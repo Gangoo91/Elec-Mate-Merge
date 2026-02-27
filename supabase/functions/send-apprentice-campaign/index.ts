@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import 'jsr:@supabase/functions-js/edge-runtime.d.ts';
 import { createClient } from 'jsr:@supabase/supabase-js@2';
 import { Resend } from 'npm:resend@2.0.0';
@@ -573,9 +574,7 @@ function generateCampaignEmail(
     case 'trial_winback': {
       const isV2 = params.email_version === 'v2';
       return {
-        html: isV2
-          ? generateTrialWinbackEmailV2(firstName)
-          : generateTrialWinbackEmail(firstName),
+        html: isV2 ? generateTrialWinbackEmailV2(firstName) : generateTrialWinbackEmail(firstName),
         subject: isV2
           ? `${firstName}, your apprentice toolkit is waiting`
           : "The UK's #1 apprentice app \u2014 \u00A34.99/mo before prices rise",
@@ -669,14 +668,13 @@ Deno.serve(async (req) => {
         if (pErr) throw pErr;
 
         // Get auth users for emails + last_sign_in_at
-        const { data: authUsers, error: authErr } = await supabaseAdmin.auth.admin.listUsers({
-          perPage: 1000,
-        });
+        const { data: authUsers, error: authErr } = await supabaseAdmin.rpc('get_auth_user_emails');
         if (authErr) throw authErr;
 
+        const authUsersList = authUsers || [];
         const emailMap = new Map<string, string>();
         const lastSignInMap = new Map<string, string | null>();
-        authUsers.users.forEach((u: any) => {
+        authUsersList.forEach((u: any) => {
           if (u.email) emailMap.set(u.id, u.email);
           lastSignInMap.set(u.id, u.last_sign_in_at || null);
         });
@@ -750,10 +748,10 @@ Deno.serve(async (req) => {
         if (pErr) throw pErr;
 
         // Fetch auth users for last_sign_in_at (needed for engagement_nudge)
-        let lastSignInMap = new Map<string, string | null>();
+        const lastSignInMap = new Map<string, string | null>();
         if (ct === 'engagement_nudge') {
-          const { data: authUsers } = await supabaseAdmin.auth.admin.listUsers({ perPage: 1000 });
-          authUsers?.users?.forEach((u: any) => {
+          const { data: authUsers } = await supabaseAdmin.rpc('get_auth_user_emails');
+          (authUsers || []).forEach((u: any) => {
             lastSignInMap.set(u.id, u.last_sign_in_at || null);
           });
         }
@@ -828,9 +826,11 @@ Deno.serve(async (req) => {
 
         if (!profile) throw new Error('User not found');
 
-        const { data: authUser, error: authErr } =
-          await supabaseAdmin.auth.admin.getUserById(userId);
-        if (authErr || !authUser.user?.email) throw new Error('Could not get user email');
+        const { data: authUser, error: authErr } = await supabaseAdmin.rpc(
+          'get_auth_user_email_by_id',
+          { user_id: userId }
+        );
+        if (authErr || !authUser?.email) throw new Error('Could not get user email');
 
         const firstName = profile.full_name?.split(' ')[0] || 'mate';
         const { html, subject } = generateCampaignEmail(ct, firstName, {
@@ -847,7 +847,7 @@ Deno.serve(async (req) => {
 
         const { data: emailData, error: emailError } = await resend.emails.send({
           from: fromAddress,
-          to: [authUser.user.email.trim().toLowerCase()],
+          to: [authUser.email.trim().toLowerCase()],
           subject,
           html,
           tags: [
@@ -868,7 +868,7 @@ Deno.serve(async (req) => {
           .eq('id', userId);
 
         await supabaseAdmin.from('email_logs').insert({
-          to_email: authUser.user.email,
+          to_email: authUser.email,
           subject,
           template: `apprentice_${ct}`,
           status: 'sent',
@@ -880,7 +880,7 @@ Deno.serve(async (req) => {
           },
         });
 
-        result = { success: true, email: authUser.user.email };
+        result = { success: true, email: authUser.email };
         break;
       }
 
@@ -893,7 +893,7 @@ Deno.serve(async (req) => {
         const ct = campaignType as CampaignType;
 
         let sentCount = 0;
-        let skippedCount = 0;
+        const skippedCount = 0;
         const errors: string[] = [];
 
         for (const uid of userIds) {
@@ -909,9 +909,11 @@ Deno.serve(async (req) => {
               continue;
             }
 
-            const { data: authUser, error: authErr } =
-              await supabaseAdmin.auth.admin.getUserById(uid);
-            if (authErr || !authUser.user?.email) {
+            const { data: authUser, error: authErr } = await supabaseAdmin.rpc(
+              'get_auth_user_email_by_id',
+              { user_id: uid }
+            );
+            if (authErr || !authUser?.email) {
               errors.push(`${uid}: Could not get email`);
               continue;
             }
@@ -931,7 +933,7 @@ Deno.serve(async (req) => {
 
             const { data: bulkEmailData, error: emailError } = await resend.emails.send({
               from: fromAddress,
-              to: [authUser.user.email.trim().toLowerCase()],
+              to: [authUser.email.trim().toLowerCase()],
               subject,
               html,
               tags: [
@@ -942,7 +944,7 @@ Deno.serve(async (req) => {
             });
 
             if (emailError) {
-              errors.push(`${authUser.user.email}: ${emailError.message}`);
+              errors.push(`${authUser.email}: ${emailError.message}`);
               continue;
             }
 
@@ -955,7 +957,7 @@ Deno.serve(async (req) => {
               .eq('id', uid);
 
             await supabaseAdmin.from('email_logs').insert({
-              to_email: authUser.user.email,
+              to_email: authUser.email,
               subject,
               template: `apprentice_${ct}`,
               status: 'sent',

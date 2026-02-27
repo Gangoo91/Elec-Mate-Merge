@@ -371,20 +371,20 @@ Deno.serve(async (req) => {
         }
 
         console.log(`get_eligible: Fetching emails for ${userIdsToFetch.length} users`);
-        const { data: authUsers, error: authError } = await supabaseAdmin.auth.admin.listUsers({
-          perPage: 1000,
-        });
+        const { data: authUsers, error: authError } =
+          await supabaseAdmin.rpc('get_auth_user_emails');
 
         if (authError) {
-          console.error('get_eligible: auth.admin.listUsers error:', authError);
+          console.error('get_eligible: get_auth_user_emails RPC error:', authError);
           throw authError;
         }
 
-        console.log(`get_eligible: Got ${authUsers.users?.length || 0} auth users`);
+        const authUsersList = authUsers || [];
+        console.log(`get_eligible: Got ${authUsersList.length} auth users`);
 
         const emailMap = new Map<string, string>();
-        authUsers.users.forEach((u: Record<string, unknown>) => {
-          if (u.email) emailMap.set(u.id, u.email);
+        authUsersList.forEach((u: Record<string, unknown>) => {
+          if (u.email) emailMap.set(u.id as string, u.email as string);
         });
 
         const usersWithEmails =
@@ -469,9 +469,11 @@ Deno.serve(async (req) => {
           throw new Error('Incomplete signup email already sent to this user');
         }
 
-        const { data: authUser, error: authError } =
-          await supabaseAdmin.auth.admin.getUserById(userId);
-        if (authError || !authUser.user?.email) {
+        const { data: authUser, error: authError } = await supabaseAdmin.rpc(
+          'get_auth_user_email_by_id',
+          { user_id: userId }
+        );
+        if (authError || !authUser?.email) {
           throw new Error('Could not get user email');
         }
 
@@ -479,7 +481,7 @@ Deno.serve(async (req) => {
           id: profile.id,
           full_name: profile.full_name,
           username: profile.username,
-          email: authUser.user.email,
+          email: authUser.email,
           role: profile.role,
           created_at: profile.created_at,
         };
@@ -558,9 +560,11 @@ Deno.serve(async (req) => {
               continue;
             }
 
-            const { data: authUser, error: authError } =
-              await supabaseAdmin.auth.admin.getUserById(uid);
-            if (authError || !authUser.user?.email) {
+            const { data: authUser, error: authError } = await supabaseAdmin.rpc(
+              'get_auth_user_email_by_id',
+              { user_id: uid }
+            );
+            if (authError || !authUser?.email) {
               errors.push(`${uid}: Could not get email`);
               continue;
             }
@@ -569,7 +573,7 @@ Deno.serve(async (req) => {
               id: profile.id,
               full_name: profile.full_name,
               username: profile.username,
-              email: authUser.user.email,
+              email: authUser.email,
               role: profile.role,
               created_at: profile.created_at,
             };
