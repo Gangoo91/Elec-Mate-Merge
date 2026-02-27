@@ -1,5 +1,5 @@
 import React from 'react';
-import { InputHTMLAttributes, forwardRef, SelectHTMLAttributes } from 'react';
+import { InputHTMLAttributes, forwardRef } from 'react';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import {
@@ -25,31 +25,31 @@ export const CalculatorInput = forwardRef<HTMLInputElement, CalculatorInputProps
 
     return (
       <div className="space-y-1.5">
-        <div className="flex items-center justify-between">
-          <Label htmlFor={inputId} className="text-sm font-medium text-white/80">
-            {label}
-          </Label>
+        <Label htmlFor={inputId} className="text-sm font-medium text-white">
+          {label}
+        </Label>
+        <div className="relative">
+          <Input
+            ref={ref}
+            id={inputId}
+            onChange={(e) => onChange?.(e.target.value)}
+            className={cn(
+              'calculator-input h-12 rounded-xl',
+              'text-white touch-manipulation',
+              'transition-all duration-200',
+              unit && 'pr-14',
+              error && 'border-red-500/50 focus:border-red-500/50 focus:ring-red-500/10',
+              className
+            )}
+            {...props}
+          />
           {unit && (
-            <span className="text-xs font-medium px-2 py-0.5 rounded-md bg-white/10 text-white/60">
+            <span className="absolute right-3 top-1/2 -translate-y-1/2 text-xs font-semibold text-white pointer-events-none">
               {unit}
             </span>
           )}
         </div>
-        <Input
-          ref={ref}
-          id={inputId}
-          onChange={(e) => onChange?.(e.target.value)}
-          className={cn(
-            'calculator-input h-12 bg-white/5 border-white/10 rounded-xl',
-            'text-base placeholder:text-white/30 touch-manipulation',
-            'focus:border-white/20 focus:ring-1 focus:ring-white/10',
-            'transition-all duration-200',
-            error && 'border-red-500/50 focus:border-red-500/50',
-            className
-          )}
-          {...props}
-        />
-        {hint && !error && <p className="text-xs text-white/40">{hint}</p>}
+        {hint && !error && <p className="text-xs text-white">{hint}</p>}
         {error && <p className="text-xs text-red-400">{error}</p>}
       </div>
     );
@@ -91,16 +91,15 @@ export const CalculatorSelect = ({
 
   return (
     <div className="space-y-1.5">
-      <Label htmlFor={selectId} className="text-sm font-medium text-white/80">
+      <Label htmlFor={selectId} className="text-sm font-medium text-white">
         {label}
       </Label>
       <Select value={value} onValueChange={onChange} disabled={disabled}>
         <SelectTrigger
           id={selectId}
           className={cn(
-            'calculator-input h-12 bg-white/5 border-white/10 rounded-xl',
-            'text-base touch-manipulation',
-            'focus:ring-1 focus:ring-white/10',
+            'calculator-input h-12 rounded-xl',
+            'text-white touch-manipulation',
             'transition-all duration-200',
             error && 'border-red-500/50',
             className
@@ -108,25 +107,25 @@ export const CalculatorSelect = ({
         >
           <SelectValue placeholder={placeholder} />
         </SelectTrigger>
-        <SelectContent className="bg-card border-white/10 rounded-xl">
+        <SelectContent className="bg-card/95 backdrop-blur-xl border-white/10 rounded-xl shadow-xl shadow-black/20 p-1">
           {options.map((option) => (
             <SelectItem
               key={option.value}
               value={option.value}
-              className="text-white/80 focus:bg-white/10 focus:text-white rounded-lg"
+              className="text-white focus:bg-white/10 focus:text-white rounded-lg transition-colors duration-150 cursor-pointer"
             >
               {option.label}
             </SelectItem>
           ))}
         </SelectContent>
       </Select>
-      {hint && !error && <p className="text-xs text-white/40">{hint}</p>}
+      {hint && !error && <p className="text-xs text-white">{hint}</p>}
       {error && <p className="text-xs text-red-400">{error}</p>}
     </div>
   );
 };
 
-// Number input with increment/decrement buttons
+// Number input with local draft state (preserves trailing decimal — ELE-14)
 interface CalculatorNumberInputProps extends Omit<CalculatorInputProps, 'type' | 'onChange'> {
   value: number | string;
   onChange: (value: number) => void;
@@ -167,8 +166,16 @@ export const CalculatorNumberInput = ({
   const handleBlur = () => {
     const num = parseFloat(draft);
     if (!isNaN(num)) {
-      if (min !== undefined && num < min) { onChange(min); setDraft(String(min)); return; }
-      if (max !== undefined && num > max) { onChange(max); setDraft(String(max)); return; }
+      if (min !== undefined && num < min) {
+        onChange(min);
+        setDraft(String(min));
+        return;
+      }
+      if (max !== undefined && num > max) {
+        onChange(max);
+        setDraft(String(max));
+        return;
+      }
       onChange(num);
     } else {
       onChange(0);
@@ -178,35 +185,35 @@ export const CalculatorNumberInput = ({
 
   return (
     <div className="space-y-1.5">
-      <div className="flex items-center justify-between">
-        <Label htmlFor={inputId} className="text-sm font-medium text-white/80">
-          {label}
-        </Label>
+      <Label htmlFor={inputId} className="text-sm font-medium text-white">
+        {label}
+      </Label>
+      <div className="relative">
+        <Input
+          id={inputId}
+          type="text"
+          inputMode="decimal"
+          value={draft}
+          onChange={(e) => handleChange(e.target.value)}
+          onBlur={handleBlur}
+          className={cn(
+            'calculator-input h-12 rounded-xl',
+            'text-white touch-manipulation',
+            'transition-all duration-200',
+            '[appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none',
+            unit && 'pr-14',
+            error && 'border-red-500/50 focus:border-red-500/50 focus:ring-red-500/10',
+            className
+          )}
+          {...props}
+        />
         {unit && (
-          <span className="text-xs font-medium px-2 py-0.5 rounded-md bg-white/10 text-white/60">
+          <span className="absolute right-3 top-1/2 -translate-y-1/2 text-xs font-semibold text-white pointer-events-none">
             {unit}
           </span>
         )}
       </div>
-      <Input
-        id={inputId}
-        type="number"
-        value={value}
-        value={draft}
-        onChange={(e) => handleChange(e.target.value)}
-        onBlur={handleBlur}
-        className={cn(
-          'calculator-input h-12 bg-white/5 border-white/10 rounded-xl',
-          'text-base placeholder:text-white/30 touch-manipulation',
-          'focus:border-white/20 focus:ring-1 focus:ring-white/10',
-          'transition-all duration-200',
-          '[appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none',
-          error && 'border-red-500/50 focus:border-red-500/50',
-          className
-        )}
-        {...props}
-      />
-      {hint && !error && <p className="text-xs text-white/40">{hint}</p>}
+      {hint && !error && <p className="text-xs text-white">{hint}</p>}
       {error && <p className="text-xs text-red-400">{error}</p>}
     </div>
   );

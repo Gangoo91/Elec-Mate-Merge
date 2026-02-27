@@ -14,10 +14,10 @@ const CableSizingInfo = () => {
         'Short circuit protection requirements',
       ]}
     >
-      <p className="text-sm text-elec-light/80 mb-2">
+      <p className="text-sm text-white mb-2">
         Cable sizing depends on multiple factors beyond current rating alone:
       </p>
-      <p className="text-xs text-elec-light/80 mt-1">
+      <p className="text-xs text-white mt-1">
         Always consult relevant electrical codes and standards for your specific application.
       </p>
     </InfoBox>

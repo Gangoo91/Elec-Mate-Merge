@@ -1,8 +1,9 @@
 import { Alert, AlertDescription } from '@/components/ui/alert';
-import { Info, ChevronDown, ChevronUp, CheckCircle2, Cable, Calculator } from 'lucide-react';
+import { Info, ChevronDown, CheckCircle2, Cable, Calculator } from 'lucide-react';
 import { CableSizingInputs, DeratingFactors, BS7671CableOption } from './useCableSizing';
 import { RequiredFieldTooltip } from '@/components/ui/required-field-tooltip';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
+import { cn } from '@/lib/utils';
 import { useState } from 'react';
 import ProtectiveDeviceSection from './ProtectiveDeviceSection';
 
@@ -94,7 +95,7 @@ const CableSizingResult = ({
                 <span className="text-6xl md:text-7xl font-bold text-elec-yellow">
                   {recommendedCable.size}
                 </span>
-                <span className="text-3xl md:text-4xl text-elec-yellow/80">mm²</span>
+                <span className="text-3xl md:text-4xl text-elec-yellow">mm²</span>
               </div>
               <div className="space-y-1">
                 <p className="text-lg font-medium text-white">
@@ -165,7 +166,7 @@ const CableSizingResult = ({
                 {alternativeCables.map((cable, index) => (
                   <div
                     key={index}
-                    className="p-4 rounded-lg border border-elec-yellow/20 hover:border-elec-yellow/40 transition-colors bg-white/10"
+                    className="p-4 rounded-lg border border-white/5 hover:border-white/10 transition-colors bg-white/[0.04]"
                   >
                     <div className="flex items-baseline gap-2 mb-3">
                       <span className="text-3xl font-bold text-white">{cable.size}</span>
@@ -203,18 +204,19 @@ const CableSizingResult = ({
 
           {/* Show Calculation Derivation */}
           <Collapsible open={showDerivation} onOpenChange={setShowDerivation} className="mt-6">
-            <CollapsibleTrigger className="w-full flex items-center justify-center gap-2 p-4 text-sm text-elec-yellow/70 hover:text-elec-yellow transition-all bg-white/5 rounded-lg border border-elec-yellow/20 hover:border-elec-yellow/40 hover:bg-white/5">
-              {showDerivation ? (
-                <>
-                  <ChevronUp className="h-4 w-4" />
-                  Hide calculation derivation
-                </>
-              ) : (
-                <>
-                  <ChevronDown className="h-4 w-4" />
-                  Show calculation derivation
-                </>
-              )}
+            <CollapsibleTrigger className="calculator-collapsible-trigger w-full">
+              <div className="flex items-center gap-2">
+                <Calculator className="h-4 w-4 text-elec-yellow" />
+                <span className="text-sm font-medium text-white">
+                  {showDerivation ? 'Hide calculation derivation' : 'Show calculation derivation'}
+                </span>
+              </div>
+              <ChevronDown
+                className={cn(
+                  'h-4 w-4 text-white transition-transform duration-200',
+                  showDerivation && 'rotate-180'
+                )}
+              />
             </CollapsibleTrigger>
             <CollapsibleContent className="pt-6">
               <div className="space-y-4">
@@ -227,7 +229,7 @@ const CableSizingResult = ({
 
                 <div className="space-y-3">
                   {/* Step 1 */}
-                  <div className="p-4 bg-white/10 rounded-lg">
+                  <div className="p-4 bg-white/[0.04] rounded-lg border-l-2 border-l-elec-yellow">
                     <div className="flex items-start gap-3 text-left">
                       <span className="flex items-center justify-center w-7 h-7 rounded-full bg-elec-yellow/20 text-elec-yellow text-sm font-bold flex-shrink-0">
                         1
@@ -245,27 +247,27 @@ const CableSizingResult = ({
                   </div>
 
                   {/* Step 2 */}
-                  <div className="p-4 bg-white/10 rounded-lg">
+                  <div className="p-4 bg-white/[0.04] rounded-lg border-l-2 border-l-elec-yellow">
                     <div className="flex items-start gap-3 text-left">
                       <span className="flex items-center justify-center w-7 h-7 rounded-full bg-elec-yellow/20 text-elec-yellow text-sm font-bold flex-shrink-0">
                         2
                       </span>
                       <div className="flex-1">
                         <h4 className="font-semibold text-white text-base">Correction Factors</h4>
-                        <p className="text-xs text-white/70 mb-2">BS 7671 Appendix 4</p>
+                        <p className="text-xs text-white mb-2">BS 7671 Appendix 4</p>
                         <div className="space-y-1.5 text-sm">
                           <div className="flex items-center justify-between gap-2">
                             <span className="text-white whitespace-nowrap">Ca (Temp):</span>
                             <span className="text-white font-mono whitespace-nowrap">
                               {Ca.toFixed(3)}{' '}
-                              <span className="text-white/60 text-xs hidden sm:inline">4B1</span>
+                              <span className="text-white text-xs hidden sm:inline">4B1</span>
                             </span>
                           </div>
                           <div className="flex items-center justify-between gap-2">
                             <span className="text-white whitespace-nowrap">Cg (Group):</span>
                             <span className="text-white font-mono whitespace-nowrap">
                               {Cg.toFixed(3)}{' '}
-                              <span className="text-white/60 text-xs hidden sm:inline">4C1</span>
+                              <span className="text-white text-xs hidden sm:inline">4C1</span>
                             </span>
                           </div>
                           <div className="flex items-center justify-between gap-2">
@@ -279,7 +281,7 @@ const CableSizingResult = ({
                               <span className="text-white whitespace-nowrap">Cs (Soil):</span>
                               <span className="text-white font-mono whitespace-nowrap">
                                 {Cs.toFixed(3)}{' '}
-                                <span className="text-white/60 text-xs hidden sm:inline">4B3</span>
+                                <span className="text-white text-xs hidden sm:inline">4B3</span>
                               </span>
                             </div>
                           )}
@@ -288,7 +290,7 @@ const CableSizingResult = ({
                               <span className="text-white whitespace-nowrap">Cd (Depth):</span>
                               <span className="text-white font-mono whitespace-nowrap">
                                 {Cd.toFixed(3)}{' '}
-                                <span className="text-white/60 text-xs hidden sm:inline">4B4</span>
+                                <span className="text-white text-xs hidden sm:inline">4B4</span>
                               </span>
                             </div>
                           )}
@@ -306,7 +308,7 @@ const CableSizingResult = ({
                   </div>
 
                   {/* Step 3 */}
-                  <div className="p-4 bg-white/10 rounded-lg">
+                  <div className="p-4 bg-white/[0.04] rounded-lg border-l-2 border-l-elec-yellow">
                     <div className="flex items-start gap-3 text-left">
                       <span className="flex items-center justify-center w-7 h-7 rounded-full bg-elec-yellow/20 text-elec-yellow text-sm font-bold flex-shrink-0">
                         3
@@ -315,7 +317,7 @@ const CableSizingResult = ({
                         <h4 className="font-semibold text-white text-base">
                           Required Tabulated Current (It)
                         </h4>
-                        <p className="text-sm text-white/80 mt-1">
+                        <p className="text-sm text-white mt-1">
                           It ≥ Ib ÷ (Ca × Cg × Ci{Cs !== 1.0 ? ' × Cs' : ''}
                           {Cd !== 1.0 ? ' × Cd' : ''})
                         </p>
@@ -330,16 +332,14 @@ const CableSizingResult = ({
                   </div>
 
                   {/* Step 4 */}
-                  <div className="p-4 bg-white/10 rounded-lg">
+                  <div className="p-4 bg-white/[0.04] rounded-lg border-l-2 border-l-elec-yellow">
                     <div className="flex items-start gap-3 text-left">
                       <span className="flex items-center justify-center w-7 h-7 rounded-full bg-elec-yellow/20 text-elec-yellow text-sm font-bold flex-shrink-0">
                         4
                       </span>
                       <div className="flex-1">
                         <h4 className="font-semibold text-white text-base">Cable Selection</h4>
-                        <p className="text-xs text-white/70 mb-1">
-                          {recommendedCable.tableReference}
-                        </p>
+                        <p className="text-xs text-white mb-1">{recommendedCable.tableReference}</p>
                         <p className="text-sm text-white">
                           Selected{' '}
                           <span className="text-elec-yellow font-medium">
@@ -355,14 +355,14 @@ const CableSizingResult = ({
                   </div>
 
                   {/* Step 5 */}
-                  <div className="p-4 bg-white/10 rounded-lg">
+                  <div className="p-4 bg-white/[0.04] rounded-lg border-l-2 border-l-elec-yellow">
                     <div className="flex items-start gap-3 text-left">
                       <span className="flex items-center justify-center w-7 h-7 rounded-full bg-elec-yellow/20 text-elec-yellow text-sm font-bold flex-shrink-0">
                         5
                       </span>
                       <div className="flex-1">
                         <h4 className="font-semibold text-white text-base">Voltage Drop</h4>
-                        <p className="text-xs text-white/70 mb-1">
+                        <p className="text-xs text-white mb-1">
                           Table{' '}
                           {recommendedCable.tableReference.replace('4D', '4D').replace('A', 'B')}
                         </p>
@@ -376,7 +376,7 @@ const CableSizingResult = ({
                           >
                             = {recommendedCable.calculatedVoltageDrop}V
                           </span>
-                          <span className="text-white/70 ml-1">
+                          <span className="text-white ml-1">
                             ({recommendedCable.voltageDropPercent}%)
                           </span>
                         </p>
@@ -400,7 +400,7 @@ const CableSizingResult = ({
       {errors.general && (
         <Alert className="bg-amber-900/30 border-amber-500/50">
           <Info className="h-4 w-4 text-amber-500" />
-          <AlertDescription className="text-amber-100">{errors.general}</AlertDescription>
+          <AlertDescription className="text-white">{errors.general}</AlertDescription>
         </Alert>
       )}
     </div>

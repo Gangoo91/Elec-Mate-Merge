@@ -1,23 +1,14 @@
 import { useState } from 'react';
-import { Badge } from '@/components/ui/badge';
-import {
-  Info,
-  BookOpen,
-  ChevronDown,
-  AlertTriangle,
-  CheckCircle,
-  XCircle,
-  Zap,
-} from 'lucide-react';
+import { Info, BookOpen, ChevronDown, AlertTriangle, Zap } from 'lucide-react';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { cn } from '@/lib/utils';
 import {
   CalculatorCard,
+  CalculatorDivider,
   CalculatorInputGrid,
   CalculatorInput,
   CalculatorSelect,
   CalculatorActions,
-  CalculatorResult,
   ResultValue,
   ResultsGrid,
   CALCULATOR_CONFIG,
@@ -204,251 +195,246 @@ const ThreePhasePowerCalculator = () => {
     return voltage && current && powerFactor;
   };
 
-  const getPfBadgeStyle = () => {
-    if (!result) return {};
-    if (result.pfQuality === 'Good') return { className: 'text-green-400 border-green-400/50' };
-    if (result.pfQuality === 'Acceptable')
-      return { className: 'text-amber-400 border-amber-400/50' };
-    return { className: 'text-red-400 border-red-400/50' };
+  const getPfStatusColour = () => {
+    if (!result) return 'text-white';
+    if (result.pfQuality === 'Good') return 'text-green-400';
+    if (result.pfQuality === 'Acceptable') return 'text-amber-400';
+    return 'text-red-400';
   };
 
   return (
-    <div className="space-y-4">
-      <CalculatorCard
-        category="power"
-        title="Three Phase Power Calculator"
-        description="Calculate power values for three-phase electrical systems including apparent, active, and reactive power"
-        badge="3φ Power"
-      >
+    <CalculatorCard
+      category="power"
+      title="Three Phase Power Calculator"
+      description="Calculate power values for three-phase electrical systems including apparent, active, and reactive power"
+    >
+      <CalculatorSelect
+        label="Calculation Mode"
+        value={mode}
+        onChange={setMode}
+        options={[
+          { value: 'power', label: 'Power Calculation' },
+          { value: 'motor', label: 'Motor Sizing' },
+        ]}
+      />
+
+      {mode === 'power' && (
         <CalculatorSelect
-          label="Calculation Mode"
-          value={mode}
-          onChange={setMode}
+          label="Solve For"
+          value={solveFor}
+          onChange={setSolveFor}
           options={[
-            { value: 'power', label: 'Power Calculation' },
-            { value: 'motor', label: 'Motor Sizing' },
+            { value: 'power', label: 'Power (from V & I)' },
+            { value: 'current', label: 'Current (from V & P)' },
           ]}
         />
+      )}
 
-        {mode === 'power' && (
-          <CalculatorSelect
-            label="Solve For"
-            value={solveFor}
-            onChange={setSolveFor}
-            options={[
-              { value: 'power', label: 'Power (from V & I)' },
-              { value: 'current', label: 'Current (from V & P)' },
-            ]}
-          />
-        )}
+      <CalculatorInputGrid columns={2}>
+        <CalculatorSelect
+          label="Connection Type"
+          value={connection}
+          onChange={setConnection}
+          options={[
+            { value: 'star', label: 'Star (Y)' },
+            { value: 'delta', label: 'Delta (Δ)' },
+          ]}
+        />
+        <CalculatorSelect
+          label="Voltage Type"
+          value={voltageType}
+          onChange={setVoltageType}
+          options={[
+            { value: 'line-line', label: 'Line-to-Line' },
+            { value: 'line-neutral', label: 'Line-to-Neutral' },
+          ]}
+        />
+      </CalculatorInputGrid>
 
-        <CalculatorInputGrid columns={2}>
-          <CalculatorSelect
-            label="Connection Type"
-            value={connection}
-            onChange={setConnection}
-            options={[
-              { value: 'star', label: 'Star (Y)' },
-              { value: 'delta', label: 'Delta (Δ)' },
-            ]}
-          />
-          <CalculatorSelect
-            label="Voltage Type"
-            value={voltageType}
-            onChange={setVoltageType}
-            options={[
-              { value: 'line-line', label: 'Line-to-Line' },
-              { value: 'line-neutral', label: 'Line-to-Neutral' },
-            ]}
-          />
-        </CalculatorInputGrid>
-
-        <CalculatorInputGrid columns={2}>
-          <CalculatorInput
-            label={voltageType === 'line-line' ? 'Line Voltage' : 'Phase Voltage'}
-            unit="V"
-            type="text"
-            inputMode="decimal"
-            value={voltage}
-            onChange={setVoltage}
-            placeholder={voltageType === 'line-line' ? 'e.g., 400' : 'e.g., 230'}
-          />
-          <CalculatorInput
-            label={currentType === 'line' ? 'Line Current' : 'Phase Current'}
-            unit="A"
-            type="text"
-            inputMode="decimal"
-            value={current}
-            onChange={setCurrent}
-            placeholder="e.g., 25"
-          />
-        </CalculatorInputGrid>
-
-        <CalculatorInputGrid columns={2}>
-          <CalculatorSelect
-            label="Current Type"
-            value={currentType}
-            onChange={setCurrentType}
-            options={[
-              { value: 'line', label: 'Line Current' },
-              { value: 'phase', label: 'Phase Current' },
-            ]}
-          />
-          <CalculatorSelect
-            label="Frequency"
-            value={frequency}
-            onChange={setFrequency}
-            options={[
-              { value: '50', label: '50 Hz (UK)' },
-              { value: '60', label: '60 Hz' },
-            ]}
-          />
-        </CalculatorInputGrid>
-
-        <CalculatorInputGrid columns={2}>
-          <CalculatorInput
-            label="Power Factor"
-            type="text"
-            inputMode="decimal"
-            value={powerFactor}
-            onChange={setPowerFactor}
-            placeholder="e.g., 0.85"
-            hint="0 to 1"
-          />
-          <CalculatorSelect
-            label="PF Type"
-            value={pfType}
-            onChange={setPfType}
-            options={[
-              { value: 'lagging', label: 'Lagging (Inductive)' },
-              { value: 'leading', label: 'Leading (Capacitive)' },
-            ]}
-          />
-        </CalculatorInputGrid>
-
-        {mode === 'motor' && (
-          <div className="p-4 rounded-xl bg-white/5 border border-white/10 space-y-3">
-            <h4 className="font-medium text-amber-400 flex items-center gap-2">
-              <Zap className="h-4 w-4" />
-              Motor Sizing Parameters
-            </h4>
-            <CalculatorInputGrid columns={2}>
-              <CalculatorInput
-                label="Mechanical Power"
-                unit={mechanicalPowerUnit}
-                type="text"
-                inputMode="decimal"
-                value={mechanicalPower}
-                onChange={setMechanicalPower}
-                placeholder="e.g., 15"
-              />
-              <CalculatorSelect
-                label="Power Unit"
-                value={mechanicalPowerUnit}
-                onChange={setMechanicalPowerUnit}
-                options={[
-                  { value: 'kW', label: 'kW' },
-                  { value: 'HP', label: 'HP' },
-                ]}
-              />
-            </CalculatorInputGrid>
-            <CalculatorInput
-              label="Efficiency"
-              unit="%"
-              type="text"
-              inputMode="decimal"
-              value={efficiency}
-              onChange={setEfficiency}
-              placeholder="85"
-            />
-          </div>
-        )}
-
+      <CalculatorInputGrid columns={2}>
         <CalculatorInput
-          label="Target Power Factor (optional)"
+          label={voltageType === 'line-line' ? 'Line Voltage' : 'Phase Voltage'}
+          unit="V"
           type="text"
           inputMode="decimal"
-          value={targetPf}
-          onChange={setTargetPf}
-          placeholder="e.g., 0.95"
-          hint="For PF correction calculation"
+          value={voltage}
+          onChange={setVoltage}
+          placeholder={voltageType === 'line-line' ? 'e.g., 400' : 'e.g., 230'}
         />
+        <CalculatorInput
+          label={currentType === 'line' ? 'Line Current' : 'Phase Current'}
+          unit="A"
+          type="text"
+          inputMode="decimal"
+          value={current}
+          onChange={setCurrent}
+          placeholder="e.g., 25"
+        />
+      </CalculatorInputGrid>
 
-        {/* Advanced Options */}
-        <Collapsible open={advancedOpen} onOpenChange={setAdvancedOpen}>
-          <CollapsibleTrigger className="w-full p-3 rounded-xl bg-white/5 border border-white/10 flex items-center justify-between hover:bg-white/10 transition-colors">
-            <span className="text-sm font-medium text-white">Advanced Options</span>
-            <ChevronDown
-              className={cn(
-                'h-4 w-4 text-white/70 transition-transform',
-                advancedOpen && 'rotate-180'
-              )}
+      <CalculatorInputGrid columns={2}>
+        <CalculatorSelect
+          label="Current Type"
+          value={currentType}
+          onChange={setCurrentType}
+          options={[
+            { value: 'line', label: 'Line Current' },
+            { value: 'phase', label: 'Phase Current' },
+          ]}
+        />
+        <CalculatorSelect
+          label="Frequency"
+          value={frequency}
+          onChange={setFrequency}
+          options={[
+            { value: '50', label: '50 Hz (UK)' },
+            { value: '60', label: '60 Hz' },
+          ]}
+        />
+      </CalculatorInputGrid>
+
+      <CalculatorInputGrid columns={2}>
+        <CalculatorInput
+          label="Power Factor"
+          type="text"
+          inputMode="decimal"
+          value={powerFactor}
+          onChange={setPowerFactor}
+          placeholder="e.g., 0.85"
+          hint="0 to 1"
+        />
+        <CalculatorSelect
+          label="PF Type"
+          value={pfType}
+          onChange={setPfType}
+          options={[
+            { value: 'lagging', label: 'Lagging (Inductive)' },
+            { value: 'leading', label: 'Leading (Capacitive)' },
+          ]}
+        />
+      </CalculatorInputGrid>
+
+      {mode === 'motor' && (
+        <div className="p-4 rounded-xl bg-white/5 border border-white/10 space-y-3">
+          <h4 className="font-medium text-amber-400 flex items-center gap-2">
+            <Zap className="h-4 w-4" />
+            Motor Sizing Parameters
+          </h4>
+          <CalculatorInputGrid columns={2}>
+            <CalculatorInput
+              label="Mechanical Power"
+              unit={mechanicalPowerUnit}
+              type="text"
+              inputMode="decimal"
+              value={mechanicalPower}
+              onChange={setMechanicalPower}
+              placeholder="e.g., 15"
             />
-          </CollapsibleTrigger>
-          <CollapsibleContent className="mt-3 p-4 rounded-xl bg-white/5 border border-white/10 space-y-3">
-            <h5 className="text-sm font-medium text-amber-400">Current Unbalance Analysis</h5>
-            <CalculatorInputGrid columns={3}>
-              <CalculatorInput
-                label="IA"
-                unit="A"
-                type="text"
-                inputMode="decimal"
-                value={currentA}
-                onChange={setCurrentA}
-                placeholder="25"
-              />
-              <CalculatorInput
-                label="IB"
-                unit="A"
-                type="text"
-                inputMode="decimal"
-                value={currentB}
-                onChange={setCurrentB}
-                placeholder="24"
-              />
-              <CalculatorInput
-                label="IC"
-                unit="A"
-                type="text"
-                inputMode="decimal"
-                value={currentC}
-                onChange={setCurrentC}
-                placeholder="26"
-              />
-            </CalculatorInputGrid>
-          </CollapsibleContent>
-        </Collapsible>
+            <CalculatorSelect
+              label="Power Unit"
+              value={mechanicalPowerUnit}
+              onChange={setMechanicalPowerUnit}
+              options={[
+                { value: 'kW', label: 'kW' },
+                { value: 'HP', label: 'HP' },
+              ]}
+            />
+          </CalculatorInputGrid>
+          <CalculatorInput
+            label="Efficiency"
+            unit="%"
+            type="text"
+            inputMode="decimal"
+            value={efficiency}
+            onChange={setEfficiency}
+            placeholder="85"
+          />
+        </div>
+      )}
 
-        <CalculatorActions
-          category="power"
-          onCalculate={calculateThreePhasePower}
-          onReset={reset}
-          isDisabled={!hasValidInputs()}
-        />
-      </CalculatorCard>
+      <CalculatorInput
+        label="Target Power Factor (optional)"
+        type="text"
+        inputMode="decimal"
+        value={targetPf}
+        onChange={setTargetPf}
+        placeholder="e.g., 0.95"
+        hint="For PF correction calculation"
+      />
+
+      {/* Advanced Options */}
+      <Collapsible open={advancedOpen} onOpenChange={setAdvancedOpen}>
+        <CollapsibleTrigger className="calculator-collapsible-trigger w-full">
+          <span className="text-sm font-medium text-white">Advanced Options</span>
+          <ChevronDown
+            className={cn('h-4 w-4 text-white transition-transform', advancedOpen && 'rotate-180')}
+          />
+        </CollapsibleTrigger>
+        <CollapsibleContent className="pt-3 space-y-3">
+          <h5 className="text-sm font-medium text-amber-400">Current Unbalance Analysis</h5>
+          <CalculatorInputGrid columns={3}>
+            <CalculatorInput
+              label="IA"
+              unit="A"
+              type="text"
+              inputMode="decimal"
+              value={currentA}
+              onChange={setCurrentA}
+              placeholder="25"
+            />
+            <CalculatorInput
+              label="IB"
+              unit="A"
+              type="text"
+              inputMode="decimal"
+              value={currentB}
+              onChange={setCurrentB}
+              placeholder="24"
+            />
+            <CalculatorInput
+              label="IC"
+              unit="A"
+              type="text"
+              inputMode="decimal"
+              value={currentC}
+              onChange={setCurrentC}
+              placeholder="26"
+            />
+          </CalculatorInputGrid>
+        </CollapsibleContent>
+      </Collapsible>
+
+      <CalculatorActions
+        category="power"
+        onCalculate={calculateThreePhasePower}
+        onReset={reset}
+        isDisabled={!hasValidInputs()}
+      />
 
       {/* Results */}
       {result && (
-        <div className="space-y-4 animate-fade-in">
-          <CalculatorResult category="power">
-            <div className="flex items-center justify-between pb-3 border-b border-white/10">
-              <div className="flex items-center gap-2">
-                <span className="text-sm text-white/60">Three Phase Power Results</span>
-                <Badge variant="outline" className="text-white/60 border-white/30">
+        <>
+          <CalculatorDivider category="power" />
+
+          <div className="space-y-4 animate-fade-in">
+            {/* Status Chips */}
+            <div className="flex flex-wrap gap-2">
+              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-amber-400/10 border border-amber-400/20">
+                <span className="text-xs font-semibold text-amber-300">
                   {connection === 'star' ? 'Star (Y)' : 'Delta (Δ)'}
-                </Badge>
+                </span>
               </div>
-              <Badge variant="outline" {...getPfBadgeStyle()}>
-                {result.pfQuality === 'Good' && <CheckCircle className="h-3 w-3 mr-1" />}
-                {result.pfQuality === 'Acceptable' && <Info className="h-3 w-3 mr-1" />}
-                {result.pfQuality === 'Poor' && <XCircle className="h-3 w-3 mr-1" />}
-                PF: {result.pfQuality}
-              </Badge>
+              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-amber-400/10 border border-amber-400/20">
+                <span className="text-xs font-semibold text-amber-300">PF</span>
+                <span className={cn('text-sm font-semibold', getPfStatusColour())}>
+                  {result.pfQuality}
+                </span>
+              </div>
             </div>
 
-            {/* Primary Result */}
-            <div className="text-center py-4">
-              <p className="text-sm text-white/60 mb-1">Apparent Power (S)</p>
+            {/* Hero — Apparent Power */}
+            <div className="text-center py-3">
+              <p className="text-sm text-white mb-1">Apparent Power (S)</p>
               <div
                 className="text-4xl font-bold bg-clip-text text-transparent"
                 style={{
@@ -457,94 +443,97 @@ const ThreePhasePowerCalculator = () => {
               >
                 {result.apparentPower.toFixed(2)} kVA
               </div>
-              <p className="text-xs text-white/70 mt-1">
+              <p className="text-xs text-white mt-1">
                 φ = {result.phaseAngle.toFixed(1)}° • √3 = 1.732
               </p>
             </div>
 
             {/* Power Triangle */}
-            <div className="p-3 rounded-lg bg-white/5">
-              <h4 className="text-sm font-medium text-amber-400 mb-2">Power Triangle</h4>
-              <ResultsGrid columns={2}>
-                <ResultValue
-                  label="Active Power (P)"
-                  value={result.activePower.toFixed(2)}
-                  unit="kW"
-                  category="power"
-                  size="sm"
-                />
-                <ResultValue
-                  label="Reactive Power (Q)"
-                  value={`${Math.abs(result.reactivePower).toFixed(2)}`}
-                  unit={`kVAR ${pfType === 'lagging' ? '(Ind)' : '(Cap)'}`}
-                  category="power"
-                  size="sm"
-                />
-              </ResultsGrid>
-            </div>
+            <ResultsGrid columns={2}>
+              <ResultValue
+                label="Active Power (P)"
+                value={result.activePower.toFixed(2)}
+                unit="kW"
+                category="power"
+                size="sm"
+              />
+              <ResultValue
+                label="Reactive Power (Q)"
+                value={`${Math.abs(result.reactivePower).toFixed(2)}`}
+                unit={`kVAR ${pfType === 'lagging' ? '(Ind)' : '(Cap)'}`}
+                category="power"
+                size="sm"
+              />
+            </ResultsGrid>
 
             {/* Voltage & Current */}
-            <div className="p-3 rounded-lg bg-white/5">
-              <h4 className="text-sm font-medium text-amber-400 mb-2">Voltage & Current</h4>
-              <ResultsGrid columns={2}>
-                <ResultValue
-                  label="Line Voltage"
-                  value={result.lineVoltage.toFixed(1)}
-                  unit="V"
-                  category="power"
-                  size="sm"
-                />
-                <ResultValue
-                  label="Line Current"
-                  value={result.lineCurrent.toFixed(2)}
-                  unit="A"
-                  category="power"
-                  size="sm"
-                />
-                <ResultValue
-                  label="Phase Voltage"
-                  value={result.phaseVoltage.toFixed(1)}
-                  unit="V"
-                  category="power"
-                  size="sm"
-                />
-                <ResultValue
-                  label="Phase Current"
-                  value={result.phaseCurrent.toFixed(2)}
-                  unit="A"
-                  category="power"
-                  size="sm"
-                />
-              </ResultsGrid>
-            </div>
+            <ResultsGrid columns={2}>
+              <ResultValue
+                label="Line Voltage"
+                value={result.lineVoltage.toFixed(1)}
+                unit="V"
+                category="power"
+                size="sm"
+              />
+              <ResultValue
+                label="Line Current"
+                value={result.lineCurrent.toFixed(2)}
+                unit="A"
+                category="power"
+                size="sm"
+              />
+              <ResultValue
+                label="Phase Voltage"
+                value={result.phaseVoltage.toFixed(1)}
+                unit="V"
+                category="power"
+                size="sm"
+              />
+              <ResultValue
+                label="Phase Current"
+                value={result.phaseCurrent.toFixed(2)}
+                unit="A"
+                category="power"
+                size="sm"
+              />
+            </ResultsGrid>
 
             {/* Per-Phase Power */}
-            <div className="flex justify-between text-sm">
-              <span className="text-white/60">Power per Phase:</span>
-              <span className="text-amber-400 font-mono">
-                {result.perPhase.power.toFixed(2)} kW
-              </span>
+            <div className="rounded-xl p-3 bg-white/[0.04]">
+              <div className="flex justify-between text-sm">
+                <span className="text-white">Power per Phase:</span>
+                <span className="text-amber-400 font-mono text-lg font-bold">
+                  {result.perPhase.power.toFixed(2)} kW
+                </span>
+              </div>
             </div>
 
             {/* Unbalance Analysis */}
             {result.unbalance !== undefined && (
-              <div className="p-3 rounded-lg bg-white/5">
+              <div
+                className={cn(
+                  'rounded-xl p-3 border',
+                  result.unbalance > 5
+                    ? 'bg-red-500/10 border-red-500/20'
+                    : 'bg-green-500/10 border-green-500/20'
+                )}
+              >
                 <div className="flex items-center justify-between">
-                  <span className="text-sm text-white/60">Current Unbalance:</span>
+                  <span className="text-sm text-white">Current Unbalance:</span>
                   <div className="flex items-center gap-2">
                     <span
                       className={cn(
-                        'font-mono',
+                        'font-mono font-bold',
                         result.unbalance > 5 ? 'text-red-400' : 'text-green-400'
                       )}
                     >
                       {result.unbalance.toFixed(1)}%
                     </span>
                     {result.unbalance > 5 && (
-                      <Badge variant="outline" className="text-red-400 border-red-400/50 text-xs">
-                        <AlertTriangle className="h-3 w-3 mr-1" />
+                      <span className="text-xs text-red-400 flex items-center gap-1">
+                        <AlertTriangle className="h-3 w-3" />
                         High
-                      </Badge>
+                      </span>
                     )}
                   </div>
                 </div>
@@ -553,11 +542,11 @@ const ThreePhasePowerCalculator = () => {
 
             {/* Power Factor Correction */}
             {result.correctionCapacitor !== undefined && (
-              <div className="p-3 rounded-lg bg-green-500/10 border border-green-500/30">
+              <div className="rounded-xl p-3 bg-green-500/10 border border-green-500/20">
                 <h4 className="text-sm font-medium text-green-400 mb-2">Power Factor Correction</h4>
                 <div className="flex justify-between">
-                  <span className="text-sm text-green-200/80">Capacitor Required:</span>
-                  <span className="text-green-400 font-mono">
+                  <span className="text-sm text-white">Capacitor Required:</span>
+                  <span className="text-green-400 font-mono font-bold">
                     {result.correctionCapacitor.toFixed(2)} kVAR
                   </span>
                 </div>
@@ -565,251 +554,294 @@ const ThreePhasePowerCalculator = () => {
             )}
 
             {/* Protective Device */}
-            <div className="pt-3 border-t border-white/10">
-              <div className="flex justify-between text-sm">
-                <span className="text-white/60">Suggested Protection:</span>
-                <span className="text-amber-400 font-mono">{result.protectiveDevice}</span>
+            <div className="p-3 rounded-xl bg-blue-500/10 border border-blue-500/20">
+              <div className="flex items-start gap-2">
+                <Info className="h-4 w-4 text-blue-400 mt-0.5 shrink-0" />
+                <div className="text-sm text-white">
+                  <div className="flex justify-between">
+                    <span>
+                      <strong>Suggested Protection:</strong>
+                    </span>
+                    <span className="text-amber-400 font-mono ml-2">{result.protectiveDevice}</span>
+                  </div>
+                  <p className="text-xs text-white mt-1">
+                    Indicative only - proper circuit design required per BS 7671
+                  </p>
+                </div>
               </div>
-              <p className="text-xs text-white/70 mt-1">
-                *Indicative only - proper circuit design required per BS 7671
-              </p>
             </div>
-          </CalculatorResult>
+          </div>
+
+          <CalculatorDivider category="power" />
 
           {/* How It Worked Out */}
           <Collapsible open={showCalculation} onOpenChange={setShowCalculation}>
-            <div className="calculator-card overflow-hidden" style={{ borderColor: '#a78bfa15' }}>
-              <CollapsibleTrigger className="agent-collapsible-trigger w-full">
-                <div className="flex items-center gap-3">
-                  <Zap className="h-4 w-4 text-purple-400" />
-                  <span className="text-sm sm:text-base font-medium text-purple-300">
-                    How It Worked Out
-                  </span>
-                </div>
-                <ChevronDown
-                  className={cn(
-                    'h-4 w-4 text-white/70 transition-transform duration-200',
-                    showCalculation && 'rotate-180'
-                  )}
-                />
-              </CollapsibleTrigger>
-              <CollapsibleContent className="p-4 pt-0 space-y-3">
-                <div className="space-y-2">
-                  <p className="text-sm text-purple-200 font-medium">Step 1: Input Values</p>
-                  <div className="p-3 rounded-lg bg-purple-500/10 font-mono text-xs text-purple-100 space-y-1">
-                    <p>Connection: {connection === 'star' ? 'Star (Y)' : 'Delta (Δ)'}</p>
-                    <p>
+            <CollapsibleTrigger className="calculator-collapsible-trigger w-full">
+              <div className="flex items-center gap-3">
+                <Zap className="h-4 w-4 text-purple-400" />
+                <span className="text-sm sm:text-base font-medium text-white">
+                  How It Worked Out
+                </span>
+              </div>
+              <ChevronDown
+                className={cn(
+                  'h-4 w-4 text-white transition-transform duration-200',
+                  showCalculation && 'rotate-180'
+                )}
+              />
+            </CollapsibleTrigger>
+
+            <CollapsibleContent className="pt-2">
+              <div className="space-y-3 pl-1">
+                {/* Step 1: Input Values */}
+                <div className="border-l-2 border-purple-400/40 pl-3">
+                  <p className="text-sm text-white">
+                    <strong className="text-purple-300">Step 1: Input Values</strong>
+                  </p>
+                  <code className="block mt-1 text-xs px-2.5 py-1.5 rounded-lg bg-black/20 text-white font-mono space-y-0.5">
+                    <span className="block">
+                      Connection: {connection === 'star' ? 'Star (Y)' : 'Delta (Δ)'}
+                    </span>
+                    <span className="block">
                       Voltage: {voltage}V (
                       {voltageType === 'line-line' ? 'Line-to-Line' : 'Line-to-Neutral'})
-                    </p>
-                    <p>
+                    </span>
+                    <span className="block">
                       Current: {current}A ({currentType === 'line' ? 'Line' : 'Phase'})
-                    </p>
-                    <p>
+                    </span>
+                    <span className="block">
                       Power Factor: {powerFactor} {pfType}
-                    </p>
-                  </div>
+                    </span>
+                  </code>
                 </div>
 
-                <div className="space-y-2">
-                  <p className="text-sm text-purple-200 font-medium">
-                    Step 2: Normalize to Line Values
+                {/* Step 2: Normalize to Line Values */}
+                <div className="border-l-2 border-purple-400/40 pl-3">
+                  <p className="text-sm text-white">
+                    <strong className="text-purple-300">Step 2: Normalise to Line Values</strong>
                   </p>
-                  <div className="p-3 rounded-lg bg-purple-500/10 font-mono text-xs text-purple-100 space-y-1">
+                  <code className="block mt-1 text-xs px-2.5 py-1.5 rounded-lg bg-black/20 text-white font-mono space-y-0.5">
                     {voltageType === 'line-neutral' ? (
-                      <p>
+                      <span className="block">
                         VLL = VLN × √3 = {voltage} × 1.732 = {result.lineVoltage.toFixed(1)}V
-                      </p>
+                      </span>
                     ) : (
-                      <p>VLL = {voltage}V (already line-to-line)</p>
+                      <span className="block">VLL = {voltage}V (already line-to-line)</span>
                     )}
                     {currentType === 'phase' && connection === 'delta' ? (
-                      <p>
+                      <span className="block">
                         IL = IP × √3 = {current} × 1.732 = {result.lineCurrent.toFixed(2)}A
-                      </p>
+                      </span>
                     ) : (
-                      <p>IL = {current}A (line current)</p>
+                      <span className="block">IL = {current}A (line current)</span>
                     )}
-                  </div>
+                  </code>
                 </div>
 
-                <div className="space-y-2">
-                  <p className="text-sm text-purple-200 font-medium">Step 3: Apparent Power</p>
-                  <div className="p-3 rounded-lg bg-purple-500/10 font-mono text-xs text-purple-100">
-                    <p>S = √3 × VLL × IL</p>
-                    <p>
+                {/* Step 3: Apparent Power */}
+                <div className="border-l-2 border-purple-400/40 pl-3">
+                  <p className="text-sm text-white">
+                    <strong className="text-purple-300">Step 3: Apparent Power</strong>
+                  </p>
+                  <code className="block mt-1 text-xs px-2.5 py-1.5 rounded-lg bg-black/20 text-white font-mono space-y-0.5">
+                    <span className="block">S = √3 × VLL × IL</span>
+                    <span className="block">
                       S = 1.732 × {result.lineVoltage.toFixed(1)} × {result.lineCurrent.toFixed(2)}
-                    </p>
-                    <p className="text-purple-300">
+                    </span>
+                    <span className="block text-amber-300">
                       S = {(result.apparentPower * 1000).toFixed(0)}VA ={' '}
                       {result.apparentPower.toFixed(2)} kVA
-                    </p>
-                  </div>
+                    </span>
+                  </code>
                 </div>
 
-                <div className="space-y-2">
-                  <p className="text-sm text-purple-200 font-medium">Step 4: Power Triangle</p>
-                  <div className="p-3 rounded-lg bg-purple-500/10 font-mono text-xs text-purple-100 space-y-1">
-                    <p>
+                {/* Step 4: Power Triangle */}
+                <div className="border-l-2 border-purple-400/40 pl-3">
+                  <p className="text-sm text-white">
+                    <strong className="text-purple-300">Step 4: Power Triangle</strong>
+                  </p>
+                  <code className="block mt-1 text-xs px-2.5 py-1.5 rounded-lg bg-black/20 text-white font-mono space-y-0.5">
+                    <span className="block">
                       P = S × cos(φ) = {result.apparentPower.toFixed(2)} × {powerFactor}
-                    </p>
-                    <p className="text-purple-300">P = {result.activePower.toFixed(2)} kW</p>
-                    <p className="mt-1">
+                    </span>
+                    <span className="block text-amber-300">
+                      P = {result.activePower.toFixed(2)} kW
+                    </span>
+                    <span className="block">
                       Q = S × sin(φ) = {result.apparentPower.toFixed(2)} × sin(
                       {result.phaseAngle.toFixed(1)}°)
-                    </p>
-                    <p className="text-purple-300">
+                    </span>
+                    <span className="block text-amber-300">
                       Q = {Math.abs(result.reactivePower).toFixed(2)} kVAR
-                    </p>
-                  </div>
+                    </span>
+                  </code>
                 </div>
 
-                <div className="space-y-2">
-                  <p className="text-sm text-purple-200 font-medium">
-                    Step 5: Per-Phase Values ({connection === 'star' ? 'Star' : 'Delta'})
+                {/* Step 5: Per-Phase Values */}
+                <div className="border-l-2 border-purple-400/40 pl-3">
+                  <p className="text-sm text-white">
+                    <strong className="text-purple-300">
+                      Step 5: Per-Phase Values ({connection === 'star' ? 'Star' : 'Delta'})
+                    </strong>
                   </p>
-                  <div className="p-3 rounded-lg bg-purple-500/10 font-mono text-xs text-purple-100 space-y-1">
+                  <code className="block mt-1 text-xs px-2.5 py-1.5 rounded-lg bg-black/20 text-white font-mono space-y-0.5">
                     {connection === 'star' ? (
                       <>
-                        <p>
+                        <span className="block">
                           VP = VLL / √3 = {result.lineVoltage.toFixed(1)} / 1.732 ={' '}
                           {result.phaseVoltage.toFixed(1)}V
-                        </p>
-                        <p>IP = IL = {result.phaseCurrent.toFixed(2)}A</p>
+                        </span>
+                        <span className="block">IP = IL = {result.phaseCurrent.toFixed(2)}A</span>
                       </>
                     ) : (
                       <>
-                        <p>VP = VLL = {result.phaseVoltage.toFixed(1)}V</p>
-                        <p>
+                        <span className="block">VP = VLL = {result.phaseVoltage.toFixed(1)}V</span>
+                        <span className="block">
                           IP = IL / √3 = {result.lineCurrent.toFixed(2)} / 1.732 ={' '}
                           {result.phaseCurrent.toFixed(2)}A
-                        </p>
+                        </span>
                       </>
                     )}
-                    <p className="text-purple-300 mt-1">
+                    <span className="block text-amber-300">
                       Power per phase = {result.perPhase.power.toFixed(2)} kW
-                    </p>
-                  </div>
+                    </span>
+                  </code>
                 </div>
 
-                <div className="p-3 rounded-lg bg-purple-500/10 border border-purple-500/30">
-                  <p className="text-sm text-purple-200 font-medium mb-2">
-                    Power Triangle Verification:
+                {/* Power Triangle Verification */}
+                <div className="border-l-2 border-amber-400/40 pl-3">
+                  <p className="text-sm text-white">
+                    <strong className="text-amber-300">Power Triangle Verification</strong>
                   </p>
-                  <p className="font-mono text-xs text-purple-100">
-                    S² = P² + Q² → {result.apparentPower.toFixed(2)}² ={' '}
-                    {result.activePower.toFixed(2)}² + {Math.abs(result.reactivePower).toFixed(2)}²
-                  </p>
-                  <p className="font-mono text-xs text-purple-100">
-                    {(result.apparentPower * result.apparentPower).toFixed(2)} ≈{' '}
-                    {(
-                      result.activePower * result.activePower +
-                      result.reactivePower * result.reactivePower
-                    ).toFixed(2)}{' '}
-                    ✓
-                  </p>
+                  <code className="block mt-1 text-xs px-2.5 py-1.5 rounded-lg bg-black/20 text-white font-mono space-y-0.5">
+                    <span className="block">
+                      S² = P² + Q² → {result.apparentPower.toFixed(2)}² ={' '}
+                      {result.activePower.toFixed(2)}² + {Math.abs(result.reactivePower).toFixed(2)}
+                      ²
+                    </span>
+                    <span className="block">
+                      {(result.apparentPower * result.apparentPower).toFixed(2)} ≈{' '}
+                      {(
+                        result.activePower * result.activePower +
+                        result.reactivePower * result.reactivePower
+                      ).toFixed(2)}{' '}
+                      ✓
+                    </span>
+                  </code>
                 </div>
-              </CollapsibleContent>
-            </div>
+              </div>
+            </CollapsibleContent>
           </Collapsible>
 
           {/* What This Means */}
           <Collapsible open={showGuidance} onOpenChange={setShowGuidance}>
-            <div className="calculator-card overflow-hidden" style={{ borderColor: '#60a5fa15' }}>
-              <CollapsibleTrigger className="agent-collapsible-trigger w-full">
-                <div className="flex items-center gap-3">
-                  <Info className="h-4 w-4 text-blue-400" />
-                  <span className="text-sm sm:text-base font-medium text-blue-300">
-                    What This Means
-                  </span>
-                </div>
-                <ChevronDown
-                  className={cn(
-                    'h-4 w-4 text-white/70 transition-transform duration-200',
-                    showGuidance && 'rotate-180'
-                  )}
-                />
-              </CollapsibleTrigger>
-              <CollapsibleContent className="p-4 pt-0 space-y-2">
-                <p className="text-sm text-blue-200/80">
-                  <strong className="text-blue-300">Power Factor:</strong>{' '}
-                  {result.pfQuality === 'Poor'
-                    ? 'Values below 0.85 may require correction per supply authority requirements. Poor power factor increases current draw and cable sizing.'
-                    : result.pfQuality === 'Acceptable'
-                      ? 'Acceptable for most applications. Consider correction for improved efficiency.'
-                      : 'Excellent efficiency - minimal reactive power losses.'}
-                </p>
-                <p className="text-sm text-blue-200/80">
-                  <strong className="text-blue-300">Star vs Delta:</strong> Star connection provides
-                  neutral for single-phase loads. Delta connection is common for motors and balanced
-                  loads.
-                </p>
-                {result.unbalance !== undefined && (
-                  <p className="text-sm text-blue-200/80">
-                    <strong className="text-blue-300">Current Unbalance:</strong>{' '}
-                    {result.unbalance > 5
-                      ? '>5% unbalance causes neutral current in star systems and reduces motor efficiency. >10% requires investigation.'
-                      : 'Unbalance within acceptable limits.'}
-                  </p>
+            <CollapsibleTrigger className="calculator-collapsible-trigger w-full">
+              <div className="flex items-center gap-3">
+                <Info className="h-4 w-4 text-blue-400" />
+                <span className="text-sm sm:text-base font-medium text-white">What This Means</span>
+              </div>
+              <ChevronDown
+                className={cn(
+                  'h-4 w-4 text-white transition-transform duration-200',
+                  showGuidance && 'rotate-180'
                 )}
-              </CollapsibleContent>
-            </div>
+              />
+            </CollapsibleTrigger>
+
+            <CollapsibleContent className="pt-2">
+              <div className="space-y-3 pl-1">
+                <div className="border-l-2 border-blue-400/40 pl-3">
+                  <p className="text-sm text-white">
+                    <strong className="text-blue-300">Power Factor</strong> {'—'}{' '}
+                    {result.pfQuality === 'Poor'
+                      ? 'Values below 0.85 may require correction per supply authority requirements. Poor power factor increases current draw and cable sizing.'
+                      : result.pfQuality === 'Acceptable'
+                        ? 'Acceptable for most applications. Consider correction for improved efficiency.'
+                        : 'Excellent efficiency - minimal reactive power losses.'}
+                  </p>
+                </div>
+                <div className="border-l-2 border-blue-400/40 pl-3">
+                  <p className="text-sm text-white">
+                    <strong className="text-blue-300">Star vs Delta</strong> {'—'} Star connection
+                    provides neutral for single-phase loads. Delta connection is common for motors
+                    and balanced loads.
+                  </p>
+                </div>
+                {result.unbalance !== undefined && (
+                  <div className="border-l-2 border-blue-400/40 pl-3">
+                    <p className="text-sm text-white">
+                      <strong className="text-blue-300">Current Unbalance</strong> {'—'}{' '}
+                      {result.unbalance > 5
+                        ? '>5% unbalance causes neutral current in star systems and reduces motor efficiency. >10% requires investigation.'
+                        : 'Unbalance within acceptable limits.'}
+                    </p>
+                  </div>
+                )}
+              </div>
+            </CollapsibleContent>
           </Collapsible>
 
           {/* BS 7671 Regs at a Glance */}
           <Collapsible open={showBsRegs} onOpenChange={setShowBsRegs}>
-            <div className="calculator-card overflow-hidden" style={{ borderColor: '#fbbf2415' }}>
-              <CollapsibleTrigger className="agent-collapsible-trigger w-full">
-                <div className="flex items-center gap-3">
-                  <BookOpen className="h-4 w-4 text-amber-400" />
-                  <span className="text-sm sm:text-base font-medium text-amber-300">
-                    BS 7671 Regs at a Glance
-                  </span>
+            <CollapsibleTrigger className="calculator-collapsible-trigger w-full">
+              <div className="flex items-center gap-3">
+                <BookOpen className="h-4 w-4 text-amber-400" />
+                <span className="text-sm sm:text-base font-medium text-white">
+                  BS 7671 Regs at a Glance
+                </span>
+              </div>
+              <ChevronDown
+                className={cn(
+                  'h-4 w-4 text-white transition-transform duration-200',
+                  showBsRegs && 'rotate-180'
+                )}
+              />
+            </CollapsibleTrigger>
+
+            <CollapsibleContent className="pt-2">
+              <div className="space-y-3 pl-1">
+                <div className="border-l-2 border-amber-400/40 pl-3">
+                  <p className="text-sm text-white">
+                    <strong className="text-amber-300">Protection</strong> {'—'} Final circuit
+                    protection must account for motor starting currents (typically 6-8× full load).
+                    Use BS EN 60947-4-1 rated devices.
+                  </p>
                 </div>
-                <ChevronDown
-                  className={cn(
-                    'h-4 w-4 text-white/70 transition-transform duration-200',
-                    showBsRegs && 'rotate-180'
-                  )}
-                />
-              </CollapsibleTrigger>
-              <CollapsibleContent className="p-4 pt-0">
-                <div className="space-y-2 text-sm text-amber-200/80">
-                  <p>
-                    <strong className="text-amber-300">Protection:</strong> Final circuit protection
-                    must account for motor starting currents (typically 6-8× full load). Use BS EN
-                    60947-4-1 rated devices.
+                <div className="border-l-2 border-amber-400/40 pl-3">
+                  <p className="text-sm text-white">
+                    <strong className="text-amber-300">Cable Sizing</strong> {'—'} Consider voltage
+                    drop (Section 525), current-carrying capacity with grouping/temperature factors.
                   </p>
-                  <p>
-                    <strong className="text-amber-300">Cable Sizing:</strong> Consider voltage drop
-                    (Section 525), current-carrying capacity with grouping/temperature factors.
-                  </p>
-                  <p>
-                    <strong className="text-amber-300">Section 512.1.2:</strong> Equipment selection
+                </div>
+                <div className="border-l-2 border-amber-400/40 pl-3">
+                  <p className="text-sm text-white">
+                    <strong className="text-amber-300">512.1.2</strong> {'—'} Equipment selection
                     must consider power factor and efficiency.
                   </p>
-                  <p>
-                    <strong className="text-amber-300">Section 523:</strong> Conductor sizing based
-                    on design current, not reduced current from poor PF.
+                </div>
+                <div className="border-l-2 border-amber-400/40 pl-3">
+                  <p className="text-sm text-white">
+                    <strong className="text-amber-300">523</strong> {'—'} Conductor sizing based on
+                    design current, not reduced current from poor PF.
                   </p>
                 </div>
-              </CollapsibleContent>
-            </div>
+              </div>
+            </CollapsibleContent>
           </Collapsible>
-        </div>
-      )}
 
-      {/* Formula Reference */}
-      <div className="p-3 rounded-xl bg-amber-500/10 border border-amber-500/20">
-        <div className="flex items-start gap-2">
-          <Info className="h-4 w-4 text-amber-400 mt-0.5 shrink-0" />
-          <p className="text-sm text-amber-200">
-            <strong>UK Standard:</strong> Three-phase supply is 400V line-to-line, 230V
-            line-to-neutral, 50Hz (BS 7671:2018+A3:2024)
-          </p>
-        </div>
-      </div>
-    </div>
+          {/* Formula Reference */}
+          <div className="p-3 rounded-xl bg-blue-500/10 border border-blue-500/20">
+            <div className="flex items-start gap-2">
+              <Info className="h-4 w-4 text-blue-400 mt-0.5 shrink-0" />
+              <p className="text-sm text-white">
+                <strong>UK Standard:</strong> Three-phase supply is 400V line-to-line, 230V
+                line-to-neutral, 50Hz (BS 7671:2018+A3:2024)
+              </p>
+            </div>
+          </div>
+        </>
+      )}
+    </CalculatorCard>
   );
 };
 

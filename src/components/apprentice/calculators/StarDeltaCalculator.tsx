@@ -1,12 +1,13 @@
 import { useState } from 'react';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { ChevronDown, Info, BookOpen } from 'lucide-react';
+import { cn } from '@/lib/utils';
 import {
   CalculatorCard,
+  CalculatorDivider,
   CalculatorInput,
   CalculatorSelect,
   CalculatorActions,
-  CalculatorResult,
   ResultValue,
   ResultsGrid,
 } from '@/components/calculators/shared';
@@ -126,10 +127,6 @@ const StarDeltaCalculator = () => {
       if (!Za || !Zb || !Zc || Za <= 0 || Zb <= 0 || Zc <= 0) return;
 
       if (mode === 'star-to-delta') {
-        // Star to Delta conversion for unequal impedances
-        // Zab = (Za×Zb + Zb×Zc + Zc×Za) / Zc
-        // Zbc = (Za×Zb + Zb×Zc + Zc×Za) / Za
-        // Zca = (Za×Zb + Zb×Zc + Zc×Za) / Zb
         const sum = Za * Zb + Zb * Zc + Zc * Za;
         const Zab = sum / Zc;
         const Zbc = sum / Za;
@@ -152,12 +149,7 @@ const StarDeltaCalculator = () => {
           ],
         });
       } else {
-        // Delta to Star conversion for unequal impedances
-        // Using Zab, Zbc, Zca as inputs (stored in za, zb, zc)
-        // Za = (Zab × Zca) / (Zab + Zbc + Zca)
-        // Zb = (Zab × Zbc) / (Zab + Zbc + Zca)
-        // Zc = (Zbc × Zca) / (Zab + Zbc + Zca)
-        const Zab = Za; // Reusing variable names
+        const Zab = Za;
         const Zbc = Zb;
         const Zca = Zc;
         const sum = Zab + Zbc + Zca;
@@ -227,97 +219,95 @@ const StarDeltaCalculator = () => {
       title="Star-Delta Conversion Calculator"
       description="Convert between star (Y) and delta (Δ) impedance configurations"
     >
-      <div className="space-y-4 sm:space-y-5">
-        {/* Conversion Mode */}
-        <CalculatorSelect
-          label="Conversion Direction"
-          value={mode}
-          onChange={(val) => {
-            setMode(val as ConversionMode);
-            setResult(null);
-          }}
-          options={modeOptions}
-          placeholder="Select conversion"
-        />
+      {/* Conversion Mode */}
+      <CalculatorSelect
+        label="Conversion Direction"
+        value={mode}
+        onChange={(val) => {
+          setMode(val as ConversionMode);
+          setResult(null);
+        }}
+        options={modeOptions}
+        placeholder="Select conversion"
+      />
 
-        {/* Impedance Type */}
-        <CalculatorSelect
-          label="Impedance Configuration"
-          value={impedanceType}
-          onChange={(val) => {
-            setImpedanceType(val as ImpedanceType);
-            setResult(null);
-          }}
-          options={impedanceTypeOptions}
-          placeholder="Select type"
-        />
+      {/* Impedance Type */}
+      <CalculatorSelect
+        label="Impedance Configuration"
+        value={impedanceType}
+        onChange={(val) => {
+          setImpedanceType(val as ImpedanceType);
+          setResult(null);
+        }}
+        options={impedanceTypeOptions}
+        placeholder="Select type"
+      />
 
-        {/* Line Voltage */}
+      {/* Line Voltage */}
+      <CalculatorInput
+        label="Line Voltage"
+        value={voltage}
+        onChange={setVoltage}
+        placeholder="400"
+        unit="V"
+        hint="UK standard 3-phase: 400V"
+      />
+
+      {/* Impedance Inputs */}
+      {impedanceType === 'equal' ? (
         <CalculatorInput
-          label="Line Voltage"
-          value={voltage}
-          onChange={setVoltage}
-          placeholder="400"
-          unit="V"
-          hint="UK standard 3-phase: 400V"
+          label={labels.single}
+          value={impedance}
+          onChange={setImpedance}
+          placeholder="e.g., 10"
+          unit="Ω"
+          hint="All three impedances are equal"
         />
-
-        {/* Impedance Inputs */}
-        {impedanceType === 'equal' ? (
+      ) : (
+        <div className="space-y-3">
           <CalculatorInput
-            label={labels.single}
-            value={impedance}
-            onChange={setImpedance}
+            label={labels.a}
+            value={za}
+            onChange={setZa}
             placeholder="e.g., 10"
             unit="Ω"
-            hint="All three impedances are equal"
           />
-        ) : (
-          <div className="space-y-3">
-            <CalculatorInput
-              label={labels.a}
-              value={za}
-              onChange={setZa}
-              placeholder="e.g., 10"
-              unit="Ω"
-            />
-            <CalculatorInput
-              label={labels.b}
-              value={zb}
-              onChange={setZb}
-              placeholder="e.g., 15"
-              unit="Ω"
-            />
-            <CalculatorInput
-              label={labels.c}
-              value={zc}
-              onChange={setZc}
-              placeholder="e.g., 20"
-              unit="Ω"
-            />
-          </div>
-        )}
+          <CalculatorInput
+            label={labels.b}
+            value={zb}
+            onChange={setZb}
+            placeholder="e.g., 15"
+            unit="Ω"
+          />
+          <CalculatorInput
+            label={labels.c}
+            value={zc}
+            onChange={setZc}
+            placeholder="e.g., 20"
+            unit="Ω"
+          />
+        </div>
+      )}
 
-        {/* Actions */}
-        <CalculatorActions
-          category="power"
-          onCalculate={calculate}
-          onReset={reset}
-          isDisabled={
-            impedanceType === 'equal'
-              ? !impedance || parseFloat(impedance) <= 0
-              : !za ||
-                !zb ||
-                !zc ||
-                parseFloat(za) <= 0 ||
-                parseFloat(zb) <= 0 ||
-                parseFloat(zc) <= 0
-          }
-        />
+      {/* Actions */}
+      <CalculatorActions
+        category="power"
+        onCalculate={calculate}
+        onReset={reset}
+        isDisabled={
+          impedanceType === 'equal'
+            ? !impedance || parseFloat(impedance) <= 0
+            : !za || !zb || !zc || parseFloat(za) <= 0 || parseFloat(zb) <= 0 || parseFloat(zc) <= 0
+        }
+      />
 
-        {/* Results */}
-        {result && (
-          <CalculatorResult category="power">
+      {/* Results */}
+      {result && (
+        <>
+          <CalculatorDivider category="power" />
+
+          <div className="space-y-4 animate-fade-in">
+            {/* Impedance Results */}
             {impedanceType === 'equal' ? (
               <ResultsGrid columns={2}>
                 <ResultValue
@@ -387,19 +377,16 @@ const StarDeltaCalculator = () => {
             )}
 
             {/* Visual Representation */}
-            <div className="mt-4 grid grid-cols-2 gap-3">
+            <div className="grid grid-cols-2 gap-3">
               {/* Star Diagram */}
-              <div className="p-3 bg-white/5 border border-white/10 rounded-lg">
-                <h4 className="text-xs font-medium text-center text-white/70 mb-2">Star (Y)</h4>
+              <div className="p-3 bg-white/[0.04] border border-white/5 rounded-xl">
+                <h4 className="text-xs font-medium text-center text-white mb-2">Star (Y)</h4>
                 <div className="relative h-24 flex items-center justify-center">
                   <svg viewBox="0 0 100 80" className="w-full h-full">
-                    {/* Neutral point */}
                     <circle cx="50" cy="40" r="3" fill="#facc15" />
-                    {/* Lines to terminals */}
                     <line x1="50" y1="40" x2="50" y2="10" stroke="#facc15" strokeWidth="2" />
                     <line x1="50" y1="40" x2="20" y2="65" stroke="#facc15" strokeWidth="2" />
                     <line x1="50" y1="40" x2="80" y2="65" stroke="#facc15" strokeWidth="2" />
-                    {/* Terminal labels */}
                     <text x="50" y="8" textAnchor="middle" fill="#fff" fontSize="8">
                       A
                     </text>
@@ -409,7 +396,7 @@ const StarDeltaCalculator = () => {
                     <text x="85" y="72" textAnchor="middle" fill="#fff" fontSize="8">
                       C
                     </text>
-                    <text x="58" y="42" fill="#888" fontSize="7">
+                    <text x="58" y="42" fill="#facc15" fontSize="7">
                       N
                     </text>
                   </svg>
@@ -417,19 +404,16 @@ const StarDeltaCalculator = () => {
               </div>
 
               {/* Delta Diagram */}
-              <div className="p-3 bg-white/5 border border-white/10 rounded-lg">
-                <h4 className="text-xs font-medium text-center text-white/70 mb-2">Delta (Δ)</h4>
+              <div className="p-3 bg-white/[0.04] border border-white/5 rounded-xl">
+                <h4 className="text-xs font-medium text-center text-white mb-2">Delta (Δ)</h4>
                 <div className="relative h-24 flex items-center justify-center">
                   <svg viewBox="0 0 100 80" className="w-full h-full">
-                    {/* Triangle */}
                     <line x1="50" y1="10" x2="20" y2="65" stroke="#3b82f6" strokeWidth="2" />
                     <line x1="20" y1="65" x2="80" y2="65" stroke="#3b82f6" strokeWidth="2" />
                     <line x1="80" y1="65" x2="50" y2="10" stroke="#3b82f6" strokeWidth="2" />
-                    {/* Terminals */}
                     <circle cx="50" cy="10" r="3" fill="#3b82f6" />
                     <circle cx="20" cy="65" r="3" fill="#3b82f6" />
                     <circle cx="80" cy="65" r="3" fill="#3b82f6" />
-                    {/* Terminal labels */}
                     <text x="50" y="6" textAnchor="middle" fill="#fff" fontSize="8">
                       A
                     </text>
@@ -444,224 +428,233 @@ const StarDeltaCalculator = () => {
               </div>
             </div>
 
-            {/* Notes */}
+            {/* Key Points */}
             {result.notes.length > 0 && (
-              <div className="mt-4 p-3 bg-blue-500/10 border border-blue-500/20 rounded-lg">
+              <div className="p-3 rounded-xl bg-blue-500/10 border border-blue-500/20">
                 <h4 className="text-sm font-medium text-blue-400 mb-2">Key Points</h4>
-                <ul className="text-xs text-white/70 space-y-1">
+                <ul className="text-xs text-white space-y-1">
                   {result.notes.map((note, idx) => (
                     <li key={idx} className="flex items-start gap-2">
-                      <span className="text-blue-400">•</span>
-                      {note}
+                      <span className="text-blue-400 shrink-0">•</span>
+                      <span>{note}</span>
                     </li>
                   ))}
                 </ul>
               </div>
             )}
-          </CalculatorResult>
-        )}
+          </div>
 
-        {/* Guidance Section */}
-        <Collapsible open={showGuidance} onOpenChange={setShowGuidance}>
-          <CollapsibleTrigger className="flex items-center justify-between w-full p-3 bg-white/5 hover:bg-white/10 rounded-lg transition-colors touch-manipulation">
-            <div className="flex items-center gap-2">
-              <Info className="w-4 h-4 text-blue-400" />
-              <span className="text-sm font-medium text-white/90">Theory & Applications</span>
-            </div>
-            <ChevronDown
-              className={`w-4 h-4 text-white/60 transition-transform ${showGuidance ? 'rotate-180' : ''}`}
-            />
-          </CollapsibleTrigger>
-          <CollapsibleContent className="mt-2 p-4 bg-white/5 rounded-lg border border-white/10">
-            <div className="space-y-4 text-sm text-white/70">
-              {/* Why This Matters Section */}
-              <div className="p-3 bg-green-500/10 border border-green-500/20 rounded-lg">
-                <h4 className="font-medium text-green-400 mb-2">Why This Conversion Matters</h4>
-                <ul className="text-xs space-y-1">
-                  <li>
-                    • <strong>Motor starting:</strong> Star-delta starters use this conversion to
-                    reduce inrush current by ~67%
-                  </li>
-                  <li>
-                    • <strong>Circuit analysis:</strong> Converting complex networks simplifies
-                    calculations for fault currents
-                  </li>
-                  <li>
-                    • <strong>Transformer windings:</strong> Understanding both configurations helps
-                    with transformer connections
-                  </li>
-                  <li>
-                    • <strong>Load balancing:</strong> Delta allows operation with one phase lost
-                    (open delta)
-                  </li>
-                </ul>
+          <CalculatorDivider category="power" />
+
+          {/* Theory & Applications */}
+          <Collapsible open={showGuidance} onOpenChange={setShowGuidance}>
+            <CollapsibleTrigger className="calculator-collapsible-trigger w-full">
+              <div className="flex items-center gap-3">
+                <Info className="h-4 w-4 text-blue-400" />
+                <span className="text-sm sm:text-base font-medium text-white">
+                  Theory & Applications
+                </span>
               </div>
+              <ChevronDown
+                className={cn(
+                  'h-4 w-4 text-white transition-transform duration-200',
+                  showGuidance && 'rotate-180'
+                )}
+              />
+            </CollapsibleTrigger>
 
-              <div>
-                <h4 className="font-medium text-white/90 mb-2">When to Use Each Configuration</h4>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                  <div className="p-3 bg-yellow-500/10 border border-yellow-500/20 rounded-lg">
-                    <h5 className="text-yellow-400 font-medium mb-1">Star (Y) Connection</h5>
-                    <ul className="text-xs space-y-1">
-                      <li>• Motor starting (reduced voltage)</li>
-                      <li>• Distribution systems with neutral</li>
-                      <li>• Lower phase voltage = safer</li>
-                      <li>• Access to two voltage levels</li>
-                    </ul>
-                  </div>
-                  <div className="p-3 bg-blue-500/10 border border-blue-500/20 rounded-lg">
-                    <h5 className="text-blue-400 font-medium mb-1">Delta (Δ) Connection</h5>
-                    <ul className="text-xs space-y-1">
-                      <li>• Motor running (full power)</li>
-                      <li>• Higher phase voltage</li>
-                      <li>• No neutral required</li>
-                      <li>• Better for unbalanced loads</li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-
-              <div>
-                <h4 className="font-medium text-white/90 mb-2">Key Formulas</h4>
-                <div className="space-y-2 text-xs font-mono bg-white/5 p-3 rounded-lg">
-                  <p>
-                    <span className="text-yellow-400">Balanced:</span>
+            <CollapsibleContent className="pt-2">
+              <div className="space-y-3 pl-1">
+                {/* Why This Matters */}
+                <div className="border-l-2 border-green-400/40 pl-3">
+                  <p className="text-sm text-white">
+                    <strong className="text-green-300">Why This Conversion Matters</strong>
                   </p>
-                  <p className="pl-3">Z_delta = 3 × Z_star</p>
-                  <p className="pl-3">Z_star = Z_delta / 3</p>
-                  <p className="mt-2">
-                    <span className="text-yellow-400">Unbalanced (Star → Delta):</span>
+                  <ul className="mt-1 text-xs text-white space-y-0.5">
+                    <li>
+                      • <strong>Motor starting:</strong> Star-delta starters reduce inrush current
+                      by ~67%
+                    </li>
+                    <li>
+                      • <strong>Circuit analysis:</strong> Converting networks simplifies fault
+                      current calculations
+                    </li>
+                    <li>
+                      • <strong>Transformer windings:</strong> Understanding both configurations
+                      helps with connections
+                    </li>
+                    <li>
+                      • <strong>Load balancing:</strong> Delta allows operation with one phase lost
+                      (open delta)
+                    </li>
+                  </ul>
+                </div>
+
+                {/* When to Use Each */}
+                <div className="border-l-2 border-amber-400/40 pl-3">
+                  <p className="text-sm text-white">
+                    <strong className="text-amber-300">Star (Y) Connection</strong>
                   </p>
-                  <p className="pl-3">Zab = (Za×Zb + Zb×Zc + Zc×Za) / Zc</p>
-                  <p className="mt-2">
-                    <span className="text-yellow-400">Unbalanced (Delta → Star):</span>
+                  <ul className="mt-1 text-xs text-white space-y-0.5">
+                    <li>• Motor starting (reduced voltage)</li>
+                    <li>• Distribution systems with neutral</li>
+                    <li>• Lower phase voltage = safer</li>
+                    <li>• Access to two voltage levels</li>
+                  </ul>
+                </div>
+
+                <div className="border-l-2 border-blue-400/40 pl-3">
+                  <p className="text-sm text-white">
+                    <strong className="text-blue-300">Delta (Δ) Connection</strong>
                   </p>
-                  <p className="pl-3">Za = (Zab × Zca) / (Zab + Zbc + Zca)</p>
+                  <ul className="mt-1 text-xs text-white space-y-0.5">
+                    <li>• Motor running (full power)</li>
+                    <li>• Higher phase voltage</li>
+                    <li>• No neutral required</li>
+                    <li>• Better for unbalanced loads</li>
+                  </ul>
                 </div>
-              </div>
 
-              <div>
-                <h4 className="font-medium text-white/90 mb-2">Star-Delta Motor Starting</h4>
-                <p className="text-xs">
-                  Star-delta starters are commonly used to reduce starting current in motors above
-                  7.5kW. The motor starts in star (lower voltage, ~⅓ starting current) then switches
-                  to delta (full voltage, full power) once up to speed.
-                </p>
-                <div className="mt-2 p-2 bg-green-500/10 border border-green-500/20 rounded">
-                  <p className="text-xs text-green-300">
-                    <strong>Starting current in star</strong> = Full load current / √3 ≈ 58% of
-                    delta starting current
+                {/* Key Formulas */}
+                <div className="border-l-2 border-purple-400/40 pl-3">
+                  <p className="text-sm text-white">
+                    <strong className="text-purple-300">Key Formulas</strong>
+                  </p>
+                  <code className="block mt-1 text-xs px-2.5 py-1.5 rounded-lg bg-black/20 text-white font-mono space-y-0.5">
+                    <span className="block text-amber-300">Balanced:</span>
+                    <span className="block pl-3">Z_delta = 3 × Z_star</span>
+                    <span className="block pl-3">Z_star = Z_delta / 3</span>
+                    <span className="block text-amber-300 mt-1">Unbalanced (Star → Delta):</span>
+                    <span className="block pl-3">Zab = (Za×Zb + Zb×Zc + Zc×Za) / Zc</span>
+                    <span className="block text-amber-300 mt-1">Unbalanced (Delta → Star):</span>
+                    <span className="block pl-3">Za = (Zab × Zca) / (Zab + Zbc + Zca)</span>
+                  </code>
+                </div>
+
+                {/* Motor Starting */}
+                <div className="border-l-2 border-green-400/40 pl-3">
+                  <p className="text-sm text-white">
+                    <strong className="text-green-300">Star-Delta Motor Starting</strong> {'—'}{' '}
+                    Commonly used for motors above 7.5kW. Motor starts in star (lower voltage, ~⅓
+                    starting current) then switches to delta (full voltage, full power) once up to
+                    speed.
+                  </p>
+                  <p className="text-xs text-green-300 mt-1">
+                    Starting current in star = Full load current / √3 ≈ 58% of delta starting
+                    current
+                  </p>
+                </div>
+
+                {/* Voltage & Current Relationships */}
+                <div className="border-l-2 border-blue-400/40 pl-3">
+                  <p className="text-sm text-white">
+                    <strong className="text-blue-300">Voltage & Current Relationships</strong>
+                  </p>
+                  <code className="block mt-1 text-xs px-2.5 py-1.5 rounded-lg bg-black/20 text-white font-mono space-y-0.5">
+                    <span className="block text-amber-300">Star (Y):</span>
+                    <span className="block pl-3">V_phase = V_line / √3</span>
+                    <span className="block pl-3">I_line = I_phase</span>
+                    <span className="block text-blue-300 mt-1">Delta (Δ):</span>
+                    <span className="block pl-3">V_phase = V_line</span>
+                    <span className="block pl-3">I_line = I_phase × √3</span>
+                  </code>
+                </div>
+
+                {/* Exam Tip */}
+                <div className="border-l-2 border-amber-400/40 pl-3">
+                  <p className="text-sm text-white">
+                    <strong className="text-amber-300">Exam Tip</strong> {'—'} The ratio 3:1 applies
+                    to balanced impedances. For UK 400V three-phase: Star phase voltage = 400/√3 =
+                    230V, Delta phase voltage = 400V. This is why we have both 230V and 400V
+                    available from a three-phase supply.
                   </p>
                 </div>
               </div>
+            </CollapsibleContent>
+          </Collapsible>
 
-              <div>
-                <h4 className="font-medium text-white/90 mb-2">Voltage & Current Relationships</h4>
-                <div className="grid grid-cols-2 gap-2 text-xs">
-                  <div className="p-2 bg-white/5 rounded">
-                    <p className="text-yellow-400 font-medium">Star (Y):</p>
-                    <p>V_phase = V_line / √3</p>
-                    <p>I_line = I_phase</p>
-                  </div>
-                  <div className="p-2 bg-white/5 rounded">
-                    <p className="text-blue-400 font-medium">Delta (Δ):</p>
-                    <p>V_phase = V_line</p>
-                    <p>I_line = I_phase × √3</p>
-                  </div>
+          {/* BS 7671 Reference */}
+          <Collapsible open={showBS7671} onOpenChange={setShowBS7671}>
+            <CollapsibleTrigger className="calculator-collapsible-trigger w-full">
+              <div className="flex items-center gap-3">
+                <BookOpen className="h-4 w-4 text-amber-400" />
+                <span className="text-sm sm:text-base font-medium text-white">
+                  BS 7671 Reference
+                </span>
+              </div>
+              <ChevronDown
+                className={cn(
+                  'h-4 w-4 text-white transition-transform duration-200',
+                  showBS7671 && 'rotate-180'
+                )}
+              />
+            </CollapsibleTrigger>
+
+            <CollapsibleContent className="pt-2">
+              <div className="space-y-3 pl-1">
+                <div className="border-l-2 border-amber-400/40 pl-3">
+                  <p className="text-sm text-white">
+                    <strong className="text-amber-300">Section 430 - Motor Circuits</strong> {'—'}{' '}
+                    Star-delta starting is covered under motor starting methods. Starting current
+                    must not cause excessive voltage drop ({'<'}4% recommended). Motor must have 6
+                    terminals.
+                  </p>
+                </div>
+
+                <div className="border-l-2 border-amber-400/40 pl-3">
+                  <p className="text-sm text-white">
+                    <strong className="text-amber-300">Regulation 430.3 - Starting</strong> {'—'}{' '}
+                    Motor starting arrangements shall be designed to limit voltage disturbances to
+                    other equipment. Star-delta starting reduces starting current to approximately ⅓
+                    of DOL.
+                  </p>
+                </div>
+
+                <div className="border-l-2 border-amber-400/40 pl-3">
+                  <p className="text-sm text-white">
+                    <strong className="text-amber-300">Distribution Systems</strong>
+                  </p>
+                  <code className="block mt-1 text-xs px-2.5 py-1.5 rounded-lg bg-black/20 text-white font-mono space-y-0.5">
+                    <span className="block">
+                      <span className="text-amber-300">TN-S/TN-C-S:</span> Star with neutral
+                    </span>
+                    <span className="block">
+                      <span className="text-amber-300">Industrial:</span> Delta common for motors
+                    </span>
+                  </code>
+                </div>
+
+                <div className="border-l-2 border-amber-400/40 pl-3">
+                  <p className="text-sm text-white">
+                    <strong className="text-amber-300">Transformer Connections</strong>
+                  </p>
+                  <ul className="mt-1 text-xs text-white space-y-0.5">
+                    <li>
+                      • <strong>Dyn11:</strong> Delta primary, Star secondary (most common UK
+                      distribution)
+                    </li>
+                    <li>
+                      • <strong>Yy0:</strong> Star-Star (used for high voltage transmission)
+                    </li>
+                    <li>
+                      • <strong>Dd0:</strong> Delta-Delta (industrial applications)
+                    </li>
+                  </ul>
+                </div>
+
+                <div className="border-l-2 border-amber-400/40 pl-3">
+                  <p className="text-sm text-white">
+                    <strong className="text-amber-300">Key Point</strong> {'—'} Understanding
+                    star-delta relationships is essential for: Fault level calculations, motor
+                    protection settings, transformer vector groups, and three-phase load balancing.
+                    The 3:1 impedance ratio is fundamental.
+                  </p>
                 </div>
               </div>
-
-              <div className="p-3 bg-amber-500/10 border border-amber-500/20 rounded-lg">
-                <h4 className="font-medium text-amber-400 mb-1">Exam Tip</h4>
-                <p className="text-xs">
-                  Remember: The ratio 3:1 applies to balanced impedances. For UK 400V three-phase:
-                  Star phase voltage = 400/√3 = 230V, Delta phase voltage = 400V. This is why we
-                  have both 230V and 400V available from a three-phase supply.
-                </p>
-              </div>
-            </div>
-          </CollapsibleContent>
-        </Collapsible>
-
-        {/* BS 7671 Reference Section */}
-        <Collapsible open={showBS7671} onOpenChange={setShowBS7671}>
-          <CollapsibleTrigger className="flex items-center justify-between w-full p-3 bg-white/5 hover:bg-white/10 rounded-lg transition-colors touch-manipulation">
-            <div className="flex items-center gap-2">
-              <BookOpen className="w-4 h-4 text-amber-400" />
-              <span className="text-sm font-medium text-white/90">BS 7671 Reference</span>
-            </div>
-            <ChevronDown
-              className={`w-4 h-4 text-white/60 transition-transform ${showBS7671 ? 'rotate-180' : ''}`}
-            />
-          </CollapsibleTrigger>
-          <CollapsibleContent className="mt-2 p-4 bg-white/5 rounded-lg border border-white/10">
-            <div className="space-y-4 text-sm text-white/70">
-              <div>
-                <h4 className="font-medium text-amber-400 mb-2">Section 430 - Motor Circuits</h4>
-                <p className="text-xs mb-2">
-                  Star-delta starting is covered under motor starting methods. Key considerations
-                  include:
-                </p>
-                <ul className="text-xs space-y-1">
-                  <li>
-                    • Starting current must not cause excessive voltage drop (&lt;4% recommended)
-                  </li>
-                  <li>• Motor must be suitable for star-delta starting (6 terminals required)</li>
-                  <li>• Transition time from star to delta should be minimised</li>
-                </ul>
-              </div>
-
-              <div>
-                <h4 className="font-medium text-amber-400 mb-2">Regulation 430.3 - Starting</h4>
-                <p className="text-xs">
-                  Motor starting arrangements shall be designed to limit voltage disturbances to
-                  other equipment. Star-delta starting reduces starting current to approximately ⅓
-                  of direct-on-line (DOL) starting current.
-                </p>
-              </div>
-
-              <div>
-                <h4 className="font-medium text-amber-400 mb-2">
-                  Distribution System Configurations
-                </h4>
-                <div className="grid grid-cols-2 gap-2 text-xs">
-                  <div className="p-2 bg-amber-500/10 rounded">
-                    <span className="text-amber-300">TN-S/TN-C-S:</span> Star with neutral
-                  </div>
-                  <div className="p-2 bg-amber-500/10 rounded">
-                    <span className="text-amber-300">Industrial:</span> Delta common for motors
-                  </div>
-                </div>
-              </div>
-
-              <div>
-                <h4 className="font-medium text-amber-400 mb-2">Transformer Connections</h4>
-                <ul className="text-xs space-y-1">
-                  <li>
-                    • <strong>Dyn11:</strong> Delta primary, Star secondary (most common UK
-                    distribution)
-                  </li>
-                  <li>
-                    • <strong>Yy0:</strong> Star-Star (used for high voltage transmission)
-                  </li>
-                  <li>
-                    • <strong>Dd0:</strong> Delta-Delta (industrial applications)
-                  </li>
-                </ul>
-              </div>
-
-              <div className="p-3 bg-amber-500/10 border border-amber-500/20 rounded-lg">
-                <h4 className="font-medium text-amber-400 mb-1">Key Point</h4>
-                <p className="text-xs">
-                  Understanding star-delta relationships is essential for: Fault level calculations,
-                  motor protection settings, transformer vector groups, and three-phase load
-                  balancing. The 3:1 impedance ratio is fundamental.
-                </p>
-              </div>
-            </div>
-          </CollapsibleContent>
-        </Collapsible>
-      </div>
+            </CollapsibleContent>
+          </Collapsible>
+        </>
+      )}
     </CalculatorCard>
   );
 };

@@ -7,7 +7,12 @@ export {
 } from './CalculatorConfig';
 
 // Calculator Card
-export { CalculatorCard, CalculatorSection, CalculatorInputGrid } from './CalculatorCard';
+export {
+  CalculatorCard,
+  CalculatorDivider,
+  CalculatorSection,
+  CalculatorInputGrid,
+} from './CalculatorCard';
 
 // Calculator Input
 export { CalculatorInput, CalculatorSelect, CalculatorNumberInput } from './CalculatorInput';

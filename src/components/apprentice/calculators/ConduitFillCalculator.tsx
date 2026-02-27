@@ -1,15 +1,14 @@
 import { useState } from 'react';
-import { Badge } from '@/components/ui/badge';
 import { Calculator, Info, AlertTriangle, CheckCircle2, BookOpen, ChevronDown } from 'lucide-react';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { cn } from '@/lib/utils';
 import {
   CalculatorCard,
+  CalculatorDivider,
   CalculatorInputGrid,
   CalculatorInput,
   CalculatorSelect,
   CalculatorActions,
-  CalculatorResult,
   ResultValue,
   ResultsGrid,
   CALCULATOR_CONFIG,
@@ -176,98 +175,109 @@ const ConduitFillCalculator = () => {
   ];
 
   return (
-    <div className="space-y-4">
-      <CalculatorCard
-        category="cable"
-        title="Conduit Fill Calculator"
-        description="Calculate fill percentage with BS EN 61386-1 compliance"
-        badge="BS EN 61386-1"
-      >
-        <CalculatorInputGrid columns={2}>
-          <CalculatorSelect
-            label="Conduit Material"
-            value={conduitMaterial}
-            onChange={setConduitMaterial}
-            options={[
-              { value: 'pvc', label: 'PVC' },
-              { value: 'steel', label: 'Steel' },
-            ]}
-          />
-          <CalculatorSelect
-            label="Conduit Size"
-            value={conduitSize}
-            onChange={setConduitSize}
-            options={conduitSizeOptions}
-            placeholder="Select size"
-          />
-        </CalculatorInputGrid>
-
-        <CalculatorInputGrid columns={2}>
-          <CalculatorSelect
-            label="Cable Size"
-            value={cableSize}
-            onChange={setCableSize}
-            options={cableSizeOptions}
-            placeholder="Select cable size"
-          />
-          <CalculatorInput
-            label="Number of Cables"
-            type="text"
-            inputMode="numeric"
-            value={cableQuantity}
-            onChange={setCableQuantity}
-            placeholder="Enter quantity"
-          />
-        </CalculatorInputGrid>
-
-        <CalculatorInputGrid columns={2}>
-          <CalculatorSelect
-            label="Installation Type"
-            value={installationType}
-            onChange={setInstallationType}
-            options={[
-              { value: 'straight', label: 'Straight Run' },
-              { value: 'bends', label: 'With Bends' },
-            ]}
-          />
-          <CalculatorSelect
-            label="Fill Target"
-            value={fillTarget}
-            onChange={setFillTarget}
-            options={[
-              { value: '30', label: '30% (Conservative)' },
-              { value: '40', label: '40% (Standard)' },
-              { value: '50', label: '50% (Maximum)' },
-            ]}
-          />
-        </CalculatorInputGrid>
-
-        <CalculatorActions
-          category="cable"
-          onCalculate={calculateConduitFill}
-          onReset={resetCalculator}
-          isDisabled={!hasValidInputs()}
+    <CalculatorCard
+      category="cable"
+      title="Conduit Fill Calculator"
+      description="Calculate fill percentage with BS EN 61386-1 compliance"
+    >
+      <CalculatorInputGrid columns={2}>
+        <CalculatorSelect
+          label="Conduit Material"
+          value={conduitMaterial}
+          onChange={setConduitMaterial}
+          options={[
+            { value: 'pvc', label: 'PVC' },
+            { value: 'steel', label: 'Steel' },
+          ]}
         />
-      </CalculatorCard>
+        <CalculatorSelect
+          label="Conduit Size"
+          value={conduitSize}
+          onChange={setConduitSize}
+          options={conduitSizeOptions}
+          placeholder="Select size"
+        />
+      </CalculatorInputGrid>
+
+      <CalculatorInputGrid columns={2}>
+        <CalculatorSelect
+          label="Cable Size"
+          value={cableSize}
+          onChange={setCableSize}
+          options={cableSizeOptions}
+          placeholder="Select cable size"
+        />
+        <CalculatorInput
+          label="Number of Cables"
+          type="text"
+          inputMode="numeric"
+          value={cableQuantity}
+          onChange={setCableQuantity}
+          placeholder="Enter quantity"
+        />
+      </CalculatorInputGrid>
+
+      <CalculatorInputGrid columns={2}>
+        <CalculatorSelect
+          label="Installation Type"
+          value={installationType}
+          onChange={setInstallationType}
+          options={[
+            { value: 'straight', label: 'Straight Run' },
+            { value: 'bends', label: 'With Bends' },
+          ]}
+        />
+        <CalculatorSelect
+          label="Fill Target"
+          value={fillTarget}
+          onChange={setFillTarget}
+          options={[
+            { value: '30', label: '30% (Conservative)' },
+            { value: '40', label: '40% (Standard)' },
+            { value: '50', label: '50% (Maximum)' },
+          ]}
+        />
+      </CalculatorInputGrid>
+
+      <CalculatorActions
+        category="cable"
+        onCalculate={calculateConduitFill}
+        onReset={resetCalculator}
+        isDisabled={!hasValidInputs()}
+      />
 
       {result && (
-        <div className="space-y-4 animate-fade-in">
-          <CalculatorResult category="cable">
-            {/* Status Header */}
-            <div className="flex items-center gap-2 pb-3 border-b border-white/10">
-              {result.suitable ? (
-                <CheckCircle2 className="h-5 w-5 text-green-400" />
-              ) : (
-                <AlertTriangle className="h-5 w-5 text-red-400" />
+        <>
+          <CalculatorDivider category="cable" />
+
+          <div className="space-y-4 animate-fade-in">
+            {/* Status Chip */}
+            <div
+              className={cn(
+                'inline-flex items-center gap-2 px-3 py-1.5 rounded-full',
+                result.suitable
+                  ? 'bg-green-500/10 border border-green-500/20'
+                  : 'bg-red-500/10 border border-red-500/20'
               )}
-              <span className="font-semibold text-white">
+            >
+              {result.suitable ? (
+                <CheckCircle2 className="h-4 w-4 text-green-400" />
+              ) : (
+                <AlertTriangle className="h-4 w-4 text-red-400" />
+              )}
+              <span
+                className={cn(
+                  'text-sm font-semibold',
+                  result.suitable ? 'text-green-300' : 'text-red-300'
+                )}
+              >
                 {result.suitable ? 'Suitable Installation' : 'Exceeds Fill Limit'}
               </span>
             </div>
 
-            {/* Main Result */}
-            <div className="text-center py-3">
-              <p className="text-sm text-white/60 mb-1">Fill Percentage</p>
+            {/* Hero Value */}
+            <div className="rounded-xl p-4 bg-white/[0.04]">
+              <p className="text-sm text-white mb-1">Fill Percentage</p>
               <div
                 className="text-4xl font-bold bg-clip-text text-transparent"
                 style={{
@@ -276,17 +286,7 @@ const ConduitFillCalculator = () => {
               >
                 {result.fillPercentage}%
               </div>
-              <Badge
-                variant="outline"
-                className={cn(
-                  'mt-2',
-                  result.suitable
-                    ? 'text-green-400 border-green-400/50'
-                    : 'text-red-400 border-red-400/50'
-                )}
-              >
-                Target: {result.actualFillTarget}%
-              </Badge>
+              <p className="text-sm text-white mt-1">Target: {result.actualFillTarget}%</p>
             </div>
 
             {/* Result Details */}
@@ -321,7 +321,7 @@ const ConduitFillCalculator = () => {
 
             {/* Warnings */}
             {result.warnings.length > 0 && (
-              <div className="p-3 rounded-xl bg-orange-500/10 border border-orange-500/30 mt-3">
+              <div className="p-3 rounded-xl bg-orange-500/10 border border-orange-500/30">
                 <div className="flex items-start gap-2">
                   <AlertTriangle className="h-4 w-4 text-orange-400 mt-0.5 shrink-0" />
                   <div className="space-y-1 text-sm text-orange-200">
@@ -332,176 +332,188 @@ const ConduitFillCalculator = () => {
                 </div>
               </div>
             )}
-          </CalculatorResult>
+          </div>
+
+          <CalculatorDivider category="cable" />
 
           {/* How It Worked Out - Collapsible */}
           {conduitSize && cableSize && cableQuantity && (
             <Collapsible open={showFormula} onOpenChange={setShowFormula}>
-              <div className="calculator-card overflow-hidden" style={{ borderColor: '#a78bfa15' }}>
-                <CollapsibleTrigger className="agent-collapsible-trigger w-full">
-                  <div className="flex items-center gap-3">
-                    <Calculator className="h-4 w-4 text-purple-400" />
-                    <span className="text-sm sm:text-base font-medium text-purple-300">
-                      How It Worked Out
-                    </span>
-                  </div>
-                  <ChevronDown
-                    className={cn(
-                      'h-4 w-4 text-white/70 transition-transform duration-200',
-                      showFormula && 'rotate-180'
-                    )}
-                  />
-                </CollapsibleTrigger>
+              <CollapsibleTrigger className="calculator-collapsible-trigger w-full">
+                <div className="flex items-center gap-3">
+                  <Calculator className="h-4 w-4 text-purple-400" />
+                  <span className="text-sm sm:text-base font-medium text-white">
+                    How It Worked Out
+                  </span>
+                </div>
+                <ChevronDown
+                  className={cn(
+                    'h-4 w-4 text-white transition-transform duration-200',
+                    showFormula && 'rotate-180'
+                  )}
+                />
+              </CollapsibleTrigger>
 
-                <CollapsibleContent className="p-4 pt-0">
-                  <div className="text-sm font-mono text-purple-300 space-y-3">
+              <CollapsibleContent className="pt-2">
+                <div className="text-sm font-mono text-purple-300 space-y-3 p-3 rounded-xl bg-purple-500/10 border border-purple-500/20">
+                  <div>
+                    <div className="text-xs text-purple-400 mb-1">
+                      Step 1: Cable cross-sectional area
+                    </div>
+                    <div>A = π × (d/2)²</div>
                     <div>
-                      <div className="text-xs text-purple-400 mb-1">
-                        Step 1: Cable cross-sectional area
-                      </div>
-                      <div>A = π × (d/2)²</div>
-                      <div>
-                        A = π × ({cableData[cableSize as keyof typeof cableData].diameter / 2})²
-                      </div>
-                      <div className="text-purple-200 font-bold">
-                        A ={' '}
-                        {(
-                          Math.PI *
-                          Math.pow(cableData[cableSize as keyof typeof cableData].diameter / 2, 2)
-                        ).toFixed(1)}
-                        mm²
-                      </div>
+                      A = π × ({cableData[cableSize as keyof typeof cableData].diameter / 2})²
                     </div>
-
-                    <div className="pt-2 border-t border-purple-500/20">
-                      <div className="text-xs text-purple-400 mb-1">Step 2: Total cable area</div>
-                      <div>
-                        Total = A × qty ={' '}
-                        {(
-                          Math.PI *
-                          Math.pow(cableData[cableSize as keyof typeof cableData].diameter / 2, 2)
-                        ).toFixed(1)}{' '}
-                        × {cableQuantity}
-                      </div>
-                      <div className="text-purple-200 font-bold">
-                        Total ={' '}
-                        {(
-                          Math.PI *
-                          Math.pow(cableData[cableSize as keyof typeof cableData].diameter / 2, 2) *
-                          parseInt(cableQuantity)
-                        ).toFixed(1)}
-                        mm²
-                      </div>
-                    </div>
-
-                    <div className="pt-2 border-t border-purple-500/20">
-                      <div className="text-xs text-purple-400 mb-1">Step 3: Fill percentage</div>
-                      <div>Fill = (Cable Area ÷ Conduit Area) × 100</div>
-                      <div>
-                        Fill = (
-                        {(
-                          Math.PI *
-                          Math.pow(cableData[cableSize as keyof typeof cableData].diameter / 2, 2) *
-                          parseInt(cableQuantity)
-                        ).toFixed(1)}{' '}
-                        ÷{' '}
-                        {
-                          conduitData[conduitMaterial as keyof typeof conduitData][
-                            conduitSize as keyof (typeof conduitData)[keyof typeof conduitData]
-                          ].area
-                        }
-                        ) × 100
-                      </div>
-                      <div className="text-purple-200 font-bold">
-                        Fill = {result.fillPercentage}%
-                      </div>
+                    <div className="text-purple-200 font-bold">
+                      A ={' '}
+                      {(
+                        Math.PI *
+                        Math.pow(cableData[cableSize as keyof typeof cableData].diameter / 2, 2)
+                      ).toFixed(1)}
+                      mm²
                     </div>
                   </div>
-                </CollapsibleContent>
-              </div>
+
+                  <div className="pt-2 border-t border-purple-500/20">
+                    <div className="text-xs text-purple-400 mb-1">Step 2: Total cable area</div>
+                    <div>
+                      Total = A × qty ={' '}
+                      {(
+                        Math.PI *
+                        Math.pow(cableData[cableSize as keyof typeof cableData].diameter / 2, 2)
+                      ).toFixed(1)}{' '}
+                      × {cableQuantity}
+                    </div>
+                    <div className="text-purple-200 font-bold">
+                      Total ={' '}
+                      {(
+                        Math.PI *
+                        Math.pow(cableData[cableSize as keyof typeof cableData].diameter / 2, 2) *
+                        parseInt(cableQuantity)
+                      ).toFixed(1)}
+                      mm²
+                    </div>
+                  </div>
+
+                  <div className="pt-2 border-t border-purple-500/20">
+                    <div className="text-xs text-purple-400 mb-1">Step 3: Fill percentage</div>
+                    <div>Fill = (Cable Area ÷ Conduit Area) × 100</div>
+                    <div>
+                      Fill = (
+                      {(
+                        Math.PI *
+                        Math.pow(cableData[cableSize as keyof typeof cableData].diameter / 2, 2) *
+                        parseInt(cableQuantity)
+                      ).toFixed(1)}{' '}
+                      ÷{' '}
+                      {
+                        conduitData[conduitMaterial as keyof typeof conduitData][
+                          conduitSize as keyof (typeof conduitData)[keyof typeof conduitData]
+                        ].area
+                      }
+                      ) × 100
+                    </div>
+                    <div className="text-purple-200 font-bold">Fill = {result.fillPercentage}%</div>
+                  </div>
+                </div>
+              </CollapsibleContent>
             </Collapsible>
           )}
 
           {/* What This Means - Collapsible */}
           <Collapsible open={showGuidance} onOpenChange={setShowGuidance}>
-            <div className="calculator-card overflow-hidden" style={{ borderColor: '#60a5fa15' }}>
-              <CollapsibleTrigger className="agent-collapsible-trigger w-full">
-                <div className="flex items-center gap-3">
-                  <Info className="h-4 w-4 text-blue-400" />
-                  <span className="text-sm sm:text-base font-medium text-blue-300">
-                    What This Means
-                  </span>
-                </div>
-                <ChevronDown
-                  className={cn(
-                    'h-4 w-4 text-white/70 transition-transform duration-200',
-                    showGuidance && 'rotate-180'
-                  )}
-                />
-              </CollapsibleTrigger>
+            <CollapsibleTrigger className="calculator-collapsible-trigger w-full">
+              <div className="flex items-center gap-3">
+                <Info className="h-4 w-4 text-blue-400" />
+                <span className="text-sm sm:text-base font-medium text-white">What This Means</span>
+              </div>
+              <ChevronDown
+                className={cn(
+                  'h-4 w-4 text-white transition-transform duration-200',
+                  showGuidance && 'rotate-180'
+                )}
+              />
+            </CollapsibleTrigger>
 
-              <CollapsibleContent className="p-4 pt-0 space-y-2">
-                <p className="text-sm text-blue-200/80">
-                  <strong className="text-blue-300">Fill percentage</strong> affects cable pulling
-                  difficulty and heat dissipation.
-                </p>
-                <p className="text-sm text-blue-200/80">
-                  <strong className="text-blue-300">High fill</strong> causes cables to jam during
-                  pulling and overheat in operation.
-                </p>
-                <p className="text-sm text-blue-200/80">
-                  <strong className="text-blue-300">Proper fill</strong> allows easier maintenance
-                  and future cable additions.
-                </p>
-                <p className="text-sm text-blue-200/80">
-                  <strong className="text-blue-300">Pull tension</strong> indicates if cable
-                  lubricant may be needed.
-                </p>
-              </CollapsibleContent>
-            </div>
+            <CollapsibleContent className="pt-2">
+              <div className="space-y-3 pl-1">
+                <div className="border-l-2 border-blue-400/40 pl-3">
+                  <p className="text-sm text-white">
+                    <strong className="text-blue-300">Fill percentage</strong> affects cable pulling
+                    difficulty and heat dissipation.
+                  </p>
+                </div>
+                <div className="border-l-2 border-blue-400/40 pl-3">
+                  <p className="text-sm text-white">
+                    <strong className="text-blue-300">High fill</strong> causes cables to jam during
+                    pulling and overheat in operation.
+                  </p>
+                </div>
+                <div className="border-l-2 border-blue-400/40 pl-3">
+                  <p className="text-sm text-white">
+                    <strong className="text-blue-300">Proper fill</strong> allows easier maintenance
+                    and future cable additions.
+                  </p>
+                </div>
+                <div className="border-l-2 border-blue-400/40 pl-3">
+                  <p className="text-sm text-white">
+                    <strong className="text-blue-300">Pull tension</strong> indicates if cable
+                    lubricant may be needed.
+                  </p>
+                </div>
+              </div>
+            </CollapsibleContent>
           </Collapsible>
 
           {/* BS EN 61386-1 Guidance - Collapsible */}
           <Collapsible open={showRegs} onOpenChange={setShowRegs}>
-            <div className="calculator-card overflow-hidden" style={{ borderColor: '#fbbf2415' }}>
-              <CollapsibleTrigger className="agent-collapsible-trigger w-full">
-                <div className="flex items-center gap-3">
-                  <BookOpen className="h-4 w-4 text-amber-400" />
-                  <span className="text-sm sm:text-base font-medium text-amber-300">
-                    Regs at a Glance
-                  </span>
-                </div>
-                <ChevronDown
-                  className={cn(
-                    'h-4 w-4 text-white/70 transition-transform duration-200',
-                    showRegs && 'rotate-180'
-                  )}
-                />
-              </CollapsibleTrigger>
+            <CollapsibleTrigger className="calculator-collapsible-trigger w-full">
+              <div className="flex items-center gap-3">
+                <BookOpen className="h-4 w-4 text-amber-400" />
+                <span className="text-sm sm:text-base font-medium text-white">
+                  Regs at a Glance
+                </span>
+              </div>
+              <ChevronDown
+                className={cn(
+                  'h-4 w-4 text-white transition-transform duration-200',
+                  showRegs && 'rotate-180'
+                )}
+              />
+            </CollapsibleTrigger>
 
-              <CollapsibleContent className="p-4 pt-0">
-                <div className="space-y-2 text-sm text-amber-200/80">
-                  <p>
+            <CollapsibleContent className="pt-2">
+              <div className="space-y-3 pl-1">
+                <div className="border-l-2 border-amber-400/40 pl-3">
+                  <p className="text-sm text-white">
                     <strong className="text-amber-300">BS EN 61386-1:</strong> Conduit systems for
                     cable management
                   </p>
-                  <p>
+                </div>
+                <div className="border-l-2 border-amber-400/40 pl-3">
+                  <p className="text-sm text-white">
                     <strong className="text-amber-300">1 cable:</strong> 53% maximum fill
                   </p>
-                  <p>
+                </div>
+                <div className="border-l-2 border-amber-400/40 pl-3">
+                  <p className="text-sm text-white">
                     <strong className="text-amber-300">2 cables:</strong> 31% maximum fill
                   </p>
-                  <p>
+                </div>
+                <div className="border-l-2 border-amber-400/40 pl-3">
+                  <p className="text-sm text-white">
                     <strong className="text-amber-300">3+ cables:</strong> 40% max for straight runs
                   </p>
-                  <p>
+                </div>
+                <div className="border-l-2 border-amber-400/40 pl-3">
+                  <p className="text-sm text-white">
                     <strong className="text-amber-300">With bends:</strong> Reduce to 35% maximum
                   </p>
                 </div>
-              </CollapsibleContent>
-            </div>
+              </div>
+            </CollapsibleContent>
           </Collapsible>
-        </div>
+        </>
       )}
 
       {/* Formula Reference */}
@@ -514,7 +526,7 @@ const ConduitFillCalculator = () => {
           </p>
         </div>
       </div>
-    </div>
+    </CalculatorCard>
   );
 };
 

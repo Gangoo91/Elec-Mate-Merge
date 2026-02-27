@@ -1,13 +1,5 @@
 import { useState, useEffect, useMemo } from 'react';
-import {
-  Shield,
-  CheckCircle2,
-  XCircle,
-  AlertTriangle,
-  Info,
-  ChevronDown,
-  ChevronUp,
-} from 'lucide-react';
+import { Shield, CheckCircle2, XCircle, AlertTriangle, Info, ChevronDown } from 'lucide-react';
 import {
   Select,
   SelectContent,
@@ -16,6 +8,7 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
+import { cn } from '@/lib/utils';
 import { RequiredFieldTooltip } from '@/components/ui/required-field-tooltip';
 import {
   DeviceType,
@@ -83,19 +76,22 @@ const ProtectiveDeviceSection = ({
       onOpenChange={setIsOpen}
       className="mt-8 pt-8 border-t border-elec-yellow/30"
     >
-      <CollapsibleTrigger className="w-full flex items-center justify-between p-4 text-elec-yellow hover:text-elec-yellow/80 transition-all duration-200 bg-white/5 rounded-lg border border-elec-yellow/20 hover:border-elec-yellow/40 min-h-[56px] active:scale-[0.98]">
+      <CollapsibleTrigger className="calculator-collapsible-trigger w-full">
         <div className="flex items-center gap-2 sm:gap-3">
-          <Shield className="h-5 w-5 flex-shrink-0" />
-          <span className="font-semibold text-sm sm:text-base">Protective Device Check</span>
+          <Shield className="h-5 w-5 text-elec-yellow flex-shrink-0" />
+          <span className="font-semibold text-sm sm:text-base text-white">
+            Protective Device Check
+          </span>
           <span className="text-xs text-white font-normal hidden sm:inline">
             (BS 7671 Reg 433.1)
           </span>
         </div>
-        {isOpen ? (
-          <ChevronUp className="h-4 w-4 flex-shrink-0" />
-        ) : (
-          <ChevronDown className="h-4 w-4 flex-shrink-0" />
-        )}
+        <ChevronDown
+          className={cn(
+            'h-4 w-4 text-white flex-shrink-0 transition-transform duration-200',
+            isOpen && 'rotate-180'
+          )}
+        />
       </CollapsibleTrigger>
 
       <CollapsibleContent className="pt-6 space-y-6">
@@ -107,7 +103,7 @@ const ProtectiveDeviceSection = ({
               <RequiredFieldTooltip content="Select the type of protective device for overload protection" />
             </label>
             <Select value={deviceType} onValueChange={(v) => setDeviceType(v as DeviceType)}>
-              <SelectTrigger className="bg-white/10 border-elec-yellow/30 min-h-[48px] text-base">
+              <SelectTrigger className="bg-white/[0.04] border-elec-yellow/30 min-h-[48px] text-base">
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>
@@ -115,7 +111,7 @@ const ProtectiveDeviceSection = ({
                   <SelectItem key={option.value} value={option.value} className="py-3">
                     <div className="flex flex-col">
                       <span className="text-white">{option.label}</span>
-                      <span className="text-xs text-white/70">{option.standard}</span>
+                      <span className="text-xs text-white">{option.standard}</span>
                     </div>
                   </SelectItem>
                 ))}
@@ -134,7 +130,7 @@ const ProtectiveDeviceSection = ({
               <RequiredFieldTooltip content="Nominal current rating of the protective device" />
             </label>
             <Select value={rating.toString()} onValueChange={(v) => setRating(parseInt(v))}>
-              <SelectTrigger className="bg-white/10 border-elec-yellow/30 min-h-[48px] text-base">
+              <SelectTrigger className="bg-white/[0.04] border-elec-yellow/30 min-h-[48px] text-base">
                 <SelectValue />
               </SelectTrigger>
               <SelectContent className="max-h-60">
@@ -178,7 +174,7 @@ const ProtectiveDeviceSection = ({
             {/* Individual Checks */}
             <div className="space-y-3">
               {/* Check 1: Ib ≤ In */}
-              <div className="p-4 bg-white/10 rounded-lg">
+              <div className="p-4 bg-white/[0.04] rounded-lg border-l-2 border-l-elec-yellow">
                 <div className="flex items-start gap-3 text-left">
                   <CheckIcon passed={validation.checks.ibLessEqualIn.passed} />
                   <div className="flex-1 min-w-0">
@@ -200,7 +196,7 @@ const ProtectiveDeviceSection = ({
               </div>
 
               {/* Check 2: In ≤ Iz */}
-              <div className="p-4 bg-white/10 rounded-lg">
+              <div className="p-4 bg-white/[0.04] rounded-lg border-l-2 border-l-elec-yellow">
                 <div className="flex items-start gap-3 text-left">
                   <CheckIcon passed={validation.checks.inLessEqualIz.passed} />
                   <div className="flex-1 min-w-0">
@@ -222,7 +218,7 @@ const ProtectiveDeviceSection = ({
               </div>
 
               {/* Check 3: I2 ≤ 1.45 × Iz */}
-              <div className="p-4 bg-white/10 rounded-lg">
+              <div className="p-4 bg-white/[0.04] rounded-lg border-l-2 border-l-elec-yellow">
                 <div className="flex items-start gap-3 text-left">
                   <CheckIcon passed={validation.checks.i2LessEqual145Iz.passed} />
                   <div className="flex-1 min-w-0">
@@ -265,25 +261,25 @@ const ProtectiveDeviceSection = ({
             )}
 
             {/* Device Reference Info */}
-            <div className="p-4 bg-white/10 rounded-lg border border-elec-yellow/10">
+            <div className="p-4 bg-white/[0.04] rounded-lg border border-white/5">
               <div className="flex items-center gap-2 mb-3 text-left">
                 <Info className="h-4 w-4 text-elec-yellow flex-shrink-0" />
                 <span className="text-sm font-medium text-white">Device I₂ Values</span>
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm text-white">
-                <div className="flex justify-between p-2 bg-white/5 rounded">
+                <div className="flex justify-between p-2 bg-white/[0.04] rounded">
                   <span>MCB/RCBO</span>
                   <span className="font-mono">1.45 × In</span>
                 </div>
-                <div className="flex justify-between p-2 bg-white/5 rounded">
+                <div className="flex justify-between p-2 bg-white/[0.04] rounded">
                   <span>BS 88 gG</span>
                   <span className="font-mono">1.6 × In</span>
                 </div>
-                <div className="flex justify-between p-2 bg-white/5 rounded">
+                <div className="flex justify-between p-2 bg-white/[0.04] rounded">
                   <span>BS 3036</span>
                   <span className="font-mono">2.0 × In</span>
                 </div>
-                <div className="flex justify-between p-2 bg-white/5 rounded">
+                <div className="flex justify-between p-2 bg-white/[0.04] rounded">
                   <span>MCCB</span>
                   <span className="font-mono">1.3 × In</span>
                 </div>

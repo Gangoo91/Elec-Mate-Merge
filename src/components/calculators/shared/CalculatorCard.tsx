@@ -1,5 +1,4 @@
 import { ReactNode } from 'react';
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { cn } from '@/lib/utils';
 import { CALCULATOR_CONFIG, CalculatorCategory } from './CalculatorConfig';
 
@@ -22,42 +21,55 @@ export const CalculatorCard = ({
   const Icon = config.icon;
 
   return (
-    <Card
-      className={cn(
-        'calculator-card bg-card border border-white/10 rounded-2xl overflow-hidden',
-        className
-      )}
-      style={{ borderColor: `${config.gradientFrom}15` }}
-    >
-      <CardHeader className="pb-4">
-        <div className="flex items-start gap-3">
+    <div className={cn('relative rounded-2xl overflow-hidden bg-card', className)}>
+      {/* Top accent gradient line */}
+      <div
+        className="h-1 w-full"
+        style={{
+          background: `linear-gradient(90deg, ${config.gradientFrom}, ${config.gradientTo})`,
+        }}
+      />
+
+      {/* Header */}
+      <div className="px-4 sm:px-6 pt-5 pb-3">
+        <div className="flex items-center gap-3">
           <div
-            className="p-2.5 rounded-xl shrink-0"
+            className="p-2 rounded-xl shrink-0"
             style={{
               background: `linear-gradient(135deg, ${config.gradientFrom}20, ${config.gradientTo}10)`,
             }}
           >
             <Icon className="h-5 w-5" style={{ color: config.gradientFrom }} />
           </div>
-          <div className="space-y-1 min-w-0">
-            <CardTitle className="text-lg sm:text-xl font-bold">
-              <span
-                className="bg-clip-text text-transparent"
-                style={{
-                  backgroundImage: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})`,
-                }}
-              >
-                {title}
-              </span>
-            </CardTitle>
-            {description && (
-              <CardDescription className="text-sm text-white/60">{description}</CardDescription>
-            )}
+          <div className="min-w-0">
+            <h2 className="text-lg sm:text-xl font-bold text-white">{title}</h2>
+            {description && <p className="text-sm text-white mt-0.5">{description}</p>}
           </div>
         </div>
-      </CardHeader>
-      <CardContent className="space-y-4">{children}</CardContent>
-    </Card>
+      </div>
+
+      {/* Content */}
+      <div className="px-4 sm:px-6 pb-5 sm:pb-6 space-y-4">{children}</div>
+    </div>
+  );
+};
+
+// Section divider — subtle gradient line between major sections
+interface CalculatorDividerProps {
+  category: CalculatorCategory;
+  className?: string;
+}
+
+export const CalculatorDivider = ({ category, className }: CalculatorDividerProps) => {
+  const config = CALCULATOR_CONFIG[category];
+
+  return (
+    <div
+      className={cn('h-px w-full my-1', className)}
+      style={{
+        background: `linear-gradient(90deg, transparent, ${config.gradientFrom}40, transparent)`,
+      }}
+    />
   );
 };
 
@@ -71,7 +83,7 @@ interface CalculatorSectionProps {
 export const CalculatorSection = ({ title, children, className }: CalculatorSectionProps) => {
   return (
     <div className={cn('space-y-3', className)}>
-      {title && <h3 className="text-sm font-medium text-white/70">{title}</h3>}
+      {title && <h3 className="text-sm font-semibold text-white">{title}</h3>}
       {children}
     </div>
   );

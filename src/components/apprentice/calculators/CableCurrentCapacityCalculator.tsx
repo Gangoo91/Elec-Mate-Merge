@@ -1,16 +1,3 @@
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { MobileInput } from '@/components/ui/mobile-input';
-import { MobileButton } from '@/components/ui/mobile-button';
-import {
-  MobileSelect,
-  MobileSelectContent,
-  MobileSelectItem,
-  MobileSelectTrigger,
-  MobileSelectValue,
-} from '@/components/ui/mobile-select';
-import { Badge } from '@/components/ui/badge';
-import { Separator } from '@/components/ui/separator';
-import { Alert, AlertDescription } from '@/components/ui/alert';
 import {
   Zap,
   Calculator,
@@ -20,24 +7,32 @@ import {
   BookOpen,
   Shield,
   ArrowRight,
+  ChevronDown,
+  Info,
 } from 'lucide-react';
+import { Alert, AlertDescription } from '@/components/ui/alert';
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
+import { cn } from '@/lib/utils';
 import { useState } from 'react';
-import WhyThisMatters from '@/components/common/WhyThisMatters';
-import InfoBox from '@/components/common/InfoBox';
 import {
-  calculateCableCapacity,
-  getRecommendations,
-  CableCapacityInputs,
-  CableCapacityResult,
-} from '@/lib/calculators/engines/cableCapacityEngine';
-import { CableType } from '@/lib/calculators/bs7671-data/cableCapacities';
-import { parseNumber, clamp } from '@/lib/calculators/utils/calculatorUtils';
+  CalculatorCard,
+  CalculatorDivider,
+  CalculatorInput,
+  CalculatorSelect,
+  CalculatorInputGrid,
+  CalculatorActions,
+  ResultValue,
+  ResultsGrid,
+  CALCULATOR_CONFIG,
+} from '@/components/calculators/shared';
 import {
   getTemperatureFactor,
   getGroupingFactor,
 } from '@/lib/calculators/bs7671-data/temperatureFactors';
 
 const CableCurrentCapacityCalculator = () => {
+  const config = CALCULATOR_CONFIG['cable'];
+
   const [cableSize, setCableSize] = useState<string>('');
   const [cableType, setCableType] = useState<string>('pvc-single');
   const [installationMethod, setInstallationMethod] = useState<string>('method-c');
@@ -48,6 +43,10 @@ const CableCurrentCapacityCalculator = () => {
   // Enhanced inputs for design verification
   const [designCurrent, setDesignCurrent] = useState<string>('');
   const [deviceRating, setDeviceRating] = useState<string>('32');
+
+  const [showWhyMatters, setShowWhyMatters] = useState(false);
+  const [showReferences, setShowReferences] = useState(false);
+  const [showGuidance, setShowGuidance] = useState(false);
 
   const [result, setResult] = useState<{
     referenceMethod: string;
@@ -75,7 +74,7 @@ const CableCurrentCapacityCalculator = () => {
   } | null>(null);
 
   // Cable sizes dropdown options
-  const cableSizes = [
+  const cableSizeOptions = [
     '1.0',
     '1.5',
     '2.5',
@@ -96,7 +95,7 @@ const CableCurrentCapacityCalculator = () => {
     '400.0',
     '500.0',
     '630.0',
-  ];
+  ].map((s) => ({ value: s, label: `${s} mm²` }));
 
   // Enhanced cable types with comprehensive options
   const cableTypes = [
@@ -144,7 +143,19 @@ const CableCurrentCapacityCalculator = () => {
   ];
 
   // Ambient temperature options
-  const ambientTemperatures = ['10', '15', '20', '25', '30', '35', '40', '45', '50', '55', '60'];
+  const ambientTemperatures = [
+    '10',
+    '15',
+    '20',
+    '25',
+    '30',
+    '35',
+    '40',
+    '45',
+    '50',
+    '55',
+    '60',
+  ].map((t) => ({ value: t, label: `${t}°C` }));
 
   // Grouping factors
   const groupingFactors = [
@@ -158,7 +169,7 @@ const CableCurrentCapacityCalculator = () => {
   ];
 
   // Enhanced cable capacity data based on BS 7671
-  const cableCapacities = {
+  const cableCapacities: Record<string, Record<string, Record<string, number>>> = {
     'pvc-single': {
       '1.0': { 'method-c': 15, 'method-a1': 13, 'method-d1': 18, 'method-e': 17 },
       '1.5': { 'method-c': 20, 'method-a1': 17, 'method-d1': 23, 'method-e': 22 },
@@ -212,24 +223,24 @@ const CableCurrentCapacityCalculator = () => {
     },
   };
 
+  const cableSizes = Object.keys(cableCapacities['pvc-single']);
+
   // Helper function to get next cable size that works
   const getNextCableSize = (currentSize: string, targetIz: number) => {
     const currentIndex = cableSizes.indexOf(currentSize);
-    const capacityData = cableCapacities[cableType as keyof typeof cableCapacities];
+    const capacityData = cableCapacities[cableType];
 
     for (let i = currentIndex + 1; i < cableSizes.length; i++) {
       const size = cableSizes[i];
-      const sizeData = capacityData?.[size as keyof typeof capacityData];
-      const baseCapacity = sizeData?.[installationMethod as keyof typeof sizeData];
+      const sizeData = capacityData?.[size];
+      const baseCapacity = sizeData?.[installationMethod];
 
       if (baseCapacity) {
         const ambient = parseFloat(ambientTemp);
         const grouping = parseFloat(groupingFactor);
         const soilResistivity = parseFloat(soilThermalResistivity);
 
-        // Calculate derating factors
         let tempFactor = 1.0;
-
         if (ambient !== 30) {
           const tempDiff = ambient - 30;
           if (cableType.includes('xlpe')) {
@@ -247,7 +258,6 @@ const CableCurrentCapacityCalculator = () => {
         }
 
         const finalCapacity = baseCapacity * tempFactor * grouping * soilFactor;
-
         if (finalCapacity >= targetIz) {
           return { size, capacity: finalCapacity };
         }
@@ -266,14 +276,12 @@ const CableCurrentCapacityCalculator = () => {
   const getAvailableInstallationMethods = () => {
     if (!cableSize) return installationMethods;
 
-    const capacityData = cableCapacities[cableType as keyof typeof cableCapacities];
-    const sizeData = capacityData?.[cableSize as keyof typeof capacityData];
+    const capacityData = cableCapacities[cableType];
+    const sizeData = capacityData?.[cableSize];
 
     if (!sizeData) return installationMethods;
 
-    return installationMethods.filter(
-      (method) => sizeData[method.value as keyof typeof sizeData] !== undefined
-    );
+    return installationMethods.filter((method) => sizeData[method.value] !== undefined);
   };
 
   // Validation helper
@@ -283,28 +291,25 @@ const CableCurrentCapacityCalculator = () => {
 
   const calculateCapacity = () => {
     const size = parseFloat(cableSize);
-    const ambient = Math.max(10, Math.min(60, parseFloat(ambientTemp))); // Clamp temperature
+    const ambient = Math.max(10, Math.min(60, parseFloat(ambientTemp)));
     const grouping = parseFloat(groupingFactor);
-    const soilResistivity = Math.max(0.5, Math.min(4.0, parseFloat(soilThermalResistivity))); // Clamp soil resistivity
+    const soilResistivity = Math.max(0.5, Math.min(4.0, parseFloat(soilThermalResistivity)));
 
     if (size > 0 && ambient > 0 && grouping > 0) {
-      const capacityData = cableCapacities[cableType as keyof typeof cableCapacities];
+      const capacityData = cableCapacities[cableType];
       const sizeKey = size.toFixed(1);
 
-      if (capacityData && capacityData[sizeKey as keyof typeof capacityData]) {
-        const sizeData = capacityData[sizeKey as keyof typeof capacityData];
-        const baseCapacity = sizeData[installationMethod as keyof typeof sizeData] || 0;
+      if (capacityData && capacityData[sizeKey]) {
+        const sizeData = capacityData[sizeKey];
+        const baseCapacity = sizeData[installationMethod] || 0;
 
         if (baseCapacity > 0) {
-          // Temperature correction factor using BS 7671 Appendix 4 lookup
           let tempFactor = 1.0;
-
           if (ambient !== 30) {
             const cableRating = cableType.includes('xlpe') ? '90C' : '70C';
             tempFactor = getTemperatureFactor(ambient, cableRating);
           }
 
-          // Soil thermal resistivity correction (for buried cables)
           let soilFactor = 1.0;
           if (installationMethod.includes('d1') || installationMethod.includes('d2')) {
             if (soilResistivity !== 2.5) {
@@ -314,9 +319,8 @@ const CableCurrentCapacityCalculator = () => {
 
           const finalCapacity = baseCapacity * tempFactor * grouping * soilFactor;
 
-          // Calculate compliance if design current and device rating are provided
           let compliance = null;
-          let warnings: string[] = [];
+          const warnings: string[] = [];
           let actionableGuidance: { failureMode: string; suggestions: string[] } | null = null;
 
           if (designCurrent && deviceRating) {
@@ -339,10 +343,8 @@ const CableCurrentCapacityCalculator = () => {
               safetyMargin,
             };
 
-            // Generate actionable guidance for failures
             if (!overallCompliant) {
               if (!ibInCompliant && !inIzCompliant) {
-                // Case C: Both fail
                 const nextCable = getNextCableSize(cableSize, In);
                 actionableGuidance = {
                   failureMode: 'Both design current and device rating fail',
@@ -357,7 +359,6 @@ const CableCurrentCapacityCalculator = () => {
                   ],
                 };
               } else if (!ibInCompliant) {
-                // Case A: Ib > In
                 const nextIn = getNextDeviceRating(Ib, Iz);
                 actionableGuidance = {
                   failureMode: 'Design current exceeds device rating',
@@ -374,7 +375,6 @@ const CableCurrentCapacityCalculator = () => {
                       ],
                 };
               } else if (!inIzCompliant) {
-                // Case B: In > Iz
                 const nextCable = getNextCableSize(cableSize, In);
                 actionableGuidance = {
                   failureMode: 'Device rating exceeds cable capacity',
@@ -400,7 +400,6 @@ const CableCurrentCapacityCalculator = () => {
             }
           }
 
-          // Additional warnings
           if (tempFactor < 0.8) {
             warnings.push('High ambient temperature significantly reducing capacity');
           }
@@ -408,7 +407,6 @@ const CableCurrentCapacityCalculator = () => {
             warnings.push('Cable grouping causing significant derating');
           }
 
-          // Determine voltage rating based on cable type
           let voltageRating = '600/1000V';
           if (cableType.includes('swa')) voltageRating = '600/1000V or 1900/3300V';
           if (cableType.includes('mineral')) voltageRating = '500V or 750V';
@@ -429,7 +427,6 @@ const CableCurrentCapacityCalculator = () => {
             actionableGuidance,
           });
         } else {
-          // No capacity data found - show helpful message
           setResult({
             referenceMethod:
               installationMethods.find((m) => m.value === installationMethod)?.label ||
@@ -456,7 +453,6 @@ const CableCurrentCapacityCalculator = () => {
           });
         }
       } else {
-        // No size data found
         setResult({
           referenceMethod:
             installationMethods.find((m) => m.value === installationMethod)?.label ||
@@ -477,7 +473,6 @@ const CableCurrentCapacityCalculator = () => {
         });
       }
     } else {
-      // Invalid inputs
       setResult(null);
     }
   };
@@ -494,363 +489,363 @@ const CableCurrentCapacityCalculator = () => {
     setResult(null);
   };
 
-  const formatValue = (value: number, unit?: string) => {
-    if (value === 0) return '0';
-    return `${value.toFixed(1)}${unit || ''}`;
-  };
-
-  const getSafetyMarginBadge = (margin: number, isCompliant: boolean) => {
-    if (!isCompliant)
+  const getSafetyChip = (margin: number, isCompliant: boolean) => {
+    if (!isCompliant) {
       return (
-        <Badge className="text-xs bg-red-500/20 text-red-600 border-red-500/30">
+        <span className="inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium bg-red-500/10 border border-red-500/20 text-red-400">
           Non-compliant
-        </Badge>
+        </span>
       );
-    if (margin >= 25)
+    }
+    if (margin >= 25) {
       return (
-        <Badge className="text-xs bg-green-500/20 text-green-600 border-green-500/30">
+        <span className="inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium bg-green-500/10 border border-green-500/20 text-green-400">
           Excellent ({margin.toFixed(1)}%)
-        </Badge>
+        </span>
       );
-    if (margin >= 10)
+    }
+    if (margin >= 10) {
       return (
-        <Badge className="text-xs bg-yellow-500/20 text-yellow-600 border-yellow-500/30">
+        <span className="inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium bg-amber-500/10 border border-amber-500/20 text-amber-400">
           Adequate ({margin.toFixed(1)}%)
-        </Badge>
+        </span>
       );
+    }
     return (
-      <Badge className="text-xs bg-red-500/20 text-red-600 border-red-500/30">
+      <span className="inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium bg-red-500/10 border border-red-500/20 text-red-400">
         Low ({margin.toFixed(1)}%)
-      </Badge>
+      </span>
     );
   };
 
   return (
-    <Card className="border-elec-yellow/20 bg-elec-card">
-      <CardHeader>
-        <div className="flex items-center gap-2">
-          <Zap className="h-5 w-5 text-elec-yellow" />
-          <div>
-            <CardTitle className="text-elec-light">Cable Current Capacity Calculator</CardTitle>
-            <CardDescription className="mt-1">
-              Calculate current carrying capacity with BS 7671 compliance verification
-            </CardDescription>
-          </div>
-          <Badge variant="outline" className="ml-auto border-elec-yellow/30 text-elec-yellow">
-            BS 7671
-          </Badge>
-        </div>
-      </CardHeader>
-      <CardContent className="space-y-6">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
-          {/* Input Section */}
-          <div className="space-y-4">
-            {/* Design Parameters */}
-            <div className="space-y-4 p-3 sm:p-4 border border-elec-yellow/20 rounded-lg bg-elec-card/50">
-              <h4 className="font-medium text-elec-light text-sm sm:text-base">Circuit Design</h4>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
-                <MobileInput
-                  label="Design Current Ib (A) *"
-                  type="text"
-                  inputMode="decimal"
-                  value={designCurrent}
-                  onChange={(e) => setDesignCurrent(e.target.value)}
-                  placeholder="Enter design current"
-                />
-                <MobileSelect value={deviceRating} onValueChange={setDeviceRating}>
-                  <MobileSelectTrigger label="Device Rating In (A) *">
-                    <MobileSelectValue />
-                  </MobileSelectTrigger>
-                  <MobileSelectContent>
-                    {deviceRatings.map((rating) => (
-                      <MobileSelectItem key={rating.value} value={rating.value}>
-                        {rating.label}
-                      </MobileSelectItem>
-                    ))}
-                  </MobileSelectContent>
-                </MobileSelect>
+    <CalculatorCard
+      category="cable"
+      title="Cable Current Capacity Calculator"
+      description="Calculate current carrying capacity with BS 7671 compliance verification"
+    >
+      {/* Circuit Design Section */}
+      <div className="space-y-4 p-3 sm:p-4 rounded-xl bg-white/[0.04] border border-white/5">
+        <h4 className="font-medium text-white text-sm sm:text-base">Circuit Design</h4>
+        <CalculatorInputGrid columns={2}>
+          <CalculatorInput
+            label="Design Current Ib (A)"
+            type="text"
+            inputMode="decimal"
+            value={designCurrent}
+            onChange={setDesignCurrent}
+            placeholder="Enter design current"
+          />
+          <CalculatorSelect
+            label="Device Rating In (A)"
+            value={deviceRating}
+            onChange={setDeviceRating}
+            options={deviceRatings}
+          />
+        </CalculatorInputGrid>
+      </div>
+
+      <CalculatorSelect
+        label="Cable Type"
+        value={cableType}
+        onChange={setCableType}
+        options={cableTypes}
+      />
+
+      <CalculatorSelect
+        label="Cable Size (mm²)"
+        value={cableSize}
+        onChange={setCableSize}
+        options={cableSizeOptions}
+      />
+
+      <CalculatorSelect
+        label="Installation Method"
+        value={installationMethod}
+        onChange={setInstallationMethod}
+        options={getAvailableInstallationMethods()}
+      />
+
+      <CalculatorInputGrid columns={2}>
+        <CalculatorSelect
+          label="Ambient Temp (°C)"
+          value={ambientTemp}
+          onChange={setAmbientTemp}
+          options={ambientTemperatures}
+        />
+        <CalculatorSelect
+          label="Grouping Factor"
+          value={groupingFactor}
+          onChange={setGroupingFactor}
+          options={groupingFactors}
+        />
+      </CalculatorInputGrid>
+
+      {/* Soil Thermal Resistivity - only for buried cables */}
+      {(installationMethod.includes('d1') || installationMethod.includes('d2')) && (
+        <CalculatorInput
+          label="Soil Thermal Resistivity (K·m/W)"
+          type="text"
+          inputMode="decimal"
+          value={soilThermalResistivity}
+          onChange={setSoilThermalResistivity}
+          placeholder="2.5"
+        />
+      )}
+
+      <CalculatorActions
+        category="cable"
+        onCalculate={calculateCapacity}
+        onReset={reset}
+        isDisabled={!isValidForCalculation()}
+        calculateLabel="Calculate"
+      />
+
+      {!isValidForCalculation() && !result && (
+        <p className="text-xs text-white text-center px-2">
+          Please enter design current, device rating, and select cable details to calculate
+        </p>
+      )}
+
+      {/* Results */}
+      {result && (
+        <>
+          <CalculatorDivider category="cable" />
+
+          <div className="space-y-4 animate-fade-in">
+            {/* Hero: Final Capacity */}
+            <div className="p-4 rounded-xl bg-white/[0.04] border border-white/5 text-center">
+              <p className="text-sm text-white mb-1">Final Capacity (Iz)</p>
+              <div
+                className="text-4xl font-bold bg-clip-text text-transparent"
+                style={{
+                  backgroundImage: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})`,
+                }}
+              >
+                {result.finalCapacity.toFixed(1)}A
               </div>
+              <p className="text-sm text-white mt-1">Base: {result.baseCapacity}A</p>
             </div>
 
-            <Separator className="border-elec-yellow/20" />
-
-            <MobileSelect value={cableType} onValueChange={setCableType}>
-              <MobileSelectTrigger label="Cable Type *">
-                <MobileSelectValue placeholder="Select cable type" />
-              </MobileSelectTrigger>
-              <MobileSelectContent>
-                {cableTypes.map((type) => (
-                  <MobileSelectItem key={type.value} value={type.value}>
-                    {type.label}
-                  </MobileSelectItem>
-                ))}
-              </MobileSelectContent>
-            </MobileSelect>
-
-            <MobileSelect value={cableSize} onValueChange={setCableSize}>
-              <MobileSelectTrigger label="Cable Size (mm²) *">
-                <MobileSelectValue placeholder="Select cable size" />
-              </MobileSelectTrigger>
-              <MobileSelectContent>
-                {cableSizes.map((size) => (
-                  <MobileSelectItem key={size} value={size}>
-                    {size} mm²
-                  </MobileSelectItem>
-                ))}
-              </MobileSelectContent>
-            </MobileSelect>
-
-            <MobileSelect value={installationMethod} onValueChange={setInstallationMethod}>
-              <MobileSelectTrigger label="Installation Method *">
-                <MobileSelectValue placeholder="Select installation method" />
-              </MobileSelectTrigger>
-              <MobileSelectContent>
-                {getAvailableInstallationMethods().map((method) => (
-                  <MobileSelectItem key={method.value} value={method.value}>
-                    {method.label}
-                  </MobileSelectItem>
-                ))}
-              </MobileSelectContent>
-            </MobileSelect>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
-              <MobileSelect value={ambientTemp} onValueChange={setAmbientTemp}>
-                <MobileSelectTrigger label="Ambient Temp (°C)">
-                  <MobileSelectValue />
-                </MobileSelectTrigger>
-                <MobileSelectContent>
-                  {ambientTemperatures.map((temp) => (
-                    <MobileSelectItem key={temp} value={temp}>
-                      {temp}°C
-                    </MobileSelectItem>
-                  ))}
-                </MobileSelectContent>
-              </MobileSelect>
-
-              <MobileSelect value={groupingFactor} onValueChange={setGroupingFactor}>
-                <MobileSelectTrigger label="Grouping Factor">
-                  <MobileSelectValue />
-                </MobileSelectTrigger>
-                <MobileSelectContent>
-                  {groupingFactors.map((factor) => (
-                    <MobileSelectItem key={factor.value} value={factor.value}>
-                      {factor.label}
-                    </MobileSelectItem>
-                  ))}
-                </MobileSelectContent>
-              </MobileSelect>
-            </div>
-
-            {/* Soil Thermal Resistivity - only for buried cables */}
-            {(installationMethod.includes('d1') || installationMethod.includes('d2')) && (
-              <MobileInput
-                label="Soil Thermal Resistivity (K⋅m/W)"
-                type="text"
-                inputMode="decimal"
-                value={soilThermalResistivity}
-                onChange={(e) => setSoilThermalResistivity(e.target.value)}
-                placeholder="2.5"
+            {/* Correction Factors */}
+            <ResultsGrid columns={3}>
+              <ResultValue
+                label="Temp Factor"
+                value={result.tempCorrectionFactor.toFixed(3)}
+                category="cable"
+                size="sm"
               />
-            )}
+              <ResultValue
+                label="Group Factor"
+                value={result.groupingCorrectionFactor.toFixed(2)}
+                category="cable"
+                size="sm"
+              />
+              <ResultValue
+                label="Soil Factor"
+                value={result.soilCorrectionFactor.toFixed(3)}
+                category="cable"
+                size="sm"
+              />
+            </ResultsGrid>
 
-            <div className="flex flex-col sm:flex-row gap-3">
-              <MobileButton
-                onClick={calculateCapacity}
-                className="flex-1 w-full"
-                icon={<Calculator className="h-4 w-4" />}
-                disabled={!isValidForCalculation()}
-              >
-                Calculate
-              </MobileButton>
-              <MobileButton
-                variant="outline"
-                onClick={reset}
-                icon={<RotateCcw className="h-4 w-4" />}
-                className="w-full sm:w-auto"
-              >
-                Reset
-              </MobileButton>
+            {/* Formula */}
+            <div className="text-xs text-white p-3 rounded-xl bg-white/[0.04] border border-white/5 font-mono">
+              Iz = {result.baseCapacity} × {result.tempCorrectionFactor.toFixed(3)} ×{' '}
+              {result.groupingCorrectionFactor} × {result.soilCorrectionFactor.toFixed(3)} ={' '}
+              {result.finalCapacity.toFixed(1)}A
             </div>
 
-            {!isValidForCalculation() && (
-              <p className="text-xs sm:text-sm text-white text-center px-2">
-                Please enter design current, device rating, and select cable details to calculate
-              </p>
+            {/* Compliance Status */}
+            {result.compliance && (
+              <div
+                className={`p-4 rounded-xl border ${
+                  result.compliance.overallCompliant
+                    ? 'bg-green-500/10 border-green-500/20'
+                    : 'bg-red-500/10 border-red-500/20'
+                }`}
+              >
+                <div className="flex items-center gap-2 mb-2">
+                  {result.compliance.overallCompliant ? (
+                    <CheckCircle2 className="h-5 w-5 text-green-400 flex-shrink-0" />
+                  ) : (
+                    <AlertTriangle className="h-5 w-5 text-red-400 flex-shrink-0" />
+                  )}
+                  <span className="font-medium text-sm text-white">
+                    {result.compliance.overallCompliant
+                      ? 'Ib ≤ In ≤ Iz: COMPLIANT'
+                      : 'Ib ≤ In ≤ Iz: NON-COMPLIANT'}
+                  </span>
+                </div>
+                <div className="text-sm grid grid-cols-3 gap-2 mb-2 text-white">
+                  <div>Ib = {result.compliance.Ib}A</div>
+                  <div>In = {result.compliance.In}A</div>
+                  <div>Iz = {result.compliance.Iz.toFixed(1)}A</div>
+                </div>
+                <div className="flex items-center gap-2">
+                  <span className="text-xs text-white">
+                    {result.compliance.overallCompliant ? 'Safety margin:' : 'Status:'}
+                  </span>
+                  {getSafetyChip(
+                    result.compliance.safetyMargin,
+                    result.compliance.overallCompliant
+                  )}
+                </div>
+              </div>
+            )}
+
+            {/* Actionable Guidance */}
+            {result.actionableGuidance && (
+              <div className="p-4 rounded-xl bg-blue-500/10 border border-blue-500/20">
+                <div className="flex items-center gap-2 mb-2">
+                  <ArrowRight className="h-4 w-4 text-blue-400 flex-shrink-0" />
+                  <span className="font-medium text-sm text-white">What to do next:</span>
+                </div>
+                <p className="text-xs text-white mb-2">{result.actionableGuidance.failureMode}</p>
+                <ul className="text-xs space-y-1">
+                  {result.actionableGuidance.suggestions.map((suggestion, i) => (
+                    <li key={i} className="flex items-start gap-2 text-white">
+                      <span className="text-blue-400 mt-0.5 flex-shrink-0">•</span>
+                      <span className="flex-1">{suggestion}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+
+            {/* Warnings */}
+            {result.warnings.length > 0 && (
+              <div className="p-4 rounded-xl bg-orange-500/10 border border-orange-500/30">
+                <div className="flex items-center gap-2 mb-1">
+                  <AlertTriangle className="h-4 w-4 text-orange-400 flex-shrink-0" />
+                  <span className="font-medium text-sm text-white">Warnings</span>
+                </div>
+                <ul className="text-xs space-y-1">
+                  {result.warnings.map((warning, i) => (
+                    <li key={i} className="flex items-start gap-2 text-white">
+                      <span className="text-orange-400 mt-0.5 flex-shrink-0">•</span>
+                      <span className="flex-1">{warning}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
             )}
           </div>
 
-          {/* Results Section */}
-          <div className="space-y-4">
-            {result && (
-              <>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
-                  <div className="space-y-2 p-3 bg-elec-card/30 rounded-lg border border-elec-yellow/20">
-                    <p className="text-xs sm:text-sm text-white">Base Capacity</p>
-                    <p className="text-lg sm:text-xl font-medium text-elec-light">
-                      {formatValue(result.baseCapacity, 'A')}
-                    </p>
-                  </div>
-                  <div className="space-y-2 p-3 bg-elec-card/30 rounded-lg border border-elec-yellow/20">
-                    <p className="text-xs sm:text-sm text-white">Final Capacity Iz</p>
-                    <p className="text-lg sm:text-xl font-medium text-elec-yellow">
-                      {formatValue(result.finalCapacity, 'A')}
-                    </p>
-                  </div>
-                </div>
-
-                <div className="grid grid-cols-3 gap-2 sm:gap-3 text-xs sm:text-sm">
-                  <div className="text-center p-2 sm:p-3 bg-elec-card/30 rounded border border-elec-yellow/20">
-                    <p className="text-white text-xs">Temp Factor</p>
-                    <p className="font-medium text-elec-light text-sm sm:text-base">
-                      {result.tempCorrectionFactor.toFixed(3)}
-                    </p>
-                  </div>
-                  <div className="text-center p-2 sm:p-3 bg-elec-card/30 rounded border border-elec-yellow/20">
-                    <p className="text-white text-xs">Group Factor</p>
-                    <p className="font-medium text-elec-light text-sm sm:text-base">
-                      {result.groupingCorrectionFactor.toFixed(2)}
-                    </p>
-                  </div>
-                  <div className="text-center p-2 sm:p-3 bg-elec-card/30 rounded border border-elec-yellow/20">
-                    <p className="text-white text-xs">Soil Factor</p>
-                    <p className="font-medium text-elec-light text-sm sm:text-base">
-                      {result.soilCorrectionFactor.toFixed(3)}
-                    </p>
-                  </div>
-                </div>
-
-                <div className="text-xs text-white p-2 sm:p-3 bg-elec-card/20 rounded border border-elec-yellow/20 overflow-x-auto">
-                  <p className="whitespace-nowrap sm:whitespace-normal">
-                    Iz = {result.baseCapacity} × {result.tempCorrectionFactor.toFixed(3)} ×{' '}
-                    {result.groupingCorrectionFactor} × {result.soilCorrectionFactor.toFixed(3)} ={' '}
-                    {result.finalCapacity.toFixed(1)}A
-                  </p>
-                </div>
-
-                {/* Compliance Status - Moved here under results */}
-                {result.compliance && (
-                  <Alert
-                    className={`${result.compliance.overallCompliant ? 'border-green-500/20 bg-green-950/20' : 'border-red-500/20 bg-red-950/20'}`}
+          {/* Why This Matters */}
+          <Collapsible open={showWhyMatters} onOpenChange={setShowWhyMatters}>
+            <CollapsibleTrigger className="calculator-collapsible-trigger w-full">
+              <div className="flex items-center gap-3">
+                <Info className="h-4 w-4" style={{ color: config.gradientFrom }} />
+                <span className="text-sm sm:text-base font-medium text-white">
+                  Why This Matters
+                </span>
+              </div>
+              <ChevronDown
+                className={cn(
+                  'h-4 w-4 text-white transition-transform duration-200',
+                  showWhyMatters && 'rotate-180'
+                )}
+              />
+            </CollapsibleTrigger>
+            <CollapsibleContent className="p-4 pt-2">
+              <div className="space-y-2">
+                {[
+                  'The Ib ≤ In ≤ Iz principle ensures protection from overloads whilst preventing nuisance trips',
+                  'Derating factors account for real installation conditions - heat buildup and circuit grouping reduce capacity',
+                  'Adequate safety margin helps accommodate real-world variability and future load growth',
+                  'Proper cable sizing prevents overheating, fire risk, and voltage drop issues',
+                ].map((point, idx) => (
+                  <div
+                    key={idx}
+                    className="p-3 rounded-lg bg-white/[0.04] border-l-2 text-sm text-white"
+                    style={{ borderLeftColor: config.gradientFrom }}
                   >
-                    {result.compliance.overallCompliant ? (
-                      <CheckCircle2 className="h-4 w-4 text-green-500 flex-shrink-0" />
-                    ) : (
-                      <AlertTriangle className="h-4 w-4 text-red-500 flex-shrink-0" />
-                    )}
-                    <AlertDescription className="w-full">
-                      <div className="font-medium mb-2 text-sm sm:text-base">
-                        {result.compliance.overallCompliant
-                          ? 'Ib ≤ In ≤ Iz: ✓ COMPLIANT'
-                          : 'Ib ≤ In ≤ Iz: ✗ NON-COMPLIANT'}
-                      </div>
-                      <div className="text-xs sm:text-sm grid grid-cols-3 gap-2 sm:gap-4 mb-2">
-                        <div>Ib = {result.compliance.Ib}A</div>
-                        <div>In = {result.compliance.In}A</div>
-                        <div>Iz = {result.compliance.Iz.toFixed(1)}A</div>
-                      </div>
-                      <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2">
-                        <span className="text-xs">
-                          {result.compliance.overallCompliant ? 'Safety margin:' : 'Status:'}
-                        </span>
-                        {getSafetyMarginBadge(
-                          result.compliance.safetyMargin,
-                          result.compliance.overallCompliant
-                        )}
-                      </div>
-                    </AlertDescription>
-                  </Alert>
+                    {point}
+                  </div>
+                ))}
+              </div>
+            </CollapsibleContent>
+          </Collapsible>
+
+          {/* BS 7671 References */}
+          <Collapsible open={showReferences} onOpenChange={setShowReferences}>
+            <CollapsibleTrigger className="calculator-collapsible-trigger w-full">
+              <div className="flex items-center gap-3">
+                <BookOpen className="h-4 w-4" style={{ color: config.gradientFrom }} />
+                <span className="text-sm sm:text-base font-medium text-white">
+                  BS 7671 Quick References
+                </span>
+              </div>
+              <ChevronDown
+                className={cn(
+                  'h-4 w-4 text-white transition-transform duration-200',
+                  showReferences && 'rotate-180'
                 )}
+              />
+            </CollapsibleTrigger>
+            <CollapsibleContent className="p-4 pt-2">
+              <div className="space-y-2">
+                {[
+                  'Section 433 - Overload protection and the fundamental Ib ≤ In ≤ Iz principle',
+                  'Section 523 - Current-carrying capacities for various cable types and methods',
+                  'Appendix 4 - Correction factors for temperature, grouping, and soil conditions',
+                  'Note: Exact tables depend on cable construction and installation method',
+                ].map((ref, idx) => (
+                  <div
+                    key={idx}
+                    className="p-3 rounded-lg bg-white/[0.04] border-l-2 text-sm text-white"
+                    style={{ borderLeftColor: config.gradientFrom }}
+                  >
+                    {ref}
+                  </div>
+                ))}
+              </div>
+            </CollapsibleContent>
+          </Collapsible>
 
-                {/* Actionable Guidance */}
-                {result.actionableGuidance && (
-                  <Alert className="border-blue-500/20 bg-blue-950/20">
-                    <ArrowRight className="h-4 w-4 text-blue-400 flex-shrink-0" />
-                    <AlertDescription className="w-full">
-                      <div className="font-medium mb-2 text-blue-400 text-sm sm:text-base">
-                        What to do next:
-                      </div>
-                      <p className="text-xs sm:text-sm mb-2 text-blue-300">
-                        {result.actionableGuidance.failureMode}
-                      </p>
-                      <ul className="text-xs sm:text-sm space-y-1">
-                        {result.actionableGuidance.suggestions.map((suggestion, i) => (
-                          <li key={i} className="flex items-start gap-2">
-                            <span className="text-blue-400 mt-0.5 flex-shrink-0">•</span>
-                            <span className="flex-1">{suggestion}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    </AlertDescription>
-                  </Alert>
-                )}
-
-                {/* Warnings */}
-                {result.warnings.length > 0 && (
-                  <Alert className="border-yellow-500/20 bg-yellow-950/20">
-                    <AlertTriangle className="h-4 w-4 text-yellow-500 flex-shrink-0" />
-                    <AlertDescription className="w-full">
-                      <div className="font-medium mb-1 text-yellow-400 text-sm sm:text-base">
-                        Warnings:
-                      </div>
-                      <ul className="text-xs sm:text-sm space-y-1">
-                        {result.warnings.map((warning, i) => (
-                          <li key={i} className="flex items-start gap-2">
-                            <span className="text-yellow-400 mt-0.5 flex-shrink-0">•</span>
-                            <span className="flex-1">{warning}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    </AlertDescription>
-                  </Alert>
-                )}
-              </>
-            )}
-          </div>
-        </div>
-
-        {/* Why This Matters */}
-        {result && (
-          <WhyThisMatters
-            points={[
-              'The Ib ≤ In ≤ Iz principle ensures protection from overloads whilst preventing nuisance trips',
-              'Derating factors account for real installation conditions - heat buildup and circuit grouping reduce capacity',
-              'Adequate safety margin helps accommodate real-world variability and future load growth',
-              'Proper cable sizing prevents overheating, fire risk, and voltage drop issues',
-            ]}
-          />
-        )}
-
-        {/* BS 7671 References */}
-        {result && (
-          <InfoBox
-            title="BS 7671 Quick References"
-            icon={<BookOpen className="h-5 w-5 text-elec-yellow" />}
-            points={[
-              'Section 433 - Overload protection and the fundamental Ib ≤ In ≤ Iz principle',
-              'Section 523 - Current-carrying capacities for various cable types and methods',
-              'Appendix 4 - Correction factors for temperature, grouping, and soil conditions',
-              'Note: Exact tables depend on cable construction and installation method',
-            ]}
-          />
-        )}
-
-        {/* Practical Guidance */}
-        {result?.actionableGuidance && (
-          <InfoBox
-            title="Practical Guidance"
-            icon={<Shield className="h-5 w-5 text-elec-yellow" />}
-            points={[
-              result.compliance?.overallCompliant
-                ? 'Installation meets BS 7671 requirements - proceed with confidence'
-                : 'Non-compliance detected - follow the suggestions above before installation',
-              'Always verify device characteristics and Zs comply for the selected protective device',
-              'Consider future load expansion when selecting cable sizes',
-              'Document all calculations and assumptions for inspection and compliance records',
-            ]}
-          />
-        )}
-      </CardContent>
-    </Card>
+          {/* Practical Guidance */}
+          {result.actionableGuidance && (
+            <Collapsible open={showGuidance} onOpenChange={setShowGuidance}>
+              <CollapsibleTrigger className="calculator-collapsible-trigger w-full">
+                <div className="flex items-center gap-3">
+                  <Shield className="h-4 w-4" style={{ color: config.gradientFrom }} />
+                  <span className="text-sm sm:text-base font-medium text-white">
+                    Practical Guidance
+                  </span>
+                </div>
+                <ChevronDown
+                  className={cn(
+                    'h-4 w-4 text-white transition-transform duration-200',
+                    showGuidance && 'rotate-180'
+                  )}
+                />
+              </CollapsibleTrigger>
+              <CollapsibleContent className="p-4 pt-2">
+                <div className="space-y-2">
+                  {[
+                    result.compliance?.overallCompliant
+                      ? 'Installation meets BS 7671 requirements - proceed with confidence'
+                      : 'Non-compliance detected - follow the suggestions above before installation',
+                    'Always verify device characteristics and Zs comply for the selected protective device',
+                    'Consider future load expansion when selecting cable sizes',
+                    'Document all calculations and assumptions for inspection and compliance records',
+                  ].map((item, idx) => (
+                    <div
+                      key={idx}
+                      className="p-3 rounded-lg bg-white/[0.04] border-l-2 text-sm text-white"
+                      style={{ borderLeftColor: config.gradientFrom }}
+                    >
+                      {item}
+                    </div>
+                  ))}
+                </div>
+              </CollapsibleContent>
+            </Collapsible>
+          )}
+        </>
+      )}
+    </CalculatorCard>
   );
 };
 

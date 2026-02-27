@@ -6,7 +6,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { Button } from '@/components/ui/button';
 import { Book } from 'lucide-react';
 import { useState } from 'react';
 import StandardsReference from './StandardsReference';
@@ -167,71 +166,59 @@ const CalculatorSelector = ({ calculatorType, setCalculatorType }: CalculatorSel
   ];
 
   return (
-    <div className="space-y-4">
-      {/* Mobile-First Layout */}
-      <div className="flex flex-col gap-4">
-        {/* Calculator Selection */}
-        <div className="w-full">
-          <Label
-            htmlFor="calculator-select"
-            className="text-sm font-medium text-elec-light mb-3 block"
-          >
-            Select Calculator
-          </Label>
-          <Select value={calculatorType} onValueChange={setCalculatorType}>
-            <SelectTrigger
-              id="calculator-select"
-              className="w-full h-12 bg-white/10 border-elec-yellow/20 text-elec-light focus:border-elec-yellow focus:ring-1 focus:ring-elec-yellow"
-            >
-              <SelectValue placeholder="Choose a calculator" />
-            </SelectTrigger>
-            <SelectContent className="bg-elec-dark border-elec-yellow/20 max-h-80 w-full">
-              {categoryOrder.map((category) => {
-                const calcs = groupedCalculators[category];
-                if (!calcs) return null;
+    <div className="space-y-3">
+      {/* Calculator Selection */}
+      <Label htmlFor="calculator-select" className="text-sm font-medium text-white block">
+        Select Calculator
+      </Label>
+      <Select value={calculatorType} onValueChange={setCalculatorType}>
+        <SelectTrigger
+          id="calculator-select"
+          className="w-full h-12 border-white/10 text-white focus:border-elec-yellow focus:ring-1 focus:ring-elec-yellow"
+        >
+          <SelectValue placeholder="Choose a calculator" />
+        </SelectTrigger>
+        <SelectContent className="border-white/10 max-h-80 w-full">
+          {categoryOrder.map((category) => {
+            const calcs = groupedCalculators[category];
+            if (!calcs) return null;
 
-                return (
-                  <div key={category}>
-                    <div className="px-3 py-2 text-xs font-semibold text-elec-yellow bg-white/5 sticky top-0 border-b border-elec-yellow/10">
-                      {category}
+            return (
+              <div key={category}>
+                <div className="px-3 py-2 text-xs font-semibold text-elec-yellow bg-white/5 sticky top-0 border-b border-white/5">
+                  {category}
+                </div>
+                {calcs.map((calc) => (
+                  <SelectItem
+                    key={calc.value}
+                    value={calc.value}
+                    className="py-3 text-sm hover:bg-elec-yellow/10 focus:bg-elec-yellow/10 cursor-pointer"
+                  >
+                    <div className="flex items-center gap-2 w-full">
+                      <span className="flex-1 text-left">{calc.label}</span>
                     </div>
-                    {calcs.map((calc) => (
-                      <SelectItem
-                        key={calc.value}
-                        value={calc.value}
-                        className="pl-4 py-3 text-sm hover:bg-elec-yellow/10 focus:bg-elec-yellow/10 cursor-pointer"
-                      >
-                        <div className="flex items-center gap-2 w-full">
-                          <span className="flex-1 text-left">{calc.label}</span>
-                        </div>
-                      </SelectItem>
-                    ))}
-                  </div>
-                );
-              })}
-            </SelectContent>
-          </Select>
-        </div>
+                  </SelectItem>
+                ))}
+              </div>
+            );
+          })}
+        </SelectContent>
+      </Select>
 
-        {/* Standards Reference Button */}
-        <div className="flex justify-center sm:justify-start">
-          <Button
-            variant="outline"
-            onClick={() => setShowStandards(!showStandards)}
-            className="w-full sm:w-auto h-11 flex items-center justify-center gap-2 border-blue-500/20 text-blue-400 hover:bg-blue-500/10 bg-white/10"
-          >
-            <Book className="h-4 w-4" />
-            <span>{showStandards ? 'Hide' : 'Show'} Standards Reference</span>
-          </Button>
-        </div>
-      </div>
+      {/* Standards Reference Toggle */}
+      <button
+        type="button"
+        onClick={() => setShowStandards(!showStandards)}
+        className="flex items-center gap-2 h-11 touch-manipulation active:opacity-70 transition-opacity"
+      >
+        <Book className="h-4 w-4 text-blue-400" />
+        <span className="text-sm text-white">
+          {showStandards ? 'Hide' : 'Show'} Standards Reference
+        </span>
+      </button>
 
-      {/* Standards Reference - Mobile Optimized */}
-      {showStandards && (
-        <div className="mt-6">
-          <StandardsReference />
-        </div>
-      )}
+      {/* Standards Reference */}
+      {showStandards && <StandardsReference />}
     </div>
   );
 };

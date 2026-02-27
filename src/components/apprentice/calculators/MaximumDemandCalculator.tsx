@@ -1,4 +1,3 @@
-import { Badge } from '@/components/ui/badge';
 import {
   TrendingUp,
   Info,
@@ -13,11 +12,11 @@ import {
 import { useState, useEffect } from 'react';
 import {
   CalculatorCard,
+  CalculatorDivider,
   CalculatorInputGrid,
   CalculatorInput,
   CalculatorSelect,
   CalculatorActions,
-  CalculatorResult,
   ResultValue,
   ResultsGrid,
   CALCULATOR_CONFIG,
@@ -103,7 +102,7 @@ const MaximumDemandCalculator = () => {
     setLoads(
       loads.map((load) => {
         if (load.id === id) {
-          let updatedLoad = { ...load, [field]: value };
+          const updatedLoad = { ...load, [field]: value };
 
           if (field === 'loadType') {
             const preset = LOAD_PRESETS[value as keyof typeof LOAD_PRESETS];
@@ -188,6 +187,7 @@ const MaximumDemandCalculator = () => {
     }, 300);
 
     return () => clearTimeout(timer);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [loads]);
 
   const calculateSupplyRequirements = (totalAfterDiversity: number) => {
@@ -213,132 +213,145 @@ const MaximumDemandCalculator = () => {
   const loadsWithPower = loads.filter((l) => parseFloat(l.power) > 0);
 
   return (
-    <div className="space-y-4">
-      <CalculatorCard
-        category="power"
-        title="Maximum Demand Calculator"
-        description="Calculate maximum demand with BS 7671 diversity factors and supply adequacy assessment"
+    <CalculatorCard
+      category="power"
+      title="Maximum Demand Calculator"
+      description="Calculate maximum demand with BS 7671 diversity factors and supply adequacy assessment"
+    >
+      {/* Add Load Section */}
+      <div
+        className="space-y-4 p-4 rounded-xl border"
+        style={{
+          borderColor: `${config.gradientFrom}30`,
+          background: `${config.gradientFrom}08`,
+        }}
       >
-        {/* Add Load Section */}
-        <div
-          className="space-y-4 p-4 rounded-xl border"
-          style={{
-            borderColor: `${config.gradientFrom}30`,
-            background: `${config.gradientFrom}08`,
-          }}
-        >
-          <div className="flex items-center justify-between">
-            <h4 className="font-medium text-white flex items-center gap-2 text-sm">
-              <Calculator className="h-4 w-4" style={{ color: config.gradientFrom }} />
-              Load Configuration
-            </h4>
-            <Badge
-              variant="outline"
-              className="text-xs"
-              style={{ borderColor: `${config.gradientFrom}40`, color: config.gradientFrom }}
-            >
-              {loads.length} Load{loads.length !== 1 ? 's' : ''}
-            </Badge>
-          </div>
-
-          <CalculatorSelect
-            label="Add Load Type"
-            value=""
-            onChange={(value) => {
-              if (value) addLoad(value);
-            }}
-            options={loadTypeOptions}
-            placeholder="Select load type to add..."
-          />
+        <div className="flex items-center justify-between">
+          <h4 className="font-medium text-white flex items-center gap-2 text-sm">
+            <Calculator className="h-4 w-4" style={{ color: config.gradientFrom }} />
+            Load Configuration
+          </h4>
+          <span
+            className="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold border"
+            style={{ borderColor: `${config.gradientFrom}40`, color: config.gradientFrom }}
+          >
+            {loads.length} Load{loads.length !== 1 ? 's' : ''}
+          </span>
         </div>
 
-        {/* Loads List */}
-        <div className="space-y-3 max-h-96 overflow-y-auto pr-1">
-          {loads.map((load) => (
-            <div
-              key={load.id}
-              className={cn(
-                'p-4 rounded-xl border transition-colors',
-                errors[load.id] ? 'border-red-500/50 bg-red-500/5' : 'bg-white/5 border-white/10'
-              )}
-            >
-              <div className="space-y-3">
-                {/* Load Type and Remove Button */}
-                <div className="flex items-center gap-2">
-                  <div className="flex-1">
-                    <CalculatorSelect
-                      label="Load Type"
-                      value={load.loadType}
-                      onChange={(value) => updateLoad(load.id, 'loadType', value)}
-                      options={loadTypeOptions}
-                    />
-                  </div>
-                  {loads.length > 1 && (
-                    <button
-                      onClick={() => removeLoad(load.id)}
-                      className="p-2 rounded-lg hover:bg-white/10 text-white/70 hover:text-red-400 transition-colors touch-manipulation mt-6"
-                    >
-                      <Trash2 className="h-4 w-4" />
-                    </button>
-                  )}
+        <CalculatorSelect
+          label="Add Load Type"
+          value=""
+          onChange={(value) => {
+            if (value) addLoad(value);
+          }}
+          options={loadTypeOptions}
+          placeholder="Select load type to add..."
+        />
+      </div>
+
+      {/* Loads List */}
+      <div className="space-y-3 max-h-96 overflow-y-auto pr-1">
+        {loads.map((load) => (
+          <div
+            key={load.id}
+            className={cn(
+              'p-4 rounded-xl border transition-colors',
+              errors[load.id] ? 'border-red-500/50 bg-red-500/5' : 'bg-white/5 border-white/10'
+            )}
+          >
+            <div className="space-y-3">
+              {/* Load Type and Remove Button */}
+              <div className="flex items-center gap-2">
+                <div className="flex-1">
+                  <CalculatorSelect
+                    label="Load Type"
+                    value={load.loadType}
+                    onChange={(value) => updateLoad(load.id, 'loadType', value)}
+                    options={loadTypeOptions}
+                  />
                 </div>
-
-                {/* Power and Diversity Factor */}
-                <CalculatorInputGrid columns={2}>
-                  <CalculatorInput
-                    label="Power"
-                    unit="kW"
-                    type="text"
-                    inputMode="decimal"
-                    value={load.power}
-                    onChange={(value) => updateLoad(load.id, 'power', value)}
-                    placeholder="e.g. 3.0"
-                    error={errors[load.id]}
-                  />
-                  <CalculatorInput
-                    label="Diversity Factor"
-                    type="text"
-                    inputMode="decimal"
-                    value={load.diversityFactor}
-                    onChange={(value) => updateLoad(load.id, 'diversityFactor', value)}
-                    placeholder="0.0 - 1.0"
-                  />
-                </CalculatorInputGrid>
-
-                {/* Load Contribution */}
-                {parseFloat(load.power) > 0 && (
-                  <div
-                    className="text-xs p-2 rounded-lg"
-                    style={{ background: `${config.gradientFrom}10`, color: config.gradientFrom }}
+                {loads.length > 1 && (
+                  <button
+                    onClick={() => removeLoad(load.id)}
+                    className="p-2 rounded-lg hover:bg-white/10 text-white hover:text-red-400 transition-colors touch-manipulation mt-6"
                   >
-                    Contribution:{' '}
-                    {(
-                      (parseFloat(load.power) || 0) * (parseFloat(load.diversityFactor) || 0)
-                    ).toFixed(2)}{' '}
-                    kW
-                  </div>
+                    <Trash2 className="h-4 w-4" />
+                  </button>
                 )}
               </div>
-            </div>
-          ))}
-        </div>
 
-        {/* Calculate Actions */}
-        <CalculatorActions
-          category="power"
-          onCalculate={validateAndCalculate}
-          onReset={reset}
-          isDisabled={!loadsWithPower.length}
-        />
-      </CalculatorCard>
+              {/* Power and Diversity Factor */}
+              <CalculatorInputGrid columns={2}>
+                <CalculatorInput
+                  label="Power"
+                  unit="kW"
+                  type="text"
+                  inputMode="decimal"
+                  value={load.power}
+                  onChange={(value) => updateLoad(load.id, 'power', value)}
+                  placeholder="e.g. 3.0"
+                  error={errors[load.id]}
+                />
+                <CalculatorInput
+                  label="Diversity Factor"
+                  type="text"
+                  inputMode="decimal"
+                  value={load.diversityFactor}
+                  onChange={(value) => updateLoad(load.id, 'diversityFactor', value)}
+                  placeholder="0.0 - 1.0"
+                />
+              </CalculatorInputGrid>
+
+              {/* Load Contribution */}
+              {parseFloat(load.power) > 0 && (
+                <div
+                  className="text-xs p-2 rounded-lg"
+                  style={{ background: `${config.gradientFrom}10`, color: config.gradientFrom }}
+                >
+                  Contribution:{' '}
+                  {(
+                    (parseFloat(load.power) || 0) * (parseFloat(load.diversityFactor) || 0)
+                  ).toFixed(2)}{' '}
+                  kW
+                </div>
+              )}
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {/* Calculate Actions */}
+      <CalculatorActions
+        category="power"
+        onCalculate={validateAndCalculate}
+        onReset={reset}
+        isDisabled={!loadsWithPower.length}
+      />
 
       {/* Results */}
       {result && (
-        <div className="space-y-4 animate-fade-in">
-          {/* Main Results */}
-          <CalculatorResult category="power">
-            <div className="text-center pb-4 border-b border-white/10">
-              <p className="text-sm text-white/60 mb-1">Maximum Demand</p>
+        <>
+          <CalculatorDivider category="power" />
+
+          <div className="space-y-4 animate-fade-in">
+            {/* Status chip */}
+            <div className="flex items-center justify-between">
+              <span
+                className="inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-medium"
+                style={{
+                  backgroundColor: `${config.gradientFrom}15`,
+                  border: `1px solid ${config.gradientFrom}30`,
+                  color: config.gradientFrom,
+                }}
+              >
+                Demand Calculated
+              </span>
+            </div>
+
+            {/* Hero Value */}
+            <div className="rounded-xl p-4 bg-white/[0.04]">
+              <p className="text-sm text-white mb-1">Maximum Demand</p>
               <div
                 className="text-4xl font-bold bg-clip-text text-transparent"
                 style={{
@@ -347,7 +360,7 @@ const MaximumDemandCalculator = () => {
               >
                 {result.maximumDemand} kW
               </div>
-              <p className="text-sm text-white/80 mt-1">
+              <p className="text-sm text-white mt-1">
                 {(result.overallDiversityFactor * 100).toFixed(1)}% overall diversity
               </p>
             </div>
@@ -384,13 +397,15 @@ const MaximumDemandCalculator = () => {
                 size="sm"
               />
             </ResultsGrid>
-          </CalculatorResult>
+          </div>
+
+          <CalculatorDivider category="power" />
 
           {/* Supply Assessment */}
           {(() => {
             const supplyInfo = calculateSupplyRequirements(result.maximumDemand);
             return (
-              <div className="calculator-card p-4 space-y-3">
+              <div className="space-y-3">
                 <h4 className="font-medium text-white flex items-center gap-2 text-sm">
                   <Zap className="h-4 w-4" style={{ color: config.gradientFrom }} />
                   Supply Assessment
@@ -414,155 +429,164 @@ const MaximumDemandCalculator = () => {
             );
           })()}
 
+          <CalculatorDivider category="power" />
+
           {/* How It Worked Out - Collapsible */}
           <Collapsible open={showWorkings} onOpenChange={setShowWorkings}>
-            <div className="calculator-card overflow-hidden" style={{ borderColor: '#a78bfa15' }}>
-              <CollapsibleTrigger className="agent-collapsible-trigger w-full">
-                <div className="flex items-center gap-3">
-                  <Calculator className="h-4 w-4 text-purple-400" />
-                  <span className="text-sm sm:text-base font-medium text-purple-300">
-                    How It Worked Out
-                  </span>
-                </div>
-                <ChevronDown
-                  className={cn(
-                    'h-4 w-4 text-white/70 transition-transform duration-200',
-                    showWorkings && 'rotate-180'
-                  )}
-                />
-              </CollapsibleTrigger>
+            <CollapsibleTrigger className="calculator-collapsible-trigger w-full">
+              <div className="flex items-center gap-3">
+                <Calculator className="h-4 w-4 text-purple-400" />
+                <span className="text-sm sm:text-base font-medium text-white">
+                  How It Worked Out
+                </span>
+              </div>
+              <ChevronDown
+                className={cn(
+                  'h-4 w-4 text-white transition-transform duration-200',
+                  showWorkings && 'rotate-180'
+                )}
+              />
+            </CollapsibleTrigger>
 
-              <CollapsibleContent className="p-4 pt-0">
-                <div className="text-sm font-mono text-purple-300 space-y-3">
-                  <div>
-                    <p className="text-xs text-purple-400 mb-2">
-                      Step 1: Calculate each load contribution
-                    </p>
-                    {loadsWithPower.map((load) => (
-                      <div key={load.id} className="pl-3 border-l-2 border-purple-500/30 mb-1">
-                        {load.name}: {load.power}kW × {load.diversityFactor} ={' '}
-                        <span className="text-purple-200 font-bold">
-                          {(
-                            (parseFloat(load.power) || 0) * (parseFloat(load.diversityFactor) || 0)
-                          ).toFixed(2)}
-                          kW
-                        </span>
-                      </div>
-                    ))}
-                  </div>
-
-                  <div className="pt-2 border-t border-purple-500/20">
-                    <p className="text-xs text-purple-400 mb-1">Step 2: Sum all contributions</p>
-                    <p>
-                      MD ={' '}
-                      {loadsWithPower
-                        .map(
-                          (l) =>
-                            `${((parseFloat(l.power) || 0) * (parseFloat(l.diversityFactor) || 0)).toFixed(2)}`
-                        )
-                        .join(' + ')}
-                    </p>
-                    <p>
-                      MD ={' '}
-                      <span className="text-purple-200 font-bold">{result.maximumDemand}kW</span>
-                    </p>
-                  </div>
-
-                  <div className="pt-2 border-t border-purple-500/20">
-                    <p className="text-xs text-purple-400 mb-1">
-                      Step 3: Calculate current (230V single phase)
-                    </p>
-                    <p>I = (P × 1000) ÷ V</p>
-                    <p>I = ({result.maximumDemand} × 1000) ÷ 230</p>
-                    <p>
-                      I ={' '}
+            <CollapsibleContent className="pt-2">
+              <div className="text-sm font-mono text-purple-300 space-y-3 p-3 rounded-xl bg-purple-500/10 border border-purple-500/20">
+                <div>
+                  <p className="text-xs text-purple-400 mb-2">
+                    Step 1: Calculate each load contribution
+                  </p>
+                  {loadsWithPower.map((load) => (
+                    <div key={load.id} className="pl-3 border-l-2 border-purple-500/30 mb-1">
+                      {load.name}: {load.power}kW × {load.diversityFactor} ={' '}
                       <span className="text-purple-200 font-bold">
-                        {((result.maximumDemand * 1000) / 230).toFixed(1)}A
+                        {(
+                          (parseFloat(load.power) || 0) * (parseFloat(load.diversityFactor) || 0)
+                        ).toFixed(2)}
+                        kW
                       </span>
-                    </p>
-                  </div>
+                    </div>
+                  ))}
                 </div>
-              </CollapsibleContent>
-            </div>
+
+                <div className="pt-2 border-t border-purple-500/20">
+                  <p className="text-xs text-purple-400 mb-1">Step 2: Sum all contributions</p>
+                  <p>
+                    MD ={' '}
+                    {loadsWithPower
+                      .map(
+                        (l) =>
+                          `${((parseFloat(l.power) || 0) * (parseFloat(l.diversityFactor) || 0)).toFixed(2)}`
+                      )
+                      .join(' + ')}
+                  </p>
+                  <p>
+                    MD = <span className="text-purple-200 font-bold">{result.maximumDemand}kW</span>
+                  </p>
+                </div>
+
+                <div className="pt-2 border-t border-purple-500/20">
+                  <p className="text-xs text-purple-400 mb-1">
+                    Step 3: Calculate current (230V single phase)
+                  </p>
+                  <p>I = (P × 1000) ÷ V</p>
+                  <p>I = ({result.maximumDemand} × 1000) ÷ 230</p>
+                  <p>
+                    I ={' '}
+                    <span className="text-purple-200 font-bold">
+                      {((result.maximumDemand * 1000) / 230).toFixed(1)}A
+                    </span>
+                  </p>
+                </div>
+              </div>
+            </CollapsibleContent>
           </Collapsible>
 
           {/* What This Means - Collapsible */}
           <Collapsible open={showGuidance} onOpenChange={setShowGuidance}>
-            <div className="calculator-card overflow-hidden" style={{ borderColor: '#60a5fa15' }}>
-              <CollapsibleTrigger className="agent-collapsible-trigger w-full">
-                <div className="flex items-center gap-3">
-                  <Info className="h-4 w-4 text-blue-400" />
-                  <span className="text-sm sm:text-base font-medium text-blue-300">
-                    What This Means
-                  </span>
-                </div>
-                <ChevronDown
-                  className={cn(
-                    'h-4 w-4 text-white/70 transition-transform duration-200',
-                    showGuidance && 'rotate-180'
-                  )}
-                />
-              </CollapsibleTrigger>
+            <CollapsibleTrigger className="calculator-collapsible-trigger w-full">
+              <div className="flex items-center gap-3">
+                <Info className="h-4 w-4 text-blue-400" />
+                <span className="text-sm sm:text-base font-medium text-white">What This Means</span>
+              </div>
+              <ChevronDown
+                className={cn(
+                  'h-4 w-4 text-white transition-transform duration-200',
+                  showGuidance && 'rotate-180'
+                )}
+              />
+            </CollapsibleTrigger>
 
-              <CollapsibleContent className="p-4 pt-0 space-y-2">
-                <p className="text-sm text-blue-200/80">
-                  <strong className="text-blue-300">Maximum Demand:</strong> The calculated peak
-                  load after applying diversity factors based on realistic usage patterns.
-                </p>
-                <p className="text-sm text-blue-200/80">
-                  <strong className="text-blue-300">Diversity Factor:</strong> Accounts for the fact
-                  that not all loads operate at full capacity simultaneously. Lower factors = more
-                  diversity.
-                </p>
-                <p className="text-sm text-blue-200/80">
-                  <strong className="text-blue-300">Supply Assessment:</strong> Helps determine if
-                  your electrical supply is adequate for the calculated demand.
-                </p>
-              </CollapsibleContent>
-            </div>
+            <CollapsibleContent className="pt-2">
+              <div className="space-y-3 pl-1">
+                <div className="border-l-2 border-blue-400/40 pl-3">
+                  <p className="text-sm text-white">
+                    <strong className="text-blue-300">Maximum Demand:</strong> The calculated peak
+                    load after applying diversity factors based on realistic usage patterns.
+                  </p>
+                </div>
+                <div className="border-l-2 border-blue-400/40 pl-3">
+                  <p className="text-sm text-white">
+                    <strong className="text-blue-300">Diversity Factor:</strong> Accounts for the
+                    fact that not all loads operate at full capacity simultaneously. Lower factors =
+                    more diversity.
+                  </p>
+                </div>
+                <div className="border-l-2 border-blue-400/40 pl-3">
+                  <p className="text-sm text-white">
+                    <strong className="text-blue-300">Supply Assessment:</strong> Helps determine if
+                    your electrical supply is adequate for the calculated demand.
+                  </p>
+                </div>
+              </div>
+            </CollapsibleContent>
           </Collapsible>
 
           {/* BS 7671 Guidance - Collapsible */}
           <Collapsible open={showBsRegs} onOpenChange={setShowBsRegs}>
-            <div className="calculator-card overflow-hidden" style={{ borderColor: '#fbbf2415' }}>
-              <CollapsibleTrigger className="agent-collapsible-trigger w-full">
-                <div className="flex items-center gap-3">
-                  <BookOpen className="h-4 w-4 text-amber-400" />
-                  <span className="text-sm sm:text-base font-medium text-amber-300">
-                    BS 7671 Regs at a Glance
-                  </span>
-                </div>
-                <ChevronDown
-                  className={cn(
-                    'h-4 w-4 text-white/70 transition-transform duration-200',
-                    showBsRegs && 'rotate-180'
-                  )}
-                />
-              </CollapsibleTrigger>
+            <CollapsibleTrigger className="calculator-collapsible-trigger w-full">
+              <div className="flex items-center gap-3">
+                <BookOpen className="h-4 w-4 text-amber-400" />
+                <span className="text-sm sm:text-base font-medium text-white">
+                  BS 7671 Regs at a Glance
+                </span>
+              </div>
+              <ChevronDown
+                className={cn(
+                  'h-4 w-4 text-white transition-transform duration-200',
+                  showBsRegs && 'rotate-180'
+                )}
+              />
+            </CollapsibleTrigger>
 
-              <CollapsibleContent className="p-4 pt-0">
-                <div className="space-y-2 text-sm text-amber-200/80">
-                  <p>
-                    • <strong className="text-amber-300">311.1:</strong> Assessment of maximum
-                    demand shall take diversity into account
+            <CollapsibleContent className="pt-2">
+              <div className="space-y-3 pl-1">
+                <div className="border-l-2 border-amber-400/40 pl-3">
+                  <p className="text-sm text-white">
+                    <strong className="text-amber-300">311.1:</strong> Assessment of maximum demand
+                    shall take diversity into account
                   </p>
-                  <p>
-                    • <strong className="text-amber-300">Appendix 1:</strong> Guidance on diversity
+                </div>
+                <div className="border-l-2 border-amber-400/40 pl-3">
+                  <p className="text-sm text-white">
+                    <strong className="text-amber-300">Appendix 1:</strong> Guidance on diversity
                     factors for different installation types
                   </p>
-                  <p>
-                    • <strong className="text-amber-300">433.1:</strong> Overcurrent protection
+                </div>
+                <div className="border-l-2 border-amber-400/40 pl-3">
+                  <p className="text-sm text-white">
+                    <strong className="text-amber-300">433.1:</strong> Overcurrent protection
                     coordination with calculated demand
                   </p>
-                  <p>
-                    • <strong className="text-amber-300">314.1:</strong> Division of installation
+                </div>
+                <div className="border-l-2 border-amber-400/40 pl-3">
+                  <p className="text-sm text-white">
+                    <strong className="text-amber-300">314.1:</strong> Division of installation
                     relative to the maximum demand
                   </p>
                 </div>
-              </CollapsibleContent>
-            </div>
+              </div>
+            </CollapsibleContent>
           </Collapsible>
-        </div>
+        </>
       )}
 
       {/* Formula Reference */}
@@ -575,7 +599,7 @@ const MaximumDemandCalculator = () => {
           </p>
         </div>
       </div>
-    </div>
+    </CalculatorCard>
   );
 };
 

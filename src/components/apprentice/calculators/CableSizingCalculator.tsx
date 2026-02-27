@@ -1,4 +1,4 @@
-import { Sigma, Zap, Info } from 'lucide-react';
+import { Zap } from 'lucide-react';
 import { useCableSizing } from './cable-sizing/useCableSizing';
 import CableSizingForm from './cable-sizing/CableSizingInputs';
 import CableSizingResult from './cable-sizing/CableSizingResult';
@@ -8,8 +8,6 @@ import CalculationReport from './CalculationReport';
 import { useToast } from '@/hooks/use-toast';
 import { useEffect, useState, useMemo } from 'react';
 import { SimpleValidator, SimpleValidationResult } from '@/services/simplifiedValidation';
-import { Alert, AlertDescription } from '@/components/ui/alert';
-import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import {
   CalculatorCard,
@@ -33,8 +31,8 @@ const phaseOptions = [
 const CableSizingCalculator = () => {
   const { toast } = useToast();
   const [validation, setValidation] = useState<SimpleValidationResult | null>(null);
-  const [calculationInputs, setCalculationInputs] = useState<any>({});
-  const [calculationResults, setCalculationResults] = useState<any>({});
+  const [calculationInputs, setCalculationInputs] = useState<Record<string, unknown>>({});
+  const [calculationResults, setCalculationResults] = useState<Record<string, unknown>>({});
   const config = CALCULATOR_CONFIG['cable'];
 
   // Load/Current input mode
@@ -92,8 +90,8 @@ const CableSizingCalculator = () => {
     if (result.recommendedCable && !result.errors) {
       const current = parseFloat(inputs.current);
       const length = parseFloat(inputs.length);
-      const ambientTemp = parseFloat((inputs as any).ambientTemp || '30');
-      const cableGrouping = parseInt((inputs as any).cableGrouping || '1');
+      const ambientTemp = parseFloat(inputs.ambientTemp || '30');
+      const cableGrouping = parseInt(inputs.cableGrouping || '1');
 
       const safetyValidation = SimpleValidator.validateCableSizing(
         current,
@@ -112,8 +110,8 @@ const CableSizingCalculator = () => {
         cableGrouping,
         installationType: inputs.installationType,
         cableType: inputs.cableType,
-        loadType: (inputs as any).loadType || 'resistive',
-        diversityFactor: parseFloat((inputs as any).diversityFactor || '1.0'),
+        loadType: inputs.loadType || 'resistive',
+        diversityFactor: parseFloat(inputs.diversityFactor || '1.0'),
       });
 
       setCalculationResults({
@@ -189,16 +187,6 @@ const CableSizingCalculator = () => {
         title="Cable Sizing Calculator"
         description="Professional cable sizing with BS 7671 compliance validation"
       >
-        <div className="flex items-center justify-end">
-          <Badge
-            variant="outline"
-            className="text-xs"
-            style={{ borderColor: `${config.gradientFrom}40`, color: config.gradientFrom }}
-          >
-            BS 7671
-          </Badge>
-        </div>
-
         <div className="space-y-6">
           {/* Input Mode Selector */}
           <div className="space-y-3">
@@ -214,7 +202,7 @@ const CableSizingCalculator = () => {
               onValueChange={(v) => setInputMode(v as 'current' | 'load')}
               className="w-full"
             >
-              <TabsList className="grid w-full grid-cols-2 h-12 bg-white/5 rounded-xl p-1">
+              <TabsList className="grid w-full grid-cols-2 h-12 bg-white/[0.04] rounded-xl p-1">
                 <TabsTrigger
                   value="current"
                   className="text-sm font-semibold rounded-lg data-[state=active]:bg-emerald-500/20 data-[state=active]:text-emerald-400"
@@ -299,7 +287,7 @@ const CableSizingCalculator = () => {
                   <div className="text-2xl font-bold" style={{ color: config.gradientFrom }}>
                     {calculatedCurrent}A
                   </div>
-                  <p className="text-xs text-white/80 mt-1">
+                  <p className="text-xs text-white mt-1">
                     {phases === 'single' ? 'I = P / (V × PF)' : 'I = P / (√3 × V × PF)'}
                   </p>
                 </div>
@@ -313,7 +301,7 @@ const CableSizingCalculator = () => {
               errors={result.errors}
               uiSelections={uiSelections}
               updateInput={updateInput}
-              setInstallationType={(type: string) => setInstallationType(type as any)}
+              setInstallationType={(type: string) => setInstallationType(type)}
               setCableType={setCableType}
               calculateCableSize={handleCalculate}
               resetCalculator={handleReset}

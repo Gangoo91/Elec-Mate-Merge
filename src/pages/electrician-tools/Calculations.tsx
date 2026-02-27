@@ -219,13 +219,13 @@ const Calculations = () => {
               <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-white">
                 Electrical Calculations
               </h1>
-              <p className="text-sm text-white/60">BS 7671 compliant professional tools</p>
+              <p className="text-sm text-white">BS 7671 compliant professional tools</p>
             </div>
           </div>
           <Link to="/electrician">
             <Button
               variant="outline"
-              className="h-11 px-4 border-white/20 text-white/70 hover:text-white hover:bg-white/10 gap-2 touch-manipulation active:scale-[0.98]"
+              className="h-11 px-4 border-white/20 text-white hover:bg-white/10 gap-2 touch-manipulation active:scale-[0.98]"
             >
               <ArrowLeft className="h-5 w-5" />
               Back to Hub
@@ -234,12 +234,7 @@ const Calculations = () => {
         </header>
 
         {/* Calculator Selector */}
-        <div className="bg-white/5 backdrop-blur-sm rounded-xl border border-white/10 p-4 sm:p-6">
-          <CalculatorSelector
-            calculatorType={calculatorType}
-            setCalculatorType={setCalculatorType}
-          />
-        </div>
+        <CalculatorSelector calculatorType={calculatorType} setCalculatorType={setCalculatorType} />
 
         {/* Dynamic Calculator */}
         <div className="w-full">{renderCalculator()}</div>

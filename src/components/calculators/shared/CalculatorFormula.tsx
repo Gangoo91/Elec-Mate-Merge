@@ -33,9 +33,9 @@ export const CalculatorFormula = ({
     <Collapsible open={isOpen} onOpenChange={setIsOpen} className={className}>
       <CollapsibleTrigger
         className={cn(
-          'flex items-center justify-between w-full py-2.5 px-3 rounded-lg',
-          'text-sm font-medium text-white/60 hover:text-white/80',
-          'hover:bg-white/5 transition-all'
+          'flex items-center justify-between w-full min-h-11 py-2.5 px-3 rounded-lg',
+          'text-sm font-medium text-white',
+          'hover:bg-white/5 transition-all touch-manipulation'
         )}
       >
         <div className="flex items-center gap-2">
@@ -51,7 +51,7 @@ export const CalculatorFormula = ({
         <div
           className="rounded-xl border p-3 space-y-3"
           style={{
-            borderColor: `${config.gradientFrom}20`,
+            borderColor: `${config.gradientFrom}15`,
             background: `${config.gradientFrom}05`,
           }}
         >
@@ -104,11 +104,11 @@ const FormulaStepItem = ({ step, stepNumber, category, isLast = false }: Formula
 
         <div className="flex-1 min-w-0 space-y-1">
           {/* Step label */}
-          <p className="text-sm font-medium text-white/80">{step.label}</p>
+          <p className="text-sm font-medium text-white">{step.label}</p>
 
           {/* Formula (code-like display) */}
           {step.formula && (
-            <code className="block text-xs px-2.5 py-1.5 rounded-lg bg-black/30 text-white/70 font-mono overflow-x-auto">
+            <code className="block text-xs px-2.5 py-1.5 rounded-lg bg-black/30 text-white font-mono overflow-x-auto">
               {step.formula}
             </code>
           )}
@@ -121,7 +121,7 @@ const FormulaStepItem = ({ step, stepNumber, category, isLast = false }: Formula
           )}
 
           {/* Description */}
-          {step.description && <p className="text-xs text-white/50">{step.description}</p>}
+          {step.description && <p className="text-xs text-white">{step.description}</p>}
         </div>
       </div>
     </div>
@@ -139,7 +139,7 @@ export const InlineFormula = ({ formula, className }: InlineFormulaProps) => {
     <code
       className={cn(
         'inline-flex items-center gap-1.5 px-2 py-0.5 rounded-md',
-        'bg-white/10 text-white/70 text-xs font-mono',
+        'bg-white/10 text-white text-xs font-mono',
         className
       )}
     >
@@ -171,17 +171,17 @@ export const FormulaReference = ({
     <div
       className={cn('rounded-xl border p-4 space-y-3', className)}
       style={{
-        borderColor: `${config.gradientFrom}20`,
+        borderColor: `${config.gradientFrom}15`,
         background: `${config.gradientFrom}05`,
       }}
     >
       <div className="flex items-center gap-2">
         <BookOpen className="h-4 w-4" style={{ color: config.gradientFrom }} />
-        <span className="text-sm font-medium text-white/80">{name}</span>
+        <span className="text-sm font-medium text-white">{name}</span>
       </div>
 
       <div className="text-center py-3 px-4 rounded-lg bg-black/30">
-        <code className="text-lg sm:text-xl font-mono text-white/90">{formula}</code>
+        <code className="text-lg sm:text-xl font-mono text-white">{formula}</code>
       </div>
 
       {variables && variables.length > 0 && (
@@ -194,7 +194,7 @@ export const FormulaReference = ({
               >
                 {variable.symbol}
               </code>
-              <span className="text-white/50">= {variable.description}</span>
+              <span className="text-white">= {variable.description}</span>
             </div>
           ))}
         </div>

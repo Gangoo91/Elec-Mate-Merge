@@ -1,21 +1,13 @@
 import { useState, useMemo } from 'react';
-import {
-  Zap,
-  Info,
-  BookOpen,
-  ChevronDown,
-  PoundSterling,
-  AlertTriangle,
-  CheckCircle,
-} from 'lucide-react';
+import { Zap, Info, BookOpen, ChevronDown, PoundSterling, AlertTriangle } from 'lucide-react';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { cn } from '@/lib/utils';
 import {
   CalculatorCard,
+  CalculatorDivider,
   CalculatorInput,
   CalculatorSelect,
   CalculatorActions,
-  CalculatorResult,
   ResultValue,
   ResultsGrid,
   CALCULATOR_CONFIG,
@@ -59,6 +51,7 @@ const PowerFactorCorrectionCalculator = () => {
   const [reactiveCharge, setReactiveCharge] = useState<string>('0.005');
   const [operatingHours, setOperatingHours] = useState<string>('2000');
 
+  const [showCostInputs, setShowCostInputs] = useState(false);
   const [showGuidance, setShowGuidance] = useState(false);
   const [showReference, setShowReference] = useState(false);
 
@@ -196,140 +189,154 @@ const PowerFactorCorrectionCalculator = () => {
   ];
 
   return (
-    <div className="space-y-4">
-      <CalculatorCard
+    <CalculatorCard
+      category="power"
+      title="Power Factor Correction"
+      description="Calculate capacitor bank sizing for power factor improvement"
+    >
+      {/* Input Method */}
+      <CalculatorSelect
+        label="Input Method"
+        value={inputMethod}
+        onChange={(v) => setInputMethod(v as 'kw-pf' | 'kva-kvar')}
+        options={inputMethodOptions}
+      />
+
+      {/* Inputs based on method */}
+      {inputMethod === 'kw-pf' ? (
+        <>
+          <CalculatorInput
+            label="Real Power (kW)"
+            unit="kW"
+            type="text"
+            inputMode="decimal"
+            value={realPower}
+            onChange={setRealPower}
+            placeholder="e.g., 100"
+            hint="From energy meter or load calculation"
+          />
+          <CalculatorInput
+            label="Current Power Factor"
+            type="text"
+            inputMode="decimal"
+            value={currentPowerFactor}
+            onChange={setCurrentPowerFactor}
+            placeholder="e.g., 0.75"
+            hint="Lagging (typical industrial: 0.7-0.85)"
+          />
+        </>
+      ) : (
+        <>
+          <CalculatorInput
+            label="Apparent Power (kVA)"
+            unit="kVA"
+            type="text"
+            inputMode="decimal"
+            value={currentKVA}
+            onChange={setCurrentKVA}
+            placeholder="e.g., 133"
+          />
+          <CalculatorInput
+            label="Reactive Power (kVAR)"
+            unit="kVAR"
+            type="text"
+            inputMode="decimal"
+            value={currentKVAR}
+            onChange={setCurrentKVAR}
+            placeholder="e.g., 88"
+          />
+        </>
+      )}
+
+      {/* Target PF */}
+      <CalculatorSelect
+        label="Target Power Factor"
+        value={targetPowerFactor}
+        onChange={setTargetPowerFactor}
+        options={targetPFOptions}
+      />
+
+      {/* Optional: Cost analysis inputs */}
+      <Collapsible open={showCostInputs} onOpenChange={setShowCostInputs}>
+        <CollapsibleTrigger className="calculator-collapsible-trigger w-full">
+          <div className="flex items-center gap-2">
+            <PoundSterling className="h-4 w-4 text-amber-400" />
+            <span className="text-sm text-white">Cost Analysis (Optional)</span>
+          </div>
+          <ChevronDown
+            className={cn(
+              'h-4 w-4 text-white transition-transform duration-200',
+              showCostInputs && 'rotate-180'
+            )}
+          />
+        </CollapsibleTrigger>
+        <CollapsibleContent className="space-y-3 p-3 mt-2 rounded-xl bg-white/[0.04] border border-white/5">
+          <div className="grid grid-cols-2 gap-3">
+            <CalculatorInput
+              label="Supply Voltage"
+              unit="V"
+              type="text"
+              inputMode="decimal"
+              value={supplyVoltage}
+              onChange={setSupplyVoltage}
+              placeholder="400"
+            />
+            <CalculatorInput
+              label="Operating Hours"
+              unit="hrs/yr"
+              type="text"
+              inputMode="numeric"
+              value={operatingHours}
+              onChange={setOperatingHours}
+              placeholder="2000"
+            />
+          </div>
+          <CalculatorInput
+            label="Reactive Power Charge"
+            unit="£/kVARh"
+            type="text"
+            inputMode="decimal"
+            value={reactiveCharge}
+            onChange={setReactiveCharge}
+            placeholder="0.005"
+            hint="Check your electricity bill for reactive charges"
+          />
+        </CollapsibleContent>
+      </Collapsible>
+
+      <CalculatorActions
         category="power"
-        title="Power Factor Correction"
-        description="Calculate capacitor bank sizing for power factor improvement"
-        badge="kVAr"
-      >
-        {/* Input Method */}
-        <CalculatorSelect
-          label="Input Method"
-          value={inputMethod}
-          onChange={(v) => setInputMethod(v as 'kw-pf' | 'kva-kvar')}
-          options={inputMethodOptions}
-        />
-
-        {/* Inputs based on method */}
-        {inputMethod === 'kw-pf' ? (
-          <>
-            <CalculatorInput
-              label="Real Power (kW)"
-              unit="kW"
-              type="text"
-              inputMode="decimal"
-              value={realPower}
-              onChange={setRealPower}
-              placeholder="e.g., 100"
-              hint="From energy meter or load calculation"
-            />
-            <CalculatorInput
-              label="Current Power Factor"
-              type="text"
-              inputMode="decimal"
-              value={currentPowerFactor}
-              onChange={setCurrentPowerFactor}
-              placeholder="e.g., 0.75"
-              hint="Lagging (typical industrial: 0.7-0.85)"
-            />
-          </>
-        ) : (
-          <>
-            <CalculatorInput
-              label="Apparent Power (kVA)"
-              unit="kVA"
-              type="text"
-              inputMode="decimal"
-              value={currentKVA}
-              onChange={setCurrentKVA}
-              placeholder="e.g., 133"
-            />
-            <CalculatorInput
-              label="Reactive Power (kVAR)"
-              unit="kVAR"
-              type="text"
-              inputMode="decimal"
-              value={currentKVAR}
-              onChange={setCurrentKVAR}
-              placeholder="e.g., 88"
-            />
-          </>
-        )}
-
-        {/* Target PF */}
-        <CalculatorSelect
-          label="Target Power Factor"
-          value={targetPowerFactor}
-          onChange={setTargetPowerFactor}
-          options={targetPFOptions}
-        />
-
-        {/* Optional: Cost analysis inputs */}
-        <Collapsible>
-          <CollapsibleTrigger className="w-full flex items-center justify-between p-3 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 transition-colors touch-manipulation">
-            <div className="flex items-center gap-2">
-              <PoundSterling className="h-4 w-4 text-amber-400" />
-              <span className="text-sm text-white/80">Cost Analysis (Optional)</span>
-            </div>
-            <ChevronDown className="h-4 w-4 text-white/70" />
-          </CollapsibleTrigger>
-          <CollapsibleContent className="space-y-3 p-3 mt-2 rounded-xl bg-white/5 border border-white/10">
-            <div className="grid grid-cols-2 gap-3">
-              <CalculatorInput
-                label="Supply Voltage"
-                unit="V"
-                type="text"
-                inputMode="decimal"
-                value={supplyVoltage}
-                onChange={setSupplyVoltage}
-                placeholder="400"
-              />
-              <CalculatorInput
-                label="Operating Hours"
-                unit="hrs/yr"
-                type="text"
-                inputMode="numeric"
-                value={operatingHours}
-                onChange={setOperatingHours}
-                placeholder="2000"
-              />
-            </div>
-            <CalculatorInput
-              label="Reactive Power Charge"
-              unit="£/kVARh"
-              type="text"
-              inputMode="decimal"
-              value={reactiveCharge}
-              onChange={setReactiveCharge}
-              placeholder="0.005"
-              hint="Check your electricity bill for reactive charges"
-            />
-          </CollapsibleContent>
-        </Collapsible>
-
-        <CalculatorActions
-          category="power"
-          onCalculate={() => {}}
-          onReset={reset}
-          isDisabled={!hasValidInputs()}
-          calculateLabel="Live Results Below"
-        />
-      </CalculatorCard>
+        onCalculate={() => {}}
+        onReset={reset}
+        isDisabled={!hasValidInputs()}
+        calculateLabel="Live Results Below"
+      />
 
       {/* Results */}
       {result && (
-        <div className="space-y-4 animate-fade-in">
-          <CalculatorResult category="power">
-            <div className="flex items-center justify-between pb-3 border-b border-white/10">
-              <span className="text-sm text-white/60">Capacitor Bank Required</span>
-              <span className="text-sm font-medium text-green-400">
-                {result.stagesRecommended > 1 ? `${result.stagesRecommended} stages` : 'Fixed'}
+        <>
+          <CalculatorDivider category="power" />
+
+          <div className="space-y-4 animate-fade-in">
+            {/* Status chip */}
+            <div className="flex items-center justify-between">
+              <span
+                className="inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-medium"
+                style={{
+                  backgroundColor: `${config.gradientFrom}15`,
+                  border: `1px solid ${config.gradientFrom}30`,
+                  color: config.gradientFrom,
+                }}
+              >
+                {result.stagesRecommended > 1
+                  ? `${result.stagesRecommended}-Stage Automatic`
+                  : 'Fixed Correction'}
               </span>
             </div>
 
-            <div className="text-center py-4">
-              <p className="text-sm text-white/60 mb-1">Required Correction</p>
+            {/* Hero value */}
+            <div className="p-4 rounded-xl bg-white/[0.04] border border-white/5 text-center">
+              <p className="text-sm text-white mb-1">Required Correction</p>
               <div
                 className="text-4xl font-bold bg-clip-text text-transparent"
                 style={{
@@ -338,7 +345,7 @@ const PowerFactorCorrectionCalculator = () => {
               >
                 {result.requiredKVAR.toFixed(1)} kVAR
               </div>
-              <p className="text-sm text-white/80 mt-1">
+              <p className="text-sm text-white mt-1">
                 Nearest standard: {result.capacitorBankSize} kVAR
               </p>
             </div>
@@ -372,79 +379,81 @@ const PowerFactorCorrectionCalculator = () => {
               />
             </ResultsGrid>
 
-            {/* Savings */}
+            {/* Benefits */}
             <div className="pt-3 mt-3 border-t border-white/10">
-              <p className="text-xs text-white/80 mb-2">Benefits</p>
+              <p className="text-xs text-white mb-2">Benefits</p>
               <div className="grid grid-cols-2 gap-2">
-                <div className="p-2 rounded-lg bg-green-500/10 border border-green-500/20">
-                  <p className="text-xs text-green-400/70">kVA Reduction</p>
+                <div className="p-2 rounded-lg bg-white/[0.04] border border-white/5">
+                  <p className="text-xs text-white">kVA Reduction</p>
                   <p className="text-sm font-semibold text-green-400">
                     {result.percentageReduction.toFixed(1)}%
                   </p>
                 </div>
-                <div className="p-2 rounded-lg bg-green-500/10 border border-green-500/20">
-                  <p className="text-xs text-green-400/70">Current Saved</p>
+                <div className="p-2 rounded-lg bg-white/[0.04] border border-white/5">
+                  <p className="text-xs text-white">Current Saved</p>
                   <p className="text-sm font-semibold text-green-400">
                     {result.currentSaved.toFixed(1)} A
                   </p>
                 </div>
               </div>
               {result.annualSavings > 0 && (
-                <div className="mt-2 p-2 rounded-lg bg-amber-500/10 border border-amber-500/20">
-                  <p className="text-xs text-amber-400/70">Estimated Annual Savings</p>
-                  <p className="text-lg font-semibold text-amber-400">
+                <div className="mt-2 p-2 rounded-lg bg-white/[0.04] border border-white/5">
+                  <p className="text-xs text-white">Estimated Annual Savings</p>
+                  <p className="text-lg font-semibold" style={{ color: config.gradientFrom }}>
                     £{result.annualSavings.toFixed(0)}/year
                   </p>
                 </div>
               )}
             </div>
-          </CalculatorResult>
+          </div>
 
           {/* Warnings */}
           {result.warnings.length > 0 && (
-            <div className="p-4 rounded-xl bg-orange-500/10 border border-orange-500/30">
-              <div className="flex items-start gap-3">
-                <AlertTriangle className="h-5 w-5 text-orange-400 mt-0.5 shrink-0" />
-                <div className="space-y-1">
-                  {result.warnings.map((warning, idx) => (
-                    <p key={idx} className="text-sm text-orange-200/80">
-                      {warning}
-                    </p>
-                  ))}
+            <>
+              <CalculatorDivider category="power" />
+              <div className="p-4 rounded-xl bg-orange-500/10 border border-orange-500/30">
+                <div className="flex items-start gap-3">
+                  <AlertTriangle className="h-5 w-5 text-orange-400 mt-0.5 shrink-0" />
+                  <div className="space-y-1">
+                    {result.warnings.map((warning, idx) => (
+                      <p key={idx} className="text-sm text-white">
+                        {warning}
+                      </p>
+                    ))}
+                  </div>
                 </div>
               </div>
-            </div>
+            </>
           )}
 
           {/* Specification */}
-          <div className="calculator-card p-4">
+          <CalculatorDivider category="power" />
+          <div className="p-4 rounded-xl bg-white/[0.04] border border-white/5">
             <div className="flex items-center gap-2 mb-3">
-              <Zap className="h-4 w-4 text-amber-400" />
-              <span className="text-sm font-medium text-white/80">
-                Capacitor Bank Specification
-              </span>
+              <Zap className="h-4 w-4" style={{ color: config.gradientFrom }} />
+              <span className="text-sm font-medium text-white">Capacitor Bank Specification</span>
             </div>
             <div className="space-y-2 text-sm">
-              <div className="flex justify-between p-2 rounded-lg bg-white/5">
-                <span className="text-white/60">Total kVAR</span>
+              <div className="flex justify-between p-2 rounded-lg bg-white/[0.04]">
+                <span className="text-white">Total kVAR</span>
                 <span className="text-white font-medium">{result.capacitorBankSize} kVAR</span>
               </div>
-              <div className="flex justify-between p-2 rounded-lg bg-white/5">
-                <span className="text-white/60">System Voltage</span>
+              <div className="flex justify-between p-2 rounded-lg bg-white/[0.04]">
+                <span className="text-white">System Voltage</span>
                 <span className="text-white font-medium">
                   {supplyVoltage}V {phases === '3' ? '3-phase' : '1-phase'}
                 </span>
               </div>
-              <div className="flex justify-between p-2 rounded-lg bg-white/5">
-                <span className="text-white/60">Switching</span>
+              <div className="flex justify-between p-2 rounded-lg bg-white/[0.04]">
+                <span className="text-white">Switching</span>
                 <span className="text-white font-medium">
                   {result.stagesRecommended === 1
                     ? 'Fixed'
                     : `Automatic ${result.stagesRecommended}-stage`}
                 </span>
               </div>
-              <div className="flex justify-between p-2 rounded-lg bg-white/5">
-                <span className="text-white/60">Detuning</span>
+              <div className="flex justify-between p-2 rounded-lg bg-white/[0.04]">
+                <span className="text-white">Detuning</span>
                 <span className="text-white font-medium">7% reactor recommended</span>
               </div>
             </div>
@@ -452,116 +461,120 @@ const PowerFactorCorrectionCalculator = () => {
 
           {/* How It Worked Out */}
           <Collapsible open={showGuidance} onOpenChange={setShowGuidance}>
-            <div className="calculator-card overflow-hidden" style={{ borderColor: '#60a5fa15' }}>
-              <CollapsibleTrigger className="agent-collapsible-trigger w-full">
-                <div className="flex items-center gap-3">
-                  <Info className="h-4 w-4 text-blue-400" />
-                  <span className="text-sm sm:text-base font-medium text-blue-300">
-                    How It Worked Out
-                  </span>
-                </div>
-                <ChevronDown
-                  className={cn(
-                    'h-4 w-4 text-white/70 transition-transform duration-200',
-                    showGuidance && 'rotate-180'
-                  )}
-                />
-              </CollapsibleTrigger>
+            <CollapsibleTrigger className="calculator-collapsible-trigger w-full">
+              <div className="flex items-center gap-3">
+                <Info className="h-4 w-4 text-blue-400" />
+                <span className="text-sm sm:text-base font-medium text-white">
+                  How It Worked Out
+                </span>
+              </div>
+              <ChevronDown
+                className={cn(
+                  'h-4 w-4 text-white transition-transform duration-200',
+                  showGuidance && 'rotate-180'
+                )}
+              />
+            </CollapsibleTrigger>
 
-              <CollapsibleContent className="p-4 pt-0">
-                <div className="space-y-3 text-sm">
-                  <div className="p-3 rounded-lg bg-white/5">
-                    <p className="text-white/60 mb-1">Power triangle relationship</p>
-                    <p className="text-white font-mono text-xs">kVA² = kW² + kVAR²</p>
-                  </div>
-                  <div className="p-3 rounded-lg bg-white/5">
-                    <p className="text-white/60 mb-1">Required correction</p>
-                    <p className="text-white font-mono text-xs">
-                      kVAR correction = kVAR current - kVAR target
-                    </p>
-                    <p className="text-white/80 text-xs mt-1">
-                      = {result.currentKVAR.toFixed(1)} - {result.targetKVAR.toFixed(1)} ={' '}
-                      {result.requiredKVAR.toFixed(1)} kVAR
-                    </p>
-                  </div>
-                  <div className="p-3 rounded-lg bg-white/5">
-                    <p className="text-white/60 mb-1">kVAR at target PF</p>
-                    <p className="text-white/80 text-xs">
-                      tan(arccos({result.targetPF})) × {result.currentKW.toFixed(1)} kW ={' '}
-                      {result.targetKVAR.toFixed(1)} kVAR
-                    </p>
-                  </div>
+            <CollapsibleContent className="p-4 pt-2">
+              <div className="space-y-3 text-sm">
+                <div
+                  className="p-3 rounded-lg bg-white/[0.04] border-l-2"
+                  style={{ borderLeftColor: config.gradientFrom }}
+                >
+                  <p className="text-white mb-1">Power triangle relationship</p>
+                  <p className="text-white font-mono text-xs">kVA² = kW² + kVAR²</p>
                 </div>
-              </CollapsibleContent>
-            </div>
+                <div
+                  className="p-3 rounded-lg bg-white/[0.04] border-l-2"
+                  style={{ borderLeftColor: config.gradientFrom }}
+                >
+                  <p className="text-white mb-1">Required correction</p>
+                  <p className="text-white font-mono text-xs">
+                    kVAR correction = kVAR current - kVAR target
+                  </p>
+                  <p className="text-white text-xs mt-1">
+                    = {result.currentKVAR.toFixed(1)} - {result.targetKVAR.toFixed(1)} ={' '}
+                    {result.requiredKVAR.toFixed(1)} kVAR
+                  </p>
+                </div>
+                <div
+                  className="p-3 rounded-lg bg-white/[0.04] border-l-2"
+                  style={{ borderLeftColor: config.gradientFrom }}
+                >
+                  <p className="text-white mb-1">kVAR at target PF</p>
+                  <p className="text-white text-xs">
+                    tan(arccos({result.targetPF})) × {result.currentKW.toFixed(1)} kW ={' '}
+                    {result.targetKVAR.toFixed(1)} kVAR
+                  </p>
+                </div>
+              </div>
+            </CollapsibleContent>
           </Collapsible>
-        </div>
+        </>
       )}
 
-      {/* Reference */}
+      {/* Reference — always visible */}
       <Collapsible open={showReference} onOpenChange={setShowReference}>
-        <div className="calculator-card overflow-hidden" style={{ borderColor: '#fbbf2415' }}>
-          <CollapsibleTrigger className="agent-collapsible-trigger w-full">
-            <div className="flex items-center gap-3">
-              <BookOpen className="h-4 w-4 text-amber-400" />
-              <span className="text-sm sm:text-base font-medium text-amber-300">PFC Guidance</span>
+        <CollapsibleTrigger className="calculator-collapsible-trigger w-full">
+          <div className="flex items-center gap-3">
+            <BookOpen className="h-4 w-4" style={{ color: config.gradientFrom }} />
+            <span className="text-sm sm:text-base font-medium text-white">PFC Guidance</span>
+          </div>
+          <ChevronDown
+            className={cn(
+              'h-4 w-4 text-white transition-transform duration-200',
+              showReference && 'rotate-180'
+            )}
+          />
+        </CollapsibleTrigger>
+
+        <CollapsibleContent className="p-4 pt-2">
+          <div className="space-y-3 text-sm text-white">
+            <p>
+              <strong style={{ color: config.gradientFrom }}>Why Correct Power Factor?</strong>
+            </p>
+            <ul className="space-y-1 ml-4">
+              <li>• Avoid reactive power charges (typically £0.003-0.01/kVARh)</li>
+              <li>• Reduce cable losses (I²R)</li>
+              <li>• Free up transformer capacity</li>
+              <li>• Improve voltage regulation</li>
+            </ul>
+            <p>
+              <strong style={{ color: config.gradientFrom }}>Typical Power Factors:</strong>
+            </p>
+            <ul className="space-y-1 ml-4">
+              <li>• Motors (part load): 0.5-0.7</li>
+              <li>• Motors (full load): 0.8-0.9</li>
+              <li>• Fluorescent lighting: 0.5-0.6</li>
+              <li>• LED lighting: 0.9-0.95</li>
+              <li>• Welders: 0.5-0.7</li>
+            </ul>
+
+            <p className="pt-2 border-t border-white/10">
+              <strong style={{ color: config.gradientFrom }}>BS 7671 / IET Guidance:</strong>
+            </p>
+            <ul className="space-y-1 ml-4 text-xs">
+              <li>
+                • <strong>Section 331:</strong> Consider power factor when sizing cables
+              </li>
+              <li>
+                • <strong>Section 555:</strong> PFC equipment must be rated for harmonics
+              </li>
+              <li>• Target PF of 0.95+ avoids most utility penalties</li>
+              <li>• Over-correction (leading PF) can cause voltage rise</li>
+            </ul>
+
+            <div className="mt-2 p-2 bg-red-500/10 border border-red-500/20 rounded-lg">
+              <p className="text-xs text-white">
+                <strong>Warning:</strong> Always install detuned reactors (5% or 7%) with capacitors
+                to avoid harmonic resonance with VFDs, LED drivers, and switch-mode power supplies.
+              </p>
             </div>
-            <ChevronDown
-              className={cn(
-                'h-4 w-4 text-white/70 transition-transform duration-200',
-                showReference && 'rotate-180'
-              )}
-            />
-          </CollapsibleTrigger>
-
-          <CollapsibleContent className="p-4 pt-0">
-            <div className="space-y-3 text-sm text-amber-200/80">
-              <p>
-                <strong className="text-amber-300">Why Correct Power Factor?</strong>
-              </p>
-              <ul className="space-y-1 ml-4">
-                <li>• Avoid reactive power charges (typically £0.003-0.01/kVARh)</li>
-                <li>• Reduce cable losses (I²R)</li>
-                <li>• Free up transformer capacity</li>
-                <li>• Improve voltage regulation</li>
-              </ul>
-              <p>
-                <strong className="text-amber-300">Typical Power Factors:</strong>
-              </p>
-              <ul className="space-y-1 ml-4">
-                <li>• Motors (part load): 0.5-0.7</li>
-                <li>• Motors (full load): 0.8-0.9</li>
-                <li>• Fluorescent lighting: 0.5-0.6</li>
-                <li>• LED lighting: 0.9-0.95</li>
-                <li>• Welders: 0.5-0.7</li>
-              </ul>
-
-              <p className="pt-2 border-t border-white/10">
-                <strong className="text-amber-300">BS 7671 / IET Guidance:</strong>
-              </p>
-              <ul className="space-y-1 ml-4 text-xs">
-                <li>
-                  • <strong>Section 331:</strong> Consider power factor when sizing cables
-                </li>
-                <li>
-                  • <strong>Section 555:</strong> PFC equipment must be rated for harmonics
-                </li>
-                <li>• Target PF of 0.95+ avoids most utility penalties</li>
-                <li>• Over-correction (leading PF) can cause voltage rise</li>
-              </ul>
-
-              <div className="mt-2 p-2 bg-red-500/10 border border-red-500/20 rounded-lg">
-                <p className="text-xs text-red-300">
-                  <strong>Warning:</strong> Always install detuned reactors (5% or 7%) with
-                  capacitors to avoid harmonic resonance with VFDs, LED drivers, and switch-mode
-                  power supplies.
-                </p>
-              </div>
-            </div>
-          </CollapsibleContent>
-        </div>
+          </div>
+        </CollapsibleContent>
       </Collapsible>
-    </div>
+    </CalculatorCard>
   );
 };
 

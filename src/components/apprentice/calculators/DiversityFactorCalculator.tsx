@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import {
-  Wrench,
   Info,
   CheckCircle2,
   RotateCcw,
@@ -17,8 +16,8 @@ import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/component
 import { cn } from '@/lib/utils';
 import {
   CalculatorCard,
+  CalculatorDivider,
   CalculatorSelect,
-  CalculatorResult,
   ResultValue,
   ResultsGrid,
   CALCULATOR_CONFIG,
@@ -93,94 +92,93 @@ const DiversityFactorCalculator = () => {
   ];
 
   return (
-    <div className="space-y-4">
-      <CalculatorCard
-        category="power"
-        title="Diversity Factor Calculator"
-        description="Calculate electrical demand after applying BS 7671 diversity factors"
-        badge="BS 7671"
-      >
-        {/* Input Mode Toggle */}
-        <div className="space-y-2">
-          <p className="text-sm text-white/60">Input Mode</p>
-          <div className="flex gap-2">
-            <button
-              onClick={() => toggleInputMode('amperage')}
-              className={cn(
-                'flex-1 h-12 rounded-xl font-medium text-sm transition-all touch-manipulation',
-                inputMode === 'amperage'
-                  ? 'text-black'
-                  : 'bg-white/5 border border-white/10 text-white/70 hover:bg-white/10'
-              )}
-              style={
-                inputMode === 'amperage'
-                  ? {
-                      background: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})`,
-                    }
-                  : undefined
-              }
-            >
-              <div className="flex flex-col items-center">
-                <span className="font-semibold">Amperage</span>
-                <span className="text-xs opacity-80">(A)</span>
-              </div>
-            </button>
-            <button
-              onClick={() => toggleInputMode('kw')}
-              className={cn(
-                'flex-1 h-12 rounded-xl font-medium text-sm transition-all touch-manipulation',
-                inputMode === 'kw'
-                  ? 'text-black'
-                  : 'bg-white/5 border border-white/10 text-white/70 hover:bg-white/10'
-              )}
-              style={
-                inputMode === 'kw'
-                  ? {
-                      background: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})`,
-                    }
-                  : undefined
-              }
-            >
-              <div className="flex flex-col items-center">
-                <span className="font-semibold">Power</span>
-                <span className="text-xs opacity-80">(kW)</span>
-              </div>
-            </button>
-          </div>
+    <CalculatorCard
+      category="power"
+      title="Diversity Factor Calculator"
+      description="Calculate electrical demand after applying BS 7671 diversity factors"
+    >
+      {/* Input Mode Toggle */}
+      <div className="space-y-2">
+        <p className="text-sm text-white">Input Mode</p>
+        <div className="flex gap-2">
+          <button
+            onClick={() => toggleInputMode('amperage')}
+            className={cn(
+              'flex-1 h-12 rounded-xl font-medium text-sm transition-all touch-manipulation',
+              inputMode === 'amperage'
+                ? 'text-black'
+                : 'bg-white/5 border border-white/10 text-white hover:bg-white/10'
+            )}
+            style={
+              inputMode === 'amperage'
+                ? {
+                    background: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})`,
+                  }
+                : undefined
+            }
+          >
+            <div className="flex flex-col items-center">
+              <span className="font-semibold">Amperage</span>
+              <span className="text-xs opacity-80">(A)</span>
+            </div>
+          </button>
+          <button
+            onClick={() => toggleInputMode('kw')}
+            className={cn(
+              'flex-1 h-12 rounded-xl font-medium text-sm transition-all touch-manipulation',
+              inputMode === 'kw'
+                ? 'text-black'
+                : 'bg-white/5 border border-white/10 text-white hover:bg-white/10'
+            )}
+            style={
+              inputMode === 'kw'
+                ? {
+                    background: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})`,
+                  }
+                : undefined
+            }
+          >
+            <div className="flex flex-col items-center">
+              <span className="font-semibold">Power</span>
+              <span className="text-xs opacity-80">(kW)</span>
+            </div>
+          </button>
         </div>
+      </div>
 
-        {/* Configuration */}
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-          <CalculatorSelect
-            label="Installation Type"
-            value={location}
-            onChange={setLocation}
-            options={locationOptions}
-          />
-          <CalculatorSelect
-            label="Supply Type"
-            value={supplyType}
-            onChange={setSupplyType}
-            options={supplyTypeOptions}
-          />
-          <CalculatorSelect
-            label="Supply Voltage"
-            value={supplyVoltage}
-            onChange={setSupplyVoltage}
-            options={voltageOptions}
-          />
-        </div>
-      </CalculatorCard>
+      {/* Configuration */}
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+        <CalculatorSelect
+          label="Installation Type"
+          value={location}
+          onChange={setLocation}
+          options={locationOptions}
+        />
+        <CalculatorSelect
+          label="Supply Type"
+          value={supplyType}
+          onChange={setSupplyType}
+          options={supplyTypeOptions}
+        />
+        <CalculatorSelect
+          label="Supply Voltage"
+          value={supplyVoltage}
+          onChange={setSupplyVoltage}
+          options={voltageOptions}
+        />
+      </div>
+
+      <CalculatorDivider category="power" />
 
       {/* Loads Section */}
-      <div className="calculator-card p-4 space-y-4">
+      <div className="space-y-4">
         <div className="flex items-center justify-between">
           <div>
             <h3 className="font-semibold text-white flex items-center gap-2">
               <Zap className="h-4 w-4 text-amber-400" />
               Circuit Loads
             </h3>
-            <p className="text-xs text-white/80 mt-1">
+            <p className="text-xs text-white mt-1">
               Add loads for comprehensive diversity calculation
             </p>
           </div>
@@ -220,7 +218,7 @@ const DiversityFactorCalculator = () => {
               'flex-1 h-14 rounded-xl font-semibold text-base flex items-center justify-center gap-2 transition-all touch-manipulation',
               !loads.some((load) => !load.type || !load.connectedLoad)
                 ? 'text-black'
-                : 'bg-white/10 text-white/30 cursor-not-allowed'
+                : 'bg-white/10 text-white cursor-not-allowed'
             )}
             style={
               !loads.some((load) => !load.type || !load.connectedLoad)
@@ -235,7 +233,7 @@ const DiversityFactorCalculator = () => {
           </button>
           <button
             onClick={resetCalculator}
-            className="h-14 px-4 flex items-center justify-center rounded-xl bg-white/5 border border-white/10 text-white/60 hover:bg-white/10 transition-colors touch-manipulation"
+            className="h-14 px-4 flex items-center justify-center rounded-xl bg-white/5 border border-white/10 text-white hover:bg-white/10 transition-colors touch-manipulation"
           >
             <RotateCcw className="h-5 w-5" />
           </button>
@@ -244,11 +242,14 @@ const DiversityFactorCalculator = () => {
 
       {/* Results Section */}
       {showResults && result ? (
-        <div className="space-y-4 animate-fade-in">
-          <CalculatorResult category="power">
-            <div className="flex items-center gap-2 mb-4">
-              <CheckCircle2 className="h-5 w-5 text-green-400" />
-              <span className="font-semibold text-white">Diversity Results</span>
+        <>
+          <CalculatorDivider category="power" />
+
+          <div className="space-y-4 animate-fade-in">
+            {/* Status Chip */}
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-green-500/10 border border-green-500/20">
+              <CheckCircle2 className="h-4 w-4 text-green-400" />
+              <span className="text-sm font-semibold text-green-300">Diversity Results</span>
             </div>
 
             <ResultsGrid columns={2}>
@@ -278,10 +279,10 @@ const DiversityFactorCalculator = () => {
               />
             </ResultsGrid>
 
-            {/* Diversity Factor Badge */}
-            <div className="mt-4 p-3 rounded-xl bg-amber-400/10 border border-amber-400/20">
+            {/* Diversity Factor */}
+            <div className="p-3 rounded-xl bg-amber-400/10 border border-amber-400/20">
               <div className="flex justify-between items-center">
-                <span className="text-sm font-medium text-white/80">Overall Diversity Factor:</span>
+                <span className="text-sm font-medium text-white">Overall Diversity Factor:</span>
                 <span
                   className="text-2xl font-bold bg-clip-text text-transparent"
                   style={{
@@ -295,14 +296,14 @@ const DiversityFactorCalculator = () => {
 
             {/* Load Breakdown */}
             {result.breakdownByType.length > 0 && (
-              <div className="mt-4 space-y-2">
+              <div className="space-y-2">
                 <div className="flex items-center gap-2">
-                  <BarChart3 className="h-4 w-4 text-white/60" />
-                  <span className="text-sm font-medium text-white/80">Load Breakdown</span>
+                  <BarChart3 className="h-4 w-4 text-white" />
+                  <span className="text-sm font-medium text-white">Load Breakdown</span>
                 </div>
                 <div className="space-y-2">
                   {result.breakdownByType.map((breakdown, index) => (
-                    <div key={index} className="p-2 rounded-lg bg-white/5">
+                    <div key={index} className="p-2 rounded-lg bg-white/[0.04]">
                       <div className="flex justify-between items-center mb-1">
                         <span className="text-sm font-medium text-white capitalize">
                           {breakdown.type.replace('-', ' ')}
@@ -311,7 +312,7 @@ const DiversityFactorCalculator = () => {
                           {(breakdown.diversityFactor * 100).toFixed(0)}%
                         </span>
                       </div>
-                      <div className="flex justify-between text-xs text-white/80">
+                      <div className="flex justify-between text-xs text-white">
                         <span>
                           {breakdown.installedLoad.toFixed(2)} kW →{' '}
                           {breakdown.diversifiedLoad.toFixed(2)} kW
@@ -327,7 +328,7 @@ const DiversityFactorCalculator = () => {
             )}
 
             {/* Protection Recommendation */}
-            <div className="mt-4 p-3 rounded-xl bg-green-500/10 border border-green-500/20">
+            <div className="p-3 rounded-xl bg-green-500/10 border border-green-500/20">
               <div className="flex items-center gap-2">
                 <Zap className="h-4 w-4 text-green-400" />
                 <span className="text-sm font-medium text-green-300">Protection Device:</span>
@@ -336,7 +337,7 @@ const DiversityFactorCalculator = () => {
             </div>
 
             {/* Load Reduction Summary */}
-            <div className="mt-3 p-3 rounded-xl bg-blue-500/10 border border-blue-500/20">
+            <div className="p-3 rounded-xl bg-blue-500/10 border border-blue-500/20">
               <p className="text-sm text-blue-300">
                 <span className="font-medium">Total Load Reduction:</span>{' '}
                 {(result.totalInstalledLoad - result.diversifiedLoad).toFixed(2)} kW (
@@ -348,225 +349,211 @@ const DiversityFactorCalculator = () => {
                 % reduction)
               </p>
             </div>
-          </CalculatorResult>
+          </div>
+
+          <CalculatorDivider category="power" />
 
           {/* What This Means */}
           <Collapsible open={showGuidance} onOpenChange={setShowGuidance}>
-            <div className="calculator-card overflow-hidden" style={{ borderColor: '#60a5fa15' }}>
-              <CollapsibleTrigger className="agent-collapsible-trigger w-full">
-                <div className="flex items-center gap-3">
-                  <Lightbulb className="h-4 w-4 text-blue-400" />
-                  <span className="text-sm sm:text-base font-medium text-blue-300">
-                    What This Means
-                  </span>
-                </div>
-                <ChevronDown
-                  className={cn(
-                    'h-4 w-4 text-white/70 transition-transform duration-200',
-                    showGuidance && 'rotate-180'
-                  )}
-                />
-              </CollapsibleTrigger>
+            <CollapsibleTrigger className="calculator-collapsible-trigger w-full">
+              <div className="flex items-center gap-3">
+                <Lightbulb className="h-4 w-4 text-blue-400" />
+                <span className="text-sm sm:text-base font-medium text-white">What This Means</span>
+              </div>
+              <ChevronDown
+                className={cn(
+                  'h-4 w-4 text-white transition-transform duration-200',
+                  showGuidance && 'rotate-180'
+                )}
+              />
+            </CollapsibleTrigger>
 
-              <CollapsibleContent className="p-4 pt-0">
-                <div className="grid md:grid-cols-2 gap-4 text-sm">
+            <CollapsibleContent className="pt-2">
+              <div className="grid md:grid-cols-2 gap-4 text-sm">
+                <div className="space-y-2">
+                  <h4 className="font-medium text-blue-300">Practical Impact:</h4>
                   <div className="space-y-2">
-                    <h4 className="font-medium text-blue-300">Practical Impact:</h4>
-                    <ul className="space-y-1 text-blue-200/80">
-                      <li className="flex items-start gap-2">
-                        <span className="text-blue-400 mt-1">•</span>
-                        <span>
-                          <strong>Cable Savings:</strong> Use smaller cables than total load
-                          suggests
-                        </span>
-                      </li>
-                      <li className="flex items-start gap-2">
-                        <span className="text-blue-400 mt-1">•</span>
-                        <span>
-                          <strong>Protection:</strong> {getMainDeviceRecommendation()} recommended
-                        </span>
-                      </li>
-                      <li className="flex items-start gap-2">
-                        <span className="text-blue-400 mt-1">•</span>
-                        <span>
-                          <strong>Cost Reduction:</strong>{' '}
-                          {(
-                            ((result.totalInstalledLoad - result.diversifiedLoad) /
-                              result.totalInstalledLoad) *
-                            100
-                          ).toFixed(1)}
-                          % load reduction saves on installation
-                        </span>
-                      </li>
-                    </ul>
-                  </div>
-                  <div className="space-y-2">
-                    <h4 className="font-medium text-blue-300">Engineering Basis:</h4>
-                    <ul className="space-y-1 text-blue-200/80">
-                      <li className="flex items-start gap-2">
-                        <span className="text-blue-400 mt-1">•</span>
-                        <span>
-                          <strong>Diversity Factor:</strong> Not all loads operate simultaneously
-                        </span>
-                      </li>
-                      <li className="flex items-start gap-2">
-                        <span className="text-blue-400 mt-1">•</span>
-                        <span>
-                          <strong>BS 7671 Compliance:</strong> Based on Table 311 diversity factors
-                        </span>
-                      </li>
-                      <li className="flex items-start gap-2">
-                        <span className="text-blue-400 mt-1">•</span>
-                        <span>
-                          <strong>Real Usage:</strong> Reflects actual electrical demand patterns
-                        </span>
-                      </li>
-                    </ul>
+                    <div className="border-l-2 border-blue-400/40 pl-3">
+                      <p className="text-white">
+                        <strong>Cable Savings:</strong> Use smaller cables than total load suggests
+                      </p>
+                    </div>
+                    <div className="border-l-2 border-blue-400/40 pl-3">
+                      <p className="text-white">
+                        <strong>Protection:</strong> {getMainDeviceRecommendation()} recommended
+                      </p>
+                    </div>
+                    <div className="border-l-2 border-blue-400/40 pl-3">
+                      <p className="text-white">
+                        <strong>Cost Reduction:</strong>{' '}
+                        {(
+                          ((result.totalInstalledLoad - result.diversifiedLoad) /
+                            result.totalInstalledLoad) *
+                          100
+                        ).toFixed(1)}
+                        % load reduction saves on installation
+                      </p>
+                    </div>
                   </div>
                 </div>
-              </CollapsibleContent>
-            </div>
+                <div className="space-y-2">
+                  <h4 className="font-medium text-blue-300">Engineering Basis:</h4>
+                  <div className="space-y-2">
+                    <div className="border-l-2 border-blue-400/40 pl-3">
+                      <p className="text-white">
+                        <strong>Diversity Factor:</strong> Not all loads operate simultaneously
+                      </p>
+                    </div>
+                    <div className="border-l-2 border-blue-400/40 pl-3">
+                      <p className="text-white">
+                        <strong>BS 7671 Compliance:</strong> Based on Table 311 diversity factors
+                      </p>
+                    </div>
+                    <div className="border-l-2 border-blue-400/40 pl-3">
+                      <p className="text-white">
+                        <strong>Real Usage:</strong> Reflects actual electrical demand patterns
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </CollapsibleContent>
           </Collapsible>
 
           {/* Practical Recommendations */}
           <Collapsible open={showPractical} onOpenChange={setShowPractical}>
-            <div className="calculator-card overflow-hidden" style={{ borderColor: '#22c55e15' }}>
-              <CollapsibleTrigger className="agent-collapsible-trigger w-full">
-                <div className="flex items-center gap-3">
-                  <TrendingDown className="h-4 w-4 text-green-400" />
-                  <span className="text-sm sm:text-base font-medium text-green-300">
-                    Next Steps & Recommendations
-                  </span>
-                </div>
-                <ChevronDown
-                  className={cn(
-                    'h-4 w-4 text-white/70 transition-transform duration-200',
-                    showPractical && 'rotate-180'
-                  )}
-                />
-              </CollapsibleTrigger>
+            <CollapsibleTrigger className="calculator-collapsible-trigger w-full">
+              <div className="flex items-center gap-3">
+                <TrendingDown className="h-4 w-4 text-green-400" />
+                <span className="text-sm sm:text-base font-medium text-white">
+                  Next Steps & Recommendations
+                </span>
+              </div>
+              <ChevronDown
+                className={cn(
+                  'h-4 w-4 text-white transition-transform duration-200',
+                  showPractical && 'rotate-180'
+                )}
+              />
+            </CollapsibleTrigger>
 
-              <CollapsibleContent className="p-4 pt-0">
-                <div className="grid md:grid-cols-2 gap-4 text-sm">
+            <CollapsibleContent className="pt-2">
+              <div className="grid md:grid-cols-2 gap-4 text-sm">
+                <div className="space-y-2">
+                  <h4 className="font-medium text-green-300">Cable Sizing:</h4>
                   <div className="space-y-2">
-                    <h4 className="font-medium text-green-300">Cable Sizing:</h4>
-                    <ul className="space-y-1 text-green-200/80">
-                      <li className="flex items-start gap-2">
-                        <span className="text-green-400 mt-1">•</span>
-                        <span>
-                          Design for {result.diversifiedCurrent.toFixed(1)}A, not{' '}
-                          {result.totalDesignCurrent.toFixed(1)}A
-                        </span>
-                      </li>
-                      <li className="flex items-start gap-2">
-                        <span className="text-green-400 mt-1">•</span>
-                        Consider voltage drop at diversified current
-                      </li>
-                      <li className="flex items-start gap-2">
-                        <span className="text-green-400 mt-1">•</span>
-                        Apply derating factors for installation method
-                      </li>
-                    </ul>
-                  </div>
-                  <div className="space-y-2">
-                    <h4 className="font-medium text-green-300">Future Considerations:</h4>
-                    <ul className="space-y-1 text-green-200/80">
-                      <li className="flex items-start gap-2">
-                        <span className="text-green-400 mt-1">•</span>
-                        Plan for 20-30% future load growth
-                      </li>
-                      <li className="flex items-start gap-2">
-                        <span className="text-green-400 mt-1">•</span>
-                        Review diversity if load patterns change
-                      </li>
-                      <li className="flex items-start gap-2">
-                        <span className="text-green-400 mt-1">•</span>
-                        Document assumptions for future reference
-                      </li>
-                    </ul>
+                    <div className="border-l-2 border-green-400/40 pl-3">
+                      <p className="text-white">
+                        Design for {result.diversifiedCurrent.toFixed(1)}A, not{' '}
+                        {result.totalDesignCurrent.toFixed(1)}A
+                      </p>
+                    </div>
+                    <div className="border-l-2 border-green-400/40 pl-3">
+                      <p className="text-white">Consider voltage drop at diversified current</p>
+                    </div>
+                    <div className="border-l-2 border-green-400/40 pl-3">
+                      <p className="text-white">Apply derating factors for installation method</p>
+                    </div>
                   </div>
                 </div>
-              </CollapsibleContent>
-            </div>
+                <div className="space-y-2">
+                  <h4 className="font-medium text-green-300">Future Considerations:</h4>
+                  <div className="space-y-2">
+                    <div className="border-l-2 border-green-400/40 pl-3">
+                      <p className="text-white">Plan for 20-30% future load growth</p>
+                    </div>
+                    <div className="border-l-2 border-green-400/40 pl-3">
+                      <p className="text-white">Review diversity if load patterns change</p>
+                    </div>
+                    <div className="border-l-2 border-green-400/40 pl-3">
+                      <p className="text-white">Document assumptions for future reference</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </CollapsibleContent>
           </Collapsible>
 
           {/* Compliance Notes */}
           {result.complianceNotes.length > 0 && (
-            <div className="calculator-card p-4 space-y-2">
-              <div className="flex items-center gap-2">
-                <Info className="h-4 w-4 text-white/60" />
-                <span className="text-sm font-medium text-white/80">Compliance Notes</span>
+            <>
+              <CalculatorDivider category="power" />
+              <div className="space-y-2">
+                <div className="flex items-center gap-2">
+                  <Info className="h-4 w-4 text-white" />
+                  <span className="text-sm font-medium text-white">Compliance Notes</span>
+                </div>
+                <div className="space-y-1">
+                  {result.complianceNotes.map((note, index) => (
+                    <p key={index} className="text-xs text-white flex items-start gap-2">
+                      <span className="text-white">•</span>
+                      {note}
+                    </p>
+                  ))}
+                </div>
               </div>
-              <div className="space-y-1">
-                {result.complianceNotes.map((note, index) => (
-                  <p key={index} className="text-xs text-white/80 flex items-start gap-2">
-                    <span className="text-white/30">•</span>
-                    {note}
-                  </p>
-                ))}
-              </div>
-            </div>
+            </>
           )}
-        </div>
+        </>
       ) : (
-        <div className="calculator-card p-8 text-center">
-          <Calculator className="h-12 w-12 mx-auto mb-3 text-white/20" />
-          <p className="text-lg font-medium text-white/60 mb-2">Ready to Calculate</p>
-          <p className="text-sm text-white/70">
-            Add your circuit loads and click "Calculate Diversity" to see results
-          </p>
-          <div className="mt-4 text-xs text-white/30 space-y-1">
-            <p>• Configure installation type and voltage</p>
-            <p>• Add circuit loads with their types</p>
-            <p>• Choose between kW or Amperage input</p>
-            <p>• Get BS 7671 compliant diversity calculations</p>
+        <>
+          <CalculatorDivider category="power" />
+          <div className="p-8 text-center rounded-xl bg-white/[0.04]">
+            <Calculator className="h-12 w-12 mx-auto mb-3 text-white" />
+            <p className="text-lg font-medium text-white mb-2">Ready to Calculate</p>
+            <p className="text-sm text-white">
+              Add your circuit loads and click "Calculate Diversity" to see results
+            </p>
+            <div className="mt-4 text-xs text-white space-y-1">
+              <p>• Configure installation type and voltage</p>
+              <p>• Add circuit loads with their types</p>
+              <p>• Choose between kW or Amperage input</p>
+              <p>• Get BS 7671 compliant diversity calculations</p>
+            </div>
           </div>
-        </div>
+        </>
       )}
 
       {/* Quick Reference */}
       <Collapsible open={showReference} onOpenChange={setShowReference}>
-        <div className="calculator-card overflow-hidden" style={{ borderColor: '#fbbf2415' }}>
-          <CollapsibleTrigger className="agent-collapsible-trigger w-full">
-            <div className="flex items-center gap-3">
-              <BookOpen className="h-4 w-4 text-amber-400" />
-              <span className="text-sm sm:text-base font-medium text-amber-300">
-                BS 7671 Diversity Reference
-              </span>
-            </div>
-            <ChevronDown
-              className={cn(
-                'h-4 w-4 text-white/70 transition-transform duration-200',
-                showReference && 'rotate-180'
-              )}
-            />
-          </CollapsibleTrigger>
+        <CollapsibleTrigger className="calculator-collapsible-trigger w-full">
+          <div className="flex items-center gap-3">
+            <BookOpen className="h-4 w-4 text-amber-400" />
+            <span className="text-sm sm:text-base font-medium text-white">
+              BS 7671 Diversity Reference
+            </span>
+          </div>
+          <ChevronDown
+            className={cn(
+              'h-4 w-4 text-white transition-transform duration-200',
+              showReference && 'rotate-180'
+            )}
+          />
+        </CollapsibleTrigger>
 
-          <CollapsibleContent className="p-4 pt-0">
-            <div className="space-y-3 text-sm text-amber-200/80">
-              <p>
+        <CollapsibleContent className="pt-2">
+          <div className="space-y-3 pl-1">
+            <div className="border-l-2 border-amber-400/40 pl-3">
+              <p className="text-sm text-white">
                 <strong className="text-amber-300">Diversity factors from Table 311:</strong>{' '}
                 Applied based on installation type
               </p>
-              <ul className="space-y-1">
-                <li className="flex items-start gap-2">
-                  <span className="text-amber-400 mt-1">•</span>
-                  Consider simultaneity and load patterns
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-amber-400 mt-1">•</span>
-                  Apply to final circuits and distribution boards
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-amber-400 mt-1">•</span>
-                  Document diversity assumptions for future reference
-                </li>
-              </ul>
             </div>
-          </CollapsibleContent>
-        </div>
+            <div className="border-l-2 border-amber-400/40 pl-3">
+              <p className="text-sm text-white">Consider simultaneity and load patterns</p>
+            </div>
+            <div className="border-l-2 border-amber-400/40 pl-3">
+              <p className="text-sm text-white">Apply to final circuits and distribution boards</p>
+            </div>
+            <div className="border-l-2 border-amber-400/40 pl-3">
+              <p className="text-sm text-white">
+                Document diversity assumptions for future reference
+              </p>
+            </div>
+          </div>
+        </CollapsibleContent>
       </Collapsible>
-    </div>
+    </CalculatorCard>
   );
 };
 

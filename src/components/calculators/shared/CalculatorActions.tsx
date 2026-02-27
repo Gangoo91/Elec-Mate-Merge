@@ -41,7 +41,7 @@ export const CalculatorActions = ({
           disabled={isCalculating}
           className={cn(
             'h-12 sm:h-14 flex-1 rounded-xl border-white/10',
-            'text-white/70 hover:text-white hover:bg-white/5',
+            'text-white hover:text-white hover:bg-white/5',
             'touch-manipulation active:scale-[0.98] transition-all'
           )}
         >
@@ -175,7 +175,7 @@ export const SecondaryButton = ({
       disabled={isDisabled}
       className={cn(
         'h-12 rounded-xl border-white/10',
-        'text-white/70 hover:text-white hover:bg-white/5',
+        'text-white hover:text-white hover:bg-white/5',
         'touch-manipulation active:scale-[0.98] transition-all',
         className
       )}
