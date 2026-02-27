@@ -14,6 +14,7 @@ import {
   Loader2,
 } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
+import { useCompanyProfile } from '@/hooks/useCompanyProfile';
 import { supabase } from '@/integrations/supabase/client';
 import { saveCertificatePdf } from '@/utils/certificate-pdf-storage';
 import PDFExportProgress from '@/components/PDFExportProgress';
@@ -48,6 +49,7 @@ const EICCertificateActions: React.FC<EICCertificateActionsProps> = ({
   const isMobile = useIsMobile();
   const haptics = useHaptics();
   const { toast } = useToast();
+  const { companyProfile } = useCompanyProfile();
   const [isExporting, setIsExporting] = useState(false);
   const [exportProgress, setExportProgress] = useState(0);
   const [exportStatus, setExportStatus] = useState<
@@ -110,6 +112,8 @@ const EICCertificateActions: React.FC<EICCertificateActionsProps> = ({
         supplyDevice: pdfData.supply_protective_device,
         scheduleCount: pdfData.schedule_of_tests?.length,
         inspectionKeys: Object.keys(pdfData).filter((k) => k.startsWith('insp_')),
+        companyLogo: pdfData.company_logo ? '(set)' : '(empty)',
+        registrationSchemeLogo: pdfData.registration_scheme_logo ? '(set)' : '(empty)',
         // Debug earth electrode (both nested and top-level)
         earthElectrode: {
           type: pdfData.earth_electrode_type,
@@ -812,6 +816,28 @@ const EICCertificateActions: React.FC<EICCertificateActionsProps> = ({
         competent_person_scheme: formData.competentPersonScheme ?? false,
       },
       observations: await formatObservationsWithPhotos(formData.observations || [], reportId),
+
+      // ============================================
+      // COMPANY BRANDING (matching EICR pattern)
+      // ============================================
+      company_details: {
+        company_name: companyProfile?.company_name || '',
+        company_address: companyProfile?.company_address || '',
+        company_postcode: companyProfile?.company_postcode || '',
+        company_phone: companyProfile?.company_phone || '',
+        company_email: companyProfile?.company_email || '',
+        company_website: companyProfile?.company_website || '',
+        company_logo: companyProfile?.logo_data_url || companyProfile?.logo_url || '',
+        registration_scheme: companyProfile?.registration_scheme || '',
+        registration_scheme_logo: companyProfile?.scheme_logo_data_url || '',
+        registration_number: companyProfile?.registration_number || '',
+      },
+
+      // Root-level logo fields for PDF template compatibility (EICR pattern)
+      company_logo: companyProfile?.logo_data_url || companyProfile?.logo_url || '',
+      registration_scheme_logo: companyProfile?.scheme_logo_data_url || '',
+      companyLogo: companyProfile?.logo_data_url || companyProfile?.logo_url || '',
+      registrationSchemeLogo: companyProfile?.scheme_logo_data_url || '',
 
       // ============================================
       // TOP-LEVEL COPIES FOR PDF TEMPLATE COMPATIBILITY
