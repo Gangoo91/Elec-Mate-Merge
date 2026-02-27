@@ -20,10 +20,12 @@ const SelectTrigger = React.forwardRef<
       // Base layout — large touch targets
       'flex w-full h-14 sm:h-12 items-center justify-between',
       'px-4 py-3 gap-2 overflow-hidden',
-      'text-[16px] sm:text-[15px] text-white text-left font-medium',
-      // Truncate selected value text
-      '[&>span]:truncate [&>span]:flex-1 [&>span]:text-left',
-      // Solid dark background — no semi-transparent
+      'text-[16px] sm:text-[15px] text-left font-medium',
+      // Safari: force custom styling on button, prevent native rendering
+      'appearance-none [-webkit-appearance:none] [color:white]',
+      // Truncate selected value text — min-w-0 prevents Safari flex overflow bug
+      '[&>span]:truncate [&>span]:flex-1 [&>span]:text-left [&>span]:min-w-0 [&>span]:[color:inherit]',
+      // Solid dark background
       'bg-input [color-scheme:dark]',
       'border border-white/[0.12] rounded-xl',
       // Placeholder — style the SelectValue span

@@ -26,7 +26,7 @@ export const PhaseTypeCell: React.FC<PhaseTypeCellProps> = ({ result, onUpdate }
   return (
     <TableCell className="p-0 h-8 align-middle w-16 min-w-[60px] max-w-[60px] bg-card">
       <Select value={result.phaseType || '1P'} onValueChange={handlePhaseChange}>
-        <SelectTrigger className="h-8 w-full text-sm text-white bg-transparent border border-transparent rounded-md hover:bg-muted/20 focus:bg-muted/30 focus:ring-1 focus:ring-elec-yellow/30">
+        <SelectTrigger className="h-8 w-full text-sm text-white bg-transparent border border-transparent rounded-md px-1.5 gap-1 [&_svg]:h-3 [&_svg]:w-3 hover:bg-muted/20 focus:bg-muted/30 focus:ring-1 focus:ring-elec-yellow/30">
           <SelectValue placeholder="1P" />
         </SelectTrigger>
         <SelectContent className="bg-background border border-border rounded-md z-[100]">

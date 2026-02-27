@@ -86,7 +86,7 @@ export const ThreePhaseCells: React.FC<ThreePhaseCellsProps> = ({ result, onUpda
             value={result.phaseRotation || ''}
             onValueChange={(value) => onUpdate(result.id, 'phaseRotation', value)}
           >
-            <SelectTrigger className="h-8 text-sm w-full px-2 bg-transparent border border-transparent text-white rounded-md hover:bg-muted/20 focus:bg-muted/30 focus:ring-1 focus:ring-elec-yellow/30">
+            <SelectTrigger className="h-8 text-sm w-full px-1.5 gap-1 [&_svg]:h-3 [&_svg]:w-3 bg-transparent border border-transparent text-white rounded-md hover:bg-muted/20 focus:bg-muted/30 focus:ring-1 focus:ring-elec-yellow/30">
               <SelectValue placeholder="Select..." />
             </SelectTrigger>
             <SelectContent className="bg-background border border-border rounded-md z-[100]">

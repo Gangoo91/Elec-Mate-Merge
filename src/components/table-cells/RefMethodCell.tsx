@@ -30,7 +30,7 @@ const RefMethodCellComponent: React.FC<RefMethodCellProps> = ({ result, onUpdate
         value={result.referenceMethod || ''}
         onValueChange={handleChange}
       >
-        <SelectTrigger className="h-8 text-sm w-full px-2 text-white bg-transparent border border-transparent rounded-md hover:bg-muted/20 focus:bg-muted/30 focus:ring-1 focus:ring-elec-yellow/30">
+        <SelectTrigger className="h-8 text-sm w-full px-1.5 gap-1 [&_svg]:h-3 [&_svg]:w-3 text-white bg-transparent border border-transparent rounded-md hover:bg-muted/20 focus:bg-muted/30 focus:ring-1 focus:ring-elec-yellow/30">
           <SelectValue placeholder="Ref" />
         </SelectTrigger>
         <SelectContent
