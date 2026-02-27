@@ -503,7 +503,6 @@ export const formatEmergencyLightingJson = (formData: Partial<EmergencyLightingF
     registration_number: get('registrationNumber'),
 
     // New fields (flat)
-    extent_of_installation: get('extentOfInstallation'),
     responsible_person_name: get('responsiblePersonName'),
     responsible_person_position: get('responsiblePersonPosition'),
     responsible_person_signature: get('responsiblePersonSignature'),
