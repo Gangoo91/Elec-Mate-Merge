@@ -62,6 +62,7 @@ const MinorWorksForm = ({
     propertyAddress: '',
     postcode: '',
     clientName: '',
+    clientPhone: '',
     clientEmail: '',
     workDate: '',
     dateOfCompletion: '',

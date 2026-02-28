@@ -43,6 +43,7 @@ const MWDetailsTab: React.FC<MWDetailsTabProps> = ({ formData, onUpdate, isMobil
   const handleSelectCustomer = (customer: Customer | null) => {
     if (customer) {
       onUpdate('clientName', customer.name || '');
+      onUpdate('clientPhone', customer.phone || '');
       onUpdate('clientEmail', customer.email || '');
       onUpdate('propertyAddress', customer.address || '');
     }
@@ -92,14 +93,24 @@ const MWDetailsTab: React.FC<MWDetailsTabProps> = ({ formData, onUpdate, isMobil
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label className="text-sm font-medium">Client Email</Label>
+                  <Label className="text-sm font-medium">Client Phone</Label>
                   <Input
-                    type="email"
-                    value={formData.clientEmail || ''}
-                    onChange={(e) => onUpdate('clientEmail', e.target.value)}
-                    placeholder="client@email.com"
+                    type="tel"
+                    value={formData.clientPhone || ''}
+                    onChange={(e) => onUpdate('clientPhone', e.target.value)}
+                    placeholder="e.g., 07700 900000"
                   />
                 </div>
+              </div>
+
+              <div className="space-y-2">
+                <Label className="text-sm font-medium">Client Email</Label>
+                <Input
+                  type="email"
+                  value={formData.clientEmail || ''}
+                  onChange={(e) => onUpdate('clientEmail', e.target.value)}
+                  placeholder="client@email.com"
+                />
               </div>
 
               <div className="space-y-2">
@@ -139,6 +150,25 @@ const MWDetailsTab: React.FC<MWDetailsTabProps> = ({ formData, onUpdate, isMobil
                     value={formData.workDate || ''}
                     onChange={(e) => onUpdate('workDate', e.target.value)}
                     className={cn(!formData.workDate && 'border-red-500/50')}
+                  />
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <Label className="text-sm font-medium">Date of Completion</Label>
+                  <Input
+                    type="date"
+                    value={formData.dateOfCompletion || ''}
+                    onChange={(e) => onUpdate('dateOfCompletion', e.target.value)}
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label className="text-sm font-medium">Next Inspection Due</Label>
+                  <Input
+                    type="date"
+                    value={formData.nextInspectionDue || ''}
+                    onChange={(e) => onUpdate('nextInspectionDue', e.target.value)}
                   />
                 </div>
               </div>

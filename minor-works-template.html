@@ -580,11 +580,11 @@
       <div class="inline-form mt-4">
         <div class="inline-group">
           <span class="inline-label">Supply Voltage:</span>
-          <span class="inline-value">{{ supply.voltage }} V</span>
+          <span class="inline-value">{{ supply.voltage }}</span>
         </div>
         <div class="inline-group">
           <span class="inline-label">Frequency:</span>
-          <span class="inline-value">{{ supply.frequency }} Hz</span>
+          <span class="inline-value">{{ supply.frequency }}</span>
         </div>
         <div class="inline-group">
           <span class="inline-label">Phases:</span>
@@ -594,11 +594,11 @@
           <span class="inline-label">Risk Assessment:</span>
           <div class="checkbox-row">
             <div class="checkbox-item">
-              <span class="checkbox-box {% if risk_assessment_attached %}checked{% endif %}">{% if risk_assessment_attached %}✓{% endif %}</span>
+              <span class="checkbox-box {% if risk_assessment_attached == true or risk_assessment_attached == 'true' %}checked{% endif %}">{% if risk_assessment_attached == true or risk_assessment_attached == 'true' %}✓{% endif %}</span>
               <label>Yes</label>
             </div>
             <div class="checkbox-item">
-              <span class="checkbox-box {% unless risk_assessment_attached %}checked{% endunless %}">{% unless risk_assessment_attached %}✓{% endunless %}</span>
+              <span class="checkbox-box {% if risk_assessment_attached == false or risk_assessment_attached == 'false' or risk_assessment_attached == '' %}checked{% endif %}">{% if risk_assessment_attached == false or risk_assessment_attached == 'false' or risk_assessment_attached == '' %}✓{% endif %}</span>
               <label>No</label>
             </div>
           </div>
@@ -668,7 +668,7 @@
           <span class="inline-label">Earthing Conductor:</span>
           <div class="checkbox-row">
             <div class="checkbox-item">
-              <span class="checkbox-box {% if earthing.conductor_present %}checked{% endif %}">{% if earthing.conductor_present %}✓{% endif %}</span>
+              <span class="checkbox-box {% if earthing.conductor_present == true or earthing.conductor_present == 'true' %}checked{% endif %}">{% if earthing.conductor_present == true or earthing.conductor_present == 'true' %}✓{% endif %}</span>
               <label>Present</label>
             </div>
           </div>
@@ -694,35 +694,35 @@
       <div class="inline-form mt-4">
         <div class="inline-group">
           <div class="checkbox-item">
-            <span class="checkbox-box {% if bonding.water %}checked{% endif %}">{% if bonding.water %}✓{% endif %}</span>
+            <span class="checkbox-box {% if bonding.water == true or bonding.water == 'true' %}checked{% endif %}">{% if bonding.water == true or bonding.water == 'true' %}✓{% endif %}</span>
             <label>Water</label>
           </div>
           {% if bonding.water_size %}<span class="inline-value">{{ bonding.water_size }}mm²</span>{% endif %}
         </div>
         <div class="inline-group">
           <div class="checkbox-item">
-            <span class="checkbox-box {% if bonding.gas %}checked{% endif %}">{% if bonding.gas %}✓{% endif %}</span>
+            <span class="checkbox-box {% if bonding.gas == true or bonding.gas == 'true' %}checked{% endif %}">{% if bonding.gas == true or bonding.gas == 'true' %}✓{% endif %}</span>
             <label>Gas</label>
           </div>
           {% if bonding.gas_size %}<span class="inline-value">{{ bonding.gas_size }}mm²</span>{% endif %}
         </div>
         <div class="inline-group">
           <div class="checkbox-item">
-            <span class="checkbox-box {% if bonding.oil %}checked{% endif %}">{% if bonding.oil %}✓{% endif %}</span>
+            <span class="checkbox-box {% if bonding.oil == true or bonding.oil == 'true' %}checked{% endif %}">{% if bonding.oil == true or bonding.oil == 'true' %}✓{% endif %}</span>
             <label>Oil</label>
           </div>
           {% if bonding.oil_size %}<span class="inline-value">{{ bonding.oil_size }}mm²</span>{% endif %}
         </div>
         <div class="inline-group">
           <div class="checkbox-item">
-            <span class="checkbox-box {% if bonding.structural %}checked{% endif %}">{% if bonding.structural %}✓{% endif %}</span>
+            <span class="checkbox-box {% if bonding.structural == true or bonding.structural == 'true' %}checked{% endif %}">{% if bonding.structural == true or bonding.structural == 'true' %}✓{% endif %}</span>
             <label>Structural</label>
           </div>
           {% if bonding.structural_size %}<span class="inline-value">{{ bonding.structural_size }}mm²</span>{% endif %}
         </div>
         <div class="inline-group">
           <div class="checkbox-item">
-            <span class="checkbox-box {% if bonding.other %}checked{% endif %}">{% if bonding.other %}✓{% endif %}</span>
+            <span class="checkbox-box {% if bonding.other == true or bonding.other == 'true' %}checked{% endif %}">{% if bonding.other == true or bonding.other == 'true' %}✓{% endif %}</span>
             <label>Other</label>
           </div>
           {% if bonding.other_specify %}<span class="inline-value">{{ bonding.other_specify }}</span>{% endif %}
@@ -836,19 +836,19 @@
           <span class="inline-label">Protection Fitted:</span>
           <div class="checkbox-row">
             <div class="checkbox-item">
-              <span class="checkbox-box {% if circuit.protection.rcd %}checked{% endif %}">{% if circuit.protection.rcd %}✓{% endif %}</span>
+              <span class="checkbox-box {% if circuit.protection.rcd == true or circuit.protection.rcd == 'true' %}checked{% endif %}">{% if circuit.protection.rcd == true or circuit.protection.rcd == 'true' %}✓{% endif %}</span>
               <label>RCD</label>
             </div>
             <div class="checkbox-item">
-              <span class="checkbox-box {% if circuit.protection.rcbo %}checked{% endif %}">{% if circuit.protection.rcbo %}✓{% endif %}</span>
+              <span class="checkbox-box {% if circuit.protection.rcbo == true or circuit.protection.rcbo == 'true' %}checked{% endif %}">{% if circuit.protection.rcbo == true or circuit.protection.rcbo == 'true' %}✓{% endif %}</span>
               <label>RCBO</label>
             </div>
             <div class="checkbox-item">
-              <span class="checkbox-box {% if circuit.protection.afdd %}checked{% endif %}">{% if circuit.protection.afdd %}✓{% endif %}</span>
+              <span class="checkbox-box {% if circuit.protection.afdd == true or circuit.protection.afdd == 'true' %}checked{% endif %}">{% if circuit.protection.afdd == true or circuit.protection.afdd == 'true' %}✓{% endif %}</span>
               <label>AFDD</label>
             </div>
             <div class="checkbox-item">
-              <span class="checkbox-box {% if circuit.protection.spd %}checked{% endif %}">{% if circuit.protection.spd %}✓{% endif %}</span>
+              <span class="checkbox-box {% if circuit.protection.spd == true or circuit.protection.spd == 'true' %}checked{% endif %}">{% if circuit.protection.spd == true or circuit.protection.spd == 'true' %}✓{% endif %}</span>
               <label>SPD</label>
             </div>
           </div>
@@ -920,7 +920,7 @@
         <div class="inline-group">
           <span class="inline-label">Polarity:</span>
           <span class="inline-value">
-            {% if tests.polarity == 'Pass' or tests.polarity == 'pass' or tests.polarity == 'Correct' %}<span class="pass">{{ tests.polarity }}</span>{% elsif tests.polarity == 'Fail' or tests.polarity == 'fail' or tests.polarity == 'Incorrect' %}<span class="fail">{{ tests.polarity }}</span>{% else %}{{ tests.polarity }}{% endif %}
+            {% if tests.polarity == 'Pass' or tests.polarity == 'pass' or tests.polarity == 'Correct' or tests.polarity == 'correct' %}<span class="pass">{{ tests.polarity }}</span>{% elsif tests.polarity == 'Fail' or tests.polarity == 'fail' or tests.polarity == 'Incorrect' or tests.polarity == 'incorrect' %}<span class="fail">{{ tests.polarity }}</span>{% else %}{{ tests.polarity }}{% endif %}
           </span>
         </div>
         <div class="inline-group">
@@ -1004,7 +1004,7 @@
         <div class="inline-group">
           <span class="inline-label">SPD Test Btn:</span>
           <span class="inline-value">
-            {% if tests.spd_test_button == true or tests.spd_test_button == 'Pass' or tests.spd_test_button == 'OK' %}<span class="pass">OK</span>{% elsif tests.spd_test_button == false %}<span class="na-text">N/A</span>{% else %}{{ tests.spd_test_button }}{% endif %}
+            {% if tests.spd_test_button == true or tests.spd_test_button == 'true' or tests.spd_test_button == 'Pass' or tests.spd_test_button == 'pass' or tests.spd_test_button == 'OK' %}<span class="pass">OK</span>{% elsif tests.spd_test_button == false or tests.spd_test_button == 'false' or tests.spd_test_button == '' %}<span class="na-text">N/A</span>{% else %}{{ tests.spd_test_button }}{% endif %}
           </span>
         </div>
       </div>
@@ -1065,37 +1065,37 @@
       <div class="inline-form mt-4">
         <div class="inline-group">
           <div class="checkbox-item">
-            <span class="checkbox-box {% if declaration.iet_declaration %}checked{% endif %}">{% if declaration.iet_declaration %}✓{% endif %}</span>
+            <span class="checkbox-box {% if declaration.iet_declaration == true or declaration.iet_declaration == 'true' %}checked{% endif %}">{% if declaration.iet_declaration == true or declaration.iet_declaration == 'true' %}✓{% endif %}</span>
             <label>Issued in accordance with IET guidelines</label>
           </div>
         </div>
         <div class="inline-group">
           <div class="checkbox-item">
-            <span class="checkbox-box {% if declaration.bs7671_compliance %}checked{% endif %}">{% if declaration.bs7671_compliance %}✓{% endif %}</span>
+            <span class="checkbox-box {% if declaration.bs7671_compliance == true or declaration.bs7671_compliance == 'true' %}checked{% endif %}">{% if declaration.bs7671_compliance == true or declaration.bs7671_compliance == 'true' %}✓{% endif %}</span>
             <label>Complies with BS 7671:2018+A3:2024</label>
           </div>
         </div>
         <div class="inline-group">
           <div class="checkbox-item">
-            <span class="checkbox-box {% if declaration.test_results_accurate %}checked{% endif %}">{% if declaration.test_results_accurate %}✓{% endif %}</span>
+            <span class="checkbox-box {% if declaration.test_results_accurate == true or declaration.test_results_accurate == 'true' %}checked{% endif %}">{% if declaration.test_results_accurate == true or declaration.test_results_accurate == 'true' %}✓{% endif %}</span>
             <label>Test results accurate</label>
           </div>
         </div>
         <div class="inline-group">
           <div class="checkbox-item">
-            <span class="checkbox-box {% if declaration.work_safety %}checked{% endif %}">{% if declaration.work_safety %}✓{% endif %}</span>
+            <span class="checkbox-box {% if declaration.work_safety == true or declaration.work_safety == 'true' %}checked{% endif %}">{% if declaration.work_safety == true or declaration.work_safety == 'true' %}✓{% endif %}</span>
             <label>Safe for continued use</label>
           </div>
         </div>
         <div class="inline-group">
           <div class="checkbox-item">
-            <span class="checkbox-box {% if declaration.part_p_notification %}checked{% endif %}">{% if declaration.part_p_notification %}✓{% endif %}</span>
+            <span class="checkbox-box {% if declaration.part_p_notification == true or declaration.part_p_notification == 'true' %}checked{% endif %}">{% if declaration.part_p_notification == true or declaration.part_p_notification == 'true' %}✓{% endif %}</span>
             <label>Part P notification required</label>
           </div>
         </div>
         <div class="inline-group">
           <div class="checkbox-item">
-            <span class="checkbox-box {% if declaration.copy_provided %}checked{% endif %}">{% if declaration.copy_provided %}✓{% endif %}</span>
+            <span class="checkbox-box {% if declaration.copy_provided == true or declaration.copy_provided == 'true' %}checked{% endif %}">{% if declaration.copy_provided == true or declaration.copy_provided == 'true' %}✓{% endif %}</span>
             <label>Copy provided to person ordering the work</label>
           </div>
         </div>

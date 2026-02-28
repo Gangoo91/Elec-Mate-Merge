@@ -288,7 +288,12 @@ export function validateMinorWorksFormData(formData: any): ValidationResult {
 }
 
 // Format field values for better PDF presentation
-export function formatFieldForPdf(field: string, value: any): string {
+export function formatFieldForPdf(field: string, value: any): any {
+  if (value === null || value === undefined) return '';
+
+  // Preserve booleans — don't convert to string
+  if (typeof value === 'boolean') return value;
+
   if (!value) return '';
 
   switch (field) {
@@ -300,6 +305,7 @@ export function formatFieldForPdf(field: string, value: any): string {
 
     case 'workDate':
     case 'dateOfCompletion':
+    case 'nextInspectionDue':
     case 'signatureDate':
       const date = new Date(value);
       if (!isNaN(date.getTime())) {

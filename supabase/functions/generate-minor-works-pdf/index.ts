@@ -8,7 +8,7 @@ const corsHeaders = {
 };
 
 const PDF_MONKEY_API_KEY = Deno.env.get('PDF_MONKEY_API_KEY');
-const DEFAULT_MINOR_WORKS_TEMPLATE_ID = 'E6A82A45-09FE-46EC-9E6E-0D20B1E81D0D';
+const DEFAULT_MINOR_WORKS_TEMPLATE_ID = 'E57A0DC9-5D3C-4BF4-9A96-18D27579A742';
 
 serve(async (req) => {
   // Handle CORS preflight requests
