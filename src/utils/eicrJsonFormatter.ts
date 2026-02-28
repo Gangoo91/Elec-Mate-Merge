@@ -338,11 +338,53 @@ export const formatEICRJson = async (formData: any, reportId: string) => {
       insulation_live_earth: result.insulationLiveEarth || 'N/A',
       insulation_resistance: result.insulationResistance || 'N/A',
       insulation_neutral_earth: result.insulationNeutralEarth || 'N/A',
-      polarity: result.polarity || 'N/A',
+      polarity: (() => {
+        const v = result.polarity;
+        if (!v || v === 'N/A') return 'N/A';
+        if (
+          v === 'Correct' ||
+          v === 'correct' ||
+          v === 'OK' ||
+          v === '✓' ||
+          v === 'Satisfactory' ||
+          v === 'Y'
+        )
+          return 'Y';
+        if (v === 'Incorrect' || v === 'incorrect' || v === '✗' || v === 'N') return 'N';
+        return v;
+      })(),
       zs: result.zs || 'N/A',
       rcd_one_x: result.rcdOneX || 'N/A',
-      rcd_test_button: result.rcdTestButton || 'N/A',
-      afdd_test: result.afddTest || 'N/A',
+      rcd_test_button: (() => {
+        const v = result.rcdTestButton;
+        if (!v || v === 'N/A') return 'N/A';
+        if (
+          v === 'Pass' ||
+          v === 'pass' ||
+          v === 'OK' ||
+          v === '✓' ||
+          v === 'Satisfactory' ||
+          v === 'Y'
+        )
+          return 'Y';
+        if (v === 'Fail' || v === 'fail' || v === '✗' || v === 'N') return 'N';
+        return v;
+      })(),
+      afdd_test: (() => {
+        const v = result.afddTest;
+        if (!v || v === 'N/A') return 'N/A';
+        if (
+          v === 'Pass' ||
+          v === 'pass' ||
+          v === 'OK' ||
+          v === '✓' ||
+          v === 'Satisfactory' ||
+          v === 'Y'
+        )
+          return 'Y';
+        if (v === 'Fail' || v === 'fail' || v === '✗' || v === 'N') return 'N';
+        return v;
+      })(),
       rcd_half_x: result.rcdHalfX || 'N/A',
       rcd_five_x: result.rcdFiveX || 'N/A',
       pfc: result.pfc || 'N/A',
@@ -422,11 +464,53 @@ export const formatEICRJson = async (formData: any, reportId: string) => {
       insulation_live_earth: result.insulationLiveEarth || 'N/A',
       insulation_resistance: result.insulationResistance || 'N/A',
       insulation_neutral_earth: result.insulationNeutralEarth || 'N/A',
-      polarity: result.polarity || 'N/A',
+      polarity: (() => {
+        const v = result.polarity;
+        if (!v || v === 'N/A') return 'N/A';
+        if (
+          v === 'Correct' ||
+          v === 'correct' ||
+          v === 'OK' ||
+          v === '✓' ||
+          v === 'Satisfactory' ||
+          v === 'Y'
+        )
+          return 'Y';
+        if (v === 'Incorrect' || v === 'incorrect' || v === '✗' || v === 'N') return 'N';
+        return v;
+      })(),
       zs: result.zs || 'N/A',
       rcd_one_x: result.rcdOneX || 'N/A',
-      rcd_test_button: result.rcdTestButton || 'N/A',
-      afdd_test: result.afddTest || 'N/A',
+      rcd_test_button: (() => {
+        const v = result.rcdTestButton;
+        if (!v || v === 'N/A') return 'N/A';
+        if (
+          v === 'Pass' ||
+          v === 'pass' ||
+          v === 'OK' ||
+          v === '✓' ||
+          v === 'Satisfactory' ||
+          v === 'Y'
+        )
+          return 'Y';
+        if (v === 'Fail' || v === 'fail' || v === '✗' || v === 'N') return 'N';
+        return v;
+      })(),
+      afdd_test: (() => {
+        const v = result.afddTest;
+        if (!v || v === 'N/A') return 'N/A';
+        if (
+          v === 'Pass' ||
+          v === 'pass' ||
+          v === 'OK' ||
+          v === '✓' ||
+          v === 'Satisfactory' ||
+          v === 'Y'
+        )
+          return 'Y';
+        if (v === 'Fail' || v === 'fail' || v === '✗' || v === 'N') return 'N';
+        return v;
+      })(),
       rcd_half_x: result.rcdHalfX || 'N/A',
       rcd_five_x: result.rcdFiveX || 'N/A',
       pfc: result.pfc || 'N/A',
