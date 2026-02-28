@@ -63,7 +63,7 @@ export const OFFGRID_PRESETS: OffGridPreset[] = [
     description: 'Mobile off-grid setup for touring',
     scenario: 'Self-contained vehicle with all essentials',
     dailyConsumption: '6',
-    peakSunHours: '4',
+    peakSunHours: '3.5', // UK average consistency
     autonomyDays: '2',
     systemVoltage: '12',
     panelWattage: '200',

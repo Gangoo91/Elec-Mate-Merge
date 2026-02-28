@@ -39,6 +39,7 @@ import {
   Timer,
   GraduationCap,
   UserPlus,
+  AlertTriangle,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
@@ -63,6 +64,7 @@ const secondaryNavItems = [
   { name: 'Verification', path: '/admin/verification', icon: CheckSquare },
   { name: 'Doc Review', path: '/admin/document-review', icon: FileCheck },
   { name: 'Subscriptions', path: '/admin/subscriptions', icon: CreditCard },
+  { name: 'Failed Payments', path: '/admin/failed-payments', icon: AlertTriangle },
 ];
 
 // Admin tools - in expandable section (rarely used)

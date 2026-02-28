@@ -1,17 +1,6 @@
-import { useState } from 'react';
-import { Badge } from '@/components/ui/badge';
-import {
-  Car,
-  Info,
-  BookOpen,
-  ChevronDown,
-  AlertTriangle,
-  CheckCircle,
-  Zap,
-  Clock,
-  PoundSterling,
-  Calculator,
-} from 'lucide-react';
+import { useState, useCallback } from 'react';
+import { Car, Copy, Check, Info, AlertTriangle, CheckCircle, Zap, ChevronDown } from 'lucide-react';
+import { useToast } from '@/hooks/use-toast';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { cn } from '@/lib/utils';
 import {
@@ -20,9 +9,13 @@ import {
   CalculatorInput,
   CalculatorSelect,
   CalculatorActions,
-  CalculatorResult,
   ResultValue,
   ResultsGrid,
+  ResultBadge,
+  CalculatorFormula,
+  CalculatorDivider,
+  CalculatorSection,
+  FormulaReference,
   CALCULATOR_CONFIG,
 } from '@/components/calculators/shared';
 import { calculateEVCharging, type EVCalculationInputs } from '@/lib/ev-calculations';
@@ -33,10 +26,13 @@ import {
   INSTALLATION_LOCATIONS,
 } from '@/lib/ev-constants';
 import { formatCurrency } from '@/lib/format';
-import { toast } from '@/hooks/use-toast';
+
+const CAT = 'ev-storage' as const;
+const config = CALCULATOR_CONFIG[CAT];
 
 const EVChargingCalculator = () => {
-  const config = CALCULATOR_CONFIG['ev-storage'];
+  const { toast } = useToast();
+  const [copied, setCopied] = useState(false);
 
   const [inputs, setInputs] = useState({
     batteryCapacity: '',
@@ -53,7 +49,7 @@ const EVChargingCalculator = () => {
   });
 
   const [results, setResults] = useState<ReturnType<typeof calculateEVCharging> | null>(null);
-  const [showFormula, setShowFormula] = useState(false);
+  const [showGuidance, setShowGuidance] = useState(false);
   const [showRegs, setShowRegs] = useState(false);
 
   const chargerOptions = Object.entries(CHARGER_TYPES).map(([key, value]) => ({
@@ -66,7 +62,7 @@ const EVChargingCalculator = () => {
     label: value.label,
   }));
 
-  const diversityOptions = Object.entries(DIVERSITY_FACTORS).map(([key, value]) => ({
+  const diversityOptions = Object.entries(DIVERSITY_FACTORS).map(([, value]) => ({
     value: value.value.toString(),
     label: value.label,
   }));
@@ -76,7 +72,7 @@ const EVChargingCalculator = () => {
     label: value.label,
   }));
 
-  const calculateEVChargingResults = () => {
+  const handleCalculate = useCallback(() => {
     const calculationInputs: EVCalculationInputs = {
       batteryCapacity: parseFloat(inputs.batteryCapacity),
       chargerType: inputs.chargerType,
@@ -114,16 +110,16 @@ const EVChargingCalculator = () => {
           variant: 'destructive',
         });
       }
-    } catch (error) {
+    } catch {
       toast({
         title: 'Calculation Error',
         description: 'Unable to complete calculation.',
         variant: 'destructive',
       });
     }
-  };
+  }, [inputs, toast]);
 
-  const resetCalculator = () => {
+  const handleReset = useCallback(() => {
     setInputs({
       batteryCapacity: '',
       chargerType: '7kw-ac',
@@ -138,263 +134,264 @@ const EVChargingCalculator = () => {
       existingLoadCurrent: '0',
     });
     setResults(null);
+  }, []);
+
+  const handleCopy = () => {
+    if (!results) return;
+    const text = [
+      'EV Charging Analysis',
+      `Energy Required: ${results.energyRequired.toFixed(1)} kWh`,
+      `Charging Time: ${results.chargingTime.toFixed(1)} hours`,
+      `Cost: ${formatCurrency(results.cost)}`,
+      `Design Current: ${results.designCurrent.toFixed(1)}A`,
+      `Cable: ${results.recommendedCable}`,
+      `Voltage Drop: ${results.voltageDrop.toFixed(1)}V (${((results.voltageDrop / 230) * 100).toFixed(1)}%)`,
+      `Zs: ${results.actualZs.toFixed(2)}Ω (Max: ${results.maxZs}Ω)`,
+      `Status: ${results.installationCompliant ? 'COMPLIANT' : 'ISSUES FOUND'}`,
+    ].join('\n');
+    navigator.clipboard.writeText(text);
+    setCopied(true);
+    toast({ title: 'Copied to clipboard' });
+    setTimeout(() => setCopied(false), 2000);
   };
 
-  const hasValidInputs = () => inputs.batteryCapacity && parseFloat(inputs.batteryCapacity) > 0;
+  const hasValidInputs = inputs.batteryCapacity && parseFloat(inputs.batteryCapacity) > 0;
 
   return (
-    <div className="space-y-4">
-      <CalculatorCard
-        category="ev-storage"
-        title="EV Charging Calculator"
-        description="Design compliant EV charging installations per BS 7671"
-        badge="Section 722"
-      >
-        {/* Vehicle & Charging Details */}
-        <div className="space-y-3">
-          <p className="text-sm font-medium text-white/80">Vehicle & Charging</p>
-          <CalculatorInputGrid columns={2}>
-            <CalculatorInput
-              label="Battery Capacity"
-              unit="kWh"
-              type="text"
-              inputMode="decimal"
-              value={inputs.batteryCapacity}
-              onChange={(value) => setInputs({ ...inputs, batteryCapacity: value })}
-              placeholder="e.g., 64"
-            />
-            <CalculatorSelect
-              label="Charger Type"
-              value={inputs.chargerType}
-              onChange={(value) =>
-                setInputs({ ...inputs, chargerType: value as keyof typeof CHARGER_TYPES })
-              }
-              options={chargerOptions}
-            />
-            <CalculatorInput
-              label="Current Charge"
-              unit="%"
-              type="text"
-              inputMode="decimal"
-              value={inputs.currentCharge}
-              onChange={(value) => setInputs({ ...inputs, currentCharge: value })}
-              placeholder="20"
-            />
-            <CalculatorInput
-              label="Target Charge"
-              unit="%"
-              type="text"
-              inputMode="decimal"
-              value={inputs.targetCharge}
-              onChange={(value) => setInputs({ ...inputs, targetCharge: value })}
-              placeholder="80"
-            />
-          </CalculatorInputGrid>
-        </div>
-
-        {/* Installation Details */}
-        <div className="space-y-3">
-          <p className="text-sm font-medium text-white/80">Installation Details</p>
-          <CalculatorInputGrid columns={2}>
-            <CalculatorSelect
-              label="Supply Type"
-              value={inputs.supplyType}
-              onChange={(value) =>
-                setInputs({ ...inputs, supplyType: value as keyof typeof EARTHING_SYSTEMS })
-              }
-              options={earthingOptions}
-            />
-            <CalculatorSelect
-              label="Installation Location"
-              value={inputs.installationLocation}
-              onChange={(value) => setInputs({ ...inputs, installationLocation: value })}
-              options={locationOptions}
-            />
-            <CalculatorInput
-              label="Cable Run Length"
-              unit="m"
-              type="text"
-              inputMode="decimal"
-              value={inputs.runLength}
-              onChange={(value) => setInputs({ ...inputs, runLength: value })}
-              placeholder="20"
-            />
-            <CalculatorInput
-              label="Ambient Temperature"
-              unit="°C"
-              type="text"
-              inputMode="decimal"
-              value={inputs.ambientTemp}
-              onChange={(value) => setInputs({ ...inputs, ambientTemp: value })}
-              placeholder="30"
-            />
-          </CalculatorInputGrid>
-        </div>
-
-        {/* Load & Cost */}
-        <div className="space-y-3">
-          <p className="text-sm font-medium text-white/80">Load & Cost</p>
-          <CalculatorInputGrid columns={2}>
-            <CalculatorSelect
-              label="Diversity Factor"
-              value={inputs.diversityFactor}
-              onChange={(value) => setInputs({ ...inputs, diversityFactor: value })}
-              options={diversityOptions}
-            />
-            <CalculatorInput
-              label="Existing Load Current"
-              unit="A"
-              type="text"
-              inputMode="decimal"
-              value={inputs.existingLoadCurrent}
-              onChange={(value) => setInputs({ ...inputs, existingLoadCurrent: value })}
-              placeholder="0"
-            />
-          </CalculatorInputGrid>
+    <CalculatorCard
+      category={CAT}
+      title="EV Charging Calculator"
+      description="Design compliant EV charging installations per BS 7671"
+      badge="Section 722"
+    >
+      {/* Vehicle & Charging */}
+      <CalculatorSection title="Vehicle & Charging">
+        <CalculatorInputGrid columns={2}>
           <CalculatorInput
-            label="Electricity Rate"
-            unit="£/kWh"
+            label="Battery Capacity"
+            unit="kWh"
             type="text"
             inputMode="decimal"
-            value={inputs.electricityRate}
-            onChange={(value) => setInputs({ ...inputs, electricityRate: value })}
-            placeholder="0.30"
+            value={inputs.batteryCapacity}
+            onChange={(value) => setInputs({ ...inputs, batteryCapacity: value })}
+            placeholder="e.g., 64"
           />
-        </div>
+          <CalculatorSelect
+            label="Charger Type"
+            value={inputs.chargerType}
+            onChange={(value) =>
+              setInputs({ ...inputs, chargerType: value as keyof typeof CHARGER_TYPES })
+            }
+            options={chargerOptions}
+          />
+          <CalculatorInput
+            label="Current Charge"
+            unit="%"
+            type="text"
+            inputMode="decimal"
+            value={inputs.currentCharge}
+            onChange={(value) => setInputs({ ...inputs, currentCharge: value })}
+            placeholder="20"
+          />
+          <CalculatorInput
+            label="Target Charge"
+            unit="%"
+            type="text"
+            inputMode="decimal"
+            value={inputs.targetCharge}
+            onChange={(value) => setInputs({ ...inputs, targetCharge: value })}
+            placeholder="80"
+          />
+        </CalculatorInputGrid>
+      </CalculatorSection>
 
-        <CalculatorActions
-          category="ev-storage"
-          onCalculate={calculateEVChargingResults}
-          onReset={resetCalculator}
-          isDisabled={!hasValidInputs()}
-          calculateLabel="Calculate"
+      {/* Installation Details */}
+      <CalculatorSection title="Installation Details">
+        <CalculatorInputGrid columns={2}>
+          <CalculatorSelect
+            label="Supply Type"
+            value={inputs.supplyType}
+            onChange={(value) =>
+              setInputs({ ...inputs, supplyType: value as keyof typeof EARTHING_SYSTEMS })
+            }
+            options={earthingOptions}
+          />
+          <CalculatorSelect
+            label="Installation Location"
+            value={inputs.installationLocation}
+            onChange={(value) => setInputs({ ...inputs, installationLocation: value })}
+            options={locationOptions}
+          />
+          <CalculatorInput
+            label="Cable Run Length"
+            unit="m"
+            type="text"
+            inputMode="decimal"
+            value={inputs.runLength}
+            onChange={(value) => setInputs({ ...inputs, runLength: value })}
+            placeholder="20"
+          />
+          <CalculatorInput
+            label="Ambient Temperature"
+            unit="°C"
+            type="text"
+            inputMode="decimal"
+            value={inputs.ambientTemp}
+            onChange={(value) => setInputs({ ...inputs, ambientTemp: value })}
+            placeholder="30"
+          />
+        </CalculatorInputGrid>
+      </CalculatorSection>
+
+      {/* Load & Cost */}
+      <CalculatorSection title="Load & Cost">
+        <CalculatorInputGrid columns={2}>
+          <CalculatorSelect
+            label="Diversity Factor"
+            value={inputs.diversityFactor}
+            onChange={(value) => setInputs({ ...inputs, diversityFactor: value })}
+            options={diversityOptions}
+          />
+          <CalculatorInput
+            label="Existing Load Current"
+            unit="A"
+            type="text"
+            inputMode="decimal"
+            value={inputs.existingLoadCurrent}
+            onChange={(value) => setInputs({ ...inputs, existingLoadCurrent: value })}
+            placeholder="0"
+          />
+        </CalculatorInputGrid>
+        <CalculatorInput
+          label="Electricity Rate"
+          unit="£/kWh"
+          type="text"
+          inputMode="decimal"
+          value={inputs.electricityRate}
+          onChange={(value) => setInputs({ ...inputs, electricityRate: value })}
+          placeholder="0.30"
         />
-      </CalculatorCard>
+      </CalculatorSection>
 
+      <CalculatorActions
+        category={CAT}
+        onCalculate={handleCalculate}
+        onReset={handleReset}
+        isDisabled={!hasValidInputs}
+        calculateLabel="Calculate"
+        showReset={!!results}
+      />
+
+      {/* ── Results ── */}
       {results && (
         <div className="space-y-4 animate-fade-in">
-          {/* Main Results */}
-          <CalculatorResult category="ev-storage">
-            <div className="flex items-center justify-between pb-3 border-b border-white/10">
-              <span className="text-sm text-white/60">EV Charging Analysis</span>
-              <Badge
-                variant="outline"
-                className={cn(
-                  results.installationCompliant
-                    ? 'text-green-400 border-green-400/50'
-                    : 'text-red-400 border-red-400/50'
-                )}
+          {/* Status + Copy */}
+          <div className="flex items-center justify-between">
+            <ResultBadge
+              status={results.installationCompliant ? 'pass' : 'fail'}
+              label={results.installationCompliant ? 'Compliant' : 'Issues Found'}
+            />
+            <button
+              onClick={handleCopy}
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 text-white text-xs font-medium transition-colors touch-manipulation min-h-[44px]"
+            >
+              {copied ? <Check className="h-3.5 w-3.5" /> : <Copy className="h-3.5 w-3.5" />}
+              {copied ? 'Copied' : 'Copy'}
+            </button>
+          </div>
+
+          {/* Hero values */}
+          <div className="grid grid-cols-2 gap-4 py-3">
+            <div className="text-center">
+              <p className="text-sm text-white mb-1">Energy Required</p>
+              <p
+                className="text-3xl font-bold bg-clip-text text-transparent"
+                style={{
+                  backgroundImage: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})`,
+                }}
               >
-                {results.installationCompliant ? (
-                  <>
-                    <CheckCircle className="h-3 w-3 mr-1" /> Compliant
-                  </>
-                ) : (
-                  <>
-                    <AlertTriangle className="h-3 w-3 mr-1" /> Issues Found
-                  </>
-                )}
-              </Badge>
-            </div>
-
-            <div className="grid grid-cols-2 gap-4 py-4">
-              <div className="text-center">
-                <p className="text-sm text-white/60 mb-1">Energy Required</p>
-                <div
-                  className="text-3xl font-bold bg-clip-text text-transparent"
-                  style={{
-                    backgroundImage: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})`,
-                  }}
-                >
-                  {results.energyRequired.toFixed(1)}
-                </div>
-                <p className="text-xs text-white/80">kWh</p>
-              </div>
-              <div className="text-center">
-                <p className="text-sm text-white/60 mb-1">Charging Time</p>
-                <div
-                  className="text-3xl font-bold bg-clip-text text-transparent"
-                  style={{
-                    backgroundImage: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})`,
-                  }}
-                >
-                  {results.chargingTime.toFixed(1)}
-                </div>
-                <p className="text-xs text-white/80">hours</p>
-              </div>
-            </div>
-
-            <ResultsGrid columns={2}>
-              <ResultValue
-                label="Charging Cost"
-                value={formatCurrency(results.cost)}
-                category="ev-storage"
-                size="sm"
-              />
-              <ResultValue
-                label="Peak Demand"
-                value={results.peakDemand.toFixed(1)}
-                unit="kW"
-                category="ev-storage"
-                size="sm"
-              />
-            </ResultsGrid>
-          </CalculatorResult>
-
-          {/* Technical Results */}
-          <CalculatorResult category="ev-storage">
-            <div className="flex items-center gap-2 pb-3 border-b border-white/10">
-              <Zap className="h-4 w-4 text-blue-400" />
-              <span className="text-sm font-medium text-white">Technical Specifications</span>
-            </div>
-            <ResultsGrid columns={2}>
-              <ResultValue
-                label="Circuit Current"
-                value={results.circuitCurrent.toFixed(1)}
-                unit="A"
-                category="ev-storage"
-                size="sm"
-              />
-              <ResultValue
-                label="Design Current"
-                value={results.designCurrent.toFixed(1)}
-                unit="A"
-                category="ev-storage"
-                size="sm"
-              />
-              <ResultValue
-                label="Cable Size"
-                value={results.recommendedCable}
-                category="ev-storage"
-                size="sm"
-              />
-              <ResultValue
-                label="Voltage Drop"
-                value={`${results.voltageDrop.toFixed(1)}V (${((results.voltageDrop / 230) * 100).toFixed(1)}%)`}
-                category="ev-storage"
-                size="sm"
-              />
-              <ResultValue
-                label="Earth Fault (Zs)"
-                value={results.actualZs.toFixed(2)}
-                unit="Ω"
-                category="ev-storage"
-                size="sm"
-              />
-              <ResultValue
-                label="Max Zs"
-                value={results.maxZs}
-                unit="Ω"
-                category="ev-storage"
-                size="sm"
-              />
-            </ResultsGrid>
-            <div className="mt-3 p-2 rounded-lg bg-white/5">
-              <p className="text-sm text-white/80">
-                <strong>Protection:</strong> {results.protectionRequired}
+                {results.energyRequired.toFixed(1)}
               </p>
+              <p className="text-xs text-white">kWh</p>
             </div>
-          </CalculatorResult>
+            <div className="text-center">
+              <p className="text-sm text-white mb-1">Charging Time</p>
+              <p
+                className="text-3xl font-bold bg-clip-text text-transparent"
+                style={{
+                  backgroundImage: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})`,
+                }}
+              >
+                {results.chargingTime.toFixed(1)}
+              </p>
+              <p className="text-xs text-white">hours</p>
+            </div>
+          </div>
+
+          <ResultsGrid columns={2}>
+            <ResultValue
+              label="Charging Cost"
+              value={formatCurrency(results.cost)}
+              category={CAT}
+              size="sm"
+            />
+            <ResultValue
+              label="Peak Demand"
+              value={results.peakDemand.toFixed(1)}
+              unit="kW"
+              category={CAT}
+              size="sm"
+            />
+          </ResultsGrid>
+
+          <CalculatorDivider category={CAT} />
+
+          {/* Technical Specifications */}
+          <div className="flex items-center gap-2 pb-2">
+            <Zap className="h-4 w-4 text-blue-400" />
+            <span className="text-sm font-medium text-white">Technical Specifications</span>
+          </div>
+          <ResultsGrid columns={2}>
+            <ResultValue
+              label="Circuit Current"
+              value={results.circuitCurrent.toFixed(1)}
+              unit="A"
+              category={CAT}
+              size="sm"
+            />
+            <ResultValue
+              label="Design Current"
+              value={results.designCurrent.toFixed(1)}
+              unit="A"
+              category={CAT}
+              size="sm"
+            />
+            <ResultValue
+              label="Cable Size"
+              value={results.recommendedCable}
+              category={CAT}
+              size="sm"
+            />
+            <ResultValue
+              label="Voltage Drop"
+              value={`${results.voltageDrop.toFixed(1)}V (${((results.voltageDrop / 230) * 100).toFixed(1)}%)`}
+              category={CAT}
+              size="sm"
+            />
+            <ResultValue
+              label="Earth Fault (Zs)"
+              value={results.actualZs.toFixed(2)}
+              unit="Ω"
+              category={CAT}
+              size="sm"
+            />
+            <ResultValue label="Max Zs" value={results.maxZs} unit="Ω" category={CAT} size="sm" />
+          </ResultsGrid>
+          <div className="p-2 rounded-lg bg-white/5">
+            <p className="text-sm text-white">
+              <strong>Protection:</strong> {results.protectionRequired}
+            </p>
+          </div>
 
           {/* Warnings */}
           {results.warnings.length > 0 && (
@@ -403,9 +400,12 @@ const EVChargingCalculator = () => {
                 <AlertTriangle className="h-4 w-4 text-red-400" />
                 <p className="text-sm font-medium text-red-300">Installation Warnings</p>
               </div>
-              <ul className="space-y-1 text-sm text-red-200/80">
+              <ul className="space-y-1 text-sm text-white">
                 {results.warnings.map((warning, idx) => (
-                  <li key={idx}>• {warning}</li>
+                  <li key={idx} className="flex items-start gap-2">
+                    <span className="w-1.5 h-1.5 rounded-full bg-red-400 mt-2 shrink-0" />
+                    {warning}
+                  </li>
                 ))}
               </ul>
             </div>
@@ -418,122 +418,160 @@ const EVChargingCalculator = () => {
                 <Info className="h-4 w-4 text-blue-400" />
                 <p className="text-sm font-medium text-blue-300">Recommendations</p>
               </div>
-              <ul className="space-y-1 text-sm text-blue-200/80">
+              <ul className="space-y-1 text-sm text-white">
                 {results.recommendations.map((rec, idx) => (
-                  <li key={idx}>• {rec}</li>
+                  <li key={idx} className="flex items-start gap-2">
+                    <span className="w-1.5 h-1.5 rounded-full bg-blue-400 mt-2 shrink-0" />
+                    {rec}
+                  </li>
                 ))}
               </ul>
             </div>
           )}
 
           {/* How It Worked Out */}
-          <Collapsible open={showFormula} onOpenChange={setShowFormula}>
-            <div className="calculator-card overflow-hidden" style={{ borderColor: '#a78bfa15' }}>
-              <CollapsibleTrigger className="agent-collapsible-trigger w-full">
-                <div className="flex items-center gap-3">
-                  <Calculator className="h-4 w-4 text-purple-400" />
-                  <span className="text-sm sm:text-base font-medium text-purple-300">
-                    How It Worked Out
-                  </span>
+          <CalculatorFormula
+            category={CAT}
+            title="How It Worked Out"
+            defaultOpen
+            steps={[
+              {
+                label: 'Energy required',
+                formula: `E = ${inputs.batteryCapacity} kWh × (${inputs.targetCharge}% − ${inputs.currentCharge}%) / 100`,
+                value: `${results.energyRequired.toFixed(2)} kWh`,
+              },
+              {
+                label: 'Charging time',
+                formula: `t = E / (P × η) = ${results.energyRequired.toFixed(2)} / (${CHARGER_TYPES[inputs.chargerType].power} × ${CHARGER_TYPES[inputs.chargerType].efficiency})`,
+                value: `${results.chargingTime.toFixed(2)} hours`,
+              },
+              {
+                label: 'Design current',
+                formula: `I = (P / η × 1000) / V${CHARGER_TYPES[inputs.chargerType].phases === 3 ? '√3' : ''}`,
+                value: `${results.designCurrent.toFixed(1)}A`,
+              },
+              {
+                label: 'Voltage drop',
+                formula: `ΔV = ${CHARGER_TYPES[inputs.chargerType].phases === 3 ? '√3' : '2'} × I × L × z / 1000`,
+                value: `${results.voltageDrop.toFixed(1)}V (${((results.voltageDrop / 230) * 100).toFixed(1)}%)`,
+              },
+              {
+                label: 'Earth fault loop impedance',
+                formula: `Zs = Ze + cable impedance`,
+                value: `${results.actualZs.toFixed(2)}Ω (max ${results.maxZs}Ω)`,
+                description:
+                  results.actualZs <= results.maxZs
+                    ? 'Within limits'
+                    : 'Exceeds maximum — review installation',
+              },
+            ]}
+          />
+
+          {/* What This Means */}
+          <Collapsible open={showGuidance} onOpenChange={setShowGuidance}>
+            <CollapsibleTrigger className="flex items-center justify-between w-full min-h-11 py-2.5 px-3 rounded-lg text-sm font-medium text-white hover:bg-white/5 transition-all touch-manipulation">
+              <span>What This Means</span>
+              <ChevronDown
+                className={cn(
+                  'h-4 w-4 transition-transform duration-200',
+                  showGuidance && 'rotate-180'
+                )}
+              />
+            </CollapsibleTrigger>
+            <CollapsibleContent className="pt-2">
+              <div
+                className="p-3 rounded-xl border space-y-3"
+                style={{
+                  borderColor: `${config.gradientFrom}15`,
+                  background: `${config.gradientFrom}05`,
+                }}
+              >
+                <div className="space-y-2">
+                  <p className="text-sm text-white font-medium">Load Analysis</p>
+                  <p className="text-sm text-white">{results.reviewFindings.loadAnalysis}</p>
                 </div>
-                <ChevronDown
-                  className={cn(
-                    'h-4 w-4 text-white/70 transition-transform duration-200',
-                    showFormula && 'rotate-180'
-                  )}
-                />
-              </CollapsibleTrigger>
-              <CollapsibleContent className="p-4 pt-0 space-y-3 font-mono text-sm">
-                <div className="p-2 rounded bg-white/5">
-                  <p className="text-xs text-purple-400 mb-1">Step 1: Energy Required</p>
-                  <p className="text-purple-200">
-                    E = {inputs.batteryCapacity}kWh × ({inputs.targetCharge}% -{' '}
-                    {inputs.currentCharge}%) ÷ 100
-                  </p>
-                  <p className="text-purple-300 font-semibold">
-                    E = {results.energyRequired.toFixed(2)} kWh
+                <div className="space-y-2">
+                  <p className="text-sm text-white font-medium">Cable Assessment</p>
+                  <p className="text-sm text-white">{results.reviewFindings.cableAssessment}</p>
+                </div>
+                <div className="space-y-2">
+                  <p className="text-sm text-white font-medium">Protection Compliance</p>
+                  <p className="text-sm text-white">
+                    {results.reviewFindings.protectionCompliance}
                   </p>
                 </div>
-                <div className="p-2 rounded bg-white/5">
-                  <p className="text-xs text-purple-400 mb-1">Step 2: Charging Time</p>
-                  <p className="text-purple-200">t = E ÷ (Power × Efficiency)</p>
-                  <p className="text-purple-300 font-semibold">
-                    t = {results.chargingTime.toFixed(2)} hours
-                  </p>
-                </div>
-                <div className="p-2 rounded bg-white/5">
-                  <p className="text-xs text-purple-400 mb-1">Step 3: Design Current</p>
-                  <p className="text-purple-200">I = (P × 1000) ÷ V</p>
-                  <p className="text-purple-300 font-semibold">
-                    I = {results.designCurrent.toFixed(1)}A
-                  </p>
-                </div>
-                <div className="p-2 rounded bg-white/5">
-                  <p className="text-xs text-purple-400 mb-1">Step 4: Voltage Drop</p>
-                  <p className="text-purple-200">ΔV = (2 × I × L × z) ÷ 1000</p>
-                  <p className="text-purple-300 font-semibold">
-                    ΔV = {results.voltageDrop.toFixed(1)}V (
-                    {((results.voltageDrop / 230) * 100).toFixed(1)}%)
-                  </p>
-                </div>
-              </CollapsibleContent>
-            </div>
+              </div>
+            </CollapsibleContent>
           </Collapsible>
 
-          {/* BS 7671 Reference */}
+          {/* BS 7671 Section 722 */}
           <Collapsible open={showRegs} onOpenChange={setShowRegs}>
-            <div className="calculator-card overflow-hidden" style={{ borderColor: '#fbbf2415' }}>
-              <CollapsibleTrigger className="agent-collapsible-trigger w-full">
-                <div className="flex items-center gap-3">
-                  <BookOpen className="h-4 w-4 text-amber-400" />
-                  <span className="text-sm sm:text-base font-medium text-amber-300">
-                    BS 7671 Section 722
-                  </span>
+            <CollapsibleTrigger className="flex items-center justify-between w-full min-h-11 py-2.5 px-3 rounded-lg text-sm font-medium text-white hover:bg-white/5 transition-all touch-manipulation">
+              <span>BS 7671 Section 722</span>
+              <ChevronDown
+                className={cn(
+                  'h-4 w-4 transition-transform duration-200',
+                  showRegs && 'rotate-180'
+                )}
+              />
+            </CollapsibleTrigger>
+            <CollapsibleContent className="pt-2">
+              <div
+                className="p-3 rounded-xl border space-y-2"
+                style={{
+                  borderColor: `${config.gradientFrom}15`,
+                  background: `${config.gradientFrom}05`,
+                }}
+              >
+                <div className="space-y-2 text-sm text-white">
+                  <p>
+                    <strong>722.531.2:</strong> RCD protection (30mA Type A minimum) mandatory
+                  </p>
+                  <p>
+                    <strong>722.411.4.1:</strong> DC fault protection required for AC charging
+                  </p>
+                  <p>
+                    <strong>722.55:</strong> Earth electrode may be required for outdoor
+                    installations
+                  </p>
+                  <p>
+                    <strong>BS EN 61851:</strong> Charging equipment safety and performance
+                    standards
+                  </p>
+                  <p>
+                    <strong>Part P:</strong> Notification required for new circuits &gt;3.68kW
+                  </p>
                 </div>
-                <ChevronDown
-                  className={cn(
-                    'h-4 w-4 text-white/70 transition-transform duration-200',
-                    showRegs && 'rotate-180'
-                  )}
-                />
-              </CollapsibleTrigger>
-              <CollapsibleContent className="p-4 pt-0 space-y-2 text-sm text-amber-200/80">
-                <p>
-                  <strong className="text-amber-300">722.531.2:</strong> RCD protection (30mA Type A
-                  minimum) mandatory
-                </p>
-                <p>
-                  <strong className="text-amber-300">722.411.4.1:</strong> DC fault protection
-                  required for AC charging
-                </p>
-                <p>
-                  <strong className="text-amber-300">722.55:</strong> Earth electrode may be
-                  required for outdoor installations
-                </p>
-                <p>
-                  <strong className="text-amber-300">BS EN 61851:</strong> Charging equipment safety
-                  and performance standards
-                </p>
-                <p>
-                  <strong className="text-amber-300">Part P:</strong> Notification required for new
-                  circuits &gt;3.68kW
-                </p>
-              </CollapsibleContent>
-            </div>
+              </div>
+            </CollapsibleContent>
           </Collapsible>
         </div>
       )}
 
+      {/* Info note */}
       <div className="p-3 rounded-xl bg-blue-500/10 border border-blue-500/20">
         <div className="flex items-start gap-2">
           <Car className="h-4 w-4 text-blue-400 mt-0.5 shrink-0" />
-          <p className="text-sm text-blue-200">
+          <p className="text-sm text-white">
             <strong>Dedicated circuit required.</strong> RCD protection and DC fault detection
             mandatory per BS 7671.
           </p>
         </div>
       </div>
-    </div>
+
+      {/* Formula reference (always visible) */}
+      <FormulaReference
+        category={CAT}
+        name="EV Charging Formulas"
+        formula="E = C_batt × (target% − current%) / 100"
+        variables={[
+          { symbol: 'E', description: 'Energy required to charge (kWh)' },
+          { symbol: 'C_batt', description: 'Battery capacity (kWh)' },
+          { symbol: 'I', description: 'P × 1000 / V — design current (A)' },
+          { symbol: 'ΔV', description: '2 × I × L × z / 1000 — voltage drop (V)' },
+        ]}
+      />
+    </CalculatorCard>
   );
 };
 

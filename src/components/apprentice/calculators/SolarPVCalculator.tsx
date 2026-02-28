@@ -1,33 +1,26 @@
-import { Badge } from '@/components/ui/badge';
-import {
-  Sun,
-  Info,
-  Calculator,
-  Zap,
-  TrendingUp,
-  Lightbulb,
-  CheckCircle,
-  AlertTriangle,
-  FileText,
-  Shield,
-  PoundSterling,
-  BookOpen,
-  ChevronDown,
-} from 'lucide-react';
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
+import { Copy, Check, ChevronDown } from 'lucide-react';
+import { useToast } from '@/hooks/use-toast';
+import { cn } from '@/lib/utils';
 import {
   CalculatorCard,
   CalculatorInputGrid,
   CalculatorInput,
   CalculatorSelect,
   CalculatorActions,
-  CalculatorResult,
   ResultValue,
   ResultsGrid,
+  ResultBadge,
+  CalculatorFormula,
+  CalculatorDivider,
+  CalculatorSection,
+  FormulaReference,
   CALCULATOR_CONFIG,
 } from '@/components/calculators/shared';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
-import { cn } from '@/lib/utils';
+
+const CAT = 'renewable' as const;
+const config = CALCULATOR_CONFIG[CAT];
 
 // Expanded UK locations with solar irradiance data (kWh/m²/year)
 const UK_LOCATIONS = [
@@ -72,7 +65,6 @@ const locationOptions = UK_LOCATIONS.map((loc) => ({
 }));
 
 // Performance Ratio (PR) options — typical UK range 0.70–0.85
-// PR accounts for inverter losses, cable losses, temperature derating, soiling
 const efficiencyOptions = [
   { value: '70', label: '70% (Poor — shading, old system)' },
   { value: '75', label: '75% (Below average)' },
@@ -96,58 +88,74 @@ const selfConsumptionOptions = [
   { value: '70', label: '70% (With battery storage)' },
 ];
 
-const SolarPVCalculator = () => {
-  const [systemSize, setSystemSize] = useState<string>('');
-  const [location, setLocation] = useState<string>('');
-  const [panelEfficiency, setPanelEfficiency] = useState<string>('80'); // System Performance Ratio %
-  const [roofOrientation, setRoofOrientation] = useState<string>('south');
-  const [roofTilt, setRoofTilt] = useState<string>('35');
-  const [electricityRate, setElectricityRate] = useState<string>('0.25');
-  const [selfConsumptionRate, setSelfConsumptionRate] = useState<string>('35');
-  const [exportRate, setExportRate] = useState<string>('0.10'); // SEG typical rate 2025
-  const [showWorkings, setShowWorkings] = useState(false);
-  const [showRegs, setShowRegs] = useState(false);
-  const [showAnalysis, setShowAnalysis] = useState(false);
-  const [result, setResult] = useState<{
-    annualGeneration: number;
-    dailyGeneration: number;
-    annualSavings: number;
-    paybackPeriod: number;
-    co2Savings: number;
-    systemEfficiency: number;
-    orientationFactor: number;
-    tiltFactor: number;
-    dnoConnectionType: string;
-    viability: string;
-    costEstimate: {
-      totalCost: number;
-      breakdown: {
-        panels: number;
-        inverter: number;
-        installation: number;
-        electrical: number;
-        scaffolding: number;
-        mcsAndDno: number;
-        vat: number;
-      };
-      costPerKw: number;
-      category: string;
+interface DegradationSnapshot {
+  year: number;
+  output: number;
+  cumulative: number;
+}
+
+interface SolarPVResult {
+  annualGeneration: number;
+  dailyGeneration: number;
+  annualSavings: number;
+  paybackPeriod: number;
+  co2Savings: number;
+  systemPR: number;
+  orientationFactor: number;
+  tiltFactor: number;
+  dnoConnectionType: string;
+  viability: string;
+  selfConsumedEnergy: number;
+  exportedEnergy: number;
+  savingsFromSelfConsumption: number;
+  incomeFromExport: number;
+  irradiance: number;
+  degradation: DegradationSnapshot[];
+  lifetimeGeneration: number;
+  costEstimate: {
+    totalCost: number;
+    breakdown: {
+      panels: number;
+      inverter: number;
+      installation: number;
+      electrical: number;
+      scaffolding: number;
+      mcsAndDno: number;
+      vat: number;
     };
-  } | null>(null);
+    costPerKw: number;
+    category: string;
+  };
+}
 
-  const config = CALCULATOR_CONFIG['renewable'];
+const SolarPVCalculator = () => {
+  const { toast } = useToast();
+  const [copied, setCopied] = useState(false);
 
-  const calculateCostEstimate = (systemSize: number, efficiency: number) => {
+  const [systemSize, setSystemSize] = useState('');
+  const [location, setLocation] = useState('');
+  const [panelEfficiency, setPanelEfficiency] = useState('80');
+  const [roofOrientation, setRoofOrientation] = useState('south');
+  const [roofTilt, setRoofTilt] = useState('35');
+  const [electricityRate, setElectricityRate] = useState('0.25');
+  const [selfConsumptionRate, setSelfConsumptionRate] = useState('35');
+  const [exportRate, setExportRate] = useState('0.10');
+
+  const [showGuidance, setShowGuidance] = useState(false);
+  const [showReference, setShowReference] = useState(false);
+  const [result, setResult] = useState<SolarPVResult | null>(null);
+
+  const calculateCostEstimate = (size: number, pr: number) => {
     let baseCostPerKw = 0;
     let category = '';
 
-    if (efficiency <= 0.15) {
+    if (pr <= 0.72) {
       baseCostPerKw = 1000;
       category = 'Budget System';
-    } else if (efficiency <= 0.18) {
+    } else if (pr <= 0.77) {
       baseCostPerKw = 1400;
       category = 'Standard System';
-    } else if (efficiency <= 0.2) {
+    } else if (pr <= 0.82) {
       baseCostPerKw = 1800;
       category = 'Premium System';
     } else {
@@ -155,12 +163,12 @@ const SolarPVCalculator = () => {
       category = 'High-Efficiency System';
     }
 
-    const panels = systemSize * baseCostPerKw * 0.4;
-    const inverter = systemSize * 600;
-    const installation = systemSize * 800;
-    const electrical = 800 + systemSize * 200;
-    const scaffolding = systemSize > 4 ? 1200 : 800;
-    const mcsAndDno = systemSize <= 3.68 ? 400 : 800;
+    const panels = size * baseCostPerKw * 0.4;
+    const inverter = size * 600;
+    const installation = size * 800;
+    const electrical = 800 + size * 200;
+    const scaffolding = size > 4 ? 1200 : 800;
+    const mcsAndDno = size <= 3.68 ? 400 : 800;
 
     const subtotal = panels + inverter + installation + electrical + scaffolding + mcsAndDno;
     const vat = subtotal * 0.05;
@@ -177,590 +185,589 @@ const SolarPVCalculator = () => {
         mcsAndDno: Math.round(mcsAndDno),
         vat: Math.round(vat),
       },
-      costPerKw: Math.round(totalCost / systemSize),
+      costPerKw: Math.round(totalCost / size),
       category,
     };
   };
 
-  const calculateSolarPV = () => {
+  const handleCalculate = useCallback(() => {
     const size = parseFloat(systemSize);
-    const efficiency = parseFloat(panelEfficiency) / 100;
+    const pr = parseFloat(panelEfficiency) / 100;
     const rate = parseFloat(electricityRate);
     const tilt = parseFloat(roofTilt);
 
-    if (size > 0 && location && efficiency > 0) {
-      const locationData = UK_LOCATIONS.find((loc) => loc.name === location);
-      if (!locationData) return;
+    if (!(size > 0 && location && pr > 0)) return;
 
-      let irradiance = locationData.irradiance;
+    const locationData = UK_LOCATIONS.find((loc) => loc.name === location);
+    if (!locationData) return;
 
-      let orientationFactor = 1.0;
-      switch (roofOrientation) {
-        case 'south':
-          orientationFactor = 1.0;
-          break;
-        case 'southwest':
-        case 'southeast':
-          orientationFactor = 0.95;
-          break;
-        case 'east':
-        case 'west':
-          orientationFactor = 0.85;
-          break;
-        case 'north':
-          orientationFactor = 0.6;
-          break;
-      }
+    const irradiance = locationData.irradiance;
 
-      const optimalTilt = 35;
-      const tiltDifference = Math.abs(tilt - optimalTilt);
-      const tiltFactor = Math.max(0.7, 1 - tiltDifference / 100);
-
-      // Performance Ratio (PR) — accounts for inverter losses, cable losses,
-      // temperature derating, soiling etc. Typical UK value: 0.75–0.85.
-      // The kWp rating already incorporates panel efficiency, so we do NOT
-      // multiply by panel efficiency here — doing so would double-count it.
-      const systemPR = efficiency; // user-supplied PR (default 0.80)
-      const annualGeneration =
-        size * irradiance * orientationFactor * tiltFactor * systemPR;
-      const dailyGeneration = annualGeneration / 365;
-
-      const costEstimate = calculateCostEstimate(size, efficiency);
-
-      const selfConsumption = parseFloat(selfConsumptionRate) / 100;
-      const segExportRate = parseFloat(exportRate);
-
-      const selfConsumedEnergy = annualGeneration * selfConsumption;
-      const exportedEnergy = annualGeneration * (1 - selfConsumption);
-
-      const savingsFromSelfConsumption = selfConsumedEnergy * rate;
-      const incomeFromExport = exportedEnergy * segExportRate;
-      const annualSavings = savingsFromSelfConsumption + incomeFromExport;
-
-      const paybackPeriod = costEstimate.totalCost / annualSavings;
-      const co2Savings = annualGeneration * 0.233;
-      const dnoConnectionType = size <= 3.68 ? 'G98' : 'G99';
-
-      let viability = 'Poor';
-      if (paybackPeriod < 8) viability = 'Excellent';
-      else if (paybackPeriod < 12) viability = 'Good';
-      else if (paybackPeriod < 16) viability = 'Fair';
-
-      setResult({
-        annualGeneration: Math.round(annualGeneration),
-        dailyGeneration: Math.round(dailyGeneration * 10) / 10,
-        annualSavings: Math.round(annualSavings),
-        paybackPeriod: Math.round(paybackPeriod * 10) / 10,
-        co2Savings: Math.round(co2Savings),
-        systemEfficiency: Math.round(systemPR * 100),
-        orientationFactor: Math.round(orientationFactor * 100),
-        tiltFactor: Math.round(tiltFactor * 100),
-        dnoConnectionType,
-        viability,
-        costEstimate,
-      });
+    let orientationFactor = 1.0;
+    switch (roofOrientation) {
+      case 'south':
+        orientationFactor = 1.0;
+        break;
+      case 'southwest':
+      case 'southeast':
+        orientationFactor = 0.95;
+        break;
+      case 'east':
+      case 'west':
+        orientationFactor = 0.85;
+        break;
+      case 'north':
+        orientationFactor = 0.6;
+        break;
     }
-  };
 
-  const reset = () => {
+    const optimalTilt = 35;
+    const tiltDifference = Math.abs(tilt - optimalTilt);
+    const tiltFactor = Math.max(0.7, 1 - tiltDifference / 100);
+
+    // Performance Ratio (PR) — accounts for inverter losses, cable losses,
+    // temperature derating, soiling etc. Typical UK value: 0.75–0.85.
+    // The kWp rating already incorporates panel efficiency, so we do NOT
+    // multiply by panel efficiency here — doing so would double-count it.
+    const systemPR = pr;
+    const annualGeneration = size * irradiance * orientationFactor * tiltFactor * systemPR;
+    const dailyGeneration = annualGeneration / 365;
+
+    const costEstimate = calculateCostEstimate(size, pr);
+
+    const selfConsumption = parseFloat(selfConsumptionRate) / 100;
+    const segExportRate = parseFloat(exportRate);
+
+    const selfConsumedEnergy = annualGeneration * selfConsumption;
+    const exportedEnergy = annualGeneration * (1 - selfConsumption);
+
+    const savingsFromSelfConsumption = selfConsumedEnergy * rate;
+    const incomeFromExport = exportedEnergy * segExportRate;
+    const annualSavings = savingsFromSelfConsumption + incomeFromExport;
+
+    const paybackPeriod = costEstimate.totalCost / annualSavings;
+    // CO2 factor: 0.207 kg CO2/kWh — BEIS 2024 UK grid average
+    const co2Savings = annualGeneration * 0.207;
+    const dnoConnectionType = size <= 3.68 ? 'G98' : 'G99';
+
+    // 25-year degradation curve (NREL: ~2% year 1, then 0.5%/yr)
+    const degradation: DegradationSnapshot[] = [];
+    let cumulative = 0;
+    const snapshotYears = [1, 5, 10, 15, 20, 25];
+    for (const yr of snapshotYears) {
+      // Year 1: 98% of nominal, then 0.5%/yr thereafter
+      const factor = yr === 1 ? 0.98 : 0.98 * Math.pow(0.995, yr - 1);
+      const yearOutput = Math.round(annualGeneration * factor);
+      // Approximate cumulative by averaging adjacent snapshots
+      if (degradation.length === 0) {
+        cumulative = yearOutput;
+      } else {
+        const prev = degradation[degradation.length - 1];
+        const yearsBetween = yr - prev.year;
+        const avgOutput = (prev.output + yearOutput) / 2;
+        cumulative = prev.cumulative + avgOutput * yearsBetween;
+      }
+      degradation.push({ year: yr, output: yearOutput, cumulative: Math.round(cumulative) });
+    }
+    const lifetimeGeneration =
+      degradation[degradation.length - 1]?.cumulative ?? annualGeneration * 25;
+
+    let viability = 'Poor';
+    if (paybackPeriod < 8) viability = 'Excellent';
+    else if (paybackPeriod < 12) viability = 'Good';
+    else if (paybackPeriod < 16) viability = 'Fair';
+
+    setResult({
+      annualGeneration: Math.round(annualGeneration),
+      dailyGeneration: Math.round(dailyGeneration * 10) / 10,
+      annualSavings: Math.round(annualSavings),
+      paybackPeriod: Math.round(paybackPeriod * 10) / 10,
+      co2Savings: Math.round(co2Savings),
+      systemPR: Math.round(systemPR * 100),
+      orientationFactor: Math.round(orientationFactor * 100),
+      tiltFactor: Math.round(tiltFactor * 100),
+      dnoConnectionType,
+      viability,
+      selfConsumedEnergy: Math.round(selfConsumedEnergy),
+      exportedEnergy: Math.round(exportedEnergy),
+      savingsFromSelfConsumption: Math.round(savingsFromSelfConsumption),
+      incomeFromExport: Math.round(incomeFromExport),
+      irradiance,
+      degradation,
+      lifetimeGeneration,
+      costEstimate,
+    });
+  }, [
+    systemSize,
+    location,
+    panelEfficiency,
+    roofOrientation,
+    roofTilt,
+    electricityRate,
+    selfConsumptionRate,
+    exportRate,
+  ]);
+
+  const handleReset = useCallback(() => {
     setSystemSize('');
     setLocation('');
-    setPanelEfficiency('20');
+    setPanelEfficiency('80');
     setRoofOrientation('south');
     setRoofTilt('35');
     setElectricityRate('0.25');
     setSelfConsumptionRate('35');
-    setExportRate('0.05');
+    setExportRate('0.10');
     setResult(null);
+  }, []);
+
+  const handleCopy = () => {
+    if (!result) return;
+    const text = [
+      'Solar PV System Calculator',
+      `System Size: ${systemSize} kWp`,
+      `Location: ${location} (${result.irradiance} kWh/m²/yr)`,
+      `Orientation: ${roofOrientation} (${result.orientationFactor}%)`,
+      `Tilt: ${roofTilt}° (${result.tiltFactor}%)`,
+      `Performance Ratio: ${result.systemPR}%`,
+      `Annual Generation: ${result.annualGeneration.toLocaleString()} kWh`,
+      `Daily Average: ${result.dailyGeneration} kWh`,
+      `Self-consumed: ${result.selfConsumedEnergy.toLocaleString()} kWh (£${result.savingsFromSelfConsumption})`,
+      `Exported: ${result.exportedEnergy.toLocaleString()} kWh (£${result.incomeFromExport})`,
+      `Annual Savings: £${result.annualSavings}`,
+      `System Cost: £${result.costEstimate.totalCost.toLocaleString()}`,
+      `Payback: ${result.paybackPeriod} years`,
+      `CO₂ Savings: ${result.co2Savings} kg/year`,
+      `DNO: ${result.dnoConnectionType}`,
+      `Viability: ${result.viability}`,
+    ].join('\n');
+    navigator.clipboard.writeText(text);
+    setCopied(true);
+    toast({ title: 'Copied to clipboard' });
+    setTimeout(() => setCopied(false), 2000);
   };
 
   return (
-    <div className="space-y-4">
-      <CalculatorCard
-        category="renewable"
-        title="Solar PV System Calculator"
-        description="Calculate solar panel performance, energy generation, and financial returns for UK installations"
-      >
-        {/* System Configuration */}
-        <div
-          className="space-y-4 p-4 rounded-xl border"
-          style={{
-            borderColor: `${config.gradientFrom}30`,
-            background: `${config.gradientFrom}08`,
-          }}
-        >
-          <h4 className="font-medium text-white flex items-center gap-2 text-sm">
-            <Sun className="h-4 w-4" style={{ color: config.gradientFrom }} />
-            System Configuration
-          </h4>
+    <CalculatorCard
+      category={CAT}
+      title="Solar PV System Calculator"
+      description="Calculate solar panel performance, energy generation, and financial returns for UK installations"
+    >
+      {/* System Configuration */}
+      <CalculatorSection title="System Configuration">
+        <CalculatorInputGrid columns={2}>
+          <CalculatorInput
+            label="System Size"
+            unit="kWp"
+            inputMode="decimal"
+            value={systemSize}
+            onChange={setSystemSize}
+            placeholder="e.g. 4.0"
+            hint="Typical UK homes: 3-6kWp"
+          />
+          <CalculatorSelect
+            label="Performance Ratio"
+            value={panelEfficiency}
+            onChange={setPanelEfficiency}
+            options={efficiencyOptions}
+          />
+          <CalculatorSelect
+            label="Location"
+            value={location}
+            onChange={setLocation}
+            options={locationOptions}
+            placeholder="Select location"
+          />
+          <CalculatorSelect
+            label="Roof Orientation"
+            value={roofOrientation}
+            onChange={setRoofOrientation}
+            options={orientationOptions}
+          />
+          <CalculatorInput
+            label="Roof Tilt"
+            unit="°"
+            inputMode="decimal"
+            value={roofTilt}
+            onChange={setRoofTilt}
+            placeholder="35"
+            hint="Optimal: 35°"
+          />
+          <CalculatorInput
+            label="Electricity Rate"
+            unit="£/kWh"
+            inputMode="decimal"
+            value={electricityRate}
+            onChange={setElectricityRate}
+            placeholder="0.25"
+            hint="UK average: £0.25"
+          />
+          <CalculatorSelect
+            label="Self-consumption Rate"
+            value={selfConsumptionRate}
+            onChange={setSelfConsumptionRate}
+            options={selfConsumptionOptions}
+          />
+          <CalculatorInput
+            label="SEG Export Rate"
+            unit="£/kWh"
+            inputMode="decimal"
+            value={exportRate}
+            onChange={setExportRate}
+            placeholder="0.10"
+            hint="Typical: £0.04-0.15"
+          />
+        </CalculatorInputGrid>
+      </CalculatorSection>
 
-          <CalculatorInputGrid columns={2}>
-            <CalculatorInput
-              label="System Size"
-              unit="kW"
-              type="text"
-              inputMode="decimal"
-              value={systemSize}
-              onChange={setSystemSize}
-              placeholder="e.g. 4.0"
-              hint="Typical UK homes: 3-6kW"
-            />
-            <CalculatorSelect
-              label="System Performance Ratio"
-              value={panelEfficiency}
-              onChange={setPanelEfficiency}
-              options={efficiencyOptions}
-            />
-            <CalculatorSelect
-              label="Location"
-              value={location}
-              onChange={setLocation}
-              options={locationOptions}
-              placeholder="Select location"
-            />
-            <CalculatorSelect
-              label="Roof Orientation"
-              value={roofOrientation}
-              onChange={setRoofOrientation}
-              options={orientationOptions}
-            />
-            <CalculatorInput
-              label="Roof Tilt"
-              unit="°"
-              type="text"
-              inputMode="decimal"
-              value={roofTilt}
-              onChange={setRoofTilt}
-              placeholder="35"
-              hint="Optimal: 35°"
-            />
-            <CalculatorInput
-              label="Electricity Rate"
-              unit="£/kWh"
-              type="text"
-              inputMode="decimal"
-              value={electricityRate}
-              onChange={setElectricityRate}
-              placeholder="0.25"
-              hint="UK average: £0.25"
-            />
-            <CalculatorSelect
-              label="Self-consumption Rate"
-              value={selfConsumptionRate}
-              onChange={setSelfConsumptionRate}
-              options={selfConsumptionOptions}
-            />
-            <CalculatorInput
-              label="SEG Export Rate"
-              unit="£/kWh"
-              type="text"
-              inputMode="decimal"
-              value={exportRate}
-              onChange={setExportRate}
-              placeholder="0.05"
-              hint="Typical: £0.04-0.15"
-            />
-          </CalculatorInputGrid>
-        </div>
-
-        <CalculatorActions
-          category="renewable"
-          onCalculate={calculateSolarPV}
-          onReset={reset}
-          isDisabled={!systemSize || !location}
-        />
-      </CalculatorCard>
+      <CalculatorActions
+        category={CAT}
+        onCalculate={handleCalculate}
+        onReset={handleReset}
+        isDisabled={!systemSize || !location}
+        showReset={!!result}
+      />
 
       {/* Results */}
       {result && (
         <div className="space-y-4 animate-fade-in">
-          {/* Main Results */}
-          <CalculatorResult category="renewable">
-            <div className="text-center pb-4 border-b border-white/10">
-              <p className="text-sm text-white/60 mb-1">Annual Generation</p>
-              <div
-                className="text-4xl font-bold bg-clip-text text-transparent"
-                style={{
-                  backgroundImage: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})`,
-                }}
-              >
-                {result.annualGeneration.toLocaleString()} kWh
-              </div>
-              <div className="flex flex-wrap justify-center gap-2 mt-2">
-                <Badge
-                  variant="outline"
-                  className="text-xs"
-                  style={{ borderColor: `${config.gradientFrom}40`, color: config.gradientFrom }}
+          {/* Status + Copy */}
+          <div className="flex items-center justify-between">
+            <ResultBadge
+              status={
+                result.viability === 'Excellent'
+                  ? 'pass'
+                  : result.viability === 'Good'
+                    ? 'pass'
+                    : result.viability === 'Fair'
+                      ? 'warning'
+                      : 'fail'
+              }
+              label={`${result.viability} Viability`}
+            />
+            <button
+              onClick={handleCopy}
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 text-white text-xs font-medium transition-colors touch-manipulation min-h-[44px]"
+            >
+              {copied ? <Check className="h-3.5 w-3.5" /> : <Copy className="h-3.5 w-3.5" />}
+              {copied ? 'Copied' : 'Copy'}
+            </button>
+          </div>
+
+          {/* Hero value */}
+          <div className="text-center py-3">
+            <p className="text-sm font-medium text-white mb-1">Annual Generation</p>
+            <p
+              className="text-4xl sm:text-5xl font-bold bg-clip-text text-transparent"
+              style={{
+                backgroundImage: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})`,
+              }}
+            >
+              {result.annualGeneration.toLocaleString()} kWh
+            </p>
+            <p className="text-sm text-white mt-2">
+              {result.dailyGeneration} kWh/day | {result.systemPR}% Performance Ratio
+            </p>
+          </div>
+
+          <ResultsGrid columns={3}>
+            <ResultValue
+              category={CAT}
+              label="Daily Generation"
+              value={result.dailyGeneration.toString()}
+              unit="kWh"
+              size="sm"
+            />
+            <ResultValue
+              category={CAT}
+              label="Annual Savings"
+              value={`£${result.annualSavings}`}
+              size="sm"
+            />
+            <ResultValue
+              category={CAT}
+              label="Payback Period"
+              value={result.paybackPeriod.toString()}
+              unit="years"
+              size="sm"
+            />
+          </ResultsGrid>
+
+          {/* Cost Estimate */}
+          <CalculatorSection title="2025 Cost Estimate">
+            <div className="grid grid-cols-2 gap-3 mb-3">
+              <div className="text-center p-3 rounded-xl bg-white/5 border border-white/10">
+                <p
+                  className="text-2xl font-bold bg-clip-text text-transparent"
+                  style={{
+                    backgroundImage: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})`,
+                  }}
                 >
-                  {result.systemEfficiency}% Efficiency
-                </Badge>
-                <Badge
-                  variant="outline"
-                  className={cn(
-                    'text-xs',
-                    result.viability === 'Excellent'
-                      ? 'border-green-500/40 text-green-400'
-                      : result.viability === 'Good'
-                        ? 'border-blue-500/40 text-blue-400'
-                        : result.viability === 'Fair'
-                          ? 'border-amber-500/40 text-amber-400'
-                          : 'border-red-500/40 text-red-400'
-                  )}
-                >
-                  {result.viability} Viability
-                </Badge>
-              </div>
-            </div>
-
-            <ResultsGrid columns={3}>
-              <ResultValue
-                label="Daily Generation"
-                value={result.dailyGeneration.toString()}
-                unit="kWh"
-                category="renewable"
-                size="sm"
-              />
-              <ResultValue
-                label="Annual Savings"
-                value={`£${result.annualSavings}`}
-                category="renewable"
-                size="sm"
-              />
-              <ResultValue
-                label="Payback Period"
-                value={result.paybackPeriod.toString()}
-                unit="years"
-                category="renewable"
-                size="sm"
-              />
-            </ResultsGrid>
-          </CalculatorResult>
-
-          {/* 2025 Cost Estimate */}
-          <div className="calculator-card p-4" style={{ borderColor: '#fbbf2430' }}>
-            <div className="flex items-center gap-2 mb-4">
-              <PoundSterling className="h-5 w-5 text-amber-400" />
-              <h3 className="font-semibold text-amber-300">2025 Cost Estimate</h3>
-            </div>
-
-            <div className="grid grid-cols-2 gap-4 mb-4">
-              <div className="text-center p-3 rounded-xl bg-amber-500/10 border border-amber-500/20">
-                <p className="text-2xl font-bold text-amber-400">
                   £{result.costEstimate.totalCost.toLocaleString()}
                 </p>
-                <p className="text-xs text-white/60">{result.costEstimate.category}</p>
+                <p className="text-xs text-white">{result.costEstimate.category}</p>
               </div>
-              <div className="text-center p-3 rounded-xl bg-emerald-500/10 border border-emerald-500/20">
-                <p className="text-2xl font-bold text-emerald-400">
+              <div className="text-center p-3 rounded-xl bg-white/5 border border-white/10">
+                <p
+                  className="text-2xl font-bold bg-clip-text text-transparent"
+                  style={{
+                    backgroundImage: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})`,
+                  }}
+                >
                   £{result.costEstimate.costPerKw.toLocaleString()}
                 </p>
-                <p className="text-xs text-white/60">Per kW installed</p>
+                <p className="text-xs text-white">Per kW installed</p>
               </div>
             </div>
-
             <div className="space-y-2 text-sm">
-              <div className="flex justify-between text-white/70">
-                <span>Panels:</span>
-                <span className="text-white">
-                  £{result.costEstimate.breakdown.panels.toLocaleString()}
-                </span>
-              </div>
-              <div className="flex justify-between text-white/70">
-                <span>Inverter:</span>
-                <span className="text-white">
-                  £{result.costEstimate.breakdown.inverter.toLocaleString()}
-                </span>
-              </div>
-              <div className="flex justify-between text-white/70">
-                <span>Installation:</span>
-                <span className="text-white">
-                  £{result.costEstimate.breakdown.installation.toLocaleString()}
-                </span>
-              </div>
-              <div className="flex justify-between text-white/70">
-                <span>Electrical:</span>
-                <span className="text-white">
-                  £{result.costEstimate.breakdown.electrical.toLocaleString()}
-                </span>
-              </div>
-              <div className="flex justify-between text-white/70">
-                <span>Scaffolding:</span>
-                <span className="text-white">
-                  £{result.costEstimate.breakdown.scaffolding.toLocaleString()}
-                </span>
-              </div>
-              <div className="flex justify-between text-white/70">
-                <span>MCS & DNO:</span>
-                <span className="text-white">
-                  £{result.costEstimate.breakdown.mcsAndDno.toLocaleString()}
-                </span>
-              </div>
+              {[
+                { label: 'Panels', value: result.costEstimate.breakdown.panels },
+                { label: 'Inverter', value: result.costEstimate.breakdown.inverter },
+                { label: 'Installation', value: result.costEstimate.breakdown.installation },
+                { label: 'Electrical', value: result.costEstimate.breakdown.electrical },
+                { label: 'Scaffolding', value: result.costEstimate.breakdown.scaffolding },
+                { label: 'MCS & DNO', value: result.costEstimate.breakdown.mcsAndDno },
+              ].map((item) => (
+                <div key={item.label} className="flex justify-between">
+                  <span className="text-white">{item.label}</span>
+                  <span className="text-white">£{item.value.toLocaleString()}</span>
+                </div>
+              ))}
               <div className="flex justify-between pt-2 border-t border-white/10">
-                <span className="text-white">VAT (5%):</span>
-                <span className="text-amber-400 font-semibold">
+                <span className="text-white font-medium">VAT (5%)</span>
+                <span className="text-white font-semibold">
                   £{result.costEstimate.breakdown.vat.toLocaleString()}
                 </span>
               </div>
             </div>
-          </div>
+          </CalculatorSection>
 
           {/* Environmental Impact */}
-          <div className="calculator-card p-4" style={{ borderColor: '#22c55e30' }}>
-            <div className="flex items-center gap-2 mb-4">
-              <Lightbulb className="h-5 w-5 text-emerald-400" />
-              <h3 className="font-semibold text-emerald-300">Environmental Impact</h3>
-            </div>
-
+          <CalculatorSection title="Environmental Impact">
             <ResultsGrid columns={2}>
-              <div className="text-center p-3 rounded-xl bg-emerald-500/10 border border-emerald-500/20">
-                <p className="text-2xl font-bold text-emerald-400">{result.co2Savings} kg</p>
-                <p className="text-xs text-white/60">CO₂ Saved / Year</p>
-              </div>
-              <div className="text-center p-3 rounded-xl bg-emerald-500/10 border border-emerald-500/20">
-                <p className="text-2xl font-bold text-emerald-400">
-                  {Math.round(result.co2Savings / 21)}
-                </p>
-                <p className="text-xs text-white/60">Trees Equivalent</p>
-              </div>
+              <ResultValue
+                category={CAT}
+                label="CO₂ Saved / Year"
+                value={result.co2Savings.toString()}
+                unit="kg"
+                size="sm"
+              />
+              <ResultValue
+                category={CAT}
+                label="Trees Equivalent"
+                value={Math.round(result.co2Savings / 21).toString()}
+                size="sm"
+              />
             </ResultsGrid>
-          </div>
+          </CalculatorSection>
 
-          {/* Analysis & Recommendations - Collapsible */}
-          <Collapsible open={showAnalysis} onOpenChange={setShowAnalysis}>
-            <div className="calculator-card overflow-hidden" style={{ borderColor: '#60a5fa30' }}>
-              <CollapsibleTrigger className="agent-collapsible-trigger w-full">
-                <div className="flex items-center gap-3">
-                  <FileText className="h-4 w-4 text-blue-400" />
-                  <span className="text-sm sm:text-base font-medium text-blue-300">
-                    Analysis & Recommendations
-                  </span>
+          {/* 25-Year Degradation */}
+          <CalculatorSection title="25-Year Output Forecast">
+            <div className="space-y-2">
+              <div className="grid grid-cols-3 gap-2 text-xs font-medium text-white border-b border-white/10 pb-1.5">
+                <span>Year</span>
+                <span className="text-right">Annual Output</span>
+                <span className="text-right">Cumulative</span>
+              </div>
+              {result.degradation.map((d) => (
+                <div key={d.year} className="grid grid-cols-3 gap-2 text-sm text-white">
+                  <span>Year {d.year}</span>
+                  <span className="text-right">{d.output.toLocaleString()} kWh</span>
+                  <span className="text-right">{(d.cumulative / 1000).toFixed(1)} MWh</span>
                 </div>
-                <ChevronDown
-                  className={cn(
-                    'h-4 w-4 text-white/70 transition-transform duration-200',
-                    showAnalysis && 'rotate-180'
-                  )}
-                />
-              </CollapsibleTrigger>
-
-              <CollapsibleContent className="p-4 pt-0 space-y-4">
-                <div className="p-3 rounded-xl bg-emerald-500/10 border border-emerald-500/20">
-                  <div className="flex items-center gap-2 mb-2">
-                    <CheckCircle className="h-4 w-4 text-emerald-400" />
-                    <span className="font-medium text-emerald-300 text-sm">System Performance</span>
-                  </div>
-                  <div className="text-xs text-emerald-200/80 space-y-1">
-                    <p>
-                      • {systemSize}kW system with {result.systemEfficiency}% overall efficiency
-                    </p>
-                    <p>
-                      • {roofOrientation} orientation provides {result.orientationFactor}% of
-                      optimal
-                    </p>
-                    <p>
-                      • {roofTilt}° tilt achieves {result.tiltFactor}% efficiency
-                    </p>
-                    <p>
-                      • Expected 25-year generation:{' '}
-                      {Math.round((result.annualGeneration * 22.5) / 1000)} MWh
-                    </p>
-                  </div>
-                </div>
-
-                <div className="p-3 rounded-xl bg-amber-500/10 border border-amber-500/20">
-                  <div className="flex items-center gap-2 mb-2">
-                    <TrendingUp className="h-4 w-4 text-amber-400" />
-                    <span className="font-medium text-amber-300 text-sm">Financial Analysis</span>
-                  </div>
-                  <div className="text-xs text-amber-200/80 space-y-1">
-                    <p>
-                      • Payback: {result.paybackPeriod} years using £
-                      {result.costEstimate.totalCost.toLocaleString()}
-                    </p>
-                    <p>• Monthly savings: ~£{Math.round(result.annualSavings / 12)}</p>
-                    <p>
-                      • 25-year total savings: £
-                      {Math.round(result.annualSavings * 22.5).toLocaleString()}
-                    </p>
-                    <p>
-                      • Monthly financing: ~£{Math.round(result.costEstimate.totalCost / 120)} over
-                      10 years
-                    </p>
-                  </div>
-                </div>
-
-                <div className="p-3 rounded-xl bg-blue-500/10 border border-blue-500/20">
-                  <div className="flex items-center gap-2 mb-2">
-                    <AlertTriangle className="h-4 w-4 text-blue-400" />
-                    <span className="font-medium text-blue-300 text-sm">Installation Tips</span>
-                  </div>
-                  <div className="text-xs text-blue-200/80 space-y-1">
-                    <p>• Use MCS-certified installer for warranty and SEG</p>
-                    <p>• Submit {result.dnoConnectionType} application before installation</p>
-                    <p>• Consider optimisers if partial shading exists</p>
-                    <p>• Install bird guards and cleaning access points</p>
-                  </div>
-                </div>
-              </CollapsibleContent>
+              ))}
+              <div className="pt-2 border-t border-white/10 flex items-center justify-between text-sm">
+                <span className="text-white font-medium">Lifetime Generation</span>
+                <span className="text-white font-bold">
+                  {(result.lifetimeGeneration / 1000).toFixed(1)} MWh
+                </span>
+              </div>
+              <p className="text-xs text-white">
+                Based on ~2% first-year loss + 0.5%/yr degradation (NREL data)
+              </p>
             </div>
-          </Collapsible>
+          </CalculatorSection>
 
-          {/* Regulations & Standards - Collapsible */}
-          <Collapsible open={showRegs} onOpenChange={setShowRegs}>
-            <div className="calculator-card overflow-hidden" style={{ borderColor: '#fbbf2415' }}>
-              <CollapsibleTrigger className="agent-collapsible-trigger w-full">
-                <div className="flex items-center gap-3">
-                  <Shield className="h-4 w-4 text-amber-400" />
-                  <span className="text-sm sm:text-base font-medium text-amber-300">
-                    Regulations & Standards
-                  </span>
-                </div>
-                <ChevronDown
-                  className={cn(
-                    'h-4 w-4 text-white/70 transition-transform duration-200',
-                    showRegs && 'rotate-180'
-                  )}
-                />
-              </CollapsibleTrigger>
+          <CalculatorDivider category={CAT} />
 
-              <CollapsibleContent className="p-4 pt-0 space-y-3">
-                <div className="p-3 rounded-xl bg-amber-500/10 border border-amber-500/20">
-                  <p className="font-medium text-amber-300 text-sm mb-2">BS 7671 (18th Edition)</p>
-                  <div className="text-xs text-amber-200/80 space-y-1">
-                    <p>• RCD protection required (411.3.3)</p>
-                    <p>• DC isolator within 3m of PV array</p>
-                    <p>• AC isolator accessible to firefighters</p>
-                  </div>
-                </div>
-                <div className="p-3 rounded-xl bg-blue-500/10 border border-blue-500/20">
-                  <p className="font-medium text-blue-300 text-sm mb-2">
-                    DNO Connection ({result.dnoConnectionType})
+          {/* How It Worked Out */}
+          <CalculatorFormula
+            category={CAT}
+            title="How It Worked Out"
+            defaultOpen
+            steps={[
+              {
+                label: 'System factors',
+                formula: `Orientation: ${roofOrientation} = ${result.orientationFactor}% | Tilt: ${roofTilt}° = ${result.tiltFactor}% | PR: ${result.systemPR}%`,
+              },
+              {
+                label: 'Annual generation',
+                formula: `E = ${systemSize}kWp × ${result.irradiance} kWh/m²/yr × ${result.orientationFactor}% × ${result.tiltFactor}% × ${result.systemPR}%`,
+                value: `${result.annualGeneration.toLocaleString()} kWh/year`,
+              },
+              {
+                label: 'Self-consumption savings',
+                formula: `${result.selfConsumedEnergy.toLocaleString()} kWh × £${electricityRate}`,
+                value: `£${result.savingsFromSelfConsumption}`,
+              },
+              {
+                label: 'Export income',
+                formula: `${result.exportedEnergy.toLocaleString()} kWh × £${exportRate}`,
+                value: `£${result.incomeFromExport}`,
+              },
+              {
+                label: 'Total annual savings',
+                value: `£${result.annualSavings}/year`,
+              },
+              {
+                label: 'Payback period',
+                formula: `£${result.costEstimate.totalCost.toLocaleString()} ÷ £${result.annualSavings}`,
+                value: `${result.paybackPeriod} years`,
+              },
+            ]}
+          />
+
+          {/* What This Means */}
+          <Collapsible open={showGuidance} onOpenChange={setShowGuidance}>
+            <CollapsibleTrigger className="flex items-center justify-between w-full min-h-11 py-2.5 px-3 rounded-lg text-sm font-medium text-white hover:bg-white/5 transition-all touch-manipulation">
+              <span>What This Means</span>
+              <ChevronDown
+                className={cn(
+                  'h-4 w-4 transition-transform duration-200',
+                  showGuidance && 'rotate-180'
+                )}
+              />
+            </CollapsibleTrigger>
+            <CollapsibleContent className="pt-2">
+              <div
+                className="p-3 rounded-xl border space-y-4"
+                style={{
+                  borderColor: `${config.gradientFrom}15`,
+                  background: `${config.gradientFrom}05`,
+                }}
+              >
+                <div className="space-y-2">
+                  <p className="text-sm text-white font-medium">System Performance</p>
+                  <p className="text-sm text-white">
+                    {systemSize}kWp system with {result.systemPR}% performance ratio.{' '}
+                    {roofOrientation} orientation provides {result.orientationFactor}% of optimal.{' '}
+                    {roofTilt}° tilt achieves {result.tiltFactor}% efficiency. Expected 25-year
+                    generation: {(result.lifetimeGeneration / 1000).toFixed(1)} MWh (includes panel
+                    degradation).
                   </p>
-                  <div className="text-xs text-blue-200/80 space-y-1">
-                    <p>
-                      •{' '}
-                      {result.dnoConnectionType === 'G98'
-                        ? 'Simplified notification for ≤3.68kW'
-                        : 'Full application for >3.68kW'}
-                    </p>
-                    <p>• Must not exceed 16A per phase</p>
-                  </div>
                 </div>
-                <div className="p-3 rounded-xl bg-emerald-500/10 border border-emerald-500/20">
-                  <p className="font-medium text-emerald-300 text-sm mb-2">MCS Certification</p>
-                  <div className="text-xs text-emerald-200/80 space-y-1">
-                    <p>• Required for SEG payments</p>
-                    <p>• Ensures quality installation</p>
-                    <p>• Insurance compliance</p>
-                  </div>
+                <div className="space-y-2">
+                  <p className="text-sm text-white font-medium">Financial Analysis</p>
+                  <p className="text-sm text-white">
+                    Payback: {result.paybackPeriod} years using £
+                    {result.costEstimate.totalCost.toLocaleString()}. Monthly savings: ~£
+                    {Math.round(result.annualSavings / 12)}. 25-year total savings: ~£
+                    {Math.round(result.annualSavings * 25 * 0.94).toLocaleString()} (adjusted for
+                    degradation).
+                  </p>
                 </div>
-              </CollapsibleContent>
-            </div>
+                <div className="space-y-2">
+                  <p className="text-sm text-white font-medium">Installation Tips</p>
+                  <ul className="space-y-1">
+                    {[
+                      'Use MCS-certified installer for warranty and SEG',
+                      `Submit ${result.dnoConnectionType} application before installation`,
+                      'Consider optimisers if partial shading exists',
+                      'Install bird guards and cleaning access points',
+                    ].map((tip) => (
+                      <li key={tip} className="flex items-start gap-2 text-sm text-white">
+                        <span
+                          className="w-1.5 h-1.5 rounded-full mt-2 shrink-0"
+                          style={{ backgroundColor: config.gradientFrom }}
+                        />
+                        {tip}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+            </CollapsibleContent>
           </Collapsible>
 
-          {/* How It Worked Out - Collapsible */}
-          <Collapsible open={showWorkings} onOpenChange={setShowWorkings}>
-            <div className="calculator-card overflow-hidden" style={{ borderColor: '#a78bfa15' }}>
-              <CollapsibleTrigger className="agent-collapsible-trigger w-full">
-                <div className="flex items-center gap-3">
-                  <Calculator className="h-4 w-4 text-purple-400" />
-                  <span className="text-sm sm:text-base font-medium text-purple-300">
-                    How It Worked Out
-                  </span>
-                </div>
-                <ChevronDown
-                  className={cn(
-                    'h-4 w-4 text-white/70 transition-transform duration-200',
-                    showWorkings && 'rotate-180'
-                  )}
-                />
-              </CollapsibleTrigger>
-
-              <CollapsibleContent className="p-4 pt-0">
-                <div className="text-sm font-mono text-purple-300 space-y-3">
-                  <div>
-                    <p className="text-xs text-purple-400 mb-1">Step 1: System factors</p>
-                    <p>
-                      Orientation: {roofOrientation} = {result.orientationFactor}%
-                    </p>
-                    <p>
-                      Tilt: {roofTilt}° vs 35° optimal = {result.tiltFactor}%
-                    </p>
-                    <p>
-                      Performance Ratio (PR):{' '}
-                      <span className="text-purple-200 font-bold">{result.systemEfficiency}%</span>
-                    </p>
-                  </div>
-
-                  <div className="pt-2 border-t border-purple-500/20">
-                    <p className="text-xs text-purple-400 mb-1">Step 2: Annual generation</p>
-                    <p>E = Size × Irradiance × Factors</p>
-                    <p>
-                      E = {systemSize}kW ×{' '}
-                      {UK_LOCATIONS.find((l) => l.name === location)?.irradiance}
-                    </p>
-                    <p>
-                      E ={' '}
-                      <span className="text-purple-200 font-bold">
-                        {result.annualGeneration.toLocaleString()} kWh/year
+          {/* BS 7671 Reference */}
+          <Collapsible open={showReference} onOpenChange={setShowReference}>
+            <CollapsibleTrigger className="flex items-center justify-between w-full min-h-11 py-2.5 px-3 rounded-lg text-sm font-medium text-white hover:bg-white/5 transition-all touch-manipulation">
+              <span>BS 7671 Reference</span>
+              <ChevronDown
+                className={cn(
+                  'h-4 w-4 transition-transform duration-200',
+                  showReference && 'rotate-180'
+                )}
+              />
+            </CollapsibleTrigger>
+            <CollapsibleContent className="pt-2">
+              <div
+                className="p-3 rounded-xl border space-y-3"
+                style={{
+                  borderColor: `${config.gradientFrom}15`,
+                  background: `${config.gradientFrom}05`,
+                }}
+              >
+                <ul className="space-y-2">
+                  {[
+                    {
+                      reg: 'Section 712',
+                      desc: 'Solar PV power supply systems',
+                    },
+                    {
+                      reg: 'Reg 712.512.2',
+                      desc: 'DC isolation within 3m of PV array',
+                    },
+                    {
+                      reg: result.dnoConnectionType === 'G98' ? 'G98' : 'G99',
+                      desc:
+                        result.dnoConnectionType === 'G98'
+                          ? 'Simplified notification for systems ≤3.68kW'
+                          : 'Full application required for systems >3.68kW',
+                    },
+                    {
+                      reg: 'MCS 012',
+                      desc: 'MCS certification required for SEG payments',
+                    },
+                    {
+                      reg: 'Section 534',
+                      desc: 'Type 2 SPDs at DC and AC sides',
+                    },
+                    {
+                      reg: 'Fire safety',
+                      desc: '1m setback from roof edges, AC isolator accessible to firefighters',
+                    },
+                  ].map((item) => (
+                    <li key={item.reg} className="flex items-start gap-2 text-sm">
+                      <span
+                        className="w-1.5 h-1.5 rounded-full mt-2 shrink-0"
+                        style={{ backgroundColor: config.gradientFrom }}
+                      />
+                      <span className="text-white">
+                        <span className="font-medium">{item.reg}:</span> {item.desc}
                       </span>
-                    </p>
-                  </div>
-
-                  <div className="pt-2 border-t border-purple-500/20">
-                    <p className="text-xs text-purple-400 mb-1">Step 3: Annual savings</p>
-                    <p>
-                      Self:{' '}
-                      {Math.round(
-                        (result.annualGeneration * parseFloat(selfConsumptionRate)) / 100
-                      )}{' '}
-                      kWh × £{electricityRate}
-                    </p>
-                    <p>
-                      Export:{' '}
-                      {Math.round(
-                        result.annualGeneration * (1 - parseFloat(selfConsumptionRate) / 100)
-                      )}{' '}
-                      kWh × £{exportRate}
-                    </p>
-                    <p>
-                      Total:{' '}
-                      <span className="text-purple-200 font-bold">
-                        £{result.annualSavings}/year
-                      </span>
-                    </p>
-                  </div>
-
-                  <div className="pt-2 border-t border-purple-500/20">
-                    <p className="text-xs text-purple-400 mb-1">Step 4: Payback</p>
-                    <p>
-                      = £{result.costEstimate.totalCost.toLocaleString()} ÷ £{result.annualSavings}
-                    </p>
-                    <p>
-                      ={' '}
-                      <span className="text-purple-200 font-bold">
-                        {result.paybackPeriod} years
-                      </span>
-                    </p>
-                  </div>
-                </div>
-              </CollapsibleContent>
-            </div>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </CollapsibleContent>
           </Collapsible>
         </div>
       )}
 
-      {/* Formula Reference */}
-      <div className="p-3 rounded-xl bg-blue-500/10 border border-blue-500/20">
-        <div className="flex items-start gap-2">
-          <Info className="h-4 w-4 text-blue-400 mt-0.5 shrink-0" />
-          <p className="text-sm text-blue-200">
-            <strong>Annual Generation</strong> = System Size × Solar Irradiance × Orientation Factor
-            × Tilt Factor × System Efficiency
-          </p>
-        </div>
-      </div>
-    </div>
+      {/* Formula reference (always visible) */}
+      <FormulaReference
+        category={CAT}
+        name="Solar PV Generation"
+        formula="E = P_kWp × G × F_orient × F_tilt × PR"
+        variables={[
+          { symbol: 'P_kWp', description: 'System size (kWp)' },
+          { symbol: 'G', description: 'Annual irradiance (kWh/m²/yr)' },
+          { symbol: 'F_orient', description: 'Orientation factor' },
+          { symbol: 'F_tilt', description: 'Tilt factor' },
+          { symbol: 'PR', description: 'Performance ratio (accounts for all system losses)' },
+        ]}
+      />
+    </CalculatorCard>
   );
 };
 

@@ -98,7 +98,7 @@ export function SetupIncompleteBanner() {
             <div className="flex items-center gap-2">
               <Button
                 size="sm"
-                className="bg-amber-500 hover:bg-amber-600 text-white h-9 touch-manipulation"
+                className="bg-amber-500 hover:bg-amber-600 text-white h-11 touch-manipulation"
                 onClick={() => navigate('/settings?tab=company')}
               >
                 <Settings className="h-3.5 w-3.5 mr-1.5" />
@@ -109,7 +109,7 @@ export function SetupIncompleteBanner() {
                 variant="ghost"
                 onClick={handleDismiss}
                 disabled={dismissBanner.isPending}
-                className="text-muted-foreground hover:text-foreground h-9 touch-manipulation"
+                className="text-muted-foreground hover:text-foreground h-11 touch-manipulation"
               >
                 Remind me later
               </Button>

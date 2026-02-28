@@ -1,24 +1,21 @@
-import { useState } from 'react';
-import {
-  Zap,
-  Calculator,
-  RotateCcw,
-  AlertTriangle,
-  CheckCircle2,
-  Lightbulb,
-  Info,
-  ChevronDown,
-  BookOpen,
-} from 'lucide-react';
+import { useState, useMemo } from 'react';
+import { ChevronDown, AlertTriangle, Copy, Check } from 'lucide-react';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { cn } from '@/lib/utils';
+import { useToast } from '@/hooks/use-toast';
 import {
   CalculatorCard,
   CalculatorInput,
   CalculatorSelect,
-  CalculatorResult,
+  CalculatorActions,
+  CalculatorDivider,
+  CalculatorInputGrid,
+  CalculatorSection,
   ResultValue,
   ResultsGrid,
+  ResultBadge,
+  CalculatorFormula,
+  FormulaReference,
   CALCULATOR_CONFIG,
 } from '@/components/calculators/shared';
 import {
@@ -26,171 +23,156 @@ import {
   MotorStartingInputs,
 } from '@/lib/calculators/engines/motorStartingEngine';
 
+const CAT = 'power' as const;
+const config = CALCULATOR_CONFIG[CAT];
+
+interface MotorResult {
+  fullLoadCurrent: number;
+  startingCurrent: number;
+  startingMultiplier: number;
+  startingKva: number;
+  thermalStress: number;
+  voltageDropRunning: number;
+  voltageDropStarting: number;
+  complianceStatus: string;
+  recommendedCableSize: string;
+  minimumCableSize: number;
+  cableAnalysis: string;
+  currentCapacityCheck: string;
+  protectionAnalysis: string;
+  whatThisMeans: string[];
+  practicalGuidance: string[];
+  recommendations: string[];
+  warnings: string[];
+  bs7671Compliant: boolean;
+}
+
 const MotorStartingCurrentCalculator = () => {
-  const config = CALCULATOR_CONFIG['power'];
+  const { toast } = useToast();
+  const [copied, setCopied] = useState(false);
 
-  const [power, setPower] = useState<string>('');
-  const [voltage, setVoltage] = useState<string>('400');
-  const [efficiency, setEfficiency] = useState<string>('0.85');
-  const [powerFactor, setPowerFactor] = useState<string>('0.85');
-  const [startingMethod, setStartingMethod] = useState<string>('direct');
-  const [phases, setPhases] = useState<string>('3');
-  const [loadType, setLoadType] = useState<string>('standard');
-  const [serviceTemperature, setServiceTemperature] = useState<string>('40');
-  const [ratedCurrent, setRatedCurrent] = useState<string>('');
-  const [startingTime, setStartingTime] = useState<string>('2');
-  const [cableLength, setCableLength] = useState<string>('50');
-  const [cableSize, setCableSize] = useState<string>('2.5');
-  const [breakerRating, setBreakerRating] = useState<string>('');
-  const [supplyImpedance, setSupplyImpedance] = useState<string>('0.1');
-  const [installationMethod, setInstallationMethod] = useState<string>('clipped');
-  const [groupingFactor, setGroupingFactor] = useState<string>('1.0');
+  const [power, setPower] = useState('');
+  const [voltage, setVoltage] = useState('400');
+  const [efficiency, setEfficiency] = useState('0.85');
+  const [powerFactor, setPowerFactor] = useState('0.85');
+  const [startingMethod, setStartingMethod] = useState('direct');
+  const [phases, setPhases] = useState('3');
+  const [loadType, setLoadType] = useState('standard');
+  const [serviceTemperature, setServiceTemperature] = useState('40');
+  const [ratedCurrent, setRatedCurrent] = useState('');
+  const [startingTime, setStartingTime] = useState('2');
+  const [cableLength, setCableLength] = useState('50');
+  const [cableSize, setCableSize] = useState('2.5');
+  const [breakerRating, setBreakerRating] = useState('');
+  const [supplyImpedance, setSupplyImpedance] = useState('0.1');
+  const [installationMethod, setInstallationMethod] = useState('clipped');
+  const [groupingFactor, setGroupingFactor] = useState('1.0');
 
+  const [showInstallation, setShowInstallation] = useState(false);
   const [showGuidance, setShowGuidance] = useState(false);
   const [showReference, setShowReference] = useState(false);
-  const [showInstallation, setShowInstallation] = useState(false);
+  const [result, setResult] = useState<MotorResult | null>(null);
 
-  const [result, setResult] = useState<{
-    fullLoadCurrent: number;
-    startingCurrent: number;
-    startingMultiplier: number;
-    startingKva: number;
-    thermalStress: number;
-    protectionRecommendation: string;
-    voltageDropRunning: number;
-    voltageDropStarting: number;
-    complianceStatus: string;
-    recommendedCableSize: string;
-    minimumCableSize: number;
-    cableAnalysis: string;
-    currentCapacityCheck: string;
-    protectionAnalysis: string;
-    whatThisMeans: string[];
-    practicalGuidance: string[];
-    recommendations: string[];
-    warnings: string[];
-    bs7671Compliant: boolean;
-  } | null>(null);
+  const canCalculate = useMemo(() => parseFloat(power) > 0, [power]);
 
-  const calculateStartingCurrent = () => {
+  const handleCalculate = () => {
     const P = parseFloat(power);
     const V = parseFloat(voltage);
     const eff = parseFloat(efficiency);
     const pf = parseFloat(powerFactor);
-    const temp = parseFloat(serviceTemperature);
-    const cableLen = parseFloat(cableLength);
-    const cableCsa = parseFloat(cableSize);
-    const startTime = parseFloat(startingTime);
-    const impedance = parseFloat(supplyImpedance);
-    const grouping = parseFloat(groupingFactor);
 
-    if (P > 0 && V > 0 && eff > 0 && pf > 0) {
-      const inputs: MotorStartingInputs = {
-        powerKw: P,
-        voltage: V,
-        phases: phases === '3' ? 3 : 1,
-        efficiency: eff,
-        powerFactor: pf,
-        startingMethod: startingMethod as any,
-        loadType: loadType as any,
-        ambientTemp: temp,
-        cableLength: cableLen,
-        installationMethod: installationMethod as any,
-        groupingFactor: grouping,
-        ratedCurrent: ratedCurrent ? parseFloat(ratedCurrent) : undefined,
-        startingTime: startTime,
-        supplyImpedance: impedance,
-      };
+    if (!(P > 0 && V > 0 && eff > 0 && pf > 0)) return;
 
-      const engineResult = calculateMotorStarting(inputs);
+    const inputs: MotorStartingInputs = {
+      powerKw: P,
+      voltage: V,
+      phases: phases === '3' ? 3 : 1,
+      efficiency: eff,
+      powerFactor: pf,
+      startingMethod: startingMethod as MotorStartingInputs['startingMethod'],
+      loadType: loadType as MotorStartingInputs['loadType'],
+      ambientTemp: parseFloat(serviceTemperature),
+      cableLength: parseFloat(cableLength),
+      installationMethod: installationMethod as MotorStartingInputs['installationMethod'],
+      groupingFactor: parseFloat(groupingFactor),
+      ratedCurrent: ratedCurrent ? parseFloat(ratedCurrent) : undefined,
+      startingTime: parseFloat(startingTime),
+      supplyImpedance: parseFloat(supplyImpedance),
+    };
 
-      const fullLoadCurrent = engineResult.fullLoadCurrent;
-      const startingCurrent = engineResult.startingCurrent;
-      const startingMultiplier = engineResult.startingMultiplier;
-      const startingKva = engineResult.startingKva;
-      const thermalStress = engineResult.thermalStress;
+    const r = calculateMotorStarting(inputs);
 
-      const recommendedCableSize = `${engineResult.recommendedCableSize}mm²`;
-      const minimumCableSize = engineResult.minimumCableSize;
-
-      let cableAnalysis = 'Cable sizing meets BS 7671 requirements';
-      if (engineResult.recommendedCableSize > engineResult.minimumCableSize) {
-        cableAnalysis = `Upgrade from ${minimumCableSize}mm² to ${engineResult.recommendedCableSize}mm² required for voltage drop compliance`;
-      } else if (engineResult.voltageDropRunning < 1.5 && engineResult.minimumCableSize > 2.5) {
-        cableAnalysis = `Current cable size is adequate with ${engineResult.voltageDropRunning.toFixed(1)}% voltage drop`;
-      }
-
-      const currentCapacityCheck = engineResult.currentCarryingCheck.suitable
-        ? `Cable capacity: ${engineResult.currentCarryingCheck.capacity.toFixed(0)}A (Required: ${engineResult.currentCarryingCheck.required.toFixed(0)}A) ✓`
-        : `Cable capacity insufficient: ${engineResult.currentCarryingCheck.capacity.toFixed(0)}A < ${engineResult.currentCarryingCheck.required.toFixed(0)}A`;
-
-      const protectionAnalysis = engineResult.protectionSuitable
-        ? `${engineResult.recommendedMcbRating}A ${engineResult.protectionType.toUpperCase()} suitable for motor protection`
-        : `${engineResult.recommendedMcbRating}A protection may be unsuitable - verify coordination`;
-
-      let complianceStatus = 'BS 7671 Compliant';
-      if (!engineResult.bs7671Compliant) {
-        if (!engineResult.voltageDropCompliant) {
-          complianceStatus = 'Non-compliant - voltage drop exceeds limits';
-        } else if (!engineResult.currentCarryingCheck.suitable) {
-          complianceStatus = 'Non-compliant - cable undersized';
-        } else {
-          complianceStatus = 'Review required for full compliance';
-        }
-      }
-
-      if (startingMethod === 'direct' && P > 11) {
-        complianceStatus = 'Consider reduced starting method (BS 7671 recommendation)';
-      }
-
-      const whatThisMeans: string[] = [
-        `Full load current: ${fullLoadCurrent.toFixed(1)}A (normal running current per BS 7671)`,
-        `Starting current: ${startingCurrent.toFixed(0)}A (${startingMultiplier.toFixed(1)}x full load current)`,
-        `Supply demand: ${startingKva.toFixed(1)}kVA during motor starting`,
-        `Running voltage drop: ${engineResult.voltageDropRunning.toFixed(1)}% (limit: 3%)`,
-        `Starting voltage drop: ${engineResult.voltageDropStarting.toFixed(1)}% (limit: 10%)`,
-      ];
-
-      const practicalGuidance: string[] = [
-        'Install motor starter close to distribution board to minimise cable runs',
-        'Use thermally protected motor starter for overload protection',
-        startingMethod === 'direct'
-          ? 'Direct starting suitable for motors <11kW only'
-          : 'Reduced starting method reduces supply impact',
-        'Regular testing of motor protection devices is required',
-        `Use ${engineResult.protectionType.includes('c') ? 'Type C' : 'Type D'} MCB for motor loads`,
-      ];
-
-      const allRecommendations = [...engineResult.recommendations, ...engineResult.notes];
-
-      setResult({
-        fullLoadCurrent,
-        startingCurrent,
-        startingMultiplier,
-        startingKva,
-        thermalStress,
-        protectionRecommendation: protectionAnalysis,
-        voltageDropRunning: engineResult.voltageDropRunning,
-        voltageDropStarting: engineResult.voltageDropStarting,
-        complianceStatus,
-        recommendedCableSize,
-        minimumCableSize,
-        cableAnalysis,
-        currentCapacityCheck,
-        protectionAnalysis,
-        whatThisMeans,
-        practicalGuidance,
-        recommendations:
-          allRecommendations.length > 0
-            ? allRecommendations
-            : ['Motor installation meets BS 7671 requirements'],
-        warnings: engineResult.warnings,
-        bs7671Compliant: engineResult.bs7671Compliant,
-      });
+    const recommendedCableSize = `${r.recommendedCableSize}mm²`;
+    let cableAnalysis = 'Cable sizing meets BS 7671 requirements';
+    if (r.recommendedCableSize > r.minimumCableSize) {
+      cableAnalysis = `Upgrade from ${r.minimumCableSize}mm² to ${r.recommendedCableSize}mm² required for voltage drop compliance`;
     }
+
+    const currentCapacityCheck = r.currentCarryingCheck.suitable
+      ? `Cable capacity: ${r.currentCarryingCheck.capacity.toFixed(0)}A (Required: ${r.currentCarryingCheck.required.toFixed(0)}A)`
+      : `Cable capacity insufficient: ${r.currentCarryingCheck.capacity.toFixed(0)}A < ${r.currentCarryingCheck.required.toFixed(0)}A`;
+
+    const protectionAnalysis = r.protectionSuitable
+      ? `${r.recommendedMcbRating}A ${r.protectionType.toUpperCase()} suitable for motor protection`
+      : `${r.recommendedMcbRating}A protection may be unsuitable — verify coordination`;
+
+    let complianceStatus = 'BS 7671 Compliant';
+    if (!r.bs7671Compliant) {
+      if (!r.voltageDropCompliant) complianceStatus = 'Non-compliant — voltage drop exceeds limits';
+      else if (!r.currentCarryingCheck.suitable)
+        complianceStatus = 'Non-compliant — cable undersized';
+      else complianceStatus = 'Review required for full compliance';
+    }
+    if (startingMethod === 'direct' && P > 11) {
+      complianceStatus = 'Consider reduced starting method (BS 7671 recommendation)';
+    }
+
+    const whatThisMeans: string[] = [
+      `Full load current: ${r.fullLoadCurrent.toFixed(1)}A (normal running current per BS 7671)`,
+      `Starting current: ${r.startingCurrent.toFixed(0)}A (${r.startingMultiplier.toFixed(1)}× full load current)`,
+      `Supply demand: ${r.startingKva.toFixed(1)}kVA during motor starting`,
+      `Running voltage drop: ${r.voltageDropRunning.toFixed(1)}% (limit: 3%)`,
+      `Starting voltage drop: ${r.voltageDropStarting.toFixed(1)}% (limit: 10%)`,
+    ];
+
+    const practicalGuidance: string[] = [
+      'Install motor starter close to distribution board to minimise cable runs',
+      'Use thermally protected motor starter for overload protection',
+      startingMethod === 'direct'
+        ? 'Direct starting suitable for motors <11kW only'
+        : 'Reduced starting method reduces supply impact',
+      'Regular testing of motor protection devices is required',
+      `Use ${r.protectionType.includes('c') ? 'Type C' : 'Type D'} MCB for motor loads`,
+    ];
+
+    const allRecommendations = [...r.recommendations, ...r.notes];
+
+    setResult({
+      fullLoadCurrent: r.fullLoadCurrent,
+      startingCurrent: r.startingCurrent,
+      startingMultiplier: r.startingMultiplier,
+      startingKva: r.startingKva,
+      thermalStress: r.thermalStress,
+      voltageDropRunning: r.voltageDropRunning,
+      voltageDropStarting: r.voltageDropStarting,
+      complianceStatus,
+      recommendedCableSize,
+      minimumCableSize: r.minimumCableSize,
+      cableAnalysis,
+      currentCapacityCheck,
+      protectionAnalysis,
+      whatThisMeans,
+      practicalGuidance,
+      recommendations:
+        allRecommendations.length > 0
+          ? allRecommendations
+          : ['Motor installation meets BS 7671 requirements'],
+      warnings: r.warnings,
+      bs7671Compliant: r.bs7671Compliant,
+    });
   };
 
-  const reset = () => {
+  const handleReset = () => {
     setPower('');
     setVoltage('400');
     setEfficiency('0.85');
@@ -210,7 +192,26 @@ const MotorStartingCurrentCalculator = () => {
     setResult(null);
   };
 
-  const isValid = parseFloat(power) > 0;
+  const handleCopy = () => {
+    if (!result) return;
+    const text = [
+      'Motor Starting Current Calculator Results',
+      `Motor: ${power}kW | ${voltage}V | ${phases}-phase`,
+      `Starting method: ${startingMethod}`,
+      `Full load current: ${result.fullLoadCurrent.toFixed(1)} A`,
+      `Starting current: ${result.startingCurrent.toFixed(0)} A (${result.startingMultiplier.toFixed(1)}×)`,
+      `Starting kVA: ${result.startingKva.toFixed(1)} kVA`,
+      `Voltage drop (running): ${result.voltageDropRunning.toFixed(1)}%`,
+      `Voltage drop (starting): ${result.voltageDropStarting.toFixed(1)}%`,
+      `Thermal stress: ${(result.thermalStress / 1000).toFixed(1)} kA²s`,
+      `Recommended cable: ${result.recommendedCableSize}`,
+      `Status: ${result.complianceStatus}`,
+    ].join('\n');
+    navigator.clipboard.writeText(text);
+    setCopied(true);
+    toast({ title: 'Copied to clipboard' });
+    setTimeout(() => setCopied(false), 2000);
+  };
 
   const voltageOptions = [
     { value: '230', label: '230V (Single Phase)' },
@@ -248,20 +249,14 @@ const MotorStartingCurrentCalculator = () => {
   ];
 
   return (
-    <div className="space-y-4">
-      <CalculatorCard
-        category="power"
-        title="Motor Starting Current Calculator"
-        description="Calculate starting current, cable sizing, and protection for motors per BS 7671"
-        badge="Motors"
-      >
-        {/* Motor Details Section */}
-        <div className="flex items-center gap-2 mb-3">
-          <Zap className="h-4 w-4 text-amber-400" />
-          <span className="text-sm font-medium text-white/80">Motor Details</span>
-        </div>
-
-        <div className="grid grid-cols-2 gap-3">
+    <CalculatorCard
+      category={CAT}
+      title="Motor Starting Current Calculator"
+      description="Calculate starting current, cable sizing, and protection for motors per BS 7671"
+    >
+      {/* Motor Details */}
+      <CalculatorSection title="Motor Details">
+        <CalculatorInputGrid columns={2}>
           <CalculatorInput
             label="Motor Power"
             unit="kW"
@@ -272,7 +267,6 @@ const MotorStartingCurrentCalculator = () => {
             placeholder="e.g., 15"
             hint="Rated motor power from nameplate"
           />
-
           <CalculatorInput
             label="Rated Current"
             unit="A"
@@ -283,25 +277,22 @@ const MotorStartingCurrentCalculator = () => {
             placeholder="Optional"
             hint="Nameplate current if known"
           />
-        </div>
-
-        <div className="grid grid-cols-2 gap-3">
+        </CalculatorInputGrid>
+        <CalculatorInputGrid columns={2}>
           <CalculatorSelect
             label="Supply Voltage"
             value={voltage}
             onChange={setVoltage}
             options={voltageOptions}
           />
-
           <CalculatorSelect
             label="Phases"
             value={phases}
             onChange={setPhases}
             options={phaseOptions}
           />
-        </div>
-
-        <div className="grid grid-cols-2 gap-3">
+        </CalculatorInputGrid>
+        <CalculatorInputGrid columns={2}>
           <CalculatorInput
             label="Efficiency"
             type="text"
@@ -311,7 +302,6 @@ const MotorStartingCurrentCalculator = () => {
             placeholder="e.g., 0.85"
             hint="IE3: 0.85, IE4: 0.90"
           />
-
           <CalculatorInput
             label="Power Factor"
             type="text"
@@ -321,32 +311,28 @@ const MotorStartingCurrentCalculator = () => {
             placeholder="e.g., 0.85"
             hint="Typical: 0.8-0.9"
           />
-        </div>
+        </CalculatorInputGrid>
+      </CalculatorSection>
 
-        {/* Starting & Protection Section */}
-        <div className="h-px bg-white/10 my-4" />
-        <div className="flex items-center gap-2 mb-3">
-          <Calculator className="h-4 w-4 text-amber-400" />
-          <span className="text-sm font-medium text-white/80">Starting & Protection</span>
-        </div>
+      <CalculatorDivider category={CAT} />
 
-        <div className="grid grid-cols-2 gap-3">
+      {/* Starting & Protection */}
+      <CalculatorSection title="Starting & Protection">
+        <CalculatorInputGrid columns={2}>
           <CalculatorSelect
             label="Starting Method"
             value={startingMethod}
             onChange={setStartingMethod}
             options={startingMethodOptions}
           />
-
           <CalculatorSelect
             label="Load Type"
             value={loadType}
             onChange={setLoadType}
             options={loadTypeOptions}
           />
-        </div>
-
-        <div className="grid grid-cols-2 gap-3">
+        </CalculatorInputGrid>
+        <CalculatorInputGrid columns={2}>
           <CalculatorInput
             label="Starting Time"
             unit="sec"
@@ -357,7 +343,6 @@ const MotorStartingCurrentCalculator = () => {
             placeholder="e.g., 2"
             hint="Time to reach full speed"
           />
-
           <CalculatorInput
             label="MCB Rating"
             unit="A"
@@ -368,408 +353,391 @@ const MotorStartingCurrentCalculator = () => {
             placeholder="Optional"
             hint="Proposed breaker rating"
           />
-        </div>
+        </CalculatorInputGrid>
+      </CalculatorSection>
 
-        {/* Installation Details - Collapsible */}
-        <Collapsible open={showInstallation} onOpenChange={setShowInstallation}>
-          <CollapsibleTrigger className="w-full flex items-center justify-between p-3 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 transition-colors">
-            <div className="flex items-center gap-2">
-              <Zap className="h-4 w-4 text-amber-400" />
-              <span className="text-sm font-medium text-white/80">Installation Details</span>
-            </div>
-            <ChevronDown
-              className={cn(
-                'h-4 w-4 text-white/70 transition-transform duration-200',
-                showInstallation && 'rotate-180'
-              )}
-            />
-          </CollapsibleTrigger>
-
-          <CollapsibleContent className="pt-4 space-y-3">
-            <div className="grid grid-cols-2 gap-3">
-              <CalculatorInput
-                label="Cable Length"
-                unit="m"
-                type="text"
-                inputMode="decimal"
-                value={cableLength}
-                onChange={setCableLength}
-                placeholder="e.g., 50"
-                hint="Distance from DB"
-              />
-
-              <CalculatorInput
-                label="Cable Size"
-                unit="mm²"
-                type="text"
-                inputMode="decimal"
-                value={cableSize}
-                onChange={setCableSize}
-                placeholder="e.g., 2.5"
-                hint="Proposed cable CSA"
-              />
-            </div>
-
-            <div className="grid grid-cols-2 gap-3">
-              <CalculatorInput
-                label="Ambient Temp"
-                unit="°C"
-                type="text"
-                inputMode="decimal"
-                value={serviceTemperature}
-                onChange={setServiceTemperature}
-                placeholder="e.g., 40"
-              />
-
-              <CalculatorInput
-                label="Supply Impedance"
-                unit="Ω"
-                type="text"
-                inputMode="decimal"
-                value={supplyImpedance}
-                onChange={setSupplyImpedance}
-                placeholder="e.g., 0.1"
-              />
-            </div>
-
-            <div className="grid grid-cols-2 gap-3">
-              <CalculatorSelect
-                label="Installation Method"
-                value={installationMethod}
-                onChange={setInstallationMethod}
-                options={installationMethodOptions}
-              />
-
-              <CalculatorInput
-                label="Grouping Factor"
-                type="text"
-                inputMode="decimal"
-                value={groupingFactor}
-                onChange={setGroupingFactor}
-                placeholder="e.g., 1.0"
-                hint="Derating for grouped cables"
-              />
-            </div>
-          </CollapsibleContent>
-        </Collapsible>
-
-        {/* Action Buttons */}
-        <div className="flex gap-2 pt-2">
-          <button
-            onClick={calculateStartingCurrent}
-            disabled={!isValid}
+      {/* Installation Details - Collapsible */}
+      <Collapsible open={showInstallation} onOpenChange={setShowInstallation}>
+        <CollapsibleTrigger className="w-full flex items-center justify-between min-h-11 py-2.5 px-3 rounded-lg text-sm font-medium text-white hover:bg-white/5 transition-all touch-manipulation">
+          <span>Installation Details</span>
+          <ChevronDown
             className={cn(
-              'flex-1 h-14 rounded-xl font-semibold text-base flex items-center justify-center gap-2 transition-all touch-manipulation',
-              isValid ? 'text-black' : 'bg-white/10 text-white/30 cursor-not-allowed'
+              'h-4 w-4 transition-transform duration-200',
+              showInstallation && 'rotate-180'
             )}
-            style={
-              isValid
-                ? {
-                    background: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})`,
-                  }
-                : undefined
-            }
-          >
-            <Calculator className="h-5 w-5" />
-            Calculate
-          </button>
-          <button
-            onClick={reset}
-            className="h-14 px-4 flex items-center justify-center rounded-xl bg-white/5 border border-white/10 text-white/60 hover:bg-white/10 transition-colors touch-manipulation"
-          >
-            <RotateCcw className="h-5 w-5" />
-          </button>
-        </div>
-      </CalculatorCard>
+          />
+        </CollapsibleTrigger>
+        <CollapsibleContent className="pt-2 space-y-3">
+          <CalculatorInputGrid columns={2}>
+            <CalculatorInput
+              label="Cable Length"
+              unit="m"
+              type="text"
+              inputMode="decimal"
+              value={cableLength}
+              onChange={setCableLength}
+              placeholder="e.g., 50"
+              hint="Distance from DB"
+            />
+            <CalculatorInput
+              label="Cable Size"
+              unit="mm²"
+              type="text"
+              inputMode="decimal"
+              value={cableSize}
+              onChange={setCableSize}
+              placeholder="e.g., 2.5"
+              hint="Proposed cable CSA"
+            />
+          </CalculatorInputGrid>
+          <CalculatorInputGrid columns={2}>
+            <CalculatorInput
+              label="Ambient Temp"
+              unit="°C"
+              type="text"
+              inputMode="decimal"
+              value={serviceTemperature}
+              onChange={setServiceTemperature}
+              placeholder="e.g., 40"
+            />
+            <CalculatorInput
+              label="Supply Impedance"
+              unit="Ω"
+              type="text"
+              inputMode="decimal"
+              value={supplyImpedance}
+              onChange={setSupplyImpedance}
+              placeholder="e.g., 0.1"
+            />
+          </CalculatorInputGrid>
+          <CalculatorInputGrid columns={2}>
+            <CalculatorSelect
+              label="Installation Method"
+              value={installationMethod}
+              onChange={setInstallationMethod}
+              options={installationMethodOptions}
+            />
+            <CalculatorInput
+              label="Grouping Factor"
+              type="text"
+              inputMode="decimal"
+              value={groupingFactor}
+              onChange={setGroupingFactor}
+              placeholder="e.g., 1.0"
+              hint="Derating for grouped cables"
+            />
+          </CalculatorInputGrid>
+        </CollapsibleContent>
+      </Collapsible>
 
-      {/* Results Section */}
+      {/* Actions */}
+      <CalculatorActions
+        category={CAT}
+        onCalculate={handleCalculate}
+        onReset={handleReset}
+        isDisabled={!canCalculate}
+        calculateLabel="Calculate"
+        showReset={!!result}
+      />
+
+      {/* ── Results ── */}
       {result && (
         <div className="space-y-4 animate-fade-in">
-          {/* Compliance Status */}
-          <div
-            className={cn(
-              'flex items-center gap-2 p-3 rounded-xl border',
-              result.bs7671Compliant
-                ? 'border-green-500/30 bg-green-500/10'
-                : 'border-amber-500/30 bg-amber-500/10'
-            )}
-          >
-            {result.bs7671Compliant ? (
-              <CheckCircle2 className="h-5 w-5 text-green-400" />
-            ) : (
-              <AlertTriangle className="h-5 w-5 text-amber-400" />
-            )}
-            <span
-              className={cn(
-                'font-medium text-sm',
-                result.bs7671Compliant ? 'text-green-400' : 'text-amber-400'
-              )}
+          {/* Status + Copy */}
+          <div className="flex items-center justify-between">
+            <ResultBadge
+              status={result.bs7671Compliant ? 'pass' : 'warning'}
+              label={result.complianceStatus}
+            />
+            <button
+              onClick={handleCopy}
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 text-white text-xs font-medium transition-colors touch-manipulation min-h-[44px]"
             >
-              {result.complianceStatus}
-            </span>
+              {copied ? <Check className="h-3.5 w-3.5" /> : <Copy className="h-3.5 w-3.5" />}
+              {copied ? 'Copied' : 'Copy'}
+            </button>
           </div>
 
-          {/* Key Results */}
-          <CalculatorResult category="power">
-            <div className="text-center pb-4 border-b border-white/10">
-              <p className="text-sm text-white/60 mb-1">Full Load Current</p>
-              <div
-                className="text-4xl font-bold bg-clip-text text-transparent"
-                style={{
-                  backgroundImage: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})`,
-                }}
-              >
-                {result.fullLoadCurrent.toFixed(1)} A
-              </div>
-            </div>
-
-            <ResultsGrid columns={3}>
-              <ResultValue
-                label="Starting Current"
-                value={result.startingCurrent.toFixed(0)}
-                unit="A"
-                category="power"
-                size="sm"
-              />
-              <ResultValue
-                label="Start Multiplier"
-                value={`${result.startingMultiplier.toFixed(1)}x`}
-                category="power"
-                size="sm"
-              />
-              <ResultValue
-                label="Running VD"
-                value={result.voltageDropRunning.toFixed(1)}
-                unit="%"
-                category="power"
-                size="sm"
-              />
-            </ResultsGrid>
-
-            <div className="h-px bg-white/10 my-4" />
-
-            <ResultsGrid columns={2}>
-              <ResultValue
-                label="Starting kVA"
-                value={result.startingKva.toFixed(1)}
-                unit="kVA"
-                category="power"
-                size="sm"
-              />
-              <ResultValue
-                label="Starting VD"
-                value={result.voltageDropStarting.toFixed(1)}
-                unit="%"
-                category="power"
-                size="sm"
-              />
-              <ResultValue
-                label="I²t Thermal"
-                value={(result.thermalStress / 1000).toFixed(1)}
-                unit="kA²s"
-                category="power"
-                size="sm"
-              />
-              <ResultValue
-                label="Min Cable"
-                value={result.minimumCableSize.toString()}
-                unit="mm²"
-                category="power"
-                size="sm"
-              />
-            </ResultsGrid>
-          </CalculatorResult>
-
-          {/* Cable Recommendation */}
-          <div className="p-4 rounded-xl border border-amber-400/20 bg-amber-400/5">
-            <div className="flex items-center gap-2 mb-3">
-              <div className="w-2 h-2 bg-amber-400 rounded-full" />
-              <span className="font-medium text-amber-300">Cable Size Recommendation</span>
-            </div>
-            <div className="text-center mb-3">
-              <div
-                className="text-3xl font-bold bg-clip-text text-transparent"
-                style={{
-                  backgroundImage: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})`,
-                }}
-              >
-                {result.recommendedCableSize}
-              </div>
-              <p className="text-sm text-white/80 mt-1">Recommended Cable Size</p>
-            </div>
-            <p className="text-sm text-white/60 text-center">{result.cableAnalysis}</p>
+          {/* Hero Value */}
+          <div className="text-center py-3">
+            <p className="text-sm font-medium text-white mb-1">Full Load Current</p>
+            <p
+              className="text-4xl sm:text-5xl font-bold bg-clip-text text-transparent"
+              style={{
+                backgroundImage: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})`,
+              }}
+            >
+              {result.fullLoadCurrent.toFixed(1)} A
+            </p>
+            <p className="text-sm text-white mt-2">
+              Starting: {result.startingCurrent.toFixed(0)}A ({result.startingMultiplier.toFixed(1)}
+              ×) · Cable: {result.recommendedCableSize}
+            </p>
           </div>
 
-          {/* Analysis Cards */}
-          <div className="grid grid-cols-1 gap-3">
-            <div className="p-3 rounded-xl border border-blue-400/20 bg-blue-400/5">
-              <div className="flex items-start gap-2">
-                <Info className="h-4 w-4 text-blue-400 mt-0.5" />
-                <div>
-                  <p className="text-sm font-medium text-blue-300">Current Carrying Capacity</p>
-                  <p className="text-sm text-blue-200/70 mt-1">{result.currentCapacityCheck}</p>
-                </div>
-              </div>
-            </div>
+          {/* Result Values */}
+          <ResultsGrid columns={3}>
+            <ResultValue
+              label="Starting Current"
+              value={result.startingCurrent.toFixed(0)}
+              unit="A"
+              category={CAT}
+              size="sm"
+            />
+            <ResultValue
+              label="Start Multiplier"
+              value={`${result.startingMultiplier.toFixed(1)}×`}
+              category={CAT}
+              size="sm"
+            />
+            <ResultValue
+              label="Running VD"
+              value={result.voltageDropRunning.toFixed(1)}
+              unit="%"
+              category={CAT}
+              size="sm"
+            />
+          </ResultsGrid>
 
-            <div className="p-3 rounded-xl border border-purple-400/20 bg-purple-400/5">
-              <div className="flex items-start gap-2">
-                <Info className="h-4 w-4 text-purple-400 mt-0.5" />
-                <div>
-                  <p className="text-sm font-medium text-purple-300">Protection Device</p>
-                  <p className="text-sm text-purple-200/70 mt-1">{result.protectionAnalysis}</p>
-                </div>
-              </div>
+          <ResultsGrid columns={2}>
+            <ResultValue
+              label="Starting kVA"
+              value={result.startingKva.toFixed(1)}
+              unit="kVA"
+              category={CAT}
+              size="sm"
+            />
+            <ResultValue
+              label="Starting VD"
+              value={result.voltageDropStarting.toFixed(1)}
+              unit="%"
+              category={CAT}
+              size="sm"
+            />
+            <ResultValue
+              label="I²t Thermal"
+              value={(result.thermalStress / 1000).toFixed(1)}
+              unit="kA²s"
+              category={CAT}
+              size="sm"
+            />
+            <ResultValue
+              label="Min Cable"
+              value={result.minimumCableSize.toString()}
+              unit="mm²"
+              category={CAT}
+              size="sm"
+            />
+          </ResultsGrid>
+
+          {/* Analysis */}
+          <div className="space-y-2">
+            <div className="p-3 rounded-lg bg-white/5">
+              <p className="text-sm text-white font-medium">Cable Analysis</p>
+              <p className="text-sm text-white mt-1">{result.cableAnalysis}</p>
+            </div>
+            <div className="p-3 rounded-lg bg-white/5">
+              <p className="text-sm text-white font-medium">Current Carrying Capacity</p>
+              <p className="text-sm text-white mt-1">{result.currentCapacityCheck}</p>
+            </div>
+            <div className="p-3 rounded-lg bg-white/5">
+              <p className="text-sm text-white font-medium">Protection Device</p>
+              <p className="text-sm text-white mt-1">{result.protectionAnalysis}</p>
             </div>
           </div>
 
           {/* Warnings */}
           {result.warnings.length > 0 && (
-            <div className="p-3 rounded-xl border border-red-400/20 bg-red-400/5">
-              <div className="flex items-start gap-2">
-                <AlertTriangle className="h-4 w-4 text-red-400 mt-0.5" />
-                <div>
-                  <p className="text-sm font-medium text-red-300">Warnings</p>
-                  <ul className="mt-2 space-y-1">
-                    {result.warnings.map((warning, index) => (
-                      <li key={index} className="text-sm text-red-200/70 flex items-start gap-2">
-                        <span className="text-red-400 mt-1">•</span>
-                        <span>{warning}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
+            <div className="flex items-start gap-2 p-3 rounded-lg bg-amber-500/10 border border-amber-500/30">
+              <AlertTriangle className="h-4 w-4 text-amber-400 mt-0.5 shrink-0" />
+              <div className="space-y-1">
+                {result.warnings.map((warning, idx) => (
+                  <p key={idx} className="text-sm text-white">
+                    {warning}
+                  </p>
+                ))}
               </div>
             </div>
           )}
 
-          {/* What This Means */}
-          <Collapsible open={showGuidance} onOpenChange={setShowGuidance}>
-            <div className="calculator-card overflow-hidden" style={{ borderColor: '#60a5fa15' }}>
-              <CollapsibleTrigger className="agent-collapsible-trigger w-full">
-                <div className="flex items-center gap-3">
-                  <Info className="h-4 w-4 text-blue-400" />
-                  <span className="text-sm sm:text-base font-medium text-blue-300">
-                    What This Means
-                  </span>
-                </div>
-                <ChevronDown
-                  className={cn(
-                    'h-4 w-4 text-white/70 transition-transform duration-200',
-                    showGuidance && 'rotate-180'
-                  )}
-                />
-              </CollapsibleTrigger>
+          <CalculatorDivider category={CAT} />
 
-              <CollapsibleContent className="p-4 pt-0">
+          {/* ── How It Worked Out ── */}
+          <CalculatorFormula
+            category={CAT}
+            title="How It Worked Out"
+            defaultOpen
+            steps={[
+              {
+                label: 'Input values',
+                formula: `Motor: ${power}kW | ${voltage}V | ${phases}-phase | η=${efficiency} | cosφ=${powerFactor} | ${startingMethod}`,
+              },
+              {
+                label: 'Full load current',
+                formula:
+                  phases === '3'
+                    ? `I = P ÷ (√3 × V × η × cosφ) = ${power}000 ÷ (1.732 × ${voltage} × ${efficiency} × ${powerFactor})`
+                    : `I = P ÷ (V × η × cosφ) = ${power}000 ÷ (${voltage} × ${efficiency} × ${powerFactor})`,
+                value: `${result.fullLoadCurrent.toFixed(1)} A`,
+              },
+              {
+                label: 'Starting current',
+                formula: `I_start = FLC × multiplier = ${result.fullLoadCurrent.toFixed(1)} × ${result.startingMultiplier.toFixed(1)}`,
+                value: `${result.startingCurrent.toFixed(0)} A`,
+                description: `${startingMethod} starting method`,
+              },
+              {
+                label: 'Starting kVA',
+                formula:
+                  phases === '3'
+                    ? `S = √3 × V × I_start ÷ 1000 = 1.732 × ${voltage} × ${result.startingCurrent.toFixed(0)} ÷ 1000`
+                    : `S = V × I_start ÷ 1000 = ${voltage} × ${result.startingCurrent.toFixed(0)} ÷ 1000`,
+                value: `${result.startingKva.toFixed(1)} kVA`,
+              },
+              {
+                label: 'Voltage drop',
+                value: `Running: ${result.voltageDropRunning.toFixed(1)}% (limit 3%) | Starting: ${result.voltageDropStarting.toFixed(1)}% (limit 10%)`,
+              },
+              {
+                label: 'Thermal stress',
+                formula: `I²t = I_start² × t = ${result.startingCurrent.toFixed(0)}² × ${startingTime}`,
+                value: `${(result.thermalStress / 1000).toFixed(1)} kA²s`,
+              },
+              {
+                label: 'Protection recommendation',
+                value: result.protectionAnalysis,
+              },
+            ]}
+          />
+
+          {/* ── What This Means ── */}
+          <Collapsible open={showGuidance} onOpenChange={setShowGuidance}>
+            <CollapsibleTrigger className="flex items-center justify-between w-full min-h-11 py-2.5 px-3 rounded-lg text-sm font-medium text-white hover:bg-white/5 transition-all touch-manipulation">
+              <span>What This Means</span>
+              <ChevronDown
+                className={cn(
+                  'h-4 w-4 transition-transform duration-200',
+                  showGuidance && 'rotate-180'
+                )}
+              />
+            </CollapsibleTrigger>
+            <CollapsibleContent className="pt-2">
+              <div
+                className="p-3 rounded-xl border space-y-3"
+                style={{
+                  borderColor: `${config.gradientFrom}15`,
+                  background: `${config.gradientFrom}05`,
+                }}
+              >
                 <ul className="space-y-2">
-                  {result.whatThisMeans.map((point, idx) => (
-                    <li key={idx} className="text-sm text-blue-200/80 flex items-start gap-2">
-                      <span className="text-blue-400 mt-1">•</span>
-                      {point}
+                  {[...result.whatThisMeans, ...result.practicalGuidance].map((item, idx) => (
+                    <li key={idx} className="flex items-start gap-2 text-sm">
+                      <span
+                        className="w-1.5 h-1.5 rounded-full mt-2 shrink-0"
+                        style={{ backgroundColor: config.gradientFrom }}
+                      />
+                      <span className="text-white">{item}</span>
                     </li>
                   ))}
                 </ul>
-              </CollapsibleContent>
-            </div>
+
+                {result.recommendations.length > 0 && (
+                  <div
+                    className="pt-2 border-t"
+                    style={{ borderColor: `${config.gradientFrom}15` }}
+                  >
+                    <p className="text-sm text-white font-medium mb-2">BS 7671 Recommendations</p>
+                    <ul className="space-y-2">
+                      {result.recommendations.map((rec, idx) => (
+                        <li key={idx} className="flex items-start gap-2 text-sm">
+                          <span
+                            className="w-1.5 h-1.5 rounded-full mt-2 shrink-0"
+                            style={{ backgroundColor: config.gradientFrom }}
+                          />
+                          <span className="text-white">{rec}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+              </div>
+            </CollapsibleContent>
           </Collapsible>
 
-          {/* Practical Guidance */}
-          <div className="p-4 rounded-xl border border-white/10 bg-white/5">
-            <div className="flex items-center gap-2 mb-3">
-              <Lightbulb className="h-4 w-4 text-amber-400" />
-              <span className="font-medium text-amber-300">Practical Guidance</span>
-            </div>
-            <ul className="space-y-2">
-              {result.practicalGuidance.map((guidance, index) => (
-                <li key={index} className="text-sm text-white/70 flex items-start gap-2">
-                  <span className="text-amber-400 mt-1.5 w-1.5 h-1.5 rounded-full bg-amber-400 flex-shrink-0" />
-                  <span>{guidance}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
+          {/* ── BS 7671 Reference ── */}
+          <Collapsible open={showReference} onOpenChange={setShowReference}>
+            <CollapsibleTrigger className="flex items-center justify-between w-full min-h-11 py-2.5 px-3 rounded-lg text-sm font-medium text-white hover:bg-white/5 transition-all touch-manipulation">
+              <span>BS 7671 Reference</span>
+              <ChevronDown
+                className={cn(
+                  'h-4 w-4 transition-transform duration-200',
+                  showReference && 'rotate-180'
+                )}
+              />
+            </CollapsibleTrigger>
+            <CollapsibleContent className="pt-2">
+              <div
+                className="p-3 rounded-xl border space-y-3"
+                style={{
+                  borderColor: `${config.gradientFrom}15`,
+                  background: `${config.gradientFrom}05`,
+                }}
+              >
+                <ul className="space-y-2">
+                  {[
+                    { reg: 'Regulation 552.1', desc: 'Motor circuit requirements' },
+                    { reg: 'Regulation 435.1', desc: 'Overload protection' },
+                    { reg: 'Table 41.3', desc: 'Maximum disconnection times' },
+                    { reg: 'Regulation 433.1', desc: 'Overcurrent protection coordination' },
+                  ].map((item) => (
+                    <li key={item.reg} className="flex items-start gap-2 text-sm">
+                      <span
+                        className="w-1.5 h-1.5 rounded-full mt-2 shrink-0"
+                        style={{ backgroundColor: config.gradientFrom }}
+                      />
+                      <span className="text-white">
+                        <span className="font-medium">{item.reg}:</span> {item.desc}
+                      </span>
+                    </li>
+                  ))}
+                </ul>
 
-          {/* Recommendations */}
-          <div className="p-4 rounded-xl border border-white/10 bg-white/5">
-            <div className="flex items-center gap-2 mb-3">
-              <CheckCircle2 className="h-4 w-4 text-amber-400" />
-              <span className="font-medium text-amber-300">BS 7671 Recommendations</span>
-            </div>
-            <ul className="space-y-2">
-              {result.recommendations.map((rec, index) => (
-                <li key={index} className="text-sm text-white/70 flex items-start gap-2">
-                  <span className="text-amber-400 mt-1.5 w-1.5 h-1.5 rounded-full bg-amber-400 flex-shrink-0" />
-                  <span>{rec}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Calculation Notes */}
-          <div className="text-xs text-white/70 pt-2 space-y-1">
-            <p>
-              <strong className="text-white/80">Calculation:</strong> I = P / (
-              {phases === '3' ? '√3 × ' : ''}V × η × cos φ)
-            </p>
-            <p>
-              <strong className="text-white/80">Voltage Drop:</strong> VD = I × Z × 100 / V
-            </p>
-            <p>
-              <strong className="text-white/80">I²t:</strong> Thermal stress = I² × t
-            </p>
-          </div>
+                <div className="grid grid-cols-2 gap-3 pt-2">
+                  <div className="space-y-1">
+                    <p className="text-sm text-white font-medium">Starting Multipliers</p>
+                    <p className="text-sm text-white">DOL: 6-8× FLC</p>
+                    <p className="text-sm text-white">Star-Delta: 2-3× FLC</p>
+                    <p className="text-sm text-white">Soft Start: 2-4× FLC</p>
+                    <p className="text-sm text-white">VFD: 1-2× FLC</p>
+                  </div>
+                  <div className="space-y-1">
+                    <p className="text-sm text-white font-medium">Voltage Drop Limits</p>
+                    <p className="text-sm text-white">Running: 3% max</p>
+                    <p className="text-sm text-white">Starting: 10% max</p>
+                    <p className="text-sm text-white">DOL: ≤11kW recommended</p>
+                  </div>
+                </div>
+              </div>
+            </CollapsibleContent>
+          </Collapsible>
         </div>
       )}
 
-      {/* Quick Reference */}
-      <Collapsible open={showReference} onOpenChange={setShowReference}>
-        <div className="calculator-card overflow-hidden" style={{ borderColor: '#fbbf2415' }}>
-          <CollapsibleTrigger className="agent-collapsible-trigger w-full">
-            <div className="flex items-center gap-3">
-              <BookOpen className="h-4 w-4 text-amber-400" />
-              <span className="text-sm sm:text-base font-medium text-amber-300">
-                Motor Starting Reference
-              </span>
-            </div>
-            <ChevronDown
-              className={cn(
-                'h-4 w-4 text-white/70 transition-transform duration-200',
-                showReference && 'rotate-180'
-              )}
-            />
-          </CollapsibleTrigger>
-
-          <CollapsibleContent className="p-4 pt-0">
-            <div className="grid grid-cols-2 gap-3 text-sm">
-              <div className="space-y-1">
-                <p className="text-amber-300 font-medium">Starting Multipliers</p>
-                <p className="text-amber-200/70">DOL: 6-8× FLC</p>
-                <p className="text-amber-200/70">Star-Delta: 2-3× FLC</p>
-                <p className="text-amber-200/70">Soft Start: 2-4× FLC</p>
-                <p className="text-amber-200/70">VFD: 1-2× FLC</p>
-              </div>
-              <div className="space-y-1">
-                <p className="text-amber-300 font-medium">Protection Types</p>
-                <p className="text-amber-200/70">Type C: 5-10× In</p>
-                <p className="text-amber-200/70">Type D: 10-20× In</p>
-                <p className="text-amber-200/70">Contactor + OL: Best</p>
-              </div>
-              <div className="space-y-1">
-                <p className="text-amber-300 font-medium">Voltage Drop Limits</p>
-                <p className="text-amber-200/70">Running: 3% max</p>
-                <p className="text-amber-200/70">Starting: 10% max</p>
-              </div>
-              <div className="space-y-1">
-                <p className="text-amber-300 font-medium">BS 7671 Notes</p>
-                <p className="text-amber-200/70">DOL: ≤11kW recommended</p>
-                <p className="text-amber-200/70">Type D MCB for motors</p>
-              </div>
-            </div>
-          </CollapsibleContent>
-        </div>
-      </Collapsible>
-    </div>
+      {/* Formula Reference (always visible) */}
+      <FormulaReference
+        category={CAT}
+        name="Motor Starting Current"
+        formula="I_start = I_FLC × Starting Multiplier"
+        variables={[
+          { symbol: 'I_FLC', description: 'Full load current (A)' },
+          {
+            symbol: 'Multiplier',
+            description: 'DOL=6-8×, Star-Delta=2-3×, Soft Start=2-4×, VFD=1-1.5×',
+          },
+          { symbol: 'I²t', description: 'Thermal stress (A²s)' },
+        ]}
+      />
+    </CalculatorCard>
   );
 };
 

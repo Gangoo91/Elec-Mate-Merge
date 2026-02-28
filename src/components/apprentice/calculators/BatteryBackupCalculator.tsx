@@ -1,27 +1,20 @@
 import { useState } from 'react';
-import { Badge } from '@/components/ui/badge';
-import {
-  Battery,
-  Info,
-  BookOpen,
-  ChevronDown,
-  AlertTriangle,
-  Plus,
-  X,
-  Clock,
-  Zap,
-} from 'lucide-react';
+import { Battery, ChevronDown, AlertTriangle, Plus, X, Clock, Copy, Check } from 'lucide-react';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { cn } from '@/lib/utils';
+import { useToast } from '@/hooks/use-toast';
 import {
   CalculatorCard,
   CalculatorInputGrid,
   CalculatorInput,
   CalculatorSelect,
   CalculatorActions,
-  CalculatorResult,
+  CalculatorDivider,
   ResultValue,
   ResultsGrid,
+  ResultBadge,
+  CalculatorFormula,
+  FormulaReference,
   CALCULATOR_CONFIG,
 } from '@/components/calculators/shared';
 import {
@@ -42,8 +35,12 @@ interface Load {
   priority: 'essential' | 'important' | 'convenience';
 }
 
+const CAT = 'ev-storage' as const;
+const config = CALCULATOR_CONFIG[CAT];
+
 const BatteryBackupCalculator = () => {
-  const config = CALCULATOR_CONFIG['ev-storage'];
+  const { toast } = useToast();
+  const [copied, setCopied] = useState(false);
 
   const [mode, setMode] = useState<'runtime' | 'sizing'>('runtime');
   const [chemistry, setChemistry] = useState('lead-acid-agm');
@@ -107,7 +104,7 @@ const BatteryBackupCalculator = () => {
     setNewLoadPriority(preset.category);
   };
 
-  const calculateBackup = () => {
+  const handleCalculate = () => {
     if (!capacityAh || loads.length === 0) return;
 
     const inputs: BatteryInputs = {
@@ -135,7 +132,7 @@ const BatteryBackupCalculator = () => {
     }
   };
 
-  const reset = () => {
+  const handleReset = () => {
     setCapacityAh('');
     setLoads([]);
     setResults(null);
@@ -144,412 +141,497 @@ const BatteryBackupCalculator = () => {
     setNewLoadWatts('');
   };
 
+  const handleCopy = () => {
+    if (!results) return;
+    const selectedChemistry = BATTERY_CHEMISTRIES[chemistry];
+    const runtimeStatus =
+      results.runtime >= 8 ? 'ADEQUATE' : results.runtime >= 3 ? 'MARGINAL' : 'INSUFFICIENT';
+    const text = [
+      'Battery Backup Calculator Results',
+      `Chemistry: ${selectedChemistry.name}`,
+      `Mode: ${mode === 'runtime' ? 'Runtime' : 'Sizing'}`,
+      mode === 'runtime'
+        ? `Runtime: ${formatRuntime(results.runtime)}`
+        : `Required Capacity: ${results.requiredAh?.toFixed(0) || 'N/A'} Ah`,
+      `Usable Energy: ${results.usableEnergyWh.toFixed(0)} Wh`,
+      `DC Current: ${results.dcCurrent.toFixed(1)} A`,
+      `C-Rate: ${results.cRate.toFixed(2)} C`,
+      `Total Load: ${results.averagePower.toFixed(0)} W`,
+      `Assessment: ${runtimeStatus}`,
+    ].join('\n');
+    navigator.clipboard.writeText(text);
+    setCopied(true);
+    toast({ title: 'Copied to clipboard' });
+    setTimeout(() => setCopied(false), 2000);
+  };
+
   const getTotalLoadWatts = () => loads.reduce((sum, load) => sum + load.watts, 0);
   const selectedChemistry = BATTERY_CHEMISTRIES[chemistry];
   const selectedInverter = INVERTER_TYPES[inverterType];
 
-  const getRuntimeColor = (runtime: number) =>
-    runtime >= 8 ? 'text-green-400' : runtime >= 3 ? 'text-amber-400' : 'text-red-400';
-  const getCRateColor = (cRate: number, maxCRate: number) =>
-    cRate <= maxCRate * 0.5
-      ? 'text-green-400'
-      : cRate <= maxCRate * 0.8
-        ? 'text-amber-400'
-        : 'text-red-400';
-
   return (
-    <div className="space-y-4">
-      <CalculatorCard
-        category="ev-storage"
-        title="Battery Backup Calculator"
-        description="Calculate runtime for battery backup systems with chemistry modelling"
-        badge="Peukert's"
-      >
-        {/* Mode Selection */}
-        <div className="space-y-3">
-          <p className="text-sm font-medium text-white/80">Calculation Mode</p>
-          <div className="grid grid-cols-2 gap-2">
+    <CalculatorCard
+      category={CAT}
+      title="Battery Backup Calculator"
+      description="Calculate runtime for battery backup systems with Peukert's equation"
+    >
+      {/* Mode Selection */}
+      <div className="space-y-3">
+        <p className="text-sm font-medium text-white">Calculation Mode</p>
+        <div className="grid grid-cols-2 gap-2">
+          {[
+            { value: 'runtime' as const, label: 'Runtime', icon: Clock },
+            { value: 'sizing' as const, label: 'Sizing', icon: Battery },
+          ].map((opt) => (
             <button
-              onClick={() => setMode('runtime')}
+              key={opt.value}
+              onClick={() => setMode(opt.value)}
               className={cn(
-                'p-3 rounded-xl border transition-colors flex items-center justify-center gap-2',
-                mode === 'runtime'
-                  ? 'bg-blue-500/20 border-blue-500/50 text-blue-300'
-                  : 'bg-white/5 border-white/10 text-white/60 hover:border-white/20'
+                'p-3 rounded-xl border transition-colors flex items-center justify-center gap-2 min-h-11 touch-manipulation',
+                mode === opt.value
+                  ? 'bg-blue-500/20 border-blue-500/50 text-white'
+                  : 'bg-white/5 border-white/10 text-white hover:border-white/20'
               )}
             >
-              <Clock className="h-4 w-4" />
-              <span className="text-sm font-medium">Runtime</span>
+              <opt.icon className="h-4 w-4" />
+              <span className="text-sm font-medium">{opt.label}</span>
             </button>
-            <button
-              onClick={() => setMode('sizing')}
-              className={cn(
-                'p-3 rounded-xl border transition-colors flex items-center justify-center gap-2',
-                mode === 'sizing'
-                  ? 'bg-blue-500/20 border-blue-500/50 text-blue-300'
-                  : 'bg-white/5 border-white/10 text-white/60 hover:border-white/20'
-              )}
-            >
-              <Battery className="h-4 w-4" />
-              <span className="text-sm font-medium">Sizing</span>
-            </button>
-          </div>
+          ))}
         </div>
+      </div>
 
-        {/* Battery Configuration */}
-        <div className="space-y-3">
-          <p className="text-sm font-medium text-white/80">Battery Configuration</p>
-          <CalculatorInputGrid columns={2}>
-            <CalculatorSelect
-              label="Battery Chemistry"
-              value={chemistry}
-              onChange={setChemistry}
-              options={chemistryOptions}
-            />
-            <CalculatorSelect
-              label="Inverter Type"
-              value={inverterType}
-              onChange={setInverterType}
-              options={inverterOptions}
-            />
-            <CalculatorInput
-              label="Voltage"
-              unit="V"
-              type="text"
-              inputMode="decimal"
-              value={nominalVoltage}
-              onChange={setNominalVoltage}
-              placeholder="12"
-            />
-            <CalculatorInput
-              label="Capacity"
-              unit="Ah"
-              type="text"
-              inputMode="decimal"
-              value={capacityAh}
-              onChange={setCapacityAh}
-              placeholder="100"
-            />
-          </CalculatorInputGrid>
-          <CalculatorInputGrid columns={2}>
-            <CalculatorInput
-              label="Temperature"
-              unit="°C"
-              type="text"
-              inputMode="decimal"
-              value={ambientTemp}
-              onChange={setAmbientTemp}
-              placeholder="20"
-            />
-            <CalculatorInput
-              label="Battery Health"
-              unit="%"
-              type="text"
-              inputMode="decimal"
-              value={batteryHealth}
-              onChange={setBatteryHealth}
-              placeholder="100"
-            />
-          </CalculatorInputGrid>
-        </div>
-
-        {/* Load Management */}
-        <div className="space-y-3">
-          <div className="flex items-center justify-between">
-            <p className="text-sm font-medium text-white/80">Load Management</p>
-            <Badge variant="outline" className="text-blue-400 border-blue-400/50">
-              {getTotalLoadWatts()}W total
-            </Badge>
-          </div>
-
-          {/* Quick Add Presets */}
-          <div className="grid grid-cols-3 gap-2">
-            {LOAD_PRESETS.slice(0, 6).map((preset, index) => (
-              <button
-                key={index}
-                onClick={() => handleLoadPresetSelect(preset)}
-                className="p-2 text-xs rounded-lg bg-white/5 border border-white/10 hover:border-blue-500/50 hover:bg-blue-500/10 transition-colors text-white/80 truncate"
-              >
-                {preset.name}
-              </button>
-            ))}
-          </div>
-
-          {/* Manual Load Entry */}
-          <div className="p-3 rounded-xl bg-white/5 border border-white/10 space-y-3">
-            <CalculatorInputGrid columns={2}>
-              <CalculatorInput
-                label="Load Name"
-                type="text"
-                value={newLoadName}
-                onChange={setNewLoadName}
-                placeholder="e.g., LED Lights"
-              />
-              <CalculatorInput
-                label="Power"
-                unit="W"
-                type="text"
-                inputMode="decimal"
-                value={newLoadWatts}
-                onChange={setNewLoadWatts}
-                placeholder="50"
-              />
-            </CalculatorInputGrid>
-            <div className="flex gap-2">
-              <div className="flex-1">
-                <CalculatorSelect
-                  label="Priority"
-                  value={newLoadPriority}
-                  onChange={(v) => setNewLoadPriority(v as typeof newLoadPriority)}
-                  options={priorityOptions}
-                />
-              </div>
-              <button
-                onClick={addLoad}
-                disabled={!newLoadName || !newLoadWatts || parseFloat(newLoadWatts) <= 0}
-                className="self-end h-12 px-4 rounded-xl bg-blue-500/20 border border-blue-500/50 text-blue-300 hover:bg-blue-500/30 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-              >
-                <Plus className="h-5 w-5" />
-              </button>
-            </div>
-          </div>
-
-          {/* Load List */}
-          {loads.length > 0 && (
-            <div className="space-y-2 max-h-40 overflow-y-auto">
-              {loads.map((load, index) => (
-                <div
-                  key={index}
-                  className="flex items-center justify-between p-2 rounded-lg bg-white/5 text-sm"
-                >
-                  <div className="flex-1 min-w-0">
-                    <span className="font-medium text-white block truncate">{load.name}</span>
-                    <span className="text-white/80 text-xs">
-                      {load.watts}W • {load.priority}
-                    </span>
-                  </div>
-                  <button
-                    onClick={() => removeLoad(index)}
-                    className="ml-2 p-1.5 rounded-lg bg-red-500/20 hover:bg-red-500/30 transition-colors"
-                  >
-                    <X className="h-3.5 w-3.5 text-red-400" />
-                  </button>
-                </div>
-              ))}
-            </div>
-          )}
-        </div>
-
-        {/* Sizing Mode Input */}
-        {mode === 'sizing' && (
+      {/* Battery Configuration */}
+      <div className="space-y-3">
+        <p className="text-sm font-medium text-white">Battery Configuration</p>
+        <CalculatorInputGrid columns={2}>
+          <CalculatorSelect
+            label="Battery Chemistry"
+            value={chemistry}
+            onChange={setChemistry}
+            options={chemistryOptions}
+          />
+          <CalculatorSelect
+            label="Inverter Type"
+            value={inverterType}
+            onChange={setInverterType}
+            options={inverterOptions}
+          />
           <CalculatorInput
-            label="Required Runtime"
-            unit="hours"
+            label="Voltage"
+            unit="V"
             type="text"
             inputMode="decimal"
-            value={requiredRuntime}
-            onChange={setRequiredRuntime}
-            placeholder="8"
+            value={nominalVoltage}
+            onChange={setNominalVoltage}
+            placeholder="12"
           />
+          <CalculatorInput
+            label="Capacity"
+            unit="Ah"
+            type="text"
+            inputMode="decimal"
+            value={capacityAh}
+            onChange={setCapacityAh}
+            placeholder="100"
+          />
+        </CalculatorInputGrid>
+        <CalculatorInputGrid columns={2}>
+          <CalculatorInput
+            label="Temperature"
+            unit="°C"
+            type="text"
+            inputMode="decimal"
+            value={ambientTemp}
+            onChange={setAmbientTemp}
+            placeholder="20"
+          />
+          <CalculatorInput
+            label="Battery Health"
+            unit="%"
+            type="text"
+            inputMode="decimal"
+            value={batteryHealth}
+            onChange={setBatteryHealth}
+            placeholder="100"
+          />
+        </CalculatorInputGrid>
+      </div>
+
+      {/* Load Management */}
+      <div className="space-y-3">
+        <div className="flex items-center justify-between">
+          <p className="text-sm font-medium text-white">Load Management</p>
+          <span className="inline-flex items-center px-2.5 py-1.5 rounded-full text-xs font-semibold border bg-blue-500/20 text-blue-400 border-blue-500/30">
+            {getTotalLoadWatts()}W total
+          </span>
+        </div>
+
+        {/* Quick Add Presets */}
+        <div className="grid grid-cols-3 gap-2">
+          {LOAD_PRESETS.slice(0, 6).map((preset, index) => (
+            <button
+              key={index}
+              onClick={() => handleLoadPresetSelect(preset)}
+              className="p-2 text-xs rounded-lg bg-white/5 border border-white/10 hover:border-blue-500/50 hover:bg-blue-500/10 transition-colors text-white truncate min-h-11 touch-manipulation"
+            >
+              {preset.name}
+            </button>
+          ))}
+        </div>
+
+        {/* Manual Load Entry */}
+        <div className="p-3 rounded-xl bg-white/5 border border-white/10 space-y-3">
+          <CalculatorInputGrid columns={2}>
+            <CalculatorInput
+              label="Load Name"
+              type="text"
+              value={newLoadName}
+              onChange={setNewLoadName}
+              placeholder="e.g., LED Lights"
+            />
+            <CalculatorInput
+              label="Power"
+              unit="W"
+              type="text"
+              inputMode="decimal"
+              value={newLoadWatts}
+              onChange={setNewLoadWatts}
+              placeholder="50"
+            />
+          </CalculatorInputGrid>
+          <div className="flex gap-2">
+            <div className="flex-1">
+              <CalculatorSelect
+                label="Priority"
+                value={newLoadPriority}
+                onChange={(v) => setNewLoadPriority(v as typeof newLoadPriority)}
+                options={priorityOptions}
+              />
+            </div>
+            <button
+              onClick={addLoad}
+              disabled={!newLoadName || !newLoadWatts || parseFloat(newLoadWatts) <= 0}
+              className="self-end h-12 px-4 rounded-xl bg-blue-500/20 border border-blue-500/50 text-white hover:bg-blue-500/30 transition-colors disabled:opacity-50 disabled:cursor-not-allowed min-h-11 touch-manipulation"
+            >
+              <Plus className="h-5 w-5" />
+            </button>
+          </div>
+        </div>
+
+        {/* Load List */}
+        {loads.length > 0 && (
+          <div className="space-y-2 max-h-40 overflow-y-auto">
+            {loads.map((load, index) => (
+              <div
+                key={index}
+                className="flex items-center justify-between p-2 rounded-lg bg-white/5 text-sm"
+              >
+                <div className="flex-1 min-w-0">
+                  <span className="font-medium text-white block truncate">{load.name}</span>
+                  <span className="text-white text-xs">
+                    {load.watts}W · {load.priority}
+                  </span>
+                </div>
+                <button
+                  onClick={() => removeLoad(index)}
+                  className="ml-2 p-1.5 rounded-lg bg-red-500/20 hover:bg-red-500/30 transition-colors min-h-11 min-w-[44px] flex items-center justify-center touch-manipulation"
+                >
+                  <X className="h-3.5 w-3.5 text-red-400" />
+                </button>
+              </div>
+            ))}
+          </div>
         )}
+      </div>
 
-        <CalculatorActions
-          category="ev-storage"
-          onCalculate={calculateBackup}
-          onReset={reset}
-          isDisabled={!capacityAh || loads.length === 0}
-          calculateLabel={mode === 'runtime' ? 'Calculate Runtime' : 'Calculate Size'}
+      {/* Sizing Mode Input */}
+      {mode === 'sizing' && (
+        <CalculatorInput
+          label="Required Runtime"
+          unit="hours"
+          type="text"
+          inputMode="decimal"
+          value={requiredRuntime}
+          onChange={setRequiredRuntime}
+          placeholder="8"
         />
-      </CalculatorCard>
+      )}
 
+      <CalculatorActions
+        category={CAT}
+        onCalculate={handleCalculate}
+        onReset={handleReset}
+        isDisabled={!capacityAh || loads.length === 0}
+        calculateLabel={mode === 'runtime' ? 'Calculate Runtime' : 'Calculate Size'}
+        showReset={!!results}
+      />
+
+      {/* ── Results ── */}
       {results && (
         <div className="space-y-4 animate-fade-in">
-          {/* Main Results */}
-          <CalculatorResult category="ev-storage">
-            <div className="flex items-center justify-between pb-3 border-b border-white/10">
-              <span className="text-sm text-white/60">
-                {mode === 'runtime' ? 'Runtime Analysis' : 'Battery Sizing'}
-              </span>
-              <Badge variant="outline" className="text-blue-400 border-blue-400/50">
-                {selectedChemistry.name}
-              </Badge>
-            </div>
-
-            <div className="text-center py-4">
-              <p className="text-sm text-white/60 mb-1">
-                {mode === 'runtime' ? 'Estimated Runtime' : 'Required Capacity'}
-              </p>
-              <div
-                className="text-4xl font-bold bg-clip-text text-transparent"
-                style={{
-                  backgroundImage: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})`,
-                }}
-              >
-                {mode === 'runtime'
-                  ? formatRuntime(results.runtime)
-                  : `${results.requiredAh?.toFixed(0) || 'N/A'} Ah`}
-              </div>
-            </div>
-
-            <ResultsGrid columns={2}>
-              <ResultValue
-                label="Usable Energy"
-                value={results.usableEnergyWh.toFixed(0)}
-                unit="Wh"
-                category="ev-storage"
-                size="sm"
-              />
-              <ResultValue
-                label="DC Current"
-                value={results.dcCurrent.toFixed(1)}
-                unit="A"
-                category="ev-storage"
-                size="sm"
-              />
-              <ResultValue
-                label="C-Rate"
-                value={results.cRate.toFixed(2)}
-                unit="C"
-                category="ev-storage"
-                size="sm"
-              />
-              <ResultValue
-                label="Max C-Rate"
-                value={selectedChemistry.maxCRate.toFixed(1)}
-                unit="C"
-                category="ev-storage"
-                size="sm"
-              />
-            </ResultsGrid>
-          </CalculatorResult>
-
-          {/* Runtime Assessment */}
-          <div
-            className={cn(
-              'p-3 rounded-xl border',
-              results.runtime >= 8
-                ? 'bg-green-500/10 border-green-500/30'
-                : results.runtime >= 3
-                  ? 'bg-amber-500/10 border-amber-500/30'
-                  : 'bg-red-500/10 border-red-500/30'
-            )}
-          >
-            <div className="flex items-start gap-2">
-              <Clock className={cn('h-4 w-4 mt-0.5 shrink-0', getRuntimeColor(results.runtime))} />
-              <div>
-                <p className={cn('text-sm font-medium', getRuntimeColor(results.runtime))}>
-                  {results.runtime >= 8
-                    ? 'Excellent Runtime'
-                    : results.runtime >= 3
-                      ? 'Moderate Runtime'
-                      : 'Short Runtime'}
-                </p>
-                <p className="text-sm text-white/60 mt-1">
-                  {results.runtime >= 8
-                    ? 'Exceeds typical 8-hour requirement'
-                    : results.runtime >= 3
-                      ? 'Consider if adequate for your needs'
-                      : 'May need larger battery or reduced loads'}
-                </p>
-              </div>
-            </div>
+          {/* Status + Copy */}
+          <div className="flex items-center justify-between">
+            <ResultBadge
+              status={results.runtime >= 8 ? 'pass' : results.runtime >= 3 ? 'warning' : 'fail'}
+              label={
+                results.runtime >= 8
+                  ? 'Adequate Runtime'
+                  : results.runtime >= 3
+                    ? 'Marginal Runtime'
+                    : 'Insufficient Runtime'
+              }
+            />
+            <button
+              onClick={handleCopy}
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 text-white text-xs font-medium transition-colors touch-manipulation min-h-[44px]"
+            >
+              {copied ? <Check className="h-3.5 w-3.5" /> : <Copy className="h-3.5 w-3.5" />}
+              {copied ? 'Copied' : 'Copy'}
+            </button>
           </div>
+
+          {/* Hero Value */}
+          <div className="text-center py-3">
+            <p className="text-sm font-medium text-white mb-1">
+              {mode === 'runtime' ? 'Estimated Runtime' : 'Required Capacity'}
+            </p>
+            <p
+              className="text-4xl sm:text-5xl font-bold bg-clip-text text-transparent"
+              style={{
+                backgroundImage: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})`,
+              }}
+            >
+              {mode === 'runtime'
+                ? formatRuntime(results.runtime)
+                : `${results.requiredAh?.toFixed(0) || 'N/A'} Ah`}
+            </p>
+            <p className="text-sm text-white mt-2">
+              {selectedChemistry.name} · {getTotalLoadWatts()}W total load
+            </p>
+          </div>
+
+          {/* Result Values */}
+          <ResultsGrid columns={2}>
+            <ResultValue
+              label="Usable Energy"
+              value={results.usableEnergyWh.toFixed(0)}
+              unit="Wh"
+              category={CAT}
+              size="sm"
+            />
+            <ResultValue
+              label="DC Current"
+              value={results.dcCurrent.toFixed(1)}
+              unit="A"
+              category={CAT}
+              size="sm"
+            />
+            <ResultValue
+              label="C-Rate"
+              value={results.cRate.toFixed(2)}
+              unit="C"
+              category={CAT}
+              size="sm"
+            />
+            <ResultValue
+              label="Max C-Rate"
+              value={selectedChemistry.maxCRate.toFixed(1)}
+              unit="C"
+              category={CAT}
+              size="sm"
+            />
+          </ResultsGrid>
 
           {/* C-Rate Warning */}
           {results.cRate > selectedChemistry.maxCRate * 0.8 && (
-            <div className="p-3 rounded-xl bg-orange-500/10 border border-orange-500/30">
-              <div className="flex items-start gap-2">
-                <AlertTriangle className="h-4 w-4 text-orange-400 mt-0.5 shrink-0" />
-                <div>
-                  <p className="text-sm font-medium text-orange-300">High Discharge Rate</p>
-                  <p className="text-sm text-orange-200/80 mt-1">
-                    Current C-rate ({results.cRate.toFixed(2)}C) is high. Consider parallel
-                    batteries to reduce discharge rate and extend battery life.
-                  </p>
-                </div>
-              </div>
+            <div className="flex items-start gap-2 p-3 rounded-lg bg-amber-500/10 border border-amber-500/30">
+              <AlertTriangle className="h-4 w-4 text-amber-400 mt-0.5 shrink-0" />
+              <p className="text-sm text-white">
+                C-rate ({results.cRate.toFixed(2)}C) is high for {selectedChemistry.name}. Consider
+                parallel batteries to reduce discharge rate and extend battery life.
+              </p>
             </div>
           )}
 
-          {/* What This Means */}
+          <CalculatorDivider category={CAT} />
+
+          {/* ── How It Worked Out ── */}
+          <CalculatorFormula
+            category={CAT}
+            title="How It Worked Out"
+            defaultOpen
+            steps={[
+              {
+                label: 'Input values',
+                formula: `Battery: ${nominalVoltage}V × ${capacityAh}Ah | Chemistry: ${selectedChemistry.name} | Load: ${results.averagePower.toFixed(0)}W`,
+              },
+              {
+                label: 'Usable energy',
+                formula: `V × Ah × DoD × health% × tempFactor = ${nominalVoltage} × ${capacityAh} × ${selectedChemistry.defaultDoD} × ${(parseFloat(batteryHealth) / 100).toFixed(2)}`,
+                value: `${results.usableEnergyWh.toFixed(0)} Wh`,
+                description: `Depth of discharge: ${(selectedChemistry.defaultDoD * 100).toFixed(0)}% for ${selectedChemistry.name}`,
+              },
+              {
+                label: 'DC current draw',
+                formula: `(totalWatts ÷ inverterEff) ÷ voltage = (${results.averagePower.toFixed(0)} ÷ ${selectedInverter.efficiency}) ÷ ${nominalVoltage}`,
+                value: `${results.dcCurrent.toFixed(1)} A`,
+                description: `${selectedInverter.name} efficiency: ${(selectedInverter.efficiency * 100).toFixed(0)}%`,
+              },
+              {
+                label: 'C-rate',
+                formula: `dcCurrent ÷ capacityAh = ${results.dcCurrent.toFixed(1)} ÷ ${capacityAh}`,
+                value: `${results.cRate.toFixed(2)} C`,
+                description: `Max recommended: ${selectedChemistry.maxCRate}C for ${selectedChemistry.name}`,
+              },
+              {
+                label: 'Runtime (Peukert-adjusted)',
+                formula: `usableEnergy ÷ totalLoad = ${results.usableEnergyWh.toFixed(0)} ÷ ${results.averagePower.toFixed(0)}`,
+                value: formatRuntime(results.runtime),
+                description: `Peukert exponent: ${selectedChemistry.peukertExponent} — accounts for capacity reduction at higher discharge rates`,
+              },
+              {
+                label: 'Assessment',
+                value:
+                  results.runtime >= 8
+                    ? 'ADEQUATE — exceeds typical 8-hour requirement'
+                    : results.runtime >= 3
+                      ? 'MARGINAL — consider if adequate for your needs'
+                      : 'INSUFFICIENT — larger battery or reduced loads needed',
+              },
+            ]}
+          />
+
+          {/* ── What This Means ── */}
           <Collapsible open={showGuidance} onOpenChange={setShowGuidance}>
-            <div className="calculator-card overflow-hidden" style={{ borderColor: '#60a5fa15' }}>
-              <CollapsibleTrigger className="agent-collapsible-trigger w-full">
-                <div className="flex items-center gap-3">
-                  <Info className="h-4 w-4 text-blue-400" />
-                  <span className="text-sm sm:text-base font-medium text-blue-300">
-                    What This Means
-                  </span>
+            <CollapsibleTrigger className="flex items-center justify-between w-full min-h-11 py-2.5 px-3 rounded-lg text-sm font-medium text-white hover:bg-white/5 transition-all touch-manipulation">
+              <span>What This Means</span>
+              <ChevronDown
+                className={cn(
+                  'h-4 w-4 transition-transform duration-200',
+                  showGuidance && 'rotate-180'
+                )}
+              />
+            </CollapsibleTrigger>
+            <CollapsibleContent className="pt-2">
+              <div
+                className="p-3 rounded-xl border space-y-3"
+                style={{
+                  borderColor: `${config.gradientFrom}15`,
+                  background: `${config.gradientFrom}05`,
+                }}
+              >
+                <div className="space-y-2">
+                  <p className="text-sm text-white font-medium">Usable Energy</p>
+                  <p className="text-sm text-white">
+                    {results.usableEnergyWh.toFixed(0)}Wh available after accounting for depth of
+                    discharge ({(selectedChemistry.defaultDoD * 100).toFixed(0)}% DoD for{' '}
+                    {selectedChemistry.name}), battery health, and temperature effects.
+                  </p>
                 </div>
-                <ChevronDown
-                  className={cn(
-                    'h-4 w-4 text-white/70 transition-transform duration-200',
-                    showGuidance && 'rotate-180'
-                  )}
-                />
-              </CollapsibleTrigger>
-              <CollapsibleContent className="p-4 pt-0 space-y-2 text-sm text-blue-200/80">
-                <p>
-                  <strong className="text-blue-300">Usable Energy:</strong>{' '}
-                  {results.usableEnergyWh.toFixed(0)}Wh available after accounting for depth of
-                  discharge ({(selectedChemistry.recommendedDoD * 100).toFixed(0)}% DoD for{' '}
-                  {selectedChemistry.name})
-                </p>
-                <p>
-                  <strong className="text-blue-300">C-Rate:</strong> Discharge rate of{' '}
-                  {results.cRate.toFixed(2)}C means the battery would fully discharge in{' '}
-                  {(1 / results.cRate).toFixed(1)} hours at this load. Lower C-rates extend battery
-                  life.
-                </p>
-                <p>
-                  <strong className="text-blue-300">Inverter Efficiency:</strong>{' '}
-                  {selectedInverter.name} at {(selectedInverter.efficiency * 100).toFixed(0)}%
-                  efficiency - {(1 - selectedInverter.efficiency) * 100}% energy lost as heat.
-                </p>
-              </CollapsibleContent>
-            </div>
+                <div className="space-y-2">
+                  <p className="text-sm text-white font-medium">C-Rate</p>
+                  <p className="text-sm text-white">
+                    Discharge rate of {results.cRate.toFixed(2)}C means the battery would fully
+                    discharge in {(1 / results.cRate).toFixed(1)} hours at this load. Lower C-rates
+                    extend battery life.
+                  </p>
+                </div>
+                <div className="space-y-2">
+                  <p className="text-sm text-white font-medium">Inverter Efficiency</p>
+                  <p className="text-sm text-white">
+                    {selectedInverter.name} at {(selectedInverter.efficiency * 100).toFixed(0)}%
+                    efficiency — {((1 - selectedInverter.efficiency) * 100).toFixed(0)}% energy lost
+                    as heat.
+                  </p>
+                </div>
+              </div>
+            </CollapsibleContent>
           </Collapsible>
 
-          {/* BS 7671 & Safety */}
+          {/* ── BS 7671 Reference ── */}
           <Collapsible open={showRegs} onOpenChange={setShowRegs}>
-            <div className="calculator-card overflow-hidden" style={{ borderColor: '#fbbf2415' }}>
-              <CollapsibleTrigger className="agent-collapsible-trigger w-full">
-                <div className="flex items-center gap-3">
-                  <BookOpen className="h-4 w-4 text-amber-400" />
-                  <span className="text-sm sm:text-base font-medium text-amber-300">
-                    BS 7671 & Safety
-                  </span>
-                </div>
-                <ChevronDown
-                  className={cn(
-                    'h-4 w-4 text-white/70 transition-transform duration-200',
-                    showRegs && 'rotate-180'
-                  )}
-                />
-              </CollapsibleTrigger>
-              <CollapsibleContent className="p-4 pt-0 space-y-2 text-sm text-amber-200/80">
-                <p>• DC current ({results.dcCurrent.toFixed(1)}A) must not exceed cable rating</p>
-                <p>• Battery system requires appropriate DC protection (fuses/MCBs)</p>
-                <p>• Ventilation required for lead-acid batteries (hydrogen gas risk)</p>
-                <p>• Temperature monitoring recommended above 25°C ambient</p>
-                <p>• Regular testing required - monthly for critical systems</p>
-                <p>• BS 5266 emergency lighting: minimum 3 hours duration</p>
-              </CollapsibleContent>
-            </div>
+            <CollapsibleTrigger className="flex items-center justify-between w-full min-h-11 py-2.5 px-3 rounded-lg text-sm font-medium text-white hover:bg-white/5 transition-all touch-manipulation">
+              <span>BS 7671 Reference</span>
+              <ChevronDown
+                className={cn(
+                  'h-4 w-4 transition-transform duration-200',
+                  showRegs && 'rotate-180'
+                )}
+              />
+            </CollapsibleTrigger>
+            <CollapsibleContent className="pt-2">
+              <div
+                className="p-3 rounded-xl border space-y-3"
+                style={{
+                  borderColor: `${config.gradientFrom}15`,
+                  background: `${config.gradientFrom}05`,
+                }}
+              >
+                <ul className="space-y-2">
+                  {[
+                    {
+                      reg: 'Regulation 560.7',
+                      desc: 'Safety services — battery backup requirements',
+                    },
+                    {
+                      reg: 'Regulation 313.2',
+                      desc: 'Supplies for safety services classification',
+                    },
+                    {
+                      reg: 'BS 5266-1',
+                      desc: 'Emergency lighting — minimum 3 hours duration',
+                    },
+                    {
+                      reg: 'IEC 62040',
+                      desc: 'UPS systems standard — performance and safety',
+                    },
+                    {
+                      reg: 'DC Protection',
+                      desc: `DC current (${results.dcCurrent.toFixed(1)}A) must not exceed cable rating — install appropriate DC OCPD`,
+                    },
+                    {
+                      reg: 'Ventilation',
+                      desc: 'Required for lead-acid batteries (hydrogen gas risk)',
+                    },
+                  ].map((item) => (
+                    <li key={item.reg} className="flex items-start gap-2 text-sm">
+                      <span
+                        className="w-1.5 h-1.5 rounded-full mt-2 shrink-0"
+                        style={{ backgroundColor: config.gradientFrom }}
+                      />
+                      <span className="text-white">
+                        <span className="font-medium">{item.reg}:</span> {item.desc}
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </CollapsibleContent>
           </Collapsible>
         </div>
       )}
 
-      <div className="p-3 rounded-xl bg-blue-500/10 border border-blue-500/20">
-        <div className="flex items-start gap-2">
-          <Battery className="h-4 w-4 text-blue-400 mt-0.5 shrink-0" />
-          <p className="text-sm text-blue-200">
-            <strong>Peukert's equation</strong> used for accurate runtime. DoD and chemistry affect
-            usable capacity.
-          </p>
-        </div>
-      </div>
-    </div>
+      {/* Formula Reference (always visible) */}
+      <FormulaReference
+        category={CAT}
+        name="Battery Backup Runtime"
+        formula="Runtime = UsableEnergy ÷ TotalLoad"
+        variables={[
+          {
+            symbol: 'UsableEnergy',
+            description: 'V × Ah × DoD × η (usable watt-hours)',
+          },
+          {
+            symbol: 'TotalLoad',
+            description: 'Sum of all loads (watts ÷ inverter efficiency)',
+          },
+          {
+            symbol: 'C-rate',
+            description: 'Discharge rate relative to capacity (A ÷ Ah)',
+          },
+        ]}
+      />
+    </CalculatorCard>
   );
 };
 

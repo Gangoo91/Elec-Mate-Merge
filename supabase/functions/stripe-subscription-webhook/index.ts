@@ -166,6 +166,141 @@ async function sendWelcomeEmail(
   }
 }
 
+/**
+ * Send payment failed email (Email 1 in dunning sequence)
+ */
+async function sendPaymentFailedEmail(
+  email: string,
+  name: string,
+  amount: string,
+  hostedInvoiceUrl: string
+): Promise<void> {
+  const resendApiKey = Deno.env.get('RESEND_API_KEY');
+
+  if (!resendApiKey) {
+    console.warn('⚠️ RESEND_API_KEY not configured - skipping payment failed email');
+    return;
+  }
+
+  const resend = new Resend(resendApiKey);
+
+  const emailHtml = `
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Payment Issue</title>
+</head>
+<body style="margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; background-color: #f8f9fa;">
+  <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #f8f9fa;">
+    <tr>
+      <td style="padding: 20px 10px;">
+        <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="max-width: 600px; margin: 0 auto; background-color: #ffffff; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); border-radius: 12px; overflow: hidden;">
+
+          <!-- Header -->
+          <tr>
+            <td style="background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%); padding: 32px 24px; text-align: center;">
+              <h1 style="margin: 0; color: #FFD700; font-size: 28px; font-weight: 700;">⚡ ElecMate</h1>
+            </td>
+          </tr>
+
+          <!-- Content -->
+          <tr>
+            <td style="padding: 32px 24px;">
+              <!-- Badge -->
+              <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="margin-bottom: 24px;">
+                <tr>
+                  <td align="center">
+                    <span style="display: inline-block; background-color: #fef2f2; color: #dc2626; font-weight: 700; font-size: 14px; padding: 8px 20px; border-radius: 20px; border: 1px solid #fecaca;">Payment Issue</span>
+                  </td>
+                </tr>
+              </table>
+
+              <p style="margin: 0 0 16px; font-size: 16px; line-height: 1.6; color: #374151;">
+                Hi <strong style="color: #1f2937;">${name}</strong>,
+              </p>
+              <p style="margin: 0 0 24px; font-size: 16px; line-height: 1.6; color: #374151;">
+                We tried to process your subscription payment of <strong>${amount}</strong>, but it didn't go through. This can happen if your card has expired or there were insufficient funds.
+              </p>
+
+              <!-- Amount Card -->
+              <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #fef2f2; border-radius: 12px; border: 2px solid #fecaca; margin-bottom: 24px;">
+                <tr>
+                  <td style="padding: 20px 24px;">
+                    <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                      <tr>
+                        <td style="font-size: 14px; color: #991b1b;">Amount due:</td>
+                        <td style="text-align: right; font-size: 16px; color: #991b1b; font-weight: 700;">${amount}</td>
+                      </tr>
+                      <tr>
+                        <td style="padding-top: 8px; font-size: 14px; color: #991b1b;">Status:</td>
+                        <td style="text-align: right; padding-top: 8px; font-size: 14px; color: #dc2626; font-weight: 700;">Payment failed</td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+              </table>
+
+              <p style="margin: 0 0 24px; font-size: 16px; line-height: 1.6; color: #374151;">
+                To keep your subscription active, please update your payment details:
+              </p>
+
+              <!-- CTA Buttons -->
+              <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                <tr>
+                  <td style="text-align: center; padding: 8px 0;">
+                    <a href="${hostedInvoiceUrl}" style="display: inline-block; background: linear-gradient(135deg, #16a34a 0%, #15803d 100%); color: #ffffff; font-weight: 700; text-decoration: none; padding: 14px 32px; border-radius: 8px; font-size: 16px;">Pay Now</a>
+                  </td>
+                </tr>
+                <tr>
+                  <td style="text-align: center; padding: 8px 0;">
+                    <a href="https://www.elec-mate.com/subscriptions" style="display: inline-block; background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%); color: #ffffff; font-weight: 600; text-decoration: none; padding: 12px 28px; border-radius: 8px; font-size: 14px;">Manage Subscription</a>
+                  </td>
+                </tr>
+              </table>
+
+              <p style="margin: 24px 0 0; font-size: 14px; line-height: 1.6; color: #6b7280;">
+                If you have any questions, just reply to this email — we're here to help!
+              </p>
+            </td>
+          </tr>
+
+          <!-- Footer -->
+          <tr>
+            <td style="background: linear-gradient(135deg, #1a1a1a 0%, #0f0f0f 100%); padding: 28px 24px; text-align: center;">
+              <p style="margin: 0 0 8px; font-size: 16px; font-weight: 700; color: #FFD700;">⚡ ElecMate</p>
+              <p style="margin: 0; font-size: 13px; color: #9ca3af;">Professional electrical tools</p>
+            </td>
+          </tr>
+
+        </table>
+      </td>
+    </tr>
+  </table>
+</body>
+</html>
+  `;
+
+  try {
+    const { data, error } = await resend.emails.send({
+      from: 'ElecMate <founder@elec-mate.com>',
+      reply_to: 'support@elec-mate.com',
+      to: [email],
+      subject: "Your ElecMate payment didn't go through",
+      html: emailHtml,
+    });
+
+    if (error) {
+      console.error('❌ Failed to send payment failed email:', error);
+    } else {
+      console.log(`✅ Payment failed email sent to ${email}:`, data?.id);
+    }
+  } catch (err) {
+    console.error('❌ Error sending payment failed email:', err);
+  }
+}
+
 // Map Stripe price IDs to subscription tiers
 // CURRENT ACTIVE PRICES (as of Jan 2026)
 const PRICE_TO_TIER: Record<string, string> = {
@@ -515,6 +650,25 @@ serve(async (req) => {
           read: false,
         });
 
+        // Resolve any active dunning sequences for this subscription
+        // Prevents further emails being sent for a cancelled subscription
+        const { error: resolveSubError } = await supabase
+          .from('failed_payment_emails')
+          .update({ resolved: true, resolved_at: new Date().toISOString() })
+          .eq('stripe_subscription_id', subscription.id)
+          .eq('resolved', false);
+
+        if (resolveSubError) {
+          logger.warn('Failed to resolve dunning sequences on subscription deletion (non-fatal)', {
+            subscriptionId: subscription.id,
+            error: resolveSubError.message,
+          });
+        } else {
+          logger.info('Resolved dunning sequences for cancelled subscription', {
+            subscriptionId: subscription.id,
+          });
+        }
+
         break;
       }
 
@@ -554,6 +708,38 @@ serve(async (req) => {
           : null;
 
         await updateSubscriptionStatus(userId, true, customerId, tier, periodEnd);
+
+        // Resolve any active dunning sequence for this invoice
+        const { data: resolvedRow, error: resolveError } = await supabase
+          .from('failed_payment_emails')
+          .update({ resolved: true, resolved_at: new Date().toISOString() })
+          .eq('stripe_invoice_id', invoice.id)
+          .eq('resolved', false)
+          .select('id')
+          .maybeSingle();
+
+        if (resolveError) {
+          logger.warn('Failed to resolve dunning sequence on invoice paid (non-fatal)', {
+            invoiceId: invoice.id,
+            error: resolveError.message,
+          });
+        } else if (resolvedRow) {
+          logger.info('Resolved dunning sequence — payment recovered', {
+            invoiceId: invoice.id,
+            trackingId: resolvedRow.id,
+          });
+
+          // Create a payment recovered notification
+          await supabase.from('notifications').insert({
+            user_id: userId,
+            type: 'payment_recovered',
+            title: 'Payment Successful',
+            message:
+              'Your subscription payment has been processed successfully. Thank you for updating your payment details!',
+            data: { invoice_id: invoice.id },
+            read: false,
+          });
+        }
 
         break;
       }
@@ -599,6 +785,75 @@ serve(async (req) => {
           },
           read: false,
         });
+
+        // --- Dunning email sequence: Email 1 (immediate) ---
+
+        // Check if we already have a tracking row for this invoice (idempotency — Stripe retries)
+        const { data: existingRow } = await supabase
+          .from('failed_payment_emails')
+          .select('id, emails_sent')
+          .eq('stripe_invoice_id', invoice.id)
+          .maybeSingle();
+
+        if (!existingRow) {
+          // Insert new tracking row
+          const { error: insertError } = await supabase.from('failed_payment_emails').insert({
+            user_id: userId,
+            stripe_invoice_id: invoice.id,
+            stripe_customer_id: customerId,
+            stripe_subscription_id: invoice.subscription as string,
+            amount_due: invoice.amount_due,
+            hosted_invoice_url: invoice.hosted_invoice_url || null,
+            emails_sent: 0,
+          });
+
+          if (insertError) {
+            logger.warn('Failed to insert dunning tracking row (non-fatal)', {
+              invoiceId: invoice.id,
+              error: insertError.message,
+            });
+          }
+        }
+
+        // Send Email 1 if not already sent
+        const emailsSentSoFar = existingRow?.emails_sent ?? 0;
+        if (emailsSentSoFar < 1) {
+          try {
+            // Get customer email from Stripe
+            const failedCustomer = await stripe.customers.retrieve(customerId);
+            if (!failedCustomer.deleted && 'email' in failedCustomer && failedCustomer.email) {
+              const userName = failedCustomer.name || failedCustomer.email.split('@')[0];
+              const amountFormatted = new Intl.NumberFormat('en-GB', {
+                style: 'currency',
+                currency: 'GBP',
+              }).format((invoice.amount_due || 0) / 100);
+
+              const payUrl =
+                invoice.hosted_invoice_url || 'https://www.elec-mate.com/subscriptions';
+
+              await sendPaymentFailedEmail(failedCustomer.email, userName, amountFormatted, payUrl);
+
+              // Update tracking row
+              await supabase
+                .from('failed_payment_emails')
+                .update({
+                  emails_sent: 1,
+                  email_1_sent_at: new Date().toISOString(),
+                })
+                .eq('stripe_invoice_id', invoice.id);
+
+              logger.info('Dunning Email 1 sent', {
+                invoiceId: invoice.id,
+                email: failedCustomer.email,
+              });
+            }
+          } catch (emailErr: unknown) {
+            logger.warn('Failed to send dunning Email 1 (non-fatal)', {
+              invoiceId: invoice.id,
+              error: (emailErr as Error)?.message,
+            });
+          }
+        }
 
         break;
       }

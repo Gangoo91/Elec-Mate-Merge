@@ -6,6 +6,9 @@ import {
   DHW_OPTIONS,
   ELECTRICAL_CONSTANTS,
   MCS_REQUIREMENTS,
+  FUEL_COMPARISON,
+  DEFROST_PENALTY,
+  BUS_GRANT,
 } from './heat-pump-constants';
 
 export interface HeatPumpInputs {
@@ -29,6 +32,13 @@ export interface ReviewFinding {
   regulation?: string;
 }
 
+export interface FuelComparisonEntry {
+  fuel: string;
+  label: string;
+  annualCost: number;
+  saving: number;
+}
+
 export interface HeatPumpResults {
   spaceHeatingLoad: number;
   dhwLoad: number;
@@ -49,6 +59,13 @@ export interface HeatPumpResults {
     efficiency: string;
     suitability: string;
     seasonalCOP: number;
+  };
+  fuelComparison: FuelComparisonEntry[];
+  defrostPenaltyKwh: number;
+  busGrant: {
+    eligible: boolean;
+    amount: number;
+    reason: string;
   };
   reviewFindings: ReviewFinding[];
 }
@@ -88,35 +105,68 @@ export function calculateHeatPumpLoad(inputs: HeatPumpInputs): HeatPumpResults {
 
   // COP calculation based on heat pump type and flow temperature
   const heatPumpData = HEAT_PUMP_TYPES[heatPumpType];
-  let baseCOP = heatPumpData.baseCOP;
+  const baseCOP = heatPumpData.baseCOP;
 
   // Temperature derating for COP
   const tempDerating = Math.max(0.5, 1 - (5 - designTemp) * heatPumpData.tempDerating);
 
-  // Flow temperature derating
-  const flowTempDerating = Math.max(0.7, 1 - (flowTemperature - 35) * 0.01);
+  // Flow temperature derating — varies by heat pump technology
+  // ASHP performance drops faster with flow temp than GSHP
+  const flowTempDerateRate: Record<string, number> = {
+    'air-source': 0.012,
+    'ground-source': 0.008,
+    'air-to-air': 0.015,
+  };
+  const flowDeratePerDegree = flowTempDerateRate[heatPumpType] ?? 0.01;
+  const flowTempDerating = Math.max(0.7, 1 - (flowTemperature - 35) * flowDeratePerDegree);
 
   const cop = baseCOP * tempDerating * flowTempDerating;
 
   // Electrical power requirement
   const electricalPower = adjustedHeatLoad / cop;
 
-  // Cost calculations
-  const dailyCost = electricalPower * ELECTRICAL_CONSTANTS.heatingHoursPerDay * electricityRate;
-  const annualCost = dailyCost * ELECTRICAL_CONSTANTS.heatingDaysPerYear;
-
-  // Carbon savings calculation
-  const gasCO2 =
+  // Defrost penalty — reduces useful annual output for air-source types
+  const defrostFraction = DEFROST_PENALTY[heatPumpType] ?? 0;
+  const annualHeatKwh =
     adjustedHeatLoad *
     ELECTRICAL_CONSTANTS.heatingHoursPerDay *
-    ELECTRICAL_CONSTANTS.heatingDaysPerYear *
-    ELECTRICAL_CONSTANTS.gasCO2Factor;
-  const electricCO2 =
-    electricalPower *
-    ELECTRICAL_CONSTANTS.heatingHoursPerDay *
-    ELECTRICAL_CONSTANTS.heatingDaysPerYear *
-    ELECTRICAL_CONSTANTS.electricCO2Factor;
+    ELECTRICAL_CONSTANTS.heatingDaysPerYear;
+  const defrostPenaltyKwh = annualHeatKwh * defrostFraction;
+  const annualElecKwh = (annualHeatKwh + defrostPenaltyKwh) / cop;
+
+  // Cost calculations (using defrost-adjusted figures)
+  const annualCostAdjusted = annualElecKwh * electricityRate;
+  const dailyCostAdjusted = annualCostAdjusted / ELECTRICAL_CONSTANTS.heatingDaysPerYear;
+
+  // Carbon savings calculation
+  const gasCO2 = annualHeatKwh * ELECTRICAL_CONSTANTS.gasCO2Factor;
+  const electricCO2 = annualElecKwh * ELECTRICAL_CONSTANTS.electricCO2Factor;
   const carbonSavings = Math.max(0, gasCO2 - electricCO2);
+
+  // Fuel comparison — what would this property cost to heat with each fuel?
+  const fuelComparison: FuelComparisonEntry[] = Object.entries(FUEL_COMPARISON).map(
+    ([fuel, data]) => {
+      const fuelAnnualCost = (annualHeatKwh / data.boilerEfficiency) * data.pricePerKwh;
+      return {
+        fuel,
+        label: data.label,
+        annualCost: fuelAnnualCost,
+        saving: fuelAnnualCost - annualCostAdjusted,
+      };
+    }
+  );
+
+  // BUS grant eligibility (England & Wales only, capacity ≤ 45 kWth)
+  const busGrantAmount = BUS_GRANT[heatPumpType as keyof typeof BUS_GRANT] as number | undefined;
+  const busGrant = {
+    eligible: !!busGrantAmount && adjustedHeatLoad <= BUS_GRANT.maxCapacity,
+    amount: busGrantAmount ?? 0,
+    reason: !busGrantAmount
+      ? 'Not eligible for this heat pump type'
+      : adjustedHeatLoad > BUS_GRANT.maxCapacity
+        ? `System exceeds ${BUS_GRANT.maxCapacity} kWth BUS limit`
+        : `£${busGrantAmount.toLocaleString()} BUS grant available (England & Wales)`,
+  };
 
   // Sizing assessment
   const recommendedSize = adjustedHeatLoad * MCS_REQUIREMENTS.designMargin;
@@ -130,8 +180,15 @@ export function calculateHeatPumpLoad(inputs: HeatPumpInputs): HeatPumpResults {
     withinMCS: electricalPower >= minSize && electricalPower <= maxSize,
   };
 
-  // Performance assessment
-  const seasonalCOP = cop * 0.9; // Approximate seasonal efficiency
+  // Performance assessment — seasonal COP varies by technology
+  // GSHP has stable ground temps so seasonal penalty is small;
+  // air-source types lose more to cold-weather cycling
+  const seasonalCOPFactor: Record<string, number> = {
+    'air-source': 0.85,
+    'ground-source': 0.95,
+    'air-to-air': 0.82,
+  };
+  const seasonalCOP = cop * (seasonalCOPFactor[heatPumpType] ?? 0.9);
   const efficiency =
     seasonalCOP > 3.5
       ? 'Excellent'
@@ -161,12 +218,15 @@ export function calculateHeatPumpLoad(inputs: HeatPumpInputs): HeatPumpResults {
     totalHeatLoad,
     cop,
     electricalPower,
-    dailyCost,
-    annualCost,
+    dailyCost: dailyCostAdjusted,
+    annualCost: annualCostAdjusted,
     carbonSavings,
     flowTemperature,
     sizing,
     performance,
+    fuelComparison,
+    defrostPenaltyKwh,
+    busGrant,
     reviewFindings: [], // temporary for the call
   });
 
@@ -176,12 +236,15 @@ export function calculateHeatPumpLoad(inputs: HeatPumpInputs): HeatPumpResults {
     totalHeatLoad,
     cop,
     electricalPower,
-    dailyCost,
-    annualCost,
+    dailyCost: dailyCostAdjusted,
+    annualCost: annualCostAdjusted,
     carbonSavings,
     flowTemperature,
     sizing,
     performance,
+    fuelComparison,
+    defrostPenaltyKwh,
+    busGrant,
     reviewFindings,
   };
 }

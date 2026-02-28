@@ -1,30 +1,27 @@
-import { useState } from 'react';
-import { Badge } from '@/components/ui/badge';
-import {
-  Droplets,
-  Info,
-  BookOpen,
-  ChevronDown,
-  TrendingUp,
-  Clock,
-  PoundSterling,
-  AlertTriangle,
-  Wrench,
-  Zap,
-} from 'lucide-react';
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
+import { useState, useCallback, useMemo } from 'react';
+import { Copy, Check, ChevronDown, AlertTriangle } from 'lucide-react';
+import { useToast } from '@/hooks/use-toast';
 import { cn } from '@/lib/utils';
+import { Button } from '@/components/ui/button';
 import {
   CalculatorCard,
   CalculatorInputGrid,
   CalculatorInput,
   CalculatorSelect,
   CalculatorActions,
-  CalculatorResult,
   ResultValue,
   ResultsGrid,
+  ResultBadge,
+  CalculatorFormula,
+  CalculatorDivider,
+  CalculatorSection,
+  FormulaReference,
   CALCULATOR_CONFIG,
 } from '@/components/calculators/shared';
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
+
+const CAT = 'renewable' as const;
+const config = CALCULATOR_CONFIG[CAT];
 
 const TURBINE_TYPES = {
   pelton: {
@@ -111,14 +108,26 @@ interface MicroHydroResult {
   costPerKw: number;
   annualRevenue: number;
   paybackPeriod: number;
-  penstock: { diameter: number; length: number; material: string; cost: number };
-  environmentalNotes: string[];
-  regulatoryRequirements: string[];
+  penstock: {
+    diameter: number;
+    length: number;
+    material: string;
+    cost: number;
+    pressureBar: number;
+  };
+  turbineCost: number;
+  civilWorksCost: number;
+  electricalCost: number;
+  installationCost: number;
   viabilityAssessment: string;
+  flowValue: number;
+  headValue: number;
+  availabilityPct: number;
 }
 
 const MicroHydroCalculator = () => {
-  const config = CALCULATOR_CONFIG['renewable'];
+  const { toast } = useToast();
+  const [copied, setCopied] = useState(false);
 
   const [flow, setFlow] = useState('');
   const [head, setHead] = useState('');
@@ -135,34 +144,39 @@ const MicroHydroCalculator = () => {
     { value: 'auto', label: 'Auto-select best turbine' },
     ...Object.entries(TURBINE_TYPES).map(([key, t]) => ({
       value: key,
-      label: `${t.name} - ${t.description}`,
+      label: `${t.name} — ${t.description}`,
     })),
   ];
 
-  const determineBestTurbine = (head: number, flow: number): string => {
-    if (head >= 50 && flow <= 2.0) return 'pelton';
-    if (head >= 30 && head < 50) return 'turgo';
-    if (head >= 10 && head < 30) return 'francis';
-    if (head >= 2 && head < 10) return 'kaplan';
+  const determineBestTurbine = (headVal: number, flowVal: number): string => {
+    if (headVal >= 50 && flowVal <= 2.0) return 'pelton';
+    if (headVal >= 30 && headVal < 50) return 'turgo';
+    if (headVal >= 10 && headVal < 30) return 'francis';
+    if (headVal >= 2 && headVal < 10) return 'kaplan';
     return 'crossflow';
   };
 
-  const assessTurbineSuitability = (head: number, flow: number, turbine: string): string => {
+  const assessTurbineSuitability = (headVal: number, flowVal: number, turbine: string): string => {
     const turbineData = TURBINE_TYPES[turbine as keyof typeof TURBINE_TYPES];
-    if (head < turbineData.minHead) return '⚠️ Head too low for optimal efficiency';
-    if (flow > turbineData.maxFlow) return '⚠️ Flow too high, consider multiple units';
-    return '✅ Excellent match for site conditions';
+    if (headVal < turbineData.minHead) return 'Head too low for optimal efficiency';
+    if (flowVal > turbineData.maxFlow) return 'Flow too high — consider multiple units';
+    return 'Excellent match for site conditions';
   };
 
   const assessViability = (power: number, payback: number): string => {
-    if (power < 5) return '⚠️ Very small system - check economics carefully';
-    if (payback > 20) return '❌ Poor economics - payback too long';
-    if (payback > 15) return '⚠️ Marginal economics - consider improvements';
-    if (payback > 10) return '✅ Reasonable economics';
-    return '✅ Excellent economics - highly viable';
+    if (power < 5) return 'Very small system — check economics carefully';
+    if (payback > 20) return 'Poor economics — payback too long';
+    if (payback > 15) return 'Marginal economics — consider improvements';
+    if (payback > 10) return 'Reasonable economics';
+    return 'Excellent economics — highly viable';
   };
 
-  const calculateMicroHydro = () => {
+  const canCalculate = useMemo(
+    () => flow.trim() !== '' && head.trim() !== '' && parseFloat(flow) > 0 && parseFloat(head) > 0,
+    [flow, head]
+  );
+
+  const handleCalculate = useCallback(() => {
     const flowValue = parseFloat(flow);
     const headValue = parseFloat(head);
     const availabilityValue = parseFloat(availabilityFactor) / 100;
@@ -180,21 +194,35 @@ const MicroHydroCalculator = () => {
 
     // Power: P = ρ × g × Q × H × η (kW)
     const theoreticalPower = (1000 * 9.81 * flowValue * headValue) / 1000;
-    const practicalPower = theoreticalPower * turbineData.efficiency * 0.95;
+    const practicalPower = theoreticalPower * turbineData.efficiency * 0.95; // 0.95 = generator efficiency
     const annualGeneration = practicalPower * 8760 * availabilityValue;
 
     // Penstock sizing
-    const velocity = 2.5;
+    const velocity = 2.5; // m/s design velocity
     const area = flowValue / velocity;
-    const diameter = Math.sqrt((4 * area) / Math.PI) * 1000;
-    const penstockCost = penstockLengthValue * 150;
+    const diameter = Math.sqrt((4 * area) / Math.PI) * 1000; // mm
+
+    // Pressure check for material selection: pressure = ρ × g × H (Pa) → bar
+    const pressureBar = (1000 * 9.81 * headValue) / 100000;
+    // HDPE for <10 bar, Steel for ≥10 bar
+    const penstockMaterial = pressureBar >= 10 ? 'Steel' : 'HDPE';
+
+    // Penstock cost: diameter-scaled formula instead of flat rate
+    const penstockCostPerMetre = 80 + (diameter / 10) * 15;
+    const penstockCost = penstockLengthValue * penstockCostPerMetre;
 
     // Cost estimation
     const turbineCost = practicalPower * turbineData.costPerKw;
-    const civilWorks = Math.max(20000, practicalPower * 800);
-    const electrical = practicalPower * 600;
-    const installation = (turbineCost + civilWorks + electrical) * 0.25;
-    const totalCost = turbineCost + civilWorks + electrical + installation + penstockCost;
+    // Civil works: £12,000 minimum for micro (<10kW), scale up for larger
+    const civilWorksCost =
+      practicalPower < 10
+        ? Math.max(12000, practicalPower * 800)
+        : Math.max(20000, practicalPower * 800);
+    const electricalCost = practicalPower * 600;
+    // Installation: 18% of equipment (UK micro-hydro average)
+    const installationCost = (turbineCost + civilWorksCost + electricalCost) * 0.18;
+    const totalCost =
+      turbineCost + civilWorksCost + electricalCost + installationCost + penstockCost;
 
     const annualRevenue = annualGeneration * rateValue;
     const paybackPeriod = totalCost / annualRevenue;
@@ -215,24 +243,20 @@ const MicroHydroCalculator = () => {
       penstock: {
         diameter: Math.round(diameter),
         length: penstockLengthValue,
-        material: diameter > 600 ? 'Steel' : 'HDPE',
-        cost: penstockCost,
+        material: penstockMaterial,
+        cost: Math.round(penstockCost),
+        pressureBar,
       },
-      environmentalNotes: [
-        'Environmental Impact Assessment may be required',
-        'Fish passage provisions typically needed',
-        'Minimum flow requirements for downstream ecology',
-        'Seasonal flow variation assessment required',
-      ],
-      regulatoryRequirements: [
-        'Environment Agency abstraction licence',
-        'Planning permission for structures',
-        'Grid connection agreement (G59/G83)',
-        'Health & Safety Executive notification if >1MW',
-      ],
+      turbineCost,
+      civilWorksCost,
+      electricalCost,
+      installationCost,
       viabilityAssessment: viability,
+      flowValue,
+      headValue,
+      availabilityPct: availabilityValue,
     });
-  };
+  }, [flow, head, turbineType, availabilityFactor, electricityRate, penstockLength]);
 
   const applyPreset = (preset: (typeof QUICK_START_PRESETS)[0]) => {
     setFlow(preset.flow);
@@ -240,7 +264,7 @@ const MicroHydroCalculator = () => {
     setTurbineType(preset.turbineType);
   };
 
-  const resetCalculator = () => {
+  const handleReset = useCallback(() => {
     setFlow('');
     setHead('');
     setTurbineType('');
@@ -248,361 +272,454 @@ const MicroHydroCalculator = () => {
     setElectricityRate('0.15');
     setPenstockLength('100');
     setResult(null);
+  }, []);
+
+  const handleCopy = () => {
+    if (!result) return;
+    const text = [
+      'Micro-Hydro System Analysis',
+      `Flow: ${result.flowValue} m³/s | Head: ${result.headValue} m`,
+      `Turbine: ${result.recommendedTurbine} (${(result.turbineEfficiency * 100).toFixed(0)}%)`,
+      `Theoretical Power: ${result.theoreticalPower.toFixed(1)} kW`,
+      `Practical Power: ${result.practicalPower.toFixed(1)} kW`,
+      `Annual Generation: ${result.annualGeneration.toFixed(0)} kWh`,
+      `Penstock: ${result.penstock.diameter}mm ${result.penstock.material} × ${result.penstock.length}m`,
+      `Estimated Cost: £${Math.round(result.estimatedCost).toLocaleString()}`,
+      `Annual Revenue: £${Math.round(result.annualRevenue).toLocaleString()}`,
+      `Payback: ${result.paybackPeriod.toFixed(1)} years`,
+    ].join('\n');
+    navigator.clipboard.writeText(text);
+    setCopied(true);
+    toast({ title: 'Copied to clipboard' });
+    setTimeout(() => setCopied(false), 2000);
   };
 
-  const hasValidInputs = () => flow && head && parseFloat(flow) > 0 && parseFloat(head) > 0;
-
-  const getPaybackColor = (years: number) =>
-    years <= 10 ? 'text-green-400' : years <= 15 ? 'text-amber-400' : 'text-red-400';
-
   return (
-    <div className="space-y-4">
-      <CalculatorCard
-        category="renewable"
-        title="Micro-Hydro Calculator"
-        description="Professional micro-hydro system analysis with accurate hydraulics"
-        badge="G59/G83"
-      >
-        {/* Quick Start Presets */}
-        <div className="space-y-3">
-          <p className="text-sm font-medium text-white/80">Quick Start Presets</p>
-          <div className="grid grid-cols-2 gap-2">
-            {QUICK_START_PRESETS.map((preset, index) => (
-              <button
-                key={index}
-                onClick={() => applyPreset(preset)}
-                className="p-3 text-left rounded-xl bg-white/5 border border-white/10 hover:border-green-500/50 hover:bg-green-500/10 transition-colors"
-              >
-                <p className="text-sm font-medium text-white">{preset.name}</p>
-                <p className="text-xs text-white/60">
-                  {preset.flow} m³/s • {preset.head}m head
-                </p>
-              </button>
-            ))}
-          </div>
+    <CalculatorCard
+      category={CAT}
+      title="Micro-Hydro Calculator"
+      description="Professional micro-hydro system analysis with accurate hydraulics"
+    >
+      {/* Quick Start Presets */}
+      <CalculatorSection title="Quick Start Presets">
+        <div className="grid grid-cols-2 gap-2">
+          {QUICK_START_PRESETS.map((preset, index) => (
+            <Button
+              key={index}
+              variant="outline"
+              onClick={() => applyPreset(preset)}
+              className="h-auto p-3 text-left rounded-xl border-white/10 bg-white/5 hover:bg-white/10 text-white touch-manipulation flex flex-col items-start"
+            >
+              <span className="text-sm font-medium">{preset.name}</span>
+              <span className="text-xs text-white">
+                {preset.flow} m³/s · {preset.head}m head
+              </span>
+            </Button>
+          ))}
         </div>
+      </CalculatorSection>
 
-        {/* Site Parameters */}
-        <div className="space-y-3">
-          <p className="text-sm font-medium text-white/80">Site Parameters</p>
-          <CalculatorInputGrid columns={2}>
-            <CalculatorInput
-              label="Flow Rate"
-              unit="m³/s"
-              type="text"
-              inputMode="decimal"
-              value={flow}
-              onChange={setFlow}
-              placeholder="e.g., 0.5"
-            />
-            <CalculatorInput
-              label="Head"
-              unit="m"
-              type="text"
-              inputMode="decimal"
-              value={head}
-              onChange={setHead}
-              placeholder="e.g., 25"
-            />
-          </CalculatorInputGrid>
-        </div>
+      <CalculatorDivider category={CAT} />
 
-        {/* System Configuration */}
-        <div className="space-y-3">
-          <p className="text-sm font-medium text-white/80">System Configuration</p>
-          <CalculatorInputGrid columns={2}>
-            <CalculatorSelect
-              label="Turbine Type"
-              value={turbineType}
-              onChange={setTurbineType}
-              options={turbineOptions}
-              placeholder="Auto-select"
-            />
-            <CalculatorInput
-              label="Penstock Length"
-              unit="m"
-              type="text"
-              inputMode="decimal"
-              value={penstockLength}
-              onChange={setPenstockLength}
-              placeholder="e.g., 100"
-            />
-            <CalculatorInput
-              label="Availability Factor"
-              unit="%"
-              type="text"
-              inputMode="decimal"
-              value={availabilityFactor}
-              onChange={setAvailabilityFactor}
-              placeholder="85"
-            />
-            <CalculatorInput
-              label="Electricity Rate"
-              unit="£/kWh"
-              type="text"
-              inputMode="decimal"
-              value={electricityRate}
-              onChange={setElectricityRate}
-              placeholder="0.15"
-            />
-          </CalculatorInputGrid>
-        </div>
+      {/* Site Parameters */}
+      <CalculatorSection title="Site Parameters">
+        <CalculatorInputGrid columns={2}>
+          <CalculatorInput
+            label="Flow Rate"
+            unit="m³/s"
+            type="text"
+            inputMode="decimal"
+            value={flow}
+            onChange={setFlow}
+            placeholder="e.g., 0.5"
+          />
+          <CalculatorInput
+            label="Head"
+            unit="m"
+            type="text"
+            inputMode="decimal"
+            value={head}
+            onChange={setHead}
+            placeholder="e.g., 25"
+          />
+        </CalculatorInputGrid>
+      </CalculatorSection>
 
-        <CalculatorActions
-          category="renewable"
-          onCalculate={calculateMicroHydro}
-          onReset={resetCalculator}
-          isDisabled={!hasValidInputs()}
-          calculateLabel="Calculate"
-        />
-      </CalculatorCard>
+      {/* System Configuration */}
+      <CalculatorSection title="System Configuration">
+        <CalculatorInputGrid columns={2}>
+          <CalculatorSelect
+            label="Turbine Type"
+            value={turbineType}
+            onChange={setTurbineType}
+            options={turbineOptions}
+            placeholder="Auto-select"
+          />
+          <CalculatorInput
+            label="Penstock Length"
+            unit="m"
+            type="text"
+            inputMode="decimal"
+            value={penstockLength}
+            onChange={setPenstockLength}
+            placeholder="e.g., 100"
+          />
+          <CalculatorInput
+            label="Availability Factor"
+            unit="%"
+            type="text"
+            inputMode="decimal"
+            value={availabilityFactor}
+            onChange={setAvailabilityFactor}
+            placeholder="85"
+          />
+          <CalculatorInput
+            label="Electricity Rate"
+            unit="£/kWh"
+            type="text"
+            inputMode="decimal"
+            value={electricityRate}
+            onChange={setElectricityRate}
+            placeholder="0.15"
+          />
+        </CalculatorInputGrid>
+      </CalculatorSection>
 
+      <CalculatorActions
+        category={CAT}
+        onCalculate={handleCalculate}
+        onReset={handleReset}
+        isDisabled={!canCalculate}
+        calculateLabel="Calculate"
+        showReset={!!result}
+      />
+
+      {/* ── Results ── */}
       {result && (
         <div className="space-y-4 animate-fade-in">
-          {/* Power Generation */}
-          <CalculatorResult category="renewable">
-            <div className="flex items-center justify-between pb-3 border-b border-white/10">
-              <div className="flex items-center gap-2">
-                <Zap className="h-4 w-4 text-green-400" />
-                <span className="text-sm font-medium text-white">Power Generation</span>
-              </div>
-              <Badge
-                variant="outline"
-                className={cn(
-                  result.practicalPower >= 10
-                    ? 'text-green-400 border-green-400/50'
-                    : 'text-amber-400 border-amber-400/50'
-                )}
-              >
-                {result.practicalPower >= 50
-                  ? 'Commercial'
+          {/* Status + Copy */}
+          <div className="flex items-center justify-between">
+            <ResultBadge
+              status={result.paybackPeriod <= 15 ? 'pass' : 'warning'}
+              label={
+                result.practicalPower >= 50
+                  ? 'Commercial Scale'
                   : result.practicalPower >= 10
                     ? 'Small Commercial'
-                    : 'Micro System'}
-              </Badge>
-            </div>
+                    : 'Micro System'
+              }
+            />
+            <button
+              onClick={handleCopy}
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 text-white text-xs font-medium transition-colors touch-manipulation min-h-[44px]"
+            >
+              {copied ? <Check className="h-3.5 w-3.5" /> : <Copy className="h-3.5 w-3.5" />}
+              {copied ? 'Copied' : 'Copy'}
+            </button>
+          </div>
 
-            <div className="text-center py-4">
-              <p className="text-sm text-white/60 mb-1">Practical Power Output</p>
-              <div
-                className="text-4xl font-bold bg-clip-text text-transparent"
-                style={{
-                  backgroundImage: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})`,
-                }}
-              >
-                {result.practicalPower.toFixed(1)} kW
-              </div>
-            </div>
+          {/* Hero power output */}
+          <div className="text-center py-3">
+            <p className="text-sm font-medium text-white mb-1">Practical Power Output</p>
+            <p
+              className="text-4xl sm:text-5xl font-bold bg-clip-text text-transparent"
+              style={{
+                backgroundImage: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})`,
+              }}
+            >
+              {result.practicalPower.toFixed(1)} kW
+            </p>
+            <p className="text-sm text-white mt-2">
+              {(result.annualGeneration / 1000).toFixed(1)} MWh/yr · {result.recommendedTurbine} at{' '}
+              {(result.turbineEfficiency * 100).toFixed(0)}%
+            </p>
+          </div>
 
-            <ResultsGrid columns={2}>
-              <ResultValue
-                label="Theoretical Power"
-                value={result.theoreticalPower.toFixed(1)}
-                unit="kW"
-                category="renewable"
-                size="sm"
-              />
-              <ResultValue
-                label="Annual Generation"
-                value={(result.annualGeneration / 1000).toFixed(0)}
-                unit="MWh"
-                category="renewable"
-                size="sm"
-              />
-            </ResultsGrid>
-          </CalculatorResult>
+          {/* Power results */}
+          <ResultsGrid columns={2}>
+            <ResultValue
+              label="Theoretical Power"
+              value={result.theoreticalPower.toFixed(1)}
+              unit="kW"
+              category={CAT}
+              size="sm"
+            />
+            <ResultValue
+              label="Annual Generation"
+              value={(result.annualGeneration / 1000).toFixed(1)}
+              unit="MWh"
+              category={CAT}
+              size="sm"
+            />
+          </ResultsGrid>
 
-          {/* Turbine Analysis */}
-          <CalculatorResult category="renewable">
-            <div className="flex items-center gap-2 pb-3 border-b border-white/10">
-              <Wrench className="h-4 w-4 text-blue-400" />
-              <span className="text-sm font-medium text-white">Turbine Analysis</span>
-            </div>
-            <ResultsGrid columns={2}>
-              <ResultValue
-                label="Recommended"
-                value={result.recommendedTurbine}
-                category="renewable"
-                size="sm"
-              />
-              <ResultValue
-                label="Efficiency"
-                value={(result.turbineEfficiency * 100).toFixed(0)}
-                unit="%"
-                category="renewable"
-                size="sm"
-              />
-            </ResultsGrid>
-            <div className="mt-3 p-2 rounded-lg bg-white/5 text-sm text-white/80">
-              {result.turbineSuitability}
-            </div>
-          </CalculatorResult>
+          {/* Turbine suitability */}
+          <div
+            className={cn(
+              'flex items-center gap-2 p-3 rounded-lg border text-sm',
+              result.turbineSuitability.includes('Excellent')
+                ? 'bg-green-500/5 border-green-500/20'
+                : 'bg-amber-500/5 border-amber-500/20'
+            )}
+          >
+            <span className="text-white font-medium">Turbine Match:</span>
+            <span className="text-white">{result.turbineSuitability}</span>
+          </div>
 
-          {/* Economic Analysis */}
-          <CalculatorResult category="renewable">
-            <div className="flex items-center gap-2 pb-3 border-b border-white/10">
-              <TrendingUp className="h-4 w-4 text-green-400" />
-              <span className="text-sm font-medium text-white">Economic Analysis</span>
-            </div>
-            <ResultsGrid columns={2}>
-              <ResultValue
-                label="Total Cost"
-                value={`£${Math.round(result.estimatedCost / 1000)}k`}
-                category="renewable"
-                size="sm"
-              />
-              <ResultValue
-                label="Cost/kW"
-                value={`£${Math.round(result.costPerKw).toLocaleString()}`}
-                category="renewable"
-                size="sm"
-              />
-              <ResultValue
-                label="Annual Revenue"
-                value={`£${Math.round(result.annualRevenue).toLocaleString()}`}
-                category="renewable"
-                size="sm"
-              />
-              <div className="text-center p-2">
-                <p className="text-xs text-white/60">Payback</p>
-                <p className={cn('text-lg font-bold', getPaybackColor(result.paybackPeriod))}>
-                  {result.paybackPeriod.toFixed(1)} yrs
-                </p>
-              </div>
-            </ResultsGrid>
-            <div className="mt-3 p-2 rounded-lg bg-white/5 text-sm text-white/80">
-              {result.viabilityAssessment}
-            </div>
-          </CalculatorResult>
+          <CalculatorDivider category={CAT} />
 
-          {/* Penstock Specifications */}
-          <CalculatorResult category="renewable">
-            <div className="flex items-center gap-2 pb-3 border-b border-white/10">
-              <Droplets className="h-4 w-4 text-cyan-400" />
-              <span className="text-sm font-medium text-white">Penstock Specifications</span>
-            </div>
+          {/* Penstock */}
+          <CalculatorSection title="Penstock Specifications">
             <ResultsGrid columns={2}>
               <ResultValue
                 label="Diameter"
                 value={result.penstock.diameter}
                 unit="mm"
-                category="renewable"
+                category={CAT}
                 size="sm"
               />
               <ResultValue
                 label="Material"
                 value={result.penstock.material}
-                category="renewable"
+                category={CAT}
                 size="sm"
               />
               <ResultValue
-                label="Length"
-                value={result.penstock.length}
-                unit="m"
-                category="renewable"
+                label="Pressure"
+                value={result.penstock.pressureBar.toFixed(1)}
+                unit="bar"
+                category={CAT}
                 size="sm"
               />
               <ResultValue
                 label="Cost"
                 value={`£${result.penstock.cost.toLocaleString()}`}
-                category="renewable"
+                category={CAT}
                 size="sm"
               />
             </ResultsGrid>
-          </CalculatorResult>
+          </CalculatorSection>
 
-          {/* Environmental Considerations */}
-          <div className="p-3 rounded-xl bg-orange-500/10 border border-orange-500/30">
-            <div className="flex items-center gap-2 mb-2">
-              <AlertTriangle className="h-4 w-4 text-orange-400" />
-              <p className="text-sm font-medium text-orange-300">Environmental Considerations</p>
-            </div>
-            <ul className="space-y-1 text-sm text-orange-200/80">
-              {result.environmentalNotes.map((note, idx) => (
-                <li key={idx}>• {note}</li>
-              ))}
-            </ul>
+          <CalculatorDivider category={CAT} />
+
+          {/* Economics */}
+          <ResultsGrid columns={2}>
+            <ResultValue
+              label="Total Cost"
+              value={`£${Math.round(result.estimatedCost / 1000)}k`}
+              category={CAT}
+              size="sm"
+            />
+            <ResultValue
+              label="Cost/kW"
+              value={`£${Math.round(result.costPerKw).toLocaleString()}`}
+              category={CAT}
+              size="sm"
+            />
+            <ResultValue
+              label="Annual Revenue"
+              value={`£${Math.round(result.annualRevenue).toLocaleString()}`}
+              category={CAT}
+              size="sm"
+            />
+            <ResultValue
+              label="Payback"
+              value={result.paybackPeriod.toFixed(1)}
+              unit="years"
+              category={CAT}
+              size="sm"
+            />
+          </ResultsGrid>
+
+          {/* Viability */}
+          <div
+            className={cn(
+              'flex items-center gap-2 p-3 rounded-lg border text-sm',
+              result.paybackPeriod <= 10
+                ? 'bg-green-500/5 border-green-500/20'
+                : result.paybackPeriod <= 15
+                  ? 'bg-amber-500/5 border-amber-500/20'
+                  : 'bg-red-500/5 border-red-500/20'
+            )}
+          >
+            <span className="text-white">{result.viabilityAssessment}</span>
           </div>
 
-          {/* What This Means */}
-          <Collapsible open={showGuidance} onOpenChange={setShowGuidance}>
-            <div className="calculator-card overflow-hidden" style={{ borderColor: '#60a5fa15' }}>
-              <CollapsibleTrigger className="agent-collapsible-trigger w-full">
-                <div className="flex items-center gap-3">
-                  <Info className="h-4 w-4 text-blue-400" />
-                  <span className="text-sm sm:text-base font-medium text-blue-300">
-                    What This Means
-                  </span>
-                </div>
-                <ChevronDown
-                  className={cn(
-                    'h-4 w-4 text-white/70 transition-transform duration-200',
-                    showGuidance && 'rotate-180'
-                  )}
-                />
-              </CollapsibleTrigger>
-              <CollapsibleContent className="p-4 pt-0 space-y-2">
-                <p className="text-sm text-blue-200/80">
-                  <strong className="text-blue-300">Power Output:</strong> Your {flow} m³/s flow
-                  rate with {head}m head produces {result.practicalPower.toFixed(1)}kW - enough to
-                  power approximately {Math.round(result.practicalPower / 3)} average homes.
-                </p>
-                <p className="text-sm text-blue-200/80">
-                  <strong className="text-blue-300">Turbine Selection:</strong>{' '}
-                  {result.recommendedTurbine} at {(result.turbineEfficiency * 100).toFixed(0)}%
-                  efficiency is optimal for your site conditions.
-                </p>
-                <p className="text-sm text-blue-200/80">
-                  <strong className="text-blue-300">Economics:</strong>{' '}
-                  {result.paybackPeriod < 10
-                    ? 'Strong returns expected - good investment opportunity.'
-                    : result.paybackPeriod < 15
-                      ? 'Moderate returns - consider grants or incentives.'
-                      : 'Long payback - may need subsidies to be viable.'}
-                </p>
-              </CollapsibleContent>
+          {/* Environmental warning */}
+          <div className="flex items-start gap-2 p-3 rounded-lg bg-amber-500/10 border border-amber-500/30">
+            <AlertTriangle className="h-4 w-4 text-amber-400 mt-0.5 shrink-0" />
+            <div className="space-y-1">
+              <p className="text-sm text-white font-medium">Environmental Considerations</p>
+              <ul className="space-y-0.5">
+                {[
+                  'Environmental Impact Assessment may be required',
+                  'Fish passage provisions typically needed',
+                  'Minimum flow requirements for downstream ecology',
+                  'Seasonal flow variation assessment required',
+                ].map((note, idx) => (
+                  <li key={idx} className="flex items-start gap-2 text-sm text-white">
+                    <span
+                      className="w-1.5 h-1.5 rounded-full mt-2 shrink-0"
+                      style={{ backgroundColor: config.gradientFrom }}
+                    />
+                    {note}
+                  </li>
+                ))}
+              </ul>
             </div>
+          </div>
+
+          <CalculatorDivider category={CAT} />
+
+          {/* ── How It Worked Out ── */}
+          <CalculatorFormula
+            category={CAT}
+            title="How It Worked Out"
+            defaultOpen
+            steps={[
+              {
+                label: 'Gross power (ρgQH)',
+                formula: `1000 × 9.81 × ${result.flowValue} × ${result.headValue} / 1000`,
+                value: `${result.theoreticalPower.toFixed(2)} kW`,
+              },
+              {
+                label: 'Net power (turbine × generator efficiency)',
+                formula: `${result.theoreticalPower.toFixed(2)} × ${(result.turbineEfficiency * 100).toFixed(0)}% × 95%`,
+                value: `${result.practicalPower.toFixed(2)} kW`,
+              },
+              {
+                label: 'Annual generation',
+                formula: `${result.practicalPower.toFixed(2)} × 8760 hours × ${(result.availabilityPct * 100).toFixed(0)}%`,
+                value: `${result.annualGeneration.toFixed(0)} kWh/yr`,
+              },
+              {
+                label: 'Penstock sizing',
+                formula: `Q / v = ${result.flowValue} / 2.5 m/s → A = ${(result.flowValue / 2.5).toFixed(4)} m² → D = ${result.penstock.diameter}mm`,
+                value: `${result.penstock.material} (${result.penstock.pressureBar.toFixed(1)} bar ${result.penstock.pressureBar >= 10 ? '≥' : '<'} 10 bar threshold)`,
+              },
+              {
+                label: 'Cost breakdown',
+                formula: `Turbine £${Math.round(result.turbineCost).toLocaleString()} + Civil £${Math.round(result.civilWorksCost).toLocaleString()} + Electrical £${Math.round(result.electricalCost).toLocaleString()} + Install 18% £${Math.round(result.installationCost).toLocaleString()} + Penstock £${result.penstock.cost.toLocaleString()}`,
+                value: `£${Math.round(result.estimatedCost).toLocaleString()} total`,
+              },
+              {
+                label: 'Payback',
+                formula: `£${Math.round(result.estimatedCost).toLocaleString()} / £${Math.round(result.annualRevenue).toLocaleString()}`,
+                value: `${result.paybackPeriod.toFixed(1)} years`,
+              },
+            ]}
+          />
+
+          {/* ── What This Means ── */}
+          <Collapsible open={showGuidance} onOpenChange={setShowGuidance}>
+            <CollapsibleTrigger className="flex items-center justify-between w-full min-h-11 py-2.5 px-3 rounded-lg text-sm font-medium text-white hover:bg-white/5 transition-all touch-manipulation">
+              <span>What This Means</span>
+              <ChevronDown
+                className={cn(
+                  'h-4 w-4 transition-transform duration-200',
+                  showGuidance && 'rotate-180'
+                )}
+              />
+            </CollapsibleTrigger>
+            <CollapsibleContent className="pt-2">
+              <div
+                className="p-3 rounded-xl border space-y-4"
+                style={{
+                  borderColor: `${config.gradientFrom}15`,
+                  background: `${config.gradientFrom}05`,
+                }}
+              >
+                <div className="space-y-2">
+                  <p className="text-sm text-white font-medium">Power Output</p>
+                  <p className="text-sm text-white">
+                    Your {result.flowValue} m³/s flow rate with {result.headValue}m head produces{' '}
+                    {result.practicalPower.toFixed(1)}kW — enough to power approximately{' '}
+                    {Math.round(result.practicalPower / 3)} average UK homes.
+                  </p>
+                </div>
+                <div className="space-y-2">
+                  <p className="text-sm text-white font-medium">Economics</p>
+                  <p className="text-sm text-white">
+                    {result.paybackPeriod < 10
+                      ? 'Strong returns expected — good investment opportunity. Hydro has the highest capacity factor of any renewable source.'
+                      : result.paybackPeriod < 15
+                        ? 'Moderate returns — consider grants or incentives to improve payback. The Rural Development Programme for England may offer support.'
+                        : 'Long payback — may need subsidies or grant funding to be economically viable at this scale.'}
+                  </p>
+                </div>
+              </div>
+            </CollapsibleContent>
           </Collapsible>
 
-          {/* Regulatory Requirements */}
+          {/* ── BS 7671 Reference ── */}
           <Collapsible open={showRegs} onOpenChange={setShowRegs}>
-            <div className="calculator-card overflow-hidden" style={{ borderColor: '#fbbf2415' }}>
-              <CollapsibleTrigger className="agent-collapsible-trigger w-full">
-                <div className="flex items-center gap-3">
-                  <BookOpen className="h-4 w-4 text-amber-400" />
-                  <span className="text-sm sm:text-base font-medium text-amber-300">
-                    Regulatory Requirements
-                  </span>
-                </div>
-                <ChevronDown
-                  className={cn(
-                    'h-4 w-4 text-white/70 transition-transform duration-200',
-                    showRegs && 'rotate-180'
-                  )}
-                />
-              </CollapsibleTrigger>
-              <CollapsibleContent className="p-4 pt-0">
-                <ul className="space-y-2 text-sm text-amber-200/80">
-                  {result.regulatoryRequirements.map((req, idx) => (
-                    <li key={idx}>• {req}</li>
+            <CollapsibleTrigger className="flex items-center justify-between w-full min-h-11 py-2.5 px-3 rounded-lg text-sm font-medium text-white hover:bg-white/5 transition-all touch-manipulation">
+              <span>BS 7671 Reference</span>
+              <ChevronDown
+                className={cn(
+                  'h-4 w-4 transition-transform duration-200',
+                  showRegs && 'rotate-180'
+                )}
+              />
+            </CollapsibleTrigger>
+            <CollapsibleContent className="pt-2">
+              <div
+                className="p-3 rounded-xl border space-y-3"
+                style={{
+                  borderColor: `${config.gradientFrom}15`,
+                  background: `${config.gradientFrom}05`,
+                }}
+              >
+                <ul className="space-y-2">
+                  {[
+                    {
+                      reg: 'Reg 551.7',
+                      desc: 'Generating sets — requirements for installations with generators',
+                    },
+                    {
+                      reg: 'Environment Agency',
+                      desc: 'Abstraction licence required for water extraction',
+                    },
+                    {
+                      reg: 'G98/G99',
+                      desc: 'Grid connection requirements for embedded generation',
+                    },
+                    {
+                      reg: 'Planning Permission',
+                      desc: 'Required for structures, weirs, and powerhouse buildings',
+                    },
+                  ].map((item) => (
+                    <li key={item.reg} className="flex items-start gap-2 text-sm">
+                      <span
+                        className="w-1.5 h-1.5 rounded-full mt-2 shrink-0"
+                        style={{ backgroundColor: config.gradientFrom }}
+                      />
+                      <span className="text-white">
+                        <span className="font-medium">{item.reg}:</span> {item.desc}
+                      </span>
+                    </li>
                   ))}
                 </ul>
-              </CollapsibleContent>
-            </div>
+              </div>
+            </CollapsibleContent>
           </Collapsible>
         </div>
       )}
 
-      <div className="p-3 rounded-xl bg-green-500/10 border border-green-500/20">
-        <div className="flex items-start gap-2">
-          <Info className="h-4 w-4 text-green-400 mt-0.5 shrink-0" />
-          <p className="text-sm text-green-200">
-            <strong>Preliminary estimates only.</strong> Professional feasibility study essential.
-            Consider seasonal flow variations.
-          </p>
-        </div>
-      </div>
-    </div>
+      {/* Formula reference (always visible) */}
+      <FormulaReference
+        category={CAT}
+        name="Hydro Power Formula"
+        formula="P = ρ × g × Q × H × η"
+        variables={[
+          { symbol: 'ρ', description: 'Water density (1000 kg/m³)' },
+          { symbol: 'g', description: 'Gravitational acceleration (9.81 m/s²)' },
+          { symbol: 'Q', description: 'Flow rate (m³/s)' },
+          { symbol: 'H', description: 'Net head (m)' },
+          { symbol: 'η', description: 'Overall efficiency (turbine × generator)' },
+        ]}
+      />
+    </CalculatorCard>
   );
 };
 

@@ -5,6 +5,8 @@ import {
   PROTECTION_DEVICES,
   DIVERSITY_FACTORS,
   SAFETY_FACTORS,
+  CABLE_DERATING,
+  DNO_THRESHOLDS,
 } from './ev-constants';
 
 export interface ChargingPoint {
@@ -20,6 +22,9 @@ export interface CalculationInputs {
   cableLength: number;
   diversityScenario: string;
   powerFactor: number;
+  ambientTemp?: number;
+  thermalInsulation?: string;
+  groupedCircuits?: number;
 }
 
 export interface CalculationResult {
@@ -28,9 +33,18 @@ export interface CalculationResult {
   designCurrent: number;
   selectedCable: string | null;
   cableCapacity: number;
+  deratedCapacity: number;
+  deratingFactors: {
+    ca: number;
+    ci: number;
+    cg: number;
+    combined: number;
+  };
   selectedProtection: string | null;
   voltageDropPercent: number;
   headroom: number;
+  pmeWarning: boolean;
+  dnoGuidance: string;
   compliance: {
     voltageDrop: boolean;
     earthFaultLoop: boolean;
@@ -105,15 +119,28 @@ export function calculateEVSELoad(inputs: CalculationInputs): CalculationResult 
       return total + currentPerPoint;
     }, 0) * diversityFactor;
 
-  // Cable selection - consider both ampacity and voltage drop
+  // Cable derating factors (BS 7671 Appendix 4)
+  const ambientKey = (inputs.ambientTemp ?? 30) as keyof typeof CABLE_DERATING.ambientTemp;
+  const ca = CABLE_DERATING.ambientTemp[ambientKey]?.factor ?? 1.0;
+  const ciKey = (inputs.thermalInsulation ??
+    'none') as keyof typeof CABLE_DERATING.thermalInsulation;
+  const ci = CABLE_DERATING.thermalInsulation[ciKey]?.factor ?? 1.0;
+  const cgKey = Math.min(inputs.groupedCircuits ?? 1, 6) as keyof typeof CABLE_DERATING.grouping;
+  const cg = CABLE_DERATING.grouping[cgKey]?.factor ?? 1.0;
+  const combinedDerating = ca * ci * cg;
+
+  // Cable selection - consider both ampacity (derated) and voltage drop
   const requiredConductorCurrent = designCurrent * SAFETY_FACTORS.design_current_factor;
+  // Cable tabulated rating must satisfy: It ≥ In / (Ca × Ci × Cg)
+  const requiredTabulatedCurrent = requiredConductorCurrent / combinedDerating;
 
   let selectedCable = null;
   let cableCapacity = 0;
+  let deratedCapacity = 0;
 
-  // First pass: find cables that meet ampacity requirements
+  // First pass: find cables that meet derated ampacity requirements
   const suitableCables = Object.entries(CABLE_SPECIFICATIONS).filter(
-    ([_, spec]) => spec.current >= requiredConductorCurrent
+    ([_, spec]) => spec.current >= requiredTabulatedCurrent
   );
 
   if (suitableCables.length > 0) {
@@ -127,6 +154,7 @@ export function calculateEVSELoad(inputs: CalculationInputs): CalculationResult 
       if (voltageDropPercent <= SAFETY_FACTORS.voltage_drop_limit * 100) {
         selectedCable = size;
         cableCapacity = spec.current;
+        deratedCapacity = cableCapacity * combinedDerating;
         break;
       }
     }
@@ -135,6 +163,7 @@ export function calculateEVSELoad(inputs: CalculationInputs): CalculationResult 
     if (!selectedCable) {
       selectedCable = suitableCables[0][0];
       cableCapacity = suitableCables[0][1].current;
+      deratedCapacity = cableCapacity * combinedDerating;
     }
   }
 
@@ -143,8 +172,9 @@ export function calculateEVSELoad(inputs: CalculationInputs): CalculationResult 
   let selectedProtection = null;
 
   // Check for DC chargers requiring special protection
+  // Match on charger type key containing 'dc' (connector strings are 'CCS/CHAdeMO', 'CCS')
   const hasDCChargers = inputs.chargingPoints.some((point) =>
-    CHARGER_TYPES[point.chargerType]?.connector?.includes('DC')
+    point.chargerType.toLowerCase().includes('dc')
   );
 
   if (hasDCChargers || requiredProtection > 63) {
@@ -169,9 +199,35 @@ export function calculateEVSELoad(inputs: CalculationInputs): CalculationResult 
   // Calculate headroom
   const headroom = availableCapacityA - designCurrent;
 
-  // Enhanced compliance checks
+  // Earth fault loop impedance calculation
+  // Zs = Ze + cable impedance contribution (both line and CPC)
+  // Cable impedance uses mΩ/A/m from spec — for Zs we need (R1+R2)/m × length
+  // Approximation: R1+R2 ≈ impedance × 2 (line + CPC of same size) × length / 1000
+  const estimatedZe = earthingData.label.includes('TT') ? 5.0 : 0.35;
+  const cableR1R2 = cableSpec ? (cableSpec.impedance * 2 * inputs.cableLength) / 1000 : 0;
+  const actualZs = estimatedZe + cableR1R2;
+  const earthFaultLoop = actualZs <= earthingData.zs_max;
+
+  // PME/PEN fault warning — Reg 722.411.4.1
+  // Outdoor EV charge points on TN-C-S (PME) supplies require additional earth electrode
+  const pmeWarning = inputs.earthingSystem === 'tn-c-s';
+
+  // DNO notification guidance
+  let dnoGuidance: string;
+  if (totalDiversifiedLoad <= DNO_THRESHOLDS.noNotification) {
+    dnoGuidance = 'No DNO notification required for single point up to 3.68 kW';
+  } else if (totalDiversifiedLoad <= DNO_THRESHOLDS.connectAndNotify) {
+    dnoGuidance = 'DNO notification required (connect and notify)';
+  } else if (totalDiversifiedLoad <= DNO_THRESHOLDS.fullApplication) {
+    dnoGuidance = 'Formal DNO application required before installation';
+  } else if (totalDiversifiedLoad <= DNO_THRESHOLDS.supplyUpgrade) {
+    dnoGuidance = 'DNO application required — likely needs supply upgrade assessment';
+  } else {
+    dnoGuidance = 'DNO application essential — supply upgrade almost certainly required';
+  }
+
+  // Compliance checks
   const voltageDrop = voltageDropPercent <= SAFETY_FACTORS.voltage_drop_limit * 100;
-  const earthFaultLoop = true; // Simplified - would need earth loop impedance calculation
   const rcdProtection = selectedProtection?.includes('RCD') || selectedProtection?.includes('RCBO');
 
   return {
@@ -180,9 +236,18 @@ export function calculateEVSELoad(inputs: CalculationInputs): CalculationResult 
     designCurrent,
     selectedCable,
     cableCapacity,
+    deratedCapacity,
+    deratingFactors: {
+      ca,
+      ci,
+      cg,
+      combined: combinedDerating,
+    },
     selectedProtection,
     voltageDropPercent,
     headroom,
+    pmeWarning,
+    dnoGuidance,
     recommendations: generateRecommendations({
       voltageDrop,
       earthFaultLoop,

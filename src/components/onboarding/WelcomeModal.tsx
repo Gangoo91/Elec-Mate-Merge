@@ -27,7 +27,7 @@ interface WelcomeModalProps {
 const roleContent = {
   apprentice: {
     icon: GraduationCap,
-    title: 'Welcome',
+    title: 'Welcome to Elec-Mate',
     subtitle: 'Everything you need for your apprenticeship',
     color: 'text-blue-400',
     bgColor: 'bg-blue-500/20',
@@ -43,7 +43,7 @@ const roleContent = {
   },
   electrician: {
     icon: Wrench,
-    title: 'Welcome',
+    title: 'Welcome to Elec-Mate',
     subtitle: 'Tools and resources for professionals',
     color: 'text-elec-yellow',
     bgColor: 'bg-elec-yellow/20',
@@ -59,7 +59,7 @@ const roleContent = {
   },
   employer: {
     icon: Building2,
-    title: 'Welcome',
+    title: 'Welcome to Elec-Mate',
     subtitle: 'Manage your team and jobs',
     color: 'text-purple-400',
     bgColor: 'bg-purple-500/20',
@@ -75,7 +75,7 @@ const roleContent = {
   },
   visitor: {
     icon: Zap,
-    title: 'Welcome',
+    title: 'Welcome to Elec-Mate',
     subtitle: 'Tools for electrical professionals',
     color: 'text-elec-yellow',
     bgColor: 'bg-elec-yellow/20',

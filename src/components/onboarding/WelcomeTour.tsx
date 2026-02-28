@@ -85,7 +85,7 @@ const WelcomeTour: React.FC<WelcomeTourProps> = ({ isOpen, onClose }) => {
               variant="ghost"
               size="icon"
               onClick={handleSkip}
-              className="h-11 w-11 text-gray-400 hover:text-white active:text-white touch-manipulation"
+              className="h-11 w-11 text-white hover:text-white active:text-white touch-manipulation"
             >
               <X className="h-5 w-5" />
             </Button>
@@ -100,7 +100,7 @@ const WelcomeTour: React.FC<WelcomeTourProps> = ({ isOpen, onClose }) => {
             </div>
           </div>
 
-          <DialogDescription className="text-center text-sm sm:text-base md:text-lg text-gray-300 max-w-md mx-auto">
+          <DialogDescription className="text-center text-sm sm:text-base md:text-lg text-white max-w-md mx-auto">
             {step.description}
           </DialogDescription>
 
@@ -132,13 +132,13 @@ const WelcomeTour: React.FC<WelcomeTourProps> = ({ isOpen, onClose }) => {
               variant="ghost"
               onClick={handlePrevious}
               disabled={currentStep === 0}
-              className="h-11 md:h-12 px-4 md:px-5 text-gray-400 hover:text-white active:text-white disabled:opacity-30 touch-manipulation"
+              className="h-11 md:h-12 px-4 md:px-5 text-white hover:text-white active:text-white disabled:opacity-30 touch-manipulation"
             >
               <ChevronLeft className="h-4 w-4 mr-1" />
               <span className="hidden sm:inline">Previous</span>
             </Button>
 
-            <span className="text-xs sm:text-sm md:text-base text-gray-500">
+            <span className="text-xs sm:text-sm md:text-base text-white">
               {currentStep + 1} / {tourSteps.length}
             </span>
 
@@ -157,7 +157,7 @@ const WelcomeTour: React.FC<WelcomeTourProps> = ({ isOpen, onClose }) => {
             </Button>
           </div>
 
-          <p className="text-center text-xs md:text-sm text-gray-500 mt-3 md:mt-4">
+          <p className="text-center text-xs md:text-sm text-white mt-3 md:mt-4">
             You can revisit this tour anytime from Settings
           </p>
         </div>

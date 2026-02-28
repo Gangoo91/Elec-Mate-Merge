@@ -61,21 +61,29 @@ export function calculateEVCharging(inputs: EVCalculationInputs): EVCalculationR
   const charger = CHARGER_TYPES[inputs.chargerType];
   const earthingSystem = EARTHING_SYSTEMS[inputs.supplyType];
 
-  // Basic energy calculations
+  // Energy required to charge from current % to target %
+  // E = battery_capacity × (target% - current%) / 100
   const chargeNeeded = inputs.targetCharge - inputs.currentCharge;
   const energyRequired = (inputs.batteryCapacity * chargeNeeded) / 100;
 
-  // Charging time with efficiency consideration
+  // Charging time: accounts for charger efficiency losses
+  // Effective power is what actually reaches the battery (after AC/DC conversion losses)
   const effectivePower = charger.power * charger.efficiency;
   const chargingTime = energyRequired / effectivePower;
 
-  // Cost calculation
+  // Electricity cost for this charging session
   const cost = energyRequired * inputs.electricityRate;
 
-  // Electrical load calculations
+  // Peak demand: the draw from the supply is higher than charger rating due to efficiency losses
+  // P_supply = P_charger / η (e.g. 7kW charger at 92% efficiency draws 7.6kW from supply)
   const peakDemand = charger.power / charger.efficiency;
+
+  // Design current: convert power to current based on supply voltage and phase count
+  // Single-phase: I = P / V | Three-phase: I = P / (V × √3)
   const designCurrent =
     (peakDemand * 1000) / (charger.voltage * (charger.phases === 3 ? Math.sqrt(3) : 1));
+
+  // Circuit current: apply 125% design factor (BS 7671) and diversity for multiple chargers
   const circuitCurrent =
     designCurrent * SAFETY_FACTORS.design_current_factor * inputs.diversityFactor;
 
@@ -94,9 +102,11 @@ export function calculateEVCharging(inputs: EVCalculationInputs): EVCalculationR
     charger.phases
   );
 
-  // Earth fault loop impedance
+  // Earth fault loop impedance: Zs = Ze + cable impedance contribution
+  // Ze defaults are typical UK values: TN-C-S ≈ 0.35Ω, TN-S ≈ 0.35Ω, TT ≈ high (RCD protected)
+  // Cable contribution uses mΩ/m from CABLE_SPECIFICATIONS, converted to Ω
   const cableImpedance = (cableSelection.impedance * inputs.runLength) / 1000;
-  const estimatedZe = earthingSystem.label.includes('TT') ? 5.0 : 0.35; // Typical values
+  const estimatedZe = earthingSystem.label.includes('TT') ? 5.0 : 0.35;
   const actualZs = estimatedZe + cableImpedance;
 
   // Compliance checks
@@ -188,7 +198,16 @@ function getProtectionRequirements(chargerType: string, power: number): string {
 
 function generateRecommendations(
   inputs: EVCalculationInputs,
-  analysis: any
+  analysis: {
+    voltageDrop_percent: number;
+    voltageDropCompliant: boolean;
+    zsCompliant: boolean;
+    installationCompliant: boolean;
+    cableSelection: { current: number; size: string; label: string };
+    deratedCurrent: number;
+    actualZs: number;
+    charger: { power: number; phases: number; voltage: number };
+  }
 ): { recommendations: string[]; warnings: string[] } {
   const recommendations: string[] = [];
   const warnings: string[] = [];
@@ -273,7 +292,17 @@ function generateRecommendations(
   return { recommendations, warnings };
 }
 
-function generateReviewFindings(inputs: EVCalculationInputs, results: any) {
+function generateReviewFindings(
+  inputs: EVCalculationInputs,
+  results: {
+    peakDemand: number;
+    circuitCurrent: number;
+    cableSelection: { label: string };
+    voltageDrop_percent: number;
+    actualZs: number;
+    installationCompliant: boolean;
+  }
+) {
   const loadAnalysis = `Peak electrical demand of ${results.peakDemand.toFixed(1)}kW requires ${results.circuitCurrent.toFixed(1)}A circuit capacity. ${
     inputs.existingLoadCurrent > 0
       ? `Combined with existing load of ${inputs.existingLoadCurrent}A, total installation capacity should be assessed for supply adequacy.`

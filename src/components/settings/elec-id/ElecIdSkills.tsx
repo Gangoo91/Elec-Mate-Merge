@@ -338,7 +338,7 @@ const ElecIdSkills = () => {
   };
 
   const getCategoryIcon = (categoryKey: string) => {
-    const icons: Record<string, React.ComponentType<any>> = {
+    const icons: Record<string, React.ComponentType<{ className?: string }>> = {
       installation: Plug,
       testing: ClipboardCheck,
       specialist: Shield,
@@ -378,7 +378,7 @@ const ElecIdSkills = () => {
   };
 
   const getLevelIcon = (level: SkillLevel) => {
-    const icons: Record<SkillLevel, React.ComponentType<any>> = {
+    const icons: Record<SkillLevel, React.ComponentType<{ className?: string }>> = {
       beginner: CircleDot,
       intermediate: Target,
       advanced: Flame,
@@ -387,8 +387,8 @@ const ElecIdSkills = () => {
     return icons[level] || Star;
   };
 
-  // Form content - reusable for both mobile and desktop
-  const FormContent = ({ isEdit = false }: { isEdit?: boolean }) => (
+  // Form content - render function (NOT a component) to avoid remount on re-render
+  const renderFormContent = (isEdit = false) => (
     <div className="space-y-6">
       {/* Step 1: Category Selection - Visual Grid */}
       <div className="space-y-3">
@@ -648,18 +648,13 @@ const ElecIdSkills = () => {
     </div>
   );
 
-  // Mobile bottom sheet for forms
-  const MobileFormSheet = ({
-    open,
-    onOpenChange,
-    title,
-    isEdit = false,
-  }: {
-    open: boolean;
-    onOpenChange: (open: boolean) => void;
-    title: string;
-    isEdit?: boolean;
-  }) => (
+  // Mobile bottom sheet - render function (NOT a component) to avoid remount on re-render
+  const renderMobileSheet = (
+    open: boolean,
+    onOpenChange: (open: boolean) => void,
+    title: string,
+    isEdit = false
+  ) => (
     <Drawer.Root open={open} onOpenChange={onOpenChange}>
       <Drawer.Portal>
         <Drawer.Overlay className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50" />
@@ -684,9 +679,7 @@ const ElecIdSkills = () => {
           </div>
 
           {/* Form content */}
-          <div className="flex-1 overflow-y-auto px-5 py-5">
-            <FormContent isEdit={isEdit} />
-          </div>
+          <div className="flex-1 overflow-y-auto px-5 py-5">{renderFormContent(isEdit)}</div>
 
           {/* Footer buttons */}
           <div className="flex gap-3 p-5 border-t border-white/[0.06] bg-background/80 backdrop-blur-sm">
@@ -725,26 +718,19 @@ const ElecIdSkills = () => {
     </Drawer.Root>
   );
 
-  // Desktop dialog for forms
-  const DesktopFormDialog = ({
-    open,
-    onOpenChange,
-    title,
-    isEdit = false,
-  }: {
-    open: boolean;
-    onOpenChange: (open: boolean) => void;
-    title: string;
-    isEdit?: boolean;
-  }) => (
+  // Desktop dialog - render function (NOT a component) to avoid remount on re-render
+  const renderDesktopDialog = (
+    open: boolean,
+    onOpenChange: (open: boolean) => void,
+    title: string,
+    isEdit = false
+  ) => (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="bg-background border-white/[0.1] max-w-md">
         <DialogHeader>
           <DialogTitle className="text-foreground">{title}</DialogTitle>
         </DialogHeader>
-        <div className="max-h-[60vh] overflow-y-auto pr-1">
-          <FormContent isEdit={isEdit} />
-        </div>
+        <div className="max-h-[60vh] overflow-y-auto pr-1">{renderFormContent(isEdit)}</div>
         <div className="flex gap-3 pt-4">
           <Button
             variant="outline"
@@ -798,32 +784,14 @@ const ElecIdSkills = () => {
       />
 
       {/* Add Sheet - Mobile or Desktop */}
-      {isMobile ? (
-        <MobileFormSheet open={isAddSheetOpen} onOpenChange={setIsAddSheetOpen} title="Add Skill" />
-      ) : (
-        <DesktopFormDialog
-          open={isAddSheetOpen}
-          onOpenChange={setIsAddSheetOpen}
-          title="Add Skill"
-        />
-      )}
+      {isMobile
+        ? renderMobileSheet(isAddSheetOpen, setIsAddSheetOpen, 'Add Skill')
+        : renderDesktopDialog(isAddSheetOpen, setIsAddSheetOpen, 'Add Skill')}
 
       {/* Edit Sheet - Mobile or Desktop */}
-      {isMobile ? (
-        <MobileFormSheet
-          open={isEditSheetOpen}
-          onOpenChange={setIsEditSheetOpen}
-          title="Edit Skill"
-          isEdit
-        />
-      ) : (
-        <DesktopFormDialog
-          open={isEditSheetOpen}
-          onOpenChange={setIsEditSheetOpen}
-          title="Edit Skill"
-          isEdit
-        />
-      )}
+      {isMobile
+        ? renderMobileSheet(isEditSheetOpen, setIsEditSheetOpen, 'Edit Skill', true)
+        : renderDesktopDialog(isEditSheetOpen, setIsEditSheetOpen, 'Edit Skill', true)}
 
       {/* Header */}
       <div className="flex items-center justify-between px-1">

@@ -106,7 +106,7 @@ export const EMITTER_TYPES = {
     flowTemp: 35,
     label: 'Underfloor Heating',
     description: 'Low temperature radiant heating',
-    efficiency: 1.1,
+    efficiency: 1.0, // Corrected: emitter efficiency cannot exceed 1.0
   },
   fancoils: {
     flowTemp: 45,
@@ -118,7 +118,7 @@ export const EMITTER_TYPES = {
     flowTemp: 45,
     label: 'Low Temperature Radiators',
     description: 'Oversized radiators for low flow temps',
-    efficiency: 1.05,
+    efficiency: 1.0, // Corrected: emitter efficiency cannot exceed 1.0
   },
 } as const;
 
@@ -160,4 +160,95 @@ export const MCS_REQUIREMENTS = {
   minUndersizing: 0.8, // 20% max undersizing
   designMargin: 1.1, // 10% design margin
   diversityFactor: 0.9, // For multiple heat pumps
+} as const;
+
+// Fuel comparison data for running cost analysis
+// Prices are typical UK 2024/25 rates — user can override electricity rate
+export const FUEL_COMPARISON = {
+  gas: {
+    label: 'Mains Gas',
+    pricePerKwh: 0.065, // £/kWh (Ofgem cap typical)
+    boilerEfficiency: 0.92, // Modern condensing boiler
+    co2Factor: 0.185, // kg CO2/kWh
+  },
+  oil: {
+    label: 'Heating Oil',
+    pricePerKwh: 0.075, // £/kWh equivalent (~80p/litre ÷ 10.35 kWh/litre)
+    boilerEfficiency: 0.88,
+    co2Factor: 0.247, // kg CO2/kWh
+  },
+  lpg: {
+    label: 'LPG',
+    pricePerKwh: 0.095, // £/kWh equivalent
+    boilerEfficiency: 0.88,
+    co2Factor: 0.214, // kg CO2/kWh
+  },
+  electric: {
+    label: 'Direct Electric',
+    pricePerKwh: 0.3, // £/kWh — uses user rate at runtime
+    boilerEfficiency: 1.0,
+    co2Factor: 0.207, // kg CO2/kWh — BEIS 2024
+  },
+} as const;
+
+// Defrost cycle energy penalty — percentage of annual output lost to defrost
+// ASHP loses 2-3% annually, up to 9% in cold snaps; GSHP has no defrost
+export const DEFROST_PENALTY: Record<string, number> = {
+  'air-source': 0.03,
+  'ground-source': 0,
+  'air-to-air': 0.04,
+};
+
+// BUS (Boiler Upgrade Scheme) grant amounts — England & Wales only
+export const BUS_GRANT = {
+  'air-source': 7500,
+  'ground-source': 7500,
+  'air-to-air': 2500,
+  maxCapacity: 45, // kWth
+} as const;
+
+// Building archetype presets — typical UK dwelling types
+export const BUILDING_ARCHETYPES = {
+  'victorian-terrace': {
+    label: 'Victorian Terrace',
+    floorArea: 85,
+    insulationLevel: 'poor' as const,
+    airTightness: 'poor' as const,
+  },
+  'semi-1930s': {
+    label: '1930s Semi-Detached',
+    floorArea: 95,
+    insulationLevel: 'average' as const,
+    airTightness: 'average' as const,
+  },
+  'detached-1970s': {
+    label: '1970s Detached',
+    floorArea: 130,
+    insulationLevel: 'average' as const,
+    airTightness: 'average' as const,
+  },
+  'modern-semi': {
+    label: 'Modern Semi (Post-2000)',
+    floorArea: 90,
+    insulationLevel: 'good' as const,
+    airTightness: 'good' as const,
+  },
+  'new-build': {
+    label: 'New Build (Post-2020)',
+    floorArea: 100,
+    insulationLevel: 'excellent' as const,
+    airTightness: 'excellent' as const,
+  },
+  bungalow: {
+    label: 'Bungalow',
+    floorArea: 75,
+    insulationLevel: 'average' as const,
+    airTightness: 'average' as const,
+  },
+  flat: {
+    label: 'Flat / Apartment',
+    floorArea: 60,
+    insulationLevel: 'good' as const,
+    airTightness: 'good' as const,
+  },
 } as const;

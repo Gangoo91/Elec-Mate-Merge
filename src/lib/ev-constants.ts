@@ -142,3 +142,39 @@ export const SAFETY_FACTORS = {
     ambient_40c: 0.87,
   },
 } as const;
+
+// Cable derating factors — BS 7671 Appendix 4
+export const CABLE_DERATING = {
+  // Ca — ambient temperature correction (Table 4B1)
+  ambientTemp: {
+    25: { factor: 1.03, label: '25°C' },
+    30: { factor: 1.0, label: '30°C (reference)' },
+    35: { factor: 0.94, label: '35°C' },
+    40: { factor: 0.87, label: '40°C' },
+    45: { factor: 0.79, label: '45°C' },
+    50: { factor: 0.71, label: '50°C' },
+  },
+  // Ci — thermal insulation (Table 52.2)
+  thermalInsulation: {
+    none: { factor: 1.0, label: 'Not enclosed in insulation' },
+    partial: { factor: 0.75, label: 'Touching one side' },
+    full: { factor: 0.5, label: 'Fully surrounded' },
+  },
+  // Cg — grouping (Table 4C1, clipped direct)
+  grouping: {
+    1: { factor: 1.0, label: '1 circuit' },
+    2: { factor: 0.8, label: '2 circuits' },
+    3: { factor: 0.7, label: '3 circuits' },
+    4: { factor: 0.65, label: '4 circuits' },
+    5: { factor: 0.6, label: '5 circuits' },
+    6: { factor: 0.57, label: '6 circuits' },
+  },
+} as const;
+
+// DNO notification thresholds (Engineering Recommendation G99/G100)
+export const DNO_THRESHOLDS = {
+  noNotification: 3.68, // kW — single point, generally no notification
+  connectAndNotify: 7.4, // kW — single point, notify DNO
+  fullApplication: 32, // kW — requires formal DNO application
+  supplyUpgrade: 100, // kW — likely requires supply upgrade
+} as const;

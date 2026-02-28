@@ -88,6 +88,7 @@ const AdminWinback = lazy(() => import('@/pages/Admin/AdminWinback'));
 const AdminIncompleteSignup = lazy(() => import('@/pages/Admin/AdminIncompleteSignup'));
 const AdminApprenticeCampaigns = lazy(() => import('@/pages/Admin/AdminApprenticeCampaigns'));
 const AdminOutreach = lazy(() => import('@/pages/Admin/AdminOutreach'));
+const AdminFailedPayments = lazy(() => import('@/pages/Admin/AdminFailedPayments'));
 const TrainingPhotoUpload = lazy(() => import('@/pages/Admin/TrainingPhotoUpload'));
 const FounderClaim = lazyWithRetry(() => import('@/pages/founder/FounderClaim'));
 const FounderSignup = lazyWithRetry(() => import('@/pages/founder/FounderSignup'));
@@ -1575,6 +1576,14 @@ const AppRouter = () => {
               element={
                 <LazyRoute>
                   <AdminSystem />
+                </LazyRoute>
+              }
+            />
+            <Route
+              path="failed-payments"
+              element={
+                <LazyRoute>
+                  <AdminFailedPayments />
                 </LazyRoute>
               }
             />

@@ -1,15 +1,14 @@
-import { useState } from 'react';
-import { Badge } from '@/components/ui/badge';
+import { useState, useCallback } from 'react';
 import {
   Battery,
+  Copy,
+  Check,
   Info,
-  BookOpen,
-  ChevronDown,
   AlertTriangle,
-  Zap,
-  Clock,
+  ChevronDown,
   PoundSterling,
 } from 'lucide-react';
+import { useToast } from '@/hooks/use-toast';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { cn } from '@/lib/utils';
 import {
@@ -18,20 +17,28 @@ import {
   CalculatorInput,
   CalculatorSelect,
   CalculatorActions,
-  CalculatorResult,
   ResultValue,
   ResultsGrid,
+  ResultBadge,
+  CalculatorFormula,
+  CalculatorDivider,
+  CalculatorSection,
+  FormulaReference,
   CALCULATOR_CONFIG,
 } from '@/components/calculators/shared';
 
+const CAT = 'ev-storage' as const;
+const config = CALCULATOR_CONFIG[CAT];
+
+// 2025 UK battery technology data
 const BATTERY_DATA_2025 = {
   lithium: {
     dod: 95,
     cycles: 6000,
     efficiency: 98,
-    costPerKwh: 650,
-    tempDerating: 0.5,
+    costPerKwh: 500, // LiFePO4 — corrected from £650 to £500 (2025 market price)
     chargingC: 0.5,
+    dischargeC: 1.0, // LiFePO4 can sustain 1C continuous discharge
     description: 'LiFePO4 with excellent cycle life',
   },
   lithiumNMC: {
@@ -39,8 +46,8 @@ const BATTERY_DATA_2025 = {
     cycles: 4000,
     efficiency: 96,
     costPerKwh: 550,
-    tempDerating: 0.7,
     chargingC: 0.8,
+    dischargeC: 1.5, // NMC handles higher discharge rates
     description: 'High energy density',
   },
   agm: {
@@ -48,8 +55,8 @@ const BATTERY_DATA_2025 = {
     cycles: 800,
     efficiency: 85,
     costPerKwh: 280,
-    tempDerating: 1.0,
     chargingC: 0.1,
+    dischargeC: 0.2, // Lead acid limited discharge rate
     description: 'Maintenance-free',
   },
   gel: {
@@ -57,8 +64,8 @@ const BATTERY_DATA_2025 = {
     cycles: 1000,
     efficiency: 87,
     costPerKwh: 320,
-    tempDerating: 0.8,
     chargingC: 0.1,
+    dischargeC: 0.2,
     description: 'Deep cycle capability',
   },
   flooded: {
@@ -66,18 +73,51 @@ const BATTERY_DATA_2025 = {
     cycles: 1200,
     efficiency: 80,
     costPerKwh: 180,
-    tempDerating: 1.2,
     chargingC: 0.08,
+    dischargeC: 0.15,
     description: 'Lowest cost',
   },
 };
 
-const ENVIRONMENT_FACTORS = {
-  indoor: { tempFactor: 1.0, description: 'Controlled temperature' },
-  garage: { tempFactor: 0.95, description: 'Some temperature variation' },
-  outdoor: { tempFactor: 0.85, description: 'Weather exposed' },
-  basement: { tempFactor: 0.98, description: 'Cool and stable' },
+// Temperature derating by chemistry — different chemistries respond differently to cold
+const ENVIRONMENT_FACTORS: Record<string, Record<string, { tempFactor: number; label: string }>> = {
+  lithium: {
+    indoor: { tempFactor: 1.0, label: 'Indoor (20°C)' },
+    garage: { tempFactor: 0.95, label: 'Garage/Utility' },
+    basement: { tempFactor: 0.98, label: 'Basement' },
+    outdoor: { tempFactor: 0.9, label: 'Outdoor' },
+  },
+  lithiumNMC: {
+    indoor: { tempFactor: 1.0, label: 'Indoor (20°C)' },
+    garage: { tempFactor: 0.93, label: 'Garage/Utility' },
+    basement: { tempFactor: 0.97, label: 'Basement' },
+    outdoor: { tempFactor: 0.85, label: 'Outdoor' },
+  },
+  agm: {
+    indoor: { tempFactor: 1.0, label: 'Indoor (20°C)' },
+    garage: { tempFactor: 0.9, label: 'Garage/Utility' },
+    basement: { tempFactor: 0.95, label: 'Basement' },
+    outdoor: { tempFactor: 0.75, label: 'Outdoor' },
+  },
+  gel: {
+    indoor: { tempFactor: 1.0, label: 'Indoor (20°C)' },
+    garage: { tempFactor: 0.92, label: 'Garage/Utility' },
+    basement: { tempFactor: 0.96, label: 'Basement' },
+    outdoor: { tempFactor: 0.78, label: 'Outdoor' },
+  },
+  flooded: {
+    indoor: { tempFactor: 1.0, label: 'Indoor (20°C)' },
+    garage: { tempFactor: 0.88, label: 'Garage/Utility' },
+    basement: { tempFactor: 0.94, label: 'Basement' },
+    outdoor: { tempFactor: 0.7, label: 'Outdoor' },
+  },
 };
+
+interface DegradationPoint {
+  year: number;
+  capacityPercent: number;
+  usableKwh: number;
+}
 
 interface BatteryResult {
   requiredCapacityAh: number;
@@ -95,16 +135,30 @@ interface BatteryResult {
   chargingTimeHours: number;
   cycleLife: number;
   warrantyYears: number;
-  batteryCost: number;
-  systemCost: number;
+  costBreakdown: {
+    batteries: number;
+    inverter: number;
+    bms: number;
+    wiring: number;
+    installation: number;
+    total: number;
+  };
   costPerKwhStored: number;
+  tariffArbitrage: {
+    dailySaving: number;
+    annualSaving: number;
+    peakRate: number;
+    offPeakRate: number;
+  };
+  degradation: DegradationPoint[];
   whatThisMeans: string;
   recommendations: string[];
   bs7671Notes: string[];
 }
 
 const BatteryStorageCalculator = () => {
-  const config = CALCULATOR_CONFIG['ev-storage'];
+  const { toast } = useToast();
+  const [copied, setCopied] = useState(false);
 
   const [criticalLoad, setCriticalLoad] = useState('');
   const [peakLoad, setPeakLoad] = useState('');
@@ -121,6 +175,7 @@ const BatteryStorageCalculator = () => {
 
   const [showGuidance, setShowGuidance] = useState(false);
   const [showRegs, setShowRegs] = useState(false);
+  const [showCosts, setShowCosts] = useState(false);
 
   const batteryTypes = [
     { value: 'lithium', label: 'Lithium Iron Phosphate (LiFePO4)' },
@@ -177,7 +232,7 @@ const BatteryStorageCalculator = () => {
     { value: '30', label: '30%' },
   ];
 
-  const calculateBatteryStorage = () => {
+  const handleCalculate = useCallback(() => {
     const consumption = parseFloat(dailyConsumption);
     const criticalLoadKw = parseFloat(criticalLoad);
     const peakLoadKw = parseFloat(peakLoad) || criticalLoadKw * 1.5;
@@ -191,7 +246,8 @@ const BatteryStorageCalculator = () => {
     if (!consumption || !criticalLoadKw || !autonomyDays || !systemV || !unitV || !unitAh) return;
 
     const batteryData = BATTERY_DATA_2025[batteryType as keyof typeof BATTERY_DATA_2025];
-    const envData = ENVIRONMENT_FACTORS[installEnvironment as keyof typeof ENVIRONMENT_FACTORS];
+    const envFactors = ENVIRONMENT_FACTORS[batteryType] ?? ENVIRONMENT_FACTORS['lithium'];
+    const envData = envFactors[installEnvironment] ?? envFactors['indoor'];
 
     const dailyEnergyKwh = consumption;
     const requiredEnergyKwh = dailyEnergyKwh * autonomyDays * (1 + reserve);
@@ -210,8 +266,8 @@ const BatteryStorageCalculator = () => {
     const continuousPowerKw = criticalLoadKw;
     const inverterSizeKw = Math.max(peakLoadKw, continuousPowerKw * 1.25);
 
-    const maxContinuousC = batteryData.chargingC * 2;
-    const maxBatteryPowerKw = actualBankCapacityKwh * maxContinuousC;
+    // Use explicit discharge C-rate per chemistry (not chargingC × 2)
+    const maxBatteryPowerKw = actualBankCapacityKwh * batteryData.dischargeC;
     const powerSufficient = maxBatteryPowerKw >= continuousPowerKw;
     const powerWarning = !powerSufficient
       ? `Battery can only deliver ${maxBatteryPowerKw.toFixed(1)}kW continuously. Consider more parallel strings.`
@@ -221,8 +277,15 @@ const BatteryStorageCalculator = () => {
     const chargingTimeHours =
       chargerKw > 0 ? actualUsableKwh / chargerKw : actualBankCapacityKwh / batteryData.chargingC;
 
+    // Itemised BOP costs (replacing flat ×1.4 multiplier)
     const batteryCost = actualBankCapacityKwh * batteryData.costPerKwh;
-    const systemCost = batteryCost * 1.4;
+    const inverterCost = inverterSizeKw * 150; // £150/kW pure sine wave
+    const bmsCost = batteryType.includes('lithium')
+      ? totalBatteries * 45 // £45/battery for lithium BMS modules
+      : totalBatteries * 15; // £15/battery for lead-acid monitoring
+    const wiringCost = Math.max(200, totalBatteries * 35); // £35/battery for cables + busbars + fuses
+    const installationCost = (batteryCost + inverterCost) * 0.12; // 12% installation labour
+    const systemCost = batteryCost + inverterCost + bmsCost + wiringCost + installationCost;
     const costPerKwhStored = systemCost / actualUsableKwh;
 
     const generateWhatThisMeans = (): string => {
@@ -239,15 +302,15 @@ const BatteryStorageCalculator = () => {
     const generateRecommendations = (): string[] => {
       const recs = [];
       if (totalBatteries === 1)
-        recs.push('Single battery - consider adding redundancy for critical applications');
+        recs.push('Single battery — consider adding redundancy for critical applications');
       else if (totalBatteries > 8)
-        recs.push('Large battery bank - ensure proper BMS and monitoring');
+        recs.push('Large battery bank — ensure proper BMS and monitoring');
       if (!powerSufficient) recs.push('Increase parallel strings to meet power requirements');
       if (chargingTimeHours > 12)
         recs.push('Consider higher power charger to reduce charging time');
-      else if (chargingTimeHours < 4) recs.push('Fast charging - ensure adequate ventilation');
-      if (batteryData.cycles < 2000) recs.push('Lead acid - plan for replacement every 3-5 years');
-      else recs.push('Long-life chemistry - expect 10+ years with proper maintenance');
+      else if (chargingTimeHours < 4) recs.push('Fast charging — ensure adequate ventilation');
+      if (batteryData.cycles < 2000) recs.push('Lead acid — plan for replacement every 3–5 years');
+      else recs.push('Long-life chemistry — expect 10+ years with proper maintenance');
       return recs;
     };
 
@@ -255,15 +318,33 @@ const BatteryStorageCalculator = () => {
       const notes = [];
       if (systemV >= 48)
         notes.push('48V system requires appropriate safety measures (Section 414)');
-      else notes.push('Low voltage system - standard domestic wiring practices apply');
+      else notes.push('Low voltage system — standard domestic wiring practices apply');
       if (installEnvironment === 'outdoor')
         notes.push('Outdoor installation requires IP65+ enclosure (Section 512)');
       notes.push('Install appropriate DC isolation switches and overcurrent protection');
       notes.push('Ensure earthing arrangements comply with Section 542');
-      if (systemCost > 5000)
-        notes.push('High-value installation - consider enhanced security measures');
       return notes;
     };
+
+    // Tariff arbitrage — charge off-peak, use during peak
+    const offPeakRate = 0.07; // Octopus Go / Economy 7 typical
+    const peakRate = 0.3; // Standard daytime rate
+    const usableCycleKwh = actualUsableKwh * (batteryData.efficiency / 100);
+    const dailyArbitrageSaving = usableCycleKwh * (peakRate - offPeakRate);
+    const annualArbitrageSaving = dailyArbitrageSaving * 365;
+
+    // Degradation curve — capacity retention at key years
+    // Lithium: ~1.5%/yr; Lead acid: ~5%/yr
+    const annualDegradation = batteryType.includes('lithium') ? 0.015 : 0.05;
+    const degradationYears = [1, 5, 10, 15];
+    const degradation: DegradationPoint[] = degradationYears.map((yr) => {
+      const remaining = Math.pow(1 - annualDegradation, yr);
+      return {
+        year: yr,
+        capacityPercent: Math.round(remaining * 100),
+        usableKwh: Math.round(actualUsableKwh * remaining * 10) / 10,
+      };
+    });
 
     setResult({
       requiredCapacityAh: bankAh,
@@ -273,7 +354,7 @@ const BatteryStorageCalculator = () => {
       batteriesInSeries,
       batteriesInParallel,
       continuousPowerKw,
-      peakPowerKw,
+      peakPowerKw: peakLoadKw,
       inverterSizeKw,
       powerSufficient,
       powerWarning,
@@ -281,16 +362,41 @@ const BatteryStorageCalculator = () => {
       chargingTimeHours,
       cycleLife: batteryData.cycles,
       warrantyYears: batteryType.includes('lithium') ? 10 : 5,
-      batteryCost,
-      systemCost,
+      costBreakdown: {
+        batteries: batteryCost,
+        inverter: inverterCost,
+        bms: bmsCost,
+        wiring: wiringCost,
+        installation: installationCost,
+        total: systemCost,
+      },
       costPerKwhStored,
+      tariffArbitrage: {
+        dailySaving: dailyArbitrageSaving,
+        annualSaving: annualArbitrageSaving,
+        peakRate,
+        offPeakRate,
+      },
+      degradation,
       whatThisMeans: generateWhatThisMeans(),
       recommendations: generateRecommendations(),
       bs7671Notes: generateBS7671Notes(),
     });
-  };
+  }, [
+    dailyConsumption,
+    criticalLoad,
+    peakLoad,
+    daysOfAutonomy,
+    systemVoltage,
+    batteryUnitVoltage,
+    batteryUnitCapacity,
+    chargerPower,
+    designReserve,
+    batteryType,
+    installEnvironment,
+  ]);
 
-  const reset = () => {
+  const handleReset = useCallback(() => {
     setCriticalLoad('');
     setPeakLoad('');
     setDaysOfAutonomy('1');
@@ -303,248 +409,229 @@ const BatteryStorageCalculator = () => {
     setChargerPower('');
     setDesignReserve('20');
     setResult(null);
+  }, []);
+
+  const handleCopy = () => {
+    if (!result) return;
+    const text = [
+      'Battery Storage Design',
+      `Configuration: ${result.batteriesInSeries}S${result.batteriesInParallel}P (${result.numberOfBatteries} batteries)`,
+      `Bank Capacity: ${result.batteryBankCapacityKwh.toFixed(1)} kWh`,
+      `Usable Capacity: ${result.usableCapacityKwh.toFixed(1)} kWh`,
+      `Backup Duration: ${result.backupDurationHours.toFixed(1)} hours`,
+      `Inverter Size: ${result.inverterSizeKw.toFixed(1)} kW`,
+      `System Cost: £${Math.round(result.costBreakdown.total)}`,
+      `Cost/kWh: £${result.costPerKwhStored.toFixed(0)}`,
+    ].join('\n');
+    navigator.clipboard.writeText(text);
+    setCopied(true);
+    toast({ title: 'Copied to clipboard' });
+    setTimeout(() => setCopied(false), 2000);
   };
 
-  const hasValidInputs = () =>
+  const hasValidInputs =
     dailyConsumption &&
     criticalLoad &&
     parseFloat(dailyConsumption) > 0 &&
     parseFloat(criticalLoad) > 0;
 
   return (
-    <div className="space-y-4">
-      <CalculatorCard
-        category="ev-storage"
-        title="Battery Storage Calculator"
-        description="Design battery storage systems with 2025 technology data"
-        badge="2025 Data"
-      >
-        {/* Load Requirements */}
-        <div className="space-y-3">
-          <p className="text-sm font-medium text-white/80">Load Requirements</p>
-          <CalculatorInputGrid columns={2}>
-            <CalculatorInput
-              label="Critical Load"
-              unit="kW"
-              type="text"
-              inputMode="decimal"
-              value={criticalLoad}
-              onChange={setCriticalLoad}
-              placeholder="e.g., 3.5"
-              hint="Essential power during outage"
-            />
-            <CalculatorInput
-              label="Peak Load"
-              unit="kW"
-              type="text"
-              inputMode="decimal"
-              value={peakLoad}
-              onChange={setPeakLoad}
-              placeholder="e.g., 5.0"
-              hint="Maximum instantaneous power"
-            />
-            <CalculatorInput
-              label="Daily Consumption"
-              unit="kWh"
-              type="text"
-              inputMode="decimal"
-              value={dailyConsumption}
-              onChange={setDailyConsumption}
-              placeholder="e.g., 25"
-              hint="Total energy used per day"
-            />
-            <CalculatorSelect
-              label="Days of Autonomy"
-              value={daysOfAutonomy}
-              onChange={setDaysOfAutonomy}
-              options={autonomyOptions}
-            />
-          </CalculatorInputGrid>
-        </div>
-
-        {/* Battery Specifications */}
-        <div className="space-y-3">
-          <p className="text-sm font-medium text-white/80">Battery Specifications</p>
-          <CalculatorInputGrid columns={2}>
-            <CalculatorSelect
-              label="Battery Chemistry"
-              value={batteryType}
-              onChange={setBatteryType}
-              options={batteryTypes}
-            />
-            <CalculatorSelect
-              label="System Voltage"
-              value={systemVoltage}
-              onChange={setSystemVoltage}
-              options={voltageOptions}
-            />
-            <CalculatorSelect
-              label="Battery Unit Voltage"
-              value={batteryUnitVoltage}
-              onChange={setBatteryUnitVoltage}
-              options={voltageOptions}
-            />
-            <CalculatorSelect
-              label="Battery Unit Capacity"
-              value={batteryUnitCapacity}
-              onChange={setBatteryUnitCapacity}
-              options={unitCapacityOptions}
-            />
-          </CalculatorInputGrid>
-        </div>
-
-        {/* Installation & Design */}
-        <div className="space-y-3">
-          <p className="text-sm font-medium text-white/80">Installation & Design</p>
-          <CalculatorInputGrid columns={2}>
-            <CalculatorSelect
-              label="Environment"
-              value={installEnvironment}
-              onChange={setInstallEnvironment}
-              options={environmentOptions}
-            />
-            <CalculatorSelect
-              label="Charger Power"
-              value={chargerPower}
-              onChange={setChargerPower}
-              options={chargerOptions}
-              placeholder="Select charger"
-            />
-          </CalculatorInputGrid>
-          <CalculatorSelect
-            label="Design Reserve"
-            value={designReserve}
-            onChange={setDesignReserve}
-            options={reserveOptions}
+    <CalculatorCard
+      category={CAT}
+      title="Battery Storage Calculator"
+      description="Design battery storage systems with 2025 technology data"
+      badge="2025 Data"
+    >
+      {/* Load Requirements */}
+      <CalculatorSection title="Load Requirements">
+        <CalculatorInputGrid columns={2}>
+          <CalculatorInput
+            label="Critical Load"
+            unit="kW"
+            type="text"
+            inputMode="decimal"
+            value={criticalLoad}
+            onChange={setCriticalLoad}
+            placeholder="e.g., 3.5"
+            hint="Essential power during outage"
           />
-        </div>
+          <CalculatorInput
+            label="Peak Load"
+            unit="kW"
+            type="text"
+            inputMode="decimal"
+            value={peakLoad}
+            onChange={setPeakLoad}
+            placeholder="e.g., 5.0"
+            hint="Maximum instantaneous power"
+          />
+          <CalculatorInput
+            label="Daily Consumption"
+            unit="kWh"
+            type="text"
+            inputMode="decimal"
+            value={dailyConsumption}
+            onChange={setDailyConsumption}
+            placeholder="e.g., 25"
+            hint="Total energy used per day"
+          />
+          <CalculatorSelect
+            label="Days of Autonomy"
+            value={daysOfAutonomy}
+            onChange={setDaysOfAutonomy}
+            options={autonomyOptions}
+          />
+        </CalculatorInputGrid>
+      </CalculatorSection>
 
-        <CalculatorActions
-          category="ev-storage"
-          onCalculate={calculateBatteryStorage}
-          onReset={reset}
-          isDisabled={!hasValidInputs()}
-          calculateLabel="Calculate Storage"
+      {/* Battery Specifications */}
+      <CalculatorSection title="Battery Specifications">
+        <CalculatorInputGrid columns={2}>
+          <CalculatorSelect
+            label="Battery Chemistry"
+            value={batteryType}
+            onChange={setBatteryType}
+            options={batteryTypes}
+          />
+          <CalculatorSelect
+            label="System Voltage"
+            value={systemVoltage}
+            onChange={setSystemVoltage}
+            options={voltageOptions}
+          />
+          <CalculatorSelect
+            label="Battery Unit Voltage"
+            value={batteryUnitVoltage}
+            onChange={setBatteryUnitVoltage}
+            options={voltageOptions}
+          />
+          <CalculatorSelect
+            label="Battery Unit Capacity"
+            value={batteryUnitCapacity}
+            onChange={setBatteryUnitCapacity}
+            options={unitCapacityOptions}
+          />
+        </CalculatorInputGrid>
+      </CalculatorSection>
+
+      {/* Installation & Design */}
+      <CalculatorSection title="Installation & Design">
+        <CalculatorInputGrid columns={2}>
+          <CalculatorSelect
+            label="Environment"
+            value={installEnvironment}
+            onChange={setInstallEnvironment}
+            options={environmentOptions}
+          />
+          <CalculatorSelect
+            label="Charger Power"
+            value={chargerPower}
+            onChange={setChargerPower}
+            options={chargerOptions}
+            placeholder="Select charger"
+          />
+        </CalculatorInputGrid>
+        <CalculatorSelect
+          label="Design Reserve"
+          value={designReserve}
+          onChange={setDesignReserve}
+          options={reserveOptions}
         />
-      </CalculatorCard>
+      </CalculatorSection>
 
+      <CalculatorActions
+        category={CAT}
+        onCalculate={handleCalculate}
+        onReset={handleReset}
+        isDisabled={!hasValidInputs}
+        calculateLabel="Calculate Storage"
+        showReset={!!result}
+      />
+
+      {/* ── Results ── */}
       {result && (
         <div className="space-y-4 animate-fade-in">
-          {/* Main Results */}
-          <CalculatorResult category="ev-storage">
-            <div className="flex items-center justify-between pb-3 border-b border-white/10">
-              <span className="text-sm text-white/60">Battery Storage Analysis</span>
-              <Badge
-                variant="outline"
-                className={cn(
-                  result.powerSufficient
-                    ? 'text-green-400 border-green-400/50'
-                    : 'text-amber-400 border-amber-400/50'
-                )}
+          {/* Status + Copy */}
+          <div className="flex items-center justify-between">
+            <ResultBadge
+              status={result.powerSufficient ? 'pass' : 'warning'}
+              label={`${result.numberOfBatteries}× ${batteryUnitCapacity}Ah — ${result.batteriesInSeries}S${result.batteriesInParallel}P`}
+            />
+            <button
+              onClick={handleCopy}
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 text-white text-xs font-medium transition-colors touch-manipulation min-h-[44px]"
+            >
+              {copied ? <Check className="h-3.5 w-3.5" /> : <Copy className="h-3.5 w-3.5" />}
+              {copied ? 'Copied' : 'Copy'}
+            </button>
+          </div>
+
+          {/* Hero values */}
+          <div className="grid grid-cols-2 gap-4 py-3">
+            <div className="text-center">
+              <p className="text-sm text-white mb-1">Configuration</p>
+              <p
+                className="text-3xl font-bold bg-clip-text text-transparent"
+                style={{
+                  backgroundImage: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})`,
+                }}
               >
-                {result.numberOfBatteries}× {batteryUnitCapacity}Ah
-              </Badge>
+                {result.batteriesInSeries}S{result.batteriesInParallel}P
+              </p>
+              <p className="text-xs text-white">{result.numberOfBatteries} batteries</p>
             </div>
-
-            <div className="grid grid-cols-2 gap-4 py-4">
-              <div className="text-center">
-                <p className="text-sm text-white/60 mb-1">Configuration</p>
-                <div
-                  className="text-3xl font-bold bg-clip-text text-transparent"
-                  style={{
-                    backgroundImage: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})`,
-                  }}
-                >
-                  {result.batteriesInSeries}S{result.batteriesInParallel}P
-                </div>
-                <p className="text-xs text-white/80">{result.numberOfBatteries} batteries</p>
-              </div>
-              <div className="text-center">
-                <p className="text-sm text-white/60 mb-1">Usable Capacity</p>
-                <div
-                  className="text-3xl font-bold bg-clip-text text-transparent"
-                  style={{
-                    backgroundImage: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})`,
-                  }}
-                >
-                  {result.usableCapacityKwh.toFixed(1)}
-                </div>
-                <p className="text-xs text-white/80">kWh</p>
-              </div>
+            <div className="text-center">
+              <p className="text-sm text-white mb-1">Usable Capacity</p>
+              <p
+                className="text-3xl font-bold bg-clip-text text-transparent"
+                style={{
+                  backgroundImage: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})`,
+                }}
+              >
+                {result.usableCapacityKwh.toFixed(1)}
+              </p>
+              <p className="text-xs text-white">kWh</p>
             </div>
+          </div>
 
-            <ResultsGrid columns={2}>
-              <ResultValue
-                label="Bank Capacity"
-                value={result.batteryBankCapacityKwh.toFixed(1)}
-                unit="kWh"
-                category="ev-storage"
-                size="sm"
-              />
-              <ResultValue
-                label="Backup Duration"
-                value={result.backupDurationHours.toFixed(1)}
-                unit="hours"
-                category="ev-storage"
-                size="sm"
-              />
-              <ResultValue
-                label="Inverter Size"
-                value={result.inverterSizeKw.toFixed(1)}
-                unit="kW"
-                category="ev-storage"
-                size="sm"
-              />
-              <ResultValue
-                label="Charging Time"
-                value={result.chargingTimeHours.toFixed(1)}
-                unit="hours"
-                category="ev-storage"
-                size="sm"
-              />
-            </ResultsGrid>
-          </CalculatorResult>
-
-          {/* Financial Summary */}
-          <CalculatorResult category="ev-storage">
-            <div className="flex items-center gap-2 pb-3 border-b border-white/10">
-              <PoundSterling className="h-4 w-4 text-blue-400" />
-              <span className="text-sm font-medium text-white">Financial Summary</span>
-            </div>
-            <ResultsGrid columns={2}>
-              <ResultValue
-                label="Battery Cost"
-                value={`£${Math.round(result.batteryCost / 1000)}k`}
-                category="ev-storage"
-                size="sm"
-              />
-              <ResultValue
-                label="System Cost"
-                value={`£${Math.round(result.systemCost / 1000)}k`}
-                category="ev-storage"
-                size="sm"
-              />
-              <ResultValue
-                label="Cost/kWh Stored"
-                value={`£${result.costPerKwhStored.toFixed(0)}`}
-                category="ev-storage"
-                size="sm"
-              />
-              <ResultValue
-                label="Expected Life"
-                value={`${result.warrantyYears}+ years`}
-                category="ev-storage"
-                size="sm"
-              />
-            </ResultsGrid>
-          </CalculatorResult>
+          {/* Key metrics */}
+          <ResultsGrid columns={2}>
+            <ResultValue
+              label="Bank Capacity"
+              value={result.batteryBankCapacityKwh.toFixed(1)}
+              unit="kWh"
+              category={CAT}
+              size="sm"
+            />
+            <ResultValue
+              label="Backup Duration"
+              value={result.backupDurationHours.toFixed(1)}
+              unit="hours"
+              category={CAT}
+              size="sm"
+            />
+            <ResultValue
+              label="Inverter Size"
+              value={result.inverterSizeKw.toFixed(1)}
+              unit="kW"
+              category={CAT}
+              size="sm"
+            />
+            <ResultValue
+              label="Charging Time"
+              value={result.chargingTimeHours.toFixed(1)}
+              unit="hours"
+              category={CAT}
+              size="sm"
+            />
+          </ResultsGrid>
 
           {/* Power Warning */}
           {result.powerWarning && (
             <div className="p-3 rounded-xl bg-amber-500/10 border border-amber-500/30">
               <div className="flex items-start gap-2">
                 <AlertTriangle className="h-4 w-4 text-amber-400 mt-0.5 shrink-0" />
-                <p className="text-sm text-amber-200">
+                <p className="text-sm text-white">
                   <strong>Power Limitation:</strong> {result.powerWarning}
                 </p>
               </div>
@@ -555,80 +642,263 @@ const BatteryStorageCalculator = () => {
           <div className="p-3 rounded-xl bg-blue-500/10 border border-blue-500/30">
             <div className="flex items-start gap-2">
               <Info className="h-4 w-4 text-blue-400 mt-0.5 shrink-0" />
-              <p className="text-sm text-blue-200">
+              <p className="text-sm text-white">
                 <strong>What this means:</strong> {result.whatThisMeans}
               </p>
+            </div>
+          </div>
+
+          <CalculatorDivider category={CAT} />
+
+          {/* How It Worked Out */}
+          <CalculatorFormula
+            category={CAT}
+            title="How It Worked Out"
+            defaultOpen
+            steps={[
+              {
+                label: 'Required energy storage',
+                formula: `E = ${dailyConsumption} kWh × ${daysOfAutonomy} days × (1 + ${designReserve}%)`,
+                value: `${(parseFloat(dailyConsumption) * parseFloat(daysOfAutonomy) * (1 + parseFloat(designReserve) / 100)).toFixed(1)} kWh`,
+              },
+              {
+                label: 'Derated for efficiency & temperature',
+                formula: `E_derated = E / η_batt / temp_factor`,
+                value: `${((result.batteryBankCapacityKwh * (BATTERY_DATA_2025[batteryType as keyof typeof BATTERY_DATA_2025]?.dod ?? 95)) / 100).toFixed(1)} kWh`,
+                description: `${BATTERY_DATA_2025[batteryType as keyof typeof BATTERY_DATA_2025]?.efficiency ?? 98}% round-trip efficiency, ${installEnvironment} temp derating applied`,
+              },
+              {
+                label: 'Total bank capacity',
+                formula: `C_bank = E_derated / DoD = E / ${BATTERY_DATA_2025[batteryType as keyof typeof BATTERY_DATA_2025]?.dod ?? 95}%`,
+                value: `${result.batteryBankCapacityKwh.toFixed(1)} kWh`,
+              },
+              {
+                label: 'Battery configuration',
+                formula: `Series: ${systemVoltage}V / ${batteryUnitVoltage}V = ${result.batteriesInSeries} | Parallel: ⌈${result.requiredCapacityAh.toFixed(0)}Ah / ${batteryUnitCapacity}Ah⌉ = ${result.batteriesInParallel}`,
+                value: `${result.batteriesInSeries}S${result.batteriesInParallel}P = ${result.numberOfBatteries} batteries`,
+              },
+              {
+                label: 'Max continuous discharge',
+                formula: `P_max = ${result.batteryBankCapacityKwh.toFixed(1)} kWh × ${BATTERY_DATA_2025[batteryType as keyof typeof BATTERY_DATA_2025]?.dischargeC ?? 1}C`,
+                value: `${(result.batteryBankCapacityKwh * (BATTERY_DATA_2025[batteryType as keyof typeof BATTERY_DATA_2025]?.dischargeC ?? 1)).toFixed(1)} kW`,
+                description: result.powerSufficient
+                  ? 'Sufficient for load'
+                  : 'Insufficient — add parallel strings',
+              },
+            ]}
+          />
+
+          {/* Cost Breakdown */}
+          <Collapsible open={showCosts} onOpenChange={setShowCosts}>
+            <CollapsibleTrigger className="flex items-center justify-between w-full min-h-11 py-2.5 px-3 rounded-lg text-sm font-medium text-white hover:bg-white/5 transition-all touch-manipulation">
+              <div className="flex items-center gap-2">
+                <PoundSterling className="h-4 w-4 text-blue-400" />
+                <span>Cost Breakdown</span>
+              </div>
+              <ChevronDown
+                className={cn(
+                  'h-4 w-4 transition-transform duration-200',
+                  showCosts && 'rotate-180'
+                )}
+              />
+            </CollapsibleTrigger>
+            <CollapsibleContent className="pt-2">
+              <div
+                className="p-3 rounded-xl border space-y-2"
+                style={{
+                  borderColor: `${config.gradientFrom}15`,
+                  background: `${config.gradientFrom}05`,
+                }}
+              >
+                <div className="space-y-2 text-sm">
+                  <div className="flex justify-between">
+                    <span className="text-white">Batteries</span>
+                    <span className="text-white">
+                      £{Math.round(result.costBreakdown.batteries).toLocaleString()}
+                    </span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-white">Inverter</span>
+                    <span className="text-white">
+                      £{Math.round(result.costBreakdown.inverter).toLocaleString()}
+                    </span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-white">BMS/Monitoring</span>
+                    <span className="text-white">
+                      £{Math.round(result.costBreakdown.bms).toLocaleString()}
+                    </span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-white">Wiring & Protection</span>
+                    <span className="text-white">
+                      £{Math.round(result.costBreakdown.wiring).toLocaleString()}
+                    </span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-white">Installation</span>
+                    <span className="text-white">
+                      £{Math.round(result.costBreakdown.installation).toLocaleString()}
+                    </span>
+                  </div>
+                  <div className="flex justify-between pt-2 border-t border-white/10 font-semibold">
+                    <span className="text-white">Total System Cost</span>
+                    <span className="text-green-400">
+                      £{Math.round(result.costBreakdown.total).toLocaleString()}
+                    </span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-white">Cost per kWh stored</span>
+                    <span className="text-white">£{result.costPerKwhStored.toFixed(0)}/kWh</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-white">Expected life</span>
+                    <span className="text-white">
+                      {result.warrantyYears}+ years ({result.cycleLife.toLocaleString()} cycles)
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </CollapsibleContent>
+          </Collapsible>
+
+          {/* Tariff Arbitrage */}
+          <div className="p-3 rounded-xl bg-green-500/10 border border-green-500/20 space-y-2">
+            <p className="text-sm font-medium text-white">Tariff Arbitrage Savings</p>
+            <p className="text-xs text-white">
+              Charge off-peak (£{result.tariffArbitrage.offPeakRate.toFixed(2)}/kWh) and use during
+              peak (£{result.tariffArbitrage.peakRate.toFixed(2)}/kWh)
+            </p>
+            <div className="grid grid-cols-2 gap-3">
+              <div>
+                <p className="text-xs text-white">Daily Saving</p>
+                <p className="text-lg font-bold text-green-400">
+                  £{result.tariffArbitrage.dailySaving.toFixed(2)}
+                </p>
+              </div>
+              <div>
+                <p className="text-xs text-white">Annual Saving</p>
+                <p className="text-lg font-bold text-green-400">
+                  £{Math.round(result.tariffArbitrage.annualSaving)}
+                </p>
+              </div>
+            </div>
+            <p className="text-xs text-white">
+              Payback from arbitrage alone:{' '}
+              {(result.costBreakdown.total / result.tariffArbitrage.annualSaving).toFixed(1)} years
+            </p>
+          </div>
+
+          {/* Degradation Curve */}
+          <div className="p-3 rounded-xl bg-white/5 space-y-2">
+            <p className="text-sm font-medium text-white">Capacity Degradation</p>
+            <div className="grid grid-cols-4 gap-2 text-center">
+              {result.degradation.map((d) => (
+                <div key={d.year}>
+                  <p className="text-xs text-white">Year {d.year}</p>
+                  <p className="text-sm font-bold text-white">{d.capacityPercent}%</p>
+                  <p className="text-xs text-white">{d.usableKwh} kWh</p>
+                </div>
+              ))}
             </div>
           </div>
 
           {/* Recommendations */}
           {result.recommendations.length > 0 && (
             <Collapsible open={showGuidance} onOpenChange={setShowGuidance}>
-              <div className="calculator-card overflow-hidden" style={{ borderColor: '#60a5fa15' }}>
-                <CollapsibleTrigger className="agent-collapsible-trigger w-full">
-                  <div className="flex items-center gap-3">
-                    <Info className="h-4 w-4 text-blue-400" />
-                    <span className="text-sm sm:text-base font-medium text-blue-300">
-                      Recommendations
-                    </span>
-                  </div>
-                  <ChevronDown
-                    className={cn(
-                      'h-4 w-4 text-white/70 transition-transform duration-200',
-                      showGuidance && 'rotate-180'
-                    )}
-                  />
-                </CollapsibleTrigger>
-                <CollapsibleContent className="p-4 pt-0">
-                  <ul className="space-y-2 text-sm text-blue-200/80">
+              <CollapsibleTrigger className="flex items-center justify-between w-full min-h-11 py-2.5 px-3 rounded-lg text-sm font-medium text-white hover:bg-white/5 transition-all touch-manipulation">
+                <span>Recommendations</span>
+                <ChevronDown
+                  className={cn(
+                    'h-4 w-4 transition-transform duration-200',
+                    showGuidance && 'rotate-180'
+                  )}
+                />
+              </CollapsibleTrigger>
+              <CollapsibleContent className="pt-2">
+                <div
+                  className="p-3 rounded-xl border space-y-2"
+                  style={{
+                    borderColor: `${config.gradientFrom}15`,
+                    background: `${config.gradientFrom}05`,
+                  }}
+                >
+                  <ul className="space-y-2 text-sm text-white">
                     {result.recommendations.map((rec, idx) => (
-                      <li key={idx}>• {rec}</li>
+                      <li key={idx} className="flex items-start gap-2">
+                        <span
+                          className="w-1.5 h-1.5 rounded-full mt-2 shrink-0"
+                          style={{ backgroundColor: config.gradientFrom }}
+                        />
+                        {rec}
+                      </li>
                     ))}
                   </ul>
-                </CollapsibleContent>
-              </div>
+                </div>
+              </CollapsibleContent>
             </Collapsible>
           )}
 
           {/* BS 7671 Compliance */}
           <Collapsible open={showRegs} onOpenChange={setShowRegs}>
-            <div className="calculator-card overflow-hidden" style={{ borderColor: '#fbbf2415' }}>
-              <CollapsibleTrigger className="agent-collapsible-trigger w-full">
-                <div className="flex items-center gap-3">
-                  <BookOpen className="h-4 w-4 text-amber-400" />
-                  <span className="text-sm sm:text-base font-medium text-amber-300">
-                    BS 7671 Compliance
-                  </span>
-                </div>
-                <ChevronDown
-                  className={cn(
-                    'h-4 w-4 text-white/70 transition-transform duration-200',
-                    showRegs && 'rotate-180'
-                  )}
-                />
-              </CollapsibleTrigger>
-              <CollapsibleContent className="p-4 pt-0">
-                <ul className="space-y-2 text-sm text-amber-200/80">
+            <CollapsibleTrigger className="flex items-center justify-between w-full min-h-11 py-2.5 px-3 rounded-lg text-sm font-medium text-white hover:bg-white/5 transition-all touch-manipulation">
+              <span>BS 7671 Compliance</span>
+              <ChevronDown
+                className={cn(
+                  'h-4 w-4 transition-transform duration-200',
+                  showRegs && 'rotate-180'
+                )}
+              />
+            </CollapsibleTrigger>
+            <CollapsibleContent className="pt-2">
+              <div
+                className="p-3 rounded-xl border space-y-2"
+                style={{
+                  borderColor: `${config.gradientFrom}15`,
+                  background: `${config.gradientFrom}05`,
+                }}
+              >
+                <ul className="space-y-2 text-sm text-white">
                   {result.bs7671Notes.map((note, idx) => (
-                    <li key={idx}>• {note}</li>
+                    <li key={idx} className="flex items-start gap-2">
+                      <span
+                        className="w-1.5 h-1.5 rounded-full mt-2 shrink-0"
+                        style={{ backgroundColor: config.gradientFrom }}
+                      />
+                      {note}
+                    </li>
                   ))}
                 </ul>
-              </CollapsibleContent>
-            </div>
+              </div>
+            </CollapsibleContent>
           </Collapsible>
         </div>
       )}
 
+      {/* Info note */}
       <div className="p-3 rounded-xl bg-blue-500/10 border border-blue-500/20">
         <div className="flex items-start gap-2">
           <Battery className="h-4 w-4 text-blue-400 mt-0.5 shrink-0" />
-          <p className="text-sm text-blue-200">
+          <p className="text-sm text-white">
             <strong>2025 technology data.</strong> Professional design review required for critical
             applications.
           </p>
         </div>
       </div>
-    </div>
+
+      {/* Formula reference (always visible) */}
+      <FormulaReference
+        category={CAT}
+        name="Battery Storage Formulas"
+        formula="C_bank = (E_daily × days × (1 + reserve)) / (η × DoD × temp)"
+        variables={[
+          { symbol: 'E_daily', description: 'Daily energy consumption (kWh)' },
+          { symbol: 'η', description: 'Round-trip efficiency (decimal)' },
+          { symbol: 'DoD', description: 'Depth of discharge (decimal)' },
+          { symbol: 'temp', description: 'Temperature derating factor' },
+        ]}
+      />
+    </CalculatorCard>
   );
 };
 

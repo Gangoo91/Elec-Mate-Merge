@@ -16,6 +16,7 @@ import {
   ArrowRight,
   GraduationCap,
   Zap,
+  Building2,
   Check,
   AlertTriangle,
   UserCircle,
@@ -42,6 +43,12 @@ const CompleteProfile = () => {
       label: 'Apprentice',
       icon: GraduationCap,
       description: 'Learning the trade',
+    },
+    {
+      value: 'employer',
+      label: 'Employer',
+      icon: Building2,
+      description: 'Managing a team',
     },
   ];
 
@@ -83,9 +90,9 @@ const CompleteProfile = () => {
 
       // Navigate to dashboard
       navigate('/dashboard');
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.error('Complete profile error:', err);
-      setError(err.message || 'An error occurred. Please try again.');
+      setError(err instanceof Error ? err.message : 'An error occurred. Please try again.');
       setIsSubmitting(false);
     }
   };

@@ -24,8 +24,8 @@ import ClientSelector from '@/components/ClientSelector';
 import { Customer } from '@/hooks/inspection/useCustomers';
 
 interface MWDetailsTabProps {
-  formData: any;
-  onUpdate: (field: string, value: any) => void;
+  formData: Record<string, unknown>;
+  onUpdate: (field: string, value: unknown) => void;
   isMobile?: boolean;
 }
 
@@ -83,102 +83,137 @@ const MWDetailsTab: React.FC<MWDetailsTabProps> = ({ formData, onUpdate, isMobil
               <ClientSelector onSelectCustomer={handleSelectCustomer} />
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div className="space-y-2">
-                  <Label className="text-sm font-medium">Client Name *</Label>
+                <div className="space-y-1.5">
+                  <label className="text-xs uppercase tracking-wide text-white pl-0.5">
+                    Client Name *
+                  </label>
                   <Input
                     value={formData.clientName || ''}
                     onChange={(e) => onUpdate('clientName', e.target.value)}
                     placeholder="Full name"
-                    className={cn(!formData.clientName && 'border-red-500/50')}
+                    className={cn(
+                      'h-12 text-base bg-white/5 border-white/10 rounded-xl focus:border-amber-500/50 focus:ring-amber-500/20',
+                      !formData.clientName && 'border-red-500/30'
+                    )}
                   />
                 </div>
-                <div className="space-y-2">
-                  <Label className="text-sm font-medium">Client Phone</Label>
+                <div className="space-y-1.5">
+                  <label className="text-xs uppercase tracking-wide text-white pl-0.5">
+                    Client Phone
+                  </label>
                   <Input
                     type="tel"
                     value={formData.clientPhone || ''}
                     onChange={(e) => onUpdate('clientPhone', e.target.value)}
                     placeholder="e.g., 07700 900000"
+                    className="h-12 text-base bg-white/5 border-white/10 rounded-xl focus:border-amber-500/50 focus:ring-amber-500/20"
                   />
                 </div>
               </div>
 
-              <div className="space-y-2">
-                <Label className="text-sm font-medium">Client Email</Label>
+              <div className="space-y-1.5">
+                <label className="text-xs uppercase tracking-wide text-white pl-0.5">
+                  Client Email
+                </label>
                 <Input
                   type="email"
                   value={formData.clientEmail || ''}
                   onChange={(e) => onUpdate('clientEmail', e.target.value)}
                   placeholder="client@email.com"
+                  className="h-12 text-base bg-white/5 border-white/10 rounded-xl focus:border-amber-500/50 focus:ring-amber-500/20"
                 />
               </div>
 
-              <div className="space-y-2">
-                <Label className="text-sm font-medium">Person Ordering Work</Label>
+              <div className="space-y-1.5">
+                <label className="text-xs uppercase tracking-wide text-white pl-0.5">
+                  Person Ordering Work
+                </label>
                 <Input
                   value={formData.personOrderingWork || ''}
                   onChange={(e) => onUpdate('personOrderingWork', e.target.value)}
                   placeholder="If different from client"
+                  className="h-12 text-base bg-white/5 border-white/10 rounded-xl focus:border-amber-500/50 focus:ring-amber-500/20"
                 />
               </div>
 
-              <div className="space-y-2">
-                <Label className="text-sm font-medium">Property Address *</Label>
+              <div className="space-y-1.5">
+                <label className="text-xs uppercase tracking-wide text-white pl-0.5">
+                  Property Address *
+                </label>
                 <Textarea
                   value={formData.propertyAddress || ''}
                   onChange={(e) => onUpdate('propertyAddress', e.target.value)}
                   placeholder="Full installation address"
                   rows={2}
-                  className={cn('min-h-[80px]', !formData.propertyAddress && 'border-red-500/50')}
+                  className={cn(
+                    'min-h-[80px] text-base bg-white/5 border-white/10 rounded-xl focus:border-amber-500/50 focus:ring-amber-500/20 resize-none',
+                    !formData.propertyAddress && 'border-red-500/30'
+                  )}
                 />
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div className="space-y-2">
-                  <Label className="text-sm font-medium">Postcode</Label>
+                <div className="space-y-1.5">
+                  <label className="text-xs uppercase tracking-wide text-white pl-0.5">
+                    Postcode
+                  </label>
                   <Input
                     value={formData.postcode || ''}
                     onChange={(e) => onUpdate('postcode', e.target.value.toUpperCase())}
                     placeholder="e.g., SW1A 1AA"
-                    className="uppercase"
+                    className="h-12 text-base bg-white/5 border-white/10 rounded-xl focus:border-amber-500/50 focus:ring-amber-500/20 uppercase"
                   />
                 </div>
-                <div className="space-y-2">
-                  <Label className="text-sm font-medium">Date of Work *</Label>
+                <div className="space-y-1.5">
+                  <label className="text-xs uppercase tracking-wide text-white pl-0.5">
+                    Date of Work *
+                  </label>
                   <Input
                     type="date"
                     value={formData.workDate || ''}
                     onChange={(e) => onUpdate('workDate', e.target.value)}
-                    className={cn(!formData.workDate && 'border-red-500/50')}
+                    className={cn(
+                      'h-12 text-base bg-white/5 border-white/10 rounded-xl focus:border-amber-500/50 focus:ring-amber-500/20',
+                      !formData.workDate && 'border-red-500/30'
+                    )}
                   />
                 </div>
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div className="space-y-2">
-                  <Label className="text-sm font-medium">Date of Completion</Label>
+                <div className="space-y-1.5">
+                  <label className="text-xs uppercase tracking-wide text-white pl-0.5">
+                    Date of Completion
+                  </label>
                   <Input
                     type="date"
                     value={formData.dateOfCompletion || ''}
                     onChange={(e) => onUpdate('dateOfCompletion', e.target.value)}
+                    className="h-12 text-base bg-white/5 border-white/10 rounded-xl focus:border-amber-500/50 focus:ring-amber-500/20"
                   />
                 </div>
-                <div className="space-y-2">
-                  <Label className="text-sm font-medium">Next Inspection Due</Label>
+                <div className="space-y-1.5">
+                  <label className="text-xs uppercase tracking-wide text-white pl-0.5">
+                    Next Inspection Due
+                  </label>
                   <Input
                     type="date"
                     value={formData.nextInspectionDue || ''}
                     onChange={(e) => onUpdate('nextInspectionDue', e.target.value)}
+                    className="h-12 text-base bg-white/5 border-white/10 rounded-xl focus:border-amber-500/50 focus:ring-amber-500/20"
                   />
                 </div>
               </div>
 
-              <div className="space-y-2">
-                <Label className="text-sm font-medium">Contractor Name</Label>
+              <div className="space-y-1.5">
+                <label className="text-xs uppercase tracking-wide text-white pl-0.5">
+                  Contractor Name
+                </label>
                 <Input
                   value={formData.contractorName || ''}
                   onChange={(e) => onUpdate('contractorName', e.target.value)}
                   placeholder="Company name"
+                  className="h-12 text-base bg-white/5 border-white/10 rounded-xl focus:border-amber-500/50 focus:ring-amber-500/20"
                 />
               </div>
             </div>
@@ -200,13 +235,20 @@ const MWDetailsTab: React.FC<MWDetailsTabProps> = ({ formData, onUpdate, isMobil
           <CollapsibleContent>
             <div className="p-4 sm:p-5 md:p-6 space-y-4">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div className="space-y-2">
-                  <Label className="text-sm font-medium">Type of Work *</Label>
+                <div className="space-y-1.5">
+                  <label className="text-xs uppercase tracking-wide text-white pl-0.5">
+                    Type of Work *
+                  </label>
                   <Select
                     value={formData.workType || ''}
                     onValueChange={(v) => onUpdate('workType', v === '__clear__' ? '' : v)}
                   >
-                    <SelectTrigger className={cn(!formData.workType && 'border-red-500/50')}>
+                    <SelectTrigger
+                      className={cn(
+                        'h-12 text-base bg-white/5 border-white/10 rounded-xl focus:border-amber-500/50 focus:ring-amber-500/20',
+                        !formData.workType && 'border-red-500/30'
+                      )}
+                    >
                       <SelectValue placeholder="Select type" />
                     </SelectTrigger>
                     <SelectContent>
@@ -221,48 +263,58 @@ const MWDetailsTab: React.FC<MWDetailsTabProps> = ({ formData, onUpdate, isMobil
                     </SelectContent>
                   </Select>
                 </div>
-                <div className="space-y-2">
-                  <Label className="text-sm font-medium">Location of Work</Label>
+                <div className="space-y-1.5">
+                  <label className="text-xs uppercase tracking-wide text-white pl-0.5">
+                    Location of Work
+                  </label>
                   <Input
                     value={formData.workLocation || ''}
                     onChange={(e) => onUpdate('workLocation', e.target.value)}
                     placeholder="e.g., Kitchen, Garage"
+                    className="h-12 text-base bg-white/5 border-white/10 rounded-xl focus:border-amber-500/50 focus:ring-amber-500/20"
                   />
                 </div>
               </div>
 
-              <div className="space-y-2">
-                <Label className="text-sm font-medium">Description of Work *</Label>
+              <div className="space-y-1.5">
+                <label className="text-xs uppercase tracking-wide text-white pl-0.5">
+                  Description of Work *
+                </label>
                 <Textarea
                   value={formData.workDescription || ''}
                   onChange={(e) => onUpdate('workDescription', e.target.value)}
                   placeholder="Describe the electrical work carried out..."
                   rows={3}
-                  className={cn('min-h-[100px]', !formData.workDescription && 'border-red-500/50')}
+                  className={cn(
+                    'min-h-[100px] text-base bg-white/5 border-white/10 rounded-xl focus:border-amber-500/50 focus:ring-amber-500/20 resize-none',
+                    !formData.workDescription && 'border-red-500/30'
+                  )}
                 />
               </div>
 
-              <div className="space-y-2">
-                <Label className="text-sm font-medium">
+              <div className="space-y-1.5">
+                <label className="text-xs uppercase tracking-wide text-white pl-0.5">
                   Departures from BS 7671 (Reg 120.3, 133.1.3, 133.5)
-                </Label>
+                </label>
                 <Textarea
                   value={formData.departuresFromBS7671 || ''}
                   onChange={(e) => onUpdate('departuresFromBS7671', e.target.value)}
                   placeholder="Detail any departures from the standard and reasons, or enter 'None'..."
                   rows={2}
-                  className="min-h-[80px]"
+                  className="min-h-[80px] text-base bg-white/5 border-white/10 rounded-xl focus:border-amber-500/50 focus:ring-amber-500/20 resize-none"
                 />
               </div>
 
-              <div className="space-y-2">
-                <Label className="text-sm font-medium">Permitted Exceptions (Reg 411.3.3)</Label>
+              <div className="space-y-1.5">
+                <label className="text-xs uppercase tracking-wide text-white pl-0.5">
+                  Permitted Exceptions (Reg 411.3.3)
+                </label>
                 <Textarea
                   value={formData.permittedExceptions || ''}
                   onChange={(e) => onUpdate('permittedExceptions', e.target.value)}
                   placeholder="Detail any permitted exceptions under Regulation 411.3.3, or enter 'None'..."
                   rows={2}
-                  className="min-h-[80px]"
+                  className="min-h-[80px] text-base bg-white/5 border-white/10 rounded-xl focus:border-amber-500/50 focus:ring-amber-500/20 resize-none"
                 />
               </div>
 
@@ -282,16 +334,16 @@ const MWDetailsTab: React.FC<MWDetailsTabProps> = ({ formData, onUpdate, isMobil
                 </Label>
               </div>
 
-              <div className="space-y-2">
-                <Label className="text-sm font-medium">
+              <div className="space-y-1.5">
+                <label className="text-xs uppercase tracking-wide text-white pl-0.5">
                   Comments on Existing Installation (Reg 644.1.2)
-                </Label>
+                </label>
                 <Textarea
                   value={formData.commentsOnExistingInstallation || ''}
                   onChange={(e) => onUpdate('commentsOnExistingInstallation', e.target.value)}
                   placeholder="Enter any comments regarding the condition of the existing installation that may affect the safety of the new work..."
                   rows={3}
-                  className="min-h-[100px]"
+                  className="min-h-[100px] text-base bg-white/5 border-white/10 rounded-xl focus:border-amber-500/50 focus:ring-amber-500/20 resize-none"
                 />
               </div>
             </div>
@@ -313,9 +365,11 @@ const MWDetailsTab: React.FC<MWDetailsTabProps> = ({ formData, onUpdate, isMobil
           <CollapsibleContent>
             <div className="p-4 sm:p-5 md:p-6 space-y-4">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div className="space-y-2">
+                <div className="space-y-1.5">
                   <div className="flex items-center gap-1">
-                    <Label className="text-sm font-medium">Earthing Arrangement *</Label>
+                    <label className="text-xs uppercase tracking-wide text-white pl-0.5">
+                      Earthing Arrangement *
+                    </label>
                     <FieldTooltip
                       content="The type of earthing system determines how protective and neutral conductors are arranged between the supply and installation."
                       regulation="411.4"
@@ -329,7 +383,10 @@ const MWDetailsTab: React.FC<MWDetailsTabProps> = ({ formData, onUpdate, isMobil
                     }
                   >
                     <SelectTrigger
-                      className={cn(!formData.earthingArrangement && 'border-red-500/50')}
+                      className={cn(
+                        'h-12 text-base bg-white/5 border-white/10 rounded-xl focus:border-amber-500/50 focus:ring-amber-500/20',
+                        !formData.earthingArrangement && 'border-red-500/30'
+                      )}
                     >
                       <SelectValue placeholder="Select earthing type" />
                     </SelectTrigger>
@@ -360,9 +417,11 @@ const MWDetailsTab: React.FC<MWDetailsTabProps> = ({ formData, onUpdate, isMobil
                     </p>
                   )}
                 </div>
-                <div className="space-y-2">
+                <div className="space-y-1.5">
                   <div className="flex items-center gap-1">
-                    <Label className="text-sm font-medium">Zdb - Earth fault loop at DB (Ω)</Label>
+                    <label className="text-xs uppercase tracking-wide text-white pl-0.5">
+                      Zdb - Earth fault loop at DB (Ω)
+                    </label>
                     <FieldTooltip
                       content="External earth fault loop impedance measured at the distribution board. This value is used to verify circuit disconnection times."
                       regulation="411.4.5"
@@ -375,11 +434,12 @@ const MWDetailsTab: React.FC<MWDetailsTabProps> = ({ formData, onUpdate, isMobil
                     value={formData.zdb || ''}
                     onChange={(e) => onUpdate('zdb', e.target.value)}
                     placeholder="e.g., 0.35"
+                    className="h-12 text-base bg-white/5 border-white/10 rounded-xl focus:border-amber-500/50 focus:ring-amber-500/20"
                   />
                 </div>
               </div>
 
-              <div className="flex items-center gap-3 p-4 min-h-[52px] rounded-xl bg-muted/30">
+              <div className="flex items-center gap-3 p-4 min-h-[52px] rounded-xl bg-white/5 border border-white/10">
                 <Checkbox
                   id="earthingConductorPresent"
                   checked={formData.earthingConductorPresent || false}
@@ -395,15 +455,17 @@ const MWDetailsTab: React.FC<MWDetailsTabProps> = ({ formData, onUpdate, isMobil
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div className="space-y-2">
-                  <Label className="text-sm font-medium">Main Earthing Conductor Size</Label>
+                <div className="space-y-1.5">
+                  <label className="text-xs uppercase tracking-wide text-white pl-0.5">
+                    Main Earthing Conductor Size
+                  </label>
                   <Select
                     value={formData.mainEarthingConductorSize || ''}
                     onValueChange={(v) =>
                       onUpdate('mainEarthingConductorSize', v === '__clear__' ? '' : v)
                     }
                   >
-                    <SelectTrigger>
+                    <SelectTrigger className="h-12 text-base bg-white/5 border-white/10 rounded-xl focus:border-amber-500/50 focus:ring-amber-500/20">
                       <SelectValue placeholder="Select size" />
                     </SelectTrigger>
                     <SelectContent>
@@ -418,15 +480,17 @@ const MWDetailsTab: React.FC<MWDetailsTabProps> = ({ formData, onUpdate, isMobil
                     </SelectContent>
                   </Select>
                 </div>
-                <div className="space-y-2">
-                  <Label className="text-sm font-medium">Main Bonding Conductor Size</Label>
+                <div className="space-y-1.5">
+                  <label className="text-xs uppercase tracking-wide text-white pl-0.5">
+                    Main Bonding Conductor Size
+                  </label>
                   <Select
                     value={formData.mainBondingConductorSize || ''}
                     onValueChange={(v) =>
                       onUpdate('mainBondingConductorSize', v === '__clear__' ? '' : v)
                     }
                   >
-                    <SelectTrigger>
+                    <SelectTrigger className="h-12 text-base bg-white/5 border-white/10 rounded-xl focus:border-amber-500/50 focus:ring-amber-500/20">
                       <SelectValue placeholder="Select size" />
                     </SelectTrigger>
                     <SelectContent>
@@ -445,14 +509,16 @@ const MWDetailsTab: React.FC<MWDetailsTabProps> = ({ formData, onUpdate, isMobil
 
               {/* Bonding Connections */}
               <div className="space-y-3">
-                <Label className="text-sm font-medium">Bonding Connections</Label>
+                <label className="text-xs uppercase tracking-wide text-white pl-0.5">
+                  Bonding Connections
+                </label>
                 <div className="flex flex-wrap gap-3">
                   {['Water', 'Gas', 'Oil', 'Structural', 'Other'].map((item) => {
                     const fieldName = `bonding${item}`;
                     return (
                       <div
                         key={item}
-                        className="flex items-center gap-2 p-3 min-h-[48px] rounded-xl bg-card/50 border border-border/30"
+                        className="flex items-center gap-2 p-3 min-h-[48px] rounded-xl bg-white/5 border border-white/10"
                       >
                         <Checkbox
                           id={fieldName}
@@ -470,12 +536,15 @@ const MWDetailsTab: React.FC<MWDetailsTabProps> = ({ formData, onUpdate, isMobil
 
                 {/* Other Bonding Specification - shown when Other is checked */}
                 {formData.bondingOther && (
-                  <div className="space-y-2 mt-2">
-                    <Label className="text-sm font-medium">Other Bonding - Specify</Label>
+                  <div className="space-y-1.5 mt-2">
+                    <label className="text-xs uppercase tracking-wide text-white pl-0.5">
+                      Other Bonding - Specify
+                    </label>
                     <Input
                       value={formData.bondingOtherSpecify || ''}
                       onChange={(e) => onUpdate('bondingOtherSpecify', e.target.value)}
                       placeholder="e.g., Incoming metallic services, extraneous conductive parts"
+                      className="h-12 text-base bg-white/5 border-white/10 rounded-xl focus:border-amber-500/50 focus:ring-amber-500/20"
                     />
                   </div>
                 )}
