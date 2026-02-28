@@ -1887,11 +1887,11 @@
             <td>{{circuit.insulation_test_voltage}}</td>
             <td>{{circuit.insulation_live_neutral}}</td>
             <td>{{circuit.insulation_live_earth}}</td>
-            <td>{{circuit.polarity}}</td>
+            <td>{% if circuit.polarity == 'correct' or circuit.polarity == 'Correct' or circuit.polarity == 'OK' or circuit.polarity == 'Satisfactory' or circuit.polarity == '✓' %}✓{% elsif circuit.polarity == 'Incorrect' or circuit.polarity == '✗' %}✗{% else %}{{circuit.polarity}}{% endif %}</td>
             <td>{{circuit.zs}}</td>
             <td>{{circuit.rcd_one_x}}</td>
             <td>{% if circuit.rcd_test_button == 'pass' or circuit.rcd_test_button == 'Pass' or circuit.rcd_test_button == 'OK' or circuit.rcd_test_button == '✓' or circuit.rcd_test_button == 'Satisfactory' %}✓{% elsif circuit.rcd_test_button == '✗' or circuit.rcd_test_button == 'fail' or circuit.rcd_test_button == 'Fail' %}✗{% else %}{{circuit.rcd_test_button}}{% endif %}</td>
-            <td>{{circuit.afdd_test}}</td>
+            <td>{% if circuit.afdd_test == '✓' or circuit.afdd_test == 'pass' or circuit.afdd_test == 'Pass' or circuit.afdd_test == 'OK' or circuit.afdd_test == 'Satisfactory' %}✓{% elsif circuit.afdd_test == '✗' or circuit.afdd_test == 'fail' or circuit.afdd_test == 'Fail' %}✗{% else %}{{circuit.afdd_test}}{% endif %}</td>
             <td class="remarks">{{circuit.notes}}</td>
           </tr>
           {% endfor %}

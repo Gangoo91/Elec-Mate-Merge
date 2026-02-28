@@ -5,6 +5,7 @@
  */
 
 import { supabase } from '@/integrations/supabase/client';
+import { MAIN_BOARD_ID } from '@/types/distributionBoard';
 
 const toSnakeCase = (str: string): string =>
   str.replace(/[A-Z]/g, (letter) => `_${letter.toLowerCase()}`);
@@ -385,7 +386,7 @@ export const formatEICRJson = async (formData: any, reportId: string) => {
     const testResults = formData['scheduleOfTests'] || [];
     if (!Array.isArray(testResults)) return [];
 
-    const MAIN_BOARD_ID = 'main-board';
+    // Use imported MAIN_BOARD_ID ('main-cu') from distributionBoard types
 
     // Helper to format a circuit for PDF output
     const formatCircuit = (result: any) => ({
