@@ -199,6 +199,42 @@ export default function AdminFailedPayments() {
     },
   });
 
+  const backfillMutation = useMutation({
+    mutationFn: async () => {
+      const { data: sessionData } = await supabase.auth.getSession();
+      const token = sessionData?.session?.access_token;
+
+      const res = await fetch(
+        `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/backfill-failed-payments`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+            apikey: import.meta.env.VITE_SUPABASE_ANON_KEY,
+          },
+          body: JSON.stringify({}),
+        }
+      );
+
+      if (!res.ok) {
+        const err = await res.json();
+        throw new Error(err.error || 'Backfill failed');
+      }
+
+      return res.json();
+    },
+    onSuccess: (data) => {
+      haptic.success();
+      toast.success(`Backfill complete: ${data.inserted} imported, ${data.skipped} skipped`);
+      queryClient.invalidateQueries({ queryKey: ['admin-failed-payments'] });
+    },
+    onError: (err: Error) => {
+      haptic.error();
+      toast.error(err.message);
+    },
+  });
+
   const resolveMutation = useMutation({
     mutationFn: async (recordId: string) => {
       const { data: sessionData } = await supabase.auth.getSession();
@@ -519,13 +555,32 @@ export default function AdminFailedPayments() {
             <CardContent className="pt-8 pb-8">
               <AdminEmptyState
                 icon={CheckCircle}
-                title="All clear!"
+                title={search || statusFilter ? 'No matches' : 'No failed payments yet'}
                 description={
                   search || statusFilter
                     ? 'No records match your current filter.'
-                    : 'When a subscription payment fails, records will appear here automatically.'
+                    : 'Import existing failed invoices from Stripe, or they will appear here automatically when a payment fails.'
                 }
               />
+              {!search && !statusFilter && (
+                <div className="flex justify-center mt-4">
+                  <Button
+                    className="h-11 px-6 touch-manipulation bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-black font-semibold"
+                    disabled={backfillMutation.isPending}
+                    onClick={() => {
+                      haptic.medium();
+                      backfillMutation.mutate();
+                    }}
+                  >
+                    {backfillMutation.isPending ? (
+                      <Loader2 className="h-4 w-4 animate-spin mr-2" />
+                    ) : (
+                      <Download className="h-4 w-4 mr-2" />
+                    )}
+                    {backfillMutation.isPending ? 'Importing from Stripe...' : 'Import from Stripe'}
+                  </Button>
+                </div>
+              )}
             </CardContent>
           </Card>
         ) : (
