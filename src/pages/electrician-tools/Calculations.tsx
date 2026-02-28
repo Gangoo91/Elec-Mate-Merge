@@ -63,6 +63,9 @@ import PowerQualityCalculator from '@/components/apprentice/calculators/PowerQua
 import EmergencyLightingCalculator from '@/components/apprentice/calculators/EmergencyLightingCalculator';
 import SwimmingPoolCalculator from '@/components/apprentice/calculators/SwimmingPoolCalculator';
 import SelectivityCalculator from '@/components/apprentice/calculators/SelectivityCalculator';
+import FaultLevelCalculator from '@/components/apprentice/calculators/FaultLevelCalculator';
+import TouchStepVoltageCalculator from '@/components/apprentice/calculators/TouchStepVoltageCalculator';
+import LightningProtectionCalculator from '@/components/apprentice/calculators/LightningProtectionCalculator';
 
 const Calculations = () => {
   const [calculatorType, setCalculatorType] = useState<string>('ohms-law');
@@ -188,6 +191,12 @@ const Calculations = () => {
         return <EmergencyLightingCalculator />;
       case 'selectivity':
         return <SelectivityCalculator />;
+      case 'fault-level':
+        return <FaultLevelCalculator />;
+      case 'touch-step-voltage':
+        return <TouchStepVoltageCalculator />;
+      case 'lightning-protection':
+        return <LightningProtectionCalculator />;
 
       // Specialised Applications
       case 'data-centre':

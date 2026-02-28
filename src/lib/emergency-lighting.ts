@@ -14,6 +14,8 @@ export interface EmergencyLightingInputs {
   hasDisabledAccess?: boolean;
   buildingHeight?: number;
   complexLayout?: boolean;
+  batteryChemistry?: string;
+  systemType?: string; // 'self-contained' | 'central-battery'
 }
 
 export interface EmergencyLightingResult {
@@ -34,6 +36,21 @@ export interface EmergencyLightingResult {
   illuminanceAchieved: number;
   uniformityRatio: number;
   spacingRatio: number;
+  shrSpacing: number; // Spacing-to-Height Ratio based spacing
+
+  // Battery Analysis
+  batteryWeight: number; // kg
+  batteryDerating: number; // factor
+  batteryCycleLife: number; // cycles
+
+  // Cost Comparison
+  selfContainedCost: number;
+  centralBatteryCost: number;
+  recommendedSystem: string;
+  costCrossoverPoint: number; // luminaires where central becomes cheaper
+
+  // Commissioning Checklist
+  commissioningChecklist: string[];
 
   // Compliance & Recommendations
   complianceStatus: 'compliant' | 'warning' | 'non-compliant';
@@ -134,6 +151,34 @@ export const fixtureProfiles = {
   },
 };
 
+// Battery chemistry profiles
+export const batteryChemistries = {
+  'lead-acid': {
+    description: 'Lead-Acid (Sealed)',
+    ahPerKg: 30, // Wh/kg
+    deratingFactor: 0.8,
+    cycleLife: 300,
+    costPerAh: 8,
+    temperatureRange: '0-40°C',
+  },
+  nicd: {
+    description: 'Nickel-Cadmium (NiCd)',
+    ahPerKg: 50,
+    deratingFactor: 0.85,
+    cycleLife: 1500,
+    costPerAh: 18,
+    temperatureRange: '-20-50°C',
+  },
+  lifepo4: {
+    description: 'Lithium Iron Phosphate (LiFePO4)',
+    ahPerKg: 120,
+    deratingFactor: 0.95,
+    cycleLife: 5000,
+    costPerAh: 25,
+    temperatureRange: '-10-60°C',
+  },
+};
+
 export function calculateEmergencyLighting(
   inputs: EmergencyLightingInputs
 ): EmergencyLightingResult {
@@ -150,49 +195,63 @@ export function calculateEmergencyLighting(
     exitRoutes,
     hasDisabledAccess = false,
     complexLayout = false,
+    batteryChemistry = 'lead-acid',
+    systemType = 'self-contained',
   } = inputs;
 
   const occupancy = occupancyProfiles[occupancyType as keyof typeof occupancyProfiles];
   const fixture = fixtureProfiles[fixtureType as keyof typeof fixtureProfiles];
+  const battery = batteryChemistries[batteryChemistry as keyof typeof batteryChemistries];
 
-  // Escape Route Lighting Calculations
+  // SHR-based photometric spacing calculation
+  // Typical SHR for emergency luminaires: 8-12m (depends on output and mounting height)
+  const luminaireMaxSHR = fixture.lumens >= 400 ? 12 : fixture.lumens >= 200 ? 10 : 8;
+  const shrSpacing = Math.min(luminaireMaxSHR, ceilingHeight * 4); // BS 5266 max SHR = 4:1
+
+  // Escape Route Lighting Calculations (using SHR)
   let escapeRouteLights = 0;
-
-  // Standard corridor lighting (every 2m maximum)
   if (corridorLength > 0) {
-    escapeRouteLights += Math.ceil(corridorLength / 2);
+    // SHR-based spacing along corridors
+    const spacingAlongCorridor = Math.min(
+      shrSpacing,
+      corridorWidth > 0 ? corridorWidth * 4 : shrSpacing
+    );
+    escapeRouteLights += Math.ceil(corridorLength / spacingAlongCorridor);
   } else {
-    // Estimate corridor length based on area and exits
     const estimatedRouteLength = Math.sqrt(floorArea) * exitRoutes * 1.4;
-    escapeRouteLights = Math.ceil(estimatedRouteLength / 2);
+    escapeRouteLights = Math.ceil(estimatedRouteLength / shrSpacing);
   }
 
   // Staircase lighting (every flight + landings)
   if (staircaseFlights > 0) {
-    escapeRouteLights += staircaseFlights * 2; // Top and bottom of each flight
+    escapeRouteLights += staircaseFlights * 2;
   }
 
-  // Open Area Lighting
-  const openAreaLights = Math.ceil(floorArea / (occupancy.spacing * occupancy.spacing));
+  // Open Area Lighting (SHR-based)
+  const openAreaLights = Math.ceil(floorArea / (shrSpacing * shrSpacing));
 
   // Anti-Panic Lighting (for areas >60m²)
   let antiPanicLights = 0;
   if (occupancy.antiPanicRequired && floorArea > 60) {
-    antiPanicLights = Math.ceil(floorArea / 100); // Additional anti-panic coverage
+    antiPanicLights = Math.ceil(floorArea / 100);
   }
 
   // High Risk Area Lighting
   let highRiskAreaLights = 0;
   if (hasHighRiskTasks) {
-    highRiskAreaLights = Math.ceil(floorArea / 50); // Denser coverage for high risk
+    highRiskAreaLights = Math.ceil(floorArea / 50);
   }
 
   const totalLuminaires = escapeRouteLights + openAreaLights + antiPanicLights + highRiskAreaLights;
   const totalPower = totalLuminaires * fixture.watts;
 
-  // Battery Capacity (Ah at 12V with safety margins)
+  // Battery Capacity with chemistry-specific derating
   const safetyMargin = occupancyType === 'hospital' ? 1.5 : 1.2;
-  const batteryCapacity = Math.ceil(((totalPower * emergencyDuration) / 12) * safetyMargin);
+  const rawCapacity = (totalPower * emergencyDuration) / 12; // at 12V
+  const batteryCapacity = Math.ceil((rawCapacity / battery.deratingFactor) * safetyMargin);
+  const batteryWeight = Math.round(((batteryCapacity * 12) / battery.ahPerKg) * 10) / 10;
+  const batteryDerating = battery.deratingFactor;
+  const batteryCycleLife = battery.cycleLife;
 
   // Circuit Current and Cable Sizing
   const circuitCurrent = totalPower / 12;
@@ -206,8 +265,36 @@ export function calculateEmergencyLighting(
   // Illuminance Analysis
   const totalLumens = totalLuminaires * fixture.lumens;
   const illuminanceAchieved = totalLumens / floorArea;
-  const uniformityRatio = Math.min(illuminanceAchieved / occupancy.lux, 40); // Max 40:1 ratio
+  const uniformityRatio = illuminanceAchieved / occupancy.lux;
   const spacingRatio = Math.sqrt(floorArea / totalLuminaires) / ceilingHeight;
+
+  // Cost Comparison: Self-contained vs Central Battery
+  const selfContainedCost =
+    totalLuminaires * (fixture.costPerUnit + 30) + // +£30 for integral battery
+    totalLuminaires * 25; // Installation
+  const centralBatteryCost =
+    totalLuminaires * (fixture.costPerUnit * 0.7) + // Cheaper luminaires (no battery)
+    batteryCapacity * battery.costPerAh + // Central battery
+    1500 + // Central battery enclosure & charger
+    totalLuminaires * 20 + // Installation (slightly cheaper per point)
+    500; // Additional monitoring/wiring
+  const costCrossoverPoint = 25; // Approximate crossover
+  const recommendedSystem =
+    totalLuminaires > costCrossoverPoint ? 'Central Battery' : 'Self-Contained';
+
+  // Commissioning Checklist per BS 5266-1 Section 12
+  const commissioningChecklist = [
+    'Verify all luminaires illuminate on mains failure',
+    'Check changeover time <0.5s (escape routes) or <5s (open areas)',
+    'Measure illuminance on escape routes (min 1 lux centreline)',
+    'Verify uniformity ratio does not exceed 40:1',
+    'Confirm battery duration meets specified requirement',
+    'Test all exit signs for visibility and correct orientation',
+    'Verify fire alarm interface operates correctly',
+    'Check remote test facility functions (if installed)',
+    'Record all luminaire positions on as-built drawings',
+    'Complete commissioning certificate per BS 5266-1',
+  ];
 
   // Compliance Assessment
   let complianceStatus: 'compliant' | 'warning' | 'non-compliant' = 'compliant';
@@ -220,12 +307,12 @@ export function calculateEmergencyLighting(
     );
   }
 
-  if (uniformityRatio > 40) {
+  if (uniformityRatio > 40 && complianceStatus !== 'non-compliant') {
     complianceStatus = 'warning';
     complianceIssues.push(`Poor uniformity ratio: ${uniformityRatio.toFixed(1)}:1 (max: 40:1)`);
   }
 
-  if (spacingRatio > 4) {
+  if (spacingRatio > 4 && complianceStatus !== 'non-compliant') {
     complianceStatus = 'warning';
     complianceIssues.push(`Excessive spacing ratio: ${spacingRatio.toFixed(1)} (max: 4:1)`);
   }
@@ -297,9 +384,7 @@ export function calculateEmergencyLighting(
 
   // Cost Estimation
   const estimatedCost =
-    totalLuminaires * fixture.costPerUnit +
-    batteryCapacity * 15 + // Battery costs
-    totalLuminaires * 25; // Installation costs per point
+    recommendedSystem === 'Central Battery' ? centralBatteryCost : selfContainedCost;
 
   return {
     totalLuminaires,
@@ -314,12 +399,21 @@ export function calculateEmergencyLighting(
     illuminanceAchieved,
     uniformityRatio,
     spacingRatio,
+    shrSpacing: Math.round(shrSpacing * 10) / 10,
+    batteryWeight,
+    batteryDerating,
+    batteryCycleLife,
+    selfContainedCost: Math.round(selfContainedCost),
+    centralBatteryCost: Math.round(centralBatteryCost),
+    recommendedSystem,
+    costCrossoverPoint,
+    commissioningChecklist,
     complianceStatus,
     complianceIssues,
     recommendations,
     regulatoryNotes,
     maintenanceSchedule,
-    estimatedCost,
+    estimatedCost: Math.round(estimatedCost),
     installationNotes,
     testingRequirements,
   };

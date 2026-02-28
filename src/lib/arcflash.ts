@@ -15,6 +15,11 @@ export interface ArcFlashInputs {
   enclosureDepth?: number; // Enclosure depth (mm)
 }
 
+export interface BoundaryDistance {
+  distance: number; // mm
+  energy: number; // cal/cm²
+}
+
 export interface ArcFlashResult {
   arcingCurrent: number; // Arcing current (kA)
   incidentEnergy: number; // Incident energy (cal/cm²)
@@ -30,6 +35,11 @@ export interface ArcFlashResult {
   ppeCategory: PPECategory; // Legacy field
   ppeRecommendations: string[];
   calculationMethod: string;
+  // Enhanced outputs
+  boundaryTable: BoundaryDistance[];
+  energyLetThrough: number; // I²t (A²s)
+  arcDuration: number; // seconds
+  bs7671DisconnectionCheck: string; // BS 7671 disconnection time assessment
 }
 
 export type EquipmentType = 'panelboard' | 'switchboard' | 'lv_switchgear' | 'open_air';
@@ -61,8 +71,17 @@ const EQUIPMENT_DEFAULTS = {
   },
 };
 
+// BS 7671 maximum disconnection times (Table 41.1)
+const BS7671_DISCONNECTION_TIMES: Record<string, { time: number; description: string }> = {
+  '230_tn': { time: 0.4, description: '230V TN system: 0.4s max' },
+  '400_tn': { time: 0.2, description: '400V TN system: 0.2s max' },
+  '230_tt': { time: 0.2, description: '230V TT system: 0.2s max' },
+  '400_tt': { time: 0.07, description: '400V TT system: 0.07s max' },
+  distribution: { time: 5.0, description: 'Distribution circuit: 5s max' },
+};
+
 // Conductor gap defaults based on voltage and equipment type
-function getDefaultConductorGap(voltage: number, equipmentType: EquipmentType): number {
+function getDefaultConductorGap(voltage: number, _equipmentType: EquipmentType): number {
   if (voltage <= 480) return 25; // 25mm for LV
   if (voltage <= 1000) return 32; // 32mm for higher LV
   if (voltage <= 5000) return 50; // 50mm for MV
@@ -103,67 +122,39 @@ function validateInputs(inputs: ArcFlashInputs): { isValid: boolean; warnings: s
 
 // Calculate arcing current using IEEE 1584-2018 equations
 function calculateArcingCurrent(inputs: ArcFlashInputs): number {
-  const { voltage, boltedFaultCurrent, electrodeConfig, enclosureType, conductorGap } = inputs;
+  const { voltage, boltedFaultCurrent, electrodeConfig, conductorGap } = inputs;
   const gap = conductorGap || getDefaultConductorGap(voltage, inputs.equipmentType);
 
   // IEEE 1584-2018 intermediate arcing current model
-  let k1: number, k2: number, k3: number, k4: number, k5: number, k6: number, k7: number;
+  let k1: number, k2: number, k3: number;
 
   // Configuration-specific coefficients
   switch (electrodeConfig) {
-    case 'VCB': // Vertical conductors in a box
+    case 'VCB': // Vertical conductors in box
       k1 = -0.04287;
       k2 = 1.73;
       k3 = -0.73;
-      k4 = 0;
-      k5 = 0;
-      k6 = 0;
-      k7 = 0;
       break;
-    case 'VCBB': // Vertical conductors in a box with barrier
+    case 'VCBB': // Vertical conductors in box with barrier
       k1 = 0.0141;
       k2 = 1.81;
       k3 = -0.664;
-      k4 = 0;
-      k5 = 0;
-      k6 = 0;
-      k7 = 0;
       break;
-    case 'HCB': // Horizontal conductors in a box
+    case 'HCB': // Horizontal conductors in box
       k1 = -0.04287;
       k2 = 1.73;
       k3 = -0.73;
-      k4 = 0;
-      k5 = 0;
-      k6 = 0;
-      k7 = 0;
       break;
     case 'VOA': // Vertical conductors in open air
-      k1 = -0.0093;
-      k2 = 2.04;
-      k3 = -0.1;
-      k4 = 0;
-      k5 = 0;
-      k6 = 0;
-      k7 = 0;
-      break;
     case 'HOA': // Horizontal conductors in open air
       k1 = -0.0093;
       k2 = 2.04;
       k3 = -0.1;
-      k4 = 0;
-      k5 = 0;
-      k6 = 0;
-      k7 = 0;
       break;
     default:
       k1 = -0.04287;
       k2 = 1.73;
       k3 = -0.73;
-      k4 = 0;
-      k5 = 0;
-      k6 = 0;
-      k7 = 0;
   }
 
   // IEEE 1584-2018 equation for intermediate arcing current (in log form)
@@ -267,6 +258,70 @@ function calculateArcFlashBoundary(inputs: ArcFlashInputs, arcingCurrent: number
   return Math.max(200, boundary); // Minimum 200mm boundary
 }
 
+// Calculate energy at multiple distances (boundary table)
+function calculateBoundaryTable(inputs: ArcFlashInputs, arcingCurrent: number): BoundaryDistance[] {
+  const distances = [300, 450, 600, 900, 1200];
+  const { voltage, clearingTime, electrodeConfig } = inputs;
+
+  let k1: number, k2: number, cf: number;
+  switch (electrodeConfig) {
+    case 'VCB':
+    case 'HCB':
+      k1 = -0.555;
+      k2 = 0.113;
+      cf = 1.0;
+      break;
+    case 'VCBB':
+      k1 = -0.555;
+      k2 = 0.113;
+      cf = 0.93;
+      break;
+    case 'VOA':
+    case 'HOA':
+      k1 = -0.555;
+      k2 = 0.0;
+      cf = 1.0;
+      break;
+    default:
+      k1 = -0.555;
+      k2 = 0.113;
+      cf = 1.0;
+  }
+
+  const logEn = k1 + k2 + 1.081 * Math.log10(arcingCurrent) + 0.0011 * voltage;
+  const En = Math.pow(10, logEn);
+
+  return distances.map((d) => ({
+    distance: d,
+    energy: Math.round(cf * En * (clearingTime / 0.2) * Math.pow(610 / d, 2) * 100) / 100,
+  }));
+}
+
+// Calculate energy let-through I²t
+function calculateEnergyLetThrough(arcingCurrentKA: number, clearingTime: number): number {
+  const arcingCurrentA = arcingCurrentKA * 1000;
+  return Math.round(arcingCurrentA * arcingCurrentA * clearingTime);
+}
+
+// Check against BS 7671 disconnection time thresholds
+function checkBS7671Disconnection(voltage: number, clearingTime: number): string {
+  if (voltage <= 230) {
+    if (clearingTime <= 0.4) return 'Within BS 7671 Table 41.1 limit (230V TN: 0.4s)';
+    if (clearingTime <= 5.0)
+      return 'Exceeds final circuit limit but within distribution limit (5s)';
+    return 'Exceeds all BS 7671 disconnection time limits';
+  }
+  if (voltage <= 400) {
+    if (clearingTime <= 0.2) return 'Within BS 7671 Table 41.1 limit (400V TN: 0.2s)';
+    if (clearingTime <= 5.0)
+      return 'Exceeds final circuit limit but within distribution limit (5s)';
+    return 'Exceeds all BS 7671 disconnection time limits';
+  }
+  if (clearingTime <= 0.1) return 'Within typical HV protection clearing time';
+  if (clearingTime <= 0.5) return 'Acceptable for HV distribution protection';
+  return 'Slow clearing - review protection settings';
+}
+
 // Determine PPE category and recommendations
 function determinePPE(incidentEnergy: number): {
   category: PPECategory;
@@ -360,6 +415,11 @@ export function calculateArcFlash(inputs: ArcFlashInputs): ArcFlashResult {
   // Determine PPE requirements
   const ppe = determinePPE(incidentEnergy);
 
+  // Enhanced calculations
+  const boundaryTable = calculateBoundaryTable(adjustedInputs, arcingCurrent);
+  const energyLetThrough = calculateEnergyLetThrough(arcingCurrent, inputs.clearingTime);
+  const bs7671DisconnectionCheck = checkBS7671Disconnection(inputs.voltage, inputs.clearingTime);
+
   // Generate advisory messages
   const advisoryMessages: string[] = [];
   const isUnrealistic = incidentEnergy > 100;
@@ -385,7 +445,7 @@ export function calculateArcFlash(inputs: ArcFlashInputs): ArcFlashResult {
   }
 
   // Determine calculation method
-  let calculationMethod = validation.isValid ? 'IEEE 1584-2018' : 'IEEE 1584-2018 (extrapolated)';
+  const calculationMethod = validation.isValid ? 'IEEE 1584-2018' : 'IEEE 1584-2018 (extrapolated)';
 
   return {
     arcingCurrent,
@@ -402,6 +462,10 @@ export function calculateArcFlash(inputs: ArcFlashInputs): ArcFlashResult {
     ppeCategory: ppe.category,
     ppeRecommendations: ppe.recommendations,
     calculationMethod,
+    boundaryTable,
+    energyLetThrough,
+    arcDuration: inputs.clearingTime,
+    bs7671DisconnectionCheck,
   };
 }
 

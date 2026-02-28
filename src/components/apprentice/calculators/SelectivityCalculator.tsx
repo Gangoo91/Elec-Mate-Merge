@@ -1,365 +1,577 @@
-import { useState } from 'react';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { MobileInput } from '@/components/ui/mobile-input';
-import { MobileButton } from '@/components/ui/mobile-button';
-import { MobileSelectWrapper as MobileSelect } from '@/components/ui/mobile-select-wrapper';
-import { Badge } from '@/components/ui/badge';
-import { Separator } from '@/components/ui/separator';
+import { useState, useCallback } from 'react';
+import { Copy, Check, ChevronDown, CheckCircle, XCircle } from 'lucide-react';
+import { useToast } from '@/hooks/use-toast';
+import {
+  CalculatorCard,
+  CalculatorInputGrid,
+  CalculatorInput,
+  CalculatorSelect,
+  CalculatorActions,
+  ResultValue,
+  ResultsGrid,
+  ResultBadge,
+  CalculatorFormula,
+  CalculatorSection,
+  FormulaReference,
+  CALCULATOR_CONFIG,
+} from '@/components/calculators/shared';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
-import { ChevronDown, Calculator, RotateCcw, ArrowDownUp, Settings } from 'lucide-react';
-import { calculateSelectivity, SelectivityInputs, SelectivityResult } from '@/lib/selectivity';
-import SelectivityInfo from './selectivity/SelectivityInfo';
-import SelectivityGuidance from './selectivity/SelectivityGuidance';
+import { calculateSelectivity, SelectivityResult } from '@/lib/selectivity';
+
+const CAT = 'protection' as const;
+const config = CALCULATOR_CONFIG[CAT];
+
+const DEVICE_TYPES = [
+  { value: 'mcb', label: 'MCB (Miniature Circuit Breaker)' },
+  { value: 'mccb', label: 'MCCB (Moulded Case Circuit Breaker)' },
+  { value: 'fuse', label: 'Fuse (BS 88 / 1361)' },
+  { value: 'rcbo', label: 'RCBO (Residual Current Breaker)' },
+];
+
+const MCB_CURVES = [
+  { value: 'B', label: 'B Curve (3-5 x In)' },
+  { value: 'C', label: 'C Curve (5-10 x In)' },
+  { value: 'D', label: 'D Curve (10-20 x In)' },
+];
 
 const SelectivityCalculator = () => {
-  // Basic inputs
-  const [upstreamDevice, setUpstreamDevice] = useState<string>('mccb');
-  const [upstreamRating, setUpstreamRating] = useState<string>('');
-  const [upstreamCurve, setUpstreamCurve] = useState<string>('');
-  const [downstreamDevice, setDownstreamDevice] = useState<string>('mcb');
-  const [downstreamRating, setDownstreamRating] = useState<string>('');
-  const [downstreamCurve, setDownstreamCurve] = useState<string>('B');
-  const [faultCurrent, setFaultCurrent] = useState<string>('');
+  const { toast } = useToast();
+  const [copied, setCopied] = useState(false);
 
-  // Advanced inputs
-  const [showAdvanced, setShowAdvanced] = useState<boolean>(false);
-  const [upstreamMagneticSetting, setUpstreamMagneticSetting] = useState<string>('');
-  const [upstreamTimeDelay, setUpstreamTimeDelay] = useState<string>('');
-  const [upstreamBreakingCapacity, setUpstreamBreakingCapacity] = useState<string>('');
-  const [downstreamMagneticSetting, setDownstreamMagneticSetting] = useState<string>('');
-  const [downstreamBreakingCapacity, setDownstreamBreakingCapacity] = useState<string>('');
-  const [shortCircuitCurrent, setShortCircuitCurrent] = useState<string>('');
-  const [loadCurrent, setLoadCurrent] = useState<string>('');
-  const [cableLength, setCableLength] = useState<string>('');
-  const [ambientTemperature, setAmbientTemperature] = useState<string>('');
-  const [installationMethod, setInstallationMethod] = useState<string>('reference-method-c');
+  // Upstream
+  const [upstreamDevice, setUpstreamDevice] = useState('mccb');
+  const [upstreamRating, setUpstreamRating] = useState('');
+  const [upstreamCurve, setUpstreamCurve] = useState('');
+  const [upstreamMagneticSetting, setUpstreamMagneticSetting] = useState('');
+  const [upstreamTimeDelay, setUpstreamTimeDelay] = useState('');
+  const [upstreamBreakingCapacity, setUpstreamBreakingCapacity] = useState('');
+
+  // Downstream
+  const [downstreamDevice, setDownstreamDevice] = useState('mcb');
+  const [downstreamRating, setDownstreamRating] = useState('');
+  const [downstreamCurve, setDownstreamCurve] = useState('B');
+  const [downstreamMagneticSetting, setDownstreamMagneticSetting] = useState('');
+  const [downstreamBreakingCapacity, setDownstreamBreakingCapacity] = useState('');
+
+  // Fault
+  const [faultCurrent, setFaultCurrent] = useState('');
 
   const [result, setResult] = useState<SelectivityResult | null>(null);
 
-  const deviceTypes = {
-    mcb: 'MCB (Miniature Circuit Breaker)',
-    mccb: 'MCCB (Moulded Case Circuit Breaker)',
-    fuse: 'Fuse (BS 88/1361)',
-    rcbo: 'RCBO (Residual Current Breaker)',
-  };
+  const handleCopy = useCallback(() => {
+    if (!result) return;
+    const timeMargin = (
+      (result.operatingTimes.upstream - result.operatingTimes.downstream) *
+      1000
+    ).toFixed(0);
+    const text = [
+      '=== Selectivity / Discrimination Analysis ===',
+      `Status: ${result.isSelective ? 'SELECTIVE' : 'NOT SELECTIVE'}`,
+      `Compliance: ${result.complianceStatus.replace('-', ' ')}`,
+      `Risk Level: ${result.riskLevel}`,
+      '',
+      `Selectivity Ratio: ${result.selectivityRatio.toFixed(2)}:1`,
+      `Selectivity Limit: ${result.selectivityLimit.toFixed(0)} A`,
+      `Selectivity Limit Current Is: ${result.selectivityLimitCurrent} A`,
+      '',
+      `Downstream Operating Time: ${(result.operatingTimes.downstream * 1000).toFixed(0)} ms`,
+      `Upstream Operating Time: ${(result.operatingTimes.upstream * 1000).toFixed(0)} ms`,
+      `Time Margin: ${timeMargin} ms`,
+      '',
+      `Downstream Magnetic Trip: ${result.magneticTrips.downstream.toFixed(0)} A`,
+      `Upstream Magnetic Trip: ${result.magneticTrips.upstream.toFixed(0)} A`,
+      '',
+      `Downstream I²t: ${result.energyLetThrough.downstreamI2t.toFixed(0)} A²s`,
+      `Upstream I²t: ${result.energyLetThrough.upstreamI2t.toFixed(0)} A²s`,
+      `Energy Selectivity: ${result.energyLetThrough.energySelective ? 'Yes' : 'No'}`,
+      '',
+      `Cascade Protection: ${result.cascadeProtection.eligible ? result.cascadeProtection.cascadeRating : 'Not applicable'}`,
+    ].join('\n');
+    navigator.clipboard.writeText(text);
+    setCopied(true);
+    toast({ title: 'Results copied to clipboard' });
+    setTimeout(() => setCopied(false), 2000);
+  }, [result, toast]);
 
-  const mcbCurves = {
-    B: 'B Curve (3-5 x In)',
-    C: 'C Curve (5-10 x In)',
-    D: 'D Curve (10-20 x In)',
-  };
-
-  const installationMethods = {
-    'reference-method-c': 'Reference Method C (Clipped Direct)',
-    'reference-method-a': 'Reference Method A (Enclosed)',
-    'reference-method-b': 'Reference Method B (Trunking)',
-    'reference-method-e': 'Reference Method E (Free Air)',
-    underground: 'Underground (Direct Buried)',
-  };
-
-  const calculateSelectivityResult = () => {
+  const calculate = useCallback(() => {
     const upRating = parseFloat(upstreamRating);
     const downRating = parseFloat(downstreamRating);
     const faultI = parseFloat(faultCurrent);
+    if (!(upRating > 0 && downRating > 0 && faultI > 0)) return;
 
-    if (upRating > 0 && downRating > 0 && faultI > 0) {
-      const inputs: SelectivityInputs = {
-        upstreamDevice,
-        upstreamRating: upRating,
-        upstreamCurve,
-        upstreamMagneticSetting: upstreamMagneticSetting
-          ? parseFloat(upstreamMagneticSetting)
-          : undefined,
-        upstreamTimeDelay: upstreamTimeDelay ? parseFloat(upstreamTimeDelay) : undefined,
-        upstreamBreakingCapacity: upstreamBreakingCapacity
-          ? parseFloat(upstreamBreakingCapacity)
-          : undefined,
-        downstreamDevice,
-        downstreamRating: downRating,
-        downstreamCurve,
-        downstreamMagneticSetting: downstreamMagneticSetting
-          ? parseFloat(downstreamMagneticSetting)
-          : undefined,
-        downstreamBreakingCapacity: downstreamBreakingCapacity
-          ? parseFloat(downstreamBreakingCapacity)
-          : undefined,
-        faultCurrent: faultI,
-        shortCircuitCurrent: shortCircuitCurrent ? parseFloat(shortCircuitCurrent) : faultI,
-        loadCurrent: loadCurrent ? parseFloat(loadCurrent) : upRating * 0.8,
-        cableLength: cableLength ? parseFloat(cableLength) : undefined,
-        ambientTemperature: ambientTemperature ? parseFloat(ambientTemperature) : undefined,
-        installationMethod,
-      };
+    const calculationResult = calculateSelectivity({
+      upstreamDevice,
+      upstreamRating: upRating,
+      upstreamCurve:
+        upstreamDevice === 'mcb' || upstreamDevice === 'rcbo' ? upstreamCurve : undefined,
+      upstreamMagneticSetting: upstreamMagneticSetting
+        ? parseFloat(upstreamMagneticSetting)
+        : undefined,
+      upstreamTimeDelay: upstreamTimeDelay ? parseFloat(upstreamTimeDelay) : undefined,
+      upstreamBreakingCapacity: upstreamBreakingCapacity
+        ? parseFloat(upstreamBreakingCapacity)
+        : undefined,
+      downstreamDevice,
+      downstreamRating: downRating,
+      downstreamCurve:
+        downstreamDevice === 'mcb' || downstreamDevice === 'rcbo' ? downstreamCurve : undefined,
+      downstreamMagneticSetting: downstreamMagneticSetting
+        ? parseFloat(downstreamMagneticSetting)
+        : undefined,
+      downstreamBreakingCapacity: downstreamBreakingCapacity
+        ? parseFloat(downstreamBreakingCapacity)
+        : undefined,
+      faultCurrent: faultI,
+    });
+    setResult(calculationResult);
+  }, [
+    upstreamDevice,
+    upstreamRating,
+    upstreamCurve,
+    upstreamMagneticSetting,
+    upstreamTimeDelay,
+    upstreamBreakingCapacity,
+    downstreamDevice,
+    downstreamRating,
+    downstreamCurve,
+    downstreamMagneticSetting,
+    downstreamBreakingCapacity,
+    faultCurrent,
+  ]);
 
-      const calculationResult = calculateSelectivity(inputs);
-      setResult(calculationResult);
-    }
-  };
-
-  const reset = () => {
+  const reset = useCallback(() => {
     setUpstreamDevice('mccb');
     setUpstreamRating('');
     setUpstreamCurve('');
-    setDownstreamDevice('mcb');
-    setDownstreamRating('');
-    setDownstreamCurve('B');
-    setFaultCurrent('');
     setUpstreamMagneticSetting('');
     setUpstreamTimeDelay('');
     setUpstreamBreakingCapacity('');
+    setDownstreamDevice('mcb');
+    setDownstreamRating('');
+    setDownstreamCurve('B');
     setDownstreamMagneticSetting('');
     setDownstreamBreakingCapacity('');
-    setShortCircuitCurrent('');
-    setLoadCurrent('');
-    setCableLength('');
-    setAmbientTemperature('');
-    setInstallationMethod('reference-method-c');
+    setFaultCurrent('');
     setResult(null);
-  };
+  }, []);
+
+  const canCalculate = !!upstreamRating && !!downstreamRating && !!faultCurrent;
 
   return (
-    <div className="space-y-6">
-      {/* Input Section */}
-      <Card className="border-elec-yellow/20 bg-white/5">
-        <CardHeader>
-          <div className="flex items-center gap-2">
-            <ArrowDownUp className="h-5 w-5 text-elec-yellow" />
-            <CardTitle>Selectivity/Discrimination Calculator</CardTitle>
+    <CalculatorCard
+      category={CAT}
+      title="Selectivity / Discrimination Calculator"
+      description="Calculate protection device selectivity with I²t energy let-through and back-up protection analysis per BS 7671."
+    >
+      {/* Upstream Protection */}
+      <CalculatorSection title="Upstream Protection" defaultOpen>
+        <CalculatorInputGrid>
+          <CalculatorSelect
+            label="Device Type"
+            value={upstreamDevice}
+            onValueChange={setUpstreamDevice}
+            options={DEVICE_TYPES}
+            category={CAT}
+          />
+          <CalculatorInput
+            label="Rating (A)"
+            value={upstreamRating}
+            onChange={setUpstreamRating}
+            type="number"
+            placeholder="e.g. 100"
+            unit="A"
+            category={CAT}
+          />
+          {(upstreamDevice === 'mcb' || upstreamDevice === 'rcbo') && (
+            <CalculatorSelect
+              label="Trip Curve"
+              value={upstreamCurve}
+              onValueChange={setUpstreamCurve}
+              options={MCB_CURVES}
+              category={CAT}
+            />
+          )}
+          <CalculatorInput
+            label="Custom Magnetic (A)"
+            value={upstreamMagneticSetting}
+            onChange={setUpstreamMagneticSetting}
+            type="number"
+            placeholder="Auto if blank"
+            unit="A"
+            category={CAT}
+          />
+          <CalculatorInput
+            label="Time Delay (s)"
+            value={upstreamTimeDelay}
+            onChange={setUpstreamTimeDelay}
+            type="number"
+            placeholder="0.0"
+            unit="s"
+            category={CAT}
+          />
+          <CalculatorInput
+            label="Breaking Capacity (kA)"
+            value={upstreamBreakingCapacity}
+            onChange={setUpstreamBreakingCapacity}
+            type="number"
+            placeholder="e.g. 25"
+            unit="kA"
+            category={CAT}
+          />
+        </CalculatorInputGrid>
+      </CalculatorSection>
+
+      {/* Downstream Protection */}
+      <CalculatorSection title="Downstream Protection" defaultOpen>
+        <CalculatorInputGrid>
+          <CalculatorSelect
+            label="Device Type"
+            value={downstreamDevice}
+            onValueChange={setDownstreamDevice}
+            options={DEVICE_TYPES}
+            category={CAT}
+          />
+          <CalculatorInput
+            label="Rating (A)"
+            value={downstreamRating}
+            onChange={setDownstreamRating}
+            type="number"
+            placeholder="e.g. 32"
+            unit="A"
+            category={CAT}
+          />
+          {(downstreamDevice === 'mcb' || downstreamDevice === 'rcbo') && (
+            <CalculatorSelect
+              label="Trip Curve"
+              value={downstreamCurve}
+              onValueChange={setDownstreamCurve}
+              options={MCB_CURVES}
+              category={CAT}
+            />
+          )}
+          <CalculatorInput
+            label="Custom Magnetic (A)"
+            value={downstreamMagneticSetting}
+            onChange={setDownstreamMagneticSetting}
+            type="number"
+            placeholder="Auto if blank"
+            unit="A"
+            category={CAT}
+          />
+          <CalculatorInput
+            label="Breaking Capacity (kA)"
+            value={downstreamBreakingCapacity}
+            onChange={setDownstreamBreakingCapacity}
+            type="number"
+            placeholder="e.g. 10"
+            unit="kA"
+            category={CAT}
+          />
+        </CalculatorInputGrid>
+      </CalculatorSection>
+
+      {/* Fault Parameters */}
+      <CalculatorSection title="Fault Parameters" defaultOpen>
+        <CalculatorInputGrid>
+          <CalculatorInput
+            label="Prospective Fault Current (A)"
+            value={faultCurrent}
+            onChange={setFaultCurrent}
+            type="number"
+            placeholder="e.g. 3000"
+            unit="A"
+            category={CAT}
+          />
+        </CalculatorInputGrid>
+      </CalculatorSection>
+
+      {/* Actions */}
+      <CalculatorActions
+        onCalculate={calculate}
+        onReset={reset}
+        canCalculate={canCalculate}
+        category={CAT}
+      />
+
+      {/* Results */}
+      {result && (
+        <>
+          {/* Status Badges */}
+          <div className="flex flex-wrap gap-2">
+            <ResultBadge
+              label="Selectivity"
+              value={result.isSelective ? 'Selective' : 'Not Selective'}
+              variant={result.isSelective ? 'success' : 'danger'}
+              category={CAT}
+            />
+            <ResultBadge
+              label="Risk"
+              value={result.riskLevel.toUpperCase()}
+              variant={
+                result.riskLevel === 'low'
+                  ? 'success'
+                  : result.riskLevel === 'medium'
+                    ? 'warning'
+                    : 'danger'
+              }
+              category={CAT}
+            />
+            <ResultBadge
+              label="Compliance"
+              value={result.complianceStatus.replace(/-/g, ' ')}
+              variant={
+                result.complianceStatus === 'compliant'
+                  ? 'success'
+                  : result.complianceStatus === 'requires-verification'
+                    ? 'warning'
+                    : 'danger'
+              }
+              category={CAT}
+            />
           </div>
-          <CardDescription>
-            Calculate protection device selectivity and discrimination for proper fault current
-            coordination.
-          </CardDescription>
-        </CardHeader>
-        <CardContent className="space-y-6">
-          <div className="space-y-4">
-            <h3 className="text-lg font-medium text-elec-yellow">Upstream Protection</h3>
 
-            <MobileSelect
-              label="Upstream Device Type"
-              placeholder="Select upstream device"
-              value={upstreamDevice}
-              onValueChange={setUpstreamDevice}
-              options={Object.entries(deviceTypes).map(([key, type]) => ({
-                value: key,
-                label: type,
-              }))}
-            />
-
-            <MobileInput
-              label="Upstream Rating (A)"
-              type="number"
-              value={upstreamRating}
-              onChange={(e) => setUpstreamRating(e.target.value)}
-              placeholder="e.g., 100"
-              unit="A"
-            />
-
-            {upstreamDevice === 'mcb' && (
-              <MobileSelect
-                label="Upstream Curve"
-                placeholder="Select curve type"
-                value={upstreamCurve}
-                onValueChange={setUpstreamCurve}
-                options={Object.entries(mcbCurves).map(([key, curve]) => ({
-                  value: key,
-                  label: curve,
-                }))}
+          {/* Key Metrics */}
+          <CalculatorSection title="Key Metrics" defaultOpen>
+            <ResultsGrid>
+              <ResultValue
+                label="Selectivity Ratio"
+                value={`${result.selectivityRatio.toFixed(2)}:1`}
+                category={CAT}
               />
-            )}
-
-            <Separator />
-
-            <h3 className="text-lg font-medium text-elec-yellow">Downstream Protection</h3>
-
-            <MobileSelect
-              label="Downstream Device Type"
-              placeholder="Select downstream device"
-              value={downstreamDevice}
-              onValueChange={setDownstreamDevice}
-              options={Object.entries(deviceTypes).map(([key, type]) => ({
-                value: key,
-                label: type,
-              }))}
-            />
-
-            <MobileInput
-              label="Downstream Rating (A)"
-              type="number"
-              value={downstreamRating}
-              onChange={(e) => setDownstreamRating(e.target.value)}
-              placeholder="e.g., 32"
-              unit="A"
-            />
-
-            {downstreamDevice === 'mcb' && (
-              <MobileSelect
-                label="Downstream Curve"
-                placeholder="Select curve type"
-                value={downstreamCurve}
-                onValueChange={setDownstreamCurve}
-                options={Object.entries(mcbCurves).map(([key, curve]) => ({
-                  value: key,
-                  label: curve,
-                }))}
+              <ResultValue
+                label="Selectivity Limit"
+                value={`${result.selectivityLimit.toFixed(0)} A`}
+                category={CAT}
               />
-            )}
+              <ResultValue
+                label="Limit Current Is"
+                value={`${result.selectivityLimitCurrent} A`}
+                category={CAT}
+              />
+              <ResultValue
+                label="Time Margin"
+                value={`${((result.operatingTimes.upstream - result.operatingTimes.downstream) * 1000).toFixed(0)} ms`}
+                category={CAT}
+              />
+            </ResultsGrid>
+          </CalculatorSection>
 
-            <MobileInput
-              label="Fault Current (A)"
-              type="number"
-              value={faultCurrent}
-              onChange={(e) => setFaultCurrent(e.target.value)}
-              placeholder="e.g., 1000"
-              unit="A"
-            />
+          {/* Operating Times */}
+          <CalculatorSection title="Operating Times" defaultOpen>
+            <ResultsGrid>
+              <ResultValue
+                label="Downstream"
+                value={`${(result.operatingTimes.downstream * 1000).toFixed(0)} ms`}
+                category={CAT}
+              />
+              <ResultValue
+                label="Upstream"
+                value={`${(result.operatingTimes.upstream * 1000).toFixed(0)} ms`}
+                category={CAT}
+              />
+              <ResultValue
+                label="Downstream Magnetic"
+                value={`${result.magneticTrips.downstream.toFixed(0)} A`}
+                category={CAT}
+              />
+              <ResultValue
+                label="Upstream Magnetic"
+                value={`${result.magneticTrips.upstream.toFixed(0)} A`}
+                category={CAT}
+              />
+            </ResultsGrid>
+          </CalculatorSection>
 
-            {/* Advanced Settings */}
-            <Collapsible open={showAdvanced} onOpenChange={setShowAdvanced}>
-              <CollapsibleTrigger asChild>
-                <MobileButton variant="outline" className="w-full justify-between" type="button">
-                  <div className="flex items-center gap-2">
-                    <Settings className="h-4 w-4" />
-                    Advanced Settings
-                  </div>
-                  <ChevronDown
-                    className={`h-4 w-4 transition-transform ${showAdvanced ? 'rotate-180' : ''}`}
-                  />
-                </MobileButton>
-              </CollapsibleTrigger>
-              <CollapsibleContent className="space-y-4 mt-4">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div className="space-y-4">
-                    <h4 className="text-sm font-medium text-elec-yellow">Upstream Settings</h4>
-                    <MobileInput
-                      label="Custom Magnetic Setting (A)"
-                      type="number"
-                      value={upstreamMagneticSetting}
-                      onChange={(e) => setUpstreamMagneticSetting(e.target.value)}
-                      placeholder="Auto-calculated if blank"
-                      unit="A"
-                    />
-                    <MobileInput
-                      label="Time Delay (s)"
-                      type="number"
-                      value={upstreamTimeDelay}
-                      onChange={(e) => setUpstreamTimeDelay(e.target.value)}
-                      placeholder="0.0"
-                      unit="s"
-                      step="0.1"
-                    />
-                    <MobileInput
-                      label="Breaking Capacity (kA)"
-                      type="number"
-                      value={upstreamBreakingCapacity}
-                      onChange={(e) => setUpstreamBreakingCapacity(e.target.value)}
-                      placeholder="e.g., 25"
-                      unit="kA"
-                    />
-                  </div>
-
-                  <div className="space-y-4">
-                    <h4 className="text-sm font-medium text-elec-yellow">Downstream Settings</h4>
-                    <MobileInput
-                      label="Custom Magnetic Setting (A)"
-                      type="number"
-                      value={downstreamMagneticSetting}
-                      onChange={(e) => setDownstreamMagneticSetting(e.target.value)}
-                      placeholder="Auto-calculated if blank"
-                      unit="A"
-                    />
-                    <MobileInput
-                      label="Breaking Capacity (kA)"
-                      type="number"
-                      value={downstreamBreakingCapacity}
-                      onChange={(e) => setDownstreamBreakingCapacity(e.target.value)}
-                      placeholder="e.g., 10"
-                      unit="kA"
-                    />
-                  </div>
+          {/* Selectivity Breakdown */}
+          <CalculatorSection title="Selectivity Breakdown" defaultOpen>
+            <div className="space-y-2">
+              {[
+                { label: 'Overload Selectivity', pass: result.overloadSelectivity },
+                { label: 'Short-Circuit Selectivity', pass: result.shortCircuitSelectivity },
+                { label: 'Breaking Capacity', pass: result.breakingCapacityCheck },
+                {
+                  label: 'Energy Selectivity (I²t)',
+                  pass: result.energyLetThrough.energySelective,
+                },
+              ].map((item) => (
+                <div key={item.label} className="flex items-center justify-between py-1.5">
+                  <span className="text-white text-sm">{item.label}</span>
+                  {item.pass ? (
+                    <span className="flex items-center gap-1 text-green-400 text-sm font-medium">
+                      <CheckCircle className="h-4 w-4" /> Pass
+                    </span>
+                  ) : (
+                    <span className="flex items-center gap-1 text-red-400 text-sm font-medium">
+                      <XCircle className="h-4 w-4" /> Fail
+                    </span>
+                  )}
                 </div>
+              ))}
+            </div>
+          </CalculatorSection>
 
-                <Separator />
+          {/* Energy Let-Through (I²t) */}
+          <CalculatorSection title="Energy Let-Through (I²t)" defaultOpen={false}>
+            <ResultsGrid>
+              <ResultValue
+                label="Downstream I²t"
+                value={`${result.energyLetThrough.downstreamI2t.toFixed(0)} A²s`}
+                category={CAT}
+              />
+              <ResultValue
+                label="Upstream I²t"
+                value={`${result.energyLetThrough.upstreamI2t.toFixed(0)} A²s`}
+                category={CAT}
+              />
+              <ResultValue
+                label="I²t Ratio"
+                value={`${result.energyLetThrough.ratio}`}
+                category={CAT}
+              />
+            </ResultsGrid>
+            <p className="text-white text-sm mt-3">
+              {result.energyLetThrough.energySelective
+                ? 'Downstream device clears the fault before upstream device lets through equivalent energy. Energy selectivity is achieved.'
+                : 'Downstream I²t exceeds upstream — both devices may experience simultaneous stress. Review device coordination.'}
+            </p>
+          </CalculatorSection>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div className="space-y-4">
-                    <h4 className="text-sm font-medium text-elec-yellow">Circuit Parameters</h4>
-                    <MobileInput
-                      label="Short Circuit Current (A)"
-                      type="number"
-                      value={shortCircuitCurrent}
-                      onChange={(e) => setShortCircuitCurrent(e.target.value)}
-                      placeholder="Same as fault current if blank"
-                      unit="A"
-                    />
-                    <MobileInput
-                      label="Load Current (A)"
-                      type="number"
-                      value={loadCurrent}
-                      onChange={(e) => setLoadCurrent(e.target.value)}
-                      placeholder="80% of upstream rating if blank"
-                      unit="A"
-                    />
-                    <MobileInput
-                      label="Cable Length (m)"
-                      type="number"
-                      value={cableLength}
-                      onChange={(e) => setCableLength(e.target.value)}
-                      placeholder="e.g., 50"
-                      unit="m"
-                    />
+          {/* Back-up (Cascade) Protection */}
+          <CalculatorSection title="Back-up (Cascade) Protection" defaultOpen={false}>
+            <ResultBadge
+              label="Cascade"
+              value={result.cascadeProtection.eligible ? 'Eligible' : 'Not Applicable'}
+              variant={result.cascadeProtection.eligible ? 'success' : 'neutral'}
+              category={CAT}
+            />
+            {result.cascadeProtection.eligible && (
+              <div className="mt-3 space-y-2">
+                <ResultValue
+                  label="Combined Breaking Capacity"
+                  value={`${result.cascadeProtection.combinedBreakingCapacity} kA`}
+                  category={CAT}
+                />
+                <p className="text-white text-sm">{result.cascadeProtection.cascadeRating}</p>
+                <p className="text-white text-sm">
+                  Per BS 7671 Regulation 536.4.3, back-up protection allows a downstream device with
+                  lower breaking capacity to be protected by an upstream device, provided the
+                  combination is verified by the manufacturer.
+                </p>
+              </div>
+            )}
+            {!result.cascadeProtection.eligible && (
+              <p className="text-white text-sm mt-3">
+                Cascade protection is not applicable for this device combination. Both devices must
+                independently meet the prospective fault current.
+              </p>
+            )}
+          </CalculatorSection>
+
+          {/* Concerns & Actions */}
+          {result.immediateActions.length > 0 && (
+            <CalculatorSection title="Immediate Actions Required" defaultOpen>
+              <div className="space-y-2">
+                {result.immediateActions.map((action, i) => (
+                  <div key={i} className="flex items-start gap-2">
+                    <XCircle className="h-4 w-4 text-red-400 mt-0.5 flex-shrink-0" />
+                    <span className="text-white text-sm">{action}</span>
                   </div>
+                ))}
+              </div>
+            </CalculatorSection>
+          )}
 
-                  <div className="space-y-4">
-                    <h4 className="text-sm font-medium text-elec-yellow">Environmental</h4>
-                    <MobileInput
-                      label="Ambient Temperature (°C)"
-                      type="number"
-                      value={ambientTemperature}
-                      onChange={(e) => setAmbientTemperature(e.target.value)}
-                      placeholder="e.g., 30"
-                      unit="°C"
-                    />
-                    <MobileSelect
-                      label="Installation Method"
-                      placeholder="Select installation method"
-                      value={installationMethod}
-                      onValueChange={setInstallationMethod}
-                      options={Object.entries(installationMethods).map(([key, method]) => ({
-                        value: key,
-                        label: method,
-                      }))}
-                    />
+          {result.concerns.length > 0 && (
+            <CalculatorSection title="Concerns" defaultOpen>
+              <div className="space-y-2">
+                {result.concerns.map((concern, i) => (
+                  <div key={i} className="flex items-start gap-2">
+                    <span className="text-orange-400 mt-0.5 flex-shrink-0">!</span>
+                    <span className="text-white text-sm">{concern}</span>
                   </div>
+                ))}
+              </div>
+            </CalculatorSection>
+          )}
+
+          {result.recommendations.length > 0 && (
+            <Collapsible>
+              <CollapsibleTrigger className="flex items-center justify-between w-full min-h-11 py-2.5 text-white font-medium touch-manipulation">
+                <span>Recommendations ({result.recommendations.length})</span>
+                <ChevronDown className="h-4 w-4" />
+              </CollapsibleTrigger>
+              <CollapsibleContent>
+                <div className="space-y-2 pt-2">
+                  {result.recommendations.map((rec, i) => (
+                    <div key={i} className="flex items-start gap-2">
+                      <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
+                      <span className="text-white text-sm">{rec}</span>
+                    </div>
+                  ))}
                 </div>
               </CollapsibleContent>
             </Collapsible>
+          )}
 
-            <div className="flex flex-col sm:flex-row gap-2">
-              <MobileButton
-                onClick={calculateSelectivityResult}
-                variant="elec"
-                size="wide"
-                disabled={!upstreamRating || !downstreamRating || !faultCurrent}
-                className="sm:flex-1"
-              >
-                <Calculator className="h-4 w-4 mr-2" />
-                Calculate Selectivity
-              </MobileButton>
-              <MobileButton onClick={reset} variant="outline" size="default" className="sm:w-auto">
-                <RotateCcw className="h-4 w-4" />
-              </MobileButton>
-            </div>
-          </div>
-        </CardContent>
-      </Card>
+          {/* Copy Results */}
+          <button
+            onClick={handleCopy}
+            className="flex items-center gap-2 text-white text-sm py-2 px-4 rounded-lg bg-white/10 hover:bg-white/20 transition-colors h-11 touch-manipulation"
+          >
+            {copied ? <Check className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
+            {copied ? 'Copied' : 'Copy Results'}
+          </button>
 
-      {/* Results Section - Immediately after calculator */}
-      {result && <SelectivityGuidance result={result} />}
+          {/* Formulas */}
+          <CalculatorFormula
+            title="Selectivity Formulas"
+            steps={[
+              {
+                label: 'Selectivity Ratio',
+                formula: 'Ratio = In(upstream) / In(downstream)',
+                result: `${result.selectivityRatio.toFixed(2)}:1`,
+              },
+              {
+                label: 'Inverse-Time Thermal',
+                formula: 't = k / ((I/In)² - 1)',
+                result: 'Thermal trip time',
+              },
+              {
+                label: 'Energy Let-Through',
+                formula: 'I²t = I_fault² x t_operating',
+                result: `Down: ${result.energyLetThrough.downstreamI2t.toFixed(0)} / Up: ${result.energyLetThrough.upstreamI2t.toFixed(0)} A²s`,
+              },
+              {
+                label: 'Time Discrimination',
+                formula: 't_upstream > t_downstream + 100ms',
+                result: `${((result.operatingTimes.upstream - result.operatingTimes.downstream) * 1000).toFixed(0)} ms margin`,
+              },
+            ]}
+            category={CAT}
+            defaultOpen
+          />
 
-      {/* Information Section */}
-      <SelectivityInfo />
-    </div>
+          <FormulaReference
+            category={CAT}
+            name="Selectivity & Discrimination"
+            formula="Ratio = In(upstream) / In(downstream) ≥ 1.6:1"
+            variables={[
+              { symbol: 'In', description: 'Rated current of protective device (A)' },
+              { symbol: 'I²t', description: 'Energy let-through: I_fault² × t_operating (A²s)' },
+              {
+                symbol: 'Is',
+                description: 'Selectivity limit current — intersection of time-current curves (A)',
+              },
+              {
+                symbol: 'Ref',
+                description:
+                  'BS 7671 Reg 536.4.1 (selectivity), Reg 536.4.3 (cascade), BS EN 60898',
+              },
+            ]}
+          />
+        </>
+      )}
+    </CalculatorCard>
   );
 };
 

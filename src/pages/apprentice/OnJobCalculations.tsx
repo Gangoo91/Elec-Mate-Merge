@@ -131,6 +131,15 @@ const SwimmingPoolCalculator = lazy(
 const SelectivityCalculator = lazy(
   () => import('@/components/apprentice/calculators/SelectivityCalculator')
 );
+const FaultLevelCalculator = lazy(
+  () => import('@/components/apprentice/calculators/FaultLevelCalculator')
+);
+const TouchStepVoltageCalculator = lazy(
+  () => import('@/components/apprentice/calculators/TouchStepVoltageCalculator')
+);
+const LightningProtectionCalculator = lazy(
+  () => import('@/components/apprentice/calculators/LightningProtectionCalculator')
+);
 // Working Renewable Energy Calculators
 const DataCentreCalculator = lazy(
   () => import('@/components/apprentice/calculators/DataCentreCalculator')
@@ -286,6 +295,12 @@ const OnJobCalculations = () => {
         return <SwimmingPoolCalculator />;
       case 'selectivity':
         return <SelectivityCalculator />;
+      case 'fault-level':
+        return <FaultLevelCalculator />;
+      case 'touch-step-voltage':
+        return <TouchStepVoltageCalculator />;
+      case 'lightning-protection':
+        return <LightningProtectionCalculator />;
       // Working Renewable Energy Calculators
       case 'solar-array':
         return <SolarArrayCalculator />;

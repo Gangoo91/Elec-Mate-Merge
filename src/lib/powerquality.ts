@@ -15,6 +15,8 @@ export interface PowerQualityInputs {
   frequency: number;
   neutralConductorSize?: number;
   loadType: 'linear' | 'non-linear' | 'mixed';
+  /** Displacement power factor (fundamental component). Defaults to 0.95 if not provided. */
+  displacementPF?: number;
 }
 
 export interface PowerQualityResults {
@@ -31,6 +33,13 @@ export interface PowerQualityResults {
   neutralCurrent: number;
   kFactor: number;
   diversityFactor: number;
+
+  // True vs Displacement PF
+  truePowerFactor: number;
+  displacementPowerFactor: number;
+
+  // Transformer derating
+  transformerDerating: number; // percentage of nameplate capacity
 
   // Individual harmonic analysis
   harmonicSpectrum: Array<{
@@ -61,6 +70,29 @@ export interface PowerQualityResults {
   bs7671Compliance: boolean;
   gCode5Compliance: boolean;
 }
+
+// Harmonic load presets — typical spectra as % of fundamental
+export const HARMONIC_PRESETS: Record<
+  string,
+  { label: string; harmonics: Record<number, number> }
+> = {
+  led_lighting: {
+    label: 'LED Lighting',
+    harmonics: { 3: 77, 5: 43, 7: 15, 9: 9, 11: 6, 13: 4 },
+  },
+  vfd: {
+    label: 'Variable Frequency Drive (6-pulse)',
+    harmonics: { 5: 20, 7: 14, 11: 9, 13: 7, 17: 5, 19: 4 },
+  },
+  ups: {
+    label: 'UPS System',
+    harmonics: { 3: 30, 5: 15, 7: 10, 9: 8, 11: 5, 13: 3 },
+  },
+  it_equipment: {
+    label: 'IT Equipment / SMPS',
+    harmonics: { 3: 40, 5: 30, 7: 20, 9: 10, 11: 5, 13: 3 },
+  },
+};
 
 // G5/5 limits for individual harmonics (% of fundamental)
 const G5_5_LIMITS = {
@@ -100,101 +132,6 @@ const IEEE_519_LIMITS = {
   voltage: { general: 8, critical: 5 },
 };
 
-// Enhanced guidance generators
-const generatePracticalGuidance = (inputs: PowerQualityInputs, metrics: any): string[] => {
-  const guidance = [];
-
-  if (metrics.thdiCurrent > 15) {
-    guidance.push('Install K-rated transformers designed for non-linear loads (K-13 or K-20)');
-    guidance.push('Consider active harmonic filters to reduce current distortion below 5%');
-    guidance.push('Implement 12-pulse or 18-pulse drives for large VFDs');
-    guidance.push('Use line reactors (3-5%) on all variable frequency drives');
-  } else if (metrics.thdiCurrent > 10) {
-    guidance.push('Install passive harmonic filters tuned to dominant frequencies (5th and 7th)');
-    guidance.push('Use DC link reactors on VFDs to reduce harmonic injection');
-    guidance.push('Consider load scheduling to reduce coincident harmonics');
-  } else if (metrics.thdiCurrent > 5) {
-    guidance.push('Monitor harmonic levels regularly as loads increase');
-    guidance.push('Plan for harmonic mitigation in future expansions');
-  }
-
-  if (metrics.kFactor > 13) {
-    guidance.push('Replace standard transformers with K-20 rated units immediately');
-    guidance.push('Increase neutral conductor to 200% of phase conductor size');
-    guidance.push('Install temperature monitoring on existing transformers');
-  } else if (metrics.kFactor > 9) {
-    guidance.push('Upgrade to K-13 rated transformers for reliability');
-    guidance.push('Monitor transformer loading and temperature closely');
-  }
-
-  if (
-    inputs.systemType === 'three-phase' &&
-    metrics.neutralCurrent > inputs.fundamentalCurrent * 0.8
-  ) {
-    guidance.push('Install oversized neutral conductor (minimum 200% of phase)');
-    guidance.push('Consider zig-zag transformers to handle triplen harmonics');
-    guidance.push('Use separate neutrals for different load types');
-  }
-
-  if (metrics.crestFactorCurrent > 2.5) {
-    guidance.push('Install RMS-sensing circuit breakers instead of peak-sensing');
-    guidance.push('Derate protective devices by 15-20% for high crest factors');
-  }
-
-  // General best practices
-  guidance.push('Conduct regular thermal imaging of electrical connections');
-  guidance.push('Use true RMS meters for accurate measurements');
-  guidance.push('Implement power quality monitoring systems');
-
-  return guidance;
-};
-
-const generateEnhancedRecommendations = (results: any): string[] => {
-  const recommendations = [];
-
-  if (results.complianceStatus === 'non-compliant') {
-    recommendations.push('Immediate compliance assessment required - violates BS 7671 regulations');
-    recommendations.push('Engage certified electrical engineer for harmonic mitigation study');
-    recommendations.push('Document all non-compliant harmonics for regulatory reporting');
-  }
-
-  if (results.riskLevel === 'critical') {
-    recommendations.push('Emergency shutdown may be required to prevent equipment damage');
-    recommendations.push('Install temporary harmonic monitoring equipment');
-  }
-
-  if (results.thdiCurrent > 8) {
-    recommendations.push('Implement continuous power quality monitoring system');
-    recommendations.push('Develop harmonic management policy for future loads');
-  }
-
-  return recommendations;
-};
-
-const generateEnhancedActions = (results: any): string[] => {
-  const actions = [];
-
-  if (results.riskLevel === 'critical') {
-    actions.push('Reduce non-linear loads immediately to prevent equipment damage');
-    actions.push('Monitor transformer temperatures every hour until mitigation');
-    actions.push('Contact electrical consultant within 24 hours');
-  } else if (results.riskLevel === 'high') {
-    actions.push('Schedule professional harmonic analysis within 1 week');
-    actions.push('Begin daily equipment temperature monitoring');
-    actions.push('Prepare for potential transformer derating or replacement');
-  } else if (results.riskLevel === 'medium') {
-    actions.push('Plan harmonic assessment within 30 days');
-    actions.push('Increase electrical system inspection frequency');
-  }
-
-  if (results.thdiCurrent > 20) {
-    actions.push('Document equipment showing signs of harmonic stress');
-    actions.push('Consider emergency power factor correction installation');
-  }
-
-  return actions;
-};
-
 export function calculatePowerQuality(inputs: PowerQualityInputs): PowerQualityResults {
   const { fundamentalCurrent, fundamentalVoltage, harmonics, systemType, frequency } = inputs;
 
@@ -222,12 +159,20 @@ export function calculatePowerQuality(inputs: PowerQualityInputs): PowerQualityR
   // Calculate distortion factor
   const distortionFactor = fundamentalCurrent / rmsCurrentTotal;
 
+  // True PF vs Displacement PF
+  const displacementPowerFactor = inputs.displacementPF ?? 0.95;
+  const truePowerFactor = displacementPowerFactor * distortionFactor;
+
   // Calculate neutral current for 3-phase systems
+  // Triplen harmonics (3rd, 9th, 15th...) are zero-sequence and add in phase across all 3 phases.
+  // Each triplen harmonic contributes 3× its per-phase current to the neutral.
+  // Different triplen orders combine as RMS (different frequencies).
+  // I_N = 3 × √(Σ I_triplen²)
   let neutralCurrent = 0;
   if (systemType === 'three-phase') {
-    // Simplified neutral current calculation (triplen harmonics)
     const triplenHarmonics = harmonics.filter((h) => h.order % 3 === 0);
-    neutralCurrent = triplenHarmonics.reduce((sum, h) => sum + h.current, 0) * Math.sqrt(3);
+    const triplenSquareSum = triplenHarmonics.reduce((sum, h) => sum + Math.pow(h.current, 2), 0);
+    neutralCurrent = 3 * Math.sqrt(triplenSquareSum);
   }
 
   // Calculate K-factor for transformer derating
@@ -238,16 +183,20 @@ export function calculatePowerQuality(inputs: PowerQualityInputs): PowerQualityR
       return sum + Math.pow(h.order, 2) * Math.pow(percentage / 100, 2);
     }, 0);
 
+  // Transformer derating per IEEE C57.110
+  // Derating = 1 / √(1 + (K-1) × e_r) where e_r ≈ 0.05 for typical transformers
+  const eddy_ratio = 0.05;
+  const transformerDerating = Math.round((1 / Math.sqrt(1 + (kFactor - 1) * eddy_ratio)) * 100);
+
   // Analyse individual harmonics
   const harmonicSpectrum = harmonics.map((h) => {
     const currentPercentage = (h.current / fundamentalCurrent) * 100;
     const voltagePercentage = h.voltage ? (h.voltage / fundamentalVoltage) * 100 : 0;
 
-    // Determine compliance based on G5/5 limits
     const isOdd = h.order % 2 === 1;
     const limit = isOdd
-      ? (G5_5_LIMITS.odd as any)[h.order] || 1
-      : (G5_5_LIMITS.even as any)[h.order] || 0.5;
+      ? (G5_5_LIMITS.odd as Record<number, number>)[h.order] || 1
+      : (G5_5_LIMITS.even as Record<number, number>)[h.order] || 0.5;
 
     let compliance: 'pass' | 'warning' | 'fail';
     if (currentPercentage <= limit * 0.8) compliance = 'pass';
@@ -293,7 +242,7 @@ export function calculatePowerQuality(inputs: PowerQualityInputs): PowerQualityR
     thdiCurrent <= IEEE_519_LIMITS.current.general &&
     thdvVoltage <= IEEE_519_LIMITS.voltage.general;
   const bs7671Compliance = harmonicSpectrum.every((h) => h.compliance !== 'fail');
-  const gCode5Compliance = bs7671Compliance; // G5/5 is part of BS 7671
+  const gCode5Compliance = bs7671Compliance;
 
   const complianceStatus: PowerQualityResults['complianceStatus'] =
     ieeeCompliance && bs7671Compliance
@@ -302,14 +251,10 @@ export function calculatePowerQuality(inputs: PowerQualityInputs): PowerQualityR
         ? 'borderline'
         : 'non-compliant';
 
-  // Enhanced recommendations generation
-  const metrics = { thdiCurrent, thdvVoltage, kFactor, neutralCurrent, crestFactorCurrent };
-  const resultsForGuidance = { complianceStatus, riskLevel, thdiCurrent };
+  // Primary concerns
+  const primaryConcerns: string[] = [];
+  const equipmentRisks: string[] = [];
 
-  const primaryConcerns = [];
-  const equipmentRisks = [];
-
-  // Primary concerns analysis
   if (thdiCurrent > 15)
     primaryConcerns.push('Critical current harmonic distortion - immediate action required');
   else if (thdiCurrent > 10)
@@ -339,10 +284,62 @@ export function calculatePowerQuality(inputs: PowerQualityInputs): PowerQualityR
   if (crestFactorCurrent > 2.5)
     equipmentRisks.push('Circuit breaker nuisance tripping and arc flash risk');
 
-  // Generate enhanced guidance
-  const practicalGuidance = generatePracticalGuidance(inputs, metrics);
-  const recommendations = generateEnhancedRecommendations(resultsForGuidance);
-  const immediateActions = generateEnhancedActions(resultsForGuidance);
+  // Practical guidance
+  const practicalGuidance: string[] = [];
+  if (thdiCurrent > 15) {
+    practicalGuidance.push(
+      'Install K-rated transformers designed for non-linear loads (K-13 or K-20)'
+    );
+    practicalGuidance.push(
+      'Consider active harmonic filters to reduce current distortion below 5%'
+    );
+    practicalGuidance.push('Implement 12-pulse or 18-pulse drives for large VFDs');
+    practicalGuidance.push('Use line reactors (3-5%) on all variable frequency drives');
+  } else if (thdiCurrent > 10) {
+    practicalGuidance.push(
+      'Install passive harmonic filters tuned to dominant frequencies (5th and 7th)'
+    );
+    practicalGuidance.push('Use DC link reactors on VFDs to reduce harmonic injection');
+    practicalGuidance.push('Consider load scheduling to reduce coincident harmonics');
+  } else if (thdiCurrent > 5) {
+    practicalGuidance.push('Monitor harmonic levels regularly as loads increase');
+    practicalGuidance.push('Plan for harmonic mitigation in future expansions');
+  }
+
+  if (kFactor > 13) {
+    practicalGuidance.push('Replace standard transformers with K-20 rated units immediately');
+    practicalGuidance.push('Increase neutral conductor to 200% of phase conductor size');
+  } else if (kFactor > 9) {
+    practicalGuidance.push('Upgrade to K-13 rated transformers for reliability');
+    practicalGuidance.push('Monitor transformer loading and temperature closely');
+  }
+
+  practicalGuidance.push('Use true RMS meters for accurate measurements');
+
+  // Recommendations
+  const recommendations: string[] = [];
+  if (complianceStatus === 'non-compliant') {
+    recommendations.push('Immediate compliance assessment required - violates BS 7671 regulations');
+    recommendations.push('Engage certified electrical engineer for harmonic mitigation study');
+  }
+  if (riskLevel === 'critical') {
+    recommendations.push('Install temporary harmonic monitoring equipment');
+  }
+  if (thdiCurrent > 8) {
+    recommendations.push('Implement continuous power quality monitoring system');
+  }
+
+  // Immediate actions
+  const immediateActions: string[] = [];
+  if (riskLevel === 'critical') {
+    immediateActions.push('Reduce non-linear loads immediately to prevent equipment damage');
+    immediateActions.push('Contact electrical consultant within 24 hours');
+  } else if (riskLevel === 'high') {
+    immediateActions.push('Schedule professional harmonic analysis within 1 week');
+    immediateActions.push('Begin daily equipment temperature monitoring');
+  } else if (riskLevel === 'medium') {
+    immediateActions.push('Plan harmonic assessment within 30 days');
+  }
 
   return {
     thdiCurrent,
@@ -355,6 +352,9 @@ export function calculatePowerQuality(inputs: PowerQualityInputs): PowerQualityR
     neutralCurrent,
     kFactor,
     diversityFactor: distortionFactor,
+    truePowerFactor: Math.round(truePowerFactor * 1000) / 1000,
+    displacementPowerFactor,
+    transformerDerating,
     harmonicSpectrum,
     powerQualityRating,
     complianceStatus,

@@ -80,6 +80,11 @@ const CalculatorSelector = ({ calculatorType, setCalculatorType }: CalculatorSel
       category: 'Lighting & Power Systems',
     },
     { value: 'battery-backup', label: 'Battery Backup', category: 'Lighting & Power Systems' },
+    {
+      value: 'emergency-lighting',
+      label: 'Emergency Lighting Design',
+      category: 'Lighting & Power Systems',
+    },
 
     // Renewable Energy
     { value: 'solar-pv', label: 'Solar PV', category: 'Renewable Energy' },
@@ -107,8 +112,18 @@ const CalculatorSelector = ({ calculatorType, setCalculatorType }: CalculatorSel
       category: 'Advanced Safety & Analysis',
     },
     {
-      value: 'emergency-lighting',
-      label: 'Emergency Lighting Design',
+      value: 'fault-level',
+      label: 'Fault Level Calculator',
+      category: 'Advanced Safety & Analysis',
+    },
+    {
+      value: 'touch-step-voltage',
+      label: 'Touch & Step Voltage',
+      category: 'Advanced Safety & Analysis',
+    },
+    {
+      value: 'lightning-protection',
+      label: 'Lightning Protection Risk Assessment',
       category: 'Advanced Safety & Analysis',
     },
 
