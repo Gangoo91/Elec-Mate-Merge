@@ -1,225 +1,346 @@
-import { motion } from 'framer-motion';
-import { type LucideIcon, CheckCircle } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { type LucideIcon, Star } from 'lucide-react';
 
-interface ShowcaseItem {
-  icon: LucideIcon;
-  label: string;
+export interface ScreenshotItem {
+  src: string;
+  alt: string;
+  caption: string;
 }
 
-interface GridItem {
-  icon: LucideIcon;
-  label: string;
-}
-
-interface TierCard {
+export interface TestimonialData {
+  quote: string;
   name: string;
-  colour: string;
-  description: string;
-  price: string;
-  badge?: string;
-  badgeColour?: string;
+  company: string;
+  companyLogo: string;
+  logoBg?: string;
 }
 
-type SlideVariant = 'hero' | 'showcase' | 'stats' | 'feature-grid' | 'tiers' | 'cta';
+type SlideVariant = 'hero-pain' | 'solution-demo' | 'proof' | 'cta-final';
 
 interface WalkthroughSlideProps {
   icon: LucideIcon;
-  title: string;
+  title: React.ReactNode;
+  titleWords: string[];
+  accentWord: string;
   description: string;
-  features: string[];
   accentColour: string;
-  variant?: SlideVariant;
-  showcaseItems?: ShowcaseItem[];
-  statCallout?: string;
-  gridItems?: GridItem[];
-  tierCards?: TierCard[];
+  variant: SlideVariant;
+  subtitle?: string;
+  badgeText?: string;
+  heroImage?: string;
+  screenshots?: ScreenshotItem[];
+  testimonials?: TestimonialData[];
+  checkmarks?: string[];
+  direction?: number;
 }
 
-const WalkthroughSlide = ({
-  icon: Icon,
-  title,
-  description,
-  features,
+/* ── mask-image style for screenshot bottom-fade ── */
+const maskFadeStyle: React.CSSProperties = {
+  maskImage: 'linear-gradient(to bottom, black 0%, black 90%, transparent 100%)',
+  WebkitMaskImage: 'linear-gradient(to bottom, black 0%, black 90%, transparent 100%)',
+};
+
+/* ── Fast crossfade variants — no lag ── */
+const slideVariants = {
+  enter: () => ({
+    opacity: 0,
+  }),
+  center: {
+    opacity: 1,
+  },
+  exit: () => ({
+    opacity: 0,
+  }),
+};
+
+const slideTransition = {
+  opacity: { duration: 0.15 },
+};
+
+/* ── Word-by-word headline component ── */
+const WordRevealHeadline = ({
+  words,
+  accentWord,
   accentColour,
-  variant = 'hero',
-  showcaseItems,
-  statCallout,
-  gridItems,
-  tierCards,
-}: WalkthroughSlideProps) => {
-  const iconBg = accentColour + '26'; // 15% opacity hex suffix
+  className,
+}: {
+  words: string[];
+  accentWord: string;
+  accentColour: string;
+  className?: string;
+}) => {
+  if (!words.length) return null;
+  const accentWords = accentWord.split(' ');
+  return (
+    <motion.h2 className={className}>
+      {words.map((word, i) => {
+        const isAccent = accentWords.includes(word);
+        return (
+          <motion.span
+            key={`${word}-${i}`}
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{
+              duration: 0.3,
+              delay: 0.06 * i,
+              ease: [0.25, 0.1, 0.25, 1],
+            }}
+            className="inline-block mr-[0.3em]"
+            style={isAccent ? { color: accentColour } : undefined}
+          >
+            {word}
+          </motion.span>
+        );
+      })}
+    </motion.h2>
+  );
+};
+
+/* ── Auto-cycling feature showcase — smooth crossfade dissolve ── */
+const FeatureShowcase = ({
+  screenshots,
+  accentColour,
+}: {
+  screenshots: ScreenshotItem[];
+  accentColour: string;
+}) => {
+  const [activeIndex, setActiveIndex] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setActiveIndex((prev) => (prev + 1) % screenshots.length);
+    }, 2500);
+    return () => clearInterval(interval);
+  }, [screenshots.length]);
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: -20 }}
-      transition={{ duration: 0.35 }}
-      className="flex flex-col items-center text-center px-6 w-full"
-    >
-      {/* ── Hero variant ── */}
-      {variant === 'hero' && (
-        <>
-          <div className="relative mb-8">
+    <div className="flex flex-col items-center w-full">
+      {/* Overlapping crossfade — both images present during transition */}
+      <div className="relative w-full max-w-[320px]" style={{ aspectRatio: '1284/2778' }}>
+        <AnimatePresence initial={false}>
+          <motion.img
+            key={activeIndex}
+            src={screenshots[activeIndex].src}
+            alt={screenshots[activeIndex].alt}
+            initial={{ opacity: 0, scale: 1.02 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.6, ease: [0.4, 0, 0.2, 1] }}
+            className="absolute inset-0 w-full h-full object-contain"
+            loading="eager"
+          />
+        </AnimatePresence>
+      </div>
+
+      {/* Mini dot indicators for features */}
+      <div className="flex gap-1 mt-3">
+        {screenshots.map((_, i) => (
+          <button key={i} onClick={() => setActiveIndex(i)} className="touch-manipulation p-1">
             <div
-              className="absolute inset-0 rounded-full blur-2xl opacity-30"
-              style={{ backgroundColor: accentColour }}
+              className="rounded-full transition-all duration-300"
+              style={{
+                width: i === activeIndex ? 16 : 4,
+                height: 4,
+                backgroundColor: i === activeIndex ? accentColour : 'rgba(255,255,255,0.2)',
+              }}
             />
-            <div
-              className="relative w-24 h-24 rounded-2xl flex items-center justify-center border border-white/10"
-              style={{ backgroundColor: iconBg }}
+          </button>
+        ))}
+      </div>
+    </div>
+  );
+};
+
+const WalkthroughSlide = ({
+  title: _title,
+  titleWords,
+  accentWord,
+  description,
+  accentColour,
+  variant,
+  subtitle,
+  heroImage,
+  screenshots,
+  testimonials,
+  checkmarks,
+  direction = 1,
+}: WalkthroughSlideProps) => {
+  return (
+    <motion.div
+      custom={direction}
+      variants={slideVariants}
+      initial="enter"
+      animate="center"
+      exit="exit"
+      transition={slideTransition}
+      className="flex flex-col items-center text-center w-full overflow-hidden"
+    >
+      {/* ─── SLIDE 1: HERO — full App Store image ─── */}
+      {variant === 'hero-pain' && (
+        <div className="flex flex-col items-center w-full px-6">
+          {heroImage && (
+            <motion.div
+              initial={{ opacity: 0, y: 60 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{
+                type: 'spring',
+                stiffness: 80,
+                damping: 15,
+                delay: 0.1,
+              }}
+              className="relative w-full max-w-[320px]"
             >
-              <Icon className="h-12 w-12" style={{ color: accentColour }} />
-            </div>
-          </div>
-          <h2 className="text-2xl font-bold text-white mb-4 leading-tight">{title}</h2>
-          <p className="text-white text-base max-w-sm leading-relaxed">{description}</p>
-        </>
+              <img
+                src={heroImage}
+                alt="Elec-Mate app"
+                className="relative w-full h-auto"
+                style={maskFadeStyle}
+                loading="eager"
+              />
+            </motion.div>
+          )}
+        </div>
       )}
 
-      {/* ── Showcase variant (icon grid) ── */}
-      {variant === 'showcase' && (
-        <>
-          <h2 className="text-2xl font-bold text-white mb-2 leading-tight">{title}</h2>
-          <p className="text-white text-sm mb-6 max-w-xs leading-relaxed">{description}</p>
-          {showcaseItems && (
-            <div className="grid grid-cols-3 gap-3 w-full max-w-xs mb-2">
-              {showcaseItems.map((item) => {
-                const ItemIcon = item.icon;
-                return (
-                  <div
-                    key={item.label}
-                    className="flex flex-col items-center gap-2 rounded-xl border border-white/10 py-3 px-2"
-                    style={{ backgroundColor: iconBg }}
-                  >
-                    <ItemIcon className="h-6 w-6" style={{ color: accentColour }} />
-                    <span className="text-white text-xs font-medium leading-tight text-center">
-                      {item.label}
-                    </span>
-                  </div>
-                );
-              })}
+      {/* ─── SLIDE 2: SOLUTION — auto-cycling single feature showcase ─── */}
+      {variant === 'solution-demo' && (
+        <div className="flex flex-col items-center w-full px-6">
+          {/* Headline */}
+          {titleWords.length > 0 && (
+            <div className="mb-6">
+              <WordRevealHeadline
+                words={titleWords}
+                accentWord={accentWord}
+                accentColour={accentColour}
+                className="text-[28px] leading-[1.15] font-extrabold text-white tracking-tight"
+              />
             </div>
           )}
-        </>
+
+          {/* Auto-cycling feature showcase — no swipe conflict */}
+          {screenshots && <FeatureShowcase screenshots={screenshots} accentColour={accentColour} />}
+        </div>
       )}
 
-      {/* ── Stats variant ── */}
-      {variant === 'stats' && (
-        <>
-          <h2 className="text-2xl font-bold text-white mb-3 leading-tight">{title}</h2>
-          {statCallout && (
-            <div className="mb-4">
-              <span className="text-5xl font-extrabold" style={{ color: accentColour }}>
-                {statCallout}
-              </span>
-              <p className="text-white text-sm mt-1">practice questions</p>
-            </div>
-          )}
-          <div className="space-y-2.5 w-full max-w-xs">
-            {features.map((feature) => (
-              <div key={feature} className="flex items-center gap-3 text-left">
-                <div
-                  className="w-2 h-2 rounded-full flex-shrink-0"
-                  style={{ backgroundColor: accentColour }}
-                />
-                <span className="text-sm text-white">{feature}</span>
-              </div>
-            ))}
-          </div>
-        </>
-      )}
+      {/* ─── SLIDE 3: SOCIAL PROOF ─── */}
+      {variant === 'proof' && (
+        <div className="flex flex-col items-center w-full px-5">
+          <WordRevealHeadline
+            words={titleWords}
+            accentWord={accentWord}
+            accentColour={accentColour}
+            className="text-[32px] leading-[1.1] font-extrabold text-white mb-6 tracking-tight"
+          />
 
-      {/* ── Feature Grid variant ── */}
-      {variant === 'feature-grid' && (
-        <>
-          <h2 className="text-2xl font-bold text-white mb-2 leading-tight">{title}</h2>
-          <p className="text-white text-sm mb-5 max-w-xs leading-relaxed">{description}</p>
-          {gridItems && (
-            <div className="grid grid-cols-2 gap-2.5 w-full max-w-sm">
-              {gridItems.map((item) => {
-                const ItemIcon = item.icon;
-                return (
-                  <div
-                    key={item.label}
-                    className="flex items-center gap-2.5 rounded-xl border border-white/10 p-3"
-                    style={{ backgroundColor: iconBg }}
-                  >
-                    <ItemIcon className="h-5 w-5 flex-shrink-0" style={{ color: accentColour }} />
-                    <span className="text-white text-xs font-medium leading-tight text-left">
-                      {item.label}
-                    </span>
-                  </div>
-                );
-              })}
-            </div>
-          )}
-        </>
-      )}
-
-      {/* ── Tiers variant ── */}
-      {variant === 'tiers' && (
-        <>
-          <h2 className="text-2xl font-bold text-white mb-5 leading-tight">{title}</h2>
-          {tierCards && (
-            <div className="space-y-3 w-full max-w-sm">
-              {tierCards.map((tier) => (
-                <div
-                  key={tier.name}
-                  className="flex items-center gap-3 rounded-xl border p-4"
-                  style={{
-                    borderColor: tier.colour + '40',
-                    backgroundColor: tier.colour + '12',
-                  }}
+          {testimonials && (
+            <div className="w-full max-w-sm space-y-2.5">
+              {testimonials.map((t, i) => (
+                <motion.div
+                  key={t.name}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.25, delay: 0.08 * i }}
+                  className="w-full rounded-xl bg-white/[0.05] border border-white/[0.08] p-4 text-left"
                 >
-                  <div className="flex-1 text-left">
-                    <div className="flex items-center gap-2 mb-1">
-                      <span className="font-bold text-base" style={{ color: tier.colour }}>
-                        {tier.name}
-                      </span>
-                      {tier.badge && (
-                        <span
-                          className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full"
-                          style={{
-                            backgroundColor: (tier.badgeColour || tier.colour) + '30',
-                            color: tier.badgeColour || tier.colour,
-                          }}
-                        >
-                          {tier.badge}
-                        </span>
-                      )}
+                  <div className="flex items-center gap-2.5 mb-2">
+                    <div
+                      className="w-9 h-9 rounded-lg overflow-hidden flex-shrink-0"
+                      style={{ backgroundColor: t.logoBg || '#fff' }}
+                    >
+                      <img
+                        src={t.companyLogo}
+                        alt={t.company}
+                        className="w-full h-full object-contain"
+                      />
                     </div>
-                    <p className="text-white text-xs leading-snug">{tier.description}</p>
+                    <div className="flex-1 min-w-0">
+                      <p className="text-white text-[13px] font-bold leading-tight">{t.name}</p>
+                      <p className="text-[12px] font-medium" style={{ color: accentColour }}>
+                        {t.company}
+                      </p>
+                    </div>
+                    <div className="flex gap-px flex-shrink-0">
+                      {Array.from({ length: 5 }).map((_, j) => (
+                        <Star key={j} className="w-3 h-3 text-yellow-400 fill-yellow-400" />
+                      ))}
+                    </div>
                   </div>
-                  <div className="text-right flex-shrink-0">
-                    <span className="text-white text-xs font-medium">{tier.price}</span>
-                  </div>
-                </div>
+                  <p className="text-white text-[12px] leading-[1.5]">&ldquo;{t.quote}&rdquo;</p>
+                </motion.div>
               ))}
             </div>
           )}
-        </>
+        </div>
       )}
 
-      {/* ── CTA variant ── */}
-      {variant === 'cta' && (
-        <>
-          <div
-            className="w-20 h-20 rounded-2xl flex items-center justify-center mb-6 border border-white/10"
-            style={{ backgroundColor: iconBg }}
-          >
-            <Icon className="h-10 w-10" style={{ color: accentColour }} />
+      {/* ─── SLIDE 4: CTA FINAL ─── */}
+      {variant === 'cta-final' && (
+        <div className="flex flex-col items-center px-8 w-full relative">
+          {/* Faded background screenshot for visual depth */}
+          <div className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-[0.06]">
+            <img
+              src="/images/walkthrough/appstore-dashboard.png"
+              alt=""
+              className="w-full max-w-[400px] h-auto"
+              style={maskFadeStyle}
+            />
           </div>
-          <h2 className="text-2xl font-bold text-white mb-6 leading-tight">{title}</h2>
-          <div className="space-y-3 w-full max-w-xs">
-            {features.map((feature) => (
-              <div key={feature} className="flex items-center gap-3 text-left">
-                <CheckCircle className="h-5 w-5 flex-shrink-0" style={{ color: accentColour }} />
-                <span className="text-sm text-white">{feature}</span>
+
+          <div className="relative z-10 flex flex-col items-center w-full">
+            <WordRevealHeadline
+              words={titleWords}
+              accentWord={accentWord}
+              accentColour={accentColour}
+              className="text-[28px] leading-[1.15] font-extrabold text-white mb-2 tracking-tight"
+            />
+            {subtitle && (
+              <motion.p
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.3, delay: 0.3 }}
+                className="text-white text-[15px] mb-8 max-w-[280px] leading-relaxed"
+              >
+                {subtitle}
+              </motion.p>
+            )}
+
+            {checkmarks && (
+              <div className="space-y-4 w-full max-w-xs">
+                {checkmarks.map((item, i) => (
+                  <motion.div
+                    key={item}
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{
+                      type: 'spring',
+                      stiffness: 120,
+                      damping: 15,
+                      delay: 0.08 * i,
+                    }}
+                    className="flex items-center gap-3.5 text-left"
+                  >
+                    <div
+                      className="w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0"
+                      style={{ backgroundColor: accentColour }}
+                    >
+                      <svg
+                        className="w-3.5 h-3.5 text-black"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                        strokeWidth={3}
+                      >
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                      </svg>
+                    </div>
+                    <span className="text-[15px] text-white font-medium">{item}</span>
+                  </motion.div>
+                ))}
               </div>
-            ))}
+            )}
           </div>
-        </>
+        </div>
       )}
     </motion.div>
   );
