@@ -83,6 +83,7 @@ export default defineConfig(({ mode }) => ({
       'zod',
       'date-fns',
       'lodash',
+      'lodash/debounce',
       'clsx',
       'tailwind-merge',
       'uuid',

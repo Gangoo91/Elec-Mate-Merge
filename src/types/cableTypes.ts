@@ -25,19 +25,35 @@ export const cableSizeOptions = [
   { value: '400mm', label: '400mm²', currentCarryingCapacity: 546 },
 ];
 
-// BS 7671 Table 4A2 — Reference Methods for current-carrying capacity
+// BS 7671 Reference Methods — matches IET model form / industry cert software
 export const referenceMethodOptions = [
+  { value: 'A', label: 'A - Cables enclosed in conduit or trunking in a thermally insulated wall' },
+  { value: 'B', label: 'B - Cables enclosed in conduit or trunking in/on a wall/floor' },
+  { value: 'C', label: 'C - Clipped direct [includes cables direct in masonry]' },
+  { value: 'D', label: 'D - Cables laid in conduit or in cable duct under ground' },
+  { value: 'E', label: 'E - Free air on perforated cable tray [multi-core cables]' },
+  { value: 'F', label: 'F - Free air on perforated cable tray [single-core cables]' },
+  { value: 'G', label: 'G - Free air, flat [spaced by 1 cable diameter]' },
+  {
+    value: '100',
+    label: '100 - T&E on wooden joist or above ceiling with up to 100mm thermal insulation',
+  },
+  {
+    value: '101',
+    label: '101 - T&E on wooden joist or above ceiling with more than 100mm thermal insulation',
+  },
+  {
+    value: '102',
+    label: '102 - T&E in stud wall with more than 100mm thermal insulation, touching inner wall',
+  },
+  {
+    value: '103',
+    label:
+      '103 - T&E in stud wall with more than 100mm thermal insulation, not touching inner wall',
+  },
+  { value: 'M', label: 'M - Mixed - multiple cables' },
   { value: 'N/A', label: 'N/A' },
-  { value: 'A1', label: 'A1 - Enclosed in conduit in a thermally insulated wall' },
-  { value: 'A2', label: 'A2 - Enclosed in conduit in masonry' },
-  { value: 'B1', label: 'B1 - Enclosed in conduit on a wall or ceiling' },
-  { value: 'B2', label: 'B2 - Enclosed in trunking on a wall or ceiling' },
-  { value: 'C', label: 'C - Clipped direct to a non-thermally insulating surface' },
-  { value: 'D1', label: 'D1 - In conduit or duct buried in the ground' },
-  { value: 'D2', label: 'D2 - Direct in the ground (without conduit)' },
-  { value: 'E', label: 'E - Free air on a perforated cable tray' },
-  { value: 'F', label: 'F - Free air, touching (cable ladder / cleats)' },
-  { value: 'G', label: 'G - Free air, spaced (from surface)' },
+  { value: 'LIM', label: 'LIM' },
 ];
 
 export const bondingConductorSizes = [

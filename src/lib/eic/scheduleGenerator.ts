@@ -51,42 +51,54 @@ export interface SiteInfo {
   propertyAddress?: string;
 }
 
-// BS 7671 Installation Method Reference Codes
+// BS 7671 Reference Method Codes — maps installation descriptions to IET cert codes
 const INSTALLATION_METHOD_CODES: Record<string, string> = {
-  // Standard method names
-  'Method A': '100',
-  'Method B': '101',
-  'Method C': '103',
-  // Common descriptions
-  'Clipped Direct': '103',
-  'clipped-direct': '103',
-  'clipped direct': '103',
-  'In Conduit': '100',
-  'in-conduit': '100',
-  'in conduit': '100',
-  'In Trunking': '101',
-  'in-trunking': '101',
-  'in trunking': '101',
-  'Buried Direct': '120',
-  buried: '120',
-  'buried-direct': '120',
-  // BS 7671 Table 4A1 reference methods
-  A1: 'A1', // Enclosed in conduit in thermally insulated wall
-  A2: 'A2', // Enclosed conduit on wall
-  B: 'B', // Enclosed in conduit on wall
-  B1: 'B1', // Enclosed in conduit on wooden wall
-  B2: 'B2', // Enclosed in conduit on masonry wall
-  C: 'C', // Direct in thermal insulation
-  'enclosed-in-wall': 'A1',
-  'on-wall': 'A2',
-  'free-air': '102',
-  'free air': '102',
-  // Reference method numbers
+  // Direct reference method codes (pass-through)
+  A: 'A',
+  B: 'B',
+  C: 'C',
+  D: 'D',
+  E: 'E',
+  F: 'F',
+  G: 'G',
+  M: 'M',
+  'N/A': 'N/A',
+  LIM: 'LIM',
   '100': '100',
   '101': '101',
   '102': '102',
   '103': '103',
-  '120': '120',
+  // Legacy sub-method codes → map to simplified letter
+  A1: 'A',
+  A2: 'A',
+  B1: 'B',
+  B2: 'B',
+  D1: 'D',
+  D2: 'D',
+  // Common description strings → reference method
+  'Clipped Direct': 'C',
+  'clipped-direct': 'C',
+  'clipped direct': 'C',
+  'In Conduit': 'B',
+  'in-conduit': 'B',
+  'in conduit': 'B',
+  'In Trunking': 'B',
+  'in-trunking': 'B',
+  'in trunking': 'B',
+  'Buried Direct': 'D',
+  buried: 'D',
+  'buried-direct': 'D',
+  'enclosed-in-wall': 'A',
+  'on-wall': 'B',
+  'free-air': 'E',
+  'free air': 'E',
+  'Method A': 'A',
+  'Method B': 'B',
+  'Method C': 'C',
+  'Method D': 'D',
+  'Method E': 'E',
+  'Method F': 'F',
+  'Method G': 'G',
 };
 
 // BS Standard based on protective device type
@@ -113,8 +125,8 @@ function getBSStandard(deviceType: string): string {
 }
 
 function getReferenceMethodCode(method?: string): string {
-  if (!method) return '103'; // Default to Method C
-  return INSTALLATION_METHOD_CODES[method] || '103';
+  if (!method) return 'C'; // Default to clipped direct
+  return INSTALLATION_METHOD_CODES[method] || 'C';
 }
 
 function getPointsServed(loadType: string): number {

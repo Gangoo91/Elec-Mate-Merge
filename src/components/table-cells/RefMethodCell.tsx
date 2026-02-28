@@ -35,7 +35,7 @@ const RefMethodCellComponent: React.FC<RefMethodCellProps> = ({ result, onUpdate
         </SelectTrigger>
         <SelectContent
           key={`referenceMethod-content-${result.id}`}
-          className="max-h-60 bg-background border border-border rounded-md z-[9999]"
+          className="max-h-60 w-[360px] bg-background border border-border rounded-md z-[9999]"
         >
           {referenceMethodOptions.map((option) => (
             <SelectItem

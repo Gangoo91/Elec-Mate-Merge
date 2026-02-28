@@ -308,29 +308,45 @@ export const INSTALLATION_METHODS: SelectOption[] = [
 // ============================================================================
 
 export const REFERENCE_METHODS: SelectOption[] = [
-  { value: 'A', label: 'Method A', description: 'Enclosed in conduit in thermally insulated wall' },
-  { value: 'B', label: 'Method B', description: 'Enclosed in conduit/trunking on wall' },
-  { value: 'C', label: 'Method C', description: 'Clipped direct to wall/ceiling/tray' },
-  { value: 'D', label: 'Method D', description: 'Buried direct in ground' },
-  { value: 'E', label: 'Method E', description: 'Free air/cable ladder/tray (spaced)' },
-  { value: 'F', label: 'Method F', description: 'Free air/cable tray (touching)' },
-  { value: 'G', label: 'Method G', description: 'Spaced from surface (cleats)' },
-  { value: '100', label: 'Method 100', description: 'Enclosed in thermal insulation (derated)' },
+  {
+    value: 'A',
+    label: 'A',
+    description: 'Cables enclosed in conduit or trunking in a thermally insulated wall',
+  },
+  {
+    value: 'B',
+    label: 'B',
+    description: 'Cables enclosed in conduit or trunking in/on a wall/floor',
+  },
+  { value: 'C', label: 'C', description: 'Clipped direct [includes cables direct in masonry]' },
+  { value: 'D', label: 'D', description: 'Cables laid in conduit or in cable duct under ground' },
+  { value: 'E', label: 'E', description: 'Free air on perforated cable tray [multi-core cables]' },
+  { value: 'F', label: 'F', description: 'Free air on perforated cable tray [single-core cables]' },
+  { value: 'G', label: 'G', description: 'Free air, flat [spaced by 1 cable diameter]' },
+  {
+    value: '100',
+    label: '100',
+    description: 'T&E on wooden joist or above ceiling with up to 100mm thermal insulation',
+  },
   {
     value: '101',
-    label: 'Method 101',
-    description: 'In contact with thermal insulation on one side',
+    label: '101',
+    description: 'T&E on wooden joist or above ceiling with more than 100mm thermal insulation',
   },
   {
     value: '102',
-    label: 'Method 102',
-    description: 'Surrounded by thermal insulation - heavily derated',
+    label: '102',
+    description: 'T&E in stud wall with more than 100mm thermal insulation, touching inner wall',
   },
   {
     value: '103',
-    label: 'Method 103',
-    description: 'In building void - partially surrounded by insulation',
+    label: '103',
+    description:
+      'T&E in stud wall with more than 100mm thermal insulation, not touching inner wall',
   },
+  { value: 'M', label: 'M', description: 'Mixed - multiple cables' },
+  { value: 'N/A', label: 'N/A', description: 'N/A' },
+  { value: 'LIM', label: 'LIM', description: 'LIM' },
 ];
 
 // ============================================================================
