@@ -1890,7 +1890,7 @@
             <td>{{circuit.polarity}}</td>
             <td>{{circuit.zs}}</td>
             <td>{{circuit.rcd_one_x}}</td>
-            <td>{{circuit.rcd_test_button}}</td>
+            <td>{% if circuit.rcd_test_button == 'pass' or circuit.rcd_test_button == 'Pass' or circuit.rcd_test_button == 'OK' or circuit.rcd_test_button == '✓' or circuit.rcd_test_button == 'Satisfactory' %}✓{% elsif circuit.rcd_test_button == '✗' or circuit.rcd_test_button == 'fail' or circuit.rcd_test_button == 'Fail' %}✗{% else %}{{circuit.rcd_test_button}}{% endif %}</td>
             <td>{{circuit.afdd_test}}</td>
             <td class="remarks">{{circuit.notes}}</td>
           </tr>

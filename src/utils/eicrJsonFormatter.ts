@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /**
  * Formats EICR form data into a structured JSON format with logical groupings
  * All keys are in snake_case, missing values default to empty strings
@@ -463,6 +464,8 @@ export const formatEICRJson = async (formData: any, reportId: string) => {
             db_ways: '',
             db_zdb: formData['zdb'] || '',
             db_ipf: formData['ipf'] || '',
+            zdb: formData['zdb'] || '',
+            ipf: formData['ipf'] || '',
             supplied_from: '',
             incoming_device_bs_en: '',
             incoming_device_type: '',
@@ -502,6 +505,9 @@ export const formatEICRJson = async (formData: any, reportId: string) => {
         db_ways: board.totalWays?.toString() || '',
         db_zdb: board.zdb || '',
         db_ipf: board.ipf || '',
+        // Aliases for template compatibility (some template sections use board.zdb / board.ipf)
+        zdb: board.zdb || '',
+        ipf: board.ipf || '',
         // Schedule page headers
         supplied_from: board.suppliedFrom || '',
         incoming_device_bs_en: board.incomingDeviceBsEn || '',
