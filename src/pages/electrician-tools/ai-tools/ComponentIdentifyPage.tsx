@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
 import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
 import {
   ArrowLeft,
   Camera,
@@ -18,7 +17,6 @@ import {
   Box,
   CircuitBoard,
   PlugZap,
-  Power,
   Gauge,
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -87,6 +85,7 @@ const ComponentIdentifyPage = () => {
   const [selectedInfo, setSelectedInfo] = useState<string[]>(['specs', 'bs7671']);
   const [isCameraActive, setIsCameraActive] = useState(false);
   const [isAnalyzing, setIsAnalyzing] = useState(false);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [analysisResult, setAnalysisResult] = useState<any>(null);
   const [analysisProgress, setAnalysisProgress] = useState(0);
 
@@ -284,7 +283,7 @@ const ComponentIdentifyPage = () => {
             </div>
             <div>
               <h1 className="text-xl font-bold text-foreground">Component Identification</h1>
-              <p className="text-sm text-muted-foreground">Identify specs & BS 7671 requirements</p>
+              <p className="text-sm text-white">Identify specs & BS 7671 requirements</p>
             </div>
           </div>
         </div>
@@ -307,9 +306,7 @@ const ComponentIdentifyPage = () => {
               <Loader2 className="h-6 w-6 animate-spin text-blue-400" />
               <div>
                 <h3 className="font-semibold text-foreground">Identifying Component...</h3>
-                <p className="text-xs text-muted-foreground">
-                  Analyzing image and cross-referencing database
-                </p>
+                <p className="text-xs text-white">Analysing image and cross-referencing database</p>
               </div>
             </div>
             <div className="h-2 bg-muted rounded-full overflow-hidden">
@@ -327,7 +324,7 @@ const ComponentIdentifyPage = () => {
               <div className="flex items-center gap-2">
                 <Box className="h-5 w-5 text-blue-400" />
                 <h2 className="font-semibold text-foreground">Component Type</h2>
-                <span className="text-xs text-muted-foreground">(optional)</span>
+                <span className="text-xs text-white">(optional)</span>
               </div>
 
               <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
@@ -336,7 +333,7 @@ const ComponentIdentifyPage = () => {
                     key={cat.id}
                     onClick={() => setSelectedCategory(selectedCategory === cat.id ? null : cat.id)}
                     className={cn(
-                      'p-3 rounded-xl border-2 transition-all min-h-[70px]',
+                      'p-3 rounded-xl border-2 transition-all min-h-[70px] touch-manipulation',
                       'flex flex-col items-center justify-center gap-2 text-center',
                       selectedCategory === cat.id
                         ? cat.color
@@ -465,11 +462,11 @@ const ComponentIdentifyPage = () => {
                     key={chip.id}
                     onClick={() => toggleInfo(chip.id)}
                     className={cn(
-                      'px-4 py-2.5 rounded-xl border-2 text-sm font-medium transition-all',
+                      'px-4 py-2.5 rounded-xl border-2 text-sm font-medium transition-all touch-manipulation',
                       'min-h-[44px] flex items-center gap-2',
                       selectedInfo.includes(chip.id)
                         ? 'bg-blue-500/20 border-blue-500/40 text-blue-400'
-                        : 'border-border/30 text-muted-foreground hover:border-border/50'
+                        : 'border-border/30 text-white hover:border-border/50'
                     )}
                   >
                     <chip.icon className="h-4 w-4" />

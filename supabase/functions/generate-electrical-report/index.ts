@@ -1,5 +1,8 @@
 import { serve } from 'https://deno.land/std@0.168.0/http/server.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.49.4';
+import { captureException } from '../_shared/sentry.ts';
+
+/* eslint-disable @typescript-eslint/no-explicit-any */
 
 const openAIApiKey = Deno.env.get('OPENAI_API_KEY');
 
@@ -16,7 +19,7 @@ interface ReportData {
 }
 
 const createPrompt = (template: string, formData: any, additionalNotes?: string) => {
-  const basePrompt = `You are a qualified electrical engineer with expertise in BS7671 18th Edition regulations. Generate a comprehensive, professional electrical report based on the provided data.
+  const basePrompt = `You are a qualified electrical engineer with expertise in BS 7671:2018+A3:2024 (18th Edition) regulations. Generate a comprehensive, professional electrical report based on the provided data.
 
 CRITICAL FORMATTING REQUIREMENTS FOR PROFESSIONAL PDFs:
 - Use proper markdown formatting with clear hierarchical headings (# ## ###)
@@ -29,7 +32,7 @@ CRITICAL FORMATTING REQUIREMENTS FOR PROFESSIONAL PDFs:
 - Use code blocks (\`\`\`) for regulation references and specific measurements
 
 CONTENT REQUIREMENTS:
-- Use proper UK electrical terminology and BS7671 18th Edition regulation references
+- Use proper UK electrical terminology and BS 7671:2018+A3:2024 (18th Edition) regulation references
 - Include specific code references where applicable (e.g., Regulation 134.1.1, 411.3.3)
 - Provide clear recommendations and actions with priority classifications
 - Include safety classifications (C1, C2, C3, FI) where relevant with proper explanations
@@ -123,8 +126,8 @@ Format as a Minor Works Certificate with:
 - Test results including continuity, insulation resistance, and polarity
 - RCD operation test results if applicable
 - Earth fault loop impedance measurements
-- Compliance statement with BS7671 18th Edition
-- Any departures from BS7671 18th Edition (if applicable)
+- Compliance statement with BS 7671:2018+A3:2024 (18th Edition)
+- Any departures from BS 7671:2018+A3:2024 (18th Edition) (if applicable)
 - Installation schedule and circuit particulars`
       );
 
@@ -145,7 +148,7 @@ Format as a Periodic Inspection Report with:
       );
 
     case 'client-explainer':
-      return `You are a qualified electrician with expertise in BS7671 18th Edition electrical regulations. You excel at explaining technical electrical work to clients in clear, accessible language whilst maintaining technical accuracy and UK compliance.
+      return `You are a qualified electrician with expertise in BS 7671:2018+A3:2024 (18th Edition) electrical regulations. You excel at explaining technical electrical work to clients in clear, accessible language whilst maintaining technical accuracy and UK compliance.
 
 Client Type: ${formData.clientType}
 Technical Findings to Explain:
@@ -342,6 +345,9 @@ serve(async (req) => {
       regulationContext ? '(with regulation context)' : ''
     );
 
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 60000); // 60 second timeout
+
     const response = await fetch('https://api.openai.com/v1/chat/completions', {
       method: 'POST',
       headers: {
@@ -349,12 +355,12 @@ serve(async (req) => {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        model: 'gpt-4.1-2025-04-14',
+        model: 'gpt-5-mini-2025-08-07',
         messages: [
           {
             role: 'system',
             content:
-              'You are a qualified electrical engineer with extensive knowledge of BS7671 18th Edition regulations and UK electrical standards. Generate professional, detailed electrical reports that comply with industry standards and regulations.',
+              'You are a qualified electrical engineer with extensive knowledge of BS 7671:2018+A3:2024 (18th Edition with Amendment 3) regulations and UK electrical standards. Generate professional, detailed electrical reports that comply with industry standards and regulations. Always use UK English throughout (analyse, colour, centre, organisation, specialise, earthing).',
           },
           {
             role: 'user',
@@ -363,7 +369,10 @@ serve(async (req) => {
         ],
         max_completion_tokens: 4000,
       }),
+      signal: controller.signal,
     });
+
+    clearTimeout(timeout);
 
     if (!response.ok) {
       const errorData = await response.text();
@@ -383,7 +392,21 @@ serve(async (req) => {
     const data = await response.json();
     console.log('OpenAI response received successfully');
 
-    const generatedReport = data.choices[0].message.content;
+    const generatedReport = data.choices?.[0]?.message?.content;
+
+    if (!generatedReport) {
+      console.error('OpenAI returned empty or unexpected response:', JSON.stringify(data));
+      return new Response(
+        JSON.stringify({
+          error: 'Failed to generate report',
+          details: 'AI returned an empty response. Please try again.',
+        }),
+        {
+          status: 502,
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+        }
+      );
+    }
 
     return new Response(
       JSON.stringify({
@@ -396,6 +419,11 @@ serve(async (req) => {
       }
     );
   } catch (error) {
+    await captureException(error, {
+      functionName: 'generate-electrical-report',
+      requestUrl: req.url,
+      requestMethod: req.method,
+    });
     console.error('Error in generate-electrical-report function:', error);
     return new Response(
       JSON.stringify({

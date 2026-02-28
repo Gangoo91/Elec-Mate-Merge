@@ -72,15 +72,12 @@ export function ResultsHeroCard({
           {/* Title and badges */}
           <div className="flex-1 min-w-0 space-y-2">
             {subtitle && (
-              <Badge
-                variant="outline"
-                className="text-xs font-medium text-muted-foreground border-border/50"
-              >
+              <Badge variant="outline" className="text-xs font-medium text-white border-border/50">
                 {subtitle}
               </Badge>
             )}
 
-            <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold text-foreground leading-tight">
+            <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold text-white leading-tight">
               {title}
             </h1>
 

@@ -192,7 +192,7 @@ const ClientExplainerPage = () => {
             </div>
             <div className="flex-1">
               <h1 className="text-xl font-bold text-foreground">Client Explainer</h1>
-              <p className="text-sm text-muted-foreground mt-0.5">
+              <p className="text-sm text-white mt-0.5">
                 Convert technical findings to client-friendly explanations
               </p>
             </div>
@@ -220,7 +220,7 @@ const ClientExplainerPage = () => {
               </div>
               <div className="text-left">
                 <h3 className="font-semibold text-foreground">Templates</h3>
-                <p className="text-xs text-muted-foreground">Quick-start with common scenarios</p>
+                <p className="text-xs text-white">Quick-start with common scenarios</p>
               </div>
             </div>
             <motion.div animate={{ rotate: showTemplates ? 180 : 0 }}>
@@ -259,7 +259,7 @@ const ClientExplainerPage = () => {
             style={{ fontSize: '16px' }}
           />
 
-          <p className="text-xs text-muted-foreground">
+          <p className="text-xs text-white">
             Be specific about findings. Include BS 7671 regulation references, test readings, and
             safety classifications (C1/C2/C3) where applicable.
           </p>
@@ -268,9 +268,7 @@ const ClientExplainerPage = () => {
         {/* Tone & Settings Row */}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
           <div className="rounded-xl border border-border/30 bg-card/50 backdrop-blur-xl p-4 space-y-2">
-            <Label className="text-xs font-medium text-muted-foreground uppercase tracking-wide">
-              Style
-            </Label>
+            <Label className="text-xs font-medium text-white uppercase tracking-wide">Style</Label>
             <Select value={tone} onValueChange={setTone}>
               <SelectTrigger className="h-12 bg-background/50 border-border/30 text-foreground">
                 <SelectValue />
@@ -286,7 +284,7 @@ const ClientExplainerPage = () => {
           </div>
 
           <div className="rounded-xl border border-border/30 bg-card/50 backdrop-blur-xl p-4 space-y-2">
-            <Label className="text-xs font-medium text-muted-foreground uppercase tracking-wide">
+            <Label className="text-xs font-medium text-white uppercase tracking-wide">
               Complexity
             </Label>
             <Select value={readingLevel} onValueChange={setReadingLevel}>
@@ -302,7 +300,7 @@ const ClientExplainerPage = () => {
           </div>
 
           <div className="rounded-xl border border-border/30 bg-card/50 backdrop-blur-xl p-4 space-y-2">
-            <Label className="text-xs font-medium text-muted-foreground uppercase tracking-wide">
+            <Label className="text-xs font-medium text-white uppercase tracking-wide">
               Priority
             </Label>
             <Select value={urgencyLevel} onValueChange={setUrgencyLevel}>
@@ -337,7 +335,7 @@ const ClientExplainerPage = () => {
               </div>
               <div className="text-left">
                 <h3 className="font-semibold text-foreground">Advanced Options</h3>
-                <p className="text-xs text-muted-foreground">Customize output style</p>
+                <p className="text-xs text-white">Customize output style</p>
               </div>
             </div>
             <div className="flex items-center gap-2">
@@ -387,7 +385,7 @@ const ClientExplainerPage = () => {
                         />
                         <div className="text-left">
                           <p className="font-medium text-foreground text-sm">{label}</p>
-                          <p className="text-xs text-muted-foreground">{desc}</p>
+                          <p className="text-xs text-white">{desc}</p>
                         </div>
                       </div>
                       <Switch

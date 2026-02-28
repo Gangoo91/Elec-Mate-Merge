@@ -11,7 +11,6 @@ import {
   CheckCircle,
   X,
   Loader2,
-  Sparkles,
   FileCheck,
   ClipboardList,
   FileText,
@@ -97,6 +96,7 @@ const InstallationVerifyPage = () => {
   const [additionalNotes, setAdditionalNotes] = useState('');
   const [isCameraActive, setIsCameraActive] = useState(false);
   const [isAnalyzing, setIsAnalyzing] = useState(false);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [analysisResult, setAnalysisResult] = useState<any>(null);
   const [analysisProgress, setAnalysisProgress] = useState(0);
 
@@ -297,7 +297,7 @@ const InstallationVerifyPage = () => {
             </div>
             <div>
               <h1 className="text-xl font-bold text-foreground">Installation Verification</h1>
-              <p className="text-sm text-muted-foreground">BS 7671 compliance check</p>
+              <p className="text-sm text-white">BS 7671 compliance check</p>
             </div>
           </div>
         </div>
@@ -319,9 +319,7 @@ const InstallationVerifyPage = () => {
               <Loader2 className="h-6 w-6 animate-spin text-cyan-400" />
               <div>
                 <h3 className="font-semibold text-foreground">Verifying Installation...</h3>
-                <p className="text-xs text-muted-foreground">
-                  Checking against BS 7671 requirements
-                </p>
+                <p className="text-xs text-white">Checking against BS 7671 requirements</p>
               </div>
             </div>
             <div className="h-2 bg-muted rounded-full overflow-hidden">
@@ -343,7 +341,7 @@ const InstallationVerifyPage = () => {
                     key={cert.id}
                     onClick={() => setSelectedCertType(cert.id)}
                     className={cn(
-                      'relative p-4 rounded-xl border-2 transition-all',
+                      'relative p-4 rounded-xl border-2 transition-all touch-manipulation',
                       'min-h-[100px] flex flex-col items-center justify-center gap-2 text-center',
                       selectedCertType === cert.id
                         ? cert.color
@@ -358,7 +356,7 @@ const InstallationVerifyPage = () => {
                     />
                     <div>
                       <span className="text-sm font-bold block">{cert.label}</span>
-                      <span className="text-[10px] text-muted-foreground">{cert.desc}</span>
+                      <span className="text-[10px] text-white">{cert.desc}</span>
                     </div>
                     {selectedCertType === cert.id && (
                       <div className="absolute top-2 right-2 w-2 h-2 rounded-full bg-current animate-pulse" />
@@ -377,10 +375,10 @@ const InstallationVerifyPage = () => {
                     key={prop.id}
                     onClick={() => setSelectedPropertyType(prop.id)}
                     className={cn(
-                      'p-3 rounded-xl border-2 transition-all flex flex-col items-center gap-1.5 min-h-[70px]',
+                      'p-3 rounded-xl border-2 transition-all flex flex-col items-center gap-1.5 min-h-[70px] touch-manipulation',
                       selectedPropertyType === prop.id
                         ? 'bg-cyan-500/20 border-cyan-500/40 text-cyan-400'
-                        : 'border-border/30 text-muted-foreground hover:border-border/50'
+                        : 'border-border/30 text-white hover:border-border/50'
                     )}
                   >
                     <prop.icon className="h-5 w-5" />
@@ -407,10 +405,10 @@ const InstallationVerifyPage = () => {
                     key={scope.id}
                     onClick={() => toggleScope(scope.id)}
                     className={cn(
-                      'px-3 py-2 rounded-lg border text-xs font-medium transition-all min-h-[36px]',
+                      'px-3 py-2 rounded-lg border text-xs font-medium transition-all min-h-[44px] touch-manipulation',
                       selectedScopes.includes(scope.id)
                         ? 'bg-cyan-500/20 border-cyan-500/40 text-cyan-400'
-                        : 'border-border/30 text-muted-foreground hover:border-border/50'
+                        : 'border-border/30 text-white hover:border-border/50'
                     )}
                   >
                     {scope.label}
@@ -431,7 +429,7 @@ const InstallationVerifyPage = () => {
                     key={check.id}
                     onClick={() => toggleCheck(check.id)}
                     className={cn(
-                      'w-full flex items-center gap-3 p-3 rounded-lg border transition-all text-left min-h-[48px]',
+                      'w-full flex items-center gap-3 p-3 rounded-lg border transition-all text-left min-h-[48px] touch-manipulation',
                       checkedItems.includes(check.id)
                         ? 'bg-cyan-500/10 border-cyan-500/30'
                         : 'border-border/30 hover:border-border/50'
@@ -452,9 +450,7 @@ const InstallationVerifyPage = () => {
                     <span
                       className={cn(
                         'text-sm',
-                        checkedItems.includes(check.id)
-                          ? 'text-foreground'
-                          : 'text-muted-foreground'
+                        checkedItems.includes(check.id) ? 'text-foreground' : 'text-white'
                       )}
                     >
                       {check.label}
@@ -476,7 +472,7 @@ const InstallationVerifyPage = () => {
                 </Badge>
               </div>
 
-              <p className="text-xs text-muted-foreground">
+              <p className="text-xs text-white">
                 Capture multiple angles: consumer unit front, internal, labels, earthing, etc.
               </p>
 

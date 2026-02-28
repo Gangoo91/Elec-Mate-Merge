@@ -122,6 +122,7 @@ const FaultDiagnosisPage = () => {
   const [additionalNotes, setAdditionalNotes] = useState('');
   const [isCameraActive, setIsCameraActive] = useState(false);
   const [isAnalyzing, setIsAnalyzing] = useState(false);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [analysisResult, setAnalysisResult] = useState<any>(null);
   const [analysisProgress, setAnalysisProgress] = useState(0);
 
@@ -242,6 +243,7 @@ const FaultDiagnosisPage = () => {
                 description: data.reasoning || 'Fault identified based on your description.',
                 eicr_code: faultCode as 'C1' | 'C2' | 'C3' | 'FI',
                 confidence: data.confidence || 0.8,
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
                 bs7671_clauses: (data.regulation_references || []).map((r: any) => r.number),
                 fix_guidance: data.gn3_guidance || '',
               },
@@ -283,6 +285,7 @@ const FaultDiagnosisPage = () => {
           : `${faultCode} classification — see full diagnosis below.`,
         duration: 3000,
       });
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (err: any) {
       toast({ title: 'Analysis Failed', description: 'Please try again', variant: 'destructive' });
     } finally {
@@ -437,9 +440,7 @@ const FaultDiagnosisPage = () => {
               </div>
               <div>
                 <h1 className="text-xl font-bold text-foreground">Fault Diagnosis</h1>
-                <p className="text-sm text-muted-foreground">
-                  Identify issues & get rectification steps
-                </p>
+                <p className="text-sm text-white">Identify issues & get rectification steps</p>
               </div>
             </div>
             {selectedSymptoms.length > 0 && (
@@ -480,10 +481,8 @@ const FaultDiagnosisPage = () => {
             <div className="flex items-center gap-3">
               <Loader2 className="h-6 w-6 animate-spin text-orange-400" />
               <div>
-                <h3 className="font-semibold text-foreground">Analyzing Fault...</h3>
-                <p className="text-xs text-muted-foreground">
-                  Identifying issues and safety concerns
-                </p>
+                <h3 className="font-semibold text-foreground">Analysing Fault...</h3>
+                <p className="text-xs text-white">Identifying issues and safety concerns</p>
               </div>
             </div>
             <div className="h-2 bg-muted rounded-full overflow-hidden">
@@ -514,7 +513,7 @@ const FaultDiagnosisPage = () => {
                       key={symptom.id}
                       onClick={() => toggleSymptom(symptom.id)}
                       className={cn(
-                        'relative p-4 rounded-xl border-2 transition-all',
+                        'relative p-4 rounded-xl border-2 transition-all touch-manipulation',
                         'min-h-[80px] flex flex-col items-center justify-center gap-2',
                         isSelected
                           ? symptom.color
@@ -527,7 +526,7 @@ const FaultDiagnosisPage = () => {
                       <span
                         className={cn(
                           'text-sm font-medium text-center',
-                          isSelected ? 'text-foreground' : 'text-muted-foreground'
+                          isSelected ? 'text-foreground' : 'text-white'
                         )}
                       >
                         {symptom.label}
@@ -565,7 +564,7 @@ const FaultDiagnosisPage = () => {
                         ? time.urgency === 'high'
                           ? 'bg-red-500/20 border-red-500/40 text-red-400'
                           : 'bg-orange-500/20 border-orange-500/40 text-orange-400'
-                        : 'border-border/30 text-muted-foreground hover:border-border/50'
+                        : 'border-border/30 text-white hover:border-border/50'
                     )}
                   >
                     {time.label}
@@ -583,10 +582,10 @@ const FaultDiagnosisPage = () => {
                     key={loc}
                     onClick={() => setSelectedLocation(loc)}
                     className={cn(
-                      'px-3 py-2 rounded-lg border text-xs font-medium transition-all min-h-[36px]',
+                      'px-3 py-2 rounded-lg border text-xs font-medium transition-all min-h-[44px] touch-manipulation',
                       selectedLocation === loc
                         ? 'bg-orange-500/20 border-orange-500/40 text-orange-400'
-                        : 'border-border/30 text-muted-foreground hover:border-border/50'
+                        : 'border-border/30 text-white hover:border-border/50'
                     )}
                   >
                     {loc}
@@ -700,7 +699,7 @@ const FaultDiagnosisPage = () => {
                 style={{ fontSize: '16px' }}
               />
               {images.length === 0 && (
-                <p className="text-xs text-foreground/50">
+                <p className="text-xs text-white">
                   📸 Add a photo above for visual analysis, or select symptoms and describe the
                   fault here to get a text-based diagnosis without one.
                 </p>

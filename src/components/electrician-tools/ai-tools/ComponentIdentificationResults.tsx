@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import {
   Package,
   Zap,
@@ -12,13 +12,12 @@ import {
   Camera,
   Clock,
   Target,
-  Shield,
-  Hash,
+  ArrowRight,
 } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
-import { ScrollableChips, ExpandableSection } from './results';
+import { ExpandableSection } from './results';
 import { cn } from '@/lib/utils';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -67,6 +66,32 @@ export default function ComponentIdentificationResults({
   const [checkedItems, setCheckedItems] = useState<Record<number, boolean>>({});
   const component = analysisResult.component;
 
+  // Memoised highlighted BS 7671 requirements (must be called before early returns)
+  const highlightedBS7671 = useMemo(() => {
+    if (!component?.bs7671_requirements) return [];
+    return component.bs7671_requirements.map((req) => {
+      // Re-run the regex fresh per item (since regex with /g flag has state)
+      const pattern =
+        /(BS\s*7671(?::[\d]+(?:\+A\d+:\d+)?)?|Regulation\s+[\d.]+|Reg\.\s*[\d.]+|Section\s+[\d.]+|Part\s+\d+)/gi;
+      const parts = req.split(pattern);
+      if (parts.length <= 1) return req;
+      return parts.map((part, i) => {
+        if (
+          /(BS\s*7671(?::[\d]+(?:\+A\d+:\d+)?)?|Regulation\s+[\d.]+|Reg\.\s*[\d.]+|Section\s+[\d.]+|Part\s+\d+)/i.test(
+            part
+          )
+        ) {
+          return (
+            <span key={i} className="text-elec-yellow font-semibold">
+              {part}
+            </span>
+          );
+        }
+        return part;
+      });
+    });
+  }, [component?.bs7671_requirements]);
+
   if (!component) {
     return (
       <Card className="border-amber-500/30 bg-amber-500/5">
@@ -75,7 +100,7 @@ export default function ComponentIdentificationResults({
             <AlertCircle className="h-6 w-6 text-amber-500 mt-1" />
             <div>
               <CardTitle className="text-lg">Unable to Identify Component</CardTitle>
-              <p className="text-sm text-muted-foreground mt-1">
+              <p className="text-sm text-white mt-1">
                 The image could not be processed. This usually happens when the component or its
                 labels are not clearly visible.
               </p>
@@ -88,7 +113,7 @@ export default function ComponentIdentificationResults({
               <Lightbulb className="h-4 w-4 text-amber-500" />
               Try these steps:
             </h4>
-            <ul className="space-y-1.5 text-sm text-muted-foreground pl-6">
+            <ul className="space-y-1.5 text-sm text-white pl-6">
               <li className="flex items-start gap-2">
                 <span className="text-amber-500">•</span>
                 <span>Ensure good lighting - avoid shadows and glare</span>
@@ -123,9 +148,6 @@ export default function ComponentIdentificationResults({
   const rawConfidence = component.confidence || 0;
   const confidence =
     rawConfidence < 1 ? Math.round(rawConfidence * 100) : Math.round(rawConfidence);
-
-  const confidenceVariant: 'success' | 'warning' | 'danger' =
-    confidence >= 90 ? 'success' : confidence >= 70 ? 'warning' : 'danger';
 
   const confidenceLabel =
     confidence >= 90 ? 'High Confidence' : confidence >= 70 ? 'Moderate' : 'Low Confidence';
@@ -166,16 +188,6 @@ export default function ComponentIdentificationResults({
     typeof window !== 'undefined'
       ? window.matchMedia('(prefers-reduced-motion: reduce)').matches
       : false;
-
-  // Helper: Get icon for spec type
-  const getSpecIcon = (label: string) => {
-    const lowerLabel = label.toLowerCase();
-    if (lowerLabel.includes('voltage') || lowerLabel.includes('current')) return Zap;
-    if (lowerLabel.includes('ip') || lowerLabel.includes('protection')) return Shield;
-    if (lowerLabel.includes('pole') || lowerLabel.includes('way')) return Hash;
-    if (lowerLabel.includes('breaking') || lowerLabel.includes('capacity')) return AlertTriangle;
-    return Info;
-  };
 
   // Helper: Get age-based color coding
   const getAgeColor = (ageEstimate: string) => {
@@ -239,32 +251,17 @@ export default function ComponentIdentificationResults({
     };
   };
 
-  // Animation variants for specs grid
-  const containerVariants = {
-    hidden: {},
-    visible: {
-      transition: {
-        staggerChildren: prefersReducedMotion ? 0 : 0.08,
-      },
-    },
+  // Helper: Format spec key to title case with spaces
+  const formatSpecLabel = (key: string): string => {
+    return key.replace(/_/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase());
   };
 
-  const itemVariants = {
-    hidden: {
-      opacity: prefersReducedMotion ? 1 : 0,
-      y: prefersReducedMotion ? 0 : 20,
-      scale: 1,
-    },
-    visible: {
-      opacity: 1,
-      y: 0,
-      scale: 1,
-      transition: {
-        duration: prefersReducedMotion ? 0 : 0.4,
-        ease: [0.25, 0.1, 0.25, 1],
-      },
-    },
-  };
+  // Smaller confidence gauge parameters for Quick Summary
+  const summarySize = 80;
+  const summaryStrokeWidth = 6;
+  const summaryRadius = (summarySize - summaryStrokeWidth) / 2;
+  const summaryCircumference = 2 * Math.PI * summaryRadius;
+  const summaryStrokeDashoffset = summaryCircumference - (confidence / 100) * summaryCircumference;
 
   return (
     <div className="space-y-5">
@@ -313,7 +310,7 @@ export default function ComponentIdentificationResults({
                 transition={{ delay: 0.3, duration: 0.3 }}
                 className="space-y-2"
               >
-                <h1 className="text-2xl sm:text-3xl font-bold text-foreground">{component.name}</h1>
+                <h1 className="text-2xl sm:text-3xl font-bold text-white">{component.name}</h1>
                 <div className="flex flex-wrap items-center gap-2">
                   <Badge variant="outline" className="text-xs">
                     {component.type}
@@ -412,7 +409,7 @@ export default function ComponentIdentificationResults({
                     {confidence}%
                   </motion.span>
                   <motion.span
-                    className="text-[10px] text-muted-foreground uppercase tracking-wider font-semibold mt-1"
+                    className="text-[10px] text-white uppercase tracking-wider font-semibold mt-1"
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={{ delay: 1 }}
@@ -440,7 +437,7 @@ export default function ComponentIdentificationResults({
             >
               <div className="flex items-center gap-2 mb-1">
                 <Target className="h-3.5 w-3.5 text-elec-yellow" />
-                <span className="text-[10px] text-muted-foreground uppercase tracking-wide font-medium">
+                <span className="text-[10px] text-white uppercase tracking-wide font-medium">
                   Confidence
                 </span>
               </div>
@@ -457,7 +454,7 @@ export default function ComponentIdentificationResults({
               >
                 <div className="flex items-center gap-2 mb-1">
                   <Clock className="h-3.5 w-3.5 text-blue-400" />
-                  <span className="text-[10px] text-muted-foreground uppercase tracking-wide font-medium">
+                  <span className="text-[10px] text-white uppercase tracking-wide font-medium">
                     Age
                   </span>
                 </div>
@@ -491,7 +488,7 @@ export default function ComponentIdentificationResults({
                         : 'text-amber-400'
                     )}
                   />
-                  <span className="text-[10px] text-muted-foreground uppercase tracking-wide font-medium">
+                  <span className="text-[10px] text-white uppercase tracking-wide font-medium">
                     Compliance
                   </span>
                 </div>
@@ -521,7 +518,7 @@ export default function ComponentIdentificationResults({
               >
                 <div className="flex items-center gap-2 mb-1">
                   <Zap className="h-3.5 w-3.5 text-purple-400" />
-                  <span className="text-[10px] text-muted-foreground uppercase tracking-wide font-medium">
+                  <span className="text-[10px] text-white uppercase tracking-wide font-medium">
                     Applications
                   </span>
                 </div>
@@ -531,65 +528,110 @@ export default function ComponentIdentificationResults({
               </motion.div>
             )}
           </motion.div>
-
-          {/* Plain English */}
-          {component.plain_english && (
-            <motion.div
-              className="mt-6 space-y-1"
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.95, duration: 0.35 }}
-            >
-              <div className="flex items-center gap-2 text-elec-yellow">
-                <Info className="h-4 w-4" />
-                <span className="text-sm font-semibold">What is this?</span>
-              </div>
-              <p className="text-sm sm:text-base leading-relaxed text-foreground/90">
-                {component.plain_english}
-              </p>
-            </motion.div>
-          )}
         </div>
       </motion.div>
 
-      {/* Specifications Grid - Animated */}
+      {/* Quick Summary Card */}
+      <motion.div
+        className={cn(
+          'rounded-2xl border border-elec-yellow/20',
+          'bg-gradient-to-br from-card via-card/95 to-card/90',
+          'backdrop-blur-xl p-5 sm:p-6'
+        )}
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.5, duration: 0.4 }}
+      >
+        <div className="flex items-start gap-4">
+          {/* Mini confidence gauge */}
+          <div className="flex-shrink-0 relative">
+            <svg width={summarySize} height={summarySize} className="transform -rotate-90">
+              <circle
+                cx={summarySize / 2}
+                cy={summarySize / 2}
+                r={summaryRadius}
+                fill="none"
+                stroke="currentColor"
+                strokeWidth={summaryStrokeWidth}
+                className="text-muted/20"
+              />
+              <motion.circle
+                cx={summarySize / 2}
+                cy={summarySize / 2}
+                r={summaryRadius}
+                fill="none"
+                stroke={getConfidenceColor()}
+                strokeWidth={summaryStrokeWidth}
+                strokeLinecap="round"
+                strokeDasharray={summaryCircumference}
+                initial={{ strokeDashoffset: summaryCircumference }}
+                animate={{ strokeDashoffset: summaryStrokeDashoffset }}
+                transition={{ duration: 1, ease: 'easeOut', delay: 0.7 }}
+                style={{
+                  filter: `drop-shadow(0 0 6px ${getConfidenceColor()}60)`,
+                }}
+              />
+            </svg>
+            <div className="absolute inset-0 flex flex-col items-center justify-center">
+              <span className="text-lg font-bold" style={{ color: getConfidenceColor() }}>
+                {confidence}%
+              </span>
+            </div>
+          </div>
+
+          {/* Name, type, description */}
+          <div className="flex-1 min-w-0 space-y-2">
+            <h2 className="text-xl sm:text-2xl font-bold text-white leading-tight">
+              {component.name}
+            </h2>
+            <Badge variant="outline" className="text-xs">
+              {component.type}
+            </Badge>
+            {component.plain_english && (
+              <p className="text-sm sm:text-base text-white leading-relaxed mt-2">
+                {component.plain_english}
+              </p>
+            )}
+          </div>
+        </div>
+      </motion.div>
+
+      {/* Specifications — 2-column key-value layout */}
       {specsArray.length > 0 ? (
         <motion.div
-          className="grid grid-cols-2 sm:grid-cols-4 gap-3"
-          variants={containerVariants}
-          initial="hidden"
-          animate="visible"
+          className={cn(
+            'rounded-2xl border border-border/50 bg-card/50 backdrop-blur-sm overflow-hidden'
+          )}
+          initial={{ opacity: 0, y: 8 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.6, duration: 0.4 }}
         >
-          {specsArray.map((spec, idx) => {
-            const SpecIcon = getSpecIcon(spec.label);
-            return (
+          <div className="px-4 py-3 border-b border-border/30">
+            <div className="flex items-center gap-2">
+              <Info className="h-5 w-5 text-elec-yellow" />
+              <h3 className="font-semibold text-white">Specifications</h3>
+            </div>
+          </div>
+          <div className="divide-y divide-border/20">
+            {specsArray.map((spec, idx) => (
               <motion.div
                 key={idx}
-                variants={itemVariants}
-                custom={idx}
                 className={cn(
-                  'p-4 rounded-xl',
-                  'bg-gradient-to-br from-elec-yellow/10 to-elec-yellow/5',
-                  'border border-elec-yellow/20',
-                  'backdrop-blur-sm',
-                  'hover:border-elec-yellow/40 hover:shadow-lg hover:shadow-elec-yellow/10',
-                  'active:scale-[0.98]',
-                  'transition-all duration-200',
-                  'touch-manipulation'
+                  'grid grid-cols-2 gap-4 px-4 py-3',
+                  idx % 2 === 0 ? 'bg-white/[0.02]' : 'bg-transparent'
                 )}
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{
+                  delay: 0.65 + idx * 0.05,
+                  duration: prefersReducedMotion ? 0 : 0.3,
+                }}
               >
-                <div className="flex items-center gap-2 mb-2">
-                  <div className="p-1.5 rounded-lg bg-elec-yellow/10">
-                    <SpecIcon className="h-3.5 w-3.5 text-elec-yellow" />
-                  </div>
-                  <span className="text-xs text-muted-foreground font-medium uppercase tracking-wide">
-                    {spec.label}
-                  </span>
-                </div>
-                <div className="text-lg font-bold text-elec-yellow truncate">{spec.value}</div>
+                <span className="text-sm text-white">{formatSpecLabel(spec.label)}</span>
+                <span className="text-sm text-white font-medium text-right">{spec.value}</span>
               </motion.div>
-            );
-          })}
+            ))}
+          </div>
         </motion.div>
       ) : (
         <motion.div
@@ -598,9 +640,9 @@ export default function ComponentIdentificationResults({
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.8, duration: 0.4 }}
         >
-          <Info className="h-8 w-8 text-muted-foreground mx-auto mb-2" />
-          <p className="text-sm font-medium text-foreground">No specifications identified</p>
-          <p className="text-xs text-muted-foreground mt-1">
+          <Info className="h-8 w-8 text-white mx-auto mb-2" />
+          <p className="text-sm font-medium text-white">No specifications identified</p>
+          <p className="text-xs text-white mt-1">
             Try capturing the component's label or rating plate
           </p>
         </motion.div>
@@ -619,7 +661,7 @@ export default function ComponentIdentificationResults({
             <div className="flex items-center justify-between mb-2">
               <div className="flex items-center gap-2">
                 <CheckCircle2 className="h-5 w-5 text-elec-yellow" />
-                <h3 className="font-semibold text-foreground">Confirm This Is Correct</h3>
+                <h3 className="font-semibold text-white">Confirm This Is Correct</h3>
               </div>
               <AnimatePresence>
                 {checkedCount > 0 && (
@@ -688,14 +730,7 @@ export default function ComponentIdentificationResults({
                     )}
                   </AnimatePresence>
                 </motion.div>
-                <span
-                  className={cn(
-                    'text-sm leading-relaxed',
-                    checkedItems[idx] ? 'text-foreground' : 'text-foreground/80'
-                  )}
-                >
-                  {identifier}
-                </span>
+                <span className="text-sm leading-relaxed text-white">{identifier}</span>
               </motion.button>
             ))}
           </div>
@@ -740,7 +775,7 @@ export default function ComponentIdentificationResults({
                 <div className={cn('p-4 rounded-xl border', ageColors.bg, ageColors.border)}>
                   <div className="flex items-center gap-2 mb-1">
                     <Clock className={cn('h-4 w-4', ageColors.icon)} />
-                    <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide">
+                    <p className="text-xs font-medium text-white uppercase tracking-wide">
                       Estimated Age
                     </p>
                   </div>
@@ -759,7 +794,7 @@ export default function ComponentIdentificationResults({
                 ) : (
                   <AlertCircle className="h-4 w-4 text-amber-400" />
                 )}
-                <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide">
+                <p className="text-xs font-medium text-white uppercase tracking-wide">
                   Compliance Status
                 </p>
               </div>
@@ -789,11 +824,11 @@ export default function ComponentIdentificationResults({
         >
           <div className="flex items-center gap-2 mb-2">
             <Target className="h-4 w-4 text-purple-400" />
-            <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide">
+            <p className="text-xs font-medium text-white uppercase tracking-wide">
               Where You'll Find This
             </p>
           </div>
-          <p className="text-sm text-foreground/90 leading-relaxed">{component.where_found}</p>
+          <p className="text-sm text-white leading-relaxed">{component.where_found}</p>
         </motion.div>
       )}
 
@@ -815,7 +850,7 @@ export default function ComponentIdentificationResults({
                   transition={{ delay: 0.05 * idx, duration: 0.3 }}
                 >
                   <Zap className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
-                  <span className="text-sm text-foreground/90">{app}</span>
+                  <span className="text-sm text-white">{app}</span>
                 </motion.div>
               ))}
             </div>
@@ -823,7 +858,7 @@ export default function ComponentIdentificationResults({
         </motion.div>
       )}
 
-      {/* BS 7671 Requirements - Expandable */}
+      {/* BS 7671 Requirements - Expandable with highlighted references */}
       {component.bs7671_requirements && component.bs7671_requirements.length > 0 && (
         <motion.div
           initial={{ opacity: 0, y: 8 }}
@@ -832,7 +867,7 @@ export default function ComponentIdentificationResults({
         >
           <ExpandableSection title="BS 7671 Requirements" icon={BookOpen} defaultOpen={false}>
             <div className="space-y-3">
-              {component.bs7671_requirements.map((req, idx) => (
+              {highlightedBS7671.map((highlighted, idx) => (
                 <motion.div
                   key={idx}
                   className="flex items-start gap-3 p-4 rounded-xl bg-card/50 border border-elec-yellow/20"
@@ -841,7 +876,7 @@ export default function ComponentIdentificationResults({
                   transition={{ delay: 0.05 * idx, duration: 0.3 }}
                 >
                   <BookOpen className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
-                  <p className="text-sm text-foreground leading-relaxed">{req}</p>
+                  <p className="text-sm text-white leading-relaxed">{highlighted}</p>
                 </motion.div>
               ))}
             </div>
@@ -849,97 +884,73 @@ export default function ComponentIdentificationResults({
         </motion.div>
       )}
 
-      {/* Installation & Replacement - Expandable */}
+      {/* What to Do Next — actionable section */}
       {(component.installation_notes || component.replacement_notes || component.common_issues) && (
         <motion.div
+          className="space-y-3"
           initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 1.5, duration: 0.4 }}
         >
-          <ExpandableSection title="Installation & Replacement" icon={Wrench} defaultOpen={false}>
-            <div className="space-y-3">
-              {/* Installation Notes */}
-              {component.installation_notes && (
-                <motion.div
-                  className="p-4 rounded-xl bg-card/50 border border-border/30"
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.3 }}
-                >
-                  <div className="flex items-center gap-2 mb-2">
-                    <Wrench className="h-4 w-4 text-elec-yellow" />
-                    <p className="text-sm font-semibold text-foreground">Installation Notes</p>
-                  </div>
-                  <p className="text-sm text-foreground/90 leading-relaxed">
-                    {component.installation_notes}
-                  </p>
-                </motion.div>
-              )}
+          {/* Section heading */}
+          <div className="flex items-center gap-2 px-1">
+            <ArrowRight className="h-5 w-5 text-elec-yellow" />
+            <h3 className="text-lg font-bold text-white">What to Do Next</h3>
+          </div>
 
-              {/* Replacement Notes */}
-              {component.replacement_notes && (
-                <motion.div
-                  className="p-4 rounded-xl bg-amber-500/10 border border-amber-500/20"
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.1, duration: 0.3 }}
-                >
-                  <div className="flex items-center gap-2 mb-2">
-                    <Info className="h-4 w-4 text-amber-400" />
-                    <p className="text-sm font-semibold text-amber-400">Replacement Information</p>
-                  </div>
-                  <p className="text-sm text-foreground/90 leading-relaxed">
-                    {component.replacement_notes}
-                  </p>
-                </motion.div>
-              )}
+          {/* Installation Notes card */}
+          {component.installation_notes && (
+            <motion.div
+              className="p-4 rounded-xl bg-card/50 border border-elec-yellow/20"
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 1.55, duration: 0.3 }}
+            >
+              <div className="flex items-center gap-2 mb-2">
+                <div className="p-1.5 rounded-lg bg-elec-yellow/10">
+                  <Wrench className="h-4 w-4 text-elec-yellow" />
+                </div>
+                <p className="text-sm font-semibold text-elec-yellow">Installation Notes</p>
+              </div>
+              <p className="text-sm text-white leading-relaxed">{component.installation_notes}</p>
+            </motion.div>
+          )}
 
-              {/* Common Issues - with pulsing animation */}
-              {component.common_issues && (
-                <motion.div
-                  className="p-4 rounded-xl bg-red-500/10 border border-red-500/20 relative overflow-hidden"
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.2, duration: 0.3 }}
-                >
-                  {/* Pulsing glow effect */}
-                  <motion.div
-                    className="absolute inset-0 bg-red-500/5 pointer-events-none"
-                    animate={{
-                      opacity: [0.3, 0.6, 0.3],
-                      scale: [1, 1.02, 1],
-                    }}
-                    transition={{
-                      duration: 2,
-                      repeat: Infinity,
-                      ease: 'easeInOut',
-                    }}
-                  />
-                  <div className="relative">
-                    <div className="flex items-center gap-2 mb-2">
-                      <motion.div
-                        animate={{
-                          scale: [1, 1.1, 1],
-                          rotate: [0, 5, -5, 0],
-                        }}
-                        transition={{
-                          duration: 2,
-                          repeat: Infinity,
-                          ease: 'easeInOut',
-                        }}
-                      >
-                        <AlertTriangle className="h-4 w-4 text-red-400" />
-                      </motion.div>
-                      <p className="text-sm font-semibold text-red-400">Known Issues</p>
-                    </div>
-                    <p className="text-sm text-foreground/90 leading-relaxed">
-                      {component.common_issues}
-                    </p>
-                  </div>
-                </motion.div>
-              )}
-            </div>
-          </ExpandableSection>
+          {/* Replacement Notes card */}
+          {component.replacement_notes && (
+            <motion.div
+              className="p-4 rounded-xl bg-card/50 border border-elec-yellow/20"
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 1.6, duration: 0.3 }}
+            >
+              <div className="flex items-center gap-2 mb-2">
+                <div className="p-1.5 rounded-lg bg-elec-yellow/10">
+                  <Package className="h-4 w-4 text-elec-yellow" />
+                </div>
+                <p className="text-sm font-semibold text-elec-yellow">Replacement Information</p>
+              </div>
+              <p className="text-sm text-white leading-relaxed">{component.replacement_notes}</p>
+            </motion.div>
+          )}
+
+          {/* Common Issues card */}
+          {component.common_issues && (
+            <motion.div
+              className="p-4 rounded-xl bg-card/50 border border-red-500/20 relative overflow-hidden"
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 1.65, duration: 0.3 }}
+            >
+              <div className="flex items-center gap-2 mb-2">
+                <div className="p-1.5 rounded-lg bg-red-500/10">
+                  <AlertTriangle className="h-4 w-4 text-elec-yellow" />
+                </div>
+                <p className="text-sm font-semibold text-elec-yellow">Common Issues</p>
+              </div>
+              <p className="text-sm text-white leading-relaxed">{component.common_issues}</p>
+            </motion.div>
+          )}
         </motion.div>
       )}
 
@@ -960,13 +971,11 @@ export default function ComponentIdentificationResults({
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: 0.05 * idx, duration: 0.3 }}
                 >
-                  <p className="font-medium text-sm text-foreground">{similar.name}</p>
+                  <p className="font-medium text-sm text-white">{similar.name}</p>
                   {similar.manufacturer && (
-                    <p className="text-xs text-muted-foreground">{similar.manufacturer}</p>
+                    <p className="text-xs text-white">{similar.manufacturer}</p>
                   )}
-                  {similar.notes && (
-                    <p className="text-xs text-muted-foreground mt-1">{similar.notes}</p>
-                  )}
+                  {similar.notes && <p className="text-xs text-white mt-1">{similar.notes}</p>}
                 </motion.div>
               ))}
             </div>
@@ -987,18 +996,16 @@ export default function ComponentIdentificationResults({
               <div className="p-1.5 rounded-lg bg-blue-500/10">
                 <Info className="h-4 w-4 text-blue-400" />
               </div>
-              <span className="text-sm font-semibold text-foreground">Summary</span>
+              <span className="text-sm font-semibold text-white">Summary</span>
             </div>
-            <p className="text-sm text-muted-foreground leading-relaxed">
-              {analysisResult.summary}
-            </p>
+            <p className="text-sm text-white leading-relaxed">{analysisResult.summary}</p>
           </div>
 
           {/* Disclaimer footer */}
           <div className="px-4 py-3 bg-amber-500/5 border-t border-amber-500/10">
             <div className="flex items-start gap-2">
               <AlertCircle className="h-3.5 w-3.5 text-amber-400 mt-0.5 flex-shrink-0" />
-              <p className="text-xs text-muted-foreground leading-relaxed">
+              <p className="text-xs text-white leading-relaxed">
                 <span className="font-semibold text-amber-400">Important:</span> AI-generated
                 results should be verified by a qualified electrician before making any decisions.
                 Always consult BS 7671 and manufacturer documentation.

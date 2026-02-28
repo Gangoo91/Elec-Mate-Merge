@@ -53,7 +53,7 @@ export function ScrollableChips({ items, className }: ScrollableChipsProps) {
         >
           <div className="flex items-center gap-2 mb-1">
             {item.icon && <item.icon className="h-3.5 w-3.5 text-elec-yellow/60" />}
-            <span className="text-xs text-muted-foreground font-medium uppercase tracking-wide">
+            <span className="text-xs text-white font-medium uppercase tracking-wide">
               {item.label}
             </span>
           </div>

@@ -17,6 +17,7 @@ import { useToast } from '@/hooks/use-toast';
 import { generateProfessionalElectricalPDF } from '@/utils/professional-electrical-pdf';
 import { motion } from 'framer-motion';
 import { cn } from '@/lib/utils';
+import DOMPurify from 'dompurify';
 
 interface OutputPanelProps {
   content: string;
@@ -61,8 +62,8 @@ const OutputPanel = ({ content, settings }: OutputPanelProps) => {
         }
 
         formatted = formatted
-          .replace(/\*\*(.*?)\*\*/g, '<strong class="font-semibold text-foreground">$1</strong>')
-          .replace(/\*(.*?)\*/g, '<em class="italic text-foreground">$1</em>')
+          .replace(/\*\*(.*?)\*\*/g, '<strong class="font-semibold text-white">$1</strong>')
+          .replace(/\*(.*?)\*/g, '<em class="italic text-white">$1</em>')
           .replace(/BS 7671/gi, '<span class="text-elec-yellow font-medium">BS 7671</span>')
           .replace(/(\d{3}\.\d+\.\d+)/g, '<span class="text-blue-400 font-mono text-sm">$1</span>')
           .replace(
@@ -70,21 +71,21 @@ const OutputPanel = ({ content, settings }: OutputPanelProps) => {
             '<span class="px-1.5 py-0.5 rounded bg-red-500/20 text-red-400 text-xs font-semibold">$1</span>'
           );
 
-        if (/^[\d\-\*•]\s/.test(formatted)) {
+        if (/^[\d\-*•]\s/.test(formatted)) {
           const items = formatted.split(/\n/).filter((item) => item.trim());
           return (
             '<ul class="space-y-3 mb-6 ml-0 list-none">' +
             items
               .map((item) => {
-                const cleanItem = item.replace(/^[\d\-\*•]\s*/, '').trim();
-                return `<li class="text-foreground leading-relaxed pl-6 relative before:content-['•'] before:absolute before:left-0 before:text-elec-yellow before:font-bold text-base">${cleanItem}</li>`;
+                const cleanItem = item.replace(/^[\d\-*•]\s*/, '').trim();
+                return `<li class="text-white leading-relaxed pl-6 relative before:content-['•'] before:absolute before:left-0 before:text-elec-yellow before:font-bold text-base">${cleanItem}</li>`;
               })
               .join('') +
             '</ul>'
           );
         }
 
-        return `<p class="text-foreground leading-relaxed mb-6 text-base">${formatted}</p>`;
+        return `<p class="text-white leading-relaxed mb-6 text-base">${formatted}</p>`;
       })
       .filter((s) => s)
       .join('');
@@ -242,8 +243,8 @@ Thank you for choosing our electrical services.`;
             <MessageSquare className="h-10 w-10 text-elec-yellow/60" />
           </div>
           <div className="space-y-2">
-            <h3 className="text-lg font-semibold text-foreground">Ready to Generate</h3>
-            <p className="text-sm text-muted-foreground max-w-sm">
+            <h3 className="text-lg font-semibold text-white">Ready to Generate</h3>
+            <p className="text-sm text-white max-w-sm">
               Your client-friendly explanation will appear here. Available in multiple formats:
               standard, email, SMS, and quotation.
             </p>
@@ -267,8 +268,8 @@ Thank you for choosing our electrical services.`;
               <Sparkles className="h-5 w-5 text-elec-yellow" />
             </div>
             <div>
-              <h2 className="font-bold text-foreground">Generated Explanation</h2>
-              <p className="text-xs text-muted-foreground capitalize">
+              <h2 className="font-bold text-white">Generated Explanation</h2>
+              <p className="text-xs text-white capitalize">
                 {settings.tone} tone • {settings.clientType}
               </p>
             </div>
@@ -281,7 +282,7 @@ Thank you for choosing our electrical services.`;
               size="sm"
               onClick={handleCopy}
               className={cn(
-                'h-10 px-4 min-w-[80px] border-border/30 transition-all',
+                'h-11 px-4 min-w-[80px] border-border/30 transition-all touch-manipulation',
                 copied && 'bg-green-500/10 border-green-500/30 text-green-400'
               )}
             >
@@ -302,7 +303,7 @@ Thank you for choosing our electrical services.`;
               size="sm"
               onClick={handleDownloadPDF}
               disabled={isGeneratingPDF}
-              className="h-10 px-4 border-border/30"
+              className="h-11 px-4 border-border/30 touch-manipulation"
             >
               <FileDown className="h-4 w-4 mr-2" />
               {isGeneratingPDF ? '...' : 'PDF'}
@@ -352,7 +353,7 @@ Thank you for choosing our electrical services.`;
                 lineHeight: '1.8',
               }}
               dangerouslySetInnerHTML={{
-                __html: processContentForDisplay(content),
+                __html: DOMPurify.sanitize(processContentForDisplay(content)),
               }}
             />
           </div>
@@ -369,7 +370,7 @@ Thank you for choosing our electrical services.`;
               variant="outline"
               size="sm"
               onClick={handleEmailTemplate}
-              className="h-10 border-border/30"
+              className="h-11 border-border/30 touch-manipulation"
             >
               <Send className="h-4 w-4 mr-2" />
               Open in Email
@@ -381,7 +382,7 @@ Thank you for choosing our electrical services.`;
               {formatForEmail(content)
                 .split('\n')
                 .map((line, index) => (
-                  <p key={index} className="text-foreground leading-relaxed text-base">
+                  <p key={index} className="text-white leading-relaxed text-base">
                     {line || <br />}
                   </p>
                 ))}
@@ -400,7 +401,7 @@ Thank you for choosing our electrical services.`;
               variant="outline"
               size="sm"
               onClick={handleSMSTemplate}
-              className="h-10 border-border/30"
+              className="h-11 border-border/30 touch-manipulation"
             >
               <Send className="h-4 w-4 mr-2" />
               Send SMS
@@ -408,13 +409,13 @@ Thank you for choosing our electrical services.`;
           </div>
 
           <div className="rounded-xl bg-background/50 border border-border/30 p-5">
-            <p className="text-foreground leading-relaxed text-base" style={{ lineHeight: '1.8' }}>
+            <p className="text-white leading-relaxed text-base" style={{ lineHeight: '1.8' }}>
               {formatForSMS(content)}
             </p>
 
             <div className="mt-4 pt-3 border-t border-border/30">
               <div className="flex items-center justify-between">
-                <span className="text-xs text-muted-foreground">Character count</span>
+                <span className="text-xs text-white">Character count</span>
                 <Badge
                   variant="outline"
                   className={cn(
@@ -442,7 +443,7 @@ Thank you for choosing our electrical services.`;
               variant="outline"
               size="sm"
               onClick={handleDownloadTxt}
-              className="h-10 border-border/30"
+              className="h-11 border-border/30 touch-manipulation"
             >
               <Download className="h-4 w-4 mr-2" />
               Download
@@ -457,7 +458,7 @@ Thank you for choosing our electrical services.`;
                 lineHeight: '1.8',
               }}
               dangerouslySetInnerHTML={{
-                __html: processContentForDisplay(formatForQuote(content)),
+                __html: DOMPurify.sanitize(processContentForDisplay(formatForQuote(content))),
               }}
             />
           </div>

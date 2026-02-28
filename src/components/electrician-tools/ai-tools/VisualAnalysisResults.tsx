@@ -8,7 +8,6 @@ import {
   Wrench,
   FileText,
   ChevronDown,
-  Sparkles,
   Shield,
   XCircle,
   MessageSquare,
@@ -75,7 +74,7 @@ const filterConfig: Record<
   FilterType,
   { label: string; color: string; bg: string; border: string }
 > = {
-  all: { label: 'All', color: 'text-foreground', bg: 'bg-card', border: 'border-border' },
+  all: { label: 'All', color: 'text-white', bg: 'bg-card', border: 'border-border' },
   C1: { label: 'C1', color: 'text-red-400', bg: 'bg-red-500/10', border: 'border-red-500/30' },
   C2: {
     label: 'C2',
@@ -83,12 +82,17 @@ const filterConfig: Record<
     bg: 'bg-amber-500/10',
     border: 'border-amber-500/30',
   },
-  C3: { label: 'C3', color: 'text-blue-400', bg: 'bg-blue-500/10', border: 'border-blue-500/30' },
+  C3: {
+    label: 'C3',
+    color: 'text-yellow-400',
+    bg: 'bg-yellow-500/10',
+    border: 'border-yellow-500/30',
+  },
   FI: {
     label: 'FI',
-    color: 'text-slate-400',
-    bg: 'bg-slate-500/10',
-    border: 'border-slate-500/30',
+    color: 'text-blue-400',
+    bg: 'bg-blue-500/10',
+    border: 'border-blue-500/30',
   },
 };
 
@@ -108,16 +112,16 @@ const eicrConfig = {
     description: 'Urgent remedial action required',
   },
   C3: {
-    bg: 'bg-blue-500/10',
-    border: 'border-blue-500/30',
-    text: 'text-blue-400',
+    bg: 'bg-yellow-500/10',
+    border: 'border-yellow-500/30',
+    text: 'text-yellow-400',
     label: 'Improvement',
     description: 'Recommended improvement',
   },
   FI: {
-    bg: 'bg-slate-500/10',
-    border: 'border-slate-500/30',
-    text: 'text-slate-400',
+    bg: 'bg-blue-500/10',
+    border: 'border-blue-500/30',
+    text: 'text-blue-400',
     label: 'Further Investigation',
     description: 'Additional testing needed',
   },
@@ -131,6 +135,7 @@ const VisualAnalysisResults = ({
 }: VisualAnalysisResultsProps) => {
   const [selectedFilter, setSelectedFilter] = useState<FilterType>('all');
   const [expandedFindings, setExpandedFindings] = useState<Record<number, boolean>>({});
+  const [expandedFixes, setExpandedFixes] = useState<Record<number, boolean>>({});
 
   // Detect parse error
   const isParseError =
@@ -178,6 +183,10 @@ const VisualAnalysisResults = ({
     setExpandedFindings((prev) => ({ ...prev, [index]: !prev[index] }));
   };
 
+  const toggleFix = (index: number) => {
+    setExpandedFixes((prev) => ({ ...prev, [index]: !prev[index] }));
+  };
+
   const copySummary = () => {
     const summaryText = `VISUAL FAULT ANALYSIS REPORT
 Generated: ${new Date().toLocaleDateString('en-GB')}
@@ -218,16 +227,14 @@ This analysis is for guidance only and must be verified by a qualified electrici
 
             <div className="text-center sm:text-left flex-1">
               <h2 className="text-2xl font-bold text-green-400 mb-2">No Faults Detected</h2>
-              <p className="text-muted-foreground">
-                Installation appears compliant with BS 7671 requirements
-              </p>
+              <p className="text-white">Installation appears compliant with BS 7671 requirements</p>
             </div>
           </div>
 
           {/* Summary if available */}
           {summary && (
             <div className="mt-6 p-4 rounded-xl bg-green-500/5 border border-green-500/20">
-              <p className="text-sm text-foreground/90 leading-relaxed">{summary}</p>
+              <p className="text-sm text-white leading-relaxed">{summary}</p>
             </div>
           )}
         </div>
@@ -235,13 +242,21 @@ This analysis is for guidance only and must be verified by a qualified electrici
         {/* Actions */}
         <div className="flex gap-3">
           {onStartChat && (
-            <Button variant="outline" onClick={onStartChat} className="flex-1 h-12">
+            <Button
+              variant="outline"
+              onClick={onStartChat}
+              className="flex-1 h-12 touch-manipulation"
+            >
               <MessageSquare className="h-4 w-4 mr-2" />
               Ask Questions
             </Button>
           )}
           {onExportReport && (
-            <Button variant="outline" onClick={onExportReport} className="flex-1 h-12">
+            <Button
+              variant="outline"
+              onClick={onExportReport}
+              className="flex-1 h-12 touch-manipulation"
+            >
               <Download className="h-4 w-4 mr-2" />
               Export Report
             </Button>
@@ -254,7 +269,7 @@ This analysis is for guidance only and must be verified by a qualified electrici
             <AlertTriangle className="h-5 w-5 text-amber-400 flex-shrink-0 mt-0.5" />
             <div>
               <p className="font-medium text-amber-400 text-sm mb-1">Visual Assessment Only</p>
-              <p className="text-xs text-muted-foreground leading-relaxed">
+              <p className="text-xs text-white leading-relaxed">
                 Physical testing with calibrated instruments is required for full BS 7671
                 compliance. Always engage a qualified electrician for certification work.
               </p>
@@ -267,6 +282,51 @@ This analysis is for guidance only and must be verified by a qualified electrici
 
   return (
     <div className="space-y-5">
+      {/* Safety Assessment Banner */}
+      {compliance_summary.overall_assessment === 'unsatisfactory' ? (
+        <div className="rounded-2xl bg-gradient-to-r from-red-500/20 to-red-600/20 border border-red-500/30 p-5">
+          <div className="flex items-center gap-4">
+            <div className="p-3 bg-red-500/20 rounded-xl border border-red-500/30 flex-shrink-0">
+              <Shield className="h-8 w-8 text-red-400" />
+            </div>
+            <div className="flex-1 min-w-0">
+              <h2 className="text-xl font-bold text-red-400 uppercase tracking-wide mb-1">
+                Unsatisfactory
+              </h2>
+              <p className="text-white text-sm">
+                {compliance_summary.c1_count > 0 && (
+                  <span className="font-semibold text-red-400">
+                    {compliance_summary.c1_count} Danger to Life
+                  </span>
+                )}
+                {compliance_summary.c1_count > 0 && compliance_summary.c2_count > 0 && (
+                  <span className="text-white">, </span>
+                )}
+                {compliance_summary.c2_count > 0 && (
+                  <span className="font-semibold text-amber-400">
+                    {compliance_summary.c2_count} Potentially Dangerous
+                  </span>
+                )}
+              </p>
+            </div>
+          </div>
+        </div>
+      ) : (
+        <div className="rounded-2xl bg-gradient-to-r from-green-500/20 to-green-600/20 border border-green-500/30 p-5">
+          <div className="flex items-center gap-4">
+            <div className="p-3 bg-green-500/20 rounded-xl border border-green-500/30 flex-shrink-0">
+              <CheckCircle className="h-8 w-8 text-green-400" />
+            </div>
+            <div className="flex-1 min-w-0">
+              <h2 className="text-xl font-bold text-green-400 uppercase tracking-wide mb-1">
+                Satisfactory
+              </h2>
+              <p className="text-white text-sm">Installation meets BS 7671 requirements</p>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Hero Section with Gauge */}
       <div className="rounded-2xl border border-border/30 bg-gradient-to-br from-card via-card/95 to-card/90 backdrop-blur-xl p-6 overflow-hidden relative">
         {/* Gradient overlay */}
@@ -276,24 +336,42 @@ This analysis is for guidance only and must be verified by a qualified electrici
           {/* Header with actions */}
           <div className="flex items-start justify-between mb-6">
             <div>
-              <h2 className="text-lg font-bold text-foreground flex items-center gap-2">
+              <h2 className="text-lg font-bold text-white flex items-center gap-2">
                 <Shield className="h-5 w-5 text-elec-yellow" />
                 Fault Analysis
               </h2>
-              <p className="text-sm text-muted-foreground mt-1">
+              <p className="text-sm text-white mt-1">
                 {findings.length} issue{findings.length !== 1 ? 's' : ''} identified
               </p>
             </div>
             <div className="flex gap-2">
               {onStartChat && (
-                <Button variant="outline" size="sm" onClick={onStartChat} className="h-9">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={onStartChat}
+                  className="h-11 touch-manipulation"
+                  aria-label="Chat about analysis"
+                >
                   <MessageSquare className="h-4 w-4" />
                 </Button>
               )}
-              <Button variant="outline" size="sm" onClick={copySummary} className="h-9">
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={copySummary}
+                className="h-11 touch-manipulation"
+                aria-label="Copy summary"
+              >
                 <Copy className="h-4 w-4" />
               </Button>
-              <Button variant="outline" size="sm" onClick={onExportReport} className="h-9">
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={onExportReport}
+                className="h-11 touch-manipulation"
+                aria-label="Export report"
+              >
                 <Download className="h-4 w-4" />
               </Button>
             </div>
@@ -342,7 +420,7 @@ This analysis is for guidance only and must be verified by a qualified electrici
               </div>
 
               {/* Summary text */}
-              <p className="text-sm text-muted-foreground leading-relaxed">{summary}</p>
+              <p className="text-sm text-white leading-relaxed">{summary}</p>
             </div>
           </div>
 
@@ -371,9 +449,9 @@ This analysis is for guidance only and must be verified by a qualified electrici
               >
                 <XCircle className="h-5 w-5 text-red-400 flex-shrink-0 mt-0.5" />
                 <div>
-                  <p className="font-medium text-foreground text-sm">{finding.description}</p>
+                  <p className="font-medium text-white text-sm">{finding.description}</p>
                   {finding.location && (
-                    <p className="text-xs text-muted-foreground mt-1">
+                    <p className="text-xs text-white mt-1">
                       <Eye className="h-3 w-3 inline mr-1" />
                       {finding.location}
                     </p>
@@ -436,29 +514,25 @@ This analysis is for guidance only and must be verified by a qualified electrici
                   className="w-full flex items-center justify-between gap-3 p-4 min-h-[56px] touch-manipulation text-left"
                 >
                   <div className="flex items-center gap-3 flex-1 min-w-0">
-                    <Badge
+                    <div
                       className={cn(
-                        'text-sm font-bold px-2.5 py-1',
+                        'w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0 text-lg font-bold border-2',
                         config.bg,
                         config.text,
-                        'border',
                         config.border
                       )}
                     >
                       {finding.eicr_code}
-                    </Badge>
-                    <span className="font-medium text-foreground text-sm truncate">
+                    </div>
+                    <span className="font-medium text-white text-sm truncate">
                       {finding.description}
                     </span>
                   </div>
                   <div className="flex items-center gap-2">
-                    <span className="text-xs text-muted-foreground hidden sm:block">
+                    <span className="text-xs text-white hidden sm:block">
                       {Math.round(finding.confidence * 100)}%
                     </span>
-                    <motion.div
-                      animate={{ rotate: isExpanded ? 180 : 0 }}
-                      className="text-muted-foreground"
-                    >
+                    <motion.div animate={{ rotate: isExpanded ? 180 : 0 }} className="text-white">
                       <ChevronDown className="h-4 w-4" />
                     </motion.div>
                   </div>
@@ -481,7 +555,7 @@ This analysis is for guidance only and must be verified by a qualified electrici
 
                           {/* Location */}
                           {finding.location && (
-                            <div className="flex items-center gap-2 text-sm text-muted-foreground mb-3">
+                            <div className="flex items-center gap-2 text-sm text-white mb-3">
                               <Eye className="h-4 w-4" />
                               <span>{finding.location}</span>
                             </div>
@@ -493,7 +567,7 @@ This analysis is for guidance only and must be verified by a qualified electrici
                           <div className="p-3 rounded-lg bg-background/50 border border-border/30">
                             <div className="flex items-center gap-2 mb-2">
                               <FileText className="h-4 w-4 text-elec-yellow" />
-                              <span className="text-sm font-semibold text-foreground">
+                              <span className="text-sm font-semibold text-white">
                                 BS 7671 References
                               </span>
                             </div>
@@ -511,21 +585,50 @@ This analysis is for guidance only and must be verified by a qualified electrici
                           </div>
                         )}
 
-                        {/* Fix Guidance */}
-                        <div className="p-3 rounded-lg bg-elec-yellow/5 border border-elec-yellow/20">
-                          <div className="flex items-center gap-2 mb-2">
-                            <Wrench className="h-4 w-4 text-elec-yellow" />
-                            <span className="text-sm font-semibold text-foreground">
-                              Recommended Fix
-                            </span>
+                        {/* How to Fix - Collapsible */}
+                        {finding.fix_guidance && (
+                          <div className="rounded-lg bg-elec-yellow/5 border border-elec-yellow/20 overflow-hidden">
+                            <button
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                toggleFix(originalIndex);
+                              }}
+                              className="w-full flex items-center justify-between gap-2 p-3 min-h-[44px] touch-manipulation text-left"
+                            >
+                              <div className="flex items-center gap-2">
+                                <Wrench className="h-4 w-4 text-elec-yellow" />
+                                <span className="text-sm font-semibold text-white">How to Fix</span>
+                              </div>
+                              <motion.div
+                                animate={{ rotate: expandedFixes[originalIndex] ? 180 : 0 }}
+                                transition={{ duration: 0.2 }}
+                                className="text-white"
+                              >
+                                <ChevronDown className="h-4 w-4" />
+                              </motion.div>
+                            </button>
+                            <AnimatePresence>
+                              {expandedFixes[originalIndex] && (
+                                <motion.div
+                                  initial={{ height: 0, opacity: 0 }}
+                                  animate={{ height: 'auto', opacity: 1 }}
+                                  exit={{ height: 0, opacity: 0 }}
+                                  transition={{ duration: 0.2 }}
+                                  className="overflow-hidden"
+                                >
+                                  <div className="px-3 pb-3 pt-0">
+                                    <p className="text-sm text-white leading-relaxed">
+                                      {finding.fix_guidance}
+                                    </p>
+                                  </div>
+                                </motion.div>
+                              )}
+                            </AnimatePresence>
                           </div>
-                          <p className="text-sm text-foreground/90 leading-relaxed">
-                            {finding.fix_guidance}
-                          </p>
-                        </div>
+                        )}
 
                         {/* Confidence indicator */}
-                        <div className="text-xs text-muted-foreground">
+                        <div className="text-xs text-white">
                           Confidence: {Math.round(finding.confidence * 100)}%
                         </div>
                       </div>
@@ -539,7 +642,7 @@ This analysis is for guidance only and must be verified by a qualified electrici
 
         {filteredFindings.length === 0 && (
           <div className="p-6 text-center rounded-xl bg-card/50 border border-border/30">
-            <p className="text-sm text-muted-foreground">No findings match the selected filter</p>
+            <p className="text-sm text-white">No findings match the selected filter</p>
           </div>
         )}
       </div>
@@ -623,9 +726,9 @@ This analysis is for guidance only and must be verified by a qualified electrici
                           </Badge>
                         )}
                       </div>
-                      <p className="text-sm font-medium text-foreground">{rec.action}</p>
+                      <p className="text-sm font-medium text-white">{rec.action}</p>
                       {rec.bs7671_reference && (
-                        <p className="text-xs text-muted-foreground mt-1">
+                        <p className="text-xs text-white mt-1">
                           <FileText className="h-3 w-3 inline mr-1" />
                           BS 7671: {rec.bs7671_reference}
                         </p>
@@ -645,7 +748,7 @@ This analysis is for guidance only and must be verified by a qualified electrici
           <AlertTriangle className="h-5 w-5 text-amber-400 flex-shrink-0 mt-0.5" />
           <div>
             <p className="font-medium text-amber-400 text-sm mb-1">Visual Assessment Only</p>
-            <p className="text-xs text-muted-foreground leading-relaxed">
+            <p className="text-xs text-white leading-relaxed">
               This AI analysis is provided as guidance only and should not replace professional
               electrical inspection. All findings must be verified by a qualified electrician.
               Visual analysis may not detect all potential issues, especially those requiring

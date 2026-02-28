@@ -88,16 +88,13 @@ export function RadialGauge({
         {/* Center content */}
         <div className="absolute inset-0 flex flex-col items-center justify-center">
           {showPercentage && (
-            <span className={cn(config.fontSize, 'font-bold text-foreground')}>
+            <span className={cn(config.fontSize, 'font-bold text-white')}>
               {Math.round(percentage)}%
             </span>
           )}
           {label && (
             <span
-              className={cn(
-                config.labelSize,
-                'font-semibold text-muted-foreground uppercase tracking-wide'
-              )}
+              className={cn(config.labelSize, 'font-semibold text-white uppercase tracking-wide')}
             >
               {label}
             </span>
@@ -105,7 +102,7 @@ export function RadialGauge({
         </div>
       </div>
 
-      {sublabel && <p className="mt-3 text-sm text-muted-foreground text-center">{sublabel}</p>}
+      {sublabel && <p className="mt-3 text-sm text-white text-center">{sublabel}</p>}
     </div>
   );
 }

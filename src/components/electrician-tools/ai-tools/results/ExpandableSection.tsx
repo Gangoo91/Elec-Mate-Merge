@@ -60,7 +60,7 @@ export function ExpandableSection({
               <Icon className="h-5 w-5" />
             </div>
           )}
-          <span className="font-semibold text-foreground truncate">{title}</span>
+          <span className="font-semibold text-white truncate">{title}</span>
           {badge && <div className="flex-shrink-0">{badge}</div>}
         </div>
 

@@ -80,6 +80,7 @@ const circuitsByProperty: Record<
   Array<{
     id: string;
     label: string;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     icon: any;
     color: string;
     border: string;
@@ -355,6 +356,28 @@ const earthingSystems = [
   { id: 'unknown', label: 'Unknown' },
 ];
 
+// Static mapping for dynamic property-based classes (Tailwind requires full class names at build time)
+const propertyGradients: Record<
+  string,
+  { heroFrom: string; progressBg: string; captureBg: string }
+> = {
+  'text-blue-400': {
+    heroFrom: 'from-blue-400/10 via-card to-card/90',
+    progressBg: 'bg-blue-500',
+    captureBg: 'bg-blue-400 hover:opacity-90',
+  },
+  'text-purple-400': {
+    heroFrom: 'from-purple-400/10 via-card to-card/90',
+    progressBg: 'bg-purple-500',
+    captureBg: 'bg-purple-400 hover:opacity-90',
+  },
+  'text-orange-400': {
+    heroFrom: 'from-orange-400/10 via-card to-card/90',
+    progressBg: 'bg-orange-500',
+    captureBg: 'bg-orange-400 hover:opacity-90',
+  },
+};
+
 const WiringInstructionPage = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
@@ -372,6 +395,7 @@ const WiringInstructionPage = () => {
   const [additionalNotes, setAdditionalNotes] = useState('');
   const [isCameraActive, setIsCameraActive] = useState(false);
   const [isAnalyzing, setIsAnalyzing] = useState(false);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [analysisResult, setAnalysisResult] = useState<any>(null);
   const [analysisProgress, setAnalysisProgress] = useState(0);
 
@@ -572,7 +596,8 @@ const WiringInstructionPage = () => {
           className={cn(
             'rounded-2xl border bg-gradient-to-br backdrop-blur-xl p-5 overflow-hidden relative',
             selectedPropertyData?.border || 'border-emerald-500/30',
-            `from-${selectedPropertyData?.color.replace('text-', '')}/10 via-card to-card/90`
+            propertyGradients[selectedPropertyData?.color || 'text-blue-400']?.heroFrom ||
+              'from-blue-400/10 via-card to-card/90'
           )}
         >
           <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/[0.05] via-transparent to-transparent pointer-events-none" />
@@ -590,7 +615,7 @@ const WiringInstructionPage = () => {
             </div>
             <div>
               <h1 className="text-xl font-bold text-foreground">Wiring Instructions</h1>
-              <p className="text-sm text-muted-foreground">Step-by-step UK wiring guidance</p>
+              <p className="text-sm text-white">Step-by-step UK wiring guidance</p>
             </div>
           </div>
         </div>
@@ -639,14 +664,18 @@ const WiringInstructionPage = () => {
               <Loader2 className={cn('h-6 w-6 animate-spin', selectedPropertyData?.color)} />
               <div>
                 <h3 className="font-semibold text-foreground">Generating Wiring Guide...</h3>
-                <p className="text-xs text-muted-foreground">
+                <p className="text-xs text-white">
                   Creating {selectedProperty} installation instructions
                 </p>
               </div>
             </div>
             <div className="h-2 bg-muted rounded-full overflow-hidden">
               <motion.div
-                className={cn('h-full', selectedPropertyData?.bg?.replace('/10', ''))}
+                className={cn(
+                  'h-full',
+                  propertyGradients[selectedPropertyData?.color || 'text-blue-400']?.progressBg ||
+                    'bg-blue-500'
+                )}
                 initial={{ width: 0 }}
                 animate={{ width: `${analysisProgress}%` }}
               />
@@ -665,7 +694,7 @@ const WiringInstructionPage = () => {
                       key={prop.id}
                       onClick={() => handlePropertyChange(prop.id)}
                       className={cn(
-                        'relative p-4 rounded-xl border-2 transition-all overflow-hidden',
+                        'relative p-4 rounded-xl border-2 transition-all overflow-hidden touch-manipulation',
                         'min-h-[100px] flex flex-col items-center justify-center gap-2',
                         isSelected
                           ? cn(prop.bg, prop.border)
@@ -689,12 +718,12 @@ const WiringInstructionPage = () => {
                         <span
                           className={cn(
                             'text-sm font-semibold block',
-                            isSelected ? 'text-foreground' : 'text-muted-foreground'
+                            isSelected ? 'text-foreground' : 'text-white'
                           )}
                         >
                           {prop.label}
                         </span>
-                        <span className="text-[10px] text-muted-foreground">{prop.desc}</span>
+                        <span className="text-[10px] text-white">{prop.desc}</span>
                       </div>
                       {isSelected && (
                         <div
@@ -726,7 +755,7 @@ const WiringInstructionPage = () => {
                       key={circuit.id}
                       onClick={() => setSelectedCircuit(circuit.id)}
                       className={cn(
-                        'relative p-3 rounded-xl border-2 transition-all overflow-hidden',
+                        'relative p-3 rounded-xl border-2 transition-all overflow-hidden touch-manipulation',
                         'min-h-[80px] flex flex-col items-center justify-center gap-1.5',
                         isSelected
                           ? cn(`bg-gradient-to-br ${circuit.gradient}`, circuit.border)
@@ -742,7 +771,7 @@ const WiringInstructionPage = () => {
                       <span
                         className={cn(
                           'text-xs font-medium text-center leading-tight',
-                          isSelected ? 'text-foreground' : 'text-muted-foreground'
+                          isSelected ? 'text-foreground' : 'text-white'
                         )}
                       >
                         {circuit.label}
@@ -765,14 +794,14 @@ const WiringInstructionPage = () => {
                     key={ctx.id}
                     onClick={() => setSelectedContext(ctx.id)}
                     className={cn(
-                      'px-3 py-2 rounded-xl border-2 text-xs font-medium transition-all min-h-[40px]',
+                      'px-3 py-2 rounded-xl border-2 text-xs font-medium transition-all min-h-[44px] touch-manipulation',
                       selectedContext === ctx.id
                         ? cn(
                             selectedPropertyData?.bg,
                             selectedPropertyData?.border,
                             selectedPropertyData?.color
                           )
-                        : 'border-border/30 text-muted-foreground hover:border-border/50'
+                        : 'border-border/30 text-white hover:border-border/50'
                     )}
                   >
                     {ctx.label}
@@ -797,23 +826,21 @@ const WiringInstructionPage = () => {
                 <div className="px-4 pb-4 space-y-4 border-t border-border/30 pt-4">
                   {/* Earthing System */}
                   <div className="space-y-2">
-                    <label className="text-xs font-medium text-muted-foreground">
-                      Earthing System
-                    </label>
+                    <label className="text-xs font-medium text-white">Earthing System</label>
                     <div className="flex flex-wrap gap-2">
                       {earthingSystems.map((sys) => (
                         <button
                           key={sys.id}
                           onClick={() => setSelectedEarthing(sys.id)}
                           className={cn(
-                            'px-3 py-2 rounded-lg border text-xs font-medium transition-all min-h-[36px]',
+                            'px-3 py-2 rounded-lg border text-xs font-medium transition-all min-h-[44px] touch-manipulation',
                             selectedEarthing === sys.id
                               ? cn(
                                   selectedPropertyData?.bg,
                                   selectedPropertyData?.border,
                                   selectedPropertyData?.color
                                 )
-                              : 'border-border/30 text-muted-foreground hover:border-border/50'
+                              : 'border-border/30 text-white hover:border-border/50'
                           )}
                         >
                           {sys.label}
@@ -824,9 +851,7 @@ const WiringInstructionPage = () => {
 
                   {/* Supply Rating */}
                   <div className="space-y-2">
-                    <label className="text-xs font-medium text-muted-foreground">
-                      Supply Rating (Amps)
-                    </label>
+                    <label className="text-xs font-medium text-white">Supply Rating (Amps)</label>
                     <input
                       type="text"
                       placeholder={
@@ -845,9 +870,7 @@ const WiringInstructionPage = () => {
 
                   {/* Additional Notes */}
                   <div className="space-y-2">
-                    <label className="text-xs font-medium text-muted-foreground">
-                      Additional Details
-                    </label>
+                    <label className="text-xs font-medium text-white">Additional Details</label>
                     <input
                       type="text"
                       placeholder="e.g., existing circuit details, special requirements..."
@@ -896,7 +919,8 @@ const WiringInstructionPage = () => {
                         onClick={captureImage}
                         className={cn(
                           'flex-1 h-12',
-                          `bg-${selectedPropertyData?.color?.replace('text-', '')} hover:opacity-90`
+                          propertyGradients[selectedPropertyData?.color || 'text-blue-400']
+                            ?.captureBg || 'bg-blue-400 hover:opacity-90'
                         )}
                       >
                         <Camera className="h-5 w-5 mr-2" />

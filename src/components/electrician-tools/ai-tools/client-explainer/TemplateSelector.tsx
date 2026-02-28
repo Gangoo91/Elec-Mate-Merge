@@ -138,7 +138,7 @@ const TemplateSelector = ({ onSelectTemplate }: TemplateSelectorProps) => {
               {/* Content */}
               <div className="flex-1 min-w-0 space-y-2">
                 <div className="flex items-start justify-between gap-2">
-                  <h4 className="font-semibold text-foreground text-sm leading-tight">
+                  <h4 className="font-semibold text-white text-sm leading-tight">
                     {template.title}
                   </h4>
                   <div className="flex gap-1 flex-shrink-0">
@@ -156,10 +156,10 @@ const TemplateSelector = ({ onSelectTemplate }: TemplateSelectorProps) => {
                   </div>
                 </div>
 
-                <p className="text-xs text-muted-foreground line-clamp-2">{template.description}</p>
+                <p className="text-xs text-white line-clamp-2">{template.description}</p>
 
                 {/* Sample preview */}
-                <p className="text-xs text-foreground/50 line-clamp-1 italic">
+                <p className="text-xs text-white line-clamp-1 italic">
                   "{template.sample.substring(0, 60)}..."
                 </p>
               </div>

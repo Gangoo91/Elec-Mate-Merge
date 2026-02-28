@@ -4,6 +4,8 @@ import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.39.3';
 import { encode as base64Encode } from 'https://deno.land/std@0.168.0/encoding/base64.ts';
 import { captureException } from '../_shared/sentry.ts';
 
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
 const geminiApiKey = Deno.env.get('GEMINI_API_KEY');
 
 // Initialize Supabase admin client for RAG queries
@@ -164,7 +166,17 @@ function extractKeywordsFromSettings(mode: string, analysisSettings: any): strin
   // Add mode-specific base keywords
   switch (mode) {
     case 'component_identify':
-      keywords.push('component', 'identification', 'specifications', 'bs7671');
+      keywords.push(
+        'component',
+        'identification',
+        'specifications',
+        'bs7671',
+        'manufacturer',
+        'rating',
+        'protection',
+        'consumer unit',
+        'distribution'
+      );
       break;
     case 'wiring_instruction':
       keywords.push('wiring', 'installation', 'connections', 'terminal', 'cable');
@@ -312,7 +324,8 @@ serve(async (req) => {
       fast: boolean,
       ragContext: { contextText: string; sourceCount: number }
     ): string => {
-      const baseContext = `You are a UK electrical expert specialising in BS 7671 18th Edition.
+      const baseContext = `You are a UK electrical expert specialising in BS 7671:2018+A3:2024 (18th Edition).
+Always use UK English throughout your response (analyse, colour, centre, organisation, specialise, earthing).
 
 ${
   ragContext.contextText
@@ -379,6 +392,8 @@ Response format:
         case 'component_identify':
           return `${baseContext}
 ${responseFormat}
+
+All compliance references must cite BS 7671:2018+A3:2024 (18th Edition with Amendment 3).
 
 UK ELECTRICAL COMPONENT KNOWLEDGE BASE:
 
@@ -772,11 +787,15 @@ RESPONSE REQUIREMENTS:
 
     console.log(`🚀 Calling Direct Gemini API (gemini-2.0-flash)...`);
 
-    // All AI photo tools use consistent 7000 tokens (increased to accommodate RAG context)
-    // Timeout of 60s to ensure enough time for comprehensive analysis
+    // Mode-specific token limits to balance cost and quality
     const timeout = 60000; // 60s timeout for all modes
-    // Token limit increased from 5000 to 7000 to accommodate RAG context (~1500-2500 tokens)
-    const maxTokens = 7000; // Consistent 7000 tokens for all AI photo analysis tools with RAG
+    const modeTokenLimits: Record<string, number> = {
+      component_identify: 5000,
+      fault_diagnosis: 6000,
+      installation_verify: 7000,
+      wiring_instruction: 8000,
+    };
+    const maxTokens = modeTokenLimits[analysis_settings.mode] || 7000;
 
     // Convert images to Gemini inlineData format (camelCase for REST API)
     const parts: any[] = [{ text: systemPrompt + '\n\n' + userPrompt }];
@@ -1019,7 +1038,7 @@ RESPONSE REQUIREMENTS:
       }
     } catch (parseError) {
       console.error('❌ Parse error:', parseError);
-      console.error('❌ Raw content:', content);
+      console.error('❌ Raw content:', text);
 
       // Return mode-appropriate error response
       if (analysis_settings.mode === 'component_identify') {
@@ -1279,9 +1298,9 @@ RESPONSE REQUIREMENTS:
 
     const errorResponse = {
       error: error instanceof Error ? error.message : 'Unknown error',
-      code: error.name === 'AbortError' ? 'TIMEOUT' : 'ERROR',
+      code: error instanceof Error && error.name === 'AbortError' ? 'TIMEOUT' : 'ERROR',
       message:
-        error.name === 'AbortError'
+        error instanceof Error && error.name === 'AbortError'
           ? 'Analysis timed out. Try fast mode or fewer images.'
           : 'Analysis failed. Please try again.',
     };

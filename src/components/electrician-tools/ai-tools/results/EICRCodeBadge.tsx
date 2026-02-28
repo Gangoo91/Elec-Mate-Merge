@@ -99,9 +99,7 @@ export function EICRCodeBadge({
           <div className={cn('text-xl font-bold', config.text)}>{code}</div>
 
           {/* Description */}
-          {showLabel && (
-            <div className="text-xs text-muted-foreground font-medium">{config.label}</div>
-          )}
+          {showLabel && <div className="text-xs text-white font-medium">{config.label}</div>}
         </div>
 
         {/* Background icon */}
@@ -126,7 +124,7 @@ export function EICRCodeBadge({
     >
       <Icon className="h-3.5 w-3.5" />
       {code}
-      {count !== undefined && <span className="ml-1 opacity-80">({count})</span>}
+      {count !== undefined && <span className="ml-1">({count})</span>}
     </span>
   );
 }

@@ -86,14 +86,11 @@ const ClientTypeSelector = ({ selected, onSelect }: ClientTypeSelectorProps) => 
               </div>
               <div className="space-y-1">
                 <p
-                  className={cn(
-                    'font-semibold text-sm',
-                    isSelected ? 'text-foreground' : 'text-foreground/80'
-                  )}
+                  className={cn('font-semibold text-sm', isSelected ? 'text-white' : 'text-white')}
                 >
                   {label}
                 </p>
-                <p className="text-xs text-muted-foreground line-clamp-1">{description}</p>
+                <p className="text-xs text-white line-clamp-1">{description}</p>
               </div>
             </div>
           </button>

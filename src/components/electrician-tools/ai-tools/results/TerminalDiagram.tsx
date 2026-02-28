@@ -13,7 +13,7 @@ interface TerminalDiagramProps {
   className?: string;
 }
 
-// UK standard wire colors
+// UK standard wire colours
 const wireColors: Record<string, string> = {
   brown: '#8B4513',
   blue: '#0066CC',
@@ -29,6 +29,74 @@ const wireColors: Record<string, string> = {
 function getWireColor(wireColor: string): string {
   const normalized = wireColor.toLowerCase().trim();
   return wireColors[normalized] || wireColor;
+}
+
+/**
+ * Returns a small coloured circle representing a wire colour.
+ * Uses UK standard wiring colours for visual identification.
+ */
+// eslint-disable-next-line react-refresh/only-export-components
+export function getWireColourDot(colourName: string): JSX.Element | null {
+  const name = colourName.toLowerCase().trim();
+
+  if (name.includes('green') && name.includes('yellow')) {
+    return (
+      <span
+        className="w-3 h-3 rounded-full inline-block flex-shrink-0 bg-green-500 ring-2 ring-yellow-400"
+        aria-label="Green and yellow wire"
+      />
+    );
+  }
+  if (name.includes('brown')) {
+    return (
+      <span
+        className="w-3 h-3 rounded-full inline-block flex-shrink-0 bg-amber-700"
+        aria-label="Brown wire"
+      />
+    );
+  }
+  if (name.includes('blue')) {
+    return (
+      <span
+        className="w-3 h-3 rounded-full inline-block flex-shrink-0 bg-blue-500"
+        aria-label="Blue wire"
+      />
+    );
+  }
+  if (name.includes('grey') || name.includes('gray')) {
+    return (
+      <span
+        className="w-3 h-3 rounded-full inline-block flex-shrink-0 bg-gray-400"
+        aria-label="Grey wire"
+      />
+    );
+  }
+  if (name.includes('black')) {
+    return (
+      <span
+        className="w-3 h-3 rounded-full inline-block flex-shrink-0 bg-black border border-white/30"
+        aria-label="Black wire"
+      />
+    );
+  }
+  if (name.includes('red')) {
+    return (
+      <span
+        className="w-3 h-3 rounded-full inline-block flex-shrink-0 bg-red-500"
+        aria-label="Red wire"
+      />
+    );
+  }
+  if (name.includes('yellow')) {
+    return (
+      <span
+        className="w-3 h-3 rounded-full inline-block flex-shrink-0 bg-yellow-400"
+        aria-label="Yellow wire"
+      />
+    );
+  }
+
+  return null;
 }
 
 /**
@@ -56,7 +124,7 @@ export function TerminalDiagram({
         className
       )}
     >
-      {title && <h4 className="text-sm font-semibold text-foreground mb-4">{title}</h4>}
+      {title && <h4 className="text-sm font-semibold text-white mb-4">{title}</h4>}
 
       <div className="flex gap-6 items-start">
         {/* SVG Diagram */}
@@ -82,7 +150,7 @@ export function TerminalDiagram({
               x="95"
               y={height / 2}
               textAnchor="middle"
-              className="fill-muted-foreground text-[10px] font-mono"
+              className="fill-white/60 text-[10px] font-mono"
               transform={`rotate(-90, 95, ${height / 2})`}
             >
               TERMINAL
@@ -122,7 +190,7 @@ export function TerminalDiagram({
                     x="95"
                     y={y + 4}
                     textAnchor="middle"
-                    className="fill-foreground text-xs font-bold"
+                    className="fill-white text-xs font-bold"
                   >
                     {conn.terminal}
                   </text>
@@ -157,12 +225,11 @@ export function TerminalDiagram({
 
               <div className="flex-1 min-w-0">
                 <div className="flex items-center gap-2">
-                  <span className="font-bold text-foreground text-sm">{conn.terminal}</span>
-                  <span className="text-muted-foreground text-sm">{conn.wire}</span>
+                  <span className="font-bold text-white text-sm">{conn.terminal}</span>
+                  {getWireColourDot(conn.wire)}
+                  <span className="text-white text-sm">{conn.wire}</span>
                 </div>
-                {conn.notes && (
-                  <p className="text-xs text-muted-foreground mt-0.5 truncate">{conn.notes}</p>
-                )}
+                {conn.notes && <p className="text-xs text-white mt-0.5 truncate">{conn.notes}</p>}
               </div>
             </div>
           ))}

@@ -86,10 +86,6 @@ interface WiringGuidanceDisplayProps {
     key_differences: string[];
     decision_factors: string[];
   };
-  ragSourcesCount?: {
-    installation_docs_count: number;
-    regulations_count: number;
-  };
   preInstallationTasks?: PreInstallationTask[];
   boardLayoutGuide?: BoardLayoutGuide;
   wiringSequenceStrategy?: WiringSequenceStrategy;
@@ -137,6 +133,7 @@ const WiringGuidanceDisplay = ({
   const [completedSteps, setCompletedSteps] = useState<Record<number, boolean>>({});
   const [expandedSteps, setExpandedSteps] = useState<Record<number, boolean>>({});
   const [checkedTasks, setCheckedTasks] = useState<Record<number, boolean>>({});
+  const [preflightChecked, setPreflightChecked] = useState<Record<number, boolean>>({});
 
   const [selectedScenarioId, setSelectedScenarioId] = useState<string>(
     wiringScenarios.find((s) => s.recommended)?.scenario_id || wiringScenarios[0]?.scenario_id
@@ -162,8 +159,25 @@ const WiringGuidanceDisplay = ({
     setCheckedTasks((prev) => ({ ...prev, [index]: !prev[index] }));
   };
 
+  const togglePreflightItem = (index: number) => {
+    setPreflightChecked((prev) => ({ ...prev, [index]: !prev[index] }));
+  };
+
+  // Derive pre-flight items: safety warnings + any wiring steps that are pre-installation related
+  const preInstallSteps = wiringSteps.filter((step) => {
+    const title = step.title.toLowerCase();
+    return title.includes('pre') || title.includes('check') || title.includes('isolat');
+  });
+
+  const hasPreflightContent =
+    safetyWarnings.length > 0 ||
+    (preInstallationTasks && preInstallationTasks.length > 0) ||
+    preInstallSteps.length > 0;
+
   const completedCount = Object.values(completedSteps).filter(Boolean).length;
-  const progressPercentage = Math.round((completedCount / wiringSteps.length) * 100);
+  const progressPercentage = Math.round(
+    wiringSteps.length > 0 ? (completedCount / wiringSteps.length) * 100 : 0
+  );
 
   // Format terminal connections for the diagram
   const diagramConnections = terminalConnections.map((conn) => ({
@@ -192,7 +206,7 @@ const WiringGuidanceDisplay = ({
                 <Zap className="h-6 w-6 text-green-400" />
               </div>
               <div>
-                <h2 className="text-lg font-bold text-foreground">{componentName}</h2>
+                <h2 className="text-lg font-bold text-white">{componentName}</h2>
                 <div className="flex items-center gap-2 mt-1">
                   <Shield className="h-4 w-4 text-green-400" />
                   <span className="text-xs font-medium text-green-400">BS 7671 Compliant</span>
@@ -204,7 +218,7 @@ const WiringGuidanceDisplay = ({
           {/* Scenario Selector */}
           {wiringScenarios.length > 1 && (
             <div className="space-y-3">
-              <p className="text-sm font-medium text-muted-foreground">Select Installation Type</p>
+              <p className="text-sm font-medium text-white">Select Installation Type</p>
               <div className="flex flex-wrap gap-2">
                 {wiringScenarios.map((scenario) => {
                   const cConfig = complexityConfig[scenario.complexity];
@@ -219,12 +233,7 @@ const WiringGuidanceDisplay = ({
                         'min-h-[48px] touch-manipulation transition-all',
                         isSelected
                           ? 'bg-elec-yellow/20 border-2 border-elec-yellow/40 text-elec-yellow'
-                          : cn(
-                              'border',
-                              cConfig.bg,
-                              cConfig.border,
-                              'text-foreground hover:opacity-80'
-                            )
+                          : cn('border', cConfig.bg, cConfig.border, 'text-white hover:opacity-80')
                       )}
                     >
                       <span>{scenario.scenario_name}</span>
@@ -239,15 +248,15 @@ const WiringGuidanceDisplay = ({
               </div>
 
               {/* Selected scenario description */}
-              <p className="text-sm text-muted-foreground">{selectedScenario.use_case}</p>
+              <p className="text-sm text-white">{selectedScenario.use_case}</p>
             </div>
           )}
 
           {/* Progress Bar */}
           <div className="space-y-2">
             <div className="flex items-center justify-between text-sm">
-              <span className="text-muted-foreground">Installation Progress</span>
-              <span className="font-semibold text-foreground">
+              <span className="text-white">Installation Progress</span>
+              <span className="font-semibold text-white">
                 {completedCount}/{wiringSteps.length} steps
               </span>
             </div>
@@ -264,6 +273,96 @@ const WiringGuidanceDisplay = ({
           </div>
         </div>
       </div>
+
+      {/* Pre-flight Checklist — Before You Start */}
+      {hasPreflightContent && (
+        <div className="rounded-xl border-2 border-amber-500/30 bg-amber-500/10 overflow-hidden">
+          <div className="px-4 py-3 bg-amber-500/15 border-b border-amber-500/20 flex items-center gap-3">
+            <div className="p-2 bg-amber-500/20 rounded-lg">
+              <Shield className="h-5 w-5 text-amber-400" />
+            </div>
+            <div>
+              <h3 className="font-bold text-white text-base">Before You Start</h3>
+              <p className="text-xs text-white mt-0.5">
+                Complete these checks before beginning the installation
+              </p>
+            </div>
+          </div>
+          <div className="p-4 space-y-2">
+            {/* Safety warnings as checklist items */}
+            {safetyWarnings.map((warning, idx) => {
+              const itemIndex = idx;
+              return (
+                <button
+                  key={`sw-${idx}`}
+                  onClick={() => togglePreflightItem(itemIndex)}
+                  className={cn(
+                    'w-full flex items-start gap-3 p-3 rounded-lg text-left',
+                    'min-h-[48px] touch-manipulation transition-colors',
+                    preflightChecked[itemIndex]
+                      ? 'bg-green-500/10 border border-green-500/30'
+                      : 'bg-background/50 border border-amber-500/20 hover:bg-amber-500/5'
+                  )}
+                >
+                  <Checkbox
+                    checked={preflightChecked[itemIndex] || false}
+                    className="mt-0.5 flex-shrink-0"
+                  />
+                  <div className="flex items-start gap-2 flex-1 min-w-0">
+                    <AlertTriangle className="h-4 w-4 text-amber-400 mt-0.5 flex-shrink-0" />
+                    <span
+                      className={cn(
+                        'text-sm font-medium',
+                        preflightChecked[itemIndex]
+                          ? 'text-white line-through opacity-70'
+                          : 'text-white'
+                      )}
+                    >
+                      {cleanMarkdown(warning)}
+                    </span>
+                  </div>
+                </button>
+              );
+            })}
+
+            {/* Pre-installation wiring steps */}
+            {preInstallSteps.map((step, idx) => {
+              const itemIndex = safetyWarnings.length + idx;
+              return (
+                <button
+                  key={`ps-${idx}`}
+                  onClick={() => togglePreflightItem(itemIndex)}
+                  className={cn(
+                    'w-full flex items-start gap-3 p-3 rounded-lg text-left',
+                    'min-h-[48px] touch-manipulation transition-colors',
+                    preflightChecked[itemIndex]
+                      ? 'bg-green-500/10 border border-green-500/30'
+                      : 'bg-background/50 border border-amber-500/20 hover:bg-amber-500/5'
+                  )}
+                >
+                  <Checkbox
+                    checked={preflightChecked[itemIndex] || false}
+                    className="mt-0.5 flex-shrink-0"
+                  />
+                  <div className="flex-1 min-w-0">
+                    <span
+                      className={cn(
+                        'text-sm font-medium',
+                        preflightChecked[itemIndex]
+                          ? 'text-white line-through opacity-70'
+                          : 'text-white'
+                      )}
+                    >
+                      {step.title}
+                    </span>
+                    <p className="text-xs text-white mt-1">{cleanMarkdown(step.instruction)}</p>
+                  </div>
+                </button>
+              );
+            })}
+          </div>
+        </div>
+      )}
 
       {/* Terminal Diagram */}
       <TerminalDiagram connections={diagramConnections} title="Terminal Connections" />
@@ -299,14 +398,12 @@ const WiringGuidanceDisplay = ({
                   <h4
                     className={cn(
                       'font-semibold text-sm',
-                      checkedTasks[idx]
-                        ? 'text-foreground line-through opacity-70'
-                        : 'text-foreground'
+                      checkedTasks[idx] ? 'text-white line-through opacity-70' : 'text-white'
                     )}
                   >
                     {task.task}
                   </h4>
-                  <p className="text-sm text-muted-foreground mt-1">{task.description}</p>
+                  <p className="text-sm text-white mt-1">{task.description}</p>
                   {task.why && (
                     <p className="text-xs text-blue-400 mt-2 flex items-start gap-1.5">
                       <Info className="h-3.5 w-3.5 mt-0.5 flex-shrink-0" />
@@ -340,8 +437,8 @@ const WiringGuidanceDisplay = ({
           <div className="space-y-3">
             {/* MCB Arrangement */}
             <div className="p-3 rounded-lg bg-background/50 border border-border/30">
-              <h4 className="text-sm font-semibold text-foreground mb-2">MCB Arrangement</h4>
-              <p className="text-sm text-foreground/90 leading-relaxed">
+              <h4 className="text-sm font-semibold text-white mb-2">MCB Arrangement</h4>
+              <p className="text-sm text-white leading-relaxed">
                 {boardLayoutGuide.mcb_arrangement}
               </p>
             </div>
@@ -350,13 +447,11 @@ const WiringGuidanceDisplay = ({
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <div className="p-3 rounded-lg bg-green-500/10 border border-green-500/20">
                 <h4 className="text-sm font-semibold text-green-400 mb-1">Earth Bar</h4>
-                <p className="text-sm text-foreground/90">{boardLayoutGuide.earth_bar_numbering}</p>
+                <p className="text-sm text-white">{boardLayoutGuide.earth_bar_numbering}</p>
               </div>
               <div className="p-3 rounded-lg bg-blue-500/10 border border-blue-500/20">
                 <h4 className="text-sm font-semibold text-blue-400 mb-1">Neutral Bar</h4>
-                <p className="text-sm text-foreground/90">
-                  {boardLayoutGuide.neutral_bar_numbering}
-                </p>
+                <p className="text-sm text-white">{boardLayoutGuide.neutral_bar_numbering}</p>
               </div>
             </div>
 
@@ -370,11 +465,11 @@ const WiringGuidanceDisplay = ({
                       <span className="flex-shrink-0 w-6 h-6 bg-purple-500/20 rounded-full flex items-center justify-center text-xs font-bold text-purple-300">
                         {idx + 1}
                       </span>
-                      <span className="text-foreground">{step}</span>
+                      <span className="text-white">{step}</span>
                     </li>
                   ))}
                 </ol>
-                <p className="text-xs text-muted-foreground mt-3 p-2 bg-background/30 rounded">
+                <p className="text-xs text-white mt-3 p-2 bg-background/30 rounded">
                   {wiringSequenceStrategy.rationale}
                 </p>
               </div>
@@ -386,7 +481,7 @@ const WiringGuidanceDisplay = ({
       {/* Step-by-Step Wiring Procedure */}
       <div className="space-y-3">
         <div className="flex items-center justify-between">
-          <h3 className="text-base font-semibold text-foreground flex items-center gap-2">
+          <h3 className="text-base font-semibold text-white flex items-center gap-2">
             <Wrench className="h-5 w-5 text-elec-yellow" />
             Wiring Steps
           </h3>
@@ -425,7 +520,7 @@ const WiringGuidanceDisplay = ({
                         ? 'bg-red-500 text-white'
                         : isCompleted
                           ? 'bg-green-500 text-white'
-                          : 'bg-muted text-foreground border-2 border-border'
+                          : 'bg-muted text-white border-2 border-border'
                     )}
                   >
                     {isCompleted ? '✓' : step.step}
@@ -436,7 +531,7 @@ const WiringGuidanceDisplay = ({
                       <h4
                         className={cn(
                           'text-base font-bold leading-tight',
-                          isCompleted ? 'text-foreground/70 line-through' : 'text-foreground'
+                          isCompleted ? 'text-white/70 line-through' : 'text-white'
                         )}
                       >
                         {step.title}
@@ -449,7 +544,7 @@ const WiringGuidanceDisplay = ({
                     <p
                       className={cn(
                         'text-sm mt-1.5 leading-relaxed',
-                        isCompleted ? 'text-muted-foreground' : 'text-foreground/90'
+                        isCompleted ? 'text-white opacity-70' : 'text-white'
                       )}
                     >
                       {cleanMarkdown(step.instruction)}
@@ -459,7 +554,7 @@ const WiringGuidanceDisplay = ({
                     {(step.what_to_check || step.common_mistakes) && (
                       <button
                         onClick={() => toggleStepExpanded(step.step)}
-                        className="flex items-center gap-1 text-xs text-muted-foreground hover:text-foreground mt-2 touch-manipulation min-h-[32px]"
+                        className="flex items-center gap-1 text-xs text-white hover:text-foreground mt-2 touch-manipulation min-h-[44px]"
                       >
                         <motion.div animate={{ rotate: isExpanded ? 180 : 0 }}>
                           <ChevronDown className="h-4 w-4" />
@@ -486,7 +581,7 @@ const WiringGuidanceDisplay = ({
                               <CheckCircle2 className="h-3.5 w-3.5" />
                               What to Check
                             </p>
-                            <p className="text-sm text-foreground/90">
+                            <p className="text-sm text-white">
                               {cleanMarkdown(step.what_to_check)}
                             </p>
                           </div>
@@ -498,13 +593,13 @@ const WiringGuidanceDisplay = ({
                               <AlertCircle className="h-3.5 w-3.5" />
                               Common Mistakes
                             </p>
-                            <p className="text-sm text-foreground/90">
+                            <p className="text-sm text-white">
                               {cleanMarkdown(step.common_mistakes)}
                             </p>
                           </div>
                         )}
 
-                        <div className="text-xs text-muted-foreground font-mono">
+                        <div className="text-xs text-white font-mono">
                           BS 7671: {step.bs7671_reference}
                         </div>
                       </div>
@@ -541,7 +636,7 @@ const WiringGuidanceDisplay = ({
                     className="flex items-start gap-2 p-3 rounded-lg bg-green-500/10 border border-green-500/20"
                   >
                     <CheckCircle2 className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
-                    <span className="text-sm text-foreground/90">{cleanMarkdown(tip)}</span>
+                    <span className="text-sm text-white">{cleanMarkdown(tip)}</span>
                   </div>
                 ))}
               </div>
@@ -568,7 +663,7 @@ const WiringGuidanceDisplay = ({
                     className="flex items-start gap-2 p-3 rounded-lg bg-orange-500/10 border border-orange-500/20"
                   >
                     <XCircle className="h-4 w-4 text-orange-400 mt-0.5 flex-shrink-0" />
-                    <span className="text-sm text-foreground/90">{cleanMarkdown(mistake)}</span>
+                    <span className="text-sm text-white">{cleanMarkdown(mistake)}</span>
                   </div>
                 ))}
               </div>
@@ -582,7 +677,7 @@ const WiringGuidanceDisplay = ({
         <ExpandableSection
           title="BS 7671 References"
           icon={BookOpen}
-          iconColor="text-muted-foreground"
+          iconColor="text-white"
           badge={
             <Badge variant="secondary" className="text-xs">
               {allRegulations.length}
@@ -603,7 +698,7 @@ const WiringGuidanceDisplay = ({
       {/* Required Tests */}
       <div className="rounded-xl border border-green-500/30 bg-green-500/5 overflow-hidden">
         <div className="px-4 py-3 bg-green-500/10 border-b border-green-500/20">
-          <h3 className="font-semibold text-foreground flex items-center gap-2">
+          <h3 className="font-semibold text-white flex items-center gap-2">
             <TestTube className="h-5 w-5 text-green-400" />
             Required Testing
           </h3>
@@ -615,7 +710,7 @@ const WiringGuidanceDisplay = ({
               className="flex items-start gap-3 p-3 rounded-lg bg-background/50 border border-green-500/20"
             >
               <CheckCircle2 className="h-5 w-5 text-green-400 flex-shrink-0 mt-0.5" />
-              <span className="text-sm text-foreground">{cleanMarkdown(test)}</span>
+              <span className="text-sm text-white">{cleanMarkdown(test)}</span>
             </div>
           ))}
         </div>
@@ -648,7 +743,7 @@ const WiringGuidanceDisplay = ({
           <AlertTriangle className="h-5 w-5 text-amber-400 flex-shrink-0 mt-0.5" />
           <div>
             <p className="font-medium text-amber-400 text-sm mb-1">Professional Guidance Only</p>
-            <p className="text-xs text-muted-foreground leading-relaxed">
+            <p className="text-xs text-white leading-relaxed">
               This wiring guidance is for qualified electricians only. All installations must comply
               with BS 7671 and local building regulations. Always verify connections with proper
               testing equipment.
