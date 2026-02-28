@@ -36,8 +36,8 @@ import {
 } from '@/constants/deviceMappings';
 
 interface MWCircuitTabProps {
-  formData: any;
-  onUpdate: (field: string, value: any) => void;
+  formData: Record<string, string | boolean>;
+  onUpdate: (field: string, value: string | boolean) => void;
   isMobile?: boolean;
 }
 
@@ -110,7 +110,9 @@ const MWCircuitTab: React.FC<MWCircuitTabProps> = ({ formData, onUpdate, isMobil
     const deviceKey = getDeviceCategory(formData.protectiveDeviceType);
     const allowedRatings = DEVICE_TYPE_RATINGS[deviceKey];
     if (!allowedRatings) return DEVICE_RATINGS;
-    return DEVICE_RATINGS.filter((r) => allowedRatings.includes(parseInt(r.value, 10)));
+    return DEVICE_RATINGS.filter(
+      (r) => r.value === 'LIM' || allowedRatings.includes(parseInt(r.value, 10))
+    );
   }, [formData.protectiveDeviceType]);
 
   // Get filtered kA ratings based on selected device type
@@ -618,9 +620,7 @@ const MWCircuitTab: React.FC<MWCircuitTabProps> = ({ formData, onUpdate, isMobil
                           <SelectItem value="BS EN 61643-11">
                             <div className="flex flex-col">
                               <span>BS EN 61643-11</span>
-                              <span className="text-xs text-white">
-                                Surge Protective Devices
-                              </span>
+                              <span className="text-xs text-white">Surge Protective Devices</span>
                             </div>
                           </SelectItem>
                         </SelectContent>
@@ -644,9 +644,7 @@ const MWCircuitTab: React.FC<MWCircuitTabProps> = ({ formData, onUpdate, isMobil
                           <SelectItem value="1">
                             <div className="flex flex-col">
                               <span>Type 1</span>
-                              <span className="text-xs text-white">
-                                Lightning current arrestor
-                              </span>
+                              <span className="text-xs text-white">Lightning current arrestor</span>
                             </div>
                           </SelectItem>
                           <SelectItem value="2">

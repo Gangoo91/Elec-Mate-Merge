@@ -148,6 +148,7 @@ export const DEVICE_RATINGS: SelectOption[] = [
   { value: '500', label: '500A', description: 'MCCB/industrial' },
   { value: '630', label: '630A', description: 'MCCB/industrial' },
   { value: '800', label: '800A', description: 'MCCB/large industrial' },
+  { value: 'LIM', label: 'LIM', description: 'Limitation — rating not determined' },
 ];
 
 // Common ratings highlighted for quick selection

@@ -21,6 +21,7 @@ export const protectiveDeviceRatingOptions = [
   { value: '63', label: '63A' },
   { value: '80', label: '80A' },
   { value: '100', label: '100A' },
+  { value: 'LIM', label: 'LIM' },
 ];
 
 // BS Standards for protective devices

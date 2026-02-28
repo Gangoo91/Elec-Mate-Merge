@@ -135,6 +135,7 @@ export function isDeviceTypeValidForStandard(standard: string, deviceType: strin
  * Checks if a rating is valid for a given device type
  */
 export function isRatingValidForDevice(deviceType: string, rating: string | number): boolean {
+  if (rating === 'LIM' || rating === 'N/A') return true;
   const deviceKey = getDeviceCategory(deviceType);
   const allowedRatings = DEVICE_TYPE_RATINGS[deviceKey];
   if (!allowedRatings) return true; // No filtering if no mapping

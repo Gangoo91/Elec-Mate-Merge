@@ -16,8 +16,8 @@ import { cn } from '@/lib/utils';
 import { useIsMobile } from '@/hooks/use-mobile';
 
 interface EICSupplyCharacteristicsSectionProps {
-  formData: any;
-  onUpdate: (field: string, value: any) => void;
+  formData: Record<string, string | boolean>;
+  onUpdate: (field: string, value: string | boolean) => void;
   isOpen: boolean;
   onToggle: () => void;
 }
@@ -243,9 +243,7 @@ const EICSupplyCharacteristicsSection: React.FC<EICSupplyCharacteristicsSectionP
               </div>
               <div className="flex-1 text-left min-w-0">
                 <h3 className="font-semibold text-foreground">Supply Characteristics</h3>
-                <span className="text-xs text-white">
-                  {getCompletionPercentage()}% complete
-                </span>
+                <span className="text-xs text-white">{getCompletionPercentage()}% complete</span>
               </div>
               <ChevronDown
                 className={cn(
@@ -546,21 +544,55 @@ const EICSupplyCharacteristicsSection: React.FC<EICSupplyCharacteristicsSectionP
                   <Label htmlFor="supplyDeviceRating" className="text-sm">
                     Rated Current (A)
                   </Label>
-                  <Select
-                    value={formData.supplyDeviceRating || ''}
-                    onValueChange={(value) => onUpdate('supplyDeviceRating', value)}
-                  >
-                    <SelectTrigger className="h-11 touch-manipulation">
-                      <SelectValue placeholder="Select rating" />
-                    </SelectTrigger>
-                    <SelectContent className="max-w-[calc(100vw-2rem)] max-h-[300px]">
-                      {getAvailableRatings().map((rating) => (
-                        <SelectItem key={rating} value={rating}>
-                          {rating}A
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
+                  <div className="flex gap-2">
+                    <Select
+                      value={
+                        formData.supplyDeviceRating === 'LIM'
+                          ? ''
+                          : formData.supplyDeviceRating || ''
+                      }
+                      onValueChange={(value) => onUpdate('supplyDeviceRating', value)}
+                      disabled={formData.supplyDeviceRating === 'LIM'}
+                    >
+                      <SelectTrigger
+                        className={cn(
+                          'h-11 touch-manipulation flex-1',
+                          formData.supplyDeviceRating === 'LIM' && 'opacity-40'
+                        )}
+                      >
+                        <SelectValue
+                          placeholder={
+                            formData.supplyDeviceRating === 'LIM' ? 'LIM' : 'Select rating'
+                          }
+                        />
+                      </SelectTrigger>
+                      <SelectContent className="max-w-[calc(100vw-2rem)] max-h-[300px]">
+                        {getAvailableRatings().map((rating) => (
+                          <SelectItem key={rating} value={rating}>
+                            {rating}A
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        if (formData.supplyDeviceRating === 'LIM') {
+                          onUpdate('supplyDeviceRating', '');
+                        } else {
+                          onUpdate('supplyDeviceRating', 'LIM');
+                        }
+                      }}
+                      className={cn(
+                        'h-11 px-3 rounded-md text-sm font-semibold touch-manipulation transition-colors shrink-0',
+                        formData.supplyDeviceRating === 'LIM'
+                          ? 'bg-orange-500 text-black'
+                          : 'bg-white/10 text-white hover:bg-white/20'
+                      )}
+                    >
+                      LIM
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
