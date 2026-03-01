@@ -693,14 +693,35 @@ const MobileOptimizedTestTable: React.FC<MobileOptimizedTestTableProps> = ({
                       onChange={(val) => onUpdate(result.id, 'notes', val)}
                       placeholder="Additional notes..."
                     />
-                    <Button
-                      variant="destructive"
-                      className="w-full h-12 gap-2 touch-manipulation"
-                      onClick={() => onRemove(result.id)}
-                    >
-                      <Trash2 className="h-5 w-5" />
-                      Remove Circuit
-                    </Button>
+                    <div className="flex gap-2">
+                      {onBulkUpdate && (
+                        <Button
+                          variant="outline"
+                          className="flex-1 h-12 gap-2 touch-manipulation border-white/20 text-white hover:bg-white/10"
+                          onClick={() => onBulkUpdate(result.id, {
+                            circuitDescription: 'Spare',
+                            r1r2: 'N/A', r2: 'N/A',
+                            ringContinuityLive: 'N/A', ringContinuityNeutral: 'N/A',
+                            ringR1: 'N/A', ringRn: 'N/A', ringR2: 'N/A',
+                            insulationTestVoltage: 'N/A', insulationLiveNeutral: 'N/A',
+                            insulationLiveEarth: 'N/A', insulationResistance: 'N/A', insulationNeutralEarth: 'N/A',
+                            polarity: 'N/A', zs: 'N/A',
+                            rcdOneX: 'N/A', rcdFiveX: 'N/A', rcdHalfX: 'N/A',
+                            rcdRating: 'N/A', rcdType: 'N/A',
+                          })}
+                        >
+                          Spare
+                        </Button>
+                      )}
+                      <Button
+                        variant="destructive"
+                        className="flex-1 h-12 gap-2 touch-manipulation"
+                        onClick={() => onRemove(result.id)}
+                      >
+                        <Trash2 className="h-5 w-5" />
+                        Remove
+                      </Button>
+                    </div>
                   </div>
                 )}
               </div>
