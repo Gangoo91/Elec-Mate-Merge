@@ -187,7 +187,7 @@ const RecentCertificatesCard = ({ onNavigate }: RecentCertificatesCardProps) => 
             </span>
           )}
         </div>
-        {reports.length > 4 && (
+        {reports.length > 0 && (
           <button
             className="text-sm font-medium text-elec-yellow hover:underline touch-manipulation h-11 flex items-center"
             onClick={() => onNavigate('my-reports')}

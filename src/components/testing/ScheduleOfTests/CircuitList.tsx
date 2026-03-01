@@ -106,6 +106,26 @@ export const CircuitList: React.FC<CircuitListProps> = ({
     setEditedValues({});
   }, [editingCircuit, onRemove]);
 
+  const handleMarkAsSpare = useCallback(() => {
+    if (!editingCircuit) return;
+    const sparePayload: Partial<TestResult> = {
+      circuitDescription: 'Spare',
+      r1r2: 'N/A', r2: 'N/A',
+      ringContinuityLive: 'N/A', ringContinuityNeutral: 'N/A',
+      ringR1: 'N/A', ringRn: 'N/A', ringR2: 'N/A',
+      insulationTestVoltage: 'N/A', insulationLiveNeutral: 'N/A',
+      insulationLiveEarth: 'N/A', insulationResistance: 'N/A', insulationNeutralEarth: 'N/A',
+      polarity: 'N/A', zs: 'N/A',
+      rcdOneX: 'N/A', rcdFiveX: 'N/A', rcdHalfX: 'N/A',
+      rcdRating: 'N/A', rcdType: 'N/A',
+    };
+    if (onBulkUpdate) {
+      onBulkUpdate(editingCircuit.id, sparePayload);
+    }
+    setEditingCircuit(null);
+    setEditedValues({});
+  }, [editingCircuit, onBulkUpdate]);
+
   // Navigate to adjacent circuit
   const navigateCircuit = useCallback(
     (direction: 'prev' | 'next') => {
@@ -221,6 +241,7 @@ export const CircuitList: React.FC<CircuitListProps> = ({
             onSave={handleSave}
             onDelete={handleDelete}
             onClose={handleClose}
+            onMarkAsSpare={handleMarkAsSpare}
             onNavigate={navigateCircuit}
             canNavigatePrev={circuits.findIndex((c) => c.id === editingCircuit.id) > 0}
             canNavigateNext={
@@ -254,6 +275,7 @@ interface CircuitEditFormProps {
   onSave: () => void;
   onDelete: () => void;
   onClose: () => void;
+  onMarkAsSpare?: () => void;
   onNavigate: (direction: 'prev' | 'next') => void;
   canNavigatePrev: boolean;
   canNavigateNext: boolean;
@@ -266,6 +288,7 @@ const CircuitEditForm: React.FC<CircuitEditFormProps> = ({
   onSave,
   onDelete,
   onClose,
+  onMarkAsSpare,
   onNavigate,
   canNavigatePrev,
   canNavigateNext,
@@ -476,6 +499,11 @@ const CircuitEditForm: React.FC<CircuitEditFormProps> = ({
           <Trash2 className="h-4 w-4 mr-1" />
           Delete
         </Button>
+        {onMarkAsSpare && (
+          <Button variant="outline" size="sm" onClick={onMarkAsSpare} className="h-10 px-3 text-muted-foreground border-muted">
+            Spare
+          </Button>
+        )}
         <div className="flex-1" />
         <Button variant="outline" size="sm" onClick={onClose} className="h-10 px-3">
           Cancel

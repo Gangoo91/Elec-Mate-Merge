@@ -19,32 +19,29 @@ const InspectionPhotoUpload: React.FC<InspectionPhotoUploadProps> = ({
     if (!file) return;
 
     // Pre-upload validation
-    const maxSize = 10 * 1024 * 1024; // 10MB
-    const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp'];
+    const maxSize = 20 * 1024 * 1024; // 20MB (desktop photos can be larger)
+    const allowedTypes = [
+      'image/jpeg', 'image/jpg', 'image/png', 'image/webp',
+      'image/heic', 'image/heif', // iPhone/desktop photos
+    ];
 
     // Validate file size
     if (file.size > maxSize) {
       alert(
-        `File size too large. Maximum allowed size is 10MB. Your file is ${(file.size / 1024 / 1024).toFixed(2)}MB.`
+        `File size too large. Maximum allowed size is 20MB. Your file is ${(file.size / 1024 / 1024).toFixed(2)}MB.`
       );
       e.target.value = ''; // Reset input
       return;
     }
 
-    // Validate file type
-    if (!allowedTypes.includes(file.type)) {
-      alert(`Invalid file type. Only JPEG, JPG, PNG, and WEBP images are allowed.`);
-      e.target.value = ''; // Reset input
-      return;
-    }
-
-    // Validate file extension (double check)
+    // Validate file type — some browsers report HEIC with empty type, fall back to extension check
+    const validExtensions = ['.jpg', '.jpeg', '.png', '.webp', '.heic', '.heif'];
     const fileName = file.name.toLowerCase();
-    const validExtensions = ['.jpg', '.jpeg', '.png', '.webp'];
     const hasValidExtension = validExtensions.some((ext) => fileName.endsWith(ext));
+    const hasValidType = allowedTypes.includes(file.type) || file.type === '';
 
-    if (!hasValidExtension) {
-      alert('Invalid file extension. Only .jpg, .jpeg, .png, and .webp files are allowed.');
+    if (!hasValidType && !hasValidExtension) {
+      alert(`Invalid file type. Supported formats: JPEG, PNG, WEBP, HEIC.`);
       e.target.value = ''; // Reset input
       return;
     }
@@ -87,7 +84,7 @@ const InspectionPhotoUpload: React.FC<InspectionPhotoUploadProps> = ({
       <input
         ref={fileInputRef}
         type="file"
-        accept="image/*"
+        accept="image/jpeg,image/jpg,image/png,image/webp,image/heic,image/heif,.heic,.heif"
         onChange={handleFileChange}
         className="hidden"
       />

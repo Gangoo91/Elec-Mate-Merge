@@ -214,16 +214,16 @@ export const CertificateCard: React.FC<CertificateCardProps> = ({
         {/* Client name */}
         {certificate.clientName && (
           <div className="flex items-center gap-2 text-sm mb-2">
-            <User className="h-4 w-4 text-muted-foreground flex-shrink-0" />
-            <span className="truncate text-foreground">{certificate.clientName}</span>
+            <User className="h-4 w-4 text-white flex-shrink-0" />
+            <span className="truncate text-white">{certificate.clientName}</span>
           </div>
         )}
 
         {/* Address */}
         {certificate.installationAddress && (
           <div className="flex items-center gap-2 text-sm mb-2">
-            <MapPin className="h-4 w-4 text-muted-foreground flex-shrink-0" />
-            <span className="truncate text-muted-foreground">
+            <MapPin className="h-4 w-4 text-white flex-shrink-0" />
+            <span className="truncate text-white">
               {certificate.installationAddress}
             </span>
           </div>
@@ -231,7 +231,7 @@ export const CertificateCard: React.FC<CertificateCardProps> = ({
 
         {/* Footer: Date + Chevron */}
         <div className="flex items-center justify-between pt-2 border-t border-border/50">
-          <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
+          <div className="flex items-center gap-1.5 text-xs text-white">
             <Calendar className="h-3.5 w-3.5" />
             <span>{formatDate(certificate.lastModified)}</span>
           </div>
