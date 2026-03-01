@@ -85,11 +85,25 @@ const EICCertificateActions: React.FC<EICCertificateActionsProps> = ({
   const canGenerateCertificate = hasRequiredInstallationDetails && hasRequiredDeclarations;
   const isFullyComplete = canGenerateCertificate && hasCompletedInspections && hasTestResults;
 
+  // Build a human-readable list of what's blocking generation
+  const missingFields: string[] = [];
+  if (!formData.clientName) missingFields.push('Client name');
+  if (!formData.installationAddress) missingFields.push('Installation address');
+  if (!formData.installationDate) missingFields.push('Installation date');
+  if (!formData.designerName) missingFields.push('Designer name');
+  if (!formData.designerSignature) missingFields.push('Designer signature');
+  if (!formData.constructorName) missingFields.push('Constructor name');
+  if (!formData.constructorSignature) missingFields.push('Constructor signature');
+  if (!formData.inspectorName) missingFields.push('Inspector name');
+  if (!formData.inspectorSignature) missingFields.push('Inspector signature');
+
   const handleGeneratePDF = async () => {
     if (!canGenerateCertificate) {
       toast({
         title: 'Cannot Generate Certificate',
-        description: 'Please complete all required sections before generating the EIC.',
+        description: missingFields.length > 0
+          ? `Missing: ${missingFields.join(', ')}. Complete the Declarations section — all three signatures are required.`
+          : 'Please complete all required sections before generating the EIC.',
         variant: 'destructive',
       });
       return;

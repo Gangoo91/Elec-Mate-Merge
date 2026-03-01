@@ -245,15 +245,38 @@ const EnhancedTestResultDesktopTableRow: React.FC<EnhancedTestResultDesktopTable
 
         {/* Actions Column */}
         <TableCell className="text-center h-8 p-1">
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={() => onRemove(result.id)}
-            className="h-7 w-7 p-0 text-red-500 hover:text-red-400 hover:bg-red-500/10 rounded-md transition-colors"
-            title="Remove this circuit"
-          >
-            <Trash2 className="h-4 w-4" />
-          </Button>
+          <div className="flex items-center gap-1 justify-center">
+            {onBulkUpdate && (
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => onBulkUpdate(result.id, {
+                  circuitDescription: 'Spare',
+                  r1r2: 'N/A', r2: 'N/A',
+                  ringContinuityLive: 'N/A', ringContinuityNeutral: 'N/A',
+                  ringR1: 'N/A', ringRn: 'N/A', ringR2: 'N/A',
+                  insulationTestVoltage: 'N/A', insulationLiveNeutral: 'N/A',
+                  insulationLiveEarth: 'N/A', insulationResistance: 'N/A', insulationNeutralEarth: 'N/A',
+                  polarity: 'N/A', zs: 'N/A',
+                  rcdOneX: 'N/A', rcdFiveX: 'N/A', rcdHalfX: 'N/A',
+                  rcdRating: 'N/A', rcdType: 'N/A',
+                })}
+                className="h-7 px-2 text-[11px] text-muted-foreground hover:text-foreground hover:bg-muted/30 rounded-md transition-colors"
+                title="Mark as spare way — sets all results to N/A"
+              >
+                Spare
+              </Button>
+            )}
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => onRemove(result.id)}
+              className="h-7 w-7 p-0 text-red-500 hover:text-red-400 hover:bg-red-500/10 rounded-md transition-colors"
+              title="Remove this circuit"
+            >
+              <Trash2 className="h-4 w-4" />
+            </Button>
+          </div>
         </TableCell>
       </TableRow>
 

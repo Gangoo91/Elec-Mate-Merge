@@ -101,6 +101,16 @@ const EICDeclarations: React.FC<EICDeclarationsProps> = ({ formData, onUpdate })
     }
   }, [isInitialMount, companyProfile]);
 
+  // When sameAsDesigner is active, keep constructor in sync with designer changes
+  useEffect(() => {
+    if (formData.sameAsDesigner) {
+      onUpdate('constructorName', formData.designerName || '');
+      onUpdate('constructorSignature', formData.designerSignature || '');
+      onUpdate('constructorQualifications', formData.designerQualifications || '');
+      onUpdate('constructorDate', formData.designerDate || '');
+    }
+  }, [formData.sameAsDesigner, formData.designerName, formData.designerSignature, formData.designerDate]);
+
   // Load business settings data into a specific declaration section
   const loadProfileToSection = (section: 'designer' | 'constructor' | 'inspector') => {
     if (!companyProfile) return;

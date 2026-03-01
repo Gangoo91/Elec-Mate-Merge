@@ -629,7 +629,7 @@ const MyReports: React.FC<MyReportsProps> = ({ onBack, onNavigate, onEditReport 
               </Button>
               <div>
                 <h1 className="text-xl font-semibold">My Certificates</h1>
-                <p className="text-sm text-muted-foreground">Loading...</p>
+                <p className="text-sm text-white">Loading...</p>
               </div>
             </div>
           </div>
@@ -1115,8 +1115,8 @@ const MyReports: React.FC<MyReportsProps> = ({ onBack, onNavigate, onEditReport 
             <CommandList className="max-h-[300px]">
               <CommandEmpty>
                 <div className="py-6 text-center">
-                  <Users className="h-8 w-8 mx-auto text-muted-foreground mb-2" />
-                  <p className="text-sm text-muted-foreground">
+                  <Users className="h-8 w-8 mx-auto text-white mb-2" />
+                  <p className="text-sm text-white">
                     {isLoadingCustomers ? 'Loading customers...' : 'No customers found'}
                   </p>
                 </div>
@@ -1137,7 +1137,7 @@ const MyReports: React.FC<MyReportsProps> = ({ onBack, onNavigate, onEditReport 
                       <div className="flex-1 min-w-0">
                         <p className="font-medium text-sm truncate">{customer.name}</p>
                         {customer.address && (
-                          <p className="text-xs text-muted-foreground truncate">
+                          <p className="text-xs text-white truncate">
                             {customer.address}
                           </p>
                         )}
@@ -1152,7 +1152,7 @@ const MyReports: React.FC<MyReportsProps> = ({ onBack, onNavigate, onEditReport 
           {isLinking && (
             <div className="flex items-center justify-center gap-2 py-2">
               <Loader2 className="h-4 w-4 animate-spin" />
-              <span className="text-sm text-muted-foreground">Linking...</span>
+              <span className="text-sm text-white">Linking...</span>
             </div>
           )}
         </DialogContent>
