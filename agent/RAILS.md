@@ -22,7 +22,9 @@ Every rail:
 
 ---
 
-## Rail 1: Morning Briefing
+## Pipeline Rails (Core Business)
+
+### Rail 1: Morning Briefing
 
 **Trigger:** Daily at 07:30 (configurable per user)
 **Channel:** WhatsApp (primary), in-app notification (secondary)
@@ -41,10 +43,12 @@ Every rail:
    d. get_overdue_invoices → overdue with days count
    e. read_quotes(status: 'sent') → pending quotes older than 3 days
    f. get_expiring_certificates(days_ahead: 60) → upcoming renewals
+   g. read_inbox → new leads since last briefing (if email connected)
 
 3. COMPOSE briefing:
    - TODAY: scheduled jobs with time, address, client, job type
    - MONEY: outstanding total, overdue count with amounts
+   - LEADS: new email enquiries since yesterday (if email connected)
    - ACTIONS: expiring quotes, cert renewals, follow-ups due
    - Keep under 200 words
 
@@ -56,7 +60,7 @@ Every rail:
 5. LOG: activity_type: 'briefing_sent'
 
 6. WAIT for replies:
-   - "CHASE" → trigger Rail 4 (Invoice Chasing)
+   - "CHASE" → trigger Rail 5 (Invoice Chasing)
    - "RENEW" → trigger Rail 6 (EICR Renewal Outreach)
    - Any other reply → handle as normal conversation
 ```
@@ -69,7 +73,7 @@ Every rail:
 
 ---
 
-## Rail 2: Inbound Enquiry Handling
+### Rail 2: Inbound Enquiry — WhatsApp
 
 **Trigger:** New WhatsApp message from an unknown or client number
 **Channel:** WhatsApp
@@ -120,7 +124,63 @@ Every rail:
 
 ---
 
-## Rail 3: Job Complete → Invoice & Cert Delivery
+### Rail 3: Inbound Enquiry — Email
+
+**Trigger:** New email detected in connected inbox (Gmail/Outlook)
+**Channel:** WhatsApp (to notify electrician)
+
+### Steps
+
+```
+1. DETECT: New email arrives in connected inbox
+   → read_inbox for unread emails
+
+2. CATEGORISE:
+   a. categorise_enquiry → classify each email:
+      - new_lead → potential new work
+      - existing_client → follow-up from known client
+      - quote_response → reply to a sent quote
+      - spam → ignore, log only
+      - general → non-enquiry email
+
+3. FOR EACH LEAD (new_lead or existing_client):
+   a. Extract details: name, phone, address, job description
+   b. Match to existing client if possible (read_clients)
+   c. Draft email reply: acknowledge enquiry, request details if needed
+
+4. PRESENT to electrician via WhatsApp:
+   "📧 New lead from sarah.d@gmail.com:
+    'Hi, we need our consumer unit upgraded at 14 Oak Street.
+     Can you give us a price? Thanks, Sarah'
+
+    Looks like: CU upgrade, residential
+
+    Options:
+    • QUOTE — I'll draft a quote
+    • REPLY — I'll send a reply asking for more details
+    • SKIP — leave it for now"
+
+5. ON "QUOTE": generate_quote → approval → send_quote via email
+   ON "REPLY": draft_email_reply → approval → send_email_reply
+   ON "SKIP": log and move on
+
+6. LOG: activity_type: 'email_lead_processed'
+
+7. FOLLOW-UP:
+   - If quote sent → schedule Rail 7 (Quote Follow-Up) in 5 days
+   - If reply sent → monitor for response
+```
+
+### Notes
+
+- Only active when email integration is connected
+- Batch multiple leads into one notification if several arrive at once
+- Spam emails are silently logged, never presented to electrician
+- Quote responses ("we'd like to go ahead") trigger Rail 8 (Quote Accepted)
+
+---
+
+### Rail 4: Job Complete → Cert & Invoice Delivery
 
 **Trigger:** Job status changed to 'completed' in Elec-Mate
 **Channel:** WhatsApp
@@ -172,13 +232,14 @@ Every rail:
 7. LOG: activity_type: 'cert_and_invoice_sent'
 
 8. SCHEDULE:
-   - If not paid in 7 days → add to Rail 4 (Invoice Chasing) queue
+   - If not paid in 7 days → add to Rail 5 (Invoice Chasing) queue
    - Store cert expiry date for Rail 6 (Renewal Outreach)
+   - Check if work is notifiable → trigger Rail 12 (Part P)
 ```
 
 ---
 
-## Rail 4: Invoice Chasing
+### Rail 5: Invoice Chasing
 
 **Trigger:** Daily heartbeat check (every 6 hours) OR electrician command "chase invoices"
 **Channel:** WhatsApp
@@ -192,7 +253,7 @@ Every rail:
    - 7-14 days overdue → GENTLE reminder
    - 15-30 days overdue → FIRM reminder
    - 31-60 days overdue → FINAL NOTICE
-   - 60+ days overdue → ESCALATION (see Rail: Overdue Escalation)
+   - 60+ days overdue → ESCALATION flag
 
 3. DRAFT messages per category:
 
@@ -230,34 +291,7 @@ Every rail:
 
 ---
 
-## Rail 5: Materials Price Search
-
-**Trigger:** Electrician request ("How much is 50m of 2.5mm T&E?")
-**Channel:** WhatsApp or in-app
-
-### Steps
-
-```
-1. PARSE: parse_materials_list from free-text request
-
-2. SEARCH: compare_material_prices for each item
-
-3. PRESENT results:
-   "50m 2.5mm Twin & Earth:
-    • CEF: £28.50 (in stock)
-    • Screwfix: £31.99 (in stock)
-    • Edmundson: £26.80 (order by 2pm for next day)
-
-    Want me to add this to a materials list?"
-
-4. ON REQUEST: save to materials list for the current job
-
-5. LOG: activity_type: 'materials_search'
-```
-
----
-
-## Rail 6: EICR & PAT Renewal Outreach
+### Rail 6: EICR & PAT Renewal Outreach
 
 **Trigger:** Certificate expiry date minus 60 days (checked in heartbeat)
 **Channel:** WhatsApp
@@ -308,7 +342,7 @@ Every rail:
 
 ---
 
-## Rail 7: Quote Follow-Up
+### Rail 7: Quote Follow-Up
 
 **Trigger:** Quote sent + 5 days with no response
 **Channel:** WhatsApp
@@ -323,68 +357,34 @@ Every rail:
    - Exclude quotes the electrician has said to "leave"
    - Exclude expired quotes
 
-3. DRAFT follow-up per quote:
+3. CHECK: track_quote_email for open/click data (if sent via email)
+   - Opened but not accepted → mention in follow-up
+   - Not opened → adjust message tone
+
+4. DRAFT follow-up per quote:
    "Hi [name], just checking in on the quote I sent for the
     [job type] at [address] — £[amount].
 
     Happy to answer any questions or adjust if needed.
     The quote is valid until [expiry date]."
 
-4. PRESENT to electrician:
+5. PRESENT to electrician:
    "[N] quotes with no response after 5 days:
 
-    • [Client] — [job type] — £[amount] (sent [date])
+    • [Client] — [job type] — £[amount] (sent [date]) [opened/not opened]
 
     Want me to follow up? YES/NO/SELECT"
 
-5. ON APPROVAL: send_approved_message
-6. LOG: activity_type: 'quote_followup_sent'
-7. If still no response after follow-up → present in next weekly digest as "declined (no response)"
+6. ON APPROVAL: send_approved_message
+7. LOG: activity_type: 'quote_followup_sent'
+8. If still no response after follow-up → present in next weekly digest as "declined (no response)"
 ```
 
 ---
 
-## Rail 8: Accounting Sync (Xero / QuickBooks)
+### Rail 8: Quote Accepted → Job & Calendar
 
-**Trigger:** Continuous background sync (every 30 minutes when connected)
-**Channel:** Silent (no WhatsApp unless action needed)
-
-### Steps
-
-```
-1. CHECK: Is Xero/QuickBooks connected?
-   NO → skip
-   YES → continue
-
-2. SYNC OUTBOUND (Elec-Mate → Xero):
-   a. Find invoices created since last sync
-   b. Push to Xero as new invoices
-   c. Sync client as Xero Contact if new
-   d. Map line items: labour, materials, VAT
-
-3. SYNC INBOUND (Xero → Elec-Mate):
-   a. Check for newly paid invoices in Xero
-   b. Mark corresponding Elec-Mate invoices as paid
-   c. Notify electrician: "Payment received from [client] — £[amount] ✅"
-
-4. EXPENSE SYNC (if Open Banking connected):
-   a. Categorise new bank transactions
-   b. Push to Xero as expense claims
-   c. Flag anything unusual for electrician review
-
-5. ERROR HANDLING:
-   - Token expired → alert: "Your Xero connection needs refreshing. Tap here to reconnect."
-   - Sync conflict → flag for manual review
-   - Never silently skip a failed sync — always log and alert if persistent
-
-6. LOG: activity_type: 'accounting_sync'
-```
-
----
-
-## Rail 9: New Booking → Calendar
-
-**Trigger:** Quote accepted by client OR electrician says "Book [client] in for [date]"
+**Trigger:** Quote acceptance webhook OR client reply confirming ("we'd like to go ahead")
 **Channel:** WhatsApp
 
 ### Steps
@@ -392,7 +392,8 @@ Every rail:
 ```
 1. DETECT:
    a. Quote acceptance webhook → quote.status = 'accepted'
-   b. OR electrician command → parse date, client, job type
+   b. OR client WhatsApp/email reply indicating acceptance
+   c. OR electrician command → "Book [client] in for [date]"
 
 2. CHECK AVAILABILITY:
    a. get_availability for requested date/time
@@ -404,7 +405,9 @@ Every rail:
    b. create_calendar_event with date, time, address, client
 
 4. PRESENT:
-   "New booking confirmed:
+   "Quote accepted! ⚡
+
+    New booking:
     📅 [date] at [time]
     📍 [address]
     👤 [client]
@@ -428,96 +431,47 @@ Every rail:
 
 ---
 
-## Rail 10: Van & Equipment Checklist
+## Support Rails
 
-**Trigger:** Electrician command ("What do I need for tomorrow?") OR evening before a scheduled job
-**Channel:** WhatsApp
+### Rail 9: Accounting Sync (Xero / QuickBooks)
 
-### Steps
-
-```
-1. READ: tomorrow's jobs from calendar
-
-2. ANALYSE each job type:
-   - EICR → multifunction tester, socket tester, RCD tester, IR tester, torch, access equipment
-   - CU upgrade → new board, MCBs/RCBOs, cable, tools, isolator, labels
-   - Rewire → cable drums, clips, back boxes, faceplates, CU, fixings
-   - EV charger → charger unit, cable, isolator, earth rod, RCD
-
-3. COMPILE checklist:
-   "Tomorrow's jobs need:
-
-    🔧 EICR at 14 Oak Street (9am):
-    □ Multifunction tester (calibrated?)
-    □ Socket tester
-    □ RCD tester
-    □ Torch + spare batteries
-    □ Access equipment (loft hatch)
-
-    🔧 CU upgrade at 7 Riverside (2pm):
-    □ Consumer unit ([spec from design])
-    □ MCBs: [list from circuit design]
-    □ [X]m 16mm tails
-    □ Earth block + labels
-    □ Isolator
-
-    Anything else you need?"
-
-4. LOG: activity_type: 'checklist_generated'
-```
-
----
-
-## Rail 11: Apprentice Tutor Mode
-
-**Trigger:** Weekly check-in (configurable day/time) OR apprentice message
-**Channel:** WhatsApp
+**Trigger:** Continuous background sync (every 30 minutes when connected)
+**Channel:** Silent (no WhatsApp unless action needed)
 
 ### Steps
 
 ```
-1. WEEKLY CHECK-IN:
-   "Hey [name] ⚡ How's the week going?
+1. CHECK: Is Xero/QuickBooks connected?
+   NO → skip
+   YES → continue
 
-    Quick check:
-    • How's college? Anything you're stuck on?
-    • What have you been working on site this week?
-    • Any off-job training hours to log?
+2. SYNC OUTBOUND (Elec-Mate → Xero):
+   a. Find invoices created since last sync
+   b. Push to Xero as new invoices
+   c. Sync client as Xero Contact if new
+   d. Map line items: labour, materials, VAT
 
-    I can help with revision, practice questions, or anything you need."
+3. SYNC INBOUND (Xero → Elec-Mate):
+   a. Check for newly paid invoices in Xero
+   b. Mark corresponding Elec-Mate invoices as paid
+   c. Notify electrician: "Payment received from [client] — £[amount] ✅"
 
-2. ON RESPONSE — classify intent:
-   - Study help → search study centre content, explain concepts, generate practice questions
-   - Portfolio help → guide evidence collection, suggest documentation
-   - Technical question → explain with teaching approach (don't just give answer)
-   - EPA/AM2 prep → generate practice scenarios, explain marking criteria
-   - Personal/wellbeing → signpost to mental health resources, Electrical Industries Charity
+4. EXPENSE SYNC (if auto-sync enabled):
+   a. Find expenses logged since last sync
+   b. Push to Xero as expense claims
+   c. Map categories
 
-3. PROGRESS TRACKING:
-   - Track topics discussed and questions asked
-   - Identify weak areas (topics asked about repeatedly)
-   - Suggest targeted revision: "You've asked about Zs calculations three times — want me to create a practice set?"
+5. ERROR HANDLING:
+   - Token expired → alert: "Your Xero connection needs refreshing. Tap here to reconnect."
+   - Sync conflict → flag for manual review
+   - Never silently skip a failed sync — always log and alert if persistent
 
-4. LOG: activity_type: 'apprentice_tutor'
-
-5. MONTHLY SUMMARY to apprentice:
-   "Your learning this month:
-    📚 Topics covered: [list]
-    ✅ Strengths: [areas with confident answers]
-    📖 Suggested revision: [areas with repeated questions]
-    ⏰ Off-job hours logged: [X] / [target]"
+6. LOG: activity_type: 'accounting_sync'
 ```
-
-### Notes
-
-- Teaching mode: always explain WHY, not just WHAT
-- Never do coursework for them
-- Encourage them to attempt answers before revealing the correct one
-- Celebrate progress: "Nice one — you nailed that calculation"
 
 ---
 
-## Rail 12: Expense Receipt Processing
+### Rail 10: Expense Receipt Processing
 
 **Trigger:** Electrician sends photo of receipt via WhatsApp
 **Channel:** WhatsApp
@@ -541,13 +495,12 @@ Every rail:
 
 4. ON APPROVAL:
    a. create_expense with extracted data
-   b. sync_expense_to_accounting (if Xero/QuickBooks connected and auto-sync enabled)
+   b. sync_expense_to_accounting (if connected and auto-sync enabled)
 
 5. LOG: activity_type: 'expense_logged'
 
 6. FOLLOW-UP:
    - If job context: "Want me to add this to the materials cost for [job]?"
-   - Monthly: include in expense summary
 ```
 
 ### Notes
@@ -558,7 +511,7 @@ Every rail:
 
 ---
 
-## Rail 13: Part P Building Control Notification
+### Rail 11: Part P Building Control Notification
 
 **Trigger:** Certificate completed for notifiable work (CU upgrade, new circuit, rewire)
 **Channel:** WhatsApp
@@ -608,56 +561,98 @@ Every rail:
 
 ---
 
-## Rail 14: Weekly Safety Summary
+### Rail 12: Van & Equipment Checklist
 
-**Trigger:** Weekly (Friday 17:00 — configurable)
-**Channel:** WhatsApp (pre-authorised like morning briefing)
+**Trigger:** Electrician command ("What do I need for tomorrow?") OR evening before a scheduled job
+**Channel:** WhatsApp
 
 ### Steps
 
 ```
-1. GATHER:
-   a. get_safety_dashboard → safety score, streak, trend
-   b. Near-miss count for the week
-   c. Safety observations logged
-   d. Briefings completed
-   e. Equipment calibration alerts (overdue or due within 7 days)
-   f. Fire watch records
-   g. Any accident book entries
+1. READ: tomorrow's jobs from calendar
 
-2. COMPOSE weekly safety summary:
-   "Your safety week ⚡
+2. ANALYSE each job type:
+   - EICR → multifunction tester, socket tester, RCD tester, IR tester, torch, access equipment
+   - CU upgrade → new board, MCBs/RCBOs, cable, tools, isolator, labels
+   - Rewire → cable drums, clips, back boxes, faceplates, CU, fixings
+   - EV charger → charger unit, cable, isolator, earth rod, RCD
 
-    Safety score: [X]/100 ([trend])
-    Streak: [X] days without incident
+3. COMPILE checklist:
+   "Tomorrow's jobs need:
 
-    This week:
-    • [X] briefings completed
-    • [X] observations logged
-    • [X] near-misses reported
+    🔧 EICR at 14 Oak Street (9am):
+    □ Multifunction tester (calibrated?)
+    □ Socket tester
+    □ RCD tester
+    □ Torch + spare batteries
+    □ Access equipment (loft hatch)
 
-    Equipment:
-    • [X] items due for calibration next week
-    • [X] items overdue — check ASAP
+    🔧 CU upgrade at 7 Riverside (2pm):
+    □ Consumer unit ([spec from design])
+    □ MCBs: [list from circuit design]
+    □ [X]m 16mm tails
+    □ Earth block + labels
+    □ Isolator
 
-    Keep it up — safe site, every time."
+    Anything else you need?"
 
-3. SEND via WhatsApp (pre-authorised — like morning briefing)
-   - If safety score drops below 70: append warning
-   - If equipment overdue: append urgent flag
+4. LOG: activity_type: 'checklist_generated'
+```
 
-4. LOG: activity_type: 'safety_summary_sent'
+---
+
+## Apprentice Rails
+
+### Rail 13: Apprentice Tutor Mode
+
+**Trigger:** Weekly check-in (configurable day/time) OR apprentice message
+**Channel:** WhatsApp
+
+### Steps
+
+```
+1. WEEKLY CHECK-IN:
+   "Hey [name] ⚡ How's the week going?
+
+    Quick check:
+    • How's college? Anything you're stuck on?
+    • What have you been working on site this week?
+    • Any off-job training hours to log?
+
+    I can help with revision, practice questions, or anything you need."
+
+2. ON RESPONSE — classify intent:
+   - Study help → search study centre content, explain concepts, generate practice questions
+   - Portfolio help → guide evidence collection, suggest documentation
+   - Technical question → explain with teaching approach (don't just give answer)
+   - EPA/AM2 prep → generate practice scenarios, explain marking criteria
+   - Personal/wellbeing → signpost to mental health resources, Electrical Industries Charity
+
+3. PROGRESS TRACKING:
+   - Track topics discussed and questions asked
+   - Identify weak areas (topics asked about repeatedly)
+   - Suggest targeted revision: "You've asked about Zs calculations three times — want me to create a practice set?"
+
+4. LOG: activity_type: 'apprentice_tutor'
+
+5. MONTHLY SUMMARY to apprentice:
+   "Your learning this month:
+    📚 Topics covered: [list]
+    ✅ Strengths: [areas with confident answers]
+    📖 Suggested revision: [areas with repeated questions]
+    ⏰ Off-job hours logged: [X] / [target]"
 ```
 
 ### Notes
 
-- Safety summary is pre-authorised (same as morning briefing) — no per-send approval
-- User can disable in preferences: `safety_summary_enabled: false`
-- If no safety data for the week, send brief: "No safety activity logged this week. Remember to log briefings and observations."
+- Teaching mode: always explain WHY, not just WHAT
+- Never do coursework for them
+- Encourage them to attempt answers before revealing the correct one
+- Celebrate progress: "Nice one — you nailed that calculation"
 
 ---
 
-## Rail 15: Apprentice EPA Countdown
+### Rail 14: Apprentice EPA Countdown
 
 **Trigger:** EPA date set in profile AND date within 60 days (checked in heartbeat)
 **Channel:** WhatsApp
@@ -714,13 +709,13 @@ Every rail:
 
 When multiple rails trigger simultaneously:
 
-1. Job Complete → Invoice (Rail 3) — highest priority, time-sensitive
-2. Inbound Enquiry (Rail 2) — client waiting
-3. Invoice Chasing (Rail 4) — money collection
-4. Morning Briefing (Rail 1) — scheduled
-5. Part P Notification (Rail 13) — legal compliance
-6. Safety Summary (Rail 14) — weekly schedule
-7. EPA Countdown (Rail 15) — apprentice support
+1. Job Complete → Cert & Invoice (Rail 4) — highest priority, time-sensitive
+2. Inbound Enquiry — WhatsApp (Rail 2) — client waiting
+3. Inbound Enquiry — Email (Rail 3) — lead waiting
+4. Invoice Chasing (Rail 5) — money collection
+5. Quote Accepted → Job (Rail 8) — client confirmed
+6. Morning Briefing (Rail 1) — scheduled
+7. Part P Notification (Rail 11) — legal compliance
 8. Everything else — queue and process in order
 
 ### Conflict Resolution
@@ -741,7 +736,7 @@ When multiple rails trigger simultaneously:
 
 | Field         | Value                 |
 | ------------- | --------------------- |
-| Version       | 2.0.0                 |
+| Version       | 3.0.0                 |
 | Last updated  | 2026-03-01            |
-| Rails defined | 15                    |
+| Rails defined | 14                    |
 | Author        | Elec-Mate Engineering |
