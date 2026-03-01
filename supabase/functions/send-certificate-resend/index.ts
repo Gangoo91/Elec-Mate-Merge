@@ -537,7 +537,7 @@ const handler = async (req: Request): Promise<Response> => {
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({
-            formData: report.form_data,
+            formData: report.data,
             reportId: report.report_id,
           }),
         });
