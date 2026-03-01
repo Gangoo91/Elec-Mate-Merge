@@ -299,6 +299,7 @@ export const useInvoiceBuilder = (sourceQuote?: Quote, existingInvoice?: Partial
     setInvoice((prev) => {
       const updatedInvoice = {
         ...prev,
+        items: prev.items?.filter((item) => item.id !== itemId),
         additional_invoice_items: prev.additional_invoice_items?.filter(
           (item) => item.id !== itemId
         ),
