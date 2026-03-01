@@ -530,7 +530,7 @@ const ElecIdQualifications = () => {
 
       {/* Mobile Bottom Sheet for Add */}
       {isMobile ? (
-        <Drawer.Root open={isAddSheetOpen} onOpenChange={setIsAddSheetOpen}>
+        <Drawer.Root open={isAddSheetOpen} onOpenChange={setIsAddSheetOpen} shouldScaleBackground={false} noBodyStyles>
           <Drawer.Portal>
             <Drawer.Overlay className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50" />
             <Drawer.Content className="fixed bottom-0 left-0 right-0 z-50 flex flex-col max-h-[90vh] bg-background rounded-t-[20px] border-t border-white/[0.08]">
@@ -562,7 +562,7 @@ const ElecIdQualifications = () => {
 
       {/* Mobile Bottom Sheet for Edit */}
       {isMobile ? (
-        <Drawer.Root open={isEditSheetOpen} onOpenChange={setIsEditSheetOpen}>
+        <Drawer.Root open={isEditSheetOpen} onOpenChange={setIsEditSheetOpen} shouldScaleBackground={false} noBodyStyles>
           <Drawer.Portal>
             <Drawer.Overlay className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50" />
             <Drawer.Content className="fixed bottom-0 left-0 right-0 z-50 flex flex-col max-h-[90vh] bg-background rounded-t-[20px] border-t border-white/[0.08]">
