@@ -24,6 +24,8 @@ const TIER_NAMES: Record<string, string> = {
   apprentice_yearly: 'Apprentice (Annual)',
   electrician: 'Electrician Pro',
   electrician_yearly: 'Electrician Pro (Annual)',
+  business_ai: 'Business AI',
+  business_ai_yearly: 'Business AI (Annual)',
   desktop: 'Desktop',
   desktop_yearly: 'Desktop (Annual)',
   employer: 'Employer',
@@ -32,6 +34,15 @@ const TIER_NAMES: Record<string, string> = {
   college_yearly: 'College (Annual)',
   Founder: 'Founder',
 };
+
+// Tiers that include Business AI agent access
+const BUSINESS_AI_TIERS = new Set([
+  'business_ai',
+  'business_ai_yearly',
+  'employer',
+  'employer_yearly',
+  'Employer', // Founders get AI too
+]);
 
 /**
  * Send welcome email to new subscriber
@@ -312,9 +323,13 @@ const PRICE_TO_TIER: Record<string, string> = {
   price_1SqJVr2RKw5t5RAmaiTGelLN: 'electrician', // £9.99/month (current)
   price_1SqJVs2RKw5t5RAmVeD2QVsb: 'electrician_yearly', // £99.99/year (current)
 
-  // Employer - £29.99/month, £299.99/year
-  price_1SlyAT2RKw5t5RAmUmTRGimH: 'employer', // £29.99/month (current)
-  price_1SlyB82RKw5t5RAmN447YJUW: 'employer_yearly', // £299.99/year (current)
+  // Business AI - £29.99/month, £299.99/year (Electrician + AI Agent)
+  price_1T6DUx2RKw5t5RAmpb177NJV: 'business_ai', // £29.99/month
+  price_1T6DUy2RKw5t5RAmo9HgAukW: 'business_ai_yearly', // £299.99/year
+
+  // Employer - £49.99/month, £499.99/year (Business AI + Team features)
+  price_1SlyAT2RKw5t5RAmUmTRGimH: 'employer', // £29.99/month (current — will become £49.99)
+  price_1SlyB82RKw5t5RAmN447YJUW: 'employer_yearly', // £299.99/year (current — will become £499.99)
 
   // Founders Offer - £3.99/month (gets Employer access - full access to all areas)
   price_1SPK8c2RKw5t5RAmRGJxXfjc: 'Employer', // £3.99/month founders offer (employer access)
@@ -475,6 +490,13 @@ serve(async (req) => {
         updateData.onboarding_completed = true;
       }
 
+      // Set business_ai_enabled based on tier (triggers agent provisioning/deprovisioning)
+      if (tier && subscribed) {
+        updateData.business_ai_enabled = BUSINESS_AI_TIERS.has(tier);
+      } else if (!subscribed) {
+        updateData.business_ai_enabled = false;
+      }
+
       const { error } = await supabase.from('profiles').update(updateData).eq('id', userId);
 
       if (error) {
@@ -482,7 +504,12 @@ serve(async (req) => {
         throw error;
       }
 
-      logger.info('Subscription status updated', { userId, subscribed, tier });
+      logger.info('Subscription status updated', {
+        userId,
+        subscribed,
+        tier,
+        businessAiEnabled: updateData.business_ai_enabled,
+      });
     }
 
     // Handle different event types

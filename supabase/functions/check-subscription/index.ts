@@ -189,7 +189,7 @@ serve(async (req) => {
     );
 
     // Find first active or trialing subscription
-    const activeSub = subscriptions.data.find((sub: any) =>
+    const activeSub = subscriptions.data.find((sub: Stripe.Subscription) =>
       ['active', 'trialing'].includes(sub.status)
     );
     const hasActiveSub = !!activeSub;
@@ -212,6 +212,9 @@ serve(async (req) => {
         // Electrician Pro
         price_1SqJVr2RKw5t5RAmaiTGelLN: 'electrician',
         price_1SqJVs2RKw5t5RAmVeD2QVsb: 'electrician_yearly',
+        // Business AI - £29.99/month, £299.99/year
+        price_1T6DUx2RKw5t5RAmpb177NJV: 'business_ai', // £29.99/month
+        price_1T6DUy2RKw5t5RAmo9HgAukW: 'business_ai_yearly', // £299.99/year
         // Employer
         price_1SlyAT2RKw5t5RAmUmTRGimH: 'Employer',
         price_1SlyB82RKw5t5RAmN447YJUW: 'employer_yearly',
@@ -226,6 +229,15 @@ serve(async (req) => {
         price_1RhteS2RKw5t5RAmzRbaTE8U: 'electrician',
         price_1RhtiS2RKw5t5RAmha0s6PJA: 'electrician_yearly',
       };
+
+      // Tiers that include Business AI agent access
+      const BUSINESS_AI_TIERS = new Set([
+        'business_ai',
+        'business_ai_yearly',
+        'employer',
+        'employer_yearly',
+        'Employer',
+      ]);
 
       subscriptionTier = PRICE_TO_TIER[priceId] || 'electrician';
       logger.info('Determined subscription tier', { priceId, subscriptionTier });
@@ -275,14 +287,18 @@ serve(async (req) => {
       }
     }
 
+    const businessAiEnabled = subscriptionTier ? BUSINESS_AI_TIERS.has(subscriptionTier) : false;
+
     logger.info('Updated database with subscription info', {
       subscribed: hasActiveSub,
       subscriptionTier,
+      businessAiEnabled,
     });
     return new Response(
       JSON.stringify({
         subscribed: hasActiveSub,
         subscription_tier: subscriptionTier,
+        business_ai_enabled: businessAiEnabled,
       }),
       {
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
