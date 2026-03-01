@@ -476,27 +476,39 @@ export const InvoiceItemsStep = ({
                     <p className="text-[13px] font-medium text-white truncate flex-1 mr-2">
                       {item.description}
                     </p>
-                    <p className="text-[13px] font-bold text-elec-yellow">
-                      {formatCurrency((item.quantity || 0) * (item.unitPrice || 0))}
-                    </p>
+                    <div className="flex items-center gap-1 ml-2">
+                      <p className="text-[13px] font-bold text-elec-yellow mr-1">
+                        {formatCurrency((item.quantity || 0) * (item.unitPrice || 0))}
+                      </p>
+                      <button
+                        onClick={() => onRemoveItem(item.id)}
+                        className="w-7 h-7 rounded-lg bg-red-500/10 flex items-center justify-center touch-manipulation active:scale-95"
+                      >
+                        <Trash2 className="h-3.5 w-3.5 text-red-400" />
+                      </button>
+                    </div>
                   </div>
                   <div className="flex items-center gap-2">
                     <InlineDecimalInput
                       value={item.quantity}
-                      onChange={(quantity) => onUpdateItem(item.id, {
-                        quantity,
-                        totalPrice: quantity * item.unitPrice,
-                      })}
+                      onChange={(quantity) =>
+                        onUpdateItem(item.id, {
+                          quantity,
+                          totalPrice: quantity * item.unitPrice,
+                        })
+                      }
                       style={darkInputStyle}
                       className="h-8 w-16 px-2 py-0 text-[13px] text-white bg-[#1a1a1e] border border-white/[0.06] rounded-lg caret-elec-yellow focus:outline-none focus:border-elec-yellow"
                     />
                     <span className="text-[12px] text-white">×</span>
                     <InlineDecimalInput
                       value={item.unitPrice}
-                      onChange={(unitPrice) => onUpdateItem(item.id, {
-                        unitPrice,
-                        totalPrice: item.quantity * unitPrice,
-                      })}
+                      onChange={(unitPrice) =>
+                        onUpdateItem(item.id, {
+                          unitPrice,
+                          totalPrice: item.quantity * unitPrice,
+                        })
+                      }
                       style={darkInputStyle}
                       className="h-8 w-20 px-2 py-0 text-[13px] text-white bg-[#1a1a1e] border border-white/[0.06] rounded-lg caret-elec-yellow focus:outline-none focus:border-elec-yellow"
                     />
