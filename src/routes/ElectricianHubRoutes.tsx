@@ -3,6 +3,7 @@ import { Route, Routes } from 'react-router-dom';
 import { LazyRoute } from '@/components/LazyRoute';
 
 // Lazy-loaded pages
+const TasksPage = lazy(() => import('@/pages/electrician/TasksPage'));
 const BusinessAdmin = lazy(() => import('@/pages/electrician/BusinessAdmin'));
 const SafetyShares = lazy(() => import('@/pages/electrician/SafetyShares'));
 const MajorProjects = lazy(() => import('@/pages/electrician/safety-shares/MajorProjects'));
@@ -138,6 +139,7 @@ const TutorPage = lazy(() => import('@/pages/electrician-tools/TutorPage'));
 const AIMethodStatementPage = lazy(() => import('@/pages/electrician-tools/AIMethodStatementPage'));
 const PremiumCVBuilder = lazy(() => import('@/components/cv-builder/premium/PremiumCVBuilder'));
 const WorkerToolsHub = lazy(() => import('@/pages/electrician/WorkerToolsHub'));
+const CalendarPage = lazy(() => import('@/pages/electrician/CalendarPage'));
 
 const ElectricianHubRoutes = () => (
   <Routes>
@@ -371,12 +373,30 @@ const ElectricianHubRoutes = () => (
       }
     />
 
+    {/* Tasks */}
+    <Route
+      path="tasks"
+      element={
+        <LazyRoute>
+          <TasksPage />
+        </LazyRoute>
+      }
+    />
+
     {/* Business Routes */}
     <Route
       path="business"
       element={
         <LazyRoute>
           <BusinessHub />
+        </LazyRoute>
+      }
+    />
+    <Route
+      path="business/calendar"
+      element={
+        <LazyRoute>
+          <CalendarPage />
         </LazyRoute>
       }
     />

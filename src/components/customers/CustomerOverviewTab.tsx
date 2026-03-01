@@ -22,6 +22,7 @@ import { CustomerQuotesCard } from './CustomerQuotesCard';
 import { CustomerSiteVisitsCard } from './CustomerSiteVisitsCard';
 import { CustomerRAMSCard } from './CustomerRAMSCard';
 import { CustomerDesignConsultationCard } from './CustomerDesignConsultationCard';
+import { CustomerTasksCard } from './CustomerTasksCard';
 
 interface CustomerOverviewTabProps {
   customer: Customer;
@@ -175,6 +176,9 @@ export const CustomerOverviewTab = ({
           Work History
         </h3>
       </div>
+
+      {/* Tasks */}
+      <CustomerTasksCard customerId={customer.id} customerName={customer.name} />
 
       {/* Quotes */}
       <CustomerQuotesCard customerId={customer.id} customerName={customer.name} />

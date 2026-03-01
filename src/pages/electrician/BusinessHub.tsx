@@ -18,13 +18,16 @@ import {
   BarChart3,
   Briefcase,
   ClipboardList,
+  ClipboardCheck,
   Camera,
+  CalendarDays,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { BusinessCard } from '@/components/business-hub';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { QuoteInvoiceAnalytics } from '@/components/electrician/analytics/QuoteInvoiceAnalytics';
 import { useBusinessHubData } from '@/hooks/useBusinessHubData';
+import { useSparkTaskOverdueCount } from '@/hooks/useSparkTaskOverdueCount';
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -45,6 +48,7 @@ const BusinessHub = () => {
 
   const { revenue, quotes, invoices, isLoading, lastUpdated, refresh, formatCurrency } =
     useBusinessHubData();
+  const overdueCount = useSparkTaskOverdueCount();
 
   // Money In
   const moneyInTools = [
@@ -179,7 +183,33 @@ const BusinessHub = () => {
           <p className="text-sm text-white mt-1">Clients, jobs & business tools</p>
         </motion.div>
 
-        {/* Customers — Top Position */}
+        {/* Tasks — Top Position */}
+        <motion.section variants={itemVariants} className="space-y-3">
+          <div className="flex items-center gap-2.5">
+            <div className="h-1.5 w-1.5 rounded-full bg-purple-400" />
+            <h2 className="text-base font-bold text-white">Tasks</h2>
+            {overdueCount > 0 && (
+              <span className="text-[11px] font-bold bg-red-500 text-white px-2 py-0.5 rounded-full">
+                {overdueCount} overdue
+              </span>
+            )}
+          </div>
+          <div className="space-y-2">
+            <BusinessCard
+              title="Tasks"
+              description={
+                overdueCount > 0
+                  ? `${overdueCount} overdue — tap to review`
+                  : 'To-dos, reminders & follow-ups'
+              }
+              icon={ClipboardCheck}
+              href="/electrician/tasks"
+              gradient="from-purple-400 to-fuchsia-500"
+            />
+          </div>
+        </motion.section>
+
+        {/* Customers */}
         <motion.section variants={itemVariants} className="space-y-3">
           <div className="flex items-center gap-2.5">
             <div className="h-1.5 w-1.5 rounded-full bg-blue-400" />
@@ -216,6 +246,13 @@ const BusinessHub = () => {
               icon={Camera}
               href="/electrician/photo-docs"
               gradient="from-blue-400 to-cyan-500"
+            />
+            <BusinessCard
+              title="Calendar"
+              description="Jobs, meetings & appointments"
+              icon={CalendarDays}
+              href="/electrician/business/calendar"
+              gradient="from-blue-400 to-indigo-500"
             />
           </div>
         </motion.section>
