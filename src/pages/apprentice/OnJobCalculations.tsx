@@ -182,6 +182,19 @@ const ConduitBendingCalculator = lazy(
 const StarDeltaCalculator = lazy(
   () => import('@/components/apprentice/calculators/StarDeltaCalculator')
 );
+const IPRatingCalculator = lazy(
+  () => import('@/components/apprentice/calculators/IPRatingCalculator')
+);
+// New Calculators — Time & Materials, Circuit Breaker Selector, Trunking Size
+const TimeMaterialsCalculator = lazy(
+  () => import('@/components/apprentice/calculators/TimeMaterialsCalculator')
+);
+const CircuitBreakerSelectorCalculator = lazy(
+  () => import('@/components/apprentice/calculators/CircuitBreakerSelectorCalculator')
+);
+const TrunkingSizeCalculator = lazy(
+  () => import('@/components/apprentice/calculators/TrunkingSizeCalculator')
+);
 
 // Loading fallback component
 const CalculatorLoader = () => (
@@ -332,6 +345,15 @@ const OnJobCalculations = () => {
         return <ConduitBendingCalculator />;
       case 'star-delta':
         return <StarDeltaCalculator />;
+      case 'ip-rating':
+        return <IPRatingCalculator />;
+      // New Calculators
+      case 'time-materials':
+        return <TimeMaterialsCalculator />;
+      case 'circuit-breaker-selector':
+        return <CircuitBreakerSelectorCalculator />;
+      case 'trunking-size':
+        return <TrunkingSizeCalculator />;
       default:
         return <OhmsLawCalculator />;
     }

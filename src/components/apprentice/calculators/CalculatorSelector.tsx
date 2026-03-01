@@ -39,6 +39,7 @@ const CalculatorSelector = ({ calculatorType, setCalculatorType }: CalculatorSel
     { value: 'cable-derating', label: 'Cable Derating', category: 'Design & Installation' },
     { value: 'conduit-fill', label: 'Conduit Fill', category: 'Design & Installation' },
     { value: 'conduit-bending', label: 'Conduit Bending', category: 'Design & Installation' },
+    { value: 'trunking-size', label: 'Pipe & Trunking Size', category: 'Design & Installation' },
     { value: 'diversity-factor', label: 'Diversity Factor', category: 'Design & Installation' },
     { value: 'maximum-demand', label: 'Maximum Demand', category: 'Design & Installation' },
     {
@@ -63,6 +64,11 @@ const CalculatorSelector = ({ calculatorType, setCalculatorType }: CalculatorSel
     {
       value: 'earth-electrode',
       label: 'Earth Electrode (TT Systems)',
+      category: 'Protection & Safety',
+    },
+    {
+      value: 'circuit-breaker-selector',
+      label: 'Circuit Breaker Selector',
       category: 'Protection & Safety',
     },
 
@@ -143,6 +149,7 @@ const CalculatorSelector = ({ calculatorType, setCalculatorType }: CalculatorSel
     },
     { value: 'wire-gauge', label: 'Wire Gauge (AWG/SWG)', category: 'Tools & Components' },
     { value: 'instrumentation', label: 'Instrumentation', category: 'Tools & Components' },
+    { value: 'ip-rating', label: 'IP Rating Decoder', category: 'Tools & Components' },
 
     // Utilities & Cost Analysis
     {
@@ -151,6 +158,7 @@ const CalculatorSelector = ({ calculatorType, setCalculatorType }: CalculatorSel
       category: 'Utilities & Cost Analysis',
     },
     { value: 'unit-converter', label: 'Unit Converter', category: 'Utilities & Cost Analysis' },
+    { value: 'time-materials', label: 'Time & Materials', category: 'Utilities & Cost Analysis' },
   ];
 
   // Group calculators by category

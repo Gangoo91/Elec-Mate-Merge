@@ -66,6 +66,10 @@ import SelectivityCalculator from '@/components/apprentice/calculators/Selectivi
 import FaultLevelCalculator from '@/components/apprentice/calculators/FaultLevelCalculator';
 import TouchStepVoltageCalculator from '@/components/apprentice/calculators/TouchStepVoltageCalculator';
 import LightningProtectionCalculator from '@/components/apprentice/calculators/LightningProtectionCalculator';
+import IPRatingCalculator from '@/components/apprentice/calculators/IPRatingCalculator';
+import TimeMaterialsCalculator from '@/components/apprentice/calculators/TimeMaterialsCalculator';
+import CircuitBreakerSelectorCalculator from '@/components/apprentice/calculators/CircuitBreakerSelectorCalculator';
+import TrunkingSizeCalculator from '@/components/apprentice/calculators/TrunkingSizeCalculator';
 
 const Calculations = () => {
   const [calculatorType, setCalculatorType] = useState<string>('ohms-law');
@@ -177,6 +181,8 @@ const Calculations = () => {
         return <WireGaugeCalculator />;
       case 'instrumentation':
         return <InstrumentationCalculator />;
+      case 'ip-rating':
+        return <IPRatingCalculator />;
 
       // Utilities & Cost Analysis
       case 'energy-cost':
@@ -209,6 +215,14 @@ const Calculations = () => {
         return <MarineElectricalCalculator />;
       case 'swimming-pool':
         return <SwimmingPoolCalculator />;
+
+      // New Calculators
+      case 'time-materials':
+        return <TimeMaterialsCalculator />;
+      case 'circuit-breaker-selector':
+        return <CircuitBreakerSelectorCalculator />;
+      case 'trunking-size':
+        return <TrunkingSizeCalculator />;
 
       default:
         return <OhmsLawCalculator />;
