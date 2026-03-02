@@ -34,7 +34,11 @@ interface BoardSectionProps {
   board: DistributionBoard;
   isExpanded: boolean;
   onToggleExpanded: () => void;
-  onUpdateBoard: (boardId: string, field: keyof DistributionBoard, value: any) => void;
+  onUpdateBoard: (
+    boardId: string,
+    field: keyof DistributionBoard | Record<string, any>,
+    value?: any
+  ) => void;
   onRemoveBoard: (boardId: string) => void;
   onAddCircuit: () => void;
   circuitCount: number;
@@ -272,49 +276,64 @@ const BoardSection: React.FC<BoardSectionProps> = ({
               </div>
             </div>
 
-            {/* Verification Buttons - Row 1: Polarity & Phase Sequence */}
-            <div className={cn('flex items-center flex-wrap gap-2', isMobile && 'gap-1.5')}>
-              <button
-                type="button"
-                onClick={() =>
-                  onUpdateBoard(
-                    board.id,
-                    'confirmedCorrectPolarity',
-                    !board.confirmedCorrectPolarity
-                  )
-                }
-                className={cn(
-                  'h-10 px-4 rounded-lg border flex items-center gap-2 cursor-pointer select-none',
-                  'transition-colors duration-150 touch-manipulation',
-                  board.confirmedCorrectPolarity
-                    ? 'bg-green-500/20 border-green-500/50 text-green-400'
-                    : 'bg-card border-border text-muted-foreground hover:bg-accent'
-                )}
-              >
-                <CheckCircle className="h-4 w-4" />
-                <span className="text-sm font-medium">Polarity</span>
-              </button>
+            {/* Verification & SPD — single row on desktop, stacked on mobile */}
+            <div
+              className={cn(
+                isMobile
+                  ? 'space-y-3'
+                  : 'flex items-center flex-wrap gap-x-6 gap-y-2 py-3 px-4 rounded-lg bg-white/[0.03] border border-white/5'
+              )}
+            >
+              {/* Polarity & Phase Seq */}
+              <div className={cn('flex items-center flex-wrap gap-2', isMobile && 'gap-1.5')}>
+                <button
+                  type="button"
+                  onClick={() =>
+                    onUpdateBoard(
+                      board.id,
+                      'confirmedCorrectPolarity',
+                      !board.confirmedCorrectPolarity
+                    )
+                  }
+                  className={cn(
+                    'h-10 px-4 rounded-lg border flex items-center gap-2 cursor-pointer select-none',
+                    'transition-colors duration-150 touch-manipulation',
+                    board.confirmedCorrectPolarity
+                      ? 'bg-green-500/20 border-green-500/50 text-green-400'
+                      : 'bg-card border-border text-muted-foreground hover:bg-accent'
+                  )}
+                >
+                  <CheckCircle className="h-4 w-4" />
+                  <span className="text-sm font-medium">Polarity</span>
+                </button>
 
-              <button
-                type="button"
-                onClick={() =>
-                  onUpdateBoard(board.id, 'confirmedPhaseSequence', !board.confirmedPhaseSequence)
-                }
-                className={cn(
-                  'h-10 px-4 rounded-lg border flex items-center gap-2 cursor-pointer select-none',
-                  'transition-colors duration-150 touch-manipulation',
-                  board.confirmedPhaseSequence
-                    ? 'bg-green-500/20 border-green-500/50 text-green-400'
-                    : 'bg-card border-border text-muted-foreground hover:bg-accent'
-                )}
-              >
-                <CheckCircle className="h-4 w-4" />
-                <span className="text-sm font-medium">Phase Seq</span>
-              </button>
-            </div>
+                <button
+                  type="button"
+                  onClick={() =>
+                    onUpdateBoard(
+                      board.id,
+                      'confirmedPhaseSequence',
+                      !board.confirmedPhaseSequence
+                    )
+                  }
+                  className={cn(
+                    'h-10 px-4 rounded-lg border flex items-center gap-2 cursor-pointer select-none',
+                    'transition-colors duration-150 touch-manipulation',
+                    board.confirmedPhaseSequence
+                      ? 'bg-green-500/20 border-green-500/50 text-green-400'
+                      : 'bg-card border-border text-muted-foreground hover:bg-accent'
+                  )}
+                >
+                  <CheckCircle className="h-4 w-4" />
+                  <span className="text-sm font-medium">Phase Seq</span>
+                </button>
+              </div>
 
-            {/* SPD Section - Row 2 */}
-            <div className={cn('flex items-center flex-wrap gap-2 mt-2', isMobile && 'gap-1.5')}>
+              {/* Divider — desktop only */}
+              {!isMobile && <div className="h-6 w-px bg-white/10" />}
+
+              {/* SPD Section */}
+              <div className={cn('flex items-center flex-wrap gap-2', isMobile && 'gap-1.5')}>
               <span className="text-xs text-white mr-1">SPD:</span>
 
               {/* SPD N/A */}
@@ -323,16 +342,15 @@ const BoardSection: React.FC<BoardSectionProps> = ({
                 onClick={(e) => {
                   e.preventDefault();
                   e.stopPropagation();
-                  console.log('[BoardSection] SPD N/A clicked, current value:', board.spdNA);
                   const newVal = !board.spdNA;
-                  console.log('[BoardSection] Setting spdNA to:', newVal);
-                  onUpdateBoard(board.id, 'spdNA', newVal);
-                  if (newVal) {
-                    onUpdateBoard(board.id, 'spdOperationalStatus', false);
-                    onUpdateBoard(board.id, 'spdT1', false);
-                    onUpdateBoard(board.id, 'spdT2', false);
-                    onUpdateBoard(board.id, 'spdT3', false);
-                  }
+                  onUpdateBoard(board.id, {
+                    spdNA: newVal,
+                    ...(newVal
+                      ? {
+                          spdOperationalStatus: false,
+                        }
+                      : {}),
+                  });
                 }}
                 className={cn(
                   'h-10 px-4 rounded-lg border flex items-center gap-2 cursor-pointer select-none',
@@ -353,46 +371,9 @@ const BoardSection: React.FC<BoardSectionProps> = ({
                 <span className="text-sm font-medium">N/A</span>
               </button>
 
-              {/* SPD Type T1, T2, T3 - only show when SPD is applicable */}
+              {/* SPD OK - only show when SPD is applicable */}
               {!board.spdNA && (
                 <>
-                  {(['T1', 'T2', 'T3'] as const).map((type) => {
-                    const fieldName = `spd${type}` as 'spdT1' | 'spdT2' | 'spdT3';
-                    const isChecked = board[fieldName] ?? false;
-                    return (
-                      <button
-                        key={type}
-                        type="button"
-                        onClick={(e) => {
-                          e.preventDefault();
-                          e.stopPropagation();
-                          console.log(`[BoardSection] SPD ${type} clicked, current:`, isChecked);
-                          onUpdateBoard(board.id, fieldName, !isChecked);
-                        }}
-                        className={cn(
-                          'h-10 px-4 rounded-lg border flex items-center gap-2 cursor-pointer select-none',
-                          'transition-colors duration-150 touch-manipulation',
-                          isChecked
-                            ? 'bg-blue-500/20 border-blue-500/50 text-blue-400'
-                            : 'bg-card border-border text-muted-foreground hover:bg-accent'
-                        )}
-                      >
-                        <div
-                          className={cn(
-                            'w-4 h-4 rounded border-2 flex items-center justify-center flex-shrink-0',
-                            isChecked ? 'bg-blue-500 border-blue-500' : 'border-muted-foreground'
-                          )}
-                        >
-                          {isChecked && <Check className="h-3 w-3 text-white" />}
-                        </div>
-                        <span className="text-sm font-medium">{type}</span>
-                      </button>
-                    );
-                  })}
-
-                  {/* Divider */}
-                  <div className="h-6 w-px bg-border mx-1" />
-
                   {/* SPD OK */}
                   <button
                     type="button"
@@ -418,6 +399,7 @@ const BoardSection: React.FC<BoardSectionProps> = ({
                   </button>
                 </>
               )}
+            </div>
             </div>
 
             {/* Tools Bar - Above Circuit Table (Desktop & Mobile) */}

@@ -83,10 +83,7 @@ export default function AnnouncementBanner() {
         .or(`ends_at.is.null,ends_at.gt.${now}`)
         .order('created_at', { ascending: false });
 
-      if (error) {
-        console.error('Error fetching announcements:', error);
-        return [];
-      }
+      if (error) return [];
 
       // Filter by user's role
       const userRole = profile?.role || 'visitor';
@@ -95,7 +92,9 @@ export default function AnnouncementBanner() {
       );
     },
     enabled: !!user,
-    refetchInterval: 60000, // Refresh every minute
+    refetchInterval: 5 * 60_000, // Every 5 minutes — announcements aren't urgent
+    staleTime: 2 * 60_000,
+    retry: 2,
   });
 
   // Fetch user's dismissed announcements
@@ -109,10 +108,7 @@ export default function AnnouncementBanner() {
         .select('announcement_id')
         .eq('user_id', user.id);
 
-      if (error) {
-        console.error('Error fetching dismissals:', error);
-        return [];
-      }
+      if (error) return [];
 
       return data?.map((d) => d.announcement_id) || [];
     },

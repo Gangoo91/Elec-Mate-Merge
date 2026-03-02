@@ -285,6 +285,7 @@ export const reportCloud = {
         inspection_date: data.inspectionDate || data.workDate || null,
         inspector_name: data.inspectorName || data.contractorName || null,
         data: data,
+        pdf_payload: null, // Clear stale formatted data — will be re-populated on next PDF generation
         last_synced_at: new Date().toISOString(),
       };
 
@@ -583,6 +584,7 @@ export const reportCloud = {
         inspection_date: data.inspectionDate || data.workDate || null,
         inspector_name: data.inspectorName || data.contractorName || null,
         data: data,
+        pdf_payload: null, // Clear stale formatted data — will be re-populated on next PDF generation
         last_synced_at: new Date().toISOString(),
       };
 

@@ -2575,42 +2575,6 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
                 </div>
               </div>
 
-              {/* Action Buttons Grid - matching EIC */}
-              <div className="grid grid-cols-6 gap-3">
-                <Button
-                  className="testing-action-primary col-span-2"
-                  onClick={() => (onOpenBoardScan ? onOpenBoardScan() : setShowBoardCapture(true))}
-                >
-                  <Camera className="h-4 w-4 mr-2" />
-                  AI Board Scan
-                </Button>
-                <Button className="testing-action-secondary" onClick={addTestResult}>
-                  <Zap className="h-4 w-4 mr-2" />
-                  Quick Add
-                </Button>
-                <Button
-                  className="testing-action-secondary"
-                  onClick={() => addCircuitToBoard(distributionBoards[0]?.id || 'main-cu')}
-                >
-                  <Plus className="h-4 w-4 mr-2" />
-                  Add Circuit
-                </Button>
-                <Button
-                  className="testing-action-secondary"
-                  onClick={() => setShowSmartAutoFillDialog(true)}
-                >
-                  <Sparkles className="h-4 w-4 mr-2" />
-                  Smart Fill
-                </Button>
-                <Button
-                  className="testing-action-secondary"
-                  onClick={() => setShowBulkInfillDialog(true)}
-                >
-                  <ClipboardCheck className="h-4 w-4 mr-2" />
-                  Bulk Infill
-                </Button>
-              </div>
-
               {/* Secondary Actions Row - matching EIC */}
               <div className="flex items-center justify-between mt-4 pt-4 border-t border-white/10">
                 <div className="flex gap-2">
@@ -2665,17 +2629,46 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
             </div>
           )}
 
-          {/* Table Container - SINGLE TABLE matching EIC structure */}
-          <div className="testing-table-container" data-autofill-section>
-            <EnhancedTestResultDesktopTable
-              testResults={testResults}
-              onUpdate={updateTestResult}
-              onRemove={removeTestResult}
-              allResults={testResults}
-              onBulkUpdate={handleBulkUpdate}
-              onAddCircuit={addTestResult}
-              onBulkFieldUpdate={handleBulkFieldUpdate}
-            />
+          {/* Board Management Header */}
+          <BoardManagement boards={distributionBoards} onAddBoard={handleAddBoard} />
+
+          {/* Distribution Boards with Circuit Tables */}
+          <div className="space-y-4" data-autofill-section>
+            {sortedBoards.map((board) => {
+              const { circuits: boardCircuits, completedCount: boardCompleted } = boardStats[
+                board.id
+              ] || {
+                circuits: [],
+                completedCount: 0,
+                progressPercent: 0,
+                isComplete: false,
+              };
+              return (
+                <BoardSection
+                  key={board.id}
+                  board={board}
+                  isExpanded={expandedBoards.has(board.id)}
+                  onToggleExpanded={() => toggleBoardExpanded(board.id)}
+                  onUpdateBoard={handleUpdateBoard}
+                  onRemoveBoard={handleRemoveBoard}
+                  onAddCircuit={() => addCircuitToBoard(board.id)}
+                  circuitCount={boardCircuits.length}
+                  completedCount={boardCompleted}
+                  showTools={true}
+                  tools={createBoardTools(board.id)}
+                >
+                  <EnhancedTestResultDesktopTable
+                    testResults={boardCircuits}
+                    onUpdate={updateTestResult}
+                    onRemove={removeTestResult}
+                    allResults={testResults}
+                    onBulkUpdate={handleBulkUpdate}
+                    onAddCircuit={() => addCircuitToBoard(board.id)}
+                    onBulkFieldUpdate={handleBulkFieldUpdate}
+                  />
+                </BoardSection>
+              );
+            })}
           </div>
         </div>
       )}

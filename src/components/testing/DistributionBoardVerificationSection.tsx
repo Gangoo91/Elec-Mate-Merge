@@ -128,6 +128,7 @@ const DistributionBoardVerificationSection: React.FC<DistributionBoardVerificati
                 id="spd-operational"
                 checked={data.spdOperationalStatus}
                 onCheckedChange={(checked) => onUpdate('spdOperationalStatus', checked === true)}
+                disabled={data.spdNA}
               />
               <span className="text-sm text-muted-foreground">Operational status confirmed</span>
             </label>
@@ -136,7 +137,10 @@ const DistributionBoardVerificationSection: React.FC<DistributionBoardVerificati
               <Checkbox
                 id="spd-na-checkbox"
                 checked={data.spdNA}
-                onCheckedChange={(checked) => onUpdate('spdNA', checked === true)}
+                onCheckedChange={(checked) => {
+                  onUpdate('spdNA', checked === true);
+                  if (checked) onUpdate('spdOperationalStatus', false);
+                }}
                 className="h-5 w-5 border-elec-yellow/50 data-[state=checked]:bg-amber-500 data-[state=checked]:border-amber-500"
               />
               <span className="text-sm text-foreground">SPD N/A</span>

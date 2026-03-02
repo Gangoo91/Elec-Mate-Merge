@@ -73,6 +73,12 @@ const EICRObservationsActions = ({
       // Format the data properly before sending to edge function
       const formattedData = await formatEICRJson(formData, reportIdToUse);
 
+      // Save formatted payload for email/reports page reuse
+      await supabase
+        .from('reports')
+        .update({ pdf_payload: formattedData })
+        .eq('report_id', reportIdToUse);
+
       // Create a timeout promise (20 seconds)
       const timeoutPromise = new Promise((_, reject) =>
         setTimeout(() => reject(new Error('TIMEOUT')), 20000)

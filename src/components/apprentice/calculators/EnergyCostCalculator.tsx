@@ -1,31 +1,31 @@
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, useMemo, useCallback } from 'react';
 import {
-  PoundSterling,
-  Info,
-  Calculator,
-  RotateCcw,
-  Zap,
-  Leaf,
-  Clock,
   Plus,
   Trash2,
   Home,
   Building,
   Factory,
-  BookOpen,
   ChevronDown,
+  Copy,
+  Check,
 } from 'lucide-react';
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { cn } from '@/lib/utils';
 import {
   CalculatorCard,
+  CalculatorSection,
   CalculatorInput,
+  CalculatorInputGrid,
   CalculatorSelect,
-  CalculatorResult,
+  CalculatorActions,
+  CalculatorDivider,
+  CalculatorFormula,
   ResultValue,
   ResultsGrid,
+  ResultBadge,
+  FormulaReference,
   CALCULATOR_CONFIG,
 } from '@/components/calculators/shared';
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { formatCurrency } from '@/lib/format';
 import {
   environmentPresets,
@@ -33,6 +33,10 @@ import {
   getAppliancesForCategory,
   type AppliancePreset,
 } from '@/data/presets';
+import { useToast } from '@/hooks/use-toast';
+
+const CAT = 'power' as const;
+const config = CALCULATOR_CONFIG[CAT];
 
 interface Appliance {
   id: string;
@@ -48,8 +52,169 @@ interface Appliance {
 
 type Environment = 'domestic' | 'commercial' | 'industrial';
 
+interface CalculationResult {
+  dailyCost: number;
+  weeklyCost: number;
+  monthlyCost: number;
+  yearlyCost: number;
+  dailyKWh: number;
+  weeklyKWh: number;
+  monthlyKWh: number;
+  yearlyKWh: number;
+  dailyCO2: number;
+  weeklyCO2: number;
+  monthlyCO2: number;
+  yearlyCO2: number;
+  costBreakdown: {
+    energyCost: number;
+    standingCharge: number;
+    vat: number;
+    total: number;
+  };
+  applianceBreakdown: Array<{
+    id: string;
+    name: string;
+    dailyKWh: number;
+    monthlyCost: number;
+    shareOfTotal: number;
+  }>;
+}
+
+/* ─── Appliance Card Sub-component ─── */
+const ApplianceCard = ({
+  appliance,
+  onUpdate,
+  onRemove,
+}: {
+  appliance: Appliance;
+  onUpdate: (id: string, updates: Partial<Appliance>) => void;
+  onRemove: (id: string) => void;
+}) => {
+  return (
+    <div className="p-3 rounded-xl bg-white/5 border border-white/10 space-y-3">
+      {/* Name and Remove */}
+      <div className="flex items-center gap-2">
+        <CalculatorInput
+          label="Name"
+          type="text"
+          value={appliance.name}
+          onChange={(v) => onUpdate(appliance.id, { name: v })}
+          placeholder="Appliance name"
+        />
+        <button
+          onClick={() => onRemove(appliance.id)}
+          className="h-11 w-11 flex items-center justify-center rounded-lg bg-red-500/10 border border-red-500/20 text-red-400 hover:bg-red-500/20 transition-colors touch-manipulation shrink-0 mt-5"
+        >
+          <Trash2 className="h-4 w-4" />
+        </button>
+      </div>
+
+      {/* Power, Standby, Quantity */}
+      <CalculatorInputGrid columns={3}>
+        <CalculatorInput
+          label="Power"
+          unit="W"
+          type="text"
+          inputMode="decimal"
+          value={appliance.powerW?.toString() ?? ''}
+          onChange={(v) => onUpdate(appliance.id, { powerW: parseFloat(v) || 0 })}
+          placeholder="0"
+        />
+        <CalculatorInput
+          label="Standby"
+          unit="W"
+          type="text"
+          inputMode="decimal"
+          value={appliance.standbyW?.toString() ?? ''}
+          onChange={(v) => onUpdate(appliance.id, { standbyW: parseFloat(v) || 0 })}
+          placeholder="0"
+        />
+        <CalculatorInput
+          label="Qty"
+          type="text"
+          inputMode="numeric"
+          value={appliance.quantity?.toString() ?? ''}
+          onChange={(v) => onUpdate(appliance.id, { quantity: parseInt(v) || 1 })}
+          placeholder="1"
+        />
+      </CalculatorInputGrid>
+
+      {/* Usage Mode Toggle */}
+      <div className="grid grid-cols-2 gap-2">
+        <button
+          onClick={() => onUpdate(appliance.id, { usageMode: 'hoursPerDay' })}
+          className={cn(
+            'h-11 rounded-lg text-xs font-medium transition-all touch-manipulation border',
+            appliance.usageMode === 'hoursPerDay'
+              ? 'bg-white/10 text-white'
+              : 'bg-white/5 border-white/10 text-white hover:bg-white/[0.07]'
+          )}
+          style={
+            appliance.usageMode === 'hoursPerDay'
+              ? { borderColor: config.gradientFrom }
+              : undefined
+          }
+        >
+          Hours/day
+        </button>
+        <button
+          onClick={() => onUpdate(appliance.id, { usageMode: 'cyclesPerWeek' })}
+          className={cn(
+            'h-11 rounded-lg text-xs font-medium transition-all touch-manipulation border',
+            appliance.usageMode === 'cyclesPerWeek'
+              ? 'bg-white/10 text-white'
+              : 'bg-white/5 border-white/10 text-white hover:bg-white/[0.07]'
+          )}
+          style={
+            appliance.usageMode === 'cyclesPerWeek'
+              ? { borderColor: config.gradientFrom }
+              : undefined
+          }
+        >
+          Cycles/week
+        </button>
+      </div>
+
+      {/* Usage Input */}
+      {appliance.usageMode === 'hoursPerDay' ? (
+        <CalculatorInput
+          label="Hours per day"
+          unit="hrs"
+          type="text"
+          inputMode="decimal"
+          value={appliance.hoursPerDay?.toString() ?? ''}
+          onChange={(v) => onUpdate(appliance.id, { hoursPerDay: parseFloat(v) || 0 })}
+          placeholder="e.g., 4"
+        />
+      ) : (
+        <CalculatorInputGrid columns={2}>
+          <CalculatorInput
+            label="Cycle duration"
+            unit="hrs"
+            type="text"
+            inputMode="decimal"
+            value={appliance.cycleHours?.toString() ?? ''}
+            onChange={(v) => onUpdate(appliance.id, { cycleHours: parseFloat(v) || 0 })}
+            placeholder="1.5"
+          />
+          <CalculatorInput
+            label="Cycles/week"
+            type="text"
+            inputMode="numeric"
+            value={appliance.cyclesPerWeek?.toString() ?? ''}
+            onChange={(v) => onUpdate(appliance.id, { cyclesPerWeek: parseInt(v) || 0 })}
+            placeholder="7"
+          />
+        </CalculatorInputGrid>
+      )}
+    </div>
+  );
+};
+
+/* ─── Main Component ─── */
 const EnergyCostCalculator = () => {
-  const config = CALCULATOR_CONFIG['power'];
+  const { toast } = useToast();
+  const [copied, setCopied] = useState(false);
 
   const [environment, setEnvironment] = useState<Environment>('domestic');
   const [selectedCategory, setSelectedCategory] = useState<string>('');
@@ -62,35 +227,9 @@ const EnergyCostCalculator = () => {
   const [useDualRate, setUseDualRate] = useState<boolean>(false);
   const [showGuidance, setShowGuidance] = useState(false);
   const [showReference, setShowReference] = useState(false);
-  const [result, setResult] = useState<{
-    dailyCost: number;
-    weeklyCost: number;
-    monthlyCost: number;
-    yearlyCost: number;
-    dailyKWh: number;
-    weeklyKWh: number;
-    monthlyKWh: number;
-    yearlyKWh: number;
-    dailyCO2: number;
-    weeklyCO2: number;
-    monthlyCO2: number;
-    yearlyCO2: number;
-    costBreakdown: {
-      energyCost: number;
-      standingCharge: number;
-      vat: number;
-      total: number;
-    };
-    applianceBreakdown: Array<{
-      id: string;
-      name: string;
-      dailyKWh: number;
-      monthlyCost: number;
-      shareOfTotal: number;
-    }>;
-  } | null>(null);
+  const [result, setResult] = useState<CalculationResult | null>(null);
 
-  // Load state from localStorage on mount
+  // ── localStorage persistence ──
   useEffect(() => {
     const savedAppliances = localStorage.getItem('energyCost.appliances');
     const savedEnvironment = localStorage.getItem('energyCost.environment');
@@ -118,7 +257,6 @@ const EnergyCostCalculator = () => {
     }
   }, []);
 
-  // Save state to localStorage when they change
   useEffect(() => {
     localStorage.setItem('energyCost.appliances', JSON.stringify(appliances));
   }, [appliances]);
@@ -131,12 +269,12 @@ const EnergyCostCalculator = () => {
     localStorage.setItem('energyCost.category', selectedCategory);
   }, [selectedCategory]);
 
-  // Reset category when environment changes
   useEffect(() => {
     setSelectedCategory('');
   }, [environment]);
 
-  const calculateApplianceCosts = useMemo(() => {
+  // ── Calculation Logic ──
+  const calculateApplianceCosts = useMemo((): CalculationResult | null => {
     const dayRatePerKWh = parseFloat(dayRate);
     const nightRatePerKWh = parseFloat(nightRate);
     const nightHoursPerDay = parseFloat(nightHours);
@@ -148,16 +286,9 @@ const EnergyCostCalculator = () => {
     const co2Factor = 0.233;
     let totalDailyKWh = 0;
     let totalDailyEnergyCost = 0;
-    const applianceBreakdown: Array<{
-      id: string;
-      name: string;
-      dailyKWh: number;
-      monthlyCost: number;
-      shareOfTotal: number;
-    }> = [];
+    const applianceBreakdown: CalculationResult['applianceBreakdown'] = [];
 
     appliances.forEach((appliance) => {
-      // Calculate hours per day
       let hoursPerDay = 0;
       if (appliance.usageMode === 'hoursPerDay') {
         hoursPerDay = appliance.hoursPerDay || 0;
@@ -165,13 +296,11 @@ const EnergyCostCalculator = () => {
         hoursPerDay = ((appliance.cycleHours || 0) * (appliance.cyclesPerWeek || 0)) / 7;
       }
 
-      // Calculate energy consumption
       const activeKWhPerDay = (appliance.powerW * appliance.quantity * hoursPerDay) / 1000;
       const standbyKWhPerDay =
         (appliance.standbyW * appliance.quantity * (24 - hoursPerDay)) / 1000;
       const totalApplianceKWh = activeKWhPerDay + standbyKWhPerDay;
 
-      // Calculate energy cost
       let applianceEnergyCost;
       if (useDualRate && nightHoursPerDay > 0) {
         const dayHours = Math.max(0, hoursPerDay - nightHoursPerDay);
@@ -198,13 +327,11 @@ const EnergyCostCalculator = () => {
       });
     });
 
-    // Calculate shares
     applianceBreakdown.forEach((item) => {
       item.shareOfTotal =
         totalDailyEnergyCost > 0 ? (item.monthlyCost / (totalDailyEnergyCost * 30.44)) * 100 : 0;
     });
 
-    // Sort by monthly cost descending
     applianceBreakdown.sort((a, b) => b.monthlyCost - a.monthlyCost);
 
     const dailyTotal = totalDailyEnergyCost + dailyStandingCharge;
@@ -239,37 +366,40 @@ const EnergyCostCalculator = () => {
     setResult(calculateApplianceCosts);
   };
 
-  const addAppliance = (presetKey?: string) => {
-    let preset: AppliancePreset | null = null;
+  const addAppliance = useCallback(
+    (presetKey?: string) => {
+      let preset: AppliancePreset | null = null;
 
-    if (presetKey) {
-      const categoryAppliances = selectedCategory
-        ? getAppliancesForCategory(environment, selectedCategory)
-        : {};
-      preset = categoryAppliances[presetKey] || null;
-    }
+      if (presetKey) {
+        const categoryAppliances = selectedCategory
+          ? getAppliancesForCategory(environment, selectedCategory)
+          : {};
+        preset = categoryAppliances[presetKey] || null;
+      }
 
-    const newAppliance: Appliance = {
-      id: Date.now().toString(),
-      name: preset?.name || 'Custom Appliance',
-      quantity: 1,
-      powerW: preset?.powerW || 0,
-      standbyW: preset?.standbyW || 0,
-      usageMode: preset?.usageMode || 'hoursPerDay',
-      hoursPerDay: preset?.hoursPerDay,
-      cycleHours: preset?.cycleHours,
-      cyclesPerWeek: preset?.cyclesPerWeek,
-    };
-    setAppliances([...appliances, newAppliance]);
-  };
+      const newAppliance: Appliance = {
+        id: Date.now().toString(),
+        name: preset?.name || 'Custom Appliance',
+        quantity: 1,
+        powerW: preset?.powerW || 0,
+        standbyW: preset?.standbyW || 0,
+        usageMode: preset?.usageMode || 'hoursPerDay',
+        hoursPerDay: preset?.hoursPerDay,
+        cycleHours: preset?.cycleHours,
+        cyclesPerWeek: preset?.cyclesPerWeek,
+      };
+      setAppliances((prev) => [...prev, newAppliance]);
+    },
+    [environment, selectedCategory]
+  );
 
-  const updateAppliance = (id: string, updates: Partial<Appliance>) => {
-    setAppliances(appliances.map((a) => (a.id === id ? { ...a, ...updates } : a)));
-  };
+  const updateAppliance = useCallback((id: string, updates: Partial<Appliance>) => {
+    setAppliances((prev) => prev.map((a) => (a.id === id ? { ...a, ...updates } : a)));
+  }, []);
 
-  const removeAppliance = (id: string) => {
-    setAppliances(appliances.filter((a) => a.id !== id));
-  };
+  const removeAppliance = useCallback((id: string) => {
+    setAppliances((prev) => prev.filter((a) => a.id !== id));
+  }, []);
 
   const reset = () => {
     setEnvironment('domestic');
@@ -284,18 +414,31 @@ const EnergyCostCalculator = () => {
     setResult(null);
   };
 
-  // Get available categories for current environment
+  const handleCopy = () => {
+    if (!result) return;
+    const text = [
+      `Annual Energy Cost: ${formatCurrency(result.yearlyCost)}`,
+      `Monthly: ${formatCurrency(result.monthlyCost)}`,
+      `Daily: ${formatCurrency(result.dailyCost)}`,
+      `Annual kWh: ${result.yearlyKWh.toFixed(0)}`,
+      `Annual CO₂: ${result.yearlyCO2.toFixed(0)} kg`,
+    ].join('\n');
+    navigator.clipboard.writeText(text);
+    setCopied(true);
+    toast({ title: 'Copied to clipboard' });
+    setTimeout(() => setCopied(false), 2000);
+  };
+
+  // ── Derived data ──
   const availableCategories = useMemo(() => {
     return getCategoriesForEnvironment(environment);
   }, [environment]);
 
-  // Get available appliances for current environment and category
   const availableAppliances = useMemo(() => {
     if (!selectedCategory) return {};
     return getAppliancesForCategory(environment, selectedCategory);
   }, [environment, selectedCategory]);
 
-  // Environment options
   const environmentOptions = [
     { key: 'domestic' as const, label: 'Domestic', icon: Home },
     { key: 'commercial' as const, label: 'Commercial', icon: Building },
@@ -312,300 +455,173 @@ const EnergyCostCalculator = () => {
     label: preset.name,
   }));
 
+  // Result status badge
+  const getResultStatus = (): { status: 'pass' | 'warning' | 'fail'; label: string } => {
+    if (!result) return { status: 'pass', label: '' };
+    if (result.yearlyCost > 5000) return { status: 'fail', label: 'High Cost' };
+    if (result.yearlyCost > 2000) return { status: 'warning', label: 'Moderate Cost' };
+    return { status: 'pass', label: 'Low Cost' };
+  };
+
+  // Formula steps for display
+  const formulaSteps = useMemo(() => {
+    if (!result) return [];
+    return [
+      {
+        label: 'Energy per appliance',
+        formula: 'kWh = (Power × Hours × Quantity) ÷ 1000',
+        value: `Total: ${result.dailyKWh.toFixed(2)} kWh/day`,
+      },
+      {
+        label: 'Apply tariff rate',
+        formula: `${result.dailyKWh.toFixed(2)} kWh × £${dayRate}/kWh`,
+        value: `Energy cost: ${formatCurrency(result.costBreakdown.energyCost)}/day`,
+      },
+      {
+        label: 'Add standing charge',
+        formula: `${formatCurrency(result.costBreakdown.energyCost)} + £${standingCharge}`,
+        value: `Subtotal: ${formatCurrency(result.costBreakdown.energyCost + result.costBreakdown.standingCharge)}/day`,
+      },
+      {
+        label: 'Apply VAT',
+        formula: `Subtotal × ${vatRate}%`,
+        value: `Total: ${formatCurrency(result.costBreakdown.total)}/day`,
+      },
+    ];
+  }, [result, dayRate, standingCharge, vatRate]);
+
   return (
-    <div className="space-y-4">
-      <CalculatorCard
-        category="power"
-        title="Energy Cost Calculator"
-        description="Calculate electricity costs for appliances based on UK rates"
-        badge="£/kWh"
-      >
-        {/* Environment Selection */}
-        <div className="space-y-3">
-          <p className="text-sm text-white/60">Choose your environment</p>
-          <div className="grid grid-cols-3 gap-2">
-            {environmentOptions.map((env) => {
-              const Icon = env.icon;
-              return (
-                <button
-                  key={env.key}
-                  onClick={() => setEnvironment(env.key)}
-                  className={cn(
-                    'flex flex-col items-center gap-1.5 p-3 rounded-xl font-medium text-sm transition-all touch-manipulation',
-                    environment === env.key
-                      ? 'text-black'
-                      : 'bg-white/5 border border-white/10 text-white/70 hover:bg-white/10'
-                  )}
-                  style={
-                    environment === env.key
-                      ? {
-                          background: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})`,
-                        }
-                      : undefined
-                  }
-                >
-                  <Icon className="h-5 w-5" />
-                  <span className="text-xs">{env.label}</span>
-                </button>
-              );
-            })}
-          </div>
+    <CalculatorCard
+      category={CAT}
+      title="Energy Cost Calculator"
+      description="Calculate electricity costs for appliances based on UK rates"
+    >
+      {/* ── Environment Selection ── */}
+      <CalculatorSection title="Environment">
+        <div className="grid grid-cols-3 gap-2">
+          {environmentOptions.map((env) => {
+            const Icon = env.icon;
+            const selected = environment === env.key;
+            return (
+              <button
+                key={env.key}
+                onClick={() => setEnvironment(env.key)}
+                className={cn(
+                  'flex flex-col items-center gap-1.5 p-3 rounded-xl font-medium text-sm transition-all touch-manipulation min-h-[44px]',
+                  selected
+                    ? 'text-black'
+                    : 'bg-white/5 border border-white/10 text-white hover:bg-white/[0.07]'
+                )}
+                style={
+                  selected
+                    ? {
+                        background: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})`,
+                      }
+                    : undefined
+                }
+              >
+                <Icon className="h-5 w-5" />
+                <span className="text-xs">{env.label}</span>
+              </button>
+            );
+          })}
         </div>
+      </CalculatorSection>
 
-        {/* Category Selection */}
-        {categoryOptions.length > 0 && (
-          <CalculatorSelect
-            label="Appliance Category"
-            value={selectedCategory}
-            onChange={setSelectedCategory}
-            options={categoryOptions}
-            placeholder="Select category..."
-          />
-        )}
-      </CalculatorCard>
+      {/* ── Appliance Category ── */}
+      {categoryOptions.length > 0 && (
+        <CalculatorSelect
+          label="Appliance Category"
+          value={selectedCategory}
+          onChange={setSelectedCategory}
+          options={categoryOptions}
+          placeholder="Select category..."
+        />
+      )}
 
-      {/* Appliances Section */}
-      <div className="calculator-card p-4 space-y-4">
-        <div className="flex items-center gap-2">
-          <Zap className="h-5 w-5 text-amber-400" />
-          <h3 className="font-semibold text-white">Your Appliances</h3>
-        </div>
+      <CalculatorDivider category={CAT} />
 
+      {/* ── Your Appliances ── */}
+      <CalculatorSection title="Your Appliances">
         {appliances.length === 0 ? (
-          <div className="text-center py-8 text-white/80">
-            <Clock className="h-10 w-10 mx-auto mb-3 opacity-50" />
-            <p className="text-sm">Add appliances to calculate costs</p>
+          <div className="text-center py-8">
+            <p className="text-sm text-white">Add appliances to calculate costs</p>
           </div>
         ) : (
           <div className="space-y-3">
             {appliances.map((appliance) => (
-              <div
+              <ApplianceCard
                 key={appliance.id}
-                className="p-3 rounded-xl bg-white/5 border border-white/10 space-y-3"
-              >
-                {/* Name and Remove */}
-                <div className="flex items-center gap-2">
-                  <input
-                    type="text"
-                    value={appliance.name}
-                    onChange={(e) => updateAppliance(appliance.id, { name: e.target.value })}
-                    className="flex-1 h-10 px-3 rounded-lg bg-white/5 border border-white/10 text-white text-base placeholder:text-white/30 focus:outline-none focus:border-amber-400/50"
-                    placeholder="Appliance name"
-                  />
-                  <button
-                    onClick={() => removeAppliance(appliance.id)}
-                    className="h-10 w-10 flex items-center justify-center rounded-lg bg-red-500/10 border border-red-500/20 text-red-400 hover:bg-red-500/20 transition-colors touch-manipulation"
-                  >
-                    <Trash2 className="h-4 w-4" />
-                  </button>
-                </div>
-
-                {/* Power, Standby, Quantity */}
-                <div className="grid grid-cols-3 gap-2">
-                  <div>
-                    <label className="text-xs text-white/80 mb-1 block">Power</label>
-                    <div className="flex items-center">
-                      <input
-                        type="text"
-                        inputMode="decimal"
-                        value={appliance.powerW?.toString() ?? ''}
-                        onChange={(e) =>
-                          updateAppliance(appliance.id, {
-                            powerW: parseFloat(e.target.value) || 0,
-                          })
-                        }
-                        className="w-full h-9 px-2 rounded-lg bg-white/5 border border-white/10 text-white text-sm focus:outline-none focus:border-amber-400/50"
-                        placeholder="0"
-                      />
-                      <span className="text-xs text-white/80 ml-1">W</span>
-                    </div>
-                  </div>
-                  <div>
-                    <label className="text-xs text-white/80 mb-1 block">Standby</label>
-                    <div className="flex items-center">
-                      <input
-                        type="text"
-                        inputMode="decimal"
-                        value={appliance.standbyW?.toString() ?? ''}
-                        onChange={(e) =>
-                          updateAppliance(appliance.id, {
-                            standbyW: parseFloat(e.target.value) || 0,
-                          })
-                        }
-                        className="w-full h-9 px-2 rounded-lg bg-white/5 border border-white/10 text-white text-sm focus:outline-none focus:border-amber-400/50"
-                        placeholder="0"
-                      />
-                      <span className="text-xs text-white/80 ml-1">W</span>
-                    </div>
-                  </div>
-                  <div>
-                    <label className="text-xs text-white/80 mb-1 block">Qty</label>
-                    <input
-                      type="text"
-                      inputMode="numeric"
-                      value={appliance.quantity?.toString() ?? ''}
-                      onChange={(e) =>
-                        updateAppliance(appliance.id, {
-                          quantity: parseInt(e.target.value) || 1,
-                        })
-                      }
-                      className="w-full h-9 px-2 rounded-lg bg-white/5 border border-white/10 text-white text-sm focus:outline-none focus:border-amber-400/50"
-                      placeholder="1"
-                    />
-                  </div>
-                </div>
-
-                {/* Usage Mode */}
-                <div className="grid grid-cols-2 gap-2">
-                  <button
-                    onClick={() => updateAppliance(appliance.id, { usageMode: 'hoursPerDay' })}
-                    className={cn(
-                      'h-9 rounded-lg text-xs font-medium transition-all touch-manipulation',
-                      appliance.usageMode === 'hoursPerDay'
-                        ? 'bg-amber-400/20 border border-amber-400/40 text-amber-300'
-                        : 'bg-white/5 border border-white/10 text-white/60'
-                    )}
-                  >
-                    Hours/day
-                  </button>
-                  <button
-                    onClick={() => updateAppliance(appliance.id, { usageMode: 'cyclesPerWeek' })}
-                    className={cn(
-                      'h-9 rounded-lg text-xs font-medium transition-all touch-manipulation',
-                      appliance.usageMode === 'cyclesPerWeek'
-                        ? 'bg-amber-400/20 border border-amber-400/40 text-amber-300'
-                        : 'bg-white/5 border border-white/10 text-white/60'
-                    )}
-                  >
-                    Cycles/week
-                  </button>
-                </div>
-
-                {/* Usage Input */}
-                {appliance.usageMode === 'hoursPerDay' ? (
-                  <div>
-                    <label className="text-xs text-white/80 mb-1 block">Hours per day</label>
-                    <div className="flex items-center">
-                      <input
-                        type="text"
-                        inputMode="decimal"
-                        value={appliance.hoursPerDay?.toString() ?? ''}
-                        onChange={(e) =>
-                          updateAppliance(appliance.id, {
-                            hoursPerDay: parseFloat(e.target.value) || 0,
-                          })
-                        }
-                        className="w-full h-9 px-2 rounded-lg bg-white/5 border border-white/10 text-white text-sm focus:outline-none focus:border-amber-400/50"
-                        placeholder="e.g., 4"
-                      />
-                      <span className="text-xs text-white/80 ml-2">hrs</span>
-                    </div>
-                  </div>
-                ) : (
-                  <div className="grid grid-cols-2 gap-2">
-                    <div>
-                      <label className="text-xs text-white/80 mb-1 block">Cycle duration</label>
-                      <div className="flex items-center">
-                        <input
-                          type="text"
-                          inputMode="decimal"
-                          value={appliance.cycleHours?.toString() ?? ''}
-                          onChange={(e) =>
-                            updateAppliance(appliance.id, {
-                              cycleHours: parseFloat(e.target.value) || 0,
-                            })
-                          }
-                          className="w-full h-9 px-2 rounded-lg bg-white/5 border border-white/10 text-white text-sm focus:outline-none focus:border-amber-400/50"
-                          placeholder="1.5"
-                        />
-                        <span className="text-xs text-white/80 ml-1">hrs</span>
-                      </div>
-                    </div>
-                    <div>
-                      <label className="text-xs text-white/80 mb-1 block">Cycles/week</label>
-                      <input
-                        type="text"
-                        inputMode="numeric"
-                        value={appliance.cyclesPerWeek?.toString() ?? ''}
-                        onChange={(e) =>
-                          updateAppliance(appliance.id, {
-                            cyclesPerWeek: parseInt(e.target.value) || 0,
-                          })
-                        }
-                        className="w-full h-9 px-2 rounded-lg bg-white/5 border border-white/10 text-white text-sm focus:outline-none focus:border-amber-400/50"
-                        placeholder="7"
-                      />
-                    </div>
-                  </div>
-                )}
-              </div>
+                appliance={appliance}
+                onUpdate={updateAppliance}
+                onRemove={removeAppliance}
+              />
             ))}
           </div>
         )}
 
-        {/* Add Appliance */}
+        {/* Add Appliance Row */}
         <div className="flex gap-2">
           {selectedCategory && applianceOptions.length > 0 && (
             <div className="flex-1">
-              <select
-                onChange={(e) => {
-                  if (e.target.value) addAppliance(e.target.value);
-                  e.target.value = '';
+              <CalculatorSelect
+                label="Add preset"
+                value=""
+                onChange={(v) => {
+                  if (v) addAppliance(v);
                 }}
-                className="w-full h-12 px-3 rounded-xl bg-white/5 border border-white/10 text-white text-sm focus:outline-none focus:border-amber-400/50"
-                defaultValue=""
-              >
-                <option value="" disabled>
-                  Add preset appliance...
-                </option>
-                {applianceOptions.map((opt) => (
-                  <option key={opt.value} value={opt.value}>
-                    {opt.label}
-                  </option>
-                ))}
-              </select>
+                options={applianceOptions}
+                placeholder="Add preset appliance..."
+              />
             </div>
           )}
           <button
             onClick={() => addAppliance()}
-            className="h-12 px-4 flex items-center justify-center gap-2 rounded-xl bg-white/5 border border-white/10 text-white/80 hover:bg-white/10 transition-colors touch-manipulation"
+            className="h-11 px-4 flex items-center justify-center gap-2 rounded-xl bg-white/5 border border-white/10 text-white hover:bg-white/10 transition-colors touch-manipulation mt-5 shrink-0"
           >
             <Plus className="h-4 w-4" />
             <span className="text-sm">Custom</span>
           </button>
         </div>
-      </div>
+      </CalculatorSection>
 
-      {/* Tariff Section */}
-      <div className="calculator-card p-4 space-y-4">
-        <div className="flex items-center gap-2">
-          <PoundSterling className="h-5 w-5 text-amber-400" />
-          <h3 className="font-semibold text-white">Tariff & Charges</h3>
-        </div>
+      <CalculatorDivider category={CAT} />
 
+      {/* ── Tariff & Charges ── */}
+      <CalculatorSection title="Tariff & Charges">
         {/* Dual Rate Toggle */}
-        <label className="flex items-center gap-3 p-3 rounded-xl bg-white/5 border border-white/10 cursor-pointer hover:bg-white/10 active:bg-white/15 transition-all touch-manipulation">
-          <input
-            type="checkbox"
-            checked={useDualRate}
-            onChange={(e) => setUseDualRate(e.target.checked)}
-            className="rounded border-white/20 bg-white/10 text-amber-400 focus:ring-amber-400/50"
-          />
-          <span className="text-sm text-white/80">Use dual rate tariff (Economy 7/10)</span>
+        <label
+          className={cn(
+            'flex items-center gap-3 p-3.5 rounded-xl cursor-pointer transition-all touch-manipulation min-h-[44px] border',
+            useDualRate
+              ? 'bg-white/10'
+              : 'bg-white/5 border-white/10 hover:bg-white/[0.07]'
+          )}
+          style={useDualRate ? { borderColor: config.gradientFrom } : undefined}
+        >
+          <div
+            className={cn(
+              'flex items-center justify-center h-5 w-5 rounded border-2 shrink-0 transition-all',
+              useDualRate ? 'border-transparent' : 'border-white/20 bg-white/10'
+            )}
+            style={useDualRate ? { backgroundColor: config.gradientFrom } : undefined}
+          >
+            {useDualRate && <Check className="h-3.5 w-3.5 text-black" />}
+          </div>
+          <span className="text-sm text-white">Use dual rate tariff (Economy 7/10)</span>
         </label>
 
-        <CalculatorInput
-          label={useDualRate ? 'Day Rate' : 'Rate'}
-          unit="£/kWh"
-          type="text"
-          inputMode="decimal"
-          value={dayRate}
-          onChange={setDayRate}
-          placeholder="e.g., 0.30"
-        />
-
-        {useDualRate && (
-          <>
+        <CalculatorInputGrid columns={2}>
+          <CalculatorInput
+            label={useDualRate ? 'Day Rate' : 'Rate'}
+            unit="£/kWh"
+            type="text"
+            inputMode="decimal"
+            value={dayRate}
+            onChange={setDayRate}
+            placeholder="e.g., 0.30"
+          />
+          {useDualRate && (
             <CalculatorInput
               label="Night Rate"
               unit="£/kWh"
@@ -615,312 +631,279 @@ const EnergyCostCalculator = () => {
               onChange={setNightRate}
               placeholder="e.g., 0.15"
             />
-            <CalculatorInput
-              label="Night Hours"
-              unit="hrs/day"
-              type="text"
-              inputMode="decimal"
-              value={nightHours}
-              onChange={setNightHours}
-              placeholder="e.g., 7"
-              hint="Hours per day on cheaper night rate"
-            />
-          </>
+          )}
+        </CalculatorInputGrid>
+
+        {useDualRate && (
+          <CalculatorInput
+            label="Night Hours"
+            unit="hrs/day"
+            type="text"
+            inputMode="decimal"
+            value={nightHours}
+            onChange={setNightHours}
+            placeholder="e.g., 7"
+            hint="Hours per day on cheaper night rate"
+          />
         )}
 
-        <CalculatorInput
-          label="Standing Charge"
-          unit="£/day"
-          type="text"
-          inputMode="decimal"
-          value={standingCharge}
-          onChange={setStandingCharge}
-          placeholder="e.g., 0.60"
-        />
+        <CalculatorInputGrid columns={2}>
+          <CalculatorInput
+            label="Standing Charge"
+            unit="£/day"
+            type="text"
+            inputMode="decimal"
+            value={standingCharge}
+            onChange={setStandingCharge}
+            placeholder="e.g., 0.60"
+          />
+          <CalculatorInput
+            label="VAT Rate"
+            unit="%"
+            type="text"
+            inputMode="decimal"
+            value={vatRate}
+            onChange={setVatRate}
+            placeholder="5"
+            hint="Usually 5% for domestic energy"
+          />
+        </CalculatorInputGrid>
+      </CalculatorSection>
 
-        <CalculatorInput
-          label="VAT Rate"
-          unit="%"
-          type="text"
-          inputMode="decimal"
-          value={vatRate}
-          onChange={setVatRate}
-          placeholder="5"
-          hint="Usually 5% for domestic energy"
-        />
+      {/* ── Actions ── */}
+      <CalculatorActions
+        category={CAT}
+        onCalculate={calculateResults}
+        onReset={reset}
+        isDisabled={appliances.length === 0}
+        calculateLabel="Calculate Costs"
+        showReset={appliances.length > 0}
+      />
 
-        {/* Action Buttons */}
-        <div className="flex gap-2 pt-2">
-          <button
-            onClick={calculateResults}
-            disabled={appliances.length === 0}
-            className={cn(
-              'flex-1 h-14 rounded-xl font-semibold text-base flex items-center justify-center gap-2 transition-all touch-manipulation',
-              appliances.length > 0 ? 'text-black' : 'bg-white/10 text-white/30 cursor-not-allowed'
-            )}
-            style={
-              appliances.length > 0
-                ? {
-                    background: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})`,
-                  }
-                : undefined
-            }
-          >
-            <Calculator className="h-5 w-5" />
-            Calculate Costs
-          </button>
-          <button
-            onClick={reset}
-            className="h-14 px-4 flex items-center justify-center rounded-xl bg-white/5 border border-white/10 text-white/60 hover:bg-white/10 transition-colors touch-manipulation"
-          >
-            <RotateCcw className="h-5 w-5" />
-          </button>
-        </div>
-      </div>
-
-      {/* Results Section */}
+      {/* ── Results ── */}
       {result && (
-        <div className="space-y-4 animate-fade-in">
-          {/* Summary Header */}
-          <CalculatorResult category="power">
-            <div className="text-center pb-4 border-b border-white/10">
-              <p className="text-sm text-white/60 mb-1">Annual Energy Cost</p>
-              <div
+        <>
+          <CalculatorDivider category={CAT} />
+
+          <div className="space-y-4 animate-fade-in">
+            {/* Status + Copy */}
+            <div className="flex items-center justify-between">
+              <ResultBadge status={getResultStatus().status} label={getResultStatus().label} />
+              <button
+                onClick={handleCopy}
+                className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 text-white text-xs font-medium transition-colors touch-manipulation min-h-[44px]"
+              >
+                {copied ? <Check className="h-3.5 w-3.5" /> : <Copy className="h-3.5 w-3.5" />}
+                {copied ? 'Copied' : 'Copy'}
+              </button>
+            </div>
+
+            {/* Hero value */}
+            <div className="text-center py-3">
+              <p className="text-sm font-medium text-white mb-1">Annual Energy Cost</p>
+              <p
                 className="text-4xl font-bold bg-clip-text text-transparent"
                 style={{
                   backgroundImage: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})`,
                 }}
               >
                 {formatCurrency(result.yearlyCost)}
-              </div>
-              <div className="flex flex-wrap justify-center gap-2 mt-3">
-                <span className="px-2 py-1 rounded-lg bg-white/5 text-xs text-white/60">
-                  {result.yearlyKWh.toFixed(0)} kWh/year
-                </span>
-                <span className="px-2 py-1 rounded-lg bg-green-500/10 text-xs text-green-400">
-                  {result.yearlyCO2.toFixed(0)} kg CO₂/year
-                </span>
-              </div>
+              </p>
+              <p className="text-sm text-white mt-2">
+                {result.yearlyKWh.toFixed(0)} kWh/year
+              </p>
             </div>
 
+            {/* Cost breakdown */}
             <ResultsGrid columns={2}>
               <ResultValue
                 label="Daily Cost"
                 value={formatCurrency(result.dailyCost)}
-                category="power"
+                category={CAT}
                 size="sm"
               />
               <ResultValue
                 label="Weekly Cost"
                 value={formatCurrency(result.weeklyCost)}
-                category="power"
+                category={CAT}
                 size="sm"
               />
               <ResultValue
                 label="Monthly Cost"
                 value={formatCurrency(result.monthlyCost)}
-                category="power"
+                category={CAT}
                 size="sm"
               />
               <ResultValue
                 label="Annual Cost"
                 value={formatCurrency(result.yearlyCost)}
-                category="power"
+                category={CAT}
                 size="sm"
               />
             </ResultsGrid>
-          </CalculatorResult>
 
-          {/* Energy Consumption */}
-          <div className="calculator-card p-4 space-y-3">
-            <div className="flex items-center gap-2">
-              <Zap className="h-4 w-4 text-amber-400" />
-              <span className="text-sm font-medium text-white/80">Energy Usage</span>
-            </div>
-            <div className="grid grid-cols-2 gap-2">
-              <div className="p-3 rounded-lg bg-white/5">
-                <p className="text-xs text-white/80">Daily</p>
-                <p className="text-lg font-semibold text-white">
-                  {result.dailyKWh.toFixed(2)} <span className="text-sm text-white/80">kWh</span>
-                </p>
-              </div>
-              <div className="p-3 rounded-lg bg-white/5">
-                <p className="text-xs text-white/80">Weekly</p>
-                <p className="text-lg font-semibold text-white">
-                  {result.weeklyKWh.toFixed(1)} <span className="text-sm text-white/80">kWh</span>
-                </p>
-              </div>
-              <div className="p-3 rounded-lg bg-white/5">
-                <p className="text-xs text-white/80">Monthly</p>
-                <p className="text-lg font-semibold text-white">
-                  {result.monthlyKWh.toFixed(0)} <span className="text-sm text-white/80">kWh</span>
-                </p>
-              </div>
-              <div className="p-3 rounded-lg bg-white/5">
-                <p className="text-xs text-white/80">Yearly</p>
-                <p className="text-lg font-semibold text-white">
-                  {result.yearlyKWh.toFixed(0)} <span className="text-sm text-white/80">kWh</span>
-                </p>
-              </div>
-            </div>
-          </div>
+            <CalculatorDivider category={CAT} />
 
-          {/* Carbon Footprint */}
-          <div className="calculator-card p-4 space-y-3">
-            <div className="flex items-center gap-2">
-              <Leaf className="h-4 w-4 text-green-400" />
-              <span className="text-sm font-medium text-white/80">Carbon Footprint</span>
-            </div>
-            <div className="grid grid-cols-2 gap-2">
-              <div className="p-3 rounded-lg bg-green-500/5 border border-green-500/10">
-                <p className="text-xs text-green-400/70">Daily</p>
-                <p className="text-lg font-semibold text-green-400">
-                  {result.dailyCO2.toFixed(2)} <span className="text-sm opacity-70">kg</span>
-                </p>
-              </div>
-              <div className="p-3 rounded-lg bg-green-500/5 border border-green-500/10">
-                <p className="text-xs text-green-400/70">Weekly</p>
-                <p className="text-lg font-semibold text-green-400">
-                  {result.weeklyCO2.toFixed(1)} <span className="text-sm opacity-70">kg</span>
-                </p>
-              </div>
-              <div className="p-3 rounded-lg bg-green-500/5 border border-green-500/10">
-                <p className="text-xs text-green-400/70">Monthly</p>
-                <p className="text-lg font-semibold text-green-400">
-                  {result.monthlyCO2.toFixed(0)} <span className="text-sm opacity-70">kg</span>
-                </p>
-              </div>
-              <div className="p-3 rounded-lg bg-green-500/5 border border-green-500/10">
-                <p className="text-xs text-green-400/70">Yearly</p>
-                <p className="text-lg font-semibold text-green-400">
-                  {result.yearlyCO2.toFixed(0)} <span className="text-sm opacity-70">kg</span>
-                </p>
-              </div>
-            </div>
-          </div>
+            {/* Energy Usage */}
+            <ResultsGrid columns={2}>
+              <ResultValue label="Daily" value={`${result.dailyKWh.toFixed(2)} kWh`} category={CAT} size="sm" />
+              <ResultValue label="Weekly" value={`${result.weeklyKWh.toFixed(1)} kWh`} category={CAT} size="sm" />
+              <ResultValue label="Monthly" value={`${result.monthlyKWh.toFixed(0)} kWh`} category={CAT} size="sm" />
+              <ResultValue label="Yearly" value={`${result.yearlyKWh.toFixed(0)} kWh`} category={CAT} size="sm" />
+            </ResultsGrid>
 
-          {/* Appliance Breakdown */}
-          {result.applianceBreakdown.length > 0 && (
-            <div className="calculator-card p-4 space-y-3">
-              <div className="flex items-center gap-2">
-                <Home className="h-4 w-4 text-amber-400" />
-                <span className="text-sm font-medium text-white/80">Cost by Appliance</span>
-              </div>
-              <div className="space-y-2">
-                {result.applianceBreakdown.map((item) => (
-                  <div
-                    key={item.id}
-                    className="flex items-center justify-between p-3 rounded-lg bg-white/5"
-                  >
-                    <div className="flex-1 min-w-0">
-                      <p className="text-sm font-medium text-white truncate">{item.name}</p>
-                      <p className="text-xs text-white/80">{item.dailyKWh.toFixed(2)} kWh/day</p>
+            <CalculatorDivider category={CAT} />
+
+            {/* Carbon Footprint */}
+            <CalculatorSection title="Carbon Footprint">
+              <ResultsGrid columns={2}>
+                <ResultValue label="Daily" value={`${result.dailyCO2.toFixed(2)} kg CO₂`} category={CAT} size="sm" />
+                <ResultValue label="Weekly" value={`${result.weeklyCO2.toFixed(1)} kg CO₂`} category={CAT} size="sm" />
+                <ResultValue label="Monthly" value={`${result.monthlyCO2.toFixed(0)} kg CO₂`} category={CAT} size="sm" />
+                <ResultValue label="Yearly" value={`${result.yearlyCO2.toFixed(0)} kg CO₂`} category={CAT} size="sm" />
+              </ResultsGrid>
+            </CalculatorSection>
+
+            <CalculatorDivider category={CAT} />
+
+            {/* Per-appliance Breakdown */}
+            {result.applianceBreakdown.length > 0 && (
+              <CalculatorSection title="Cost by Appliance">
+                <div className="space-y-2">
+                  {result.applianceBreakdown.map((item) => (
+                    <div
+                      key={item.id}
+                      className="flex items-center justify-between p-3 rounded-lg bg-white/5"
+                    >
+                      <div className="flex-1 min-w-0">
+                        <p className="text-sm font-medium text-white truncate">{item.name}</p>
+                        <p className="text-xs text-white">{item.dailyKWh.toFixed(2)} kWh/day</p>
+                      </div>
+                      <div className="text-right ml-3">
+                        <p className="text-sm font-semibold text-white">
+                          {formatCurrency(item.monthlyCost)}
+                          <span className="text-xs text-white">/mo</span>
+                        </p>
+                        <p className="text-xs text-white">{item.shareOfTotal.toFixed(1)}%</p>
+                      </div>
                     </div>
-                    <div className="text-right ml-3">
-                      <p className="text-sm font-semibold text-amber-400">
-                        {formatCurrency(item.monthlyCost)}
-                        <span className="text-xs text-white/80">/mo</span>
-                      </p>
-                      <p className="text-xs text-white/80">{item.shareOfTotal.toFixed(1)}%</p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          )}
-
-          {/* Guidance */}
-          <Collapsible open={showGuidance} onOpenChange={setShowGuidance}>
-            <div className="calculator-card overflow-hidden" style={{ borderColor: '#60a5fa15' }}>
-              <CollapsibleTrigger className="agent-collapsible-trigger w-full">
-                <div className="flex items-center gap-3">
-                  <Info className="h-4 w-4 text-blue-400" />
-                  <span className="text-sm sm:text-base font-medium text-blue-300">
-                    Energy Saving Tips
-                  </span>
+                  ))}
                 </div>
+              </CalculatorSection>
+            )}
+
+            {/* How It Worked Out */}
+            <CalculatorFormula
+              category={CAT}
+              steps={formulaSteps}
+              title="How It Worked Out"
+              defaultOpen
+            />
+
+            {/* Energy Saving Tips */}
+            <Collapsible open={showGuidance} onOpenChange={setShowGuidance}>
+              <CollapsibleTrigger className="calculator-collapsible-trigger w-full">
+                <span>Energy Saving Tips</span>
                 <ChevronDown
                   className={cn(
-                    'h-4 w-4 text-white/70 transition-transform duration-200',
+                    'h-4 w-4 text-white transition-transform duration-200',
                     showGuidance && 'rotate-180'
                   )}
                 />
               </CollapsibleTrigger>
-
-              <CollapsibleContent className="p-4 pt-0">
-                <ul className="space-y-2 text-sm text-blue-200/80">
-                  <li className="flex items-start gap-2">
-                    <span className="text-blue-400 mt-1">•</span>
-                    Check your energy bill for exact rates - prices vary by supplier
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-blue-400 mt-1">•</span>
-                    Economy 7/10 tariffs offer cheaper night rates for storage heaters
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-blue-400 mt-1">•</span>
-                    Include standby power - TVs, routers, and chargers add up
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-blue-400 mt-1">•</span>
-                    Focus on high-cost appliances first for biggest savings
-                  </li>
-                </ul>
+              <CollapsibleContent className="pt-2">
+                <div
+                  className="p-3 rounded-xl border space-y-2"
+                  style={{
+                    borderColor: `${config.gradientFrom}15`,
+                    background: `${config.gradientFrom}05`,
+                  }}
+                >
+                  <ul className="space-y-2">
+                    {[
+                      'Check your energy bill for exact rates — prices vary by supplier',
+                      'Economy 7/10 tariffs offer cheaper night rates for storage heaters',
+                      'Include standby power — TVs, routers, and chargers add up',
+                      'Focus on high-cost appliances first for biggest savings',
+                    ].map((tip, idx) => (
+                      <li key={idx} className="text-sm text-white flex items-start gap-2">
+                        <span
+                          className="w-1.5 h-1.5 rounded-full mt-2 shrink-0"
+                          style={{ backgroundColor: config.gradientFrom }}
+                        />
+                        {tip}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
               </CollapsibleContent>
-            </div>
-          </Collapsible>
-        </div>
+            </Collapsible>
+
+            {/* Typical Power Ratings */}
+            <Collapsible open={showReference} onOpenChange={setShowReference}>
+              <CollapsibleTrigger className="calculator-collapsible-trigger w-full">
+                <span>Typical Power Ratings</span>
+                <ChevronDown
+                  className={cn(
+                    'h-4 w-4 text-white transition-transform duration-200',
+                    showReference && 'rotate-180'
+                  )}
+                />
+              </CollapsibleTrigger>
+              <CollapsibleContent className="pt-2">
+                <div
+                  className="p-3 rounded-xl border"
+                  style={{
+                    borderColor: `${config.gradientFrom}15`,
+                    background: `${config.gradientFrom}05`,
+                  }}
+                >
+                  <div className="grid grid-cols-2 gap-3 text-sm">
+                    <div className="space-y-1">
+                      <p className="text-white font-medium">Kitchen</p>
+                      <p className="text-white">Kettle: 2-3 kW</p>
+                      <p className="text-white">Microwave: 800-1200 W</p>
+                      <p className="text-white">Fridge: 100-150 W</p>
+                    </div>
+                    <div className="space-y-1">
+                      <p className="text-white font-medium">Heating</p>
+                      <p className="text-white">Fan heater: 2-3 kW</p>
+                      <p className="text-white">Oil radiator: 1.5-2.5 kW</p>
+                      <p className="text-white">Immersion: 3 kW</p>
+                    </div>
+                    <div className="space-y-1">
+                      <p className="text-white font-medium">Electronics</p>
+                      <p className="text-white">TV (LED): 50-100 W</p>
+                      <p className="text-white">Laptop: 30-65 W</p>
+                      <p className="text-white">Router: 5-20 W</p>
+                    </div>
+                    <div className="space-y-1">
+                      <p className="text-white font-medium">Laundry</p>
+                      <p className="text-white">Washing: 500-2000 W</p>
+                      <p className="text-white">Dryer: 2-3 kW</p>
+                      <p className="text-white">Dishwasher: 1.8-2.4 kW</p>
+                    </div>
+                  </div>
+                </div>
+              </CollapsibleContent>
+            </Collapsible>
+          </div>
+        </>
       )}
 
-      {/* Quick Reference */}
-      <Collapsible open={showReference} onOpenChange={setShowReference}>
-        <div className="calculator-card overflow-hidden" style={{ borderColor: '#fbbf2415' }}>
-          <CollapsibleTrigger className="agent-collapsible-trigger w-full">
-            <div className="flex items-center gap-3">
-              <BookOpen className="h-4 w-4 text-amber-400" />
-              <span className="text-sm sm:text-base font-medium text-amber-300">
-                Typical Power Ratings
-              </span>
-            </div>
-            <ChevronDown
-              className={cn(
-                'h-4 w-4 text-white/70 transition-transform duration-200',
-                showReference && 'rotate-180'
-              )}
-            />
-          </CollapsibleTrigger>
-
-          <CollapsibleContent className="p-4 pt-0">
-            <div className="grid grid-cols-2 gap-3 text-sm">
-              <div className="space-y-1">
-                <p className="text-amber-300 font-medium">Kitchen</p>
-                <p className="text-amber-200/70">Kettle: 2-3 kW</p>
-                <p className="text-amber-200/70">Microwave: 800-1200 W</p>
-                <p className="text-amber-200/70">Fridge: 100-150 W</p>
-              </div>
-              <div className="space-y-1">
-                <p className="text-amber-300 font-medium">Heating</p>
-                <p className="text-amber-200/70">Fan heater: 2-3 kW</p>
-                <p className="text-amber-200/70">Oil radiator: 1.5-2.5 kW</p>
-                <p className="text-amber-200/70">Immersion: 3 kW</p>
-              </div>
-              <div className="space-y-1">
-                <p className="text-amber-300 font-medium">Electronics</p>
-                <p className="text-amber-200/70">TV (LED): 50-100 W</p>
-                <p className="text-amber-200/70">Laptop: 30-65 W</p>
-                <p className="text-amber-200/70">Router: 5-20 W</p>
-              </div>
-              <div className="space-y-1">
-                <p className="text-amber-300 font-medium">Laundry</p>
-                <p className="text-amber-200/70">Washing: 500-2000 W</p>
-                <p className="text-amber-200/70">Dryer: 2-3 kW</p>
-                <p className="text-amber-200/70">Dishwasher: 1.8-2.4 kW</p>
-              </div>
-            </div>
-          </CollapsibleContent>
-        </div>
-      </Collapsible>
-    </div>
+      {/* Formula reference (always visible) */}
+      <FormulaReference
+        category={CAT}
+        name="Energy Cost"
+        formula="Cost = (kWh × Rate) + Standing Charge + VAT"
+        variables={[
+          { symbol: 'kWh', description: 'Kilowatt-hours consumed per day' },
+          { symbol: 'Rate', description: 'Price per kWh (pence or pounds)' },
+          { symbol: 'Standing', description: 'Daily fixed charge from supplier' },
+          { symbol: 'VAT', description: 'Value Added Tax (usually 5% domestic)' },
+        ]}
+      />
+    </CalculatorCard>
   );
 };
 

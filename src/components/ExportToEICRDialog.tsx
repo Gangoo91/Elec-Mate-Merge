@@ -30,6 +30,7 @@ import {
   getExportToEICRSummary,
   EICFormData,
 } from '@/utils/eicToEicrExport';
+import { generateCertificateNumber } from '@/utils/certificateNumbering';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 
@@ -109,9 +110,13 @@ export const ExportToEICRDialog: React.FC<ExportToEICRDialogProps> = ({
       // Transform EIC to EICR data
       const eicrData = transformEICToEICR(eicData);
 
+      // Generate a proper EICR certificate number for the new document
+      const newCertNumber = await generateCertificateNumber('eicr');
+
       // Add metadata to track origin
       const eicrDataWithMeta = {
         ...eicrData,
+        certificateNumber: newCertNumber,
         sourceEICReportId: reportId,
         sourceCertificateNumber: eicData.certificateNumber,
         exportedFromEIC: true,

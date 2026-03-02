@@ -174,6 +174,12 @@ const EICCertificateActions: React.FC<EICCertificateActionsProps> = ({
       // Prepare form data in the format expected by PDF Monkey template
       const pdfData = await generateTestJSON(reportId);
 
+      // Save formatted payload for email/reports page reuse
+      await supabase
+        .from('reports')
+        .update({ pdf_payload: pdfData })
+        .eq('report_id', reportId);
+
       setExportProgress(30);
       setExportStatus('generating');
 

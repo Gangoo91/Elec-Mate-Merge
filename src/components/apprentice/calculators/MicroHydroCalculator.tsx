@@ -2,7 +2,6 @@ import { useState, useCallback, useMemo } from 'react';
 import { Copy, Check, ChevronDown, AlertTriangle } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { cn } from '@/lib/utils';
-import { Button } from '@/components/ui/button';
 import {
   CalculatorCard,
   CalculatorInputGrid,
@@ -301,29 +300,23 @@ const MicroHydroCalculator = () => {
       description="Professional micro-hydro system analysis with accurate hydraulics"
     >
       {/* Quick Start Presets */}
-      <CalculatorSection title="Quick Start Presets">
-        <div className="grid grid-cols-2 gap-2">
-          {QUICK_START_PRESETS.map((preset, index) => (
-            <Button
-              key={index}
-              variant="outline"
-              onClick={() => applyPreset(preset)}
-              className="h-auto p-3 text-left rounded-xl border-white/10 bg-white/5 hover:bg-white/10 text-white touch-manipulation flex flex-col items-start"
-            >
-              <span className="text-sm font-medium">{preset.name}</span>
-              <span className="text-xs text-white">
-                {preset.flow} m³/s · {preset.head}m head
-              </span>
-            </Button>
-          ))}
-        </div>
-      </CalculatorSection>
-
-      <CalculatorDivider category={CAT} />
+      <CalculatorSelect
+        label="Quick Start Preset"
+        value=""
+        onChange={(val) => {
+          const preset = QUICK_START_PRESETS.find((p) => p.turbineType === val);
+          if (preset) applyPreset(preset);
+        }}
+        options={QUICK_START_PRESETS.map((p) => ({
+          value: p.turbineType,
+          label: `${p.name} (${p.flow} m³/s, ${p.head}m head)`,
+        }))}
+        placeholder="Select a preset scenario..."
+      />
 
       {/* Site Parameters */}
       <CalculatorSection title="Site Parameters">
-        <CalculatorInputGrid columns={2}>
+        <CalculatorInputGrid columns={2} className="grid-cols-2">
           <CalculatorInput
             label="Flow Rate"
             unit="m³/s"
@@ -347,7 +340,7 @@ const MicroHydroCalculator = () => {
 
       {/* System Configuration */}
       <CalculatorSection title="System Configuration">
-        <CalculatorInputGrid columns={2}>
+        <CalculatorInputGrid columns={2} className="grid-cols-2">
           <CalculatorSelect
             label="Turbine Type"
             value={turbineType}

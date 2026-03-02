@@ -425,6 +425,14 @@ export default function PATTestingCertificate() {
         registrationSchemeLogo: branding?.registrationSchemeLogo,
       });
 
+      // Save formatted payload for email/reports page reuse
+      if (savedReportId) {
+        await supabase
+          .from('reports')
+          .update({ pdf_payload: pdfData })
+          .eq('report_id', savedReportId);
+      }
+
       // Debug log — helps diagnose empty PDF issues
       console.log('[PAT] PDF payload keys:', Object.keys(pdfData));
       console.log('[PAT] Client details:', pdfData.client_details);

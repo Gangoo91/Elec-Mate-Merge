@@ -146,7 +146,9 @@ export function useNativePushNotifications() {
         console.log('Push notification action:', action);
         // Handle notification tap - navigate to relevant screen
         const data = action.notification.data;
-        if (data?.conversationId) {
+        if (data?.action === 'open_tasks' || data?.type === 'task') {
+          window.location.href = '/electrician/tasks';
+        } else if (data?.conversationId) {
           // Navigate to chat
           window.location.href = `/mental-health?chat=${data.conversationId}`;
         } else if (data?.quoteId) {

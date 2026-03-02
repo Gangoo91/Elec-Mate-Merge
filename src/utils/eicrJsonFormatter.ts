@@ -559,9 +559,6 @@ export const formatEICRJson = async (formData: any, reportId: string) => {
             phase_sequence_confirmed: formData['confirmedPhaseSequence'] ?? false,
             spd_operational: formData['spdOperationalStatus'] ?? false,
             spd_na: formData['spdNA'] ?? false,
-            spd_t1: formData['spdT1'] ?? false,
-            spd_t2: formData['spdT2'] ?? false,
-            spd_t3: formData['spdT3'] ?? false,
             main_switch_bs_en: formData['mainSwitchBsEn'] || '',
             main_switch_type: formData['mainSwitchType'] || '',
             main_switch_rating: formData['mainSwitchRating'] || '',
@@ -604,9 +601,6 @@ export const formatEICRJson = async (formData: any, reportId: string) => {
         // SPD details per board
         spd_operational: board.spdOperationalStatus ?? false,
         spd_na: board.spdNA ?? false,
-        spd_t1: board.spdT1 ?? false,
-        spd_t2: board.spdT2 ?? false,
-        spd_t3: board.spdT3 ?? false,
         // Main switch for this board
         main_switch_bs_en: board.mainSwitchBsEn || '',
         main_switch_type: board.mainSwitchType || '',
@@ -964,10 +958,6 @@ export const formatEICRJson = async (formData: any, reportId: string) => {
           mainBoard?.confirmedPhaseSequence ?? getBool('confirmedPhaseSequence'),
         spd_operational_status: mainBoard?.spdOperationalStatus ?? getBool('spdOperationalStatus'),
         spd_na: mainBoard?.spdNA ?? getBool('spdNA'),
-        // SPD Type checkboxes
-        spd_t1: mainBoard?.spdT1 ?? false,
-        spd_t2: mainBoard?.spdT2 ?? false,
-        spd_t3: mainBoard?.spdT3 ?? false,
       };
     })(),
 

@@ -111,9 +111,9 @@ const EICClientDetailsSection = ({
 
             {/* Client Information */}
             <div className="space-y-4">
-              <h3 className="text-sm sm:text-base font-semibold text-foreground border-b border-elec-gray pb-2 flex items-center gap-2">
-                <div className="w-1.5 h-1.5 rounded-full bg-yellow-400"></div>
-                Client Information
+              <h3 className="text-sm sm:text-base font-semibold text-foreground border-b border-elec-gray pb-2 flex items-start gap-2">
+                <div className="w-1.5 h-1.5 rounded-full bg-yellow-400 mt-1.5 shrink-0"></div>
+                <span className="break-words min-w-0">Client Information</span>
               </h3>
 
               {/* Customer Selector */}
@@ -302,9 +302,9 @@ const EICClientDetailsSection = ({
 
             {/* Installation Dates */}
             <div className="space-y-4">
-              <h3 className="text-sm sm:text-base font-semibold text-foreground border-b border-border pb-2 flex items-center gap-2">
-                <div className="w-1.5 h-1.5 rounded-full bg-green-400"></div>
-                Installation Dates
+              <h3 className="text-sm sm:text-base font-semibold text-foreground border-b border-border pb-2 flex items-start gap-2">
+                <div className="w-1.5 h-1.5 rounded-full bg-green-400 mt-1.5 shrink-0"></div>
+                <span className="break-words min-w-0">Installation Dates</span>
               </h3>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="space-y-2">

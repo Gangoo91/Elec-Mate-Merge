@@ -38,6 +38,7 @@ import { ElecIdBanner } from '@/components/elec-id/ElecIdBanner';
 import { SetupWizard } from '@/components/onboarding/SetupWizard';
 import { SetupIncompleteBanner } from '@/components/onboarding/SetupIncompleteBanner';
 import { LatestJobsWidget } from '@/components/job-vacancies/LatestJobsWidget';
+import { TasksDueWidget } from '@/components/tasks/TasksDueWidget';
 import { useQuery } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { useMyEmployeeRecord } from '@/hooks/useWorkerLocations';
@@ -519,6 +520,11 @@ const ElectricalHub = () => {
           {/* Stats Bar */}
           <motion.section variants={itemVariants} className="px-4 sm:px-0">
             <ElectricalStatsBar />
+          </motion.section>
+
+          {/* Tasks Due Widget — only renders when overdue tasks exist */}
+          <motion.section variants={itemVariants} className="px-4 sm:px-0">
+            <TasksDueWidget />
           </motion.section>
 
           {/* Elec-ID Banner */}

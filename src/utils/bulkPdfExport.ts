@@ -229,8 +229,35 @@ export const generateBulkPDFs = async (
       // Get template ID for this report type
       const templateId = await getTemplateIdForReportType(report.report_type);
 
+      // Use pre-formatted PDF payload if available, otherwise format on-the-fly
+      let dataForPdf = validation.data;
+      const rtLower = report.report_type.toLowerCase().replace(/\s+/g, '-');
+      if (report.pdf_payload) {
+        console.log(`[bulkPdfExport] Using saved pdf_payload for ${reportId}`);
+        dataForPdf = report.pdf_payload;
+      } else {
+        console.log(`[bulkPdfExport] No pdf_payload, attempting on-the-fly format for ${reportId} (${rtLower})`);
+        if (rtLower === 'eicr') {
+          const { formatEICRJson } = await import('./eicrJsonFormatter');
+          dataForPdf = await formatEICRJson(validation.data, report.report_id);
+        } else if (rtLower === 'ev-charging') {
+          const { formatEVChargingJson } = await import('./evChargingJsonFormatter');
+          dataForPdf = formatEVChargingJson(validation.data);
+        } else if (rtLower === 'pat-testing') {
+          const { formatPATTestingJson } = await import('./patTestingJsonFormatter');
+          dataForPdf = formatPATTestingJson(validation.data);
+        } else if (rtLower === 'fire-alarm') {
+          const { formatFireAlarmJson } = await import('./fireAlarmJsonFormatter');
+          dataForPdf = formatFireAlarmJson(validation.data);
+        } else if (rtLower === 'emergency-lighting') {
+          const { formatEmergencyLightingJson } = await import('./emergencyLightingJsonFormatter');
+          dataForPdf = formatEmergencyLightingJson(validation.data);
+        }
+        // EIC and Minor Works: no standalone formatter available, fall through with raw data
+      }
+
       // Optimise data before sending (use enriched data)
-      const optimizationResult = optimizeForPdfGeneration(validation.data);
+      const optimizationResult = optimizeForPdfGeneration(dataForPdf);
       console.log(
         `[bulkPdfExport] Data size for ${reportId}: ${optimizationResult.originalSizeMB.toFixed(2)}MB → ${optimizationResult.optimizedSizeMB.toFixed(2)}MB`
       );

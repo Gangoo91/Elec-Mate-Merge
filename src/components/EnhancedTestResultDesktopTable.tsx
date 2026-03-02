@@ -82,6 +82,17 @@ const EnhancedTestResultDesktopTable: React.FC<EnhancedTestResultDesktopTablePro
     toast.success(`All ${testResults.length} AFDD fields filled with Pass ✓`);
   };
 
+  const handleFillAllFunctional = () => {
+    if (onBulkFieldUpdate) {
+      onBulkFieldUpdate('functionalTesting', '✓');
+    } else {
+      testResults.forEach((result) => {
+        onUpdate(result.id, 'functionalTesting', '✓');
+      });
+    }
+    toast.success(`All ${testResults.length} Functional Test fields filled with Satisfactory ✓`);
+  };
+
   const handleFillAllRcdBsStandard = (value: string) => {
     if (onBulkFieldUpdate) {
       onBulkFieldUpdate('rcdBsStandard', value);
@@ -285,6 +296,7 @@ const EnhancedTestResultDesktopTable: React.FC<EnhancedTestResultDesktopTablePro
                     onFillAllInsulationLiveNeutral={handleFillAllInsulationLiveNeutral}
                     onFillAllInsulationLiveEarth={handleFillAllInsulationLiveEarth}
                     onFillAllPolarity={handleFillAllPolarity}
+                    onFillAllFunctional={handleFillAllFunctional}
                   />
                   <TableBody>
                     {testResults.map((result, index) => (

@@ -19,6 +19,7 @@ interface EnhancedTestResultDesktopTableHeaderProps {
   onFillAllInsulationLiveNeutral?: (value: string) => void;
   onFillAllInsulationLiveEarth?: (value: string) => void;
   onFillAllPolarity?: (value: string) => void;
+  onFillAllFunctional?: () => void;
 }
 
 const EnhancedTestResultDesktopTableHeader: React.FC<EnhancedTestResultDesktopTableHeaderProps> = ({
@@ -36,6 +37,7 @@ const EnhancedTestResultDesktopTableHeader: React.FC<EnhancedTestResultDesktopTa
   onFillAllInsulationLiveNeutral,
   onFillAllInsulationLiveEarth,
   onFillAllPolarity,
+  onFillAllFunctional,
 }) => {
   const [rcdBsPopoverOpen, setRcdBsPopoverOpen] = useState(false);
   const [rcdTypePopoverOpen, setRcdTypePopoverOpen] = useState(false);
@@ -296,7 +298,7 @@ const EnhancedTestResultDesktopTableHeader: React.FC<EnhancedTestResultDesktopTa
               kA
             </TableHead>
             <TableHead
-              className="sot-header-cell w-24 min-w-[90px] max-w-[90px]"
+              className="sot-header-cell w-28 min-w-[110px] max-w-[110px]"
               data-group="protection"
             >
               <div className="flex items-center justify-center gap-1">
@@ -957,7 +959,18 @@ const EnhancedTestResultDesktopTableHeader: React.FC<EnhancedTestResultDesktopTa
             className="sot-header-cell w-16 min-w-[70px] max-w-[70px]"
             data-group="functional"
           >
-            Func
+            <div className="flex items-center justify-center gap-1">
+              <span>Func</span>
+              {onFillAllFunctional && (
+                <button
+                  onClick={onFillAllFunctional}
+                  className="sot-fill-all-btn text-green-500"
+                  title="Fill all with Satisfactory"
+                >
+                  <CheckCircle className="h-3.5 w-3.5" />
+                </button>
+              )}
+            </div>
           </TableHead>
         )}
 

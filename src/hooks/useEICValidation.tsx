@@ -164,11 +164,8 @@ export const useEICValidation = (formData: any): ValidationResult => {
     }
 
     // Technical Validation Warnings
-    if (
-      formData.supplyVoltage &&
-      formData.supplyVoltage !== '230' &&
-      formData.supplyVoltage !== '400'
-    ) {
+    const rawVoltage = formData.supplyVoltage?.replace(/V$/i, '') || '';
+    if (rawVoltage && rawVoltage !== '230' && rawVoltage !== '400') {
       warnings.push({
         field: 'supplyVoltage',
         message: 'Non-standard supply voltage - verify specification',
@@ -186,7 +183,12 @@ export const useEICValidation = (formData: any): ValidationResult => {
       });
     }
 
-    if (!formData.inspections || Object.keys(formData.inspections).length === 0) {
+    const hasInspections =
+      (formData.inspectionItems &&
+        Array.isArray(formData.inspectionItems) &&
+        formData.inspectionItems.some((i: any) => i.outcome)) ||
+      (formData.inspections && Object.keys(formData.inspections).length > 0);
+    if (!hasInspections) {
       warnings.push({
         field: 'inspections',
         message: 'No inspections recorded - visual inspection required',

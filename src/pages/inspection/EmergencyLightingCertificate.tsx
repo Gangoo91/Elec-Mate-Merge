@@ -483,6 +483,14 @@ export default function EmergencyLightingCertificate() {
       // Use the JSON formatter to prepare PDF data with all proper formatting
       const pdfData = formatEmergencyLightingJson(dataWithCertNumber);
 
+      // Save formatted payload for email/reports page reuse
+      if (savedReportId) {
+        await supabase
+          .from('reports')
+          .update({ pdf_payload: pdfData })
+          .eq('report_id', savedReportId);
+      }
+
       // Call edge function
       const { data: functionData, error: functionError } = await supabase.functions.invoke(
         'generate-emergency-lighting-pdf',

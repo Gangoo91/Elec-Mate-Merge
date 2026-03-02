@@ -349,9 +349,35 @@ export const ReportPdfViewer = ({ reportId, open, onOpenChange }: ReportPdfViewe
         templateId = credentials.eicrTemplateId;
       }
 
+      // Use pre-formatted PDF payload if available, otherwise format on-the-fly
+      let dataForPdf = reportData.data;
+      if (reportData.pdf_payload) {
+        console.log('[ReportPdfViewer] Using saved pdf_payload');
+        dataForPdf = reportData.pdf_payload;
+      } else {
+        console.log(`[ReportPdfViewer] No pdf_payload, attempting on-the-fly format for ${reportType}`);
+        if (reportType === 'eicr') {
+          const { formatEICRJson } = await import('@/utils/eicrJsonFormatter');
+          dataForPdf = await formatEICRJson(reportData.data, reportData.report_id);
+        } else if (reportType === 'ev-charging' || reportType === 'ev charging') {
+          const { formatEVChargingJson } = await import('@/utils/evChargingJsonFormatter');
+          dataForPdf = formatEVChargingJson(reportData.data);
+        } else if (reportType === 'pat-testing' || reportType === 'pat testing') {
+          const { formatPATTestingJson } = await import('@/utils/patTestingJsonFormatter');
+          dataForPdf = formatPATTestingJson(reportData.data);
+        } else if (reportType === 'fire-alarm' || reportType === 'fire alarm') {
+          const { formatFireAlarmJson } = await import('@/utils/fireAlarmJsonFormatter');
+          dataForPdf = formatFireAlarmJson(reportData.data);
+        } else if (reportType === 'emergency-lighting' || reportType === 'emergency lighting') {
+          const { formatEmergencyLightingJson } = await import('@/utils/emergencyLightingJsonFormatter');
+          dataForPdf = formatEmergencyLightingJson(reportData.data);
+        }
+        // EIC and Minor Works: no standalone formatter available, fall through with raw data
+      }
+
       // Optimize data and check size
       console.log('Optimizing data for PDF generation...');
-      const optimizationResult = optimizeForPdfGeneration(reportData.data);
+      const optimizationResult = optimizeForPdfGeneration(dataForPdf);
 
       console.log(
         `Data size: ${optimizationResult.originalSizeMB.toFixed(2)}MB (optimised: ${optimizationResult.optimizedSizeMB.toFixed(2)}MB)`

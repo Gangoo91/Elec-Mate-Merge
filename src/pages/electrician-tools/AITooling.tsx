@@ -130,16 +130,16 @@ const AITooling = () => {
                     className="block focus:outline-none focus-visible:ring-2 focus-visible:ring-purple-500/50 rounded-2xl touch-manipulation"
                   >
                     <div className="relative overflow-hidden bg-white/[0.03] border border-white/[0.08] rounded-2xl group active:bg-white/[0.06] active:scale-[0.97] transition-all h-full">
-                      <div className="p-3.5">
+                      <div className="p-3.5 flex flex-col h-full">
                         <div
-                          className={`w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-br ${gradient} mb-2.5`}
+                          className={`w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-br ${gradient} mb-2.5 flex-shrink-0`}
                         >
                           <IconComponent className="h-5 w-5 text-white" />
                         </div>
-                        <h3 className="text-[13px] font-bold text-white leading-tight">
+                        <h3 className="text-[13px] font-bold text-white leading-tight min-h-[32px]">
                           {tool.label}
                         </h3>
-                        <p className="text-[11px] text-white mt-1 line-clamp-2 leading-relaxed">
+                        <p className="text-[11px] text-white mt-1 line-clamp-2 leading-relaxed flex-1">
                           {tool.description}
                         </p>
                       </div>

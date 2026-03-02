@@ -37,7 +37,8 @@ export const requestPermission = async (): Promise<NotificationPermission> => {
 };
 
 /**
- * Get the active service worker registration (registered by VitePWA)
+ * Get the active service worker registration (registered by VitePWA).
+ * Includes a timeout so the UI never hangs if the SW fails to activate.
  */
 export const registerServiceWorker = async (): Promise<ServiceWorkerRegistration | null> => {
   if (!('serviceWorker' in navigator)) {
@@ -46,7 +47,24 @@ export const registerServiceWorker = async (): Promise<ServiceWorkerRegistration
   }
 
   try {
-    const registration = await navigator.serviceWorker.ready;
+    // Check if any SW is registered — if not, navigator.serviceWorker.ready hangs forever
+    const registrations = await navigator.serviceWorker.getRegistrations();
+    if (registrations.length === 0) {
+      console.warn('[Push] No service worker registered. Push requires a built production deploy.');
+      return null;
+    }
+
+    // Race against a timeout so the UI never gets stuck
+    const registration = await Promise.race([
+      navigator.serviceWorker.ready,
+      new Promise<null>((resolve) => setTimeout(() => resolve(null), 8000)),
+    ]);
+
+    if (!registration) {
+      console.warn('[Push] Service worker did not become ready within 8 seconds');
+      return null;
+    }
+
     console.log('Service Worker ready:', registration.scope);
     return registration;
   } catch (error) {
@@ -67,11 +85,21 @@ export const subscribeToPush = async (
     let subscription = await registration.pushManager.getSubscription();
 
     if (!subscription) {
-      // Create new subscription
-      subscription = await registration.pushManager.subscribe({
+      // Create new subscription with timeout
+      const subscribePromise = registration.pushManager.subscribe({
         userVisibleOnly: true,
         applicationServerKey: urlBase64ToUint8Array(vapidPublicKey),
       });
+
+      subscription = await Promise.race([
+        subscribePromise,
+        new Promise<null>((resolve) => setTimeout(() => resolve(null), 10000)),
+      ]);
+
+      if (!subscription) {
+        console.error('[Push] pushManager.subscribe timed out after 10s');
+        return null;
+      }
     }
 
     return subscription;

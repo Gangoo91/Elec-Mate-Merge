@@ -1629,6 +1629,42 @@
               <span class="inline-label">Ipf (kA):</span>
               <span class="inline-value">{{ board.ipf }}</span>
             </div>
+            <div class="inline-group">
+              <div class="checkbox-item">
+                <span
+                  class="checkbox-box {% if board.polarity_confirmed %}checked{% endif %}"
+                  >{% if board.polarity_confirmed %}✓{% endif %}</span
+                >
+                <label>Polarity Confirmed</label>
+              </div>
+            </div>
+            <div class="inline-group">
+              <div class="checkbox-item">
+                <span
+                  class="checkbox-box {% if board.phase_sequence_confirmed %}checked{% endif %}"
+                  >{% if board.phase_sequence_confirmed %}✓{% endif %}</span
+                >
+                <label>Phase Sequence</label>
+              </div>
+            </div>
+            <div class="inline-group">
+              <div class="checkbox-item">
+                <span
+                  class="checkbox-box {% if board.spd_operational %}checked{% endif %}"
+                  >{% if board.spd_operational %}✓{% endif %}</span
+                >
+                <label>SPD Operational</label>
+              </div>
+            </div>
+            <div class="inline-group">
+              <div class="checkbox-item">
+                <span
+                  class="checkbox-box {% if board.spd_na %}checked{% endif %}"
+                  >{% if board.spd_na %}✓{% endif %}</span
+                >
+                <label>SPD N/A</label>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -2573,14 +2609,6 @@
         <div class="board-verification">
           <span><strong>Zdb:</strong> {{ board.db_zdb }} Ω</span>
           <span><strong>Ipf:</strong> {{ board.db_ipf }} kA</span>
-          <span
-            >Polarity: {% if board.polarity_confirmed %}✓{% else
-            %}✗{% endif %}</span
-          >
-          <span
-            >SPD: {% if board.spd_operational %}✓{% elsif
-            board.spd_na %}N/A{% else %}✗{% endif %}</span
-          >
         </div>
       </div>
 

@@ -164,6 +164,17 @@ const NOTIFICATION_CONFIG: Record<string, NotificationTypeConfig> = {
       { action: 'dismiss', title: 'Dismiss' },
     ],
   },
+  task: {
+    icon: '/icons/task.svg',
+    badge: '/icons/badge.svg',
+    color: '#A855F7',
+    vibrate: [200, 100, 200],
+    requireInteraction: true,
+    actions: [
+      { action: 'view', title: 'View Tasks' },
+      { action: 'dismiss', title: 'Dismiss' },
+    ],
+  },
   default: {
     icon: '/pwa-192x192.png',
     badge: '/icons/badge.svg',
@@ -295,6 +306,9 @@ self.addEventListener('notificationclick', (event: NotificationEvent) => {
       break;
     case 'certificate':
       url = `/electrician/certificates?id=${data.certificateId || ''}`;
+      break;
+    case 'task':
+      url = '/electrician/tasks';
       break;
     default:
       url = '/';

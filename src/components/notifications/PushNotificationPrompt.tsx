@@ -61,8 +61,13 @@ const PushNotificationPrompt: React.FC<PushNotificationPromptProps> = ({
 
   const handleEnable = async () => {
     try {
-      await subscribe();
-      setVisible(false);
+      const success = await subscribe();
+      if (success) {
+        setVisible(false);
+      } else {
+        // Subscription failed (no SW, permission denied, etc.) — hide and retry later
+        handleDismiss();
+      }
     } catch {
       // Permission denied or error - hide prompt
       handleDismiss();

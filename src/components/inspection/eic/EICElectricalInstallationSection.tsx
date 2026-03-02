@@ -54,9 +54,9 @@ const EICElectricalInstallationSection = ({
           <CardContent className="space-y-6 p-4 sm:p-6">
             {/* Main Protective Device */}
             <div className="space-y-4">
-              <h3 className="text-sm sm:text-base font-semibold text-foreground border-b border-elec-gray pb-2 flex items-center gap-2">
-                <div className="w-1.5 h-1.5 rounded-full bg-yellow-400"></div>
-                Main Protective Device
+              <h3 className="text-sm sm:text-base font-semibold text-foreground border-b border-elec-gray pb-2 flex items-start gap-2">
+                <div className="w-1.5 h-1.5 rounded-full bg-yellow-400 mt-1.5 shrink-0"></div>
+                <span className="break-words min-w-0">Main Protective Device</span>
               </h3>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <div>
@@ -133,9 +133,9 @@ const EICElectricalInstallationSection = ({
 
             {/* RCD Protection */}
             <div className="space-y-4">
-              <h3 className="text-sm sm:text-base font-semibold text-foreground border-b border-elec-gray pb-2 flex items-center gap-2">
-                <div className="w-1.5 h-1.5 rounded-full bg-blue-400"></div>
-                RCD Protection
+              <h3 className="text-sm sm:text-base font-semibold text-foreground border-b border-elec-gray pb-2 flex items-start gap-2">
+                <div className="w-1.5 h-1.5 rounded-full bg-blue-400 mt-1.5 shrink-0"></div>
+                <span className="break-words min-w-0">RCD Protection</span>
               </h3>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <div>
@@ -214,9 +214,9 @@ const EICElectricalInstallationSection = ({
 
             {/* Distribution Board */}
             <div className="space-y-4">
-              <h3 className="text-sm sm:text-base font-semibold text-foreground border-b border-elec-gray pb-2 flex items-center gap-2">
-                <div className="w-1.5 h-1.5 rounded-full bg-green-400"></div>
-                Distribution Board
+              <h3 className="text-sm sm:text-base font-semibold text-foreground border-b border-elec-gray pb-2 flex items-start gap-2">
+                <div className="w-1.5 h-1.5 rounded-full bg-green-400 mt-1.5 shrink-0"></div>
+                <span className="break-words min-w-0">Distribution Board</span>
               </h3>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <div>
@@ -292,9 +292,9 @@ const EICElectricalInstallationSection = ({
 
             {/* Supply Cables */}
             <div className="space-y-4">
-              <h3 className="text-sm sm:text-base font-semibold text-foreground border-b border-elec-gray pb-2 flex items-center gap-2">
-                <div className="w-1.5 h-1.5 rounded-full bg-purple-400"></div>
-                Supply Cables
+              <h3 className="text-sm sm:text-base font-semibold text-foreground border-b border-elec-gray pb-2 flex items-start gap-2">
+                <div className="w-1.5 h-1.5 rounded-full bg-purple-400 mt-1.5 shrink-0"></div>
+                <span className="break-words min-w-0">Supply Cables</span>
               </h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>

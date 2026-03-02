@@ -1282,9 +1282,14 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
     );
   };
 
-  const handleUpdateBoard = (boardId: string, field: keyof DistributionBoard, value: any) => {
+  const handleUpdateBoard = (
+    boardId: string,
+    field: keyof DistributionBoard | Record<string, any>,
+    value?: any
+  ) => {
+    const updates = typeof field === 'string' ? { [field]: value } : field;
     const updatedBoards = distributionBoards.map((b) =>
-      b.id === boardId ? { ...b, [field]: value, updatedAt: new Date() } : b
+      b.id === boardId ? { ...b, ...updates, updatedAt: new Date() } : b
     );
     setDistributionBoards(updatedBoards);
 

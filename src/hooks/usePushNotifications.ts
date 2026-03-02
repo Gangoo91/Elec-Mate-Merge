@@ -117,18 +117,18 @@ export function usePushNotifications(): UsePushNotificationsReturn {
         return false;
       }
 
-      // Register service worker
+      // Register service worker (includes timeout — won't hang)
       console.log('[Push] Registering service worker...');
       const registration = await registerServiceWorker();
       if (!registration) {
-        throw new Error('Failed to register service worker');
+        toast({
+          title: 'Service Worker Unavailable',
+          description: 'Push notifications require the production build. Try refreshing the page.',
+          variant: 'destructive',
+        });
+        return false;
       }
       console.log('[Push] Service worker registered:', registration.scope);
-
-      // Wait for service worker to be ready
-      console.log('[Push] Waiting for service worker to be ready...');
-      await navigator.serviceWorker.ready;
-      console.log('[Push] Service worker ready');
 
       // Subscribe to push
       console.log('[Push] Subscribing to push manager...');

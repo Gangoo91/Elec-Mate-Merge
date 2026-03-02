@@ -605,23 +605,60 @@ const SupplyCharacteristicsSectionInner = ({
 
       {/* Main Protective Device Section */}
       <div>
-        <SectionTitle
-          icon={Shield}
-          title="Main Protective Device"
-          color="orange"
-          isMobile={isMobile}
-        />
+        <div
+          className={cn(
+            'flex items-center justify-between gap-3 py-3',
+            isMobile
+              ? '-mx-4 px-4 bg-card/30 border-y border-border/20'
+              : 'pb-2 border-b border-border/30'
+          )}
+        >
+          <div className="flex items-center gap-3">
+            <div className="h-8 w-8 rounded-lg flex items-center justify-center bg-orange-500/20">
+              <Shield className="h-4 w-4 text-orange-400" />
+            </div>
+            <h3 className="font-semibold text-foreground">Main Protective Device</h3>
+          </div>
+          <button
+            type="button"
+            onClick={() => {
+              haptics.tap();
+              if (formData.mainSwitchRating === 'LIM') {
+                // Toggle OFF — just clear mainSwitchRating
+                onUpdate('mainSwitchRating', '');
+              } else {
+                // Toggle ON — set LIM and clear all device fields
+                onUpdate('mainSwitchRating', 'LIM');
+                onUpdate('mainProtectiveDevice', '');
+                onUpdate('mainProtectiveDeviceCustom', 'false');
+                onUpdate('breakingCapacity', '');
+                onUpdate('fuseDeviceRating', '');
+                onUpdate('mainSwitchPoles', '');
+                onUpdate('mainSwitchVoltageRating', '');
+              }
+            }}
+            className={cn(
+              'h-9 px-3 rounded-md text-sm font-semibold touch-manipulation transition-colors shrink-0',
+              formData.mainSwitchRating === 'LIM'
+                ? 'bg-orange-500 text-black'
+                : 'bg-white/10 text-white hover:bg-white/20'
+            )}
+          >
+            LIM
+          </button>
+        </div>
         <div className={cn('space-y-4 py-4', isMobile ? 'px-4' : '')}>
           <FormField
             label="Main Protective Device"
             required
-            hint="Select device type, enter rating below"
+            hint={formData.mainSwitchRating === 'LIM' ? 'Limitation applied — device cannot be verified' : 'Select device type, enter rating below'}
           >
             <Select
               value={showCustomProtectiveDevice ? 'other' : formData.mainProtectiveDevice || ''}
               onValueChange={handleMainProtectiveDeviceChange}
+              disabled={formData.mainSwitchRating === 'LIM'}
             >
-              <SelectTrigger className="h-11 touch-manipulation">
+              <SelectTrigger className={cn('h-11 touch-manipulation', formData.mainSwitchRating === 'LIM' && 'opacity-40')}>
                 <SelectValue placeholder="Select protective device" />
               </SelectTrigger>
               <SelectContent className="z-[100] max-w-[calc(100vw-2rem)] max-h-[60vh]">
@@ -659,14 +696,21 @@ const SupplyCharacteristicsSectionInner = ({
                 value={formData.mainProtectiveDevice || ''}
                 onChange={(e) => onUpdate('mainProtectiveDevice', e.target.value)}
                 placeholder="e.g. 125A BS 88 Fuse"
-                className="h-11 text-base touch-manipulation"
+                disabled={formData.mainSwitchRating === 'LIM'}
+                className={cn('h-11 text-base touch-manipulation', formData.mainSwitchRating === 'LIM' && 'opacity-40')}
               />
             </FormField>
           )}
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <FormField label="Main Switch Rating (A)">
-              {currentRatings.length > 0 ? (
+              {formData.mainSwitchRating === 'LIM' ? (
+                <Input
+                  value="LIM"
+                  disabled
+                  className="h-11 text-base touch-manipulation opacity-40"
+                />
+              ) : currentRatings.length > 0 ? (
                 <Select
                   value={formData.mainSwitchRating || ''}
                   onValueChange={(value) => {
@@ -707,8 +751,9 @@ const SupplyCharacteristicsSectionInner = ({
                     haptics.tap();
                     onUpdate('breakingCapacity', value === '__clear__' ? '' : value);
                   }}
+                  disabled={formData.mainSwitchRating === 'LIM'}
                 >
-                  <SelectTrigger className="h-11 touch-manipulation">
+                  <SelectTrigger className={cn('h-11 touch-manipulation', formData.mainSwitchRating === 'LIM' && 'opacity-40')}>
                     <SelectValue placeholder="Select kA" />
                   </SelectTrigger>
                   <SelectContent className="z-[100] max-w-[calc(100vw-2rem)]">
@@ -734,7 +779,8 @@ const SupplyCharacteristicsSectionInner = ({
                   type="number"
                   min="0"
                   step="0.1"
-                  className="h-11 text-base touch-manipulation"
+                  disabled={formData.mainSwitchRating === 'LIM'}
+                  className={cn('h-11 text-base touch-manipulation', formData.mainSwitchRating === 'LIM' && 'opacity-40')}
                 />
               )}
             </FormField>
@@ -748,8 +794,9 @@ const SupplyCharacteristicsSectionInner = ({
                   haptics.tap();
                   onUpdate('mainSwitchPoles', value === '__clear__' ? '' : value);
                 }}
+                disabled={formData.mainSwitchRating === 'LIM'}
               >
-                <SelectTrigger className="h-11 touch-manipulation">
+                <SelectTrigger className={cn('h-11 touch-manipulation', formData.mainSwitchRating === 'LIM' && 'opacity-40')}>
                   <SelectValue placeholder="Select" />
                 </SelectTrigger>
                 <SelectContent>
@@ -770,7 +817,8 @@ const SupplyCharacteristicsSectionInner = ({
                 value={formData.fuseDeviceRating || ''}
                 onChange={(e) => onUpdate('fuseDeviceRating', e.target.value)}
                 placeholder="e.g., 100"
-                className="h-11 text-base touch-manipulation"
+                disabled={formData.mainSwitchRating === 'LIM'}
+                className={cn('h-11 text-base touch-manipulation', formData.mainSwitchRating === 'LIM' && 'opacity-40')}
               />
             </FormField>
             <FormField label="Voltage Rating (V)">
@@ -780,7 +828,8 @@ const SupplyCharacteristicsSectionInner = ({
                 value={formData.mainSwitchVoltageRating || ''}
                 onChange={(e) => onUpdate('mainSwitchVoltageRating', e.target.value)}
                 placeholder="e.g., 230"
-                className="h-11 text-base touch-manipulation"
+                disabled={formData.mainSwitchRating === 'LIM'}
+                className={cn('h-11 text-base touch-manipulation', formData.mainSwitchRating === 'LIM' && 'opacity-40')}
               />
             </FormField>
           </div>

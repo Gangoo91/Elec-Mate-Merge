@@ -492,10 +492,30 @@ const EICSupplyCharacteristicsSection: React.FC<EICSupplyCharacteristicsSectionP
 
             {/* Supply Protective Device (IET Form) */}
             <div className="space-y-4">
-              <h4 className="text-sm font-semibold text-orange-400 border-b border-white/10 pb-2 flex items-center gap-2">
-                <Shield className="h-4 w-4" />
-                Supply Protective Device
-              </h4>
+              <div className="flex items-center justify-between border-b border-white/10 pb-2">
+                <h4 className="text-sm font-semibold text-orange-400 flex items-center gap-2">
+                  <Shield className="h-4 w-4" />
+                  Supply Protective Device
+                </h4>
+                <button
+                  type="button"
+                  onClick={() => {
+                    if (formData.supplyDeviceRating === 'LIM') {
+                      onUpdate('supplyDeviceRating', '');
+                    } else {
+                      onUpdate('supplyDeviceRating', 'LIM');
+                    }
+                  }}
+                  className={cn(
+                    'h-9 px-3 rounded-md text-sm font-semibold touch-manipulation transition-colors shrink-0',
+                    formData.supplyDeviceRating === 'LIM'
+                      ? 'bg-orange-500 text-black'
+                      : 'bg-white/10 text-white hover:bg-white/20'
+                  )}
+                >
+                  LIM
+                </button>
+              </div>
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                 <div className="space-y-2">
                   <Label htmlFor="supplyDeviceBsEn" className="text-sm">
@@ -504,8 +524,9 @@ const EICSupplyCharacteristicsSection: React.FC<EICSupplyCharacteristicsSectionP
                   <Select
                     value={formData.supplyDeviceBsEn || ''}
                     onValueChange={handleBsStandardChange}
+                    disabled={formData.supplyDeviceRating === 'LIM'}
                   >
-                    <SelectTrigger className="h-11 touch-manipulation">
+                    <SelectTrigger className={cn('h-11 touch-manipulation', formData.supplyDeviceRating === 'LIM' && 'opacity-40')}>
                       <SelectValue placeholder="Select BS standard" />
                     </SelectTrigger>
                     <SelectContent className="max-w-[calc(100vw-2rem)]">
@@ -527,8 +548,9 @@ const EICSupplyCharacteristicsSection: React.FC<EICSupplyCharacteristicsSectionP
                   <Select
                     value={formData.supplyDeviceType || ''}
                     onValueChange={(value) => onUpdate('supplyDeviceType', value)}
+                    disabled={formData.supplyDeviceRating === 'LIM'}
                   >
-                    <SelectTrigger className="h-11 touch-manipulation">
+                    <SelectTrigger className={cn('h-11 touch-manipulation', formData.supplyDeviceRating === 'LIM' && 'opacity-40')}>
                       <SelectValue placeholder="Select type" />
                     </SelectTrigger>
                     <SelectContent className="max-w-[calc(100vw-2rem)]">
@@ -544,55 +566,35 @@ const EICSupplyCharacteristicsSection: React.FC<EICSupplyCharacteristicsSectionP
                   <Label htmlFor="supplyDeviceRating" className="text-sm">
                     Rated Current (A)
                   </Label>
-                  <div className="flex gap-2">
-                    <Select
-                      value={
-                        formData.supplyDeviceRating === 'LIM'
-                          ? ''
-                          : formData.supplyDeviceRating || ''
-                      }
-                      onValueChange={(value) => onUpdate('supplyDeviceRating', value)}
-                      disabled={formData.supplyDeviceRating === 'LIM'}
-                    >
-                      <SelectTrigger
-                        className={cn(
-                          'h-11 touch-manipulation flex-1',
-                          formData.supplyDeviceRating === 'LIM' && 'opacity-40'
-                        )}
-                      >
-                        <SelectValue
-                          placeholder={
-                            formData.supplyDeviceRating === 'LIM' ? 'LIM' : 'Select rating'
-                          }
-                        />
-                      </SelectTrigger>
-                      <SelectContent className="max-w-[calc(100vw-2rem)] max-h-[300px]">
-                        {getAvailableRatings().map((rating) => (
-                          <SelectItem key={rating} value={rating}>
-                            {rating}A
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                    <button
-                      type="button"
-                      onClick={() => {
-                        if (formData.supplyDeviceRating === 'LIM') {
-                          onUpdate('supplyDeviceRating', '');
-                        } else {
-                          onUpdate('supplyDeviceRating', 'LIM');
-                        }
-                      }}
+                  <Select
+                    value={
+                      formData.supplyDeviceRating === 'LIM'
+                        ? ''
+                        : formData.supplyDeviceRating || ''
+                    }
+                    onValueChange={(value) => onUpdate('supplyDeviceRating', value)}
+                    disabled={formData.supplyDeviceRating === 'LIM'}
+                  >
+                    <SelectTrigger
                       className={cn(
-                        'h-11 px-3 rounded-md text-sm font-semibold touch-manipulation transition-colors shrink-0',
-                        formData.supplyDeviceRating === 'LIM'
-                          ? 'bg-orange-500 text-black'
-                          : 'bg-white/10 text-white hover:bg-white/20'
+                        'h-11 touch-manipulation',
+                        formData.supplyDeviceRating === 'LIM' && 'opacity-40'
                       )}
                     >
-                      LIM
-                    </button>
-                  </div>
+                      <SelectValue
+                        placeholder={
+                          formData.supplyDeviceRating === 'LIM' ? 'LIM' : 'Select rating'
+                        }
+                      />
+                    </SelectTrigger>
+                    <SelectContent className="max-w-[calc(100vw-2rem)] max-h-[300px]">
+                      {getAvailableRatings().map((rating) => (
+                        <SelectItem key={rating} value={rating}>
+                          {rating}A
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
                 </div>
               </div>
             </div>

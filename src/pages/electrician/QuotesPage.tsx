@@ -29,6 +29,8 @@ import { SwipeableQuoteCard } from '@/components/electrician/quote-builder/Swipe
 import { AnimatePresence } from 'framer-motion';
 import { ConfirmationDialog } from '@/components/ui/confirmation-dialog';
 import { toast } from '@/hooks/use-toast';
+import { createQuickTaskBatch } from '@/utils/createQuickTask';
+import { ClipboardCheck } from 'lucide-react';
 
 const QuotesPage = () => {
   const navigate = useNavigate();
@@ -38,6 +40,7 @@ const QuotesPage = () => {
   const [quoteToDelete, setQuoteToDelete] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState('');
   const [showSearch, setShowSearch] = useState(false);
+  const [creatingFollowUps, setCreatingFollowUps] = useState(false);
 
   const {
     savedQuotes,
@@ -124,6 +127,48 @@ const QuotesPage = () => {
       },
     };
   }, [savedQuotes]);
+
+  // Stale sent quotes (sent 7+ days ago, not yet approved/rejected)
+  const staleQuotes = useMemo(() => {
+    const sevenDaysAgo = new Date();
+    sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
+    return savedQuotes.filter(
+      (q) =>
+        (q.status === 'sent' || q.status === 'pending') &&
+        q.updatedAt &&
+        new Date(q.updatedAt) < sevenDaysAgo
+    );
+  }, [savedQuotes]);
+
+  const handleCreateFollowUps = async () => {
+    setCreatingFollowUps(true);
+    try {
+      const tomorrow = new Date();
+      tomorrow.setDate(tomorrow.getDate() + 1);
+      tomorrow.setHours(9, 0, 0, 0);
+
+      const tasks = staleQuotes.map((q) => ({
+        title: `Follow up: Quote ${q.quoteNumber || ''}${q.client?.name ? ` — ${q.client.name}` : ''}`.trim(),
+        priority: 'normal' as const,
+        dueAt: tomorrow.toISOString(),
+        tags: ['follow-up', 'quote'],
+      }));
+
+      const count = await createQuickTaskBatch(tasks);
+      toast({
+        title: 'Follow-up tasks created',
+        description: `${count} follow-up ${count === 1 ? 'task' : 'tasks'} added for tomorrow.`,
+      });
+    } catch (error: any) {
+      toast({
+        title: 'Failed',
+        description: error?.message || 'Could not create follow-up tasks.',
+        variant: 'destructive',
+      });
+    } finally {
+      setCreatingFollowUps(false);
+    }
+  };
 
   const setFilter = (newFilter: string) => {
     if (newFilter === 'all') {
@@ -354,6 +399,25 @@ const QuotesPage = () => {
             </button>
           </div>
         </section>
+
+        {/* Follow-up task prompt for stale sent quotes */}
+        {staleQuotes.length > 0 && (
+          <div className="flex items-center gap-3 p-3 rounded-xl bg-purple-500/[0.08] border border-purple-500/20">
+            <ClipboardCheck className="h-5 w-5 text-purple-400 shrink-0" />
+            <p className="text-sm text-white flex-1">
+              {staleQuotes.length} {staleQuotes.length === 1 ? 'quote' : 'quotes'} sent 7+ days ago
+              — create follow-up tasks?
+            </p>
+            <button
+              type="button"
+              onClick={handleCreateFollowUps}
+              disabled={creatingFollowUps}
+              className="px-3 h-9 rounded-lg bg-purple-500/20 text-purple-400 text-sm font-semibold touch-manipulation active:bg-purple-500/30 transition-colors disabled:opacity-50"
+            >
+              {creatingFollowUps ? 'Creating...' : 'Create'}
+            </button>
+          </div>
+        )}
 
         {/* Analytics Dashboard */}
         {savedQuotes.length > 0 && (

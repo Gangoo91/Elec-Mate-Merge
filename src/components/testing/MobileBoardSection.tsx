@@ -24,7 +24,11 @@ interface MobileBoardSectionProps {
   board: DistributionBoard;
   isExpanded: boolean;
   onToggleExpanded: () => void;
-  onUpdateBoard: (boardId: string, field: keyof DistributionBoard, value: any) => void;
+  onUpdateBoard: (
+    boardId: string,
+    field: keyof DistributionBoard | Record<string, any>,
+    value?: any
+  ) => void;
   onRemoveBoard?: (boardId: string) => void;
   onAddCircuit: (boardId: string) => void;
   circuitCount: number;
@@ -331,13 +335,14 @@ const MobileBoardSection: React.FC<MobileBoardSectionProps> = ({
                 e.preventDefault();
                 e.stopPropagation();
                 const newValue = !board.spdNA;
-                onUpdateBoard(board.id, 'spdNA', newValue);
-                if (newValue) {
-                  onUpdateBoard(board.id, 'spdOperationalStatus', false);
-                  onUpdateBoard(board.id, 'spdT1', false);
-                  onUpdateBoard(board.id, 'spdT2', false);
-                  onUpdateBoard(board.id, 'spdT3', false);
-                }
+                onUpdateBoard(board.id, {
+                  spdNA: newValue,
+                  ...(newValue
+                    ? {
+                        spdOperationalStatus: false,
+                      }
+                    : {}),
+                });
               }}
               className={`h-11 rounded-lg text-sm font-medium transition-all touch-manipulation active:scale-95 flex items-center gap-2 px-3 cursor-pointer select-none ${
                 board.spdNA
@@ -353,40 +358,9 @@ const MobileBoardSection: React.FC<MobileBoardSectionProps> = ({
               <span className="pointer-events-none">N/A</span>
             </button>
 
-            {/* SPD Type T1, T2, T3 - only show when SPD is applicable */}
+            {/* SPD OK - only show when SPD is applicable */}
             {!board.spdNA && (
               <>
-                {(['T1', 'T2', 'T3'] as const).map((type) => {
-                  const fieldName = `spd${type}` as 'spdT1' | 'spdT2' | 'spdT3';
-                  const isChecked = board[fieldName] ?? false;
-                  return (
-                    <button
-                      key={type}
-                      type="button"
-                      onClick={(e) => {
-                        e.preventDefault();
-                        e.stopPropagation();
-                        onUpdateBoard(board.id, fieldName, !isChecked);
-                      }}
-                      className={`h-11 px-3 rounded-lg text-sm font-medium transition-all touch-manipulation active:scale-95 flex items-center gap-2 cursor-pointer select-none ${
-                        isChecked
-                          ? 'bg-blue-500/20 border border-blue-500/30 text-blue-400'
-                          : 'bg-card border border-border/50 text-white'
-                      }`}
-                    >
-                      <div
-                        className={`w-4 h-4 rounded border-2 flex items-center justify-center flex-shrink-0 pointer-events-none ${isChecked ? 'bg-blue-500 border-blue-500' : 'border-white'}`}
-                      >
-                        {isChecked && <Check className="h-3 w-3 text-white" />}
-                      </div>
-                      <span className="pointer-events-none">{type}</span>
-                    </button>
-                  );
-                })}
-
-                {/* Divider */}
-                <div className="h-6 w-px bg-border/50 mx-1" />
-
                 {/* SPD OK */}
                 <button
                   type="button"

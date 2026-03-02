@@ -305,6 +305,13 @@ const EICRSummary = ({ formData: propFormData, onUpdate: propOnUpdate }: EICRSum
       });
 
       const formattedJson = await formatEICRJson(dataForPdf, savedReportId);
+
+      // Save formatted payload for email/reports page reuse
+      await supabase
+        .from('reports')
+        .update({ pdf_payload: formattedJson })
+        .eq('report_id', savedReportId);
+
       console.log(
         '[PDF Generation] Formatted EICR JSON (first 200 chars):',
         JSON.stringify(formattedJson).substring(0, 200)

@@ -429,6 +429,14 @@ export default function FireAlarmCertificate() {
 
       const pdfData = formatFireAlarmJson(dataWithCertNumber);
 
+      // Save formatted payload for email/reports page reuse
+      if (savedReportId) {
+        await supabase
+          .from('reports')
+          .update({ pdf_payload: pdfData })
+          .eq('report_id', savedReportId);
+      }
+
       const { data: functionData, error: functionError } = await supabase.functions.invoke(
         'generate-fire-alarm-pdf',
         {

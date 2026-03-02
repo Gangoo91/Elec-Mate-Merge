@@ -78,9 +78,14 @@ const MultiboardSetup: React.FC<MultiboardSetupProps> = ({
   };
 
   // Handle updating a board field
-  const handleUpdateBoard = (boardId: string, field: keyof DistributionBoard, value: any) => {
+  const handleUpdateBoard = (
+    boardId: string,
+    field: keyof DistributionBoard | Record<string, any>,
+    value?: any
+  ) => {
+    const updates = typeof field === 'string' ? { [field]: value } : field;
     const updatedBoards = currentBoards.map((b) =>
-      b.id === boardId ? { ...b, [field]: value, updatedAt: new Date() } : b
+      b.id === boardId ? { ...b, ...updates, updatedAt: new Date() } : b
     );
     onBoardsChange(updatedBoards);
   };

@@ -310,6 +310,14 @@ const MinorWorksPdfGenerator: React.FC<MinorWorksPdfGeneratorProps> = ({
         }
       });
 
+      // Save formatted payload for email/reports page reuse
+      if (savedReportId) {
+        await supabase
+          .from('reports')
+          .update({ pdf_payload: formattedFormData })
+          .eq('report_id', savedReportId);
+      }
+
       const { data: functionData, error: functionError } = await supabase.functions.invoke(
         'generate-minor-works-pdf',
         {

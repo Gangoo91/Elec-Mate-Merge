@@ -479,6 +479,14 @@ export default function EVChargingCertificate() {
       // Use the standardised JSON formatter for BS 7671:2018+A3:2024 compliance
       const pdfData = formatEVChargingJson(dataWithCertNumber);
 
+      // Save formatted payload for email/reports page reuse
+      if (savedReportId) {
+        await supabase
+          .from('reports')
+          .update({ pdf_payload: pdfData })
+          .eq('report_id', savedReportId);
+      }
+
       // Call edge function
       const { data: functionData, error: functionError } = await supabase.functions.invoke(
         'generate-ev-charging-pdf',

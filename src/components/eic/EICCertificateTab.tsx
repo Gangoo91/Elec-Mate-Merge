@@ -9,6 +9,7 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { Button } from '@/components/ui/button';
 import {
   Award,
+  Beaker,
   Shield,
   User,
   FileText,
@@ -31,6 +32,7 @@ import { useIsMobile } from '@/hooks/use-mobile';
 import { useHaptics } from '@/hooks/useHaptics';
 import { useCompanyProfile } from '@/hooks/useCompanyProfile';
 import { useInspectorProfiles } from '@/hooks/useInspectorProfiles';
+import { applyEICDevFill } from '@/utils/eicDevFill';
 
 interface EICCertificateTabProps {
   formData: any;
@@ -292,6 +294,17 @@ const EICCertificateTab: React.FC<EICCertificateTabProps> = ({
                 >
                   <Sparkles className="h-5 w-5 mr-2" />
                   Fill from Business Settings
+                </Button>
+                <Button
+                  onClick={() => applyEICDevFill(onUpdate)}
+                  className={cn(
+                    'h-12 touch-manipulation bg-purple-500/20 hover:bg-purple-500/30 border border-purple-500/40 text-purple-400 font-medium rounded-xl active:scale-[0.98] transition-transform',
+                    isMobile ? 'w-full' : 'flex-1'
+                  )}
+                  variant="outline"
+                >
+                  <Beaker className="h-5 w-5 mr-2" />
+                  Dev Fill All
                 </Button>
               </div>
 

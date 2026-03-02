@@ -35,6 +35,8 @@ import { VoiceHeaderButton } from '@/components/electrician/VoiceHeaderButton';
 import { QuoteInvoiceAnalytics } from '@/components/electrician/analytics';
 import StripeConnectBanner from '@/components/electrician/StripeConnectBanner';
 import { openOrDownloadPdf } from '@/utils/pdf-download';
+import { createQuickTaskBatch } from '@/utils/createQuickTask';
+import { ClipboardCheck } from 'lucide-react';
 
 const InvoicesPage = () => {
   const { invoices, isLoading, fetchInvoices, deleteInvoice, lastUpdated } = useInvoiceStorage();
@@ -53,6 +55,7 @@ const InvoicesPage = () => {
   const [sharingWhatsAppId, setSharingWhatsAppId] = useState<string | null>(null);
   const [sharingEmailId, setSharingEmailId] = useState<string | null>(null);
   const [stripeRefreshKey, setStripeRefreshKey] = useState(0);
+  const [creatingChaseTasks, setCreatingChaseTasks] = useState(false);
 
   // Pull to refresh handler
   const handleRefresh = useCallback(async () => {
@@ -354,6 +357,38 @@ const InvoicesPage = () => {
     };
   }, [invoices]);
 
+  // Chase task creation for overdue invoices
+  const handleCreateChaseTasks = async () => {
+    setCreatingChaseTasks(true);
+    try {
+      const overdueInvoices = invoices.filter((i) => {
+        const isOverdue = i.invoice_due_date && isPast(new Date(i.invoice_due_date));
+        return isOverdue || i.invoice_status === 'overdue';
+      });
+
+      const tasks = overdueInvoices.map((inv) => ({
+        title: `Chase payment: Invoice ${inv.invoice_number || ''}${inv.client?.name ? ` — ${inv.client.name}` : ''}`.trim(),
+        priority: 'high' as const,
+        dueAt: new Date().toISOString(),
+        tags: ['chase', 'invoice'],
+      }));
+
+      const count = await createQuickTaskBatch(tasks);
+      toast({
+        title: 'Chase tasks created',
+        description: `${count} chase ${count === 1 ? 'task' : 'tasks'} added to your task list.`,
+      });
+    } catch (error: any) {
+      toast({
+        title: 'Failed',
+        description: error?.message || 'Could not create chase tasks.',
+        variant: 'destructive',
+      });
+    } finally {
+      setCreatingChaseTasks(false);
+    }
+  };
+
   // Filter invoices
   const filteredInvoices = useMemo(() => {
     let filtered = invoices;
@@ -609,6 +644,24 @@ const InvoicesPage = () => {
       <main className="px-4 py-4 space-y-4">
         {/* Stripe Connect Banner - Prompt to enable card payments */}
         <StripeConnectBanner refreshKey={stripeRefreshKey} />
+
+        {/* Chase task prompt for overdue invoices */}
+        {stats.overdue > 0 && (
+          <div className="flex items-center gap-3 p-3 rounded-xl bg-purple-500/[0.08] border border-purple-500/20">
+            <ClipboardCheck className="h-5 w-5 text-purple-400 shrink-0" />
+            <p className="text-sm text-white flex-1">
+              {stats.overdue} overdue — create chase tasks?
+            </p>
+            <button
+              type="button"
+              onClick={handleCreateChaseTasks}
+              disabled={creatingChaseTasks}
+              className="px-3 h-9 rounded-lg bg-purple-500/20 text-purple-400 text-sm font-semibold touch-manipulation active:bg-purple-500/30 transition-colors disabled:opacity-50"
+            >
+              {creatingChaseTasks ? 'Creating...' : 'Create'}
+            </button>
+          </div>
+        )}
 
         {/* Financial Snapshot Card - Clean iOS Design */}
         <section className="rounded-2xl bg-white/[0.03] border border-white/[0.06] overflow-hidden">

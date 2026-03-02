@@ -228,7 +228,7 @@ const ProtectiveDeviceCellsComponent: React.FC<ProtectiveDeviceCellsProps> = ({
       </TableCell>
 
       {/* Column 12: Maximum permitted Zs (Ω)§ */}
-      <TableCell className="p-0 h-8 align-middle w-28 min-w-[100px] max-w-[100px]">
+      <TableCell className="p-0 h-8 align-middle w-28 min-w-[110px] max-w-[110px]">
         <div className="flex items-center gap-1">
           <EnhancedValidatedInput
             value={result.maxZs || ''}

@@ -27,6 +27,7 @@ export interface CertificateEmailData {
   inspectionDate?: string;
   overallAssessment?: string;
   companyName?: string;
+  formattedData?: Record<string, any>;
 }
 
 export interface SendEmailParams {
@@ -94,6 +95,7 @@ export const useCertificateEmail = (data: CertificateEmailData): UseCertificateE
               reportId: data.reportId,
               recipientEmail,
               customMessage,
+              formattedData: data.formattedData,
             },
           }
         );

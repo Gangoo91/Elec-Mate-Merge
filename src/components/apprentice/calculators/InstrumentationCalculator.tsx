@@ -1,26 +1,26 @@
-import { useState, useMemo } from 'react';
-import {
-  Gauge,
-  RotateCcw,
-  AlertTriangle,
-  Zap,
-  Info,
-  BookOpen,
-  ChevronDown,
-  CheckCircle,
-} from 'lucide-react';
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
+import { useState, useMemo, useCallback } from 'react';
+import { Copy, Check, ChevronDown, AlertTriangle, CheckCircle } from 'lucide-react';
+import { useToast } from '@/hooks/use-toast';
 import { cn } from '@/lib/utils';
 import {
   CalculatorCard,
+  CalculatorSection,
+  CalculatorInputGrid,
   CalculatorInput,
   CalculatorSelect,
   CalculatorActions,
-  CalculatorResult,
   ResultValue,
   ResultsGrid,
+  ResultBadge,
+  CalculatorFormula,
+  CalculatorDivider,
+  FormulaReference,
   CALCULATOR_CONFIG,
 } from '@/components/calculators/shared';
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
+
+const CAT = 'testing' as const;
+const config = CALCULATOR_CONFIG[CAT];
 
 interface CalculationResult {
   current: number;
@@ -31,11 +31,40 @@ interface CalculationResult {
   supplyMargin?: number;
   cableDrop?: number;
   powerInShunt?: number;
-  status: 'success' | 'warning' | 'error';
+  status: 'pass' | 'warning' | 'fail';
 }
 
+const unitOptions = [
+  { value: 'bar', label: 'bar (Pressure)' },
+  { value: '°C', label: '°C (Temperature)' },
+  { value: '°F', label: '°F (Temperature)' },
+  { value: 'L/min', label: 'L/min (Flow)' },
+  { value: 'm³/h', label: 'm³/h (Flow)' },
+  { value: 'rpm', label: 'rpm (Speed)' },
+  { value: 'pH', label: 'pH (Acidity)' },
+  { value: '%', label: '% (Level/Humidity)' },
+];
+
+const currentOptions = [
+  { value: '4', label: '4.0 mA (0%)' },
+  { value: '6', label: '6.0 mA (12.5%)' },
+  { value: '8', label: '8.0 mA (25%)' },
+  { value: '10', label: '10.0 mA (37.5%)' },
+  { value: '12', label: '12.0 mA (50%)' },
+  { value: '14', label: '14.0 mA (62.5%)' },
+  { value: '16', label: '16.0 mA (75%)' },
+  { value: '18', label: '18.0 mA (87.5%)' },
+  { value: '20', label: '20.0 mA (100%)' },
+];
+
+const formatNum = (num: number | undefined, decimals = 2): string => {
+  if (num === undefined) return '0';
+  return num.toFixed(decimals);
+};
+
 const InstrumentationCalculator = () => {
-  const config = CALCULATOR_CONFIG['testing'];
+  const { toast } = useToast();
+  const [copied, setCopied] = useState(false);
 
   // Core inputs
   const [minScale, setMinScale] = useState('');
@@ -45,12 +74,11 @@ const InstrumentationCalculator = () => {
   const [targetCurrent, setTargetCurrent] = useState('');
   const [unit, setUnit] = useState('bar');
 
-  // Loop analysis inputs
+  // Loop analysis inputs (always visible, sensible defaults)
   const [supplyVoltage, setSupplyVoltage] = useState('24');
   const [shuntResistor, setShuntResistor] = useState('250');
   const [cableLength, setCableLength] = useState('');
   const [cableResistance, setCableResistance] = useState('0.1');
-  const [showLoopAnalysis, setShowLoopAnalysis] = useState(false);
 
   const [showGuidance, setShowGuidance] = useState(false);
   const [showReference, setShowReference] = useState(false);
@@ -109,19 +137,21 @@ const InstrumentationCalculator = () => {
       supplyMargin = supply - shuntVoltage;
 
       if (cableLength && cableResistance) {
-        const length = parseFloat(cableLength);
+        const len = parseFloat(cableLength);
         const resistance = parseFloat(cableResistance);
-        cableDrop = (current / 1000) * (resistance * length * 2);
-        supplyMargin -= cableDrop;
+        if (len > 0 && resistance > 0) {
+          cableDrop = (current / 1000) * (resistance * len * 2);
+          supplyMargin -= cableDrop;
+        }
       }
     }
 
     // Determine status
-    let status: 'success' | 'warning' | 'error' = 'success';
-    if (current < 4 || current > 20) status = 'error';
+    let status: 'pass' | 'warning' | 'fail' = 'pass';
+    if (current < 4 || current > 20) status = 'fail';
     else if (current < 4.5 || current > 19.5) status = 'warning';
-    else if (supplyMargin && supplyMargin < 5) status = 'warning';
-    else if (supplyMargin && supplyMargin < 2) status = 'error';
+    else if (supplyMargin !== undefined && supplyMargin < 2) status = 'fail';
+    else if (supplyMargin !== undefined && supplyMargin < 5) status = 'warning';
 
     return {
       current,
@@ -146,7 +176,7 @@ const InstrumentationCalculator = () => {
     cableResistance,
   ]);
 
-  const reset = () => {
+  const handleReset = useCallback(() => {
     setMinScale('');
     setMaxScale('');
     setInputValue('');
@@ -157,54 +187,49 @@ const InstrumentationCalculator = () => {
     setShuntResistor('250');
     setCableLength('');
     setCableResistance('0.1');
-  };
+  }, []);
 
-  const formatNumber = (num: number | undefined, decimals = 2): string => {
-    if (num === undefined) return '0';
-    return num.toFixed(decimals);
+  const handleCopy = () => {
+    if (!result) return;
+    const text = [
+      '4-20mA Instrumentation Results',
+      `Current Output: ${formatNum(result.current, 2)} mA`,
+      `Engineering Value: ${formatNum(result.engineeringValue, 2)} ${unit}`,
+      `Percentage: ${formatNum(result.percentage, 1)}%`,
+      `Trip Points: Low ${formatNum(result.tripPoints.low, 1)}mA / High ${formatNum(result.tripPoints.high, 1)}mA`,
+      ...(result.shuntVoltage
+        ? [`Shunt Voltage: ${formatNum(result.shuntVoltage * 1000, 0)}mV`]
+        : []),
+      ...(result.supplyMargin !== undefined
+        ? [`Supply Margin: ${formatNum(result.supplyMargin, 1)}V`]
+        : []),
+    ].join('\n');
+    navigator.clipboard.writeText(text);
+    setCopied(true);
+    toast({ title: 'Copied to clipboard' });
+    setTimeout(() => setCopied(false), 2000);
   };
 
   const hasValidInputs = () => minScale && maxScale && (inputValue || targetCurrent);
 
-  const unitOptions = [
-    { value: 'bar', label: 'bar (Pressure)' },
-    { value: '°C', label: '°C (Temperature)' },
-    { value: '°F', label: '°F (Temperature)' },
-    { value: 'L/min', label: 'L/min (Flow)' },
-    { value: 'm³/h', label: 'm³/h (Flow)' },
-    { value: 'rpm', label: 'rpm (Speed)' },
-    { value: 'pH', label: 'pH (Acidity)' },
-    { value: '%', label: '% (Level/Humidity)' },
-  ];
-
-  const currentOptions = [
-    { value: '4', label: '4.0 mA (0%)' },
-    { value: '6', label: '6.0 mA (12.5%)' },
-    { value: '8', label: '8.0 mA (25%)' },
-    { value: '10', label: '10.0 mA (37.5%)' },
-    { value: '12', label: '12.0 mA (50%)' },
-    { value: '14', label: '14.0 mA (62.5%)' },
-    { value: '16', label: '16.0 mA (75%)' },
-    { value: '18', label: '18.0 mA (87.5%)' },
-    { value: '20', label: '20.0 mA (100%)' },
-  ];
-
-  const getStatusColor = (status: string) => {
-    if (status === 'success') return 'text-green-400';
-    if (status === 'warning') return 'text-amber-400';
-    return 'text-red-400';
+  const getStatusLabel = (): string => {
+    if (!result) return '';
+    if (result.status === 'pass') return 'Normal Range';
+    if (result.status === 'warning') return 'Near Limits';
+    return 'Out of Range';
   };
 
+  const hasLoopData = result && (result.shuntVoltage !== undefined || result.supplyMargin !== undefined);
+
   return (
-    <div className="space-y-4">
-      <CalculatorCard
-        category="testing"
-        title="4-20mA Instrumentation"
-        description="Calculate current output for alarm trip points and loop analysis"
-        badge="4-20mA"
-      >
-        {/* Scale Range */}
-        <div className="grid grid-cols-2 gap-3">
+    <CalculatorCard
+      category={CAT}
+      title="4-20mA Instrumentation"
+      description="Calculate current output for alarm trip points and loop analysis"
+    >
+      {/* Scale Range */}
+      <CalculatorSection title="Scale Range">
+        <CalculatorInputGrid columns={2} className="grid-cols-2">
           <CalculatorInput
             label="Min Scale"
             type="text"
@@ -221,15 +246,17 @@ const InstrumentationCalculator = () => {
             onChange={setMaxScale}
             placeholder="100"
           />
-        </div>
-
+        </CalculatorInputGrid>
         <CalculatorSelect
           label="Engineering Units"
           value={unit}
           onChange={setUnit}
           options={unitOptions}
         />
+      </CalculatorSection>
 
+      {/* Input Value */}
+      <CalculatorSection title="Input Value">
         <CalculatorSelect
           label="Input Type"
           value={inputType}
@@ -241,7 +268,7 @@ const InstrumentationCalculator = () => {
         />
 
         <CalculatorInput
-          label={inputType === 'percentage' ? 'Percentage' : `Trip Setpoint`}
+          label={inputType === 'percentage' ? 'Percentage' : 'Trip Setpoint'}
           unit={inputType === 'percentage' ? '%' : unit}
           type="text"
           inputMode="decimal"
@@ -262,287 +289,317 @@ const InstrumentationCalculator = () => {
           options={currentOptions}
           placeholder="Select mA value"
         />
+      </CalculatorSection>
 
-        {/* Loop Analysis Toggle */}
-        <button
-          onClick={() => setShowLoopAnalysis(!showLoopAnalysis)}
-          className="w-full flex items-center justify-between p-3 rounded-xl bg-white/5 border border-white/10 text-white/70 hover:bg-white/10 transition-colors"
-        >
-          <div className="flex items-center gap-2">
-            <Zap className="h-4 w-4 text-purple-400" />
-            <span className="text-sm">Loop Analysis (Optional)</span>
-          </div>
-          <ChevronDown
-            className={cn('h-4 w-4 transition-transform', showLoopAnalysis && 'rotate-180')}
+      {/* Loop Analysis */}
+      <CalculatorSection title="Loop Analysis">
+        <CalculatorInputGrid columns={2} className="grid-cols-2">
+          <CalculatorInput
+            label="Supply Voltage"
+            unit="V"
+            type="text"
+            inputMode="decimal"
+            value={supplyVoltage}
+            onChange={setSupplyVoltage}
+            placeholder="24"
           />
-        </button>
+          <CalculatorInput
+            label="Shunt Resistor"
+            unit="Ω"
+            type="text"
+            inputMode="decimal"
+            value={shuntResistor}
+            onChange={setShuntResistor}
+            placeholder="250"
+          />
+        </CalculatorInputGrid>
+        <CalculatorInputGrid columns={2} className="grid-cols-2">
+          <CalculatorInput
+            label="Cable Length"
+            unit="m"
+            type="text"
+            inputMode="decimal"
+            value={cableLength}
+            onChange={setCableLength}
+            placeholder="Optional"
+          />
+          <CalculatorInput
+            label="Cable R"
+            unit="Ω/m"
+            type="text"
+            inputMode="decimal"
+            value={cableResistance}
+            onChange={setCableResistance}
+            placeholder="0.1"
+          />
+        </CalculatorInputGrid>
+      </CalculatorSection>
 
-        {showLoopAnalysis && (
-          <div className="space-y-3 p-3 rounded-xl bg-white/5 border border-white/10">
-            <div className="grid grid-cols-2 gap-3">
-              <CalculatorInput
-                label="Supply Voltage"
-                unit="V"
-                type="text"
-                inputMode="decimal"
-                value={supplyVoltage}
-                onChange={setSupplyVoltage}
-                placeholder="24"
-              />
-              <CalculatorInput
-                label="Shunt Resistor"
-                unit="Ω"
-                type="text"
-                inputMode="decimal"
-                value={shuntResistor}
-                onChange={setShuntResistor}
-                placeholder="250"
-              />
-            </div>
-            <div className="grid grid-cols-2 gap-3">
-              <CalculatorInput
-                label="Cable Length"
-                unit="m"
-                type="text"
-                inputMode="decimal"
-                value={cableLength}
-                onChange={setCableLength}
-                placeholder="Optional"
-              />
-              <CalculatorInput
-                label="Cable R"
-                unit="Ω/m"
-                type="text"
-                inputMode="decimal"
-                value={cableResistance}
-                onChange={setCableResistance}
-                placeholder="0.1"
-              />
-            </div>
-          </div>
-        )}
+      <CalculatorActions
+        category={CAT}
+        onCalculate={() => {}}
+        onReset={handleReset}
+        isDisabled={!hasValidInputs()}
+        calculateLabel="Calculate"
+        showReset={!!(minScale || maxScale || inputValue || targetCurrent)}
+      />
 
-        <CalculatorActions
-          category="testing"
-          onCalculate={() => {}}
-          onReset={reset}
-          isDisabled={!hasValidInputs()}
-          calculateLabel="Live Results Below"
-        />
-      </CalculatorCard>
-
-      {/* Results */}
+      {/* ── Results ── */}
       {result && (
         <div className="space-y-4 animate-fade-in">
-          <CalculatorResult category="testing">
-            <div className="flex items-center justify-between pb-3 border-b border-white/10">
-              <span className="text-sm text-white/60">4-20mA Output</span>
-              <span className={cn('text-sm font-medium', getStatusColor(result.status))}>
-                {result.status === 'success'
-                  ? 'Normal Range'
-                  : result.status === 'warning'
-                    ? 'Near Limits'
-                    : 'Out of Range'}
-              </span>
-            </div>
+          {/* Status + Copy */}
+          <div className="flex items-center justify-between">
+            <ResultBadge status={result.status} label={getStatusLabel()} />
+            <button
+              onClick={handleCopy}
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 text-white text-xs font-medium transition-colors touch-manipulation min-h-[44px]"
+            >
+              {copied ? <Check className="h-3.5 w-3.5" /> : <Copy className="h-3.5 w-3.5" />}
+              {copied ? 'Copied' : 'Copy'}
+            </button>
+          </div>
 
-            <div className="text-center py-4">
-              <p className="text-sm text-white/60 mb-1">Current Output</p>
-              <div
-                className="text-4xl font-bold bg-clip-text text-transparent"
-                style={{
-                  backgroundImage: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})`,
-                }}
-              >
-                {formatNumber(result.current, 2)} mA
-              </div>
-              <p className="text-sm text-white/80 mt-1">
-                {formatNumber(result.percentage, 1)}% of scale
+          {/* Hero value */}
+          <div className="text-center py-3">
+            <p className="text-sm font-medium text-white mb-1">Current Output</p>
+            <p
+              className="text-4xl sm:text-5xl font-bold bg-clip-text text-transparent"
+              style={{
+                backgroundImage: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})`,
+              }}
+            >
+              {formatNum(result.current, 2)} mA
+            </p>
+            <p className="text-sm text-white mt-2">
+              {formatNum(result.percentage, 1)}% of scale
+            </p>
+          </div>
+
+          {/* Core results */}
+          <ResultsGrid columns={2}>
+            <ResultValue
+              label="Engineering Value"
+              value={formatNum(result.engineeringValue, 2)}
+              unit={unit}
+              category={CAT}
+              size="sm"
+            />
+            <ResultValue
+              label="Percentage"
+              value={formatNum(result.percentage, 1)}
+              unit="%"
+              category={CAT}
+              size="sm"
+            />
+            <ResultValue
+              label="Low Trip (10%)"
+              value={formatNum(result.tripPoints.low, 1)}
+              unit="mA"
+              category={CAT}
+              size="sm"
+            />
+            <ResultValue
+              label="High Trip (90%)"
+              value={formatNum(result.tripPoints.high, 1)}
+              unit="mA"
+              category={CAT}
+              size="sm"
+            />
+          </ResultsGrid>
+
+          {/* Loop Analysis Results */}
+          {hasLoopData && (
+            <ResultsGrid columns={2}>
+              {result.shuntVoltage !== undefined && (
+                <ResultValue
+                  label="Shunt Voltage"
+                  value={formatNum(result.shuntVoltage * 1000, 0)}
+                  unit="mV"
+                  category={CAT}
+                  size="sm"
+                />
+              )}
+              {result.supplyMargin !== undefined && (
+                <ResultValue
+                  label="Supply Margin"
+                  value={formatNum(result.supplyMargin, 1)}
+                  unit="V"
+                  category={CAT}
+                  size="sm"
+                />
+              )}
+              {result.cableDrop !== undefined && (
+                <ResultValue
+                  label="Cable Drop"
+                  value={formatNum(result.cableDrop, 2)}
+                  unit="V"
+                  category={CAT}
+                  size="sm"
+                />
+              )}
+              {result.powerInShunt !== undefined && (
+                <ResultValue
+                  label="Shunt Power"
+                  value={formatNum(result.powerInShunt, 1)}
+                  unit="mW"
+                  category={CAT}
+                  size="sm"
+                />
+              )}
+            </ResultsGrid>
+          )}
+
+          {/* Status warnings */}
+          {result.status === 'warning' && (
+            <div className="flex items-start gap-2 p-3 rounded-lg bg-amber-500/10 border border-amber-500/30">
+              <AlertTriangle className="h-4 w-4 text-amber-400 mt-0.5 shrink-0" />
+              <p className="text-sm text-white">
+                Values near operating limits. Verify adequate margin for reliable operation.
               </p>
             </div>
+          )}
 
-            <ResultsGrid columns={2}>
-              <ResultValue
-                label="Engineering Value"
-                value={formatNumber(result.engineeringValue, 2)}
-                unit={unit}
-                category="testing"
-                size="sm"
-              />
-              <ResultValue
-                label="Percentage"
-                value={formatNumber(result.percentage, 1)}
-                unit="%"
-                category="testing"
-                size="sm"
-              />
-              <ResultValue
-                label="Low Trip (10%)"
-                value={formatNumber(result.tripPoints.low, 1)}
-                unit="mA"
-                category="testing"
-                size="sm"
-              />
-              <ResultValue
-                label="High Trip (90%)"
-                value={formatNumber(result.tripPoints.high, 1)}
-                unit="mA"
-                category="testing"
-                size="sm"
-              />
-            </ResultsGrid>
-
-            {/* Loop Analysis Results */}
-            {(result.shuntVoltage || result.supplyMargin) && (
-              <div className="pt-3 mt-3 border-t border-white/10">
-                <p className="text-xs text-white/80 mb-2">Loop Analysis</p>
-                <ResultsGrid columns={2}>
-                  {result.shuntVoltage && (
-                    <ResultValue
-                      label="Shunt Voltage"
-                      value={formatNumber(result.shuntVoltage * 1000, 0)}
-                      unit="mV"
-                      category="testing"
-                      size="sm"
-                    />
-                  )}
-                  {result.supplyMargin && (
-                    <ResultValue
-                      label="Supply Margin"
-                      value={formatNumber(result.supplyMargin, 1)}
-                      unit="V"
-                      category="testing"
-                      size="sm"
-                    />
-                  )}
-                  {result.cableDrop && (
-                    <ResultValue
-                      label="Cable Drop"
-                      value={formatNumber(result.cableDrop, 2)}
-                      unit="V"
-                      category="testing"
-                      size="sm"
-                    />
-                  )}
-                  {result.powerInShunt && (
-                    <ResultValue
-                      label="Shunt Power"
-                      value={formatNumber(result.powerInShunt, 1)}
-                      unit="mW"
-                      category="testing"
-                      size="sm"
-                    />
-                  )}
-                </ResultsGrid>
-              </div>
-            )}
-          </CalculatorResult>
-
-          {/* Status Warnings */}
-          {result.status === 'warning' && (
-            <div className="p-3 rounded-xl bg-amber-500/10 border border-amber-500/30">
-              <div className="flex items-start gap-2">
-                <AlertTriangle className="h-4 w-4 text-amber-400 mt-0.5 shrink-0" />
-                <p className="text-sm text-amber-200">
-                  Values near operating limits. Verify adequate margin for reliable operation.
-                </p>
-              </div>
+          {result.status === 'fail' && (
+            <div className="flex items-start gap-2 p-3 rounded-lg bg-red-500/10 border border-red-500/30">
+              <AlertTriangle className="h-4 w-4 text-red-400 mt-0.5 shrink-0" />
+              <p className="text-sm text-white">
+                Values outside 4-20mA operating range. Check inputs.
+              </p>
             </div>
           )}
 
-          {result.status === 'error' && (
-            <div className="p-3 rounded-xl bg-red-500/10 border border-red-500/30">
-              <div className="flex items-start gap-2">
-                <AlertTriangle className="h-4 w-4 text-red-400 mt-0.5 shrink-0" />
-                <p className="text-sm text-red-200">
-                  Values outside 4-20mA operating range. Check inputs.
-                </p>
-              </div>
-            </div>
-          )}
+          <CalculatorDivider category={CAT} />
 
-          {/* Guidance */}
+          {/* ── How It Worked Out ── */}
+          <CalculatorFormula
+            category={CAT}
+            title="How It Worked Out"
+            defaultOpen
+            steps={[
+              {
+                label: 'Scale range',
+                formula: `Span = ${maxScale} − ${minScale} = ${parseFloat(maxScale) - parseFloat(minScale)} ${unit}`,
+                value: `LRV: ${minScale} ${unit}, URV: ${maxScale} ${unit}`,
+              },
+              {
+                label: 'Linear scaling',
+                formula: `I = 4 + 16 × (${formatNum(result.engineeringValue, 2)} − ${minScale}) ÷ ${parseFloat(maxScale) - parseFloat(minScale)}`,
+                value: `${formatNum(result.current, 2)} mA (${formatNum(result.percentage, 1)}%)`,
+              },
+              {
+                label: 'Engineering conversion',
+                formula: `PV = ${minScale} + ${parseFloat(maxScale) - parseFloat(minScale)} × ${formatNum(result.percentage, 1)}%`,
+                value: `${formatNum(result.engineeringValue, 2)} ${unit}`,
+              },
+              ...(result.shuntVoltage !== undefined
+                ? [
+                    {
+                      label: 'Loop analysis',
+                      formula: `V_shunt = ${formatNum(result.current, 2)}mA × ${shuntResistor}Ω${result.cableDrop !== undefined ? ` | Cable drop = ${formatNum(result.current, 2)}mA × ${cableResistance}Ω/m × 2 × ${cableLength}m` : ''}`,
+                      value: `Shunt: ${formatNum(result.shuntVoltage * 1000, 0)}mV${result.supplyMargin !== undefined ? ` | Margin: ${formatNum(result.supplyMargin, 1)}V` : ''}`,
+                    },
+                  ]
+                : []),
+            ]}
+          />
+
+          {/* ── What This Means ── */}
           <Collapsible open={showGuidance} onOpenChange={setShowGuidance}>
-            <div className="calculator-card overflow-hidden" style={{ borderColor: '#60a5fa15' }}>
-              <CollapsibleTrigger className="agent-collapsible-trigger w-full">
-                <div className="flex items-center gap-3">
-                  <CheckCircle className="h-4 w-4 text-blue-400" />
-                  <span className="text-sm sm:text-base font-medium text-blue-300">
-                    What This Means
-                  </span>
-                </div>
-                <ChevronDown
-                  className={cn(
-                    'h-4 w-4 text-white/70 transition-transform duration-200',
-                    showGuidance && 'rotate-180'
-                  )}
-                />
-              </CollapsibleTrigger>
-
-              <CollapsibleContent className="p-4 pt-0">
-                <ul className="space-y-2 text-sm text-blue-200/80">
-                  <li className="flex items-start gap-2">
-                    <span className="text-blue-400 mt-1">•</span>
-                    Set calibrator to {formatNumber(result.current, 1)}mA to simulate{' '}
-                    {formatNumber(result.engineeringValue, 2)} {unit}
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-blue-400 mt-1">•</span>
-                    This represents {formatNumber(result.percentage, 1)}% of scale - ideal for trip
-                    testing
-                  </li>
-                  {result.shuntVoltage && (
-                    <li className="flex items-start gap-2">
-                      <span className="text-blue-400 mt-1">•</span>
-                      Monitor {formatNumber(result.shuntVoltage * 1000, 0)}mV across shunt to
-                      confirm signal
+            <CollapsibleTrigger className="flex items-center justify-between w-full min-h-11 py-2.5 px-3 rounded-lg text-sm font-medium text-white hover:bg-white/5 transition-all touch-manipulation">
+              <span>What This Means</span>
+              <ChevronDown
+                className={cn(
+                  'h-4 w-4 transition-transform duration-200',
+                  showGuidance && 'rotate-180'
+                )}
+              />
+            </CollapsibleTrigger>
+            <CollapsibleContent className="pt-2">
+              <div
+                className="p-3 rounded-xl border space-y-3"
+                style={{
+                  borderColor: `${config.gradientFrom}15`,
+                  background: `${config.gradientFrom}05`,
+                }}
+              >
+                <ul className="space-y-2">
+                  {[
+                    `Set calibrator to ${formatNum(result.current, 1)}mA to simulate ${formatNum(result.engineeringValue, 2)} ${unit}`,
+                    `This represents ${formatNum(result.percentage, 1)}% of scale — ideal for trip testing`,
+                    ...(result.shuntVoltage
+                      ? [
+                          `Monitor ${formatNum(result.shuntVoltage * 1000, 0)}mV across shunt to confirm signal`,
+                        ]
+                      : []),
+                  ].map((item, idx) => (
+                    <li key={idx} className="flex items-start gap-2 text-sm text-white">
+                      <CheckCircle className="h-4 w-4 text-purple-400 mt-0.5 shrink-0" />
+                      {item}
                     </li>
-                  )}
+                  ))}
                 </ul>
-              </CollapsibleContent>
-            </div>
+              </div>
+            </CollapsibleContent>
+          </Collapsible>
+
+          {/* ── 4-20mA Reference ── */}
+          <Collapsible open={showReference} onOpenChange={setShowReference}>
+            <CollapsibleTrigger className="flex items-center justify-between w-full min-h-11 py-2.5 px-3 rounded-lg text-sm font-medium text-white hover:bg-white/5 transition-all touch-manipulation">
+              <span>4-20mA Reference</span>
+              <ChevronDown
+                className={cn(
+                  'h-4 w-4 transition-transform duration-200',
+                  showReference && 'rotate-180'
+                )}
+              />
+            </CollapsibleTrigger>
+            <CollapsibleContent className="pt-2">
+              <div
+                className="p-3 rounded-xl border space-y-3"
+                style={{
+                  borderColor: `${config.gradientFrom}15`,
+                  background: `${config.gradientFrom}05`,
+                }}
+              >
+                <ul className="space-y-2">
+                  {[
+                    { term: 'Live Zero (4mA)', desc: 'Allows detection of broken wires vs. zero reading' },
+                    { term: 'Current Loop', desc: 'Immune to voltage drops over long cable runs' },
+                    { term: 'Typical Shunt', desc: '250Ω gives 1-5V output for PLC analogue inputs' },
+                  ].map((item) => (
+                    <li key={item.term} className="flex items-start gap-2 text-sm">
+                      <span
+                        className="w-1.5 h-1.5 rounded-full mt-2 shrink-0"
+                        style={{ backgroundColor: config.gradientFrom }}
+                      />
+                      <span className="text-white">
+                        <span className="font-medium">{item.term}:</span> {item.desc}
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+                <p className="text-xs text-white pt-2 border-t border-white/10">
+                  BS 7671: Use screened cables and proper earthing for instrumentation circuits.
+                </p>
+              </div>
+            </CollapsibleContent>
           </Collapsible>
         </div>
       )}
 
-      {/* Reference */}
-      <Collapsible open={showReference} onOpenChange={setShowReference}>
-        <div className="calculator-card overflow-hidden" style={{ borderColor: '#fbbf2415' }}>
-          <CollapsibleTrigger className="agent-collapsible-trigger w-full">
-            <div className="flex items-center gap-3">
-              <BookOpen className="h-4 w-4 text-amber-400" />
-              <span className="text-sm sm:text-base font-medium text-amber-300">4-20mA Basics</span>
-            </div>
-            <ChevronDown
-              className={cn(
-                'h-4 w-4 text-white/70 transition-transform duration-200',
-                showReference && 'rotate-180'
-              )}
-            />
-          </CollapsibleTrigger>
-
-          <CollapsibleContent className="p-4 pt-0">
-            <div className="space-y-3 text-sm text-amber-200/80">
-              <p>
-                <strong className="text-amber-300">Live Zero (4mA):</strong> Allows detection of
-                broken wires vs. zero reading
-              </p>
-              <p>
-                <strong className="text-amber-300">Current Loop:</strong> Immune to voltage drops
-                over long cable runs
-              </p>
-              <p>
-                <strong className="text-amber-300">Typical Shunt:</strong> 250Ω gives 1-5V output
-                for PLC analog inputs
-              </p>
-              <p className="text-xs text-white/80 pt-2 border-t border-white/10">
-                BS 7671: Use screened cables and proper earthing for instrumentation circuits.
-              </p>
-            </div>
-          </CollapsibleContent>
-        </div>
-      </Collapsible>
-    </div>
+      {/* Formula reference (always visible) */}
+      <FormulaReference
+        category={CAT}
+        name="4-20mA Scaling"
+        formula="I = 4 + 16 × (PV − LRV) ÷ Span"
+        variables={[
+          { symbol: 'I', description: 'Current output (mA)' },
+          { symbol: 'PV', description: 'Process variable (engineering units)' },
+          { symbol: 'LRV', description: 'Lower range value' },
+          { symbol: 'Span', description: 'URV − LRV (full scale range)' },
+        ]}
+      />
+    </CalculatorCard>
   );
 };
 
