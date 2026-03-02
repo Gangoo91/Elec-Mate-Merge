@@ -468,8 +468,8 @@ const handler = async (req: Request): Promise<Response> => {
     // ========================================================================
     // STEP 5: Determine recipient email
     // ========================================================================
-    const reportData = report.data || {};
-    const clientEmail = recipientEmail || reportData.clientEmail;
+    const reportData = report.pdf_payload || report.form_data || report.data || {};
+    const clientEmail = recipientEmail || reportData.clientEmail || reportData.client_email;
 
     if (!isValidEmail(clientEmail)) {
       console.error('❌ Invalid client email:', clientEmail);
@@ -538,7 +538,7 @@ const handler = async (req: Request): Promise<Response> => {
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({
-            formData: formattedDataFromClient || report.pdf_payload || report.data,
+            formData: formattedDataFromClient || report.pdf_payload || report.form_data,
             reportId: report.report_id,
           }),
         });
@@ -612,10 +612,15 @@ const handler = async (req: Request): Promise<Response> => {
     const emailHtml = buildCertificateEmailHtml({
       certificateType: certificateTypeDisplay,
       certificateNumber: report.certificate_number,
-      clientName: report.client_name || reportData.clientName,
-      installationAddress: report.installation_address || reportData.installationAddress,
-      inspectionDate: report.inspection_date || reportData.inspectionDate,
-      overallAssessment: reportData.overallAssessment,
+      clientName: report.client_name || reportData.clientName || reportData.client_name,
+      installationAddress:
+        report.installation_address ||
+        reportData.installationAddress ||
+        reportData.installation_address,
+      inspectionDate:
+        report.inspection_date || reportData.inspectionDate || reportData.inspection_date,
+      overallAssessment:
+        reportData.overallAssessment || reportData.overall_assessment || report.overall_assessment,
       companyName: companyName,
       companyPhone: companyProfile?.company_phone,
       companyEmail: companyProfile?.company_email,
