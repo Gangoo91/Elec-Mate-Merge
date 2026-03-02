@@ -512,6 +512,8 @@ const handler = async (req: Request): Promise<Response> => {
       edgeFunctionName = 'generate-fire-alarm-pdf';
     } else if (reportType === 'emergency-lighting' || reportType === 'emergency lighting') {
       edgeFunctionName = 'generate-emergency-lighting-pdf';
+    } else if (reportType === 'solar-pv' || reportType === 'solar pv') {
+      edgeFunctionName = 'generate-solar-pv-pdf';
     } else {
       console.error('❌ Unsupported report type:', reportType);
       throw new Error(`Unsupported certificate type: "${report.report_type}"`);
@@ -607,7 +609,9 @@ const handler = async (req: Request): Promise<Response> => {
               ? 'Fire Alarm'
               : reportType === 'emergency-lighting'
                 ? 'Emergency Lighting'
-                : reportType.toUpperCase();
+                : reportType === 'solar-pv'
+                  ? 'Solar PV'
+                  : reportType.toUpperCase();
 
     const emailHtml = buildCertificateEmailHtml({
       certificateType: certificateTypeDisplay,
