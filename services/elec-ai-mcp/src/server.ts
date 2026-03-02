@@ -29,6 +29,7 @@ import { RateLimitError } from './middleware/rate-limiter.js';
 import { EdgeFunctionBlockedError } from './middleware/edge-function-guard.js';
 import { createUserClient } from './lib/supabase.js';
 import { cleanupRateLimiter } from './middleware/rate-limiter.js';
+import { handleProvisionAgent } from './api/provision-agent.js';
 
 // ─── Graceful shutdown ─────────────────────────────────────────────────
 let isShuttingDown = false;
@@ -91,7 +92,7 @@ function startHttp(): void {
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, DELETE, OPTIONS');
     res.setHeader(
       'Access-Control-Allow-Headers',
-      'Content-Type, Authorization, X-Request-Id, X-API-Key'
+      'Content-Type, Authorization, X-Request-Id, X-API-Key, X-Sender-Phone'
     );
     res.setHeader('Access-Control-Expose-Headers', 'X-Request-Id');
     res.setHeader('Access-Control-Max-Age', '86400');
@@ -148,6 +149,9 @@ function startHttp(): void {
     res.status(statusCode).json(health);
   });
 
+  // ── Agent provisioning endpoint ──────────────────────────────────
+  app.post('/api/provision-agent', handleProvisionAgent);
+
   // ── MCP Streamable HTTP endpoint ───────────────────────────────────
   app.post('/mcp', async (req, res) => {
     if (isShuttingDown) {
@@ -158,7 +162,8 @@ function startHttp(): void {
     try {
       const userContext = await authenticateUser(
         req.headers.authorization,
-        req.headers['x-api-key'] as string | undefined
+        req.headers['x-api-key'] as string | undefined,
+        req.headers['x-sender-phone'] as string | undefined
       );
 
       const server = new McpServer({

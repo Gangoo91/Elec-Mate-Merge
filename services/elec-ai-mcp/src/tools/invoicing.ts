@@ -14,8 +14,27 @@
  */
 
 import type { UserContext } from '../auth.js';
+import { randomUUID } from 'node:crypto';
 
 import { callEdgeFunction } from '../lib/edge-function.js';
+
+/** Generate an invoice number: INV-YYMM-NNN */
+function generateInvoiceNumber(): string {
+  const now = new Date();
+  const year = now.getFullYear().toString().slice(-2);
+  const month = (now.getMonth() + 1).toString().padStart(2, '0');
+  const random = Math.floor(Math.random() * 1000).toString().padStart(3, '0');
+  return `INV-${year}${month}-${random}`;
+}
+
+/** Generate a quote_number for standalone invoices (required NOT NULL column) */
+function generateStandaloneQuoteNumber(): string {
+  const now = new Date();
+  const year = now.getFullYear().toString().slice(-2);
+  const month = (now.getMonth() + 1).toString().padStart(2, '0');
+  const random = Math.floor(Math.random() * 1000).toString().padStart(3, '0');
+  return `INV-${year}${month}-${random}`;
+}
 
 export async function readInvoices(args: Record<string, unknown>, user: UserContext) {
   const supabase = user.supabase;
@@ -64,8 +83,11 @@ export async function createInvoice(args: Record<string, unknown>, user: UserCon
     throw new Error('At least one line item is required');
   }
 
-  // Validate each line item
-  const lineItems: Array<{ description: string; quantity: number; unit_price: number }> = [];
+  // Validate each line item — store in camelCase format matching the app
+  const lineItems: Array<{
+    id: string; description: string; category: string; quantity: number;
+    unitPrice: number; totalPrice: number; unit: string; notes: string;
+  }> = [];
   for (const item of args.line_items) {
     if (typeof item !== 'object' || item === null) {
       throw new Error(
@@ -79,13 +101,20 @@ export async function createInvoice(args: Record<string, unknown>, user: UserCon
     if (typeof li.quantity !== 'number' || li.quantity <= 0) {
       throw new Error('Line item quantity must be a positive number');
     }
-    if (typeof li.unit_price !== 'number' || li.unit_price < 0) {
+    const price = typeof li.unit_price === 'number' ? li.unit_price : (typeof li.unitPrice === 'number' ? li.unitPrice : -1);
+    if (price < 0) {
       throw new Error('Line item unit_price must be zero or positive');
     }
+    const qty = li.quantity as number;
     lineItems.push({
+      id: randomUUID(),
       description: li.description.trim(),
-      quantity: li.quantity,
-      unit_price: li.unit_price,
+      category: typeof li.category === 'string' ? li.category : 'labour',
+      quantity: qty,
+      unitPrice: price,
+      totalPrice: Math.round(qty * price * 100) / 100,
+      unit: typeof li.unit === 'string' ? li.unit : 'each',
+      notes: typeof li.notes === 'string' ? li.notes : '',
     });
   }
 
@@ -95,7 +124,7 @@ export async function createInvoice(args: Record<string, unknown>, user: UserCon
       : 20;
   const dueDays = typeof args.due_days === 'number' && args.due_days > 0 ? args.due_days : 30;
 
-  const subtotal = lineItems.reduce((sum, item) => sum + item.quantity * item.unit_price, 0);
+  const subtotal = lineItems.reduce((sum, item) => sum + item.totalPrice, 0);
   const vat = subtotal * (vatRate / 100);
   const total = subtotal + vat;
 
@@ -131,15 +160,35 @@ export async function createInvoice(args: Record<string, unknown>, user: UserCon
   const dueDate = new Date();
   dueDate.setDate(dueDate.getDate() + dueDays);
 
-  const clientData = typeof args.client_id === 'string' ? { id: args.client_id } : {};
+  const invoiceNumber = generateInvoiceNumber();
+  const quoteNumber = generateStandaloneQuoteNumber();
+
+  // Resolve client data — look up full details from customers table if given client_id
+  let clientData: Record<string, unknown> = {};
+  if (typeof args.client_data === 'object' && args.client_data !== null) {
+    clientData = args.client_data as Record<string, unknown>;
+  }
+  if (typeof args.client_id === 'string') {
+    const { data: customer } = await supabase
+      .from('customers')
+      .select('id, name, email, phone, address, postcode')
+      .eq('id', args.client_id)
+      .single();
+    if (customer) {
+      clientData = { ...clientData, ...customer };
+    } else {
+      clientData = { ...clientData, id: args.client_id };
+    }
+  }
 
   const { data, error } = await supabase
     .from('quotes')
     .insert({
       user_id: user.userId,
+      quote_number: quoteNumber,
       client_data: clientData,
       items: lineItems,
-      settings: { vat_rate: vatRate },
+      settings: { vatRegistered: true, vatRate },
       subtotal: Math.round(subtotal * 100) / 100,
       overhead: 0,
       profit: 0,
@@ -147,22 +196,149 @@ export async function createInvoice(args: Record<string, unknown>, user: UserCon
       total: Math.round(total * 100) / 100,
       status: 'approved',
       invoice_raised: true,
+      invoice_number: invoiceNumber,
       invoice_status: 'draft',
       invoice_date: new Date().toISOString(),
       invoice_due_date: dueDate.toISOString(),
       invoice_notes: typeof args.notes === 'string' ? args.notes : null,
+      expiry_date: dueDate.toISOString(),
     })
-    .select('id, total, vat_amount, invoice_status')
+    .select('id, total, vat_amount, invoice_number, invoice_status')
     .single();
 
   if (error) throw new Error(`Failed to create invoice: ${error.message}`);
 
   return {
     invoice_id: data.id,
+    invoice_number: data.invoice_number,
     total: data.total,
     vat: data.vat_amount,
     status: data.invoice_status,
     warnings: warnings.length > 0 ? warnings : undefined,
+  };
+}
+
+export async function updateInvoice(args: Record<string, unknown>, user: UserContext) {
+  if (typeof args.invoice_id !== 'string') {
+    throw new Error('invoice_id is required');
+  }
+
+  const supabase = user.supabase;
+
+  // Fetch existing invoice
+  const { data: existing, error: fetchError } = await supabase
+    .from('quotes')
+    .select('*')
+    .eq('id', args.invoice_id)
+    .eq('invoice_raised', true)
+    .single();
+
+  if (fetchError || !existing) {
+    throw new Error('Invoice not found');
+  }
+
+  if (existing.invoice_status === 'paid') {
+    throw new Error('Cannot edit a paid invoice');
+  }
+
+  const updates: Record<string, unknown> = {};
+
+  // Client data
+  if (typeof args.client_data === 'object' && args.client_data !== null) {
+    updates.client_data = { ...(existing.client_data || {}), ...(args.client_data as object) };
+  }
+
+  // Notes
+  if (typeof args.notes === 'string') {
+    updates.invoice_notes = args.notes;
+  }
+
+  // Due date
+  if (typeof args.due_date === 'string') {
+    updates.invoice_due_date = args.due_date;
+    updates.expiry_date = args.due_date;
+  }
+
+  // Status (draft/sent only — paid handled separately)
+  if (typeof args.status === 'string' && ['draft', 'sent'].includes(args.status)) {
+    updates.invoice_status = args.status;
+  }
+
+  // Line items — recalculate totals, store in camelCase format matching the app
+  if (Array.isArray(args.line_items) && args.line_items.length > 0) {
+    const updatedItems: Array<{
+      id: string; description: string; category: string; quantity: number;
+      unitPrice: number; totalPrice: number; unit: string; notes: string;
+    }> = [];
+    for (const item of args.line_items) {
+      if (typeof item !== 'object' || item === null) {
+        throw new Error('Each line item must be an object with description, quantity, and unit_price');
+      }
+      const li = item as Record<string, unknown>;
+      if (typeof li.description !== 'string' || li.description.trim().length === 0) {
+        throw new Error('Line item description is required');
+      }
+      if (typeof li.quantity !== 'number' || li.quantity <= 0) {
+        throw new Error('Line item quantity must be a positive number');
+      }
+      const price = typeof li.unit_price === 'number' ? li.unit_price : (typeof li.unitPrice === 'number' ? li.unitPrice : -1);
+      if (price < 0) {
+        throw new Error('Line item unit_price must be zero or positive');
+      }
+      const qty = li.quantity as number;
+      updatedItems.push({
+        id: randomUUID(),
+        description: li.description.trim(),
+        category: typeof li.category === 'string' ? li.category : 'labour',
+        quantity: qty,
+        unitPrice: price,
+        totalPrice: Math.round(qty * price * 100) / 100,
+        unit: typeof li.unit === 'string' ? li.unit : 'each',
+        notes: typeof li.notes === 'string' ? li.notes : '',
+      });
+    }
+
+    const vatRate =
+      typeof args.vat_rate === 'number'
+        ? args.vat_rate
+        : existing.settings?.vatRate ?? existing.settings?.vat_rate ?? 20;
+
+    const subtotal = updatedItems.reduce((sum, item) => sum + item.totalPrice, 0);
+    const vat = subtotal * (vatRate / 100);
+    const total = subtotal + vat;
+
+    if (total <= 0) {
+      throw new Error('Invoice total must be greater than £0');
+    }
+
+    updates.items = updatedItems;
+    updates.subtotal = Math.round(subtotal * 100) / 100;
+    updates.vat_amount = Math.round(vat * 100) / 100;
+    updates.total = Math.round(total * 100) / 100;
+    updates.settings = { ...(existing.settings || {}), vatRegistered: true, vatRate };
+  }
+
+  if (Object.keys(updates).length === 0) {
+    throw new Error('No fields to update — provide at least one of: client_data, line_items, notes, due_date, status');
+  }
+
+  const { data, error } = await supabase
+    .from('quotes')
+    .update(updates)
+    .eq('id', args.invoice_id)
+    .select('id, total, vat_amount, invoice_number, invoice_status, client_data')
+    .single();
+
+  if (error) throw new Error(`Failed to update invoice: ${error.message}`);
+
+  return {
+    invoice_id: data.id,
+    invoice_number: data.invoice_number,
+    total: data.total,
+    vat: data.vat_amount,
+    status: data.invoice_status,
+    client: data.client_data,
+    updated_fields: Object.keys(updates),
   };
 }
 

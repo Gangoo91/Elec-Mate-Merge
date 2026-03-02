@@ -90,15 +90,16 @@ async function validateJwt(jwt: string): Promise<UserContext> {
   };
 }
 
-// ── API key → JWT cache ─────────────────────────────────────────────
-let _apiKeyJwtCache: { jwt: string; fetchedAt: number } | null = null;
+// ── API key → JWT cache (per phone number) ──────────────────────────
+const _apiKeyJwtCache = new Map<string, { jwt: string; fetchedAt: number }>();
 const API_KEY_JWT_TTL_MS = 30 * 60 * 1000; // 30 minutes
 
 /**
  * Authenticate via VPS API key.
- * Fetches (and caches) a user JWT from the get-agent-jwt edge function.
+ * Fetches a user JWT from the get-agent-jwt edge function using the sender's phone number.
+ * Each phone number resolves to a different Supabase user via the phone_number_routing table.
  */
-async function authenticateWithApiKey(apiKey: string): Promise<UserContext> {
+async function authenticateWithApiKey(apiKey: string, senderPhone?: string): Promise<UserContext> {
   if (!config.vpsApiKey) {
     throw new AuthError('api_key_disabled', 'API key auth is not configured');
   }
@@ -106,9 +107,12 @@ async function authenticateWithApiKey(apiKey: string): Promise<UserContext> {
     throw new AuthError('invalid_api_key', 'Invalid API key');
   }
 
-  // Use cached JWT if fresh
-  if (_apiKeyJwtCache && Date.now() - _apiKeyJwtCache.fetchedAt < API_KEY_JWT_TTL_MS) {
-    return validateJwt(_apiKeyJwtCache.jwt);
+  const phoneNumber = senderPhone || config.defaultPhone;
+
+  // Use per-phone cached JWT if fresh
+  const cached = _apiKeyJwtCache.get(phoneNumber);
+  if (cached && Date.now() - cached.fetchedAt < API_KEY_JWT_TTL_MS) {
+    return validateJwt(cached.jwt);
   }
 
   // Fetch a new JWT from the get-agent-jwt edge function
@@ -119,7 +123,7 @@ async function authenticateWithApiKey(apiKey: string): Promise<UserContext> {
       'X-VPS-API-Key': config.vpsApiKey,
       Authorization: `Bearer ${config.supabaseAnonKey}`,
     },
-    body: JSON.stringify({ phone_number: config.defaultPhone }),
+    body: JSON.stringify({ phone_number: phoneNumber }),
   });
 
   if (!res.ok) {
@@ -132,7 +136,7 @@ async function authenticateWithApiKey(apiKey: string): Promise<UserContext> {
     throw new AuthError('no_jwt', `No JWT returned: ${data.error || 'unknown'}`);
   }
 
-  _apiKeyJwtCache = { jwt: data.jwt, fetchedAt: Date.now() };
+  _apiKeyJwtCache.set(phoneNumber, { jwt: data.jwt, fetchedAt: Date.now() });
   return validateJwt(data.jwt);
 }
 
@@ -144,11 +148,12 @@ async function authenticateWithApiKey(apiKey: string): Promise<UserContext> {
  */
 export async function authenticateUser(
   authHeader: string | undefined,
-  apiKeyHeader?: string | undefined
+  apiKeyHeader?: string | undefined,
+  senderPhone?: string | undefined
 ): Promise<UserContext> {
   // Try API key auth first (X-API-Key header)
   if (apiKeyHeader) {
-    return authenticateWithApiKey(apiKeyHeader);
+    return authenticateWithApiKey(apiKeyHeader, senderPhone);
   }
 
   if (!authHeader) {
@@ -164,7 +169,7 @@ export async function authenticateUser(
   }
 
   // Otherwise treat as API key
-  return authenticateWithApiKey(token);
+  return authenticateWithApiKey(token, senderPhone);
 }
 
 /**

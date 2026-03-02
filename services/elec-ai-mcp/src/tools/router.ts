@@ -37,6 +37,7 @@ const handlers: Record<string, ToolHandler> = {
   // Quoting
   read_quotes: quoting.readQuotes,
   generate_quote: quoting.generateQuote,
+  update_quote: quoting.updateQuote,
   generate_quote_pdf: quoting.generateQuotePdf,
   send_quote: quoting.sendQuote,
   set_quote_auto_followup: quoting.setQuoteAutoFollowup,
@@ -63,6 +64,7 @@ const handlers: Record<string, ToolHandler> = {
   // Invoicing
   read_invoices: invoicing.readInvoices,
   create_invoice: invoicing.createInvoice,
+  update_invoice: invoicing.updateInvoice,
   generate_invoice_pdf: invoicing.generateInvoicePdf,
   send_invoice: invoicing.sendInvoice,
   get_overdue_invoices: invoicing.getOverdueInvoices,

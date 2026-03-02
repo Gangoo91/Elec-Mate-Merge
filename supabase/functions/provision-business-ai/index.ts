@@ -63,7 +63,7 @@ serve(async (req) => {
     const { data: profile, error: profileError } = await supabase
       .from('profiles')
       .select(
-        'business_ai_enabled, agent_phone_verified, agent_whatsapp_number, agent_status, role, email'
+        'business_ai_enabled, agent_phone_verified, agent_whatsapp_number, agent_status, role'
       )
       .eq('id', user.id)
       .single();
@@ -110,7 +110,7 @@ serve(async (req) => {
 
     const payload = buildAgentJwtPayload({
       userId: user.id,
-      email: profile.email || user.email || '',
+      email: user.email || '',
       userRole: profile.role || 'electrician',
       expiresAt,
     });
@@ -175,12 +175,46 @@ serve(async (req) => {
 
     console.log(`Agent provisioned for user ${user.id}, JWT expires ${expiresAtDate}`);
 
+    // Notify VPS to create OpenClaw agent workspace + binding
+    let vpsProvisioned = false;
+    const vpsApiKey = Deno.env.get('VPS_API_KEY');
+    if (vpsApiKey) {
+      try {
+        const vpsRes = await fetch('https://agent.elec-mate.com/api/provision-agent', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'X-API-Key': vpsApiKey,
+          },
+          body: JSON.stringify({
+            user_id: user.id,
+            phone_number: profile.agent_whatsapp_number,
+            full_name: user.user_metadata?.full_name || '',
+            role: profile.role || 'electrician',
+          }),
+        });
+        if (vpsRes.ok) {
+          vpsProvisioned = true;
+          console.log(`VPS agent provisioned for user ${user.id}`);
+        } else {
+          const vpsErr = await vpsRes.text();
+          console.error(`VPS provisioning failed (${vpsRes.status}): ${vpsErr}`);
+        }
+      } catch (vpsError) {
+        // VPS provisioning failure is non-fatal — Supabase side is already done
+        console.error('VPS provisioning error:', vpsError);
+      }
+    } else {
+      console.warn('VPS_API_KEY not set — skipping VPS agent provisioning');
+    }
+
     return new Response(
       JSON.stringify({
         provisioned: true,
         agent_status: 'active',
         expires_at: expiresAtDate,
         phone_number: profile.agent_whatsapp_number,
+        vps_provisioned: vpsProvisioned,
       }),
       {
         status: 200,

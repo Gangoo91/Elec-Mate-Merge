@@ -1,6 +1,6 @@
 import { useState, useCallback } from 'react';
 import { toast } from 'sonner';
-import { supabase } from '@/integrations/supabase/client';
+import { supabase, SUPABASE_PUBLISHABLE_KEY } from '@/integrations/supabase/client';
 
 interface StreamChunk {
   type:
@@ -171,8 +171,7 @@ export const useStreamingChat = (options: UseStreamingChatOptions = {}) => {
               ...(session?.access_token
                 ? {
                     Authorization: `Bearer ${session.access_token}`,
-                    apikey:
-                      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imp0d3lnYmVjZXVuZGZnbmtpcm9mIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDYyMTc2OTUsImV4cCI6MjA2MTc5MzY5NX0.NgMOzzNkreOiJ2_t_f90NJxIJTcpUninWPYnM7RkrY8',
+                    apikey: SUPABASE_PUBLISHABLE_KEY,
                   }
                 : {}),
             },

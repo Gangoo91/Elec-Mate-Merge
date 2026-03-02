@@ -36,6 +36,20 @@ serve(async (req) => {
       });
     }
 
+    // Normalise propertyDetails — accept string or object
+    const propStr = typeof propertyDetails === 'string'
+      ? propertyDetails
+      : JSON.stringify(propertyDetails);
+    const propBedrooms = typeof propertyDetails === 'object' && propertyDetails?.bedrooms
+      ? propertyDetails.bedrooms
+      : null;
+    const propType = typeof propertyDetails === 'object' && propertyDetails?.type
+      ? propertyDetails.type
+      : null;
+    const propFloors = typeof propertyDetails === 'object' && propertyDetails?.floors
+      ? propertyDetails.floors
+      : null;
+
     // Generate a unique quote variation seed
     const quoteSeed = Math.random().toString(36).substring(2, 8);
     const currentDate = new Date().toISOString();
@@ -53,7 +67,7 @@ CRITICAL REQUIREMENTS:
 
 PROPERTY DETAILS:
 - Job Type: ${jobType}
-- Property: ${JSON.stringify(propertyDetails)}
+- Property: ${propStr}
 - Client Requirements: ${clientRequirements || 'Standard installation to BS 7671'}
 - Region: ${region}
 - Quote Variation Seed: ${quoteSeed}
@@ -64,7 +78,7 @@ MATERIAL SPECIFICATIONS BY JOB TYPE:
 REWIRE:
 - Use 1.5mm² T&E for lighting circuits (NOT 2.5mm²)
 - Use 2.5mm² T&E for socket circuits
-- Consider property size: ${propertyDetails.bedrooms} bedrooms = ${parseInt(propertyDetails.bedrooms) * 150 + 200}m total cable approx
+- Consider property size: ${propBedrooms ? `${propBedrooms} bedrooms = ${parseInt(propBedrooms) * 150 + 200}m total cable approx` : 'estimate based on property description above'}
 - Vary consumer unit sizes: 8-way (small), 12-way (medium), 16-way (large)
 - Include earth bonding, testing equipment hire, waste disposal
 
@@ -128,7 +142,7 @@ IMPORTANT: Generate DIFFERENT materials, quantities, and prices each time. Avoid
           { role: 'system', content: systemMessage },
           {
             role: 'user',
-            content: `Generate a unique UK electrical quote for a ${jobType} in a ${propertyDetails.bedrooms}-bedroom ${propertyDetails.type} with ${propertyDetails.floors} floors.
+            content: `Generate a unique UK electrical quote for a ${jobType}${propBedrooms ? ` in a ${propBedrooms}-bedroom ${propType || 'property'} with ${propFloors || '2'} floors` : ` — property details: ${propStr}`}.
 
 SPECIFIC REQUIREMENTS:
 - Use proper cable specifications (1.5mm² lighting, 2.5mm² sockets)

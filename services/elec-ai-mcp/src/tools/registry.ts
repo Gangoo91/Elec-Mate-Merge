@@ -196,14 +196,83 @@ function registerQuotingTools(server: McpServer, user: UserContext): void {
 
   server.tool(
     'generate_quote',
-    'Generate a detailed quote using AI pricing and RAG data. Returns full breakdown for review.',
+    'Create a quote and save it to the database. The agent composes the items/pricing from the conversation. Returns quote_id for PDF generation.',
     {
-      job_type: z.string().describe('Type of electrical work'),
-      property_details: z.string().describe('Property type, size, age, etc.'),
-      client_requirements: z.string().describe('What the client wants done'),
-      region: z.string().optional().describe('UK region for regional pricing'),
+      client_data: z
+        .object({
+          name: z.string().describe('Client name'),
+          email: z.string().optional().describe('Client email'),
+          phone: z.string().optional().describe('Client phone'),
+          address: z.string().optional().describe('Job/client address'),
+          postcode: z.string().optional().describe('Postcode'),
+        })
+        .describe('Client details'),
+      job_details: z
+        .object({
+          title: z.string().describe('Short job title, e.g. "Lighting Replacement"'),
+          description: z.string().optional().describe('Full job description'),
+          estimatedDuration: z.string().optional().describe('e.g. "2 days"'),
+        })
+        .describe('Job details'),
+      items: z
+        .array(
+          z.object({
+            description: z.string().describe('Item description'),
+            category: z
+              .enum(['labour', 'materials', 'equipment'])
+              .describe('Item category'),
+            quantity: z.number().describe('Quantity'),
+            unitPrice: z.number().describe('Price per unit in GBP'),
+            unit: z.string().optional().describe('Unit type: each, metre, hours, etc.'),
+            notes: z.string().optional().describe('Optional notes'),
+          })
+        )
+        .describe('Line items — materials, labour, and equipment'),
+      vat_registered: z.boolean().optional().describe('Whether to apply VAT (default false)'),
+      vat_rate: z.number().optional().describe('VAT rate percentage (default 20)'),
+      notes: z.string().optional().describe('Quote notes'),
     },
     callTool('generate_quote', user)
+  );
+
+  server.tool(
+    'update_quote',
+    'Update an existing quote — change client details, items, notes, expiry date, or status. Recalculates totals if items change.',
+    {
+      quote_id: z.string().describe('Quote UUID to update'),
+      client_data: z
+        .object({
+          name: z.string().optional(),
+          email: z.string().optional(),
+          phone: z.string().optional(),
+          address: z.string().optional(),
+        })
+        .optional()
+        .describe('Client details to update (merged with existing)'),
+      job_details: z
+        .record(z.unknown())
+        .optional()
+        .describe('Job details to update (merged with existing)'),
+      items: z
+        .array(
+          z.object({
+            description: z.string(),
+            category: z.string().optional(),
+            quantity: z.number(),
+            unitPrice: z.number(),
+            unit: z.string().optional(),
+            notes: z.string().optional(),
+          })
+        )
+        .optional()
+        .describe('Replacement line items (replaces all items, recalculates totals)'),
+      vat_registered: z.boolean().optional().describe('VAT registered'),
+      vat_rate: z.number().optional().describe('VAT rate'),
+      notes: z.string().optional().describe('Quote notes'),
+      expiry_date: z.string().optional().describe('New expiry date (ISO-8601)'),
+      status: z.enum(['draft', 'sent', 'approved', 'rejected']).optional().describe('Quote status'),
+    },
+    callTool('update_quote', user)
   );
 
   server.tool(
@@ -440,9 +509,18 @@ function registerInvoicingTools(server: McpServer, user: UserContext): void {
 
   server.tool(
     'create_invoice',
-    'Create a draft invoice with line items.',
+    'Create a standalone draft invoice with line items. Provide client_data (name, email, phone, address) or client_id if a customer record exists.',
     {
-      client_id: z.string().describe('Client UUID'),
+      client_id: z.string().optional().describe('Customer UUID (if exists in customers table)'),
+      client_data: z
+        .object({
+          name: z.string().describe('Client name'),
+          email: z.string().optional().describe('Client email'),
+          phone: z.string().optional().describe('Client phone'),
+          address: z.string().optional().describe('Client address'),
+        })
+        .optional()
+        .describe('Client details for standalone invoices'),
       job_id: z.string().optional().describe('Linked job UUID'),
       line_items: z
         .array(
@@ -458,6 +536,38 @@ function registerInvoicingTools(server: McpServer, user: UserContext): void {
       notes: z.string().optional().describe('Invoice notes'),
     },
     callTool('create_invoice', user)
+  );
+
+  server.tool(
+    'update_invoice',
+    'Update an existing invoice — change client details, line items, notes, due date, or status. Cannot edit paid invoices. Recalculates totals if line items change.',
+    {
+      invoice_id: z.string().describe('Invoice UUID to update'),
+      client_data: z
+        .object({
+          name: z.string().optional(),
+          email: z.string().optional(),
+          phone: z.string().optional(),
+          address: z.string().optional(),
+        })
+        .optional()
+        .describe('Client details to update (merged with existing)'),
+      line_items: z
+        .array(
+          z.object({
+            description: z.string(),
+            quantity: z.number(),
+            unit_price: z.number(),
+          })
+        )
+        .optional()
+        .describe('Replacement line items (replaces all items, recalculates totals)'),
+      vat_rate: z.number().optional().describe('VAT rate for recalculation'),
+      notes: z.string().optional().describe('Invoice notes'),
+      due_date: z.string().optional().describe('New due date (ISO-8601)'),
+      status: z.enum(['draft', 'sent']).optional().describe('Invoice status'),
+    },
+    callTool('update_invoice', user)
   );
 
   server.tool(

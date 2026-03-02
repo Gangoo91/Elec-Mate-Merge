@@ -208,14 +208,45 @@ const handler = async (req: Request): Promise<Response> => {
     const clientData = safeJsonParse(invoice.client_data, {});
     console.log('📄 Client data keys:', Object.keys(clientData));
 
-    const clientEmail = clientData?.email?.trim();
+    let clientEmail = clientData?.email?.trim();
     const clientName = clientData?.name || 'Valued Client';
+
+    // If client_data has no valid email, look up the customer record
+    if (!isValidEmail(clientEmail) && clientData?.id) {
+      console.log('🔍 No email in client_data, looking up customer record:', clientData.id);
+      const { data: customer } = await supabaseClient
+        .from('customers')
+        .select('email')
+        .eq('id', clientData.id)
+        .single();
+      if (customer?.email) {
+        clientEmail = customer.email.trim();
+        console.log('✅ Found email from customer record:', clientEmail);
+      }
+    }
+
+    // If still no email, try matching by name under this user
+    if (!isValidEmail(clientEmail) && clientName && clientName !== 'Valued Client') {
+      console.log('🔍 Trying name match for:', clientName);
+      const { data: customer } = await supabaseClient
+        .from('customers')
+        .select('email')
+        .eq('user_id', user.id)
+        .ilike('name', clientName)
+        .not('email', 'is', null)
+        .limit(1)
+        .single();
+      if (customer?.email) {
+        clientEmail = customer.email.trim();
+        console.log('✅ Found email via name match:', clientEmail);
+      }
+    }
 
     if (!isValidEmail(clientEmail)) {
       console.error('❌ Invalid client email:', clientEmail);
       console.error('❌ Client data:', JSON.stringify(clientData).substring(0, 300));
       throw new Error(
-        `Invalid client email address: "${clientEmail || 'missing'}". Please update the invoice with a valid email.`
+        `Invalid client email address: "${clientEmail || 'missing'}". Please update the client record with a valid email.`
       );
     }
 
