@@ -21,7 +21,7 @@ interface UseEICAutoSaveOptions {
 export const useEICAutoSave = ({
   formData,
   interval = 30,
-  reportType = 'eicr',
+  reportType = 'eic',
   onSave,
   enabled = true,
 }: UseEICAutoSaveOptions) => {

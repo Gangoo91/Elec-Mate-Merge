@@ -223,6 +223,7 @@ export const EICFormProvider: React.FC<EICFormProviderProps> = ({
   } = useEICAutoSave({
     formData,
     interval: 30,
+    reportType: 'eic',
     enabled: true,
   });
 
