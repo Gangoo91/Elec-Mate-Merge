@@ -415,6 +415,7 @@ const handler = async (req: Request): Promise<Response> => {
     const reportId = body.reportId;
     const recipientEmail = body.recipientEmail;
     const customMessage = body.customMessage;
+    const formattedDataFromClient = body.formattedData;
 
     if (!reportId || typeof reportId !== 'string') {
       throw new Error('Report ID is required.');
@@ -537,7 +538,7 @@ const handler = async (req: Request): Promise<Response> => {
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({
-            formData: report.data,
+            formData: formattedDataFromClient || report.pdf_payload || report.data,
             reportId: report.report_id,
           }),
         });
@@ -626,10 +627,11 @@ const handler = async (req: Request): Promise<Response> => {
     // STEP 9: Send email via Resend
     // ========================================================================
     const replyToEmail = companyProfile?.company_email || 'info@elec-mate.com';
-    const subject =
-      `Your ${certificateTypeDisplay} Certificate - ${report.installation_address || report.certificate_number}`
-        .replace(/[\r\n]+/g, ' ')
-        .trim();
+    const addressOrRef = String(report.installation_address || report.certificate_number || '')
+      .replace(/[\r\n\t]+/g, ' ')
+      .replace(/\s{2,}/g, ' ')
+      .trim();
+    const subject = `Your ${certificateTypeDisplay} Certificate - ${addressOrRef}`.trim();
 
     console.log(`📧 Sending to: ${clientEmail}`);
     console.log(`📧 Reply-to: ${replyToEmail}`);

@@ -41,98 +41,170 @@ serve(async (req) => {
       throw new Error('Missing documentId or documentType');
     }
 
-    if (!['quote', 'invoice'].includes(documentType)) {
-      throw new Error('Invalid documentType. Must be "quote" or "invoice"');
+    const quoteInvoiceTypes = ['quote', 'invoice'];
+    const certificateTypes = [
+      'eic',
+      'eicr',
+      'minor-works',
+      'fire-alarm',
+      'emergency-lighting',
+      'solar-pv',
+      'pat-testing',
+      'ev-charging',
+    ];
+    const allValidTypes = [...quoteInvoiceTypes, ...certificateTypes];
+
+    if (!allValidTypes.includes(documentType)) {
+      throw new Error(
+        `Invalid documentType "${documentType}". Must be one of: ${allValidTypes.join(', ')}`
+      );
     }
+
+    const isCertificate = certificateTypes.includes(documentType);
 
     console.log(`📄 Generating temporary PDF link for ${documentType} ${documentId}`);
 
-    // Step 1: Fetch the document data
-    const { data: document, error: docError } = await userSupabase
-      .from('quotes')
-      .select('*')
-      .eq('id', documentId)
-      .single();
+    let pdfBlob: ArrayBuffer;
+    let pdfDocumentId: string | undefined;
 
-    if (docError || !document) {
-      throw new Error(`${documentType} not found`);
-    }
+    if (isCertificate) {
+      // --- Certificate path: read existing pdf_url from reports table ---
+      const { data: report, error: reportError } = await userSupabase
+        .from('reports')
+        .select('id, user_id, pdf_url, report_type')
+        .eq('id', documentId)
+        .single();
 
-    // Verify ownership
-    if (document.user_id !== user.id) {
-      throw new Error('Unauthorized access to document');
-    }
+      if (reportError || !report) {
+        throw new Error(`Certificate not found`);
+      }
 
-    // Step 2: Fetch company profile
-    const { data: companyProfile } = await supabase
-      .from('company_profiles')
-      .select('*')
-      .eq('user_id', user.id)
-      .single();
+      if (report.user_id !== user.id) {
+        throw new Error('Unauthorised access to certificate');
+      }
 
-    // Step 3: Generate PDF using PDF Monkey
-    console.log('🔨 Generating PDF via PDF Monkey...');
-    const pdfResponse = await fetch(`${supabaseUrl}/functions/v1/generate-pdf-monkey`, {
-      method: 'POST',
-      headers: {
-        Authorization: authHeader,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        quote: document,
-        companyProfile: companyProfile,
-        invoice_mode: documentType === 'invoice',
-        force_regenerate: true,
-      }),
-    });
+      if (!report.pdf_url) {
+        throw new Error(
+          'No PDF has been generated for this certificate yet. Please generate the PDF first, then share.'
+        );
+      }
 
-    if (!pdfResponse.ok) {
-      const errorText = await pdfResponse.text();
-      console.error('PDF Monkey error:', errorText);
-      throw new Error('Failed to generate PDF');
-    }
+      console.log('📋 Certificate PDF URL found:', report.pdf_url);
 
-    const pdfData = await pdfResponse.json();
-    let pdfDownloadUrl = pdfData?.downloadUrl;
-    const pdfDocumentId = pdfData?.documentId;
+      // If the pdf_url is a Supabase storage path, create a signed URL directly
+      if (report.pdf_url.startsWith('certificate-pdfs/') || report.pdf_url.startsWith('reports/')) {
+        const { data: signedUrlData, error: signedUrlError } = await supabase.storage
+          .from(report.pdf_url.split('/')[0])
+          .createSignedUrl(report.pdf_url.split('/').slice(1).join('/'), 604800);
 
-    // Poll for PDF if not immediately available
-    if (!pdfDownloadUrl && pdfDocumentId) {
-      console.log('⏳ Polling for PDF completion...');
-      for (let i = 0; i < 45; i++) {
-        await new Promise((resolve) => setTimeout(resolve, 2000));
-        const statusResponse = await fetch(`${supabaseUrl}/functions/v1/generate-pdf-monkey`, {
-          method: 'POST',
-          headers: {
-            Authorization: authHeader,
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({ documentId: pdfDocumentId, mode: 'status' }),
-        });
-        const statusData = await statusResponse.json();
-        if (statusData?.downloadUrl) {
-          pdfDownloadUrl = statusData.downloadUrl;
-          break;
+        if (signedUrlError || !signedUrlData?.signedUrl) {
+          console.error('Signed URL error:', signedUrlError);
+          throw new Error('Failed to generate signed URL for certificate');
+        }
+
+        console.log('✅ Signed URL generated from storage path (valid 7 days)');
+        return new Response(
+          JSON.stringify({
+            success: true,
+            publicUrl: signedUrlData.signedUrl,
+            expiresAt: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString(),
+            fileName: report.pdf_url,
+          }),
+          {
+            status: 200,
+            headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+          }
+        );
+      }
+
+      // Otherwise pdf_url is an external URL — download it
+      const pdfFileResponse = await fetch(report.pdf_url);
+      if (!pdfFileResponse.ok) {
+        throw new Error('Failed to download certificate PDF');
+      }
+      pdfBlob = await pdfFileResponse.arrayBuffer();
+      console.log(`📦 Certificate PDF downloaded: ${pdfBlob.byteLength} bytes`);
+    } else {
+      // --- Quote/Invoice path: generate via PDF Monkey ---
+      const { data: document, error: docError } = await userSupabase
+        .from('quotes')
+        .select('*')
+        .eq('id', documentId)
+        .single();
+
+      if (docError || !document) {
+        throw new Error(`${documentType} not found`);
+      }
+
+      if (document.user_id !== user.id) {
+        throw new Error('Unauthorised access to document');
+      }
+
+      const { data: companyProfile } = await supabase
+        .from('company_profiles')
+        .select('*')
+        .eq('user_id', user.id)
+        .single();
+
+      console.log('🔨 Generating PDF via PDF Monkey...');
+      const pdfResponse = await fetch(`${supabaseUrl}/functions/v1/generate-pdf-monkey`, {
+        method: 'POST',
+        headers: {
+          Authorization: authHeader,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          quote: document,
+          companyProfile: companyProfile,
+          invoice_mode: documentType === 'invoice',
+          force_regenerate: true,
+        }),
+      });
+
+      if (!pdfResponse.ok) {
+        const errorText = await pdfResponse.text();
+        console.error('PDF Monkey error:', errorText);
+        throw new Error('Failed to generate PDF');
+      }
+
+      const pdfData = await pdfResponse.json();
+      let pdfDownloadUrl = pdfData?.downloadUrl;
+      pdfDocumentId = pdfData?.documentId;
+
+      if (!pdfDownloadUrl && pdfDocumentId) {
+        console.log('⏳ Polling for PDF completion...');
+        for (let i = 0; i < 45; i++) {
+          await new Promise((resolve) => setTimeout(resolve, 2000));
+          const statusResponse = await fetch(`${supabaseUrl}/functions/v1/generate-pdf-monkey`, {
+            method: 'POST',
+            headers: {
+              Authorization: authHeader,
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ documentId: pdfDocumentId, mode: 'status' }),
+          });
+          const statusData = await statusResponse.json();
+          if (statusData?.downloadUrl) {
+            pdfDownloadUrl = statusData.downloadUrl;
+            break;
+          }
         }
       }
+
+      if (!pdfDownloadUrl) {
+        throw new Error('PDF generation timed out');
+      }
+
+      console.log('✅ PDF generated, downloading...');
+      const pdfFileResponse = await fetch(pdfDownloadUrl);
+      if (!pdfFileResponse.ok) {
+        throw new Error('Failed to download PDF from PDF Monkey');
+      }
+      pdfBlob = await pdfFileResponse.arrayBuffer();
+      console.log(`📦 PDF downloaded: ${pdfBlob.byteLength} bytes`);
     }
 
-    if (!pdfDownloadUrl) {
-      throw new Error('PDF generation timed out');
-    }
-
-    console.log('✅ PDF generated, downloading...');
-
-    // Step 4: Download the PDF from PDF Monkey
-    const pdfFileResponse = await fetch(pdfDownloadUrl);
-    if (!pdfFileResponse.ok) {
-      throw new Error('Failed to download PDF from PDF Monkey');
-    }
-
-    const pdfBlob = await pdfFileResponse.arrayBuffer();
-    console.log(`📦 PDF downloaded: ${pdfBlob.byteLength} bytes`);
-
-    // Step 5: Upload to Supabase Storage
+    // Upload to Supabase Storage
     const fileName = `${user.id}/${documentType}_${documentId}_${Date.now()}.pdf`;
 
     const { data: uploadData, error: uploadError } = await supabase.storage
@@ -150,10 +222,10 @@ serve(async (req) => {
 
     console.log('☁️ PDF uploaded to storage:', uploadData.path);
 
-    // Step 6: Generate signed URL (valid for 7 days)
+    // Generate signed URL (valid for 7 days)
     const { data: signedUrlData, error: signedUrlError } = await supabase.storage
       .from('temp-pdfs')
-      .createSignedUrl(fileName, 604800); // 7 days in seconds
+      .createSignedUrl(fileName, 604800);
 
     if (signedUrlError || !signedUrlData?.signedUrl) {
       console.error('Signed URL error:', signedUrlError);
@@ -163,9 +235,14 @@ serve(async (req) => {
     const publicUrl = signedUrlData.signedUrl;
     console.log('✅ Signed URL generated (valid 7 days):', publicUrl);
 
-    // Step 7: Update document with PDF metadata (optional - for tracking)
-    if (pdfDocumentId) {
-      const newVersion = (document.pdf_version || 0) + 1;
+    // Update quote/invoice with PDF metadata (for tracking)
+    if (!isCertificate && pdfDocumentId) {
+      const { data: document } = await userSupabase
+        .from('quotes')
+        .select('pdf_version')
+        .eq('id', documentId)
+        .single();
+      const newVersion = (((document as Record<string, unknown>)?.pdf_version as number) || 0) + 1;
       await supabase
         .from('quotes')
         .update({
@@ -180,7 +257,7 @@ serve(async (req) => {
       JSON.stringify({
         success: true,
         publicUrl,
-        expiresAt: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString(), // 7 days from now
+        expiresAt: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString(),
         fileName,
       }),
       {
@@ -188,12 +265,12 @@ serve(async (req) => {
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       }
     );
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('❌ Error in generate-temporary-pdf-link:', error);
     return new Response(
       JSON.stringify({
         success: false,
-        error: error.message || 'Failed to generate temporary PDF link',
+        error: error instanceof Error ? error.message : 'Failed to generate temporary PDF link',
       }),
       {
         status: 500,
