@@ -461,6 +461,15 @@ function registerInvoicingTools(server: McpServer, user: UserContext): void {
   );
 
   server.tool(
+    'generate_invoice_pdf',
+    'Generate a branded PDF of an invoice using the PDFMonkey template. Returns downloadUrl. To send as WhatsApp document, include MEDIA:<downloadUrl> on its own line.',
+    {
+      invoice_id: z.string().describe('Invoice UUID (same as quote UUID with invoice_raised=true)'),
+    },
+    callTool('generate_invoice_pdf', user)
+  );
+
+  server.tool(
     'send_invoice',
     'Send an invoice with a Stripe payment link.',
     {
@@ -486,7 +495,7 @@ function registerInvoicingTools(server: McpServer, user: UserContext): void {
 function registerRamsTools(server: McpServer, user: UserContext): void {
   server.tool(
     'create_rams',
-    'Generate a full RAMS (Risk Assessment & Method Statement) for a job. Calls AI directly (may take up to 2 minutes). Returns rams_id, hazard count, top risks, and PPE list. Then call generate_rams_pdf to create the PDF.',
+    'Generate a full RAMS (Risk Assessment & Method Statement) for a job using the full pipeline — runs H&S Agent + Install Planner in parallel with RAG-enhanced content and caching. May take up to 3 minutes. Returns rams_job_id, hazard count, method step count, top risks, and PPE list. Then call generate_rams_pdf with the rams_job_id to create the PDF.',
     {
       job_description: z
         .string()
@@ -496,17 +505,26 @@ function registerRamsTools(server: McpServer, user: UserContext): void {
       job_type: z
         .string()
         .describe('Type of work (e.g. consumer_unit_change, rewire, eicr, ev_charger, fire_alarm)'),
-      address: z.string().describe('Job site address'),
-      hazards: z.array(z.string()).optional().describe('Known hazards to include'),
+      location: z.string().describe('Job site address'),
+      project_name: z
+        .string()
+        .optional()
+        .describe('Project name (defaults to job_type - location)'),
+      contractor: z.string().optional().describe('Contractor name'),
+      supervisor: z.string().optional().describe('Supervisor name'),
+      job_scale: z
+        .enum(['domestic', 'commercial', 'industrial'])
+        .optional()
+        .describe('Job scale (default domestic)'),
     },
     callTool('create_rams', user)
   );
 
   server.tool(
     'generate_rams_pdf',
-    'Generate a PDF from a saved RAMS document. Call create_rams first to get the rams_id. Returns a downloadUrl. To send the PDF as a WhatsApp document attachment, include MEDIA:<downloadUrl> on its own line in your reply.',
+    'Generate a professional Combined RAMS PDF (risk assessment + method statement) from a completed RAMS job using the PDFMonkey template. Call create_rams first to get the rams_job_id. Returns a downloadUrl for the professionally formatted PDF. To send the PDF as a WhatsApp document attachment, include MEDIA:<downloadUrl> on its own line in your reply.',
     {
-      rams_id: z.string().describe('RAMS UUID from create_rams result'),
+      rams_job_id: z.string().describe('RAMS job UUID from create_rams result'),
     },
     callTool('generate_rams_pdf', user)
   );
@@ -810,9 +828,18 @@ function registerAgentInternalTools(server: McpServer, user: UserContext): void 
   );
 }
 
-// ─── Document Tools (1) ─────────────────────────────────────────────────
+// ─── Document Tools (2) ─────────────────────────────────────────────────
 
 function registerDocumentTools(server: McpServer, user: UserContext): void {
+  server.tool(
+    'generate_briefing_pdf',
+    'Generate a branded PDF of a team briefing / toolbox talk using the PDFMonkey template. Returns downloadUrl. To send as WhatsApp document, include MEDIA:<downloadUrl> on its own line.',
+    {
+      briefing_id: z.string().describe('Team briefing UUID from team_briefings table'),
+    },
+    callTool('generate_briefing_pdf', user)
+  );
+
   server.tool(
     'generate_shareable_link',
     'Create a 7-day signed URL for any PDF document (cert, quote, or invoice).',

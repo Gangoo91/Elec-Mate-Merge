@@ -30,11 +30,11 @@ const ALLOWED_FUNCTIONS = new Set([
   'send-expiry-reminders',
   // Invoicing
   'send-invoice-resend',
-  // RAMS & Compliance
-  'create-health-safety-job',
+  // RAMS & Compliance — agent uses create_rams MCP tool (not direct edge calls)
+  'create-rams-job',
   'health-safety-v3',
-  'installer-v3',
   'generate-rams-pdf',
+  'generate-combined-rams-pdf',
   'generate-method-statement-pdf',
   'submit-part-p-notification',
   // Expenses & Accounting

@@ -166,6 +166,57 @@ export async function createInvoice(args: Record<string, unknown>, user: UserCon
   };
 }
 
+export async function generateInvoicePdf(args: Record<string, unknown>, user: UserContext) {
+  if (typeof args.invoice_id !== 'string') {
+    throw new Error('invoice_id is required');
+  }
+
+  const supabase = user.supabase;
+
+  // generate-pdf-monkey with invoice_mode needs full quote/invoice data + company profile
+  const [quoteRes, profileRes] = await Promise.all([
+    supabase
+      .from('quotes')
+      .select('*')
+      .eq('id', args.invoice_id)
+      .eq('invoice_raised', true)
+      .single(),
+    supabase.from('company_profiles').select('*').eq('user_id', user.userId).single(),
+  ]);
+
+  if (quoteRes.error || !quoteRes.data) {
+    throw new Error('Invoice not found');
+  }
+
+  const result = await callEdgeFunction(
+    'generate-pdf-monkey',
+    user.jwt,
+    {
+      quote: quoteRes.data,
+      companyProfile: profileRes.data ?? undefined,
+      invoice_mode: true,
+    },
+    { timeoutMs: 90_000 }
+  );
+
+  if (result.error) throw new Error(result.error);
+
+  const data = result.data as Record<string, unknown> | null;
+  const downloadUrl = (data?.downloadUrl ?? data?.download_url) as string | undefined;
+
+  if (!downloadUrl) {
+    throw new Error('PDF generation failed — no download URL returned');
+  }
+
+  return {
+    documentId: data?.documentId ?? data?.document_id,
+    downloadUrl,
+    previewUrl: data?.previewUrl ?? data?.preview_url,
+    invoice_id: args.invoice_id,
+    message: `Invoice PDF generated. To send as a WhatsApp document, use MEDIA:${downloadUrl}`,
+  };
+}
+
 export async function sendInvoice(args: Record<string, unknown>, user: UserContext) {
   if (typeof args.invoice_id !== 'string') {
     throw new Error('invoice_id is required');

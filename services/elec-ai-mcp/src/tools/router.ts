@@ -63,6 +63,7 @@ const handlers: Record<string, ToolHandler> = {
   // Invoicing
   read_invoices: invoicing.readInvoices,
   create_invoice: invoicing.createInvoice,
+  generate_invoice_pdf: invoicing.generateInvoicePdf,
   send_invoice: invoicing.sendInvoice,
   get_overdue_invoices: invoicing.getOverdueInvoices,
 
@@ -106,6 +107,7 @@ const handlers: Record<string, ToolHandler> = {
   read_activity_log: agentInternals.readActivityLog,
 
   // Documents
+  generate_briefing_pdf: documents.generateBriefingPdf,
   generate_shareable_link: documents.generateShareableLink,
 
   // Email

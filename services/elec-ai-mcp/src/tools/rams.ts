@@ -2,13 +2,18 @@
  * RAMS & Compliance tools — create_rams, generate_rams_pdf, generate_method_statement,
  *                           submit_part_p_notification
  *
- * createRams: calls health-safety-v3 DIRECTLY (sync), saves to rams_documents table
- * generateRamsPdf: fetches from DB, maps to edge function format, calls generate-rams-pdf
+ * createRams: triggers the full app pipeline (create-rams-job → generate-rams orchestrator)
+ *             with both H&S Agent + Install Planner running in parallel, all caching layers
+ * generateRamsPdf: calls generate-combined-rams-pdf edge function (PDFMonkey template 5EE6A088)
  * generateMethodStatement: calls health-safety-v3 directly for method statement content
  */
 
 import type { UserContext } from '../auth.js';
 import { callEdgeFunction } from '../lib/edge-function.js';
+
+/** Poll interval and timeout for RAMS job completion */
+const POLL_INTERVAL_MS = 5_000;
+const POLL_TIMEOUT_MS = 180_000;
 
 export async function createRams(args: Record<string, unknown>, user: UserContext) {
   if (typeof args.job_description !== 'string' || args.job_description.trim().length === 0) {
@@ -17,37 +22,13 @@ export async function createRams(args: Record<string, unknown>, user: UserContex
   if (typeof args.job_type !== 'string' || args.job_type.trim().length === 0) {
     throw new Error('job_type is required');
   }
-  if (typeof args.address !== 'string' || args.address.trim().length === 0) {
-    throw new Error('address is required');
+  if (typeof args.location !== 'string' || args.location.trim().length === 0) {
+    throw new Error('location is required');
   }
 
   const supabase = user.supabase;
 
-  // 1. Call health-safety-v3 DIRECTLY (sync) — 150s timeout
-  // health-safety-v3 expects: query (required), workType, location, hazards
-  const aiResult = await callEdgeFunction(
-    'health-safety-v3',
-    user.jwt,
-    {
-      query: args.job_description,
-      workType: args.job_type,
-      location: args.address,
-      hazards: Array.isArray(args.hazards) ? args.hazards : undefined,
-    },
-    { timeoutMs: 150_000 }
-  );
-
-  if (aiResult.error) throw new Error(aiResult.error);
-
-  const aiData = aiResult.data as Record<string, unknown> | null;
-  if (!aiData) throw new Error('No response from health & safety AI');
-
-  // 2. Extract hazards, PPE, emergency procedures from AI response
-  const risks = extractRisks(aiData);
-  const ppeDetails = extractPpe(aiData);
-  const emergencyContacts = extractEmergencyContacts(aiData);
-
-  // 3. Fetch user's name for assessor field
+  // 1. Fetch user's name for assessor field
   const { data: profile } = await supabase
     .from('profiles')
     .select('full_name')
@@ -56,156 +37,231 @@ export async function createRams(args: Record<string, unknown>, user: UserContex
 
   const assessorName = profile?.full_name || 'Not specified';
 
-  // 4. Save to rams_documents table
-  const { data: ramsDoc, error: insertError } = await supabase
-    .from('rams_documents')
-    .insert({
-      user_id: user.userId,
-      project_name: `${args.job_type} - ${args.address}`,
-      location: args.address,
-      date: new Date().toISOString().split('T')[0],
-      assessor: assessorName,
-      risks,
-      ppe_details: ppeDetails,
-      status: 'generated',
-      ai_generation_metadata: {
-        source: 'health-safety-v3',
-        generatedAt: new Date().toISOString(),
-        jobDescription: args.job_description,
-        jobType: args.job_type,
-        emergencyContacts,
-        rawResponse: aiData,
-      },
-    })
-    .select('id')
-    .single();
-
-  if (insertError) throw new Error(`Failed to save RAMS: ${insertError.message}`);
-
-  // 5. Return structured result for agent
-  const topRisks = risks
-    .slice(0, 5)
-    .map((r: Record<string, unknown>) =>
-      typeof r.hazard === 'string' ? r.hazard : 'Unknown hazard'
-    );
-  const ppeRequired = Array.isArray(ppeDetails)
-    ? ppeDetails.map((p: Record<string, unknown>) =>
-        typeof p === 'string'
-          ? p
-          : ((p.item ?? p.name ?? p.equipment ?? JSON.stringify(p)) as string)
-      )
-    : [];
-
-  return {
-    rams_id: ramsDoc.id,
-    hazard_count: risks.length,
-    top_risks: topRisks,
-    ppe_required: ppeRequired,
-    status: 'generated',
-    message: `RAMS generated with ${risks.length} hazards identified. Call generate_rams_pdf to create the PDF.`,
+  // 2. Build projectInfo from args (matching create-rams-job expected input)
+  const projectInfo: Record<string, unknown> = {
+    projectName:
+      typeof args.project_name === 'string'
+        ? args.project_name
+        : `${args.job_type} - ${args.location}`,
+    location: args.location,
+    assessor: assessorName,
+    contractor: typeof args.contractor === 'string' ? args.contractor : assessorName,
+    supervisor: typeof args.supervisor === 'string' ? args.supervisor : undefined,
   };
+
+  const jobScale =
+    typeof args.job_scale === 'string' &&
+    ['domestic', 'commercial', 'industrial'].includes(args.job_scale)
+      ? args.job_scale
+      : 'domestic';
+
+  // 3. Call create-rams-job edge function → creates job + fires generate-rams in background
+  const createResult = await callEdgeFunction(
+    'create-rams-job',
+    user.jwt,
+    {
+      jobDescription: args.job_description,
+      projectInfo,
+      jobScale,
+    },
+    { timeoutMs: 30_000 }
+  );
+
+  if (createResult.error) throw new Error(createResult.error);
+
+  const createData = createResult.data as Record<string, unknown> | null;
+  const jobId = createData?.jobId as string | undefined;
+  if (!jobId) throw new Error('Failed to create RAMS job — no jobId returned');
+
+  // 4. Poll rams_generation_jobs table until complete/partial/failed
+  const startTime = Date.now();
+
+  while (Date.now() - startTime < POLL_TIMEOUT_MS) {
+    await sleep(POLL_INTERVAL_MS);
+
+    const { data: job, error: pollError } = await supabase
+      .from('rams_generation_jobs')
+      .select(
+        'status, progress, hs_agent_progress, installer_agent_progress, rams_data, method_data, error_message'
+      )
+      .eq('id', jobId)
+      .single();
+
+    if (pollError) {
+      throw new Error(`Failed to poll RAMS job: ${pollError.message}`);
+    }
+
+    if (!job) throw new Error('RAMS job not found');
+
+    const status = job.status as string;
+
+    if (status === 'complete' || status === 'partial') {
+      // Extract summary data from the completed job
+      const ramsData = (job.rams_data as Record<string, unknown>) || {};
+      const methodData = (job.method_data as Record<string, unknown>) || {};
+
+      const risks = Array.isArray(ramsData.risks) ? ramsData.risks : [];
+      const steps = Array.isArray(methodData.steps) ? methodData.steps : [];
+
+      const topRisks = risks
+        .slice(0, 5)
+        .map((r: Record<string, unknown>) =>
+          typeof r.hazard === 'string' ? r.hazard : 'Unknown hazard'
+        );
+
+      const ppeItems = Array.isArray(ramsData.ppeDetails) ? ramsData.ppeDetails : [];
+      const ppeRequired = ppeItems.map((p: Record<string, unknown>) =>
+        typeof p === 'string' ? p : ((p.ppeType ?? p.item ?? p.name ?? JSON.stringify(p)) as string)
+      );
+
+      const statusNote =
+        status === 'partial'
+          ? ' (partial — one agent may have failed, but usable data was generated)'
+          : '';
+
+      return {
+        rams_job_id: jobId,
+        status,
+        hazard_count: risks.length,
+        top_risks: topRisks,
+        method_step_count: steps.length,
+        ppe_required: ppeRequired,
+        message: `RAMS generated with ${risks.length} hazards and ${steps.length} method steps${statusNote}. Call generate_rams_pdf to create the PDF.`,
+      };
+    }
+
+    if (status === 'failed') {
+      const errorMsg = (job.error_message as string) || 'Unknown error';
+      throw new Error(`RAMS generation failed: ${errorMsg}`);
+    }
+
+    // Still processing — continue polling
+  }
+
+  // Timeout reached
+  throw new Error(
+    `RAMS generation timed out after ${POLL_TIMEOUT_MS / 1000}s. The job (${jobId}) may still be processing — try again in a minute.`
+  );
 }
 
 export async function generateRamsPdf(args: Record<string, unknown>, user: UserContext) {
-  if (typeof args.rams_id !== 'string') {
-    throw new Error('rams_id is required');
+  const jobId = args.rams_job_id;
+  if (typeof jobId !== 'string' || jobId.trim().length === 0) {
+    throw new Error('rams_job_id is required (from create_rams result)');
   }
 
   const supabase = user.supabase;
 
-  // 1. Fetch rams_documents row by ID
-  const { data: ramsDoc, error: fetchError } = await supabase
-    .from('rams_documents')
-    .select('*')
-    .eq('id', args.rams_id)
+  // 1. Fetch the completed RAMS job data
+  const { data: job, error: fetchError } = await supabase
+    .from('rams_generation_jobs')
+    .select('rams_data, method_data, project_info, user_id, status')
+    .eq('id', jobId)
     .single();
 
-  if (fetchError || !ramsDoc) {
-    throw new Error('RAMS document not found');
+  if (fetchError) throw new Error(`Failed to fetch RAMS job: ${fetchError.message}`);
+  if (!job) throw new Error('RAMS job not found');
+  if (job.status !== 'complete' && job.status !== 'partial') {
+    throw new Error(`RAMS job is not complete (status: ${job.status}). Run create_rams first.`);
   }
 
-  // 2. Map DB fields to edge function format
-  const risks = Array.isArray(ramsDoc.risks) ? ramsDoc.risks : [];
-  const metadata = (ramsDoc.ai_generation_metadata as Record<string, unknown>) || {};
-  const emergencyContacts = (metadata.emergencyContacts as Record<string, unknown>) || {};
+  const ramsRaw = (job.rams_data as Record<string, unknown>) || {};
+  const methodRaw = (job.method_data as Record<string, unknown>) || {};
+  const projectInfo = (job.project_info as Record<string, unknown>) || {};
 
+  // 2. Map to the format generate-combined-rams-pdf (PDFMonkey) expects
+  //    The edge function expects { ramsData, methodData } matching the app's data shape
   const ramsData = {
-    projectName: ramsDoc.project_name || 'Untitled Project',
-    location: ramsDoc.location || '',
-    date: ramsDoc.date || new Date().toISOString().split('T')[0],
-    assessor: ramsDoc.assessor || 'Not specified',
-    risks: risks.map((r: Record<string, unknown>) => ({
-      hazard: r.hazard || r.description || 'Unknown',
-      likelihood: r.likelihood || 'Medium',
-      severity: r.severity || 'Medium',
-      riskRating: r.riskRating || r.risk_rating || 'Medium',
-      controls: r.controls || r.control_measures || 'Standard controls apply',
-      residualRisk: r.residualRisk || r.residual_risk || 'Low',
-    })),
-    siteManagerName: (emergencyContacts.siteManagerName as string) || 'Site Manager',
-    siteManagerPhone: (emergencyContacts.siteManagerPhone as string) || 'N/A',
-    emergencyServices: '999',
-    nearestHospital: (emergencyContacts.nearestHospital as string) || 'Nearest A&E',
-    assemblyPoint: (emergencyContacts.assemblyPoint as string) || 'Front of building',
+    projectName: projectInfo.projectName || ramsRaw.projectName || 'Untitled Project',
+    location: projectInfo.location || ramsRaw.location || '',
+    date: ramsRaw.date || new Date().toISOString().split('T')[0],
+    assessor: projectInfo.assessor || ramsRaw.assessor || '',
+    contractor: projectInfo.contractor || ramsRaw.contractor || '',
+    supervisor: projectInfo.supervisor || ramsRaw.supervisor || '',
+    risks: Array.isArray(ramsRaw.risks) ? ramsRaw.risks : [],
+    requiredPPE: Array.isArray(ramsRaw.requiredPPE) ? ramsRaw.requiredPPE : [],
+    ppeDetails: Array.isArray(ramsRaw.ppeDetails) ? ramsRaw.ppeDetails : [],
+    emergencyProcedures: Array.isArray(ramsRaw.emergencyProcedures)
+      ? ramsRaw.emergencyProcedures
+      : [],
+    siteManagerName: ramsRaw.siteManagerName || '',
+    siteManagerPhone: ramsRaw.siteManagerPhone || '',
+    firstAiderName: ramsRaw.firstAiderName || '',
+    firstAiderPhone: ramsRaw.firstAiderPhone || '',
+    safetyOfficerName: ramsRaw.safetyOfficerName || '',
+    safetyOfficerPhone: ramsRaw.safetyOfficerPhone || '',
+    assemblyPoint: ramsRaw.assemblyPoint || '',
   };
 
-  // 3. Call generate-rams-pdf — 90s timeout (PDFMonkey polls until ready)
+  const methodData = {
+    jobTitle: methodRaw.jobTitle || ramsData.projectName,
+    location: methodRaw.location || ramsData.location,
+    contractor: methodRaw.contractor || ramsData.contractor,
+    supervisor: methodRaw.supervisor || ramsData.supervisor,
+    workType: methodRaw.workType || '',
+    duration: methodRaw.duration || '',
+    teamSize: methodRaw.teamSize || '',
+    description: methodRaw.description || '',
+    overallRiskLevel: methodRaw.overallRiskLevel || 'medium',
+    reviewDate: methodRaw.reviewDate || '',
+    steps: Array.isArray(methodRaw.steps) ? methodRaw.steps : [],
+    practicalTips: Array.isArray(methodRaw.practicalTips) ? methodRaw.practicalTips : [],
+    commonMistakes: Array.isArray(methodRaw.commonMistakes) ? methodRaw.commonMistakes : [],
+    toolsRequired: Array.isArray(methodRaw.toolsRequired) ? methodRaw.toolsRequired : [],
+    materialsRequired: Array.isArray(methodRaw.materialsRequired)
+      ? methodRaw.materialsRequired
+      : [],
+    totalEstimatedTime: methodRaw.totalEstimatedTime || '',
+    difficultyLevel: methodRaw.difficultyLevel || '',
+    complianceRegulations: Array.isArray(methodRaw.complianceRegulations)
+      ? methodRaw.complianceRegulations
+      : [],
+    complianceWarnings: Array.isArray(methodRaw.complianceWarnings)
+      ? methodRaw.complianceWarnings
+      : [],
+    requiredQualifications: Array.isArray(methodRaw.requiredQualifications)
+      ? methodRaw.requiredQualifications
+      : [],
+    // Emergency contacts can also come from method data
+    siteManagerName: methodRaw.siteManagerName || '',
+    siteManagerPhone: methodRaw.siteManagerPhone || '',
+    firstAiderName: methodRaw.firstAiderName || '',
+    firstAiderPhone: methodRaw.firstAiderPhone || '',
+    safetyOfficerName: methodRaw.safetyOfficerName || '',
+    safetyOfficerPhone: methodRaw.safetyOfficerPhone || '',
+    assemblyPoint: methodRaw.assemblyPoint || '',
+  };
+
+  // 3. Call generate-combined-rams-pdf (PDFMonkey template 5EE6A088)
   const result = await callEdgeFunction(
-    'generate-rams-pdf',
+    'generate-combined-rams-pdf',
     user.jwt,
-    {
-      ramsData,
-      userId: user.userId,
-    },
+    { ramsData, methodData },
     { timeoutMs: 90_000 }
   );
 
   if (result.error) throw new Error(result.error);
 
   const pdfData = result.data as Record<string, unknown> | null;
-  const pdfMonkeyUrl = pdfData?.downloadUrl ?? pdfData?.download_url;
 
-  if (!pdfMonkeyUrl || typeof pdfMonkeyUrl !== 'string') {
+  // PDFMonkey edge function returns { success, downloadUrl, documentId, status }
+  // or { success: false, useFallback: true, message }
+  if (pdfData?.useFallback) {
+    throw new Error(`PDF generation unavailable: ${pdfData.message || 'PDFMonkey not configured'}`);
+  }
+
+  const downloadUrl = pdfData?.downloadUrl as string | undefined;
+  if (!downloadUrl) {
     throw new Error('PDF generation failed — no download URL returned');
   }
 
-  // 4. Download PDF from PDFMonkey and upload to Supabase Storage
-  //    PDFMonkey presigned URLs break with special chars — store in our own bucket
-  const pdfResponse = await fetch(pdfMonkeyUrl);
-  if (!pdfResponse.ok) {
-    throw new Error(`Failed to download PDF from generator (${pdfResponse.status})`);
-  }
-  const pdfBuffer = Buffer.from(await pdfResponse.arrayBuffer());
-
-  const safeName = (ramsDoc.project_name || 'rams')
-    .replace(/[^a-z0-9]/gi, '_')
-    .replace(/_+/g, '_')
-    .slice(0, 80);
-  const storagePath = `${user.userId}/${args.rams_id}_${safeName}.pdf`;
-
-  const { error: uploadError } = await supabase.storage
-    .from('rams-pdfs')
-    .upload(storagePath, pdfBuffer, {
-      contentType: 'application/pdf',
-      upsert: true,
-    });
-
-  if (uploadError) {
-    throw new Error(`Failed to store PDF: ${uploadError.message}`);
-  }
-
-  // 5. Get the public URL from Supabase Storage
-  const { data: urlData } = supabase.storage.from('rams-pdfs').getPublicUrl(storagePath);
-
-  const stableUrl = urlData.publicUrl;
-
-  // 6. Store stable URL back to rams_documents
-  await supabase.from('rams_documents').update({ pdf_url: stableUrl }).eq('id', args.rams_id);
+  const projectName = String(ramsData.projectName || 'Document').replace(/[^a-z0-9]/gi, '_');
 
   return {
-    downloadUrl: stableUrl,
-    documentId: args.rams_id,
-    message: `RAMS PDF generated and stored. Share this link or use MEDIA:${stableUrl} to send as a document.`,
+    downloadUrl,
+    fileName: `Combined_RAMS_${projectName}.pdf`,
+    rams_job_id: jobId,
+    message: `Combined RAMS PDF generated. Share this link or use MEDIA:${downloadUrl} to send as a document.`,
   };
 }
 
@@ -266,82 +322,7 @@ export async function submitPartPNotification(args: Record<string, unknown>, use
 
 // ─── Helpers ─────────────────────────────────────────────────────────────
 
-/** Extract risk items from the AI response (handles multiple response shapes) */
-function extractRisks(aiData: Record<string, unknown>): Record<string, unknown>[] {
-  // Try common response shapes from health-safety-v3
-  const candidates = [
-    aiData.risks,
-    aiData.hazards,
-    aiData.riskAssessment,
-    (aiData.data as Record<string, unknown>)?.risks,
-    (aiData.data as Record<string, unknown>)?.hazards,
-    (aiData.response as Record<string, unknown>)?.risks,
-  ];
-
-  for (const candidate of candidates) {
-    if (Array.isArray(candidate) && candidate.length > 0) {
-      return candidate as Record<string, unknown>[];
-    }
-  }
-
-  // If the response has a text/content field, it might be unstructured — wrap it
-  if (typeof aiData.content === 'string' || typeof aiData.response === 'string') {
-    return [
-      {
-        hazard: 'See full RAMS document for detailed risk assessment',
-        likelihood: 'Medium',
-        severity: 'Medium',
-        riskRating: 'Medium',
-        controls: 'See detailed controls in full document',
-        residualRisk: 'Low',
-      },
-    ];
-  }
-
-  return [];
-}
-
-/** Extract PPE requirements from the AI response */
-function extractPpe(aiData: Record<string, unknown>): Record<string, unknown>[] {
-  const candidates = [
-    aiData.ppe,
-    aiData.ppeRequired,
-    aiData.ppe_details,
-    (aiData.data as Record<string, unknown>)?.ppe,
-    (aiData.data as Record<string, unknown>)?.ppeRequired,
-    (aiData.response as Record<string, unknown>)?.ppe,
-  ];
-
-  for (const candidate of candidates) {
-    if (Array.isArray(candidate) && candidate.length > 0) {
-      return candidate as Record<string, unknown>[];
-    }
-  }
-
-  // Default PPE for electrical work
-  return [
-    { item: 'Safety boots', required: true },
-    { item: 'Hard hat', required: true },
-    { item: 'Hi-vis vest', required: true },
-    { item: 'Safety glasses', required: true },
-    { item: 'Insulated gloves', required: true },
-  ];
-}
-
-/** Extract emergency contact info from the AI response */
-function extractEmergencyContacts(aiData: Record<string, unknown>): Record<string, unknown> {
-  const candidates = [
-    aiData.emergencyContacts,
-    aiData.emergency_contacts,
-    (aiData.data as Record<string, unknown>)?.emergencyContacts,
-    (aiData.response as Record<string, unknown>)?.emergencyContacts,
-  ];
-
-  for (const candidate of candidates) {
-    if (candidate && typeof candidate === 'object') {
-      return candidate as Record<string, unknown>;
-    }
-  }
-
-  return {};
+/** Simple sleep helper for polling */
+function sleep(ms: number): Promise<void> {
+  return new Promise((resolve) => setTimeout(resolve, ms));
 }

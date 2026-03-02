@@ -69,7 +69,8 @@ export async function generateCertificatePdf(args: Record<string, unknown>, user
     throw new Error('certificate_type is required');
   }
 
-  const certType = args.certificate_type.toLowerCase();
+  // Normalise: agent may send underscores (minor_works) but map uses hyphens (minor-works)
+  const certType = args.certificate_type.toLowerCase().replace(/_/g, '-');
   const functionName = CERT_PDF_FUNCTIONS[certType];
 
   if (!functionName) {
@@ -84,11 +85,29 @@ export async function generateCertificatePdf(args: Record<string, unknown>, user
     {
       reportId: args.certificate_id,
     },
-    { timeoutMs: 60_000 }
+    { timeoutMs: 90_000 }
   );
 
   if (result.error) throw new Error(result.error);
-  return result.data;
+
+  // Cert edge functions return pdfUrl or downloadUrl depending on the type
+  const data = result.data as Record<string, unknown> | null;
+  const downloadUrl = (data?.downloadUrl ?? data?.pdfUrl ?? data?.download_url) as
+    | string
+    | undefined;
+
+  if (!downloadUrl) {
+    throw new Error('PDF generation failed — no download URL returned');
+  }
+
+  return {
+    downloadUrl,
+    documentId: data?.documentId,
+    previewUrl: data?.previewUrl,
+    certificate_id: args.certificate_id,
+    certificate_type: certType,
+    message: `Certificate PDF generated. To send as a WhatsApp document, use MEDIA:${downloadUrl}`,
+  };
 }
 
 export async function sendCertificate(args: Record<string, unknown>, user: UserContext) {

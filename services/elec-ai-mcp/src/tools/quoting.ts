@@ -86,12 +86,20 @@ export async function generateQuotePdf(args: Record<string, unknown>, user: User
 
   if (result.error) throw new Error(result.error);
 
-  // Return structured PDF result
+  // Return structured PDF result with MEDIA: guidance for WhatsApp
   const data = result.data as Record<string, unknown> | null;
+  const downloadUrl = (data?.downloadUrl ?? data?.download_url) as string | undefined;
+
+  if (!downloadUrl) {
+    throw new Error('PDF generation failed — no download URL returned');
+  }
+
   return {
     documentId: data?.documentId ?? data?.document_id,
-    downloadUrl: data?.downloadUrl ?? data?.download_url,
+    downloadUrl,
     previewUrl: data?.previewUrl ?? data?.preview_url,
+    quote_id: args.quote_id,
+    message: `Quote PDF generated. To send as a WhatsApp document, use MEDIA:${downloadUrl}`,
   };
 }
 
