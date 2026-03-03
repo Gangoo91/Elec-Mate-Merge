@@ -6,6 +6,7 @@ import Header from '@/components/layout/Header';
 import { useState, useEffect } from 'react';
 import { PageTransition } from '@/components/layout/PageTransition';
 import AnnouncementBanner from '@/components/announcements/AnnouncementBanner';
+import PushNotificationPrompt from '@/components/notifications/PushNotificationPrompt';
 
 const Layout = () => {
   const isMobile = useIsMobile();
@@ -41,6 +42,9 @@ const Layout = () => {
           <div className="px-3 sm:px-4 md:px-6 lg:px-8 pt-1 sm:pt-3 md:pt-6 pb-4">
             {/* Announcements Banner */}
             <AnnouncementBanner />
+
+            {/* Push notification prompt — inline banner, shows once */}
+            <PushNotificationPrompt context="Get notified about quotes, invoices, tasks and messages" />
 
             <div className={cn('min-w-0')}>
               <PageTransition key={location.pathname}>

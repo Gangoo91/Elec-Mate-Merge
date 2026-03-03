@@ -37,6 +37,7 @@ import { useAuth } from '@/contexts/AuthContext';
 import { ElecIdBanner } from '@/components/elec-id/ElecIdBanner';
 import { SetupWizard } from '@/components/onboarding/SetupWizard';
 import { SetupIncompleteBanner } from '@/components/onboarding/SetupIncompleteBanner';
+import { BusinessAICard } from '@/components/business-ai/BusinessAICard';
 import { LatestJobsWidget } from '@/components/job-vacancies/LatestJobsWidget';
 import { TasksDueWidget } from '@/components/tasks/TasksDueWidget';
 import { useQuery } from '@tanstack/react-query';
@@ -350,6 +351,12 @@ function SectionHeader({ title }: { title: string }) {
 // Main resources - Core Daily Tools
 const mainResources: ToolCardProps[] = [
   {
+    title: 'Elec-AI',
+    description: 'Your electrical adviser — circuit design, fault finding & regs',
+    icon: Brain,
+    link: '/electrician-tools/ai-tooling/assistant',
+  },
+  {
     title: 'Inspection & Testing',
     description: 'EICR, EIC & Minor Works certificates',
     icon: Zap,
@@ -537,10 +544,10 @@ const ElectricalHub = () => {
             <SetupIncompleteBanner />
           </motion.section>
 
-          {/* Elec-AI Featured Card */}
+          {/* Business AI Card */}
           <motion.section variants={itemVariants} className="space-y-4 px-4 sm:px-0">
-            <SectionHeader title="Elec-AI" />
-            <FeaturedCard />
+            <SectionHeader title="Business AI" />
+            <BusinessAICard />
           </motion.section>
 
           {/* Core Daily Tools */}

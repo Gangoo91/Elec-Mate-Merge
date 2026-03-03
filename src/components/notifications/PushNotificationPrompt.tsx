@@ -1,49 +1,39 @@
 import React, { useState, useEffect } from 'react';
-import { Bell, X, BellRing } from 'lucide-react';
+import { BellRing, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { usePushNotifications } from '@/hooks/usePushNotifications';
 import { useAuth } from '@/contexts/AuthContext';
 
 interface PushNotificationPromptProps {
-  /** When to show the prompt. Default shows after 3 seconds */
+  /** When to show the prompt. Default shows after 1 second */
   delay?: number;
   /** Context message - why they should enable notifications here */
   context?: string;
-  /** Compact mode for inline use */
-  compact?: boolean;
 }
 
 /**
- * Smart push notification prompt that only shows when:
- * - Push is supported
- * - User is logged in
- * - User hasn't already subscribed
- * - User hasn't dismissed it recently (24h localStorage)
+ * Top banner push notification prompt. Shows once, then gone forever
+ * once user enables or dismisses. Non-invasive inline banner.
  */
 const PushNotificationPrompt: React.FC<PushNotificationPromptProps> = ({
-  delay = 3000,
+  delay = 1000,
   context = 'Never miss important messages',
-  compact = false,
 }) => {
   const { user } = useAuth();
   const { isSupported, isSubscribed, isLoading, subscribe } = usePushNotifications();
   const [visible, setVisible] = useState(false);
   const [dismissed, setDismissed] = useState(false);
 
-  const DISMISS_KEY = 'push_prompt_dismissed_at';
+  const DISMISS_KEY = 'push_prompt_dismissed';
 
   useEffect(() => {
-    // Check if recently dismissed (within 24 hours)
-    const dismissedAt = localStorage.getItem(DISMISS_KEY);
-    if (dismissedAt) {
-      const hoursSince = (Date.now() - parseInt(dismissedAt)) / (1000 * 60 * 60);
-      if (hoursSince < 24) {
-        setDismissed(true);
-        return;
-      }
+    // Permanently dismissed or already enabled
+    if (localStorage.getItem(DISMISS_KEY)) {
+      setDismissed(true);
+      return;
     }
 
-    // Show after delay if conditions are met
+    // Show after short delay
     const timer = setTimeout(() => {
       if (isSupported && user && !isSubscribed && !dismissed) {
         setVisible(true);
@@ -54,7 +44,7 @@ const PushNotificationPrompt: React.FC<PushNotificationPromptProps> = ({
   }, [isSupported, isSubscribed, user, delay, dismissed]);
 
   const handleDismiss = () => {
-    localStorage.setItem(DISMISS_KEY, Date.now().toString());
+    localStorage.setItem(DISMISS_KEY, '1');
     setDismissed(true);
     setVisible(false);
   };
@@ -63,84 +53,44 @@ const PushNotificationPrompt: React.FC<PushNotificationPromptProps> = ({
     try {
       const success = await subscribe();
       if (success) {
+        localStorage.setItem(DISMISS_KEY, '1');
         setVisible(false);
       } else {
-        // Subscription failed (no SW, permission denied, etc.) — hide and retry later
         handleDismiss();
       }
     } catch {
-      // Permission denied or error - hide prompt
       handleDismiss();
     }
   };
 
-  // Don't render if conditions not met
   if (!visible || isSubscribed || !isSupported || !user) {
     return null;
   }
 
-  if (compact) {
-    return (
-      <div className="flex items-center gap-3 p-3 bg-gradient-to-r from-purple-500/10 to-elec-yellow/10 rounded-lg border border-purple-500/20">
-        <Bell className="w-5 h-5 text-elec-yellow flex-shrink-0" />
-        <p className="text-sm text-white flex-1">{context}</p>
-        <Button
-          size="sm"
-          onClick={handleEnable}
-          disabled={isLoading}
-          className="bg-elec-yellow hover:bg-elec-yellow/90 text-black font-medium h-8 px-3"
-        >
-          {isLoading ? 'Enabling...' : 'Enable'}
-        </Button>
-        <button
-          onClick={handleDismiss}
-          className="text-white hover:bg-white/10 h-11 w-11 flex items-center justify-center touch-manipulation"
-        >
-          <X className="w-4 h-4" />
-        </button>
-      </div>
-    );
-  }
-
   return (
-    <div className="fixed bottom-4 left-4 right-4 sm:left-auto sm:right-4 sm:max-w-sm z-50 animate-in slide-in-from-bottom-4 duration-300">
-      <div className="bg-gradient-to-br from-slate-900 to-slate-800 rounded-xl border border-purple-500/30 shadow-2xl shadow-purple-500/10 overflow-hidden">
-        <div className="p-4">
-          <div className="flex items-start gap-3">
-            <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-elec-yellow/20 to-purple-500/20 flex items-center justify-center flex-shrink-0">
-              <BellRing className="w-5 h-5 text-elec-yellow" />
-            </div>
-            <div className="flex-1 min-w-0">
-              <h4 className="font-semibold text-white text-sm">Enable Push Notifications</h4>
-              <p className="text-xs text-white mt-1">{context}</p>
-            </div>
-            <button
-              onClick={handleDismiss}
-              className="text-white hover:bg-white/10 h-11 w-11 flex items-center justify-center touch-manipulation -mt-1 -mr-1"
-            >
-              <X className="w-4 h-4" />
-            </button>
-          </div>
-          <div className="flex gap-2 mt-4">
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={handleDismiss}
-              className="flex-1 h-11 text-white hover:text-white hover:bg-white/5 touch-manipulation"
-            >
-              Not Now
-            </Button>
-            <Button
-              size="sm"
-              onClick={handleEnable}
-              disabled={isLoading}
-              className="flex-1 h-11 bg-gradient-to-r from-elec-yellow to-amber-500 hover:from-elec-yellow/90 hover:to-amber-500/90 text-black font-semibold touch-manipulation"
-            >
-              {isLoading ? 'Enabling...' : 'Enable'}
-            </Button>
-          </div>
-        </div>
+    <div className="flex items-center gap-3 p-3 bg-gradient-to-r from-elec-yellow/10 to-amber-500/10 rounded-xl border border-elec-yellow/20 mb-3 animate-in fade-in slide-in-from-top-2 duration-300">
+      <div className="w-9 h-9 rounded-lg bg-elec-yellow/15 flex items-center justify-center flex-shrink-0">
+        <BellRing className="w-4.5 h-4.5 text-elec-yellow" />
       </div>
+      <div className="flex-1 min-w-0">
+        <p className="text-sm font-medium text-white">Enable notifications</p>
+        <p className="text-xs text-white mt-0.5">{context}</p>
+      </div>
+      <Button
+        size="sm"
+        onClick={handleEnable}
+        disabled={isLoading}
+        className="bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold h-9 px-4 touch-manipulation flex-shrink-0"
+      >
+        {isLoading ? 'Enabling...' : 'Enable'}
+      </Button>
+      <button
+        onClick={handleDismiss}
+        className="text-white hover:bg-white/10 rounded-lg h-11 w-11 flex items-center justify-center touch-manipulation flex-shrink-0 -mr-1"
+        aria-label="Dismiss"
+      >
+        <X className="w-4 h-4" />
+      </button>
     </div>
   );
 };

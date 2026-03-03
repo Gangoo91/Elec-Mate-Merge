@@ -20,6 +20,16 @@ export type ProfileType = {
   ecs_card_type?: string;
   elec_id_enabled?: boolean;
 
+  // Business AI fields
+  business_ai_enabled?: boolean;
+  agent_status?: 'active' | 'provisioning' | 'paused' | null;
+  agent_provisioned_at?: string | null;
+  agent_whatsapp_number?: string | null;
+  agent_phone_verified?: boolean;
+  agent_phone_verified_at?: string | null;
+  agent_last_active?: string | null;
+  agent_health_status?: string | null;
+
   // College-specific fields
   college_id?: string | null;
   college_role?: 'admin' | 'head_of_department' | 'tutor' | 'assessor' | 'iqa' | 'support' | null;
@@ -41,6 +51,7 @@ export type ProfileType = {
   company_size?: '1-5' | '6-20' | '21-50' | '50+';
 };
 
+/* eslint-disable @typescript-eslint/no-explicit-any */
 export type AuthContextType = {
   session: Session | null;
   user: User | null;
