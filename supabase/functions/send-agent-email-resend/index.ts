@@ -11,19 +11,117 @@ const corsHeaders = {
 
 /**
  * General-purpose agent email sender via Resend.
- * Used by Mate to email clients to book jobs, send PDFs, reminders, etc.
+ * Used by Mate to email clients on behalf of an electrician.
  *
- * Takes: { to, subject, body, clientName?, attachmentUrl? }
- * Auth: JWT verified via supabase.auth.getUser()
- * From: "Company Name <founder@elec-mate.com>" — reply-to is the user's company email
+ * Takes: { to, subject, body, clientName?, attachmentUrl?, attachmentFilename? }
+ * Auth:  JWT verified via supabase.auth.getUser()
+ * From:  "Company Name <founder@elec-mate.com>" — reply-to is the user's company email
+ *
+ * The agent is responsible for the FULL email body including greeting and sign-off.
+ * The template provides branded framing only — no injected greetings or sign-offs.
  */
+
+/** Convert plain text body to HTML paragraphs */
+function textToHtml(text: string): string {
+  return text
+    .split(/\n\n+/)
+    .map((para) => `<p style="margin:0 0 16px;font-size:16px;line-height:1.65;color:#374151;">${para.replace(/\n/g, '<br>')}</p>`)
+    .join('');
+}
+
+/** Build the branded HTML email */
+function buildEmailHtml(opts: {
+  body: string;
+  companyName: string;
+  logoUrl?: string | null;
+  phone?: string | null;
+  website?: string | null;
+  address?: string | null;
+  postcode?: string | null;
+}): string {
+  const { body, companyName, logoUrl, phone, website, address, postcode } = opts;
+
+  // Header: logo image if available, else company name in yellow
+  const headerContent = logoUrl
+    ? `<img src="${logoUrl}" alt="${companyName}" style="max-height:60px;max-width:200px;display:block;margin:0 auto;" />`
+    : `<h1 style="margin:0;color:#FFC800;font-size:22px;font-weight:700;letter-spacing:-0.3px;">${companyName}</h1>`;
+
+  // Footer details
+  const footerParts: string[] = [];
+  if (phone) footerParts.push(`<a href="tel:${phone}" style="color:#9ca3af;text-decoration:none;">${phone}</a>`);
+  if (website) {
+    const displayUrl = website.replace(/^https?:\/\//, '');
+    footerParts.push(`<a href="${website.startsWith('http') ? website : 'https://' + website}" style="color:#9ca3af;text-decoration:none;">${displayUrl}</a>`);
+  }
+  if (address) {
+    const fullAddress = [address, postcode].filter(Boolean).join(', ');
+    footerParts.push(`<span style="color:#9ca3af;">${fullAddress}</span>`);
+  }
+
+  const footerDetails = footerParts.length > 0
+    ? `<p style="margin:8px 0 0;font-size:13px;line-height:1.8;">${footerParts.join(' &nbsp;·&nbsp; ')}</p>`
+    : '';
+
+  return `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="color-scheme" content="light" />
+</head>
+<body style="margin:0;padding:0;background-color:#f3f4f6;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Arial,sans-serif;">
+  <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color:#f3f4f6;">
+    <tr>
+      <td style="padding:32px 16px;">
+
+        <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%"
+          style="max-width:600px;margin:0 auto;border-radius:16px;overflow:hidden;box-shadow:0 4px 24px rgba(0,0,0,0.10);">
+
+          <!-- ── Header ───────────────────────────────── -->
+          <tr>
+            <td style="background:linear-gradient(135deg,#111111 0%,#1f1f1f 100%);padding:28px 32px;text-align:center;border-bottom:3px solid #FFC800;">
+              ${headerContent}
+            </td>
+          </tr>
+
+          <!-- ── Body ────────────────────────────────── -->
+          <tr>
+            <td style="background:#ffffff;padding:36px 36px 28px;">
+              ${textToHtml(body)}
+            </td>
+          </tr>
+
+          <!-- ── Divider ──────────────────────────────── -->
+          <tr>
+            <td style="background:#ffffff;padding:0 36px 28px;">
+              <div style="height:1px;background:linear-gradient(90deg,transparent,#e5e7eb,transparent);"></div>
+            </td>
+          </tr>
+
+          <!-- ── Footer ──────────────────────────────── -->
+          <tr>
+            <td style="background:#111111;padding:24px 32px;text-align:center;">
+              <p style="margin:0;font-size:14px;font-weight:700;color:#ffffff;">${companyName}</p>
+              ${footerDetails}
+              <p style="margin:16px 0 0;font-size:11px;color:#4b5563;letter-spacing:0.5px;text-transform:uppercase;">Sent via Elec-Mate</p>
+            </td>
+          </tr>
+
+        </table>
+      </td>
+    </tr>
+  </table>
+</body>
+</html>`;
+}
+
 const handler = async (req: Request): Promise<Response> => {
   if (req.method === 'OPTIONS') {
     return new Response('ok', { headers: corsHeaders });
   }
 
   try {
-    // ── Validate environment ────────────────────────────────────────
+    // ── Validate environment ──────────────────────────────────────
     const resendApiKey = Deno.env.get('RESEND_API_KEY');
     const supabaseUrl = Deno.env.get('SUPABASE_URL');
     const supabaseAnonKey = Deno.env.get('SUPABASE_ANON_KEY');
@@ -31,7 +129,7 @@ const handler = async (req: Request): Promise<Response> => {
     if (!resendApiKey) throw new Error('Email service not configured');
     if (!supabaseUrl || !supabaseAnonKey) throw new Error('Database service not configured');
 
-    // ── Authenticate user ───────────────────────────────────────────
+    // ── Authenticate user ─────────────────────────────────────────
     const authHeader = req.headers.get('Authorization');
     if (!authHeader) throw new Error('Unauthorised');
 
@@ -40,80 +138,42 @@ const handler = async (req: Request): Promise<Response> => {
     });
 
     const jwt = authHeader.replace('Bearer ', '').trim();
-    const {
-      data: { user },
-      error: userError,
-    } = await supabaseClient.auth.getUser(jwt);
+    const { data: { user }, error: userError } = await supabaseClient.auth.getUser(jwt);
     if (userError || !user) throw new Error('Session expired');
 
-    // ── Parse request ───────────────────────────────────────────────
+    // ── Parse request ─────────────────────────────────────────────
     const body = await req.json();
-    const { to, subject, body: emailBody, clientName, attachmentUrl } = body;
+    const { to, subject, body: emailBody, attachmentUrl, attachmentFilename } = body;
 
     if (!to || typeof to !== 'string') throw new Error('Recipient email (to) is required');
     if (!subject || typeof subject !== 'string') throw new Error('Email subject is required');
     if (!emailBody || typeof emailBody !== 'string') throw new Error('Email body is required');
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(to.trim())) throw new Error(`Invalid email address: ${to}`);
 
-    // Basic email validation
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(to.trim())) {
-      throw new Error(`Invalid email address: ${to}`);
-    }
-
-    // ── Fetch company profile for branding ──────────────────────────
-    const { data: companyProfile } = await supabaseClient
+    // ── Fetch company profile ─────────────────────────────────────
+    const { data: profile } = await supabaseClient
       .from('company_profiles')
-      .select('company_name, company_email, company_phone, logo_url')
+      .select('company_name, company_email, company_phone, company_website, company_address, company_postcode, logo_url, logo_data_url')
       .eq('user_id', user.id)
       .single();
 
-    const companyName = companyProfile?.company_name || 'ElecMate';
-    const replyTo = companyProfile?.company_email || user.email || 'info@elec-mate.com';
+    const companyName = profile?.company_name || 'Elec-Mate';
+    const replyTo = profile?.company_email || user.email || 'info@elec-mate.com';
+    // Prefer hosted logo URL, fall back to data URL (inline base64)
+    const logoUrl = profile?.logo_url || profile?.logo_data_url || null;
 
+    // ── Build HTML ────────────────────────────────────────────────
+    const html = buildEmailHtml({
+      body: emailBody,
+      companyName,
+      logoUrl,
+      phone: profile?.company_phone || null,
+      website: profile?.company_website || null,
+      address: profile?.company_address || null,
+      postcode: profile?.company_postcode || null,
+    });
 
-    // ── Build email HTML ────────────────────────────────────────────
-    const recipientName = clientName || 'there';
-    const html = `
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-</head>
-<body style="margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif; background-color: #f8f9fa;">
-  <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #f8f9fa;">
-    <tr>
-      <td style="padding: 20px 10px;">
-        <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="max-width: 600px; margin: 0 auto; background-color: #ffffff; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.08);">
-          <!-- Header -->
-          <tr>
-            <td style="background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%); padding: 24px; text-align: center;">
-              <h1 style="margin: 0; color: #FFD700; font-size: 22px; font-weight: 700;">${companyName}</h1>
-            </td>
-          </tr>
-          <!-- Body -->
-          <tr>
-            <td style="padding: 32px 24px;">
-              <p style="margin: 0 0 16px; font-size: 16px; color: #374151;">Hi ${recipientName},</p>
-              <div style="margin: 0 0 24px; font-size: 16px; line-height: 1.6; color: #374151; white-space: pre-wrap;">${emailBody}</div>
-              <p style="margin: 24px 0 0; font-size: 16px; color: #374151;">Kind regards,</p>
-              <p style="margin: 4px 0 0; font-size: 16px; font-weight: 700; color: #1f2937;">${companyName}</p>
-              ${companyProfile?.company_phone ? `<p style="margin: 4px 0 0; font-size: 14px; color: #6b7280;">${companyProfile.company_phone}</p>` : ''}
-            </td>
-          </tr>
-          <!-- Footer -->
-          <tr>
-            <td style="background: #1a1a1a; padding: 20px 24px; text-align: center;">
-              <p style="margin: 0; font-size: 13px; color: #9ca3af;">Sent via ElecMate</p>
-            </td>
-          </tr>
-        </table>
-      </td>
-    </tr>
-  </table>
-</body>
-</html>`;
-
-    // ── Handle attachment (optional) ────────────────────────────────
+    // ── Handle optional attachment ────────────────────────────────
     const attachments: Array<{ filename: string; content: string }> = [];
 
     if (attachmentUrl && typeof attachmentUrl === 'string') {
@@ -125,11 +185,10 @@ const handler = async (req: Request): Promise<Response> => {
           let binary = '';
           const chunkSize = 0x8000;
           for (let i = 0; i < uint8Array.length; i += chunkSize) {
-            const chunk = uint8Array.subarray(i, i + chunkSize);
-            binary += String.fromCharCode.apply(null, Array.from(chunk));
+            binary += String.fromCharCode.apply(null, Array.from(uint8Array.subarray(i, i + chunkSize)));
           }
           attachments.push({
-            filename: body.attachmentFilename || 'document.pdf',
+            filename: attachmentFilename || 'document.pdf',
             content: btoa(binary),
           });
         }
@@ -138,7 +197,7 @@ const handler = async (req: Request): Promise<Response> => {
       }
     }
 
-    // ── Send via Resend ─────────────────────────────────────────────
+    // ── Send via Resend ───────────────────────────────────────────
     const resend = new Resend(resendApiKey);
 
     const emailOptions: {
@@ -161,20 +220,13 @@ const handler = async (req: Request): Promise<Response> => {
     }
 
     const { data: emailData, error: emailError } = await resend.emails.send(emailOptions);
-
-    if (emailError) {
-      throw new Error(`Resend error: ${emailError.message || 'Unknown'}`);
-    }
+    if (emailError) throw new Error(`Resend error: ${emailError.message || 'Unknown'}`);
 
     return new Response(
-      JSON.stringify({
-        success: true,
-        emailId: emailData?.id,
-        to: to.trim(),
-        subject,
-      }),
+      JSON.stringify({ success: true, emailId: emailData?.id, to: to.trim(), subject }),
       { status: 200, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
+
   } catch (error: unknown) {
     console.error('send-agent-email-resend error:', error);
 
