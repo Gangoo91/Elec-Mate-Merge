@@ -14,9 +14,18 @@ import {
   MessageSquare,
   Users,
   Send,
+  Zap,
+  CheckCircle2,
+  XCircle,
+  Clock,
+  CalendarClock,
+  Mail,
+  Bot,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useBusinessAIProfile } from './useBusinessAIProfile';
+import { useAgentActivity, AgentAction } from '@/hooks/useAgentActivity';
+import { formatDistanceToNow, parseISO } from 'date-fns';
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -59,8 +68,59 @@ const clientCapabilities = [
   { icon: MessageSquare, label: 'Lead handling', desc: 'New enquiries logged automatically' },
 ];
 
+// Map action_type to icon + colour
+function actionMeta(type: string): { icon: React.ElementType; color: string; bg: string } {
+  const t = type?.toLowerCase() ?? '';
+  if (t.includes('invoice') || t.includes('payment'))
+    return { icon: Receipt, color: 'text-green-400', bg: 'bg-green-500/10' };
+  if (t.includes('quote'))
+    return { icon: FileText, color: 'text-blue-400', bg: 'bg-blue-500/10' };
+  if (t.includes('email') || t.includes('message'))
+    return { icon: Mail, color: 'text-purple-400', bg: 'bg-purple-500/10' };
+  if (t.includes('cert') || t.includes('expiry') || t.includes('renewal'))
+    return { icon: CalendarClock, color: 'text-amber-400', bg: 'bg-amber-500/10' };
+  if (t.includes('task'))
+    return { icon: ListTodo, color: 'text-amber-400', bg: 'bg-amber-500/10' };
+  if (t.includes('revoke') || t.includes('provision'))
+    return { icon: Bot, color: 'text-white/50', bg: 'bg-white/[0.05]' };
+  return { icon: Zap, color: 'text-amber-400', bg: 'bg-amber-500/10' };
+}
+
+function ActivityCard({ action }: { action: AgentAction }) {
+  const { icon: Icon, color, bg } = actionMeta(action.action_type);
+  const success = !action.outcome || action.outcome === 'success';
+  const timeAgo = formatDistanceToNow(parseISO(action.created_at), { addSuffix: true });
+
+  return (
+    <div className="flex items-start gap-3 py-3 border-b border-white/[0.05] last:border-0">
+      <div className={`w-8 h-8 rounded-xl ${bg} flex items-center justify-center shrink-0 mt-0.5`}>
+        <Icon className={`${color}`} style={{ height: 15, width: 15 }} />
+      </div>
+      <div className="flex-1 min-w-0">
+        <p className="text-sm text-white leading-snug">{action.description}</p>
+        {action.customer_name && (
+          <p className="text-xs text-white/50 mt-0.5 truncate">{action.customer_name}</p>
+        )}
+        <div className="flex items-center gap-2 mt-1">
+          <Clock style={{ height: 10, width: 10 }} className="text-white/25" />
+          <span className="text-[10px] text-white/30">{timeAgo}</span>
+        </div>
+      </div>
+      {action.outcome && (
+        <div className="shrink-0 mt-0.5">
+          {success
+            ? <CheckCircle2 style={{ height: 14, width: 14 }} className="text-green-400/70" />
+            : <XCircle style={{ height: 14, width: 14 }} className="text-red-400/70" />
+          }
+        </div>
+      )}
+    </div>
+  );
+}
+
 export function BusinessAIDashboardView() {
   const { profile, whatsappNumber } = useBusinessAIProfile();
+  const { actions, isLoading: activityLoading } = useAgentActivity(12);
   const healthStatus = profile?.agent_health_status ?? 'healthy';
   const firstName = profile?.full_name?.split(' ')[0] || 'there';
 
@@ -139,6 +199,36 @@ export function BusinessAIDashboardView() {
                 whatever you need.
               </p>
             </div>
+          </div>
+        </motion.div>
+
+        {/* Activity Feed */}
+        <motion.div variants={itemVariants} className="px-4 space-y-3">
+          <div className="flex items-center justify-between px-1">
+            <h3 className="text-xs font-semibold text-white uppercase tracking-wider">
+              Recent Activity
+            </h3>
+            {actions.length > 0 && (
+              <span className="text-[10px] text-white/30">{actions.length} actions</span>
+            )}
+          </div>
+
+          <div className="glass-premium rounded-2xl px-4 py-1">
+            {activityLoading ? (
+              <div className="py-6 flex justify-center">
+                <div className="w-5 h-5 border-2 border-amber-500/30 border-t-amber-500 rounded-full animate-spin" />
+              </div>
+            ) : actions.length === 0 ? (
+              <div className="py-8 text-center space-y-2">
+                <Zap className="h-8 w-8 text-white/10 mx-auto" />
+                <p className="text-sm text-white/30">Mate hasn't done anything yet</p>
+                <p className="text-xs text-white/20">Send a WhatsApp to get started</p>
+              </div>
+            ) : (
+              actions.map((action) => (
+                <ActivityCard key={action.id} action={action} />
+              ))
+            )}
           </div>
         </motion.div>
 
