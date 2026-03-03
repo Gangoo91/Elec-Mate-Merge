@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
@@ -106,6 +106,25 @@ export function BusinessAISalesView() {
   const [interested, setInterested] = useState(false);
   const [loading, setLoading] = useState(false);
   const { toast } = useToast();
+
+  // On mount: check if user already registered interest so returning users see confirmed state
+  useEffect(() => {
+    const checkWaitlist = async () => {
+      try {
+        const { data: { user } } = await supabase.auth.getUser();
+        if (!user) return;
+        const { data } = await supabase
+          .from('business_ai_waitlist' as never)
+          .select('id')
+          .eq('user_id', user.id)
+          .maybeSingle();
+        if (data) setInterested(true);
+      } catch {
+        // Table may not exist in older envs — silently ignore
+      }
+    };
+    checkWaitlist();
+  }, []);
 
   const handleInterest = async () => {
     setLoading(true);
