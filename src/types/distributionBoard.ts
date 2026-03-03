@@ -16,6 +16,7 @@ export const BOARD_MANUFACTURERS = [
   'Crabtree',
   'Contactum',
   'BG Electrical',
+  'CED',
   'Eaton',
   'ABB',
   'Legrand',
