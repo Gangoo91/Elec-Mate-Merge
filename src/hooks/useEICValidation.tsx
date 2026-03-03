@@ -183,11 +183,18 @@ export const useEICValidation = (formData: any): ValidationResult => {
       });
     }
 
-    const hasInspections =
-      (formData.inspectionItems &&
-        Array.isArray(formData.inspectionItems) &&
-        formData.inspectionItems.some((i: any) => i.outcome)) ||
-      (formData.inspections && Object.keys(formData.inspections).length > 0);
+    // inspectionItems may be a Record<string,{result,...}> (wizard path) or an array (legacy)
+    // The component stores results under 'result', not 'outcome' — check both for safety
+    const hasInspections = (() => {
+      const items = formData.inspectionItems;
+      if (items && !Array.isArray(items) && typeof items === 'object') {
+        return Object.values(items).some((i: any) => i.result || i.outcome);
+      }
+      if (Array.isArray(items) && items.length > 0) {
+        return items.some((i: any) => i.result || i.outcome);
+      }
+      return false;
+    })() || (formData.inspections && Object.keys(formData.inspections).length > 0);
     if (!hasInspections) {
       warnings.push({
         field: 'inspections',

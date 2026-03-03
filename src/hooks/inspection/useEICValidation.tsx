@@ -164,11 +164,10 @@ export const useEICValidation = (formData: any): ValidationResult => {
     }
 
     // Technical Validation Warnings
-    if (
-      formData.supplyVoltage &&
-      formData.supplyVoltage !== '230' &&
-      formData.supplyVoltage !== '400'
-    ) {
+    // Strip V/v suffix and whitespace before comparing — the inspection path stores '230V'/'400V'
+    const normalisedVoltage = formData.supplyVoltage?.replace(/V$/i, '').trim() || '';
+    const standardVoltages = ['230', '400', '110', '415'];
+    if (normalisedVoltage && !standardVoltages.includes(normalisedVoltage) && normalisedVoltage !== 'other') {
       warnings.push({
         field: 'supplyVoltage',
         message: 'Non-standard supply voltage - verify specification',
