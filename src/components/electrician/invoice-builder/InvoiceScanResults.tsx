@@ -132,6 +132,9 @@ export function InvoiceScanResults({
                     <div className="flex items-center gap-2">
                       <Input
                         type="number"
+                        inputMode="decimal"
+                        step="0.01"
+                        min="0"
                         value={item.quantity === 0 ? '' : item.quantity}
                         onClick={(e) => e.stopPropagation()}
                         onChange={(e) => {
@@ -148,6 +151,9 @@ export function InvoiceScanResults({
                         </span>
                         <Input
                           type="number"
+                          inputMode="decimal"
+                          step="0.01"
+                          min="0"
                           value={item.unitPrice === 0 ? '' : item.unitPrice.toFixed(2)}
                           onClick={(e) => e.stopPropagation()}
                           onChange={(e) => {

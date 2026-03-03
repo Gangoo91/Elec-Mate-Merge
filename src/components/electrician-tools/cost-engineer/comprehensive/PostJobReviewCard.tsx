@@ -112,9 +112,12 @@ const PostJobReviewCard = ({
                 <Input
                   id="actual-cost"
                   type="number"
+                  inputMode="decimal"
+                  step="0.01"
+                  min="0"
                   value={actualCost}
                   onChange={(e) => setActualCost(e.target.value)}
-                  placeholder={`Est: £${estimatedCost.toFixed(0)}`}
+                  placeholder={`Est: £${estimatedCost.toFixed(2)}`}
                   className="min-h-11"
                 />
                 {costVariance !== null && (

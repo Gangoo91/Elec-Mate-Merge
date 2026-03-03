@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -42,6 +42,20 @@ const BoardSetupCard: React.FC<BoardSetupCardProps> = ({
   className,
 }) => {
   const isMainBoard = board.id === MAIN_BOARD_ID || board.order === 0;
+
+  // Track whether user has selected "Other" for free-text manufacturer entry
+  const isCustomMake = board.make ? !BOARD_MANUFACTURERS.includes(board.make as any) || board.make === 'Other' : false;
+  const [showCustomMake, setShowCustomMake] = useState(isCustomMake);
+
+  const handleMakeChange = (value: string) => {
+    if (value === 'Other') {
+      setShowCustomMake(true);
+      onUpdate('make', '');
+    } else {
+      setShowCustomMake(false);
+      onUpdate('make', value);
+    }
+  };
 
   return (
     <Card
@@ -125,18 +139,37 @@ const BoardSetupCard: React.FC<BoardSetupCardProps> = ({
               <Factory className="h-3 w-3" />
               Manufacturer
             </Label>
-            <Select value={board.make || ''} onValueChange={(value) => onUpdate('make', value)}>
-              <SelectTrigger className="h-11 touch-manipulation bg-white/5 border-white/10 text-white focus:border-elec-yellow/50">
-                <SelectValue placeholder="Select..." />
-              </SelectTrigger>
-              <SelectContent className="bg-card border-white/10">
-                {BOARD_MANUFACTURERS.map((make) => (
-                  <SelectItem key={make} value={make} className="text-white">
-                    {make}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
+            {showCustomMake ? (
+              <div className="flex gap-2">
+                <Input
+                  value={board.make === 'Other' ? '' : board.make || ''}
+                  onChange={(e) => onUpdate('make', e.target.value)}
+                  placeholder="Type manufacturer name..."
+                  className="h-11 touch-manipulation bg-white/5 border-white/10 text-white flex-1"
+                  autoFocus
+                />
+                <button
+                  type="button"
+                  onClick={() => { setShowCustomMake(false); onUpdate('make', ''); }}
+                  className="h-11 px-3 text-xs text-white/50 hover:text-white bg-white/5 border border-white/10 rounded-md"
+                >
+                  Back
+                </button>
+              </div>
+            ) : (
+              <Select value={board.make && BOARD_MANUFACTURERS.includes(board.make as any) ? board.make : ''} onValueChange={handleMakeChange}>
+                <SelectTrigger className="h-11 touch-manipulation bg-white/5 border-white/10 text-white focus:border-elec-yellow/50">
+                  <SelectValue placeholder="Select..." />
+                </SelectTrigger>
+                <SelectContent className="bg-card border-white/10">
+                  {BOARD_MANUFACTURERS.map((make) => (
+                    <SelectItem key={make} value={make} className="text-white">
+                      {make}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            )}
           </div>
         </div>
 
