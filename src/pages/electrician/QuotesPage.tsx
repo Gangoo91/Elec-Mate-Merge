@@ -51,7 +51,6 @@ const QuotesPage = () => {
     refreshQuotes,
     loading,
     lastUpdated,
-    updateQuoteStatus,
   } = useQuoteStorage();
 
   const handleAcceptQuote = async (quoteId: string, currentStatus: Quote['status']) => {
