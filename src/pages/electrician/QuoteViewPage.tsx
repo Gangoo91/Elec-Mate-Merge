@@ -270,6 +270,20 @@ const QuoteViewPage = () => {
     }
   };
 
+  const handleMarkAsAccepted = async () => {
+    if (!quote) return;
+    const { error } = await supabase
+      .from('quotes')
+      .update({ acceptance_status: 'accepted', accepted_at: new Date().toISOString() })
+      .eq('id', quote.id);
+    if (error) {
+      toast({ title: 'Error', description: 'Failed to mark as accepted.', variant: 'destructive' });
+    } else {
+      setQuote((prev) => prev ? { ...prev, acceptance_status: 'accepted', accepted_at: new Date().toISOString() } : prev);
+      toast({ title: '✅ Quote accepted', description: 'You can now convert it to an invoice.' });
+    }
+  };
+
   const handleConvertToInvoice = async () => {
     if (!quote) return;
 
@@ -606,6 +620,25 @@ const QuoteViewPage = () => {
             </button>
           </div>
         </motion.div>
+
+        {/* Mark as Accepted — manual accept for desktop or when client confirmed verbally */}
+        {quote.acceptance_status !== 'accepted' && quote.acceptance_status !== 'rejected' && (
+          <motion.div variants={itemVariants}>
+            <button
+              onClick={handleMarkAsAccepted}
+              className="flex items-center gap-3 p-3.5 w-full rounded-2xl bg-emerald-500/10 border border-emerald-500/20 touch-manipulation active:bg-emerald-500/20 transition-colors"
+            >
+              <div className="w-10 h-10 rounded-xl bg-emerald-500/20 border border-emerald-500/30 flex items-center justify-center flex-shrink-0">
+                <CheckCircle className="h-5 w-5 text-emerald-400" />
+              </div>
+              <div className="flex-1 min-w-0 text-left">
+                <p className="text-[15px] font-medium text-emerald-400">Mark as Accepted</p>
+                <p className="text-[13px] text-white">Client said yes? Confirm acceptance here — unlocks invoice conversion</p>
+              </div>
+              <ChevronRight className="h-4 w-4 text-emerald-400/50" />
+            </button>
+          </motion.div>
+        )}
 
         {/* Convert to Invoice - Show for accepted quotes not yet invoiced */}
         {quote.acceptance_status === 'accepted' && !quote.invoice_raised && (
