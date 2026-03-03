@@ -27,6 +27,7 @@ interface SwipeableQuoteCardProps {
   onDelete: () => void;
   onEdit: () => void;
   onView: () => void;
+  onAccept?: () => void;
   delay?: number;
 }
 
@@ -35,6 +36,7 @@ export function SwipeableQuoteCard({
   onDelete,
   onEdit,
   onView,
+  onAccept,
   delay = 0,
 }: SwipeableQuoteCardProps) {
   const { isMobile, touchSupport } = useMobileEnhanced();
@@ -53,11 +55,20 @@ export function SwipeableQuoteCard({
     }
   };
 
+  const canAccept = !!onAccept && quote.acceptance_status !== 'accepted' && quote.acceptance_status !== 'rejected';
+
   const handleDragEnd = (_: MouseEvent | TouchEvent | PointerEvent, info: PanInfo) => {
     setIsDragging(false);
-    // Only process swipe if it was a touch interaction or on mobile
-    if ((isTouchEvent.current || enableSwipe) && info.offset.x < -80) {
-      onDelete();
+    if (isTouchEvent.current || enableSwipe) {
+      if (info.offset.x < -80) {
+        // Swipe left → delete
+        onDelete();
+      } else if (info.offset.x > 80 && canAccept) {
+        // Swipe right → accept
+        onAccept!();
+      } else {
+        setSwipeOffset(0);
+      }
     } else {
       setSwipeOffset(0);
     }
@@ -152,6 +163,16 @@ export function SwipeableQuoteCard({
       transition={{ delay, duration: 0.3 }}
       className="relative"
     >
+      {/* Accept action background (revealed on swipe right) */}
+      {canAccept && (
+        <div className="absolute inset-y-0 left-0 right-0 flex items-center justify-start px-6 bg-emerald-500 rounded-2xl overflow-hidden">
+          <div className="flex items-center gap-2">
+            <CheckCircle className="h-5 w-5 text-white" />
+            <span className="text-white font-medium">Accept</span>
+          </div>
+        </div>
+      )}
+
       {/* Delete action background (revealed on swipe left) */}
       <div className="absolute inset-y-0 left-0 right-0 flex items-center justify-end px-6 bg-red-500 rounded-2xl overflow-hidden">
         <div className="flex items-center gap-2">
@@ -169,7 +190,7 @@ export function SwipeableQuoteCard({
         animate={{ x: swipeOffset }}
         transition={{ type: 'spring', stiffness: 300, damping: 30 }}
         drag={enableSwipe ? 'x' : false}
-        dragConstraints={{ left: -100, right: 0 }}
+        dragConstraints={{ left: -100, right: canAccept ? 100 : 0 }}
         dragElastic={0.05}
         dragSnapToOrigin
         onDragStart={handleDragStart}

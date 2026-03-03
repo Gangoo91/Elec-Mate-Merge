@@ -18,6 +18,7 @@ import {
 } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { useQuoteStorage } from '@/hooks/useQuoteStorage';
+import { Quote } from '@/types/quote';
 import { filterQuotesByStatus } from '@/utils/quote-analytics';
 import { useMemo, useState, useCallback } from 'react';
 import { cn } from '@/lib/utils';
@@ -50,7 +51,24 @@ const QuotesPage = () => {
     refreshQuotes,
     loading,
     lastUpdated,
+    updateQuoteStatus,
   } = useQuoteStorage();
+
+  const handleAcceptQuote = async (quoteId: string, currentStatus: Quote['status']) => {
+    const success = await updateQuoteStatus(quoteId, currentStatus, undefined, 'accepted');
+    if (success) {
+      toast({
+        title: '✅ Quote accepted',
+        description: 'Marked as accepted. You can now convert it to an invoice.',
+      });
+    } else {
+      toast({
+        title: 'Failed to accept quote',
+        description: 'Please try again.',
+        variant: 'destructive',
+      });
+    }
+  };
 
   const handleDeleteQuote = async (quoteId: string) => {
     const success = await deleteQuote(quoteId);
@@ -489,6 +507,7 @@ const QuotesPage = () => {
                     onDelete={() => setQuoteToDelete(quote.id)}
                     onEdit={() => navigate(`/electrician/quote-builder/${quote.id}`)}
                     onView={() => navigate(`/electrician/quotes/view/${quote.id}`)}
+                    onAccept={() => handleAcceptQuote(quote.id, quote.status)}
                     delay={idx * 0.05}
                   />
                 ))}
