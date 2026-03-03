@@ -17,6 +17,17 @@ const REQUIRED_FIELDS: string[] = [
   // Minimal required fields - allow PDF generation with partial data
 ];
 
+// Insulation resistance fields that accept ">999", ">1999", "∞" and "infinity"
+// when the meter reading exceeds its range — perfectly valid on site
+const INFINITE_READING_FIELDS = [
+  'insulationLiveNeutral',
+  'insulationLiveEarth',
+  'insulationNeutralEarth',
+];
+
+const isInfiniteReading = (value: string): boolean =>
+  /^>\s*\d+/.test(value) || value === '∞' || value.toLowerCase() === 'infinity';
+
 // Fields that should be numeric
 const NUMERIC_FIELDS = [
   'supplyVoltage',
@@ -59,13 +70,20 @@ function validateField(field: string, value: any): ValidationError[] {
 
   // Numeric field validation
   if (NUMERIC_FIELDS.includes(field)) {
-    const numValue = parseFloat(value.toString());
-    if (isNaN(numValue) || numValue < 0) {
-      errors.push({
-        field,
-        message: `${field.replace(/([A-Z])/g, ' $1').toLowerCase()} must be a positive number`,
-        severity: 'error',
-      });
+    const strVal = value.toString().trim();
+    // Insulation fields accept infinite readings: >999, >1999, ∞, infinity
+    // These occur when the meter reading exceeds its measurement range
+    if (INFINITE_READING_FIELDS.includes(field) && isInfiniteReading(strVal)) {
+      // Valid infinite resistance — skip numeric check
+    } else {
+      const numValue = parseFloat(strVal);
+      if (isNaN(numValue) || numValue < 0) {
+        errors.push({
+          field,
+          message: `${field.replace(/([A-Z])/g, ' $1').toLowerCase()} must be a positive number`,
+          severity: 'error',
+        });
+      }
     }
   }
 
