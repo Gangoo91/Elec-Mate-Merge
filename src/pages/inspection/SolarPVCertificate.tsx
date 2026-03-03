@@ -49,6 +49,7 @@ import {
 } from '@/utils/certificateToQuote';
 import { supabase } from '@/integrations/supabase/client';
 import { formatSolarPVJson } from '@/utils/solarPVJsonFormatter';
+import { createNotificationFromCertificate } from '@/utils/notificationHelper';
 
 import SolarPVFormTabs from '@/components/inspection/solar-pv/SolarPVFormTabs';
 import { useSolarPVTabs, SolarPVTabValue } from '@/hooks/useSolarPVTabs';
@@ -512,6 +513,24 @@ export default function SolarPVCertificate() {
       link.click();
       document.body.removeChild(link);
       setTimeout(() => URL.revokeObjectURL(blobUrl), 100);
+
+      // Save pdf_url to reports table and create Part P notification
+      if (savedReportId) {
+        await supabase
+          .from('reports')
+          .update({
+            pdf_url: functionData.pdfUrl,
+            pdf_generated_at: new Date().toISOString(),
+            status: 'completed',
+          })
+          .eq('report_id', savedReportId);
+
+        // Solar PV is always Part P notifiable (new circuit to dwelling)
+        const { data: { user } } = await supabase.auth.getUser();
+        if (user) {
+          await createNotificationFromCertificate(savedReportId, 'solar-pv', formData, user.id);
+        }
+      }
 
       toast.success('Certificate generated and downloaded');
     } catch (error) {

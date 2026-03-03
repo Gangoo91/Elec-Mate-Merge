@@ -40,6 +40,7 @@ import {
 } from 'lucide-react';
 import { toast } from 'sonner';
 import { reportCloud } from '@/utils/reportCloud';
+import { createNotificationFromCertificate } from '@/utils/notificationHelper';
 import { draftStorage } from '@/utils/draftStorage';
 import { supabase } from '@/integrations/supabase/client';
 import { formatEVChargingJson } from '@/utils/evChargingJsonFormatter';
@@ -523,6 +524,24 @@ export default function EVChargingCertificate() {
       link.click();
       document.body.removeChild(link);
       setTimeout(() => URL.revokeObjectURL(blobUrl), 100);
+
+      // Save pdf_url to reports table and create Part P notification
+      if (savedReportId) {
+        await supabase
+          .from('reports')
+          .update({
+            pdf_url: functionData.pdfUrl,
+            pdf_generated_at: new Date().toISOString(),
+            status: 'completed',
+          })
+          .eq('report_id', savedReportId);
+
+        // EV Charging is always Part P notifiable (new circuit to dwelling)
+        const { data: { user } } = await supabase.auth.getUser();
+        if (user) {
+          await createNotificationFromCertificate(savedReportId, 'ev-charging', formData, user.id);
+        }
+      }
 
       toast.success('Certificate generated and downloaded');
     } catch (error) {

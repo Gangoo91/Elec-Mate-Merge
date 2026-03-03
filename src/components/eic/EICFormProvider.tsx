@@ -832,13 +832,8 @@ export const EICFormProvider: React.FC<EICFormProviderProps> = ({
 
       console.log('Generating EIC certificate...', formData);
 
-      const isNotifiable = isNotifiableWork(
-        formData.description || '',
-        formData.installationAddress || '',
-        formData.scheduleOfTests?.some((circuit: any) => circuit.isNew === true)
-      );
-
-      if (isNotifiable) {
+      // EIC is always notifiable under Part P — no keyword check needed
+      {
         let complianceWarning = false;
         if (
           formData.scheduleOfTests &&
@@ -906,14 +901,6 @@ export const EICFormProvider: React.FC<EICFormProviderProps> = ({
               'Certificate created successfully, but notification creation failed. You can create it manually from the Notifications page.',
           });
         }
-      } else {
-        queryClient.invalidateQueries({ queryKey: ['recent-certificates'] });
-        queryClient.invalidateQueries({ queryKey: ['my-reports'] });
-
-        toast({
-          title: 'EIC Generated',
-          description: 'Your Electrical Installation Certificate has been generated successfully.',
-        });
       }
 
       clearAutoSave();

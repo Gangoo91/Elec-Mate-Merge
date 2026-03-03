@@ -73,7 +73,8 @@ const MinorWorksPdfGenerator: React.FC<MinorWorksPdfGeneratorProps> = ({
   const { loadCompanyBranding, hasSavedCompanyBranding } = useMinorWorksSmartForm();
 
   // Handle automatic Part P notification creation
-  const handleNotificationCreation = async () => {
+  // Always pass savedReportId (the real DB report_id) — never fall back to certificateNumber
+  const handleNotificationCreation = async (savedReportId?: string) => {
     // Only create notification if Part P checkbox is ticked
     if (!formData.partPNotification) {
       return;
@@ -90,10 +91,11 @@ const MinorWorksPdfGenerator: React.FC<MinorWorksPdfGeneratorProps> = ({
         currentUserId = user.id;
       }
 
-      // Get report ID (use certificate number as fallback)
-      const currentReportId = reportId || formData.certificateNumber;
-      if (!currentReportId) {
-        console.warn('No report ID available for notification');
+      // Use the confirmed savedReportId from DB — never fall back to certificateNumber
+      // which would create an orphaned notification pointing to a non-existent report
+      const currentReportId = savedReportId || reportId;
+      if (!currentReportId || currentReportId === formData.certificateNumber) {
+        console.warn('[Part P] Skipping notification — no valid report_id available yet');
         return;
       }
 
@@ -214,7 +216,7 @@ const MinorWorksPdfGenerator: React.FC<MinorWorksPdfGeneratorProps> = ({
         });
 
         onSuccess?.();
-        await handleNotificationCreation();
+        await handleNotificationCreation(savedReportId ?? undefined);
 
         // Invalidate dashboard queries
         queryClient.invalidateQueries({ queryKey: ['recent-certificates'] });
@@ -356,7 +358,7 @@ const MinorWorksPdfGenerator: React.FC<MinorWorksPdfGeneratorProps> = ({
         });
 
         onSuccess?.();
-        await handleNotificationCreation();
+        await handleNotificationCreation(savedReportId ?? undefined);
 
         // Invalidate dashboard queries
         queryClient.invalidateQueries({ queryKey: ['recent-certificates'] });
@@ -444,7 +446,7 @@ const MinorWorksPdfGenerator: React.FC<MinorWorksPdfGeneratorProps> = ({
           });
 
           onSuccess?.();
-          await handleNotificationCreation();
+          await handleNotificationCreation(savedReportId ?? undefined);
 
           // Invalidate dashboard queries
           queryClient.invalidateQueries({ queryKey: ['recent-certificates'] });
@@ -472,7 +474,7 @@ const MinorWorksPdfGenerator: React.FC<MinorWorksPdfGeneratorProps> = ({
           });
 
           onSuccess?.();
-          await handleNotificationCreation();
+          await handleNotificationCreation(savedReportId ?? undefined);
 
           // Invalidate dashboard queries
           queryClient.invalidateQueries({ queryKey: ['recent-certificates'] });
