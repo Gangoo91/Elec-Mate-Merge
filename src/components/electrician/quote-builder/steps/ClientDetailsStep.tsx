@@ -26,11 +26,24 @@ interface ClientDetailsStepProps {
   quoteId?: string;
 }
 
+/** Extract UK postcode from a combined address string */
+const extractPostcode = (address: string): { address: string; postcode: string } => {
+  const postcodeRegex = /\b([A-Z]{1,2}\d{1,2}[A-Z]?\s*\d[A-Z]{2})\b/i;
+  const match = address.match(postcodeRegex);
+  if (match) {
+    const postcode = match[1].toUpperCase().replace(/\s+/, ' ');
+    const cleanAddress = address.replace(postcodeRegex, '').replace(/,\s*$/, '').trim();
+    return { address: cleanAddress, postcode };
+  }
+  return { address: address.trim(), postcode: '' };
+};
+
 export const ClientDetailsStep = ({ client, onUpdate, quoteId }: ClientDetailsStepProps) => {
   const [customerId, setCustomerId] = useState<string | undefined>(client?.customerId);
   const [selectedCustomer, setSelectedCustomer] = useState<Customer | null>(null);
   const [showSavePrompt, setShowSavePrompt] = useState(false);
   const [savePromptDismissed, setSavePromptDismissed] = useState(false);
+  const [addressKey, setAddressKey] = useState(0);
 
   const form = useForm<QuoteClient>({
     resolver: zodResolver(clientSchema),
@@ -52,10 +65,13 @@ export const ClientDetailsStep = ({ client, onUpdate, quoteId }: ClientDetailsSt
     if (customer) {
       setSelectedCustomer(customer);
       setCustomerId(customer.id);
+      const { address, postcode } = extractPostcode(customer.address || '');
       form.setValue('name', customer.name);
       form.setValue('email', customer.email || '');
       form.setValue('phone', customer.phone || '');
-      form.setValue('address', customer.address || '');
+      form.setValue('address', address || customer.address || '');
+      form.setValue('postcode', postcode);
+      setAddressKey(k => k + 1);
       setShowSavePrompt(false);
       setSavePromptDismissed(true);
     } else {
@@ -73,6 +89,7 @@ export const ClientDetailsStep = ({ client, onUpdate, quoteId }: ClientDetailsSt
     form.setValue('phone', '');
     form.setValue('address', '');
     form.setValue('postcode', '');
+    setAddressKey(k => k + 1);
   };
 
   const handleCustomerSaved = async (savedCustomerId: string) => {
@@ -244,9 +261,10 @@ export const ClientDetailsStep = ({ client, onUpdate, quoteId }: ClientDetailsSt
           </p>
           <div className="rounded-2xl bg-white/[0.03] border border-white/[0.06] p-4">
             <UnifiedAddressFinder
+              key={addressKey}
               onAddressSelect={handleAddressSelect}
               defaultValue={
-                form.watch('address') ? `${form.watch('address')}, ${form.watch('postcode')}` : ''
+                form.watch('address') ? `${form.watch('address')}${form.watch('postcode') ? ', ' + form.watch('postcode') : ''}` : ''
               }
             />
           </div>
