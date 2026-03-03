@@ -80,6 +80,20 @@ Deno.serve(async (req) => {
 
     console.log(`User ${userId} (${targetProfile?.full_name}) deleted by super admin ${user.id}`);
 
+    // Security audit log — best effort, non-fatal
+    try {
+      await supabaseAdmin.from('security_audit_log').insert({
+        user_id: user.id, // the admin who performed the action
+        action: 'admin_account_deletion',
+        table_name: 'auth.users',
+        record_id: userId, // the user who was deleted
+        ip_address: req.headers.get('x-forwarded-for')?.split(',')[0]?.trim() ?? null,
+        user_agent: req.headers.get('user-agent') ?? null,
+      });
+    } catch (auditErr) {
+      console.warn('Non-fatal: could not write security audit log:', auditErr);
+    }
+
     return new Response(JSON.stringify({ success: true, message: 'User deleted successfully' }), {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       status: 200,

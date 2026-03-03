@@ -126,6 +126,20 @@ Deno.serve(async (req) => {
 
     console.log(`User ${user.id} (${profile?.full_name ?? user.email}) deleted their own account`);
 
+    // Security audit log — best effort, non-fatal
+    try {
+      await supabaseAdmin.from('security_audit_log').insert({
+        user_id: user.id,
+        action: 'account_deletion',
+        table_name: 'auth.users',
+        record_id: user.id,
+        ip_address: req.headers.get('x-forwarded-for')?.split(',')[0]?.trim() ?? null,
+        user_agent: req.headers.get('user-agent') ?? null,
+      });
+    } catch (auditErr) {
+      console.warn('Non-fatal: could not write security audit log:', auditErr);
+    }
+
     return new Response(
       JSON.stringify({ success: true, message: 'Account deleted successfully' }),
       {
