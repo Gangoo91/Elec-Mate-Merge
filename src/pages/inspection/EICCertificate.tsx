@@ -64,6 +64,9 @@ const getDefaultFormData = () => ({
   // Circuit schedule
   scheduleOfTests: [],
 
+  // Distribution boards (multi-board support)
+  distributionBoards: [],
+
   // Inspections
   scheduleOfInspections: {},
 
