@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   ArrowLeft,
+  ArrowRight,
   MessageSquare,
   Receipt,
   FileText,
@@ -13,12 +14,22 @@ import {
   BellRing,
   Zap,
   CheckCircle,
-  Clock,
-  Sparkles,
+  Mail,
+  Calendar,
+  FileDown,
+  ShieldCheck,
+  BarChart3,
+  Calculator,
+  Loader2,
+  Shield,
+  Banknote,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/components/ui/use-toast';
+import { useAuth } from '@/contexts/AuthContext';
 import { supabase } from '@/integrations/supabase/client';
+import { stripePrices } from '@/data/stripePrices';
+import { capturePaymentError, addBreadcrumb, trackMilestone } from '@/lib/sentry';
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -55,6 +66,11 @@ const dayMoments = [
     message:
       "Morning! You've got 3 jobs today. Mrs Chen's EICR is due, and that quote for the Hendersons is still outstanding. Want me to chase it?",
     icon: BellRing,
+    interaction: {
+      userReply: 'Yes',
+      mateFollowUp:
+        "Done — chased Henderson, sent a polite reminder. I'll follow up tomorrow if no reply.",
+    },
   },
   {
     time: '9:30 AM',
@@ -86,60 +102,196 @@ const dayMoments = [
   },
 ];
 
-const features = [
+// Pipeline steps — Lead to Paid
+const pipelineSteps = [
+  { icon: Users, label: 'Lead', desc: 'Captured & replied to', tools: 5 },
+  { icon: FileText, label: 'Quote', desc: 'Drafted & sent', tools: 7 },
+  { icon: ListTodo, label: 'Job', desc: 'Scheduled & tracked', tools: 10 },
+  { icon: ClipboardCheck, label: 'Cert', desc: 'Filed & delivered', tools: 5 },
+  { icon: Receipt, label: 'Invoice', desc: 'Raised & chased', tools: 6 },
+  { icon: Banknote, label: 'Paid', desc: 'Tracked & reconciled', tools: 4 },
+];
+
+// Capability groups with real tool counts
+const capabilityGroups = [
   {
-    icon: BellRing,
-    title: 'Daily briefings',
-    desc: 'Tasks, appointments & reminders every morning',
+    title: 'Running Your Business',
+    cards: [
+      {
+        icon: Receipt,
+        title: 'Invoicing',
+        tools: 6,
+        examples: 'Create · send · chase · track payments · overdue alerts · statements',
+      },
+      {
+        icon: FileText,
+        title: 'Quoting',
+        tools: 7,
+        examples: 'Draft · price · send · follow up · convert to job · templates · revisions',
+      },
+      {
+        icon: BarChart3,
+        title: 'Analytics',
+        tools: 4,
+        examples: 'Revenue · outstanding · job profit · monthly summary',
+      },
+      {
+        icon: Calculator,
+        title: 'Expenses',
+        tools: 3,
+        examples: 'Log receipts · mileage · material costs',
+      },
+    ],
   },
-  { icon: Receipt, title: 'Invoice chasing', desc: 'Automatic follow-ups on unpaid invoices' },
-  { icon: FileText, title: 'Quote drafting', desc: 'Send job details, get a quote drafted' },
-  { icon: ListTodo, title: 'Task management', desc: 'Manage your to-do list via text' },
-  { icon: Users, title: 'Client comms', desc: 'Confirmations & follow-ups handled' },
-  { icon: ClipboardCheck, title: 'Cert tracking', desc: 'EICR & PAT renewal reminders' },
-  { icon: BookOpen, title: 'Regs on site', desc: 'BS 7671 answers while you work' },
-  { icon: MessageSquare, title: 'Lead handling', desc: 'New enquiries logged & responded to' },
+  {
+    title: 'On Site',
+    cards: [
+      {
+        icon: BookOpen,
+        title: 'Knowledge Base',
+        tools: 6,
+        examples: 'BS 7671 regs · Zs tables · cable ratings · inspection guidance · GN3 · IET',
+      },
+      {
+        icon: ShieldCheck,
+        title: 'RAMS & Compliance',
+        tools: 4,
+        examples: 'Risk assessments · method statements · site safety · toolbox talks',
+      },
+      {
+        icon: ClipboardCheck,
+        title: 'Certificates',
+        tools: 5,
+        examples: 'EICR · EIC · minor works · delivery · PDF generation',
+      },
+    ],
+  },
+  {
+    title: 'Your Clients',
+    cards: [
+      {
+        icon: Users,
+        title: 'Client Management',
+        tools: 4,
+        examples: 'Add · search · notes · job history',
+      },
+      {
+        icon: MessageSquare,
+        title: 'Messaging',
+        tools: 2,
+        examples: 'WhatsApp replies · appointment confirmations',
+      },
+      {
+        icon: Mail,
+        title: 'Email & Leads',
+        tools: 5,
+        examples: 'Gmail monitor · lead capture · auto-reply · follow-up · enquiry log',
+      },
+    ],
+  },
+  {
+    title: 'Back Office',
+    cards: [
+      {
+        icon: ListTodo,
+        title: 'Projects & Tasks',
+        tools: 10,
+        examples:
+          'Create · assign · schedule · track · complete · notes · dependencies · reminders · archive · projects',
+      },
+      {
+        icon: Calendar,
+        title: 'Calendar',
+        tools: 3,
+        examples: 'Schedule · reminders · availability',
+      },
+      {
+        icon: FileDown,
+        title: 'Documents',
+        tools: 2,
+        examples: 'Generate PDFs · file storage',
+      },
+    ],
+  },
+];
+
+// Trust points for approval-first section
+const trustPoints = [
+  'Invoices drafted but never sent without approval',
+  'Quotes reviewed by you before going to clients',
+  'Messages composed then held for your OK to send',
+  'Payments tracked but never initiated without you',
 ];
 
 export function BusinessAISalesView() {
   const [billing, setBilling] = useState<'monthly' | 'yearly'>('monthly');
-  const [interested, setInterested] = useState(false);
   const [loading, setLoading] = useState(false);
   const { toast } = useToast();
+  const { user } = useAuth();
+  const navigate = useNavigate();
 
-  // On mount: check if user already registered interest so returning users see confirmed state
-  useEffect(() => {
-    const checkWaitlist = async () => {
-      try {
-        const { data: { user } } = await supabase.auth.getUser();
-        if (!user) return;
-        const { data } = await supabase
-          .from('business_ai_waitlist' as never)
-          .select('id')
-          .eq('user_id', user.id)
-          .maybeSingle();
-        if (data) setInterested(true);
-      } catch {
-        // Table may not exist in older envs — silently ignore
-      }
-    };
-    checkWaitlist();
-  }, []);
+  const handleCheckout = async () => {
+    if (!user) {
+      toast({
+        title: 'Sign in required',
+        description: 'Please sign in or create an account to start your free trial.',
+      });
+      navigate('/auth/signin');
+      return;
+    }
 
-  const handleInterest = async () => {
     setLoading(true);
     try {
-      const { data: { user } } = await supabase.auth.getUser();
-      if (user) {
-        // Best-effort — table may not exist yet
-        await supabase
-          .from('business_ai_waitlist' as never)
-          .upsert({ user_id: user.id, created_at: new Date().toISOString() }, { onConflict: 'user_id' });
+      addBreadcrumb('Business AI checkout started', 'payment', { billing });
+
+      const priceId =
+        billing === 'monthly' ? stripePrices.monthly.business_ai : stripePrices.yearly.business_ai;
+      const planId = billing === 'monthly' ? 'business-ai-monthly' : 'business-ai-yearly';
+      const offerCode = localStorage.getItem('elec-mate-offer-code');
+
+      const { data, error } = await supabase.functions.invoke('create-checkout', {
+        body: { priceId, mode: 'subscription', planId, offerCode },
+      });
+
+      if (error) throw new Error(error.message);
+
+      if (data?.url) {
+        if (offerCode) {
+          localStorage.removeItem('elec-mate-offer-code');
+        }
+        trackMilestone('Business AI Checkout Created', {
+          planId,
+          billing,
+          hasOfferCode: !!offerCode,
+        });
+
+        toast({
+          title: 'Redirecting to checkout',
+          description: offerCode
+            ? 'Your discount will be applied automatically.'
+            : 'Opening secure Stripe checkout page.',
+        });
+
+        const newWindow = window.open(data.url, '_blank');
+        if (!newWindow || newWindow.closed) {
+          setTimeout(() => {
+            window.location.href = data.url;
+          }, 1000);
+        }
+      } else {
+        throw new Error('No checkout URL returned');
       }
-      setInterested(true);
-    } catch {
-      // Silently succeed — we don't need the DB call to work to show the right UI
-      setInterested(true);
+    } catch (err) {
+      console.error('Checkout error:', err);
+      capturePaymentError(err instanceof Error ? err : new Error(String(err)), {
+        billing,
+        context: 'business-ai-checkout',
+      });
+      toast({
+        title: 'Checkout Error',
+        description: err instanceof Error ? err.message : 'Failed to start checkout',
+        variant: 'destructive',
+      });
     } finally {
       setLoading(false);
     }
@@ -170,7 +322,7 @@ export function BusinessAISalesView() {
           </Link>
         </motion.div>
 
-        {/* ── Hero ── */}
+        {/* ── 1. Hero ── */}
         <motion.div variants={itemVariants} className="px-4">
           <div className="relative overflow-hidden rounded-3xl">
             {/* Background layers */}
@@ -179,10 +331,12 @@ export function BusinessAISalesView() {
             <div className="absolute -bottom-12 -left-12 w-40 h-40 bg-yellow-500/[0.08] blur-3xl rounded-full" />
 
             <div className="relative px-6 pt-8 pb-7 text-center space-y-5">
-              {/* Coming Soon badge */}
+              {/* Stat badge */}
               <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-500/15 border border-amber-500/30">
-                <Sparkles className="h-3 w-3 text-amber-400" />
-                <span className="text-xs font-semibold text-amber-400 tracking-wide uppercase">Coming soon</span>
+                <Zap className="h-3 w-3 text-amber-400" />
+                <span className="text-xs font-semibold text-amber-400 tracking-wide">
+                  80 tools. One WhatsApp number.
+                </span>
               </div>
 
               {/* Icon */}
@@ -201,8 +355,9 @@ export function BusinessAISalesView() {
               </div>
 
               {/* Subheadline */}
-              <p className="text-base text-white/80 max-w-xs mx-auto leading-relaxed">
-                Your business assistant on WhatsApp. Handles invoicing, scheduling, client comms and regs — so you never stop what you're doing.
+              <p className="text-base text-white max-w-xs mx-auto leading-relaxed">
+                Your business assistant on WhatsApp. Handles invoicing, scheduling, client comms and
+                regs — so you never stop what you're doing.
               </p>
 
               {/* Social proof */}
@@ -216,17 +371,16 @@ export function BusinessAISalesView() {
                     />
                   ))}
                 </div>
-                <p className="text-xs text-white/60">Built by electricians, for electricians</p>
+                <p className="text-xs text-white">Built by electricians, for electricians</p>
               </div>
             </div>
           </div>
         </motion.div>
 
-        {/* ── A Day with Mate — WhatsApp-style chat ── */}
+        {/* ── 2. A Day with Mate — WhatsApp-style chat ── */}
         <motion.div variants={itemVariants} className="px-4 space-y-4">
           <h2 className="text-lg font-semibold text-white flex items-center gap-2 px-1">
-            <div className="h-2 w-2 rounded-full bg-amber-400" />
-            A Day with Mate
+            <div className="h-2 w-2 rounded-full bg-amber-400" />A Day with Mate
           </h2>
 
           {/* Chat container — WhatsApp dark mode look */}
@@ -235,9 +389,12 @@ export function BusinessAISalesView() {
             style={{ background: 'linear-gradient(180deg, #0b1612 0%, #0e1a14 100%)' }}
           >
             {/* Chat header */}
-            <div className="flex items-center gap-3 px-4 py-3 border-b border-white/[0.06]" style={{ background: '#1a2b20' }}>
+            <div
+              className="flex items-center gap-3 px-4 py-3 border-b border-white/[0.06]"
+              style={{ background: '#1a2b20' }}
+            >
               <div className="w-9 h-9 rounded-full bg-amber-500 flex items-center justify-center shrink-0">
-                <Zap className="h-4.5 w-4.5 text-black" style={{ height: 18, width: 18 }} />
+                <Zap className="text-black" style={{ height: 18, width: 18 }} />
               </div>
               <div className="flex-1 min-w-0">
                 <div className="text-sm font-semibold text-white">Mate ⚡</div>
@@ -250,23 +407,18 @@ export function BusinessAISalesView() {
 
             {/* Messages */}
             <div className="px-3 py-4 space-y-1">
-              {dayMoments.map(({ time, label, message, icon: Icon }, i) => (
-                <motion.div
-                  key={i}
-                  custom={i}
-                  variants={bubbleVariants}
-                  className="mb-3"
-                >
+              {dayMoments.map(({ time, label, message, icon: Icon, interaction }, i) => (
+                <motion.div key={i} custom={i} variants={bubbleVariants} className="mb-3">
                   {/* Time label */}
                   <div className="flex justify-center mb-2">
-                    <span className="text-[10px] text-white/30 bg-white/[0.04] px-2.5 py-0.5 rounded-full">
+                    <span className="text-[10px] text-white bg-white/[0.04] px-2.5 py-0.5 rounded-full">
                       {time} · {label}
                     </span>
                   </div>
 
-                  {/* Bubble */}
+                  {/* Mate bubble */}
                   <div className="flex items-end gap-2 max-w-[88%]">
-                    {/* Avatar — only on first or after a gap */}
+                    {/* Avatar */}
                     <div className="shrink-0 w-7 h-7 rounded-full bg-amber-500 flex items-center justify-center mb-0.5">
                       <Icon className="text-black" style={{ height: 13, width: 13 }} />
                     </div>
@@ -275,25 +427,97 @@ export function BusinessAISalesView() {
                       {/* Bubble body */}
                       <div
                         className="rounded-[18px] rounded-tl-[4px] px-3.5 py-2.5 relative"
-                        style={{ background: '#1f2d22', border: '1px solid rgba(255,255,255,0.06)' }}
+                        style={{
+                          background: '#1f2d22',
+                          border: '1px solid rgba(255,255,255,0.06)',
+                        }}
                       >
                         <p className="text-sm text-white leading-relaxed">{message}</p>
                       </div>
                       {/* Read receipt style */}
                       <div className="flex items-center gap-1 mt-1 px-1">
-                        <span className="text-[10px] text-white/25">{time}</span>
-                        <CheckCircle className="text-amber-400/70" style={{ height: 10, width: 10 }} />
+                        <span className="text-[10px] text-white">{time}</span>
+                        <CheckCircle
+                          className="text-amber-400/70"
+                          style={{ height: 10, width: 10 }}
+                        />
                       </div>
                     </div>
                   </div>
+
+                  {/* Interactive Yes/No buttons + user reply + Mate follow-up */}
+                  {interaction && (
+                    <div className="mt-3 space-y-3">
+                      {/* WhatsApp-style quick reply buttons */}
+                      <div className="flex items-center justify-center gap-3">
+                        <div className="px-6 py-2 rounded-full border border-amber-500/40 text-sm font-medium text-amber-400 bg-amber-500/[0.08]">
+                          Yes
+                        </div>
+                        <div className="px-6 py-2 rounded-full border border-white/[0.12] text-sm font-medium text-white bg-white/[0.04]">
+                          No
+                        </div>
+                      </div>
+
+                      {/* User reply bubble — right-aligned, WhatsApp green */}
+                      <div className="flex justify-end">
+                        <div className="max-w-[88%]">
+                          <div
+                            className="rounded-[18px] rounded-tr-[4px] px-3.5 py-2.5"
+                            style={{ background: '#005c4b' }}
+                          >
+                            <p className="text-sm text-white leading-relaxed">
+                              {interaction.userReply}
+                            </p>
+                          </div>
+                          <div className="flex items-center justify-end gap-1 mt-1 px-1">
+                            <span className="text-[10px] text-white">7:01 AM</span>
+                            <CheckCircle
+                              className="text-blue-400/70"
+                              style={{ height: 10, width: 10 }}
+                            />
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Mate follow-up bubble */}
+                      <div className="flex items-end gap-2 max-w-[88%]">
+                        <div className="shrink-0 w-7 h-7 rounded-full bg-amber-500 flex items-center justify-center mb-0.5">
+                          <Zap className="text-black" style={{ height: 13, width: 13 }} />
+                        </div>
+                        <div>
+                          <div
+                            className="rounded-[18px] rounded-tl-[4px] px-3.5 py-2.5 relative"
+                            style={{
+                              background: '#1f2d22',
+                              border: '1px solid rgba(255,255,255,0.06)',
+                            }}
+                          >
+                            <p className="text-sm text-white leading-relaxed">
+                              {interaction.mateFollowUp}
+                            </p>
+                          </div>
+                          <div className="flex items-center gap-1 mt-1 px-1">
+                            <span className="text-[10px] text-white">7:01 AM</span>
+                            <CheckCircle
+                              className="text-amber-400/70"
+                              style={{ height: 10, width: 10 }}
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  )}
                 </motion.div>
               ))}
             </div>
 
             {/* Input area — decorative */}
-            <div className="flex items-center gap-2.5 px-3 py-2.5 border-t border-white/[0.06]" style={{ background: '#111c14' }}>
+            <div
+              className="flex items-center gap-2.5 px-3 py-2.5 border-t border-white/[0.06]"
+              style={{ background: '#111c14' }}
+            >
               <div className="flex-1 h-9 rounded-full bg-white/[0.06] flex items-center px-4">
-                <span className="text-xs text-white/25">Message Mate...</span>
+                <span className="text-xs text-white">Message Mate...</span>
               </div>
               <div className="w-9 h-9 rounded-full bg-amber-500 flex items-center justify-center shrink-0">
                 <Zap className="text-black" style={{ height: 16, width: 16 }} />
@@ -302,34 +526,92 @@ export function BusinessAISalesView() {
           </div>
         </motion.div>
 
-        {/* ── Everything Mate Handles ── */}
+        {/* ── 3. The Pipeline ── */}
         <motion.div variants={itemVariants} className="px-4 space-y-4">
+          <h2 className="text-lg font-semibold text-white flex items-center gap-2 px-1">
+            <div className="h-2 w-2 rounded-full bg-amber-400" />
+            The Pipeline
+          </h2>
+
+          {/* Horizontal scrollable pipeline */}
+          <div className="relative">
+            <div
+              className="overflow-x-auto -mx-4 px-4 pb-2 scrollbar-hide"
+              style={{ WebkitOverflowScrolling: 'touch' }}
+            >
+              <div className="flex items-center gap-0 min-w-max">
+                {pipelineSteps.map(({ icon: Icon, label, desc, tools }, i) => (
+                  <React.Fragment key={label}>
+                    <div className="flex flex-col items-center text-center w-[88px] shrink-0">
+                      <div className="w-12 h-12 rounded-2xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center mb-2">
+                        <Icon className="text-amber-400" style={{ height: 20, width: 20 }} />
+                      </div>
+                      <span className="text-sm font-semibold text-white">{label}</span>
+                      <span className="text-[11px] text-white mt-0.5">{desc}</span>
+                      <span className="mt-1.5 text-[10px] font-semibold text-amber-400 bg-amber-500/10 px-2 py-0.5 rounded-full">
+                        {tools} tools
+                      </span>
+                    </div>
+                    {i < pipelineSteps.length - 1 && (
+                      <ArrowRight
+                        className="text-amber-400/50 shrink-0 mx-1"
+                        style={{ height: 16, width: 16 }}
+                      />
+                    )}
+                  </React.Fragment>
+                ))}
+              </div>
+            </div>
+            {/* Right-edge fade to hint at scrollability */}
+            <div className="absolute top-0 right-0 bottom-2 w-10 bg-gradient-to-l from-background to-transparent pointer-events-none" />
+          </div>
+
+          <p className="text-sm text-white text-center">
+            80 tools working behind one WhatsApp chat
+          </p>
+        </motion.div>
+
+        {/* ── 4. Everything Mate Handles ── */}
+        <motion.div variants={itemVariants} className="px-4 space-y-5">
           <h2 className="text-lg font-semibold text-white flex items-center gap-2 px-1">
             <div className="h-2 w-2 rounded-full bg-amber-400" />
             Everything Mate Handles
           </h2>
-          <div className="grid grid-cols-2 gap-2.5">
-            {features.map(({ icon: Icon, title, desc }, i) => (
-              <motion.div
-                key={title}
-                custom={i}
-                variants={bubbleVariants}
-                className="rounded-2xl p-4 space-y-2.5 border border-white/[0.06]"
-                style={{ background: 'rgba(255,255,255,0.03)' }}
-              >
-                <div className="w-8 h-8 rounded-xl bg-amber-500/10 border border-amber-500/15 flex items-center justify-center">
-                  <Icon className="text-amber-400" style={{ height: 16, width: 16 }} />
-                </div>
-                <div>
-                  <div className="text-sm font-semibold text-white leading-tight">{title}</div>
-                  <div className="text-xs text-white/50 mt-0.5 leading-snug">{desc}</div>
-                </div>
-              </motion.div>
-            ))}
-          </div>
+
+          {capabilityGroups.map(({ title, cards }) => (
+            <div key={title} className="space-y-2.5">
+              <h3 className="text-sm font-semibold text-amber-400 px-1">{title}</h3>
+              <div className="grid grid-cols-2 gap-2.5">
+                {cards.map(({ icon: Icon, title: cardTitle, tools, examples }, i) => (
+                  <motion.div
+                    key={cardTitle}
+                    custom={i}
+                    variants={bubbleVariants}
+                    className="rounded-2xl p-4 space-y-2.5 border border-white/[0.06]"
+                    style={{ background: 'rgba(255,255,255,0.03)' }}
+                  >
+                    <div className="flex items-center gap-2">
+                      <div className="w-8 h-8 rounded-xl bg-amber-500/10 border border-amber-500/15 flex items-center justify-center shrink-0">
+                        <Icon className="text-amber-400" style={{ height: 16, width: 16 }} />
+                      </div>
+                      <span className="text-[10px] font-semibold text-amber-400 bg-amber-500/10 px-2 py-0.5 rounded-full">
+                        {tools} tools
+                      </span>
+                    </div>
+                    <div>
+                      <div className="text-sm font-semibold text-white leading-tight">
+                        {cardTitle}
+                      </div>
+                      <div className="text-[11px] text-white mt-1 leading-snug">{examples}</div>
+                    </div>
+                  </motion.div>
+                ))}
+              </div>
+            </div>
+          ))}
         </motion.div>
 
-        {/* ── How It Works ── */}
+        {/* ── 5. How It Works ── */}
         <motion.div variants={itemVariants} className="px-4 space-y-4">
           <h2 className="text-lg font-semibold text-white flex items-center gap-2 px-1">
             <div className="h-2 w-2 rounded-full bg-amber-400" />
@@ -337,7 +619,7 @@ export function BusinessAISalesView() {
           </h2>
           <div className="relative space-y-0">
             {[
-              { step: '1', text: 'Subscribe to the Business AI plan' },
+              { step: '1', text: 'Subscribe to Business AI' },
               { step: '2', text: 'Connect your WhatsApp number' },
               { step: '3', text: "Start texting Mate — that's it" },
             ].map(({ step, text }, i) => (
@@ -348,7 +630,10 @@ export function BusinessAISalesView() {
                     <span className="text-xs font-bold text-amber-400">{step}</span>
                   </div>
                   {i < 2 && (
-                    <div className="w-px flex-1 bg-gradient-to-b from-amber-500/30 to-transparent my-1" style={{ minHeight: 20 }} />
+                    <div
+                      className="w-px flex-1 bg-gradient-to-b from-amber-500/30 to-transparent my-1"
+                      style={{ minHeight: 20 }}
+                    />
                   )}
                 </div>
                 {/* Step text */}
@@ -360,7 +645,38 @@ export function BusinessAISalesView() {
           </div>
         </motion.div>
 
-        {/* ── Pricing ── */}
+        {/* ── 6. Approval-First Trust ── */}
+        <motion.div variants={itemVariants} className="px-4">
+          <div
+            className="rounded-2xl p-6 border border-green-500/20 space-y-4"
+            style={{ background: 'rgba(34,197,94,0.05)' }}
+          >
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-xl bg-green-500/15 border border-green-500/25 flex items-center justify-center shrink-0">
+                <Shield className="h-5 w-5 text-green-400" />
+              </div>
+              <div>
+                <h3 className="text-base font-semibold text-white">Mate always asks first</h3>
+                <p className="text-sm text-white mt-0.5">
+                  Nothing leaves your business without your OK
+                </p>
+              </div>
+            </div>
+
+            <div className="space-y-3">
+              {trustPoints.map((point) => (
+                <div key={point} className="flex items-start gap-2.5">
+                  <div className="w-5 h-5 rounded-full bg-green-500/15 flex items-center justify-center flex-shrink-0 mt-0.5">
+                    <CheckCircle className="h-3 w-3 text-green-400" />
+                  </div>
+                  <span className="text-sm text-white leading-snug">{point}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </motion.div>
+
+        {/* ── 7. Pricing + Live Checkout ── */}
         <motion.div variants={itemVariants} className="px-4 space-y-4">
           <h2 className="text-lg font-semibold text-white flex items-center gap-2 px-1">
             <div className="h-2 w-2 rounded-full bg-amber-400" />
@@ -373,15 +689,17 @@ export function BusinessAISalesView() {
               <button
                 key={period}
                 onClick={() => setBilling(period)}
-                className={`flex-1 py-2.5 px-4 rounded-lg text-sm font-medium transition-all touch-manipulation capitalize ${
+                className={`flex-1 py-2.5 px-4 rounded-lg text-sm font-medium transition-all touch-manipulation capitalize h-11 ${
                   billing === period
                     ? 'bg-amber-500 text-black shadow-lg shadow-amber-500/20'
-                    : 'text-white/60 hover:text-white'
+                    : 'text-white hover:text-white'
                 }`}
               >
                 {period}
                 {period === 'yearly' && (
-                  <span className={`ml-1.5 text-[10px] font-bold ${billing === 'yearly' ? 'text-black/60' : 'text-green-400'}`}>
+                  <span
+                    className={`ml-1.5 text-[10px] font-bold ${billing === 'yearly' ? 'text-black' : 'text-green-400'}`}
+                  >
                     SAVE 17%
                   </span>
                 )}
@@ -404,84 +722,51 @@ export function BusinessAISalesView() {
                   <div className="text-4xl font-bold text-white">
                     {billing === 'monthly' ? monthlyPrice : yearlyPrice}
                   </div>
-                  <div className="text-sm text-white/50 mt-1">
+                  <div className="text-sm text-white mt-1">
                     {billing === 'monthly' ? 'per month' : 'per year'}
                   </div>
                   {billing === 'yearly' && (
                     <div className="inline-flex items-center gap-1.5 mt-2 px-3 py-1 rounded-full bg-green-500/10 border border-green-500/20">
-                      <span className="text-green-400 text-xs font-semibold">Save {yearlySaving} vs monthly</span>
+                      <span className="text-green-400 text-xs font-semibold">
+                        Save {yearlySaving} vs monthly
+                      </span>
                     </div>
                   )}
                 </motion.div>
               </AnimatePresence>
-              <p className="text-xs text-white/40 pt-2">Includes everything in the Electrician plan</p>
+              <p className="text-xs text-white pt-2">Includes everything in the Electrician plan</p>
             </div>
           </div>
 
-          {/* Coming Soon CTA — replaces subscribe */}
-          <AnimatePresence mode="wait">
-            {!interested ? (
-              <motion.div
-                key="waitlist"
-                initial={{ opacity: 0, scale: 0.98 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.96 }}
-                className="space-y-3"
-              >
-                {/* Coming soon notice */}
-                <div className="rounded-2xl p-4 border border-amber-500/20 text-center space-y-1" style={{ background: 'rgba(251,191,36,0.05)' }}>
-                  <div className="flex items-center justify-center gap-2 mb-2">
-                    <Sparkles className="h-4 w-4 text-amber-400" />
-                    <span className="text-sm font-semibold text-amber-400">In final testing</span>
-                  </div>
-                  <p className="text-sm text-white/70 leading-relaxed">
-                    Mate is being tested with a select group of sparks right now. Be first in line when we open the doors.
-                  </p>
-                </div>
-
-                <Button
-                  onClick={handleInterest}
-                  disabled={loading}
-                  className="w-full h-13 touch-manipulation font-semibold text-base rounded-xl transition-all bg-amber-500 hover:bg-amber-400 active:bg-amber-600 active:scale-[0.98] text-black shadow-lg shadow-amber-500/25"
-                  style={{ height: 52 }}
-                >
-                  {loading ? (
-                    <span className="flex items-center gap-2">
-                      <div className="w-4 h-4 border-2 border-black/30 border-t-black rounded-full animate-spin" />
-                      One sec...
-                    </span>
-                  ) : (
-                    <span className="flex items-center gap-2">
-                      <Zap className="h-4 w-4" />
-                      Count me in — notify me when live
-                    </span>
-                  )}
-                </Button>
-                <p className="text-xs text-white/30 text-center">
-                  No commitment. We'll message you on WhatsApp when Mate launches.
-                </p>
-              </motion.div>
+          {/* Checkout CTA */}
+          <Button
+            onClick={handleCheckout}
+            disabled={loading}
+            className="w-full touch-manipulation font-semibold text-base rounded-xl transition-all bg-amber-500 hover:bg-amber-400 active:bg-amber-600 active:scale-[0.98] text-black shadow-lg shadow-amber-500/25"
+            style={{ height: 52 }}
+          >
+            {loading ? (
+              <span className="flex items-center gap-2">
+                <Loader2 className="h-4 w-4 animate-spin" />
+                One sec...
+              </span>
             ) : (
-              <motion.div
-                key="confirmed"
-                initial={{ opacity: 0, y: 8, scale: 0.97 }}
-                animate={{ opacity: 1, y: 0, scale: 1 }}
-                transition={{ duration: 0.35, ease: 'easeOut' }}
-                className="rounded-2xl p-6 text-center space-y-3 border border-green-500/25"
-                style={{ background: 'rgba(34,197,94,0.06)' }}
-              >
-                <div className="w-12 h-12 rounded-full bg-green-500/15 border border-green-500/30 flex items-center justify-center mx-auto">
-                  <CheckCircle className="h-6 w-6 text-green-400" />
-                </div>
-                <div>
-                  <div className="text-base font-semibold text-white">You're on the list ⚡</div>
-                  <p className="text-sm text-white/50 mt-1">
-                    We'll drop you a message when Mate is ready. Won't be long.
-                  </p>
-                </div>
-              </motion.div>
+              <span className="flex items-center gap-2">
+                <Zap className="h-4 w-4" />
+                Start 7-Day Free Trial
+              </span>
             )}
-          </AnimatePresence>
+          </Button>
+
+          {/* Trust signals */}
+          <div className="flex items-center justify-center gap-3 text-xs text-white">
+            <span className="flex items-center gap-1.5">
+              <Shield className="h-3.5 w-3.5 text-green-500/60" />
+              Secured by Stripe
+            </span>
+            <span className="w-1 h-1 rounded-full bg-white/20" />
+            <span>Cancel anytime</span>
+          </div>
         </motion.div>
       </motion.div>
     </div>
