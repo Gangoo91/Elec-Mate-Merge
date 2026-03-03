@@ -1,4 +1,5 @@
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, useMemo, useCallback } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { NotificationsList } from './NotificationsList';
 import { NotificationDetailModal } from './NotificationDetailModal';
 import { BuildingControlFormGuide } from './BuildingControlFormGuide';
@@ -24,11 +25,29 @@ import { ChevronDown } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { differenceInDays, parseISO } from 'date-fns';
 
+// Maps logical section names to real app routes
+const CROSS_APP_ROUTES: Record<string, string> = {
+  'invoices': '/electrician/invoices',
+  'quotes': '/electrician/quotes',
+  'tasks': '/electrician/tasks',
+  'calendar': '/electrician/business/calendar',
+  'elec-id': '/elec-id',
+  'safety-equipment': '/electrician-tools/site-safety',
+};
+
 interface NotificationsManagerProps {
-  onNavigate: (section: string, reportId?: string, reportType?: string) => void;
+  /** Called for inspection-internal navigation (cert viewing, Part P sections).
+   *  Cross-app sections (invoices, tasks etc) are handled internally via React Router. */
+  onNavigate?: (section: string, reportId?: string, reportType?: string) => void;
+  /** Optional: called before any navigation so parent can close a sheet etc. */
+  onBeforeNavigate?: () => void;
+  /** Compact mode: hides static guidance sections (building control guide, NICEIC/NAPIT info).
+   *  Used when embedded in the bell icon sheet. */
+  compact?: boolean;
 }
 
-export const NotificationsManager = ({ onNavigate }: NotificationsManagerProps) => {
+export const NotificationsManager = ({ onNavigate, onBeforeNavigate, compact = false }: NotificationsManagerProps) => {
+  const navigate = useNavigate();
   const { notifications, isLoading, updateNotification, deleteNotification } = useNotifications();
   const { reminders, isLoading: expIsLoading } = useExpiryReminders();
   const { data: elecIdAlerts = [] } = useElecIdExpiryAlerts();
@@ -36,6 +55,16 @@ export const NotificationsManager = ({ onNavigate }: NotificationsManagerProps) 
   const { data: taskAlerts } = useTaskAlerts();
   const { data: equipmentAlerts = [] } = useSafetyEquipmentAlerts();
   const { toast } = useToast();
+
+  /** Navigate to a section — cross-app routes use React Router, inspection sections use prop */
+  const handleNav = useCallback((section: string, reportId?: string, reportType?: string) => {
+    onBeforeNavigate?.();
+    if (CROSS_APP_ROUTES[section]) {
+      navigate(CROSS_APP_ROUTES[section]);
+    } else {
+      onNavigate?.(section, reportId, reportType);
+    }
+  }, [navigate, onNavigate, onBeforeNavigate]);
 
   // Expiry alerts: overdue or due within 60 days, not yet completed
   const expiryAlerts = useMemo(() => {
@@ -93,7 +122,7 @@ export const NotificationsManager = ({ onNavigate }: NotificationsManagerProps) 
     };
 
     const section = sectionMap[reportType] || reportType;
-    onNavigate(section, reportId, reportType);
+    handleNav(section, reportId, reportType);
   };
 
   if (isLoading && expIsLoading) {
@@ -139,7 +168,7 @@ export const NotificationsManager = ({ onNavigate }: NotificationsManagerProps) 
             <ElecIdExpiryCard
               key={alert.id}
               alert={alert}
-              onNavigate={() => onNavigate('elec-id')}
+              onNavigate={() => handleNav('elec-id')}
             />
           ))}
           <div className="border-b border-border/30 pt-2" />
@@ -160,7 +189,7 @@ export const NotificationsManager = ({ onNavigate }: NotificationsManagerProps) 
             <SafetyEquipmentCard
               key={alert.id}
               alert={alert}
-              onNavigate={() => onNavigate('safety-equipment')}
+              onNavigate={() => handleNav('safety-equipment')}
             />
           ))}
           <div className="border-b border-border/30 pt-2" />
@@ -179,7 +208,7 @@ export const NotificationsManager = ({ onNavigate }: NotificationsManagerProps) 
           </div>
           <OverdueTasksCard
             tasks={taskAlerts!.overdueTasks}
-            onNavigate={() => onNavigate('tasks')}
+            onNavigate={() => handleNav('tasks')}
           />
           <div className="border-b border-border/30 pt-2" />
         </div>
@@ -196,7 +225,7 @@ export const NotificationsManager = ({ onNavigate }: NotificationsManagerProps) 
             </span>
           </div>
           {taskAlerts!.jobsDueToday.map((job) => (
-            <JobDueCard key={job.id} job={job} onNavigate={() => onNavigate('calendar')} />
+            <JobDueCard key={job.id} job={job} onNavigate={() => handleNav('calendar')} />
           ))}
           <div className="border-b border-border/30 pt-2" />
         </div>
@@ -213,7 +242,7 @@ export const NotificationsManager = ({ onNavigate }: NotificationsManagerProps) 
             </span>
           </div>
           {taskAlerts!.jobsDueTomorrow.map((job) => (
-            <JobDueCard key={job.id} job={job} onNavigate={() => onNavigate('calendar')} />
+            <JobDueCard key={job.id} job={job} onNavigate={() => handleNav('calendar')} />
           ))}
           <div className="border-b border-border/30 pt-2" />
         </div>
@@ -233,7 +262,7 @@ export const NotificationsManager = ({ onNavigate }: NotificationsManagerProps) 
             <OverdueInvoiceCard
               key={invoice.id}
               invoice={invoice}
-              onNavigate={() => onNavigate('invoices')}
+              onNavigate={() => handleNav('invoices')}
             />
           ))}
           <div className="border-b border-border/30 pt-2" />
@@ -254,7 +283,7 @@ export const NotificationsManager = ({ onNavigate }: NotificationsManagerProps) 
             <ExpiringQuoteCard
               key={quote.id}
               quote={quote}
-              onNavigate={() => onNavigate('quotes')}
+              onNavigate={() => handleNav('quotes')}
             />
           ))}
           <div className="border-b border-border/30 pt-2" />
@@ -275,7 +304,7 @@ export const NotificationsManager = ({ onNavigate }: NotificationsManagerProps) 
             <InvoicePaidCard
               key={invoice.id}
               invoice={invoice}
-              onNavigate={() => onNavigate('invoices')}
+              onNavigate={() => handleNav('invoices')}
             />
           ))}
           <div className="border-b border-border/30 pt-2" />
@@ -296,24 +325,24 @@ export const NotificationsManager = ({ onNavigate }: NotificationsManagerProps) 
             <QuoteActivityCard
               key={activity.id}
               activity={activity}
-              onNavigate={() => onNavigate('quotes')}
+              onNavigate={() => handleNav('quotes')}
             />
           ))}
           <div className="border-b border-border/30 pt-2" />
         </div>
       )}
 
-      {/* User-specific guidance based on scheme membership */}
-      {isRegistered === false && (
+      {/* User-specific guidance based on scheme membership — hidden in compact/sheet mode */}
+      {!compact && isRegistered === false && (
         <NonRegisteredUserGuide onFindBuildingControl={() => setShowBuildingControlFinder(true)} />
       )}
 
-      {isRegistered === true && (
+      {!compact && isRegistered === true && (
         <RegisteredUserGuide showNiceic={showNiceic} showNapit={showNapit} />
       )}
 
-      {/* Building Control Form Guide - Collapsible (supplementary details) */}
-      <Collapsible open={isFormGuideOpen} onOpenChange={setIsFormGuideOpen} className="mb-6">
+      {/* Building Control Form Guide — hidden in compact/sheet mode */}
+      {!compact && <Collapsible open={isFormGuideOpen} onOpenChange={setIsFormGuideOpen} className="mb-6">
         <CollapsibleTrigger className="flex items-center justify-between w-full p-4 bg-card/80 hover:bg-card rounded-2xl transition-all border border-border/50 hover:border-primary/30 group">
           <div className="flex items-center gap-3">
             <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors">
@@ -336,7 +365,7 @@ export const NotificationsManager = ({ onNavigate }: NotificationsManagerProps) 
             </div>
           </ScrollArea>
         </CollapsibleContent>
-      </Collapsible>
+      </Collapsible>}
 
       <NotificationsList
         notifications={notifications}
@@ -348,13 +377,15 @@ export const NotificationsManager = ({ onNavigate }: NotificationsManagerProps) 
         showNapit={showNapit}
       />
 
-      <NotificationDetailModal
-        notification={selectedNotification}
-        open={!!selectedNotification}
-        onClose={() => setSelectedNotification(null)}
-        onUpdate={updateNotification}
-        onViewCertificate={handleViewCertificate}
-      />
+      {!compact && (
+        <NotificationDetailModal
+          notification={selectedNotification}
+          open={!!selectedNotification}
+          onClose={() => setSelectedNotification(null)}
+          onUpdate={updateNotification}
+          onViewCertificate={handleViewCertificate}
+        />
+      )}
 
       {/* Global Building Control Finder Dialog */}
       <BuildingControlFinder

@@ -13,6 +13,7 @@ import { useNavigate } from 'react-router-dom';
 import { cn } from '@/lib/utils';
 import { useNotifications } from '@/components/notifications/NotificationProvider';
 import { useCombinedUnreadWithNotifications } from '@/hooks/useCombinedUnread';
+import { useTotalAlertCount } from '@/hooks/useTotalAlertCount';
 import { MessagesSheet } from './MessagesSheet';
 import { NotificationsSheet } from './NotificationsSheet';
 
@@ -25,7 +26,7 @@ const UserProfileDropdown = () => {
   const [notificationsOpen, setNotificationsOpen] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
-  // Get notification count safely
+  // Push notification count (system alerts, announcements)
   let notificationUnread = 0;
   try {
     const { unreadCount } = useNotifications();
@@ -34,11 +35,16 @@ const UserProfileDropdown = () => {
     // NotificationProvider not available
   }
 
+  // All actionable alerts (overdue invoices, tasks, equipment, elec-id etc)
+  const alertCount = useTotalAlertCount();
+
   // Get combined unread counts
   const { messageUnread, hasUnread } = useCombinedUnreadWithNotifications(notificationUnread);
 
-  // Total unread for badge display
-  const totalUnread = notificationUnread + messageUnread;
+  // Total for badge — alerts + push notifications + messages
+  const totalUnread = alertCount + notificationUnread + messageUnread;
+  // Bell badge uses alerts + push notifications
+  const bellBadgeCount = alertCount + notificationUnread;
 
   const handleOpenMessages = () => {
     setDropdownOpen(false);
@@ -164,9 +170,9 @@ const UserProfileDropdown = () => {
                 <span className="font-medium">Notifications</span>
               </div>
               <div className="flex items-center gap-2">
-                {notificationUnread > 0 && (
+                {bellBadgeCount > 0 && (
                   <span className="flex h-5 min-w-5 items-center justify-center rounded-full bg-red-500 px-1.5 text-[10px] font-bold text-white">
-                    {notificationUnread > 9 ? '9+' : notificationUnread}
+                    {bellBadgeCount > 9 ? '9+' : bellBadgeCount}
                   </span>
                 )}
                 <ChevronRight className="h-4 w-4 text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity" />
