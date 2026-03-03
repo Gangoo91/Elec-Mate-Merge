@@ -494,7 +494,8 @@ export const EICFormProvider: React.FC<EICFormProviderProps> = ({
       loadFromCloudRef.current(initialReportId).then((cloudResult) => {
         if (cloudResult && cloudResult.data && typeof cloudResult.data === 'object') {
           const data = cloudResult.data as any;
-          const cloudTime = new Date(data.updated_at || data.last_synced_at || 0).getTime();
+          // Use the database timestamp from cloudResult (not data.updated_at which is the form JSON and won't have this field)
+          const cloudTime = new Date(cloudResult.updatedAt || cloudResult.lastSyncedAt || data.updated_at || 0).getTime();
           const localTime = localDraft?.lastModified
             ? new Date(localDraft.lastModified).getTime()
             : 0;
