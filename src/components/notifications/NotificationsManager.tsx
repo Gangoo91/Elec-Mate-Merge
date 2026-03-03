@@ -1,17 +1,20 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { NotificationsList } from './NotificationsList';
 import { NotificationDetailModal } from './NotificationDetailModal';
 import { BuildingControlFormGuide } from './BuildingControlFormGuide';
 import { BuildingControlFinder } from './BuildingControlFinder';
 import { NonRegisteredUserGuide } from './NonRegisteredUserGuide';
 import { RegisteredUserGuide } from './RegisteredUserGuide';
+import { CertExpiryCard } from './CertExpiryCard';
 import { useNotifications, Notification } from '@/hooks/useNotifications';
+import { useExpiryReminders } from '@/hooks/useExpiryReminders';
 import { supabase } from '@/integrations/supabase/client';
-import { Loader2 } from 'lucide-react';
+import { Loader2, CalendarClock } from 'lucide-react';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { ChevronDown } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
+import { differenceInDays, parseISO } from 'date-fns';
 
 interface NotificationsManagerProps {
   onNavigate: (section: string, reportId?: string, reportType?: string) => void;
@@ -19,7 +22,18 @@ interface NotificationsManagerProps {
 
 export const NotificationsManager = ({ onNavigate }: NotificationsManagerProps) => {
   const { notifications, isLoading, updateNotification, deleteNotification } = useNotifications();
+  const { reminders, isLoading: expIsLoading } = useExpiryReminders();
   const { toast } = useToast();
+
+  // Expiry alerts: overdue or due within 60 days, not yet completed
+  const expiryAlerts = useMemo(() => {
+    if (!reminders) return [];
+    return reminders.filter((r) => {
+      if (r.reminder_status === 'completed') return false;
+      const days = differenceInDays(parseISO(r.expiry_date), new Date());
+      return days <= 60;
+    });
+  }, [reminders]);
   const [selectedNotification, setSelectedNotification] = useState<Notification | null>(null);
   const [showNiceic, setShowNiceic] = useState(true);
   const [showNapit, setShowNapit] = useState(true);
@@ -70,7 +84,7 @@ export const NotificationsManager = ({ onNavigate }: NotificationsManagerProps) 
     onNavigate(section, reportId, reportType);
   };
 
-  if (isLoading) {
+  if (isLoading && expIsLoading) {
     return (
       <div className="flex items-center justify-center py-12">
         <Loader2 className="w-8 h-8 animate-spin text-primary" />
@@ -80,6 +94,25 @@ export const NotificationsManager = ({ onNavigate }: NotificationsManagerProps) 
 
   return (
     <>
+      {/* ── Re-Inspection Due Alerts ── */}
+      {expiryAlerts.length > 0 && (
+        <div className="mb-6 space-y-3">
+          <div className="flex items-center gap-2 px-1">
+            <CalendarClock className="w-4 h-4 text-amber-400" />
+            <h3 className="text-sm font-semibold text-foreground">
+              Re-Inspections Due
+            </h3>
+            <span className="ml-auto text-xs font-medium px-2 py-0.5 rounded-full bg-amber-500/15 text-amber-400">
+              {expiryAlerts.length}
+            </span>
+          </div>
+          {expiryAlerts.map((reminder) => (
+            <CertExpiryCard key={reminder.id} reminder={reminder} />
+          ))}
+          <div className="border-b border-border/30 pt-2" />
+        </div>
+      )}
+
       {/* User-specific guidance based on scheme membership */}
       {isRegistered === false && (
         <NonRegisteredUserGuide onFindBuildingControl={() => setShowBuildingControlFinder(true)} />
