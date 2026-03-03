@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
-import { differenceInDays, parseISO } from 'date-fns';
+import { differenceInDays, parseISO, subDays } from 'date-fns';
 
 export interface OverdueInvoice {
   id: string;
@@ -20,9 +20,28 @@ export interface ExpiringQuote {
   daysUntilExpiry: number;
 }
 
+export interface QuoteActivity {
+  id: string;
+  quoteNumber: string;
+  clientName: string;
+  total: number;
+  status: 'accepted' | 'rejected';
+  activityAt: string;
+}
+
+export interface PaidInvoice {
+  id: string;
+  quoteNumber: string;
+  clientName: string;
+  total: number;
+  paidAt: string;
+}
+
 export interface FinanceAlerts {
   overdueInvoices: OverdueInvoice[];
   expiringQuotes: ExpiringQuote[];
+  recentQuoteActivity: QuoteActivity[];
+  recentPaidInvoices: PaidInvoice[];
 }
 
 export function useFinanceAlerts() {
@@ -32,12 +51,13 @@ export function useFinanceAlerts() {
       const {
         data: { user },
       } = await supabase.auth.getUser();
-      if (!user) return { overdueInvoices: [], expiringQuotes: [] };
+      if (!user) return { overdueInvoices: [], expiringQuotes: [], recentQuoteActivity: [], recentPaidInvoices: [] };
 
       const now = new Date().toISOString();
       const sevenDaysFromNow = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString();
+      const sevenDaysAgo = subDays(new Date(), 7).toISOString();
 
-      const [invoiceRes, quoteRes] = await Promise.all([
+      const [invoiceRes, quoteRes, activityRes, paidRes] = await Promise.all([
         // Overdue invoices: raised, not paid, due date passed
         supabase
           .from('quotes')
@@ -59,6 +79,27 @@ export function useFinanceAlerts() {
           .gt('expiry_date', now)
           .lt('expiry_date', sevenDaysFromNow)
           .is('deleted_at', null),
+
+        // Recent quote activity: accepted or rejected in last 7 days
+        supabase
+          .from('quotes')
+          .select('id, quote_number, client_data, total, acceptance_status, accepted_at')
+          .eq('user_id', user.id)
+          .in('acceptance_status', ['accepted', 'rejected'])
+          .gte('accepted_at', sevenDaysAgo)
+          .is('deleted_at', null)
+          .order('accepted_at', { ascending: false }),
+
+        // Recently paid invoices: last 7 days
+        supabase
+          .from('quotes')
+          .select('id, quote_number, client_data, total, invoice_paid_at')
+          .eq('user_id', user.id)
+          .eq('invoice_status', 'paid')
+          .not('invoice_paid_at', 'is', null)
+          .gte('invoice_paid_at', sevenDaysAgo)
+          .is('deleted_at', null)
+          .order('invoice_paid_at', { ascending: false }),
       ]);
 
       const overdueInvoices: OverdueInvoice[] = (invoiceRes.data ?? []).map((q) => ({
@@ -79,7 +120,24 @@ export function useFinanceAlerts() {
         daysUntilExpiry: differenceInDays(parseISO(q.expiry_date), new Date()),
       }));
 
-      return { overdueInvoices, expiringQuotes };
+      const recentQuoteActivity: QuoteActivity[] = (activityRes.data ?? []).map((q) => ({
+        id: q.id,
+        quoteNumber: q.quote_number,
+        clientName: (q.client_data as any)?.name || 'Unknown Client',
+        total: q.total ?? 0,
+        status: q.acceptance_status as 'accepted' | 'rejected',
+        activityAt: q.accepted_at,
+      }));
+
+      const recentPaidInvoices: PaidInvoice[] = (paidRes.data ?? []).map((q) => ({
+        id: q.id,
+        quoteNumber: q.quote_number,
+        clientName: (q.client_data as any)?.name || 'Unknown Client',
+        total: q.total ?? 0,
+        paidAt: q.invoice_paid_at,
+      }));
+
+      return { overdueInvoices, expiringQuotes, recentQuoteActivity, recentPaidInvoices };
     },
     staleTime: 5 * 60 * 1000,
   });

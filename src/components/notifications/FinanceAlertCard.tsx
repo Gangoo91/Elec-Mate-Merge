@@ -1,7 +1,96 @@
-import { format, parseISO } from 'date-fns';
-import { AlertCircle, Clock, ChevronRight, PoundSterling } from 'lucide-react';
+import { format, parseISO, formatDistanceToNow } from 'date-fns';
+import { AlertCircle, Clock, ChevronRight, CheckCircle2, XCircle, Banknote } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import type { OverdueInvoice, ExpiringQuote } from '@/hooks/useFinanceAlerts';
+import type { OverdueInvoice, ExpiringQuote, QuoteActivity, PaidInvoice } from '@/hooks/useFinanceAlerts';
+
+function formatGbp(amount: number): string {
+  return new Intl.NumberFormat('en-GB', { style: 'currency', currency: 'GBP' }).format(amount);
+}
+
+interface QuoteActivityCardProps {
+  activity: QuoteActivity;
+  onNavigate?: () => void;
+}
+
+interface InvoicePaidCardProps {
+  invoice: PaidInvoice;
+  onNavigate?: () => void;
+}
+
+export function QuoteActivityCard({ activity, onNavigate }: QuoteActivityCardProps) {
+  const accepted = activity.status === 'accepted';
+  return (
+    <button
+      onClick={onNavigate}
+      className={cn(
+        'w-full text-left rounded-2xl border p-4 transition-all active:scale-[0.98]',
+        accepted ? 'border-green-500/40 bg-green-500/10' : 'border-red-500/40 bg-red-500/10'
+      )}
+    >
+      <div className="flex items-start gap-3">
+        <div
+          className={cn(
+            'w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0',
+            accepted ? 'bg-green-500/20 text-green-400' : 'bg-red-500/20 text-red-400'
+          )}
+        >
+          {accepted ? <CheckCircle2 className="w-5 h-5" /> : <XCircle className="w-5 h-5" />}
+        </div>
+        <div className="flex-1 min-w-0">
+          <div className="flex items-center gap-2 mb-0.5">
+            <span className="text-sm font-semibold text-foreground truncate">
+              {activity.clientName}
+            </span>
+            <span className="text-xs px-2 py-0.5 rounded-full bg-muted/40 text-muted-foreground">
+              {activity.quoteNumber}
+            </span>
+          </div>
+          <p className="text-xs text-muted-foreground">
+            Quote {accepted ? 'accepted' : 'rejected'} {formatDistanceToNow(parseISO(activity.activityAt), { addSuffix: true })}
+          </p>
+        </div>
+        <div className="flex items-center gap-2 flex-shrink-0">
+          <p className={cn('text-sm font-bold', accepted ? 'text-green-400' : 'text-red-400')}>
+            {formatGbp(activity.total)}
+          </p>
+          <ChevronRight className="w-4 h-4 text-muted-foreground" />
+        </div>
+      </div>
+    </button>
+  );
+}
+
+export function InvoicePaidCard({ invoice, onNavigate }: InvoicePaidCardProps) {
+  return (
+    <button
+      onClick={onNavigate}
+      className="w-full text-left rounded-2xl border border-green-500/40 bg-green-500/10 p-4 transition-all active:scale-[0.98]"
+    >
+      <div className="flex items-start gap-3">
+        <div className="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0 bg-green-500/20 text-green-400">
+          <Banknote className="w-5 h-5" />
+        </div>
+        <div className="flex-1 min-w-0">
+          <div className="flex items-center gap-2 mb-0.5">
+            <span className="text-sm font-semibold text-foreground truncate">
+              {invoice.clientName}
+            </span>
+            <span className="text-xs px-2 py-0.5 rounded-full bg-muted/40 text-muted-foreground">
+              {invoice.quoteNumber}
+            </span>
+          </div>
+          <p className="text-xs text-muted-foreground">
+            Paid {formatDistanceToNow(parseISO(invoice.paidAt), { addSuffix: true })}
+          </p>
+        </div>
+        <div className="flex items-center gap-2 flex-shrink-0">
+          <p className="text-sm font-bold text-green-400">{formatGbp(invoice.total)}</p>
+          <ChevronRight className="w-4 h-4 text-muted-foreground" />
+        </div>
+      </div>
+    </button>
+  );
+}
 
 interface OverdueInvoiceCardProps {
   invoice: OverdueInvoice;
@@ -11,10 +100,6 @@ interface OverdueInvoiceCardProps {
 interface ExpiringQuoteCardProps {
   quote: ExpiringQuote;
   onNavigate?: () => void;
-}
-
-function formatGbp(amount: number): string {
-  return new Intl.NumberFormat('en-GB', { style: 'currency', currency: 'GBP' }).format(amount);
 }
 
 export function OverdueInvoiceCard({ invoice, onNavigate }: OverdueInvoiceCardProps) {
