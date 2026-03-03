@@ -18,7 +18,9 @@ import { cn } from '@/lib/utils';
 import { useIsMobile } from '@/hooks/use-mobile';
 
 interface EarthingAndBondingSectionProps {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   formData: any;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   onUpdate: (field: string, value: any) => void;
   isOpen: boolean;
   onToggle: () => void;
@@ -64,6 +66,17 @@ const EarthingAndBondingSection: React.FC<EarthingAndBondingSectionProps> = ({
       (part) => !knownServices.some((service) => part.toLowerCase().includes(service))
     );
     return otherParts.join(', ');
+  });
+  const [otherChecked, setOtherChecked] = useState<boolean>(() => {
+    const value = formData.mainBondingLocations || '';
+    const knownServices = ['water', 'gas', 'oil', 'structural steel', 'steel', 'telecom'];
+    const parts = value
+      .split(',')
+      .map((s) => s.trim())
+      .filter((s) => s);
+    return parts.some(
+      (part) => !knownServices.some((service) => part.toLowerCase().includes(service))
+    );
   });
 
   // Sync state when formData changes externally
@@ -442,102 +455,84 @@ const EarthingAndBondingSection: React.FC<EarthingAndBondingSectionProps> = ({
 
             {/* Bonding Connections (IET Form) */}
             <div className="space-y-3">
-              <Label className="font-medium text-sm">Bonding Connections To:</Label>
+              <h4 className="text-sm font-semibold text-amber-400 border-b border-white/10 pb-2 flex items-center gap-2">
+                <div className="w-1.5 h-1.5 rounded-full bg-amber-400"></div>
+                Bonding Connections To
+              </h4>
               <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-                <div className="flex items-center space-x-2">
-                  <Checkbox
-                    id="eic-bonding-water"
-                    checked={bondingLocations.has('water')}
-                    onCheckedChange={(checked) =>
-                      handleBondingLocationChange('water', checked as boolean)
-                    }
-                  />
-                  <label
-                    htmlFor="eic-bonding-water"
-                    className="text-sm font-normal leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 cursor-pointer"
+                {[
+                  { key: 'water', label: 'Water pipes' },
+                  { key: 'gas', label: 'Gas pipes' },
+                  { key: 'oil', label: 'Oil pipes' },
+                  { key: 'structural-steel', label: 'Structural steel' },
+                  { key: 'lightning', label: 'Lightning protection' },
+                ].map(({ key, label }) => (
+                  <div
+                    key={key}
+                    className={cn(
+                      'flex items-center gap-3 p-3 rounded-lg border transition-all cursor-pointer touch-manipulation',
+                      bondingLocations.has(key)
+                        ? 'bg-amber-500/15 border-amber-500/50'
+                        : 'bg-white/[0.03] border-white/[0.08] hover:bg-white/[0.05]'
+                    )}
+                    onClick={() => handleBondingLocationChange(key, !bondingLocations.has(key))}
                   >
-                    Water pipes
-                  </label>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <Checkbox
-                    id="eic-bonding-gas"
-                    checked={bondingLocations.has('gas')}
-                    onCheckedChange={(checked) =>
-                      handleBondingLocationChange('gas', checked as boolean)
+                    <Checkbox
+                      id={`eic-bonding-${key}`}
+                      checked={bondingLocations.has(key)}
+                      onCheckedChange={(checked) =>
+                        handleBondingLocationChange(key, checked as boolean)
+                      }
+                      className="border-amber-500/40 data-[state=checked]:bg-amber-500 data-[state=checked]:border-amber-500 data-[state=checked]:text-black"
+                    />
+                    <label
+                      htmlFor={`eic-bonding-${key}`}
+                      className="text-sm font-medium cursor-pointer"
+                    >
+                      {label}
+                    </label>
+                  </div>
+                ))}
+                <div
+                  className={cn(
+                    'flex items-center gap-3 p-3 rounded-lg border transition-all cursor-pointer touch-manipulation',
+                    otherChecked
+                      ? 'bg-amber-500/15 border-amber-500/50'
+                      : 'bg-white/[0.03] border-white/[0.08] hover:bg-white/[0.05]'
+                  )}
+                  onClick={() => {
+                    const newVal = !otherChecked;
+                    setOtherChecked(newVal);
+                    if (!newVal) {
+                      setOtherBonding('');
+                      updateMainBondingLocations(bondingLocations, '');
                     }
-                  />
-                  <label
-                    htmlFor="eic-bonding-gas"
-                    className="text-sm font-normal leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 cursor-pointer"
-                  >
-                    Gas pipes
-                  </label>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <Checkbox
-                    id="eic-bonding-oil"
-                    checked={bondingLocations.has('oil')}
-                    onCheckedChange={(checked) =>
-                      handleBondingLocationChange('oil', checked as boolean)
-                    }
-                  />
-                  <label
-                    htmlFor="eic-bonding-oil"
-                    className="text-sm font-normal leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 cursor-pointer"
-                  >
-                    Oil pipes
-                  </label>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <Checkbox
-                    id="eic-bonding-steel"
-                    checked={bondingLocations.has('structural-steel')}
-                    onCheckedChange={(checked) =>
-                      handleBondingLocationChange('structural-steel', checked as boolean)
-                    }
-                  />
-                  <label
-                    htmlFor="eic-bonding-steel"
-                    className="text-sm font-normal leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 cursor-pointer"
-                  >
-                    Structural steel
-                  </label>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <Checkbox
-                    id="eic-bonding-lightning"
-                    checked={bondingLocations.has('lightning')}
-                    onCheckedChange={(checked) =>
-                      handleBondingLocationChange('lightning', checked as boolean)
-                    }
-                  />
-                  <label
-                    htmlFor="eic-bonding-lightning"
-                    className="text-sm font-normal leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 cursor-pointer"
-                  >
-                    Lightning protection
-                  </label>
-                </div>
-                <div className="flex items-center space-x-2">
+                  }}
+                >
                   <Checkbox
                     id="eic-bonding-other-check"
-                    checked={otherBonding.length > 0}
+                    checked={otherChecked}
                     onCheckedChange={(checked) => {
-                      if (!checked) setOtherBonding('');
+                      const newVal = checked as boolean;
+                      setOtherChecked(newVal);
+                      if (!newVal) {
+                        setOtherBonding('');
+                        updateMainBondingLocations(bondingLocations, '');
+                      }
                     }}
+                    className="border-amber-500/40 data-[state=checked]:bg-amber-500 data-[state=checked]:border-amber-500 data-[state=checked]:text-black"
                   />
                   <label
                     htmlFor="eic-bonding-other-check"
-                    className="text-sm font-normal leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 cursor-pointer"
+                    className="text-sm font-medium cursor-pointer"
                   >
                     Other
                   </label>
                 </div>
               </div>
-              {(otherBonding.length > 0 || bondingLocations.has('other')) && (
+              {otherChecked && (
                 <div className="space-y-2 mt-3">
-                  <Label htmlFor="eic-bonding-other" className="text-sm font-normal">
+                  <Label htmlFor="eic-bonding-other" className="text-sm font-medium">
                     Specify Other
                   </Label>
                   <Input
@@ -545,7 +540,8 @@ const EarthingAndBondingSection: React.FC<EarthingAndBondingSectionProps> = ({
                     value={otherBonding}
                     onChange={(e) => handleOtherBondingChange(e.target.value)}
                     placeholder="e.g., Metal pipework, Central heating"
-                    className="touch-manipulation h-11"
+                    className="touch-manipulation h-11 text-base"
+                    style={{ fontSize: '16px' }}
                   />
                 </div>
               )}

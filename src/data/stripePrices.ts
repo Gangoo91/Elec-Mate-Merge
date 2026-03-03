@@ -97,7 +97,6 @@ export const stripePriceData = {
       popular: false,
       color: 'bg-gradient-to-br from-elec-gray to-elec-dark',
       priceId: stripePrices.monthly.business_ai,
-      coming: true,
     },
     {
       id: 'employer-monthly',
@@ -188,7 +187,6 @@ export const stripePriceData = {
       color: 'bg-gradient-to-br from-elec-gray to-elec-dark',
       savings: 'Save £59.89 vs monthly',
       priceId: stripePrices.yearly.business_ai,
-      coming: true,
     },
     {
       id: 'employer-yearly',

@@ -20,8 +20,10 @@ import {
   Receipt,
 } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
+import { useCompanyProfile } from '@/hooks/useCompanyProfile';
 import { supabase } from '@/integrations/supabase/client';
 import { saveCertificatePdf } from '@/utils/certificate-pdf-storage';
+import { formatEicJson } from '@/utils/eicJsonFormatter';
 import PDFExportProgress from '@/components/PDFExportProgress';
 import {
   Dialog,
@@ -41,6 +43,7 @@ import {
 } from '@/utils/certificateToQuote';
 
 interface EICCertificateActionsProps {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   formData: any;
   reportId: string;
   onGenerateCertificate: () => void;
@@ -54,6 +57,7 @@ const EICCertificateActions: React.FC<EICCertificateActionsProps> = ({
   onSaveDraft,
 }) => {
   const { toast } = useToast();
+  const { companyProfile } = useCompanyProfile();
   const queryClient = useQueryClient();
   const navigate = useNavigate();
   const [isExporting, setIsExporting] = useState(false);
@@ -144,6 +148,7 @@ const EICCertificateActions: React.FC<EICCertificateActionsProps> = ({
     (formData.inspectionItems &&
       Array.isArray(formData.inspectionItems) &&
       formData.inspectionItems.some(
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         (item: any) =>
           item.outcome === 'satisfactory' ||
           item.outcome === 'not-applicable' ||
@@ -172,13 +177,10 @@ const EICCertificateActions: React.FC<EICCertificateActionsProps> = ({
       setExportProgress(10);
 
       // Prepare form data in the format expected by PDF Monkey template
-      const pdfData = await generateTestJSON(reportId);
+      const pdfData = await formatEicJson(formData, companyProfile, reportId);
 
       // Save formatted payload for email/reports page reuse
-      await supabase
-        .from('reports')
-        .update({ pdf_payload: pdfData })
-        .eq('report_id', reportId);
+      await supabase.from('reports').update({ pdf_payload: pdfData }).eq('report_id', reportId);
 
       setExportProgress(30);
       setExportStatus('generating');
@@ -245,6 +247,7 @@ const EICCertificateActions: React.FC<EICCertificateActionsProps> = ({
       setExportProgress(85);
 
       // Save PDF URL to database for later preview/retrieval
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const updateData: Record<string, any> = {
         pdf_url: permanentUrl, // Use permanent URL if available
         pdf_generated_at: new Date().toISOString(),
@@ -433,325 +436,12 @@ const EICCertificateActions: React.FC<EICCertificateActionsProps> = ({
     navigate(url);
   };
 
-  const generateTestJSON = async (reportId: string) => {
-    // Always include all keys with empty values as defaults
-
-    // Build FLAT inspection keys at ROOT level dynamically from form data
-    const flatInspectionKeys: Record<string, string> = {};
-    const inspectionItems = formData.inspectionItems || Object.values(formData.inspections || {});
-
-    // Create flat keys for all 14 EIC inspection items
-    for (let i = 1; i <= 14; i++) {
-      const item = inspectionItems.find(
-        (it: any) =>
-          it?.itemNumber === String(i) ||
-          it?.itemNumber === i ||
-          it?.id === `eic_${i}` ||
-          it?.id === String(i)
-      );
-      const outcome = item?.outcome || '';
-
-      // Convert outcome to display value for PDF
-      if (outcome === 'satisfactory' || outcome === 'acceptable' || outcome === 'Acceptable') {
-        flatInspectionKeys[`insp_${i}`] = 'Acceptable';
-      } else if (outcome === 'na' || outcome === 'not-applicable' || outcome === 'N/A') {
-        flatInspectionKeys[`insp_${i}`] = 'N/A';
-      } else if (outcome === 'limitation' || outcome === 'LIM') {
-        flatInspectionKeys[`insp_${i}`] = 'LIM';
-      } else {
-        flatInspectionKeys[`insp_${i}`] = '';
-      }
-    }
-
-    const json: any = {
-      // SPREAD flat inspection keys at ROOT level
-      ...flatInspectionKeys,
-
-      metadata: {
-        certificate_number: formData.certificateNumber || '',
-      },
-      client_details: {
-        client_name: formData.clientName || '',
-        client_address: formData.clientAddress || '',
-        client_phone: formData.clientPhone || '',
-        client_email: formData.clientEmail || '',
-      },
-      installation_details: {
-        address: formData.installationAddress || '',
-        same_as_client_address: formData.sameAsClientAddress === 'true',
-        installation_type: formData.installationType || '',
-        description: formData.description || '',
-        installation_date: formData.installationDate || '',
-        test_date: formData.testDate || '',
-        construction_date: formData.constructionDate || '',
-      },
-      standards_compliance: {
-        design_standard: formData.designStandard || '',
-        part_p_compliance: formData.partPCompliance || '',
-      },
-      supply_characteristics: {
-        supply_voltage: formData.supplyVoltage || '',
-        supply_frequency: formData.supplyFrequency || '',
-        phases: formData.phases || '',
-        earthing_arrangement: formData.earthingArrangement || '',
-        supply_type: formData.supplyType || '',
-        supply_pme: formData.supplyPME || '',
-      },
-      main_protective_device: {
-        device_type: formData.mainProtectiveDevice || formData.mainProtectiveDeviceType || '',
-        main_switch_rating: formData.mainSwitchRating || '',
-        main_switch_location: formData.mainSwitchLocation || '',
-        breaking_capacity: formData.breakingCapacity || '',
-      },
-      rcd_details: {
-        rcd_main_switch: formData.rcdMainSwitch || '',
-        rcd_rating: formData.rcdRating || '',
-        rcd_type: formData.rcdType || '',
-      },
-      distribution_board: {
-        board_size: formData.boardSize || '',
-        board_type: formData.boardType || '',
-        board_location: formData.boardLocation || '',
-      },
-      // Sub-board support - array of distribution boards (for multi-board installations)
-      distribution_boards: (formData.distributionBoards || []).map((board: any, index: number) => ({
-        db_reference: board.dbReference || board.reference || `DB${index + 1}`,
-        location: board.location || '',
-        board_type: board.boardType || board.type || '',
-        board_make: board.make || board.boardMake || '',
-        board_model: board.model || board.boardModel || '',
-        total_ways: board.totalWays || board.ways || '',
-        used_ways: board.usedWays || '',
-        spare_ways: board.spareWays || '',
-        zdb: board.zdb || '',
-        ipf: board.ipf || '',
-        // Main switch for this board
-        main_switch_bs_en: board.mainSwitchBsEn || '',
-        main_switch_type: board.mainSwitchType || '',
-        main_switch_rating: board.mainSwitchRating || '',
-        main_switch_poles: board.mainSwitchPoles || '',
-        // RCD for this board (if applicable)
-        rcd_type: board.rcdType || '',
-        rcd_rating: board.rcdRating || '',
-        rcd_measured_time: board.rcdMeasuredTime || '',
-        // SPD for this board (IET form T1/T2/T3/N/A checkboxes)
-        spd_fitted: board.spdFitted ?? false,
-        spd_operational: board.spdOperationalStatus ?? board.spdOperational ?? false,
-        spd_t1: board.spdT1 ?? false,
-        spd_t2: board.spdT2 ?? false,
-        spd_t3: board.spdT3 ?? false,
-        spd_na: board.spdNA ?? false,
-        // Verification
-        polarity_confirmed: board.confirmedCorrectPolarity ?? board.polarityConfirmed ?? false,
-        phase_sequence_confirmed:
-          board.confirmedPhaseSequence ?? board.phaseSequenceConfirmed ?? false,
-        // Supply to this board (from main or another DB)
-        supply_from: board.supplyFrom || 'Main',
-        supply_cable_size: board.supplyCableSize || '',
-        supply_cable_type: board.supplyCableType || '',
-      })),
-      cables: {
-        intake_cable_size: formData.intakeCableSize || '',
-        intake_cable_type: formData.intakeCableType || '',
-        tails_size: formData.tailsSize || '',
-        tails_length: formData.tailsLength || '',
-      },
-      earthing_bonding: {
-        earth_electrode_type: formData.earthElectrodeType || '',
-        earth_electrode_resistance: formData.earthElectrodeResistance || '',
-        main_bonding_conductor: formData.mainBondingConductor || '',
-        main_bonding_size: formData.mainBondingSize || '',
-        main_bonding_size_custom: formData.mainBondingSizeCustom || '',
-        bonding_compliance: formData.bondingCompliance || '',
-        supplementary_bonding: formData.supplementaryBonding || '',
-        supplementary_bonding_size: formData.supplementaryBondingSize || '',
-        supplementary_bonding_size_custom: formData.supplementaryBondingSizeCustom || '',
-        equipotential_bonding: formData.equipotentialBonding || '',
-      },
-      inspection_checklist:
-        (formData.inspectionItems || Object.values(formData.inspections || {}))?.map(
-          (item: any) => ({
-            id: item.id || '',
-            item_number: item.itemNumber || '',
-            description: item.description || '',
-            outcome: item.outcome || '',
-            notes: item.notes || '',
-          })
-        ) || [],
-      schedule_of_tests:
-        formData.scheduleOfTests?.map((test: any) => ({
-          id: test.id || 'N/A',
-          circuit_number: test.circuitNumber || 'N/A',
-          circuit_description: test.circuitDescription || 'N/A',
-          circuit_type: test.circuitType || 'N/A',
-          reference_method: test.referenceMethod || 'N/A',
-          live_size: test.liveSize || 'N/A',
-          cpc_size: test.cpcSize || 'N/A',
-          protective_device_type: test.protectiveDeviceType || 'N/A',
-          protective_device_curve: test.protectiveDeviceCurve || 'N/A',
-          protective_device_rating: test.protectiveDeviceRating || 'N/A',
-          protective_device_ka_rating: test.protectiveDeviceKaRating || 'N/A',
-          protective_device_location: test.protectiveDeviceLocation || 'N/A',
-          bs_standard: test.bsStandard || 'N/A',
-          r1r2: test.r1r2 || 'N/A',
-          ring_continuity_live: test.ringContinuityLive || 'N/A',
-          ring_continuity_neutral: test.ringContinuityNeutral || 'N/A',
-          ring_r1: test.ringR1 || 'N/A',
-          ring_rn: test.ringRn || 'N/A',
-          ring_r2: test.ringR2 || 'N/A',
-          insulation_test_voltage: test.insulationTestVoltage || 'N/A',
-          insulation_resistance: test.insulationResistance || 'N/A',
-          insulation_live_neutral: test.insulationLiveNeutral || 'N/A',
-          insulation_live_earth: test.insulationLiveEarth || 'N/A',
-          insulation_neutral_earth: test.insulationNeutralEarth || 'N/A',
-          polarity: test.polarity || 'N/A',
-          zs: test.zs || 'N/A',
-          max_zs: test.maxZs || 'N/A',
-          points_served: test.pointsServed || 'N/A',
-          rcd_rating: test.rcdRating || 'N/A',
-          rcd_bs_standard: test.rcdBsStandard || 'N/A',
-          rcd_type: test.rcdType || 'N/A',
-          rcd_rating_a: test.rcdRatingA || 'N/A',
-          rcd_one_x: test.rcdOneX || 'N/A',
-          rcd_half_x: test.rcdHalfX || 'N/A',
-          rcd_five_x: test.rcdFiveX || 'N/A',
-          rcd_test_button: test.rcdTestButton || 'N/A',
-          afdd_test: test.afddTest || 'N/A',
-          pfc: test.pfc || 'N/A',
-          pfc_live_neutral: test.pfcLiveNeutral || 'N/A',
-          pfc_live_earth: test.pfcLiveEarth || 'N/A',
-          functional_testing: test.functionalTesting || 'N/A',
-          notes: test.notes || 'N/A',
-          phase_type: test.phaseType || 'N/A',
-          phase_rotation: test.phaseRotation || 'N/A',
-          phase_balance_l1: test.phaseBalanceL1 || 'N/A',
-          phase_balance_l2: test.phaseBalanceL2 || 'N/A',
-          phase_balance_l3: test.phaseBalanceL3 || 'N/A',
-          line_to_line_voltage: test.lineToLineVoltage || 'N/A',
-          source_circuit_id: test.sourceCircuitId ?? null,
-          auto_filled: test.autoFilled ?? false,
-        })) || [],
-      test_instrument_details: {
-        make_model: formData.testInstrumentMake || formData.customTestInstrument || '',
-        serial_number: formData.testInstrumentSerial || '',
-        calibration_date: formData.calibrationDate || '',
-        test_temperature: formData.testTemperature || '',
-      },
-      test_information: {
-        test_method: formData.testMethod || '',
-        test_voltage: formData.testVoltage || '',
-        test_notes: formData.testNotes || '',
-      },
-      distribution_board_verification: {
-        db_reference: formData.dbReference || formData.distributionBoards?.[0]?.dbReference || '',
-        zdb: formData.zdb || formData.distributionBoards?.[0]?.zdb || '',
-        ipf: formData.ipf || formData.distributionBoards?.[0]?.ipf || '',
-        confirmed_correct_polarity:
-          formData.confirmedCorrectPolarity ??
-          formData.distributionBoards?.[0]?.polarityConfirmed ??
-          false,
-        confirmed_phase_sequence:
-          formData.confirmedPhaseSequence ??
-          formData.distributionBoards?.[0]?.phaseSequenceConfirmed ??
-          false,
-        spd_operational_status:
-          formData.spdOperationalStatus ??
-          formData.distributionBoards?.[0]?.spdOperational ??
-          false,
-        spd_t1: formData.spdT1 ?? formData.distributionBoards?.[0]?.spdT1 ?? false,
-        spd_t2: formData.spdT2 ?? formData.distributionBoards?.[0]?.spdT2 ?? false,
-        spd_t3: formData.spdT3 ?? formData.distributionBoards?.[0]?.spdT3 ?? false,
-        spd_na: formData.spdNA ?? formData.distributionBoards?.[0]?.spdNA ?? false,
-      },
-      designer: {
-        name: formData.designerName || '',
-        qualifications: formData.designerQualifications || '',
-        company: formData.designerCompany || '',
-        date: formData.designerDate || '',
-        signature: formData.designerSignature || '',
-      },
-      constructor: {
-        name: formData.constructorName || '',
-        qualifications: formData.constructorQualifications || '',
-        company: formData.constructorCompany || '',
-        date: formData.constructorDate || '',
-        signature: formData.constructorSignature || '',
-      },
-      inspector: {
-        name: formData.inspectorName || '',
-        qualifications: formData.inspectorQualifications || '',
-        company: formData.inspectorCompany || '',
-        date: formData.inspectorDate || '',
-        signature: formData.inspectorSignature || '',
-      },
-      declarations: {
-        same_as_designer: formData.sameAsDesigner ?? false,
-        same_as_constructor: formData.sameAsConstructor ?? false,
-        additional_notes: formData.additionalNotes || '',
-        inspected_by: {
-          name: formData.inspectedByName || '',
-          signature: formData.inspectedBySignature || '',
-          for_on_behalf_of: formData.inspectedByForOnBehalfOf || '',
-          position: formData.inspectedByPosition || '',
-          address: formData.inspectedByAddress || '',
-          cp_scheme: formData.inspectedByCpScheme || '',
-          cp_scheme_na: formData.inspectedByCpSchemeNA ?? false,
-        },
-        report_authorised_by: {
-          name: formData.reportAuthorisedByName || '',
-          date: formData.reportAuthorisedByDate || '',
-          signature: formData.reportAuthorisedBySignature || '',
-          for_on_behalf_of: formData.reportAuthorisedByForOnBehalfOf || '',
-          position: formData.reportAuthorisedByPosition || '',
-          address: formData.reportAuthorisedByAddress || '',
-          membership_no: formData.reportAuthorisedByMembershipNo || '',
-        },
-        bs7671_compliance: formData.bs7671Compliance ?? false,
-        building_regs_compliance: formData.buildingRegsCompliance ?? false,
-        competent_person_scheme: formData.competentPersonScheme ?? false,
-      },
-      observations: await formatObservationsWithPhotos(formData.observations || [], reportId),
-    };
-
-    return json;
-  };
-
-  const formatObservationsWithPhotos = async (observations: any[], reportId: string) => {
-    // Fetch all photos for this report
-    const { data: photos } = await supabase
-      .from('inspection_photos')
-      .select('*')
-      .eq('report_id', reportId)
-      .eq('report_type', 'eic');
-
-    // Map observations and attach photos
-    return observations.map((obs: any) => {
-      // Find photos linked to this observation
-      const observationPhotos = photos?.filter((p) => p.observation_id === obs.id) || [];
-
-      // Get public URLs
-      const photoUrls = observationPhotos.map((photo) => {
-        const {
-          data: { publicUrl },
-        } = supabase.storage.from('inspection-photos').getPublicUrl(photo.file_path);
-        return publicUrl;
-      });
-
-      return {
-        id: obs.id || '',
-        description: obs.description || '',
-        defect_code: obs.defectCode || obs.defect_code || '', // Accept both camelCase and snake_case, output snake_case
-        recommendation: obs.recommendation || '',
-        item: obs.item || '',
-        rectified: obs.rectified ?? false,
-        photo_evidence: photoUrls,
-        photo_count: photoUrls.length,
-      };
-    });
-  };
-
   const handleCopyJSON = async () => {
-    const jsonData = JSON.stringify(await generateTestJSON(reportId), null, 2);
+    const jsonData = JSON.stringify(
+      await formatEicJson(formData, companyProfile, reportId),
+      null,
+      2
+    );
     navigator.clipboard.writeText(jsonData);
     setJsonPreview(jsonData);
     toast({
@@ -761,7 +451,11 @@ const EICCertificateActions: React.FC<EICCertificateActionsProps> = ({
   };
 
   const handleLoadJSONPreview = async () => {
-    const jsonData = JSON.stringify(await generateTestJSON(reportId), null, 2);
+    const jsonData = JSON.stringify(
+      await formatEicJson(formData, companyProfile, reportId),
+      null,
+      2
+    );
     setJsonPreview(jsonData);
   };
 

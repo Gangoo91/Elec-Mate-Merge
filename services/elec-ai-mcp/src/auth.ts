@@ -107,7 +107,13 @@ async function authenticateWithApiKey(apiKey: string, senderPhone?: string): Pro
     throw new AuthError('invalid_api_key', 'Invalid API key');
   }
 
-  const phoneNumber = senderPhone || config.defaultPhone;
+  if (!senderPhone) {
+    throw new AuthError(
+      'missing_phone',
+      'sender_phone is required for API key auth — identity cannot be determined without it'
+    );
+  }
+  const phoneNumber = senderPhone;
 
   // Use per-phone cached JWT if fresh
   const cached = _apiKeyJwtCache.get(phoneNumber);

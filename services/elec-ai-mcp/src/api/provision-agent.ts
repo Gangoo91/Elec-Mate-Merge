@@ -17,12 +17,12 @@
  *
  * Then runs:
  *   openclaw agents add <user_id> --workspace <dir>
- *   openclaw agents bind --agent <user_id> --bind whatsapp:<jid>
+ *   Adds peer binding + allowFrom directly in openclaw.json
  */
 
 import { type Request, type Response } from 'express';
 import { spawn } from 'node:child_process';
-import { mkdir, symlink, writeFile, readFile, readdir } from 'node:fs/promises';
+import { chmod, mkdir, symlink, writeFile, readFile, readdir } from 'node:fs/promises';
 import { join } from 'node:path';
 import { config } from '../config.js';
 
@@ -170,7 +170,22 @@ Always address them by name and use their data from the MCP tools.
       'utf-8'
     );
 
-    // 5. Register agent with OpenClaw
+    // 5. Create per-user bin/mcp-call wrapper (bypasses mcporter for data isolation)
+    const binDir = join(workspaceDir, 'bin');
+    await mkdir(binDir, { recursive: true });
+
+    const mcpCallScript = `#!/bin/bash
+# Tool caller for ${full_name} — identity baked in
+export MCP_SENDER_PHONE="${phone_number}"
+export MCP_API_KEY="${config.vpsApiKey}"
+exec /opt/elec-ai/mcp-call "$@"
+`;
+    const mcpCallPath = join(binDir, 'mcp-call');
+    await writeFile(mcpCallPath, mcpCallScript, 'utf-8');
+    await chmod(mcpCallPath, 0o755);
+    console.log(`[provision] Created ${mcpCallPath}`);
+
+    // 6. Register agent with OpenClaw
     const jid = phoneToJid(phone_number);
 
     try {
@@ -193,42 +208,45 @@ Always address them by name and use their data from the MCP tools.
       console.log(`[provision] Agent ${user_id} already exists, continuing`);
     }
 
-    // 6. Bind WhatsApp number
-    try {
-      await runCommand(NODE22_BIN, [
-        OPENCLAW_BIN,
-        'agents',
-        'bind',
-        '--agent',
-        user_id,
-        '--bind',
-        `whatsapp:${jid}`,
-      ]);
-      console.log(`[provision] Bound WhatsApp ${jid} to agent ${user_id}`);
-    } catch (err: unknown) {
-      const msg = (err as Error).message || '';
-      if (!msg.includes('already bound')) {
-        throw err;
-      }
-      console.log(`[provision] WhatsApp ${jid} already bound, continuing`);
-    }
-
-    // 7. Add JID to allowFrom in openclaw.json (dmPolicy: "allowlist")
+    // 7. Add peer-based WhatsApp binding + allowFrom in openclaw.json
+    //    We write directly to openclaw.json because `openclaw agents bind`
+    //    creates accountId bindings (wrong — accountId = bot login, not sender).
+    //    Peer bindings match the sender's phone number (E.164 format).
     try {
       const raw = await readFile(OPENCLAW_CONFIG, 'utf-8');
       const ocConfig = JSON.parse(raw);
+
+      // Add peer-based binding (skip if already exists for this agent)
+      const bindings: Array<Record<string, unknown>> = ocConfig.bindings || [];
+      const alreadyBound = bindings.some((b: Record<string, unknown>) => b.agentId === user_id);
+      if (!alreadyBound) {
+        bindings.push({
+          agentId: user_id,
+          match: {
+            channel: 'whatsapp',
+            peer: { kind: 'direct', id: phone_number },
+          },
+        });
+        ocConfig.bindings = bindings;
+        console.log(`[provision] Added peer binding: whatsapp direct ${phone_number} → ${user_id}`);
+      } else {
+        console.log(`[provision] Binding for ${user_id} already exists`);
+      }
+
+      // Add JID to allowFrom (dmPolicy: "allowlist")
       const allowFrom: string[] = ocConfig.channels?.whatsapp?.allowFrom || [];
       if (!allowFrom.includes(jid)) {
         allowFrom.push(jid);
         ocConfig.channels.whatsapp.allowFrom = allowFrom;
-        await writeFile(OPENCLAW_CONFIG, JSON.stringify(ocConfig, null, 4), 'utf-8');
         console.log(`[provision] Added ${jid} to allowFrom`);
       } else {
         console.log(`[provision] ${jid} already in allowFrom`);
       }
+
+      await writeFile(OPENCLAW_CONFIG, JSON.stringify(ocConfig, null, 2), 'utf-8');
     } catch (err: unknown) {
-      // Non-fatal — agent still works, just needs manual allowlist entry
-      console.error(`[provision] Failed to update allowFrom: ${(err as Error).message}`);
+      // Non-fatal — agent still works, just needs manual config entry
+      console.error(`[provision] Failed to update openclaw.json: ${(err as Error).message}`);
     }
 
     // Verify workspace

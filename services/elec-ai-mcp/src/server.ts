@@ -25,11 +25,16 @@ import express from 'express';
 import { config, validateConfig } from './config.js';
 import { authenticateUser, authenticateFromJwt, AuthError } from './auth.js';
 import { registerAllTools } from './tools/registry.js';
-import { RateLimitError } from './middleware/rate-limiter.js';
+import {
+  RateLimitError,
+  enforceRateLimits,
+  cleanupRateLimiter,
+} from './middleware/rate-limiter.js';
 import { EdgeFunctionBlockedError } from './middleware/edge-function-guard.js';
 import { createUserClient } from './lib/supabase.js';
-import { cleanupRateLimiter } from './middleware/rate-limiter.js';
 import { handleProvisionAgent } from './api/provision-agent.js';
+import { getHandler } from './tools/router.js';
+import { logToolCall } from './middleware/audit-logger.js';
 
 // ─── Graceful shutdown ─────────────────────────────────────────────────
 let isShuttingDown = false;
@@ -151,6 +156,62 @@ function startHttp(): void {
 
   // ── Agent provisioning endpoint ──────────────────────────────────
   app.post('/api/provision-agent', handleProvisionAgent);
+
+  // ── REST tool-call endpoint (bypasses mcporter) ─────────────────
+  app.post('/api/tool-call', async (req, res) => {
+    if (isShuttingDown) {
+      res.status(503).json({ error: 'Server is shutting down' });
+      return;
+    }
+
+    const apiKey = req.headers['x-api-key'] as string | undefined;
+    const {
+      tool,
+      arguments: toolArgs,
+      sender_phone: senderPhone,
+    } = req.body as {
+      tool?: string;
+      arguments?: Record<string, unknown>;
+      sender_phone?: string;
+    };
+
+    if (!tool) {
+      res.status(400).json({ error: 'Missing required field: tool' });
+      return;
+    }
+
+    try {
+      const userContext = await authenticateUser(undefined, apiKey, senderPhone);
+
+      const handler = getHandler(tool);
+      if (!handler) {
+        res.status(404).json({ error: `Unknown tool: ${tool}` });
+        return;
+      }
+
+      enforceRateLimits(userContext.userId, tool);
+
+      const startTime = Date.now();
+      const result = await handler(toolArgs || {}, userContext);
+      const durationMs = Date.now() - startTime;
+
+      logToolCall(userContext, tool, toolArgs || {}, { success: true, durationMs });
+
+      res.json({ success: true, result });
+    } catch (err) {
+      if (err instanceof AuthError) {
+        res.status(401).json({ error: err.message, code: err.code });
+        return;
+      }
+      if (err instanceof RateLimitError) {
+        res.status(429).json({ error: err.message, retry_after_ms: err.retryAfterMs });
+        return;
+      }
+      const message = err instanceof Error ? err.message : String(err);
+      console.error(`[tool-call] ${tool} error:`, message);
+      res.status(500).json({ error: message });
+    }
+  });
 
   // ── MCP Streamable HTTP endpoint ───────────────────────────────────
   app.post('/mcp', async (req, res) => {
