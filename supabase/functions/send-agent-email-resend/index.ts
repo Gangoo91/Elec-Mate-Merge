@@ -13,9 +13,9 @@ const corsHeaders = {
  * General-purpose agent email sender via Resend.
  * Used by Mate to email clients to book jobs, send PDFs, reminders, etc.
  *
- * Takes: { to, subject, body, clientName?, attachmentUrl?, fromName? }
+ * Takes: { to, subject, body, clientName?, attachmentUrl? }
  * Auth: JWT verified via supabase.auth.getUser()
- * From: "Mate <mate@elec-mate.com>" (or fromName override)
+ * From: "Company Name <founder@elec-mate.com>" — reply-to is the user's company email
  */
 const handler = async (req: Request): Promise<Response> => {
   if (req.method === 'OPTIONS') {
@@ -48,7 +48,7 @@ const handler = async (req: Request): Promise<Response> => {
 
     // ── Parse request ───────────────────────────────────────────────
     const body = await req.json();
-    const { to, subject, body: emailBody, clientName, attachmentUrl, fromName } = body;
+    const { to, subject, body: emailBody, clientName, attachmentUrl } = body;
 
     if (!to || typeof to !== 'string') throw new Error('Recipient email (to) is required');
     if (!subject || typeof subject !== 'string') throw new Error('Email subject is required');
@@ -68,7 +68,7 @@ const handler = async (req: Request): Promise<Response> => {
 
     const companyName = companyProfile?.company_name || 'ElecMate';
     const replyTo = companyProfile?.company_email || user.email || 'info@elec-mate.com';
-    const senderName = fromName || 'Mate';
+
 
     // ── Build email HTML ────────────────────────────────────────────
     const recipientName = clientName || 'there';
@@ -149,7 +149,7 @@ const handler = async (req: Request): Promise<Response> => {
       html: string;
       attachments?: Array<{ filename: string; content: string }>;
     } = {
-      from: `${senderName} <mate@elec-mate.com>`,
+      from: `${companyName} <founder@elec-mate.com>`,
       reply_to: replyTo,
       to: [to.trim()],
       subject,
