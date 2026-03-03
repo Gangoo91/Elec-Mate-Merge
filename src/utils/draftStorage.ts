@@ -107,19 +107,9 @@ export const draftStorage = {
         };
       }
 
-      // If no specific draft, try the "new" draft
-      if (reportId) {
-        const newKey = getDraftKey(reportType, null);
-        const newStored = localStorage.getItem(newKey);
-        if (newStored) {
-          const draft: DraftData = JSON.parse(newStored);
-          return {
-            data: draft.data,
-            lastModified: new Date(draft.lastModified),
-          };
-        }
-      }
-
+      // IMPORTANT: Do NOT fall back to the "-new" draft when loading an existing record.
+      // A stale/blank abandoned new-form draft must never overwrite a saved certificate.
+      // If no specific draft exists for this reportId, return null and load from cloud.
       return null;
     } catch (error) {
       console.error('[DraftStorage] Failed to load draft:', error);
