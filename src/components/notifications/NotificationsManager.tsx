@@ -6,10 +6,14 @@ import { BuildingControlFinder } from './BuildingControlFinder';
 import { NonRegisteredUserGuide } from './NonRegisteredUserGuide';
 import { RegisteredUserGuide } from './RegisteredUserGuide';
 import { CertExpiryCard } from './CertExpiryCard';
+import { ElecIdExpiryCard } from './ElecIdExpiryCard';
+import { OverdueInvoiceCard, ExpiringQuoteCard } from './FinanceAlertCard';
 import { useNotifications, Notification } from '@/hooks/useNotifications';
 import { useExpiryReminders } from '@/hooks/useExpiryReminders';
+import { useElecIdExpiryAlerts } from '@/hooks/useElecIdExpiryAlerts';
+import { useFinanceAlerts } from '@/hooks/useFinanceAlerts';
 import { supabase } from '@/integrations/supabase/client';
-import { Loader2, CalendarClock } from 'lucide-react';
+import { Loader2, CalendarClock, ShieldAlert, AlertCircle, Clock } from 'lucide-react';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { ChevronDown } from 'lucide-react';
@@ -23,6 +27,8 @@ interface NotificationsManagerProps {
 export const NotificationsManager = ({ onNavigate }: NotificationsManagerProps) => {
   const { notifications, isLoading, updateNotification, deleteNotification } = useNotifications();
   const { reminders, isLoading: expIsLoading } = useExpiryReminders();
+  const { data: elecIdAlerts = [] } = useElecIdExpiryAlerts();
+  const { data: financeAlerts } = useFinanceAlerts();
   const { toast } = useToast();
 
   // Expiry alerts: overdue or due within 60 days, not yet completed
@@ -108,6 +114,69 @@ export const NotificationsManager = ({ onNavigate }: NotificationsManagerProps) 
           </div>
           {expiryAlerts.map((reminder) => (
             <CertExpiryCard key={reminder.id} reminder={reminder} />
+          ))}
+          <div className="border-b border-border/30 pt-2" />
+        </div>
+      )}
+
+      {/* ── Elec-ID Expiry Alerts ── */}
+      {elecIdAlerts.length > 0 && (
+        <div className="mb-6 space-y-3">
+          <div className="flex items-center gap-2 px-1">
+            <ShieldAlert className="w-4 h-4 text-yellow-400" />
+            <h3 className="text-sm font-semibold text-foreground">Elec-ID Expiry</h3>
+            <span className="ml-auto text-xs font-medium px-2 py-0.5 rounded-full bg-yellow-500/15 text-yellow-400">
+              {elecIdAlerts.length}
+            </span>
+          </div>
+          {elecIdAlerts.map((alert) => (
+            <ElecIdExpiryCard
+              key={alert.id}
+              alert={alert}
+              onNavigate={() => onNavigate('elec-id')}
+            />
+          ))}
+          <div className="border-b border-border/30 pt-2" />
+        </div>
+      )}
+
+      {/* ── Overdue Invoices ── */}
+      {(financeAlerts?.overdueInvoices.length ?? 0) > 0 && (
+        <div className="mb-6 space-y-3">
+          <div className="flex items-center gap-2 px-1">
+            <AlertCircle className="w-4 h-4 text-red-400" />
+            <h3 className="text-sm font-semibold text-foreground">Overdue Invoices</h3>
+            <span className="ml-auto text-xs font-medium px-2 py-0.5 rounded-full bg-red-500/15 text-red-400">
+              {financeAlerts!.overdueInvoices.length}
+            </span>
+          </div>
+          {financeAlerts!.overdueInvoices.map((invoice) => (
+            <OverdueInvoiceCard
+              key={invoice.id}
+              invoice={invoice}
+              onNavigate={() => onNavigate('invoices')}
+            />
+          ))}
+          <div className="border-b border-border/30 pt-2" />
+        </div>
+      )}
+
+      {/* ── Expiring Quotes ── */}
+      {(financeAlerts?.expiringQuotes.length ?? 0) > 0 && (
+        <div className="mb-6 space-y-3">
+          <div className="flex items-center gap-2 px-1">
+            <Clock className="w-4 h-4 text-amber-400" />
+            <h3 className="text-sm font-semibold text-foreground">Quotes Expiring Soon</h3>
+            <span className="ml-auto text-xs font-medium px-2 py-0.5 rounded-full bg-amber-500/15 text-amber-400">
+              {financeAlerts!.expiringQuotes.length}
+            </span>
+          </div>
+          {financeAlerts!.expiringQuotes.map((quote) => (
+            <ExpiringQuoteCard
+              key={quote.id}
+              quote={quote}
+              onNavigate={() => onNavigate('quotes')}
+            />
           ))}
           <div className="border-b border-border/30 pt-2" />
         </div>
