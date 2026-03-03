@@ -128,14 +128,16 @@ export const getBuildingControlAuthority = async (postcode: string): Promise<str
  */
 export const createNotificationFromCertificate = async (
   reportId: string,
-  reportType: 'eicr' | 'eic' | 'minor-works',
+  reportType: 'eicr' | 'eic' | 'minor-works' | 'solar-pv' | 'ev-charging',
   formData: any,
   userId: string
 ): Promise<{ success: boolean; notificationId?: string; error?: string }> => {
   try {
-    // Allow notification if explicitly requested via checkbox (minor-works or EIC)
-    const isUserRequested =
-      (reportType === 'minor-works' || reportType === 'eic') && formData.partPNotification === true;
+    // EIC, Solar PV and EV Charging are always notifiable — no condition needed
+    const isAlwaysNotifiable = reportType === 'eic' || reportType === 'solar-pv' || reportType === 'ev-charging';
+
+    // Minor Works: notifiable if user ticked the checkbox or auto-detected
+    const isUserRequested = reportType === 'minor-works' && formData.partPNotification === true;
 
     const isAutoNotifiable = isNotifiableWork(
       formData.workType || formData.workDescription || formData.description || '',
@@ -143,12 +145,23 @@ export const createNotificationFromCertificate = async (
       formData.isNewCircuit
     );
 
-    // Create notification if either user requested OR automatically notifiable
-    if (!isUserRequested && !isAutoNotifiable) {
+    if (!isAlwaysNotifiable && !isUserRequested && !isAutoNotifiable) {
       return {
         success: false,
         error: 'This work is not notifiable under Part P of the Building Regulations',
       };
+    }
+
+    // Deduplication: don't create a second notification for the same report
+    const { data: existing } = await supabase
+      .from('part_p_notifications')
+      .select('id')
+      .eq('report_id', reportId)
+      .eq('user_id', userId)
+      .single();
+
+    if (existing) {
+      return { success: true, notificationId: existing.id };
     }
 
     const completionDate =

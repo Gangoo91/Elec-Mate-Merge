@@ -555,9 +555,9 @@ export const NotificationCard = ({
         initialAddress={notification.reports?.installation_address || ''}
       />
 
-      {/* PDF Viewer Dialog */}
+      {/* PDF Viewer Dialog — always use the string report_id for reliable lookup */}
       <ReportPdfViewer
-        reportId={notification.reports?.id || notification.report_id}
+        reportId={notification.report_id}
         open={showPdfViewer}
         onOpenChange={setShowPdfViewer}
       />

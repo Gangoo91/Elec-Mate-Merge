@@ -55,9 +55,10 @@ export const useNotifications = () => {
         const { data: reportsData } = await supabase
           .from('reports')
           .select(
-            'report_id, certificate_number, client_name, installation_address, report_type, status'
+            'id, report_id, certificate_number, client_name, installation_address, report_type, status, pdf_url, pdf_generated_at'
           )
-          .in('report_id', reportIds);
+          .in('report_id', reportIds)
+          .is('deleted_at', null);
 
         if (reportsData) {
           reportsMap = Object.fromEntries(reportsData.map((r) => [r.report_id, r]));
