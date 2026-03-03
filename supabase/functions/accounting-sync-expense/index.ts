@@ -666,61 +666,41 @@ async function getQBBankAccount(
   accessToken: string,
   realmId: string
 ): Promise<{ value: string; name: string }> {
-  // Query for Bank accounts (checking/savings) - this is where the money comes from
-  const query = `SELECT * FROM Account WHERE AccountType = 'Bank' MAXRESULTS 10`;
-  const queryUrl = `${QUICKBOOKS_BASE_URL}/v3/company/${realmId}/query?query=${encodeURIComponent(query)}`;
+  const doQuery = async (where: string): Promise<any[]> => {
+    const url = `${QUICKBOOKS_BASE_URL}/v3/company/${realmId}/query?query=${encodeURIComponent(`SELECT * FROM Account WHERE ${where} MAXRESULTS 20`)}`;
+    const res = await fetch(url, { headers: { Authorization: `Bearer ${accessToken}`, Accept: 'application/json' } });
+    if (!res.ok) return [];
+    const data = await res.json();
+    return data.QueryResponse?.Account || [];
+  };
 
-  const response = await fetch(queryUrl, {
-    headers: {
-      Authorization: `Bearer ${accessToken}`,
-      Accept: 'application/json',
-    },
-  });
-
-  if (response.ok) {
-    const result = await response.json();
-    const accounts = result.QueryResponse?.Account;
-
-    if (accounts && accounts.length > 0) {
-      // Prefer active checking account
-      const checking = accounts.find((acc: any) => acc.Active && acc.AccountSubType === 'Checking');
-      if (checking) {
-        console.log('Using QB bank account:', checking.Id, checking.Name);
-        return { value: String(checking.Id), name: checking.Name };
-      }
-      // Fall back to first active bank account
-      const active = accounts.find((acc: any) => acc.Active);
-      if (active) {
-        console.log('Using QB bank account:', active.Id, active.Name);
-        return { value: String(active.Id), name: active.Name };
-      }
-      console.log('Using QB bank account (first):', accounts[0].Id, accounts[0].Name);
-      return { value: String(accounts[0].Id), name: accounts[0].Name };
-    }
+  // 1. Prefer active checking/current account
+  let accounts = await doQuery(`AccountType = 'Bank' AND Active = true`);
+  if (accounts.length > 0) {
+    const checking = accounts.find((a: any) =>
+      a.AccountSubType === 'Checking' || /current|checking|business/i.test(a.Name)
+    );
+    const picked = checking || accounts[0];
+    console.log('Using QB bank account:', picked.Id, picked.Name);
+    return { value: String(picked.Id), name: picked.Name };
   }
 
-  // Fallback - try to find any account that can serve as payment source
-  console.warn('No bank accounts found, trying Credit Card accounts');
-  const ccQuery = `SELECT * FROM Account WHERE AccountType = 'Credit Card' MAXRESULTS 5`;
-  const ccUrl = `${QUICKBOOKS_BASE_URL}/v3/company/${realmId}/query?query=${encodeURIComponent(ccQuery)}`;
+  // 2. Try any Bank type (including inactive)
+  accounts = await doQuery(`AccountType = 'Bank'`);
+  if (accounts.length > 0) {
+    console.log('Using QB bank account (any):', accounts[0].Id, accounts[0].Name);
+    return { value: String(accounts[0].Id), name: accounts[0].Name };
+  }
 
-  const ccResponse = await fetch(ccUrl, {
-    headers: {
-      Authorization: `Bearer ${accessToken}`,
-      Accept: 'application/json',
-    },
-  });
-
-  if (ccResponse.ok) {
-    const ccResult = await ccResponse.json();
-    const ccAccounts = ccResult.QueryResponse?.Account;
-    if (ccAccounts && ccAccounts.length > 0) {
-      return { value: String(ccAccounts[0].Id), name: ccAccounts[0].Name };
-    }
+  // 3. Try Credit Card as payment source
+  accounts = await doQuery(`AccountType = 'Credit Card' AND Active = true`);
+  if (accounts.length > 0) {
+    console.log('Using QB credit card account:', accounts[0].Id, accounts[0].Name);
+    return { value: String(accounts[0].Id), name: accounts[0].Name };
   }
 
   throw new Error(
-    'No bank or credit card account found in QuickBooks. Please add a bank account first.'
+    'No bank or credit card account found in QuickBooks. Please add a bank account in QuickBooks before syncing expenses.'
   );
 }
 
@@ -729,43 +709,92 @@ async function getOrCreateQBExpenseAccount(
   realmId: string,
   category: string
 ): Promise<{ value: string; name: string }> {
-  const accountType = QUICKBOOKS_ACCOUNT_TYPES[category] || 'Other Business Expense';
+  const desiredSubType = QUICKBOOKS_ACCOUNT_TYPES[category] || 'Other Business Expense';
 
-  // Query for expense accounts
-  const query = `SELECT * FROM Account WHERE AccountType = 'Expense' MAXRESULTS 50`;
-  const queryUrl = `${QUICKBOOKS_BASE_URL}/v3/company/${realmId}/query?query=${encodeURIComponent(query)}`;
+  // Helper to query QB accounts
+  const queryAccounts = async (whereClause: string): Promise<any[]> => {
+    const query = `SELECT * FROM Account WHERE ${whereClause} MAXRESULTS 100`;
+    const url = `${QUICKBOOKS_BASE_URL}/v3/company/${realmId}/query?query=${encodeURIComponent(query)}`;
+    const res = await fetch(url, {
+      headers: { Authorization: `Bearer ${accessToken}`, Accept: 'application/json' },
+    });
+    if (!res.ok) return [];
+    const data = await res.json();
+    return data.QueryResponse?.Account || [];
+  };
 
-  const response = await fetch(queryUrl, {
+  // 1. Try standard Expense type accounts
+  let accounts = await queryAccounts(`AccountType = 'Expense' AND Active = true`);
+
+  // 2. If empty, try Cost of Goods Sold (common for materials)
+  if (!accounts.length && category === 'materials') {
+    accounts = await queryAccounts(`AccountType = 'Cost of Goods Sold' AND Active = true`);
+  }
+
+  // 3. Broader fallback — any expense-like account type
+  if (!accounts.length) {
+    accounts = await queryAccounts(
+      `AccountType IN ('Expense', 'Cost of Goods Sold', 'Other Expense') AND Active = true`
+    );
+  }
+
+  if (accounts.length > 0) {
+    // Prefer an account whose SubType or Name matches the category
+    const matchBySubType = accounts.find(
+      (acc: any) =>
+        acc.AccountSubType?.toLowerCase().replace(/\s/g, '') ===
+        desiredSubType.toLowerCase().replace(/\s/g, '')
+    );
+    if (matchBySubType) {
+      console.log(`QB expense account matched by SubType: ${matchBySubType.Id} ${matchBySubType.Name}`);
+      return { value: String(matchBySubType.Id), name: matchBySubType.Name };
+    }
+
+    const matchByName = accounts.find((acc: any) =>
+      acc.Name?.toLowerCase().includes(desiredSubType.toLowerCase().split(' ')[0])
+    );
+    if (matchByName) {
+      console.log(`QB expense account matched by Name: ${matchByName.Id} ${matchByName.Name}`);
+      return { value: String(matchByName.Id), name: matchByName.Name };
+    }
+
+    // Use first available expense account
+    console.log(`QB expense account using first available: ${accounts[0].Id} ${accounts[0].Name}`);
+    return { value: String(accounts[0].Id), name: accounts[0].Name };
+  }
+
+  // 4. No expense accounts found at all — create a generic one
+  console.warn(`No expense accounts found in QB for category "${category}" — creating one`);
+  const newAccount = {
+    Name: 'Business Expenses',
+    AccountType: 'Expense',
+    AccountSubType: 'OtherMiscellaneousExpense',
+  };
+
+  const createRes = await fetch(`${QUICKBOOKS_BASE_URL}/v3/company/${realmId}/account`, {
+    method: 'POST',
     headers: {
       Authorization: `Bearer ${accessToken}`,
+      'Content-Type': 'application/json',
       Accept: 'application/json',
     },
+    body: JSON.stringify(newAccount),
   });
 
-  if (response.ok) {
-    const result = await response.json();
-    const accounts = result.QueryResponse?.Account;
-
-    if (accounts && accounts.length > 0) {
-      // Try to find an account matching the category type
-      const matchingAccount = accounts.find(
-        (acc: any) =>
-          acc.Name?.toLowerCase().includes(accountType.toLowerCase()) ||
-          acc.AccountSubType?.toLowerCase().includes(accountType.toLowerCase().replace(/ /g, ''))
-      );
-
-      if (matchingAccount) {
-        return { value: String(matchingAccount.Id), name: matchingAccount.Name };
-      }
-
-      // Otherwise return the first expense account
-      return { value: String(accounts[0].Id), name: accounts[0].Name };
+  if (createRes.ok) {
+    const created = await createRes.json();
+    const acc = created.Account;
+    if (acc?.Id) {
+      console.log(`Created QB expense account: ${acc.Id} ${acc.Name}`);
+      return { value: String(acc.Id), name: acc.Name };
     }
   }
 
-  // Fallback - this shouldn't happen in a properly set up QuickBooks
-  console.warn('No expense accounts found, using fallback');
-  return { value: '1', name: 'Expenses' };
+  const createErr = createRes.ok ? 'No ID returned' : await createRes.text();
+  throw new Error(
+    `Could not find or create a QuickBooks expense account for category "${category}". ` +
+    `Please ensure at least one Expense-type account exists in QuickBooks. Detail: ${createErr}`
+  );
 }
 
 // ============================================
