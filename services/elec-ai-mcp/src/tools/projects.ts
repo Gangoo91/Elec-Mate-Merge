@@ -254,3 +254,183 @@ export async function completeProject(args: Record<string, unknown>, user: UserC
 
   return { success: true, status: 'completed' };
 }
+
+// ─── Link / Unlink / Summary ──────────────────────────────────────────────
+
+/** Valid tables that support project_id linking */
+const LINKABLE_TABLES: Record<string, string> = {
+  task: 'spark_tasks',
+  quote: 'quotes',
+  invoice: 'quotes', // invoices are quotes with invoice_raised=true
+  certificate: 'reports',
+  rams: 'rams_generation_jobs',
+  circuit_design: 'circuit_design_jobs',
+  site_visit: 'site_visits',
+};
+
+export async function linkToProject(args: Record<string, unknown>, user: UserContext) {
+  if (typeof args.project_id !== 'string') {
+    throw new Error('project_id is required');
+  }
+  if (typeof args.entity_type !== 'string' || !LINKABLE_TABLES[args.entity_type]) {
+    throw new Error(`entity_type must be one of: ${Object.keys(LINKABLE_TABLES).join(', ')}`);
+  }
+  if (typeof args.entity_id !== 'string') {
+    throw new Error('entity_id is required');
+  }
+
+  const supabase = user.supabase;
+  const table = LINKABLE_TABLES[args.entity_type];
+
+  // Verify project exists and belongs to user
+  const { data: project, error: projErr } = await supabase
+    .from('spark_projects')
+    .select('id')
+    .eq('id', args.project_id)
+    .eq('user_id', user.userId)
+    .single();
+
+  if (projErr || !project) throw new Error('Project not found');
+
+  // Link the entity
+  const { error } = await supabase
+    .from(table)
+    .update({ project_id: args.project_id })
+    .eq('id', args.entity_id);
+
+  if (error) throw new Error(`Failed to link ${args.entity_type} to project: ${error.message}`);
+
+  return {
+    success: true,
+    entity_type: args.entity_type,
+    entity_id: args.entity_id,
+    project_id: args.project_id,
+  };
+}
+
+export async function unlinkFromProject(args: Record<string, unknown>, user: UserContext) {
+  if (typeof args.entity_type !== 'string' || !LINKABLE_TABLES[args.entity_type]) {
+    throw new Error(`entity_type must be one of: ${Object.keys(LINKABLE_TABLES).join(', ')}`);
+  }
+  if (typeof args.entity_id !== 'string') {
+    throw new Error('entity_id is required');
+  }
+
+  const supabase = user.supabase;
+  const table = LINKABLE_TABLES[args.entity_type];
+
+  const { error } = await supabase
+    .from(table)
+    .update({ project_id: null })
+    .eq('id', args.entity_id);
+
+  if (error) throw new Error(`Failed to unlink ${args.entity_type}: ${error.message}`);
+
+  return { success: true, entity_type: args.entity_type, entity_id: args.entity_id };
+}
+
+export async function getProjectSummary(args: Record<string, unknown>, user: UserContext) {
+  if (typeof args.project_id !== 'string') {
+    throw new Error('project_id is required');
+  }
+
+  const supabase = user.supabase;
+
+  // Get project details
+  const { data: project, error: projErr } = await supabase
+    .from('spark_projects')
+    .select('*, customers(name, email, phone)')
+    .eq('id', args.project_id)
+    .eq('user_id', user.userId)
+    .single();
+
+  if (projErr || !project) throw new Error('Project not found');
+
+  // Fetch all linked entities in parallel
+  const [tasksResult, quotesResult, invoicesResult, certsResult, ramsResult, designsResult] =
+    await Promise.all([
+      supabase
+        .from('spark_tasks')
+        .select('id, title, status, priority, due_at, completed_at')
+        .eq('project_id', args.project_id)
+        .neq('status', 'cancelled')
+        .order('due_at', { ascending: true }),
+
+      supabase
+        .from('quotes')
+        .select('id, status, total, client_data, created_at')
+        .eq('project_id', args.project_id)
+        .eq('invoice_raised', false),
+
+      supabase
+        .from('quotes')
+        .select('id, status, total, invoice_status, client_data, created_at')
+        .eq('project_id', args.project_id)
+        .eq('invoice_raised', true),
+
+      supabase
+        .from('reports')
+        .select('id, report_type, status, installation_address, created_at')
+        .eq('project_id', args.project_id),
+
+      supabase
+        .from('rams_generation_jobs')
+        .select('id, status, job_type, created_at')
+        .eq('project_id', args.project_id),
+
+      supabase
+        .from('circuit_design_jobs')
+        .select('id, status, job_type, created_at')
+        .eq('project_id', args.project_id),
+    ]);
+
+  const tasks = tasksResult.data || [];
+  const completedTasks = tasks.filter((t) => t.status === 'done').length;
+
+  const customer = project.customers as { name: string; email: string; phone: string } | null;
+
+  return {
+    project: {
+      id: project.id,
+      title: project.title,
+      description: project.description,
+      status: project.status,
+      priority: project.priority,
+      customer_name: customer?.name || null,
+      customer_email: customer?.email || null,
+      estimated_value: project.estimated_value,
+      start_date: project.start_date,
+      due_date: project.due_date,
+      created_at: project.created_at,
+    },
+    tasks: {
+      items: tasks,
+      total: tasks.length,
+      completed: completedTasks,
+      progress: tasks.length > 0 ? Math.round((completedTasks / tasks.length) * 100) : 0,
+    },
+    quotes: {
+      items: quotesResult.data || [],
+      total: (quotesResult.data || []).length,
+      total_value: (quotesResult.data || []).reduce((s, q) => s + (Number(q.total) || 0), 0),
+    },
+    invoices: {
+      items: invoicesResult.data || [],
+      total: (invoicesResult.data || []).length,
+      total_value: (invoicesResult.data || []).reduce((s, i) => s + (Number(i.total) || 0), 0),
+      paid: (invoicesResult.data || []).filter((i) => i.invoice_status === 'paid').length,
+    },
+    certificates: {
+      items: certsResult.data || [],
+      total: (certsResult.data || []).length,
+    },
+    rams: {
+      items: ramsResult.data || [],
+      total: (ramsResult.data || []).length,
+    },
+    circuit_designs: {
+      items: designsResult.data || [],
+      total: (designsResult.data || []).length,
+    },
+  };
+}

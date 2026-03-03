@@ -1,6 +1,6 @@
 /**
  * Master tool registry.
- * Registers all 59 core tools + 21 apprentice tools onto the MCP server.
+ * Registers all 73 core tools + 21 apprentice tools onto the MCP server (94 total).
  * Tools are role-filtered: electricians get core tools, apprentices get learning tools.
  */
 
@@ -37,6 +37,24 @@ export function registerAllTools(server: McpServer, user: UserContext): void {
   // Apprentice/learning tools — available to all roles
   // (a founder can also be learning, an apprentice might run a side business)
   registerApprenticeTools(server, user);
+
+  // Study tools — quiz result tracking (new, available to all roles)
+  registerStudyExtras(server, user);
+
+  // Analytics — business intelligence
+  registerAnalyticsTools(server, user);
+
+  // Project linking
+  registerProjectLinkTools(server, user);
+
+  // Marketplace
+  registerMarketplaceTools(server, user);
+
+  // Safety
+  registerSafetyTools(server, user);
+
+  // Vision (photo analysis)
+  registerVisionTools(server, user);
 }
 
 // ─── Helper to wrap handler calls with rate limiting + audit logging ────
@@ -218,9 +236,7 @@ function registerQuotingTools(server: McpServer, user: UserContext): void {
         .array(
           z.object({
             description: z.string().describe('Item description'),
-            category: z
-              .enum(['labour', 'materials', 'equipment'])
-              .describe('Item category'),
+            category: z.enum(['labour', 'materials', 'equipment']).describe('Item category'),
             quantity: z.number().describe('Quantity'),
             unitPrice: z.number().describe('Price per unit in GBP'),
             unit: z.string().optional().describe('Unit type: each, metre, hours, etc.'),
@@ -314,6 +330,18 @@ function registerQuotingTools(server: McpServer, user: UserContext): void {
       quote_id: z.string().describe('Quote UUID'),
     },
     callTool('track_quote_email', user)
+  );
+
+  server.tool(
+    'add_receipt_to_quote',
+    'Add receipt items to an existing quote. Call analyse_photo on the receipt first, then pass photo_analysis_id + quote_id. Appends materials line items and recalculates totals.',
+    {
+      photo_analysis_id: z
+        .string()
+        .describe('Photo analysis UUID from analyse_photo (must be analysis_type=receipt)'),
+      quote_id: z.string().describe('Quote UUID to add items to'),
+    },
+    callTool('add_receipt_to_quote', user)
   );
 }
 
@@ -574,7 +602,7 @@ function registerInvoicingTools(server: McpServer, user: UserContext): void {
     'generate_invoice_pdf',
     'Generate a branded PDF of an invoice using the PDFMonkey template. Returns downloadUrl. To send as WhatsApp document, include MEDIA:<downloadUrl> on its own line.',
     {
-      invoice_id: z.string().describe('Invoice UUID (same as quote UUID with invoice_raised=true)'),
+      invoice_id: z.string().describe('Invoice UUID from the invoices table'),
     },
     callTool('generate_invoice_pdf', user)
   );
@@ -597,6 +625,18 @@ function registerInvoicingTools(server: McpServer, user: UserContext): void {
       min_days_overdue: z.number().optional().describe('Minimum days overdue (default 1)'),
     },
     callTool('get_overdue_invoices', user)
+  );
+
+  server.tool(
+    'add_receipt_to_invoice',
+    'Add receipt items to an existing invoice. Call analyse_photo on the receipt first, then pass photo_analysis_id + invoice_id. Appends materials line items and recalculates totals including VAT.',
+    {
+      photo_analysis_id: z
+        .string()
+        .describe('Photo analysis UUID from analyse_photo (must be analysis_type=receipt)'),
+      invoice_id: z.string().describe('Invoice UUID to add items to'),
+    },
+    callTool('add_receipt_to_invoice', user)
   );
 }
 
@@ -752,13 +792,25 @@ function registerExpenseTools(server: McpServer, user: UserContext): void {
     {
       amount: z.number().describe('Expense amount in GBP'),
       category: z
-        .enum(['materials', 'tools', 'fuel', 'mileage', 'insurance', 'training', 'other'])
+        .enum([
+          'materials',
+          'tools',
+          'fuel',
+          'mileage',
+          'ppe',
+          'hotels',
+          'training',
+          'vehicle',
+          'insurance',
+          'subscriptions',
+          'meals',
+          'other',
+        ])
         .describe('Expense category'),
       description: z.string().describe('Expense description'),
-      supplier: z.string().optional().describe('Supplier name'),
+      vendor: z.string().optional().describe('Vendor/supplier name'),
       date: z.string().describe('Expense date (ISO-8601)'),
-      receipt_photo_url: z.string().optional().describe('URL of receipt photo'),
-      job_id: z.string().optional().describe('Linked job UUID'),
+      receipt_url: z.string().optional().describe('URL of receipt photo'),
     },
     callTool('create_expense', user)
   );
@@ -771,8 +823,7 @@ function registerExpenseTools(server: McpServer, user: UserContext): void {
       to_address: z.string().describe('Destination address'),
       miles: z.number().describe('Miles travelled'),
       date: z.string().describe('Date of travel (ISO-8601)'),
-      job_id: z.string().optional().describe('Linked job UUID'),
-      rate_per_mile: z.number().optional().describe('Rate per mile in GBP (default HMRC rate)'),
+      rate_per_mile: z.number().optional().describe('Rate per mile in GBP (default HMRC 0.45)'),
     },
     callTool('log_mileage', user)
   );
@@ -784,6 +835,17 @@ function registerExpenseTools(server: McpServer, user: UserContext): void {
       expense_id: z.string().describe('Expense UUID'),
     },
     callTool('sync_expense_to_accounting', user)
+  );
+
+  server.tool(
+    'add_receipt_to_expense',
+    'Create an expense from a receipt photo analysis. Call analyse_photo first, then pass the photo_analysis_id.',
+    {
+      photo_analysis_id: z
+        .string()
+        .describe('Photo analysis UUID from analyse_photo (must be analysis_type=receipt)'),
+    },
+    callTool('add_receipt_to_expense', user)
   );
 }
 
@@ -1199,6 +1261,30 @@ function registerApprenticeTools(server: McpServer, user: UserContext): void {
   );
 
   server.tool(
+    'create_evidence_from_photo',
+    'Turn a photo analysis into portfolio evidence. Auto-extracts skills, matches ACs/LOs from qualifications, creates a portfolio_items entry with photo linked. Ideal for apprentices who send site photos.',
+    {
+      photo_analysis_id: z.string().describe('Photo analysis UUID from analyse_photo'),
+      title: z
+        .string()
+        .optional()
+        .describe('Evidence title (auto-generated from photo if not provided)'),
+      category: z
+        .string()
+        .optional()
+        .describe(
+          'Category (e.g. Installation Practice, Testing & Inspection). Auto-detected if not provided.'
+        ),
+      reflection: z.string().optional().describe('Reflection notes — what was learned'),
+      skills: z
+        .array(z.string())
+        .optional()
+        .describe('Additional skills to tag (auto-extracted from photo analysis + these)'),
+    },
+    callTool('create_evidence_from_photo', user)
+  );
+
+  server.tool(
     'submit_portfolio_for_review',
     'Submit a portfolio entry for tutor/assessor review.',
     {
@@ -1415,5 +1501,354 @@ function registerApprenticeTools(server: McpServer, user: UserContext): void {
       radius_miles: z.number().optional().describe('Search radius in miles'),
     },
     callTool('search_training_providers', user)
+  );
+}
+
+// ─── Study Extras (2) — quiz result tracking ────────────────────────────
+
+function registerStudyExtras(server: McpServer, user: UserContext): void {
+  server.tool(
+    'save_quiz_result',
+    'Save the result of a quiz session. Tracks topic, score, and category breakdown for trend analysis.',
+    {
+      topic: z.string().describe('Quiz topic (e.g. "Safe Isolation", "RCD Protection")'),
+      score: z.number().describe('Score as a percentage (0-100)'),
+      total_questions: z.number().describe('Total number of questions in the quiz'),
+      correct_answers: z.number().describe('Number of correct answers'),
+      category_breakdown: z
+        .record(z.number())
+        .optional()
+        .describe('Score breakdown by category (e.g. {"theory": 80, "practical": 60})'),
+      difficulty: z.enum(['easy', 'medium', 'hard']).optional().describe('Quiz difficulty'),
+      source: z.string().optional().describe('Source of quiz (default: whatsapp_quiz)'),
+    },
+    callTool('save_quiz_result', user)
+  );
+
+  server.tool(
+    'get_quiz_history',
+    'Get past quiz results with trend analysis and weak area identification. Shows improving/declining topics.',
+    {
+      topic: z.string().optional().describe('Filter by topic'),
+      limit: z.number().optional().describe('Max results (default 20)'),
+    },
+    callTool('get_quiz_history', user)
+  );
+}
+
+// ─── Analytics Tools (13) ───────────────────────────────────────────────
+
+function registerAnalyticsTools(server: McpServer, user: UserContext): void {
+  server.tool(
+    'get_revenue_summary',
+    'Get revenue summary for a period — total revenue, invoice count, average job value, growth vs previous period.',
+    {
+      period: z
+        .enum(['week', 'month', 'quarter', 'year'])
+        .optional()
+        .describe('Time period (default: month)'),
+    },
+    callTool('get_revenue_summary', user)
+  );
+
+  server.tool(
+    'get_outstanding_payments',
+    'Get total outstanding payments with aging breakdown (7/14/30/60+ days overdue).',
+    {},
+    callTool('get_outstanding_payments', user)
+  );
+
+  server.tool(
+    'get_business_snapshot',
+    "Get a full business snapshot — open tasks, pending quotes, overdue invoices, expiring certs, today's schedule. Perfect for morning briefings.",
+    {},
+    callTool('get_business_snapshot', user)
+  );
+
+  server.tool(
+    'get_top_clients',
+    'Get top clients ranked by revenue in a period.',
+    {
+      period: z
+        .enum(['month', 'quarter', 'year'])
+        .optional()
+        .describe('Time period (default: year)'),
+      limit: z.number().optional().describe('Max clients (default 10)'),
+    },
+    callTool('get_top_clients', user)
+  );
+
+  server.tool(
+    'get_inactive_clients',
+    'Get clients with no activity (quotes, invoices, certificates) in the last N months. Useful for "fill my diary" outreach.',
+    {
+      months_inactive: z
+        .number()
+        .optional()
+        .describe('Months of inactivity threshold (default: 6)'),
+      limit: z.number().optional().describe('Max clients to return (default: 10)'),
+    },
+    callTool('get_inactive_clients', user)
+  );
+
+  server.tool(
+    'get_quote_analytics',
+    'Quote conversion analytics — conversion rate, rejection rate, pipeline value, time to convert, and conversion by price range.',
+    {
+      period: z
+        .enum(['month', 'quarter', 'year'])
+        .optional()
+        .describe('Time period (default: quarter)'),
+    },
+    callTool('get_quote_analytics', user)
+  );
+
+  server.tool(
+    'get_pricing_analysis',
+    'Pricing analysis — average quote/invoice values, monthly trends, VAT recovery summary.',
+    {
+      period: z
+        .enum(['month', 'quarter', 'year'])
+        .optional()
+        .describe('Time period (default: year)'),
+    },
+    callTool('get_pricing_analysis', user)
+  );
+
+  server.tool(
+    'get_revenue_forecast',
+    'Revenue forecast — monthly trend, predicted next month, pipeline forecast weighted by conversion rate, cash expected from sent invoices.',
+    {},
+    callTool('get_revenue_forecast', user)
+  );
+
+  server.tool(
+    'get_seasonal_trends',
+    'Seasonal business trends — monthly revenue breakdown, busiest/quietest months, year-on-year comparison.',
+    {},
+    callTool('get_seasonal_trends', user)
+  );
+
+  server.tool(
+    'get_client_lifetime_value',
+    'Client lifetime value analysis — top clients by total revenue, average order value, repeat rate, acquisition timeline.',
+    {
+      limit: z.number().optional().describe('Max clients to return (default: 10)'),
+    },
+    callTool('get_client_lifetime_value', user)
+  );
+
+  server.tool(
+    'get_profitability_analysis',
+    'Profitability analysis — gross revenue, expenses by category, net profit, margin percentage, month-on-month profit trend.',
+    {
+      period: z
+        .enum(['week', 'month', 'quarter', 'year'])
+        .optional()
+        .describe('Time period (default: month)'),
+    },
+    callTool('get_profitability_analysis', user)
+  );
+
+  server.tool(
+    'get_cash_flow_forecast',
+    'Cash flow forecast — days sales outstanding (DSO), expected inflows (30/60/90 days), average weekly outflow, at-risk overdue invoices.',
+    {},
+    callTool('get_cash_flow_forecast', user)
+  );
+
+  server.tool(
+    'get_at_risk_alerts',
+    'Business risk alerts — overdue invoices, expiring quotes, VIP clients gone quiet, expiring certificates, negative cash flow warning. Sorted by severity.',
+    {},
+    callTool('get_at_risk_alerts', user)
+  );
+}
+
+// ─── Project Link Tools (3) ─────────────────────────────────────────────
+
+function registerProjectLinkTools(server: McpServer, user: UserContext): void {
+  server.tool(
+    'link_to_project',
+    'Link any entity (task, quote, invoice, certificate, RAMS, circuit design, site visit) to a project.',
+    {
+      project_id: z.string().describe('Project UUID'),
+      entity_type: z
+        .enum(['task', 'quote', 'invoice', 'certificate', 'rams', 'circuit_design', 'site_visit'])
+        .describe('Type of entity to link'),
+      entity_id: z.string().describe('Entity UUID'),
+    },
+    callTool('link_to_project', user)
+  );
+
+  server.tool(
+    'unlink_from_project',
+    'Remove an entity from a project. The entity continues to exist independently.',
+    {
+      entity_type: z
+        .enum(['task', 'quote', 'invoice', 'certificate', 'rams', 'circuit_design', 'site_visit'])
+        .describe('Type of entity to unlink'),
+      entity_id: z.string().describe('Entity UUID'),
+    },
+    callTool('unlink_from_project', user)
+  );
+
+  server.tool(
+    'get_project_summary',
+    'Get a complete project summary — all linked tasks, quotes, invoices, certificates, RAMS, designs with progress and totals.',
+    {
+      project_id: z.string().describe('Project UUID'),
+    },
+    callTool('get_project_summary', user)
+  );
+}
+
+// ─── Marketplace Tools (3) ──────────────────────────────────────────────
+
+function registerMarketplaceTools(server: McpServer, user: UserContext): void {
+  server.tool(
+    'search_products',
+    'Search electrical products by name, category, or supplier.',
+    {
+      query: z.string().describe('Product search query'),
+      category: z.string().optional().describe('Product category filter'),
+      supplier: z.string().optional().describe('Supplier filter (e.g. CEF, Screwfix, TLC)'),
+      limit: z.number().optional().describe('Max results (default 20)'),
+    },
+    callTool('search_products', user)
+  );
+
+  server.tool(
+    'compare_prices',
+    'Compare prices for a product across multiple suppliers.',
+    {
+      product_name: z.string().describe('Product name to compare'),
+    },
+    callTool('compare_prices', user)
+  );
+
+  server.tool(
+    'get_deals',
+    'Get current deals and discount codes from electrical suppliers.',
+    {
+      supplier: z.string().optional().describe('Filter by supplier'),
+      category: z.string().optional().describe('Filter by product category'),
+      limit: z.number().optional().describe('Max deals (default 10)'),
+    },
+    callTool('get_deals', user)
+  );
+}
+
+// ─── Safety Tools (3) ───────────────────────────────────────────────────
+
+function registerSafetyTools(server: McpServer, user: UserContext): void {
+  server.tool(
+    'get_safety_templates',
+    'Browse safety document templates (risk assessments, method statements, toolbox talks).',
+    {
+      category: z.string().optional().describe('Template category'),
+      template_type: z.string().optional().describe('Template type'),
+      search: z.string().optional().describe('Search by title or description'),
+      limit: z.number().optional().describe('Max results (default 20)'),
+    },
+    callTool('get_safety_templates', user)
+  );
+
+  server.tool(
+    'create_safe_isolation_record',
+    'Log a safe isolation procedure (GS38 compliant). Records voltage readings, lock-off, proving unit use.',
+    {
+      location: z.string().describe('Job site location'),
+      circuit_description: z.string().describe('Circuit being isolated'),
+      supply_type: z.string().optional().describe('Supply type (e.g. TN-S, TN-C-S, TT)'),
+      isolation_point: z.string().optional().describe('Where isolation was applied'),
+      voltage_before: z.number().optional().describe('Voltage reading before isolation (V)'),
+      voltage_after: z.number().optional().describe('Voltage reading after isolation (V)'),
+      proving_unit_used: z.boolean().optional().describe('Was a proving unit used?'),
+      lock_off_applied: z.boolean().optional().describe('Was lock-off applied?'),
+      caution_notice_posted: z.boolean().optional().describe('Was a caution notice posted?'),
+      gs38_compliant: z.boolean().optional().describe('Was the procedure GS38 compliant?'),
+      notes: z.string().optional().describe('Additional notes'),
+      date: z.string().optional().describe('Date of isolation (ISO-8601, default today)'),
+      customer_id: z.string().optional().describe('Linked customer UUID'),
+      job_id: z.string().optional().describe('Linked job UUID'),
+    },
+    callTool('create_safe_isolation_record', user)
+  );
+
+  server.tool(
+    'log_site_diary_entry',
+    'Log a daily site diary entry — work done, issues, materials, hours.',
+    {
+      date: z.string().describe('Date (ISO-8601)'),
+      summary: z.string().describe('Brief summary of the day'),
+      location: z.string().optional().describe('Site location'),
+      work_completed: z.string().optional().describe('Detailed work completed'),
+      issues_encountered: z.string().optional().describe('Any issues or problems'),
+      materials_used: z.string().optional().describe('Materials used'),
+      weather_conditions: z.string().optional().describe('Weather conditions'),
+      hours_worked: z.number().optional().describe('Hours worked'),
+      customer_id: z.string().optional().describe('Linked customer UUID'),
+      project_id: z.string().optional().describe('Linked project UUID'),
+      photos: z.array(z.string()).optional().describe('Photo URLs'),
+    },
+    callTool('log_site_diary_entry', user)
+  );
+}
+
+// ─── Vision Tools (3) ───────────────────────────────────────────────────
+
+function registerVisionTools(server: McpServer, user: UserContext): void {
+  server.tool(
+    'analyse_photo',
+    'Analyse a photo of a consumer unit, electrical installation, or receipt using AI vision. Returns structured observations, compliance issues, details, and a photo_analysis_id for linking.',
+    {
+      image_url: z
+        .string()
+        .describe('URL of the image to analyse (from WhatsApp or Supabase storage)'),
+      context: z
+        .string()
+        .optional()
+        .describe(
+          'Additional context from the electrician (e.g. "This is the board at 14 Oak Street")'
+        ),
+      property_address: z.string().optional().describe('Property address to link the analysis to'),
+      tags: z
+        .array(z.string())
+        .optional()
+        .describe('Tags to attach to the photo (e.g. ["first fix", "kitchen"])'),
+    },
+    callTool('analyse_photo', user)
+  );
+
+  server.tool(
+    'attach_photo_to_entity',
+    'Attach a photo to a job, certificate, site diary, portfolio, project, quote, or invoice. Runs AI analysis automatically and links the photo to the entity.',
+    {
+      image_url: z.string().describe('URL of the image'),
+      entity_type: z
+        .enum(['job', 'certificate', 'site_diary', 'portfolio', 'project', 'quote', 'invoice'])
+        .describe('Type of entity to attach the photo to'),
+      entity_id: z.string().describe('Entity UUID'),
+      description: z
+        .string()
+        .optional()
+        .describe('Manual description (AI generates one if not provided)'),
+      property_address: z.string().optional().describe('Property address'),
+      tags: z.array(z.string()).optional().describe('Tags for categorisation'),
+    },
+    callTool('attach_photo_to_entity', user)
+  );
+
+  server.tool(
+    'get_entity_photos',
+    'Retrieve all photos linked to an entity (job, project, quote, invoice, portfolio, site diary).',
+    {
+      entity_type: z
+        .enum(['job', 'certificate', 'site_diary', 'portfolio', 'project', 'quote', 'invoice'])
+        .describe('Type of entity'),
+      entity_id: z.string().describe('Entity UUID'),
+    },
+    callTool('get_entity_photos', user)
   );
 }

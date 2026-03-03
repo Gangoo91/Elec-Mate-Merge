@@ -213,6 +213,46 @@ function startHttp(): void {
     }
   });
 
+  // ── Proactive message endpoint (used by cron edge functions) ──────
+  app.post('/api/send-message', async (req, res) => {
+    if (isShuttingDown) {
+      res.status(503).json({ error: 'Server is shutting down' });
+      return;
+    }
+
+    const apiKey = req.headers['x-api-key'] as string | undefined;
+    if (!apiKey || apiKey !== config.vpsApiKey) {
+      res.status(401).json({ error: 'Invalid API key' });
+      return;
+    }
+
+    const { target, message, channel } = req.body as {
+      target?: string;
+      message?: string;
+      channel?: string;
+    };
+
+    if (!target || !message) {
+      res.status(400).json({ error: 'Missing required fields: target, message' });
+      return;
+    }
+
+    const ch = channel || 'whatsapp';
+
+    try {
+      const { execSync } = await import('node:child_process');
+      const result = execSync(
+        `openclaw message send --channel ${ch} --target "${target}" --message "${message.replace(/"/g, '\\"')}" --json 2>&1`,
+        { timeout: 30_000, encoding: 'utf-8' }
+      );
+      res.json({ success: true, result: result.trim() });
+    } catch (err) {
+      const msg = err instanceof Error ? err.message : String(err);
+      console.error('[send-message] Error:', msg);
+      res.status(500).json({ error: msg });
+    }
+  });
+
   // ── MCP Streamable HTTP endpoint ───────────────────────────────────
   app.post('/mcp', async (req, res) => {
     if (isShuttingDown) {

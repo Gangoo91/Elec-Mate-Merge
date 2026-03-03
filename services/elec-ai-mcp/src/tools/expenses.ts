@@ -33,18 +33,17 @@ export async function createExpense(args: Record<string, unknown>, user: UserCon
       amount: Math.round(args.amount * 100) / 100,
       category: args.category,
       description: args.description.trim(),
-      supplier: typeof args.supplier === 'string' ? args.supplier.trim() : null,
+      vendor: typeof args.vendor === 'string' ? args.vendor.trim() : null,
       date: args.date,
-      receipt_photo_url: typeof args.receipt_photo_url === 'string' ? args.receipt_photo_url : null,
-      job_id: typeof args.job_id === 'string' ? args.job_id : null,
-      status: 'logged',
+      receipt_url: typeof args.receipt_url === 'string' ? args.receipt_url : null,
+      tax_deductible: true,
     })
-    .select('id, status')
+    .select('id')
     .single();
 
   if (error) throw new Error(`Failed to create expense: ${error.message}`);
 
-  return { expense_id: data.id, status: data.status };
+  return { expense_id: data.id, status: 'logged' };
 }
 
 export async function logMileage(args: Record<string, unknown>, user: UserContext) {
@@ -80,14 +79,11 @@ export async function logMileage(args: Record<string, unknown>, user: UserContex
       category: 'mileage',
       description: `Mileage: ${fromAddress} → ${toAddress} (${miles} miles @ £${ratePerMile.toFixed(2)}/mile)`,
       date: args.date,
-      job_id: typeof args.job_id === 'string' ? args.job_id : null,
-      metadata: {
-        from_address: fromAddress,
-        to_address: toAddress,
-        miles,
-        rate_per_mile: ratePerMile,
-      },
-      status: 'logged',
+      mileage_miles: miles,
+      mileage_rate: ratePerMile,
+      mileage_from: fromAddress,
+      mileage_to: toAddress,
+      tax_deductible: true,
     })
     .select('id')
     .single();
@@ -95,6 +91,99 @@ export async function logMileage(args: Record<string, unknown>, user: UserContex
   if (error) throw new Error(`Failed to log mileage: ${error.message}`);
 
   return { expense_id: data.id, amount, miles };
+}
+
+export async function addReceiptToExpense(args: Record<string, unknown>, user: UserContext) {
+  if (typeof args.photo_analysis_id !== 'string') {
+    throw new Error('photo_analysis_id is required — analyse a receipt photo first');
+  }
+
+  const supabase = user.supabase;
+
+  // Fetch the photo analysis
+  const { data: analysis, error: fetchError } = await supabase
+    .from('photo_analyses')
+    .select('id, analysis_type, analysis_result, image_url')
+    .eq('id', args.photo_analysis_id)
+    .eq('user_id', user.userId)
+    .single();
+
+  if (fetchError || !analysis) {
+    throw new Error('Photo analysis not found — run analyse_photo on the receipt image first');
+  }
+
+  if (analysis.analysis_type !== 'receipt') {
+    throw new Error(
+      `This photo was analysed as "${analysis.analysis_type}", not a receipt. Re-analyse with context indicating it is a receipt.`
+    );
+  }
+
+  const result = analysis.analysis_result as Record<string, unknown> | null;
+  if (!result) {
+    throw new Error(
+      'Photo analysis has no structured result — the receipt may not have been readable'
+    );
+  }
+
+  const supplier = (result.supplier as string) || 'Unknown supplier';
+  const total = typeof result.total === 'number' ? result.total : 0;
+  const category = (result.category as string) || 'materials';
+  const receiptDate = (result.date as string) || new Date().toISOString().split('T')[0];
+  const items = Array.isArray(result.items) ? result.items : [];
+
+  if (total <= 0 && items.length === 0) {
+    throw new Error('Could not extract any amounts from the receipt. Try a clearer photo.');
+  }
+
+  // Build description from extracted items
+  const itemDescriptions = items
+    .map((item: Record<string, unknown>) => {
+      const desc = item.description || 'Item';
+      const qty = typeof item.quantity === 'number' ? item.quantity : 1;
+      const price = typeof item.unit_price === 'number' ? `£${item.unit_price.toFixed(2)}` : '';
+      return `${qty}x ${desc}${price ? ` @ ${price}` : ''}`;
+    })
+    .join(', ');
+
+  const description = itemDescriptions
+    ? `Receipt from ${supplier}: ${itemDescriptions}`
+    : `Receipt from ${supplier}`;
+
+  const amount =
+    total > 0
+      ? total
+      : items.reduce((sum: number, item: Record<string, unknown>) => {
+          const qty = typeof item.quantity === 'number' ? item.quantity : 1;
+          const price = typeof item.unit_price === 'number' ? item.unit_price : 0;
+          return sum + qty * price;
+        }, 0);
+
+  const { data, error } = await supabase
+    .from('sole_trader_expenses')
+    .insert({
+      user_id: user.userId,
+      amount: Math.round(amount * 100) / 100,
+      category,
+      description,
+      vendor: supplier,
+      date: receiptDate,
+      receipt_url: analysis.image_url || null,
+      tax_deductible: true,
+    })
+    .select('id')
+    .single();
+
+  if (error) throw new Error(`Failed to create expense from receipt: ${error.message}`);
+
+  return {
+    expense_id: data.id,
+    supplier,
+    amount: Math.round(amount * 100) / 100,
+    category,
+    date: receiptDate,
+    items_extracted: items.length,
+    status: 'logged',
+  };
 }
 
 export async function syncExpenseToAccounting(args: Record<string, unknown>, user: UserContext) {

@@ -1,6 +1,9 @@
 /**
- * Apprentice tools — 21 learning and development tools
+ * Apprentice tools — portfolio, learning progress, EPA, wellbeing, and career tools
  * Maps to: Supabase study content tables + edge functions
+ *
+ * Study/quiz tools (search_study_content, generate_practice_questions, etc.)
+ * have been extracted to study.ts and are available to ALL roles.
  *
  * SECURITY.md §17 — Apprentice-specific safeguards:
  *   - EPA/AM2 simulators clearly marked as PRACTICE
@@ -12,63 +15,17 @@ import type { UserContext } from '../auth.js';
 
 import { callEdgeFunction } from '../lib/edge-function.js';
 
-export async function searchStudyContent(args: Record<string, unknown>, user: UserContext) {
-  if (typeof args.query !== 'string' || args.query.trim().length === 0) {
-    throw new Error('Search query is required');
-  }
-
-  const supabase = user.supabase;
-  const { data, error } = await supabase.rpc('search_study_content', {
-    search_query: args.query.trim(),
-    filter_course: typeof args.course === 'string' ? args.course : null,
-    filter_level: typeof args.level === 'string' ? args.level : null,
-  });
-
-  if (error) {
-    const result = await callEdgeFunction('multi-source-rag-search', user.jwt, {
-      query: args.query.trim(),
-      sources: ['training_content'],
-      level: typeof args.level === 'string' ? args.level : undefined,
-    });
-    if (result.error) throw new Error(result.error);
-    return result.data;
-  }
-
-  return { results: data || [] };
-}
-
-export async function generatePracticeQuestions(args: Record<string, unknown>, user: UserContext) {
-  const result = await callEdgeFunction('generate-practice-questions', user.jwt, {
-    topic: typeof args.topic === 'string' ? args.topic : undefined,
-    count: typeof args.count === 'number' && args.count > 0 ? Math.min(args.count, 50) : 10,
-    difficulty: typeof args.difficulty === 'string' ? args.difficulty : undefined,
-  });
-
-  if (result.error) throw new Error(result.error);
-  return result.data;
-}
-
-export async function getFlashcards(args: Record<string, unknown>, user: UserContext) {
-  const supabase = user.supabase;
-  let query = supabase
-    .from('flashcards')
-    .select('id, front, back, topic, next_review, ease_factor');
-
-  if (typeof args.topic === 'string') {
-    query = query.eq('topic', args.topic);
-  }
-  if (args.due_only === true) {
-    query = query.lte('next_review', new Date().toISOString());
-  }
-
-  const limit = typeof args.limit === 'number' && args.limit > 0 ? Math.min(args.limit, 50) : 20;
-  query = query.order('next_review', { ascending: true }).limit(limit);
-
-  const { data, error } = await query;
-  if (error) throw new Error(`Failed to get flashcards: ${error.message}`);
-
-  return { flashcards: data || [] };
-}
+// Re-export study tools so existing router imports still work
+export {
+  searchStudyContent,
+  generatePracticeQuestions,
+  getFlashcards,
+  getExamResults,
+  getToolboxGuides,
+  runAm2Simulator,
+  saveQuizResult,
+  getQuizHistory,
+} from './study.js';
 
 export async function getLearningProgress(args: Record<string, unknown>, user: UserContext) {
   const supabase = user.supabase;
@@ -84,25 +41,6 @@ export async function getLearningProgress(args: Record<string, unknown>, user: U
   if (error) throw new Error(`Failed to get learning progress: ${error.message}`);
 
   return { progress: data || [] };
-}
-
-export async function getExamResults(args: Record<string, unknown>, user: UserContext) {
-  const supabase = user.supabase;
-  let query = supabase
-    .from('exam_results')
-    .select('id, exam_type, score, total_questions, passed, completed_at');
-
-  if (typeof args.exam_type === 'string') {
-    query = query.eq('exam_type', args.exam_type);
-  }
-
-  const limit = typeof args.limit === 'number' && args.limit > 0 ? Math.min(args.limit, 50) : 10;
-  query = query.order('completed_at', { ascending: false }).limit(limit);
-
-  const { data, error } = await query;
-  if (error) throw new Error(`Failed to get exam results: ${error.message}`);
-
-  return { results: data || [] };
 }
 
 export async function logOjtHours(args: Record<string, unknown>, user: UserContext) {
@@ -348,6 +286,139 @@ export async function searchQualificationRequirements(
   return { requirements: fallbackData || [] };
 }
 
+export async function createEvidenceFromPhoto(args: Record<string, unknown>, user: UserContext) {
+  if (typeof args.photo_analysis_id !== 'string') {
+    throw new Error('photo_analysis_id is required — analyse a photo first');
+  }
+
+  const supabase = user.supabase;
+
+  // Fetch the photo analysis
+  const { data: analysis, error: fetchError } = await supabase
+    .from('photo_analyses')
+    .select('id, analysis_type, analysis_result, observations, image_url, ai_description')
+    .eq('id', args.photo_analysis_id)
+    .eq('user_id', user.userId)
+    .single();
+
+  if (fetchError || !analysis) {
+    throw new Error('Photo analysis not found — run analyse_photo first');
+  }
+
+  const result = analysis.analysis_result as Record<string, unknown> | null;
+  const observations = Array.isArray(analysis.observations) ? analysis.observations : [];
+
+  // Auto-extract skills from analysis type and observations
+  const skills: string[] = [];
+  if (analysis.analysis_type === 'consumer_unit') {
+    skills.push('consumer unit identification');
+    if (result?.rcd_config) skills.push('RCD configuration');
+    if (result?.spd_present) skills.push('SPD identification');
+  } else if (analysis.analysis_type === 'installation') {
+    skills.push('installation practice');
+    for (const obs of observations) {
+      const obsObj = obs as Record<string, unknown>;
+      const desc = (obsObj.description as string) || '';
+      if (desc.toLowerCase().includes('containment')) skills.push('containment routing');
+      if (desc.toLowerCase().includes('earthing') || desc.toLowerCase().includes('bonding'))
+        skills.push('earthing and bonding');
+      if (desc.toLowerCase().includes('cable')) skills.push('cable management');
+      if (desc.toLowerCase().includes('label')) skills.push('circuit labelling');
+    }
+  }
+  // Add user-provided skills
+  if (Array.isArray(args.skills)) {
+    for (const s of args.skills) {
+      if (typeof s === 'string' && !skills.includes(s)) skills.push(s);
+    }
+  }
+
+  // Search for matching qualification ACs/LOs
+  let matchedAcs: string[] = [];
+  let matchedLos: string[] = [];
+  if (skills.length > 0) {
+    const { data: reqData } = await supabase.rpc('search_qualification_requirements', {
+      p_keywords: skills.slice(0, 5),
+      p_qualification_code: null,
+      p_unit_code: null,
+      p_limit: 10,
+    });
+
+    if (reqData && reqData.length > 0) {
+      matchedAcs = reqData
+        .filter((r: Record<string, unknown>) => r.ac_text)
+        .map((r: Record<string, unknown>) => r.ac_text as string)
+        .slice(0, 5);
+      matchedLos = reqData
+        .filter((r: Record<string, unknown>) => r.lo_text)
+        .map((r: Record<string, unknown>) => r.lo_text as string)
+        .slice(0, 5);
+    }
+  }
+
+  const title =
+    typeof args.title === 'string' && args.title.trim().length > 0
+      ? args.title.trim()
+      : analysis.ai_description || `Photo evidence: ${analysis.analysis_type}`;
+
+  const category =
+    typeof args.category === 'string' && args.category.trim().length > 0
+      ? args.category.trim()
+      : analysis.analysis_type === 'consumer_unit'
+        ? 'Testing & Inspection'
+        : 'Installation Practice';
+
+  const { data, error } = await supabase
+    .from('portfolio_items')
+    .insert({
+      user_id: user.userId,
+      title,
+      description: analysis.ai_description || 'Photo evidence from site',
+      category,
+      file_url: analysis.image_url,
+      file_type: 'image',
+      skills_demonstrated: skills,
+      reflection_notes: typeof args.reflection === 'string' ? args.reflection.trim() : null,
+      learning_outcomes_met: matchedLos,
+      assessment_criteria_met: matchedAcs,
+      storage_urls: [{ url: analysis.image_url }],
+      status: 'draft',
+      date_completed: new Date().toISOString(),
+    })
+    .select('id, title, category, status')
+    .single();
+
+  if (error) throw new Error(`Failed to create portfolio evidence: ${error.message}`);
+
+  // Link photo analysis to portfolio
+  await supabase
+    .from('photo_analyses')
+    .update({ linked_portfolio_id: data.id })
+    .eq('id', args.photo_analysis_id);
+
+  // Create evidence file link
+  await supabase.from('portfolio_evidence_files').insert({
+    portfolio_item_id: data.id,
+    file_url: analysis.image_url,
+    file_type: 'image',
+    description: analysis.ai_description || 'Photo evidence',
+  });
+
+  return {
+    evidence_id: data.id,
+    title: data.title,
+    category: data.category,
+    status: data.status,
+    skills_demonstrated: skills,
+    matched_acs: matchedAcs.length,
+    matched_los: matchedLos.length,
+    message:
+      matchedAcs.length > 0
+        ? `Created portfolio evidence with ${matchedAcs.length} ACs and ${matchedLos.length} LOs auto-matched. Review and submit when ready.`
+        : 'Created portfolio evidence. Use search_qualification_requirements to find matching ACs/LOs.',
+  };
+}
+
 export async function submitPortfolioForReview(args: Record<string, unknown>, user: UserContext) {
   if (typeof args.evidence_id !== 'string') {
     throw new Error('evidence_id is required');
@@ -551,19 +622,6 @@ export async function scoreEpaResponse(args: Record<string, unknown>, user: User
   };
 }
 
-export async function runAm2Simulator(args: Record<string, unknown>, user: UserContext) {
-  const result = await callEdgeFunction('am2-simulator', user.jwt, {
-    section: typeof args.section === 'string' ? args.section : undefined,
-  });
-
-  if (result.error) throw new Error(result.error);
-
-  return {
-    ...((result.data as Record<string, unknown>) || {}),
-    disclaimer: 'This is a PRACTICE session — not a real assessment.',
-  };
-}
-
 export async function logMoodCheckin(args: Record<string, unknown>, user: UserContext) {
   if (typeof args.mood !== 'number' || args.mood < 1 || args.mood > 10) {
     throw new Error('Mood must be a number between 1 and 10');
@@ -656,24 +714,6 @@ export async function getApprenticeRights(args: Record<string, unknown>, user: U
   if (error) throw new Error(`Failed to get apprentice rights: ${error.message}`);
 
   return { rights: data || [] };
-}
-
-export async function getToolboxGuides(args: Record<string, unknown>, user: UserContext) {
-  const supabase = user.supabase;
-
-  let query = supabase.from('toolbox_guides').select('id, title, topic, content, difficulty');
-
-  if (typeof args.guide_name === 'string' && args.guide_name.length > 0) {
-    query = query.ilike('title', `%${args.guide_name}%`);
-  }
-  if (typeof args.topic === 'string' && args.topic.length > 0) {
-    query = query.ilike('topic', `%${args.topic}%`);
-  }
-
-  const { data, error } = await query;
-  if (error) throw new Error(`Failed to get toolbox guides: ${error.message}`);
-
-  return { guides: data || [] };
 }
 
 export async function searchLearningVideos(args: Record<string, unknown>, user: UserContext) {

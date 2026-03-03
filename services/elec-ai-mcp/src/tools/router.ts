@@ -21,7 +21,12 @@ import * as agentInternals from './agent-internals.js';
 import * as documents from './documents.js';
 import * as email from './email.js';
 import * as apprentice from './apprentice.js';
+import * as study from './study.js';
 import * as tasks from './tasks.js';
+import * as analytics from './analytics.js';
+import * as marketplace from './marketplace.js';
+import * as safety from './safety.js';
+import * as vision from './vision.js';
 
 /** Handler function signature — every tool handler takes args + user context */
 export type ToolHandler = (args: Record<string, unknown>, user: UserContext) => Promise<unknown>;
@@ -88,6 +93,7 @@ const handlers: Record<string, ToolHandler> = {
   create_expense: expenses.createExpense,
   log_mileage: expenses.logMileage,
   sync_expense_to_accounting: expenses.syncExpenseToAccounting,
+  add_receipt_to_expense: expenses.addReceiptToExpense,
 
   // RAG Knowledge
   lookup_regulation: knowledge.lookupRegulation,
@@ -127,17 +133,30 @@ const handlers: Record<string, ToolHandler> = {
   snooze_task: tasks.snoozeTask,
   delete_task: tasks.deleteTask,
 
+  // Quoting — receipt scanner
+  add_receipt_to_quote: quoting.addReceiptToQuote,
+
+  // Invoicing — receipt scanner
+  add_receipt_to_invoice: invoicing.addReceiptToInvoice,
+
   // Apprentice tools — portfolio
   read_portfolio_evidence: apprentice.readPortfolioEvidence,
   add_portfolio_evidence: apprentice.addPortfolioEvidence,
   search_qualification_requirements: apprentice.searchQualificationRequirements,
+  create_evidence_from_photo: apprentice.createEvidenceFromPhoto,
 
-  // Apprentice tools — study
-  search_study_content: apprentice.searchStudyContent,
-  generate_practice_questions: apprentice.generatePracticeQuestions,
-  get_flashcards: apprentice.getFlashcards,
+  // Study tools (shared — all roles)
+  search_study_content: study.searchStudyContent,
+  generate_practice_questions: study.generatePracticeQuestions,
+  get_flashcards: study.getFlashcards,
+  get_exam_results: study.getExamResults,
+  get_toolbox_guides: study.getToolboxGuides,
+  run_am2_simulator: study.runAm2Simulator,
+  save_quiz_result: study.saveQuizResult,
+  get_quiz_history: study.getQuizHistory,
+
+  // Apprentice tools — portfolio, learning, EPA, wellbeing
   get_learning_progress: apprentice.getLearningProgress,
-  get_exam_results: apprentice.getExamResults,
   log_ojt_hours: apprentice.logOjtHours,
   log_site_diary: apprentice.logSiteDiary,
   get_site_diary_coaching: apprentice.getSiteDiaryCoaching,
@@ -146,15 +165,48 @@ const handlers: Record<string, ToolHandler> = {
   validate_evidence: apprentice.validateEvidence,
   run_epa_simulator: apprentice.runEpaSimulator,
   score_epa_response: apprentice.scoreEpaResponse,
-  run_am2_simulator: apprentice.runAm2Simulator,
   log_mood_checkin: apprentice.logMoodCheckin,
   get_wellbeing_resources: apprentice.getWellbeingResources,
   get_safety_scenarios: apprentice.getSafetyScenarios,
   get_career_pathways: apprentice.getCareerPathways,
   get_apprentice_rights: apprentice.getApprenticeRights,
-  get_toolbox_guides: apprentice.getToolboxGuides,
   search_learning_videos: apprentice.searchLearningVideos,
   search_training_providers: apprentice.searchTrainingProviders,
+
+  // Analytics (business intelligence)
+  get_revenue_summary: analytics.getRevenueSummary,
+  get_outstanding_payments: analytics.getOutstandingPayments,
+  get_business_snapshot: analytics.getBusinessSnapshot,
+  get_top_clients: analytics.getTopClients,
+  get_inactive_clients: analytics.getInactiveClients,
+  get_quote_analytics: analytics.getQuoteAnalytics,
+  get_pricing_analysis: analytics.getPricingAnalysis,
+  get_revenue_forecast: analytics.getRevenueForecast,
+  get_seasonal_trends: analytics.getSeasonalTrends,
+  get_client_lifetime_value: analytics.getClientLifetimeValue,
+  get_profitability_analysis: analytics.getProfitabilityAnalysis,
+  get_cash_flow_forecast: analytics.getCashFlowForecast,
+  get_at_risk_alerts: analytics.getAtRiskAlerts,
+
+  // Projects — linking
+  link_to_project: projects.linkToProject,
+  get_project_summary: projects.getProjectSummary,
+  unlink_from_project: projects.unlinkFromProject,
+
+  // Marketplace
+  search_products: marketplace.searchProducts,
+  compare_prices: marketplace.comparePrices,
+  get_deals: marketplace.getDeals,
+
+  // Safety
+  get_safety_templates: safety.getSafetyTemplates,
+  create_safe_isolation_record: safety.createSafeIsolationRecord,
+  log_site_diary_entry: safety.logSiteDiaryEntry,
+
+  // Vision
+  analyse_photo: vision.analysePhoto,
+  attach_photo_to_entity: vision.attachPhotoToEntity,
+  get_entity_photos: vision.getEntityPhotos,
 };
 
 /**

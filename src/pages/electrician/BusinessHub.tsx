@@ -21,6 +21,7 @@ import {
   ClipboardCheck,
   Camera,
   CalendarDays,
+  FolderKanban,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { BusinessCard } from '@/components/business-hub';
@@ -246,6 +247,13 @@ const BusinessHub = () => {
               icon={Camera}
               href="/electrician/photo-docs"
               gradient="from-blue-400 to-cyan-500"
+            />
+            <BusinessCard
+              title="Projects"
+              description="Group jobs, quotes, certs & tasks"
+              icon={FolderKanban}
+              href="/electrician/projects"
+              gradient="from-amber-400 to-orange-500"
             />
             <BusinessCard
               title="Calendar"

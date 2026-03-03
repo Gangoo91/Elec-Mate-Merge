@@ -18,7 +18,9 @@ function generateQuoteNumber(): string {
   const now = new Date();
   const year = now.getFullYear().toString().slice(-2);
   const month = (now.getMonth() + 1).toString().padStart(2, '0');
-  const random = Math.floor(Math.random() * 1000).toString().padStart(3, '0');
+  const random = Math.floor(Math.random() * 1000)
+    .toString()
+    .padStart(3, '0');
   return `QTE-${year}${month}-${random}`;
 }
 
@@ -62,7 +64,9 @@ export async function generateQuote(args: Record<string, unknown>, user: UserCon
 
   for (const raw of args.items) {
     if (typeof raw !== 'object' || raw === null) {
-      throw new Error('Each item must be an object with description, category, quantity, unitPrice');
+      throw new Error(
+        'Each item must be an object with description, category, quantity, unitPrice'
+      );
     }
     const item = raw as Record<string, unknown>;
     if (typeof item.description !== 'string' || item.description.trim().length === 0) {
@@ -91,21 +95,15 @@ export async function generateQuote(args: Record<string, unknown>, user: UserCon
 
   // Client data
   const clientData =
-    typeof args.client_data === 'object' && args.client_data !== null
-      ? args.client_data
-      : {};
+    typeof args.client_data === 'object' && args.client_data !== null ? args.client_data : {};
 
   // Job details
   const jobDetails =
-    typeof args.job_details === 'object' && args.job_details !== null
-      ? args.job_details
-      : {};
+    typeof args.job_details === 'object' && args.job_details !== null ? args.job_details : {};
 
   // Settings
-  const vatRegistered =
-    typeof args.vat_registered === 'boolean' ? args.vat_registered : false;
-  const vatRate =
-    typeof args.vat_rate === 'number' && args.vat_rate >= 0 ? args.vat_rate : 20;
+  const vatRegistered = typeof args.vat_registered === 'boolean' ? args.vat_registered : false;
+  const vatRate = typeof args.vat_rate === 'number' && args.vat_rate >= 0 ? args.vat_rate : 20;
 
   // Calculate totals
   const subtotal = items.reduce((sum, item) => sum + item.totalPrice, 0);
@@ -207,7 +205,10 @@ export async function updateQuote(args: Record<string, unknown>, user: UserConte
   }
 
   // Status
-  if (typeof args.status === 'string' && ['draft', 'sent', 'approved', 'rejected'].includes(args.status)) {
+  if (
+    typeof args.status === 'string' &&
+    ['draft', 'sent', 'approved', 'rejected'].includes(args.status)
+  ) {
     updates.status = args.status;
   }
 
@@ -254,8 +255,11 @@ export async function updateQuote(args: Record<string, unknown>, user: UserConte
     }
 
     const settings = existing.settings || {};
-    const vatRegistered = typeof args.vat_registered === 'boolean' ? args.vat_registered : settings.vatRegistered ?? false;
-    const vatRate = typeof args.vat_rate === 'number' ? args.vat_rate : settings.vatRate ?? 20;
+    const vatRegistered =
+      typeof args.vat_registered === 'boolean'
+        ? args.vat_registered
+        : (settings.vatRegistered ?? false);
+    const vatRate = typeof args.vat_rate === 'number' ? args.vat_rate : (settings.vatRate ?? 20);
 
     const subtotal = items.reduce((sum, item) => sum + item.totalPrice, 0);
     const vatAmount = vatRegistered ? Math.round(subtotal * (vatRate / 100) * 100) / 100 : 0;
@@ -273,7 +277,9 @@ export async function updateQuote(args: Record<string, unknown>, user: UserConte
   }
 
   if (Object.keys(updates).length === 0) {
-    throw new Error('No fields to update — provide at least one of: client_data, job_details, items, notes, expiry_date, status');
+    throw new Error(
+      'No fields to update — provide at least one of: client_data, job_details, items, notes, expiry_date, status'
+    );
   }
 
   const { data, error } = await supabase
@@ -462,6 +468,110 @@ export async function setQuoteAutoFollowup(args: Record<string, unknown>, user: 
 
   if (result.error) throw new Error(result.error);
   return result.data;
+}
+
+export async function addReceiptToQuote(args: Record<string, unknown>, user: UserContext) {
+  if (typeof args.photo_analysis_id !== 'string') {
+    throw new Error('photo_analysis_id is required — analyse a receipt photo first');
+  }
+  if (typeof args.quote_id !== 'string') {
+    throw new Error('quote_id is required');
+  }
+
+  const supabase = user.supabase;
+
+  // Fetch the photo analysis
+  const { data: analysis, error: fetchError } = await supabase
+    .from('photo_analyses')
+    .select('id, analysis_type, analysis_result')
+    .eq('id', args.photo_analysis_id)
+    .eq('user_id', user.userId)
+    .single();
+
+  if (fetchError || !analysis) {
+    throw new Error('Photo analysis not found — run analyse_photo on the receipt image first');
+  }
+
+  if (analysis.analysis_type !== 'receipt') {
+    throw new Error(
+      `This photo was analysed as "${analysis.analysis_type}", not a receipt. Re-analyse with context indicating it is a receipt.`
+    );
+  }
+
+  const result = analysis.analysis_result as Record<string, unknown> | null;
+  if (!result) {
+    throw new Error('Photo analysis has no structured result');
+  }
+
+  const items = Array.isArray(result.items) ? result.items : [];
+  if (items.length === 0) {
+    throw new Error('No line items extracted from receipt. Try a clearer photo.');
+  }
+
+  // Fetch existing quote
+  const { data: existing, error: quoteError } = await supabase
+    .from('quotes')
+    .select('*')
+    .eq('id', args.quote_id)
+    .single();
+
+  if (quoteError || !existing) {
+    throw new Error('Quote not found');
+  }
+
+  // Build new items from receipt
+  const existingItems = Array.isArray(existing.items) ? existing.items : [];
+  const newItems = items.map((item: Record<string, unknown>) => ({
+    id: randomUUID(),
+    description: (typeof item.description === 'string' ? item.description : 'Receipt item').trim(),
+    category: 'materials',
+    quantity: typeof item.quantity === 'number' && item.quantity > 0 ? item.quantity : 1,
+    unitPrice: typeof item.unit_price === 'number' ? item.unit_price : 0,
+    totalPrice:
+      Math.round(
+        (typeof item.quantity === 'number' ? item.quantity : 1) *
+          (typeof item.unit_price === 'number' ? item.unit_price : 0) *
+          100
+      ) / 100,
+    unit: 'each',
+    notes: `From receipt: ${result.supplier || 'unknown supplier'}`,
+  }));
+
+  const allItems = [...existingItems, ...newItems];
+
+  // Recalculate totals
+  const settings = existing.settings || {};
+  const vatRegistered = settings.vatRegistered ?? false;
+  const vatRate = settings.vatRate ?? 20;
+  const subtotal = allItems.reduce(
+    (sum: number, item: Record<string, unknown>) => sum + (Number(item.totalPrice) || 0),
+    0
+  );
+  const vatAmount = vatRegistered ? Math.round(subtotal * (vatRate / 100) * 100) / 100 : 0;
+  const total = Math.round((subtotal + vatAmount) * 100) / 100;
+
+  const { data, error } = await supabase
+    .from('quotes')
+    .update({
+      items: allItems,
+      subtotal: Math.round(subtotal * 100) / 100,
+      vat_amount: vatAmount,
+      total,
+    })
+    .eq('id', args.quote_id)
+    .select('id, quote_number, total, vat_amount')
+    .single();
+
+  if (error) throw new Error(`Failed to update quote with receipt items: ${error.message}`);
+
+  return {
+    quote_id: data.id,
+    quote_number: data.quote_number,
+    items_added: newItems.length,
+    new_total: data.total,
+    vat: data.vat_amount,
+    supplier: result.supplier || 'unknown',
+  };
 }
 
 export async function trackQuoteEmail(args: Record<string, unknown>, user: UserContext) {

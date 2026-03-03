@@ -36,6 +36,9 @@ export const config = {
 
   /** Default phone number for API key auth → JWT resolution */
   defaultPhone: process.env.DEFAULT_PHONE || '+447506026934',
+
+  /** Anthropic API key for vision analysis (Claude) */
+  anthropicApiKey: process.env.ANTHROPIC_API_KEY || '',
 } as const;
 
 /** Validate required config on startup */
