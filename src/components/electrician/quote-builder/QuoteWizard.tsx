@@ -381,16 +381,16 @@ export const QuoteWizard = ({
         },
         {
           name: 'client_email',
-          label: 'Email',
+          label: 'Email (optional)',
           type: 'email',
-          required: true,
+          required: false,
           currentValue: quote.client?.email,
         },
         {
           name: 'client_phone',
-          label: 'Phone',
+          label: 'Phone (optional)',
           type: 'tel',
-          required: true,
+          required: false,
           currentValue: quote.client?.phone,
         },
         {

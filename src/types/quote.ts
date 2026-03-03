@@ -47,8 +47,8 @@ export interface EquipmentItem {
 
 export interface QuoteClient {
   name: string;
-  email: string;
-  phone: string;
+  email?: string;
+  phone?: string;
   address: string;
   postcode: string;
   customerId?: string;

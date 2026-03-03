@@ -69,6 +69,14 @@ const QuoteActionsStep = ({ quote, onQuoteUpdate }: QuoteActionsStepProps) => {
   };
 
   const sendViaDocuSign = async () => {
+    if (!quote.client.email?.trim()) {
+      toast({
+        title: 'Client email required',
+        description: "Please add the client's email address before sending via DocuSign.",
+        variant: 'destructive',
+      });
+      return;
+    }
     setLoading(true);
     try {
       const { error } = await supabase.functions.invoke('docusign-create-envelope', {

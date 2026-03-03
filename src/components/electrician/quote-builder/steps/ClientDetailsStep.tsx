@@ -14,8 +14,8 @@ import { supabase } from '@/integrations/supabase/client';
 
 const clientSchema = z.object({
   name: z.string().min(1, 'Client name is required'),
-  email: z.string().email('Please enter a valid email address'),
-  phone: z.string().min(1, 'Phone number is required'),
+  email: z.union([z.string().email('Please enter a valid email address'), z.literal(''), z.undefined()]).optional(),
+  phone: z.string().optional(),
   address: z.string().min(1, 'Address is required'),
   postcode: z.string().min(1, 'Postcode is required'),
 });
@@ -185,7 +185,7 @@ export const ClientDetailsStep = ({ client, onUpdate, quoteId }: ClientDetailsSt
                       <Mail className="h-5 w-5 text-black" />
                     </div>
                     <div className="flex-1 min-w-0 text-left">
-                      <label className="text-[12px] text-white block mb-0.5">Email Address *</label>
+                      <label className="text-[12px] text-white block mb-0.5">Email Address (optional)</label>
                       <FormControl>
                         <input
                           {...field}
@@ -215,7 +215,7 @@ export const ClientDetailsStep = ({ client, onUpdate, quoteId }: ClientDetailsSt
                       <Phone className="h-5 w-5 text-black" />
                     </div>
                     <div className="flex-1 min-w-0 text-left">
-                      <label className="text-[12px] text-white block mb-0.5">Phone Number *</label>
+                      <label className="text-[12px] text-white block mb-0.5">Phone Number (optional)</label>
                       <FormControl>
                         <input
                           {...field}

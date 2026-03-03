@@ -19,7 +19,7 @@ import {
 } from '@/components/ui/alert-dialog';
 
 type CertificateContext = {
-  client: { name: string; email: string; phone: string; address: string; postcode: string };
+  client: { name: string; email?: string; phone?: string; address: string; postcode: string };
   jobDetails: { title: string; description: string; location: string };
   linkedCertificate?: {
     reportId: string;
@@ -31,7 +31,7 @@ type CertificateContext = {
 };
 
 type SiteVisitContext = {
-  client: { name: string; email: string; phone: string; address: string; postcode: string };
+  client: { name: string; email?: string; phone?: string; address: string; postcode: string };
   jobDetails: { title: string; description: string; location: string };
   materials?: Array<{
     id: string;
@@ -58,7 +58,7 @@ type MaterialsContext = {
     unit: string;
     notes?: string;
   }>;
-  client?: { name: string; email: string; phone: string; address: string; postcode: string };
+  client?: { name: string; email?: string; phone?: string; address: string; postcode: string };
   jobDetails?: { title: string; description: string; location: string };
 };
 
