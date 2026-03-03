@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { Button } from '@/components/ui/button';
 import { Switch } from '@/components/ui/switch';
 import {
   Select,
@@ -12,37 +11,27 @@ import { useNotifications } from '@/components/notifications/NotificationProvide
 import { usePushNotifications } from '@/hooks/usePushNotifications';
 import { useAuth } from '@/contexts/AuthContext';
 import { supabase } from '@/integrations/supabase/client';
-import SettingsSection from './SettingsSection';
-import SettingsRow from './SettingsRow';
 import { motion } from 'framer-motion';
-import {
-  Bell,
-  BellRing,
-  Mail,
-  MessageSquare,
-  Volume2,
-  VolumeX,
-  FileCheck,
-  Smartphone,
-  Send,
-  Loader2,
-  CheckCircle,
-  AlertTriangle,
-  GraduationCap,
-  Settings2,
-  Mic,
-} from 'lucide-react';
+import { Loader2 } from 'lucide-react';
 
-const containerVariants = {
+// Certificate types for default selection
+const CERTIFICATE_TYPES = [
+  { value: 'eicr', label: 'EICR' },
+  { value: 'eic', label: 'EIC' },
+  { value: 'minor_works', label: 'Minor Works' },
+  { value: 'domestic_eic', label: 'Domestic EIC' },
+];
+
+const sectionVariants = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
-    transition: { staggerChildren: 0.02, delayChildren: 0 },
+    transition: { staggerChildren: 0.04, delayChildren: 0 },
   },
 };
 
 const itemVariants = {
-  hidden: { opacity: 0, y: 12 },
+  hidden: { opacity: 0, y: 8 },
   visible: {
     opacity: 1,
     y: 0,
@@ -50,13 +39,50 @@ const itemVariants = {
   },
 };
 
-// Certificate types for default selection
-const CERTIFICATE_TYPES = [
-  { value: 'eicr', label: 'EICR (Electrical Installation Condition Report)' },
-  { value: 'eic', label: 'EIC (Electrical Installation Certificate)' },
-  { value: 'minor_works', label: 'Minor Works Certificate' },
-  { value: 'domestic_eic', label: 'Domestic EIC' },
-];
+/* ─── Inline sub-components ─── */
+
+const SectionLabel = ({ children }: { children: React.ReactNode }) => (
+  <p className="text-[11px] font-semibold text-white uppercase tracking-[0.08em] mb-1 mt-6 px-4">
+    {children}
+  </p>
+);
+
+const Divider = () => <div className="border-t border-white/[0.06] ml-16" />;
+
+interface ToggleRowProps {
+  icon: string;
+  iconBg: string;
+  label: string;
+  checked: boolean;
+  onCheckedChange: (v: boolean) => void;
+  disabled?: boolean;
+  switchClassName?: string;
+}
+
+const ToggleRow = ({
+  icon,
+  iconBg,
+  label,
+  checked,
+  onCheckedChange,
+  disabled,
+  switchClassName,
+}: ToggleRowProps) => (
+  <div className="flex items-center min-h-[48px] px-4 touch-manipulation">
+    <div
+      className={`w-8 h-8 rounded-lg ${iconBg} flex items-center justify-center flex-shrink-0 text-base`}
+    >
+      {icon}
+    </div>
+    <span className="text-[15px] font-medium text-white ml-3 flex-1">{label}</span>
+    <Switch
+      checked={checked}
+      onCheckedChange={onCheckedChange}
+      disabled={disabled}
+      className={switchClassName}
+    />
+  </div>
+);
 
 const PreferencesTab = () => {
   const { user } = useAuth();
@@ -87,6 +113,16 @@ const PreferencesTab = () => {
   // AI preferences
   const [aiSuggestionsEnabled, setAiSuggestionsEnabled] = useState(true);
 
+  // Derived
+  const channelStates = [
+    emailUpdates,
+    mentorMessages,
+    courseCompletions,
+    expiryAlerts,
+    billingAlerts,
+  ];
+  const activeCount = channelStates.filter(Boolean).length;
+
   // Send test notification
   const handleTestNotification = async () => {
     if (!user?.id) return;
@@ -108,10 +144,7 @@ const PreferencesTab = () => {
           type: 'error',
         });
       } else {
-        // Debug: log full response
         console.log('[Push Test] Response:', data);
-
-        // Determine the appropriate message based on what happened
         let title = 'Test Sent';
         let message = '';
         let notificationType: 'success' | 'error' | 'info' = 'success';
@@ -122,7 +155,8 @@ const PreferencesTab = () => {
           notificationType = 'success';
         } else if (data?.foundSubscriptions === false) {
           title = 'No Subscriptions';
-          message = `No active push subscriptions found. Try toggling push notifications off and on again.`;
+          message =
+            'No active push subscriptions found. Try toggling push notifications off and on again.';
           notificationType = 'info';
         } else if (data?.errors?.length > 0) {
           title = 'Send Failed';
@@ -134,10 +168,9 @@ const PreferencesTab = () => {
           message = `Response: ${JSON.stringify(data)}`;
           notificationType = 'info';
         }
-
         addNotification({ title, message, type: notificationType });
       }
-    } catch (err) {
+    } catch {
       addNotification({
         title: 'Test Failed',
         message: 'An error occurred whilst sending the test notification',
@@ -171,7 +204,6 @@ const PreferencesTab = () => {
             type: 'success',
           });
         }
-        // Note: subscribeToPush shows its own error toasts, so no need to show another on failure
       }
     } catch (err) {
       console.error('[Push Toggle] Error:', err);
@@ -209,230 +241,164 @@ const PreferencesTab = () => {
   };
 
   return (
-    <motion.div
-      variants={containerVariants}
-      initial="hidden"
-      animate="visible"
-      className="space-y-6"
-    >
-      {/* Notifications Section */}
-      <motion.div variants={itemVariants}>
-        <SettingsSection
-          title="Notifications"
-          icon={Bell}
-          iconBg="bg-amber-500/10"
-          iconColour="text-amber-400"
-          description="Control how you receive updates"
+    <motion.div variants={sectionVariants} initial="hidden" animate="visible" className="pb-8">
+      {/* ─── Notification summary row ─── */}
+      <motion.div variants={itemVariants} className="flex items-center justify-between px-4 pb-4">
+        <div className="flex items-center gap-2">
+          <div
+            className={`w-2 h-2 rounded-full ${
+              allMuted ? 'bg-red-400' : activeCount === 5 ? 'bg-green-400' : 'bg-amber-400'
+            }`}
+          />
+          <span className="text-[14px] font-medium text-white">
+            {allMuted ? 'All muted' : `${activeCount} of 5 active`}
+          </span>
+        </div>
+        <button
+          onClick={handleMuteAll}
+          className={`text-[13px] font-medium px-3 py-1 rounded-full border touch-manipulation transition-colors ${
+            allMuted ? 'border-red-400/40 text-red-400' : 'border-white/20 text-white'
+          }`}
         >
-          {/* Push Notifications - Primary */}
-          {isPushSupported && (
-            <div className="p-4 rounded-xl bg-gradient-to-br from-elec-yellow/10 to-purple-500/10 border border-elec-yellow/20">
-              <div className="flex items-center justify-between gap-4">
-                <div className="flex items-center gap-3 min-w-0">
-                  <div
-                    className={`w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0 ${
-                      isPushSubscribed
-                        ? 'bg-green-500/20 ring-2 ring-green-500/30'
-                        : 'bg-elec-yellow/20'
-                    }`}
-                  >
-                    {isPushLoading ? (
-                      <Loader2 className="h-6 w-6 text-elec-yellow animate-spin" />
-                    ) : isPushSubscribed ? (
-                      <BellRing className="h-6 w-6 text-green-400" />
-                    ) : (
-                      <Smartphone className="h-6 w-6 text-elec-yellow" />
-                    )}
-                  </div>
-                  <div className="min-w-0">
-                    <h3 className="text-base font-semibold text-foreground">Push Notifications</h3>
-                    <p className="text-sm text-muted-foreground">
-                      {isPushSubscribed
-                        ? 'Receive notifications when the app is closed'
-                        : 'Get notified about messages and updates'}
-                    </p>
-                  </div>
-                </div>
-                <Switch
-                  checked={isPushSubscribed}
-                  onCheckedChange={handlePushToggle}
-                  disabled={isPushLoading}
-                  className="data-[state=checked]:bg-green-500"
-                />
-              </div>
+          {allMuted ? 'Unmute All' : 'Mute All'}
+        </button>
+      </motion.div>
+
+      {/* ─── Push Notifications hero row ─── */}
+      {isPushSupported && (
+        <motion.div variants={itemVariants}>
+          <div className="flex items-center min-h-[56px] px-4 touch-manipulation">
+            <div className="relative w-10 h-10 rounded-xl bg-green-500/15 flex items-center justify-center flex-shrink-0">
+              <span className="text-xl">{isPushSubscribed ? '🔔' : '📱'}</span>
               {isPushSubscribed && (
-                <div className="mt-3 flex items-center gap-2">
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={handleTestNotification}
-                    disabled={isTestingSend}
-                    className="h-10 touch-manipulation active:scale-[0.98] border-white/20 hover:bg-white/5"
-                  >
-                    {isTestingSend ? (
-                      <>
-                        <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                        Sending...
-                      </>
-                    ) : (
-                      <>
-                        <Send className="h-4 w-4 mr-2" />
-                        Send Test
-                      </>
-                    )}
-                  </Button>
-                </div>
+                <span className="absolute -top-0.5 -right-0.5 w-2.5 h-2.5 rounded-full bg-green-400 animate-pulse" />
               )}
             </div>
-          )}
-
-          {/* Mute All */}
-          <div className="flex justify-end">
-            <Button
-              variant="outline"
-              size="sm"
-              className={`h-10 touch-manipulation active:scale-[0.98] border-white/20 ${allMuted ? 'bg-red-500/10 border-red-500/30 text-red-400' : 'hover:bg-white/5'}`}
-              onClick={handleMuteAll}
-            >
-              {allMuted ? (
-                <>
-                  <VolumeX className="h-4 w-4 mr-2" />
-                  Unmute All
-                </>
-              ) : (
-                <>
-                  <Volume2 className="h-4 w-4 mr-2" />
-                  Mute All
-                </>
+            <div className="ml-3 flex-1 min-w-0">
+              <span className="text-[15px] font-medium text-white block">Push Notifications</span>
+              {isPushSubscribed && (
+                <span className="text-[10px] font-semibold text-green-400 uppercase tracking-wider">
+                  Active
+                </span>
               )}
-            </Button>
+            </div>
+            {isPushLoading ? (
+              <Loader2 className="h-5 w-5 text-white animate-spin" />
+            ) : (
+              <Switch
+                checked={isPushSubscribed}
+                onCheckedChange={handlePushToggle}
+                disabled={isPushLoading}
+                className="data-[state=checked]:bg-green-500"
+              />
+            )}
           </div>
+          {isPushSubscribed && (
+            <div className="pl-[68px] pb-2">
+              <button
+                onClick={handleTestNotification}
+                disabled={isTestingSend}
+                className="text-[13px] text-white underline underline-offset-2 touch-manipulation disabled:opacity-50"
+              >
+                {isTestingSend ? 'Sending...' : 'Send Test Notification'}
+              </button>
+            </div>
+          )}
+        </motion.div>
+      )}
 
-          <SettingsRow
-            icon={Mail}
-            iconBg="bg-blue-500/10"
-            iconColour="text-blue-400"
-            title="Email Updates"
-            description="Receive important updates via email"
-          >
-            <Switch checked={emailUpdates} onCheckedChange={setEmailUpdates} disabled={allMuted} />
-          </SettingsRow>
-
-          <SettingsRow
-            icon={MessageSquare}
-            iconBg="bg-green-500/10"
-            iconColour="text-green-400"
-            title="Messages"
-            description="Notifications for new messages"
-          >
-            <Switch
-              checked={mentorMessages}
-              onCheckedChange={setMentorMessages}
-              disabled={allMuted}
-            />
-          </SettingsRow>
-
-          <SettingsRow
-            icon={GraduationCap}
-            iconBg="bg-purple-500/10"
-            iconColour="text-purple-400"
-            title="Course Completions"
-            description="Celebrate when you complete courses"
-          >
-            <Switch
-              checked={courseCompletions}
-              onCheckedChange={setCourseCompletions}
-              disabled={allMuted}
-            />
-          </SettingsRow>
-
-          <SettingsRow
-            icon={AlertTriangle}
-            iconBg="bg-amber-500/10"
-            iconColour="text-amber-400"
-            title="Expiry Alerts"
-            description="Warnings when certifications expire"
-          >
-            <Switch checked={expiryAlerts} onCheckedChange={setExpiryAlerts} disabled={allMuted} />
-          </SettingsRow>
-
-          <SettingsRow
-            icon={Bell}
-            iconBg="bg-emerald-500/10"
-            iconColour="text-emerald-400"
-            title="Billing Alerts"
-            description="Payment and subscription updates"
-          >
-            <Switch
-              checked={billingAlerts}
-              onCheckedChange={setBillingAlerts}
-              disabled={allMuted}
-            />
-          </SettingsRow>
-        </SettingsSection>
+      {/* ─── CHANNELS ─── */}
+      <motion.div variants={itemVariants}>
+        <SectionLabel>Channels</SectionLabel>
+        <div className={allMuted ? 'opacity-40' : undefined}>
+          <ToggleRow
+            icon="📧"
+            iconBg="bg-blue-500/15"
+            label="Email Updates"
+            checked={emailUpdates}
+            onCheckedChange={setEmailUpdates}
+            disabled={allMuted}
+          />
+          <Divider />
+          <ToggleRow
+            icon="💬"
+            iconBg="bg-green-500/15"
+            label="Messages"
+            checked={mentorMessages}
+            onCheckedChange={setMentorMessages}
+            disabled={allMuted}
+          />
+          <Divider />
+          <ToggleRow
+            icon="🎓"
+            iconBg="bg-purple-500/15"
+            label="Course Completions"
+            checked={courseCompletions}
+            onCheckedChange={setCourseCompletions}
+            disabled={allMuted}
+          />
+          <Divider />
+          <ToggleRow
+            icon="⚠️"
+            iconBg="bg-amber-500/15"
+            label="Expiry Alerts"
+            checked={expiryAlerts}
+            onCheckedChange={setExpiryAlerts}
+            disabled={allMuted}
+          />
+          <Divider />
+          <ToggleRow
+            icon="🔔"
+            iconBg="bg-emerald-500/15"
+            label="Billing Alerts"
+            checked={billingAlerts}
+            onCheckedChange={setBillingAlerts}
+            disabled={allMuted}
+          />
+        </div>
       </motion.div>
 
-      {/* Certificate Preferences */}
+      {/* ─── CERTIFICATES ─── */}
       <motion.div variants={itemVariants}>
-        <SettingsSection
-          title="Certificates"
-          icon={FileCheck}
-          iconBg="bg-green-500/10"
-          iconColour="text-green-400"
-          description="Default settings for electrical certificates"
-        >
-          <SettingsRow
-            icon={FileCheck}
-            iconBg="bg-blue-500/10"
-            iconColour="text-blue-400"
-            title="Default Certificate Type"
-            description="Pre-selected when creating new certificates"
-          >
-            <Select value={defaultCertType} onValueChange={setDefaultCertType}>
-              <SelectTrigger className="w-full sm:w-56">
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent>
-                {CERTIFICATE_TYPES.map((cert) => (
-                  <SelectItem key={cert.value} value={cert.value}>
-                    {cert.label}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </SettingsRow>
-
-          <SettingsRow
-            icon={CheckCircle}
-            iconBg="bg-purple-500/10"
-            iconColour="text-purple-400"
-            title="Auto-Save"
-            description="Automatically save certificate drafts"
-          >
-            <Switch checked={autoSaveEnabled} onCheckedChange={setAutoSaveEnabled} />
-          </SettingsRow>
-        </SettingsSection>
+        <SectionLabel>Certificates</SectionLabel>
+        <div className="flex items-center min-h-[48px] px-4 touch-manipulation">
+          <div className="w-8 h-8 rounded-lg bg-blue-500/15 flex items-center justify-center flex-shrink-0 text-base">
+            📄
+          </div>
+          <span className="text-[15px] font-medium text-white ml-3 flex-1">Default Type</span>
+          <Select value={defaultCertType} onValueChange={setDefaultCertType}>
+            <SelectTrigger className="w-auto min-w-[100px] h-9 border-0 bg-white/[0.06] text-white text-[14px] focus:ring-0">
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>
+              {CERTIFICATE_TYPES.map((cert) => (
+                <SelectItem key={cert.value} value={cert.value}>
+                  {cert.label}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
+        <Divider />
+        <ToggleRow
+          icon="💾"
+          iconBg="bg-purple-500/15"
+          label="Auto-Save Drafts"
+          checked={autoSaveEnabled}
+          onCheckedChange={setAutoSaveEnabled}
+        />
       </motion.div>
 
-      {/* AI Assistant */}
+      {/* ─── ASSISTANT ─── */}
       <motion.div variants={itemVariants}>
-        <SettingsSection
-          title="AI Assistant"
-          icon={Mic}
-          iconBg="bg-pink-500/10"
-          iconColour="text-pink-400"
-          description="Voice and AI features"
-        >
-          <SettingsRow
-            icon={Settings2}
-            iconBg="bg-cyan-500/10"
-            iconColour="text-cyan-400"
-            title="AI Suggestions"
-            description="Get smart suggestions whilst working"
-          >
-            <Switch checked={aiSuggestionsEnabled} onCheckedChange={setAiSuggestionsEnabled} />
-          </SettingsRow>
-        </SettingsSection>
+        <SectionLabel>Assistant</SectionLabel>
+        <ToggleRow
+          icon="✨"
+          iconBg="bg-pink-500/15"
+          label="Smart Suggestions"
+          checked={aiSuggestionsEnabled}
+          onCheckedChange={setAiSuggestionsEnabled}
+        />
       </motion.div>
     </motion.div>
   );
