@@ -30,6 +30,7 @@ const ElectricalMaterials = lazy(() => import('@/pages/electrician/ElectricalMat
 const MaterialsMarketplace = lazy(() => import('@/pages/electrician/MaterialsMarketplace'));
 const MaterialsLists = lazy(() => import('@/pages/electrician/MaterialsLists'));
 const PriceBook = lazy(() => import('@/pages/electrician/PriceBook'));
+const RateCard = lazy(() => import('@/pages/electrician/RateCard'));
 const ToolsMarketplace = lazy(() => import('@/pages/electrician/ToolsMarketplace'));
 const LivePricingHub = lazy(() => import('@/pages/electrician/LivePricingHub'));
 const ElectricalHub = lazy(() => import('@/pages/ElectricalHub'));
@@ -222,6 +223,14 @@ const ElectricianHubRoutes = () => (
       element={
         <LazyRoute>
           <PriceBook />
+        </LazyRoute>
+      }
+    />
+    <Route
+      path="rate-card"
+      element={
+        <LazyRoute>
+          <RateCard />
         </LazyRoute>
       }
     />

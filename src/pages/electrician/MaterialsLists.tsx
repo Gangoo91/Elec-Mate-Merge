@@ -478,6 +478,16 @@ export default function MaterialsLists() {
               </div>
             </div>
             <div className="flex items-center gap-2">
+              <Link to="/electrician/rate-card">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="h-10 touch-manipulation border-white/20 text-white hover:bg-white/5"
+                >
+                  <FileText className="h-4 w-4 mr-1.5" />
+                  Rate Card
+                </Button>
+              </Link>
               <Link to="/electrician/price-book">
                 <Button
                   variant="outline"

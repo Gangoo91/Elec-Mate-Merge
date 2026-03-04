@@ -28,6 +28,7 @@ import {
   BookOpen,
   Layers,
   ChevronUp,
+  Receipt,
 } from 'lucide-react';
 import { QuoteItem, JobTemplate } from '@/types/quote';
 import { JobTemplates } from '../JobTemplates';
@@ -45,6 +46,7 @@ import { toast } from '@/hooks/use-toast';
 import { useCompanyProfile } from '@/hooks/useCompanyProfile';
 import { useMaterialsLists, MaterialsListItem } from '@/hooks/useMaterialsLists';
 import { usePriceBookBundles } from '@/hooks/usePriceBookBundles';
+import { usePriceList } from '@/hooks/usePriceList';
 import { useInvoiceScanner } from '@/hooks/useInvoiceScanner';
 import { InvoiceScannerSheet } from '@/components/electrician/invoice-builder/InvoiceScannerSheet';
 import { InvoiceScanResults } from '@/components/electrician/invoice-builder/InvoiceScanResults';
@@ -80,6 +82,11 @@ export const EnhancedQuoteItemsStep = ({
   const { bundles, bundleTotal } = usePriceBookBundles();
   const [showBundles, setShowBundles] = useState(false);
   const [expandedBundle, setExpandedBundle] = useState<string | null>(null);
+
+  // Rate card
+  const { items: rateCardItems } = usePriceList();
+  const [showRateCard, setShowRateCard] = useState(false);
+  const [rateCardSearch, setRateCardSearch] = useState('');
 
   const pricedBookItems = useMemo(() => {
     const result: { item: MaterialsListItem; listName: string }[] = [];
@@ -1132,6 +1139,101 @@ export const EnhancedQuoteItemsStep = ({
             )}
           </div>
         </div>
+      )}
+
+      {/* Rate Card Section */}
+      {rateCardItems.length > 0 && (
+        !showRateCard ? (
+          <button
+            type="button"
+            onClick={() => setShowRateCard(true)}
+            className="w-full flex items-center justify-between p-4 rounded-2xl bg-white/[0.03] border border-dashed border-white/[0.1] touch-manipulation active:bg-white/[0.05] transition-colors"
+          >
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-xl bg-elec-yellow/20 flex items-center justify-center">
+                <Receipt className="h-5 w-5 text-elec-yellow" />
+              </div>
+              <div className="text-left">
+                <p className="text-[14px] font-medium text-white">My Rate Card</p>
+                <p className="text-[12px] text-gray-400">
+                  {rateCardItems.length} saved {rateCardItems.length === 1 ? 'rate' : 'rates'}
+                </p>
+              </div>
+            </div>
+            <ChevronRight className="h-5 w-5 text-gray-400" />
+          </button>
+        ) : (
+          <div className="rounded-2xl bg-white/[0.03] border border-white/[0.06] overflow-hidden">
+            <div className="flex items-center justify-between p-4 border-b border-white/[0.06]">
+              <h3 className="font-semibold text-white flex items-center gap-2">
+                <Receipt className="h-4 w-4 text-elec-yellow" />
+                My Rate Card
+              </h3>
+              <button
+                type="button"
+                onClick={() => setShowRateCard(false)}
+                className="text-[14px] text-elec-yellow font-medium touch-manipulation"
+              >
+                Close
+              </button>
+            </div>
+            <div className="p-3">
+              <div className="relative mb-3">
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
+                <input
+                  type="text"
+                  placeholder="Search rates..."
+                  value={rateCardSearch}
+                  onChange={(e) => setRateCardSearch(e.target.value)}
+                  className="w-full h-10 pl-10 pr-3 bg-white/[0.03] border border-white/[0.08] rounded-xl text-sm text-white placeholder:text-gray-500 focus:outline-none focus:border-elec-yellow/50 touch-manipulation"
+                />
+              </div>
+              <div className="max-h-[300px] overflow-y-auto space-y-2">
+                {rateCardItems
+                  .filter(item =>
+                    !rateCardSearch.trim() ||
+                    item.name.toLowerCase().includes(rateCardSearch.toLowerCase())
+                  )
+                  .map((item) => (
+                    <button
+                      key={item.id}
+                      type="button"
+                      onClick={() => {
+                        onAdd({
+                          description: item.name,
+                          quantity: 1,
+                          unit: item.unit,
+                          unitPrice: item.unit_price,
+                          category: item.category === 'labour' || item.category === 'call-out'
+                            ? 'labour'
+                            : item.category === 'materials'
+                              ? 'materials'
+                              : 'manual',
+                          notes: item.description || undefined,
+                        });
+                        toast({ title: 'Added to quote', description: item.name });
+                      }}
+                      className="w-full p-3 rounded-xl text-left bg-white/[0.02] border border-white/[0.04] active:bg-white/[0.06] transition-all touch-manipulation active:scale-[0.99]"
+                    >
+                      <div className="flex justify-between items-start">
+                        <div className="flex-1 min-w-0 mr-2">
+                          <p className="font-medium text-[14px] text-white line-clamp-1">{item.name}</p>
+                          {item.description && (
+                            <p className="text-[12px] text-gray-500 line-clamp-1 mt-0.5">{item.description}</p>
+                          )}
+                        </div>
+                        <p className="font-bold text-[15px] text-elec-yellow whitespace-nowrap flex-shrink-0">
+                          £{item.unit_price.toFixed(2)}
+                        </p>
+                      </div>
+                      <p className="text-[12px] text-gray-500 mt-0.5">per {item.unit}</p>
+                    </button>
+                  ))
+                }
+              </div>
+            </div>
+          </div>
+        )
       )}
 
       {/* Bundles Section */}

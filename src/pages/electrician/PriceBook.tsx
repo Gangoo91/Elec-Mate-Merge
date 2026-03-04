@@ -1,5 +1,5 @@
 import { useState, useMemo, useCallback } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import {
   ArrowLeft,
   BookOpen,
@@ -17,6 +17,7 @@ import {
   Trash2,
   X,
   Check,
+  Receipt,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -390,6 +391,20 @@ export default function PriceBook() {
             </button>
           )}
         </div>
+      </div>
+
+      {/* Rate Card cross-link */}
+      <div className="container mx-auto px-4 pt-3">
+        <Link to="/electrician/rate-card">
+          <div className="flex items-center justify-between p-3 rounded-xl bg-white/[0.02] border border-white/[0.05] touch-manipulation active:bg-white/[0.04] mb-3">
+            <div className="flex items-center gap-2">
+              <Receipt className="h-4 w-4 text-gray-400" />
+              <span className="text-sm text-gray-400">My Rate Card</span>
+              <span className="text-xs text-gray-600">— fixed prices per job</span>
+            </div>
+            <ChevronRight className="h-4 w-4 text-gray-600" />
+          </div>
+        </Link>
       </div>
 
       {/* Tabs */}
