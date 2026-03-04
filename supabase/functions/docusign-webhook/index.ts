@@ -49,12 +49,14 @@ serve(async (req) => {
       docusign_status: status,
     };
 
-    switch (status?.toLowerCase()) {
-      case 'completed':
-        // Get signer information from webhook
-        const recipients = webhookData.data?.envelopeSummary?.recipients;
-        const signer = recipients?.signers?.[0];
+    const recipients = webhookData.data?.envelopeSummary?.recipients;
+    const signer = recipients?.signers?.[0];
+    let shouldSendPush = false;
+    let pushTitle = '';
+    let pushBody = '';
 
+    switch (status?.toLowerCase()) {
+      case 'completed': {
         updateData = {
           ...updateData,
           acceptance_status: 'accepted',
@@ -64,21 +66,31 @@ serve(async (req) => {
           accepted_by_email: signer?.email || 'Unknown',
           status: 'completed',
         };
-
+        const clientName = signer?.name || (quote.client_data as any)?.name || 'Your client';
+        const amount = quote.total ? ` for £${Number(quote.total).toFixed(2)}` : '';
+        pushTitle = '✅ Quote accepted';
+        pushBody = `${clientName} signed your quote${amount}`;
+        shouldSendPush = true;
         console.log(`Quote ${quote.id} accepted via DocuSign`);
         break;
+      }
 
       case 'declined':
-      case 'voided':
+      case 'voided': {
         updateData = {
           ...updateData,
           acceptance_status: 'rejected',
           accepted_at: new Date().toISOString(),
           status: 'rejected',
         };
-
+        const clientName = signer?.name || (quote.client_data as any)?.name || 'Your client';
+        const amount = quote.total ? ` for £${Number(quote.total).toFixed(2)}` : '';
+        pushTitle = '❌ Quote declined';
+        pushBody = `${clientName} declined your quote${amount}`;
+        shouldSendPush = true;
         console.log(`Quote ${quote.id} rejected/voided via DocuSign`);
         break;
+      }
 
       case 'sent':
       case 'delivered':
@@ -102,6 +114,28 @@ serve(async (req) => {
     }
 
     console.log(`Successfully updated quote ${quote.id} with DocuSign status: ${status}`);
+
+    // Send push notification to the electrician — non-critical
+    if (shouldSendPush && quote.user_id) {
+      try {
+        await supabase.functions.invoke('send-push-notification', {
+          body: {
+            userId: quote.user_id,
+            title: pushTitle,
+            body: pushBody,
+            type: 'quote',
+            data: {
+              quoteId: quote.id,
+              action: status?.toLowerCase() === 'completed' ? 'accepted' : 'rejected',
+              via: 'docusign',
+            },
+          },
+        });
+        console.log(`Push notification sent for quote ${quote.id}`);
+      } catch (pushErr) {
+        console.error('Push notification error (non-critical):', pushErr);
+      }
+    }
 
     return new Response('OK', {
       status: 200,
