@@ -760,7 +760,7 @@ export default function PublicElecIdView() {
                   <span className="font-bold text-white text-sm">Are you an electrician?</span>
                 </div>
                 <p className="text-slate-400 text-sm leading-relaxed mb-4">
-                  Build your own verified Elec-ID profile — share your credentials with employers and homeowners in seconds.
+                  Build your own verified Elec-ID profile — share your credentials with employers and homeowners in seconds. 7-day free trial, no card required.
                 </p>
                 <a
                   href="https://elec-mate.com"
@@ -769,7 +769,7 @@ export default function PublicElecIdView() {
                   className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-yellow-500 hover:bg-yellow-400 text-[#0a0a14] text-sm font-bold transition-all touch-manipulation"
                 >
                   <Smartphone className="h-4 w-4" />
-                  Get Elec-Mate free
+                  Start free trial
                   <ChevronRight className="h-4 w-4" />
                 </a>
               </div>
