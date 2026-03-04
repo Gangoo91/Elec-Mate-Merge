@@ -9,11 +9,17 @@ import { getInstallationMethodFactor } from '@/lib/calculators/bs7671-data/insta
 import { CableType } from '@/lib/calculators/bs7671-data/cableCapacities';
 
 export const calculateCableSelection = (planData: InstallPlanDataV2): CalculationResult => {
-  // Calculate design current
+  // Calculate design current.
+  // Single phase in the UK is always 230V (line-to-neutral). If the voltage
+  // stored on the plan is 400V but phases is 'single', correct it here as a
+  // defensive fallback — the primary fix is in useAIDesigner.ts.
+  const effectiveVoltage =
+    planData.phases === 'single' && planData.voltage > 230 ? 230 : planData.voltage;
+
   const designCurrent =
     planData.phases === 'three'
-      ? planData.totalLoad / (Math.sqrt(3) * planData.voltage * (planData.powerFactor || 0.85))
-      : planData.totalLoad / planData.voltage;
+      ? planData.totalLoad / (Math.sqrt(3) * effectiveVoltage * (planData.powerFactor || 0.85))
+      : planData.totalLoad / effectiveVoltage;
 
   // Intelligent cable type selection based on installation context
   const cableSelection = selectOptimalCableType({

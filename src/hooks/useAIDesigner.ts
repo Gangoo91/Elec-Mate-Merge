@@ -453,8 +453,14 @@ export const useAIDesigner = () => {
           type: 'main-switch',
           mainSwitchRating: inputs.mainSwitchRating || 100,
           incomingSupply: {
-            voltage: data.supply?.voltage || inputs.voltage || 230,
+            // Determine phases first, then enforce correct voltage.
+            // The AI sometimes returns 400V for single-phase supplies (three-phase
+            // line voltage). Single phase in the UK is always 230V (line-to-neutral).
             phases: data.supply?.phases || inputs.phases || 'single',
+            voltage:
+              (data.supply?.phases || inputs.phases || 'single') === 'single'
+                ? 230
+                : data.supply?.voltage || inputs.voltage || 400,
             incomingPFC: (data.supply?.pfc || inputs.pscc || 3500) * 1000,
             Ze: data.supply?.ze || inputs.ze || 0.35,
             earthingSystem: data.supply?.earthingSystem || inputs.earthingSystem || 'TN-C-S',
