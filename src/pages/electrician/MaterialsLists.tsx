@@ -49,6 +49,7 @@ export default function MaterialsLists() {
     deleteList,
     removeItem,
     updateItemQuantity,
+    updateItemPrice,
     parseTextToItems,
     addItem,
   } = useMaterialsLists();
@@ -63,6 +64,8 @@ export default function MaterialsLists() {
   const [pasteSheetOpen, setPasteSheetOpen] = useState(false);
   const [pasteText, setPasteText] = useState('');
   const [parsing, setParsing] = useState(false);
+  const [editingPriceId, setEditingPriceId] = useState<string | null>(null);
+  const [priceInput, setPriceInput] = useState('');
 
   // Keep selectedList in sync with lists state
   const activeList = selectedList ? lists.find((l) => l.id === selectedList.id) || null : null;
@@ -260,10 +263,53 @@ export default function MaterialsLists() {
               <div className="flex-1 min-w-0">
                 <p className="text-sm font-medium text-white line-clamp-2">{item.name}</p>
                 <div className="flex items-center gap-2 mt-1">
-                  {item.estimated_price && (
-                    <span className="text-xs text-elec-yellow font-semibold">
-                      £{(item.estimated_price * item.quantity).toFixed(2)}
-                    </span>
+                  {editingPriceId === item.id ? (
+                    <div className="flex items-center gap-1">
+                      <span className="text-xs text-elec-yellow">£</span>
+                      <input
+                        type="text"
+                        inputMode="decimal"
+                        step="0.01"
+                        autoFocus
+                        value={priceInput}
+                        onChange={(e) => {
+                          const val = e.target.value;
+                          if (val === '' || /^\d*\.?\d*$/.test(val)) setPriceInput(val);
+                        }}
+                        onBlur={() => {
+                          const parsed = parseFloat(priceInput);
+                          if (activeList) {
+                            updateItemPrice(
+                              activeList.id,
+                              item.id,
+                              isNaN(parsed) || parsed <= 0 ? undefined : parsed
+                            );
+                          }
+                          setEditingPriceId(null);
+                        }}
+                        onKeyDown={(e) => {
+                          if (e.key === 'Enter') (e.target as HTMLInputElement).blur();
+                          if (e.key === 'Escape') setEditingPriceId(null);
+                        }}
+                        className="w-20 h-7 text-xs bg-[#1a1a1e] border border-elec-yellow/40 rounded px-1.5 text-elec-yellow font-semibold touch-manipulation focus:outline-none focus:ring-1 focus:ring-elec-yellow/50"
+                      />
+                    </div>
+                  ) : (
+                    <button
+                      onClick={() => {
+                        setEditingPriceId(item.id);
+                        setPriceInput(item.estimated_price ? item.estimated_price.toFixed(2) : '');
+                      }}
+                      className="text-xs font-semibold touch-manipulation"
+                    >
+                      {item.estimated_price ? (
+                        <span className="text-elec-yellow">
+                          £{(item.estimated_price * item.quantity).toFixed(2)}
+                        </span>
+                      ) : (
+                        <span className="text-gray-500">Set price</span>
+                      )}
+                    </button>
                   )}
                   {item.supplier && <span className="text-xs text-white">{item.supplier}</span>}
                   {!item.matched && <span className="text-xs text-orange-400">Unmatched</span>}

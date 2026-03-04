@@ -25,6 +25,7 @@ import {
   PoundSterling,
   Hash,
   Scan,
+  BookOpen,
 } from 'lucide-react';
 import { QuoteItem, JobTemplate } from '@/types/quote';
 import { JobTemplates } from '../JobTemplates';
@@ -40,6 +41,7 @@ import { supabase } from '@/integrations/supabase/client';
 import { useDebounce } from '@/hooks/useDebounce';
 import { toast } from '@/hooks/use-toast';
 import { useCompanyProfile } from '@/hooks/useCompanyProfile';
+import { useMaterialsLists, MaterialsListItem } from '@/hooks/useMaterialsLists';
 import { useInvoiceScanner } from '@/hooks/useInvoiceScanner';
 import { InvoiceScannerSheet } from '@/components/electrician/invoice-builder/InvoiceScannerSheet';
 import { InvoiceScanResults } from '@/components/electrician/invoice-builder/InvoiceScanResults';
@@ -65,6 +67,27 @@ export const EnhancedQuoteItemsStep = ({
 }: EnhancedQuoteItemsStepProps) => {
   // Get user's company profile for custom worker rates
   const { companyProfile } = useCompanyProfile();
+
+  // Price Book data
+  const { lists: materialsLists } = useMaterialsLists();
+  const [priceBookSearch, setPriceBookSearch] = useState('');
+  const [showPriceBook, setShowPriceBook] = useState(false);
+
+  const pricedBookItems = useMemo(() => {
+    const result: { item: MaterialsListItem; listName: string }[] = [];
+    for (const list of materialsLists) {
+      for (const item of list.items) {
+        if (item.estimated_price != null && item.estimated_price > 0) {
+          result.push({ item, listName: list.name });
+        }
+      }
+    }
+    if (priceBookSearch.trim()) {
+      const q = priceBookSearch.toLowerCase();
+      return result.filter((p) => p.item.name.toLowerCase().includes(q));
+    }
+    return result;
+  }, [materialsLists, priceBookSearch]);
 
   // Calculate personalised worker rates based on user's saved worker_rates or fallback to hourly_rate
   const workerTypes = useMemo(() => {
@@ -1002,6 +1025,103 @@ export const EnhancedQuoteItemsStep = ({
           </div>
           <div className="p-4">
             <JobTemplates onSelectTemplate={handleTemplateSelect} />
+          </div>
+        </div>
+      )}
+
+      {/* Price Book Section */}
+      {!showPriceBook ? (
+        <button
+          type="button"
+          onClick={() => setShowPriceBook(true)}
+          className="w-full flex items-center justify-between p-4 rounded-2xl bg-white/[0.03] border border-dashed border-white/[0.1] touch-manipulation active:bg-white/[0.05] transition-colors"
+        >
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-xl bg-elec-yellow/20 flex items-center justify-center">
+              <BookOpen className="h-5 w-5 text-elec-yellow" />
+            </div>
+            <div className="text-left">
+              <p className="text-[14px] font-medium text-white">My Price Book</p>
+              <p className="text-[12px] text-gray-400">
+                {pricedBookItems.length} saved {pricedBookItems.length === 1 ? 'item' : 'items'}
+              </p>
+            </div>
+          </div>
+          <ChevronRight className="h-5 w-5 text-gray-400" />
+        </button>
+      ) : (
+        <div className="rounded-2xl bg-white/[0.03] border border-white/[0.06] overflow-hidden">
+          <div className="flex items-center justify-between p-4 border-b border-white/[0.06]">
+            <h3 className="font-semibold text-white flex items-center gap-2">
+              <BookOpen className="h-4 w-4 text-elec-yellow" />
+              My Price Book
+            </h3>
+            <button
+              type="button"
+              onClick={() => setShowPriceBook(false)}
+              className="text-[14px] text-elec-yellow font-medium touch-manipulation"
+            >
+              Close
+            </button>
+          </div>
+          <div className="p-3">
+            <div className="relative mb-3">
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
+              <input
+                type="text"
+                placeholder="Search price book..."
+                value={priceBookSearch}
+                onChange={(e) => setPriceBookSearch(e.target.value)}
+                className="w-full h-10 pl-10 pr-3 bg-white/[0.03] border border-white/[0.08] rounded-xl text-sm text-white placeholder:text-gray-500 focus:outline-none focus:border-elec-yellow/50 touch-manipulation"
+              />
+            </div>
+            {pricedBookItems.length === 0 ? (
+              <p className="text-sm text-gray-500 text-center py-6">
+                {priceBookSearch ? 'No matching items' : 'No priced items in your lists yet.'}
+              </p>
+            ) : (
+              <div className="max-h-[300px] overflow-y-auto space-y-2">
+                {pricedBookItems.map((p) => (
+                  <button
+                    key={`pb-${p.item.id}`}
+                    type="button"
+                    onClick={() => {
+                      onAdd({
+                        description: p.item.name,
+                        quantity: p.item.quantity || 1,
+                        unit: p.item.unit || 'each',
+                        unitPrice: p.item.estimated_price || 0,
+                        category: 'materials',
+                        notes: p.item.supplier ? `Supplier: ${p.item.supplier}` : undefined,
+                      });
+                      toast({
+                        title: 'Added to quote',
+                        description: p.item.name,
+                      });
+                    }}
+                    className="w-full p-3 rounded-xl text-left bg-white/[0.02] border border-white/[0.04] active:bg-white/[0.06] transition-all touch-manipulation active:scale-[0.99]"
+                  >
+                    <div className="flex justify-between items-start">
+                      <p className="font-medium text-[14px] text-white line-clamp-1 flex-1 mr-2">
+                        {p.item.name}
+                      </p>
+                      <p className="font-bold text-[15px] text-elec-yellow whitespace-nowrap">
+                        £{p.item.estimated_price?.toFixed(2)}
+                      </p>
+                    </div>
+                    <div className="flex items-center gap-2 mt-0.5">
+                      <span className="text-[12px] text-gray-400">
+                        per {p.item.unit || 'each'}
+                      </span>
+                      {p.item.supplier && (
+                        <span className="text-[12px] text-gray-500">{p.item.supplier}</span>
+                      )}
+                      <span className="text-[10px] text-gray-600 ml-auto">{p.listName}</span>
+                    </div>
+                  </button>
+                ))}
+              </div>
+            )}
           </div>
         </div>
       )}

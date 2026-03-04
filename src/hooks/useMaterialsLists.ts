@@ -283,6 +283,50 @@ export function useMaterialsLists() {
     [toast]
   );
 
+  // Update item price
+  const updateItemPrice = useCallback(
+    async (listId: string, itemId: string, price: number | undefined) => {
+      try {
+        // Fetch fresh list from DB to avoid stale closure issues
+        const { data: currentList, error: fetchError } = await (supabase as any)
+          .from('materials_lists')
+          .select('*')
+          .eq('id', listId)
+          .single();
+
+        if (fetchError || !currentList) return;
+
+        const existingItems = (currentList.items || []) as MaterialsListItem[];
+        const updatedItems = existingItems.map((i) =>
+          i.id === itemId ? { ...i, estimated_price: price } : i
+        );
+
+        const { error } = await (supabase as any)
+          .from('materials_lists')
+          .update({ items: updatedItems })
+          .eq('id', listId);
+
+        if (error) throw error;
+
+        setLists((prev) =>
+          prev.map((l) =>
+            l.id === listId
+              ? { ...l, items: updatedItems, updated_at: new Date().toISOString() }
+              : l
+          )
+        );
+      } catch (err) {
+        console.error('Failed to update price:', err);
+        toast({
+          title: 'Error',
+          description: 'Could not update price.',
+          variant: 'destructive',
+        });
+      }
+    },
+    [toast]
+  );
+
   // Check if a product is saved in any list
   const isProductSaved = useCallback(
     (productId: string): boolean => {
@@ -299,6 +343,7 @@ export function useMaterialsLists() {
     addItem,
     removeItem,
     updateItemQuantity,
+    updateItemPrice,
     parseTextToItems,
     isProductSaved,
     refetch: fetchLists,
