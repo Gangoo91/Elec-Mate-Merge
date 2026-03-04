@@ -255,7 +255,7 @@ serve(async (req: Request) => {
 
         let quotesQuery = supabase
           .from('quotes')
-          .select('id, total, status, acceptance_status, invoice_status, invoice_number', {
+          .select('id, total, status, acceptance_status, invoice_status, invoice_number, invoice_raised', {
             count: 'exact',
           });
 
@@ -270,8 +270,8 @@ serve(async (req: Request) => {
           break;
         }
 
-        const quotes = allData.filter((d) => !d.invoice_number);
-        const invoices = allData.filter((d) => d.invoice_number);
+        const quotes = allData.filter((d) => !d.invoice_raised);
+        const invoices = allData.filter((d) => d.invoice_raised);
 
         const pendingQuotes = quotes.filter(
           (q) => q.status === 'sent' && !q.acceptance_status
@@ -418,8 +418,8 @@ serve(async (req: Request) => {
           break;
         }
 
-        // Find the quote
-        let query = supabase.from('quotes').select('*');
+        // Find the quote — must be invoice_raised = false to avoid returning invoices
+        let query = supabase.from('quotes').select('*').is('invoice_raised', false);
         if (userId) query = query.eq('user_id', userId);
 
         if (quoteId) {
@@ -487,8 +487,8 @@ serve(async (req: Request) => {
           break;
         }
 
-        // Find the invoice (quotes table with invoice_number set)
-        let invoiceQuery = supabase.from('quotes').select('*').not('invoice_number', 'is', null);
+        // Find the invoice — must be invoice_raised = true to avoid returning quotes
+        let invoiceQuery = supabase.from('quotes').select('*').eq('invoice_raised', true);
 
         if (userId) invoiceQuery = invoiceQuery.eq('user_id', userId);
 
