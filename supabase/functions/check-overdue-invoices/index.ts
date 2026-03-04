@@ -1,5 +1,7 @@
 // Check Overdue Invoices Edge Function
-// Runs daily via pg_cron to check for overdue invoices and send notifications
+// Runs daily via pg_cron to mark overdue invoices in the invoices table.
+// Push notifications for overdue invoices are handled by daily-notification-digest
+// to avoid duplicate notifications.
 import { serve } from '../_shared/deps.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.49.4';
 import { captureException } from '../_shared/sentry.ts';
@@ -11,7 +13,6 @@ const corsHeaders = {
 };
 
 serve(async (req: Request) => {
-  // Handle CORS preflight
   if (req.method === 'OPTIONS') {
     return new Response('ok', { headers: corsHeaders });
   }
@@ -24,13 +25,14 @@ serve(async (req: Request) => {
 
     const today = new Date().toISOString().split('T')[0];
 
-    // Find invoices that are overdue (due_date < today and not paid)
+    // Find invoices that are overdue and not yet marked as such.
+    // Uses correct column names for the invoices table:
+    //   user_id (not created_by), client_data jsonb (not client), total (not amount)
     const { data: overdueInvoices, error: queryError } = await supabase
       .from('invoices')
-      .select('id, invoice_number, client, amount, due_date, status, created_by')
+      .select('id, invoice_number, client_data, total, due_date, status, user_id')
       .lt('due_date', today)
-      .neq('status', 'Paid')
-      .neq('status', 'Cancelled');
+      .not('status', 'in', '("Paid","paid","Cancelled","cancelled","Overdue","overdue")');
 
     if (queryError) {
       console.error('Error fetching overdue invoices:', queryError);
@@ -41,104 +43,48 @@ serve(async (req: Request) => {
     }
 
     if (!overdueInvoices || overdueInvoices.length === 0) {
-      return new Response(JSON.stringify({ message: 'No overdue invoices found', processed: 0 }), {
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-      });
+      return new Response(
+        JSON.stringify({ message: 'No invoices to mark overdue', processed: 0 }),
+        { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      );
     }
 
-    let notificationsSent = 0;
     let statusesUpdated = 0;
 
     for (const invoice of overdueInvoices) {
-      // Update status to Overdue if not already
-      if (invoice.status !== 'Overdue') {
-        await supabase
-          .from('invoices')
-          .update({ status: 'Overdue', updated_at: new Date().toISOString() })
-          .eq('id', invoice.id);
+      // Mark as Overdue — push notifications are sent by daily-notification-digest
+      const { error: updateError } = await supabase
+        .from('invoices')
+        .update({ status: 'Overdue', updated_at: new Date().toISOString() })
+        .eq('id', invoice.id);
+
+      if (updateError) {
+        console.error(`Failed to update invoice ${invoice.id}:`, updateError);
+      } else {
         statusesUpdated++;
       }
-
-      // Send push notification to invoice creator
-      if (invoice.created_by) {
-        // Calculate days overdue
-        const dueDate = new Date(invoice.due_date);
-        const todayDate = new Date(today);
-        const daysOverdue = Math.floor(
-          (todayDate.getTime() - dueDate.getTime()) / (1000 * 60 * 60 * 24)
-        );
-
-        const daysText = daysOverdue === 1 ? '1 day' : `${daysOverdue} days`;
-
-        try {
-          // Check if we've already notified about this invoice today
-          // to avoid spam (using a simple approach - check notification_logs if exists)
-          const { data: recentNotification } = await supabase
-            .from('notification_logs')
-            .select('id')
-            .eq('invoice_id', invoice.id)
-            .eq('notification_type', 'overdue')
-            .gte('created_at', today)
-            .maybeSingle();
-
-          // Skip if already notified today
-          if (recentNotification) {
-            continue;
-          }
-
-          // Send the push notification
-          await supabase.functions.invoke('send-push-notification', {
-            body: {
-              userId: invoice.created_by,
-              title: '⚠️ Invoice Overdue',
-              body: `Invoice #${invoice.invoice_number} for ${invoice.client} (£${typeof invoice.amount === 'number' && !isNaN(invoice.amount) ? invoice.amount.toFixed(2) : '0.00'}) is ${daysText} overdue`,
-              type: 'invoice',
-              data: {
-                invoiceId: invoice.id,
-                status: 'overdue',
-                daysOverdue,
-              },
-            },
-          });
-
-          // Log the notification (if table exists)
-          await supabase
-            .from('notification_logs')
-            .insert({
-              invoice_id: invoice.id,
-              notification_type: 'overdue',
-              user_id: invoice.created_by,
-            })
-            .catch(() => {
-              // Table might not exist, that's fine
-            });
-
-          notificationsSent++;
-        } catch (notifyError) {
-          console.error(`Failed to notify for invoice ${invoice.id}:`, notifyError);
-        }
-      }
     }
+
+    console.log(`[check-overdue-invoices] Marked ${statusesUpdated} invoices as Overdue`);
 
     return new Response(
       JSON.stringify({
         success: true,
-        overdueCount: overdueInvoices.length,
+        overdueFound: overdueInvoices.length,
         statusesUpdated,
-        notificationsSent,
       }),
       { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('Check overdue invoices error:', error);
-    await captureException(error, {
+    await captureException(error instanceof Error ? error : new Error(String(error)), {
       functionName: 'check-overdue-invoices',
       requestUrl: req.url,
       requestMethod: req.method,
     });
-    return new Response(JSON.stringify({ error: error.message }), {
-      status: 500,
-      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-    });
+    return new Response(
+      JSON.stringify({ error: error instanceof Error ? error.message : 'Unknown error' }),
+      { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+    );
   }
 });
