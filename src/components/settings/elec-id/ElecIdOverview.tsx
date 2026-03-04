@@ -1186,15 +1186,18 @@ const ElecIdOverview = ({ onNavigate }: ElecIdOverviewProps) => {
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.25 }}
-        className="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-4"
+        className="grid grid-cols-2 sm:grid-cols-5 gap-2 sm:gap-4"
       >
         {statsLoading ? (
           // Loading skeletons
           <>
-            {[1, 2, 3, 4].map((i) => (
+            {[1, 2, 3, 4, 5].map((i) => (
               <div
                 key={i}
-                className="relative overflow-hidden rounded-2xl border border-white/10 bg-white/5 p-4 sm:p-5 min-h-[120px]"
+                className={cn(
+                  'relative overflow-hidden rounded-2xl border border-white/10 bg-white/5 p-4 sm:p-5 min-h-[120px]',
+                  i === 5 ? 'col-span-2 sm:col-span-1' : ''
+                )}
               >
                 <Skeleton className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl mb-2 sm:mb-3 bg-white/10" />
                 <Skeleton className="h-8 w-12 mb-1 bg-white/10" />
@@ -1243,6 +1246,18 @@ const ElecIdOverview = ({ onNavigate }: ElecIdOverviewProps) => {
               color: 'from-orange-500/20 to-red-500/20',
               iconColor: 'text-orange-400',
               borderColor: 'hover:border-orange-500/50 active:border-orange-500/50',
+              colSpan: '',
+            },
+            {
+              id: 'share',
+              icon: Eye,
+              count: profile?.profile_views ?? 0,
+              label: 'Profile Views',
+              shortLabel: 'Views',
+              color: 'from-yellow-500/20 to-amber-500/20',
+              iconColor: 'text-yellow-400',
+              borderColor: 'hover:border-yellow-500/50 active:border-yellow-500/50',
+              colSpan: 'col-span-2 sm:col-span-1',
             },
           ].map((stat, index) => (
             <motion.button
@@ -1251,7 +1266,8 @@ const ElecIdOverview = ({ onNavigate }: ElecIdOverviewProps) => {
               onClick={() => handleStatClick(stat.id)}
               className={cn(
                 'relative overflow-hidden rounded-2xl border border-white/10 bg-white/5 p-4 sm:p-5 text-left transition-all touch-manipulation min-h-[120px]',
-                stat.borderColor
+                stat.borderColor,
+                stat.colSpan
               )}
             >
               {/* Gradient background */}
