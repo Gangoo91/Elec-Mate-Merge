@@ -56,6 +56,48 @@ Deno.serve(async (req) => {
       { auth: { autoRefreshToken: false, persistSession: false } }
     );
 
+    // ── Push notification helper ─────────────────────────────────────────────
+    // Best-effort: look up the spark's user_id via employer_employees and fire
+    // a push via send-push-notification. Never throws — admin action must succeed
+    // regardless of notification delivery.
+    async function sendVerificationPush(title: string, body: string): Promise<void> {
+      try {
+        if (!profileId) return;
+
+        const { data: elecProfile } = await supabaseAdmin
+          .from('employer_elec_id_profiles')
+          .select('employee_id')
+          .eq('id', profileId)
+          .maybeSingle();
+        if (!elecProfile?.employee_id) return;
+
+        const { data: employee } = await supabaseAdmin
+          .from('employer_employees')
+          .select('user_id')
+          .eq('id', elecProfile.employee_id)
+          .maybeSingle();
+        if (!employee?.user_id) return;
+
+        await fetch(`${Deno.env.get('SUPABASE_URL')}/functions/v1/send-push-notification`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')}`,
+          },
+          body: JSON.stringify({
+            userId: employee.user_id,
+            title,
+            body,
+            type: 'certificate',
+            data: { action: 'open_elec_id' },
+          }),
+        });
+      } catch (err) {
+        console.error('Failed to send verification push notification:', err);
+      }
+    }
+    // ─────────────────────────────────────────────────────────────────────────
+
     let result;
 
     switch (action) {
@@ -145,6 +187,12 @@ Deno.serve(async (req) => {
           performed_by: user.id,
         });
 
+        // Notify the spark
+        await sendVerificationPush(
+          '⚡ Elec-ID Verified!',
+          'Your credentials have been verified. Share your profile with employers now.'
+        );
+
         console.log(`Elec-ID ${profileId} approved by admin ${user.id}`);
         result = { success: true, action: 'approved' };
         break;
@@ -178,6 +226,12 @@ Deno.serve(async (req) => {
           performed_by: user.id,
           notes: reason,
         });
+
+        // Notify the spark
+        await sendVerificationPush(
+          'Elec-ID verification update',
+          `Your verification couldn't be completed: ${reason}. Tap to review and resubmit.`
+        );
 
         console.log(`Elec-ID ${profileId} rejected by admin ${user.id}: ${reason}`);
         result = { success: true, action: 'rejected' };
