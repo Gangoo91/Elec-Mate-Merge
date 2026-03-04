@@ -47,6 +47,7 @@ import {
   Power,
   AlertCircle,
   Copy,
+  Link2,
   QrCode,
   Sparkles,
   TrendingUp,
@@ -111,6 +112,7 @@ const ElecIdOverview = ({ onNavigate }: ElecIdOverviewProps) => {
   const [isEditSheetOpen, setIsEditSheetOpen] = useState(false);
   const [isOptOutDialogOpen, setIsOptOutDialogOpen] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
+  const [copiedLink, setCopiedLink] = useState(false);
   const [isUploadingPhoto, setIsUploadingPhoto] = useState(false);
   const [photoUrl, setPhotoUrl] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -1297,6 +1299,68 @@ const ElecIdOverview = ({ onNavigate }: ElecIdOverviewProps) => {
           ))
         )}
       </motion.div>
+
+      {/* ── Your profile is live — share CTA ─────────────────────────────── */}
+      {elecIdProfile?.elec_id_number && (
+        <motion.div
+          initial={{ opacity: 0, y: 8 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.35 }}
+          className="relative overflow-hidden rounded-2xl border border-yellow-500/20 bg-gradient-to-br from-yellow-500/8 via-transparent to-transparent p-4 sm:p-5"
+        >
+          {/* Subtle glow */}
+          <div className="absolute top-0 right-0 w-32 h-32 bg-yellow-500/10 rounded-full blur-3xl pointer-events-none" />
+
+          <div className="relative">
+            {/* Header */}
+            <div className="flex items-center gap-2.5 mb-3">
+              <div className="w-7 h-7 rounded-lg bg-gradient-to-br from-yellow-400 to-amber-600 flex items-center justify-center flex-shrink-0 shadow-sm shadow-yellow-500/20">
+                <Link2 className="h-3.5 w-3.5 text-white" />
+              </div>
+              <div>
+                <p className="font-bold text-white text-sm leading-none">Your profile is live</p>
+                <p className="text-[11px] text-slate-400 mt-0.5">Share with employers, clients, or anyone who needs to verify your credentials</p>
+              </div>
+            </div>
+
+            {/* URL row */}
+            <div className="flex items-center gap-2">
+              <div className="flex-1 min-w-0 px-3 py-2 rounded-xl bg-black/30 border border-white/[0.07]">
+                <p className="text-xs text-slate-300 font-mono truncate">
+                  elec-mate.com/verify/<span className="text-yellow-400 font-bold">{elecIdProfile.elec_id_number}</span>
+                </p>
+              </div>
+              <button
+                onClick={() => {
+                  navigator.clipboard.writeText(
+                    `https://elec-mate.com/verify/${elecIdProfile.elec_id_number}`
+                  );
+                  setCopiedLink(true);
+                  setTimeout(() => setCopiedLink(false), 2000);
+                }}
+                className="flex-shrink-0 flex items-center gap-1.5 px-3 py-2 rounded-xl bg-yellow-500 hover:bg-yellow-400 text-[#0a0a14] text-xs font-bold transition-all touch-manipulation min-h-[36px]"
+              >
+                {copiedLink ? (
+                  <CheckCircle2 className="h-3.5 w-3.5" />
+                ) : (
+                  <Copy className="h-3.5 w-3.5" />
+                )}
+                {copiedLink ? 'Copied!' : 'Copy'}
+              </button>
+            </div>
+
+            {/* Create QR / share link button */}
+            <button
+              onClick={() => onNavigate?.('share')}
+              className="mt-2.5 w-full flex items-center justify-center gap-2 py-2 rounded-xl bg-white/[0.04] border border-white/[0.08] hover:bg-white/[0.07] text-slate-300 hover:text-white text-xs font-medium transition-all touch-manipulation"
+            >
+              <QrCode className="h-3.5 w-3.5" />
+              Create QR code or timed share link
+              <ChevronRight className="h-3.5 w-3.5 ml-auto" />
+            </button>
+          </div>
+        </motion.div>
+      )}
 
       {/* Training Requests from Employers */}
       <TrainingRequestsCard />
