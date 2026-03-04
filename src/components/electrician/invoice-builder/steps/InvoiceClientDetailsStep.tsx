@@ -273,7 +273,7 @@ export const InvoiceClientDetailsStep = ({
         {/* Save customer prompt */}
         {showSavePrompt && !customerId && (
           <SaveCustomerPrompt
-            clientData={{
+            client={{
               name: form.watch('name'),
               email: form.watch('email') || undefined,
               phone: form.watch('phone') || undefined,
