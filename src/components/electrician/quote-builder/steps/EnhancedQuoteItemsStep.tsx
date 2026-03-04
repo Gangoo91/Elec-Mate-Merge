@@ -26,6 +26,8 @@ import {
   Hash,
   Scan,
   BookOpen,
+  Layers,
+  ChevronUp,
 } from 'lucide-react';
 import { QuoteItem, JobTemplate } from '@/types/quote';
 import { JobTemplates } from '../JobTemplates';
@@ -42,6 +44,7 @@ import { useDebounce } from '@/hooks/useDebounce';
 import { toast } from '@/hooks/use-toast';
 import { useCompanyProfile } from '@/hooks/useCompanyProfile';
 import { useMaterialsLists, MaterialsListItem } from '@/hooks/useMaterialsLists';
+import { usePriceBookBundles } from '@/hooks/usePriceBookBundles';
 import { useInvoiceScanner } from '@/hooks/useInvoiceScanner';
 import { InvoiceScannerSheet } from '@/components/electrician/invoice-builder/InvoiceScannerSheet';
 import { InvoiceScanResults } from '@/components/electrician/invoice-builder/InvoiceScanResults';
@@ -72,6 +75,11 @@ export const EnhancedQuoteItemsStep = ({
   const { lists: materialsLists } = useMaterialsLists();
   const [priceBookSearch, setPriceBookSearch] = useState('');
   const [showPriceBook, setShowPriceBook] = useState(false);
+
+  // Bundles
+  const { bundles, bundleTotal } = usePriceBookBundles();
+  const [showBundles, setShowBundles] = useState(false);
+  const [expandedBundle, setExpandedBundle] = useState<string | null>(null);
 
   const pricedBookItems = useMemo(() => {
     const result: { item: MaterialsListItem; listName: string }[] = [];
@@ -1124,6 +1132,118 @@ export const EnhancedQuoteItemsStep = ({
             )}
           </div>
         </div>
+      )}
+
+      {/* Bundles Section */}
+      {bundles.length > 0 && (
+        !showBundles ? (
+          <button
+            type="button"
+            onClick={() => setShowBundles(true)}
+            className="w-full flex items-center justify-between p-4 rounded-2xl bg-white/[0.03] border border-dashed border-white/[0.1] touch-manipulation active:bg-white/[0.05] transition-colors"
+          >
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-xl bg-elec-yellow/20 flex items-center justify-center">
+                <Layers className="h-5 w-5 text-elec-yellow" />
+              </div>
+              <div className="text-left">
+                <p className="text-[14px] font-medium text-white">My Bundles</p>
+                <p className="text-[12px] text-gray-400">
+                  {bundles.length} saved {bundles.length === 1 ? 'assembly' : 'assemblies'}
+                </p>
+              </div>
+            </div>
+            <ChevronRight className="h-5 w-5 text-gray-400" />
+          </button>
+        ) : (
+          <div className="rounded-2xl bg-white/[0.03] border border-white/[0.06] overflow-hidden">
+            <div className="flex items-center justify-between p-4 border-b border-white/[0.06]">
+              <h3 className="font-semibold text-white flex items-center gap-2">
+                <Layers className="h-4 w-4 text-elec-yellow" />
+                My Bundles
+              </h3>
+              <button
+                type="button"
+                onClick={() => setShowBundles(false)}
+                className="text-[14px] text-elec-yellow font-medium touch-manipulation"
+              >
+                Close
+              </button>
+            </div>
+            <div className="p-3 space-y-2">
+              {bundles.map((bundle) => {
+                const total = bundleTotal(bundle);
+                const expanded = expandedBundle === bundle.id;
+                return (
+                  <div key={bundle.id} className="rounded-xl overflow-hidden border border-white/[0.06] bg-white/[0.02]">
+                    <button
+                      type="button"
+                      onClick={() => setExpandedBundle(expanded ? null : bundle.id)}
+                      className="w-full p-3 text-left touch-manipulation"
+                    >
+                      <div className="flex items-center justify-between">
+                        <div className="flex-1 min-w-0">
+                          <p className="text-[14px] font-medium text-white line-clamp-1">{bundle.name}</p>
+                          {bundle.description && (
+                            <p className="text-[11px] text-gray-500 mt-0.5 line-clamp-1">{bundle.description}</p>
+                          )}
+                        </div>
+                        <div className="flex items-center gap-2 ml-2 flex-shrink-0">
+                          <span className="text-[14px] font-bold text-elec-yellow">£{total.toFixed(2)}</span>
+                          {expanded ? (
+                            <ChevronUp className="h-4 w-4 text-gray-500" />
+                          ) : (
+                            <ChevronDown className="h-4 w-4 text-gray-500" />
+                          )}
+                        </div>
+                      </div>
+                      <p className="text-[11px] text-gray-600 mt-0.5">{bundle.items.length} items</p>
+                    </button>
+
+                    {expanded && (
+                      <div className="border-t border-white/[0.05] px-3 pb-3">
+                        <div className="space-y-1 mt-2 mb-3">
+                          {bundle.items.map((item) => (
+                            <div key={item.id} className="flex items-center justify-between text-[12px]">
+                              <span className="text-gray-300 flex-1 min-w-0 line-clamp-1">{item.name}</span>
+                              <span className="text-gray-500 ml-2 flex-shrink-0">
+                                {item.quantity} × £{item.unitPrice.toFixed(2)}
+                              </span>
+                            </div>
+                          ))}
+                        </div>
+                        <button
+                          type="button"
+                          onClick={() => {
+                            let addedCount = 0;
+                            bundle.items.forEach((item) => {
+                              onAdd({
+                                description: item.name,
+                                quantity: item.quantity,
+                                unit: item.unit,
+                                unitPrice: item.unitPrice,
+                                category: item.category === 'labour' ? 'labour' : item.category === 'equipment' ? 'equipment' : 'materials',
+                              });
+                              addedCount++;
+                            });
+                            toast({
+                              title: `${bundle.name} added`,
+                              description: `${addedCount} items added to quote`,
+                            });
+                            setExpandedBundle(null);
+                          }}
+                          className="w-full py-2.5 text-[13px] font-semibold text-black bg-elec-yellow rounded-lg touch-manipulation active:bg-elec-yellow/90"
+                        >
+                          Add all to quote
+                        </button>
+                      </div>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        )
       )}
 
       {/* Invoice Scanner Sheet */}

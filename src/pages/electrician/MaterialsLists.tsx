@@ -477,13 +477,25 @@ export default function MaterialsLists() {
                 </p>
               </div>
             </div>
-            <Button
-              onClick={() => setShowNewListInput(true)}
-              className="h-10 touch-manipulation bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold"
-            >
-              <Plus className="h-4 w-4 mr-1.5" />
-              New List
-            </Button>
+            <div className="flex items-center gap-2">
+              <Link to="/electrician/price-book">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="h-10 touch-manipulation border-white/20 text-white hover:bg-white/5"
+                >
+                  <FileText className="h-4 w-4 mr-1.5" />
+                  Price Book
+                </Button>
+              </Link>
+              <Button
+                onClick={() => setShowNewListInput(true)}
+                className="h-10 touch-manipulation bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold"
+              >
+                <Plus className="h-4 w-4 mr-1.5" />
+                New List
+              </Button>
+            </div>
           </div>
         </div>
       </div>

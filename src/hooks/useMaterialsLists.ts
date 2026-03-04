@@ -9,7 +9,14 @@ export interface MaterialsListItem {
   name: string;
   quantity: number;
   unit: string;
+  /** Sell price — what goes on the quote */
   estimated_price?: number;
+  /** Trade/cost price — what they actually pay */
+  cost_price?: number;
+  /** Per-item markup override (%). Falls back to global setting if absent. */
+  markup_percent?: number;
+  /** ISO timestamp of when the price was last set/updated */
+  price_updated_at?: string;
   supplier?: string;
   product_url?: string;
   matched: boolean;
@@ -128,7 +135,7 @@ export function useMaterialsLists() {
     [toast]
   );
 
-  // Add an item to a list (from a marketplace product)
+  // Add an item to a list (from a marketplace product or price book)
   const addItem = useCallback(
     async (
       listId: string,
@@ -139,6 +146,10 @@ export function useMaterialsLists() {
         supplier_name?: string;
         product_url?: string;
         image_url?: string | null;
+        /** Trade/cost price — if provided, also stamps price_updated_at */
+        cost_price?: number;
+        /** Per-item markup % override */
+        markup_percent?: number;
       }
     ) => {
       try {
@@ -153,6 +164,7 @@ export function useMaterialsLists() {
 
         const existingItems = (currentList.items || []) as MaterialsListItem[];
 
+        const hasPriceInfo = !!product.current_price || !!product.cost_price;
         const newItem: MaterialsListItem = {
           id: crypto.randomUUID(),
           product_id: product.id,
@@ -160,11 +172,14 @@ export function useMaterialsLists() {
           quantity: 1,
           unit: 'each',
           estimated_price: product.current_price,
+          cost_price: product.cost_price,
+          markup_percent: product.markup_percent,
           supplier: product.supplier_name,
           product_url: product.product_url,
           image_url: product.image_url || undefined,
           matched: !!product.id,
           added_at: new Date().toISOString(),
+          price_updated_at: hasPriceInfo ? new Date().toISOString() : undefined,
         };
 
         const updatedItems = [...existingItems, newItem];
@@ -283,7 +298,7 @@ export function useMaterialsLists() {
     [toast]
   );
 
-  // Update item price
+  // Update item price — also stamps price_updated_at
   const updateItemPrice = useCallback(
     async (listId: string, itemId: string, price: number | undefined) => {
       try {
@@ -298,7 +313,9 @@ export function useMaterialsLists() {
 
         const existingItems = (currentList.items || []) as MaterialsListItem[];
         const updatedItems = existingItems.map((i) =>
-          i.id === itemId ? { ...i, estimated_price: price } : i
+          i.id === itemId
+            ? { ...i, estimated_price: price, price_updated_at: new Date().toISOString() }
+            : i
         );
 
         const { error } = await (supabase as any)
@@ -327,6 +344,55 @@ export function useMaterialsLists() {
     [toast]
   );
 
+  // Update multiple fields on a single item (name, cost_price, markup_percent, supplier, unit, etc.)
+  const updateItemDetails = useCallback(
+    async (listId: string, itemId: string, updates: Partial<MaterialsListItem>) => {
+      try {
+        const { data: currentList, error: fetchError } = await (supabase as any)
+          .from('materials_lists')
+          .select('*')
+          .eq('id', listId)
+          .single();
+
+        if (fetchError || !currentList) return;
+
+        const existingItems = (currentList.items || []) as MaterialsListItem[];
+        const updatedItems = existingItems.map((i) => {
+          if (i.id !== itemId) return i;
+          const merged = { ...i, ...updates };
+          // Always stamp price_updated_at when price-related fields change
+          if ('estimated_price' in updates || 'cost_price' in updates || 'markup_percent' in updates) {
+            merged.price_updated_at = new Date().toISOString();
+          }
+          return merged;
+        });
+
+        const { error } = await (supabase as any)
+          .from('materials_lists')
+          .update({ items: updatedItems })
+          .eq('id', listId);
+
+        if (error) throw error;
+
+        setLists((prev) =>
+          prev.map((l) =>
+            l.id === listId
+              ? { ...l, items: updatedItems, updated_at: new Date().toISOString() }
+              : l
+          )
+        );
+      } catch (err) {
+        console.error('Failed to update item details:', err);
+        toast({
+          title: 'Error',
+          description: 'Could not update item.',
+          variant: 'destructive',
+        });
+      }
+    },
+    [toast]
+  );
+
   // Check if a product is saved in any list
   const isProductSaved = useCallback(
     (productId: string): boolean => {
@@ -344,6 +410,7 @@ export function useMaterialsLists() {
     removeItem,
     updateItemQuantity,
     updateItemPrice,
+    updateItemDetails,
     parseTextToItems,
     isProductSaved,
     refetch: fetchLists,
