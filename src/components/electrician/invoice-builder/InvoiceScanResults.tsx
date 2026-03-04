@@ -3,13 +3,15 @@
  * Clean mobile-first design for reviewing extracted invoice items
  */
 
-import React from 'react';
+import React, { useState } from 'react';
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Check, X, CheckCircle2, Circle, Sparkles, Store } from 'lucide-react';
+import { Check, X, CheckCircle2, Circle, Sparkles, Store, BookOpen } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { ScanResult, ScannedInvoiceItem, MaterialMatch } from '@/types/invoice-scanner';
+import { useMaterialsLists } from '@/hooks/useMaterialsLists';
+import { useToast } from '@/hooks/use-toast';
 
 interface InvoiceScanResultsProps {
   open: boolean;
@@ -33,7 +35,43 @@ export function InvoiceScanResults({
   onDeselectAll,
   onConfirm,
 }: InvoiceScanResultsProps) {
+  const { lists, createList, addItem } = useMaterialsLists();
+  const { toast } = useToast();
+  const [savingToPriceBook, setSavingToPriceBook] = useState(false);
+
   if (!result || !result.success) return null;
+
+  const handleSaveToPriceBook = async () => {
+    const selected = result.items.filter((i) => i.selected && i.unitPrice > 0);
+    if (selected.length === 0) {
+      toast({ title: 'No items to save', description: 'Select items with a price first.', variant: 'destructive' });
+      return;
+    }
+    setSavingToPriceBook(true);
+    try {
+      let list = lists.find((l) => l.name === 'Price Book');
+      if (!list) {
+        const created = await createList('Price Book', 'Items saved from scanned invoices');
+        if (!created) return;
+        list = created;
+      }
+      for (const item of selected) {
+        await addItem(list.id, {
+          name: item.extracted.description,
+          current_price: item.unitPrice,
+          supplier_name: result.supplierName || undefined,
+        });
+      }
+      toast({
+        title: `${selected.length} ${selected.length === 1 ? 'item' : 'items'} saved to Price Book`,
+        description: result.supplierName ? `From ${result.supplierName}` : undefined,
+      });
+    } catch {
+      toast({ title: 'Failed to save to Price Book', variant: 'destructive' });
+    } finally {
+      setSavingToPriceBook(false);
+    }
+  };
 
   const selectedCount = result.items.filter((i) => i.selected).length;
   const totalItems = result.items.length;
@@ -202,6 +240,17 @@ export function InvoiceScanResults({
                 Add {selectedCount} Items
               </Button>
             </div>
+
+            {/* Save to Price Book (secondary action) */}
+            <Button
+              variant="ghost"
+              className="w-full h-10 mt-2 text-gray-400 hover:text-white hover:bg-white/[0.05] rounded-xl text-sm gap-2"
+              onClick={handleSaveToPriceBook}
+              disabled={savingToPriceBook || selectedCount === 0}
+            >
+              <BookOpen className="h-4 w-4" />
+              {savingToPriceBook ? 'Saving...' : `Save ${selectedCount > 0 ? selectedCount : ''} to Price Book`}
+            </Button>
           </div>
         </div>
       </SheetContent>
