@@ -511,6 +511,7 @@ export default function PATTestingCertificate() {
       installationAddress: formData.siteAddress || '',
       certificateType: 'PAT Testing',
       certificateReference: formData.certificateNumber || '',
+      reportId: savedReportId || undefined,
     });
     navigate(url);
   };
@@ -525,6 +526,7 @@ export default function PATTestingCertificate() {
       installationAddress: formData.siteAddress || '',
       certificateType: 'PAT Testing',
       certificateReference: formData.certificateNumber || '',
+      reportId: savedReportId || undefined,
     });
     navigate(url);
   };

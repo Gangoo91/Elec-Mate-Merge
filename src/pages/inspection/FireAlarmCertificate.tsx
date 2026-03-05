@@ -490,6 +490,7 @@ export default function FireAlarmCertificate() {
       installationAddress: formData.premisesAddress || '',
       certificateType: 'Fire Alarm',
       certificateReference: formData.certificateNumber || '',
+      reportId: savedReportId || undefined,
     });
     navigate(url);
   };
@@ -504,6 +505,7 @@ export default function FireAlarmCertificate() {
       installationAddress: formData.premisesAddress || '',
       certificateType: 'Fire Alarm',
       certificateReference: formData.certificateNumber || '',
+      reportId: savedReportId || undefined,
     });
     navigate(url);
   };

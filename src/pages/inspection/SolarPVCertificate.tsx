@@ -550,6 +550,7 @@ export default function SolarPVCertificate() {
       installationAddress: formData.installationAddress || formData.clientAddress || '',
       certificateType: 'Solar PV',
       certificateReference: formData.certificateNumber || '',
+      reportId: savedReportId || undefined,
     });
     navigate(url);
   };
@@ -564,6 +565,7 @@ export default function SolarPVCertificate() {
       installationAddress: formData.installationAddress || formData.clientAddress || '',
       certificateType: 'Solar PV',
       certificateReference: formData.certificateNumber || '',
+      reportId: savedReportId || undefined,
     });
     navigate(url);
   };
