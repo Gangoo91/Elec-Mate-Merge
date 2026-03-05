@@ -1,4 +1,4 @@
-import { useState, useCallback, useEffect } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import { Quote, QuoteItem, QuoteClient, QuoteSettings, JobDetails } from '@/types/quote';
 import { v4 as uuidv4 } from 'uuid';
 import { toast } from '@/hooks/use-toast';
@@ -336,10 +336,10 @@ export const useQuoteBuilder = (onQuoteGenerated?: () => void, initialQuote?: Qu
             description: 'Your quote PDF has been generated.',
             variant: 'success',
             duration: 10000,
-            action: (
-              <ToastAction altText="Open PDF" onClick={() => window.open(pdfUrl, '_blank')}>
-                Open PDF
-              </ToastAction>
+            action: React.createElement(
+              ToastAction,
+              { altText: 'Open PDF', onClick: () => window.open(pdfUrl, '_blank') },
+              'Open PDF'
             ),
           });
         } else if (data?.documentId) {
