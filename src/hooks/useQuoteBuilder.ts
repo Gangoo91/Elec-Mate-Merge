@@ -2,6 +2,7 @@ import { useState, useCallback, useEffect } from 'react';
 import { Quote, QuoteItem, QuoteClient, QuoteSettings, JobDetails } from '@/types/quote';
 import { v4 as uuidv4 } from 'uuid';
 import { toast } from '@/hooks/use-toast';
+import { ToastAction } from '@/components/ui/toast';
 import { useQuoteStorage } from './useQuoteStorage';
 import { useCompanyProfile } from './useCompanyProfile';
 import { generateSequentialQuoteNumber } from '@/utils/quote-number-generator';
@@ -328,7 +329,19 @@ export const useQuoteBuilder = (onQuoteGenerated?: () => void, initialQuote?: Qu
 
         if (data?.downloadUrl) {
           logger.api('generate-pdf-monkey', requestId).success({ documentId: data.documentId });
-          window.open(data.downloadUrl, '_blank');
+          // Don't auto-open — let the user choose (ELE-260)
+          const pdfUrl = data.downloadUrl;
+          toast({
+            title: 'PDF Ready',
+            description: 'Your quote PDF has been generated.',
+            variant: 'success',
+            duration: 10000,
+            action: (
+              <ToastAction altText="Open PDF" onClick={() => window.open(pdfUrl, '_blank')}>
+                Open PDF
+              </ToastAction>
+            ),
+          });
         } else if (data?.documentId) {
           logger.info('PDF still processing', { documentId: data.documentId });
           toast({
