@@ -32,6 +32,7 @@ interface PATTestingFormTabsProps {
     canGenerateCertificate?: boolean;
   };
   onGenerateCertificate: () => void;
+  onCreateInvoice?: () => void;
   onSaveDraft: () => void;
   canGenerateCertificate?: boolean;
   activeApplianceId: string | null;
@@ -49,6 +50,7 @@ const PATTestingFormTabs: React.FC<PATTestingFormTabsProps> = ({
   onUpdate,
   tabNavigationProps,
   onGenerateCertificate,
+  onCreateInvoice,
   onSaveDraft,
   canGenerateCertificate = true,
   activeApplianceId,
@@ -100,6 +102,7 @@ const PATTestingFormTabs: React.FC<PATTestingFormTabsProps> = ({
           <PATTestingTabNavigation
             {...tabNavigationProps}
             onGenerateCertificate={onGenerateCertificate}
+            onCreateInvoice={onCreateInvoice}
             canGenerateCertificate={canGenerateCertificate}
           />
         </div>

@@ -39,6 +39,7 @@ interface SolarPVFormTabsProps {
     };
   };
   onGenerateCertificate: () => void;
+  onCreateInvoice?: () => void;
   onSaveDraft: () => void;
   canGenerateCertificate?: boolean;
 }
@@ -51,6 +52,7 @@ const SolarPVFormTabs: React.FC<SolarPVFormTabsProps> = ({
   onUpdate,
   tabNavigationProps,
   onGenerateCertificate,
+  onCreateInvoice,
   onSaveDraft,
   canGenerateCertificate = true,
 }) => {
@@ -118,6 +120,7 @@ const SolarPVFormTabs: React.FC<SolarPVFormTabsProps> = ({
           <SolarPVTabNavigation
             {...tabNavigationProps}
             onGenerateCertificate={onGenerateCertificate}
+            onCreateInvoice={onCreateInvoice}
             canGenerateCertificate={canGenerateCertificate}
           />
         </div>

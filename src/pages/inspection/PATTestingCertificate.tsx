@@ -664,6 +664,7 @@ export default function PATTestingCertificate() {
             canGenerateCertificate: !isGenerating,
           }}
           onGenerateCertificate={handleGenerateCertificate}
+          onCreateInvoice={handleCreateInvoice}
           onSaveDraft={handleSaveDraft}
           canGenerateCertificate={!isGenerating}
           activeApplianceId={activeApplianceId}

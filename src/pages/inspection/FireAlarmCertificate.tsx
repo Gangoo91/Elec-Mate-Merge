@@ -684,6 +684,7 @@ export default function FireAlarmCertificate() {
             canGenerateCertificate: !isGenerating,
           }}
           onGenerateCertificate={handleGenerateCertificate}
+          onCreateInvoice={handleCreateInvoice}
           onSaveDraft={handleSaveDraft}
           canGenerateCertificate={!isGenerating}
         />

@@ -37,6 +37,7 @@ interface FireAlarmFormTabsProps {
     };
   };
   onGenerateCertificate: () => void;
+  onCreateInvoice?: () => void;
   onSaveDraft: () => void;
   canGenerateCertificate?: boolean;
 }
@@ -49,6 +50,7 @@ const FireAlarmFormTabs: React.FC<FireAlarmFormTabsProps> = ({
   onUpdate,
   tabNavigationProps,
   onGenerateCertificate,
+  onCreateInvoice,
   onSaveDraft,
   canGenerateCertificate = true,
 }) => {
@@ -103,6 +105,7 @@ const FireAlarmFormTabs: React.FC<FireAlarmFormTabsProps> = ({
           <FireAlarmTabNavigation
             {...tabNavigationProps}
             onGenerateCertificate={onGenerateCertificate}
+            onCreateInvoice={onCreateInvoice}
             canGenerateCertificate={canGenerateCertificate}
           />
         </div>

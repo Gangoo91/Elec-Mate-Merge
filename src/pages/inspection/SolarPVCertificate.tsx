@@ -734,6 +734,7 @@ export default function SolarPVCertificate() {
             canGenerateCertificate: !isGenerating,
           }}
           onGenerateCertificate={handleGenerateCertificate}
+          onCreateInvoice={handleCreateInvoice}
           onSaveDraft={handleSaveDraft}
           canGenerateCertificate={!isGenerating}
         />
