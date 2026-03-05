@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import {
   ArrowLeft,
   ArrowRight,
@@ -28,8 +28,7 @@ import { Button } from '@/components/ui/button';
 import { useToast } from '@/components/ui/use-toast';
 import { useAuth } from '@/contexts/AuthContext';
 import { supabase } from '@/integrations/supabase/client';
-import { stripePrices } from '@/data/stripePrices';
-import { capturePaymentError, addBreadcrumb, trackMilestone } from '@/lib/sentry';
+
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -224,82 +223,61 @@ const trustPoints = [
 ];
 
 export function BusinessAISalesView() {
-  const [billing, setBilling] = useState<'monthly' | 'yearly'>('monthly');
   const [loading, setLoading] = useState(false);
+  const [waitlistJoined, setWaitlistJoined] = useState(false);
   const { toast } = useToast();
   const { user } = useAuth();
   const navigate = useNavigate();
 
-  const handleCheckout = async () => {
+  // Check if user is already on the waitlist
+  useEffect(() => {
+    if (!user) return;
+    supabase
+      .from('business_ai_waitlist')
+      .select('id')
+      .eq('user_id', user.id)
+      .maybeSingle()
+      .then(({ data }) => {
+        if (data) setWaitlistJoined(true);
+      });
+  }, [user]);
+
+  const handleJoinWaitlist = async () => {
     if (!user) {
       toast({
         title: 'Sign in required',
-        description: 'Please sign in or create an account to start your free trial.',
+        description: 'Please sign in or create an account to join the waitlist.',
       });
       navigate('/auth/signin');
       return;
     }
 
+    if (waitlistJoined) return;
+
     setLoading(true);
     try {
-      addBreadcrumb('Business AI checkout started', 'payment', { billing });
+      const { error } = await supabase
+        .from('business_ai_waitlist')
+        .insert({ user_id: user.id });
 
-      const priceId =
-        billing === 'monthly' ? stripePrices.monthly.business_ai : stripePrices.yearly.business_ai;
-      const planId = billing === 'monthly' ? 'business-ai-monthly' : 'business-ai-yearly';
-      const offerCode = localStorage.getItem('elec-mate-offer-code');
+      if (error && error.code !== '23505') throw error; // ignore duplicate
 
-      const { data, error } = await supabase.functions.invoke('create-checkout', {
-        body: { priceId, mode: 'subscription', planId, offerCode },
-      });
-
-      if (error) throw new Error(error.message);
-
-      if (data?.url) {
-        if (offerCode) {
-          localStorage.removeItem('elec-mate-offer-code');
-        }
-        trackMilestone('Business AI Checkout Created', {
-          planId,
-          billing,
-          hasOfferCode: !!offerCode,
-        });
-
-        toast({
-          title: 'Redirecting to checkout',
-          description: offerCode
-            ? 'Your discount will be applied automatically.'
-            : 'Opening secure Stripe checkout page.',
-        });
-
-        const newWindow = window.open(data.url, '_blank');
-        if (!newWindow || newWindow.closed) {
-          setTimeout(() => {
-            window.location.href = data.url;
-          }, 1000);
-        }
-      } else {
-        throw new Error('No checkout URL returned');
-      }
-    } catch (err) {
-      console.error('Checkout error:', err);
-      capturePaymentError(err instanceof Error ? err : new Error(String(err)), {
-        billing,
-        context: 'business-ai-checkout',
-      });
+      setWaitlistJoined(true);
       toast({
-        title: 'Checkout Error',
-        description: err instanceof Error ? err.message : 'Failed to start checkout',
+        title: "You're on the list! ⚡",
+        description: "We'll be in touch as soon as Elec-AI is ready for you.",
+      });
+    } catch (err) {
+      console.error('Waitlist error:', err);
+      toast({
+        title: 'Something went wrong',
+        description: 'Please try again in a moment.',
         variant: 'destructive',
       });
     } finally {
       setLoading(false);
     }
   };
-
-  const monthlyPrice = '£29.99';
-  const yearlyPrice = '£299.99';
-  const yearlySaving = '£59.89';
 
   return (
     <div className="min-h-screen bg-background">
@@ -676,97 +654,53 @@ export function BusinessAISalesView() {
           </div>
         </motion.div>
 
-        {/* ── 7. Pricing + Live Checkout ── */}
+        {/* ── 7. Waitlist CTA ── */}
         <motion.div variants={itemVariants} className="px-4 space-y-4">
           <h2 className="text-lg font-semibold text-white flex items-center gap-2 px-1">
             <div className="h-2 w-2 rounded-full bg-amber-400" />
-            Pricing
+            Early Access
           </h2>
 
-          {/* Billing toggle */}
-          <div className="flex items-center gap-1 p-1 rounded-xl bg-white/[0.05] border border-white/[0.06]">
-            {(['monthly', 'yearly'] as const).map((period) => (
-              <button
-                key={period}
-                onClick={() => setBilling(period)}
-                className={`flex-1 py-2.5 px-4 rounded-lg text-sm font-medium transition-all touch-manipulation capitalize h-11 ${
-                  billing === period
-                    ? 'bg-amber-500 text-black shadow-lg shadow-amber-500/20'
-                    : 'text-white hover:text-white'
-                }`}
-              >
-                {period}
-                {period === 'yearly' && (
-                  <span
-                    className={`ml-1.5 text-[10px] font-bold ${billing === 'yearly' ? 'text-black' : 'text-green-400'}`}
-                  >
-                    SAVE 17%
-                  </span>
-                )}
-              </button>
-            ))}
-          </div>
-
-          {/* Price card */}
+          {/* Waitlist card */}
           <div className="relative overflow-hidden rounded-2xl border border-amber-500/20">
             <div className="absolute inset-0 bg-gradient-to-br from-amber-500/10 via-transparent to-yellow-500/5" />
-            <div className="relative p-6 text-center space-y-1">
-              <AnimatePresence mode="wait">
-                <motion.div
-                  key={billing}
-                  initial={{ opacity: 0, y: 6 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -6 }}
-                  transition={{ duration: 0.2 }}
-                >
-                  <div className="text-4xl font-bold text-white">
-                    {billing === 'monthly' ? monthlyPrice : yearlyPrice}
-                  </div>
-                  <div className="text-sm text-white mt-1">
-                    {billing === 'monthly' ? 'per month' : 'per year'}
-                  </div>
-                  {billing === 'yearly' && (
-                    <div className="inline-flex items-center gap-1.5 mt-2 px-3 py-1 rounded-full bg-green-500/10 border border-green-500/20">
-                      <span className="text-green-400 text-xs font-semibold">
-                        Save {yearlySaving} vs monthly
-                      </span>
-                    </div>
-                  )}
-                </motion.div>
-              </AnimatePresence>
-              <p className="text-xs text-white pt-2">Includes everything in the Electrician plan</p>
+            <div className="relative p-6 text-center space-y-2">
+              <div className="text-3xl font-bold text-white">£29.99</div>
+              <div className="text-sm text-white">per month · launching soon</div>
+              <p className="text-xs text-white pt-1">Includes everything in the Electrician plan</p>
             </div>
           </div>
 
-          {/* Checkout CTA */}
-          <Button
-            onClick={handleCheckout}
-            disabled={loading}
-            className="w-full touch-manipulation font-semibold text-base rounded-xl transition-all bg-amber-500 hover:bg-amber-400 active:bg-amber-600 active:scale-[0.98] text-black shadow-lg shadow-amber-500/25"
-            style={{ height: 52 }}
-          >
-            {loading ? (
-              <span className="flex items-center gap-2">
-                <Loader2 className="h-4 w-4 animate-spin" />
-                One sec...
-              </span>
-            ) : (
-              <span className="flex items-center gap-2">
-                <Zap className="h-4 w-4" />
-                Start 7-Day Free Trial
-              </span>
-            )}
-          </Button>
+          {/* Waitlist CTA button */}
+          {waitlistJoined ? (
+            <div className="w-full rounded-xl border border-green-500/30 bg-green-500/10 flex items-center justify-center gap-2 text-green-400 font-semibold text-base" style={{ height: 52 }}>
+              <CheckCircle className="h-4 w-4" />
+              You're on the waitlist!
+            </div>
+          ) : (
+            <Button
+              onClick={handleJoinWaitlist}
+              disabled={loading}
+              className="w-full touch-manipulation font-semibold text-base rounded-xl transition-all bg-amber-500 hover:bg-amber-400 active:bg-amber-600 active:scale-[0.98] text-black shadow-lg shadow-amber-500/25"
+              style={{ height: 52 }}
+            >
+              {loading ? (
+                <span className="flex items-center gap-2">
+                  <Loader2 className="h-4 w-4 animate-spin" />
+                  One sec...
+                </span>
+              ) : (
+                <span className="flex items-center gap-2">
+                  <Zap className="h-4 w-4" />
+                  Join the Waitlist
+                </span>
+              )}
+            </Button>
+          )}
 
-          {/* Trust signals */}
-          <div className="flex items-center justify-center gap-3 text-xs text-white">
-            <span className="flex items-center gap-1.5">
-              <Shield className="h-3.5 w-3.5 text-green-500/60" />
-              Secured by Stripe
-            </span>
-            <span className="w-1 h-1 rounded-full bg-white/20" />
-            <span>Cancel anytime</span>
-          </div>
+          <p className="text-center text-xs text-white">
+            We'll let you know as soon as Elec-AI is ready
+          </p>
         </motion.div>
       </motion.div>
     </div>
