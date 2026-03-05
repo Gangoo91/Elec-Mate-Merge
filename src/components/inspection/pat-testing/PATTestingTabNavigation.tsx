@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button } from '@/components/ui/button';
-import { ChevronLeft, ChevronRight, CheckCircle2 } from 'lucide-react';
+import { ChevronLeft, ChevronRight, CheckCircle2, PoundSterling } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useIsMobile } from '@/hooks/use-mobile';
 
@@ -16,6 +16,7 @@ interface PATTestingTabNavigationProps {
   isCurrentTabComplete: boolean;
   onGenerateCertificate?: () => void;
   canGenerateCertificate?: boolean;
+  onCreateInvoice?: () => void;
 }
 
 const PATTestingTabNavigation: React.FC<PATTestingTabNavigationProps> = ({
@@ -30,6 +31,7 @@ const PATTestingTabNavigation: React.FC<PATTestingTabNavigationProps> = ({
   isCurrentTabComplete,
   onGenerateCertificate,
   canGenerateCertificate = true,
+  onCreateInvoice,
 }) => {
   const isMobile = useIsMobile();
   const progress = getProgressPercentage();
@@ -81,13 +83,26 @@ const PATTestingTabNavigation: React.FC<PATTestingTabNavigationProps> = ({
           </div>
 
           {isLastTab ? (
-            <Button
-              onClick={onGenerateCertificate}
-              disabled={!canGenerateCertificate}
-              className="h-12 px-6 touch-manipulation bg-blue-600 hover:bg-blue-700"
-            >
-              Generate Certificate
-            </Button>
+            <div className="flex items-center gap-2">
+              {onCreateInvoice && (
+                <Button
+                  variant="outline"
+                  size="icon"
+                  onClick={onCreateInvoice}
+                  className="h-11 w-11 touch-manipulation bg-emerald-500/10 border-emerald-500/30 hover:bg-emerald-500/20 text-emerald-400 active:scale-[0.98] transition-transform"
+                  aria-label="Create invoice"
+                >
+                  <PoundSterling className="h-5 w-5" />
+                </Button>
+              )}
+              <Button
+                onClick={onGenerateCertificate}
+                disabled={!canGenerateCertificate}
+                className="h-12 px-6 touch-manipulation bg-blue-600 hover:bg-blue-700"
+              >
+                Generate Certificate
+              </Button>
+            </div>
           ) : (
             <Button
               onClick={navigateNext}

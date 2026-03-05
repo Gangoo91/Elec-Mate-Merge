@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button } from '@/components/ui/button';
-import { ChevronLeft, ChevronRight, CheckCircle2 } from 'lucide-react';
+import { ChevronLeft, ChevronRight, CheckCircle2, PoundSterling } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { WhatsAppShareButton } from '@/components/ui/WhatsAppShareButton';
@@ -17,6 +17,7 @@ interface SolarPVTabNavigationProps {
   isCurrentTabComplete: boolean;
   onGenerateCertificate?: () => void;
   canGenerateCertificate?: boolean;
+  onCreateInvoice?: () => void;
   whatsApp?: {
     type: string;
     id: string;
@@ -38,6 +39,7 @@ const SolarPVTabNavigation: React.FC<SolarPVTabNavigationProps> = ({
   isCurrentTabComplete,
   onGenerateCertificate,
   canGenerateCertificate = true,
+  onCreateInvoice,
   whatsApp,
 }) => {
   const isMobile = useIsMobile();
@@ -105,6 +107,17 @@ const SolarPVTabNavigation: React.FC<SolarPVTabNavigationProps> = ({
 
           {isLastTab ? (
             <div className="flex items-center gap-2">
+              {onCreateInvoice && (
+                <Button
+                  variant="outline"
+                  size="icon"
+                  onClick={onCreateInvoice}
+                  className="h-11 w-11 touch-manipulation bg-emerald-500/10 border-emerald-500/30 hover:bg-emerald-500/20 text-emerald-400 active:scale-[0.98] transition-transform"
+                  aria-label="Create invoice"
+                >
+                  <PoundSterling className="h-5 w-5" />
+                </Button>
+              )}
               <Button
                 onClick={onGenerateCertificate}
                 disabled={!canGenerateCertificate}
