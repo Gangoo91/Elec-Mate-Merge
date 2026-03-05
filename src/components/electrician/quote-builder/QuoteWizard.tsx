@@ -495,11 +495,7 @@ export const QuoteWizard = ({
   const canProceed = () => {
     switch (currentStep) {
       case 0:
-        return (
-          quote.client?.name &&
-          quote.client?.address &&
-          quote.client?.postcode
-        );
+        return !!quote.client?.name;
       case 1:
         return (
           quote.jobDetails?.title &&

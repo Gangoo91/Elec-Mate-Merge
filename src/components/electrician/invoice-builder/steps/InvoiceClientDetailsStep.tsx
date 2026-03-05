@@ -16,8 +16,8 @@ const clientSchema = z.object({
   name: z.string().min(1, 'Client name is required'),
   email: z.union([z.string().email('Please enter a valid email address'), z.literal(''), z.undefined()]).optional(),
   phone: z.string().optional(),
-  address: z.string().min(1, 'Address is required'),
-  postcode: z.string().min(1, 'Postcode is required'),
+  address: z.string().optional(),
+  postcode: z.string().optional(),
   jobTitle: z.string().min(1, 'Job title is required'),
   jobDescription: z.string().optional(),
   jobLocation: z.string().optional(),
@@ -142,7 +142,7 @@ export const InvoiceClientDetailsStep = ({
       onUpdate(client, jobDetails);
 
       // Show save prompt if details complete but no customer linked
-      if (!customerId && !savePromptDismissed && value.name?.trim() && value.address?.trim()) {
+      if (!customerId && !savePromptDismissed && value.name?.trim()) {
         setShowSavePrompt(true);
       }
     });
@@ -255,7 +255,7 @@ export const InvoiceClientDetailsStep = ({
         <div>
           <p className="text-[13px] font-medium text-white uppercase tracking-wider mb-3 flex items-center gap-2">
             <MapPin className="h-3.5 w-3.5" />
-            Job Site Address
+            Job Site Address (optional)
           </p>
           <div className="rounded-2xl bg-white/[0.03] border border-white/[0.06] p-4">
             <UnifiedAddressFinder

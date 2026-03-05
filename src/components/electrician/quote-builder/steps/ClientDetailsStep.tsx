@@ -16,8 +16,8 @@ const clientSchema = z.object({
   name: z.string().min(1, 'Client name is required'),
   email: z.union([z.string().email('Please enter a valid email address'), z.literal(''), z.undefined()]).optional(),
   phone: z.string().optional(),
-  address: z.string().min(1, 'Address is required'),
-  postcode: z.string().min(1, 'Postcode is required'),
+  address: z.string().optional(),
+  postcode: z.string().optional(),
 });
 
 interface ClientDetailsStepProps {
@@ -105,8 +105,8 @@ export const ClientDetailsStep = ({ client, onUpdate, quoteId }: ClientDetailsSt
       // Always propagate form state to parent — email and phone are optional
       onUpdate({ ...(value as QuoteClient), customerId });
 
-      // Show save prompt once required fields are filled but no customer is linked
-      if (value.name && value.address && value.postcode && !customerId && !savePromptDismissed && value.name.trim()) {
+      // Show save prompt once a name is entered but no customer is linked
+      if (value.name?.trim() && !customerId && !savePromptDismissed) {
         setShowSavePrompt(true);
       }
     });
@@ -256,7 +256,7 @@ export const ClientDetailsStep = ({ client, onUpdate, quoteId }: ClientDetailsSt
         <div>
           <p className="text-[13px] font-medium text-white uppercase tracking-wider mb-3 flex items-center gap-2">
             <MapPin className="h-3.5 w-3.5" />
-            Job Site Address
+            Job Site Address (optional)
           </p>
           <div className="rounded-2xl bg-white/[0.03] border border-white/[0.06] p-4">
             <UnifiedAddressFinder
