@@ -26,6 +26,7 @@ import {
   MailOpen,
   Eye,
   ChevronRight,
+  RotateCcw,
 } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { toast } from '@/hooks/use-toast';
@@ -57,6 +58,8 @@ const QuoteViewPage = () => {
   const [isDownloading, setIsDownloading] = useState(false);
   const [isConverting, setIsConverting] = useState(false);
   const [isSendingReminder, setIsSendingReminder] = useState(false);
+  const [isReverting, setIsReverting] = useState(false);
+  const [showRevertDialog, setShowRevertDialog] = useState(false);
   const [emailTracking, setEmailTracking] = useState<{
     email_opened_at?: string;
     email_open_count?: number;
@@ -281,6 +284,49 @@ const QuoteViewPage = () => {
     } else {
       setQuote((prev) => prev ? { ...prev, acceptance_status: 'accepted', accepted_at: new Date().toISOString() } : prev);
       toast({ title: '✅ Quote accepted', description: 'You can now convert it to an invoice.' });
+    }
+  };
+
+  const handleRevertToSent = async () => {
+    if (!quote) return;
+    setIsReverting(true);
+    try {
+      const { error } = await supabase
+        .from('quotes')
+        .update({
+          acceptance_status: 'pending',
+          status: 'sent',
+          accepted_at: null,
+          accepted_by_name: null,
+          accepted_by_email: null,
+          accepted_ip: null,
+          accepted_user_agent: null,
+          updated_at: new Date().toISOString(),
+        })
+        .eq('id', quote.id);
+
+      if (error) throw error;
+
+      setQuote((prev) =>
+        prev
+          ? {
+              ...prev,
+              acceptance_status: 'pending',
+              status: 'sent',
+              accepted_at: undefined,
+              accepted_by_name: undefined,
+              accepted_by_email: undefined,
+              accepted_ip: undefined,
+              accepted_user_agent: undefined,
+            }
+          : prev
+      );
+      toast({ title: 'Quote reverted to Sent', description: 'Acceptance has been undone.' });
+    } catch (err: any) {
+      toast({ title: 'Error', description: err.message || 'Failed to revert quote.', variant: 'destructive' });
+    } finally {
+      setIsReverting(false);
+      setShowRevertDialog(false);
     }
   };
 
@@ -664,6 +710,25 @@ const QuoteViewPage = () => {
           </motion.div>
         )}
 
+        {/* Revert to Sent — only when accepted but not yet invoiced */}
+        {quote.acceptance_status === 'accepted' && !quote.invoice_raised && (
+          <motion.div variants={itemVariants}>
+            <button
+              onClick={() => setShowRevertDialog(true)}
+              className="flex items-center gap-3 p-3.5 w-full rounded-2xl bg-amber-500/10 border border-amber-500/20 touch-manipulation active:bg-amber-500/20 transition-colors"
+            >
+              <div className="w-10 h-10 rounded-xl bg-amber-500/20 border border-amber-500/30 flex items-center justify-center flex-shrink-0">
+                <RotateCcw className="h-5 w-5 text-amber-400" />
+              </div>
+              <div className="flex-1 min-w-0 text-left">
+                <p className="text-[15px] font-medium text-amber-400">Revert to Sent</p>
+                <p className="text-[13px] text-white">Undo acceptance — accepted by mistake?</p>
+              </div>
+              <ChevronRight className="h-4 w-4 text-amber-400/50" />
+            </button>
+          </motion.div>
+        )}
+
         {/* Email Tracking - Show for sent quotes awaiting response */}
         {quote.status === 'sent' &&
           quote.acceptance_status === 'pending' &&
@@ -965,6 +1030,38 @@ const QuoteViewPage = () => {
           </motion.div>
         )}
       </div>
+
+      {/* Revert Confirmation Dialog */}
+      <AlertDialog open={showRevertDialog} onOpenChange={setShowRevertDialog}>
+        <AlertDialogContent className="rounded-2xl">
+          <AlertDialogHeader>
+            <AlertDialogTitle>Revert to Sent?</AlertDialogTitle>
+            <AlertDialogDescription>
+              This will undo the acceptance and return the quote to "Sent" status. Any recorded
+              signature or acceptance details will be cleared. This cannot be undone.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel disabled={isReverting} className="rounded-xl">
+              Cancel
+            </AlertDialogCancel>
+            <AlertDialogAction
+              onClick={handleRevertToSent}
+              disabled={isReverting}
+              className="bg-amber-500 hover:bg-amber-600 text-black rounded-xl"
+            >
+              {isReverting ? (
+                <>
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  Reverting...
+                </>
+              ) : (
+                'Yes, Revert'
+              )}
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
 
       {/* Delete Confirmation Dialog */}
       <AlertDialog open={showDeleteDialog} onOpenChange={setShowDeleteDialog}>
