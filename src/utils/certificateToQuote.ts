@@ -30,7 +30,7 @@ export interface CertificateClientData {
   clientPhone?: string;
   clientAddress?: string;
   installationAddress?: string;
-  certificateType: 'EICR' | 'EIC' | 'Minor Works';
+  certificateType: 'EICR' | 'EIC' | 'Minor Works' | 'Emergency Lighting' | 'EV Charging' | 'PAT Testing' | 'Fire Alarm';
   certificateReference?: string;
   // Certificate attachment info
   reportId?: string;

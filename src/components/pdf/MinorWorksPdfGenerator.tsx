@@ -630,7 +630,7 @@ const MinorWorksPdfGenerator: React.FC<MinorWorksPdfGeneratorProps> = ({
     const url = createQuoteFromCertificate({
       clientName: formData.clientName || '',
       clientEmail: formData.clientEmail || '',
-      clientPhone: formData.electricianPhone || '',
+      clientPhone: '', // Minor Works form does not collect client phone
       clientAddress: formData.propertyAddress || '',
       installationAddress: formData.propertyAddress || '',
       certificateType: 'Minor Works',
@@ -646,7 +646,7 @@ const MinorWorksPdfGenerator: React.FC<MinorWorksPdfGeneratorProps> = ({
     const url = createInvoiceFromCertificate({
       clientName: formData.clientName || '',
       clientEmail: formData.clientEmail || '',
-      clientPhone: formData.electricianPhone || '',
+      clientPhone: '', // Minor Works form does not collect client phone
       clientAddress: formData.propertyAddress || '',
       installationAddress: formData.propertyAddress || '',
       certificateType: 'Minor Works',

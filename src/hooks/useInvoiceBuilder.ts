@@ -176,10 +176,13 @@ export const useInvoiceBuilder = (sourceQuote?: Quote, existingInvoice?: Partial
         ...(existingInvoice.items || []),
         ...(existingInvoice.additional_invoice_items || []),
       ];
-      const totals = calculateAllTotals(allItems, existingInvoice.settings!);
+      // Guard against missing settings (e.g. cert-created invoices before companyProfile loads)
+      const settings = existingInvoice.settings || createEmptyInvoice().settings!;
+      const totals = calculateAllTotals(allItems, settings);
 
       return {
         ...existingInvoice,
+        settings,
         ...totals,
       };
     }

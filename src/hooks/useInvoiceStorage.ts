@@ -172,12 +172,18 @@ export const useInvoiceStorage = () => {
       // Merge additional invoice items into the main items array
       const mergedItems = [...(invoice.items || []), ...(invoice.additional_invoice_items || [])];
 
-      // Check if this is a new standalone invoice or existing quote
-      const { data: existingQuote } = await supabase
-        .from('quotes')
-        .select('id')
-        .eq('id', invoice.id)
-        .maybeSingle();
+      // Check if this is a new standalone invoice or existing quote.
+      // Short-circuit: if invoice.id is falsy (cert-created invoices have no id yet),
+      // skip the DB lookup entirely — it would produce .eq('id', undefined) which is unreliable.
+      let existingQuote = null;
+      if (invoice.id) {
+        const { data } = await supabase
+          .from('quotes')
+          .select('id')
+          .eq('id', invoice.id)
+          .maybeSingle();
+        existingQuote = data;
+      }
 
       const isNewInvoice = !existingQuote;
       let updatedQuote;
@@ -405,7 +411,9 @@ export const useInvoiceStorage = () => {
         description:
           isDuplicateKeyError && retryCount >= MAX_RETRIES
             ? 'Failed to generate unique invoice number after multiple attempts. Please try again.'
-            : 'Failed to save invoice. Please try again.',
+            : error?.message
+              ? `Failed to save invoice: ${error.message}`
+              : 'Failed to save invoice. Please try again.',
         variant: 'destructive',
       });
       return false;
