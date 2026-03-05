@@ -102,13 +102,12 @@ export const ClientDetailsStep = ({ client, onUpdate, quoteId }: ClientDetailsSt
 
   useEffect(() => {
     const subscription = form.watch((value) => {
-      if (value.name && value.email && value.phone && value.address && value.postcode) {
-        onUpdate({ ...(value as QuoteClient), customerId });
+      // Always propagate form state to parent — email and phone are optional
+      onUpdate({ ...(value as QuoteClient), customerId });
 
-        // Show save prompt if client details are complete but no customer linked
-        if (!customerId && !savePromptDismissed && value.name.trim()) {
-          setShowSavePrompt(true);
-        }
+      // Show save prompt once required fields are filled but no customer is linked
+      if (value.name && value.address && value.postcode && !customerId && !savePromptDismissed && value.name.trim()) {
+        setShowSavePrompt(true);
       }
     });
     return () => subscription.unsubscribe();

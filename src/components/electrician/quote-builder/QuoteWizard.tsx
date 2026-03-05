@@ -497,8 +497,6 @@ export const QuoteWizard = ({
       case 0:
         return (
           quote.client?.name &&
-          quote.client?.email &&
-          quote.client?.phone &&
           quote.client?.address &&
           quote.client?.postcode
         );
