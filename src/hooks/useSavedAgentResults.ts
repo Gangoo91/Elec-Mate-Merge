@@ -108,7 +108,7 @@ export function useSavedAgentResults(): UseSavedAgentResultsReturn {
           allResults.push({
             id: job.id,
             agentType: 'circuit-designer',
-            title: jobInputs?.projectName || 'Circuit Design',
+            title: jobInputs?.projectInfo?.projectName || jobInputs?.projectName || 'Circuit Design',
             completedAt: job.completed_at || '',
             outputData: job.design_data,
             inputData: job.job_inputs,

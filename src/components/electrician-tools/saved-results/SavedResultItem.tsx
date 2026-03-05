@@ -92,7 +92,7 @@ export const SavedResultItem: React.FC<SavedResultItemProps> = ({ result, onClos
     try {
       switch (result.agentType) {
         case 'circuit-designer': {
-          const projectName = result.inputData?.projectName || 'Circuit Design';
+          const projectName = result.inputData?.projectInfo?.projectName || result.inputData?.projectName || 'Circuit Design';
           const response =
             typeof result.outputData === 'string'
               ? result.outputData
