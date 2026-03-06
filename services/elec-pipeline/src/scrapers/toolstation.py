@@ -113,7 +113,7 @@ async def _scrape_page(
 
     # Also try parsing from any product links in the page
     if not products:
-        product_links = soup.find_all("a", href=re.compile(r"/p\d+|/products?/"))
+        product_links = soup.find_all("a", href=re.compile(r"/p\w+$"))
         processed: set[str] = set()
         for link in product_links:
             href = link.get("href", "")
@@ -131,31 +131,47 @@ def _parse_card(
     card, supplier_id: str, page_info: dict[str, str], seen_skus: set[str]
 ) -> dict[str, Any] | None:
     """Parse a Toolstation product card element."""
-    # Find product link
+    # Find product link — Toolstation uses /product-name/p12345 format
     link = card.find("a", href=True)
     if not link:
         return None
 
     href = link.get("href", "")
-    sku_match = re.search(r"/p(?:roducts?/)?(\w+)", href)
+    # Match /p12345 or /pABC123 at end of URL
+    sku_match = re.search(r"/p(\w+)$", href)
     if not sku_match:
         return None
     sku = sku_match.group(1)
     if sku in seen_skus:
         return None
 
-    # Name
+    # Name — link text is often empty, extract from card text
+    # Card text format: "★★★★★ (96) Product code: 10589 Product Name Here £48.30..."
+    card_text = card.get_text(" ", strip=True)
     name = ""
+
+    # Try data-testid name element first
     name_el = card.find(attrs={"data-testid": re.compile(r"product.*name|product.*title")})
     if name_el:
         name = name_el.get_text(strip=True)
+
+    # Try link text
     if not name:
         name = link.get_text(strip=True)
-    if not name or len(name) < 3:
+
+    # Extract name from card text: after "Product code: XXXXX" up to the price
+    if not name or len(name) < 5:
+        name_match = re.search(
+            r"Product\s+code:\s*\w+\s+(.+?)(?:\s+£|\s+From\s+£|\s+each\s+quantity)",
+            card_text, re.IGNORECASE
+        )
+        if name_match:
+            name = name_match.group(1).strip()
+
+    if not name or len(name) < 5:
         return None
 
-    # Price
-    card_text = card.get_text()
+    # Price — first £ value is inc. VAT
     price = None
     price_matches = re.findall(r"£(\d+\.?\d*)", card_text)
     if price_matches:
@@ -194,7 +210,7 @@ def _parse_link(
 ) -> dict[str, Any] | None:
     """Parse a product from a link element and its parent context."""
     href = link.get("href", "")
-    sku_match = re.search(r"/p(?:roducts?/)?(\w+)", href)
+    sku_match = re.search(r"/p(\w+)$", href)
     if not sku_match:
         return None
     sku = sku_match.group(1)

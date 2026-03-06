@@ -115,8 +115,8 @@ async def _scrape_search(
     soup = BeautifulSoup(html, "lxml")
     products: list[dict] = []
 
-    # Screwfix product cards have data-qaid attributes or /p/ links
-    product_links = soup.find_all("a", href=re.compile(r"/p/\d+"))
+    # Screwfix product links: /p/product-slug/SKU (e.g. /p/some-product-name/453vf)
+    product_links = soup.find_all("a", href=re.compile(r"/p/[^/]+/[a-zA-Z0-9]+"))
     processed: set[str] = set()
 
     for link in product_links:
@@ -125,15 +125,26 @@ async def _scrape_search(
             continue
         processed.add(href)
 
-        # Extract SKU from URL: /p/12345
-        sku_match = re.search(r"/p/(\d+)", href)
+        # Extract SKU from URL: /p/slug/453vf
+        sku_match = re.search(r"/p/[^/]+/([a-zA-Z0-9]+)$", href)
         if not sku_match:
             continue
         sku = sku_match.group(1)
         if sku in seen_skus:
             continue
 
-        # Find the product card container
+        # Get product name from link text
+        name = link.get_text(strip=True)
+        if not name or len(name) < 5:
+            # Try span inside link
+            span = link.find("span")
+            if span:
+                name = span.get_text(strip=True)
+        # Skip review-count links like "(99)"
+        if not name or len(name) < 5 or re.match(r"^\(\d+\)$", name):
+            continue
+
+        # Find the product card container for price/image
         card = link.find_parent("div", recursive=True)
         if not card:
             card = link.parent
@@ -150,21 +161,12 @@ async def _scrape_search(
                     break
                 card = parent
 
-        name = link.get_text(strip=True)
-        if not name or len(name) < 3:
-            # Try span inside link
-            span = link.find("span")
-            if span:
-                name = span.get_text(strip=True)
-        if not name or len(name) < 3:
-            continue
-
         # Find price
         card_text = card.get_text()
         price = None
         price_matches = re.findall(r"£(\d+\.?\d*)", card_text)
         if price_matches:
-            # First price is usually current price
+            # First price is usually inc. VAT price
             price = clean_price(price_matches[0])
 
         # Find image
