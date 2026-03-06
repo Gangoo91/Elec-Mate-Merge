@@ -179,8 +179,11 @@ const Header = ({ toggleSidebar }: HeaderProps) => {
           </motion.div>
         </div>
 
-        {/* Center area - Search + Clock */}
-        <div className="flex items-center gap-2">
+        {/* Center - Live Clock (desktop only) */}
+        <LiveClock className="hidden md:flex" />
+
+        {/* Right side - Search + Profile */}
+        <div className="flex items-center gap-1.5">
           <motion.div whileTap={{ scale: 0.92 }}>
             <Button
               variant="ghost"
@@ -194,14 +197,9 @@ const Header = ({ toggleSidebar }: HeaderProps) => {
               )}
               aria-label="Search pages"
             >
-              <Search className="h-5 w-5 text-white" />
+              <Search className="h-4.5 w-4.5 text-white" />
             </Button>
           </motion.div>
-          <LiveClock className="hidden md:flex" />
-        </div>
-
-        {/* Right side - Profile */}
-        <div className="flex items-center">
           <UserProfileDropdown />
         </div>
       </div>
