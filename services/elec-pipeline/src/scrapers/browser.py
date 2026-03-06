@@ -13,16 +13,42 @@ _browser_config = BrowserConfig(
     text_mode=True,  # Skip images/CSS for speed
 )
 
+_stealth_browser_config = BrowserConfig(
+    headless=True,
+    browser_type="chromium",
+    text_mode=False,  # Need full rendering for Turnstile
+    enable_stealth=True,
+    viewport_width=1920,
+    viewport_height=1080,
+)
 
-async def fetch_page_html(url: str, wait_time: int = 3) -> str:
-    """Fetch a page using stealth browser, return raw HTML."""
+
+async def fetch_page_html(
+    url: str,
+    wait_time: float = 3.0,
+    stealth: bool = False,
+) -> str:
+    """Fetch a page using stealth browser, return raw HTML.
+
+    Args:
+        url: Page URL to fetch.
+        wait_time: Seconds to wait before extracting HTML.
+        stealth: Use full stealth mode (magic + simulate_user) for
+                 sites with Cloudflare Turnstile or similar challenges.
+    """
     config = CrawlerRunConfig(
         cache_mode=CacheMode.BYPASS,
-        wait_time=wait_time,
+        delay_before_return_html=wait_time,
+        page_timeout=90000 if stealth else 60000,
+        magic=stealth,
+        simulate_user=stealth,
+        scan_full_page=stealth,
+        remove_overlay_elements=stealth,
     )
-    async with AsyncWebCrawler(config=_browser_config) as crawler:
+    browser = _stealth_browser_config if stealth else _browser_config
+    async with AsyncWebCrawler(config=browser) as crawler:
         result = await crawler.arun(url=url, config=config)
         if not result.success:
             raise RuntimeError(f"Crawl failed for {url}: {result.error_message}")
-        log.debug("browser_fetch_ok", url=url, html_len=len(result.html))
+        log.debug("browser_fetch_ok", url=url, html_len=len(result.html), stealth=stealth)
         return result.html

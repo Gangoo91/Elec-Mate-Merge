@@ -16,18 +16,21 @@ from src.scrapers.tlc_direct import scrape_tlc
 from src.scrapers.screwfix import scrape_screwfix
 from src.scrapers.toolstation import scrape_toolstation
 from src.scrapers.cef import scrape_cef
+from src.scrapers.wickes import scrape_wickes
+from src.scrapers.bandq import scrape_bandq
 from src.utils.alerting import alert_pipeline_failure
 
 log = structlog.get_logger()
 
 # Supplier slug → scraper function mapping
-# Edmundson removed: trade-only, no public product catalogue
-# ElectricalDirect removed: site is dead (Netlify 404)
+# Machine Mart + FFX: load products via AJAX, need further work
 SCRAPERS = [
     ("tlc-electrical", scrape_tlc),
     ("screwfix", scrape_screwfix),
     ("toolstation", scrape_toolstation),
     ("cef", scrape_cef),
+    ("wickes", scrape_wickes),
+    ("bandq", scrape_bandq),
 ]
 
 

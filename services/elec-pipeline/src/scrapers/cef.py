@@ -91,7 +91,7 @@ async def _scrape_category(
 ) -> list[dict[str, Any]]:
     """Scrape a single CEF category page."""
     url = BASE_URL + cat["path"]
-    html = await fetch_page_html(url, wait_time=15.0)
+    html = await fetch_page_html(url, wait_time=15.0, stealth=True)
     soup = BeautifulSoup(html, "lxml")
     products: list[dict] = []
 
@@ -126,7 +126,7 @@ async def _scrape_category(
             next_url = next_page["href"]
             if not next_url.startswith("http"):
                 next_url = BASE_URL + next_url
-            html2 = await fetch_page_html(next_url)
+            html2 = await fetch_page_html(next_url, wait_time=15.0, stealth=True)
             soup2 = BeautifulSoup(html2, "lxml")
             cards2 = soup2.find_all("div", class_=re.compile(r"product-item|product-card"))
             if not cards2:
