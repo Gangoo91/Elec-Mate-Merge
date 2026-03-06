@@ -61,6 +61,9 @@ BRANDS = [
 ]
 
 
+MAX_PAGES = 3  # Scrape up to 3 pages per category/search
+
+
 async def scrape_toolstation(supplier_id: str) -> list[dict[str, Any]]:
     """Scrape Toolstation category and search pages using stealth browser."""
     all_products: list[dict] = []
@@ -68,7 +71,7 @@ async def scrape_toolstation(supplier_id: str) -> list[dict[str, Any]]:
 
     for page_info in PAGES:
         try:
-            products = await _scrape_page(supplier_id, page_info, seen_skus)
+            products = await _scrape_paginated(supplier_id, page_info, seen_skus)
             all_products.extend(products)
             log.info(
                 "toolstation_page_done",
@@ -88,13 +91,38 @@ async def scrape_toolstation(supplier_id: str) -> list[dict[str, Any]]:
     return all_products
 
 
-async def _scrape_page(
+async def _scrape_paginated(
     supplier_id: str,
     page_info: dict[str, str],
     seen_skus: set[str],
 ) -> list[dict[str, Any]]:
+    """Scrape multiple pages of a category or search result."""
+    all_products: list[dict] = []
+
+    for page_num in range(1, MAX_PAGES + 1):
+        products = await _scrape_page(supplier_id, page_info, seen_skus, page_num)
+        all_products.extend(products)
+        if len(products) < 20:
+            # Fewer than a full page — no more pages to fetch
+            break
+        await asyncio.sleep(3)
+
+    return all_products
+
+
+async def _scrape_page(
+    supplier_id: str,
+    page_info: dict[str, str],
+    seen_skus: set[str],
+    page_num: int = 1,
+) -> list[dict[str, Any]]:
     """Scrape a single page (category or search results)."""
-    url = BASE_URL + page_info["path"]
+    base_path = page_info["path"]
+
+    # Add pagination params: 72 products per page
+    sep = "&" if "?" in base_path else "?"
+    url = f"{BASE_URL}{base_path}{sep}productsperpage=72&page={page_num}"
+
     html = await fetch_page_html(url)
     soup = BeautifulSoup(html, "lxml")
     products: list[dict] = []

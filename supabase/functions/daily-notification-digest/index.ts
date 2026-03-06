@@ -106,7 +106,9 @@ async function buildAlertsForUser(
 
   if (overdueInvoices && overdueInvoices.length > 0) {
     const totalOwed = overdueInvoices.reduce((sum, q) => sum + (q.total ?? 0), 0);
-    const formatted = new Intl.NumberFormat('en-GB', { style: 'currency', currency: 'GBP' }).format(totalOwed);
+    const formatted = new Intl.NumberFormat('en-GB', { style: 'currency', currency: 'GBP' }).format(
+      totalOwed
+    );
     alerts.push({
       type: 'overdue_invoices',
       referenceId: `batch-${overdueInvoices.length}`,
@@ -130,7 +132,7 @@ async function buildAlertsForUser(
     .limit(5);
 
   for (const quote of expiringQuotes ?? []) {
-    const clientName = (quote.client_data as any)?.name || 'Client';
+    const clientName = (quote.client_data as Record<string, unknown>)?.name || 'Client';
     alerts.push({
       type: 'expiring_quote',
       referenceId: quote.id,
@@ -151,14 +153,17 @@ async function buildAlertsForUser(
     .limit(10);
 
   if (overdueTasks && overdueTasks.length > 0) {
-    const urgentCount = overdueTasks.filter(t => t.priority === 'urgent' || t.priority === 'high').length;
+    const urgentCount = overdueTasks.filter(
+      (t) => t.priority === 'urgent' || t.priority === 'high'
+    ).length;
     alerts.push({
       type: 'overdue_tasks',
       referenceId: `batch-${overdueTasks.length}`,
       title: `📋 ${overdueTasks.length} overdue task${overdueTasks.length > 1 ? 's' : ''}`,
-      body: urgentCount > 0
-        ? `${urgentCount} high priority — open the app to action them`
-        : 'Open the app to catch up',
+      body:
+        urgentCount > 0
+          ? `${urgentCount} high priority — open the app to action them`
+          : 'Open the app to catch up',
       pushType: 'job',
     });
   }
@@ -195,7 +200,7 @@ async function buildAlertsForUser(
   const fourteenDays = new Date(now.getTime() + 14 * 86400000).toISOString().split('T')[0];
 
   const { data: elecIdProfile } = await supabase
-    .from('elec_id_profiles')
+    .from('employer_elec_id_profiles')
     .select('id, ecs_expiry_date')
     .eq('user_id', userId)
     .single();
@@ -208,9 +213,10 @@ async function buildAlertsForUser(
       type: 'ecs_card_expiry',
       referenceId: elecIdProfile.id,
       title: `⚠️ ECS Card ${daysLeft < 0 ? 'expired' : 'expiring soon'}`,
-      body: daysLeft < 0
-        ? 'Your ECS card has expired — renew now'
-        : `Expires in ${daysLeft} day${daysLeft !== 1 ? 's' : ''} — renew before it lapses`,
+      body:
+        daysLeft < 0
+          ? 'Your ECS card has expired — renew now'
+          : `Expires in ${daysLeft} day${daysLeft !== 1 ? 's' : ''} — renew before it lapses`,
       pushType: 'certificate',
     });
   }
@@ -232,9 +238,10 @@ async function buildAlertsForUser(
         type: 'equipment_calibration',
         referenceId: eq.id,
         title: `🔧 Calibration due: ${eq.name}`,
-        body: daysLeft < 0
-          ? `Calibration overdue — equipment may be non-compliant`
-          : `Due in ${daysLeft} day${daysLeft !== 1 ? 's' : ''}`,
+        body:
+          daysLeft < 0
+            ? `Calibration overdue — equipment may be non-compliant`
+            : `Due in ${daysLeft} day${daysLeft !== 1 ? 's' : ''}`,
         pushType: 'certificate',
       });
     }
@@ -251,9 +258,7 @@ async function buildAlertsForUser(
     .limit(5);
 
   for (const cert of expiringCerts ?? []) {
-    const daysLeft = Math.floor(
-      (new Date(cert.expiry_date).getTime() - now.getTime()) / 86400000
-    );
+    const daysLeft = Math.floor((new Date(cert.expiry_date).getTime() - now.getTime()) / 86400000);
     alerts.push({
       type: 'eicr_reinspection',
       referenceId: cert.id,
@@ -287,7 +292,7 @@ serve(async (req: Request): Promise<Response> => {
 
     if (subError) throw subError;
 
-    const userIds = [...new Set((subscriptions ?? []).map(s => s.user_id))];
+    const userIds = [...new Set((subscriptions ?? []).map((s) => s.user_id))];
     console.log(`[daily-digest] Processing ${userIds.length} users`);
 
     let totalSent = 0;
@@ -311,7 +316,7 @@ serve(async (req: Request): Promise<Response> => {
           totalSent++;
 
           // Throttle slightly between sends
-          await new Promise(r => setTimeout(r, 100));
+          await new Promise((r) => setTimeout(r, 100));
         }
       } catch (userErr) {
         console.error(`[daily-digest] Error processing user ${userId}:`, userErr);
@@ -322,10 +327,14 @@ serve(async (req: Request): Promise<Response> => {
     console.log(`[daily-digest] Done. Sent: ${totalSent}, Skipped (deduped): ${totalSkipped}`);
 
     return new Response(
-      JSON.stringify({ success: true, usersProcessed: userIds.length, sent: totalSent, skipped: totalSkipped }),
+      JSON.stringify({
+        success: true,
+        usersProcessed: userIds.length,
+        sent: totalSent,
+        skipped: totalSkipped,
+      }),
       { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
-
   } catch (error: unknown) {
     console.error('[daily-digest] Fatal error:', error);
     return new Response(

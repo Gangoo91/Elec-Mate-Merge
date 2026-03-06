@@ -91,7 +91,7 @@ async def _scrape_category(
 ) -> list[dict[str, Any]]:
     """Scrape a single CEF category page."""
     url = BASE_URL + cat["path"]
-    html = await fetch_page_html(url)
+    html = await fetch_page_html(url, wait_time=15.0)
     soup = BeautifulSoup(html, "lxml")
     products: list[dict] = []
 

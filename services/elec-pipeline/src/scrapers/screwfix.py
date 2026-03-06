@@ -98,7 +98,7 @@ async def scrape_screwfix(supplier_id: str) -> list[dict[str, Any]]:
                 query=sq["query"],
                 error=str(e),
             )
-        await asyncio.sleep(2)
+        await asyncio.sleep(5)
 
     log.info("screwfix_total", count=len(all_products))
     return all_products
@@ -110,8 +110,8 @@ async def _scrape_search(
     seen_skus: set[str],
 ) -> list[dict[str, Any]]:
     """Scrape a single search results page."""
-    url = f"{BASE_URL}/search?search={sq['query']}&page_size=100"
-    html = await fetch_page_html(url)
+    url = f"{BASE_URL}/search?search={sq['query']}"
+    html = await fetch_page_html(url, wait_time=5.0)
     soup = BeautifulSoup(html, "lxml")
     products: list[dict] = []
 
