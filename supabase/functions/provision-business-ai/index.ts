@@ -176,36 +176,54 @@ serve(async (req) => {
     console.log(`Agent provisioned for user ${user.id}, JWT expires ${expiresAtDate}`);
 
     // Notify VPS to create OpenClaw agent workspace + binding
-    let vpsProvisioned = false;
     const vpsApiKey = Deno.env.get('VPS_API_KEY');
-    if (vpsApiKey) {
-      try {
-        const vpsRes = await fetch('https://agent.elec-mate.com/api/provision-agent', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'X-API-Key': vpsApiKey,
-          },
-          body: JSON.stringify({
-            user_id: user.id,
-            phone_number: profile.agent_whatsapp_number,
-            full_name: user.user_metadata?.full_name || '',
-            role: profile.role || 'electrician',
-          }),
-        });
-        if (vpsRes.ok) {
-          vpsProvisioned = true;
-          console.log(`VPS agent provisioned for user ${user.id}`);
-        } else {
-          const vpsErr = await vpsRes.text();
-          console.error(`VPS provisioning failed (${vpsRes.status}): ${vpsErr}`);
-        }
-      } catch (vpsError) {
-        // VPS provisioning failure is non-fatal — Supabase side is already done
-        console.error('VPS provisioning error:', vpsError);
+    if (!vpsApiKey) {
+      // Roll back — can't provision without VPS key
+      await supabase.from('profiles').update({ agent_status: 'provisioning' }).eq('id', user.id);
+      console.error('VPS_API_KEY not set — cannot provision agent on VPS');
+      throw new Error(
+        'Agent activation failed — VPS configuration missing. Please contact support.'
+      );
+    }
+
+    let vpsProvisioned = false;
+    try {
+      const vpsRes = await fetch('https://agent.elec-mate.com/api/provision-agent', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-API-Key': vpsApiKey,
+        },
+        body: JSON.stringify({
+          user_id: user.id,
+          phone_number: profile.agent_whatsapp_number,
+          full_name: user.user_metadata?.full_name || '',
+          role: profile.role || 'electrician',
+        }),
+      });
+      if (vpsRes.ok) {
+        vpsProvisioned = true;
+        console.log(`VPS agent provisioned for user ${user.id}`);
+      } else {
+        const vpsErr = await vpsRes.text();
+        console.error(`VPS provisioning failed (${vpsRes.status}): ${vpsErr}`);
+        throw new Error(`VPS returned ${vpsRes.status}`);
       }
-    } else {
-      console.warn('VPS_API_KEY not set — skipping VPS agent provisioning');
+    } catch (vpsError) {
+      // Roll back agent_status so user can retry
+      await supabase.from('profiles').update({ agent_status: 'provisioning' }).eq('id', user.id);
+
+      await supabase.from('agent_action_log').insert({
+        user_id: user.id,
+        action_type: 'agent_provision_failed',
+        description: `VPS provisioning failed: ${vpsError instanceof Error ? vpsError.message : 'Unknown error'}`,
+        outcome: 'failure',
+      });
+
+      console.error('VPS provisioning error — rolled back agent_status:', vpsError);
+      throw new Error(
+        'Agent activation failed — could not set up WhatsApp connection. Please try again in a moment.'
+      );
     }
 
     return new Response(

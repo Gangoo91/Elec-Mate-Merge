@@ -17,6 +17,7 @@ import {
   ChevronLeft,
   ChevronRight,
   ArrowLeft,
+  Gift,
 } from 'lucide-react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useNotifications } from '@/components/notifications/NotificationProvider';
@@ -31,6 +32,7 @@ import BusinessTab from '@/components/settings/BusinessTab';
 import PreferencesTab from '@/components/settings/PreferencesTab';
 import PrivacyTab from '@/components/settings/PrivacyTab';
 import BillingTab from '@/components/settings/BillingTab';
+import ReferralsTab from '@/components/settings/ReferralsTab';
 import SettingsNavGrid from '@/components/settings/SettingsNavGrid';
 
 // New 6-tab configuration (reduced from 10)
@@ -41,6 +43,7 @@ const SETTINGS_TABS = [
   { id: 'preferences', label: 'Preferences', icon: Settings2, component: PreferencesTab },
   { id: 'privacy', label: 'Privacy', icon: Shield, component: PrivacyTab },
   { id: 'billing', label: 'Billing', icon: CreditCard, component: BillingTab },
+  { id: 'referrals', label: 'Refer a Mate', icon: Gift, component: ReferralsTab },
 ];
 
 const SettingsPage = () => {

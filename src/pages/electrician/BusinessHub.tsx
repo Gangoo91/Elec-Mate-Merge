@@ -29,6 +29,7 @@ import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/component
 import { QuoteInvoiceAnalytics } from '@/components/electrician/analytics/QuoteInvoiceAnalytics';
 import { useBusinessHubData } from '@/hooks/useBusinessHubData';
 import { useSparkTaskOverdueCount } from '@/hooks/useSparkTaskOverdueCount';
+import { useSparkProjects } from '@/hooks/useSparkProjects';
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -50,6 +51,7 @@ const BusinessHub = () => {
   const { revenue, quotes, invoices, isLoading, lastUpdated, refresh, formatCurrency } =
     useBusinessHubData();
   const overdueCount = useSparkTaskOverdueCount();
+  const { counts: projectCounts } = useSparkProjects('active');
 
   // Money In
   const moneyInTools = [
@@ -210,6 +212,32 @@ const BusinessHub = () => {
           </div>
         </motion.section>
 
+        {/* Projects — Featured Position */}
+        <motion.section variants={itemVariants} className="space-y-3">
+          <div className="flex items-center gap-2.5">
+            <div className="h-1.5 w-1.5 rounded-full bg-amber-400" />
+            <h2 className="text-base font-bold text-white">Projects</h2>
+            {projectCounts.active > 0 && (
+              <span className="text-[11px] font-bold bg-amber-500/20 text-amber-400 px-2 py-0.5 rounded-full">
+                {projectCounts.active} active
+              </span>
+            )}
+          </div>
+          <div className="space-y-2">
+            <BusinessCard
+              title="Projects"
+              description={
+                projectCounts.active > 0
+                  ? `${projectCounts.active} active — tap to manage`
+                  : 'Group jobs, quotes, certs & tasks'
+              }
+              icon={FolderKanban}
+              href="/electrician/projects"
+              gradient="from-amber-400 to-orange-500"
+            />
+          </div>
+        </motion.section>
+
         {/* Customers */}
         <motion.section variants={itemVariants} className="space-y-3">
           <div className="flex items-center gap-2.5">
@@ -247,13 +275,6 @@ const BusinessHub = () => {
               icon={Camera}
               href="/electrician/photo-docs"
               gradient="from-blue-400 to-cyan-500"
-            />
-            <BusinessCard
-              title="Projects"
-              description="Group jobs, quotes, certs & tasks"
-              icon={FolderKanban}
-              href="/electrician/projects"
-              gradient="from-amber-400 to-orange-500"
             />
             <BusinessCard
               title="Calendar"

@@ -1,8 +1,9 @@
-import { Menu } from 'lucide-react';
+import { Menu, Search } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useIsMobile } from '@/hooks/use-mobile';
 import RecordingIndicator from '../apprentice/timer/RecordingIndicator';
 import UserProfileDropdown from '../auth/UserProfileDropdown';
+import { CommandPalette } from '../search/CommandPalette';
 import { useRef, useEffect, useState } from 'react';
 import { format } from 'date-fns';
 import { cn } from '@/lib/utils';
@@ -83,6 +84,19 @@ const Header = ({ toggleSidebar }: HeaderProps) => {
   const isMobile = useIsMobile();
   const headerRef = useRef<HTMLElement>(null);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [commandOpen, setCommandOpen] = useState(false);
+
+  // Cmd+K / Ctrl+K keyboard shortcut
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+        e.preventDefault();
+        setCommandOpen((prev) => !prev);
+      }
+    };
+    document.addEventListener('keydown', handleKeyDown);
+    return () => document.removeEventListener('keydown', handleKeyDown);
+  }, []);
 
   // Track scroll position for visual effects
   useEffect(() => {
@@ -165,14 +179,33 @@ const Header = ({ toggleSidebar }: HeaderProps) => {
           </motion.div>
         </div>
 
-        {/* Center - Live Clock (desktop only) */}
-        <LiveClock className="hidden md:flex" />
+        {/* Center area - Search + Clock */}
+        <div className="flex items-center gap-2">
+          <motion.div whileTap={{ scale: 0.92 }}>
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={() => setCommandOpen(true)}
+              className={cn(
+                'h-10 w-10 min-w-[40px] min-h-[40px]',
+                'hover:bg-white/10 active:bg-white/15',
+                'touch-manipulation rounded-xl',
+                'transition-all duration-150'
+              )}
+              aria-label="Search pages"
+            >
+              <Search className="h-5 w-5 text-white" />
+            </Button>
+          </motion.div>
+          <LiveClock className="hidden md:flex" />
+        </div>
 
         {/* Right side - Profile */}
         <div className="flex items-center">
           <UserProfileDropdown />
         </div>
       </div>
+      <CommandPalette open={commandOpen} onOpenChange={setCommandOpen} />
     </header>
   );
 };

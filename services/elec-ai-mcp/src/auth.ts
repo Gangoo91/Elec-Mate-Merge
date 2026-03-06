@@ -63,7 +63,10 @@ async function validateJwt(jwt: string): Promise<UserContext> {
     if (msg.includes('invalid') || msg.includes('malformed')) {
       throw new AuthError('invalid_token', 'JWT is invalid or has been revoked');
     }
-    throw new AuthError('auth_failed', `Authentication failed: ${error.message}`);
+    throw new AuthError(
+      'auth_failed',
+      'Authentication failed — please try again or request a new token'
+    );
   }
 
   if (!user) {
@@ -134,12 +137,14 @@ async function authenticateWithApiKey(apiKey: string, senderPhone?: string): Pro
 
   if (!res.ok) {
     const err = (await res.json().catch(() => ({ error: 'unknown' }))) as Record<string, unknown>;
-    throw new AuthError('jwt_fetch_failed', `Failed to fetch JWT: ${err.error || res.statusText}`);
+    console.error('[auth] JWT fetch failed:', err.error || res.statusText);
+    throw new AuthError('jwt_fetch_failed', 'Failed to authenticate — please try again');
   }
 
   const data = (await res.json()) as { jwt?: string; error?: string };
   if (!data.jwt) {
-    throw new AuthError('no_jwt', `No JWT returned: ${data.error || 'unknown'}`);
+    console.error('[auth] No JWT in response:', data.error || 'unknown');
+    throw new AuthError('no_jwt', 'Authentication unavailable — please contact support');
   }
 
   _apiKeyJwtCache.set(phoneNumber, { jwt: data.jwt, fetchedAt: Date.now() });

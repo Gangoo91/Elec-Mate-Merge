@@ -345,6 +345,21 @@ const PRICE_TO_TIER: Record<string, string> = {
   price_1RhtiS2RKw5t5RAmha0s6PJA: 'electrician_yearly', // £99.99/year (legacy)
 };
 
+/**
+ * Get monthly price in pence from a Stripe price ID
+ */
+async function getMonthlyPrice(stripe: Stripe, priceId: string): Promise<number> {
+  try {
+    const price = await stripe.prices.retrieve(priceId);
+    if (price.recurring?.interval === 'year' && price.unit_amount) {
+      return Math.round(price.unit_amount / 12); // Convert yearly to monthly equivalent
+    }
+    return price.unit_amount || 999; // Default to £9.99 if can't determine
+  } catch {
+    return 999; // Default fallback: £9.99
+  }
+}
+
 serve(async (req) => {
   // Generate request ID for tracing
   const requestId = req.headers.get('x-request-id') || generateRequestId();
@@ -597,6 +612,131 @@ serve(async (req) => {
           } catch (inviteErr: unknown) {
             logger.warn('Error processing founder invite (non-fatal)', {
               error: (inviteErr as Error)?.message,
+            });
+          }
+        }
+
+        // Process referral rewards for new subscriptions
+        if (event.type === 'customer.subscription.created' && isActive) {
+          try {
+            // Check if this user was referred
+            const { data: profile } = await supabase
+              .from('profiles')
+              .select('referred_by')
+              .eq('id', userId)
+              .single();
+
+            if (profile?.referred_by) {
+              logger.info('Processing referral reward', {
+                referredUser: userId,
+                referrerId: profile.referred_by,
+              });
+
+              // Update referral status to 'subscribed'
+              const { data: referralRow } = await supabase
+                .from('referrals')
+                .update({ status: 'subscribed', updated_at: new Date().toISOString() })
+                .eq('referred_id', userId)
+                .eq('referrer_id', profile.referred_by)
+                .in('status', ['pending', 'signed_up'])
+                .select('id')
+                .maybeSingle();
+
+              if (referralRow) {
+                // Get referrer's Stripe customer ID
+                const { data: referrerProfile } = await supabase
+                  .from('profiles')
+                  .select('stripe_customer_id, successful_referrals, referral_credits_pence')
+                  .eq('id', profile.referred_by)
+                  .single();
+
+                if (referrerProfile?.stripe_customer_id) {
+                  // Calculate reward based on tier
+                  const successfulReferrals = (referrerProfile.successful_referrals || 0) + 1;
+                  let creditPence: number;
+
+                  if (successfulReferrals >= 3 && successfulReferrals <= 4) {
+                    // Silver tier: 2 free months per referral
+                    creditPence = priceId ? (await getMonthlyPrice(stripe, priceId)) * 2 : 999 * 2;
+                  } else {
+                    // Bronze / standard: 1 free month credit
+                    creditPence = priceId ? await getMonthlyPrice(stripe, priceId) : 999;
+                  }
+
+                  // Apply Stripe balance credit (negative amount = credit to customer)
+                  try {
+                    const balanceTx = await stripe.customers.createBalanceTransaction(
+                      referrerProfile.stripe_customer_id,
+                      {
+                        amount: -creditPence, // Negative = credit
+                        currency: 'gbp',
+                        description: `Referral reward: ${successfulReferrals >= 3 ? '2' : '1'} free month(s) credit`,
+                        metadata: {
+                          referral_id: referralRow.id,
+                          referred_user_id: userId,
+                        },
+                      }
+                    );
+
+                    logger.info('Stripe balance credit applied', {
+                      referrerId: profile.referred_by,
+                      creditPence,
+                      balanceTxId: balanceTx.id,
+                    });
+
+                    // Create referral_rewards row
+                    await supabase.from('referral_rewards').insert({
+                      user_id: profile.referred_by,
+                      referral_id: referralRow.id,
+                      reward_type: 'credit',
+                      amount_pence: creditPence,
+                      stripe_credit_note_id: balanceTx.id,
+                      status: 'applied',
+                      applied_at: new Date().toISOString(),
+                    });
+
+                    // Update referral status to 'rewarded'
+                    await supabase
+                      .from('referrals')
+                      .update({ status: 'rewarded', updated_at: new Date().toISOString() })
+                      .eq('id', referralRow.id);
+
+                    // Update referrer's profile stats
+                    await supabase
+                      .from('profiles')
+                      .update({
+                        successful_referrals: successfulReferrals,
+                        total_referrals: successfulReferrals,
+                        referral_credits_pence:
+                          (referrerProfile.referral_credits_pence || 0) + creditPence,
+                      })
+                      .eq('id', profile.referred_by);
+
+                    // In-app notification for referrer
+                    const creditFormatted = `£${(creditPence / 100).toFixed(2)}`;
+                    await supabase.from('notifications').insert({
+                      user_id: profile.referred_by,
+                      type: 'referral_reward',
+                      title: 'Referral Reward!',
+                      message: `Your mate just subscribed! ${creditFormatted} credit has been applied to your account.`,
+                      data: {
+                        referral_id: referralRow.id,
+                        credit_pence: creditPence,
+                        referred_user_id: userId,
+                      },
+                      read: false,
+                    });
+                  } catch (balanceErr: unknown) {
+                    logger.warn('Failed to apply Stripe balance credit (non-fatal)', {
+                      error: (balanceErr as Error)?.message,
+                    });
+                  }
+                }
+              }
+            }
+          } catch (referralErr: unknown) {
+            logger.warn('Referral reward processing failed (non-fatal)', {
+              error: (referralErr as Error)?.message,
             });
           }
         }

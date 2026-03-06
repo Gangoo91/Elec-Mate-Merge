@@ -1,0 +1,24 @@
+services:
+  elec-pipeline:
+    build: .
+    container_name: elec-pipeline
+    restart: unless-stopped
+    ports:
+      - "3002:3002"
+    environment:
+      - SUPABASE_URL=${SUPABASE_URL}
+      - SUPABASE_SERVICE_ROLE_KEY=${SUPABASE_SERVICE_ROLE_KEY}
+      - REED_API_KEY=${REED_API_KEY}
+      - ADZUNA_APP_ID=${ADZUNA_APP_ID}
+      - ADZUNA_API_KEY=${ADZUNA_API_KEY}
+      - RS_API_KEY=${RS_API_KEY}
+      - TZ=Europe/London
+    deploy:
+      resources:
+        limits:
+          memory: 2G
+    logging:
+      driver: json-file
+      options:
+        max-size: "50m"
+        max-file: "3"

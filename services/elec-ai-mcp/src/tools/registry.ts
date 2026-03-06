@@ -1,6 +1,6 @@
 /**
  * Master tool registry.
- * Registers all 73 core tools + 21 apprentice tools onto the MCP server (94 total).
+ * Registers all 76 core tools + 21 apprentice tools onto the MCP server (97 total).
  * Tools are role-filtered: electricians get core tools, apprentices get learning tools.
  */
 
@@ -10,6 +10,7 @@ import type { UserContext } from '../auth.js';
 import { getHandler } from './router.js';
 import { enforceRateLimits, RateLimitError } from '../middleware/rate-limiter.js';
 import { logToolCall } from '../middleware/audit-logger.js';
+import { sanitiseError } from '../lib/error-sanitiser.js';
 
 /**
  * Register all tools onto the MCP server, filtered by user role.
@@ -116,20 +117,21 @@ function callTool(toolName: string, user: UserContext) {
       };
     } catch (err) {
       const durationMs = Date.now() - startTime;
-      const message = err instanceof Error ? err.message : String(err);
+      const rawMessage = err instanceof Error ? err.message : String(err);
 
-      // Log failures too
+      // Log raw error internally for debugging
       logToolCall(user, toolName, args, {
         success: false,
-        error: message,
+        error: rawMessage,
         durationMs,
       });
 
+      // Return sanitised error to agent (ELE-249)
       return {
         content: [
           {
             type: 'text' as const,
-            text: JSON.stringify({ error: message }),
+            text: JSON.stringify({ error: sanitiseError(rawMessage) }),
           },
         ],
       };
@@ -452,7 +454,7 @@ function registerProjectTools(server: McpServer, user: UserContext): void {
   );
 }
 
-// ─── Certificate Tools (5) ──────────────────────────────────────────────
+// ─── Certificate Tools (8) ──────────────────────────────────────────────
 
 function registerCertificateTools(server: McpServer, user: UserContext): void {
   server.tool(
@@ -514,6 +516,80 @@ function registerCertificateTools(server: McpServer, user: UserContext): void {
       certificate_types: z.array(z.string()).optional().describe('Filter by cert types'),
     },
     callTool('send_client_expiry_reminders', user)
+  );
+
+  server.tool(
+    'create_eicr',
+    'Create a new EICR (Electrical Installation Condition Report) as a draft. Returns eicr_id, certificate_number, and report_id. Use update_eicr to fill in sections.',
+    {
+      client_name: z.string().describe('Client full name'),
+      installation_address: z.string().describe('Full installation address'),
+      inspection_date: z.string().optional().describe('Inspection date (ISO-8601, default today)'),
+      property_type: z
+        .enum(['domestic', 'commercial'])
+        .optional()
+        .describe(
+          'Property type (default domestic). Affects expiry: 5yr domestic, 3yr commercial.'
+        ),
+      inspector_name: z.string().optional().describe('Inspector name'),
+      customer_id: z.string().optional().describe('Customer UUID from customers table'),
+      purpose_of_inspection: z
+        .string()
+        .optional()
+        .describe('Purpose of inspection (e.g. "Periodic inspection", "Change of occupancy")'),
+    },
+    callTool('create_eicr', user)
+  );
+
+  server.tool(
+    'update_eicr',
+    'Update an EICR section. Uses optimistic concurrency — pass edit_version from the last read. Merges new data into existing JSONB. Sections: client, installation, supply, earthing, boards, inspection, testing, defects, inspector, company.',
+    {
+      eicr_id: z.string().describe('EICR UUID'),
+      edit_version: z
+        .number()
+        .describe('Current edit_version from read_eicr. Prevents concurrent edit conflicts.'),
+      data: z
+        .record(z.unknown())
+        .describe(
+          'Data object to deep merge into the EICR. Keys match sections: supply, earthing, boards, inspection, testing, defects, inspector, company, etc.'
+        ),
+      section: z
+        .enum([
+          'client',
+          'installation',
+          'supply',
+          'earthing',
+          'boards',
+          'inspection',
+          'testing',
+          'defects',
+          'inspector',
+          'company',
+        ])
+        .optional()
+        .describe('Section being updated (for audit logging)'),
+      status: z
+        .enum(['draft', 'in_progress', 'completed'])
+        .optional()
+        .describe('Update EICR status'),
+    },
+    callTool('update_eicr', user)
+  );
+
+  server.tool(
+    'read_eicr',
+    'Read an EICR with all data. Optionally include full inspection items, defects, circuits, and photos.',
+    {
+      eicr_id: z.string().describe('EICR UUID'),
+      include: z
+        .array(z.enum(['inspection_items', 'defects', 'circuits', 'photos', 'all']))
+        .optional()
+        .describe(
+          'Include full arrays: inspection_items, defects, circuits, photos, or "all" for everything.'
+        ),
+    },
+    callTool('read_eicr', user)
   );
 }
 

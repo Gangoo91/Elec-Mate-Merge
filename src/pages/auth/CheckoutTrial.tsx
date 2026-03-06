@@ -52,6 +52,7 @@ const CheckoutTrial = () => {
 
     try {
       const offerCode = localStorage.getItem('elec-mate-offer-code');
+      const referralCode = localStorage.getItem('elec-mate-referral-code');
 
       const { data, error: fnError } = await supabase.functions.invoke('create-checkout', {
         body: {
@@ -59,6 +60,7 @@ const CheckoutTrial = () => {
           mode: 'subscription',
           planId: priceInfo.planId,
           offerCode,
+          referralCode,
         },
       });
 
@@ -68,13 +70,16 @@ const CheckoutTrial = () => {
         if (offerCode) {
           localStorage.removeItem('elec-mate-offer-code');
         }
+        if (referralCode) {
+          localStorage.removeItem('elec-mate-referral-code');
+        }
         window.location.href = data.url;
       } else {
         throw new Error('No checkout URL returned');
       }
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.error('Checkout error:', err);
-      setError(err.message || 'Failed to start checkout. Please try again.');
+      setError(err instanceof Error ? err.message : 'Failed to start checkout. Please try again.');
       setIsRedirecting(false);
     }
   }, [isRedirecting, priceInfo]);

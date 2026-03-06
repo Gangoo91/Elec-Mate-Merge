@@ -1,15 +1,26 @@
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Card } from '@/components/ui/card';
-import { BookOpen, ClipboardCheck, Calculator, Heart, Sparkles, FileText } from 'lucide-react';
+import {
+  BookOpen,
+  ClipboardCheck,
+  Calculator,
+  Heart,
+  Sparkles,
+  FileText,
+  Gift,
+} from 'lucide-react';
+import ReferralShareSheet from '@/components/referrals/ReferralShareSheet';
 
 interface QuickAccessItemProps {
   title: string;
   icon: React.ReactNode;
   path: string;
   badge?: string;
+  onClick?: () => void;
 }
 
-function QuickAccessItem({ title, icon, path, badge }: QuickAccessItemProps) {
+function QuickAccessItem({ title, icon, path, badge, onClick }: QuickAccessItemProps) {
   const navigate = useNavigate();
 
   return (
@@ -19,7 +30,7 @@ function QuickAccessItem({ title, icon, path, badge }: QuickAccessItemProps) {
         hover:border-elec-yellow/40 hover:bg-[#242424]
         active:scale-[0.97] active:opacity-90
       "
-      onClick={() => navigate(path)}
+      onClick={() => (onClick ? onClick() : navigate(path))}
     >
       <div className="p-2.5 sm:p-3 flex items-center gap-2 sm:gap-2.5">
         <div
@@ -47,6 +58,8 @@ function QuickAccessItem({ title, icon, path, badge }: QuickAccessItemProps) {
 }
 
 export function SecondaryQuickAccess() {
+  const [referralOpen, setReferralOpen] = useState(false);
+
   const items: QuickAccessItemProps[] = [
     {
       title: 'Study Centre',
@@ -79,6 +92,13 @@ export function SecondaryQuickAccess() {
       icon: <FileText className="h-3.5 w-3.5 sm:h-4 sm:w-4" />,
       path: '/electrician/inspection-testing?section=my-reports',
     },
+    {
+      title: 'Refer a Mate',
+      icon: <Gift className="h-3.5 w-3.5 sm:h-4 sm:w-4" />,
+      path: '#',
+      badge: 'Free month',
+      onClick: () => setReferralOpen(true),
+    },
   ];
 
   return (
@@ -86,11 +106,12 @@ export function SecondaryQuickAccess() {
       <h3 className="text-xs font-medium text-white uppercase tracking-wider mb-2.5 px-0.5">
         Quick Access
       </h3>
-      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-7 gap-3">
         {items.map((item) => (
           <QuickAccessItem key={item.path + item.title} {...item} />
         ))}
       </div>
+      <ReferralShareSheet open={referralOpen} onOpenChange={setReferralOpen} context="dashboard" />
     </div>
   );
 }

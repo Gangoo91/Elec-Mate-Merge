@@ -65,6 +65,9 @@ const handlers: Record<string, ToolHandler> = {
   send_certificate: certificates.sendCertificate,
   get_expiring_certificates: certificates.getExpiringCertificates,
   send_client_expiry_reminders: certificates.sendClientExpiryReminders,
+  create_eicr: certificates.createEicr,
+  update_eicr: certificates.updateEicr,
+  read_eicr: certificates.readEicr,
 
   // Invoicing
   read_invoices: invoicing.readInvoices,

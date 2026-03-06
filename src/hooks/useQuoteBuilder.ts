@@ -1,12 +1,14 @@
-import { useState, useCallback, useEffect } from 'react';
+import { useState, useCallback, useEffect, createElement } from 'react';
 import { Quote, QuoteItem, QuoteClient, QuoteSettings, JobDetails } from '@/types/quote';
 import { v4 as uuidv4 } from 'uuid';
 import { toast } from '@/hooks/use-toast';
+import { ToastAction } from '@/components/ui/toast';
 import { useQuoteStorage } from './useQuoteStorage';
 import { useCompanyProfile } from './useCompanyProfile';
 import { generateSequentialQuoteNumber } from '@/utils/quote-number-generator';
 import { supabase } from '@/integrations/supabase/client';
 import { logger, generateRequestId } from '@/utils/logger';
+import { openOrDownloadPdf } from '@/utils/pdf-download';
 
 export const useQuoteBuilder = (onQuoteGenerated?: () => void, initialQuote?: Quote) => {
   const { saveQuote } = useQuoteStorage();
@@ -207,6 +209,8 @@ export const useQuoteBuilder = (onQuoteGenerated?: () => void, initialQuote?: Qu
     logger.action('Generate quote', 'quotes', { quoteId: quote.id });
 
     setIsGenerating(true);
+    let pdfDownloadUrl: string | null = null;
+    let pdfQuoteNumber: string = '';
     try {
       const finalQuote = calculateTotals();
 
@@ -328,7 +332,9 @@ export const useQuoteBuilder = (onQuoteGenerated?: () => void, initialQuote?: Qu
 
         if (data?.downloadUrl) {
           logger.api('generate-pdf-monkey', requestId).success({ documentId: data.documentId });
-          window.open(data.downloadUrl, '_blank');
+          // Store URL for the success toast action — don't auto-download (ELE-260)
+          pdfDownloadUrl = data.downloadUrl;
+          pdfQuoteNumber = updatedQuote.quoteNumber || updatedQuote.id;
         } else if (data?.documentId) {
           logger.info('PDF still processing', { documentId: data.documentId });
           toast({
@@ -352,10 +358,25 @@ export const useQuoteBuilder = (onQuoteGenerated?: () => void, initialQuote?: Qu
 
       if (saved) {
         logger.api('quotes/save', requestId).success({ quoteNumber: updatedQuote.quoteNumber });
+        const url = pdfDownloadUrl;
+        const num = pdfQuoteNumber;
         toast({
           title: 'Quote Generated Successfully',
           description: `Quote ${updatedQuote.quoteNumber} has been generated and saved.`,
           variant: 'success',
+          ...(url
+            ? {
+                action: createElement(
+                  ToastAction,
+                  {
+                    altText: 'Download PDF',
+                    className: 'touch-manipulation',
+                    onClick: () => openOrDownloadPdf(url, `Quote-${num}.pdf`),
+                  },
+                  'Download PDF'
+                ),
+              }
+            : {}),
         });
       } else {
         logger.warn('Quote save failed', {
@@ -387,15 +408,7 @@ export const useQuoteBuilder = (onQuoteGenerated?: () => void, initialQuote?: Qu
     } finally {
       setIsGenerating(false);
     }
-  }, [
-    quote,
-    currentStep,
-    isGenerating,
-    onQuoteGenerated,
-    saveQuote,
-    companyProfile,
-    calculateTotals,
-  ]);
+  }, [quote, isGenerating, onQuoteGenerated, saveQuote, companyProfile, calculateTotals]);
 
   const resetQuote = useCallback(async () => {
     try {

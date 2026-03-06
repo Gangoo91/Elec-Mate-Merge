@@ -1,7 +1,16 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { cn } from '@/lib/utils';
-import { User, IdCard, Building2, Settings2, Shield, CreditCard, ChevronRight } from 'lucide-react';
+import {
+  User,
+  IdCard,
+  Building2,
+  Settings2,
+  Shield,
+  CreditCard,
+  Gift,
+  ChevronRight,
+} from 'lucide-react';
 
 interface SettingsNavItem {
   id: string;
@@ -70,6 +79,21 @@ const SETTINGS_SECTIONS: SettingsSection[] = [
         icon: CreditCard,
         iconBg: 'bg-purple-500/15',
         iconColour: 'text-purple-400',
+      },
+    ],
+  },
+  {
+    title: 'Rewards',
+    items: [
+      {
+        id: 'referrals',
+        label: 'Refer a Mate',
+        description: 'Free month for you and your mate',
+        icon: Gift,
+        iconBg: 'bg-green-500/15',
+        iconColour: 'text-green-400',
+        badge: 'New',
+        badgeColour: 'bg-green-500/20 text-green-400',
       },
     ],
   },

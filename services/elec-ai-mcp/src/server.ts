@@ -35,6 +35,7 @@ import { createUserClient } from './lib/supabase.js';
 import { handleProvisionAgent } from './api/provision-agent.js';
 import { getHandler } from './tools/router.js';
 import { logToolCall } from './middleware/audit-logger.js';
+import { sanitiseError } from './lib/error-sanitiser.js';
 
 // ─── Graceful shutdown ─────────────────────────────────────────────────
 let isShuttingDown = false;
@@ -207,9 +208,9 @@ function startHttp(): void {
         res.status(429).json({ error: err.message, retry_after_ms: err.retryAfterMs });
         return;
       }
-      const message = err instanceof Error ? err.message : String(err);
-      console.error(`[tool-call] ${tool} error:`, message);
-      res.status(500).json({ error: message });
+      const rawMessage = err instanceof Error ? err.message : String(err);
+      console.error(`[tool-call] ${tool} error:`, rawMessage);
+      res.status(500).json({ error: sanitiseError(rawMessage) });
     }
   });
 
@@ -247,9 +248,9 @@ function startHttp(): void {
       );
       res.json({ success: true, result: result.trim() });
     } catch (err) {
-      const msg = err instanceof Error ? err.message : String(err);
-      console.error('[send-message] Error:', msg);
-      res.status(500).json({ error: msg });
+      const rawMsg = err instanceof Error ? err.message : String(err);
+      console.error('[send-message] Error:', rawMsg);
+      res.status(500).json({ error: sanitiseError(rawMsg) });
     }
   });
 

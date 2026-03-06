@@ -19,6 +19,7 @@ export interface SparkTask {
   customerName?: string;
   location?: string;
   tags: string[];
+  projectId?: string;
   createdAt: string;
   updatedAt: string;
   completedAt?: string;
@@ -32,6 +33,7 @@ export interface SaveTaskInput {
   customerId?: string;
   location?: string;
   tags?: string[];
+  projectId?: string;
 }
 
 export interface UpdateTaskInput {
@@ -43,6 +45,7 @@ export interface UpdateTaskInput {
   location?: string | null;
   tags?: string[];
   status?: TaskStatus;
+  projectId?: string | null;
 }
 
 export interface SparkTaskCounts {
@@ -66,6 +69,7 @@ interface SparkTaskRow {
   customers?: { name: string } | null;
   location?: string | null;
   tags?: string[] | null;
+  project_id?: string | null;
   created_at: string;
   updated_at: string;
   completed_at?: string | null;
@@ -113,6 +117,7 @@ function mapRow(row: SparkTaskRow): SparkTask {
     customerName: row.customers?.name || undefined,
     location: row.location || undefined,
     tags: row.tags || [],
+    projectId: row.project_id || undefined,
     createdAt: row.created_at,
     updatedAt: row.updated_at,
     completedAt: row.completed_at || undefined,
@@ -263,6 +268,7 @@ export const useSparkTasks = (view: TaskView = 'all') => {
           customer_id: input.customerId || null,
           location: input.location?.trim() || null,
           tags: input.tags || [],
+          project_id: input.projectId || null,
         })
         .select('*, customers(name)')
         .single();
@@ -307,6 +313,7 @@ export const useSparkTasks = (view: TaskView = 'all') => {
           patched.location = updates.location?.trim() || undefined;
         if (updates.tags !== undefined) patched.tags = updates.tags;
         if (updates.status !== undefined) patched.status = updates.status;
+        if (updates.projectId !== undefined) patched.projectId = updates.projectId || undefined;
         return patched;
       })
     );
@@ -326,6 +333,7 @@ export const useSparkTasks = (view: TaskView = 'all') => {
       if (updates.location !== undefined) dbUpdates.location = updates.location?.trim() || null;
       if (updates.tags !== undefined) dbUpdates.tags = updates.tags;
       if (updates.status !== undefined) dbUpdates.status = updates.status;
+      if (updates.projectId !== undefined) dbUpdates.project_id = updates.projectId || null;
 
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const { error } = await (supabase as any)

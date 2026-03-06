@@ -22,6 +22,7 @@ interface TaskFormProps {
   onSave: (input: SaveTaskInput) => Promise<string | null>;
   onUpdate?: (id: string, input: Partial<SaveTaskInput>) => Promise<void>;
   editTask?: SparkTask | null;
+  projectId?: string;
 }
 
 interface CustomerOption {
@@ -65,7 +66,14 @@ function toLocalDatetimeValue(date: Date): string {
   return `${y}-${m}-${d}T${h}:${min}`;
 }
 
-export function TaskForm({ isOpen, onClose, onSave, onUpdate, editTask }: TaskFormProps) {
+export function TaskForm({
+  isOpen,
+  onClose,
+  onSave,
+  onUpdate,
+  editTask,
+  projectId,
+}: TaskFormProps) {
   const [title, setTitle] = useState('');
   const [details, setDetails] = useState('');
   const [dueAt, setDueAt] = useState('');
@@ -168,6 +176,7 @@ export function TaskForm({ isOpen, onClose, onSave, onUpdate, editTask }: TaskFo
           customerId: resolveCustomerId(),
           location: location.trim() || undefined,
           tags,
+          projectId,
         });
       }
       resetForm();

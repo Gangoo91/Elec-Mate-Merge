@@ -257,6 +257,89 @@ export const useTrainingCourses = (filters: TrainingCoursesFilters = {}) => {
 
       let processedCourses = courses as TrainingCourse[];
 
+      // Also fetch live courses from pipeline cache and merge
+      try {
+        const { data: liveCacheRows } = await supabase
+          .from('live_course_cache')
+          .select('course_data, source')
+          .gt('expires_at', new Date().toISOString());
+
+        if (liveCacheRows && liveCacheRows.length > 0) {
+          const liveCourses: TrainingCourse[] = [];
+          for (const row of liveCacheRows) {
+            const items = Array.isArray(row.course_data)
+              ? row.course_data
+              : row.course_data?.courses || [];
+            for (const item of items) {
+              // Map live cache fields to TrainingCourse interface
+              const mapped: TrainingCourse = {
+                id: item.id || `live-${Math.random().toString(36).slice(2)}`,
+                title: item.title || item.courseTitle || '',
+                provider_name:
+                  item.provider ||
+                  item.providerName ||
+                  item.provider_name ||
+                  row.source ||
+                  'Unknown',
+                category: item.category || item.qualification || 'General',
+                description: item.description || item.entry_requirements || null,
+                duration: item.duration || null,
+                price: item.price != null ? `£${item.price}` : item.price_display || null,
+                price_numeric: typeof item.price === 'number' ? item.price * 100 : null,
+                level: item.qualification || item.level || null,
+                format: item.location ? 'Classroom' : 'Online',
+                venue_name: null,
+                venue_city: item.location || null,
+                venue_postcode: null,
+                venue_region: null,
+                latitude: null,
+                longitude: null,
+                is_online: !item.location,
+                next_dates: item.dates ? [item.dates] : null,
+                external_url: item.url || item.courseUrl || '#',
+                booking_url: item.url || item.courseUrl || null,
+                contact_phone: null,
+                contact_email: null,
+                accreditation: null,
+                source: row.source || 'live',
+                rating: null,
+                scraped_at: new Date().toISOString(),
+              };
+
+              if (!mapped.title) continue;
+
+              // Apply same filters as training_courses query
+              if (filters.searchQuery) {
+                const term = filters.searchQuery.toLowerCase();
+                const searchable =
+                  `${mapped.title} ${mapped.provider_name} ${mapped.description || ''} ${mapped.category}`.toLowerCase();
+                if (!searchable.includes(term)) continue;
+              }
+              if (
+                filters.maxPrice &&
+                mapped.price_numeric &&
+                mapped.price_numeric > filters.maxPrice * 100
+              )
+                continue;
+
+              liveCourses.push(mapped);
+            }
+          }
+
+          // Deduplicate: if a live course matches a training_courses entry by title+provider, skip the live one
+          const existingKeys = new Set(
+            processedCourses.map((c) => `${c.title.toLowerCase()}|${c.provider_name.toLowerCase()}`)
+          );
+          const uniqueLive = liveCourses.filter(
+            (c) => !existingKeys.has(`${c.title.toLowerCase()}|${c.provider_name.toLowerCase()}`)
+          );
+
+          processedCourses = [...processedCourses, ...uniqueLive];
+        }
+      } catch (liveErr) {
+        console.warn('Failed to fetch live course cache:', liveErr);
+      }
+
       // Calculate distances if postcode provided
       if (filters.postcode && processedCourses.length > 0) {
         const userCoords = getPostcodeCoordinates(filters.postcode);
@@ -292,17 +375,22 @@ export const useTrainingCourses = (filters: TrainingCoursesFilters = {}) => {
           // Filter by radius if specified
           if (filters.radiusMiles) {
             processedCourses = processedCourses.filter(
-              (course: any) => course._distance === null || course._distance <= filters.radiusMiles!
+              (course: { _distance?: number | null }) =>
+                course._distance === null ||
+                course._distance === undefined ||
+                course._distance <= filters.radiusMiles!
             );
           }
 
           // Sort by distance if requested
           if (filters.sortBy === 'distance') {
-            processedCourses.sort((a: any, b: any) => {
-              if (a._distance === null) return 1;
-              if (b._distance === null) return -1;
-              return a._distance - b._distance;
-            });
+            processedCourses.sort(
+              (a: { _distance?: number | null }, b: { _distance?: number | null }) => {
+                if (a._distance === null) return 1;
+                if (b._distance === null) return -1;
+                return a._distance - b._distance;
+              }
+            );
           }
         }
       }

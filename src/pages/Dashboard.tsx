@@ -16,6 +16,7 @@ import { PremiumHubGrid } from '@/components/dashboard/PremiumHubGrid';
 import { SmartActions } from '@/components/dashboard/SmartActions';
 import { SecondaryQuickAccess } from '@/components/dashboard/SecondaryQuickAccess';
 import TrialBanner from '@/components/dashboard/TrialBanner';
+import ReferralBanner from '@/components/referrals/ReferralBanner';
 import WelcomeModal from '@/components/onboarding/WelcomeModal';
 import { DesignedCircuitsCard } from '@/components/dashboard/DesignedCircuitsCard';
 import { useAuth } from '@/contexts/AuthContext';
@@ -78,6 +79,11 @@ const Dashboard = () => {
         {/* Trial Banner (if applicable) */}
         <motion.section variants={sectionVariants} initial="hidden" animate="visible" custom={2}>
           <TrialBanner />
+        </motion.section>
+
+        {/* Referral Banner (first 7 days) */}
+        <motion.section variants={sectionVariants} initial="hidden" animate="visible" custom={2.5}>
+          <ReferralBanner />
         </motion.section>
 
         {/* Premium Hub Cards */}

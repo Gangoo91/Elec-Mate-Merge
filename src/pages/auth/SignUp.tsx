@@ -144,6 +144,7 @@ const SignUp = () => {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const [offerCode, setOfferCode] = useState<string | null>(null);
+  const [referralCode, setReferralCode] = useState<string | null>(null);
 
   // Capture offer code from URL
   useEffect(() => {
@@ -152,6 +153,20 @@ const SignUp = () => {
       localStorage.setItem('elec-mate-offer-code', code);
       setOfferCode(code);
       console.log('Offer code captured:', code);
+    }
+  }, [searchParams]);
+
+  // Capture referral code from URL
+  useEffect(() => {
+    const ref = searchParams.get('ref');
+    if (ref) {
+      localStorage.setItem('elec-mate-referral-code', ref);
+      setReferralCode(ref);
+      console.log('Referral code captured:', ref);
+    } else {
+      // Check if we already stored one from a previous visit
+      const stored = localStorage.getItem('elec-mate-referral-code');
+      if (stored) setReferralCode(stored);
     }
   }, [searchParams]);
 
@@ -253,13 +268,45 @@ const SignUp = () => {
 
         // Retry the profile update to handle trigger timing race condition
         const saveRole = async (retries = 3): Promise<boolean> => {
+          // Build update payload — include referred_by if we have a referral code
+          const updatePayload: Record<string, unknown> = {
+            role: profile.role,
+            onboarding_completed: false,
+            updated_at: new Date().toISOString(),
+          };
+
+          // Look up referrer from stored referral code
+          const storedRefCode = localStorage.getItem('elec-mate-referral-code');
+          if (storedRefCode) {
+            try {
+              const { data: refData } = await supabase
+                .from('referral_codes')
+                .select('user_id')
+                .eq('code', storedRefCode)
+                .eq('is_active', true)
+                .maybeSingle();
+
+              if (refData?.user_id) {
+                updatePayload.referred_by = refData.user_id;
+
+                // Create referral row linking referrer → this new user
+                await supabase.from('referrals').insert({
+                  referrer_id: refData.user_id,
+                  referred_id: data.user!.id,
+                  referred_email: email,
+                  referral_code: storedRefCode,
+                  status: 'signed_up',
+                  source: (searchParams.get('src') as string) || 'link',
+                });
+              }
+            } catch (refErr) {
+              console.warn('Referral lookup failed (non-critical):', refErr);
+            }
+          }
+
           const { error: profileError } = await supabase
             .from('profiles')
-            .update({
-              role: profile.role,
-              onboarding_completed: false,
-              updated_at: new Date().toISOString(),
-            })
+            .update(updatePayload)
             .eq('id', data.user!.id);
 
           if (profileError) {
@@ -313,6 +360,7 @@ const SignUp = () => {
 
       // Clean up localStorage items used during onboarding
       // NOTE: Do NOT remove elec-mate-profile-role here — CheckoutTrial needs it as fallback
+      // NOTE: Do NOT remove elec-mate-referral-code here — create-checkout needs it
       localStorage.removeItem('elec-mate-offer-code');
       localStorage.removeItem('elec-mate-onboarding-data');
 
@@ -399,6 +447,25 @@ const SignUp = () => {
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: -20 }}
               >
+                {/* Referral Banner */}
+                {referralCode && !offerCode && (
+                  <motion.div
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="mb-4 p-3 rounded-2xl bg-gradient-to-r from-elec-yellow/20 to-amber-500/20 border border-elec-yellow/30"
+                  >
+                    <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 rounded-xl bg-elec-yellow/20 flex items-center justify-center flex-shrink-0">
+                        <Gift className="h-5 w-5 text-elec-yellow" />
+                      </div>
+                      <div>
+                        <p className="text-sm font-semibold text-elec-yellow">Referred by a Mate</p>
+                        <p className="text-xs text-white">Your first month's on us — free!</p>
+                      </div>
+                    </div>
+                  </motion.div>
+                )}
+
                 {/* Offer Banner */}
                 {offerCode && (
                   <motion.div

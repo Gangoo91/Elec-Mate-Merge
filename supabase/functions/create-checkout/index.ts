@@ -26,9 +26,9 @@ serve(async (req) => {
 
     // Get request body
     const body = await req.json();
-    const { priceId, mode, planId, offerCode } = body;
+    const { priceId, mode, planId, offerCode, referralCode } = body;
 
-    logger.info('Request body received', { priceId, mode, planId, offerCode });
+    logger.info('Request body received', { priceId, mode, planId, offerCode, referralCode });
 
     if (!priceId || !mode || !planId) {
       throw new ValidationError('Missing required parameters: priceId, mode, or planId');
@@ -125,8 +125,10 @@ serve(async (req) => {
           .eq('id', user.id);
         logger.info('Stored stripe_customer_id in profile', { userId: user.id, customerId });
       }
-    } catch (linkError: any) {
-      logger.warn('Failed to store stripe_customer_id (non-fatal)', { error: linkError?.message });
+    } catch (linkError: unknown) {
+      logger.warn('Failed to store stripe_customer_id (non-fatal)', {
+        error: linkError instanceof Error ? linkError.message : String(linkError),
+      });
     }
 
     // Look up offer code if provided
@@ -172,12 +174,69 @@ serve(async (req) => {
       }
     }
 
+    // Handle referral code — create a one-time 100% off first month coupon
+    if (referralCode && !discounts) {
+      logger.info('Processing referral code', { referralCode });
+
+      const supabaseServiceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY');
+      if (supabaseServiceKey) {
+        const supabaseAdmin = createClient(supabaseUrl, supabaseServiceKey);
+
+        // Validate referral code exists and is active
+        const { data: refCode, error: refError } = await supabaseAdmin
+          .from('referral_codes')
+          .select('user_id, code, is_active')
+          .eq('code', referralCode)
+          .eq('is_active', true)
+          .maybeSingle();
+
+        if (refError) {
+          logger.warn('Referral code lookup failed', { error: refError.message });
+        } else if (refCode) {
+          // Don't allow self-referral
+          if (refCode.user_id !== user.id) {
+            try {
+              // Create a one-time 100% off coupon for 1 month
+              const coupon = await withRetry(
+                () =>
+                  stripe.coupons.create({
+                    percent_off: 100,
+                    duration: 'once',
+                    name: `Referral: Free first month (${referralCode})`,
+                    metadata: {
+                      referral_code: referralCode,
+                      referrer_id: refCode.user_id,
+                      referred_id: user.id,
+                    },
+                  }),
+                RetryPresets.FAST
+              );
+
+              discounts = [{ coupon: coupon.id }];
+              logger.info('Referral coupon created and applied', {
+                couponId: coupon.id,
+                referralCode,
+              });
+            } catch (couponErr: unknown) {
+              logger.warn('Failed to create referral coupon (non-fatal)', {
+                error: couponErr instanceof Error ? couponErr.message : String(couponErr),
+              });
+            }
+          } else {
+            logger.warn('Self-referral attempted', { userId: user.id, referralCode });
+          }
+        } else {
+          logger.warn('Referral code not found or inactive', { referralCode });
+        }
+      }
+    }
+
     // Create checkout options based on mode
     const origin =
       req.headers.get('origin') ||
       'https://f214c814-3a85-4c4a-8139-3d81ec8b7efb.lovableproject.com';
 
-    const checkoutOptions: any = {
+    const checkoutOptions: Record<string, unknown> = {
       customer: customerId,
       line_items: [
         {
@@ -193,6 +252,7 @@ serve(async (req) => {
       metadata: {
         userId: user.id,
         planId: planId,
+        ...(referralCode ? { referralCode } : {}),
       },
       payment_method_types: ['card'],
       billing_address_collection: 'auto',
