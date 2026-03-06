@@ -12,9 +12,25 @@ from src.db.supabase_client import (
     record_price_history,
     upsert_products,
 )
+from src.scrapers.tlc_direct import scrape_tlc
+from src.scrapers.screwfix import scrape_screwfix
+from src.scrapers.toolstation import scrape_toolstation
+from src.scrapers.cef import scrape_cef
+from src.scrapers.edmundson import scrape_edmundson
+from src.scrapers.electrical_direct import scrape_electrical_direct
 from src.utils.alerting import alert_pipeline_failure
 
 log = structlog.get_logger()
+
+# Supplier slug → scraper function mapping
+SCRAPERS = [
+    ("tlc-electrical", scrape_tlc),
+    ("screwfix", scrape_screwfix),
+    ("toolstation", scrape_toolstation),
+    ("cef", scrape_cef),
+    ("edmundson", scrape_edmundson),
+    ("electrical-direct", scrape_electrical_direct),
+]
 
 
 async def run_rs_components_pipeline() -> None:
@@ -50,14 +66,58 @@ async def run_rs_components_pipeline() -> None:
 
 
 async def run_full_materials_scrape() -> None:
-    """Scrape all 9 supplier websites for materials + tools (Phase 2/3)."""
+    """Scrape all supplier websites for materials + tools."""
     run_id = log_pipeline_start("materials_full_scrape")
-    try:
-        # Phase 2: Screwfix, Toolstation, TLC
-        # Phase 3: CEF, Edmundson, Yesss, Electric Center, Rexel, ElectricalDirect
+    total_found = 0
+    total_inserted = 0
+    errors: list[str] = []
 
-        log_pipeline_end(run_id, status="completed", records_found=0)
-        log.info("materials_scrape_skipped", reason="phase_2_3")
+    try:
+        for slug, scraper_fn in SCRAPERS:
+            try:
+                supplier_id = await get_supplier_id(slug)
+                if not supplier_id:
+                    log.warning("supplier_not_found", slug=slug)
+                    errors.append(f"Supplier '{slug}' not in DB")
+                    continue
+
+                log.info("scraper_starting", supplier=slug)
+                products = await scraper_fn(supplier_id)
+                total_found += len(products)
+
+                if products:
+                    inserted = upsert_products(products)
+                    total_inserted += inserted
+                    log.info(
+                        "scraper_done",
+                        supplier=slug,
+                        found=len(products),
+                        inserted=inserted,
+                    )
+                else:
+                    log.warning("scraper_empty", supplier=slug)
+
+            except Exception as e:
+                log.error("scraper_failed", supplier=slug, error=str(e))
+                errors.append(f"{slug}: {e}")
+
+        status = "completed" if total_found > 0 else "completed_empty"
+        if errors and total_found == 0:
+            status = "failed"
+
+        log_pipeline_end(
+            run_id,
+            status=status,
+            records_found=total_found,
+            records_inserted=total_inserted,
+            errors=errors if errors else None,
+        )
+        log.info(
+            "materials_scrape_done",
+            total_found=total_found,
+            total_inserted=total_inserted,
+            errors=len(errors),
+        )
     except Exception as e:
         log_pipeline_end(run_id, status="failed", errors=[str(e)])
         alert_pipeline_failure("materials_full_scrape", str(e))

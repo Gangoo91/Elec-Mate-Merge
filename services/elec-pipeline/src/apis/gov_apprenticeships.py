@@ -41,6 +41,11 @@ async def fetch_apprenticeships() -> list[dict[str, Any]]:
                         },
                     )
                     resp.raise_for_status()
+                    # API may return HTML instead of JSON if retired
+                    content_type = resp.headers.get("content-type", "")
+                    if "json" not in content_type:
+                        log.warning("gov_apprenticeships_not_json", content_type=content_type)
+                        return all_jobs
                     data = resp.json()
 
                     results = data.get("results", [])

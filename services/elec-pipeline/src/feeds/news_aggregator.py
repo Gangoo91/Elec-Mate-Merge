@@ -23,7 +23,7 @@ async def fetch_all_news() -> list[dict[str, Any]]:
     """Fetch articles from all configured RSS feeds."""
     all_articles: list[dict] = []
 
-    async with httpx.AsyncClient(timeout=20) as client:
+    async with httpx.AsyncClient(timeout=20, follow_redirects=True) as client:
         for feed_config in FEEDS:
             try:
                 articles = await _fetch_feed(client, feed_config)

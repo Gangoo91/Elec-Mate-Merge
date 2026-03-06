@@ -22,12 +22,18 @@ async def run_jobs_api_pipeline() -> None:
     """Fetch jobs from all API sources (Reed, Adzuna, Gov.uk apprenticeships)."""
     run_id = log_pipeline_start("jobs_api")
     try:
-        # Fetch from all API sources
-        reed_jobs = await fetch_reed()
-        adzuna_jobs = await fetch_adzuna()
-        apprenticeships = await fetch_apprenticeships()
-
-        all_jobs = reed_jobs + adzuna_jobs + apprenticeships
+        # Fetch from all API sources (each wrapped so one failure doesn't kill the rest)
+        all_jobs: list[dict] = []
+        for name, fetcher in [
+            ("reed", fetch_reed),
+            ("adzuna", fetch_adzuna),
+            ("gov_apprenticeships", fetch_apprenticeships),
+        ]:
+            try:
+                results = await fetcher()
+                all_jobs.extend(results)
+            except Exception as e:
+                log.error("jobs_source_failed", source=name, error=str(e))
         unique_jobs = deduplicate_jobs(all_jobs)
 
         # Group by region and cache

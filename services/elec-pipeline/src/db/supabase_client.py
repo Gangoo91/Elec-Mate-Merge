@@ -186,24 +186,27 @@ def upsert_news(articles: list[dict[str, Any]]) -> int:
             external_id = a.get("external_id") or hashlib.md5(
                 (a.get("source_url") or a["title"]).encode()
             ).hexdigest()
+            # date_published is DATE type, extract date only
+            raw_date = a.get("date_published") or datetime.now(timezone.utc).isoformat()
+            date_only = raw_date[:10] if isinstance(raw_date, str) else raw_date
+
             rows.append(
                 {
                     "title": a["title"],
-                    "summary": a.get("summary"),
-                    "content": a.get("content"),
+                    "summary": a.get("summary") or a.get("content") or a["title"],
+                    "content": a.get("content") or a.get("summary") or a["title"],
                     "category": a.get("category", "general"),
-                    "source": a["source"],
+                    "regulatory_body": a.get("source", "general"),
+                    "source_name": a.get("source", ""),
                     "source_url": a.get("source_url"),
                     "external_id": external_id,
-                    "date_published": a.get(
-                        "date_published",
-                        datetime.now(timezone.utc).isoformat(),
-                    ),
-                    "tags": a.get("tags"),
+                    "date_published": date_only,
+                    "published_date": date_only,
+                    "keywords": a.get("tags"),
                 }
             )
         client.table("industry_news").upsert(
-            rows, on_conflict="source,external_id"
+            rows, on_conflict="external_id"
         ).execute()
         total += len(rows)
 
@@ -241,19 +244,20 @@ def insert_coupons(coupons: list[dict[str, Any]]) -> int:
     now = datetime.now(timezone.utc).isoformat()
     rows = []
     for c in coupons:
-        rows.append(
-            {
-                "supplier_id": c["supplier_id"],
-                "code": c["code"],
-                "description": c.get("description"),
-                "discount_type": c.get("discount_type"),
-                "discount_value": c.get("discount_value"),
-                "minimum_spend": c.get("minimum_spend"),
-                "valid_until": c.get("valid_until"),
-                "source_url": c.get("source_url"),
-                "scraped_at": now,
-            }
-        )
+        row = {
+            "supplier_id": c["supplier_id"],
+            "code": c["code"],
+            "description": c.get("description"),
+            "discount_type": c.get("discount_type"),
+            "discount_value": c.get("discount_value"),
+            "minimum_spend": c.get("minimum_spend"),
+            "valid_until": c.get("valid_until"),
+            "source_url": c.get("source_url"),
+            "scraped_at": now,
+        }
+        if "is_verified" in c:
+            row["is_verified"] = c["is_verified"]
+        rows.append(row)
 
     total = 0
     for i in range(0, len(rows), settings.batch_size):

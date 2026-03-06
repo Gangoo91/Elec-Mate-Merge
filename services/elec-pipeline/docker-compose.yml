@@ -3,6 +3,9 @@ services:
     build: .
     container_name: elec-pipeline
     restart: unless-stopped
+    dns:
+      - 8.8.8.8
+      - 1.1.1.1
     ports:
       - "3002:3002"
     environment:
@@ -13,10 +16,11 @@ services:
       - ADZUNA_API_KEY=${ADZUNA_API_KEY}
       - RS_API_KEY=${RS_API_KEY}
       - TZ=Europe/London
+    shm_size: '1g'
     deploy:
       resources:
         limits:
-          memory: 2G
+          memory: 4G
     logging:
       driver: json-file
       options:

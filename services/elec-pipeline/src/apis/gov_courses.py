@@ -83,7 +83,9 @@ async def fetch_courses() -> list[dict[str, Any]]:
                     term=term,
                     count=len(results),
                 )
-            except httpx.HTTPError as e:
+            except (httpx.HTTPError, httpx.ConnectError) as e:
+                log.error("gov_courses_error", term=term, error=str(e))
+            except Exception as e:
                 log.error("gov_courses_error", term=term, error=str(e))
 
     log.info("gov_courses_total", count=len(all_courses))
