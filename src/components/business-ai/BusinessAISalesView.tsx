@@ -73,7 +73,7 @@ const dayMoments = [
     time: '9:30 AM',
     label: 'On site',
     message:
-      "B32 RCBO on TN-C-S — max Zs is 1.44Ω. That's 230 ÷ 160A (5 × 32) from BS 7671 App 3, Table 41.3, 0.4s disconnection. Here's the full table if you need it.",
+      "B32 RCBO on TN-C-S — max Zs is 1.37Ω. That's from the Zs tables (0.95 × 230 ÷ 160A), BS 7671 App 3, 0.4s disconnection. Here's the full table if you need it.",
     icon: BookOpen,
   },
   {
