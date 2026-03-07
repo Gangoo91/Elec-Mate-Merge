@@ -216,7 +216,7 @@ function registerQuotingTools(server: McpServer, user: UserContext): void {
 
   server.tool(
     'generate_quote',
-    'Create a quote and save it to the database. The agent composes the items/pricing from the conversation. Returns quote_id for PDF generation.',
+    'ALWAYS use this when the user asks to create a quote (not an invoice). Accepts manual line items with exact prices provided by the user, OR agent-estimated pricing. Creates a QTE- prefixed quote record. NEVER use create_invoice for quotes.',
     {
       client_data: z
         .object({
@@ -233,6 +233,7 @@ function registerQuotingTools(server: McpServer, user: UserContext): void {
           description: z.string().optional().describe('Full job description'),
           estimatedDuration: z.string().optional().describe('e.g. "2 days"'),
         })
+        .optional()
         .describe('Job details'),
       items: z
         .array(
@@ -240,12 +241,13 @@ function registerQuotingTools(server: McpServer, user: UserContext): void {
             description: z.string().describe('Item description'),
             category: z.enum(['labour', 'materials', 'equipment']).describe('Item category'),
             quantity: z.number().describe('Quantity'),
-            unitPrice: z.number().describe('Price per unit in GBP'),
+            unitPrice: z.number().optional().describe('Price per unit in GBP (use this or unit_price)'),
+            unit_price: z.number().optional().describe('Price per unit in GBP (alias for unitPrice)'),
             unit: z.string().optional().describe('Unit type: each, metre, hours, etc.'),
             notes: z.string().optional().describe('Optional notes'),
           })
         )
-        .describe('Line items — materials, labour, and equipment'),
+        .describe('Line items — use the exact prices the user provides. Accepts both unitPrice and unit_price.'),
       vat_registered: z.boolean().optional().describe('Whether to apply VAT (default false)'),
       vat_rate: z.number().optional().describe('VAT rate percentage (default 20)'),
       notes: z.string().optional().describe('Quote notes'),
@@ -613,7 +615,7 @@ function registerInvoicingTools(server: McpServer, user: UserContext): void {
 
   server.tool(
     'create_invoice',
-    'Create a standalone draft invoice with line items. Provide client_data (name, email, phone, address) or client_id if a customer record exists.',
+    'Create a draft INVOICE (INV- prefix) with line items. Use ONLY when the user explicitly asks for an invoice — NOT for quotes. For quotes always use generate_quote instead.',
     {
       client_id: z.string().optional().describe('Customer UUID (if exists in customers table)'),
       client_data: z
