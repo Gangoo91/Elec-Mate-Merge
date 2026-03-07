@@ -270,6 +270,8 @@ export const useQuoteStorage = () => {
           linked_certificate_type: quote.linked_certificate_type || null,
           linked_certificate_reference: quote.linked_certificate_reference || null,
           linked_certificate_pdf_url: quote.linked_certificate_pdf_url || null,
+          // Project linking
+          project_id: quote.project_id || null,
         };
 
         console.log('Quote Storage - Prepared data for database', {

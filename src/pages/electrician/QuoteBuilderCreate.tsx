@@ -73,6 +73,9 @@ const QuoteBuilderCreate = () => {
   const [showExitDialog, setShowExitDialog] = useState(false);
   const [isLoadingContext, setIsLoadingContext] = useState(true);
 
+  // Read projectId from URL — when coming from a project page
+  const projectId = new URLSearchParams(location.search).get('projectId') || undefined;
+
   // Load cost data, certificate data, or site visit data from sessionStorage
   useEffect(() => {
     const params = new URLSearchParams(location.search);
@@ -123,7 +126,11 @@ const QuoteBuilderCreate = () => {
 
   const handleQuoteGenerated = () => {
     refreshQuotes();
-    navigate('/electrician/quotes');
+    if (projectId) {
+      navigate(`/electrician/projects/${projectId}`);
+    } else {
+      navigate('/electrician/quotes');
+    }
   };
 
   const handleBack = () => {
@@ -131,7 +138,11 @@ const QuoteBuilderCreate = () => {
   };
 
   const confirmExit = () => {
-    navigate('/electrician/quotes');
+    if (projectId) {
+      navigate(`/electrician/projects/${projectId}`);
+    } else {
+      navigate('/electrician/quotes');
+    }
   };
 
   // Voice navigation handler
@@ -276,6 +287,7 @@ const QuoteBuilderCreate = () => {
           ) : (
             <QuoteWizard
               onQuoteGenerated={handleQuoteGenerated}
+              initialQuote={projectId ? { project_id: projectId } : undefined}
               initialCostData={costContext}
               initialCertificateData={certificateContext}
               initialSiteVisitData={siteVisitContext}

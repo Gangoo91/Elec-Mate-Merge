@@ -140,27 +140,37 @@ const ProjectDetailPage = () => {
       title: string;
       fetch: () => Promise<{ id: string; label: string; sublabel?: string }[]>;
       link: (id: string) => Promise<boolean>;
+      createLabel: string;
+      createUrl: string;
     }
   > = {
     quote: {
       title: 'Link Quote',
       fetch: fetchUnlinkedQuotes,
       link: linkQuote,
+      createLabel: 'Create new quote',
+      createUrl: `/electrician/quote-builder/create?projectId=${project?.id}`,
     },
     invoice: {
       title: 'Link Invoice',
       fetch: fetchUnlinkedInvoices,
       link: linkInvoice,
+      createLabel: 'Create new invoice',
+      createUrl: `/electrician/invoice-builder/create?projectId=${project?.id}`,
     },
     certificate: {
       title: 'Link Certificate',
       fetch: fetchUnlinkedCertificates,
       link: linkCertificate,
+      createLabel: 'Create new certificate',
+      createUrl: `/electrician/certificates/new`,
     },
     rams: {
       title: 'Link RAMS',
       fetch: fetchUnlinkedRams,
       link: linkRams,
+      createLabel: 'Create new RAMS',
+      createUrl: `/electrician-tools/site-safety`,
     },
   };
 
@@ -662,6 +672,8 @@ const ProjectDetailPage = () => {
           title={linkConfig[linkType].title}
           fetchItems={linkConfig[linkType].fetch}
           onSelect={linkConfig[linkType].link}
+          createLabel={linkConfig[linkType].createLabel}
+          createUrl={linkConfig[linkType].createUrl}
         />
       )}
     </div>

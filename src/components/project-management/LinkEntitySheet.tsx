@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Drawer } from 'vaul';
-import { X, Loader2, Link2 } from 'lucide-react';
+import { X, Loader2, Link2, Plus } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import type { UnlinkedItem } from '@/hooks/useProjectEntities';
 
 interface LinkEntitySheetProps {
@@ -9,6 +10,10 @@ interface LinkEntitySheetProps {
   title: string;
   fetchItems: () => Promise<UnlinkedItem[]>;
   onSelect: (id: string) => Promise<boolean>;
+  /** Label for the create button e.g. "Create new quote" */
+  createLabel?: string;
+  /** Route to navigate to when create button is tapped */
+  createUrl?: string;
 }
 
 export function LinkEntitySheet({
@@ -17,7 +22,10 @@ export function LinkEntitySheet({
   title,
   fetchItems,
   onSelect,
+  createLabel,
+  createUrl,
 }: LinkEntitySheetProps) {
+  const navigate = useNavigate();
   const [items, setItems] = useState<UnlinkedItem[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [linking, setLinking] = useState<string | null>(null);
@@ -61,17 +69,26 @@ export function LinkEntitySheet({
 
           {/* Body */}
           <div className="flex-1 overflow-y-auto px-5 py-3 space-y-2">
+            {/* Create new button — shown whenever a createUrl is provided */}
+            {createLabel && createUrl && (
+              <button
+                type="button"
+                onClick={() => { onClose(); navigate(createUrl); }}
+                className="w-full flex items-center gap-3 min-h-[48px] px-4 py-3 rounded-xl bg-elec-yellow/10 border border-elec-yellow/30 text-left touch-manipulation active:bg-elec-yellow/20 transition-colors mb-1"
+              >
+                <Plus className="h-4 w-4 text-elec-yellow flex-shrink-0" />
+                <span className="text-sm font-semibold text-elec-yellow">{createLabel}</span>
+              </button>
+            )}
+
             {isLoading ? (
               <div className="flex justify-center py-8">
                 <Loader2 className="h-5 w-5 animate-spin text-white" />
               </div>
             ) : items.length === 0 ? (
-              <div className="flex flex-col items-center py-8 text-center">
-                <Link2 className="h-6 w-6 text-white mb-2" />
-                <p className="text-sm text-white">Nothing to link.</p>
-                <p className="text-[12px] text-white mt-1">
-                  All items are already linked to a project.
-                </p>
+              <div className="flex flex-col items-center py-6 text-center">
+                <Link2 className="h-5 w-5 text-white/40 mb-2" />
+                <p className="text-sm text-white/60">No existing items to link.</p>
               </div>
             ) : (
               items.map((item) => (
