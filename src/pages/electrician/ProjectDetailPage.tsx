@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import {
@@ -15,6 +15,8 @@ import {
   ChevronRight,
   Circle,
   FileText,
+  Camera,
+  Images,
   PoundSterling,
   Shield,
   Zap,
@@ -33,6 +35,8 @@ import { useProjectEntities } from '@/hooks/useProjectEntities';
 import { TaskForm } from '@/components/tasks/TaskForm';
 import { TaskDetailSheet } from '@/components/tasks/TaskDetailSheet';
 import { LinkEntitySheet } from '@/components/project-management/LinkEntitySheet';
+import { ProjectDocumentSheet } from '@/components/project-management/ProjectDocumentSheet';
+import { useProjectDocuments } from '@/hooks/useProjectDocuments';
 import { cn } from '@/lib/utils';
 
 const containerVariants = {
@@ -90,12 +94,19 @@ const ProjectDetailPage = () => {
   const { saveTask, updateTask, markDone, reopenTask, snoozeTask, deleteTask } =
     useSparkTasks('all');
 
+  // Project documents (photos + drawings)
+  const { photos, drawings, fetchDocuments } = useProjectDocuments(id || '');
+  useEffect(() => {
+    if (id) fetchDocuments();
+  }, [id]);
+
   // Sheet states
   const [taskFormOpen, setTaskFormOpen] = useState(false);
   const [editingTask, setEditingTask] = useState<SparkTask | null>(null);
   const [detailTask, setDetailTask] = useState<SparkTask | null>(null);
   const [detailSheetOpen, setDetailSheetOpen] = useState(false);
   const [linkType, setLinkType] = useState<LinkType | null>(null);
+  const [docSheetType, setDocSheetType] = useState<'photo' | 'drawing' | null>(null);
 
   const formatDate = (dateStr?: string) => {
     if (!dateStr) return null;
@@ -360,6 +371,20 @@ const ProjectDetailPage = () => {
           >
             <Link2 className="h-4 w-4" /> RAMS
           </button>
+          <button
+            type="button"
+            onClick={() => setDocSheetType('photo')}
+            className="flex items-center gap-1.5 h-11 px-3 rounded-xl bg-white/[0.04] border border-white/[0.08] text-white text-sm font-medium whitespace-nowrap touch-manipulation active:scale-[0.98] transition-transform"
+          >
+            <Camera className="h-4 w-4" /> Photos
+          </button>
+          <button
+            type="button"
+            onClick={() => setDocSheetType('drawing')}
+            className="flex items-center gap-1.5 h-11 px-3 rounded-xl bg-white/[0.04] border border-white/[0.08] text-white text-sm font-medium whitespace-nowrap touch-manipulation active:scale-[0.98] transition-transform"
+          >
+            <Images className="h-4 w-4" /> Drawings
+          </button>
         </motion.div>
 
         {/* 5e. Tasks Section */}
@@ -533,7 +558,87 @@ const ProjectDetailPage = () => {
           </motion.div>
         )}
 
-        {/* 5g. Documents Section */}
+        {/* 5g. Photos preview */}
+        {photos.length > 0 && (
+          <motion.div variants={itemVariants}>
+            <div className="flex items-center justify-between mb-2">
+              <h3 className="text-sm font-semibold text-white flex items-center gap-2">
+                <div className="w-1.5 h-1.5 rounded-full bg-sky-400" />
+                Photos ({photos.length})
+              </h3>
+              <button
+                type="button"
+                onClick={() => setDocSheetType('photo')}
+                className="text-xs text-elec-yellow font-medium touch-manipulation"
+              >
+                View all
+              </button>
+            </div>
+            <div className="grid grid-cols-3 gap-1.5">
+              {photos.slice(0, 6).map((photo) => (
+                <button
+                  key={photo.id}
+                  type="button"
+                  onClick={() => setDocSheetType('photo')}
+                  className="aspect-square rounded-xl overflow-hidden bg-white/[0.04] touch-manipulation active:opacity-80"
+                >
+                  {photo.signedUrl && (
+                    <img
+                      src={photo.signedUrl}
+                      alt={photo.name}
+                      className="w-full h-full object-cover"
+                      loading="lazy"
+                    />
+                  )}
+                </button>
+              ))}
+            </div>
+          </motion.div>
+        )}
+
+        {/* 5h. Drawings preview */}
+        {drawings.length > 0 && (
+          <motion.div variants={itemVariants}>
+            <div className="flex items-center justify-between mb-2">
+              <h3 className="text-sm font-semibold text-white flex items-center gap-2">
+                <div className="w-1.5 h-1.5 rounded-full bg-purple-400" />
+                Drawings ({drawings.length})
+              </h3>
+              <button
+                type="button"
+                onClick={() => setDocSheetType('drawing')}
+                className="text-xs text-elec-yellow font-medium touch-manipulation"
+              >
+                View all
+              </button>
+            </div>
+            <div className="space-y-2">
+              {drawings.slice(0, 3).map((drawing) => (
+                <div
+                  key={drawing.id}
+                  className="flex items-center gap-3 p-3 rounded-xl bg-white/[0.04] border border-white/[0.08]"
+                >
+                  <FileText className="h-4 w-4 text-purple-400 flex-shrink-0" />
+                  <div className="min-w-0 flex-1">
+                    <p className="text-sm text-white truncate">{drawing.name}</p>
+                  </div>
+                  {drawing.signedUrl && (
+                    <a
+                      href={drawing.signedUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-xs text-elec-yellow font-medium flex-shrink-0 touch-manipulation"
+                    >
+                      Open
+                    </a>
+                  )}
+                </div>
+              ))}
+            </div>
+          </motion.div>
+        )}
+
+        {/* 5i. Documents Section (Certs + RAMS) */}
         {(certificates.length > 0 || rams.length > 0) && (
           <motion.div variants={itemVariants} className="space-y-3">
             {/* Certificates */}
@@ -674,6 +779,16 @@ const ProjectDetailPage = () => {
           onSelect={linkConfig[linkType].link}
           createLabel={linkConfig[linkType].createLabel}
           createUrl={linkConfig[linkType].createUrl}
+        />
+      )}
+
+      {docSheetType && project && (
+        <ProjectDocumentSheet
+          isOpen={true}
+          onClose={() => setDocSheetType(null)}
+          docType={docSheetType}
+          projectId={project.id}
+          projectName={project.name}
         />
       )}
     </div>
