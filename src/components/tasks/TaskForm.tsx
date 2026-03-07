@@ -190,7 +190,7 @@ export function TaskForm({
     <Drawer.Root open={isOpen} onOpenChange={(open) => !open && onClose()}>
       <Drawer.Portal>
         <Drawer.Overlay className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50" />
-        <Drawer.Content className="fixed bottom-0 left-0 right-0 z-50 flex flex-col rounded-t-3xl bg-background max-h-[85vh] outline-none">
+        <Drawer.Content className="fixed bottom-0 left-0 right-0 z-50 flex flex-col rounded-t-3xl bg-background max-h-[85dvh] outline-none">
           {/* Drag handle */}
           <div className="flex justify-center pt-3 pb-1">
             <div className="w-10 h-1 rounded-full bg-white/20" />
@@ -218,7 +218,7 @@ export function TaskForm({
                 onChange={(e) => setTitle(e.target.value)}
                 placeholder="e.g. Chase Mrs Smith re: quote"
                 className="h-11 text-base touch-manipulation border-white/30 focus:border-yellow-500 focus:ring-yellow-500"
-                autoFocus
+                autoFocus={false}
               />
             </div>
 
@@ -229,7 +229,7 @@ export function TaskForm({
                 value={details}
                 onChange={(e) => setDetails(e.target.value)}
                 placeholder="Any notes or context..."
-                className="touch-manipulation text-base min-h-[120px] focus:ring-2 focus:ring-elec-yellow/20 border-white/30 focus:border-yellow-500"
+                className="touch-manipulation text-base min-h-[72px] focus:ring-2 focus:ring-elec-yellow/20 border-white/30 focus:border-yellow-500"
               />
             </div>
 
