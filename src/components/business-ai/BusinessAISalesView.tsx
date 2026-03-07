@@ -321,7 +321,7 @@ export function BusinessAISalesView() {
               </div>
 
               {/* Subheadline */}
-              <p className="text-sm text-white/70 text-left leading-relaxed">
+              <p className="text-sm text-white text-left leading-relaxed">
                 Your business assistant on WhatsApp. Handles invoicing, scheduling, client comms
                 and regs — so you never stop what you're doing.
               </p>
@@ -337,7 +337,7 @@ export function BusinessAISalesView() {
                     />
                   ))}
                 </div>
-                <p className="text-xs text-white/60">Built by electricians, for electricians</p>
+                <p className="text-xs text-white">Built by electricians, for electricians</p>
               </div>
             </div>
           </div>
@@ -380,8 +380,8 @@ export function BusinessAISalesView() {
                   </div>
 
                   {/* Mate bubble */}
-                  <div className="flex items-end gap-2" style={{ maxWidth: '88%' }}>
-                    <div className="shrink-0 w-7 h-7 rounded-full bg-amber-500 flex items-center justify-center mb-0.5">
+                  <div className="flex items-start gap-2" style={{ maxWidth: '88%' }}>
+                    <div className="shrink-0 w-7 h-7 rounded-full bg-amber-500 flex items-center justify-center mt-0.5">
                       <Icon className="h-[13px] w-[13px] text-black" />
                     </div>
                     <div className="flex-1 min-w-0">
@@ -389,7 +389,7 @@ export function BusinessAISalesView() {
                         className="rounded-[18px] rounded-tl-[4px] px-3.5 py-2.5"
                         style={{ background: '#1f2d22', border: '1px solid rgba(255,255,255,0.06)' }}
                       >
-                        <p className="text-sm text-white leading-relaxed">{message}</p>
+                        <p className="text-sm text-white leading-relaxed text-left">{message}</p>
                       </div>
                       <div className="flex items-center gap-1 mt-1 px-1">
                         <span className="text-[10px] text-white/40">{time}</span>
@@ -405,7 +405,7 @@ export function BusinessAISalesView() {
                         <div className="px-5 py-2 rounded-full border border-amber-500/40 text-sm font-medium text-amber-400 bg-amber-500/[0.08]">
                           Yes
                         </div>
-                        <div className="px-5 py-2 rounded-full border border-white/[0.12] text-sm font-medium text-white/70 bg-white/[0.04]">
+                        <div className="px-5 py-2 rounded-full border border-white/[0.12] text-sm font-medium text-white bg-white/[0.04]">
                           No
                         </div>
                       </div>
@@ -422,8 +422,8 @@ export function BusinessAISalesView() {
                         </div>
                       </div>
                       {/* Follow-up */}
-                      <div className="flex items-end gap-2" style={{ maxWidth: '88%' }}>
-                        <div className="shrink-0 w-7 h-7 rounded-full bg-amber-500 flex items-center justify-center mb-0.5">
+                      <div className="flex items-start gap-2" style={{ maxWidth: '88%' }}>
+                        <div className="shrink-0 w-7 h-7 rounded-full bg-amber-500 flex items-center justify-center mt-0.5">
                           <Zap className="h-[13px] w-[13px] text-black" />
                         </div>
                         <div className="flex-1 min-w-0">
@@ -431,7 +431,7 @@ export function BusinessAISalesView() {
                             className="rounded-[18px] rounded-tl-[4px] px-3.5 py-2.5"
                             style={{ background: '#1f2d22', border: '1px solid rgba(255,255,255,0.06)' }}
                           >
-                            <p className="text-sm text-white leading-relaxed">{interaction.mateFollowUp}</p>
+                            <p className="text-sm text-white leading-relaxed text-left">{interaction.mateFollowUp}</p>
                           </div>
                           <div className="flex items-center gap-1 mt-1 px-1">
                             <span className="text-[10px] text-white/40">7:01 AM</span>
@@ -475,11 +475,11 @@ export function BusinessAISalesView() {
                       <div className="w-12 h-12 rounded-2xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center mb-2 shrink-0">
                         <Icon className="h-5 w-5 text-amber-400" />
                       </div>
-                      {/* Label */}
-                      <span className="text-xs font-bold text-white leading-tight">{label}</span>
-                      {/* Desc */}
-                      <span className="text-[10px] text-white/50 mt-0.5 leading-tight px-1">{desc}</span>
-                      {/* Badge — own line, no wrapping issues */}
+                      {/* Label — fixed height */}
+                      <span className="text-xs font-bold text-white leading-tight h-[16px] flex items-center">{label}</span>
+                      {/* Desc — fixed height so badges stay level across all cards */}
+                      <span className="text-[10px] text-white mt-0.5 leading-tight px-1 h-[28px] flex items-center text-center">{desc}</span>
+                      {/* Badge — own line, always at same vertical position */}
                       <div className="mt-2 px-2 py-0.5 rounded-full bg-amber-500/10 border border-amber-500/20">
                         <span className="text-[10px] font-semibold text-amber-400 whitespace-nowrap">
                           {tools} tools
@@ -487,8 +487,8 @@ export function BusinessAISalesView() {
                       </div>
                     </div>
                     {i < pipelineSteps.length - 1 && (
-                      <div className="flex items-start pt-[22px] shrink-0">
-                        <ArrowRight className="h-3.5 w-3.5 text-amber-400/40" />
+                      <div className="flex items-start pt-4 shrink-0">
+                        <ArrowRight className="h-4 w-4 text-amber-400/60" />
                       </div>
                     )}
                   </React.Fragment>
@@ -499,7 +499,7 @@ export function BusinessAISalesView() {
             <div className="absolute top-0 right-0 bottom-2 w-8 bg-gradient-to-l from-background to-transparent pointer-events-none" />
           </div>
 
-          <p className="text-xs text-white/50 text-center px-4">
+          <p className="text-xs text-white text-center px-4">
             80 tools working behind one WhatsApp chat
           </p>
         </motion.div>
@@ -534,7 +534,7 @@ export function BusinessAISalesView() {
                     {/* Title + examples */}
                     <div className="space-y-1">
                       <p className="text-sm font-semibold text-white leading-tight">{cardTitle}</p>
-                      <p className="text-[11px] text-white/50 leading-snug">{examples}</p>
+                      <p className="text-[11px] text-white leading-snug">{examples}</p>
                     </div>
                   </motion.div>
                 ))}
@@ -569,26 +569,26 @@ export function BusinessAISalesView() {
             style={{ background: 'rgba(34,197,94,0.04)' }}
           >
             {/* Header row */}
-            <div className="flex items-start gap-3">
-              <div className="w-10 h-10 rounded-xl bg-green-500/15 border border-green-500/25 flex items-center justify-center shrink-0 mt-0.5">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-xl bg-green-500/15 border border-green-500/25 flex items-center justify-center shrink-0">
                 <Shield className="h-5 w-5 text-green-400" />
               </div>
               <div className="flex-1 min-w-0">
-                <h3 className="text-sm font-bold text-white">Mate always asks first</h3>
-                <p className="text-xs text-white/60 mt-0.5 leading-snug">
+                <h3 className="text-sm font-bold text-white text-left">Mate always asks first</h3>
+                <p className="text-xs text-white mt-0.5 leading-snug text-left">
                   Nothing leaves your business without your OK
                 </p>
               </div>
             </div>
 
             {/* Checklist */}
-            <div className="space-y-2.5">
+            <div className="space-y-3">
               {trustPoints.map((point) => (
-                <div key={point} className="flex items-start gap-3">
-                  <div className="w-5 h-5 rounded-full bg-green-500/15 border border-green-500/20 flex items-center justify-center shrink-0 mt-0.5">
+                <div key={point} className="flex items-center gap-3">
+                  <div className="w-5 h-5 rounded-full bg-green-500/15 border border-green-500/20 flex items-center justify-center shrink-0">
                     <CheckCircle className="h-3 w-3 text-green-400" />
                   </div>
-                  <span className="text-sm text-white/80 leading-snug flex-1">{point}</span>
+                  <span className="text-sm text-white leading-snug text-left flex-1">{point}</span>
                 </div>
               ))}
             </div>
@@ -607,8 +607,8 @@ export function BusinessAISalesView() {
             <div className="absolute inset-0 bg-gradient-to-br from-amber-500/10 via-transparent to-yellow-500/5 pointer-events-none" />
             <div className="relative p-6 text-center space-y-1.5">
               <div className="text-4xl font-bold text-white">£29.99</div>
-              <div className="text-sm text-white/60">per month · launching soon</div>
-              <p className="text-xs text-white/40 pt-1">Includes everything in the Electrician plan</p>
+              <div className="text-sm text-white">per month · launching soon</div>
+              <p className="text-xs text-white pt-1">Includes everything in the Electrician plan</p>
             </div>
           </div>
 
@@ -642,7 +642,7 @@ export function BusinessAISalesView() {
             </Button>
           )}
 
-          <p className="text-center text-xs text-white/40">
+          <p className="text-center text-xs text-white">
             We'll let you know as soon as Elec-AI is ready
           </p>
         </motion.div>
