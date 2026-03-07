@@ -75,12 +75,18 @@ export async function generateQuote(args: Record<string, unknown>, user: UserCon
     if (typeof item.quantity !== 'number' || item.quantity <= 0) {
       throw new Error('Item quantity must be a positive number');
     }
-    if (typeof item.unitPrice !== 'number' || item.unitPrice < 0) {
-      throw new Error('Item unitPrice must be zero or positive');
+    // Accept both unitPrice (camelCase) and unit_price (snake_case) for agent compatibility
+    const price =
+      typeof item.unitPrice === 'number'
+        ? item.unitPrice
+        : typeof item.unit_price === 'number'
+          ? item.unit_price
+          : -1;
+    if (price < 0) {
+      throw new Error('Item unitPrice (or unit_price) must be zero or positive');
     }
     const category = typeof item.category === 'string' ? item.category : 'materials';
     const qty = item.quantity;
-    const price = item.unitPrice;
     items.push({
       id: randomUUID(),
       description: item.description.trim(),
