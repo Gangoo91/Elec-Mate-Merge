@@ -25,6 +25,9 @@ const InvoiceBuilderCreate = () => {
   const [showExitDialog, setShowExitDialog] = useState(false);
   const [isLoadingContext, setIsLoadingContext] = useState(true);
 
+  // Read projectId from URL — when coming from a project page
+  const projectId = new URLSearchParams(location.search).get('projectId') || undefined;
+
   // Load quote data or certificate data from sessionStorage
   useEffect(() => {
     const params = new URLSearchParams(location.search);
@@ -55,7 +58,11 @@ const InvoiceBuilderCreate = () => {
 
   const handleInvoiceGenerated = () => {
     fetchInvoices();
-    navigate('/electrician/invoices');
+    if (projectId) {
+      navigate(`/electrician/projects/${projectId}`);
+    } else {
+      navigate('/electrician/invoices');
+    }
   };
 
   const handleBack = () => {
@@ -63,7 +70,11 @@ const InvoiceBuilderCreate = () => {
   };
 
   const confirmExit = () => {
-    navigate('/electrician/invoices');
+    if (projectId) {
+      navigate(`/electrician/projects/${projectId}`);
+    } else {
+      navigate('/electrician/invoices');
+    }
   };
 
   // Voice navigation handler
@@ -157,6 +168,7 @@ const InvoiceBuilderCreate = () => {
               onInvoiceGenerated={handleInvoiceGenerated}
               sourceQuote={quoteContext}
               initialCertificateData={certificateContext}
+              existingInvoice={projectId ? { project_id: projectId } : undefined}
             />
           )}
         </main>

@@ -136,6 +136,8 @@ export interface Quote {
   linked_certificate_type?: 'EICR' | 'EIC' | 'Minor Works';
   linked_certificate_reference?: string;
   linked_certificate_pdf_url?: string;
+  // Project linking
+  project_id?: string;
   // External accounting sync fields
   external_invoice_id?: string;
   external_invoice_provider?: string;

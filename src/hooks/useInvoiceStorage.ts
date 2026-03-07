@@ -227,6 +227,8 @@ export const useInvoiceStorage = () => {
               linked_certificate_type: invoice.linked_certificate_type || null,
               linked_certificate_reference: invoice.linked_certificate_reference || null,
               linked_certificate_pdf_url: invoice.linked_certificate_pdf_url || null,
+              // Project linking
+              project_id: invoice.project_id || null,
             },
           ])
           .select()
