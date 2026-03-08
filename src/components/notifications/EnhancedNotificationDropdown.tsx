@@ -93,10 +93,12 @@ const formatTime = (date: Date) => {
 const NotificationItem = ({
   notification,
   onRead,
+  onDelete,
   index,
 }: {
   notification: Notification;
   onRead: () => void;
+  onDelete: () => void;
   index: number;
 }) => {
   const iconConfig = getNotificationIcon(notification.type || 'info');
@@ -106,7 +108,9 @@ const NotificationItem = ({
     <motion.div
       initial={{ opacity: 0, x: -20 }}
       animate={{ opacity: 1, x: 0 }}
+      exit={{ opacity: 0, x: 80, height: 0, paddingTop: 0, paddingBottom: 0 }}
       transition={{ delay: index * 0.05, duration: 0.2 }}
+      layout
       className={cn(
         'group relative px-4 py-3 cursor-pointer transition-all duration-200',
         'hover:bg-white/5',
@@ -159,10 +163,17 @@ const NotificationItem = ({
           </div>
         </div>
 
-        {/* Hover action */}
-        <div className="opacity-0 group-hover:opacity-100 transition-opacity shrink-0 self-center">
-          <ChevronRight className="h-4 w-4 text-muted-foreground" />
-        </div>
+        {/* Delete button (visible on hover / always on touch) */}
+        <button
+          onClick={(e) => {
+            e.stopPropagation();
+            onDelete();
+          }}
+          className="shrink-0 self-center h-8 w-8 flex items-center justify-center rounded-lg opacity-0 group-hover:opacity-100 hover:bg-red-500/15 transition-all touch-manipulation sm:opacity-0 active:opacity-100"
+          aria-label="Delete notification"
+        >
+          <X className="h-4 w-4 text-white hover:text-red-400 transition-colors" />
+        </button>
       </div>
     </motion.div>
   );
@@ -175,8 +186,10 @@ const EnhancedNotificationDropdown = () => {
   // Using useNotifications hook safely
   let notifications: Notification[] = [];
   let unreadCount = 0;
-  let markAsRead = (id: string) => {};
+  let markAsRead = (_id: string) => {};
   let markAllAsRead = () => {};
+  let deleteNotification = (_id: string) => {};
+  let clearAllNotifications = () => {};
 
   try {
     const notificationContext = useNotifications();
@@ -184,6 +197,8 @@ const EnhancedNotificationDropdown = () => {
     unreadCount = notificationContext.unreadCount;
     markAsRead = notificationContext.markAsRead;
     markAllAsRead = notificationContext.markAllAsRead;
+    deleteNotification = notificationContext.deleteNotification;
+    clearAllNotifications = notificationContext.clearAllNotifications;
   } catch (e) {
     console.warn('NotificationProvider not available');
   }
@@ -318,6 +333,7 @@ const EnhancedNotificationDropdown = () => {
                     key={notification.id}
                     notification={notification}
                     onRead={() => markAsRead(notification.id)}
+                    onDelete={() => deleteNotification(notification.id)}
                     index={index}
                   />
                 ))}
@@ -328,14 +344,25 @@ const EnhancedNotificationDropdown = () => {
 
         {/* Footer */}
         {notifications.length > 0 && (
-          <div className="p-3 border-t border-border/50 bg-muted/30">
+          <div className="p-3 border-t border-border/50 bg-muted/30 flex gap-2">
             <Button
               variant="ghost"
-              className="w-full h-10 text-sm font-medium hover:bg-elec-yellow/10 hover:text-elec-yellow transition-colors"
+              className="flex-1 h-10 text-sm font-medium hover:bg-elec-yellow/10 hover:text-elec-yellow transition-colors"
               onClick={handleViewAll}
             >
-              View all notifications
+              View all
               <ChevronRight className="h-4 w-4 ml-1" />
+            </Button>
+            <Button
+              variant="ghost"
+              className="h-10 text-sm font-medium text-white hover:bg-red-500/10 hover:text-red-400 transition-colors touch-manipulation"
+              onClick={() => {
+                clearAllNotifications();
+                setOpen(false);
+              }}
+            >
+              <X className="h-4 w-4 mr-1" />
+              Clear all
             </Button>
           </div>
         )}
