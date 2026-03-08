@@ -100,14 +100,20 @@ serve(async (req: Request) => {
       email: emailAddress,
     });
 
-    // Close the popup — the app detects focus return and refreshes status
-    return new Response(closePage('Connected!', `${emailAddress} is now synced with Elec-Mate.`), {
-      headers: { 'Content-Type': 'text/html; charset=utf-8' },
+    // Redirect to frontend oauth-complete page which closes the popup
+    return new Response(null, {
+      status: 302,
+      headers: {
+        Location: `${FRONTEND_URL}/oauth-complete?status=success&email=${encodeURIComponent(emailAddress)}`,
+      },
     });
   } catch (error) {
     console.error('Calendar OAuth callback error:', error);
-    return new Response(closePage('Connection Failed', (error as Error).message), {
-      headers: { 'Content-Type': 'text/html; charset=utf-8' },
+    return new Response(null, {
+      status: 302,
+      headers: {
+        Location: `${FRONTEND_URL}/oauth-complete?status=error&message=${encodeURIComponent((error as Error).message)}`,
+      },
     });
   }
 });
