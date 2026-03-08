@@ -2,17 +2,16 @@ import { useState, useMemo } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from '@/hooks/use-toast';
-import { formatDistanceToNow, parseISO, format } from 'date-fns';
+import { formatDistanceToNow, parseISO, format, differenceInDays } from 'date-fns';
 import PullToRefresh from '@/components/admin/PullToRefresh';
 import AdminSearchInput from '@/components/admin/AdminSearchInput';
 import AdminEmptyState from '@/components/admin/AdminEmptyState';
 import { useHaptic } from '@/hooks/useHaptic';
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Input } from '@/components/ui/input';
-import { Textarea } from '@/components/ui/textarea';
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
 import {
   AlertDialog,
@@ -24,13 +23,6 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from '@/components/ui/alert-dialog';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
 import {
   Users,
   Send,
@@ -44,63 +36,10 @@ import {
   CheckCheck,
   GraduationCap,
   TrendingUp,
-  Sparkles,
-  BookOpen,
-  Bell,
   Gift,
   RotateCcw,
-  BarChart3,
-  MousePointerClick,
-  AlertTriangle,
+  CalendarDays,
 } from 'lucide-react';
-
-// Campaign type definitions
-const CAMPAIGN_TYPES = {
-  feature_spotlight: {
-    label: 'Feature Spotlight',
-    description: 'Highlight a specific feature to subscribed apprentices',
-    icon: Sparkles,
-    colour: 'from-purple-500 to-violet-500',
-    badgeColour: 'bg-purple-500/20 text-purple-400',
-  },
-  new_content: {
-    label: 'New Content',
-    description: 'Announce new content or features to subscribed apprentices',
-    icon: BookOpen,
-    colour: 'from-green-500 to-emerald-500',
-    badgeColour: 'bg-green-500/20 text-green-400',
-  },
-  engagement_nudge: {
-    label: 'Engagement Nudge',
-    description: 'Re-engage subscribed apprentices inactive for 14+ days',
-    icon: Bell,
-    colour: 'from-blue-500 to-cyan-500',
-    badgeColour: 'bg-blue-500/20 text-blue-400',
-  },
-  trial_winback: {
-    label: 'Trial Win-Back',
-    description: 'Win back apprentices whose trial expired without subscribing',
-    icon: Gift,
-    colour: 'from-amber-500 to-orange-500',
-    badgeColour: 'bg-amber-500/20 text-amber-400',
-  },
-} as const;
-
-type CampaignType = keyof typeof CAMPAIGN_TYPES;
-
-const SPOTLIGHT_FEATURES = [
-  { key: 'study_centre', label: 'Study Centre' },
-  { key: 'am2_simulator', label: 'AM2 Simulator' },
-  { key: 'epa_simulator', label: 'EPA Simulator' },
-  { key: 'portfolio_hub', label: 'Portfolio Hub' },
-  { key: 'site_diary', label: 'Site Diary' },
-  { key: 'ask_dave', label: 'Ask Dave' },
-  { key: 'mental_health', label: 'Mental Health Hub' },
-  { key: 'career_development', label: 'Career Development' },
-  { key: 'ojt_hub', label: 'OJT Hub' },
-  { key: 'learning_videos', label: 'Learning Videos' },
-  { key: 'calculators', label: 'Calculators' },
-];
 
 interface EligibleUser {
   id: string;
@@ -122,12 +61,21 @@ interface SentUser {
   subscribed: boolean;
 }
 
+const EMAIL_VERSIONS = {
+  v1: { label: 'v1 — Full Feature List', description: 'Comprehensive breakdown of every feature' },
+  v2: { label: 'v2 — Short & Punchy', description: 'Quick pitch with pricing upfront' },
+  v3: {
+    label: 'v3 — Personal from Andrew',
+    description: "Friendly, personal tone acknowledging they've been away",
+  },
+} as const;
+
+type EmailVersion = keyof typeof EMAIL_VERSIONS;
+
 export default function AdminApprenticeCampaigns() {
   const queryClient = useQueryClient();
   const haptic = useHaptic();
 
-  // State
-  const [campaignType, setCampaignType] = useState<CampaignType>('trial_winback');
   const [search, setSearch] = useState('');
   const [selectedUsers, setSelectedUsers] = useState<Set<string>>(new Set());
   const [selectedUser, setSelectedUser] = useState<EligibleUser | null>(null);
@@ -135,14 +83,9 @@ export default function AdminApprenticeCampaigns() {
   const [showSentHistory, setShowSentHistory] = useState(false);
   const [testEmail, setTestEmail] = useState('');
   const [manualEmail, setManualEmail] = useState('');
+  const [emailVersion, setEmailVersion] = useState<EmailVersion>('v3');
 
-  // Campaign-specific config
-  const [featureKey, setFeatureKey] = useState('study_centre');
-  const [contentTitle, setContentTitle] = useState('');
-  const [contentDescription, setContentDescription] = useState('');
-  const [emailVersion, setEmailVersion] = useState<'v1' | 'v2'>('v1');
-
-  const campaignConfig = CAMPAIGN_TYPES[campaignType];
+  const campaignType = 'trial_winback' as const;
 
   // ─── Queries ────────────────────────────────────────────
   const { data: stats, isLoading: statsLoading } = useQuery({
@@ -186,10 +129,7 @@ export default function AdminApprenticeCampaigns() {
   // ─── Mutations ──────────────────────────────────────────
   const campaignParams = {
     campaignType,
-    featureKey: campaignType === 'feature_spotlight' ? featureKey : undefined,
-    contentTitle: campaignType === 'new_content' ? contentTitle : undefined,
-    contentDescription: campaignType === 'new_content' ? contentDescription : undefined,
-    email_version: campaignType === 'trial_winback' ? emailVersion : undefined,
+    email_version: emailVersion,
   };
 
   const sendSingleMutation = useMutation({
@@ -202,16 +142,10 @@ export default function AdminApprenticeCampaigns() {
     },
     onSuccess: (data) => {
       haptic.success();
-      toast({ title: `Campaign email sent to ${data.email}`, variant: 'success' });
-      queryClient.invalidateQueries({
-        queryKey: ['apprentice-campaign-stats'],
-      });
-      queryClient.invalidateQueries({
-        queryKey: ['apprentice-campaign-eligible'],
-      });
-      queryClient.invalidateQueries({
-        queryKey: ['apprentice-campaign-sent'],
-      });
+      toast({ title: `Win-back email sent to ${data.email}`, variant: 'success' });
+      queryClient.invalidateQueries({ queryKey: ['apprentice-campaign-stats'] });
+      queryClient.invalidateQueries({ queryKey: ['apprentice-campaign-eligible'] });
+      queryClient.invalidateQueries({ queryKey: ['apprentice-campaign-sent'] });
       setSelectedUser(null);
       setSelectedUsers((prev) => {
         const next = new Set(prev);
@@ -239,15 +173,9 @@ export default function AdminApprenticeCampaigns() {
         title: `Sent ${data.sent} of ${data.sent + (data.failed || 0)} emails${data.skipped ? ` (${data.skipped} skipped)` : ''}${data.failed ? ` (${data.failed} failed)` : ''}`,
         variant: data.failed ? 'warning' : 'success',
       });
-      queryClient.invalidateQueries({
-        queryKey: ['apprentice-campaign-stats'],
-      });
-      queryClient.invalidateQueries({
-        queryKey: ['apprentice-campaign-eligible'],
-      });
-      queryClient.invalidateQueries({
-        queryKey: ['apprentice-campaign-sent'],
-      });
+      queryClient.invalidateQueries({ queryKey: ['apprentice-campaign-stats'] });
+      queryClient.invalidateQueries({ queryKey: ['apprentice-campaign-eligible'] });
+      queryClient.invalidateQueries({ queryKey: ['apprentice-campaign-sent'] });
       setSelectedUsers(new Set());
       setConfirmSendAll(false);
     },
@@ -279,11 +207,7 @@ export default function AdminApprenticeCampaigns() {
   const sendManualMutation = useMutation({
     mutationFn: async (email: string) => {
       const { data, error } = await supabase.functions.invoke('send-apprentice-campaign', {
-        body: {
-          action: 'send_manual',
-          manualEmail: email,
-          ...campaignParams,
-        },
+        body: { action: 'send_manual', manualEmail: email, ...campaignParams },
       });
       if (error) throw error;
       return data;
@@ -292,9 +216,7 @@ export default function AdminApprenticeCampaigns() {
       haptic.success();
       toast({ title: 'Email sent!', variant: 'success' });
       setManualEmail('');
-      queryClient.invalidateQueries({
-        queryKey: ['apprentice-campaign-stats'],
-      });
+      queryClient.invalidateQueries({ queryKey: ['apprentice-campaign-stats'] });
     },
     onError: (err: Error) => {
       haptic.error();
@@ -313,15 +235,9 @@ export default function AdminApprenticeCampaigns() {
     onSuccess: (data) => {
       haptic.success();
       toast({ title: data.message || `${data.reset} users reset`, variant: 'success' });
-      queryClient.invalidateQueries({
-        queryKey: ['apprentice-campaign-stats'],
-      });
-      queryClient.invalidateQueries({
-        queryKey: ['apprentice-campaign-eligible'],
-      });
-      queryClient.invalidateQueries({
-        queryKey: ['apprentice-campaign-sent'],
-      });
+      queryClient.invalidateQueries({ queryKey: ['apprentice-campaign-stats'] });
+      queryClient.invalidateQueries({ queryKey: ['apprentice-campaign-eligible'] });
+      queryClient.invalidateQueries({ queryKey: ['apprentice-campaign-sent'] });
     },
     onError: (err: Error) => {
       haptic.error();
@@ -365,275 +281,160 @@ export default function AdminApprenticeCampaigns() {
     }
   };
 
-  // Reset selection when campaign type changes
-  const handleCampaignTypeChange = (ct: CampaignType) => {
-    setCampaignType(ct);
-    setSelectedUsers(new Set());
-    setSearch('');
-  };
+  // Compute date range from eligible users
+  const dateRange = useMemo(() => {
+    if (!eligibleUsers || eligibleUsers.length === 0) return null;
+    const dates = eligibleUsers.map((u: EligibleUser) => new Date(u.created_at).getTime());
+    const earliest = new Date(Math.min(...dates));
+    const latest = new Date(Math.max(...dates));
+    return {
+      earliest: format(earliest, 'dd MMM'),
+      latest: format(latest, 'dd MMM yyyy'),
+    };
+  }, [eligibleUsers]);
 
   return (
     <PullToRefresh
       onRefresh={async () => {
         await Promise.all([
-          queryClient.invalidateQueries({
-            queryKey: ['apprentice-campaign-stats'],
-          }),
-          queryClient.invalidateQueries({
-            queryKey: ['apprentice-campaign-eligible'],
-          }),
+          queryClient.invalidateQueries({ queryKey: ['apprentice-campaign-stats'] }),
+          queryClient.invalidateQueries({ queryKey: ['apprentice-campaign-eligible'] }),
         ]);
       }}
     >
       <div className="space-y-4 pb-20">
         {/* Header */}
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-purple-500 to-violet-500 flex items-center justify-center">
-            <GraduationCap className="h-5 w-5 text-white" />
+          <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-amber-500 to-orange-500 flex items-center justify-center">
+            <Gift className="h-5 w-5 text-white" />
           </div>
           <div>
-            <h2 className="text-lg font-bold">Apprentice Campaigns</h2>
-            <p className="text-xs text-white">Targeted email campaigns for apprentice users</p>
+            <h2 className="text-lg font-bold">Apprentice Win-Back</h2>
+            <p className="text-xs text-white">
+              Re-engage lapsed trial apprentices with targeted emails
+            </p>
           </div>
         </div>
 
-        {/* Campaign Type Selector */}
-        <div className="flex gap-2 overflow-x-auto scrollbar-hide pb-1">
-          {(Object.keys(CAMPAIGN_TYPES) as CampaignType[]).map((ct) => {
-            const config = CAMPAIGN_TYPES[ct];
-            const Icon = config.icon;
-            const isActive = campaignType === ct;
-            return (
-              <Button
-                key={ct}
-                variant={isActive ? 'default' : 'ghost'}
-                size="sm"
-                onClick={() => handleCampaignTypeChange(ct)}
-                className={`shrink-0 gap-1.5 touch-manipulation h-11 px-3 text-xs ${
-                  isActive
-                    ? `bg-gradient-to-r ${config.colour} text-white hover:opacity-90`
-                    : 'text-white'
-                }`}
-              >
-                <Icon className="h-4 w-4" />
-                {config.label}
-              </Button>
-            );
-          })}
-        </div>
-
-        {/* Campaign Description */}
-        <p className="text-sm text-white px-1">{campaignConfig.description}</p>
-
-        {/* Stats Cards */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-          <Card className="bg-gradient-to-br from-purple-500/10 to-purple-500/5 border-purple-500/20">
-            <CardContent className="pt-4 pb-3 px-4">
-              <div className="flex items-center gap-2 mb-1">
-                <Target className="h-4 w-4 text-purple-400" />
-                <span className="text-xs text-white">Eligible</span>
+        {/* Hero Stats Row */}
+        <div className="grid grid-cols-4 gap-2">
+          <Card className="bg-gradient-to-br from-amber-500/10 to-amber-500/5 border-amber-500/20">
+            <CardContent className="pt-3 pb-2.5 px-3">
+              <div className="flex items-center gap-1.5 mb-0.5">
+                <Target className="h-3.5 w-3.5 text-amber-400" />
+                <span className="text-[10px] text-white">Eligible</span>
               </div>
-              <p className="text-xl sm:text-2xl font-bold">
+              <p className="text-xl font-bold">
                 {statsLoading ? '...' : stats?.totalEligible || 0}
               </p>
             </CardContent>
           </Card>
           <Card className="bg-gradient-to-br from-blue-500/10 to-blue-500/5 border-blue-500/20">
-            <CardContent className="pt-4 pb-3 px-4">
-              <div className="flex items-center gap-2 mb-1">
-                <Send className="h-4 w-4 text-blue-400" />
-                <span className="text-xs text-white">Sent</span>
+            <CardContent className="pt-3 pb-2.5 px-3">
+              <div className="flex items-center gap-1.5 mb-0.5">
+                <Send className="h-3.5 w-3.5 text-blue-400" />
+                <span className="text-[10px] text-white">Sent</span>
               </div>
-              <p className="text-xl sm:text-2xl font-bold">
-                {statsLoading ? '...' : stats?.offersSent || 0}
-              </p>
+              <p className="text-xl font-bold">{statsLoading ? '...' : stats?.offersSent || 0}</p>
             </CardContent>
           </Card>
           <Card className="bg-gradient-to-br from-green-500/10 to-green-500/5 border-green-500/20">
-            <CardContent className="pt-4 pb-3 px-4">
-              <div className="flex items-center gap-2 mb-1">
-                <CheckCheck className="h-4 w-4 text-green-400" />
-                <span className="text-xs text-white">Converted</span>
+            <CardContent className="pt-3 pb-2.5 px-3">
+              <div className="flex items-center gap-1.5 mb-0.5">
+                <CheckCheck className="h-3.5 w-3.5 text-green-400" />
+                <span className="text-[10px] text-white">Converted</span>
               </div>
-              <p className="text-xl sm:text-2xl font-bold">
-                {statsLoading ? '...' : stats?.conversions || 0}
-              </p>
+              <p className="text-xl font-bold">{statsLoading ? '...' : stats?.conversions || 0}</p>
             </CardContent>
           </Card>
-          <Card className="bg-gradient-to-br from-amber-500/10 to-amber-500/5 border-amber-500/20">
-            <CardContent className="pt-4 pb-3 px-4">
-              <div className="flex items-center gap-2 mb-1">
-                <TrendingUp className="h-4 w-4 text-amber-400" />
-                <span className="text-xs text-white">Rate</span>
+          <Card className="bg-gradient-to-br from-purple-500/10 to-purple-500/5 border-purple-500/20">
+            <CardContent className="pt-3 pb-2.5 px-3">
+              <div className="flex items-center gap-1.5 mb-0.5">
+                <TrendingUp className="h-3.5 w-3.5 text-purple-400" />
+                <span className="text-[10px] text-white">Rate</span>
               </div>
-              <p className="text-xl sm:text-2xl font-bold">
+              <p className="text-xl font-bold">
                 {statsLoading ? '...' : `${stats?.conversionRate || 0}%`}
               </p>
             </CardContent>
           </Card>
         </div>
 
-        {/* Engagement Funnel (trial_winback only) */}
-        {campaignType === 'trial_winback' && (
-          <Card>
-            <CardHeader className="pb-3">
-              <CardTitle className="text-sm flex items-center gap-2">
-                <BarChart3 className="h-4 w-4 text-cyan-400" />
-                Engagement Funnel
-              </CardTitle>
-              <CardDescription>Email delivery and engagement metrics</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="grid grid-cols-2 gap-3">
-                <div className="flex items-center gap-2 p-3 rounded-lg bg-green-500/10 border border-green-500/20">
-                  <CheckCheck className="h-4 w-4 text-green-400 shrink-0" />
-                  <div>
-                    <p className="text-xs text-white">Delivered</p>
-                    <p className="text-lg font-bold">—</p>
-                  </div>
-                </div>
-                <div className="flex items-center gap-2 p-3 rounded-lg bg-blue-500/10 border border-blue-500/20">
-                  <Eye className="h-4 w-4 text-blue-400 shrink-0" />
-                  <div>
-                    <p className="text-xs text-white">Opened</p>
-                    <p className="text-lg font-bold">—</p>
-                  </div>
-                </div>
-                <div className="flex items-center gap-2 p-3 rounded-lg bg-purple-500/10 border border-purple-500/20">
-                  <MousePointerClick className="h-4 w-4 text-purple-400 shrink-0" />
-                  <div>
-                    <p className="text-xs text-white">Clicked</p>
-                    <p className="text-lg font-bold">—</p>
-                  </div>
-                </div>
-                <div className="flex items-center gap-2 p-3 rounded-lg bg-red-500/10 border border-red-500/20">
-                  <AlertTriangle className="h-4 w-4 text-red-400 shrink-0" />
-                  <div>
-                    <p className="text-xs text-white">Bounced</p>
-                    <p className="text-lg font-bold">—</p>
-                  </div>
-                </div>
+        {/* Audience Insight */}
+        <Card className="border-amber-500/20">
+          <CardContent className="pt-4 pb-4 px-4">
+            <div className="flex items-start gap-3">
+              <div className="w-9 h-9 rounded-lg bg-amber-500/10 flex items-center justify-center shrink-0 mt-0.5">
+                <CalendarDays className="h-4 w-4 text-amber-400" />
               </div>
-              <p className="text-xs text-white mt-3 text-center">
-                Wires up automatically once Resend webhook data is available
-              </p>
-            </CardContent>
-          </Card>
-        )}
-
-        {/* Reset & Resend (trial_winback only) */}
-        {campaignType === 'trial_winback' && (
-          <Card>
-            <CardContent className="pt-4 pb-4 px-4">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-sm font-medium">Reset Sent Users</p>
-                  <p className="text-xs text-white">
-                    Clears sent status for non-converted users (24h+ ago) so they can be resent
-                  </p>
-                </div>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={() => resetSentMutation.mutate()}
-                  disabled={resetSentMutation.isPending}
-                  className="gap-1.5 h-11 px-3 touch-manipulation shrink-0"
-                >
-                  {resetSentMutation.isPending ? (
-                    <Loader2 className="h-4 w-4 animate-spin" />
-                  ) : (
-                    <RotateCcw className="h-4 w-4" />
-                  )}
-                  Reset (Resend)
-                </Button>
+              <div>
+                <p className="text-sm text-white leading-relaxed">
+                  <strong className="text-amber-400">
+                    {statsLoading ? '...' : stats?.totalEligible || 0} apprentices
+                  </strong>{' '}
+                  signed up
+                  {dateRange ? ` between ${dateRange.earliest} \u2013 ${dateRange.latest}` : ''} and
+                  didn't subscribe after their 7-day trial.
+                  {stats?.offersSent === 0
+                    ? ' None have been contacted yet.'
+                    : ` ${stats?.offersSent || 0} have been contacted so far.`}
+                </p>
               </div>
-            </CardContent>
-          </Card>
-        )}
+            </div>
+          </CardContent>
+        </Card>
 
-        {/* Campaign Config Card */}
+        {/* Email Version Selector */}
         <Card>
           <CardHeader className="pb-3">
             <CardTitle className="text-sm flex items-center gap-2">
-              <campaignConfig.icon className="h-4 w-4 text-amber-400" />
-              Campaign Configuration
+              <Mail className="h-4 w-4 text-amber-400" />
+              Email Version
             </CardTitle>
           </CardHeader>
-          <CardContent className="space-y-4">
-            {campaignType === 'feature_spotlight' && (
-              <div>
-                <label className="text-sm text-white mb-2 block">Feature to highlight</label>
-                <Select value={featureKey} onValueChange={setFeatureKey}>
-                  <SelectTrigger className="h-11 touch-manipulation bg-elec-gray border-elec-gray focus:border-elec-yellow focus:ring-elec-yellow data-[state=open]:border-elec-yellow data-[state=open]:ring-2">
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent className="z-[100] bg-elec-gray border-elec-gray text-foreground">
-                    {SPOTLIGHT_FEATURES.map((f) => (
-                      <SelectItem key={f.key} value={f.key}>
-                        {f.label}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
-            )}
-
-            {campaignType === 'new_content' && (
-              <>
-                <div>
-                  <label className="text-sm text-white mb-2 block">Content title</label>
-                  <Input
-                    value={contentTitle}
-                    onChange={(e) => setContentTitle(e.target.value)}
-                    placeholder="e.g. AM2 Practice Mode"
-                    className="h-11 text-base touch-manipulation border-white/30 focus:border-yellow-500 focus:ring-yellow-500"
-                  />
-                </div>
-                <div>
-                  <label className="text-sm text-white mb-2 block">Description</label>
-                  <Textarea
-                    value={contentDescription}
-                    onChange={(e) => setContentDescription(e.target.value)}
-                    placeholder="What's new and why it's useful..."
-                    className="touch-manipulation text-base min-h-[100px] focus:ring-2 focus:ring-elec-yellow/20 border-white/30 focus:border-yellow-500"
-                  />
-                </div>
-              </>
-            )}
-
-            {/* Email version toggle (trial_winback only) */}
-            {campaignType === 'trial_winback' && (
-              <div>
-                <label className="text-sm text-white mb-2 block">Email version</label>
-                <div className="flex gap-2">
-                  <Button
-                    variant={emailVersion === 'v1' ? 'default' : 'outline'}
-                    size="sm"
-                    onClick={() => setEmailVersion('v1')}
-                    className={`flex-1 h-11 touch-manipulation ${
-                      emailVersion === 'v1'
-                        ? 'bg-gradient-to-r from-amber-500 to-orange-500 text-white hover:opacity-90'
-                        : ''
+          <CardContent className="space-y-2">
+            {(Object.keys(EMAIL_VERSIONS) as EmailVersion[]).map((v) => {
+              const config = EMAIL_VERSIONS[v];
+              const isActive = emailVersion === v;
+              return (
+                <button
+                  key={v}
+                  onClick={() => setEmailVersion(v)}
+                  className={`w-full flex items-center gap-3 p-3 rounded-xl touch-manipulation transition-all text-left ${
+                    isActive
+                      ? 'bg-gradient-to-r from-amber-500/15 to-orange-500/10 border border-amber-500/40'
+                      : 'bg-muted/30 border border-transparent hover:bg-muted/50'
+                  }`}
+                >
+                  <div
+                    className={`w-5 h-5 rounded-full border-2 flex items-center justify-center shrink-0 ${
+                      isActive ? 'border-amber-400' : 'border-white/30'
                     }`}
                   >
-                    v1 — Full Feature List
-                  </Button>
-                  <Button
-                    variant={emailVersion === 'v2' ? 'default' : 'outline'}
-                    size="sm"
-                    onClick={() => setEmailVersion('v2')}
-                    className={`flex-1 h-11 touch-manipulation ${
-                      emailVersion === 'v2'
-                        ? 'bg-gradient-to-r from-amber-500 to-orange-500 text-white hover:opacity-90'
-                        : ''
-                    }`}
-                  >
-                    v2 — Short &amp; Punchy
-                  </Button>
-                </div>
-              </div>
-            )}
+                    {isActive && <div className="w-2.5 h-2.5 rounded-full bg-amber-400" />}
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <p
+                      className={`text-sm font-medium ${isActive ? 'text-amber-400' : 'text-white'}`}
+                    >
+                      {config.label}
+                    </p>
+                    <p className="text-xs text-white">{config.description}</p>
+                  </div>
+                  {v === 'v3' && (
+                    <Badge className="bg-green-500/20 text-green-400 text-[10px] shrink-0">
+                      New
+                    </Badge>
+                  )}
+                </button>
+              );
+            })}
+          </CardContent>
+        </Card>
 
+        {/* Action Bar */}
+        <Card>
+          <CardContent className="pt-4 pb-4 px-4 space-y-3">
             {/* Test email */}
             <div>
               <label className="text-sm text-white mb-2 block">Send test email</label>
@@ -643,7 +444,7 @@ export default function AdminApprenticeCampaigns() {
                   value={testEmail}
                   onChange={(e) => setTestEmail(e.target.value)}
                   placeholder="your@email.com"
-                  className="h-11 text-base touch-manipulation flex-1"
+                  className="h-11 text-base touch-manipulation flex-1 border-white/30 focus:border-yellow-500 focus:ring-yellow-500"
                 />
                 <Button
                   onClick={() => testEmail && sendTestMutation.mutate(testEmail)}
@@ -658,122 +459,127 @@ export default function AdminApprenticeCampaigns() {
                 </Button>
               </div>
               <p className="text-xs text-white mt-1">
-                Preview the {campaignConfig.label.toLowerCase()} email in your inbox
+                Preview the {EMAIL_VERSIONS[emailVersion].label.toLowerCase()} email in your inbox
               </p>
             </div>
 
-            <p className="text-xs text-white text-center">
-              All emails include CTA: "Grab it now before the app store launch"
-            </p>
-          </CardContent>
-        </Card>
-
-        {/* Filters & Actions */}
-        <Card>
-          <CardContent className="pt-4 pb-4 px-3 sm:px-6">
-            <div className="flex flex-col gap-3">
-              <div className="flex items-center gap-2">
-                <AdminSearchInput
-                  value={search}
-                  onChange={setSearch}
-                  placeholder="Search..."
-                  className="flex-1"
-                />
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={() => setShowSentHistory(!showSentHistory)}
-                  className="gap-1.5 h-11 px-2.5 touch-manipulation text-white shrink-0"
-                >
-                  <Eye className="h-4 w-4" />
-                  <span className="hidden sm:inline">History</span>
-                </Button>
-              </div>
-
-              {/* Manual Email Entry */}
-              <div className="flex items-center gap-2 pt-2 border-t border-border/50">
+            {/* Manual email */}
+            <div className="pt-2 border-t border-border/50">
+              <label className="text-sm text-white mb-2 block">Send to any email</label>
+              <div className="flex gap-2">
                 <Input
                   type="email"
                   value={manualEmail}
                   onChange={(e) => setManualEmail(e.target.value)}
-                  placeholder="Send to any email..."
-                  className="h-11 text-base touch-manipulation flex-1"
+                  placeholder="anyone@email.com"
+                  className="h-11 text-base touch-manipulation flex-1 border-white/30 focus:border-yellow-500 focus:ring-yellow-500"
                 />
                 <Button
                   onClick={() => manualEmail && sendManualMutation.mutate(manualEmail)}
                   disabled={!manualEmail || sendManualMutation.isPending}
-                  className={`h-11 px-4 touch-manipulation bg-gradient-to-r ${campaignConfig.colour} hover:opacity-90 text-white shrink-0`}
+                  className="h-11 px-4 touch-manipulation bg-gradient-to-r from-amber-500 to-orange-500 hover:opacity-90 text-white"
                 >
                   {sendManualMutation.isPending ? (
                     <Loader2 className="h-4 w-4 animate-spin" />
                   ) : (
-                    <>
-                      <Send className="h-4 w-4 mr-1.5" />
-                      <span className="hidden sm:inline">Send</span>
-                    </>
+                    <Send className="h-4 w-4" />
                   )}
                 </Button>
               </div>
+            </div>
 
-              {/* Bulk Actions */}
-              {filteredUsers.length > 0 && (
-                <div className="flex items-center justify-between pt-2 border-t border-border/50">
-                  <div className="flex items-center gap-3">
-                    <Checkbox
-                      checked={
-                        filteredUsers.length > 0 && selectedUsers.size === filteredUsers.length
-                      }
-                      onCheckedChange={toggleSelectAll}
-                      className="border-white/40 data-[state=checked]:bg-amber-500 data-[state=checked]:border-amber-500"
-                    />
-                    <span className="text-sm text-white">
-                      {selectedUsers.size > 0 ? `${selectedUsers.size} selected` : 'Select all'}
-                    </span>
-                  </div>
-
-                  {selectedUsers.size > 0 && (
-                    <Button
-                      size="sm"
-                      onClick={handleSendSelected}
-                      disabled={sendBulkMutation.isPending}
-                      className={`gap-2 h-10 touch-manipulation bg-gradient-to-r ${campaignConfig.colour} hover:opacity-90 text-white`}
-                    >
-                      {sendBulkMutation.isPending ? (
-                        <>
-                          <Loader2 className="h-4 w-4 animate-spin" />
-                          Sending...
-                        </>
-                      ) : (
-                        <>
-                          <Send className="h-4 w-4" />
-                          Send to {selectedUsers.size}
-                        </>
-                      )}
-                    </Button>
-                  )}
-                </div>
-              )}
+            {/* Reset & History */}
+            <div className="flex gap-2 pt-2 border-t border-border/50">
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => resetSentMutation.mutate()}
+                disabled={resetSentMutation.isPending}
+                className="gap-1.5 h-11 touch-manipulation flex-1"
+              >
+                {resetSentMutation.isPending ? (
+                  <Loader2 className="h-4 w-4 animate-spin" />
+                ) : (
+                  <RotateCcw className="h-4 w-4" />
+                )}
+                Reset Sent
+              </Button>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => setShowSentHistory(true)}
+                className="gap-1.5 h-11 touch-manipulation flex-1"
+              >
+                <Eye className="h-4 w-4" />
+                Sent History
+              </Button>
             </div>
           </CardContent>
         </Card>
 
-        {/* Eligible Users List */}
+        {/* User List */}
         <Card>
           <CardHeader className="pb-3">
             <CardTitle className="text-sm flex items-center justify-between">
               <span className="flex items-center gap-2">
                 <Target className="h-4 w-4 text-amber-400" />
-                Eligible Users
+                Lapsed Apprentices
               </span>
               <Badge variant="outline" className="text-xs">
                 {filteredUsers.length} users
               </Badge>
             </CardTitle>
-            <CardDescription>
-              Apprentices eligible for {campaignConfig.label.toLowerCase()} campaign
-            </CardDescription>
           </CardHeader>
-          <CardContent>
+          <CardContent className="space-y-3">
+            {/* Search & bulk actions */}
+            <div className="flex items-center gap-2">
+              <AdminSearchInput
+                value={search}
+                onChange={setSearch}
+                placeholder="Search name or email..."
+                className="flex-1"
+              />
+            </div>
+
+            {filteredUsers.length > 0 && (
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-3">
+                  <Checkbox
+                    checked={
+                      filteredUsers.length > 0 && selectedUsers.size === filteredUsers.length
+                    }
+                    onCheckedChange={toggleSelectAll}
+                    className="border-white/40 data-[state=checked]:bg-amber-500 data-[state=checked]:border-amber-500"
+                  />
+                  <span className="text-sm text-white">
+                    {selectedUsers.size > 0 ? `${selectedUsers.size} selected` : 'Select all'}
+                  </span>
+                </div>
+
+                {selectedUsers.size > 0 && (
+                  <Button
+                    size="sm"
+                    onClick={handleSendSelected}
+                    disabled={sendBulkMutation.isPending}
+                    className="gap-2 h-11 touch-manipulation bg-gradient-to-r from-amber-500 to-orange-500 hover:opacity-90 text-white"
+                  >
+                    {sendBulkMutation.isPending ? (
+                      <>
+                        <Loader2 className="h-4 w-4 animate-spin" />
+                        Sending...
+                      </>
+                    ) : (
+                      <>
+                        <Send className="h-4 w-4" />
+                        Send to {selectedUsers.size}
+                      </>
+                    )}
+                  </Button>
+                )}
+              </div>
+            )}
+
+            {/* User rows */}
             {usersLoading ? (
               <div className="space-y-2">
                 {[1, 2, 3].map((i) => (
@@ -787,59 +593,60 @@ export default function AdminApprenticeCampaigns() {
                 description={
                   search
                     ? 'No users match your search criteria.'
-                    : `No apprentices eligible for ${campaignConfig.label.toLowerCase()} right now.`
+                    : 'No lapsed apprentices eligible for win-back right now.'
                 }
               />
             ) : (
               <div className="space-y-2">
-                {filteredUsers.map((user: EligibleUser) => (
-                  <div
-                    key={user.id}
-                    className="flex items-center gap-3 p-3 rounded-xl bg-muted/50 touch-manipulation active:scale-[0.99] transition-transform"
-                  >
-                    <Checkbox
-                      checked={selectedUsers.has(user.id)}
-                      onCheckedChange={() => toggleUserSelection(user.id)}
-                      onClick={(e) => e.stopPropagation()}
-                      className="border-white/40 data-[state=checked]:bg-amber-500 data-[state=checked]:border-amber-500"
-                    />
+                {filteredUsers.map((user: EligibleUser) => {
+                  const daysSinceSignup = differenceInDays(new Date(), parseISO(user.created_at));
+                  const daysSinceTrial = Math.max(0, daysSinceSignup - 7);
 
+                  return (
                     <div
-                      className="flex-1 min-w-0 cursor-pointer"
-                      onClick={() => setSelectedUser(user)}
+                      key={user.id}
+                      className="flex items-center gap-3 p-3 rounded-xl bg-muted/50 touch-manipulation active:scale-[0.99] transition-transform"
                     >
-                      <div className="flex items-center gap-2">
-                        <p className="font-medium text-sm truncate">
-                          {user.full_name || 'Unknown'}
-                        </p>
-                        <Badge className="bg-purple-500/20 text-purple-400 text-xs">
-                          <GraduationCap className="h-2.5 w-2.5 mr-0.5" />
-                          Apprentice
-                        </Badge>
-                      </div>
-                      <div className="flex items-center gap-2 text-xs text-white">
-                        <span className="truncate max-w-[150px]">{user.email}</span>
-                        <span>&middot;</span>
-                        <span className="flex items-center gap-1">
-                          <Clock className="h-3 w-3" />
-                          Joined{' '}
-                          {formatDistanceToNow(parseISO(user.created_at), {
-                            addSuffix: true,
-                          })}
-                        </span>
-                      </div>
-                    </div>
+                      <Checkbox
+                        checked={selectedUsers.has(user.id)}
+                        onCheckedChange={() => toggleUserSelection(user.id)}
+                        onClick={(e) => e.stopPropagation()}
+                        className="border-white/40 data-[state=checked]:bg-amber-500 data-[state=checked]:border-amber-500"
+                      />
 
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      onClick={() => setSelectedUser(user)}
-                      className="h-11 px-2 touch-manipulation"
-                    >
-                      <ChevronRight className="h-4 w-4" />
-                    </Button>
-                  </div>
-                ))}
+                      <div
+                        className="flex-1 min-w-0 cursor-pointer"
+                        onClick={() => setSelectedUser(user)}
+                      >
+                        <div className="flex items-center gap-2">
+                          <p className="font-medium text-sm truncate">
+                            {user.full_name || 'Unknown'}
+                          </p>
+                          <Badge className="bg-orange-500/20 text-orange-400 text-[10px]">
+                            {daysSinceTrial}d lapsed
+                          </Badge>
+                        </div>
+                        <div className="flex items-center gap-2 text-xs text-white">
+                          <span className="truncate max-w-[140px]">{user.email}</span>
+                          <span>&middot;</span>
+                          <span className="flex items-center gap-1">
+                            <Clock className="h-3 w-3" />
+                            {format(parseISO(user.created_at), 'dd MMM yy')}
+                          </span>
+                        </div>
+                      </div>
+
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => setSelectedUser(user)}
+                        className="h-11 px-2 touch-manipulation"
+                      >
+                        <ChevronRight className="h-4 w-4" />
+                      </Button>
+                    </div>
+                  );
+                })}
               </div>
             )}
           </CardContent>
@@ -859,7 +666,7 @@ export default function AdminApprenticeCampaigns() {
                   Sent History
                 </SheetTitle>
                 <p className="text-sm text-white text-left">
-                  Apprentices who have received campaign emails
+                  Win-back emails sent to lapsed apprentices
                 </p>
               </SheetHeader>
 
@@ -873,7 +680,7 @@ export default function AdminApprenticeCampaigns() {
                 ) : !sentUsers || sentUsers.length === 0 ? (
                   <div className="text-center py-8">
                     <Mail className="h-10 w-10 text-white mx-auto mb-3 opacity-50" />
-                    <p className="text-sm text-white">No campaign emails sent yet</p>
+                    <p className="text-sm text-white">No win-back emails sent yet</p>
                   </div>
                 ) : (
                   <div className="space-y-2">
@@ -891,11 +698,6 @@ export default function AdminApprenticeCampaigns() {
                           </p>
                           <div className="flex items-center gap-2 text-xs text-white">
                             <span>
-                              {CAMPAIGN_TYPES[user.apprentice_campaign_type as CampaignType]
-                                ?.label || user.apprentice_campaign_type}
-                            </span>
-                            <span>&middot;</span>
-                            <span>
                               {formatDistanceToNow(parseISO(user.apprentice_campaign_sent_at), {
                                 addSuffix: true,
                               })}
@@ -908,7 +710,9 @@ export default function AdminApprenticeCampaigns() {
                             Subscribed
                           </Badge>
                         ) : (
-                          <Badge className="bg-gray-500/20 text-gray-400 text-xs">Pending</Badge>
+                          <Badge className="bg-orange-500/20 text-orange-400 text-xs">
+                            Pending
+                          </Badge>
                         )}
                       </div>
                     ))}
@@ -929,8 +733,8 @@ export default function AdminApprenticeCampaigns() {
 
               <SheetHeader className="px-4 pb-4 border-b border-border">
                 <SheetTitle className="flex items-center gap-3">
-                  <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-purple-500/20 to-violet-500/20 flex items-center justify-center">
-                    <User className="h-6 w-6 text-purple-400" />
+                  <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-amber-500/20 to-orange-500/20 flex items-center justify-center">
+                    <User className="h-6 w-6 text-amber-400" />
                   </div>
                   <div>
                     <p className="text-left">{selectedUser?.full_name || 'Unknown'}</p>
@@ -954,6 +758,26 @@ export default function AdminApprenticeCampaigns() {
                         {selectedUser?.created_at &&
                           format(parseISO(selectedUser.created_at), 'dd MMM yyyy')}
                       </span>
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <span className="text-sm text-white">Trial Ended</span>
+                      <span className="text-sm">
+                        {selectedUser?.created_at &&
+                          format(
+                            new Date(
+                              new Date(selectedUser.created_at).getTime() + 7 * 24 * 60 * 60 * 1000
+                            ),
+                            'dd MMM yyyy'
+                          )}
+                      </span>
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <span className="text-sm text-white">Days Since Trial</span>
+                      <Badge className="bg-orange-500/20 text-orange-400 text-xs">
+                        {selectedUser?.created_at
+                          ? `${Math.max(0, differenceInDays(new Date(), parseISO(selectedUser.created_at)) - 7)} days`
+                          : '-'}
+                      </Badge>
                     </div>
                     {selectedUser?.last_sign_in && (
                       <div className="flex justify-between items-center">
@@ -982,12 +806,15 @@ export default function AdminApprenticeCampaigns() {
                   <CardHeader className="pb-2">
                     <CardTitle className="text-sm flex items-center gap-2">
                       <Send className="h-4 w-4 text-amber-400" />
-                      Send {campaignConfig.label}
+                      Send Win-Back Email
                     </CardTitle>
                   </CardHeader>
                   <CardContent>
+                    <p className="text-xs text-white mb-3">
+                      Using {EMAIL_VERSIONS[emailVersion].label}
+                    </p>
                     <Button
-                      className={`w-full h-12 touch-manipulation bg-gradient-to-r ${campaignConfig.colour} hover:opacity-90 text-white font-semibold`}
+                      className="w-full h-12 touch-manipulation bg-gradient-to-r from-amber-500 to-orange-500 hover:opacity-90 text-white font-semibold"
                       onClick={() => selectedUser && sendSingleMutation.mutate(selectedUser.id)}
                       disabled={sendSingleMutation.isPending}
                     >
@@ -999,7 +826,7 @@ export default function AdminApprenticeCampaigns() {
                       ) : (
                         <>
                           <Mail className="h-4 w-4 mr-2" />
-                          Send {campaignConfig.label} Email
+                          Send Win-Back Email
                         </>
                       )}
                     </Button>
@@ -1015,19 +842,19 @@ export default function AdminApprenticeCampaigns() {
           <AlertDialogContent>
             <AlertDialogHeader>
               <AlertDialogTitle>
-                Send {campaignConfig.label.toLowerCase()} to {selectedUsers.size} users?
+                Send win-back email to {selectedUsers.size} apprentices?
               </AlertDialogTitle>
               <AlertDialogDescription>
-                This will send the {campaignConfig.label.toLowerCase()} email to{' '}
-                {selectedUsers.size} apprentice{selectedUsers.size === 1 ? '' : 's'}. This action
-                cannot be undone.
+                This will send the {EMAIL_VERSIONS[emailVersion].label.toLowerCase()} email to{' '}
+                {selectedUsers.size} lapsed apprentice{selectedUsers.size === 1 ? '' : 's'}. This
+                action cannot be undone.
               </AlertDialogDescription>
             </AlertDialogHeader>
             <AlertDialogFooter>
               <AlertDialogCancel className="h-11 touch-manipulation">Cancel</AlertDialogCancel>
               <AlertDialogAction
                 onClick={() => sendBulkMutation.mutate(Array.from(selectedUsers))}
-                className={`h-11 touch-manipulation bg-gradient-to-r ${campaignConfig.colour} hover:opacity-90 text-white`}
+                className="h-11 touch-manipulation bg-gradient-to-r from-amber-500 to-orange-500 hover:opacity-90 text-white"
               >
                 {sendBulkMutation.isPending ? (
                   <>

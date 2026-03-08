@@ -534,6 +534,109 @@ function generateTrialWinbackEmailV2(firstName: string): string {
   `);
 }
 
+function generateTrialWinbackEmailV3(firstName: string, signupMonth: string): string {
+  return emailWrapper(`
+          <tr>
+            <td style="padding: 32px 24px 20px;">
+              <p style="margin: 0 0 18px; font-size: 17px; color: #ffffff; line-height: 1.6;">
+                Hey ${firstName},
+              </p>
+              <p style="margin: 0 0 16px; font-size: 16px; color: #e2e8f0; line-height: 1.7;">
+                It's Andrew from Elec-Mate. You signed up back in ${signupMonth} and I know the app was still early days back then &mdash; so I wanted to reach out personally.
+              </p>
+              <p style="margin: 0; font-size: 16px; color: #e2e8f0; line-height: 1.7;">
+                We've added <strong style="color: #fbbf24;">loads</strong> since you were last in. Here's what's new:
+              </p>
+            </td>
+          </tr>
+
+          <!-- What's changed -->
+          <tr>
+            <td style="padding: 0 20px 20px;">
+              <div style="background: rgba(255,255,255,0.03); border-left: 3px solid #22c55e; border-radius: 0 10px 10px 0; padding: 14px 16px; margin-bottom: 10px;">
+                <p style="margin: 0 0 4px; font-size: 15px; color: #ffffff; font-weight: 600;">Study Centre</p>
+                <p style="margin: 0; font-size: 14px; color: #94a3b8; line-height: 1.5;">36 courses covering Level 2, Level 3, EAL, City &amp; Guilds &mdash; with 500+ practice questions to nail your exams.</p>
+              </div>
+              <div style="background: rgba(255,255,255,0.03); border-left: 3px solid #3b82f6; border-radius: 0 10px 10px 0; padding: 14px 16px; margin-bottom: 10px;">
+                <p style="margin: 0 0 4px; font-size: 15px; color: #ffffff; font-weight: 600;">AM2 &amp; EPA Simulators</p>
+                <p style="margin: 0; font-size: 14px; color: #94a3b8; line-height: 1.5;">Practice safe isolation, fault finding, and AI-scored professional discussions. Know exactly what to expect on the day.</p>
+              </div>
+              <div style="background: rgba(255,255,255,0.03); border-left: 3px solid #fbbf24; border-radius: 0 10px 10px 0; padding: 14px 16px; margin-bottom: 10px;">
+                <p style="margin: 0 0 4px; font-size: 15px; color: #ffffff; font-weight: 600;">Ask Dave &mdash; 24/7 AI Mentor</p>
+                <p style="margin: 0; font-size: 14px; color: #94a3b8; line-height: 1.5;">Got a question about BS 7671, wiring, or your coursework? Dave's got your back, any time of day.</p>
+              </div>
+              <div style="background: rgba(255,255,255,0.03); border-left: 3px solid #a78bfa; border-radius: 0 10px 10px 0; padding: 14px 16px;">
+                <p style="margin: 0 0 4px; font-size: 15px; color: #ffffff; font-weight: 600;">Portfolio Hub + Site Diary</p>
+                <p style="margin: 0; font-size: 14px; color: #94a3b8; line-height: 1.5;">Track your evidence, log your OJT hours, and keep a daily site diary with AI coach insights. Everything your assessor needs.</p>
+              </div>
+            </td>
+          </tr>
+
+          <!-- Social proof -->
+          <tr>
+            <td style="padding: 0 24px 20px;">
+              <div style="background: rgba(34, 197, 94, 0.08); border: 1px solid rgba(34, 197, 94, 0.2); border-radius: 12px; padding: 14px; text-align: center;">
+                <p style="margin: 0; font-size: 14px; color: #e2e8f0; line-height: 1.6;">
+                  <strong style="color: #22c55e;">40 apprentices</strong> are now using Elec-Mate daily to revise, track their progress, and smash their qualifications.
+                </p>
+              </div>
+            </td>
+          </tr>
+
+          <!-- Free week offer -->
+          <tr>
+            <td style="padding: 0 24px 20px;">
+              <div style="background: rgba(59, 130, 246, 0.08); border: 1px solid rgba(59, 130, 246, 0.2); border-radius: 12px; padding: 16px; text-align: center;">
+                <p style="margin: 0 0 4px; font-size: 15px; color: #60a5fa; font-weight: 600;">
+                  Fancy another look?
+                </p>
+                <p style="margin: 0; font-size: 14px; color: #e2e8f0; line-height: 1.6;">
+                  Just reply to this email and I'll give you <strong style="color: #60a5fa;">another free week</strong> to try everything properly. No strings.
+                </p>
+              </div>
+            </td>
+          </tr>
+
+          <!-- Pricing -->
+          <tr>
+            <td style="padding: 0 20px 24px;">
+              <div style="background: linear-gradient(135deg, rgba(251, 191, 36, 0.15) 0%, rgba(251, 191, 36, 0.05) 100%); border: 2px solid rgba(251, 191, 36, 0.4); border-radius: 16px; padding: 24px 20px; text-align: center;">
+                <p style="margin: 0 0 4px; font-size: 14px; color: #94a3b8;">
+                  Or if you're ready to jump back in
+                </p>
+                <p style="margin: 0; font-size: 48px; font-weight: 800; color: #fbbf24; line-height: 1;">
+                  &pound;4.99<span style="font-size: 18px; font-weight: 600; color: #94a3b8;">/mo</span>
+                </p>
+                <p style="margin: 6px 0 16px; font-size: 14px; color: #94a3b8;">
+                  or &pound;49.99/year (&pound;4.17/mo)
+                </p>
+                <a href="${APPRENTICE_WINBACK_CONFIG.monthlyPaymentLink}" style="display: block; padding: 16px 24px; background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%); color: #0f172a; text-decoration: none; font-size: 16px; font-weight: 700; border-radius: 12px; text-align: center;">
+                  Lock in &pound;4.99/mo now &rarr;
+                </a>
+                <a href="${APPRENTICE_WINBACK_CONFIG.yearlyPaymentLink}" style="display: block; padding: 12px 24px; margin-top: 8px; background: transparent; border: 2px solid rgba(251, 191, 36, 0.4); color: #fbbf24; text-decoration: none; font-size: 14px; font-weight: 600; border-radius: 12px; text-align: center;">
+                  Or save with &pound;49.99/year &rarr;
+                </a>
+                <p style="margin: 10px 0 0; font-size: 12px; color: #64748b;">
+                  Prices go up when we hit the app stores
+                </p>
+              </div>
+            </td>
+          </tr>
+
+          <!-- Personal sign-off -->
+          <tr>
+            <td style="padding: 0 24px 32px;">
+              <p style="margin: 0 0 4px; font-size: 15px; color: #e2e8f0;">Cheers,</p>
+              <p style="margin: 0 0 4px; font-size: 16px; color: #ffffff; font-weight: 600;">Andrew</p>
+              <p style="margin: 0 0 8px; font-size: 13px; color: #64748b;">Founder, Elec-Mate</p>
+              <p style="margin: 0; font-size: 13px; color: #94a3b8;">
+                WhatsApp: <a href="https://wa.me/447507241303" style="color: #22c55e; text-decoration: none;">+44 7507 241303</a>
+              </p>
+            </td>
+          </tr>
+  `);
+}
+
 // ─── Template Dispatch ──────────────────────────────────────────────
 function generateCampaignEmail(
   campaignType: CampaignType,
@@ -543,6 +646,7 @@ function generateCampaignEmail(
     contentTitle?: string;
     contentDescription?: string;
     email_version?: string;
+    signupDate?: string;
   }
 ): { html: string; subject: string } {
   switch (campaignType) {
@@ -572,12 +676,25 @@ function generateCampaignEmail(
         subject: "The UK's best apprentice app is waiting for you",
       };
     case 'trial_winback': {
-      const isV2 = params.email_version === 'v2';
+      const version = params.email_version || 'v1';
+      if (version === 'v3') {
+        const signupMonth = params.signupDate
+          ? new Date(params.signupDate).toLocaleDateString('en-GB', { month: 'long' })
+          : 'January';
+        return {
+          html: generateTrialWinbackEmailV3(firstName, signupMonth),
+          subject: "We've added loads since you left \u2014 fancy another look?",
+        };
+      }
+      if (version === 'v2') {
+        return {
+          html: generateTrialWinbackEmailV2(firstName),
+          subject: `${firstName}, your apprentice toolkit is waiting`,
+        };
+      }
       return {
-        html: isV2 ? generateTrialWinbackEmailV2(firstName) : generateTrialWinbackEmail(firstName),
-        subject: isV2
-          ? `${firstName}, your apprentice toolkit is waiting`
-          : "The UK's #1 apprentice app \u2014 \u00A34.99/mo before prices rise",
+        html: generateTrialWinbackEmail(firstName),
+        subject: "The UK's #1 apprentice app \u2014 \u00A34.99/mo before prices rise",
       };
     }
   }
@@ -820,7 +937,7 @@ Deno.serve(async (req) => {
 
         const { data: profile } = await supabaseAdmin
           .from('profiles')
-          .select('id, full_name, username')
+          .select('id, full_name, username, created_at')
           .eq('id', userId)
           .single();
 
@@ -838,6 +955,7 @@ Deno.serve(async (req) => {
           contentTitle,
           contentDescription,
           email_version,
+          signupDate: profile.created_at,
         });
 
         const fromAddress =
@@ -900,7 +1018,7 @@ Deno.serve(async (req) => {
           try {
             const { data: profile } = await supabaseAdmin
               .from('profiles')
-              .select('id, full_name, username')
+              .select('id, full_name, username, created_at')
               .eq('id', uid)
               .single();
 
@@ -924,6 +1042,7 @@ Deno.serve(async (req) => {
               contentTitle,
               contentDescription,
               email_version,
+              signupDate: profile.created_at,
             });
 
             const fromAddress =
