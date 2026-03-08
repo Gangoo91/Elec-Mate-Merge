@@ -52,20 +52,18 @@ const STEP_INFO: Record<
 function ProgressSteps({ currentStep }: { currentStep: ProcurementStep }) {
   const steps: ProcurementStep[] = ['parsing_text', 'comparing_prices', 'done'];
   const currentIdx = steps.indexOf(currentStep);
-
-  // For photo flow, treat parsing_photo same as parsing_text
   const adjustedIdx = currentStep === 'parsing_photo' ? 0 : currentIdx;
 
   return (
-    <div className="flex items-center gap-2 py-4">
+    <div className="flex items-center gap-1 py-4">
       {steps.map((step, i) => {
         const info = STEP_INFO[step];
         const isActive = i === adjustedIdx;
         const isDone = i < adjustedIdx || currentStep === 'done';
 
         return (
-          <div key={step} className="flex items-center gap-2 flex-1">
-            <div className="flex items-center gap-2 flex-1">
+          <div key={step} className="flex items-center gap-1 flex-1">
+            <div className="flex items-center gap-1.5 flex-shrink-0">
               <div
                 className={`h-8 w-8 rounded-full flex items-center justify-center flex-shrink-0 transition-all ${
                   isDone
@@ -78,7 +76,7 @@ function ProgressSteps({ currentStep }: { currentStep: ProcurementStep }) {
                 {isDone ? <CheckCircle2 className="h-4 w-4" /> : <info.icon className="h-4 w-4" />}
               </div>
               <span
-                className={`text-xs font-medium ${
+                className={`text-xs font-medium hidden sm:inline ${
                   isActive ? 'text-elec-yellow' : isDone ? 'text-green-400' : 'text-white'
                 }`}
               >
@@ -155,38 +153,41 @@ export default function MaterialsProcurement() {
 
   return (
     <div className="bg-background pb-20 sm:pb-8 min-h-screen">
-      {/* Header */}
-      <div className="bg-gradient-to-b from-yellow-500/10 to-transparent border-b border-white/10">
-        <div className="container mx-auto px-4 py-4">
-          <Link to="/electrician/materials">
-            <Button
-              variant="ghost"
-              size="sm"
-              className="mb-3 -ml-2 touch-manipulation h-10 text-white"
-            >
-              <ArrowLeft className="h-4 w-4 mr-1.5" />
-              Materials Marketplace
-            </Button>
+      {/* Sticky header */}
+      <div className="sticky top-0 z-50 bg-background/95 backdrop-blur-sm border-b border-white/10">
+        <div className="px-4 py-2.5 flex items-center gap-2">
+          <Link
+            to="/electrician/materials"
+            className="flex items-center gap-1.5 text-white active:opacity-70 transition-all touch-manipulation h-11 -ml-2 px-2 rounded-lg flex-shrink-0"
+          >
+            <ArrowLeft className="h-5 w-5" />
           </Link>
-
-          <div className="flex items-center gap-3">
-            <div className="p-2.5 bg-yellow-500/20 rounded-xl">
-              <BarChart3 className="h-7 w-7 text-yellow-400" />
-            </div>
-            <div>
-              <h1 className="text-xl sm:text-2xl font-bold">Smart Procurement</h1>
-              <p className="text-white text-sm">Compare prices across 6 suppliers instantly</p>
-            </div>
+          <div className="flex items-center gap-2 flex-1 min-w-0">
+            <BarChart3 className="h-4 w-4 text-yellow-400 flex-shrink-0" />
+            <span className="text-sm font-semibold text-white truncate">Smart Procurement</span>
           </div>
         </div>
       </div>
 
-      <div className="container mx-auto px-4 py-4 space-y-4">
+      {/* Hero */}
+      <div className="px-4 pt-4 pb-3">
+        <div className="flex items-center gap-3">
+          <div className="p-2.5 bg-yellow-500/10 border border-yellow-500/20 rounded-xl">
+            <BarChart3 className="h-6 w-6 text-yellow-400" />
+          </div>
+          <div>
+            <h1 className="text-xl font-bold text-white">Smart Procurement</h1>
+            <p className="text-sm text-white">Compare prices across 6 suppliers instantly</p>
+          </div>
+        </div>
+      </div>
+
+      <div className="px-4 space-y-4">
         {/* Input section — collapsible after results */}
         {hasResults ? (
           <button
             onClick={() => setInputCollapsed(!inputCollapsed)}
-            className="w-full flex items-center justify-between p-3 bg-white/[0.03] border border-white/[0.08] rounded-xl touch-manipulation"
+            className="w-full flex items-center justify-between p-3.5 bg-white/[0.03] border border-white/[0.06] rounded-xl touch-manipulation active:bg-white/[0.05] transition-colors"
           >
             <div className="flex items-center gap-2">
               <Zap className="h-4 w-4 text-elec-yellow" />
@@ -233,7 +234,11 @@ export default function MaterialsProcurement() {
           <div className="p-4 bg-red-500/10 border border-red-500/30 rounded-xl">
             <p className="text-sm text-red-400 font-medium mb-2">Something went wrong</p>
             <p className="text-sm text-white">{error}</p>
-            <Button onClick={reset} variant="outline" className="mt-3 h-10 touch-manipulation">
+            <Button
+              onClick={reset}
+              variant="outline"
+              className="mt-3 h-11 touch-manipulation border-white/20 text-white"
+            >
               Try Again
             </Button>
           </div>
@@ -242,13 +247,10 @@ export default function MaterialsProcurement() {
         {/* Results */}
         {hasResults && comparison && (
           <div className="space-y-4">
-            {/* Optimised basket summary */}
             <OptimisedBasketSummary
               basket={comparison.optimised_basket}
               onSendToQuote={handleSendToQuote}
             />
-
-            {/* Per-item comparison */}
             <ItemComparisonTable items={comparison.items} />
           </div>
         )}

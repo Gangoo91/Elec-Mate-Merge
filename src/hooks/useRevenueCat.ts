@@ -7,11 +7,25 @@ import { useHaptic } from '@/hooks/useHaptic';
 const RC_IOS_API_KEY = import.meta.env.VITE_REVENUECAT_IOS_KEY || '';
 const RC_ANDROID_API_KEY = import.meta.env.VITE_REVENUECAT_ANDROID_KEY || '';
 
-const ENTITLEMENT_ID = 'Elec-Mate Pro';
+// Multi-tier entitlement IDs — must match RevenueCat dashboard entitlement names
+// Priority order: highest tier first (used to resolve the "best" entitlement)
+const ENTITLEMENT_IDS = ['business_ai', 'electrician', 'apprentice'] as const;
+export type RevenueCatTier = (typeof ENTITLEMENT_IDS)[number] | null;
+
+// Map entitlement IDs to human-readable tier names (must match profiles.subscription_tier values)
+const TIER_DISPLAY_NAMES: Record<string, string> = {
+  business_ai: 'Business AI',
+  electrician: 'Electrician Pro',
+  apprentice: 'Apprentice',
+};
+
+// Legacy entitlement from single-tier era — still checked for backwards compatibility
+const LEGACY_ENTITLEMENT_ID = 'Elec-Mate Pro';
 
 interface RevenueCatState {
   isInitialised: boolean;
   isProEntitled: boolean;
+  activeTier: RevenueCatTier;
   availablePackages: PurchasesPackage[];
   isPurchasing: boolean;
   error: string | null;
@@ -25,6 +39,7 @@ export function useRevenueCat(userId?: string) {
   const [state, setState] = useState<RevenueCatState>({
     isInitialised: false,
     isProEntitled: false,
+    activeTier: null,
     availablePackages: [],
     isPurchasing: false,
     error: null,
@@ -63,15 +78,35 @@ export function useRevenueCat(userId?: string) {
     init();
   }, [isNative, userId]);
 
-  // Check if user has pro_access entitlement
+  // Resolve the highest-priority active entitlement from customerInfo
+  const resolveActiveTier = useCallback(
+    (
+      activeEntitlements: Record<string, unknown>
+    ): { isEntitled: boolean; tier: RevenueCatTier } => {
+      // Check multi-tier entitlements (highest priority first)
+      for (const entId of ENTITLEMENT_IDS) {
+        if (activeEntitlements[entId] !== undefined) {
+          return { isEntitled: true, tier: entId };
+        }
+      }
+      // Fallback: legacy single entitlement (users who purchased before multi-tier migration)
+      if (activeEntitlements[LEGACY_ENTITLEMENT_ID] !== undefined) {
+        return { isEntitled: true, tier: 'electrician' }; // Legacy Pro maps to Electrician
+      }
+      return { isEntitled: false, tier: null };
+    },
+    []
+  );
+
+  // Check which entitlements the user has
   const checkEntitlements = useCallback(async (): Promise<boolean> => {
     if (!isNative) return false;
 
     try {
       const { customerInfo } = await Purchases.getCustomerInfo();
-      const isEntitled = customerInfo.entitlements.active[ENTITLEMENT_ID] !== undefined;
+      const { isEntitled, tier } = resolveActiveTier(customerInfo.entitlements.active);
 
-      setState((prev) => ({ ...prev, isProEntitled: isEntitled, error: null }));
+      setState((prev) => ({ ...prev, isProEntitled: isEntitled, activeTier: tier, error: null }));
       return isEntitled;
     } catch (err) {
       console.error('RevenueCat entitlement check error:', err);
@@ -81,7 +116,7 @@ export function useRevenueCat(userId?: string) {
       }));
       return false;
     }
-  }, [isNative]);
+  }, [isNative, resolveActiveTier]);
 
   // Load available offerings/packages
   const loadOfferings = useCallback(async () => {
@@ -114,20 +149,26 @@ export function useRevenueCat(userId?: string) {
           aPackage: pkg,
         });
 
-        const isEntitled = customerInfo.entitlements.active[ENTITLEMENT_ID] !== undefined;
+        const { isEntitled, tier } = resolveActiveTier(customerInfo.entitlements.active);
 
         setState((prev) => ({
           ...prev,
           isProEntitled: isEntitled,
+          activeTier: tier,
           isPurchasing: false,
         }));
 
         if (isEntitled) haptic.success(); // celebratory thud on successful purchase
 
         return isEntitled;
-      } catch (err: any) {
+      } catch (err: unknown) {
         // User cancelled — not an error
-        if (err?.userCancelled) {
+        if (
+          err &&
+          typeof err === 'object' &&
+          'userCancelled' in err &&
+          (err as Record<string, unknown>).userCancelled
+        ) {
           setState((prev) => ({ ...prev, isPurchasing: false }));
           return false;
         }
@@ -142,7 +183,7 @@ export function useRevenueCat(userId?: string) {
         return false;
       }
     },
-    [isNative]
+    [isNative, resolveActiveTier]
   );
 
   // Restore purchases (required by Apple for all subscription apps)
@@ -153,11 +194,12 @@ export function useRevenueCat(userId?: string) {
 
     try {
       const { customerInfo } = await Purchases.restorePurchases();
-      const isEntitled = customerInfo.entitlements.active[ENTITLEMENT_ID] !== undefined;
+      const { isEntitled, tier } = resolveActiveTier(customerInfo.entitlements.active);
 
       setState((prev) => ({
         ...prev,
         isProEntitled: isEntitled,
+        activeTier: tier,
         isPurchasing: false,
       }));
 
@@ -171,12 +213,33 @@ export function useRevenueCat(userId?: string) {
       }));
       return false;
     }
-  }, [isNative]);
+  }, [isNative, resolveActiveTier]);
+
+  // Find the package matching a given plan ID (e.g. 'apprentice-monthly')
+  const getPackageForPlan = useCallback(
+    (planId: string): PurchasesPackage | undefined => {
+      // RevenueCat package identifiers should match plan IDs
+      // e.g. '$rc_monthly' for monthly, '$rc_annual' for yearly, or custom IDs
+      // Try exact match first, then look for partial match on plan tier
+      const tierKey = planId.replace(/-(?:monthly|yearly)$/, ''); // 'business-ai' → 'business-ai'
+      return (
+        state.availablePackages.find((pkg) => pkg.identifier === planId) ||
+        state.availablePackages.find((pkg) =>
+          pkg.identifier.toLowerCase().includes(tierKey.replace(/-/g, '_'))
+        )
+      );
+    },
+    [state.availablePackages]
+  );
 
   return {
     isNative,
     isInitialised: state.isInitialised,
     isProEntitled: state.isProEntitled,
+    activeTier: state.activeTier,
+    activeTierDisplayName: state.activeTier
+      ? (TIER_DISPLAY_NAMES[state.activeTier] ?? state.activeTier)
+      : null,
     availablePackages: state.availablePackages,
     isPurchasing: state.isPurchasing,
     error: state.error,
@@ -184,5 +247,6 @@ export function useRevenueCat(userId?: string) {
     purchasePackage,
     restorePurchases,
     loadOfferings,
+    getPackageForPlan,
   };
 }

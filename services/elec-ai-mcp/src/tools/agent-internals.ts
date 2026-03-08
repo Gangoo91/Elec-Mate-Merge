@@ -114,6 +114,41 @@ export async function logActivity(args: Record<string, unknown>, user: UserConte
   return { log_id: data.id };
 }
 
+export async function getUsageSummary(args: Record<string, unknown>, user: UserContext) {
+  const supabase = user.supabase;
+
+  // Default to last 7 days
+  const days = typeof args.days === 'number' && args.days > 0 ? Math.min(args.days, 90) : 7;
+  const since = new Date();
+  since.setDate(since.getDate() - days);
+
+  const { data, error } = await supabase
+    .from('agent_usage')
+    .select('date, tool_calls, messages_sent, messages_received, rag_queries, rate_limit_hits')
+    .gte('date', since.toISOString().slice(0, 10))
+    .order('date', { ascending: false });
+
+  if (error) throw new Error(`Failed to read usage: ${error.message}`);
+
+  const rows = data || [];
+  const totals = rows.reduce(
+    (acc, row) => ({
+      tool_calls: acc.tool_calls + (row.tool_calls || 0),
+      messages_sent: acc.messages_sent + (row.messages_sent || 0),
+      messages_received: acc.messages_received + (row.messages_received || 0),
+      rag_queries: acc.rag_queries + (row.rag_queries || 0),
+    }),
+    { tool_calls: 0, messages_sent: 0, messages_received: 0, rag_queries: 0 }
+  );
+
+  return {
+    period_days: days,
+    daily_breakdown: rows,
+    totals,
+    summary: `Over the last ${days} days: ${totals.tool_calls} tool calls, ${totals.messages_sent} messages sent, ${totals.rag_queries} knowledge lookups.`,
+  };
+}
+
 export async function readActivityLog(args: Record<string, unknown>, user: UserContext) {
   const supabase = user.supabase;
 

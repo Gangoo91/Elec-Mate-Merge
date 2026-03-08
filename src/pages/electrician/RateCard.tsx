@@ -1,16 +1,6 @@
 import { useState, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
-import {
-  ArrowLeft,
-  Plus,
-  Search,
-  Pencil,
-  Trash2,
-  Tag,
-  Receipt,
-  X,
-  Check,
-} from 'lucide-react';
+import { ArrowLeft, Plus, Search, Pencil, Trash2, Tag, Receipt, X, Check } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
@@ -62,16 +52,22 @@ const EXAMPLE_ITEMS = [
 function EmptyState({ onAdd }: { onAdd: () => void }) {
   return (
     <div className="text-center py-10">
-      <Receipt className="h-14 w-14 text-gray-600 mx-auto mb-4" />
-      <h2 className="text-lg font-semibold text-white mb-2">No rates yet</h2>
-      <p className="text-gray-400 text-sm mb-6 max-w-xs mx-auto">
-        Add your fixed prices for common jobs. They'll appear as quick-pick options in the quote builder.
+      <div className="w-16 h-16 mx-auto mb-4 rounded-2xl bg-white/[0.03] border border-white/[0.08] flex items-center justify-center">
+        <Receipt className="h-8 w-8 text-white" />
+      </div>
+      <h2 className="text-lg font-semibold text-white mb-1">No rates yet</h2>
+      <p className="text-white text-sm mb-6 max-w-xs mx-auto">
+        Add your fixed prices for common jobs. They'll appear as quick-pick options in the quote
+        builder.
       </p>
-      <p className="text-xs text-gray-600 mb-3">Common rates to get you started:</p>
+      <p className="text-xs text-white mb-3">Common rates to get you started:</p>
       <div className="space-y-1.5 max-w-xs mx-auto mb-6 text-left">
         {EXAMPLE_ITEMS.map((e) => (
-          <div key={e.name} className="flex justify-between text-xs px-3 py-2 bg-white/[0.03] rounded-lg border border-white/[0.05]">
-            <span className="text-gray-400">{e.name}</span>
+          <div
+            key={e.name}
+            className="flex justify-between text-xs px-3 py-2.5 bg-white/[0.03] rounded-lg border border-white/[0.05]"
+          >
+            <span className="text-white">{e.name}</span>
             <span className="text-elec-yellow font-medium">{fmt(e.unit_price)}</span>
           </div>
         ))}
@@ -114,12 +110,11 @@ export default function RateCard() {
   // ── Filtered items ──
   const filtered = useMemo(() => {
     let list = items;
-    if (activeFilter !== ALL) list = list.filter(i => i.category === activeFilter);
+    if (activeFilter !== ALL) list = list.filter((i) => i.category === activeFilter);
     if (search.trim()) {
       const q = search.toLowerCase();
-      list = list.filter(i =>
-        i.name.toLowerCase().includes(q) ||
-        (i.description || '').toLowerCase().includes(q)
+      list = list.filter(
+        (i) => i.name.toLowerCase().includes(q) || (i.description || '').toLowerCase().includes(q)
       );
     }
     return list;
@@ -132,7 +127,7 @@ export default function RateCard() {
     }
     const groups: { label: string; items: PriceListItem[] }[] = [];
     for (const cat of RATE_CARD_CATEGORIES) {
-      const catItems = items.filter(i => i.category === cat);
+      const catItems = items.filter((i) => i.category === cat);
       if (catItems.length) groups.push({ label: CATEGORY_LABELS[cat], items: catItems });
     }
     return groups;
@@ -142,8 +137,11 @@ export default function RateCard() {
   const openAdd = () => {
     setSheetMode('add');
     setEditTarget(null);
-    setFieldName(''); setFieldDesc(''); setFieldPrice('');
-    setFieldUnit('each'); setFieldCategory('labour');
+    setFieldName('');
+    setFieldDesc('');
+    setFieldPrice('');
+    setFieldUnit('each');
+    setFieldCategory('labour');
   };
 
   const openEdit = (item: PriceListItem) => {
@@ -156,13 +154,17 @@ export default function RateCard() {
     setFieldCategory(item.category as PriceListCategory);
   };
 
-  const closeSheet = () => { setSheetMode(null); setEditTarget(null); };
+  const closeSheet = () => {
+    setSheetMode(null);
+    setEditTarget(null);
+  };
 
   const handleSave = async () => {
     if (!fieldName.trim() || !fieldPrice) return;
     const price = parseFloat(fieldPrice);
     if (isNaN(price) || price < 0) {
-      toast({ title: 'Invalid price', variant: 'destructive' }); return;
+      toast({ title: 'Invalid price', variant: 'destructive' });
+      return;
     }
     setSaving(true);
     const payload = {
@@ -198,69 +200,80 @@ export default function RateCard() {
   // ─── Render ───────────────────────────────────────────────────────────────
 
   return (
-    <div className="bg-background pb-24 sm:pb-8 min-h-screen">
-      {/* Header */}
-      <div className="bg-gradient-to-b from-yellow-500/10 to-transparent border-b border-white/10">
-        <div className="container mx-auto px-4 py-4">
-          <Button
-            variant="ghost" size="sm" onClick={() => navigate(-1)}
-            className="mb-3 -ml-2 touch-manipulation h-10 text-white"
+    <div className="bg-background pb-8 min-h-screen">
+      {/* Sticky header */}
+      <div className="sticky top-0 z-50 bg-background/95 backdrop-blur-sm border-b border-white/10">
+        <div className="px-4 py-2.5 flex items-center justify-between gap-2">
+          <button
+            onClick={() => navigate(-1)}
+            className="flex items-center gap-1.5 text-white active:opacity-70 transition-all touch-manipulation h-11 -ml-2 px-2 rounded-lg flex-shrink-0"
           >
-            <ArrowLeft className="h-4 w-4 mr-1.5" />Back
-          </Button>
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <div className="p-2 bg-yellow-500/20 rounded-xl">
-                <Receipt className="h-6 w-6 text-yellow-400" />
-              </div>
-              <div>
-                <h1 className="text-xl sm:text-2xl font-bold text-white">My Rate Card</h1>
-                <p className="text-gray-400 text-sm">
-                  {items.length} {items.length === 1 ? 'rate' : 'rates'}
-                </p>
-              </div>
-            </div>
-            {items.length > 0 && (
-              <Button
-                onClick={openAdd}
-                className="h-10 touch-manipulation bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold"
-              >
-                <Plus className="h-4 w-4 mr-1.5" />Add Rate
-              </Button>
-            )}
+            <ArrowLeft className="h-5 w-5" />
+            <span className="text-sm font-medium hidden sm:inline">Back</span>
+          </button>
+
+          <div className="flex items-center gap-2 flex-1 justify-center sm:justify-start min-w-0">
+            <Receipt className="h-4 w-4 text-yellow-400 flex-shrink-0" />
+            <span className="text-sm font-semibold text-white truncate">My Rate Card</span>
+          </div>
+
+          {items.length > 0 && (
+            <Button
+              onClick={openAdd}
+              size="sm"
+              className="h-11 touch-manipulation bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold px-3 flex-shrink-0"
+            >
+              <Plus className="h-4 w-4 sm:mr-1.5" />
+              <span className="hidden sm:inline">Add Rate</span>
+            </Button>
+          )}
+        </div>
+      </div>
+
+      {/* Hero */}
+      <div className="px-4 pt-4 pb-3">
+        <div className="flex items-center gap-3">
+          <div className="p-2.5 bg-yellow-500/10 border border-yellow-500/20 rounded-xl">
+            <Receipt className="h-6 w-6 text-yellow-400" />
+          </div>
+          <div>
+            <h1 className="text-xl font-bold text-white">My Rate Card</h1>
+            <p className="text-sm text-white">
+              {items.length} {items.length === 1 ? 'rate' : 'rates'}
+            </p>
           </div>
         </div>
       </div>
 
-      <div className="container mx-auto px-4 py-4 space-y-3">
+      <div className="px-4 space-y-3">
         {isLoading ? (
-          <div className="text-center py-16 text-gray-500 text-sm">Loading...</div>
+          <div className="text-center py-16 text-white text-sm">Loading...</div>
         ) : items.length === 0 ? (
           <EmptyState onAdd={openAdd} />
         ) : (
           <>
             {/* Search */}
             <div className="relative">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white" />
               <Input
                 placeholder="Search rates..."
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
-                className="h-11 pl-10 bg-white/[0.03] border-white/[0.08] text-white placeholder:text-gray-500 focus:border-elec-yellow touch-manipulation"
+                className="h-11 pl-10 bg-white/[0.03] border-white/[0.08] text-white placeholder:text-white focus:border-elec-yellow touch-manipulation"
               />
             </div>
 
             {/* Category pills */}
-            <div className="flex gap-2 overflow-x-auto pb-1 -mx-1 px-1">
+            <div className="flex gap-2 overflow-x-auto pb-1 scrollbar-hide -mx-1 px-1">
               {FILTERS.map((f) => (
                 <button
                   key={f}
                   onClick={() => setActiveFilter(f)}
                   className={cn(
-                    'px-3.5 py-1.5 rounded-full text-sm font-medium whitespace-nowrap transition-all touch-manipulation active:scale-[0.97]',
+                    'h-9 px-3.5 rounded-full text-sm font-medium whitespace-nowrap transition-all touch-manipulation active:scale-[0.97]',
                     activeFilter === f
                       ? 'bg-elec-yellow text-black'
-                      : 'bg-white/[0.05] text-gray-400 border border-white/[0.08]'
+                      : 'bg-white/[0.05] text-white border border-white/[0.08]'
                   )}
                 >
                   {f === ALL ? 'All' : CATEGORY_LABELS[f as PriceListCategory]}
@@ -268,17 +281,17 @@ export default function RateCard() {
               ))}
             </div>
 
-            {/* Items — grouped by category when no filter active */}
+            {/* Items */}
             {filtered.length === 0 ? (
-              <p className="text-center py-8 text-gray-500 text-sm">No matching rates.</p>
+              <p className="text-center py-8 text-white text-sm">No matching rates.</p>
             ) : (
               <div className="space-y-4">
                 {grouped.map((group) => (
                   <div key={group.label ?? 'all'}>
                     {group.label && (
                       <div className="flex items-center gap-2 mb-2">
-                        <Tag className="h-3.5 w-3.5 text-gray-500" />
-                        <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide">
+                        <Tag className="h-3.5 w-3.5 text-white" />
+                        <p className="text-xs font-semibold text-white uppercase tracking-wide">
                           {group.label}
                         </p>
                       </div>
@@ -287,30 +300,34 @@ export default function RateCard() {
                       {group.items.map((item) => (
                         <div
                           key={item.id}
-                          className="p-3.5 bg-white/[0.03] rounded-xl border border-white/[0.06] flex items-center gap-3"
+                          className="p-3.5 bg-white/[0.03] rounded-xl border border-white/[0.06] flex items-center gap-3 active:bg-white/[0.05] transition-colors"
                         >
                           <div className="flex-1 min-w-0">
-                            <p className="text-sm font-medium text-white line-clamp-1">{item.name}</p>
+                            <p className="text-sm font-medium text-white line-clamp-1">
+                              {item.name}
+                            </p>
                             {item.description && (
-                              <p className="text-xs text-gray-500 mt-0.5 line-clamp-1">{item.description}</p>
+                              <p className="text-xs text-white mt-0.5 line-clamp-1">
+                                {item.description}
+                              </p>
                             )}
                           </div>
                           <div className="flex-shrink-0 text-right">
                             <p className="text-sm font-bold text-elec-yellow">
                               {fmt(item.unit_price)}
                             </p>
-                            <p className="text-[11px] text-gray-500">per {item.unit}</p>
+                            <p className="text-[11px] text-white">per {item.unit}</p>
                           </div>
                           <div className="flex gap-1 flex-shrink-0">
                             <button
                               onClick={() => openEdit(item)}
-                              className="p-2 rounded-lg text-gray-500 hover:text-white hover:bg-white/[0.05] touch-manipulation"
+                              className="h-9 w-9 rounded-lg flex items-center justify-center text-white active:bg-white/[0.05] touch-manipulation"
                             >
                               <Pencil className="h-3.5 w-3.5" />
                             </button>
                             <button
                               onClick={() => setDeleteTarget(item)}
-                              className="p-2 rounded-lg text-gray-500 hover:text-red-400 hover:bg-red-400/10 touch-manipulation"
+                              className="h-9 w-9 rounded-lg flex items-center justify-center text-red-400 active:bg-red-400/10 touch-manipulation"
                             >
                               <Trash2 className="h-3.5 w-3.5" />
                             </button>
@@ -326,19 +343,13 @@ export default function RateCard() {
         )}
       </div>
 
-      {/* FAB */}
-      {items.length > 0 && (
-        <button
-          onClick={openAdd}
-          className="fixed bottom-24 right-4 sm:bottom-8 sm:right-8 w-14 h-14 rounded-full bg-elec-yellow flex items-center justify-center shadow-lg shadow-elec-yellow/30 touch-manipulation active:scale-95 transition-transform z-50"
-          aria-label="Add rate"
-        >
-          <Plus className="h-6 w-6 text-black" />
-        </button>
-      )}
-
       {/* ── Add / Edit Sheet ── */}
-      <Sheet open={!!sheetMode} onOpenChange={(open) => { if (!open) closeSheet(); }}>
+      <Sheet
+        open={!!sheetMode}
+        onOpenChange={(open) => {
+          if (!open) closeSheet();
+        }}
+      >
         <SheetContent side="bottom" className="h-auto max-h-[85vh] rounded-t-2xl overflow-y-auto">
           <SheetHeader>
             <SheetTitle className="flex items-center gap-2 text-white">
@@ -348,50 +359,52 @@ export default function RateCard() {
           </SheetHeader>
           <div className="mt-4 space-y-4 pb-6">
             <div>
-              <label className="text-xs text-gray-400 mb-1 block">Job / Service Name *</label>
+              <label className="text-xs text-white mb-1 block">Job / Service Name *</label>
               <Input
                 value={fieldName}
                 onChange={(e) => setFieldName(e.target.value)}
                 placeholder="e.g., Install double socket"
-                className="h-11 bg-white/[0.03] border-white/[0.08] text-white placeholder:text-gray-500 touch-manipulation"
+                className="h-11 bg-white/[0.03] border-white/[0.08] text-white placeholder:text-white touch-manipulation"
               />
             </div>
 
             <div>
-              <label className="text-xs text-gray-400 mb-1 block">Description (optional)</label>
+              <label className="text-xs text-white mb-1 block">Description (optional)</label>
               <Input
                 value={fieldDesc}
                 onChange={(e) => setFieldDesc(e.target.value)}
                 placeholder="e.g., Includes back box, faceplate, wiring"
-                className="h-11 bg-white/[0.03] border-white/[0.08] text-white placeholder:text-gray-500 touch-manipulation"
+                className="h-11 bg-white/[0.03] border-white/[0.08] text-white placeholder:text-white touch-manipulation"
               />
             </div>
 
             <div className="grid grid-cols-2 gap-3">
               <div>
-                <label className="text-xs text-gray-400 mb-1 block">Price (£) *</label>
+                <label className="text-xs text-white mb-1 block">Price (£) *</label>
                 <Input
                   type="text"
                   inputMode="decimal"
                   value={fieldPrice}
                   placeholder="0.00"
-                  onChange={(e) => { if (numOnly(e.target.value)) setFieldPrice(e.target.value); }}
-                  className="h-11 bg-white/[0.03] border-white/[0.08] text-white placeholder:text-gray-500 touch-manipulation"
+                  onChange={(e) => {
+                    if (numOnly(e.target.value)) setFieldPrice(e.target.value);
+                  }}
+                  className="h-11 bg-white/[0.03] border-white/[0.08] text-white placeholder:text-white touch-manipulation"
                 />
               </div>
               <div>
-                <label className="text-xs text-gray-400 mb-1 block">Unit</label>
+                <label className="text-xs text-white mb-1 block">Unit</label>
                 <Input
                   value={fieldUnit}
                   onChange={(e) => setFieldUnit(e.target.value)}
                   placeholder="each"
-                  className="h-11 bg-white/[0.03] border-white/[0.08] text-white placeholder:text-gray-500 touch-manipulation"
+                  className="h-11 bg-white/[0.03] border-white/[0.08] text-white placeholder:text-white touch-manipulation"
                 />
               </div>
             </div>
 
             <div>
-              <label className="text-xs text-gray-400 mb-1 block">Category</label>
+              <label className="text-xs text-white mb-1 block">Category</label>
               <Select
                 value={fieldCategory}
                 onValueChange={(v) => setFieldCategory(v as PriceListCategory)}
@@ -421,14 +434,20 @@ export default function RateCard() {
       </Sheet>
 
       {/* ── Delete confirm sheet ── */}
-      <Sheet open={!!deleteTarget} onOpenChange={(open) => { if (!open) setDeleteTarget(null); }}>
+      <Sheet
+        open={!!deleteTarget}
+        onOpenChange={(open) => {
+          if (!open) setDeleteTarget(null);
+        }}
+      >
         <SheetContent side="bottom" className="h-auto rounded-t-2xl">
           <SheetHeader>
             <SheetTitle className="text-white">Delete rate?</SheetTitle>
           </SheetHeader>
           <div className="mt-4 pb-6 space-y-4">
-            <p className="text-gray-400 text-sm">
-              Remove <span className="text-white font-medium">"{deleteTarget?.name}"</span> from your rate card? This can't be undone.
+            <p className="text-white text-sm">
+              Remove <span className="text-white font-medium">"{deleteTarget?.name}"</span> from
+              your rate card? This can't be undone.
             </p>
             <div className="flex gap-3">
               <Button
@@ -442,7 +461,8 @@ export default function RateCard() {
                 onClick={handleDelete}
                 className="flex-1 h-11 bg-red-500 hover:bg-red-600 text-white font-semibold touch-manipulation"
               >
-                <Trash2 className="h-4 w-4 mr-2" />Delete
+                <Trash2 className="h-4 w-4 mr-2" />
+                Delete
               </Button>
             </div>
           </div>

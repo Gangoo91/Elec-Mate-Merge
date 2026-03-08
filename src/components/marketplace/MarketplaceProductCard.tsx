@@ -14,6 +14,7 @@ import { Badge } from '@/components/ui/badge';
 import { MarketplaceProduct } from '@/hooks/useMarketplaceSearch';
 import { PriceSparkline } from '@/components/marketplace/PriceSparkline';
 import { cn } from '@/lib/utils';
+import { proxyImageUrl } from '@/lib/proxyImage';
 
 interface MarketplaceProductCardProps {
   product: MarketplaceProduct;
@@ -81,7 +82,7 @@ export function MarketplaceProductCard({
   const stockInfo = getStockInfo();
   const dealBadge = getDealBadge();
 
-  // Supplier colors
+  // Supplier badge colours
   const supplierColors: Record<string, string> = {
     screwfix: 'bg-orange-500',
     toolstation: 'bg-blue-500',
@@ -90,7 +91,28 @@ export function MarketplaceProductCard({
     'rs-components': 'bg-red-500',
     'tlc-electrical': 'bg-cyan-500',
     edmundson: 'bg-yellow-500',
+    wickes: 'bg-teal-500',
+    bandq: 'bg-emerald-500',
+    'machine-mart': 'bg-amber-500',
+    ffx: 'bg-indigo-500',
   };
+
+  // Supplier fallback gradients (shown when no image / image fails)
+  const supplierGradients: Record<string, string> = {
+    screwfix: 'from-orange-100 to-orange-200',
+    toolstation: 'from-blue-100 to-blue-200',
+    cef: 'from-green-100 to-green-200',
+    'electrical-direct': 'from-purple-100 to-purple-200',
+    'rs-components': 'from-red-100 to-red-200',
+    'tlc-electrical': 'from-cyan-100 to-cyan-200',
+    edmundson: 'from-yellow-100 to-yellow-200',
+    wickes: 'from-teal-100 to-teal-200',
+    bandq: 'from-emerald-100 to-emerald-200',
+    'machine-mart': 'from-amber-100 to-amber-200',
+    ffx: 'from-indigo-100 to-indigo-200',
+  };
+
+  const proxiedImage = proxyImageUrl(product.image_url);
 
   // Merged brand + product name
   const displayTitle = product.brand ? `${product.brand} ${product.name}` : product.name;
@@ -98,21 +120,21 @@ export function MarketplaceProductCard({
   return (
     <div
       className={cn(
-        'group relative flex flex-col bg-white/[0.03] rounded-2xl border border-white/[0.08] overflow-hidden touch-manipulation',
-        'transition-colors active:bg-white/[0.06]',
+        'group relative flex flex-col h-full bg-white/[0.03] rounded-2xl border border-white/[0.08] overflow-hidden touch-manipulation',
+        'transition-all duration-200 active:bg-white/[0.06] lg:hover:border-white/20 lg:hover:shadow-xl lg:hover:shadow-black/20 lg:hover:-translate-y-0.5',
         className
       )}
     >
-      {/* Image Section - 150px prominent */}
-      <div className="relative w-full h-[150px] bg-white overflow-hidden">
-        {product.image_url ? (
+      {/* Image Section - 200px prominent */}
+      <div className="relative w-full h-[200px] bg-white overflow-hidden">
+        {proxiedImage ? (
           <img
-            src={product.image_url}
+            src={proxiedImage}
             alt={product.name}
-            className="w-full h-full object-contain p-3"
+            className="w-full h-full object-contain p-3 transition-transform duration-200 group-active:scale-105"
             loading="lazy"
+            referrerPolicy="no-referrer"
             onError={(e) => {
-              // Hide the broken image and show fallback
               const img = e.currentTarget as HTMLImageElement;
               img.style.display = 'none';
               const fallback = img.parentElement?.querySelector('[data-fallback]') as HTMLElement;
@@ -123,8 +145,11 @@ export function MarketplaceProductCard({
         {/* Styled fallback — shown when no image or image fails to load */}
         <div
           data-fallback
-          className="w-full h-full flex flex-col items-center justify-center bg-gradient-to-br from-gray-100 to-gray-200"
-          style={{ display: product.image_url ? 'none' : 'flex' }}
+          className={cn(
+            'w-full h-full flex flex-col items-center justify-center bg-gradient-to-br',
+            supplierGradients[product.supplier_slug] || 'from-gray-100 to-gray-200'
+          )}
+          style={{ display: proxiedImage ? 'none' : 'flex' }}
         >
           <Package className="h-10 w-10 text-gray-400 mb-1" />
           <span className="text-[10px] font-semibold text-gray-500 uppercase tracking-wide">
@@ -192,13 +217,12 @@ export function MarketplaceProductCard({
       {/* Content Section - flex-1 to fill remaining space */}
       <div className="flex-1 flex flex-col p-3 space-y-2">
         {/* Product name - merged brand + title, 3 lines max */}
-        <h3 className="font-medium text-sm leading-tight text-white line-clamp-4 min-h-[4.5rem]">
+        <h3 className="font-medium text-sm leading-tight text-white line-clamp-3 min-h-[3.75rem]">
           {displayTitle}
         </h3>
 
-        {/* Price section - prominent, pushed to bottom via flex */}
-        <div className="flex-1" />
-        <div className="space-y-1 pt-1 border-t border-white/[0.08]">
+        {/* Price section - fixed min-height so cards align whether or not there's a sale */}
+        <div className="min-h-[3.25rem] space-y-0.5 pt-1 border-t border-white/[0.08] mt-auto">
           <div className="flex items-baseline gap-2">
             <span className="text-xl font-bold text-elec-yellow">
               £{formatPrice(product.current_price)}

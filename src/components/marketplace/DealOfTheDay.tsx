@@ -2,6 +2,7 @@ import { Flame, ExternalLink, Tag } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { DealOfTheDay as DealOfTheDayType } from '@/hooks/useMarketplaceSearch';
 import { cn } from '@/lib/utils';
+import { proxyImageUrl } from '@/lib/proxyImage';
 
 interface DealOfTheDayProps {
   deal: DealOfTheDayType;
@@ -40,10 +41,11 @@ export function DealOfTheDay({ deal }: DealOfTheDayProps) {
         {deal.image_url && (
           <div className="flex-shrink-0 w-20 h-20 rounded-xl bg-white overflow-hidden">
             <img
-              src={deal.image_url}
+              src={proxyImageUrl(deal.image_url)!}
               alt={deal.name}
               className="w-full h-full object-contain p-1.5"
               loading="lazy"
+              referrerPolicy="no-referrer"
             />
           </div>
         )}

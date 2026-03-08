@@ -16,6 +16,41 @@ const corsHeaders = {
  * URL: https://jtwygbeceundfgnkirof.supabase.co/functions/v1/revenuecat-webhook
  * Auth header: your REVENUECAT_WEBHOOK_SECRET
  */
+
+// Map RevenueCat product IDs → subscription tier names
+// Product IDs are set in App Store Connect / Google Play Console
+// Format: com.elecmate.app.<tier>.<period>
+const PRODUCT_TIER_MAP: Record<string, string> = {
+  // iOS products
+  'com.elecmate.app.apprentice.monthly': 'Apprentice',
+  'com.elecmate.app.apprentice.yearly': 'Apprentice',
+  'com.elecmate.app.electrician.monthly': 'Electrician Pro',
+  'com.elecmate.app.electrician.yearly': 'Electrician Pro',
+  'com.elecmate.app.business_ai.monthly': 'Business AI',
+  'com.elecmate.app.business_ai.yearly': 'Business AI',
+  // Android products (same naming convention)
+  apprentice_monthly: 'Apprentice',
+  apprentice_yearly: 'Apprentice',
+  electrician_monthly: 'Electrician Pro',
+  electrician_yearly: 'Electrician Pro',
+  business_ai_monthly: 'Business AI',
+  business_ai_yearly: 'Business AI',
+};
+
+function resolveTierFromProduct(productId: string | null, store: string | null): string {
+  if (productId && PRODUCT_TIER_MAP[productId]) {
+    return PRODUCT_TIER_MAP[productId];
+  }
+  // Fallback: pattern matching on product ID
+  if (productId) {
+    const id = productId.toLowerCase();
+    if (id.includes('business_ai') || id.includes('business-ai')) return 'Business AI';
+    if (id.includes('electrician')) return 'Electrician Pro';
+    if (id.includes('apprentice')) return 'Apprentice';
+  }
+  // Last resort: generic tier by store (legacy single-product users)
+  return store === 'APP_STORE' ? 'Electrician Pro' : 'Electrician Pro';
+}
 serve(async (req) => {
   if (req.method === 'OPTIONS') {
     return new Response('ok', { headers: corsHeaders });
@@ -75,7 +110,7 @@ serve(async (req) => {
 
     if (activeEvents.includes(type)) {
       subscribed = true;
-      subscriptionTier = store === 'APP_STORE' ? 'Pro (iOS)' : 'Pro (Android)';
+      subscriptionTier = resolveTierFromProduct(product_id, store);
       subscriptionEnd = expiration_at_ms ? new Date(expiration_at_ms).toISOString() : null;
     } else if (inactiveEvents.includes(type)) {
       subscribed = false;

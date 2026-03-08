@@ -1,37 +1,205 @@
 import { useState } from 'react';
-import { Check, X, GraduationCap, Zap, Building2, ChevronDown } from 'lucide-react';
+import { Check, X, GraduationCap, Zap, Building2, Bot, ChevronDown } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 interface Feature {
   name: string;
   apprentice: boolean;
   electrician: boolean;
+  business_ai: boolean;
   employer: boolean;
 }
 
 const features: Feature[] = [
-  { name: '2,000+ Practice Questions', apprentice: true, electrician: true, employer: true },
-  { name: 'AM2 Exam Preparation', apprentice: true, electrician: true, employer: true },
-  { name: 'Level 2 & 3 Courses', apprentice: true, electrician: true, employer: true },
-  { name: 'BS 7671 18th Edition Guides', apprentice: true, electrician: true, employer: true },
-  { name: '50+ Electrical Calculators', apprentice: true, electrician: true, employer: true },
-  { name: 'OJT Logbook Tracking', apprentice: true, electrician: true, employer: true },
-  { name: 'Flashcards & Mock Exams', apprentice: true, electrician: true, employer: true },
-  { name: 'Progress Tracking', apprentice: true, electrician: true, employer: true },
-  { name: '8 AI Specialist Agents', apprentice: false, electrician: true, employer: true },
-  { name: 'Inspection & Testing Suite', apprentice: false, electrician: true, employer: true },
-  { name: 'AI Board Scanner', apprentice: false, electrician: true, employer: true },
-  { name: 'Quote & Invoice Builder', apprentice: false, electrician: true, employer: true },
-  { name: 'Live Material Pricing', apprentice: false, electrician: true, employer: true },
-  { name: 'RAMS Generator', apprentice: false, electrician: true, employer: true },
-  { name: 'Customer Management', apprentice: false, electrician: true, employer: true },
-  { name: 'Team GPS & Job Tracking', apprentice: false, electrician: false, employer: true },
-  { name: 'Team Management (up to 5)', apprentice: false, electrician: false, employer: true },
-  { name: 'Job Packs & Assignments', apprentice: false, electrician: false, employer: true },
-  { name: 'Timesheets & Scheduling', apprentice: false, electrician: false, employer: true },
-  { name: 'Safety Hub & Incidents', apprentice: false, electrician: false, employer: true },
-  { name: 'Finance Hub & Reporting', apprentice: false, electrician: false, employer: true },
-  { name: 'Talent Pool Access', apprentice: false, electrician: false, employer: true },
+  {
+    name: '2,000+ Practice Questions',
+    apprentice: true,
+    electrician: true,
+    business_ai: true,
+    employer: true,
+  },
+  {
+    name: 'AM2 Exam Preparation',
+    apprentice: true,
+    electrician: true,
+    business_ai: true,
+    employer: true,
+  },
+  {
+    name: 'Level 2 & 3 Courses',
+    apprentice: true,
+    electrician: true,
+    business_ai: true,
+    employer: true,
+  },
+  {
+    name: 'BS 7671 18th Edition Guides',
+    apprentice: true,
+    electrician: true,
+    business_ai: true,
+    employer: true,
+  },
+  {
+    name: '50+ Electrical Calculators',
+    apprentice: true,
+    electrician: true,
+    business_ai: true,
+    employer: true,
+  },
+  {
+    name: 'OJT Logbook Tracking',
+    apprentice: true,
+    electrician: true,
+    business_ai: true,
+    employer: true,
+  },
+  {
+    name: 'Flashcards & Mock Exams',
+    apprentice: true,
+    electrician: true,
+    business_ai: true,
+    employer: true,
+  },
+  {
+    name: 'Progress Tracking',
+    apprentice: true,
+    electrician: true,
+    business_ai: true,
+    employer: true,
+  },
+  {
+    name: '8 AI Specialist Agents',
+    apprentice: false,
+    electrician: true,
+    business_ai: true,
+    employer: true,
+  },
+  {
+    name: 'Inspection & Testing Suite',
+    apprentice: false,
+    electrician: true,
+    business_ai: true,
+    employer: true,
+  },
+  {
+    name: 'AI Board Scanner',
+    apprentice: false,
+    electrician: true,
+    business_ai: true,
+    employer: true,
+  },
+  {
+    name: 'Quote & Invoice Builder',
+    apprentice: false,
+    electrician: true,
+    business_ai: true,
+    employer: true,
+  },
+  {
+    name: 'Live Material Pricing',
+    apprentice: false,
+    electrician: true,
+    business_ai: true,
+    employer: true,
+  },
+  {
+    name: 'RAMS Generator',
+    apprentice: false,
+    electrician: true,
+    business_ai: true,
+    employer: true,
+  },
+  {
+    name: 'Customer Management',
+    apprentice: false,
+    electrician: true,
+    business_ai: true,
+    employer: true,
+  },
+  {
+    name: 'Mate AI on WhatsApp',
+    apprentice: false,
+    electrician: false,
+    business_ai: true,
+    employer: true,
+  },
+  {
+    name: 'Email Lead Monitoring',
+    apprentice: false,
+    electrician: false,
+    business_ai: true,
+    employer: true,
+  },
+  {
+    name: 'Automated Invoice Chasing',
+    apprentice: false,
+    electrician: false,
+    business_ai: true,
+    employer: true,
+  },
+  {
+    name: 'Morning Briefing',
+    apprentice: false,
+    electrician: false,
+    business_ai: true,
+    employer: true,
+  },
+  {
+    name: 'Certificate Delivery Automation',
+    apprentice: false,
+    electrician: false,
+    business_ai: true,
+    employer: true,
+  },
+  {
+    name: 'Team GPS & Job Tracking',
+    apprentice: false,
+    electrician: false,
+    business_ai: false,
+    employer: true,
+  },
+  {
+    name: 'Team Management (up to 5)',
+    apprentice: false,
+    electrician: false,
+    business_ai: false,
+    employer: true,
+  },
+  {
+    name: 'Job Packs & Assignments',
+    apprentice: false,
+    electrician: false,
+    business_ai: false,
+    employer: true,
+  },
+  {
+    name: 'Timesheets & Scheduling',
+    apprentice: false,
+    electrician: false,
+    business_ai: false,
+    employer: true,
+  },
+  {
+    name: 'Safety Hub & Incidents',
+    apprentice: false,
+    electrician: false,
+    business_ai: false,
+    employer: true,
+  },
+  {
+    name: 'Finance Hub & Reporting',
+    apprentice: false,
+    electrician: false,
+    business_ai: false,
+    employer: true,
+  },
+  {
+    name: 'Talent Pool Access',
+    apprentice: false,
+    electrician: false,
+    business_ai: false,
+    employer: true,
+  },
 ];
 
 const plans = [
@@ -43,7 +211,14 @@ const plans = [
     icon: Zap,
     popular: true,
   },
-  { key: 'employer' as const, name: 'Employer', price: 'From £29.99/mo', icon: Building2 },
+  {
+    key: 'business_ai' as const,
+    name: 'Business AI',
+    price: 'From £29.99/mo',
+    icon: Bot,
+    premium: true,
+  },
+  { key: 'employer' as const, name: 'Employer', price: 'From £49.99/mo', icon: Building2 },
 ];
 
 const FeatureComparison = () => {
@@ -87,11 +262,22 @@ const FeatureComparison = () => {
                 <div
                   className={cn(
                     'w-8 h-8 rounded-lg flex items-center justify-center shrink-0',
-                    plan.popular ? 'bg-elec-yellow/20' : 'bg-white/[0.06]'
+                    plan.popular
+                      ? 'bg-elec-yellow/20'
+                      : 'premium' in plan && plan.premium
+                        ? 'bg-amber-500/20'
+                        : 'bg-white/[0.06]'
                   )}
                 >
                   <plan.icon
-                    className={cn('h-4 w-4', plan.popular ? 'text-elec-yellow' : 'text-white')}
+                    className={cn(
+                      'h-4 w-4',
+                      plan.popular
+                        ? 'text-elec-yellow'
+                        : 'premium' in plan && plan.premium
+                          ? 'text-amber-400'
+                          : 'text-white'
+                    )}
                   />
                 </div>
                 <div className="flex-1 min-w-0">
@@ -100,6 +286,11 @@ const FeatureComparison = () => {
                     {plan.popular && (
                       <span className="text-[10px] font-bold text-elec-dark bg-elec-yellow px-1.5 py-0.5 rounded">
                         POPULAR
+                      </span>
+                    )}
+                    {'premium' in plan && plan.premium && (
+                      <span className="text-[10px] font-bold text-white bg-gradient-to-r from-amber-500 to-orange-500 px-1.5 py-0.5 rounded">
+                        PREMIUM
                       </span>
                     )}
                   </div>
@@ -143,29 +334,44 @@ const FeatureComparison = () => {
       {/* Desktop: Table */}
       <div className="hidden md:block rounded-xl border border-white/[0.06] overflow-hidden">
         {/* Header Row */}
-        <div className="grid grid-cols-[1fr_repeat(3,120px)] gap-0 bg-white/[0.03] border-b border-white/[0.06]">
+        <div className="grid grid-cols-[1fr_repeat(4,100px)] gap-0 bg-white/[0.03] border-b border-white/[0.06]">
           <div className="px-4 py-3 text-xs font-medium text-white uppercase tracking-wider">
             Feature
           </div>
           {plans.map((plan) => (
             <div
               key={plan.key}
-              className={cn('px-3 py-3 text-center', plan.popular && 'bg-elec-yellow/[0.06]')}
+              className={cn(
+                'px-2 py-3 text-center',
+                plan.popular && 'bg-elec-yellow/[0.06]',
+                'premium' in plan && plan.premium && 'bg-amber-500/[0.04]'
+              )}
             >
-              <div className="flex items-center justify-center gap-1.5">
+              <div className="flex items-center justify-center gap-1">
                 <plan.icon
-                  className={cn('h-3.5 w-3.5', plan.popular ? 'text-elec-yellow' : 'text-white')}
+                  className={cn(
+                    'h-3.5 w-3.5',
+                    plan.popular
+                      ? 'text-elec-yellow'
+                      : 'premium' in plan && plan.premium
+                        ? 'text-amber-400'
+                        : 'text-white'
+                  )}
                 />
                 <span
                   className={cn(
-                    'text-sm font-semibold',
-                    plan.popular ? 'text-elec-yellow' : 'text-foreground'
+                    'text-xs font-semibold',
+                    plan.popular
+                      ? 'text-elec-yellow'
+                      : 'premium' in plan && plan.premium
+                        ? 'text-amber-400'
+                        : 'text-foreground'
                   )}
                 >
                   {plan.name}
                 </span>
               </div>
-              <div className="text-[11px] text-white mt-0.5">{plan.price}</div>
+              <div className="text-[10px] text-white mt-0.5">{plan.price}</div>
             </div>
           ))}
         </div>
@@ -175,19 +381,20 @@ const FeatureComparison = () => {
           <div
             key={index}
             className={cn(
-              'grid grid-cols-[1fr_repeat(3,120px)] gap-0 border-b border-white/[0.03] last:border-b-0',
+              'grid grid-cols-[1fr_repeat(4,100px)] gap-0 border-b border-white/[0.03] last:border-b-0',
               'hover:bg-white/[0.02] transition-colors'
             )}
           >
             <div className="px-4 py-2.5 text-sm text-foreground/70">{feature.name}</div>
-            {(['apprentice', 'electrician', 'employer'] as const).map((key) => {
+            {(['apprentice', 'electrician', 'business_ai', 'employer'] as const).map((key) => {
               const plan = plans.find((p) => p.key === key);
               return (
                 <div
                   key={key}
                   className={cn(
                     'flex justify-center items-center py-2.5',
-                    plan?.popular && 'bg-elec-yellow/[0.03]'
+                    plan?.popular && 'bg-elec-yellow/[0.03]',
+                    plan && 'premium' in plan && plan.premium && 'bg-amber-500/[0.02]'
                   )}
                 >
                   {feature[key] ? (

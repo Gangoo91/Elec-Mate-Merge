@@ -11,6 +11,7 @@ import { getHandler } from './router.js';
 import { enforceRateLimits, RateLimitError } from '../middleware/rate-limiter.js';
 import { logToolCall } from '../middleware/audit-logger.js';
 import { sanitiseError } from '../lib/error-sanitiser.js';
+import { recordToolUsage, recordRateLimitHit } from '../middleware/usage-tracker.js';
 
 /**
  * Register all tools onto the MCP server, filtered by user role.
@@ -69,6 +70,8 @@ function callTool(toolName: string, user: UserContext) {
       enforceRateLimits(user.userId, toolName);
     } catch (err) {
       if (err instanceof RateLimitError) {
+        // Track rate limit hit in Supabase
+        recordRateLimitHit(user.userId);
         // Log rate limit hits as security events
         logToolCall(user, toolName, args, {
           success: false,
@@ -106,6 +109,9 @@ function callTool(toolName: string, user: UserContext) {
 
       // ── Audit log (SECURITY.md §9 — every tool call logged) ─────
       logToolCall(user, toolName, args, { success: true, durationMs });
+
+      // ── Usage tracking (ELE-140/207 — fire-and-forget) ───────
+      recordToolUsage(user.userId, toolName);
 
       return {
         content: [
@@ -239,7 +245,10 @@ function registerQuotingTools(server: McpServer, user: UserContext): void {
         .array(
           z.object({
             description: z.string().describe('Item description'),
-            category: z.enum(['labour', 'materials', 'equipment']).describe('Item category'),
+            category: z
+              .enum(['labour', 'materials', 'equipment'])
+              .optional()
+              .describe('Item category (defaults to materials)'),
             quantity: z.number().describe('Quantity'),
             unitPrice: z.number().optional().describe('Price per unit in GBP (use this or unit_price)'),
             unit_price: z.number().optional().describe('Price per unit in GBP (alias for unitPrice)'),
@@ -1075,6 +1084,15 @@ function registerAgentInternalTools(server: McpServer, user: UserContext): void 
       limit: z.number().optional().describe('Max results (default 50)'),
     },
     callTool('read_activity_log', user)
+  );
+
+  server.tool(
+    'get_usage_summary',
+    'Get usage stats for this user — tool calls, messages sent, knowledge lookups. Use when the user asks about their usage or activity.',
+    {
+      days: z.number().optional().describe('Number of days to look back (default 7, max 90)'),
+    },
+    callTool('get_usage_summary', user)
   );
 }
 

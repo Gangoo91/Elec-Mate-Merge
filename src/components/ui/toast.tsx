@@ -30,16 +30,11 @@ const toastVariants = cva(
   {
     variants: {
       variant: {
-        default:
-          'border-l-zinc-400 shadow-[0_8px_32px_rgba(0,0,0,0.5)]',
-        success:
-          'border-l-emerald-400 shadow-[0_8px_32px_rgba(16,185,129,0.18)]',
-        destructive:
-          'border-l-red-400 shadow-[0_8px_32px_rgba(239,68,68,0.18)]',
-        warning:
-          'border-l-amber-400 shadow-[0_8px_32px_rgba(245,158,11,0.18)]',
-        info:
-          'border-l-blue-400 shadow-[0_8px_32px_rgba(59,130,246,0.18)]',
+        default: 'border-l-zinc-400 shadow-[0_8px_32px_rgba(0,0,0,0.5)]',
+        success: 'border-l-emerald-400 shadow-[0_8px_32px_rgba(16,185,129,0.18)]',
+        destructive: 'border-l-red-400 shadow-[0_8px_32px_rgba(239,68,68,0.18)]',
+        warning: 'border-l-amber-400 shadow-[0_8px_32px_rgba(245,158,11,0.18)]',
+        info: 'border-l-blue-400 shadow-[0_8px_32px_rgba(59,130,246,0.18)]',
       },
     },
     defaultVariants: {
@@ -77,7 +72,12 @@ const Toast = React.forwardRef<
       className={cn(toastVariants({ variant }), className)}
       {...props}
     >
-      <div className={cn('w-8 h-8 rounded-xl flex items-center justify-center flex-shrink-0', bubbleClass)}>
+      <div
+        className={cn(
+          'w-8 h-8 rounded-xl flex items-center justify-center flex-shrink-0',
+          bubbleClass
+        )}
+      >
         <Icon className="w-4 h-4" />
       </div>
       <div className="flex-1 min-w-0 pr-8">{children}</div>
@@ -108,7 +108,7 @@ const ToastClose = React.forwardRef<
   <ToastPrimitives.Close
     ref={ref}
     className={cn(
-      'absolute right-2 top-1/2 -translate-y-1/2 rounded-lg h-7 w-7 flex items-center justify-center text-white/40 hover:text-white/80 hover:bg-white/10 transition-all touch-manipulation',
+      'absolute right-2 top-1/2 -translate-y-1/2 rounded-lg h-7 w-7 flex items-center justify-center text-white hover:text-white hover:bg-white/10 transition-all touch-manipulation',
       className
     )}
     toast-close=""
@@ -137,7 +137,7 @@ const ToastDescription = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <ToastPrimitives.Description
     ref={ref}
-    className={cn('text-[12px] text-white/55 leading-snug mt-0.5 line-clamp-2', className)}
+    className={cn('text-[12px] text-white leading-snug mt-0.5 line-clamp-2', className)}
     {...props}
   />
 ));

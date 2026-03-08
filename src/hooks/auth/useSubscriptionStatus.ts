@@ -5,7 +5,16 @@ import { ProfileType } from './types';
 import { supabase } from '@/integrations/supabase/client';
 import { capturePaymentError, captureEdgeFunctionError, addBreadcrumb } from '@/lib/sentry';
 
-const RC_ENTITLEMENT_ID = 'Elec-Mate Pro';
+// Multi-tier entitlement IDs — must match RevenueCat dashboard (highest priority first)
+const RC_ENTITLEMENT_IDS = ['business_ai', 'electrician', 'apprentice'] as const;
+const RC_LEGACY_ENTITLEMENT_ID = 'Elec-Mate Pro';
+
+// Map entitlement ID → profiles.subscription_tier value
+const RC_TIER_MAP: Record<string, string> = {
+  business_ai: 'Business AI',
+  electrician: 'Electrician Pro',
+  apprentice: 'Apprentice',
+};
 
 // Cache TTLs in milliseconds
 const CACHE_TTL_SUBSCRIBED = 30 * 60 * 1000; // 30 minutes
@@ -242,18 +251,30 @@ export function useSubscriptionStatus(profile: ProfileType | null) {
         setState((prev) => ({ ...prev, isCheckingStatus: true, lastError: null }));
         try {
           const { customerInfo } = await Purchases.getCustomerInfo();
-          const isEntitled = customerInfo.entitlements.active[RC_ENTITLEMENT_ID] !== undefined;
+          const activeEnts = customerInfo.entitlements.active;
+
+          // Resolve best tier from multi-tier entitlements (highest priority first)
+          let isEntitled = false;
+          let resolvedTierName: string | null = null;
+          for (const entId of RC_ENTITLEMENT_IDS) {
+            if (activeEnts[entId] !== undefined) {
+              isEntitled = true;
+              resolvedTierName = RC_TIER_MAP[entId] ?? entId;
+              break;
+            }
+          }
+          // Legacy fallback: old single "Elec-Mate Pro" entitlement → Electrician Pro
+          if (!isEntitled && activeEnts[RC_LEGACY_ENTITLEMENT_ID] !== undefined) {
+            isEntitled = true;
+            resolvedTierName = 'Electrician Pro';
+          }
 
           hasCheckedRef.current = true;
           profileIdRef.current = profile.id;
 
           setState((prev) => {
             const resolvedSubscribed = isEntitled || prev.isSubscribed;
-            const resolvedTier = isEntitled
-              ? Capacitor.getPlatform() === 'ios'
-                ? 'Pro (iOS)'
-                : 'Pro (Android)'
-              : prev.subscriptionTier;
+            const resolvedTier = resolvedTierName ?? prev.subscriptionTier;
 
             // Write to cache after RevenueCat success (using resolved values from prev state)
             writeCache({
@@ -389,10 +410,7 @@ export function useSubscriptionStatus(profile: ProfileType | null) {
           const message = error instanceof Error ? error.message : String(error);
           lastError = message;
           // Retry on network/timeout errors
-          if (
-            attempt < MAX_RETRIES &&
-            /failed to send|fetch|network|timed out/i.test(message)
-          ) {
+          if (attempt < MAX_RETRIES && /failed to send|fetch|network|timed out/i.test(message)) {
             continue;
           }
           console.error('Error in checkSubscriptionStatus:', message);
@@ -426,9 +444,7 @@ export function useSubscriptionStatus(profile: ProfileType | null) {
       // All retries exhausted
       if (lastError) {
         captureEdgeFunctionError(
-          new Error(
-            `Subscription check failed after ${MAX_RETRIES + 1} attempts: ${lastError}`
-          ),
+          new Error(`Subscription check failed after ${MAX_RETRIES + 1} attempts: ${lastError}`),
           'check-subscription',
           { userId: profile?.id, attempts: MAX_RETRIES + 1 }
         );

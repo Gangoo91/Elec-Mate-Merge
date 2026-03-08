@@ -1,6 +1,5 @@
 import './App.css';
 import AppRouter from './AppRouter';
-import { Toaster } from '@/components/ui/toaster';
 import { Toaster as SonnerToaster } from '@/components/ui/sonner';
 import { ThemeProvider } from '@/components/theme-provider';
 import { BrowserRouter } from 'react-router-dom';
@@ -16,6 +15,7 @@ import { useNativeApp } from '@/hooks/useNativeApp';
 import { ActivityTracker } from '@/components/ActivityTracker';
 import { InAppBrowserDetector } from '@/components/InAppBrowserDetector';
 import { lazy, Suspense } from 'react';
+import { Capacitor } from '@capacitor/core';
 
 // Lazy load analytics components to defer ~427KB from initial bundle
 const PostHogProvider = lazy(() => import('@/components/analytics/PostHogProvider'));
@@ -36,8 +36,8 @@ function App() {
   return (
     <BrowserRouter>
       <ScrollToTop />
-      {/* Detect Facebook/Instagram in-app browsers and prompt to open in real browser */}
-      <InAppBrowserDetector />
+      {/* Web-only: detect in-app browsers — not needed in native app */}
+      {!Capacitor.isNativePlatform() && <InAppBrowserDetector />}
       <QueryClientProvider client={queryClient}>
         <AuthProvider>
           <ThemeProvider forcedTheme="dark">
@@ -53,10 +53,14 @@ function App() {
                 </Suspense>
                 <TrainingActivityMonitor />
                 <AppRouter />
-                <Toaster />
                 <SonnerToaster />
-                <PWAUpdatePrompt />
-                <CookieConsent />
+                {/* Web-only components — not needed in native app */}
+                {!Capacitor.isNativePlatform() && (
+                  <>
+                    <PWAUpdatePrompt />
+                    <CookieConsent />
+                  </>
+                )}
                 {/* Vercel analytics load after app is interactive */}
                 <Suspense fallback={null}>
                   <SpeedInsights />

@@ -95,7 +95,7 @@ export function ProductGrid({
         className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-4"
       >
         {products.map((product) => (
-          <motion.div key={product.id} variants={gridItemVariants}>
+          <motion.div key={product.id} variants={gridItemVariants} className="h-full">
             <MarketplaceProductCard
               product={product}
               onSave={onSave}
@@ -140,9 +140,7 @@ export function ProductGrid({
       {/* All loaded state */}
       {!hasMore && products.length > 0 && products.length >= total && (
         <div className="py-6 text-center">
-          <p className="text-sm text-white">
-            You've seen all {total.toLocaleString()} products
-          </p>
+          <p className="text-sm text-white">You've seen all {total.toLocaleString()} products</p>
         </div>
       )}
     </div>
@@ -161,8 +159,11 @@ export function ProductGridSkeleton() {
 
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-4">
         {Array.from({ length: 8 }).map((_, i) => (
-          <div key={i} className="bg-white/[0.03] rounded-2xl border border-white/[0.08] overflow-hidden">
-            <div className="w-full h-[150px] bg-white/[0.05] animate-pulse" />
+          <div
+            key={i}
+            className="bg-white/[0.03] rounded-2xl border border-white/[0.08] overflow-hidden"
+          >
+            <div className="w-full h-[170px] bg-white/[0.05] animate-pulse" />
             <div className="p-3 space-y-2">
               <div className="h-4 w-full bg-white/[0.05] rounded animate-pulse" />
               <div className="h-4 w-3/4 bg-white/[0.05] rounded animate-pulse" />

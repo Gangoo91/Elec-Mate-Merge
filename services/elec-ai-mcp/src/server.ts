@@ -127,6 +127,7 @@ function startHttp(): void {
       return;
     }
 
+    const mem = process.memoryUsage();
     const health: Record<string, unknown> = {
       status: 'ok',
       service: 'elec-ai-mcp',
@@ -134,8 +135,14 @@ function startHttp(): void {
       transport: 'http',
       uptime: Math.floor(process.uptime()),
       timestamp: new Date().toISOString(),
+      memory_mb: {
+        rss: Math.round(mem.rss / 1048576),
+        heap_used: Math.round(mem.heapUsed / 1048576),
+        heap_total: Math.round(mem.heapTotal / 1048576),
+      },
     };
 
+    // Check Supabase
     if (config.supabaseAnonKey) {
       try {
         const supabase = createUserClient(config.supabaseAnonKey);
@@ -149,6 +156,34 @@ function startHttp(): void {
     } else {
       health.supabase = { status: 'not_configured' };
       health.status = 'degraded';
+    }
+
+    // Check OpenClaw gateway process
+    try {
+      const { execSync } = await import('node:child_process');
+      const count = execSync('pgrep -cf openclaw 2>/dev/null || echo 0', {
+        encoding: 'utf-8',
+        timeout: 3000,
+      }).trim();
+      const n = parseInt(count, 10);
+      health.openclaw = { status: n > 0 ? 'ok' : 'down', processes: n };
+      if (n === 0) health.status = 'degraded';
+    } catch {
+      health.openclaw = { status: 'unknown' };
+    }
+
+    // Count active agent workspaces
+    try {
+      const { readdirSync, existsSync } = await import('node:fs');
+      const wsDir = '/root/.openclaw/workspaces';
+      if (existsSync(wsDir)) {
+        const dirs = readdirSync(wsDir, { withFileTypes: true }).filter((d) => d.isDirectory());
+        health.agents = { active_workspaces: dirs.length };
+      } else {
+        health.agents = { active_workspaces: 0 };
+      }
+    } catch {
+      health.agents = { active_workspaces: 'unknown' };
     }
 
     const statusCode = health.status === 'ok' ? 200 : 503;

@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import { toast } from '@/hooks/use-toast';
+import { toast } from 'sonner';
 import { supabase } from '@/integrations/supabase/client';
 import type { User } from '@supabase/supabase-js';
 
@@ -146,20 +146,9 @@ export const NotificationProvider: React.FC<{ children: React.ReactNode }> = ({ 
 
     setNotifications((prev) => [newNotification, ...prev]);
 
-    // Also show as toast — map notification type to toast variant
-    const variantMap: Record<Notification['type'], 'success' | 'warning' | 'info' | 'destructive'> =
-      {
-        success: 'success',
-        warning: 'warning',
-        info: 'info',
-        error: 'destructive',
-      };
-
-    toast({
-      title: notification.title,
-      description: notification.message,
-      variant: variantMap[notification.type],
-    });
+    // Also show as toast via Sonner
+    const sonnerMethod = notification.type === 'error' ? 'error' : notification.type;
+    toast[sonnerMethod](notification.title, { description: notification.message });
 
     return newNotification;
   };

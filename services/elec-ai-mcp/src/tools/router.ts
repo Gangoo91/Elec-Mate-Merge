@@ -116,6 +116,7 @@ const handlers: Record<string, ToolHandler> = {
   delete_memory: agentInternals.deleteMemory,
   log_activity: agentInternals.logActivity,
   read_activity_log: agentInternals.readActivityLog,
+  get_usage_summary: agentInternals.getUsageSummary,
 
   // Documents
   generate_briefing_pdf: documents.generateBriefingPdf,

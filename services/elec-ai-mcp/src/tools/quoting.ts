@@ -242,12 +242,19 @@ export async function updateQuote(args: Record<string, unknown>, user: UserConte
       if (typeof item.quantity !== 'number' || item.quantity <= 0) {
         throw new Error('Item quantity must be a positive number');
       }
-      if (typeof item.unitPrice !== 'number' || item.unitPrice < 0) {
-        throw new Error('Item unitPrice must be zero or positive');
+      // Accept both unitPrice (camelCase) and unit_price (snake_case)
+      const resolvedPrice =
+        typeof item.unitPrice === 'number'
+          ? item.unitPrice
+          : typeof item.unit_price === 'number'
+            ? item.unit_price
+            : undefined;
+      if (resolvedPrice === undefined || resolvedPrice < 0) {
+        throw new Error('Item unitPrice (or unit_price) must be zero or positive');
       }
       const category = typeof item.category === 'string' ? item.category : 'materials';
       const qty = item.quantity;
-      const price = item.unitPrice;
+      const price = resolvedPrice;
       items.push({
         id: randomUUID(),
         description: item.description.trim(),

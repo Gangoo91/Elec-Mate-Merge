@@ -67,7 +67,7 @@ export function CouponCard({ coupon }: CouponCardProps) {
       onClick={handleCopy}
       className={cn(
         'relative flex items-center gap-3 w-full min-w-[240px] p-3 rounded-xl border touch-manipulation',
-        'transition-all duration-200 active:scale-[0.98]',
+        'transition-all duration-200 active:scale-[0.98] lg:hover:scale-[1.02] lg:hover:shadow-lg lg:hover:shadow-black/20',
         supplierColors[coupon.supplier_slug] || 'border-white/10 bg-white/[0.03]'
       )}
     >

@@ -34,7 +34,8 @@ const PlansList = ({ billing }: PlansListProps) => {
   const [isLoading, setIsLoading] = useState<{ [key: string]: boolean }>({});
   const scrollRef = useRef<HTMLDivElement>(null);
   const [activeIndex, setActiveIndex] = useState(1); // Start on popular plan
-  const { isNative, availablePackages, isPurchasing, purchasePackage } = useRevenueCat(user?.id);
+  const { isNative, availablePackages, isPurchasing, purchasePackage, getPackageForPlan } =
+    useRevenueCat(user?.id);
 
   const plans = stripePriceData[billing];
 
@@ -109,9 +110,12 @@ const PlansList = ({ billing }: PlansListProps) => {
     }
   };
 
-  // Native IAP purchase handler
-  const handleNativePurchase = async () => {
-    if (!availablePackages.length) {
+  // Native IAP purchase handler — selects the correct package for the chosen plan
+  const handleNativePurchase = async (planId: string, planName: string) => {
+    // Try to find matching package for this specific plan
+    const pkg = getPackageForPlan(planId) || availablePackages[0];
+
+    if (!pkg) {
       toast({
         title: 'No packages available',
         description: 'Unable to load subscription packages. Please try again.',
@@ -120,14 +124,12 @@ const PlansList = ({ billing }: PlansListProps) => {
       return;
     }
 
-    // Use the first available package (monthly)
-    const pkg = availablePackages[0];
     const success = await purchasePackage(pkg);
 
     if (success) {
       toast({
         title: 'Subscription active',
-        description: 'Welcome to Elec-Mate Pro! All features are now unlocked.',
+        description: `Welcome to Elec-Mate ${planName}! All features are now unlocked.`,
       });
     }
   };
@@ -344,7 +346,9 @@ const PlansList = ({ billing }: PlansListProps) => {
                   )}
                   disabled={isCurrentPlan || isLoading[plan.id] || plan.coming || isPurchasing}
                   onClick={() =>
-                    isNative ? handleNativePurchase() : handleSubscribe(plan.id, plan.priceId)
+                    isNative
+                      ? handleNativePurchase(plan.id, plan.name)
+                      : handleSubscribe(plan.id, plan.priceId)
                   }
                 >
                   {isLoading[plan.id] ? (

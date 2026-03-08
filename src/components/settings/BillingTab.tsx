@@ -41,8 +41,12 @@ const itemVariants = {
   },
 };
 
+const STRIPE_BILLING_PORTAL_URL =
+  import.meta.env.VITE_STRIPE_BILLING_PORTAL_URL ||
+  'https://billing.stripe.com/p/login/test_8wM6pY7xJ4j2bks000';
+
 const BillingTab = () => {
-  const { isSubscribed, subscriptionTier, user } = useAuth();
+  const { isSubscribed, subscriptionTier, user, profile } = useAuth();
   const navigate = useNavigate();
   const { toast } = useToast();
   const isNative = Capacitor.isNativePlatform();
@@ -142,7 +146,15 @@ const BillingTab = () => {
               <Clock className="h-4 w-4 text-elec-yellow" />
               <span className="text-sm text-foreground/80">
                 Next billing date:{' '}
-                <span className="font-medium text-foreground">1st February 2026</span>
+                <span className="font-medium text-foreground">
+                  {profile?.subscription_end
+                    ? new Date(profile.subscription_end).toLocaleDateString('en-GB', {
+                        day: 'numeric',
+                        month: 'long',
+                        year: 'numeric',
+                      })
+                    : 'Check your subscription settings'}
+                </span>
               </span>
             </div>
           )}
@@ -253,9 +265,7 @@ const BillingTab = () => {
               /* On web — Stripe billing portal */
               <>
                 <button
-                  onClick={() =>
-                    window.open('https://billing.stripe.com/p/login/test_8wM6pY7xJ4j2bks000', '_blank')
-                  }
+                  onClick={() => window.open(STRIPE_BILLING_PORTAL_URL, '_blank')}
                   className="w-full flex items-center justify-between gap-4 p-4 rounded-xl bg-white/[0.03] hover:bg-white/[0.06] transition-all text-left touch-manipulation active:scale-[0.99]"
                 >
                   <div className="flex items-center gap-3">
@@ -271,9 +281,7 @@ const BillingTab = () => {
                 </button>
 
                 <button
-                  onClick={() =>
-                    window.open('https://billing.stripe.com/p/login/test_8wM6pY7xJ4j2bks000', '_blank')
-                  }
+                  onClick={() => window.open(STRIPE_BILLING_PORTAL_URL, '_blank')}
                   className="w-full flex items-center justify-between gap-4 p-4 rounded-xl bg-white/[0.03] hover:bg-white/[0.06] transition-all text-left touch-manipulation active:scale-[0.99]"
                 >
                   <div className="flex items-center gap-3">
@@ -282,7 +290,9 @@ const BillingTab = () => {
                     </div>
                     <div>
                       <p className="text-sm font-medium text-foreground">Payment Method</p>
-                      <p className="text-xs text-muted-foreground">Update card or billing details</p>
+                      <p className="text-xs text-muted-foreground">
+                        Update card or billing details
+                      </p>
                     </div>
                   </div>
                   <ExternalLink className="h-4 w-4 text-muted-foreground" />

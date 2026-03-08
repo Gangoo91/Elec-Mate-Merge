@@ -1,12 +1,12 @@
-import { Wrench } from 'lucide-react';
+import { Wrench, LayoutGrid, Hammer, Zap, Gauge, HardHat } from 'lucide-react';
 import UnifiedMarketplace from '@/components/marketplace/UnifiedMarketplace';
 
 const TOOLS_CATEGORIES = [
-  { name: 'All', slug: undefined },
-  { name: 'Hand Tools', slug: 'hand-tools' },
-  { name: 'Power Tools', slug: 'power-tools' },
-  { name: 'Test Equipment', slug: 'test-equipment' },
-  { name: 'PPE', slug: 'ppe' },
+  { name: 'All', slug: undefined, icon: LayoutGrid },
+  { name: 'Hand Tools', slug: 'hand-tools', icon: Hammer },
+  { name: 'Power Tools', slug: 'power-tools', icon: Zap },
+  { name: 'Test Equipment', slug: 'test-equipment', icon: Gauge },
+  { name: 'PPE', slug: 'ppe', icon: HardHat },
 ];
 
 export default function ToolsMarketplace() {
@@ -20,6 +20,7 @@ export default function ToolsMarketplace() {
       categories={TOOLS_CATEGORIES}
       supplierLabel="UK suppliers"
       dealsTitle="Deals of the Day"
+      listsPath="/electrician/tools/lists"
     />
   );
 }
