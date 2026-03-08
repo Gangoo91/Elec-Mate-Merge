@@ -11,7 +11,7 @@ import { queryClient } from '@/lib/queryClient';
 import ScrollToTop from '@/components/ScrollToTop';
 import { PWAUpdatePrompt } from '@/components/PWAUpdatePrompt';
 import { CookieConsent } from '@/components/CookieConsent';
-import { useNativeApp } from '@/hooks/useNativeApp';
+import { useNativeApp, useNativePushNotifications } from '@/hooks/useNativeApp';
 import { ActivityTracker } from '@/components/ActivityTracker';
 import { InAppBrowserDetector } from '@/components/InAppBrowserDetector';
 import { lazy, Suspense } from 'react';
@@ -29,6 +29,7 @@ const Analytics = lazy(() =>
 // Initialize native app features (Capacitor)
 function NativeAppInit({ children }: { children: React.ReactNode }) {
   useNativeApp();
+  useNativePushNotifications();
   return <>{children}</>;
 }
 

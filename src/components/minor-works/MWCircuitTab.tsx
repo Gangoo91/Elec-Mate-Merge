@@ -259,7 +259,7 @@ const MWCircuitTab: React.FC<MWCircuitTabProps> = ({ formData, onUpdate, isMobil
                   </SelectTrigger>
                   <SelectContent>
                     <SelectItem value="__clear__">
-                      <span className="text-muted-foreground">Clear selection</span>
+                      <span className="text-white">Clear selection</span>
                     </SelectItem>
                     {CIRCUIT_TYPES.map((opt) => (
                       <SelectItem key={opt.value} value={opt.value}>
@@ -302,7 +302,7 @@ const MWCircuitTab: React.FC<MWCircuitTabProps> = ({ formData, onUpdate, isMobil
                     </SelectTrigger>
                     <SelectContent>
                       <SelectItem value="__clear__">
-                        <span className="text-muted-foreground">Clear selection</span>
+                        <span className="text-white">Clear selection</span>
                       </SelectItem>
                       {BS_EN_STANDARDS.map((opt) => (
                         <SelectItem key={opt.value} value={opt.value}>
@@ -325,7 +325,7 @@ const MWCircuitTab: React.FC<MWCircuitTabProps> = ({ formData, onUpdate, isMobil
                     </SelectTrigger>
                     <SelectContent>
                       <SelectItem value="__clear__">
-                        <span className="text-muted-foreground">Clear selection</span>
+                        <span className="text-white">Clear selection</span>
                       </SelectItem>
                       {filteredDeviceTypes.map((opt) => (
                         <SelectItem key={opt.value} value={opt.value}>
@@ -336,7 +336,7 @@ const MWCircuitTab: React.FC<MWCircuitTabProps> = ({ formData, onUpdate, isMobil
                   </Select>
                   {formData.overcurrentDeviceBsEn &&
                     filteredDeviceTypes.length < PROTECTIVE_DEVICE_TYPES.length && (
-                      <p className="text-xs text-muted-foreground mt-1">
+                      <p className="text-xs text-white mt-1">
                         Filtered for {formData.overcurrentDeviceBsEn}
                       </p>
                     )}
@@ -356,7 +356,7 @@ const MWCircuitTab: React.FC<MWCircuitTabProps> = ({ formData, onUpdate, isMobil
                     </SelectTrigger>
                     <SelectContent>
                       <SelectItem value="__clear__">
-                        <span className="text-muted-foreground">Clear selection</span>
+                        <span className="text-white">Clear selection</span>
                       </SelectItem>
                       {filteredRatings.map((opt) => (
                         <SelectItem key={opt.value} value={opt.value}>
@@ -367,7 +367,7 @@ const MWCircuitTab: React.FC<MWCircuitTabProps> = ({ formData, onUpdate, isMobil
                   </Select>
                   {formData.protectiveDeviceType &&
                     filteredRatings.length < DEVICE_RATINGS.length && (
-                      <p className="text-xs text-muted-foreground mt-1">
+                      <p className="text-xs text-white mt-1">
                         BS 7671 ratings for{' '}
                         {PROTECTIVE_DEVICE_TYPES.find(
                           (d) => d.value === formData.protectiveDeviceType
@@ -388,7 +388,7 @@ const MWCircuitTab: React.FC<MWCircuitTabProps> = ({ formData, onUpdate, isMobil
                     </SelectTrigger>
                     <SelectContent>
                       <SelectItem value="__clear__">
-                        <span className="text-muted-foreground">Clear selection</span>
+                        <span className="text-white">Clear selection</span>
                       </SelectItem>
                       {filteredKaRatings.map((opt) => (
                         <SelectItem key={opt.value} value={opt.value}>
@@ -399,7 +399,7 @@ const MWCircuitTab: React.FC<MWCircuitTabProps> = ({ formData, onUpdate, isMobil
                   </Select>
                   {formData.protectiveDeviceType &&
                     filteredKaRatings.length < BREAKING_CAPACITIES.length && (
-                      <p className="text-xs text-muted-foreground mt-1">
+                      <p className="text-xs text-white mt-1">
                         Typical for{' '}
                         {PROTECTIVE_DEVICE_TYPES.find(
                           (d) => d.value === formData.protectiveDeviceType
@@ -457,7 +457,7 @@ const MWCircuitTab: React.FC<MWCircuitTabProps> = ({ formData, onUpdate, isMobil
                         </SelectTrigger>
                         <SelectContent>
                           <SelectItem value="__clear__">
-                            <span className="text-muted-foreground">Clear selection</span>
+                            <span className="text-white">Clear selection</span>
                           </SelectItem>
                           <SelectItem value="BS EN 61008">
                             <div className="flex flex-col">
@@ -496,7 +496,7 @@ const MWCircuitTab: React.FC<MWCircuitTabProps> = ({ formData, onUpdate, isMobil
                           </SelectTrigger>
                           <SelectContent>
                             <SelectItem value="__clear__">
-                              <span className="text-muted-foreground">Clear selection</span>
+                              <span className="text-white">Clear selection</span>
                             </SelectItem>
                             {RCD_TYPES.map((opt) => (
                               <SelectItem key={opt.value} value={opt.value}>
@@ -532,7 +532,7 @@ const MWCircuitTab: React.FC<MWCircuitTabProps> = ({ formData, onUpdate, isMobil
                         </SelectTrigger>
                         <SelectContent>
                           <SelectItem value="__clear__">
-                            <span className="text-muted-foreground">Clear selection</span>
+                            <span className="text-white">Clear selection</span>
                           </SelectItem>
                           {RCD_RATINGS.map((opt) => (
                             <SelectItem key={opt.value} value={opt.value}>
@@ -566,7 +566,7 @@ const MWCircuitTab: React.FC<MWCircuitTabProps> = ({ formData, onUpdate, isMobil
                         </SelectTrigger>
                         <SelectContent>
                           <SelectItem value="__clear__">
-                            <span className="text-muted-foreground">Clear selection</span>
+                            <span className="text-white">Clear selection</span>
                           </SelectItem>
                           <SelectItem value="BS EN 62606">
                             <div className="flex flex-col">
@@ -615,7 +615,7 @@ const MWCircuitTab: React.FC<MWCircuitTabProps> = ({ formData, onUpdate, isMobil
                         </SelectTrigger>
                         <SelectContent>
                           <SelectItem value="__clear__">
-                            <span className="text-muted-foreground">Clear selection</span>
+                            <span className="text-white">Clear selection</span>
                           </SelectItem>
                           <SelectItem value="BS EN 61643-11">
                             <div className="flex flex-col">
@@ -639,7 +639,7 @@ const MWCircuitTab: React.FC<MWCircuitTabProps> = ({ formData, onUpdate, isMobil
                         </SelectTrigger>
                         <SelectContent>
                           <SelectItem value="__clear__">
-                            <span className="text-muted-foreground">Clear selection</span>
+                            <span className="text-white">Clear selection</span>
                           </SelectItem>
                           <SelectItem value="1">
                             <div className="flex flex-col">
@@ -711,7 +711,7 @@ const MWCircuitTab: React.FC<MWCircuitTabProps> = ({ formData, onUpdate, isMobil
                     </SelectTrigger>
                     <SelectContent>
                       <SelectItem value="__clear__">
-                        <span className="text-muted-foreground">Clear selection</span>
+                        <span className="text-white">Clear selection</span>
                       </SelectItem>
                       <SelectItem value="2">2-core</SelectItem>
                       <SelectItem value="3">3-core</SelectItem>
@@ -733,7 +733,7 @@ const MWCircuitTab: React.FC<MWCircuitTabProps> = ({ formData, onUpdate, isMobil
                     </SelectTrigger>
                     <SelectContent>
                       <SelectItem value="__clear__">
-                        <span className="text-muted-foreground">Clear selection</span>
+                        <span className="text-white">Clear selection</span>
                       </SelectItem>
                       {CONDUCTOR_SIZES.map((opt) => (
                         <SelectItem key={opt.value} value={opt.value}>
@@ -754,7 +754,7 @@ const MWCircuitTab: React.FC<MWCircuitTabProps> = ({ formData, onUpdate, isMobil
                     </SelectTrigger>
                     <SelectContent>
                       <SelectItem value="__clear__">
-                        <span className="text-muted-foreground">Clear selection</span>
+                        <span className="text-white">Clear selection</span>
                       </SelectItem>
                       {filteredCpcSizes.map((opt) => (
                         <SelectItem key={opt.value} value={opt.value}>
@@ -764,7 +764,7 @@ const MWCircuitTab: React.FC<MWCircuitTabProps> = ({ formData, onUpdate, isMobil
                     </SelectContent>
                   </Select>
                   {formData.liveConductorSize && parseFloat(formData.liveConductorSize) > 16 && (
-                    <p className="text-xs text-muted-foreground mt-1">
+                    <p className="text-xs text-white mt-1">
                       Sizes shown up to {formData.liveConductorSize}mm² (per BS 7671)
                     </p>
                   )}
@@ -780,7 +780,7 @@ const MWCircuitTab: React.FC<MWCircuitTabProps> = ({ formData, onUpdate, isMobil
                     </SelectTrigger>
                     <SelectContent>
                       <SelectItem value="__clear__">
-                        <span className="text-muted-foreground">Clear selection</span>
+                        <span className="text-white">Clear selection</span>
                       </SelectItem>
                       {CABLE_TYPES.map((opt) => (
                         <SelectItem key={opt.value} value={opt.value}>
@@ -804,7 +804,7 @@ const MWCircuitTab: React.FC<MWCircuitTabProps> = ({ formData, onUpdate, isMobil
                     </SelectTrigger>
                     <SelectContent>
                       <SelectItem value="__clear__">
-                        <span className="text-muted-foreground">Clear selection</span>
+                        <span className="text-white">Clear selection</span>
                       </SelectItem>
                       {INSTALLATION_METHODS.map((opt) => (
                         <SelectItem key={opt.value} value={opt.value}>
@@ -825,7 +825,7 @@ const MWCircuitTab: React.FC<MWCircuitTabProps> = ({ formData, onUpdate, isMobil
                     </SelectTrigger>
                     <SelectContent>
                       <SelectItem value="__clear__">
-                        <span className="text-muted-foreground">Clear selection</span>
+                        <span className="text-white">Clear selection</span>
                       </SelectItem>
                       {REFERENCE_METHODS.map((opt) => (
                         <SelectItem key={opt.value} value={opt.value}>
@@ -840,7 +840,7 @@ const MWCircuitTab: React.FC<MWCircuitTabProps> = ({ formData, onUpdate, isMobil
                     </SelectContent>
                   </Select>
                   {formData.referenceMethod && (
-                    <p className="text-xs text-muted-foreground mt-1">
+                    <p className="text-xs text-white mt-1">
                       {
                         REFERENCE_METHODS.find((r) => r.value === formData.referenceMethod)
                           ?.description

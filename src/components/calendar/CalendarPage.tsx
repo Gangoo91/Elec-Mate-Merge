@@ -1,5 +1,5 @@
-import { useState, useCallback, useMemo } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useState, useCallback, useMemo, useEffect } from 'react';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import {
   addMonths,
   subMonths,
@@ -28,6 +28,7 @@ import {
   useDeleteCalendarEvent,
 } from '@/hooks/useCalendarEvents';
 import { useGoogleCalendarSync } from '@/hooks/useGoogleCalendarSync';
+import { toast } from '@/hooks/use-toast';
 import { useCalendarSettings } from '@/hooks/useCalendarSettings';
 import { useTasksForCalendar } from '@/hooks/useTasksForCalendar';
 import type {
@@ -39,6 +40,7 @@ import type {
 
 const CalendarPageContent = () => {
   const navigate = useNavigate();
+  const [searchParams, setSearchParams] = useSearchParams();
   const { settings, setDefaultView, setWorkingHours, setDefaultReminder } = useCalendarSettings();
   const [currentDate, setCurrentDate] = useState(new Date());
   const [view, setView] = useState<CalendarView>(settings.defaultView);
@@ -55,6 +57,28 @@ const CalendarPageContent = () => {
 
   // Google sync
   const googleSync = useGoogleCalendarSync();
+
+  // Handle OAuth callback redirect
+  useEffect(() => {
+    const connected = searchParams.get('google_connected');
+    const email = searchParams.get('email');
+    const error = searchParams.get('google_error');
+
+    if (connected === 'true') {
+      toast({
+        title: `Google Calendar connected${email ? ` (${email})` : ''}`,
+        variant: 'success',
+      });
+      searchParams.delete('google_connected');
+      searchParams.delete('email');
+      setSearchParams(searchParams, { replace: true });
+      googleSync.refetch?.();
+    } else if (error) {
+      toast({ title: `Calendar connection failed: ${error}`, variant: 'destructive' });
+      searchParams.delete('google_error');
+      setSearchParams(searchParams, { replace: true });
+    }
+  }, []);
 
   // Compute query date range based on view
   const { dateFrom, dateTo } = useMemo(() => {

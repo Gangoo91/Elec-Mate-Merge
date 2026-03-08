@@ -1,14 +1,49 @@
 import UIKit
 import Capacitor
+import UserNotifications
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate {
 
     var window: UIWindow?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
+        // Set ourselves as the notification centre delegate so we control
+        // how notifications are presented when the app is in the foreground.
+        UNUserNotificationCenter.current().delegate = self
         return true
+    }
+
+    // MARK: - Push Notification Forwarding
+
+    func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
+        NotificationCenter.default.post(name: .capacitorDidRegisterForRemoteNotifications, object: deviceToken)
+    }
+
+    func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
+        NotificationCenter.default.post(name: .capacitorDidFailToRegisterForRemoteNotifications, object: error)
+    }
+
+    // MARK: - Foreground Notification Presentation
+
+    func userNotificationCenter(_ center: UNUserNotificationCenter,
+                                willPresent notification: UNNotification,
+                                withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+        // Always show banner, badge, and sound even when the app is in the foreground
+        if #available(iOS 14.0, *) {
+            completionHandler([.banner, .badge, .sound, .list])
+        } else {
+            completionHandler([.alert, .badge, .sound])
+        }
+    }
+
+    func userNotificationCenter(_ center: UNUserNotificationCenter,
+                                didReceive response: UNNotificationResponse,
+                                withCompletionHandler completionHandler: @escaping () -> Void) {
+        // Let Capacitor handle the notification tap
+        NotificationCenter.default.post(name: Notification.Name("capacitorDidReceiveRemoteNotification"),
+                                        object: response.notification.request.content.userInfo)
+        completionHandler()
     }
 
     func applicationWillResignActive(_ application: UIApplication) {

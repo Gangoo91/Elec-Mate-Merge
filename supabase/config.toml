@@ -48,6 +48,10 @@ verify_jwt = false
 [functions.cancel-installation-method-job]
 verify_jwt = true
 
+# Calendar OAuth callback — Google redirects here with no auth header
+[functions.calendar-oauth-callback]
+verify_jwt = false
+
 # Commissioning & Testing Specialist V3
 [functions.commissioning-v3]
 verify_jwt = false

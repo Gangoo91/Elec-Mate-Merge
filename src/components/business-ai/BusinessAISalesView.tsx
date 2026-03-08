@@ -3,7 +3,6 @@ import { Link, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import {
   ArrowLeft,
-  ArrowRight,
   MessageSquare,
   Receipt,
   FileText,
@@ -23,205 +22,129 @@ import {
   Loader2,
   Shield,
   Banknote,
+  Phone,
+  Check,
+  Star,
+  Quote,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/components/ui/use-toast';
 import { useAuth } from '@/contexts/AuthContext';
 import { supabase } from '@/integrations/supabase/client';
 
-const containerVariants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: { staggerChildren: 0.06, delayChildren: 0 },
-  },
-};
-
-const itemVariants = {
-  hidden: { opacity: 0, y: 12 },
+/* ── animation ── */
+const fade = {
+  hidden: { opacity: 0, y: 20 },
   visible: {
     opacity: 1,
     y: 0,
-    transition: { duration: 0.3, ease: 'easeOut' },
+    transition: { duration: 0.4, ease: 'easeOut' },
   },
 };
 
-const bubbleVariants = {
-  hidden: { opacity: 0, x: -8, scale: 0.97 },
-  visible: (i: number) => ({
+const stagger = {
+  hidden: { opacity: 0 },
+  visible: {
     opacity: 1,
-    x: 0,
-    scale: 1,
-    transition: { duration: 0.28, ease: 'easeOut', delay: i * 0.07 },
-  }),
+    transition: { staggerChildren: 0.05 },
+  },
 };
 
-const dayMoments = [
+const childFade = {
+  hidden: { opacity: 0, y: 12 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.3 } },
+};
+
+/* ── data ── */
+const chatPreview = [
   {
-    time: '7:00 AM',
-    label: 'Morning briefing',
-    message:
-      "Morning! You've got 3 jobs today. Mrs Chen's EICR is due, and that quote for the Hendersons is still outstanding. Want me to chase it?",
+    from: 'mate' as const,
+    text: 'Morning! 3 jobs today. Henderson quote is outstanding — want me to chase it?',
     icon: BellRing,
-    interaction: {
-      userReply: 'Yes',
-      mateFollowUp:
-        "Done — chased Henderson, sent a polite reminder. I'll follow up tomorrow if no reply.",
-    },
   },
+  { from: 'user' as const, text: 'Yes please' },
   {
-    time: '9:30 AM',
-    label: 'On site',
-    message:
-      "B32 RCBO on TN-C-S — max Zs is 1.37Ω. That's from the Zs tables (0.95 × 230 ÷ 160A), BS 7671 App 3, 0.4s disconnection. Here's the full table if you need it.",
-    icon: BookOpen,
+    from: 'mate' as const,
+    text: "Done — sent a polite reminder. I'll follow up tomorrow if no reply.",
+    icon: Zap,
   },
+];
+
+const stats = [
+  { value: '80', label: 'Tools' },
+  { value: '24/7', label: 'Available' },
+  { value: '1', label: 'WhatsApp chat' },
+];
+
+const features = [
   {
-    time: '12:15 PM',
-    label: 'New enquiry',
-    message:
-      "New lead from your website — David Walsh needs a full rewire in Chorlton. I've replied to confirm you'll get back to him today. Want me to draft a quote?",
-    icon: MessageSquare,
-  },
-  {
-    time: '3:45 PM',
-    label: 'Invoice chasing',
-    message:
-      "Heads up — that £2,400 invoice to Parker & Sons is 14 days overdue. I've sent a polite follow-up. Want me to call them tomorrow if there's no response?",
     icon: Receipt,
+    title: 'Invoicing & Quoting',
+    desc: 'Draft, send, chase and track — all from a text message',
+    colour: 'amber',
   },
   {
-    time: '5:30 PM',
-    label: 'End of day',
-    message:
-      "Jobs logged, timesheets updated. Mrs Chen's EICR filed. Tomorrow you've got the Henderson rewire starting at 8. Have a good evening!",
-    icon: CheckCircle,
+    icon: BookOpen,
+    title: 'BS 7671 on Tap',
+    desc: 'Zs tables, cable ratings, disconnection times — instant answers on site',
+    colour: 'blue',
+  },
+  {
+    icon: Users,
+    title: 'Client Management',
+    desc: 'CRM, job history, notes and follow-ups without opening an app',
+    colour: 'green',
+  },
+  {
+    icon: ClipboardCheck,
+    title: 'Certificates',
+    desc: 'EICR, EIC, minor works — filed, generated and delivered',
+    colour: 'purple',
+  },
+  {
+    icon: ListTodo,
+    title: 'Projects & Scheduling',
+    desc: 'Create jobs, assign tasks, set reminders — Mate keeps you on track',
+    colour: 'orange',
+  },
+  {
+    icon: BarChart3,
+    title: 'Business Analytics',
+    desc: 'Revenue, outstanding invoices, job profitability at a glance',
+    colour: 'cyan',
   },
 ];
 
-const pipelineSteps = [
-  { icon: Users, label: 'Lead', desc: 'Captured & replied', tools: 5 },
-  { icon: FileText, label: 'Quote', desc: 'Drafted & sent', tools: 7 },
-  { icon: ListTodo, label: 'Job', desc: 'Scheduled & tracked', tools: 10 },
-  { icon: ClipboardCheck, label: 'Cert', desc: 'Filed & delivered', tools: 5 },
-  { icon: Receipt, label: 'Invoice', desc: 'Raised & chased', tools: 6 },
-  { icon: Banknote, label: 'Paid', desc: 'Tracked & logged', tools: 4 },
-];
+const featureColours: Record<string, { icon: string; bg: string; border: string }> = {
+  amber: { icon: 'text-amber-400', bg: 'bg-amber-500/10', border: 'border-amber-500/20' },
+  blue: { icon: 'text-blue-400', bg: 'bg-blue-500/10', border: 'border-blue-500/20' },
+  green: { icon: 'text-green-400', bg: 'bg-green-500/10', border: 'border-green-500/20' },
+  purple: { icon: 'text-purple-400', bg: 'bg-purple-500/10', border: 'border-purple-500/20' },
+  orange: { icon: 'text-orange-400', bg: 'bg-orange-500/10', border: 'border-orange-500/20' },
+  cyan: { icon: 'text-cyan-400', bg: 'bg-cyan-500/10', border: 'border-cyan-500/20' },
+};
 
-const capabilityGroups = [
-  {
-    title: 'Running Your Business',
-    cards: [
-      {
-        icon: Receipt,
-        title: 'Invoicing',
-        tools: 6,
-        examples: 'Create · send · chase · track payments · overdue alerts · statements',
-      },
-      {
-        icon: FileText,
-        title: 'Quoting',
-        tools: 7,
-        examples: 'Draft · price · send · follow up · convert to job · templates',
-      },
-      {
-        icon: BarChart3,
-        title: 'Analytics',
-        tools: 4,
-        examples: 'Revenue · outstanding · job profit · monthly summary',
-      },
-      {
-        icon: Calculator,
-        title: 'Expenses',
-        tools: 3,
-        examples: 'Log receipts · mileage · material costs',
-      },
-    ],
-  },
-  {
-    title: 'On Site',
-    cards: [
-      {
-        icon: BookOpen,
-        title: 'Knowledge Base',
-        tools: 6,
-        examples: 'BS 7671 · Zs tables · cable ratings · inspection guidance · GN3',
-      },
-      {
-        icon: ShieldCheck,
-        title: 'RAMS & Compliance',
-        tools: 4,
-        examples: 'Risk assessments · method statements · site safety',
-      },
-      {
-        icon: ClipboardCheck,
-        title: 'Certificates',
-        tools: 5,
-        examples: 'EICR · EIC · minor works · delivery · PDF generation',
-      },
-    ],
-  },
-  {
-    title: 'Your Clients',
-    cards: [
-      {
-        icon: Users,
-        title: 'Clients',
-        tools: 4,
-        examples: 'Add · search · notes · job history',
-      },
-      {
-        icon: MessageSquare,
-        title: 'Messaging',
-        tools: 2,
-        examples: 'WhatsApp replies · appointment confirmations',
-      },
-      {
-        icon: Mail,
-        title: 'Email & Leads',
-        tools: 5,
-        examples: 'Gmail monitor · lead capture · auto-reply · follow-up',
-      },
-    ],
-  },
-  {
-    title: 'Back Office',
-    cards: [
-      {
-        icon: ListTodo,
-        title: 'Projects & Tasks',
-        tools: 10,
-        examples: 'Create · assign · schedule · track · complete · archive',
-      },
-      {
-        icon: Calendar,
-        title: 'Calendar',
-        tools: 3,
-        examples: 'Schedule · reminders · availability',
-      },
-      {
-        icon: FileDown,
-        title: 'Documents',
-        tools: 2,
-        examples: 'Generate PDFs · file storage',
-      },
-    ],
-  },
-];
+const pipeline = ['Lead', 'Quote', 'Job', 'Cert', 'Invoice', 'Paid'];
 
 const trustPoints = [
-  'Invoices drafted but never sent without approval',
-  'Quotes reviewed by you before going to clients',
-  'Messages composed then held for your OK to send',
-  'Payments tracked but never initiated without you',
+  'Invoices drafted but never sent without your say-so',
+  'Quotes reviewed by you before clients see them',
+  'Messages held for your OK before sending',
+  'Payments tracked — never initiated without you',
 ];
 
-const howItWorksSteps = [
-  { step: '1', text: 'Subscribe to Business AI' },
-  { step: '2', text: 'Connect your WhatsApp number' },
-  { step: '3', text: "Start texting Mate — that's it" },
+const included = [
+  'All 80 business tools',
+  'WhatsApp access 24/7',
+  'BS 7671 knowledge base',
+  'Invoice & quote management',
+  'Client CRM',
+  'Certificate filing & delivery',
+  'RAMS & compliance tools',
+  'Everything in the Electrician plan',
 ];
 
+/* ── component ── */
 export function BusinessAISalesView() {
   const [loading, setLoading] = useState(false);
   const [waitlistJoined, setWaitlistJoined] = useState(false);
@@ -257,27 +180,54 @@ export function BusinessAISalesView() {
       if (error && error.code !== '23505') throw error;
       setWaitlistJoined(true);
       toast({
-        title: "You're on the list! ⚡",
-        description: "We'll be in touch as soon as Elec-AI is ready for you.",
+        title: "You're on the list!",
+        description: "We'll be in touch as soon as Mate is ready for you.",
+        variant: 'success',
       });
     } catch (err) {
       console.error('Waitlist error:', err);
-      toast({ title: 'Something went wrong', description: 'Please try again.', variant: 'destructive' });
+      toast({
+        title: 'Something went wrong',
+        description: 'Please try again.',
+        variant: 'destructive',
+      });
     } finally {
       setLoading(false);
     }
   };
 
+  const CtaButton = () =>
+    waitlistJoined ? (
+      <div className="flex items-center justify-center gap-2.5 py-4 rounded-2xl bg-green-500/10 border border-green-500/25">
+        <CheckCircle className="h-5 w-5 text-green-400 shrink-0" />
+        <span className="text-sm font-bold text-green-400">You're on the waitlist!</span>
+      </div>
+    ) : (
+      <Button
+        onClick={handleJoinWaitlist}
+        disabled={loading}
+        className="w-full touch-manipulation font-bold text-[15px] rounded-2xl bg-amber-500 hover:bg-amber-400 active:bg-amber-600 active:scale-[0.98] text-black shadow-lg shadow-amber-500/25 transition-all"
+        style={{ height: 56 }}
+      >
+        {loading ? (
+          <span className="flex items-center gap-2">
+            <Loader2 className="h-5 w-5 animate-spin" />
+            One sec...
+          </span>
+        ) : (
+          <span className="flex items-center gap-2">
+            <Zap className="h-5 w-5" />
+            Join the Waitlist — Free
+          </span>
+        )}
+      </Button>
+    );
+
   return (
     <div className="min-h-screen bg-background">
-      <motion.div
-        variants={containerVariants}
-        initial="hidden"
-        animate="visible"
-        className="max-w-lg mx-auto pb-28"
-      >
-        {/* ── Back ── */}
-        <motion.div variants={itemVariants} className="px-4 pt-4 pb-2">
+      <div className="max-w-lg mx-auto pb-32">
+        {/* ── Nav ── */}
+        <div className="px-4 pt-4 pb-2">
           <Link to="/electrician">
             <Button
               variant="ghost"
@@ -287,366 +237,413 @@ export function BusinessAISalesView() {
               Back
             </Button>
           </Link>
-        </motion.div>
+        </div>
 
-        {/* ── 1. Hero ── */}
-        <motion.div variants={itemVariants} className="px-4 pb-8">
+        {/* ════════════════════════════════════════════
+            1. HERO — full bleed amber gradient
+        ════════════════════════════════════════════ */}
+        <motion.section variants={fade} initial="hidden" animate="visible" className="px-4 pb-12">
           <div className="relative overflow-hidden rounded-3xl">
-            <div className="absolute inset-0 bg-gradient-to-br from-amber-500/20 via-yellow-500/10 to-transparent" />
-            <div className="absolute -top-16 -right-16 w-48 h-48 bg-amber-400/[0.12] blur-3xl rounded-full pointer-events-none" />
-            <div className="absolute -bottom-10 -left-10 w-36 h-36 bg-yellow-500/[0.08] blur-3xl rounded-full pointer-events-none" />
+            {/* Background */}
+            <div className="absolute inset-0 bg-gradient-to-b from-amber-500/25 via-amber-500/8 to-transparent" />
+            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[300px] h-[300px] bg-amber-400/15 blur-[100px] rounded-full pointer-events-none" />
 
-            <div className="relative px-5 pt-7 pb-6 text-center space-y-4">
-              {/* Icon + badge row */}
-              <div className="flex items-center justify-between">
-                <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-amber-500/15 border border-amber-500/30">
-                  <Zap className="h-3 w-3 text-amber-400 shrink-0" />
-                  <span className="text-xs font-semibold text-amber-400">
-                    80 tools. One WhatsApp number.
-                  </span>
+            <div className="relative px-5 pt-10 pb-8 space-y-6">
+              {/* Logo */}
+              <div className="flex items-center gap-3">
+                <div className="w-14 h-14 rounded-2xl bg-amber-500 flex items-center justify-center shrink-0 shadow-xl shadow-amber-500/30">
+                  <Zap className="h-7 w-7 text-black" />
                 </div>
-                <div className="w-12 h-12 rounded-2xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center shrink-0">
-                  <Zap className="h-6 w-6 text-amber-400" />
+                <div>
+                  <div className="text-xl font-extrabold text-white leading-none">Mate</div>
+                  <div className="text-xs text-amber-400 font-semibold mt-0.5">by Elec-Mate</div>
                 </div>
               </div>
 
               {/* Headline */}
-              <div className="space-y-1 pt-1 text-left">
-                <h1 className="text-[28px] font-bold text-white leading-tight tracking-tight">
-                  Stay on the tools.
+              <div className="space-y-3">
+                <h1 className="text-[34px] font-extrabold leading-[1.08] tracking-tight">
+                  <span className="text-white">Stay on the tools.</span>
+                  <br />
+                  <span className="bg-gradient-to-r from-amber-300 via-yellow-200 to-amber-300 bg-clip-text text-transparent">
+                    Let Mate run the office.
+                  </span>
                 </h1>
-                <h1 className="text-[28px] font-bold leading-tight tracking-tight bg-gradient-to-r from-amber-400 via-yellow-300 to-amber-400 bg-clip-text text-transparent">
-                  Let Mate run the office.
-                </h1>
+                <p className="text-[15px] text-white leading-relaxed">
+                  Your AI business assistant — right inside WhatsApp. Invoicing, scheduling, regs,
+                  client comms. All from one chat.
+                </p>
               </div>
 
-              {/* Subheadline */}
-              <p className="text-sm text-white text-left leading-relaxed">
-                Your business assistant on WhatsApp. Handles invoicing, scheduling, client comms
-                and regs — so you never stop what you're doing.
-              </p>
-
-              {/* Social proof */}
-              <div className="flex items-center gap-2 pt-1">
-                <div className="flex -space-x-1">
-                  {['#f59e0b', '#10b981', '#3b82f6', '#8b5cf6'].map((color, i) => (
-                    <div
-                      key={i}
-                      className="w-5 h-5 rounded-full border-2 border-black/60 shrink-0"
-                      style={{ backgroundColor: color }}
-                    />
-                  ))}
-                </div>
-                <p className="text-xs text-white">Built by electricians, for electricians</p>
+              {/* Stats row */}
+              <div className="flex items-center gap-3">
+                {stats.map(({ value, label }) => (
+                  <div
+                    key={label}
+                    className="flex-1 py-3 px-3 rounded-2xl bg-black/30 border border-white/[0.06]"
+                  >
+                    <div className="text-xl font-extrabold text-amber-400">{value}</div>
+                    <div className="text-[11px] text-white font-medium mt-0.5">{label}</div>
+                  </div>
+                ))}
               </div>
+
+              {/* CTA */}
+              <CtaButton />
             </div>
           </div>
-        </motion.div>
+        </motion.section>
 
-        {/* ── 2. A Day with Mate ── */}
-        <motion.div variants={itemVariants} className="px-4 pb-8 space-y-3">
-          <h2 className="text-base font-semibold text-white flex items-center gap-2">
-            <div className="h-2 w-2 rounded-full bg-amber-400 shrink-0" />
-            A Day with Mate
-          </h2>
+        {/* ════════════════════════════════════════════
+            2. WHATSAPP PREVIEW — mini chat
+        ════════════════════════════════════════════ */}
+        <motion.section
+          variants={fade}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.3 }}
+          className="px-4 pb-12"
+        >
+          <div className="mb-5 space-y-2">
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-green-500/10 border border-green-500/20">
+              <Phone className="h-3.5 w-3.5 text-green-400" />
+              <span className="text-xs font-bold text-green-400">Works on WhatsApp</span>
+            </div>
+            <h2 className="text-xl font-extrabold text-white">Just text. Mate handles the rest.</h2>
+          </div>
 
           <div
-            className="rounded-2xl overflow-hidden border border-white/[0.06]"
-            style={{ background: 'linear-gradient(180deg, #0b1612 0%, #0e1a14 100%)' }}
+            className="rounded-2xl overflow-hidden border border-green-500/15"
+            style={{ background: '#0b1612' }}
           >
-            {/* Chat header */}
-            <div className="flex items-center gap-3 px-4 py-3 border-b border-white/[0.06]" style={{ background: '#1a2b20' }}>
-              <div className="w-9 h-9 rounded-full bg-amber-500 flex items-center justify-center shrink-0">
-                <Zap className="h-[18px] w-[18px] text-black" />
+            {/* Header */}
+            <div className="flex items-center gap-3 px-4 py-2.5" style={{ background: '#1a2b20' }}>
+              <div className="w-8 h-8 rounded-full bg-amber-500 flex items-center justify-center shrink-0">
+                <Zap className="h-4 w-4 text-black" />
               </div>
-              <div className="flex-1 min-w-0">
-                <div className="text-sm font-semibold text-white">Mate ⚡</div>
-                <div className="flex items-center gap-1.5">
-                  <div className="w-1.5 h-1.5 rounded-full bg-green-400 shrink-0" />
-                  <span className="text-[11px] text-green-400">Online</span>
+              <div>
+                <div className="text-sm font-bold text-white leading-none">Mate</div>
+                <div className="flex items-center gap-1 mt-0.5">
+                  <div className="w-1.5 h-1.5 rounded-full bg-green-400" />
+                  <span className="text-[10px] text-green-400">Online</span>
                 </div>
               </div>
             </div>
 
-            {/* Messages */}
-            <div className="px-3 py-4 space-y-4">
-              {dayMoments.map(({ time, label, message, icon: Icon, interaction }, i) => (
-                <motion.div key={i} custom={i} variants={bubbleVariants}>
-                  {/* Time label */}
-                  <div className="flex justify-center mb-2">
-                    <span className="text-[10px] text-white/50 bg-white/[0.04] px-2.5 py-0.5 rounded-full">
-                      {time} · {label}
-                    </span>
-                  </div>
-
-                  {/* Mate bubble */}
-                  <div className="flex items-start gap-2" style={{ maxWidth: '88%' }}>
-                    <div className="shrink-0 w-7 h-7 rounded-full bg-amber-500 flex items-center justify-center mt-0.5">
-                      <Icon className="h-[13px] w-[13px] text-black" />
-                    </div>
-                    <div className="flex-1 min-w-0">
+            {/* Bubbles */}
+            <motion.div
+              variants={stagger}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              className="px-3 py-3 space-y-2"
+            >
+              {chatPreview.map((msg, i) => (
+                <motion.div key={i} variants={childFade}>
+                  {msg.from === 'mate' ? (
+                    <div className="flex items-start gap-2 max-w-[85%]">
+                      <div className="shrink-0 w-6 h-6 rounded-full bg-amber-500 flex items-center justify-center mt-0.5">
+                        {msg.icon && <msg.icon className="h-3 w-3 text-black" />}
+                      </div>
                       <div
-                        className="rounded-[18px] rounded-tl-[4px] px-3.5 py-2.5"
-                        style={{ background: '#1f2d22', border: '1px solid rgba(255,255,255,0.06)' }}
+                        className="rounded-2xl rounded-tl-md px-3 py-2"
+                        style={{
+                          background: '#1f2d22',
+                          border: '1px solid rgba(255,255,255,0.06)',
+                        }}
                       >
-                        <p className="text-sm text-white leading-relaxed text-left">{message}</p>
-                      </div>
-                      <div className="flex items-center gap-1 mt-1 px-1">
-                        <span className="text-[10px] text-white/40">{time}</span>
-                        <CheckCircle className="h-[10px] w-[10px] text-amber-400/70" />
+                        <p className="text-[13px] text-white leading-relaxed">{msg.text}</p>
                       </div>
                     </div>
-                  </div>
-
-                  {/* Interaction */}
-                  {interaction && (
-                    <div className="mt-3 space-y-3">
-                      <div className="flex items-center justify-center gap-3">
-                        <div className="px-5 py-2 rounded-full border border-amber-500/40 text-sm font-medium text-amber-400 bg-amber-500/[0.08]">
-                          Yes
-                        </div>
-                        <div className="px-5 py-2 rounded-full border border-white/[0.12] text-sm font-medium text-white bg-white/[0.04]">
-                          No
-                        </div>
-                      </div>
-                      {/* User reply */}
-                      <div className="flex justify-end">
-                        <div style={{ maxWidth: '88%' }}>
-                          <div className="rounded-[18px] rounded-tr-[4px] px-3.5 py-2.5" style={{ background: '#005c4b' }}>
-                            <p className="text-sm text-white">{interaction.userReply}</p>
-                          </div>
-                          <div className="flex items-center justify-end gap-1 mt-1 px-1">
-                            <span className="text-[10px] text-white/40">7:01 AM</span>
-                            <CheckCircle className="h-[10px] w-[10px] text-blue-400/70" />
-                          </div>
-                        </div>
-                      </div>
-                      {/* Follow-up */}
-                      <div className="flex items-start gap-2" style={{ maxWidth: '88%' }}>
-                        <div className="shrink-0 w-7 h-7 rounded-full bg-amber-500 flex items-center justify-center mt-0.5">
-                          <Zap className="h-[13px] w-[13px] text-black" />
-                        </div>
-                        <div className="flex-1 min-w-0">
-                          <div
-                            className="rounded-[18px] rounded-tl-[4px] px-3.5 py-2.5"
-                            style={{ background: '#1f2d22', border: '1px solid rgba(255,255,255,0.06)' }}
-                          >
-                            <p className="text-sm text-white leading-relaxed text-left">{interaction.mateFollowUp}</p>
-                          </div>
-                          <div className="flex items-center gap-1 mt-1 px-1">
-                            <span className="text-[10px] text-white/40">7:01 AM</span>
-                            <CheckCircle className="h-[10px] w-[10px] text-amber-400/70" />
-                          </div>
-                        </div>
+                  ) : (
+                    <div className="flex justify-end">
+                      <div
+                        className="rounded-2xl rounded-tr-md px-3 py-2 max-w-[70%]"
+                        style={{ background: '#005c4b' }}
+                      >
+                        <p className="text-[13px] text-white">{msg.text}</p>
                       </div>
                     </div>
                   )}
                 </motion.div>
               ))}
-            </div>
+            </motion.div>
 
-            {/* Input bar */}
-            <div className="flex items-center gap-2.5 px-3 py-2.5 border-t border-white/[0.06]" style={{ background: '#111c14' }}>
-              <div className="flex-1 h-9 rounded-full bg-white/[0.06] flex items-center px-4">
-                <span className="text-xs text-white/40">Message Mate...</span>
+            {/* Input */}
+            <div
+              className="flex items-center gap-2 px-3 py-2 border-t border-white/[0.06]"
+              style={{ background: '#111c14' }}
+            >
+              <div className="flex-1 h-8 rounded-full bg-white/[0.05] flex items-center px-3">
+                <span className="text-[11px] text-white/30">Message Mate...</span>
               </div>
-              <div className="w-9 h-9 rounded-full bg-amber-500 flex items-center justify-center shrink-0">
-                <Zap className="h-4 w-4 text-black" />
+              <div className="w-8 h-8 rounded-full bg-amber-500 flex items-center justify-center shrink-0">
+                <Zap className="h-3.5 w-3.5 text-black" />
               </div>
             </div>
           </div>
-        </motion.div>
+        </motion.section>
 
-        {/* ── 3. The Pipeline ── */}
-        <motion.div variants={itemVariants} className="pb-8 space-y-3">
-          <h2 className="text-base font-semibold text-white flex items-center gap-2 px-4">
-            <div className="h-2 w-2 rounded-full bg-amber-400 shrink-0" />
-            The Pipeline
-          </h2>
-
-          {/* Horizontal scroll — padded so first/last card shows edge fade */}
-          <div className="relative">
-            <div className="overflow-x-auto pb-2 scrollbar-hide" style={{ WebkitOverflowScrolling: 'touch' }}>
-              <div className="flex items-start gap-1 px-4 min-w-max">
-                {pipelineSteps.map(({ icon: Icon, label, desc, tools }, i) => (
-                  <React.Fragment key={label}>
-                    <div className="flex flex-col items-center text-center w-[82px] shrink-0 pt-1 pb-2">
-                      {/* Icon */}
-                      <div className="w-12 h-12 rounded-2xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center mb-2 shrink-0">
-                        <Icon className="h-5 w-5 text-amber-400" />
-                      </div>
-                      {/* Label — fixed height */}
-                      <span className="text-xs font-bold text-white leading-tight h-[16px] flex items-center">{label}</span>
-                      {/* Desc — fixed height so badges stay level across all cards */}
-                      <span className="text-[10px] text-white mt-0.5 leading-tight px-1 h-[28px] flex items-center text-center">{desc}</span>
-                      {/* Badge — own line, always at same vertical position */}
-                      <div className="mt-2 px-2 py-0.5 rounded-full bg-amber-500/10 border border-amber-500/20">
-                        <span className="text-[10px] font-semibold text-amber-400 whitespace-nowrap">
-                          {tools} tools
-                        </span>
-                      </div>
-                    </div>
-                    {i < pipelineSteps.length - 1 && (
-                      <div className="flex items-start pt-4 shrink-0">
-                        <ArrowRight className="h-4 w-4 text-amber-400/60" />
-                      </div>
-                    )}
-                  </React.Fragment>
-                ))}
-              </div>
-            </div>
-            {/* Right fade */}
-            <div className="absolute top-0 right-0 bottom-2 w-8 bg-gradient-to-l from-background to-transparent pointer-events-none" />
+        {/* ════════════════════════════════════════════
+            3. PIPELINE — linear flow
+        ════════════════════════════════════════════ */}
+        <motion.section
+          variants={fade}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.3 }}
+          className="px-4 pb-12"
+        >
+          <div className="mb-5 space-y-1">
+            <h2 className="text-xl font-extrabold text-white">Lead to Paid. Automated.</h2>
+            <p className="text-sm text-white">Mate handles every stage of the job</p>
           </div>
 
-          <p className="text-xs text-white text-center px-4">
-            80 tools working behind one WhatsApp chat
-          </p>
-        </motion.div>
-
-        {/* ── 4. Everything Mate Handles ── */}
-        <motion.div variants={itemVariants} className="px-4 pb-8 space-y-5">
-          <h2 className="text-base font-semibold text-white flex items-center gap-2">
-            <div className="h-2 w-2 rounded-full bg-amber-400 shrink-0" />
-            Everything Mate Handles
-          </h2>
-
-          {capabilityGroups.map(({ title, cards }) => (
-            <div key={title} className="space-y-2">
-              <h3 className="text-xs font-bold text-amber-400 uppercase tracking-wider px-0.5">{title}</h3>
-              <div className="grid grid-cols-2 gap-2">
-                {cards.map(({ icon: Icon, title: cardTitle, tools, examples }, i) => (
-                  <motion.div
-                    key={cardTitle}
-                    custom={i}
-                    variants={bubbleVariants}
-                    className="rounded-2xl p-3.5 border border-white/[0.07] space-y-3"
-                    style={{ background: 'rgba(255,255,255,0.03)' }}
-                  >
-                    {/* Icon */}
-                    <div className="w-9 h-9 rounded-xl bg-amber-500/10 border border-amber-500/15 flex items-center justify-center">
-                      <Icon className="h-4 w-4 text-amber-400" />
+          <div className="rounded-2xl border border-white/[0.06] bg-white/[0.02] p-5">
+            <div className="flex items-center justify-between">
+              {pipeline.map((step, i) => (
+                <React.Fragment key={step}>
+                  <div className="flex flex-col items-center gap-1.5">
+                    <div className="w-10 h-10 rounded-xl bg-amber-500/15 border border-amber-500/25 flex items-center justify-center">
+                      <span className="text-xs font-extrabold text-amber-400">{i + 1}</span>
                     </div>
-                    {/* Badge — own line */}
-                    <div className="inline-flex items-center px-2 py-0.5 rounded-full bg-amber-500/10 border border-amber-500/15">
-                      <span className="text-[10px] font-semibold text-amber-400">{tools} tools</span>
-                    </div>
-                    {/* Title + examples */}
-                    <div className="space-y-1">
-                      <p className="text-sm font-semibold text-white leading-tight">{cardTitle}</p>
-                      <p className="text-[11px] text-white leading-snug">{examples}</p>
-                    </div>
-                  </motion.div>
-                ))}
-              </div>
+                    <span className="text-[10px] font-bold text-white">{step}</span>
+                  </div>
+                  {i < pipeline.length - 1 && (
+                    <div className="flex-1 h-px bg-gradient-to-r from-amber-500/30 to-amber-500/10 mx-1" />
+                  )}
+                </React.Fragment>
+              ))}
             </div>
-          ))}
-        </motion.div>
+          </div>
+        </motion.section>
 
-        {/* ── 5. How It Works ── */}
-        <motion.div variants={itemVariants} className="px-4 pb-8 space-y-4">
-          <h2 className="text-base font-semibold text-white flex items-center gap-2">
-            <div className="h-2 w-2 rounded-full bg-amber-400 shrink-0" />
-            How It Works
-          </h2>
+        {/* ════════════════════════════════════════════
+            4. FEATURES — cards with colour variety
+        ════════════════════════════════════════════ */}
+        <motion.section
+          variants={stagger}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.2 }}
+          className="px-4 pb-12"
+        >
+          <div className="mb-5 space-y-1">
+            <h2 className="text-xl font-extrabold text-white">80 Tools. One Chat.</h2>
+            <p className="text-sm text-white">Everything you need to run your business</p>
+          </div>
 
           <div className="space-y-3">
-            {howItWorksSteps.map(({ step, text }) => (
-              <div key={step} className="flex items-center gap-4 p-4 rounded-2xl border border-white/[0.06] bg-white/[0.02]">
-                <div className="w-9 h-9 rounded-full bg-amber-500/15 border border-amber-500/30 flex items-center justify-center shrink-0">
-                  <span className="text-sm font-bold text-amber-400">{step}</span>
+            {features.map(({ icon: Icon, title, desc, colour }) => {
+              const c = featureColours[colour];
+              return (
+                <motion.div
+                  key={title}
+                  variants={childFade}
+                  className="flex items-start gap-4 p-4 rounded-2xl border border-white/[0.06] bg-white/[0.02]"
+                >
+                  <div
+                    className={`w-11 h-11 rounded-xl ${c.bg} border ${c.border} flex items-center justify-center shrink-0`}
+                  >
+                    <Icon className={`h-5 w-5 ${c.icon}`} />
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <p className="text-[15px] font-bold text-white">{title}</p>
+                    <p className="text-[13px] text-white mt-0.5 leading-relaxed">{desc}</p>
+                  </div>
+                </motion.div>
+              );
+            })}
+          </div>
+
+          {/* Extra tools footnote */}
+          <p className="text-xs text-white mt-4 font-medium">
+            Plus: expenses, documents, RAMS, email monitoring, calendar and more
+          </p>
+        </motion.section>
+
+        {/* ════════════════════════════════════════════
+            5. TESTIMONIAL / SOCIAL PROOF
+        ════════════════════════════════════════════ */}
+        <motion.section
+          variants={fade}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.3 }}
+          className="px-4 pb-12"
+        >
+          <div className="rounded-2xl border border-amber-500/15 bg-amber-500/[0.03] p-5 space-y-5">
+            {/* Stars at top */}
+            <div className="flex gap-0.5">
+              {[1, 2, 3, 4, 5].map((s) => (
+                <Star key={s} className="h-4 w-4 text-amber-400 fill-amber-400" />
+              ))}
+            </div>
+
+            {/* Quote */}
+            <div className="space-y-3">
+              <p className="text-[15px] text-white leading-[1.7]">
+                "I used to allocate a few hours every night just to sort the admin — invoices,
+                chasing payments, replying to enquiries. Now I just message Mate on WhatsApp, it
+                does it all and messages me back with what it's done.
+              </p>
+              <p className="text-[15px] text-white leading-[1.7]">
+                It never sends anything client-facing without your say-so, which I really love. And
+                you can ask it about different electrical things — regs, Zs values, cable sizes —
+                and it answers super accurately. It's like having a business partner and a technical
+                library in your pocket."
+              </p>
+            </div>
+
+            {/* Author */}
+            <div className="flex items-center gap-3 pt-3 border-t border-white/[0.06]">
+              <div className="w-10 h-10 rounded-full bg-amber-500/15 flex items-center justify-center shrink-0">
+                <span className="text-sm font-bold text-amber-400">AM</span>
+              </div>
+              <div>
+                <p className="text-sm font-bold text-white">Andrew M.</p>
+                <p className="text-xs text-white">Electrician, Cumbria</p>
+              </div>
+            </div>
+          </div>
+        </motion.section>
+
+        {/* ════════════════════════════════════════════
+            6. HOW IT WORKS
+        ════════════════════════════════════════════ */}
+        <motion.section
+          variants={fade}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.3 }}
+          className="px-4 pb-12"
+        >
+          <div className="mb-5 space-y-1">
+            <h2 className="text-xl font-extrabold text-white">Up and Running in 60 Seconds</h2>
+          </div>
+
+          <div className="space-y-3">
+            {[
+              {
+                n: '1',
+                title: 'Subscribe',
+                desc: 'Add Business AI to your Elec-Mate plan',
+                icon: Zap,
+              },
+              {
+                n: '2',
+                title: 'Connect WhatsApp',
+                desc: 'Link your number — takes 30 seconds',
+                icon: Phone,
+              },
+              {
+                n: '3',
+                title: 'Text Mate',
+                desc: "That's it. Start running your business from chat.",
+                icon: MessageSquare,
+              },
+            ].map(({ n, title, desc, icon: Icon }) => (
+              <div
+                key={n}
+                className="flex items-center gap-4 p-4 rounded-2xl border border-white/[0.06] bg-white/[0.02]"
+              >
+                <div className="w-11 h-11 rounded-full bg-amber-500 flex items-center justify-center shrink-0 shadow-lg shadow-amber-500/20">
+                  <span className="text-lg font-extrabold text-black">{n}</span>
                 </div>
-                <span className="text-sm font-medium text-white leading-snug">{text}</span>
+                <div className="flex-1 min-w-0">
+                  <p className="text-[15px] font-bold text-white">{title}</p>
+                  <p className="text-[13px] text-white mt-0.5">{desc}</p>
+                </div>
+                <Icon className="h-5 w-5 text-amber-400/50 shrink-0" />
               </div>
             ))}
           </div>
-        </motion.div>
+        </motion.section>
 
-        {/* ── 6. Approval-First Trust ── */}
-        <motion.div variants={itemVariants} className="px-4 pb-8">
-          <div
-            className="rounded-2xl p-5 border border-green-500/20 space-y-4"
-            style={{ background: 'rgba(34,197,94,0.04)' }}
-          >
-            {/* Header row */}
+        {/* ════════════════════════════════════════════
+            7. TRUST — approval-first
+        ════════════════════════════════════════════ */}
+        <motion.section
+          variants={fade}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.3 }}
+          className="px-4 pb-12"
+        >
+          <div className="rounded-2xl border border-green-500/15 bg-green-500/[0.03] p-5 space-y-4">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl bg-green-500/15 border border-green-500/25 flex items-center justify-center shrink-0">
+              <div className="w-11 h-11 rounded-xl bg-green-500/15 border border-green-500/20 flex items-center justify-center shrink-0">
                 <Shield className="h-5 w-5 text-green-400" />
               </div>
-              <div className="flex-1 min-w-0">
-                <h3 className="text-sm font-bold text-white text-left">Mate always asks first</h3>
-                <p className="text-xs text-white mt-0.5 leading-snug text-left">
+              <div>
+                <h3 className="text-[15px] font-bold text-white">Mate always asks first</h3>
+                <p className="text-xs text-white mt-0.5">
                   Nothing leaves your business without your OK
                 </p>
               </div>
             </div>
 
-            {/* Checklist */}
-            <div className="space-y-3">
+            <div className="space-y-3 pl-1">
               {trustPoints.map((point) => (
-                <div key={point} className="flex items-center gap-3">
-                  <div className="w-5 h-5 rounded-full bg-green-500/15 border border-green-500/20 flex items-center justify-center shrink-0">
-                    <CheckCircle className="h-3 w-3 text-green-400" />
-                  </div>
-                  <span className="text-sm text-white leading-snug text-left flex-1">{point}</span>
+                <div key={point} className="flex items-start gap-3">
+                  <Check className="h-4 w-4 text-green-400 shrink-0 mt-0.5" />
+                  <span className="text-[13px] text-white leading-snug">{point}</span>
                 </div>
               ))}
             </div>
           </div>
-        </motion.div>
+        </motion.section>
 
-        {/* ── 7. Early Access / Waitlist ── */}
-        <motion.div variants={itemVariants} className="px-4 space-y-4">
-          <h2 className="text-base font-semibold text-white flex items-center gap-2">
-            <div className="h-2 w-2 rounded-full bg-amber-400 shrink-0" />
-            Early Access
-          </h2>
+        {/* ════════════════════════════════════════════
+            8. PRICING
+        ════════════════════════════════════════════ */}
+        <motion.section
+          variants={fade}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.3 }}
+          className="px-4 pb-8"
+        >
+          <div className="relative overflow-hidden rounded-3xl border border-amber-500/25">
+            {/* Glow */}
+            <div className="absolute inset-0 bg-gradient-to-b from-amber-500/15 via-amber-500/5 to-transparent pointer-events-none" />
+            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[200px] h-[200px] bg-amber-400/10 blur-[80px] rounded-full pointer-events-none" />
 
-          {/* Pricing card */}
-          <div className="relative overflow-hidden rounded-2xl border border-amber-500/20">
-            <div className="absolute inset-0 bg-gradient-to-br from-amber-500/10 via-transparent to-yellow-500/5 pointer-events-none" />
-            <div className="relative p-6 text-center space-y-1.5">
-              <div className="text-4xl font-bold text-white">£29.99</div>
-              <div className="text-sm text-white">per month · launching soon</div>
-              <p className="text-xs text-white pt-1">Includes everything in the Electrician plan</p>
+            <div className="relative p-6 space-y-6">
+              {/* Price */}
+              <div className="space-y-2">
+                <div className="inline-flex items-center px-3 py-1.5 rounded-full bg-amber-500/15 border border-amber-500/25">
+                  <span className="text-xs font-bold text-amber-400">Early Access</span>
+                </div>
+                <div className="flex items-baseline gap-1">
+                  <span className="text-5xl font-extrabold text-white">£29.99</span>
+                  <span className="text-sm text-white font-medium">/mo</span>
+                </div>
+                <p className="text-sm text-white">Launching soon</p>
+              </div>
+
+              {/* What's included */}
+              <div className="space-y-2.5">
+                {included.map((item) => (
+                  <div key={item} className="flex items-center gap-3">
+                    <div className="w-5 h-5 rounded-full bg-amber-500/15 flex items-center justify-center shrink-0">
+                      <Check className="h-3 w-3 text-amber-400" />
+                    </div>
+                    <span className="text-sm text-white">{item}</span>
+                  </div>
+                ))}
+              </div>
+
+              {/* CTA */}
+              <CtaButton />
+
+              <p className="text-xs text-white">
+                No card required. We'll notify you when Mate is ready.
+              </p>
             </div>
           </div>
-
-          {/* CTA */}
-          {waitlistJoined ? (
-            <div
-              className="w-full rounded-xl border border-green-500/30 bg-green-500/10 flex items-center justify-center gap-2 text-green-400 font-semibold text-sm"
-              style={{ height: 52 }}
-            >
-              <CheckCircle className="h-4 w-4 shrink-0" />
-              You're on the waitlist!
-            </div>
-          ) : (
-            <Button
-              onClick={handleJoinWaitlist}
-              disabled={loading}
-              className="w-full touch-manipulation font-semibold text-base rounded-xl bg-amber-500 hover:bg-amber-400 active:bg-amber-600 active:scale-[0.98] text-black shadow-lg shadow-amber-500/25 transition-all"
-              style={{ height: 52 }}
-            >
-              {loading ? (
-                <span className="flex items-center gap-2">
-                  <Loader2 className="h-4 w-4 animate-spin" />
-                  One sec...
-                </span>
-              ) : (
-                <span className="flex items-center gap-2">
-                  <Zap className="h-4 w-4" />
-                  Join the Waitlist
-                </span>
-              )}
-            </Button>
-          )}
-
-          <p className="text-center text-xs text-white">
-            We'll let you know as soon as Elec-AI is ready
-          </p>
-        </motion.div>
-      </motion.div>
+        </motion.section>
+      </div>
     </div>
   );
 }

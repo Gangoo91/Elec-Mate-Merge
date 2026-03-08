@@ -2,6 +2,7 @@
 // Maintains the old API while using the new best-in-class sync system
 // This allows gradual migration without breaking existing components
 
+import { useCallback } from 'react';
 import { useReportSync, SyncStatus, SyncNowImmediateResult } from './useReportSync';
 
 export type { SyncStatus, SyncNowImmediateResult };
@@ -9,6 +10,7 @@ export type { SyncStatus, SyncNowImmediateResult };
 interface CloudSyncOptions {
   reportId: string | null;
   reportType: 'eicr' | 'eic' | 'minor-works';
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   data: any;
   enabled: boolean;
   customerId?: string;
@@ -79,28 +81,30 @@ export const useCloudSync = ({
   };
 
   // Wrapper for the old syncToCloud API
-  const syncToCloud = async (
-    forceSync = false
-  ): Promise<{ success: boolean; reportId: string | null }> => {
-    if (!forceSync) {
-      // Auto-sync is now handled internally by useReportSync
-      return { success: false, reportId: null };
-    }
-    return await saveNow();
-  };
+  const syncToCloud = useCallback(
+    async (forceSync = false): Promise<{ success: boolean; reportId: string | null }> => {
+      if (!forceSync) {
+        return { success: false, reportId: null };
+      }
+      return await saveNow();
+    },
+    [saveNow]
+  );
 
   // Wrapper for the old loadFromCloud API - now returns { data, databaseId }
-  const loadFromCloud = async (
-    cloudReportId: string
-  ): Promise<{ data: any; databaseId: string | null } | null> => {
-    return await loadReport(cloudReportId);
-  };
+  const loadFromCloud = useCallback(
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    async (cloudReportId: string): Promise<{ data: any; databaseId: string | null } | null> => {
+      return await loadReport(cloudReportId);
+    },
+    [loadReport]
+  );
 
   // Process offline queue - now handled automatically
-  const processOfflineQueue = async () => {
+  const processOfflineQueue = useCallback(async () => {
     // This is now handled internally by useReportSync
     // Just a no-op for compatibility
-  };
+  }, []);
 
   return {
     syncState,

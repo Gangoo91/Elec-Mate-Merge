@@ -541,11 +541,14 @@ function generateTrialWinbackEmailV3(firstName: string, signupMonth: string): st
               <p style="margin: 0 0 18px; font-size: 17px; color: #ffffff; line-height: 1.6;">
                 Hey ${firstName},
               </p>
-              <p style="margin: 0 0 16px; font-size: 16px; color: #e2e8f0; line-height: 1.7;">
+              <p style="margin: 0 0 16px; font-size: 16px; color: #ffffff; line-height: 1.7;">
                 It's Andrew from Elec-Mate. You signed up back in ${signupMonth} and I know the app was still early days back then &mdash; so I wanted to reach out personally.
               </p>
-              <p style="margin: 0; font-size: 16px; color: #e2e8f0; line-height: 1.7;">
-                We've added <strong style="color: #fbbf24;">loads</strong> since you were last in. Here's what's new:
+              <p style="margin: 0 0 16px; font-size: 16px; color: #ffffff; line-height: 1.7;">
+                Since then, we've built <strong style="color: #fbbf24;">the most complete apprentice platform in the UK</strong>. Nothing else comes close. Seriously.
+              </p>
+              <p style="margin: 0; font-size: 16px; color: #ffffff; line-height: 1.7;">
+                Here's what you're missing out on:
               </p>
             </td>
           </tr>
@@ -555,29 +558,38 @@ function generateTrialWinbackEmailV3(firstName: string, signupMonth: string): st
             <td style="padding: 0 20px 20px;">
               <div style="background: rgba(255,255,255,0.03); border-left: 3px solid #22c55e; border-radius: 0 10px 10px 0; padding: 14px 16px; margin-bottom: 10px;">
                 <p style="margin: 0 0 4px; font-size: 15px; color: #ffffff; font-weight: 600;">Study Centre</p>
-                <p style="margin: 0; font-size: 14px; color: #94a3b8; line-height: 1.5;">36 courses covering Level 2, Level 3, EAL, City &amp; Guilds &mdash; with 500+ practice questions to nail your exams.</p>
+                <p style="margin: 0; font-size: 14px; color: #ffffff; line-height: 1.5;">36 courses covering Level 2, Level 3, EAL, City &amp; Guilds &mdash; plus 500+ practice questions. Everything you need to smash your exams, all in one place.</p>
               </div>
               <div style="background: rgba(255,255,255,0.03); border-left: 3px solid #3b82f6; border-radius: 0 10px 10px 0; padding: 14px 16px; margin-bottom: 10px;">
                 <p style="margin: 0 0 4px; font-size: 15px; color: #ffffff; font-weight: 600;">AM2 &amp; EPA Simulators</p>
-                <p style="margin: 0; font-size: 14px; color: #94a3b8; line-height: 1.5;">Practice safe isolation, fault finding, and AI-scored professional discussions. Know exactly what to expect on the day.</p>
+                <p style="margin: 0; font-size: 14px; color: #ffffff; line-height: 1.5;">Realistic exam simulations &mdash; safe isolation, fault finding, AI-scored professional discussions with predicted grading. Walk into your AM2 or EPA knowing exactly what to expect.</p>
               </div>
               <div style="background: rgba(255,255,255,0.03); border-left: 3px solid #fbbf24; border-radius: 0 10px 10px 0; padding: 14px 16px; margin-bottom: 10px;">
-                <p style="margin: 0 0 4px; font-size: 15px; color: #ffffff; font-weight: 600;">Ask Dave &mdash; 24/7 AI Mentor</p>
-                <p style="margin: 0; font-size: 14px; color: #94a3b8; line-height: 1.5;">Got a question about BS 7671, wiring, or your coursework? Dave's got your back, any time of day.</p>
+                <p style="margin: 0 0 4px; font-size: 15px; color: #ffffff; font-weight: 600;">Ask Dave &mdash; Your 24/7 AI Mentor</p>
+                <p style="margin: 0; font-size: 14px; color: #ffffff; line-height: 1.5;">Stuck on BS 7671? Confused about wiring? Need help with coursework at 11pm? Dave knows the regs inside out and he's always there.</p>
               </div>
               <div style="background: rgba(255,255,255,0.03); border-left: 3px solid #a78bfa; border-radius: 0 10px 10px 0; padding: 14px 16px;">
                 <p style="margin: 0 0 4px; font-size: 15px; color: #ffffff; font-weight: 600;">Portfolio Hub + Site Diary</p>
-                <p style="margin: 0; font-size: 14px; color: #94a3b8; line-height: 1.5;">Track your evidence, log your OJT hours, and keep a daily site diary with AI coach insights. Everything your assessor needs.</p>
+                <p style="margin: 0; font-size: 14px; color: #ffffff; line-height: 1.5;">Track your evidence, log OJT hours, keep a daily site diary with AI coach insights. When your assessor asks for evidence, you'll have everything ready.</p>
               </div>
             </td>
           </tr>
 
-          <!-- Social proof -->
+          <!-- Why it matters -->
+          <tr>
+            <td style="padding: 0 24px 20px;">
+              <p style="margin: 0; font-size: 16px; color: #ffffff; line-height: 1.7;">
+                Plus 60 learning videos, 40+ electrical calculators, a mental health hub, career pathways, and more. We built this because apprentices deserve a proper tool &mdash; not just a textbook in an app.
+              </p>
+            </td>
+          </tr>
+
+          <!-- Spread the word -->
           <tr>
             <td style="padding: 0 24px 20px;">
               <div style="background: rgba(34, 197, 94, 0.08); border: 1px solid rgba(34, 197, 94, 0.2); border-radius: 12px; padding: 14px; text-align: center;">
-                <p style="margin: 0; font-size: 14px; color: #e2e8f0; line-height: 1.6;">
-                  <strong style="color: #22c55e;">40 apprentices</strong> are now using Elec-Mate daily to revise, track their progress, and smash their qualifications.
+                <p style="margin: 0; font-size: 14px; color: #ffffff; line-height: 1.6;">
+                  Know other apprentices who'd benefit? <strong style="color: #22c55e;">Send them to elec-mate.com</strong> &mdash; the more sparks using it, the better it gets for everyone.
                 </p>
               </div>
             </td>
@@ -590,7 +602,7 @@ function generateTrialWinbackEmailV3(firstName: string, signupMonth: string): st
                 <p style="margin: 0 0 4px; font-size: 15px; color: #60a5fa; font-weight: 600;">
                   Fancy another look?
                 </p>
-                <p style="margin: 0; font-size: 14px; color: #e2e8f0; line-height: 1.6;">
+                <p style="margin: 0; font-size: 14px; color: #ffffff; line-height: 1.6;">
                   Just reply to this email and I'll give you <strong style="color: #60a5fa;">another free week</strong> to try everything properly. No strings.
                 </p>
               </div>
@@ -601,13 +613,13 @@ function generateTrialWinbackEmailV3(firstName: string, signupMonth: string): st
           <tr>
             <td style="padding: 0 20px 24px;">
               <div style="background: linear-gradient(135deg, rgba(251, 191, 36, 0.15) 0%, rgba(251, 191, 36, 0.05) 100%); border: 2px solid rgba(251, 191, 36, 0.4); border-radius: 16px; padding: 24px 20px; text-align: center;">
-                <p style="margin: 0 0 4px; font-size: 14px; color: #94a3b8;">
+                <p style="margin: 0 0 4px; font-size: 14px; color: #ffffff;">
                   Or if you're ready to jump back in
                 </p>
                 <p style="margin: 0; font-size: 48px; font-weight: 800; color: #fbbf24; line-height: 1;">
-                  &pound;4.99<span style="font-size: 18px; font-weight: 600; color: #94a3b8;">/mo</span>
+                  &pound;4.99<span style="font-size: 18px; font-weight: 600; color: #e2e8f0;">/mo</span>
                 </p>
-                <p style="margin: 6px 0 16px; font-size: 14px; color: #94a3b8;">
+                <p style="margin: 6px 0 16px; font-size: 14px; color: #ffffff;">
                   or &pound;49.99/year (&pound;4.17/mo)
                 </p>
                 <a href="${APPRENTICE_WINBACK_CONFIG.monthlyPaymentLink}" style="display: block; padding: 16px 24px; background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%); color: #0f172a; text-decoration: none; font-size: 16px; font-weight: 700; border-radius: 12px; text-align: center;">
@@ -616,7 +628,7 @@ function generateTrialWinbackEmailV3(firstName: string, signupMonth: string): st
                 <a href="${APPRENTICE_WINBACK_CONFIG.yearlyPaymentLink}" style="display: block; padding: 12px 24px; margin-top: 8px; background: transparent; border: 2px solid rgba(251, 191, 36, 0.4); color: #fbbf24; text-decoration: none; font-size: 14px; font-weight: 600; border-radius: 12px; text-align: center;">
                   Or save with &pound;49.99/year &rarr;
                 </a>
-                <p style="margin: 10px 0 0; font-size: 12px; color: #64748b;">
+                <p style="margin: 10px 0 0; font-size: 12px; color: #ffffff;">
                   Prices go up when we hit the app stores
                 </p>
               </div>
@@ -626,10 +638,10 @@ function generateTrialWinbackEmailV3(firstName: string, signupMonth: string): st
           <!-- Personal sign-off -->
           <tr>
             <td style="padding: 0 24px 32px;">
-              <p style="margin: 0 0 4px; font-size: 15px; color: #e2e8f0;">Cheers,</p>
+              <p style="margin: 0 0 4px; font-size: 15px; color: #ffffff;">Cheers,</p>
               <p style="margin: 0 0 4px; font-size: 16px; color: #ffffff; font-weight: 600;">Andrew</p>
-              <p style="margin: 0 0 8px; font-size: 13px; color: #64748b;">Founder, Elec-Mate</p>
-              <p style="margin: 0; font-size: 13px; color: #94a3b8;">
+              <p style="margin: 0 0 8px; font-size: 13px; color: #ffffff;">Founder, Elec-Mate</p>
+              <p style="margin: 0; font-size: 13px; color: #ffffff;">
                 WhatsApp: <a href="https://wa.me/447507241303" style="color: #22c55e; text-decoration: none;">+44 7507 241303</a>
               </p>
             </td>

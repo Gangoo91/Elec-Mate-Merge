@@ -27,6 +27,7 @@ import * as analytics from './analytics.js';
 import * as marketplace from './marketplace.js';
 import * as safety from './safety.js';
 import * as vision from './vision.js';
+import * as jobIntake from './job-intake.js';
 
 /** Handler function signature — every tool handler takes args + user context */
 export type ToolHandler = (args: Record<string, unknown>, user: UserContext) => Promise<unknown>;
@@ -211,6 +212,9 @@ const handlers: Record<string, ToolHandler> = {
   analyse_photo: vision.analysePhoto,
   attach_photo_to_entity: vision.attachPhotoToEntity,
   get_entity_photos: vision.getEntityPhotos,
+
+  // Job Intake (ELE-209)
+  create_job_intake: jobIntake.createJobIntake,
 };
 
 /**

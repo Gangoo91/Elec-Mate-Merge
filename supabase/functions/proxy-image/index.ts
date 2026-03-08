@@ -9,16 +9,24 @@ const corsHeaders = {
 /** Whitelisted supplier domains — prevents open-proxy abuse */
 const ALLOWED_HOSTS = new Set([
   'media.toolstation.com',
+  'cdn.toolstation.com',
+  'cdn.aws.toolstation.com',
   'media.screwfix.com',
   'www.screwfix.com',
   'www.machinemart.co.uk',
   'ffx.co.uk',
   'uk.rs-online.com',
+  'media.rs-online.com',
   'media.diy.com',
   'www.tlc-direct.co.uk',
   'www.cef.co.uk',
   'www.edmundson-electrical.co.uk',
   'www.wickes.co.uk',
+  'cdn11.bigcommerce.com',
+  'dccf75d8gej24.cloudfront.net',
+  'i.shgcdn.com',
+  'images.hotukdeals.com',
+  'res.cloudinary.com',
 ]);
 
 const MAX_SIZE = 2 * 1024 * 1024; // 2 MB

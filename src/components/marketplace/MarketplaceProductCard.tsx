@@ -216,8 +216,8 @@ export function MarketplaceProductCard({
 
       {/* Content Section - flex-1 to fill remaining space */}
       <div className="flex-1 flex flex-col p-3 space-y-2">
-        {/* Product name - merged brand + title, 3 lines max */}
-        <h3 className="font-medium text-sm leading-tight text-white line-clamp-3 min-h-[3.75rem]">
+        {/* Product name - merged brand + title, 4 lines max */}
+        <h3 className="font-medium text-sm leading-tight text-white line-clamp-4 min-h-[5rem]">
           {displayTitle}
         </h3>
 

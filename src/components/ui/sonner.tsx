@@ -10,16 +10,18 @@ const Toaster = ({ ...props }: ToasterProps) => {
       className="toaster group"
       position="top-center"
       expand={false}
-      closeButton={false}
+      closeButton={true}
       duration={3500}
       richColors={false}
       gap={8}
       offset={0}
+      swipeDirections={['up', 'right']}
       style={
         {
           '--offset': 'calc(env(safe-area-inset-top, 0px) + 2.5rem)',
-          '--width': 'calc(100vw - 2rem)',
-          '--max-width': '420px',
+          '--width': 'min(calc(100vw - 2rem), 420px)',
+          left: '50%',
+          transform: 'translateX(-50%)',
         } as React.CSSProperties
       }
       icons={{
@@ -47,15 +49,17 @@ const Toaster = ({ ...props }: ToasterProps) => {
       toastOptions={{
         classNames: {
           toast:
-            'group toast !rounded-2xl !border !border-white/[0.07] !border-l-[3px] !shadow-[0_8px_32px_rgba(0,0,0,0.5)] !px-4 !py-3.5 !min-h-[64px] !items-center !gap-3 !w-full !bg-zinc-900/95 !backdrop-blur-xl',
+            'group toast !rounded-2xl !border !border-white/10 !border-l-[3px] !ring-1 !ring-inset !ring-white/[0.05] !shadow-[0_8px_32px_rgba(0,0,0,0.5)] !px-4 !py-3.5 !min-h-[68px] !items-center !gap-3 !w-full !bg-[#1a1a2e]/95 !backdrop-blur-xl',
           title: '!text-white !font-semibold !text-[14px] !leading-snug',
           description: '!text-white !text-[12px] !leading-snug !mt-0.5',
-          success: '!border-l-emerald-400 !shadow-[0_8px_32px_rgba(16,185,129,0.18)]',
-          error: '!border-l-red-400 !shadow-[0_8px_32px_rgba(239,68,68,0.18)]',
-          warning: '!border-l-amber-400 !shadow-[0_8px_32px_rgba(245,158,11,0.18)]',
-          info: '!border-l-blue-400 !shadow-[0_8px_32px_rgba(59,130,246,0.18)]',
+          success: '!border-l-emerald-500 !shadow-[0_8px_32px_rgba(16,185,129,0.25)]',
+          error: '!border-l-red-500 !shadow-[0_8px_32px_rgba(239,68,68,0.25)]',
+          warning: '!border-l-amber-500 !shadow-[0_8px_32px_rgba(245,158,11,0.25)]',
+          info: '!border-l-blue-500 !shadow-[0_8px_32px_rgba(59,130,246,0.25)]',
           default: '!border-l-zinc-400',
           icon: 'self-center !w-8 !h-8 !mr-0',
+          closeButton:
+            '!bg-white/15 !border-white/10 !text-white hover:!bg-white/25 !rounded-full !w-7 !h-7 !top-1.5 !right-1.5',
         },
         style: {
           opacity: 1,

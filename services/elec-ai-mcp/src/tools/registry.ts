@@ -57,6 +57,9 @@ export function registerAllTools(server: McpServer, user: UserContext): void {
 
   // Vision (photo analysis)
   registerVisionTools(server, user);
+
+  // Job Intake (ELE-209)
+  registerJobIntakeTools(server, user);
 }
 
 // ─── Helper to wrap handler calls with rate limiting + audit logging ────
@@ -250,13 +253,21 @@ function registerQuotingTools(server: McpServer, user: UserContext): void {
               .optional()
               .describe('Item category (defaults to materials)'),
             quantity: z.number().describe('Quantity'),
-            unitPrice: z.number().optional().describe('Price per unit in GBP (use this or unit_price)'),
-            unit_price: z.number().optional().describe('Price per unit in GBP (alias for unitPrice)'),
+            unitPrice: z
+              .number()
+              .optional()
+              .describe('Price per unit in GBP (use this or unit_price)'),
+            unit_price: z
+              .number()
+              .optional()
+              .describe('Price per unit in GBP (alias for unitPrice)'),
             unit: z.string().optional().describe('Unit type: each, metre, hours, etc.'),
             notes: z.string().optional().describe('Optional notes'),
           })
         )
-        .describe('Line items — use the exact prices the user provides. Accepts both unitPrice and unit_price.'),
+        .describe(
+          'Line items — use the exact prices the user provides. Accepts both unitPrice and unit_price.'
+        ),
       vat_registered: z.boolean().optional().describe('Whether to apply VAT (default false)'),
       vat_rate: z.number().optional().describe('VAT rate percentage (default 20)'),
       notes: z.string().optional().describe('Quote notes'),
@@ -1946,5 +1957,55 @@ function registerVisionTools(server: McpServer, user: UserContext): void {
       entity_id: z.string().describe('Entity UUID'),
     },
     callTool('get_entity_photos', user)
+  );
+}
+
+// ─── Job Intake Tools (1) — ELE-209 ─────────────────────────────────────
+
+function registerJobIntakeTools(server: McpServer, user: UserContext): void {
+  server.tool(
+    'create_job_intake',
+    'Turn a job enquiry into a full project with trade-specific tasks. Use this when the electrician receives a job request (WhatsApp forward, phone call, email). Automatically generates a task checklist based on the job type using RAG trade knowledge. The electrician MUST approve the plan before you proceed with quoting or scheduling.',
+    {
+      job_type: z
+        .string()
+        .describe(
+          'Type of electrical work (e.g. "consumer unit upgrade", "EICR", "rewire", "EV charger", "fire alarm", "lighting", "fault finding", "socket installation")'
+        ),
+      title: z
+        .string()
+        .optional()
+        .describe('Custom project title. If omitted, auto-generated from job type + address.'),
+      description: z
+        .string()
+        .optional()
+        .describe('Job description / scope of work from the enquiry'),
+      address: z.string().optional().describe('Property address'),
+      customer_id: z
+        .string()
+        .optional()
+        .describe('Customer UUID (if existing client — use read_clients to find)'),
+      urgency: z.enum(['normal', 'urgent']).optional().describe('Job urgency (default normal)'),
+      estimated_value: z.number().optional().describe('Estimated job value in GBP'),
+      start_date: z
+        .string()
+        .optional()
+        .describe('Planned start date (ISO-8601). Tasks are spaced 1 day apart from this date.'),
+      due_date: z.string().optional().describe('Job deadline (ISO-8601)'),
+      source: z
+        .enum(['whatsapp_forward', 'app', 'email', 'phone'])
+        .optional()
+        .describe('How the enquiry came in (default whatsapp_forward)'),
+      site_visit_date: z
+        .string()
+        .optional()
+        .describe('Date for site visit (ISO-8601 date, e.g. 2026-03-10)'),
+      site_visit_time: z.string().optional().describe('Time for site visit (HH:mm, e.g. 09:00)'),
+      site_visit_duration: z
+        .number()
+        .optional()
+        .describe('Site visit duration in minutes (default 60)'),
+    },
+    callTool('create_job_intake', user)
   );
 }

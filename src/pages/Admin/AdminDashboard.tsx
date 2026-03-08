@@ -19,6 +19,10 @@ import {
   MessageSquare,
   Bell,
   FileCheck,
+  Send,
+  MailOpen,
+  MousePointerClick,
+  Gift,
 } from 'lucide-react';
 import { formatDistanceToNow } from 'date-fns';
 import { useState, useCallback } from 'react';
@@ -270,6 +274,40 @@ export default function AdminDashboard() {
     },
     staleTime: 30 * 1000,
     refetchInterval: 60000,
+  });
+
+  // Campaign stats for the dashboard card
+  const { data: campaignStats } = useQuery({
+    queryKey: ['admin-campaign-stats'],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        .from('email_tracking_events' as any)
+        .select('email_id, event_type')
+        .limit(10000);
+      if (error) return { sent: 0, opened: 0, clicked: 0, openRate: '0', clickRate: '0' };
+
+      const events = (data || []) as Array<{ email_id: string; event_type: string }>;
+      const delivered = new Set(
+        events.filter((e) => e.event_type === 'email.delivered').map((e) => e.email_id)
+      ).size;
+      const opened = new Set(
+        events.filter((e) => e.event_type === 'email.opened').map((e) => e.email_id)
+      ).size;
+      const clicked = new Set(
+        events.filter((e) => e.event_type === 'email.clicked').map((e) => e.email_id)
+      ).size;
+      const base = delivered || 1;
+      return {
+        sent: delivered,
+        opened,
+        clicked,
+        openRate: ((opened / base) * 100).toFixed(1),
+        clickRate: ((clicked / base) * 100).toFixed(1),
+      };
+    },
+    staleTime: 60 * 1000,
+    refetchInterval: 120000,
   });
 
   // Pending action counts for the dashboard card
@@ -529,6 +567,40 @@ export default function AdminDashboard() {
             </CardContent>
           </Card>
         )}
+
+        {/* Campaign Overview Card */}
+        <Card
+          className="border-purple-500/20 bg-gradient-to-r from-purple-500/5 to-indigo-500/5 touch-manipulation active:scale-[0.99] transition-transform cursor-pointer"
+          onClick={() => navigate('/admin/winback')}
+        >
+          <CardContent className="p-4">
+            <div className="flex items-center justify-between mb-3">
+              <div className="flex items-center gap-2">
+                <Gift className="h-4 w-4 text-purple-400" />
+                <span className="font-semibold text-sm">Campaigns</span>
+              </div>
+              <ChevronRight className="h-4 w-4 text-muted-foreground/50" />
+            </div>
+            <div className="grid grid-cols-4 gap-2">
+              <div className="text-center p-2 rounded-lg bg-blue-500/10">
+                <p className="text-lg font-bold text-blue-400">{campaignStats?.sent || 0}</p>
+                <p className="text-[10px] text-white">Sent</p>
+              </div>
+              <div className="text-center p-2 rounded-lg bg-green-500/10">
+                <p className="text-lg font-bold text-green-400">{campaignStats?.openRate || 0}%</p>
+                <p className="text-[10px] text-white">Open</p>
+              </div>
+              <div className="text-center p-2 rounded-lg bg-amber-500/10">
+                <p className="text-lg font-bold text-amber-400">{campaignStats?.clickRate || 0}%</p>
+                <p className="text-[10px] text-white">Click</p>
+              </div>
+              <div className="text-center p-2 rounded-lg bg-purple-500/10">
+                <p className="text-lg font-bold text-purple-400">{campaignStats?.clicked || 0}</p>
+                <p className="text-[10px] text-white">Clicks</p>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
 
         {/* Quick Stats Row - 2x2 on mobile, 4 cols on tablet+ */}
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">

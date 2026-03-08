@@ -1,220 +1,240 @@
-import 'https://deno.land/x/xhr@0.1.0/mod.ts';
-import { serve } from 'https://deno.land/std@0.168.0/http/server.ts';
-import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.49.4';
-
-const corsHeaders = {
-  'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers':
-    'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
-};
-
-interface HealthCheckResult {
-  service: string;
-  status: 'healthy' | 'degraded' | 'down';
-  responseTimeMs?: number;
-  error?: string;
-}
-
-interface HealthStatus {
-  overall: 'healthy' | 'degraded' | 'down';
-  timestamp: string;
-  checks: HealthCheckResult[];
-}
-
 /**
- * Check database connectivity
+ * System Health Monitor — ELE-129
+ *
+ * Comprehensive health monitoring with persistence and alerting.
+ * Runs every 5 minutes via pg_cron (or manual POST).
+ *
+ * Checks:
+ *   1. Supabase database connectivity + latency
+ *   2. OpenAI API availability
+ *   3. VPS MCP server health (Supabase, OpenClaw, agents, memory)
+ *
+ * Stores results in `health_checks` table.
+ * Sends WhatsApp alert to Andrew if service is degraded or down.
+ * Alert deduplication: max one alert per 30-minute window.
  */
-async function checkDatabase(): Promise<HealthCheckResult> {
+
+import { createClient, corsHeaders } from '../_shared/deps.ts';
+
+const VPS_URL = Deno.env.get('VPS_MCP_URL') || 'http://89.167.69.251:3100';
+const VPS_API_KEY = Deno.env.get('VPS_API_KEY') || '';
+const ANDREW_PHONE = '+447507241303';
+
+interface ServiceCheck {
+  service: string;
+  status: 'ok' | 'degraded' | 'down';
+  latency_ms?: number;
+  error?: string;
+  detail?: Record<string, unknown>;
+}
+
+// ── Individual service checks ───────────────────────────────────────
+
+async function checkDatabase(supabase: ReturnType<typeof createClient>): Promise<ServiceCheck> {
   const start = Date.now();
   try {
-    const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
-    const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
-    const supabase = createClient(supabaseUrl, supabaseKey);
-
     const { error } = await supabase.from('profiles').select('id').limit(1);
-    const responseTimeMs = Date.now() - start;
-
+    const latency = Date.now() - start;
     if (error) {
-      return {
-        service: 'database',
-        status: 'down',
-        responseTimeMs,
-        error: error.message,
-      };
+      return { service: 'database', status: 'down', latency_ms: latency, error: error.message };
     }
-
     return {
       service: 'database',
-      status: responseTimeMs < 1000 ? 'healthy' : 'degraded',
-      responseTimeMs,
+      status: latency < 1000 ? 'ok' : 'degraded',
+      latency_ms: latency,
     };
-  } catch (error) {
+  } catch (err) {
     return {
       service: 'database',
       status: 'down',
-      responseTimeMs: Date.now() - start,
-      error: error instanceof Error ? error.message : 'Unknown error',
+      latency_ms: Date.now() - start,
+      error: err instanceof Error ? err.message : String(err),
     };
   }
 }
 
-/**
- * Check OpenAI API availability
- */
-async function checkOpenAI(): Promise<HealthCheckResult> {
+async function checkOpenAI(): Promise<ServiceCheck> {
   const start = Date.now();
   try {
     const apiKey = Deno.env.get('OPENAI_API_KEY');
     if (!apiKey) {
-      return {
-        service: 'openai',
-        status: 'down',
-        error: 'API key not configured',
-      };
+      return { service: 'openai', status: 'down', error: 'API key not configured' };
     }
-
-    const response = await fetch('https://api.openai.com/v1/models', {
-      headers: {
-        Authorization: `Bearer ${apiKey}`,
-      },
+    const resp = await fetch('https://api.openai.com/v1/models', {
+      headers: { Authorization: `Bearer ${apiKey}` },
+      signal: AbortSignal.timeout(10000),
     });
-
-    const responseTimeMs = Date.now() - start;
-
-    if (!response.ok) {
+    const latency = Date.now() - start;
+    if (!resp.ok) {
       return {
         service: 'openai',
         status: 'down',
-        responseTimeMs,
-        error: `HTTP ${response.status}`,
+        latency_ms: latency,
+        error: `HTTP ${resp.status}`,
       };
     }
-
     return {
       service: 'openai',
-      status: responseTimeMs < 2000 ? 'healthy' : 'degraded',
-      responseTimeMs,
+      status: latency < 2000 ? 'ok' : 'degraded',
+      latency_ms: latency,
     };
-  } catch (error) {
+  } catch (err) {
     return {
       service: 'openai',
       status: 'down',
-      responseTimeMs: Date.now() - start,
-      error: error instanceof Error ? error.message : 'Unknown error',
+      latency_ms: Date.now() - start,
+      error: err instanceof Error ? err.message : String(err),
     };
   }
 }
 
-/**
- * Check Lovable AI Gateway availability
- */
-async function checkLovableAI(): Promise<HealthCheckResult> {
+async function checkVpsMcp(): Promise<ServiceCheck> {
   const start = Date.now();
   try {
-    const apiKey = Deno.env.get('LOVABLE_API_KEY');
-    if (!apiKey) {
-      return {
-        service: 'lovable_ai',
-        status: 'down',
-        error: 'API key not configured',
-      };
-    }
-
-    // Simple ping to the AI gateway
-    const response = await fetch('https://ai.gateway.lovable.dev/v1/models', {
-      headers: {
-        Authorization: `Bearer ${apiKey}`,
-      },
+    const resp = await fetch(`${VPS_URL}/health`, {
+      signal: AbortSignal.timeout(15000),
     });
-
-    const responseTimeMs = Date.now() - start;
-
-    if (!response.ok) {
+    const latency = Date.now() - start;
+    if (!resp.ok) {
       return {
-        service: 'lovable_ai',
+        service: 'vps_mcp',
         status: 'down',
-        responseTimeMs,
-        error: `HTTP ${response.status}`,
+        latency_ms: latency,
+        error: `HTTP ${resp.status}`,
       };
     }
-
+    const data = await resp.json();
+    const vpsStatus = data.status === 'ok' ? 'ok' : 'degraded';
     return {
-      service: 'lovable_ai',
-      status: responseTimeMs < 2000 ? 'healthy' : 'degraded',
-      responseTimeMs,
+      service: 'vps_mcp',
+      status: vpsStatus as 'ok' | 'degraded',
+      latency_ms: latency,
+      detail: {
+        uptime: data.uptime,
+        memory_mb: data.memory_mb,
+        supabase: data.supabase,
+        openclaw: data.openclaw,
+        agents: data.agents,
+      },
     };
-  } catch (error) {
+  } catch (err) {
     return {
-      service: 'lovable_ai',
+      service: 'vps_mcp',
       status: 'down',
-      responseTimeMs: Date.now() - start,
-      error: error instanceof Error ? error.message : 'Unknown error',
+      latency_ms: Date.now() - start,
+      error: err instanceof Error ? err.message : String(err),
     };
   }
 }
 
-serve(async (req) => {
+// ── Main handler ────────────────────────────────────────────────────
+
+Deno.serve(async (req) => {
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });
   }
 
   try {
-    console.log('🏥 Running health checks...');
+    const supabase = createClient(
+      Deno.env.get('SUPABASE_URL') ?? '',
+      Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? '',
+      { auth: { persistSession: false } }
+    );
 
-    // Run all health checks in parallel
-    const [dbCheck, openaiCheck, lovableCheck] = await Promise.all([
-      checkDatabase(),
+    // Run all checks in parallel
+    const [dbCheck, openaiCheck, vpsCheck] = await Promise.all([
+      checkDatabase(supabase),
       checkOpenAI(),
-      checkLovableAI(),
+      checkVpsMcp(),
     ]);
 
-    const checks = [dbCheck, openaiCheck, lovableCheck];
-
-    // Determine overall status
+    const checks = [dbCheck, openaiCheck, vpsCheck];
     const hasDown = checks.some((c) => c.status === 'down');
     const hasDegraded = checks.some((c) => c.status === 'degraded');
+    const overall = hasDown ? 'down' : hasDegraded ? 'degraded' : 'ok';
+    const totalLatency = checks.reduce((sum, c) => sum + (c.latency_ms || 0), 0);
 
-    const overall = hasDown ? 'down' : hasDegraded ? 'degraded' : 'healthy';
+    // Persist to health_checks table
+    let alertSent = false;
 
-    const status: HealthStatus = {
+    if (overall !== 'ok') {
+      // Check alert deduplication — max one per 30 min
+      const thirtyMinAgo = new Date(Date.now() - 30 * 60 * 1000).toISOString();
+      const { data: recentAlerts } = await supabase
+        .from('health_checks')
+        .select('id')
+        .eq('alert_sent', true)
+        .gte('checked_at', thirtyMinAgo)
+        .limit(1);
+
+      if (!recentAlerts || recentAlerts.length === 0) {
+        // Build alert message
+        const failedServices = checks
+          .filter((c) => c.status !== 'ok')
+          .map((c) => `${c.service}: ${c.status}${c.error ? ` (${c.error})` : ''}`)
+          .join(', ');
+
+        try {
+          const alertResp = await fetch(`${VPS_URL}/api/send-message`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'X-API-Key': VPS_API_KEY,
+            },
+            body: JSON.stringify({
+              target: ANDREW_PHONE,
+              message: `⚠️ HEALTH ALERT [${overall.toUpperCase()}]\n${failedServices}\nCheck admin dashboard for details.`,
+              channel: 'whatsapp',
+            }),
+          });
+          alertSent = alertResp.ok;
+        } catch {
+          // VPS might be down — can't send via WhatsApp
+          console.error('[system-health] Could not send WhatsApp alert');
+        }
+      }
+    }
+
+    // Store result
+    await supabase.from('health_checks').insert({
+      status: overall,
+      services: { checks, overall },
+      response_time_ms: totalLatency,
+      error_message:
+        overall !== 'ok'
+          ? checks
+              .filter((c) => c.status !== 'ok')
+              .map((c) => `${c.service}: ${c.error || c.status}`)
+              .join('; ')
+          : null,
+      alert_sent: alertSent,
+      alert_channel: alertSent ? 'whatsapp' : null,
+    });
+
+    // Cleanup records older than 30 days
+    const thirtyDaysAgo = new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString();
+    await supabase.from('health_checks').delete().lt('checked_at', thirtyDaysAgo);
+
+    const result = {
       overall,
       timestamp: new Date().toISOString(),
       checks,
+      alert_sent: alertSent,
     };
 
-    console.log('✅ Health check complete:', {
-      overall,
-      checks: checks.map((c) => ({ service: c.service, status: c.status })),
-    });
-
-    return new Response(JSON.stringify(status), {
+    return new Response(JSON.stringify(result), {
       status: overall === 'down' ? 503 : 200,
-      headers: {
-        ...corsHeaders,
-        'Content-Type': 'application/json',
-      },
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
     });
   } catch (error) {
-    console.error('❌ Health check failed:', error);
-
-    const status: HealthStatus = {
-      overall: 'down',
-      timestamp: new Date().toISOString(),
-      checks: [
-        {
-          service: 'system',
-          status: 'down',
-          error: error instanceof Error ? error.message : 'Unknown error',
-        },
-      ],
-    };
-
-    return new Response(JSON.stringify(status), {
-      status: 503,
-      headers: {
-        ...corsHeaders,
-        'Content-Type': 'application/json',
-      },
-    });
+    console.error('[system-health] Fatal error:', error);
+    return new Response(
+      JSON.stringify({
+        overall: 'down',
+        timestamp: new Date().toISOString(),
+        error: error instanceof Error ? error.message : 'Unknown error',
+      }),
+      { status: 503, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+    );
   }
 });

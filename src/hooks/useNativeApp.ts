@@ -1,4 +1,4 @@
-import { useEffect, useCallback } from 'react';
+import { useEffect, useCallback, useRef } from 'react';
 import { Capacitor } from '@capacitor/core';
 import { StatusBar, Style } from '@capacitor/status-bar';
 import { SplashScreen } from '@capacitor/splash-screen';
@@ -6,6 +6,7 @@ import { Keyboard } from '@capacitor/keyboard';
 import { App } from '@capacitor/app';
 import { PushNotifications } from '@capacitor/push-notifications';
 import { supabase } from '@/integrations/supabase/client';
+import { toast } from 'sonner';
 
 /**
  * Hook to initialize native app features when running in Capacitor
@@ -101,93 +102,17 @@ export function useNativeApp() {
 }
 
 /**
- * Hook to manage native push notifications
- * Separate from useNativeApp for flexibility
+ * Hook to manage native push notifications.
+ * Auto-registers when user is authenticated and shows in-app toasts
+ * for foreground notifications so users never miss an alert.
  */
 export function useNativePushNotifications() {
   const isNative = Capacitor.isNativePlatform();
-
-  const registerPushNotifications = useCallback(async () => {
-    if (!isNative) return null;
-
-    try {
-      // Request permission
-      const permStatus = await PushNotifications.requestPermissions();
-
-      if (permStatus.receive !== 'granted') {
-        console.log('Push notification permission denied');
-        return null;
-      }
-
-      // Register with APNS/FCM
-      await PushNotifications.register();
-
-      // Listen for registration token
-      const tokenPromise = new Promise<string>((resolve) => {
-        PushNotifications.addListener('registration', (token) => {
-          console.log('Push registration token:', token.value);
-          resolve(token.value);
-        });
-      });
-
-      // Listen for errors
-      PushNotifications.addListener('registrationError', (error) => {
-        console.error('Push registration error:', error);
-      });
-
-      // Listen for notifications received while app is open
-      PushNotifications.addListener('pushNotificationReceived', (notification) => {
-        console.log('Push notification received:', notification);
-        // You can show an in-app notification here
-      });
-
-      // Listen for notification tapped
-      PushNotifications.addListener('pushNotificationActionPerformed', (action) => {
-        console.log('Push notification action:', action);
-        const data = action.notification.data;
-        const role = data?.role || '';
-
-        if (data?.action === 'open_tasks' || data?.type === 'task') {
-          window.location.href = '/electrician/tasks';
-        } else if (data?.type === 'study') {
-          window.location.href = '/electrician/study-centre';
-        } else if (data?.type === 'mental_health') {
-          window.location.href = '/electrician/mental-health';
-        } else if (data?.type === 'assessment') {
-          window.location.href = '/electrician/study-centre/apprentice';
-        } else if (data?.type === 'briefing') {
-          window.location.href = '/dashboard';
-        } else if (data?.type === 'certificate') {
-          window.location.href = '/electrician/inspection-testing';
-        } else if (data?.type === 'peer' && data?.conversationId) {
-          window.location.href = `/electrician/mental-health?tab=mates&conversation=${data.conversationId}`;
-        } else if (data?.conversationId) {
-          window.location.href = `/electrician/messages?conversation=${data.conversationId}`;
-        } else if (data?.quoteId) {
-          window.location.href =
-            role === 'employer'
-              ? '/employer?section=quotes'
-              : `/electrician/quotes/view/${data.quoteId}`;
-        } else if (data?.invoiceId) {
-          window.location.href =
-            role === 'employer'
-              ? '/employer?section=quotes'
-              : `/electrician/invoices/${data.invoiceId}/view`;
-        }
-      });
-
-      return await tokenPromise;
-    } catch (error) {
-      console.error('Push notification setup error:', error);
-      return null;
-    }
-  }, [isNative]);
+  const registered = useRef(false);
 
   const savePushToken = useCallback(async (token: string, userId: string) => {
     try {
-      const platform = Capacitor.getPlatform(); // 'ios' or 'android'
-
-      // Save to your push_subscriptions table
+      const platform = Capacitor.getPlatform();
       const { error } = await supabase.from('push_subscriptions').upsert(
         {
           user_id: userId,
@@ -196,11 +121,8 @@ export function useNativePushNotifications() {
           device_type: platform,
           is_active: true,
         },
-        {
-          onConflict: 'user_id,endpoint',
-        }
+        { onConflict: 'user_id,endpoint' }
       );
-
       if (error) throw error;
       console.log('Push token saved for', platform);
     } catch (error) {
@@ -208,9 +130,105 @@ export function useNativePushNotifications() {
     }
   }, []);
 
-  return {
-    isNative,
-    registerPushNotifications,
-    savePushToken,
-  };
+  const navigateFromNotification = useCallback((data: Record<string, string>) => {
+    const role = data?.role || '';
+    if (data?.action === 'open_tasks' || data?.type === 'task') {
+      window.location.href = '/electrician/tasks';
+    } else if (data?.type === 'study') {
+      window.location.href = '/electrician/study-centre';
+    } else if (data?.type === 'mental_health') {
+      window.location.href = '/electrician/mental-health';
+    } else if (data?.type === 'assessment') {
+      window.location.href = '/electrician/study-centre/apprentice';
+    } else if (data?.type === 'briefing') {
+      window.location.href = '/dashboard';
+    } else if (data?.type === 'certificate') {
+      window.location.href = '/electrician/inspection-testing';
+    } else if (data?.type === 'peer' && data?.conversationId) {
+      window.location.href = `/electrician/mental-health?tab=mates&conversation=${data.conversationId}`;
+    } else if (data?.conversationId) {
+      window.location.href = `/electrician/messages?conversation=${data.conversationId}`;
+    } else if (data?.quoteId) {
+      window.location.href =
+        role === 'employer'
+          ? '/employer?section=quotes'
+          : `/electrician/quotes/view/${data.quoteId}`;
+    } else if (data?.invoiceId) {
+      window.location.href =
+        role === 'employer'
+          ? '/employer?section=quotes'
+          : `/electrician/invoices/${data.invoiceId}/view`;
+    }
+  }, []);
+
+  // Auto-register on mount when running natively
+  useEffect(() => {
+    if (!isNative || registered.current) return;
+
+    const setup = async () => {
+      try {
+        // Check / request permission
+        let permStatus = await PushNotifications.checkPermissions();
+        if (permStatus.receive === 'prompt') {
+          permStatus = await PushNotifications.requestPermissions();
+        }
+        if (permStatus.receive !== 'granted') {
+          console.log('Push notification permission not granted');
+          return;
+        }
+
+        // Register with APNS / FCM
+        await PushNotifications.register();
+        registered.current = true;
+
+        // Token received — persist to Supabase
+        PushNotifications.addListener('registration', async (token) => {
+          console.log('Push token:', token.value);
+          const {
+            data: { user },
+          } = await supabase.auth.getUser();
+          if (user) {
+            savePushToken(token.value, user.id);
+          }
+        });
+
+        PushNotifications.addListener('registrationError', (error) => {
+          console.error('Push registration error:', error);
+        });
+
+        // Foreground notification — show in-app toast so the user sees it
+        PushNotifications.addListener('pushNotificationReceived', (notification) => {
+          console.log('Push received (foreground):', notification);
+          toast(notification.title || 'Notification', {
+            description: notification.body,
+            duration: 5000,
+            action: notification.data
+              ? {
+                  label: 'View',
+                  onClick: () => navigateFromNotification(notification.data),
+                }
+              : undefined,
+          });
+        });
+
+        // Notification tapped — deep link
+        PushNotifications.addListener('pushNotificationActionPerformed', (action) => {
+          console.log('Push tap:', action);
+          if (action.notification.data) {
+            navigateFromNotification(action.notification.data);
+          }
+        });
+      } catch (error) {
+        console.error('Push notification setup error:', error);
+      }
+    };
+
+    setup();
+
+    return () => {
+      PushNotifications.removeAllListeners();
+    };
+  }, [isNative, savePushToken, navigateFromNotification]);
+
+  return { isNative };
 }

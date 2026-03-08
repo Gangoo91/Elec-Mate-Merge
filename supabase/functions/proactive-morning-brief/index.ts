@@ -17,6 +17,14 @@ import { handleError } from '../_shared/errors.ts';
 const VPS_URL = Deno.env.get('VPS_MCP_URL') || 'http://89.167.69.251:3100';
 const VPS_API_KEY = Deno.env.get('VPS_API_KEY') || '';
 
+interface ProjectTaskGroup {
+  project_title: string;
+  project_id: string;
+  location: string | null;
+  open_count: number;
+  overdue_count: number;
+}
+
 interface UserBriefData {
   user_id: string;
   phone: string;
@@ -27,7 +35,8 @@ interface UserBriefData {
   overdue_invoices: number;
   overdue_invoice_total: number;
   expiring_certs: number;
-  today_events: Array<{ title: string; start_time: string }>;
+  today_events: Array<{ title: string; start_at: string }>;
+  project_tasks: ProjectTaskGroup[];
 }
 
 Deno.serve(async (req) => {
@@ -151,6 +160,7 @@ async function gatherBriefData(
     overdueInvoicesResult,
     expiringCertsResult,
     todayEventsResult,
+    projectTasksResult,
   ] = await Promise.all([
     supabase
       .from('spark_tasks')
@@ -185,15 +195,50 @@ async function gatherBriefData(
       .gte('expiry_date', now.toISOString()),
     supabase
       .from('calendar_events')
-      .select('title, start_time')
+      .select('title, start_at')
       .eq('user_id', userId)
-      .gte('start_time', todayStart)
-      .lt('start_time', todayEnd)
-      .order('start_time', { ascending: true }),
+      .gte('start_at', todayStart)
+      .lt('start_at', todayEnd)
+      .order('start_at', { ascending: true }),
+    // Tasks grouped by project — for per-job task breakdown in briefing
+    supabase
+      .from('spark_tasks')
+      .select('id, status, due_at, project_id, spark_projects(id, title, location)')
+      .eq('user_id', userId)
+      .eq('status', 'open')
+      .not('project_id', 'is', null)
+      .order('due_at', { ascending: true })
+      .limit(100),
   ]);
 
   const overdueInvoices = overdueInvoicesResult.data || [];
   const overdueTotal = overdueInvoices.reduce((sum, inv) => sum + (Number(inv.total) || 0), 0);
+
+  // Group tasks by project
+  const projectMap = new Map<string, ProjectTaskGroup>();
+  for (const task of projectTasksResult.data || []) {
+    const project = task.spark_projects as {
+      id: string;
+      title: string;
+      location: string | null;
+    } | null;
+    if (!project) continue;
+    const pid = project.id;
+    if (!projectMap.has(pid)) {
+      projectMap.set(pid, {
+        project_id: pid,
+        project_title: project.title,
+        location: project.location,
+        open_count: 0,
+        overdue_count: 0,
+      });
+    }
+    const group = projectMap.get(pid)!;
+    group.open_count++;
+    if (task.due_at && new Date(task.due_at as string) < now) {
+      group.overdue_count++;
+    }
+  }
 
   return {
     open_tasks: openTasksResult.count || 0,
@@ -202,7 +247,8 @@ async function gatherBriefData(
     overdue_invoices: overdueInvoices.length,
     overdue_invoice_total: overdueTotal,
     expiring_certs: (expiringCertsResult.data || []).length,
-    today_events: (todayEventsResult.data || []) as Array<{ title: string; start_time: string }>,
+    today_events: (todayEventsResult.data || []) as Array<{ title: string; start_at: string }>,
+    project_tasks: Array.from(projectMap.values()).slice(0, 5),
   };
 }
 
@@ -222,7 +268,7 @@ function composeBrief(data: UserBriefData, isMonday: boolean): string {
   if (data.today_events.length > 0) {
     lines.push('📅 Today:');
     for (const ev of data.today_events) {
-      const time = new Date(ev.start_time).toLocaleTimeString('en-GB', {
+      const time = new Date(ev.start_at).toLocaleTimeString('en-GB', {
         hour: '2-digit',
         minute: '2-digit',
       });
@@ -232,12 +278,24 @@ function composeBrief(data: UserBriefData, isMonday: boolean): string {
     lines.push('📅 No jobs scheduled today');
   }
 
-  // Tasks
-  if (data.overdue_tasks > 0) {
-    lines.push(`⚠️ ${data.overdue_tasks} overdue task${data.overdue_tasks === 1 ? '' : 's'}`);
-  }
-  if (data.open_tasks > 0) {
-    lines.push(`📋 ${data.open_tasks} open task${data.open_tasks === 1 ? '' : 's'}`);
+  // Tasks — grouped by project if available
+  if (data.project_tasks.length > 0) {
+    lines.push('');
+    lines.push('📋 Tasks by job:');
+    for (const group of data.project_tasks) {
+      const loc = group.location ? ` (${group.location})` : '';
+      const overdue = group.overdue_count > 0 ? ` ⚠️ ${group.overdue_count} overdue` : '';
+      lines.push(
+        `  • ${group.project_title}${loc}: ${group.open_count} task${group.open_count === 1 ? '' : 's'}${overdue}`
+      );
+    }
+  } else if (data.overdue_tasks > 0 || data.open_tasks > 0) {
+    if (data.overdue_tasks > 0) {
+      lines.push(`⚠️ ${data.overdue_tasks} overdue task${data.overdue_tasks === 1 ? '' : 's'}`);
+    }
+    if (data.open_tasks > 0) {
+      lines.push(`📋 ${data.open_tasks} open task${data.open_tasks === 1 ? '' : 's'}`);
+    }
   }
 
   // Money

@@ -100,23 +100,14 @@ serve(async (req: Request) => {
       email: emailAddress,
     });
 
-    // Redirect to calendar page with success
-    return new Response(null, {
-      status: 302,
-      headers: {
-        ...corsHeaders,
-        Location: `${FRONTEND_URL}/electrician/business/calendar?google_connected=true`,
-      },
+    // Close the popup — the app detects focus return and refreshes status
+    return new Response(closePage('Connected!', `${emailAddress} is now synced with Elec-Mate.`), {
+      headers: { 'Content-Type': 'text/html; charset=utf-8' },
     });
   } catch (error) {
     console.error('Calendar OAuth callback error:', error);
-    // Redirect with error
-    return new Response(null, {
-      status: 302,
-      headers: {
-        ...corsHeaders,
-        Location: `${FRONTEND_URL}/electrician/business/calendar?error=${encodeURIComponent((error as Error).message)}`,
-      },
+    return new Response(closePage('Connection Failed', (error as Error).message), {
+      headers: { 'Content-Type': 'text/html; charset=utf-8' },
     });
   }
 });
@@ -150,4 +141,8 @@ async function getGoogleEmail(accessToken: string): Promise<string> {
   });
   const data = await response.json();
   return data.email;
+}
+
+function closePage(title: string, message: string): string {
+  return `<!DOCTYPE html><html><head><title>${title}</title></head><body><script>window.close();</script><p>${title}: ${message}</p><p>You can close this window.</p></body></html>`;
 }

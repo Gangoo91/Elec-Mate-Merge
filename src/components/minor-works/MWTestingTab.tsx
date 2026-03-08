@@ -22,7 +22,9 @@ import {
 import { useMinorWorksSmartForm } from '@/hooks/useMinorWorksSmartForm';
 
 interface MWTestingTabProps {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   formData: any;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   onUpdate: (field: string, value: any) => void;
   isMobile?: boolean;
 }
@@ -229,7 +231,7 @@ const MWTestingTab: React.FC<MWTestingTabProps> = ({ formData, onUpdate, isMobil
                         Ω
                       </span>
                     </div>
-                    <p className="text-xs text-muted-foreground">Combined line and cpc</p>
+                    <p className="text-xs text-white">Combined line and cpc</p>
                   </div>
                   <div className="space-y-2">
                     <Label className="text-sm">
@@ -246,7 +248,7 @@ const MWTestingTab: React.FC<MWTestingTabProps> = ({ formData, onUpdate, isMobil
                         Ω
                       </span>
                     </div>
-                    <p className="text-xs text-muted-foreground">CPC only (alternative)</p>
+                    <p className="text-xs text-white">CPC only (alternative)</p>
                   </div>
                   <div className="space-y-2">
                     <Label className="text-sm">Polarity *</Label>
@@ -759,9 +761,7 @@ const MWTestingTab: React.FC<MWTestingTabProps> = ({ formData, onUpdate, isMobil
                         </Select>
                       </div>
                     </div>
-                    <p className="text-xs text-white">
-                      NOTE: Not all AFDDs have a test button
-                    </p>
+                    <p className="text-xs text-white">NOTE: Not all AFDDs have a test button</p>
                   </div>
                 )}
 
@@ -825,9 +825,7 @@ const MWTestingTab: React.FC<MWTestingTabProps> = ({ formData, onUpdate, isMobil
                             <SelectItem value="unsatisfactory">
                               <div className="flex flex-col">
                                 <span>Unsatisfactory</span>
-                                <span className="text-xs text-white">
-                                  Damage or issues found
-                                </span>
+                                <span className="text-xs text-white">Damage or issues found</span>
                               </div>
                             </SelectItem>
                           </SelectContent>

@@ -1,6 +1,6 @@
 #root {
   margin: 0 auto;
-  text-align: center;
+  text-align: left;
   /* Safe area handled by Header component - don't add padding-top here */
   /* Bottom/left/right safe areas still needed for edge content */
   padding-bottom: env(safe-area-inset-bottom, 0px);

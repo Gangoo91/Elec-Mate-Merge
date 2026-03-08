@@ -17,9 +17,12 @@ import {
   Clock,
 } from 'lucide-react';
 import { format, subDays, startOfDay, endOfDay } from 'date-fns';
+import { useState } from 'react';
 import PullToRefresh from '@/components/admin/PullToRefresh';
 
 export default function AdminAnalytics() {
+  const [chartPeriod, setChartPeriod] = useState<'7d' | '30d'>('7d');
+
   // Fetch analytics data
   const {
     data: analytics,
@@ -88,14 +91,14 @@ export default function AdminAnalytics() {
         roleBreakdown[role] = (roleBreakdown[role] || 0) + 1;
       });
 
-      // Get daily signups for the last 7 days - batch all queries in parallel
-      const dailyDates = Array.from({ length: 7 }, (_, i) => {
-        const date = subDays(now, 6 - i);
+      // Get daily signups for the last 30 days - batch all queries in parallel
+      const dailyDates30 = Array.from({ length: 30 }, (_, i) => {
+        const date = subDays(now, 29 - i);
         return { date, start: startOfDay(date), end: endOfDay(date) };
       });
 
-      const dailyResults = await Promise.all(
-        dailyDates.map(({ start, end }) =>
+      const dailyResults30 = await Promise.all(
+        dailyDates30.map(({ start, end }) =>
           supabase
             .from('profiles')
             .select('*', { count: 'exact', head: true })
@@ -104,9 +107,16 @@ export default function AdminAnalytics() {
         )
       );
 
-      const dailySignups = dailyDates.map(({ date }, i) => ({
-        date: format(date, 'EEE'),
-        count: dailyResults[i].count || 0,
+      const dailySignups30 = dailyDates30.map(({ date }, i) => ({
+        date: format(date, 'd MMM'),
+        dateShort: format(date, 'EEE'),
+        count: dailyResults30[i].count || 0,
+      }));
+
+      // Last 7 days is the tail of the 30-day data
+      const dailySignups = dailySignups30.slice(-7).map((d) => ({
+        date: d.dateShort,
+        count: d.count,
       }));
 
       // Calculate growth rates
@@ -115,17 +125,34 @@ export default function AdminAnalytics() {
           100
         : 0;
 
+      // Previous 30d for comparison
+      const prevMonthStart = startOfDay(subDays(now, 60));
+      const prevMonthEnd = startOfDay(subDays(now, 30));
+      const prevMonthSignupsRes = await supabase
+        .from('profiles')
+        .select('*', { count: 'exact', head: true })
+        .gte('created_at', prevMonthStart.toISOString())
+        .lt('created_at', prevMonthEnd.toISOString());
+
+      const prevMonthSignups = prevMonthSignupsRes.count || 0;
+      const monthGrowth = prevMonthSignups
+        ? (((monthSignupsRes.count || 0) - prevMonthSignups) / prevMonthSignups) * 100
+        : 0;
+
       return {
         totalUsers: totalUsersRes.count || 0,
         todaySignups: todaySignupsRes.count || 0,
         yesterdaySignups: yesterdaySignupsRes.count || 0,
         weekSignups: weekSignupsRes.count || 0,
         monthSignups: monthSignupsRes.count || 0,
+        prevMonthSignups,
         subscribedUsers: subscribedRes.count || 0,
         activeUsers: activeRes.count || 0,
         weekGrowth,
+        monthGrowth,
         roleBreakdown,
         dailySignups,
+        dailySignups30,
         conversionRate: totalUsersRes.count
           ? ((subscribedRes.count || 0) / totalUsersRes.count) * 100
           : 0,
@@ -141,7 +168,8 @@ export default function AdminAnalytics() {
     return <Minus className="h-3 w-3 text-gray-400" />;
   };
 
-  const maxDailySignup = Math.max(...(analytics?.dailySignups?.map((d) => d.count) || [1]));
+  const chartData = chartPeriod === '30d' ? analytics?.dailySignups30 : analytics?.dailySignups;
+  const maxDailySignup = Math.max(...(chartData?.map((d: { count: number }) => d.count) || [1]));
 
   return (
     <PullToRefresh
@@ -228,24 +256,73 @@ export default function AdminAnalytics() {
         {/* Daily Signups Chart */}
         <Card>
           <CardHeader className="pb-2">
-            <CardTitle className="text-sm flex items-center gap-2">
-              <TrendingUp className="h-4 w-4 text-green-400" />
-              Daily Signups (Last 7 Days)
+            <CardTitle className="text-sm flex items-center justify-between">
+              <span className="flex items-center gap-2">
+                <TrendingUp className="h-4 w-4 text-green-400" />
+                Daily Signups
+              </span>
+              <div className="flex gap-1">
+                <Button
+                  variant={chartPeriod === '7d' ? 'default' : 'outline'}
+                  size="sm"
+                  onClick={() => setChartPeriod('7d')}
+                  className={`h-7 px-2 text-xs touch-manipulation ${chartPeriod === '7d' ? 'bg-green-500 text-black hover:bg-green-600' : ''}`}
+                >
+                  7d
+                </Button>
+                <Button
+                  variant={chartPeriod === '30d' ? 'default' : 'outline'}
+                  size="sm"
+                  onClick={() => setChartPeriod('30d')}
+                  className={`h-7 px-2 text-xs touch-manipulation ${chartPeriod === '30d' ? 'bg-green-500 text-black hover:bg-green-600' : ''}`}
+                >
+                  30d
+                </Button>
+              </div>
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="flex items-end justify-between gap-2 h-32">
-              {analytics?.dailySignups?.map((day, i) => (
-                <div key={i} className="flex-1 flex flex-col items-center gap-1">
-                  <div
-                    className="w-full bg-gradient-to-t from-green-500/30 to-green-500/10 rounded-t-lg transition-all"
-                    style={{ height: `${Math.max((day.count / maxDailySignup) * 100, 5)}%` }}
-                  />
-                  <span className="text-xs text-muted-foreground">{day.date}</span>
-                  <span className="text-xs font-medium">{day.count}</span>
-                </div>
-              ))}
+            <div className="flex items-end justify-between gap-[2px] h-32">
+              {chartData?.map(
+                (day: { date: string; dateShort?: string; count: number }, i: number) => (
+                  <div key={i} className="flex-1 flex flex-col items-center gap-0.5">
+                    <div
+                      className="w-full bg-gradient-to-t from-green-500/30 to-green-500/10 rounded-t-lg transition-all"
+                      style={{ height: `${Math.max((day.count / maxDailySignup) * 100, 5)}%` }}
+                    />
+                    {chartPeriod === '7d' ? (
+                      <>
+                        <span className="text-xs text-muted-foreground">{day.date}</span>
+                        <span className="text-xs font-medium">{day.count}</span>
+                      </>
+                    ) : i % 5 === 0 ? (
+                      <span className="text-[9px] text-muted-foreground">{day.date}</span>
+                    ) : null}
+                  </div>
+                )
+              )}
             </div>
+            {chartPeriod === '30d' && (
+              <div className="flex items-center justify-between mt-3 pt-3 border-t border-border/50">
+                <div className="text-center flex-1">
+                  <p className="text-lg font-bold">{analytics?.monthSignups || 0}</p>
+                  <p className="text-[10px] text-muted-foreground">This 30d</p>
+                </div>
+                <div className="text-center flex-1">
+                  <p className="text-lg font-bold">{analytics?.prevMonthSignups || 0}</p>
+                  <p className="text-[10px] text-muted-foreground">Prev 30d</p>
+                </div>
+                <div className="text-center flex-1">
+                  <Badge
+                    className={`text-xs ${(analytics?.monthGrowth || 0) >= 0 ? 'bg-green-500/20 text-green-400' : 'bg-red-500/20 text-red-400'}`}
+                  >
+                    {(analytics?.monthGrowth || 0) >= 0 ? '+' : ''}
+                    {(analytics?.monthGrowth || 0).toFixed(0)}%
+                  </Badge>
+                  <p className="text-[10px] text-muted-foreground mt-1">MoM Growth</p>
+                </div>
+              </div>
+            )}
           </CardContent>
         </Card>
 

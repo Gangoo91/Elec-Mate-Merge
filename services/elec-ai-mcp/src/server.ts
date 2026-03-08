@@ -175,7 +175,7 @@ function startHttp(): void {
     // Count active agent workspaces
     try {
       const { readdirSync, existsSync } = await import('node:fs');
-      const wsDir = '/root/.openclaw/workspaces';
+      const wsDir = '/home/openclaw/.openclaw/workspaces';
       if (existsSync(wsDir)) {
         const dirs = readdirSync(wsDir, { withFileTypes: true }).filter((d) => d.isDirectory());
         health.agents = { active_workspaces: dirs.length };
@@ -276,10 +276,28 @@ function startHttp(): void {
     const ch = channel || 'whatsapp';
 
     try {
-      const { execSync } = await import('node:child_process');
-      const result = execSync(
-        `openclaw message send --channel ${ch} --target "${target}" --message "${message.replace(/"/g, '\\"')}" --json 2>&1`,
-        { timeout: 30_000, encoding: 'utf-8' }
+      const { execFileSync } = await import('node:child_process');
+      // Use node22 + openclaw.mjs directly (container has node 20 but openclaw needs >=22)
+      const result = execFileSync(
+        '/usr/local/bin/node22',
+        [
+          '/usr/lib/node_modules/openclaw/openclaw.mjs',
+          'message',
+          'send',
+          '--channel',
+          ch,
+          '--target',
+          target,
+          '--message',
+          message,
+          '--json',
+        ],
+        {
+          timeout: 30_000,
+          encoding: 'utf-8',
+          stdio: ['pipe', 'pipe', 'pipe'],
+          env: { ...process.env, HOME: '/home/openclaw' },
+        }
       );
       res.json({ success: true, result: result.trim() });
     } catch (err) {

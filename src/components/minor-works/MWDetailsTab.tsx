@@ -253,7 +253,7 @@ const MWDetailsTab: React.FC<MWDetailsTabProps> = ({ formData, onUpdate, isMobil
                     </SelectTrigger>
                     <SelectContent>
                       <SelectItem value="__clear__">
-                        <span className="text-muted-foreground">Clear selection</span>
+                        <span className="text-white">Clear selection</span>
                       </SelectItem>
                       {WORK_TYPES.map((opt) => (
                         <SelectItem key={opt.value} value={opt.value}>
@@ -392,7 +392,7 @@ const MWDetailsTab: React.FC<MWDetailsTabProps> = ({ formData, onUpdate, isMobil
                     </SelectTrigger>
                     <SelectContent>
                       <SelectItem value="__clear__">
-                        <span className="text-muted-foreground">Clear selection</span>
+                        <span className="text-white">Clear selection</span>
                       </SelectItem>
                       {EARTHING_ARRANGEMENTS.map((opt) => (
                         <SelectItem key={opt.value} value={opt.value}>
@@ -409,7 +409,7 @@ const MWDetailsTab: React.FC<MWDetailsTabProps> = ({ formData, onUpdate, isMobil
                     </SelectContent>
                   </Select>
                   {formData.earthingArrangement && (
-                    <p className="text-xs text-muted-foreground mt-1">
+                    <p className="text-xs text-white mt-1">
                       {
                         EARTHING_ARRANGEMENTS.find((e) => e.value === formData.earthingArrangement)
                           ?.description
@@ -470,7 +470,7 @@ const MWDetailsTab: React.FC<MWDetailsTabProps> = ({ formData, onUpdate, isMobil
                     </SelectTrigger>
                     <SelectContent>
                       <SelectItem value="__clear__">
-                        <span className="text-muted-foreground">Clear selection</span>
+                        <span className="text-white">Clear selection</span>
                       </SelectItem>
                       {EARTHING_CONDUCTOR_SIZES.map((opt) => (
                         <SelectItem key={opt.value} value={opt.value}>
@@ -495,7 +495,7 @@ const MWDetailsTab: React.FC<MWDetailsTabProps> = ({ formData, onUpdate, isMobil
                     </SelectTrigger>
                     <SelectContent>
                       <SelectItem value="__clear__">
-                        <span className="text-muted-foreground">Clear selection</span>
+                        <span className="text-white">Clear selection</span>
                       </SelectItem>
                       {EARTHING_CONDUCTOR_SIZES.map((opt) => (
                         <SelectItem key={opt.value} value={opt.value}>

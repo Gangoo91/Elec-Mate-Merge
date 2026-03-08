@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
 import { Alert, AlertDescription } from '@/components/ui/alert';
@@ -38,6 +38,7 @@ import {
 import { useMinorWorksSmartForm } from '@/hooks/useMinorWorksSmartForm';
 
 interface MinorWorksPdfGeneratorProps {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   formData: any;
   isFormValid: boolean;
   onSuccess?: () => void;
@@ -148,11 +149,15 @@ const MinorWorksPdfGenerator: React.FC<MinorWorksPdfGeneratorProps> = ({
   };
 
   // Check if PDF Monkey is configured
-  const isPdfMonkeyConfigured = async () => {
-    const { offlineStorage } = await import('@/utils/offlineStorage');
-    const credentials = await offlineStorage.getApiCredentials('pdfMonkey');
-    return credentials.apiKey && credentials.templateId;
-  };
+  const [hasCustomTemplate, setHasCustomTemplate] = useState(false);
+
+  useEffect(() => {
+    (async () => {
+      const { offlineStorage } = await import('@/utils/offlineStorage');
+      const credentials = await offlineStorage.getApiCredentials('pdfMonkey');
+      setHasCustomTemplate(!!(credentials.apiKey && credentials.templateId));
+    })();
+  }, []);
 
   const generateFallbackPdf = async () => {
     // Fallback to browser-based PDF generation using existing utils
@@ -298,8 +303,7 @@ const MinorWorksPdfGenerator: React.FC<MinorWorksPdfGeneratorProps> = ({
             brandingAccentColor:
               branding.companyAccentColor || dataWithBranding.brandingAccentColor || '#d69e2e',
             brandingWebsite: branding.companyWebsite || dataWithBranding.brandingWebsite || '',
-            schemeLogo:
-              branding.registrationSchemeLogo || dataWithBranding.schemeLogo || '',
+            schemeLogo: branding.registrationSchemeLogo || dataWithBranding.schemeLogo || '',
           };
         }
       }
@@ -405,6 +409,7 @@ const MinorWorksPdfGenerator: React.FC<MinorWorksPdfGeneratorProps> = ({
 
           // Save PDF URL to database
           if (savedReportId) {
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             const updateData: Record<string, any> = {
               pdf_url: permanentUrl,
               pdf_generated_at: new Date().toISOString(),
@@ -481,6 +486,7 @@ const MinorWorksPdfGenerator: React.FC<MinorWorksPdfGeneratorProps> = ({
           queryClient.invalidateQueries({ queryKey: ['my-reports'] });
         }
       }
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
       setError(error.message || 'PDF generation failed');
       setCurrentMethod(null);
@@ -497,6 +503,7 @@ const MinorWorksPdfGenerator: React.FC<MinorWorksPdfGeneratorProps> = ({
   const handleDownload = async () => {
     if (pdfUrl) {
       try {
+        // eslint-disable-next-line @typescript-eslint/no-require-imports
         const { generatePdfFilename } = require('@/utils/pdfFilenameGenerator');
         const filename = generatePdfFilename(
           'MinorWorks',
@@ -702,12 +709,12 @@ const MinorWorksPdfGenerator: React.FC<MinorWorksPdfGeneratorProps> = ({
           </Button>
         </div>
 
-        {isPdfMonkeyConfigured() && (
-          <p className="text-xs text-center text-muted-foreground">Using custom PDF template</p>
+        {hasCustomTemplate && (
+          <p className="text-xs text-center text-white">Using custom PDF template</p>
         )}
 
-        {!isPdfMonkeyConfigured() && (
-          <p className="text-xs text-center text-muted-foreground">
+        {!hasCustomTemplate && (
+          <p className="text-xs text-center text-white">
             Using local template • Configure custom templates in Settings
           </p>
         )}

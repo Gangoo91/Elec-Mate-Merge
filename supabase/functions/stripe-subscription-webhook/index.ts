@@ -576,6 +576,33 @@ serve(async (req) => {
           isNewSubscription && isActive
         );
 
+        // Cancel any previous subscriptions for this customer (upgrade scenario)
+        // e.g. user upgrading from Electrician (£9.99) to Business AI (£29.99)
+        if (isNewSubscription && isActive) {
+          try {
+            const existingSubs = await stripe.subscriptions.list({
+              customer: customerId,
+              limit: 10,
+            });
+
+            for (const oldSub of existingSubs.data) {
+              if (oldSub.id !== subscription.id && ['active', 'trialing'].includes(oldSub.status)) {
+                await stripe.subscriptions.cancel(oldSub.id);
+                logger.info('Cancelled previous subscription (upgrade)', {
+                  cancelledSubId: oldSub.id,
+                  newSubId: subscription.id,
+                  oldPriceId: oldSub.items.data[0]?.price?.id,
+                  newPriceId: priceId,
+                });
+              }
+            }
+          } catch (cancelErr: unknown) {
+            logger.warn('Failed to cancel previous subscriptions (non-fatal)', {
+              error: (cancelErr as Error)?.message,
+            });
+          }
+        }
+
         // Handle founder invite completion (mark as claimed)
         // Check if this is a founder subscription by looking at the price ID
         const isFounderSubscription = priceId === 'price_1SPK8c2RKw5t5RAmRGJxXfjc';
@@ -804,18 +831,46 @@ serve(async (req) => {
           break;
         }
 
-        await updateSubscriptionStatus(userId, false, customerId, null, null);
+        // Check if customer has another active subscription (upgrade scenario)
+        // When upgrading, we cancel the old sub — but the new sub is already active.
+        // Without this check, the old sub's deletion event would incorrectly deactivate the user.
+        let hasOtherActiveSub = false;
+        try {
+          const existingSubs = await stripe.subscriptions.list({
+            customer: customerId,
+            status: 'active',
+            limit: 10,
+          });
+          hasOtherActiveSub = existingSubs.data.some((s) => s.id !== subscription.id);
+          if (hasOtherActiveSub) {
+            logger.info(
+              'Skipping deactivation — customer has another active subscription (upgrade)',
+              {
+                deletedSubId: subscription.id,
+                activeSubId: existingSubs.data.find((s) => s.id !== subscription.id)?.id,
+              }
+            );
+          }
+        } catch (listErr: unknown) {
+          logger.warn('Failed to check for other subscriptions (proceeding with deactivation)', {
+            error: (listErr as Error)?.message,
+          });
+        }
 
-        // Notify user
-        await supabase.from('notifications').insert({
-          user_id: userId,
-          type: 'subscription_cancelled',
-          title: 'Subscription Ended',
-          message:
-            'Your subscription has ended. Subscribe again to regain access to premium features.',
-          data: {},
-          read: false,
-        });
+        if (!hasOtherActiveSub) {
+          await updateSubscriptionStatus(userId, false, customerId, null, null);
+
+          // Notify user
+          await supabase.from('notifications').insert({
+            user_id: userId,
+            type: 'subscription_cancelled',
+            title: 'Subscription Ended',
+            message:
+              'Your subscription has ended. Subscribe again to regain access to premium features.',
+            data: {},
+            read: false,
+          });
+        }
 
         // Resolve any active dunning sequences for this subscription
         // Prevents further emails being sent for a cancelled subscription
