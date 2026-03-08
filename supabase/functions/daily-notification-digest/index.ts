@@ -23,7 +23,17 @@ interface PushAlert {
   referenceId: string;
   title: string;
   body: string;
-  pushType: 'quote' | 'invoice' | 'certificate' | 'job' | 'peer';
+  pushType:
+    | 'quote'
+    | 'invoice'
+    | 'certificate'
+    | 'job'
+    | 'peer'
+    | 'study'
+    | 'mental_health'
+    | 'assessment'
+    | 'briefing';
+  data?: Record<string, unknown>;
 }
 
 /** Call send-push-notification for a single user */
@@ -33,7 +43,8 @@ async function sendPush(
   userId: string,
   title: string,
   body: string,
-  type: string
+  type: string,
+  data?: Record<string, unknown>
 ): Promise<void> {
   await fetch(`${supabaseUrl}/functions/v1/send-push-notification`, {
     method: 'POST',
@@ -42,7 +53,7 @@ async function sendPush(
       Authorization: `Bearer ${serviceKey}`,
       apikey: serviceKey,
     },
-    body: JSON.stringify({ userId, title, body, type }),
+    body: JSON.stringify({ userId, title, body, type, data }),
   });
 }
 
@@ -86,7 +97,8 @@ async function logPush(
 /** Build alert list for a given user */
 async function buildAlertsForUser(
   supabase: ReturnType<typeof createClient>,
-  userId: string
+  userId: string,
+  role: string
 ): Promise<PushAlert[]> {
   const alerts: PushAlert[] = [];
   const now = new Date();
@@ -94,18 +106,17 @@ async function buildAlertsForUser(
 
   // ── Overdue invoices ──────────────────────────────────────────────
   const { data: overdueInvoices } = await supabase
-    .from('quotes')
-    .select('id, quote_number, client_data, total, invoice_due_date')
+    .from('invoices')
+    .select('id, invoice_number, client_data, total, due_date')
     .eq('user_id', userId)
-    .eq('invoice_raised', true)
-    .not('invoice_status', 'eq', 'paid')
-    .not('invoice_due_date', 'is', null)
-    .lt('invoice_due_date', today)
+    .not('status', 'eq', 'paid')
+    .not('due_date', 'is', null)
+    .lt('due_date', today)
     .is('deleted_at', null)
     .limit(10);
 
   if (overdueInvoices && overdueInvoices.length > 0) {
-    const totalOwed = overdueInvoices.reduce((sum, q) => sum + (q.total ?? 0), 0);
+    const totalOwed = overdueInvoices.reduce((sum, inv) => sum + (inv.total ?? 0), 0);
     const formatted = new Intl.NumberFormat('en-GB', { style: 'currency', currency: 'GBP' }).format(
       totalOwed
     );
@@ -115,6 +126,7 @@ async function buildAlertsForUser(
       title: `⚠️ ${overdueInvoices.length} overdue invoice${overdueInvoices.length > 1 ? 's' : ''}`,
       body: `${formatted} outstanding — chase these today`,
       pushType: 'invoice',
+      data: { role, invoiceId: overdueInvoices[0].id },
     });
   }
 
@@ -139,6 +151,7 @@ async function buildAlertsForUser(
       title: `⏰ Quote expiring soon`,
       body: `Quote for ${clientName} expires within 3 days — follow up now`,
       pushType: 'quote',
+      data: { role, quoteId: quote.id },
     });
   }
 
@@ -165,6 +178,7 @@ async function buildAlertsForUser(
           ? `${urgentCount} high priority — open the app to action them`
           : 'Open the app to catch up',
       pushType: 'job',
+      data: { role },
     });
   }
 
@@ -193,6 +207,7 @@ async function buildAlertsForUser(
       title: `🔧 ${todayJobs.length} job${todayJobs.length > 1 ? 's' : ''} today`,
       body: `First job at ${timeStr}${firstJob.location ? ` — ${firstJob.location}` : ''}`,
       pushType: 'job',
+      data: { role },
     });
   }
 
@@ -218,6 +233,7 @@ async function buildAlertsForUser(
           ? 'Your ECS card has expired — renew now'
           : `Expires in ${daysLeft} day${daysLeft !== 1 ? 's' : ''} — renew before it lapses`,
       pushType: 'certificate',
+      data: { role, certificateId: elecIdProfile.id },
     });
   }
 
@@ -243,6 +259,7 @@ async function buildAlertsForUser(
             ? `Calibration overdue — equipment may be non-compliant`
             : `Due in ${daysLeft} day${daysLeft !== 1 ? 's' : ''}`,
         pushType: 'certificate',
+        data: { role },
       });
     }
   }
@@ -265,7 +282,167 @@ async function buildAlertsForUser(
       title: `📋 EICR re-inspection due`,
       body: `${cert.client_name || cert.installation_address} — ${daysLeft < 0 ? 'overdue' : `due in ${daysLeft} day${daysLeft !== 1 ? 's' : ''}`}`,
       pushType: 'certificate',
+      data: { role, certificateId: cert.id },
     });
+  }
+
+  // ── Flashcard reviews due ────────────────────────────────────────
+  const { data: dueFlashcards } = await supabase
+    .from('flashcards')
+    .select('id')
+    .eq('user_id', userId)
+    .lte('next_review', today)
+    .limit(1);
+
+  if (dueFlashcards && dueFlashcards.length > 0) {
+    const { count } = await supabase
+      .from('flashcards')
+      .select('id', { count: 'exact', head: true })
+      .eq('user_id', userId)
+      .lte('next_review', today);
+
+    alerts.push({
+      type: 'flashcards_due',
+      referenceId: `batch-${new Date().toDateString()}`,
+      title: `📚 ${count ?? 0} flashcard${(count ?? 0) !== 1 ? 's' : ''} to review`,
+      body: 'Keep your streak alive — quick revision session',
+      pushType: 'study',
+      data: { role },
+    });
+  }
+
+  // ── Learning streak broken (no study in 2+ days) ───────────────
+  const twoDaysAgo = new Date(now.getTime() - 2 * 86400000).toISOString();
+  const { data: recentStudy } = await supabase
+    .from('learning_progress')
+    .select('id')
+    .eq('user_id', userId)
+    .gte('last_accessed', twoDaysAgo)
+    .limit(1);
+
+  if (!recentStudy || recentStudy.length === 0) {
+    // Only alert if user has any learning progress at all
+    const { data: anyStudy } = await supabase
+      .from('learning_progress')
+      .select('id')
+      .eq('user_id', userId)
+      .limit(1);
+
+    if (anyStudy && anyStudy.length > 0) {
+      alerts.push({
+        type: 'streak_broken',
+        referenceId: `streak-${new Date().toDateString()}`,
+        title: `🔥 Your learning streak needs you`,
+        body: "You haven't studied in 2+ days — jump back in",
+        pushType: 'study',
+        data: { role },
+      });
+    }
+  }
+
+  // ── Daily mood check-in ────────────────────────────────────────
+  const todayStart = new Date(now);
+  todayStart.setHours(0, 0, 0, 0);
+  const { data: todayMood } = await supabase
+    .from('mental_health_mood_entries')
+    .select('id')
+    .eq('user_id', userId)
+    .gte('created_at', todayStart.toISOString())
+    .limit(1);
+
+  if (!todayMood || todayMood.length === 0) {
+    alerts.push({
+      type: 'mood_checkin',
+      referenceId: `mood-${new Date().toDateString()}`,
+      title: `💙 How are you feeling today?`,
+      body: 'Take a moment to check in with yourself',
+      pushType: 'mental_health',
+      data: { role },
+    });
+  }
+
+  // ── Unread peer messages ───────────────────────────────────────
+  const { data: unreadPeer } = await supabase
+    .from('mental_health_peer_messages')
+    .select('id')
+    .eq('recipient_id', userId)
+    .eq('is_read', false)
+    .limit(1);
+
+  if (unreadPeer && unreadPeer.length > 0) {
+    const { count: unreadCount } = await supabase
+      .from('mental_health_peer_messages')
+      .select('id', { count: 'exact', head: true })
+      .eq('recipient_id', userId)
+      .eq('is_read', false);
+
+    alerts.push({
+      type: 'unread_peer_messages',
+      referenceId: `peer-${new Date().toDateString()}`,
+      title: `💬 ${unreadCount ?? 0} unread message${(unreadCount ?? 0) !== 1 ? 's' : ''}`,
+      body: 'A mate has reached out — have a read',
+      pushType: 'peer',
+      data: { role },
+    });
+  }
+
+  // ── Apprentice-only alerts ─────────────────────────────────────
+  if (role === 'apprentice') {
+    // Assessments due within 7 days
+    const sevenDaysFromNow = new Date(now.getTime() + 7 * 86400000).toISOString();
+    const { data: dueAssessments } = await supabase
+      .from('ojt_assessments')
+      .select('id, title, due_date')
+      .eq('user_id', userId)
+      .not('status', 'eq', 'completed')
+      .not('due_date', 'is', null)
+      .lte('due_date', sevenDaysFromNow)
+      .order('due_date', { ascending: true })
+      .limit(5);
+
+    if (dueAssessments && dueAssessments.length > 0) {
+      const nearest = dueAssessments[0];
+      const daysLeft = Math.floor(
+        (new Date(nearest.due_date).getTime() - now.getTime()) / 86400000
+      );
+      alerts.push({
+        type: 'assessment_due',
+        referenceId: nearest.id,
+        title: `📝 ${dueAssessments.length} assessment${dueAssessments.length > 1 ? 's' : ''} due soon`,
+        body:
+          daysLeft <= 0
+            ? `"${nearest.title}" is overdue — complete it now`
+            : `"${nearest.title}" due in ${daysLeft} day${daysLeft !== 1 ? 's' : ''}`,
+        pushType: 'assessment',
+        data: { role, assessmentId: nearest.id },
+      });
+    }
+
+    // OJT hours behind pace
+    const thirtyDaysFromNow = new Date(now.getTime() + 30 * 86400000).toISOString();
+    const { data: compliance } = await supabase
+      .from('compliance_tracking')
+      .select('id, requirement_name, completed_hours, required_hours, deadline')
+      .eq('user_id', userId)
+      .not('deadline', 'is', null)
+      .lte('deadline', thirtyDaysFromNow)
+      .limit(5);
+
+    for (const item of compliance ?? []) {
+      const pct =
+        item.required_hours > 0 ? (item.completed_hours / item.required_hours) * 100 : 100;
+      if (pct < 50) {
+        const daysLeft = Math.floor((new Date(item.deadline).getTime() - now.getTime()) / 86400000);
+        alerts.push({
+          type: 'ojt_hours_behind',
+          referenceId: item.id,
+          title: `⚠️ OJT hours behind schedule`,
+          body: `${item.requirement_name}: ${Math.round(pct)}% complete, ${daysLeft} day${daysLeft !== 1 ? 's' : ''} remaining`,
+          pushType: 'assessment',
+          data: { role },
+        });
+      }
+    }
   }
 
   return alerts;
@@ -300,9 +477,82 @@ serve(async (req: Request): Promise<Response> => {
 
     for (const userId of userIds) {
       try {
-        const alerts = await buildAlertsForUser(supabase, userId);
+        // Look up user role for role-aware routing
+        const { data: profile } = await supabase
+          .from('profiles')
+          .select('role')
+          .eq('id', userId)
+          .single();
+        const role = profile?.role || 'electrician';
 
-        for (const alert of alerts) {
+        const alerts = await buildAlertsForUser(supabase, userId, role);
+
+        // ── Generate consolidated morning briefing ────────────────────
+        if (alerts.length > 0) {
+          const categoryCounts: Record<string, number> = {};
+          for (const a of alerts) {
+            const cat = a.pushType;
+            categoryCounts[cat] = (categoryCounts[cat] || 0) + 1;
+          }
+          const parts: string[] = [];
+          if (categoryCounts.job)
+            parts.push(`${categoryCounts.job} task alert${categoryCounts.job > 1 ? 's' : ''}`);
+          if (categoryCounts.invoice || categoryCounts.quote) {
+            const financeCount = (categoryCounts.invoice || 0) + (categoryCounts.quote || 0);
+            parts.push(`${financeCount} finance alert${financeCount > 1 ? 's' : ''}`);
+          }
+          if (categoryCounts.certificate)
+            parts.push(
+              `${categoryCounts.certificate} cert alert${categoryCounts.certificate > 1 ? 's' : ''}`
+            );
+          if (categoryCounts.study) parts.push('study reminders');
+          if (categoryCounts.mental_health || categoryCounts.peer) parts.push('wellbeing check-in');
+          if (categoryCounts.assessment)
+            parts.push(
+              `${categoryCounts.assessment} assessment alert${categoryCounts.assessment > 1 ? 's' : ''}`
+            );
+
+          const briefingSummary = parts.join(' | ');
+
+          alerts.unshift({
+            type: 'morning_briefing',
+            referenceId: `briefing-${new Date().toDateString()}`,
+            title: `Good morning! Here's your day`,
+            body: briefingSummary,
+            pushType: 'briefing',
+            data: { role, tag: 'briefing-morning' },
+          });
+        }
+
+        // ── Respect notification preferences ───────────────────────────
+        const pushTypeToPrefCategory: Record<string, string> = {
+          briefing: 'daily_briefing',
+          job: 'tasks_projects',
+          invoice: 'invoices_quotes',
+          quote: 'invoices_quotes',
+          certificate: 'certificates_compliance',
+          study: 'study_centre',
+          mental_health: 'mental_health',
+          peer: 'messages',
+          assessment: 'apprentice',
+        };
+
+        const { data: prefRows } = await supabase
+          .from('notification_preferences')
+          .select('category, enabled')
+          .eq('user_id', userId)
+          .eq('enabled', false);
+
+        const disabledCategories = new Set(
+          (prefRows ?? []).map((r: { category: string }) => r.category)
+        );
+
+        const filteredAlerts = alerts.filter((a) => {
+          const prefCat = pushTypeToPrefCategory[a.pushType];
+          return !prefCat || !disabledCategories.has(prefCat);
+        });
+
+        for (const alert of filteredAlerts) {
           // Deduplicate — skip if already sent today
           const sent = await alreadySent(supabase, userId, alert.type, alert.referenceId);
           if (sent) {
@@ -311,12 +561,21 @@ serve(async (req: Request): Promise<Response> => {
           }
 
           // Send push notification
-          await sendPush(supabaseUrl, serviceKey, userId, alert.title, alert.body, alert.pushType);
+          await sendPush(
+            supabaseUrl,
+            serviceKey,
+            userId,
+            alert.title,
+            alert.body,
+            alert.pushType,
+            alert.data
+          );
           await logPush(supabase, userId, alert);
           totalSent++;
 
-          // Throttle slightly between sends
-          await new Promise((r) => setTimeout(r, 100));
+          // Longer delay after briefing so it displays first; shorter for others
+          const delay = alert.type === 'morning_briefing' ? 2000 : 100;
+          await new Promise((r) => setTimeout(r, delay));
         }
       } catch (userErr) {
         console.error(`[daily-digest] Error processing user ${userId}:`, userErr);

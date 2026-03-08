@@ -283,27 +283,38 @@ export function useMessageNotifications(onNotificationClick?: (conversationId: s
 }
 
 /**
- * Notification preferences hook
+ * Notification preferences hook — Supabase-backed with localStorage cache
  */
-export interface NotificationPreferences {
-  messages: boolean;
-  mentions: boolean;
-  reactions: boolean;
-  applications: boolean;
-  sound: boolean;
-}
+export const NOTIFICATION_CATEGORIES = [
+  'daily_briefing',
+  'tasks_projects',
+  'invoices_quotes',
+  'certificates_compliance',
+  'study_centre',
+  'mental_health',
+  'apprentice',
+  'messages',
+] as const;
+
+export type NotificationCategory = (typeof NOTIFICATION_CATEGORIES)[number];
+
+export type NotificationPreferences = Record<NotificationCategory, boolean>;
 
 const DEFAULT_PREFERENCES: NotificationPreferences = {
+  daily_briefing: true,
+  tasks_projects: true,
+  invoices_quotes: true,
+  certificates_compliance: true,
+  study_centre: true,
+  mental_health: true,
+  apprentice: true,
   messages: true,
-  mentions: true,
-  reactions: true,
-  applications: true,
-  sound: true,
 };
 
 const PREFERENCES_KEY = 'elecmate_notification_preferences';
 
 export function useNotificationPreferences() {
+  const { user } = useAuth();
   const [preferences, setPreferences] = useState<NotificationPreferences>(() => {
     try {
       const stored = localStorage.getItem(PREFERENCES_KEY);
@@ -312,23 +323,97 @@ export function useNotificationPreferences() {
       return DEFAULT_PREFERENCES;
     }
   });
+  const [isLoading, setIsLoading] = useState(false);
 
-  const updatePreferences = useCallback((updates: Partial<NotificationPreferences>) => {
-    setPreferences((prev) => {
-      const updated = { ...prev, ...updates };
-      localStorage.setItem(PREFERENCES_KEY, JSON.stringify(updated));
-      return updated;
-    });
-  }, []);
+  // Load from Supabase on mount
+  useEffect(() => {
+    if (!user?.id) return;
 
-  const resetPreferences = useCallback(() => {
+    const load = async () => {
+      setIsLoading(true);
+      try {
+        const { data, error } = await supabase
+          .from('notification_preferences')
+          .select('category, enabled')
+          .eq('user_id', user.id);
+
+        if (error) throw error;
+
+        if (data && data.length > 0) {
+          const fromDb: Partial<NotificationPreferences> = {};
+          for (const row of data) {
+            if (NOTIFICATION_CATEGORIES.includes(row.category as NotificationCategory)) {
+              fromDb[row.category as NotificationCategory] = row.enabled;
+            }
+          }
+          const merged = { ...DEFAULT_PREFERENCES, ...fromDb };
+          setPreferences(merged);
+          localStorage.setItem(PREFERENCES_KEY, JSON.stringify(merged));
+        }
+      } catch (err) {
+        console.error('[NotifPrefs] Failed to load from Supabase:', err);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    load();
+  }, [user?.id]);
+
+  const updatePreference = useCallback(
+    async (category: NotificationCategory, enabled: boolean) => {
+      setPreferences((prev) => {
+        const updated = { ...prev, [category]: enabled };
+        localStorage.setItem(PREFERENCES_KEY, JSON.stringify(updated));
+        return updated;
+      });
+
+      if (!user?.id) return;
+
+      try {
+        await supabase.from('notification_preferences').upsert(
+          {
+            user_id: user.id,
+            category,
+            enabled,
+            updated_at: new Date().toISOString(),
+          },
+          { onConflict: 'user_id,category' }
+        );
+      } catch (err) {
+        console.error('[NotifPrefs] Failed to save to Supabase:', err);
+      }
+    },
+    [user?.id]
+  );
+
+  const resetPreferences = useCallback(async () => {
     setPreferences(DEFAULT_PREFERENCES);
     localStorage.setItem(PREFERENCES_KEY, JSON.stringify(DEFAULT_PREFERENCES));
-  }, []);
+
+    if (!user?.id) return;
+
+    try {
+      for (const category of NOTIFICATION_CATEGORIES) {
+        await supabase.from('notification_preferences').upsert(
+          {
+            user_id: user.id,
+            category,
+            enabled: true,
+            updated_at: new Date().toISOString(),
+          },
+          { onConflict: 'user_id,category' }
+        );
+      }
+    } catch (err) {
+      console.error('[NotifPrefs] Failed to reset in Supabase:', err);
+    }
+  }, [user?.id]);
 
   return {
     preferences,
-    updatePreferences,
+    updatePreference,
     resetPreferences,
+    isLoading,
   };
 }

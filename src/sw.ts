@@ -164,6 +164,50 @@ const NOTIFICATION_CONFIG: Record<string, NotificationTypeConfig> = {
       { action: 'dismiss', title: 'Dismiss' },
     ],
   },
+  study: {
+    icon: '/icons/message.svg',
+    badge: '/icons/badge.svg',
+    color: '#A855F7',
+    vibrate: [100, 50, 100],
+    requireInteraction: false,
+    actions: [
+      { action: 'view', title: 'Study Now' },
+      { action: 'dismiss', title: 'Later' },
+    ],
+  },
+  mental_health: {
+    icon: '/icons/peer.svg',
+    badge: '/icons/badge.svg',
+    color: '#EC4899',
+    vibrate: [100, 50, 100],
+    requireInteraction: false,
+    actions: [
+      { action: 'view', title: 'Check In' },
+      { action: 'dismiss', title: 'Later' },
+    ],
+  },
+  assessment: {
+    icon: '/icons/certificate.svg',
+    badge: '/icons/badge.svg',
+    color: '#F59E0B',
+    vibrate: [200, 100, 200],
+    requireInteraction: true,
+    actions: [
+      { action: 'view', title: 'View Assessment' },
+      { action: 'dismiss', title: 'Dismiss' },
+    ],
+  },
+  briefing: {
+    icon: '/pwa-192x192.png',
+    badge: '/icons/badge.svg',
+    color: '#3B82F6',
+    vibrate: [100, 50, 100],
+    requireInteraction: false,
+    actions: [
+      { action: 'view', title: 'View Dashboard' },
+      { action: 'dismiss', title: 'Dismiss' },
+    ],
+  },
   task: {
     icon: '/icons/task.svg',
     badge: '/icons/badge.svg',
@@ -242,7 +286,9 @@ self.addEventListener('push', (event: PushEvent) => {
     body: payload.body,
     icon: icon,
     badge: config.badge,
-    tag: `${type}-${payload.data?.conversationId || payload.data?.invoiceId || payload.data?.applicationId || Date.now()}`,
+    tag:
+      (payload.data?.tag as string) ||
+      `${type}-${payload.data?.conversationId || payload.data?.invoiceId || payload.data?.applicationId || Date.now()}`,
     vibrate: config.vibrate,
     renotify: true,
     requireInteraction: config.requireInteraction,
@@ -275,14 +321,17 @@ self.addEventListener('notificationclick', (event: NotificationEvent) => {
   }
 
   let url = '/';
+  const role = data.role || '';
+
   switch (data.type) {
     case 'peer':
       url = `/electrician/mental-health?tab=mates&conversation=${data.conversationId || ''}`;
       break;
     case 'job':
-      url = data.isEmployer
-        ? `/employer/messages?conversation=${data.conversationId || ''}`
-        : `/electrician/messages?conversation=${data.conversationId || ''}`;
+      url =
+        role === 'employer'
+          ? `/employer/messages?conversation=${data.conversationId || ''}`
+          : `/electrician/messages?conversation=${data.conversationId || ''}`;
       break;
     case 'team':
       url = `/employer/team?channel=${data.channelId || ''}&dm=${data.dmId || ''}`;
@@ -291,24 +340,43 @@ self.addEventListener('notificationclick', (event: NotificationEvent) => {
       url = `/college/messages?conversation=${data.conversationId || ''}`;
       break;
     case 'quote':
-      url = `/employer/finance?tab=quotes&id=${data.quoteId || ''}`;
+      url =
+        role === 'employer'
+          ? `/employer?section=quotes`
+          : `/electrician/quotes/view/${data.quoteId || ''}`;
       break;
     case 'invoice':
-      url = `/employer/finance?tab=invoices&id=${data.invoiceId || ''}`;
+      url =
+        role === 'employer'
+          ? `/employer?section=quotes`
+          : `/electrician/invoices/${data.invoiceId || ''}/view`;
       break;
     case 'application':
-      url = data.isEmployer
-        ? `/employer/recruitment?tab=applications&id=${data.applicationId || ''}`
-        : `/electrician/jobs?tab=applications&id=${data.applicationId || ''}`;
+      url =
+        role === 'employer'
+          ? `/employer/recruitment?tab=applications&id=${data.applicationId || ''}`
+          : `/electrician/jobs?tab=applications&id=${data.applicationId || ''}`;
       break;
     case 'vacancy':
       url = `/electrician/jobs?vacancy=${data.vacancyId || ''}`;
       break;
     case 'certificate':
-      url = `/electrician/certificates?id=${data.certificateId || ''}`;
+      url = `/electrician/inspection-testing`;
       break;
     case 'task':
       url = '/electrician/tasks';
+      break;
+    case 'study':
+      url = `/electrician/study-centre`;
+      break;
+    case 'mental_health':
+      url = `/electrician/mental-health`;
+      break;
+    case 'assessment':
+      url = `/electrician/study-centre/apprentice`;
+      break;
+    case 'briefing':
+      url = '/dashboard';
       break;
     default:
       url = '/';

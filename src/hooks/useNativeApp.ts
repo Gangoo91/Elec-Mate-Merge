@@ -144,19 +144,35 @@ export function useNativePushNotifications() {
       // Listen for notification tapped
       PushNotifications.addListener('pushNotificationActionPerformed', (action) => {
         console.log('Push notification action:', action);
-        // Handle notification tap - navigate to relevant screen
         const data = action.notification.data;
+        const role = data?.role || '';
+
         if (data?.action === 'open_tasks' || data?.type === 'task') {
           window.location.href = '/electrician/tasks';
+        } else if (data?.type === 'study') {
+          window.location.href = '/electrician/study-centre';
+        } else if (data?.type === 'mental_health') {
+          window.location.href = '/electrician/mental-health';
+        } else if (data?.type === 'assessment') {
+          window.location.href = '/electrician/study-centre/apprentice';
+        } else if (data?.type === 'briefing') {
+          window.location.href = '/dashboard';
+        } else if (data?.type === 'certificate') {
+          window.location.href = '/electrician/inspection-testing';
+        } else if (data?.type === 'peer' && data?.conversationId) {
+          window.location.href = `/electrician/mental-health?tab=mates&conversation=${data.conversationId}`;
         } else if (data?.conversationId) {
-          // Navigate to chat
-          window.location.href = `/mental-health?chat=${data.conversationId}`;
+          window.location.href = `/electrician/messages?conversation=${data.conversationId}`;
         } else if (data?.quoteId) {
-          // Navigate to quote
-          window.location.href = `/quote/${data.quoteId}`;
+          window.location.href =
+            role === 'employer'
+              ? '/employer?section=quotes'
+              : `/electrician/quotes/view/${data.quoteId}`;
         } else if (data?.invoiceId) {
-          // Navigate to invoice
-          window.location.href = `/invoice/${data.invoiceId}`;
+          window.location.href =
+            role === 'employer'
+              ? '/employer?section=quotes'
+              : `/electrician/invoices/${data.invoiceId}/view`;
         }
       });
 

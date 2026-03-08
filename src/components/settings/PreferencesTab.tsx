@@ -8,7 +8,11 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { useNotifications } from '@/components/notifications/NotificationProvider';
-import { usePushNotifications } from '@/hooks/usePushNotifications';
+import {
+  usePushNotifications,
+  useNotificationPreferences,
+  type NotificationCategory,
+} from '@/hooks/usePushNotifications';
 import { useAuth } from '@/contexts/AuthContext';
 import { supabase } from '@/integrations/supabase/client';
 import { motion } from 'framer-motion';
@@ -98,12 +102,12 @@ const PreferencesTab = () => {
     unsubscribe: unsubscribeFromPush,
   } = usePushNotifications();
 
-  // Notification settings
-  const [emailUpdates, setEmailUpdates] = useState(true);
-  const [mentorMessages, setMentorMessages] = useState(true);
-  const [courseCompletions, setCourseCompletions] = useState(true);
-  const [expiryAlerts, setExpiryAlerts] = useState(true);
-  const [billingAlerts, setBillingAlerts] = useState(true);
+  // Notification category preferences (Supabase-backed)
+  const {
+    preferences: notifPrefs,
+    updatePreference,
+    isLoading: isPrefsLoading,
+  } = useNotificationPreferences();
   const [allMuted, setAllMuted] = useState(false);
 
   // Certificate preferences
@@ -114,14 +118,9 @@ const PreferencesTab = () => {
   const [aiSuggestionsEnabled, setAiSuggestionsEnabled] = useState(true);
 
   // Derived
-  const channelStates = [
-    emailUpdates,
-    mentorMessages,
-    courseCompletions,
-    expiryAlerts,
-    billingAlerts,
-  ];
-  const activeCount = channelStates.filter(Boolean).length;
+  const categoryKeys = Object.keys(notifPrefs) as NotificationCategory[];
+  const activeCount = categoryKeys.filter((k) => notifPrefs[k]).length;
+  const totalCount = categoryKeys.length;
 
   // Send test notification
   const handleTestNotification = async () => {
@@ -218,18 +217,8 @@ const PreferencesTab = () => {
   const handleMuteAll = () => {
     const newMuted = !allMuted;
     setAllMuted(newMuted);
-    if (newMuted) {
-      setEmailUpdates(false);
-      setMentorMessages(false);
-      setCourseCompletions(false);
-      setExpiryAlerts(false);
-      setBillingAlerts(false);
-    } else {
-      setEmailUpdates(true);
-      setMentorMessages(true);
-      setCourseCompletions(true);
-      setExpiryAlerts(true);
-      setBillingAlerts(true);
+    for (const key of categoryKeys) {
+      updatePreference(key, !newMuted);
     }
     addNotification({
       title: newMuted ? 'Notifications Muted' : 'Notifications Enabled',
@@ -247,11 +236,11 @@ const PreferencesTab = () => {
         <div className="flex items-center gap-2">
           <div
             className={`w-2 h-2 rounded-full ${
-              allMuted ? 'bg-red-400' : activeCount === 5 ? 'bg-green-400' : 'bg-amber-400'
+              allMuted ? 'bg-red-400' : activeCount === totalCount ? 'bg-green-400' : 'bg-amber-400'
             }`}
           />
           <span className="text-[14px] font-medium text-white">
-            {allMuted ? 'All muted' : `${activeCount} of 5 active`}
+            {allMuted ? 'All muted' : `${activeCount} of ${totalCount} active`}
           </span>
         </div>
         <button
@@ -307,53 +296,80 @@ const PreferencesTab = () => {
         </motion.div>
       )}
 
-      {/* ─── CHANNELS ─── */}
+      {/* ─── NOTIFICATION CATEGORIES ─── */}
       <motion.div variants={itemVariants}>
-        <SectionLabel>Channels</SectionLabel>
-        <div className={allMuted ? 'opacity-40' : undefined}>
+        <SectionLabel>Notification Categories</SectionLabel>
+        <div className={allMuted || isPrefsLoading ? 'opacity-40' : undefined}>
           <ToggleRow
-            icon="📧"
+            icon="🌅"
             iconBg="bg-blue-500/15"
-            label="Email Updates"
-            checked={emailUpdates}
-            onCheckedChange={setEmailUpdates}
-            disabled={allMuted}
+            label="Daily Briefing"
+            checked={notifPrefs.daily_briefing}
+            onCheckedChange={(v) => updatePreference('daily_briefing', v)}
+            disabled={allMuted || isPrefsLoading}
           />
           <Divider />
           <ToggleRow
-            icon="💬"
+            icon="📋"
+            iconBg="bg-amber-500/15"
+            label="Tasks & Projects"
+            checked={notifPrefs.tasks_projects}
+            onCheckedChange={(v) => updatePreference('tasks_projects', v)}
+            disabled={allMuted || isPrefsLoading}
+          />
+          <Divider />
+          <ToggleRow
+            icon="💷"
+            iconBg="bg-emerald-500/15"
+            label="Invoices & Quotes"
+            checked={notifPrefs.invoices_quotes}
+            onCheckedChange={(v) => updatePreference('invoices_quotes', v)}
+            disabled={allMuted || isPrefsLoading}
+          />
+          <Divider />
+          <ToggleRow
+            icon="📜"
             iconBg="bg-green-500/15"
-            label="Messages"
-            checked={mentorMessages}
-            onCheckedChange={setMentorMessages}
-            disabled={allMuted}
+            label="Certificates & Compliance"
+            checked={notifPrefs.certificates_compliance}
+            onCheckedChange={(v) => updatePreference('certificates_compliance', v)}
+            disabled={allMuted || isPrefsLoading}
+          />
+          <Divider />
+          <ToggleRow
+            icon="📚"
+            iconBg="bg-purple-500/15"
+            label="Study Centre"
+            checked={notifPrefs.study_centre}
+            onCheckedChange={(v) => updatePreference('study_centre', v)}
+            disabled={allMuted || isPrefsLoading}
+          />
+          <Divider />
+          <ToggleRow
+            icon="💙"
+            iconBg="bg-pink-500/15"
+            label="Mental Health"
+            checked={notifPrefs.mental_health}
+            onCheckedChange={(v) => updatePreference('mental_health', v)}
+            disabled={allMuted || isPrefsLoading}
           />
           <Divider />
           <ToggleRow
             icon="🎓"
-            iconBg="bg-purple-500/15"
-            label="Course Completions"
-            checked={courseCompletions}
-            onCheckedChange={setCourseCompletions}
-            disabled={allMuted}
-          />
-          <Divider />
-          <ToggleRow
-            icon="⚠️"
             iconBg="bg-amber-500/15"
-            label="Expiry Alerts"
-            checked={expiryAlerts}
-            onCheckedChange={setExpiryAlerts}
-            disabled={allMuted}
+            label="Apprentice"
+            checked={notifPrefs.apprentice}
+            onCheckedChange={(v) => updatePreference('apprentice', v)}
+            disabled={allMuted || isPrefsLoading}
           />
           <Divider />
           <ToggleRow
-            icon="🔔"
-            iconBg="bg-emerald-500/15"
-            label="Billing Alerts"
-            checked={billingAlerts}
-            onCheckedChange={setBillingAlerts}
-            disabled={allMuted}
+            icon="💬"
+            iconBg="bg-blue-500/15"
+            label="Messages"
+            checked={notifPrefs.messages}
+            onCheckedChange={(v) => updatePreference('messages', v)}
+            disabled={allMuted || isPrefsLoading}
           />
         </div>
       </motion.div>
