@@ -22,8 +22,6 @@ import { formatDistanceToNow, format, isToday, isYesterday } from 'date-fns';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { useIsMobile } from '@/hooks/use-mobile';
-import { NotificationsManager } from '@/components/notifications/NotificationsManager';
-import { useTotalAlertCount } from '@/hooks/useTotalAlertCount';
 
 interface NotificationsSheetProps {
   open: boolean;
@@ -209,12 +207,9 @@ export function NotificationsSheet({ open, onOpenChange }: NotificationsSheetPro
     console.warn('NotificationProvider not available');
   }
 
-  const alertCount = useTotalAlertCount();
-  const totalCount = alertCount + unreadCount;
-
   const handleViewAll = () => {
     onOpenChange(false);
-    navigate('/electrician/inspection-testing?section=notifications');
+    navigate('/notifications');
   };
 
   return (
@@ -232,8 +227,8 @@ export function NotificationsSheet({ open, onOpenChange }: NotificationsSheetPro
             <SheetTitle className="flex items-center gap-2 text-foreground">
               <Bell className="h-5 w-5 text-elec-yellow" />
               Notifications
-              {totalCount > 0 && (
-                <Badge className="bg-elec-yellow text-black ml-2">{totalCount}</Badge>
+              {unreadCount > 0 && (
+                <Badge className="bg-elec-yellow text-black ml-2">{unreadCount}</Badge>
               )}
             </SheetTitle>
             <div className="flex items-center gap-1">
@@ -265,42 +260,33 @@ export function NotificationsSheet({ open, onOpenChange }: NotificationsSheetPro
 
         {/* Notifications list */}
         <ScrollArea className="flex-1">
-          {/* ── Actionable alerts feed (Elec-ID, tasks, finance, equipment etc) ── */}
-          <div className="p-4 pb-0">
-            <NotificationsManager
-              compact
-              onBeforeNavigate={() => onOpenChange(false)}
-            />
-          </div>
-
-          {/* ── Push notifications (system alerts, announcements etc) ── */}
-          <AnimatePresence>
-            {notifications.length > 0 && (
-              <>
-                <div className="px-4 pb-2 pt-2">
-                  <div className="border-t border-border/30" />
-                  <p className="text-xs font-semibold text-muted-foreground mt-3 mb-2 uppercase tracking-wide">
-                    System
-                  </p>
-                </div>
-                <div className="divide-y divide-border/30 px-4">
-                  {notifications.map((notification, index) => (
-                    <NotificationItem
-                      key={notification.id}
-                      notification={notification}
-                      onRead={() => markAsRead(notification.id)}
-                      onDelete={() => deleteNotification(notification.id)}
-                      index={index}
-                    />
-                  ))}
-                </div>
-              </>
-            )}
-          </AnimatePresence>
+          {notifications.length === 0 ? (
+            <div className="py-12 px-4 text-center">
+              <div className="p-4 rounded-2xl bg-muted/30 inline-block mb-3">
+                <Bell className="h-8 w-8 text-muted-foreground/40" />
+              </div>
+              <p className="text-sm font-medium text-white">All caught up!</p>
+              <p className="text-xs text-white mt-1">No new notifications</p>
+            </div>
+          ) : (
+            <AnimatePresence>
+              <div className="divide-y divide-border/30">
+                {notifications.map((notification, index) => (
+                  <NotificationItem
+                    key={notification.id}
+                    notification={notification}
+                    onRead={() => markAsRead(notification.id)}
+                    onDelete={() => deleteNotification(notification.id)}
+                    index={index}
+                  />
+                ))}
+              </div>
+            </AnimatePresence>
+          )}
         </ScrollArea>
 
-        {/* Footer — always show so user can reach full notifications page */}
-        {(notifications.length > 0 || totalCount > 0) && (
+        {/* Footer */}
+        {notifications.length > 0 && (
           <div className="p-3 border-t border-border/50 bg-muted/30 shrink-0 pb-safe">
             <Button
               variant="ghost"
