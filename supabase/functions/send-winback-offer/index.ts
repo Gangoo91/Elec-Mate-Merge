@@ -514,6 +514,197 @@ function generateWinbackEmailV3HTML(user: EligibleUser): string {
 </body></html>`;
 }
 
+// Generate win-back v4 email HTML — "You Won't Recognise It" big update showcase
+function generateWinbackEmailV4HTML(user: EligibleUser): string {
+  const firstName = user.full_name?.split(' ')[0] || 'mate';
+  const t = 'color:#e2e8f0;font-size:14px;line-height:1.6;margin:0 0 5px';
+  const b = 'color:#fff;font-weight:700';
+  const h =
+    'font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;margin:0 0 8px';
+
+  return `<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><meta name="color-scheme" content="dark"><!--[if mso]><style>body,table,td{font-family:Arial,sans-serif!important}</style><![endif]--></head>
+<body style="margin:0;padding:0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;background:#0f172a">
+<table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background:#0f172a"><tr><td style="padding:24px 12px">
+<table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="max-width:500px;margin:0 auto;background:linear-gradient(180deg,#1e293b,#0f172a);border-radius:24px;overflow:hidden;border:1px solid rgba(251,191,36,0.2)">
+
+<tr><td style="padding:32px 24px 20px">
+<p style="margin:0 0 16px;font-size:17px;color:#fff;line-height:1.6">Hey ${firstName},</p>
+<p style="margin:0 0 14px;font-size:16px;color:#e2e8f0;line-height:1.7">You tried Elec-Mate a while back. I'm not going to lie &mdash; it's <strong style="color:#fbbf24">unrecognisable</strong> now. We've shipped 18 features in the last two weeks alone.</p>
+<p style="margin:0;font-size:16px;color:#e2e8f0;line-height:1.7">Here are the three biggest:</p>
+</td></tr>
+
+<tr><td style="padding:0 20px 8px"><p style="margin:0;font-size:15px;color:#fbbf24;font-weight:700;text-transform:uppercase;letter-spacing:0.5px">&#x2B50; The Big Three</p></td></tr>
+
+<tr><td style="padding:0 20px 10px"><div style="background:rgba(34,197,94,0.08);border:1px solid rgba(34,197,94,0.25);border-radius:14px;padding:14px">
+<p style="${h};color:#22c55e">&#x1F4AC; Mate &mdash; Your AI Business Agent on WhatsApp <span style="font-size:10px;background:#22c55e;color:#0f172a;padding:2px 6px;border-radius:6px;margin-left:4px;font-style:normal;letter-spacing:0">BETA</span></p>
+<p style="${t}"><strong style="${b}">Text your Mate on WhatsApp</strong> and it manages your business for you</p>
+<p style="${t}">&#x2705; Create quotes &amp; invoices from a message</p>
+<p style="${t}">&#x2705; Answer any BS 7671 question instantly</p>
+<p style="${t}">&#x2705; Manage tasks, track cert expiry, chase payments</p>
+<p style="margin:0;font-size:13px;color:#22c55e;font-style:italic;font-weight:600">Like having a PA in your pocket. No app needed &mdash; just WhatsApp.</p>
+<p style="margin:6px 0 0;font-size:12px;color:#94a3b8;line-height:1.5">Mate is currently in beta testing and available as an optional add-on &mdash; not included in the base subscription.</p>
+</div></td></tr>
+
+<tr><td style="padding:0 20px 10px"><div style="background:rgba(59,130,246,0.08);border:1px solid rgba(59,130,246,0.25);border-radius:14px;padding:14px">
+<p style="${h};color:#3b82f6">&#x1F4CB; Elec-ID &mdash; Prove You're Legit</p>
+<p style="${t}"><strong style="${b}">Public verification page</strong> at elec-mate.com/verify/EM-XXXXXX</p>
+<p style="${t}">Share with clients so they can check your credentials before you arrive</p>
+<p style="${t}">Track who's viewed your profile &mdash; know when clients are checking you out</p>
+<p style="margin:0;font-size:13px;color:#3b82f6;font-style:italic;font-weight:600">Professional credibility, one link.</p>
+</div></td></tr>
+
+<tr><td style="padding:0 20px 10px"><div style="background:rgba(168,85,247,0.08);border:1px solid rgba(168,85,247,0.25);border-radius:14px;padding:14px">
+<p style="${h};color:#a855f7">&#x1F3D7;&#xFE0F; Projects That Actually Work</p>
+<p style="${t}"><strong style="${b}">Photos &amp; drawings</strong> attached directly to projects</p>
+<p style="${t}"><strong style="${b}">One-click quote or invoice</strong> from any project page</p>
+<p style="${t}">Pre &amp; post site surveys with client sign-off</p>
+<p style="margin:0;font-size:13px;color:#a855f7;font-style:italic;font-weight:600">From survey to sign-off to invoice &mdash; all in one place.</p>
+</div></td></tr>
+
+<tr><td style="padding:0 20px 8px"><p style="margin:0;font-size:15px;color:#f59e0b;font-weight:700;text-transform:uppercase;letter-spacing:0.5px">&#x26A1; Plus 15 More Things We Shipped This Fortnight</p></td></tr>
+
+<tr><td style="padding:0 20px 14px"><div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);border-radius:14px;padding:14px">
+<p style="${t}">&#x1F4B7; <strong style="${b}">My Rate Card</strong> &mdash; your job/labour price list with quote builder integration</p>
+<p style="${t}">&#x1F4D6; <strong style="${b}">My Price Book</strong> &mdash; cost/sell pricing, staleness warnings, bundles, scan import</p>
+<p style="${t}">&#x1F50D; <strong style="${b}">Supplier Price Monitor</strong> &mdash; Screwfix, Toolstation, Wickes, B&amp;Q, CEF price tracking</p>
+<p style="${t}">&#x1F514; <strong style="${b}">Push Notifications</strong> &mdash; overdue invoices, expiring quotes, cert expiry alerts</p>
+<p style="${t}">&#x1F4F8; <strong style="${b}">Pre &amp; Post Site Surveys</strong> &mdash; dictate per-room needs, one-click to quote</p>
+<p style="${t}">&#x2705; <strong style="${b}">7 cert types</strong> &mdash; EICR, EIC, Minor Works, Fire Alarm, EV, Emergency Lighting, Solar PV</p>
+<p style="${t}">&#x1F916; <strong style="${b}">6 AI Agents</strong> &mdash; Circuit Designer, Cost Engineer, Installation, H&amp;S, Maintenance, Report Writer</p>
+<p style="${t}">&#x1F9EE; <strong style="${b}">50+ electrical calculators</strong> &middot; 14 business calculators</p>
+<p style="${t}">&#x1F4DA; <strong style="${b}">Apprentice Hub</strong> &mdash; 60+ videos, 780 flash cards, AM2/EPA simulators</p>
+<p style="${t}">&#x1F4CA; <strong style="${b}">Board Scanner</strong> &mdash; photograph a DB, get auto circuit mapping</p>
+<p style="${t}">&#x1F6E1;&#xFE0F; <strong style="${b}">RAMS &amp; Site Safety</strong> &mdash; from a job description in 2 mins</p>
+<p style="margin:0;color:#e2e8f0;font-size:14px;line-height:1.6">&#x1F4DD; <strong style="${b}">Quote &amp; Invoice Builder</strong> with optional address, revert, improved client management</p>
+</div></td></tr>
+
+<tr><td style="padding:0 20px 10px"><div style="background:rgba(59,130,246,0.08);border:1px solid rgba(59,130,246,0.25);border-radius:14px;padding:14px;text-align:center">
+<p style="margin:0 0 6px;font-size:13px;color:#60a5fa;font-weight:700;text-transform:uppercase;letter-spacing:0.5px">&#x1F4F1; App Store Launch Coming Soon</p>
+<p style="margin:0;font-size:14px;color:#e2e8f0;line-height:1.6">We're launching on the <strong style="color:#fff">Apple App Store</strong> and <strong style="color:#fff">Google Play</strong>. When we do, the price goes to <strong style="color:#ef4444">&pound;12.99/mo</strong>. Lock in at &pound;7.99 now and <strong style="color:#22c55e">keep that price forever</strong>.</p>
+</div></td></tr>
+
+<tr><td style="padding:0 20px 20px"><div style="background:linear-gradient(135deg,rgba(251,191,36,0.15),rgba(251,191,36,0.05));border:2px solid rgba(251,191,36,0.4);border-radius:16px;padding:22px 18px;text-align:center">
+<p style="margin:0 0 4px;font-size:14px;color:#e2e8f0">All of this. Less than a bag of Screwfix screws.</p>
+<p style="margin:0;font-size:48px;font-weight:800;color:#fbbf24;line-height:1">&pound;${WINBACK_CONFIG.monthlyPrice.toFixed(2)}<span style="font-size:18px;font-weight:600;color:#94a3b8">/mo</span></p>
+<p style="margin:6px 0 4px;font-size:14px;color:#94a3b8"><span style="text-decoration:line-through">&pound;12.99</span> app store price &middot; <span style="color:#22c55e;font-weight:600">you pay &pound;7.99</span> &middot; locked forever</p>
+<p style="margin:0 0 16px;font-size:15px;color:#e2e8f0;line-height:1.5">Replace your cert software, RAMS tool, quoting app, invoicing app and that notes app. One sub instead of five.</p>
+<a href="${WINBACK_CONFIG.monthlyPaymentLink}" style="display:block;padding:16px;background:linear-gradient(135deg,#fbbf24,#f59e0b);color:#0f172a;text-decoration:none;font-size:16px;font-weight:700;border-radius:12px;text-align:center;margin-bottom:10px">Lock in &pound;${WINBACK_CONFIG.monthlyPrice.toFixed(2)}/mo before app store launch &rarr;</a>
+<a href="${WINBACK_CONFIG.yearlyPaymentLink}" style="display:block;padding:14px;background:rgba(251,191,36,0.15);border:2px solid rgba(251,191,36,0.5);color:#fbbf24;text-decoration:none;font-size:15px;font-weight:600;border-radius:12px;text-align:center">Go yearly: &pound;${WINBACK_CONFIG.yearlyPrice.toFixed(2)} &mdash; save &pound;${(WINBACK_CONFIG.monthlyPrice * 12 - WINBACK_CONFIG.yearlyPrice).toFixed(2)}/yr</a>
+</div></td></tr>
+
+<tr><td style="padding:0 20px 20px"><div style="background:rgba(59,130,246,0.06);border:1px solid rgba(59,130,246,0.2);border-radius:12px;padding:14px;text-align:center">
+<p style="margin:0;font-size:14px;color:#e2e8f0;line-height:1.6">Not sure? Reply to this email and I'll give you <strong style="color:#60a5fa">another free week</strong> to try it properly. No strings.</p>
+</div></td></tr>
+
+<tr><td style="padding:0 24px 28px">
+<p style="margin:0 0 4px;font-size:15px;color:#e2e8f0">Cheers,</p>
+<p style="margin:0 0 4px;font-size:16px;color:#fff;font-weight:600">Andrew</p>
+<p style="margin:0 0 10px;font-size:13px;color:#64748b">Founder, Elec-Mate</p>
+<p style="margin:0;font-size:14px;color:#e2e8f0">&#x1F4AC; Got questions? Drop me a WhatsApp: <a href="https://wa.me/447507241303" style="color:#25D366;font-weight:600;text-decoration:none">+44 7507 241303</a></p>
+</td></tr>
+
+<tr><td style="padding:14px 24px;text-align:center;background:rgba(15,23,42,0.6);border-top:1px solid rgba(255,255,255,0.05)">
+<p style="margin:0;font-size:12px;color:#475569">&copy; ${new Date().getFullYear()} Elec-Mate &middot; Built for UK Sparks &#x1F1EC;&#x1F1E7;&#x26A1;</p>
+</td></tr>
+
+</table></td></tr></table>
+</body></html>`;
+}
+
+// Generate v4b "Fortnight Report" product update email — feature-led, not offer-led
+function generateFortnightReportHTML(user: EligibleUser): string {
+  const firstName = user.full_name?.split(' ')[0] || 'mate';
+  const t = 'color:#e2e8f0;font-size:14px;line-height:1.6;margin:0 0 5px';
+  const b = 'color:#fff;font-weight:700';
+  const h =
+    'font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;margin:0 0 8px';
+
+  return `<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><meta name="color-scheme" content="dark"><!--[if mso]><style>body,table,td{font-family:Arial,sans-serif!important}</style><![endif]--></head>
+<body style="margin:0;padding:0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;background:#0f172a">
+<table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background:#0f172a"><tr><td style="padding:24px 12px">
+<table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="max-width:500px;margin:0 auto;background:linear-gradient(180deg,#1e293b,#0f172a);border-radius:24px;overflow:hidden;border:1px solid rgba(251,191,36,0.2)">
+
+<tr><td style="padding:32px 24px 20px">
+<p style="margin:0 0 16px;font-size:17px;color:#fff;line-height:1.6">Hey ${firstName},</p>
+<p style="margin:0 0 14px;font-size:16px;color:#e2e8f0;line-height:1.7">Quick product update from me. The last two weeks have been our biggest shipping sprint yet &mdash; <strong style="color:#fbbf24">68 issues closed, 88 commits</strong>. Here's what you're missing.</p>
+</td></tr>
+
+<tr><td style="padding:0 20px 8px"><p style="margin:0;font-size:15px;color:#22c55e;font-weight:700;text-transform:uppercase;letter-spacing:0.5px">&#x1F4AC; 1. Your AI Business Partner</p></td></tr>
+<tr><td style="padding:0 20px 10px"><div style="background:rgba(34,197,94,0.08);border:1px solid rgba(34,197,94,0.25);border-radius:14px;padding:14px">
+<p style="${t}"><strong style="${b}">Mate by Elec-Mate</strong> is now live on WhatsApp</p>
+<p style="${t}">&#x2705; Create quotes &amp; invoices from a text message</p>
+<p style="${t}">&#x2705; Ask any BS 7671 question &mdash; instant, accurate answers</p>
+<p style="${t}">&#x2705; Task management, cert expiry tracking, payment chasing</p>
+<p style="margin:0;font-size:13px;color:#22c55e;font-style:italic;font-weight:600">Your business, managed from WhatsApp. No app needed.</p>
+</div></td></tr>
+
+<tr><td style="padding:0 20px 8px"><p style="margin:0;font-size:15px;color:#3b82f6;font-weight:700;text-transform:uppercase;letter-spacing:0.5px">&#x1F4CB; 2. Prove You're Legit</p></td></tr>
+<tr><td style="padding:0 20px 10px"><div style="background:rgba(59,130,246,0.08);border:1px solid rgba(59,130,246,0.25);border-radius:14px;padding:14px">
+<p style="${t}"><strong style="${b}">Elec-ID</strong> &mdash; public verification pages</p>
+<p style="${t}">Share elec-mate.com/verify/EM-XXXXXX with clients</p>
+<p style="${t}">Profile view tracking &mdash; know who's checking your credentials</p>
+</div></td></tr>
+
+<tr><td style="padding:0 20px 8px"><p style="margin:0;font-size:15px;color:#f59e0b;font-weight:700;text-transform:uppercase;letter-spacing:0.5px">&#x1F4B7; 3. Price Like a Pro</p></td></tr>
+<tr><td style="padding:0 20px 10px"><div style="background:rgba(245,158,11,0.08);border:1px solid rgba(245,158,11,0.25);border-radius:14px;padding:14px">
+<p style="${t}"><strong style="${b}">My Rate Card</strong> &mdash; job/labour price list with quote builder integration</p>
+<p style="${t}"><strong style="${b}">My Price Book</strong> &mdash; cost/sell pricing, staleness warnings, bundles</p>
+<p style="${t}"><strong style="${b}">Supplier Price Monitor</strong> &mdash; Screwfix, Toolstation, Wickes, B&amp;Q, CEF tracking</p>
+</div></td></tr>
+
+<tr><td style="padding:0 20px 8px"><p style="margin:0;font-size:15px;color:#a855f7;font-weight:700;text-transform:uppercase;letter-spacing:0.5px">&#x1F3D7;&#xFE0F; 4. Projects That Work</p></td></tr>
+<tr><td style="padding:0 20px 10px"><div style="background:rgba(168,85,247,0.08);border:1px solid rgba(168,85,247,0.25);border-radius:14px;padding:14px">
+<p style="${t}">Photos &amp; drawings attached to projects</p>
+<p style="${t}">Create quote or invoice directly from any project page</p>
+<p style="${t}">Pre &amp; post site surveys with client digital sign-off</p>
+</div></td></tr>
+
+<tr><td style="padding:0 20px 8px"><p style="margin:0;font-size:15px;color:#ef4444;font-weight:700;text-transform:uppercase;letter-spacing:0.5px">&#x1F514; 5. Never Miss a Thing</p></td></tr>
+<tr><td style="padding:0 20px 10px"><div style="background:rgba(239,68,68,0.08);border:1px solid rgba(239,68,68,0.25);border-radius:14px;padding:14px">
+<p style="${t}"><strong style="${b}">Push Notifications</strong> now live</p>
+<p style="${t}">Overdue invoices &middot; Expiring quotes &middot; Cert expiry &middot; Elec-ID views</p>
+</div></td></tr>
+
+<tr><td style="padding:0 20px 8px"><p style="margin:0;font-size:15px;color:#06b6d4;font-weight:700;text-transform:uppercase;letter-spacing:0.5px">&#x1F6E1;&#xFE0F; 6. Rock-Solid Compliance</p></td></tr>
+<tr><td style="padding:0 20px 10px"><div style="background:rgba(6,182,212,0.08);border:1px solid rgba(6,182,212,0.25);border-radius:14px;padding:14px">
+<p style="${t}">EICR/EIC/Minor Works improvements &middot; Reference method alignment</p>
+<p style="${t}">Board Scanner upgrades &middot; Schedule of Tests enhancements</p>
+</div></td></tr>
+
+<tr><td style="padding:0 20px 8px"><p style="margin:0;font-size:15px;color:#94a3b8;font-weight:700;text-transform:uppercase;letter-spacing:0.5px">&#x2728; 7. Quality of Life</p></td></tr>
+<tr><td style="padding:0 20px 14px"><div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);border-radius:14px;padding:14px">
+<p style="${t}">Safari compatibility fixes &middot; Optional address in quotes</p>
+<p style="${t}">Quote revert &middot; Better saved client management</p>
+<p style="margin:0;color:#e2e8f0;font-size:14px;line-height:1.6">Improved PDF exports across the board</p>
+</div></td></tr>
+
+<tr><td style="padding:0 20px 20px"><div style="background:linear-gradient(135deg,rgba(251,191,36,0.1),rgba(251,191,36,0.03));border:1px solid rgba(251,191,36,0.3);border-radius:16px;padding:18px;text-align:center">
+<p style="margin:0 0 8px;font-size:15px;color:#e2e8f0">All of this for <strong style="color:#fbbf24">&pound;${WINBACK_CONFIG.monthlyPrice.toFixed(2)}/mo</strong></p>
+<p style="margin:0 0 4px;font-size:13px;color:#94a3b8"><span style="text-decoration:line-through">&pound;${WINBACK_CONFIG.standardMonthlyPrice.toFixed(2)}</span> &middot; 20% early-adopter discount &middot; locked forever</p>
+<p style="margin:0 0 14px;font-size:13px;color:#94a3b8">or &pound;${WINBACK_CONFIG.yearlyPrice.toFixed(2)}/yr (&pound;${(WINBACK_CONFIG.yearlyPrice / 12).toFixed(2)}/mo)</p>
+<a href="${WINBACK_CONFIG.monthlyPaymentLink}" style="display:block;padding:14px;background:linear-gradient(135deg,#fbbf24,#f59e0b);color:#0f172a;text-decoration:none;font-size:15px;font-weight:700;border-radius:12px;text-align:center;margin-bottom:8px">Get back in &rarr;</a>
+<a href="${WINBACK_CONFIG.yearlyPaymentLink}" style="display:block;padding:12px;background:rgba(251,191,36,0.12);border:1px solid rgba(251,191,36,0.4);color:#fbbf24;text-decoration:none;font-size:14px;font-weight:600;border-radius:12px;text-align:center">Or go yearly: &pound;${WINBACK_CONFIG.yearlyPrice.toFixed(2)}</a>
+</div></td></tr>
+
+<tr><td style="padding:0 20px 20px"><div style="background:rgba(59,130,246,0.06);border:1px solid rgba(59,130,246,0.2);border-radius:12px;padding:14px;text-align:center">
+<p style="margin:0;font-size:14px;color:#e2e8f0;line-height:1.6">Not sure? Reply to this email and I'll give you <strong style="color:#60a5fa">another free week</strong>. No strings.</p>
+</div></td></tr>
+
+<tr><td style="padding:0 24px 28px">
+<p style="margin:0 0 4px;font-size:15px;color:#e2e8f0">Cheers,</p>
+<p style="margin:0 0 4px;font-size:16px;color:#fff;font-weight:600">Andrew</p>
+<p style="margin:0 0 10px;font-size:13px;color:#64748b">Founder, Elec-Mate</p>
+<p style="margin:0;font-size:14px;color:#e2e8f0">&#x1F4AC; Drop me a WhatsApp: <a href="https://wa.me/447507241303" style="color:#25D366;font-weight:600;text-decoration:none">+44 7507 241303</a></p>
+</td></tr>
+
+<tr><td style="padding:14px 24px;text-align:center;background:rgba(15,23,42,0.6);border-top:1px solid rgba(255,255,255,0.05)">
+<p style="margin:0;font-size:12px;color:#475569">&copy; ${new Date().getFullYear()} Elec-Mate &middot; Built for UK Sparks &#x1F1EC;&#x1F1E7;&#x26A1;</p>
+</td></tr>
+
+</table></td></tr></table>
+</body></html>`;
+}
+
 Deno.serve(async (req) => {
   if (req.method === 'OPTIONS') {
     return new Response('ok', { headers: corsHeaders });
@@ -759,21 +950,34 @@ Deno.serve(async (req) => {
           ).toISOString(),
         };
 
-        // Send email — use v3/v2 template if requested
-        const isV3 = email_version === 'v3';
-        const isV2 = email_version === 'v2';
+        // Send email — select template by version
         let emailHtml, emailSubject;
-        if (isV3) {
+        if (email_version === 'v4b') {
+          emailHtml = generateFortnightReportHTML(userWithEmail);
+          emailSubject = '18 features shipped in 2 weeks ⚡';
+        } else if (email_version === 'v4') {
+          emailHtml = generateWinbackEmailV4HTML(userWithEmail);
+          emailSubject = "You won't recognise this app ⚡";
+        } else if (email_version === 'v3') {
           emailHtml = generateWinbackEmailV3HTML(userWithEmail);
           emailSubject = 'This week at Elec-Mate ⚡';
-        } else if (isV2) {
+        } else if (email_version === 'v2') {
           emailHtml = generateWinbackEmailV2HTML(userWithEmail);
           emailSubject = 'Your Sunday Round-Up ⚡';
         } else {
           emailHtml = generateWinbackEmailHTML(userWithEmail);
           emailSubject = 'Fancy another look?';
         }
-        const versionTag = isV3 ? 'v3' : isV2 ? 'v2' : 'v1';
+        const versionTag =
+          email_version === 'v4b'
+            ? 'v4b'
+            : email_version === 'v4'
+              ? 'v4'
+              : email_version === 'v3'
+                ? 'v3'
+                : email_version === 'v2'
+                  ? 'v2'
+                  : 'v1';
         const { data: emailData, error: emailError } = await resend.emails.send({
           from: 'Elec-Mate <offers@elec-mate.com>',
           to: [userWithEmail.email.trim().toLowerCase()],
@@ -802,11 +1006,16 @@ Deno.serve(async (req) => {
         }
 
         // Log to email_logs table
-        const templateName = isV3
-          ? 'winback_offer_v3'
-          : isV2
-            ? 'winback_offer_v2'
-            : 'winback_offer';
+        const templateName =
+          email_version === 'v4b'
+            ? 'winback_fortnight_report'
+            : email_version === 'v4'
+              ? 'winback_offer_v4'
+              : email_version === 'v3'
+                ? 'winback_offer_v3'
+                : email_version === 'v2'
+                  ? 'winback_offer_v2'
+                  : 'winback_offer';
         await supabaseAdmin.from('email_logs').insert({
           to_email: userWithEmail.email,
           subject: emailSubject,
@@ -873,21 +1082,34 @@ Deno.serve(async (req) => {
               ).toISOString(),
             };
 
-            // Send email — use v3/v2 template if requested
-            const bulkIsV3 = email_version === 'v3';
-            const bulkIsV2 = email_version === 'v2';
+            // Send email — select template by version
             let emailHtml, bulkSubject;
-            if (bulkIsV3) {
+            if (email_version === 'v4b') {
+              emailHtml = generateFortnightReportHTML(userWithEmail);
+              bulkSubject = '18 features shipped in 2 weeks ⚡';
+            } else if (email_version === 'v4') {
+              emailHtml = generateWinbackEmailV4HTML(userWithEmail);
+              bulkSubject = "You won't recognise this app ⚡";
+            } else if (email_version === 'v3') {
               emailHtml = generateWinbackEmailV3HTML(userWithEmail);
               bulkSubject = 'This week at Elec-Mate ⚡';
-            } else if (bulkIsV2) {
+            } else if (email_version === 'v2') {
               emailHtml = generateWinbackEmailV2HTML(userWithEmail);
               bulkSubject = 'Your Sunday Round-Up ⚡';
             } else {
               emailHtml = generateWinbackEmailHTML(userWithEmail);
               bulkSubject = 'Fancy another look?';
             }
-            const bulkVersionTag = bulkIsV3 ? 'v3' : bulkIsV2 ? 'v2' : 'v1';
+            const bulkVersionTag =
+              email_version === 'v4b'
+                ? 'v4b'
+                : email_version === 'v4'
+                  ? 'v4'
+                  : email_version === 'v3'
+                    ? 'v3'
+                    : email_version === 'v2'
+                      ? 'v2'
+                      : 'v1';
             const { data: bulkEmailData, error: emailError } = await resend.emails.send({
               from: 'Elec-Mate <offers@elec-mate.com>',
               to: [userWithEmail.email.trim().toLowerCase()],
@@ -912,11 +1134,16 @@ Deno.serve(async (req) => {
               .eq('id', uid);
 
             // Log email
-            const bulkTemplateName = bulkIsV3
-              ? 'winback_offer_v3'
-              : bulkIsV2
-                ? 'winback_offer_v2'
-                : 'winback_offer';
+            const bulkTemplateName =
+              email_version === 'v4b'
+                ? 'winback_fortnight_report'
+                : email_version === 'v4'
+                  ? 'winback_offer_v4'
+                  : email_version === 'v3'
+                    ? 'winback_offer_v3'
+                    : email_version === 'v2'
+                      ? 'winback_offer_v2'
+                      : 'winback_offer';
             await supabaseAdmin.from('email_logs').insert({
               to_email: userWithEmail.email,
               subject: bulkSubject,
@@ -959,11 +1186,57 @@ Deno.serve(async (req) => {
           .select('id, full_name, username, created_at, winback_offer_sent_at, subscribed')
           .not('winback_offer_sent_at', 'is', null)
           .order('winback_offer_sent_at', { ascending: false })
-          .limit(100);
+          .limit(500);
 
         if (sentError) throw sentError;
 
-        result = { users: sentUsers || [] };
+        // Get emails from auth.users
+        const { data: sentAuthUsers, error: sentAuthError } =
+          await supabaseAdmin.rpc('get_auth_user_emails');
+        if (sentAuthError) {
+          console.error('get_sent_history: get_auth_user_emails RPC error:', sentAuthError);
+        }
+        const sentEmailMap = new Map<string, string>();
+        (sentAuthUsers || []).forEach((u: Record<string, unknown>) => {
+          if (u.email) sentEmailMap.set(u.id as string, u.email as string);
+        });
+
+        // Get email version from email_logs (most recent per to_email)
+        const sentEmails = (sentUsers || [])
+          .map((u: Record<string, unknown>) => sentEmailMap.get(u.id as string))
+          .filter(Boolean) as string[];
+
+        const emailVersionMap = new Map<string, string>();
+        if (sentEmails.length > 0) {
+          const { data: logs, error: logsError } = await supabaseAdmin
+            .from('email_logs')
+            .select('to_email, template, metadata')
+            .in('to_email', sentEmails)
+            .like('template', 'winback%')
+            .order('created_at', { ascending: false });
+
+          if (!logsError && logs) {
+            // Take the most recent log per email
+            logs.forEach((log: Record<string, unknown>) => {
+              const email = (log.to_email as string).toLowerCase();
+              if (!emailVersionMap.has(email)) {
+                // Extract version from metadata or template name
+                const meta = log.metadata as Record<string, unknown> | null;
+                const version = (meta?.email_version as string) || 'v1';
+                emailVersionMap.set(email, version);
+              }
+            });
+          }
+        }
+
+        // Merge email + version into each user
+        const usersWithDetails = (sentUsers || []).map((u: Record<string, unknown>) => {
+          const email = sentEmailMap.get(u.id as string) || null;
+          const emailVersion = email ? emailVersionMap.get(email.toLowerCase()) || 'v1' : 'v1';
+          return { ...u, email, email_version: emailVersion };
+        });
+
+        result = { users: usersWithDetails };
         break;
       }
 
@@ -983,21 +1256,34 @@ Deno.serve(async (req) => {
           trial_ended_at: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString(),
         };
 
-        // Generate and send the email — use v3/v2 template if requested
-        const testIsV3 = email_version === 'v3';
-        const testIsV2 = email_version === 'v2';
+        // Generate and send the email — select template by version
         let emailHtml, testSubject;
-        if (testIsV3) {
+        if (email_version === 'v4b') {
+          emailHtml = generateFortnightReportHTML(testUser);
+          testSubject = '[TEST] 18 features shipped in 2 weeks ⚡';
+        } else if (email_version === 'v4') {
+          emailHtml = generateWinbackEmailV4HTML(testUser);
+          testSubject = "[TEST] You won't recognise this app ⚡";
+        } else if (email_version === 'v3') {
           emailHtml = generateWinbackEmailV3HTML(testUser);
           testSubject = '[TEST] This week at Elec-Mate ⚡';
-        } else if (testIsV2) {
+        } else if (email_version === 'v2') {
           emailHtml = generateWinbackEmailV2HTML(testUser);
           testSubject = '[TEST] Your Sunday Round-Up ⚡';
         } else {
           emailHtml = generateWinbackEmailHTML(testUser);
           testSubject = '[TEST] Fancy another look?';
         }
-        const testVersionTag = testIsV3 ? 'v3' : testIsV2 ? 'v2' : 'v1';
+        const testVersionTag =
+          email_version === 'v4b'
+            ? 'v4b'
+            : email_version === 'v4'
+              ? 'v4'
+              : email_version === 'v3'
+                ? 'v3'
+                : email_version === 'v2'
+                  ? 'v2'
+                  : 'v1';
         const { data: testEmailData, error: emailError } = await resend.emails.send({
           from: 'Elec-Mate <offers@elec-mate.com>',
           to: [testEmail.trim().toLowerCase()],
@@ -1036,21 +1322,34 @@ Deno.serve(async (req) => {
           trial_ended_at: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString(),
         };
 
-        // Generate and send the email — use v3/v2 template if requested
-        const manualIsV3 = email_version === 'v3';
-        const manualIsV2 = email_version === 'v2';
+        // Generate and send the email — select template by version
         let manualEmailHtml, manualSubject;
-        if (manualIsV3) {
+        if (email_version === 'v4b') {
+          manualEmailHtml = generateFortnightReportHTML(manualUser);
+          manualSubject = '18 features shipped in 2 weeks ⚡';
+        } else if (email_version === 'v4') {
+          manualEmailHtml = generateWinbackEmailV4HTML(manualUser);
+          manualSubject = "You won't recognise this app ⚡";
+        } else if (email_version === 'v3') {
           manualEmailHtml = generateWinbackEmailV3HTML(manualUser);
           manualSubject = 'This week at Elec-Mate ⚡';
-        } else if (manualIsV2) {
+        } else if (email_version === 'v2') {
           manualEmailHtml = generateWinbackEmailV2HTML(manualUser);
           manualSubject = 'Your Sunday Round-Up ⚡';
         } else {
           manualEmailHtml = generateWinbackEmailHTML(manualUser);
           manualSubject = 'Fancy another look?';
         }
-        const manualVersionTag = manualIsV3 ? 'v3' : manualIsV2 ? 'v2' : 'v1';
+        const manualVersionTag =
+          email_version === 'v4b'
+            ? 'v4b'
+            : email_version === 'v4'
+              ? 'v4'
+              : email_version === 'v3'
+                ? 'v3'
+                : email_version === 'v2'
+                  ? 'v2'
+                  : 'v1';
         const { data: manualEmailData, error: manualEmailError } = await resend.emails.send({
           from: 'Elec-Mate <offers@elec-mate.com>',
           to: [manualEmail.trim().toLowerCase()],
@@ -1069,11 +1368,16 @@ Deno.serve(async (req) => {
         }
 
         // Log to email_logs table
-        const manualTemplateName = manualIsV3
-          ? 'winback_offer_v3_manual'
-          : manualIsV2
-            ? 'winback_offer_v2_manual'
-            : 'winback_offer_manual';
+        const manualTemplateName =
+          email_version === 'v4b'
+            ? 'winback_fortnight_report_manual'
+            : email_version === 'v4'
+              ? 'winback_offer_v4_manual'
+              : email_version === 'v3'
+                ? 'winback_offer_v3_manual'
+                : email_version === 'v2'
+                  ? 'winback_offer_v2_manual'
+                  : 'winback_offer_manual';
         await supabaseAdmin.from('email_logs').insert({
           to_email: manualEmail.trim().toLowerCase(),
           subject: manualSubject,
@@ -1128,6 +1432,110 @@ Deno.serve(async (req) => {
         result = {
           reset: resetIds.length,
           message: `${resetIds.length} users reset and eligible for resend`,
+        };
+        break;
+      }
+
+      case 'get_audience_breakdown': {
+        // Full audience breakdown across all roles
+        console.log('get_audience_breakdown: Fetching all profiles');
+
+        const { data: allProfiles, error: abError } = await supabaseAdmin
+          .from('profiles')
+          .select('id, role, subscribed, free_access_granted, winback_offer_sent_at, created_at');
+
+        if (abError) {
+          console.error('get_audience_breakdown: query error:', abError);
+          throw abError;
+        }
+
+        const profiles = allProfiles || [];
+        const eligibleCutoff = Date.now() - 7 * 24 * 60 * 60 * 1000 - 24 * 60 * 60 * 1000;
+        const sentCutoff24h = Date.now() - 24 * 60 * 60 * 1000;
+
+        // Electricians
+        const elecs = profiles.filter((p: Record<string, unknown>) => p.role === 'electrician');
+        const elecSubscribed = elecs.filter(
+          (p: Record<string, unknown>) => p.subscribed === true
+        ).length;
+        const elecFreeAccess = elecs.filter(
+          (p: Record<string, unknown>) => p.free_access_granted === true && p.subscribed !== true
+        ).length;
+        const elecLapsed = elecs.filter((p: Record<string, unknown>) => {
+          if (p.subscribed === true) return false;
+          if (p.free_access_granted === true) return false;
+          return new Date(p.created_at as string).getTime() < eligibleCutoff;
+        }).length;
+        const elecSentNotConverted = elecs.filter((p: Record<string, unknown>) => {
+          if (p.subscribed === true) return false;
+          if (!p.winback_offer_sent_at) return false;
+          return new Date(p.winback_offer_sent_at as string).getTime() < sentCutoff24h;
+        }).length;
+        const elecNeverSent = elecs.filter((p: Record<string, unknown>) => {
+          if (p.subscribed === true) return false;
+          if (p.free_access_granted === true) return false;
+          if (p.winback_offer_sent_at) return false;
+          return new Date(p.created_at as string).getTime() < eligibleCutoff;
+        }).length;
+
+        // Apprentices
+        const apprentices = profiles.filter(
+          (p: Record<string, unknown>) => p.role === 'apprentice'
+        );
+        const appSubscribed = apprentices.filter(
+          (p: Record<string, unknown>) => p.subscribed === true
+        ).length;
+        const appFreeAccess = apprentices.filter(
+          (p: Record<string, unknown>) => p.free_access_granted === true && p.subscribed !== true
+        ).length;
+        const appLapsed = apprentices.filter((p: Record<string, unknown>) => {
+          if (p.subscribed === true) return false;
+          if (p.free_access_granted === true) return false;
+          return new Date(p.created_at as string).getTime() < eligibleCutoff;
+        }).length;
+
+        // Employers
+        const employers = profiles.filter((p: Record<string, unknown>) => p.role === 'employer');
+        const empSubscribed = employers.filter(
+          (p: Record<string, unknown>) => p.subscribed === true
+        ).length;
+        const empFreeAccess = employers.filter(
+          (p: Record<string, unknown>) => p.free_access_granted === true && p.subscribed !== true
+        ).length;
+        const empLapsed = employers.filter((p: Record<string, unknown>) => {
+          if (p.subscribed === true) return false;
+          if (p.free_access_granted === true) return false;
+          return new Date(p.created_at as string).getTime() < eligibleCutoff;
+        }).length;
+
+        // Total target = elecSentNotConverted (will be reset) + elecNeverSent
+        const totalTarget = elecSentNotConverted + elecNeverSent;
+
+        console.log(`get_audience_breakdown: ${profiles.length} total, target=${totalTarget}`);
+
+        result = {
+          electricians: {
+            total: elecs.length,
+            subscribed: elecSubscribed,
+            freeAccess: elecFreeAccess,
+            lapsed: elecLapsed,
+            sentNotConverted: elecSentNotConverted,
+            neverSent: elecNeverSent,
+          },
+          apprentices: {
+            total: apprentices.length,
+            subscribed: appSubscribed,
+            freeAccess: appFreeAccess,
+            lapsed: appLapsed,
+          },
+          employers: {
+            total: employers.length,
+            subscribed: empSubscribed,
+            freeAccess: empFreeAccess,
+            lapsed: empLapsed,
+          },
+          totalUsers: profiles.length,
+          totalTarget,
         };
         break;
       }

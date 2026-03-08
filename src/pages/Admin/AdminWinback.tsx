@@ -44,6 +44,8 @@ import {
   ExternalLink,
   BarChart3,
   ArrowRight,
+  FileText,
+  Sparkles,
 } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { format, formatDistanceToNow, parseISO } from 'date-fns';
@@ -66,6 +68,8 @@ interface SentUser {
   created_at: string;
   winback_offer_sent_at: string;
   subscribed: boolean;
+  email: string | null;
+  email_version: string;
 }
 
 interface WinbackStats {
@@ -73,6 +77,31 @@ interface WinbackStats {
   offersSent: number;
   conversions: number;
   conversionRate: string;
+}
+
+interface AudienceBreakdown {
+  electricians: {
+    total: number;
+    subscribed: number;
+    freeAccess: number;
+    lapsed: number;
+    sentNotConverted: number;
+    neverSent: number;
+  };
+  apprentices: {
+    total: number;
+    subscribed: number;
+    freeAccess: number;
+    lapsed: number;
+  };
+  employers: {
+    total: number;
+    subscribed: number;
+    freeAccess: number;
+    lapsed: number;
+  };
+  totalUsers: number;
+  totalTarget: number;
 }
 
 export default function AdminWinback() {
@@ -99,7 +128,8 @@ export default function AdminWinback() {
   });
   const [confirmResend, setConfirmResend] = useState(false);
   const [resetting, setResetting] = useState(false);
-  const [emailVersion, setEmailVersion] = useState<'v1' | 'v2' | 'v3'>('v3');
+  const [emailVersion, setEmailVersion] = useState<'v1' | 'v2' | 'v3' | 'v4' | 'v4b'>('v4');
+  const [showPreview, setShowPreview] = useState(false);
 
   // Fetch campaign stats
   const {
@@ -174,6 +204,21 @@ export default function AdminWinback() {
     },
     staleTime: 30 * 1000,
     refetchInterval: 30 * 1000,
+  });
+
+  // Fetch audience breakdown
+  const { data: audienceBreakdown } = useQuery<AudienceBreakdown>({
+    queryKey: ['admin-winback-audience'],
+    queryFn: async () => {
+      const { data, error } = await supabase.functions.invoke('send-winback-offer', {
+        body: { action: 'get_audience_breakdown' },
+      });
+      if (error) throw error;
+      if (data?.error) throw new Error(data.error);
+      return data as AudienceBreakdown;
+    },
+    staleTime: 60 * 1000,
+    retry: false,
   });
 
   // Compute tracking stats
@@ -485,6 +530,7 @@ export default function AdminWinback() {
               queryClient.invalidateQueries({ queryKey: ['admin-winback-tracking'] });
               queryClient.invalidateQueries({ queryKey: ['admin-winback-stats'] });
               queryClient.invalidateQueries({ queryKey: ['admin-winback-sent'] });
+              queryClient.invalidateQueries({ queryKey: ['admin-winback-audience'] });
             }}
             className="gap-2 h-11 touch-manipulation"
           >
@@ -493,69 +539,130 @@ export default function AdminWinback() {
           </Button>
         </div>
 
-        {/* Hero Stats — 6 cards */}
-        <div className="grid grid-cols-3 md:grid-cols-6 gap-2">
-          {[
-            {
-              label: 'Eligible',
-              value: stats?.totalEligible || 0,
-              icon: Users,
-              colour: 'text-amber-400',
-              bg: 'from-amber-500/10 to-orange-500/5',
-              border: 'border-amber-500/20',
-            },
-            {
-              label: 'Sent',
-              value: totalSent,
-              icon: Mail,
-              colour: 'text-blue-400',
-              bg: 'from-blue-500/10 to-cyan-500/5',
-              border: 'border-blue-500/20',
-            },
-            {
-              label: 'Delivered',
-              value: trackingStats.delivered,
-              icon: CheckCircle,
-              colour: 'text-sky-400',
-              bg: 'from-sky-500/10 to-blue-500/5',
-              border: 'border-sky-500/20',
-            },
-            {
-              label: 'Opened',
-              value: trackingStats.opened,
-              icon: MailOpen,
-              colour: 'text-green-400',
-              bg: 'from-green-500/10 to-emerald-500/5',
-              border: 'border-green-500/20',
-            },
-            {
-              label: 'Clicked',
-              value: trackingStats.clicked,
-              icon: MousePointerClick,
-              colour: 'text-yellow-400',
-              bg: 'from-yellow-500/10 to-amber-500/5',
-              border: 'border-yellow-500/20',
-            },
-            {
-              label: 'Converted',
-              value: stats?.conversions || 0,
-              icon: TrendingUp,
-              colour: 'text-emerald-400',
-              bg: 'from-emerald-500/10 to-green-500/5',
-              border: 'border-emerald-500/20',
-            },
-          ].map((s) => (
-            <Card key={s.label} className={`bg-gradient-to-br ${s.bg} ${s.border}`}>
-              <CardContent className="p-2.5 sm:p-3 text-center">
-                <s.icon className={`h-4 w-4 ${s.colour} mx-auto mb-1`} />
-                <p className="text-lg sm:text-xl font-bold">
-                  {statsLoading ? '...' : s.value.toLocaleString()}
-                </p>
-                <p className="text-[10px] sm:text-xs text-white">{s.label}</p>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
+        {/* Audience Breakdown */}
+        <Card className="border-amber-500/30 bg-gradient-to-br from-amber-500/5 to-orange-500/5">
+          <CardHeader className="pb-2">
+            <CardTitle className="text-sm flex items-center gap-2">
+              <Users className="h-4 w-4 text-amber-400" />
+              Audience Breakdown
+            </CardTitle>
+            <CardDescription className="text-xs text-white">
+              Full user base — {audienceBreakdown?.totalUsers?.toLocaleString() || '...'} total
+              users
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-3">
+            {/* Role breakdown table */}
+            <div className="rounded-xl border border-border overflow-hidden">
+              <table className="w-full text-xs">
+                <thead>
+                  <tr className="bg-muted/50">
+                    <th className="text-left p-2 font-semibold text-white">Role</th>
+                    <th className="text-center p-2 font-semibold text-white">Total</th>
+                    <th className="text-center p-2 font-semibold text-green-400">Subscribed</th>
+                    <th className="text-center p-2 font-semibold text-blue-400">Free</th>
+                    <th className="text-center p-2 font-semibold text-red-400">Lapsed</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr className="border-t border-border/50">
+                    <td className="p-2 text-white font-medium">Electrician</td>
+                    <td className="p-2 text-center text-white font-bold">
+                      {audienceBreakdown?.electricians.total ?? '...'}
+                    </td>
+                    <td className="p-2 text-center text-green-400">
+                      {audienceBreakdown?.electricians.subscribed ?? '-'}
+                    </td>
+                    <td className="p-2 text-center text-blue-400">
+                      {audienceBreakdown?.electricians.freeAccess ?? '-'}
+                    </td>
+                    <td className="p-2 text-center text-red-400">
+                      {audienceBreakdown?.electricians.lapsed ?? '-'}
+                    </td>
+                  </tr>
+                  <tr className="border-t border-border/50">
+                    <td className="p-2 text-white font-medium">Apprentice</td>
+                    <td className="p-2 text-center text-white font-bold">
+                      {audienceBreakdown?.apprentices.total ?? '...'}
+                    </td>
+                    <td className="p-2 text-center text-green-400">
+                      {audienceBreakdown?.apprentices.subscribed ?? '-'}
+                    </td>
+                    <td className="p-2 text-center text-blue-400">
+                      {audienceBreakdown?.apprentices.freeAccess ?? '-'}
+                    </td>
+                    <td className="p-2 text-center text-red-400">
+                      {audienceBreakdown?.apprentices.lapsed ?? '-'}
+                    </td>
+                  </tr>
+                  <tr className="border-t border-border/50">
+                    <td className="p-2 text-white font-medium">Employer</td>
+                    <td className="p-2 text-center text-white font-bold">
+                      {audienceBreakdown?.employers.total ?? '...'}
+                    </td>
+                    <td className="p-2 text-center text-green-400">
+                      {audienceBreakdown?.employers.subscribed ?? '-'}
+                    </td>
+                    <td className="p-2 text-center text-blue-400">
+                      {audienceBreakdown?.employers.freeAccess ?? '-'}
+                    </td>
+                    <td className="p-2 text-center text-red-400">
+                      {audienceBreakdown?.employers.lapsed ?? '-'}
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            {/* Electrician targeting detail */}
+            <div className="p-3 rounded-xl bg-muted/50 border border-border space-y-2">
+              <p className="text-xs text-white font-semibold flex items-center gap-1.5">
+                <Target className="h-3.5 w-3.5 text-amber-400" />
+                Electrician Targeting (this blast)
+              </p>
+              <div className="grid grid-cols-2 gap-2">
+                <div className="flex items-center justify-between text-xs">
+                  <span className="text-white">Previously sent (resendable)</span>
+                  <span className="text-amber-400 font-bold">
+                    {audienceBreakdown?.electricians.sentNotConverted ?? '-'}
+                  </span>
+                </div>
+                <div className="flex items-center justify-between text-xs">
+                  <span className="text-white">Never sent (new)</span>
+                  <span className="text-green-400 font-bold">
+                    {audienceBreakdown?.electricians.neverSent ?? '-'}
+                  </span>
+                </div>
+              </div>
+              <div className="flex items-center justify-between pt-1 border-t border-border/50">
+                <span className="text-sm text-white font-bold">Target</span>
+                <span className="text-lg font-extrabold text-amber-400">
+                  ~{audienceBreakdown?.totalTarget ?? '...'}
+                </span>
+              </div>
+              <p className="text-[10px] text-white">
+                Apprentices ({audienceBreakdown?.apprentices.lapsed ?? '...'} lapsed) targeted
+                separately via apprentice admin
+              </p>
+            </div>
+
+            {/* Quick stat row */}
+            <div className="grid grid-cols-3 gap-2">
+              <div className="p-2 rounded-lg bg-blue-500/10 border border-blue-500/20 text-center">
+                <p className="text-lg font-bold text-blue-400">{totalSent}</p>
+                <p className="text-[10px] text-white">Sent</p>
+              </div>
+              <div className="p-2 rounded-lg bg-emerald-500/10 border border-emerald-500/20 text-center">
+                <p className="text-lg font-bold text-emerald-400">{stats?.conversions || 0}</p>
+                <p className="text-[10px] text-white">Converted</p>
+              </div>
+              <div className="p-2 rounded-lg bg-amber-500/10 border border-amber-500/20 text-center">
+                <p className="text-lg font-bold text-amber-400">{stats?.conversionRate || '0'}%</p>
+                <p className="text-[10px] text-white">Conv. Rate</p>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
 
         {/* Engagement Funnel */}
         <Card className="border-purple-500/30 bg-gradient-to-br from-purple-500/5 to-indigo-500/5">
@@ -681,32 +788,67 @@ export default function AdminWinback() {
           </CardHeader>
           <CardContent className="space-y-3">
             {/* Version toggle + pricing */}
-            <div className="flex items-center gap-2 p-2.5 rounded-xl bg-muted/50 border border-border">
-              <span className="text-xs text-white font-semibold mr-auto">Template:</span>
-              <Button
-                variant={emailVersion === 'v1' ? 'default' : 'outline'}
-                size="sm"
-                onClick={() => setEmailVersion('v1')}
-                className={`h-8 touch-manipulation text-xs ${emailVersion === 'v1' ? 'bg-amber-500 text-black hover:bg-amber-600' : ''}`}
-              >
-                v1 Original
-              </Button>
-              <Button
-                variant={emailVersion === 'v2' ? 'default' : 'outline'}
-                size="sm"
-                onClick={() => setEmailVersion('v2')}
-                className={`h-8 touch-manipulation text-xs ${emailVersion === 'v2' ? 'bg-green-500 text-black hover:bg-green-600' : ''}`}
-              >
-                v2 Round-Up
-              </Button>
-              <Button
-                variant={emailVersion === 'v3' ? 'default' : 'outline'}
-                size="sm"
-                onClick={() => setEmailVersion('v3')}
-                className={`h-8 touch-manipulation text-xs ${emailVersion === 'v3' ? 'bg-emerald-500 text-black hover:bg-emerald-600' : ''}`}
-              >
-                v3 This Week
-              </Button>
+            <div className="space-y-2 p-2.5 rounded-xl bg-muted/50 border border-border">
+              <div className="flex items-center justify-between">
+                <span className="text-xs text-white font-semibold">Template:</span>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => setShowPreview(true)}
+                  className="h-8 touch-manipulation text-xs gap-1.5 text-purple-400 hover:text-purple-300"
+                >
+                  <Eye className="h-3.5 w-3.5" />
+                  Preview
+                </Button>
+              </div>
+              <div className="flex items-center gap-1.5 flex-wrap">
+                <Button
+                  variant={emailVersion === 'v4' ? 'default' : 'outline'}
+                  size="sm"
+                  onClick={() => setEmailVersion('v4')}
+                  className={`h-8 touch-manipulation text-xs relative ${emailVersion === 'v4' ? 'bg-amber-500 text-black hover:bg-amber-600' : ''}`}
+                >
+                  v4 Big Update
+                  <Badge className="absolute -top-1.5 -right-1.5 bg-green-500 text-[9px] px-1 py-0 h-4 text-white border-0">
+                    NEW
+                  </Badge>
+                </Button>
+                <Button
+                  variant={emailVersion === 'v4b' ? 'default' : 'outline'}
+                  size="sm"
+                  onClick={() => setEmailVersion('v4b')}
+                  className={`h-8 touch-manipulation text-xs relative ${emailVersion === 'v4b' ? 'bg-purple-500 text-white hover:bg-purple-600' : ''}`}
+                >
+                  v4b Fortnight
+                  <Badge className="absolute -top-1.5 -right-1.5 bg-green-500 text-[9px] px-1 py-0 h-4 text-white border-0">
+                    NEW
+                  </Badge>
+                </Button>
+                <Button
+                  variant={emailVersion === 'v3' ? 'default' : 'outline'}
+                  size="sm"
+                  onClick={() => setEmailVersion('v3')}
+                  className={`h-8 touch-manipulation text-xs ${emailVersion === 'v3' ? 'bg-emerald-500 text-black hover:bg-emerald-600' : ''}`}
+                >
+                  v3
+                </Button>
+                <Button
+                  variant={emailVersion === 'v2' ? 'default' : 'outline'}
+                  size="sm"
+                  onClick={() => setEmailVersion('v2')}
+                  className={`h-8 touch-manipulation text-xs ${emailVersion === 'v2' ? 'bg-green-500 text-black hover:bg-green-600' : ''}`}
+                >
+                  v2
+                </Button>
+                <Button
+                  variant={emailVersion === 'v1' ? 'default' : 'outline'}
+                  size="sm"
+                  onClick={() => setEmailVersion('v1')}
+                  className={`h-8 touch-manipulation text-xs ${emailVersion === 'v1' ? 'bg-amber-500 text-black hover:bg-amber-600' : ''}`}
+                >
+                  v1
+                </Button>
+              </div>
             </div>
 
             {/* Pricing preview */}
@@ -732,11 +874,15 @@ export default function AdminWinback() {
               <div className="p-3 rounded-xl bg-yellow-500/10 border border-yellow-500/20 space-y-2">
                 <p className="text-xs text-yellow-400 font-semibold">
                   Send Test Email (
-                  {emailVersion === 'v3'
-                    ? 'This Week'
-                    : emailVersion === 'v2'
-                      ? 'Sunday Round-Up'
-                      : 'Original'}
+                  {emailVersion === 'v4b'
+                    ? 'Fortnight Report'
+                    : emailVersion === 'v4'
+                      ? 'Big Update'
+                      : emailVersion === 'v3'
+                        ? 'This Week'
+                        : emailVersion === 'v2'
+                          ? 'Sunday Round-Up'
+                          : 'Original'}
                   )
                 </p>
                 <div className="flex gap-2">
@@ -823,7 +969,7 @@ export default function AdminWinback() {
                   ) : (
                     <RefreshCw className="h-4 w-4" />
                   )}
-                  Resend New Email to All ({totalSent} users)
+                  Resend New Email to All (~{audienceBreakdown?.totalTarget || totalSent} users)
                 </Button>
                 <p className="text-[10px] text-white text-center">
                   Resets users sent 24h+ ago then sends the new email in batches of {BATCH_SIZE}
@@ -977,11 +1123,22 @@ export default function AdminWinback() {
               ) : (
                 <div className="space-y-1.5">
                   {sentUsers.map((user) => {
-                    const emailEvents = trackingStats.byEmail;
-                    // Try to match by username (we don't have email in sent history)
-                    const wasDelivered = user.subscribed || false; // placeholder
-                    const wasOpened = false; // will populate when we have per-user email tracking
-                    const wasClicked = false;
+                    // Match per-user email against tracking events
+                    const userEmail = user.email?.toLowerCase();
+                    const userEvents = userEmail ? trackingStats.byEmail.get(userEmail) : undefined;
+                    const wasDelivered = userEvents?.has('email.delivered') || false;
+                    const wasOpened = userEvents?.has('email.opened') || false;
+                    const wasClicked = userEvents?.has('email.clicked') || false;
+
+                    // Version badge colour
+                    const versionColours: Record<string, string> = {
+                      v1: 'bg-gray-500/20 text-gray-400',
+                      v2: 'bg-green-500/20 text-green-400',
+                      v3: 'bg-emerald-500/20 text-emerald-400',
+                      v4: 'bg-amber-500/20 text-amber-400',
+                      v4b: 'bg-purple-500/20 text-purple-400',
+                    };
+                    const vClass = versionColours[user.email_version] || versionColours.v1;
 
                     return (
                       <div
@@ -1002,14 +1159,32 @@ export default function AdminWinback() {
                             })}
                           </p>
                         </div>
-                        <div className="flex items-center gap-1.5 shrink-0">
+                        <div className="flex items-center gap-1 shrink-0 flex-wrap justify-end">
+                          <Badge className={`text-[9px] px-1.5 border-0 ${vClass}`}>
+                            {user.email_version?.toUpperCase() || 'V1'}
+                          </Badge>
+                          {wasDelivered && (
+                            <Badge className="bg-blue-500/20 text-blue-400 text-[9px] px-1 border-0">
+                              <CheckCircle className="h-2.5 w-2.5" />
+                            </Badge>
+                          )}
+                          {wasOpened && (
+                            <Badge className="bg-green-500/20 text-green-400 text-[9px] px-1 border-0">
+                              <MailOpen className="h-2.5 w-2.5" />
+                            </Badge>
+                          )}
+                          {wasClicked && (
+                            <Badge className="bg-amber-500/20 text-amber-400 text-[9px] px-1 border-0">
+                              <MousePointerClick className="h-2.5 w-2.5" />
+                            </Badge>
+                          )}
                           {user.subscribed ? (
-                            <Badge className="bg-green-500/20 text-green-400 text-[10px] px-1.5">
+                            <Badge className="bg-green-500/20 text-green-400 text-[10px] px-1.5 border-0">
                               <CheckCheck className="h-3 w-3 mr-0.5" />
                               Converted
                             </Badge>
                           ) : (
-                            <Badge className="bg-gray-500/20 text-gray-400 text-[10px] px-1.5">
+                            <Badge className="bg-gray-500/20 text-gray-400 text-[10px] px-1.5 border-0">
                               Pending
                             </Badge>
                           )}
@@ -1105,11 +1280,42 @@ export default function AdminWinback() {
           <AlertDialogContent className="max-w-[calc(100vw-2rem)] sm:max-w-lg rounded-2xl p-5 sm:p-6">
             <AlertDialogHeader className="space-y-3">
               <AlertDialogTitle className="text-base sm:text-lg leading-tight">
-                Resend new email to all previously sent?
+                Resend{' '}
+                {emailVersion === 'v4b'
+                  ? 'Fortnight Report'
+                  : emailVersion === 'v4'
+                    ? 'Big Update'
+                    : emailVersion.toUpperCase()}{' '}
+                to all?
               </AlertDialogTitle>
-              <AlertDialogDescription className="text-sm leading-relaxed">
-                This resets all users sent the old email 24+ hours ago (who haven't subscribed),
-                then sends the new rewritten email in batches of {BATCH_SIZE}. One fresh email each.
+              <AlertDialogDescription asChild>
+                <div className="text-sm leading-relaxed space-y-2">
+                  {audienceBreakdown ? (
+                    <>
+                      <p className="text-white">
+                        <span className="font-bold text-amber-400">
+                          {audienceBreakdown.electricians.sentNotConverted}
+                        </span>{' '}
+                        users will be reset (sent 24h+ ago, not subscribed)
+                      </p>
+                      <p className="text-white">
+                        <span className="font-bold text-green-400">
+                          {audienceBreakdown.electricians.neverSent}
+                        </span>{' '}
+                        never-sent users will also receive it
+                      </p>
+                      <p className="text-white font-bold">
+                        Total: ~{audienceBreakdown.totalTarget} emails via{' '}
+                        {emailVersion.toUpperCase()} in batches of {BATCH_SIZE}
+                      </p>
+                    </>
+                  ) : (
+                    <p className="text-white">
+                      Resets all users sent the old email 24+ hours ago (who haven't subscribed),
+                      then sends the new email in batches of {BATCH_SIZE}.
+                    </p>
+                  )}
+                </div>
               </AlertDialogDescription>
             </AlertDialogHeader>
             <AlertDialogFooter className="flex-col-reverse sm:flex-row gap-2 sm:gap-2 pt-2">
@@ -1195,6 +1401,61 @@ export default function AdminWinback() {
             </AlertDialogFooter>
           </AlertDialogContent>
         </AlertDialog>
+
+        {/* Email Preview Sheet */}
+        <Sheet open={showPreview} onOpenChange={setShowPreview}>
+          <SheetContent side="bottom" className="h-[85vh] rounded-t-2xl p-0">
+            <div className="flex flex-col h-full">
+              <div className="flex justify-center pt-3 pb-2">
+                <div className="w-10 h-1 rounded-full bg-muted-foreground/30" />
+              </div>
+              <SheetHeader className="px-4 pb-3 border-b border-border">
+                <SheetTitle className="flex items-center gap-2 text-sm">
+                  <FileText className="h-4 w-4 text-purple-400" />
+                  Preview:{' '}
+                  {emailVersion === 'v4b'
+                    ? 'Fortnight Report'
+                    : emailVersion === 'v4'
+                      ? 'Big Update'
+                      : emailVersion === 'v3'
+                        ? 'This Week'
+                        : emailVersion === 'v2'
+                          ? 'Sunday Round-Up'
+                          : 'Original'}
+                  <Badge className="bg-purple-500/20 text-purple-400 text-[10px] border-0">
+                    {emailVersion.toUpperCase()}
+                  </Badge>
+                </SheetTitle>
+              </SheetHeader>
+              <div className="flex-1 overflow-hidden bg-slate-900">
+                <iframe
+                  title="Email Preview"
+                  sandbox="allow-same-origin"
+                  className="w-full h-full border-0"
+                  srcDoc={(() => {
+                    const mockUser = {
+                      id: 'preview',
+                      full_name: 'Test User',
+                      username: 'testuser',
+                      email: 'test@example.com',
+                      created_at: new Date(Date.now() - 14 * 24 * 60 * 60 * 1000).toISOString(),
+                      trial_ended_at: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString(),
+                    };
+                    // Return placeholder HTML with version info — actual template rendered on server
+                    const versionLabels: Record<string, string> = {
+                      v1: 'Fancy another look?',
+                      v2: 'Your Sunday Round-Up',
+                      v3: 'This week at Elec-Mate',
+                      v4: "You won't recognise this app",
+                      v4b: '18 features shipped in 2 weeks',
+                    };
+                    return `<!DOCTYPE html><html><head><meta name="color-scheme" content="dark"><style>body{margin:0;padding:40px 20px;font-family:-apple-system,system-ui,sans-serif;background:#0f172a;color:#e2e8f0;text-align:center;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:90vh}h2{color:#fbbf24;margin-bottom:8px}p{color:#94a3b8;font-size:14px;line-height:1.6;max-width:300px}.btn{display:inline-block;margin-top:20px;padding:12px 24px;background:linear-gradient(135deg,#fbbf24,#f59e0b);color:#0f172a;border-radius:12px;font-weight:700;font-size:14px;text-decoration:none;cursor:pointer}</style></head><body><h2>${versionLabels[emailVersion] || emailVersion}</h2><p>Send a test email to preview the full rendered template in your inbox.</p><p style="color:#64748b;font-size:12px;margin-top:4px">Email templates are rendered server-side for security. Use the test send button above to see the exact email.</p></body></html>`;
+                  })()}
+                />
+              </div>
+            </div>
+          </SheetContent>
+        </Sheet>
       </div>
     </PullToRefresh>
   );

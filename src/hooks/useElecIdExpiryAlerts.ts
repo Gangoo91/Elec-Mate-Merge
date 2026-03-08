@@ -34,7 +34,7 @@ export function useElecIdExpiryAlerts() {
       const { data: profiles } = await supabase
         .from('employer_elec_id_profiles')
         .select('id, ecs_expiry_date')
-        .eq('user_id', user.id);
+        .eq('employee_id', user.id);
 
       if (!profiles || profiles.length === 0) return [];
 
