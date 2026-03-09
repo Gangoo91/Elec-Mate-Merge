@@ -1,27 +1,58 @@
+/**
+ * Sonner Toaster — best-in-class native mobile design
+ *
+ * - Bottom-center on mobile (matches native iOS/Android UX patterns)
+ * - Top-right on desktop (conventional web placement)
+ * - Full safe-area awareness: env(safe-area-inset-bottom/top) so toasts
+ *   never overlap the Dynamic Island, notch, or home indicator
+ * - Frosted glass dark design with coloured left accent per type
+ * - Swipe-down on mobile to dismiss
+ */
+
+import { useEffect, useState } from 'react';
 import { Toaster as Sonner, toast } from 'sonner';
 import { CheckCircle2, XCircle, AlertTriangle, Info } from 'lucide-react';
 
 type ToasterProps = React.ComponentProps<typeof Sonner>;
 
 const Toaster = ({ ...props }: ToasterProps) => {
+  const [isMobile, setIsMobile] = useState(() =>
+    typeof window !== 'undefined' ? window.innerWidth < 768 : true
+  );
+
+  useEffect(() => {
+    const mq = window.matchMedia('(min-width: 768px)');
+    const handler = (e: MediaQueryListEvent) => setIsMobile(!e.matches);
+    mq.addEventListener('change', handler);
+    setIsMobile(!mq.matches);
+    return () => mq.removeEventListener('change', handler);
+  }, []);
+
+  const position = isMobile ? 'bottom-center' : 'top-right';
+
+  // On mobile: sit just above the home indicator / bottom bar
+  // On desktop: sit just below the nav bar / top edge with some breathing room
+  const offset = isMobile
+    ? 'calc(env(safe-area-inset-bottom, 0px) + 8px)'
+    : 'calc(env(safe-area-inset-top, 0px) + 16px)';
+
   return (
     <Sonner
       theme="dark"
       className="toaster group"
-      position="top-center"
+      position={position}
       expand={false}
       closeButton={true}
-      duration={3500}
+      duration={4000}
       richColors={false}
       gap={8}
-      offset={0}
-      swipeDirections={['up', 'right']}
+      offset={offset}
+      swipeDirections={isMobile ? ['down'] : ['right']}
       style={
         {
-          '--offset': 'calc(env(safe-area-inset-top, 0px) + 2.5rem)',
-          '--width': 'min(calc(100vw - 2rem), 420px)',
-          left: '50%',
-          transform: 'translateX(-50%)',
+          '--width': isMobile ? 'calc(100vw - 2rem)' : 'min(420px, calc(100vw - 2rem))',
+          // On desktop, pin to the right edge with some padding
+          ...(!isMobile && { right: '1rem', left: 'auto', transform: 'none' }),
         } as React.CSSProperties
       }
       icons={{
@@ -48,22 +79,30 @@ const Toaster = ({ ...props }: ToasterProps) => {
       }}
       toastOptions={{
         classNames: {
-          toast:
-            'group toast !rounded-2xl !border !border-white/10 !border-l-[3px] !ring-1 !ring-inset !ring-white/[0.05] !shadow-[0_8px_32px_rgba(0,0,0,0.5)] !px-4 !py-3.5 !min-h-[68px] !items-center !gap-3 !w-full !bg-[#1a1a2e]/95 !backdrop-blur-xl',
+          toast: [
+            'group toast',
+            '!rounded-2xl !border !border-white/10 !border-l-[3px]',
+            '!ring-1 !ring-inset !ring-white/[0.04]',
+            '!shadow-[0_8px_40px_rgba(0,0,0,0.6),0_2px_8px_rgba(0,0,0,0.4)]',
+            '!px-4 !py-3.5 !min-h-[64px] !items-center !gap-3 !w-full',
+            // Frosted glass — darker on mobile for legibility over app content
+            '!bg-[#141420]/96 !backdrop-blur-2xl',
+          ].join(' '),
           title: '!text-white !font-semibold !text-[14px] !leading-snug',
-          description: '!text-white !text-[12px] !leading-snug !mt-0.5',
-          success: '!border-l-emerald-500 !shadow-[0_8px_32px_rgba(16,185,129,0.25)]',
-          error: '!border-l-red-500 !shadow-[0_8px_32px_rgba(239,68,68,0.25)]',
-          warning: '!border-l-amber-500 !shadow-[0_8px_32px_rgba(245,158,11,0.25)]',
-          info: '!border-l-blue-500 !shadow-[0_8px_32px_rgba(59,130,246,0.25)]',
-          default: '!border-l-zinc-400',
-          icon: 'self-center !w-8 !h-8 !mr-0',
+          description: '!text-white/70 !text-[12px] !leading-snug !mt-0.5',
+          success:
+            '!border-l-emerald-500 !shadow-[0_8px_40px_rgba(0,0,0,0.5),0_0_0_1px_rgba(16,185,129,0.15)]',
+          error:
+            '!border-l-red-500 !shadow-[0_8px_40px_rgba(0,0,0,0.5),0_0_0_1px_rgba(239,68,68,0.15)]',
+          warning:
+            '!border-l-amber-500 !shadow-[0_8px_40px_rgba(0,0,0,0.5),0_0_0_1px_rgba(245,158,11,0.15)]',
+          info: '!border-l-blue-500 !shadow-[0_8px_40px_rgba(0,0,0,0.5),0_0_0_1px_rgba(59,130,246,0.15)]',
+          default: '!border-l-white/20',
+          icon: 'self-center !w-8 !h-8 !mr-0 !flex-shrink-0',
           closeButton:
-            '!bg-white/15 !border-white/10 !text-white hover:!bg-white/25 !rounded-full !w-7 !h-7 !top-1.5 !right-1.5',
+            '!bg-white/10 !border-white/10 !text-white/60 hover:!bg-white/20 hover:!text-white !rounded-full !w-6 !h-6 !top-2 !right-2 !transition-colors',
         },
-        style: {
-          opacity: 1,
-        },
+        style: { opacity: 1 },
       }}
       {...props}
     />
