@@ -20,6 +20,12 @@ const Input = React.forwardRef<HTMLInputElement, React.ComponentProps<'input'>>(
             ? 'tel'
             : undefined);
 
+    // Date/time inputs must not carry py-3/py-2 — on iOS WKWebView, combining
+    // native date chrome with vertical padding forces the input taller than h-12.
+    // Use line-height centering instead (mirrors the global index.css rule).
+    const isDateLike =
+      type === 'date' || type === 'time' || type === 'datetime-local';
+
     return (
       <input
         type={finalType}
@@ -58,6 +64,9 @@ const Input = React.forwardRef<HTMLInputElement, React.ComponentProps<'input'>>(
           '[color-scheme:dark]',
           // Password masking via CSS rather than type="password" (iOS Safari fix)
           isPassword && 'pw-masked',
+          // Date/time inputs: strip top/bottom padding and use line-height centering.
+          // iOS WKWebView native date chrome + py-3 = oversized input box.
+          isDateLike && '!py-0 leading-[3rem] md:leading-[2.75rem]',
           className
         )}
         ref={ref}
