@@ -2788,12 +2788,17 @@ input::-webkit-caps-lock-indicator {
 input[type='date'],
 input[type='time'],
 input[type='datetime-local'] {
+  /* Remove iOS WKWebView native chrome that overrides our styling */
+  -webkit-appearance: none;
+  appearance: none;
   /* Lock to the same height as our base Input component on mobile */
+  box-sizing: border-box;
   min-height: 3rem;
   height: 3rem;
-  /* Prevent iOS from adding extra native padding that skews the height */
-  padding-top: 0;
-  padding-bottom: 0;
+  /* !important overrides Tailwind utility layer (py-3) which would otherwise
+     win the cascade and expand the input height on iOS WKWebView */
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
   /* Vertically centre the date/time text within the fixed height */
   line-height: 3rem;
   /* Ensure text doesn't overflow on narrow screens */
@@ -2809,6 +2814,23 @@ input[type='datetime-local'] {
     height: 2.75rem;
     line-height: 2.75rem;
   }
+}
+
+/* Align the internal date/time value text to the left to match text inputs */
+input[type='date']::-webkit-date-and-time-value,
+input[type='time']::-webkit-date-and-time-value,
+input[type='datetime-local']::-webkit-date-and-time-value {
+  text-align: left;
+  margin: 0;
+  padding: 0;
+}
+
+/* Inner edit field alignment (Chromium/iOS 16+) */
+input[type='date']::-webkit-datetime-edit,
+input[type='time']::-webkit-datetime-edit,
+input[type='datetime-local']::-webkit-datetime-edit {
+  padding: 0;
+  line-height: inherit;
 }
 
 /* ───────────────────────────────────────────────────────────────────────────
