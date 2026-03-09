@@ -90,7 +90,7 @@ export const SmartTabs = ({
       <div className="-mx-4 sm:mx-0">
         {/* Progress bar */}
         {showProgress && (
-          <div className="px-4 sm:px-0 pb-2">
+          <div className="px-4 sm:px-0 pb-1">
             <div className="flex justify-between text-xs text-muted-foreground mb-1">
               <span>
                 {completedCount} of {tabs.length} sections complete
@@ -111,7 +111,7 @@ export const SmartTabs = ({
           ref={scrollRef}
           className={cn(
             'flex overflow-x-auto scrollbar-hide',
-            isMobile ? 'gap-1.5 px-4 pb-3' : 'gap-2'
+            isMobile ? 'gap-1.5 px-4 pb-2' : 'gap-2'
           )}
           style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
         >
@@ -157,7 +157,7 @@ export const SmartTabs = ({
       </div>
 
       {/* Tab content */}
-      <div className="mt-4">{activeTab?.content}</div>
+      <div className="mt-2">{activeTab?.content}</div>
     </div>
   );
 };

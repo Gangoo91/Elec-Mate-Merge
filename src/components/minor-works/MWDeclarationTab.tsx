@@ -21,7 +21,9 @@ import { useMinorWorksSmartForm } from '@/hooks/useMinorWorksSmartForm';
 import { useToast } from '@/hooks/use-toast';
 
 interface MWDeclarationTabProps {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   formData: any;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   onUpdate: (field: string, value: any) => void;
   isMobile?: boolean;
 }
@@ -319,12 +321,14 @@ const MWDeclarationTab: React.FC<MWDeclarationTabProps> = ({
                       htmlFor="ietDeclaration"
                       className="text-sm cursor-pointer leading-relaxed text-white text-left"
                     >
-                      I/We <span className="text-green-400 font-medium">CERTIFY</span> that the work
-                      does not impair the safety of the existing installation and that the work has
-                      been designed, constructed, inspected and tested in accordance with{' '}
-                      <span className="text-white font-medium">BS 7671:2018+A3:2024</span> (IET
-                      Wiring Regulations), subject to the departures detailed above if any. The work
-                      is to the best of my/our knowledge and belief safe to be put into service.{' '}
+                      I <span className="text-green-400 font-medium">CERTIFY</span> that the work
+                      covered by this certificate does not impair the safety of the existing
+                      installation and the work has been designed, constructed, inspected and tested
+                      in accordance with{' '}
+                      <span className="text-white font-medium">BS 7671:2018</span> amended to{' '}
+                      <span className="text-white font-medium">A3:2024</span> and that to the best
+                      of my knowledge and belief, at the time of my inspection, complied with BS
+                      7671 except as detailed in Part 1 above.{' '}
                       <span className="text-red-400">*</span>
                     </label>
                   </div>
@@ -357,10 +361,7 @@ const MWDeclarationTab: React.FC<MWDeclarationTabProps> = ({
                         onCheckedChange={(c) => onUpdate('copyProvided', c)}
                         className="h-5 w-5 rounded-md border-white/30 data-[state=checked]:bg-cyan-500 data-[state=checked]:border-cyan-500 touch-manipulation"
                       />
-                      <label
-                        htmlFor="copyProvided"
-                        className="text-sm cursor-pointer text-white"
-                      >
+                      <label htmlFor="copyProvided" className="text-sm cursor-pointer text-white">
                         Copy provided to client
                       </label>
                     </div>

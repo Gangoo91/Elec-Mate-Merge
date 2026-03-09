@@ -176,6 +176,7 @@ serve(async (req) => {
 /**
  * Transform app form data (camelCase) to PDF template format (nested objects)
  */
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 function transformFormDataForTemplate(formData: any): any {
   const today = new Date().toLocaleDateString('en-GB');
 
@@ -354,26 +355,29 @@ function transformFormDataForTemplate(formData: any): any {
     },
 
     // Declaration
-    declaration: {
-      name: formData.electricianName || '',
-      company: formData.forAndOnBehalfOf || '',
-      address: formData.contractorAddress || '',
-      phone: formData.electricianPhone || '',
-      email: formData.electricianEmail || '',
-      position: formData.position || '',
-      date: formatDate(formData.signatureDate),
-      qualification: formData.qualificationLevel || '',
-      scheme_provider: formData.schemeProvider || '',
-      registration_number: formData.registrationNumber || '',
-      signature: formData.signature || '',
-      iet_declaration: formData.ietDeclaration || false,
-      bs7671_compliance: formData.bs7671Compliance || false,
-      test_results_accurate: formData.testResultsAccurate || false,
-      work_safety: formData.workSafety || false,
-      part_p_notification: formData.partPNotification || false,
-      copy_provided: formData.copyProvided || false,
-      additional_notes: formData.additionalNotes || '',
-    },
+    declaration: (() => {
+      const ietDeclared = formData.ietDeclaration || false;
+      return {
+        name: formData.electricianName || '',
+        company: formData.forAndOnBehalfOf || '',
+        address: formData.contractorAddress || '',
+        phone: formData.electricianPhone || '',
+        email: formData.electricianEmail || '',
+        position: formData.position || '',
+        date: formatDate(formData.signatureDate),
+        qualification: formData.qualificationLevel || '',
+        scheme_provider: formData.schemeProvider || '',
+        registration_number: formData.registrationNumber || '',
+        signature: formData.signature || '',
+        iet_declaration: ietDeclared,
+        bs7671_compliance: ietDeclared || formData.bs7671Compliance || false,
+        test_results_accurate: ietDeclared || formData.testResultsAccurate || false,
+        work_safety: ietDeclared || formData.workSafety || false,
+        part_p_notification: formData.partPNotification || false,
+        copy_provided: formData.copyProvided || false,
+        additional_notes: formData.additionalNotes || '',
+      };
+    })(),
 
     // Generation metadata
     _generated_at: new Date().toISOString(),

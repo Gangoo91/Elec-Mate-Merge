@@ -482,6 +482,26 @@ const MWDetailsTab: React.FC<MWDetailsTabProps> = ({ formData, onUpdate, isMobil
                 </div>
                 <div className="space-y-1.5">
                   <label className="text-xs uppercase tracking-wide text-white pl-0.5">
+                    Earthing Conductor Material
+                  </label>
+                  <Select
+                    value={formData.mainEarthingConductorMaterial || 'copper'}
+                    onValueChange={(v) => onUpdate('mainEarthingConductorMaterial', v)}
+                  >
+                    <SelectTrigger className="h-12 text-base bg-white/5 border-white/10 rounded-xl focus:border-amber-500/50 focus:ring-amber-500/20">
+                      <SelectValue placeholder="Select material" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="copper">Copper</SelectItem>
+                      <SelectItem value="aluminium">Aluminium</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div className="space-y-1.5">
+                  <label className="text-xs uppercase tracking-wide text-white pl-0.5">
                     Main Bonding Conductor Size
                   </label>
                   <Select

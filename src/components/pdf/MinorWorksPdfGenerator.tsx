@@ -36,6 +36,7 @@ import {
   createInvoiceFromCertificate,
 } from '@/utils/certificateToQuote';
 import { useMinorWorksSmartForm } from '@/hooks/useMinorWorksSmartForm';
+import { generatePdfFilename } from '@/utils/pdfFilenameGenerator';
 
 interface MinorWorksPdfGeneratorProps {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -503,8 +504,6 @@ const MinorWorksPdfGenerator: React.FC<MinorWorksPdfGeneratorProps> = ({
   const handleDownload = async () => {
     if (pdfUrl) {
       try {
-        // eslint-disable-next-line @typescript-eslint/no-require-imports
-        const { generatePdfFilename } = require('@/utils/pdfFilenameGenerator');
         const filename = generatePdfFilename(
           'MinorWorks',
           formData.certificateNumber || 'MW',

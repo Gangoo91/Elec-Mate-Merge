@@ -25,7 +25,6 @@ import { useMinorWorksTabs } from '@/hooks/useMinorWorksTabs';
 import { applyMinorWorksDevFill, clearMinorWorksForm } from '@/utils/minorWorksDevFill';
 import { CertificatePhotoProvider } from '@/contexts/CertificatePhotoContext';
 import { getZsLimitFromDeviceString } from '@/data/zsLimits';
-import { StickyFormSyncBar, type SyncState } from '@/components/ui/SyncStatusIndicator';
 
 // New tab-based components
 import MWFormHeader from '@/components/minor-works/MWFormHeader';
@@ -54,6 +53,7 @@ const MinorWorksForm = ({
   const customerIdFromNav = location.state?.customerId;
   const customerDataFromNav = location.state?.customerData;
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [formData, setFormData] = useState<any>({
     // Certificate Header
     certificateNumber: '',
@@ -89,6 +89,7 @@ const MinorWorksForm = ({
     earthingConductorPresent: false,
     mainEarthingConductorSize: '',
     mainEarthingConductorSizeCustom: '',
+    mainEarthingConductorMaterial: 'copper',
     mainBondingConductorSize: '',
     mainBondingConductorSizeCustom: '',
 
@@ -298,6 +299,7 @@ const MinorWorksForm = ({
   // Pre-fill customer details if navigating from customer page
   useEffect(() => {
     if (customerDataFromNav && !initialReportId) {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       setFormData((prev: any) => ({
         ...prev,
         clientName: customerDataFromNav.name || '',
@@ -458,9 +460,12 @@ const MinorWorksForm = ({
         // Step 3: Compare timestamps - use whichever is NEWER
         // cloudResult is now { data, databaseId } format
         if (cloudResult && cloudResult.data && typeof cloudResult.data === 'object') {
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
           const data = cloudResult.data as any;
           // Use the database timestamp from cloudResult (not data.updated_at which is the form JSON and won't have this field)
-          const cloudTime = new Date(cloudResult.updatedAt || cloudResult.lastSyncedAt || data.updated_at || 0).getTime();
+          const cloudTime = new Date(
+            cloudResult.updatedAt || cloudResult.lastSyncedAt || data.updated_at || 0
+          ).getTime();
           const localTime = localDraft?.lastModified
             ? new Date(localDraft.lastModified).getTime()
             : 0;
@@ -581,6 +586,7 @@ const MinorWorksForm = ({
       // Auto-recover if form is empty and draft has meaningful data
       if (draft.data.clientName || draft.data.propertyAddress || draft.data.workDescription) {
         console.log('[MinorWorks] Auto-recovering draft for new report');
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         setFormData((prev: any) => ({
           ...prev,
           ...draft.data,
@@ -603,14 +609,17 @@ const MinorWorksForm = ({
         certNumberGenerated.current = true;
         const { generateCertificateNumber } = await import('@/utils/certificateNumbering');
         const certNumber = await generateCertificateNumber('minor-works');
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         setFormData((prev: any) => ({ ...prev, certificateNumber: certNumber }));
       }
     };
     initCertificateNumber();
   }, []);
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleUpdate = (field: string, value: any) => {
     const sanitizedValue = typeof value === 'string' ? sanitizeTextInput(value) : value;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     setFormData((prev: any) => ({ ...prev, [field]: sanitizedValue }));
   };
 
@@ -708,6 +717,7 @@ const MinorWorksForm = ({
       earthingConductorPresent: false,
       mainEarthingConductorSize: '',
       mainEarthingConductorSizeCustom: '',
+      mainEarthingConductorMaterial: 'copper',
       mainBondingConductorSize: '',
       mainBondingConductorSizeCustom: '',
       bondingWater: false,
@@ -821,6 +831,7 @@ const MinorWorksForm = ({
     const { generateCertificateNumber } = await import('@/utils/certificateNumbering');
     const certificateNumber = await generateCertificateNumber('minor-works');
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const duplicatedData: any =
       typeof structuredClone === 'function'
         ? structuredClone(formData)
@@ -907,16 +918,6 @@ const MinorWorksForm = ({
         variant: 'destructive',
       });
     }
-  };
-
-  // Convert sync status to SyncState for the indicator
-  const getSyncIndicatorState = (): SyncState => {
-    if (!isOnline) return 'offline';
-    if (syncState.status === 'error') return 'error';
-    if (syncState.status === 'syncing') return 'syncing';
-    if (syncState.status === 'synced') return 'synced';
-    if (hasUnsavedChanges) return 'unsaved';
-    return 'synced';
   };
 
   // Shared nav props for inline EICRTabNavigation in each tab
@@ -1036,15 +1037,6 @@ const MinorWorksForm = ({
       installationAddress={formData.installationAddress || formData.clientAddress || ''}
     >
       <div className="min-h-screen bg-background prevent-shortcuts">
-        {/* Prominent sync status bar - always visible */}
-        <StickyFormSyncBar
-          state={getSyncIndicatorState()}
-          lastSaved={lastSavedTime}
-          isOnline={isOnline}
-          onRetry={syncNow}
-          certificateNumber={formData.certificateNumber}
-        />
-
         {/* Header */}
         <MWFormHeader
           onBack={onBack}
@@ -1063,16 +1055,12 @@ const MinorWorksForm = ({
         />
 
         {/* Main Content - Edge-to-edge on mobile, contained on desktop */}
-        <div
-          className={cn(
-            'pb-6',
-            isMobile ? '' : 'max-w-6xl mx-auto px-4 sm:px-6 lg:px-8'
-          )}
-        >
+        <div className={cn('pb-6', isMobile ? '' : 'max-w-6xl mx-auto px-4 sm:px-6 lg:px-8')}>
           <SmartTabs
             tabs={smartTabs}
             value={currentTab}
             onValueChange={(value) => {
+              // eslint-disable-next-line @typescript-eslint/no-explicit-any
               setTab(value as any);
               onTabChange?.(value);
             }}

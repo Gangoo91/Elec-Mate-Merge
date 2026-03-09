@@ -29,6 +29,7 @@ interface MWFormHeaderProps {
   onStartNew?: () => void;
   onDevFill?: () => void;
   onClearForm?: () => void;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   formData?: any;
   syncState?: { status: SyncStatus; lastSyncTime?: number; errorMessage?: string };
   isOnline?: boolean;
@@ -87,15 +88,16 @@ const MWFormHeader: React.FC<MWFormHeaderProps> = ({
             <span className="font-semibold truncate text-base">Minor Works</span>
           </div>
 
-          {/* Sync status indicator */}
+          {/* Sync status indicator — icon only on mobile to save space */}
           {syncState && (
-            <SyncStatusIndicator
-              status={syncState.status}
-              lastSyncTime={syncState.lastSyncTime}
-              isOnline={isOnline}
-              isAuthenticated={isAuthenticated}
-              className="mr-1"
-            />
+            <div className="shrink-0 [&>div>span]:hidden">
+              <SyncStatusIndicator
+                status={syncState.status}
+                lastSyncTime={syncState.lastSyncTime}
+                isOnline={isOnline}
+                isAuthenticated={isAuthenticated}
+              />
+            </div>
           )}
 
           {/* Save button - large touch target */}
@@ -193,9 +195,7 @@ const MWFormHeader: React.FC<MWFormHeaderProps> = ({
                   BS7671 Minor Electrical Installation Works
                 </p>
                 {formData?.certificateNumber && (
-                  <p className="text-xs font-mono text-white mt-1">
-                    {formData.certificateNumber}
-                  </p>
+                  <p className="text-xs font-mono text-white mt-1">{formData.certificateNumber}</p>
                 )}
               </div>
             </div>

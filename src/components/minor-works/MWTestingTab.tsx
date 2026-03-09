@@ -549,6 +549,48 @@ const MWTestingTab: React.FC<MWTestingTabProps> = ({ formData, onUpdate, isMobil
                   </Select>
                 </div>
               </div>
+
+              {/* Earth Electrode Resistance - only for TT earthing systems */}
+              {formData.earthingArrangement === 'tt' && (
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div className="space-y-2">
+                    <Label className="text-sm">Earth Electrode Resistance (Ω)</Label>
+                    <div className="relative">
+                      <Input
+                        value={formData.earthElectrodeResistance || ''}
+                        onChange={(e) => onUpdate('earthElectrodeResistance', e.target.value)}
+                        placeholder="e.g., 12"
+                        className="h-11 text-base touch-manipulation border-white/30 focus:border-elec-yellow focus:ring-elec-yellow pr-10"
+                      />
+                      <span className="absolute right-3 top-1/2 -translate-y-1/2 text-white text-sm">
+                        Ω
+                      </span>
+                    </div>
+                    <p className="text-xs text-white">Required for TT earthing systems</p>
+                  </div>
+                </div>
+              )}
+
+              {/* Phase Rotation - only for 3-phase supplies */}
+              {formData.supplyPhases === '3' && (
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div className="space-y-2">
+                    <Label className="text-sm">Phase Rotation</Label>
+                    <Select
+                      value={formData.phaseRotation || ''}
+                      onValueChange={(v) => onUpdate('phaseRotation', v)}
+                    >
+                      <SelectTrigger className="">
+                        <SelectValue placeholder="Select rotation" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="clockwise">Clockwise (L1-L2-L3)</SelectItem>
+                        <SelectItem value="anti-clockwise">Anti-clockwise (L1-L3-L2)</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                </div>
+              )}
             </div>
           </CollapsibleContent>
         </Collapsible>
@@ -722,6 +764,26 @@ const MWTestingTab: React.FC<MWTestingTabProps> = ({ formData, onUpdate, isMobil
                         </Select>
                       </div>
                     </div>
+
+                    {/* RCBO Trip Time - only when RCBO fitted */}
+                    {formData.protectionRcbo && (
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div className="space-y-2">
+                          <Label className="text-sm">RCBO Trip Time (ms)</Label>
+                          <div className="relative">
+                            <Input
+                              value={formData.rcboTripTime || ''}
+                              onChange={(e) => onUpdate('rcboTripTime', e.target.value)}
+                              placeholder="e.g., 18"
+                              className="h-11 text-base touch-manipulation border-white/30 focus:border-purple-500 focus:ring-purple-500 pr-12"
+                            />
+                            <span className="absolute right-3 top-1/2 -translate-y-1/2 text-white text-sm">
+                              ms
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                    )}
                   </div>
                 )}
 
@@ -759,6 +821,20 @@ const MWTestingTab: React.FC<MWTestingTabProps> = ({ formData, onUpdate, isMobil
                             </SelectItem>
                           </SelectContent>
                         </Select>
+                      </div>
+                      <div className="space-y-2">
+                        <Label className="text-sm">AFDD Trip Time (ms)</Label>
+                        <div className="relative">
+                          <Input
+                            value={formData.afddTripTime || ''}
+                            onChange={(e) => onUpdate('afddTripTime', e.target.value)}
+                            placeholder="e.g., 30"
+                            className="h-11 text-base touch-manipulation border-white/30 focus:border-purple-500 focus:ring-purple-500 pr-12"
+                          />
+                          <span className="absolute right-3 top-1/2 -translate-y-1/2 text-white text-sm">
+                            ms
+                          </span>
+                        </div>
                       </div>
                     </div>
                     <p className="text-xs text-white">NOTE: Not all AFDDs have a test button</p>

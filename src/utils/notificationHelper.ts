@@ -129,12 +129,14 @@ export const getBuildingControlAuthority = async (postcode: string): Promise<str
 export const createNotificationFromCertificate = async (
   reportId: string,
   reportType: 'eicr' | 'eic' | 'minor-works' | 'solar-pv' | 'ev-charging',
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   formData: any,
   userId: string
 ): Promise<{ success: boolean; notificationId?: string; error?: string }> => {
   try {
     // EIC, Solar PV and EV Charging are always notifiable — no condition needed
-    const isAlwaysNotifiable = reportType === 'eic' || reportType === 'solar-pv' || reportType === 'ev-charging';
+    const isAlwaysNotifiable =
+      reportType === 'eic' || reportType === 'solar-pv' || reportType === 'ev-charging';
 
     // Minor Works: notifiable if user ticked the checkbox or auto-detected
     const isUserRequested = reportType === 'minor-works' && formData.partPNotification === true;
@@ -158,7 +160,7 @@ export const createNotificationFromCertificate = async (
       .select('id')
       .eq('report_id', reportId)
       .eq('user_id', userId)
-      .single();
+      .maybeSingle();
 
     if (existing) {
       return { success: true, notificationId: existing.id };
@@ -192,6 +194,7 @@ export const createNotificationFromCertificate = async (
     }
 
     return { success: true, notificationId: data.id };
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (error: any) {
     console.error('Exception creating notification:', error);
     return { success: false, error: error.message };
