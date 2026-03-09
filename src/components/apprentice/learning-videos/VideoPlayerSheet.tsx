@@ -10,6 +10,7 @@ import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/ui
 import { Bookmark, Clock, ExternalLink, ChevronDown } from 'lucide-react';
 import type { CuratedVideo } from '@/data/apprentice/curatedVideos';
 import { categoryLabels } from '@/data/apprentice/curatedVideos';
+import { YouTubePlayer } from './YouTubePlayer';
 
 interface VideoPlayerSheetProps {
   video: CuratedVideo | null;
@@ -63,16 +64,8 @@ export function VideoPlayerSheet({
 
           {/* Scrollable content -- iframe first, no padding above */}
           <div className="flex-1 overflow-y-auto overscroll-contain -mt-8">
-            {/* YouTube embed - full width, immediately visible */}
-            <div className="relative w-full aspect-video bg-black">
-              <iframe
-                src={`https://www.youtube.com/embed/${video.id}?autoplay=1&rel=0&modestbranding=1`}
-                title={video.title}
-                className="absolute inset-0 w-full h-full"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
-              />
-            </div>
+            {/* YouTube player — iframe on web, native browser on iOS/Android */}
+            <YouTubePlayer videoId={video.id} title={video.title} />
 
             {/* Video info */}
             <div className="px-4 pt-4 pb-6 space-y-4">
