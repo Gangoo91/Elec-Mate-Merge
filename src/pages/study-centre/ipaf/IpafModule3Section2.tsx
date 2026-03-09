@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
 import useSEO from '@/hooks/useSEO';
+import { YouTubePlayer } from '@/components/apprentice/learning-videos/YouTubePlayer';
 
 const TITLE = '3T Method (Through The Trap) – Assembly & Dismantling (IPAF Module 3 Section 2)';
 const DESCRIPTION =
@@ -845,14 +846,8 @@ const IpafModule3Section2 = () => {
                 the sequence of operations and the position of the operative at each stage.
               </p>
 
-              <div className="aspect-video rounded-lg overflow-hidden my-6">
-                <iframe
-                  className="w-full h-full"
-                  src="https://www.youtube.com/embed/JE9wEkbFnGM"
-                  title="PASMA 3T Assembly Method"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                  allowFullScreen
-                />
+              <div className="rounded-lg overflow-hidden my-6">
+                <YouTubePlayer videoId="JE9wEkbFnGM" title="PASMA 3T Assembly Method" />
               </div>
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg text-sm">

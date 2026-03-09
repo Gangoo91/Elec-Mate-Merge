@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
 import useSEO from '@/hooks/useSEO';
+import { YouTubePlayer } from '@/components/apprentice/learning-videos/YouTubePlayer';
 
 const quickCheckQuestions = [
   {
@@ -775,14 +776,8 @@ export default function PasmaModule3Section2() {
             <div className="text-white space-y-4 leading-relaxed">
               {/* YouTube Embed */}
               <div className="my-8">
-                <div className="aspect-video rounded-xl overflow-hidden border border-white/10">
-                  <iframe
-                    src="https://www.youtube.com/embed/ByZzHdt9PtE"
-                    title="Setting up a BoSS Ladderspan 3T Mobile Access Tower"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    allowFullScreen
-                    className="w-full h-full"
-                  />
+                <div className="rounded-xl overflow-hidden border border-white/10">
+                  <YouTubePlayer videoId="ByZzHdt9PtE" title="Setting up a BoSS Ladderspan 3T Mobile Access Tower" />
                 </div>
                 <p className="text-xs text-white mt-2 text-center">
                   Setting up a BoSS Ladderspan 3T mobile access tower

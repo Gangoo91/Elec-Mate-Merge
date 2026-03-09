@@ -28,6 +28,7 @@ import {
 } from '@/data/apprentice/curatedVideos';
 import type { CuratedVideo, VideoCategory } from '@/data/apprentice/curatedVideos';
 import { useVideoBookmarks } from '@/hooks/learning-videos/useVideoBookmarks';
+import { YouTubePlayer } from '@/components/apprentice/learning-videos/YouTubePlayer';
 
 export default function LearningVideos() {
   const navigate = useNavigate();
@@ -208,16 +209,8 @@ export default function LearningVideos() {
         /* ─── INLINE PLAYER VIEW ─── */
         <div className="flex-1 overflow-y-auto overscroll-contain">
           <div>
-            {/* YouTube iframe -- immediately visible, full width, 16:9 */}
-            <div className="relative w-full aspect-video bg-black">
-              <iframe
-                src={`https://www.youtube.com/embed/${selectedVideo.id}?autoplay=1&rel=0&modestbranding=1`}
-                title={selectedVideo.title}
-                className="absolute inset-0 w-full h-full"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
-              />
-            </div>
+            {/* YouTube player — iframe on web, native browser on iOS/Android */}
+            <YouTubePlayer videoId={selectedVideo.id} title={selectedVideo.title} />
 
             {/* Video info */}
             <div className="px-4 pt-4 pb-6 space-y-4 max-w-4xl mx-auto">
