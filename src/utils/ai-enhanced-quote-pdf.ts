@@ -4,6 +4,7 @@ import { Quote } from '@/types/quote';
 import { CompanyProfile } from '@/types/company';
 import { safeText, safeNumber, safeDate } from './rams-pdf-helpers';
 import { AIService } from '@/components/cv-builder/ai/AIService';
+import { savePdf } from '@/utils/pdf-native';
 
 // No need to extend jsPDF interface since we're using autoTable directly
 
@@ -569,7 +570,7 @@ export const generateAIEnhancedQuotePDF = async ({
 
     // Save the PDF
     const fileName = `AI_Enhanced_Quote_${safeText(quote.quoteNumber)}_${safeDate(quote.createdAt).replace(/\//g, '-')}.pdf`;
-    pdf.save(fileName);
+    await savePdf(pdf, fileName);
 
     return true;
   } catch (error) {

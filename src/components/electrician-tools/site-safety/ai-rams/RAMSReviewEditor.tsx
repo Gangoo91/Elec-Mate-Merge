@@ -28,6 +28,8 @@ import {
 } from 'lucide-react';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { toast } from '@/hooks/use-toast';
+import { downloadBlobPdf, saveBase64Pdf } from '@/utils/pdf-native';
+import { openOrDownloadPdf } from '@/utils/pdf-download';
 import { generateRAMSPDF } from '@/utils/rams-pdf-professional';
 import { generateMethodStatementPDF } from '@/utils/method-statement-pdf';
 import type { RAMSData, RAMSRisk } from '@/types/rams';
@@ -342,10 +344,7 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
       });
 
       if (data?.success && data?.downloadUrl) {
-        const link = document.createElement('a');
-        link.href = data.downloadUrl;
-        link.download = `Risk_Assessment_${ramsData.projectName?.replace(/[^a-z0-9]/gi, '_') || Date.now()}.pdf`;
-        link.click();
+        await openOrDownloadPdf(data.downloadUrl, `Risk_Assessment_${ramsData.projectName?.replace(/[^a-z0-9]/gi, '_') || Date.now()}.pdf`);
 
         setShowPDFModal(false);
         toast({
@@ -363,10 +362,7 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
           reviewDate: methodData.reviewDate,
         });
 
-        const link = document.createElement('a');
-        link.href = pdfDataUri;
-        link.download = `Risk_Assessment_${Date.now()}.pdf`;
-        link.click();
+        await saveBase64Pdf(pdfDataUri.split(',')[1], `Risk_Assessment_${Date.now()}.pdf`);
 
         toast({
           title: 'PDF Downloaded',
@@ -384,10 +380,7 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
         reviewDate: methodData.reviewDate,
       });
 
-      const link = document.createElement('a');
-      link.href = pdfDataUri;
-      link.download = `Risk_Assessment_${Date.now()}.pdf`;
-      link.click();
+      await saveBase64Pdf(pdfDataUri.split(',')[1], `Risk_Assessment_${Date.now()}.pdf`);
 
       toast({
         title: 'PDF Generation Error',
@@ -416,10 +409,7 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
       });
 
       if (data?.success && data?.downloadUrl) {
-        const link = document.createElement('a');
-        link.href = data.downloadUrl;
-        link.download = `Method_Statement_${methodData.jobTitle?.replace(/[^a-z0-9]/gi, '_') || Date.now()}.pdf`;
-        link.click();
+        await openOrDownloadPdf(data.downloadUrl, `Method_Statement_${methodData.jobTitle?.replace(/[^a-z0-9]/gi, '_') || Date.now()}.pdf`);
 
         setShowPDFModal(false);
         toast({
@@ -435,12 +425,7 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
         });
 
         const blob = new Blob([new Uint8Array(methodPdfData)], { type: 'application/pdf' });
-        const url = URL.createObjectURL(blob);
-        const link = document.createElement('a');
-        link.href = url;
-        link.download = `Method_Statement_${Date.now()}.pdf`;
-        link.click();
-        URL.revokeObjectURL(url);
+        await downloadBlobPdf(blob, `Method_Statement_${Date.now()}.pdf`);
 
         toast({
           title: 'PDF Downloaded',
@@ -456,12 +441,7 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
       });
 
       const blob = new Blob([new Uint8Array(methodPdfData)], { type: 'application/pdf' });
-      const url = URL.createObjectURL(blob);
-      const link = document.createElement('a');
-      link.href = url;
-      link.download = `Method_Statement_${Date.now()}.pdf`;
-      link.click();
-      URL.revokeObjectURL(url);
+      await downloadBlobPdf(blob, `Method_Statement_${Date.now()}.pdf`);
 
       toast({
         title: 'PDF Generation Error',
@@ -523,10 +503,7 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
       });
 
       if (data?.success && data?.downloadUrl) {
-        const link = document.createElement('a');
-        link.href = data.downloadUrl;
-        link.download = `Combined_RAMS_${ramsData.projectName?.replace(/[^a-z0-9]/gi, '_') || Date.now()}.pdf`;
-        link.click();
+        await openOrDownloadPdf(data.downloadUrl, `Combined_RAMS_${ramsData.projectName?.replace(/[^a-z0-9]/gi, '_') || Date.now()}.pdf`);
 
         setShowPDFModal(false);
         toast({
@@ -571,14 +548,7 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
 
         if (saveResult.success) {
           // Also trigger download
-          const url = URL.createObjectURL(pdfBlob);
-          const link = document.createElement('a');
-          link.href = url;
-          link.download = `Combined_RAMS_${ramsData.projectName?.replace(/[^a-z0-9]/gi, '_') || Date.now()}.pdf`;
-          document.body.appendChild(link);
-          link.click();
-          document.body.removeChild(link);
-          URL.revokeObjectURL(url);
+          await downloadBlobPdf(pdfBlob, `Combined_RAMS_${ramsData.projectName?.replace(/[^a-z0-9]/gi, '_') || Date.now()}.pdf`);
 
           toast({
             title: 'PDF Downloaded & Saved',
@@ -620,14 +590,7 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
         await saveRAMSPDFToStorage(pdfBlob, ramsData, methodData, 'draft');
 
         // Download
-        const url = URL.createObjectURL(pdfBlob);
-        const link = document.createElement('a');
-        link.href = url;
-        link.download = `Combined_RAMS_${ramsData.projectName?.replace(/[^a-z0-9]/gi, '_') || Date.now()}.pdf`;
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-        URL.revokeObjectURL(url);
+        await downloadBlobPdf(pdfBlob, `Combined_RAMS_${ramsData.projectName?.replace(/[^a-z0-9]/gi, '_') || Date.now()}.pdf`);
 
         toast({
           title: 'PDF Downloaded & Saved',

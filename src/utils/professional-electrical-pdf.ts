@@ -1,6 +1,7 @@
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
 import { format as formatDate } from 'date-fns';
+import { savePdf } from '@/utils/pdf-native';
 
 // Extend jsPDF with autoTable
 declare module 'jspdf' {
@@ -141,7 +142,7 @@ export const generateProfessionalElectricalPDF = async (
       `${reportType.toLowerCase().replace(/\s+/g, '-')}-${formatDate(new Date(), 'ddMMyyyy')}.pdf`;
 
     // Save the PDF
-    pdf.save(finalFilename);
+    await savePdf(pdf, finalFilename);
     console.log('PDF generated successfully');
   } catch (error) {
     console.error('PDF generation failed:', error);

@@ -3,6 +3,7 @@ import 'jspdf-autotable';
 import { Quote } from '@/types/quote';
 import { CompanyProfile } from '@/types/company';
 import { safeText, safeNumber, safeDate } from './rams-pdf-helpers';
+import { savePdf } from '@/utils/pdf-native';
 
 // Extend jsPDF with autoTable
 declare module 'jspdf' {
@@ -545,7 +546,7 @@ export const generateProfessionalQuotePDF = ({ quote, companyProfile }: PDFGener
 
     // Save the PDF
     const fileName = `Quote_${safeText(quote.quoteNumber)}_${safeDate(quote.createdAt).replace(/\//g, '-')}.pdf`;
-    pdf.save(fileName);
+    await savePdf(pdf, fileName);
 
     return true;
   } catch (error) {

@@ -2,6 +2,7 @@ import jsPDF from 'jspdf';
 import 'jspdf-autotable';
 import { format as formatDate } from 'date-fns';
 import { safeText, safeNumber } from './rams-pdf-helpers';
+import { savePdf } from '@/utils/pdf-native';
 
 // Extend jsPDF with autoTable
 declare module 'jspdf' {
@@ -798,7 +799,7 @@ export const generateEnhancedElectricalPDF = async (
       filename || `${safeReportType}-${formatDate(new Date(), 'ddMMyyyy-HHmm')}.pdf`;
 
     // Save the PDF
-    doc.save(finalFilename);
+    await savePdf(doc, finalFilename);
     console.log('Enhanced electrical PDF generated successfully with professional formatting');
   } catch (error) {
     console.error('Enhanced PDF generation failed:', error);

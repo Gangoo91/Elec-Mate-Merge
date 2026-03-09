@@ -1,6 +1,7 @@
 import jsPDF from 'jspdf';
 import { format } from 'date-fns';
 import type { Briefing, BriefingAttendee } from '@/hooks/useBriefings';
+import { savePdf } from '@/utils/pdf-native';
 
 interface BriefingPdfOptions {
   briefing: Briefing;
@@ -634,7 +635,7 @@ export async function downloadBriefingPDF(options: BriefingPdfOptions): Promise<
   const dateStr = format(new Date(), 'yyyyMMdd');
   const fileName = `Briefing_${safeName}_${dateStr}.pdf`;
 
-  doc.save(fileName);
+  await savePdf(doc, fileName);
 }
 
 export function getBriefingPDFBlob(options: BriefingPdfOptions): Blob {

@@ -7,6 +7,7 @@ import { supabase } from '@/integrations/supabase/client';
 import { reportCloud, type CloudReport } from './reportCloud';
 import { optimizeForPdfGeneration } from './pdfDataOptimizer';
 import { generatePdfFilename } from './pdfFilenameGenerator';
+import { downloadBlobPdf } from '@/utils/pdf-native';
 
 interface BulkExportResult {
   successful: number;
@@ -76,17 +77,10 @@ const fetchPdfAsBlob = async (pdfUrl: string): Promise<Blob> => {
 };
 
 /**
- * Trigger browser download for a Blob
+ * Trigger download for a Blob — native-aware (uses Filesystem+Share on iOS/Android)
  */
-const downloadBlob = (blob: Blob, filename: string): void => {
-  const url = window.URL.createObjectURL(blob);
-  const link = document.createElement('a');
-  link.href = url;
-  link.download = filename;
-  document.body.appendChild(link);
-  link.click();
-  document.body.removeChild(link);
-  window.URL.revokeObjectURL(url);
+const downloadBlob = async (blob: Blob, filename: string): Promise<void> => {
+  await downloadBlobPdf(blob, filename);
 };
 
 /**
@@ -313,7 +307,7 @@ export const generateBulkPDFs = async (
         console.log(`[bulkPdfExport] Added ${filename} to ZIP bundle`);
       } else {
         // Download immediately
-        downloadBlob(pdfBlob, filename);
+        await downloadBlob(pdfBlob, filename);
         console.log(`[bulkPdfExport] Downloaded ${filename}`);
       }
 
@@ -365,7 +359,7 @@ export const generateBulkPDFs = async (
       const zipFilename = `Certificates_Export_${dateStr}.zip`;
 
       // Download the ZIP file
-      downloadBlob(zipBlob, zipFilename);
+      await downloadBlob(zipBlob, zipFilename);
       console.log(`[bulkPdfExport] ZIP bundle downloaded: ${zipFilename}`);
     } catch (zipError) {
       console.error('[bulkPdfExport] Failed to create ZIP bundle:', zipError);

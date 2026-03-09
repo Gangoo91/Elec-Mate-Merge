@@ -2,6 +2,7 @@ import jsPDF from 'jspdf';
 import 'jspdf-autotable';
 import { format as formatDate } from 'date-fns';
 import { safeText } from './rams-pdf-helpers';
+import { savePdf } from '@/utils/pdf-native';
 
 // Extend jsPDF with autoTable
 declare module 'jspdf' {
@@ -800,7 +801,7 @@ export const generateLaTeXStylePDF = async (
     }
 
     // Save the PDF
-    pdf.save(finalFilename);
+    await savePdf(pdf, finalFilename);
     console.log('LaTeX-style PDF generated successfully');
   } catch (error) {
     console.error('LaTeX-style PDF generation failed:', error);

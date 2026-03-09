@@ -2,6 +2,7 @@ import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
 import { format as formatDate } from 'date-fns';
 import { MethodStatementData, MethodStep } from '@/types/method-statement';
+import { downloadBlobPdf } from '@/utils/pdf-native';
 import {
   safeText,
   safeNumber,
@@ -839,24 +840,16 @@ export function generateMethodStatementPDFPreview(
   return URL.createObjectURL(new Blob([arrayBuffer], { type: 'application/pdf' }));
 }
 
-export function downloadMethodStatementPDF(
+export async function downloadMethodStatementPDF(
   data: MethodStatementData,
   options: PDFOptions = {}
-): void {
+): Promise<void> {
   const generator = new MethodStatementPDFGenerator();
   const pdfData = generator.generate(data, options);
 
   const arrayBuffer = new ArrayBuffer(pdfData.byteLength);
   new Uint8Array(arrayBuffer).set(pdfData);
   const blob = new Blob([arrayBuffer], { type: 'application/pdf' });
-  const url = URL.createObjectURL(blob);
-
-  const link = document.createElement('a');
-  link.href = url;
-  link.download = `${safeFileName(data.jobTitle)}_Method_Statement_${formatDate(new Date(), 'ddMMyyyy')}.pdf`;
-  document.body.appendChild(link);
-  link.click();
-  document.body.removeChild(link);
-
-  URL.revokeObjectURL(url);
+  const filename = `${safeFileName(data.jobTitle)}_Method_Statement_${formatDate(new Date(), 'ddMMyyyy')}.pdf`;
+  await downloadBlobPdf(blob, filename);
 }

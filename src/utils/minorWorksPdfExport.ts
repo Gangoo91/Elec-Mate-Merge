@@ -1,5 +1,6 @@
 import jsPDF from 'jspdf';
 import { generatePdfFilename } from './pdfFilenameGenerator';
+import { savePdf } from '@/utils/pdf-native';
 
 interface MinorWorksFormData {
   certificateNumber: string;
@@ -403,5 +404,5 @@ export const generateMinorWorksPdf = (formData: MinorWorksFormData): void => {
     formData.clientName || formData.propertyAddress || 'Client',
     formData.workDate || new Date()
   );
-  doc.save(fileName);
+  await savePdf(doc, fileName);
 };

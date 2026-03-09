@@ -14,6 +14,7 @@ import {
   getUrgencyLevel,
 } from './pdfDataFormatters';
 import { supabase } from '@/integrations/supabase/client';
+import { savePdf } from '@/utils/pdf-native';
 
 interface DefectObservation {
   id: string;
@@ -433,7 +434,7 @@ export const exportObservationsToPDF = async (
     formData.clientName || 'Client',
     formData.inspectionDate || new Date()
   );
-  pdf.save(filename);
+  await savePdf(pdf, filename);
 };
 
 export const exportCompleteEICRToPDF = async (
@@ -1912,7 +1913,7 @@ export const exportCompleteEICRToPDF = async (
     sanitizedFormData.inspectionDate || new Date()
   );
 
-  pdf.save(filename);
+  await savePdf(pdf, filename);
   console.log(`Professional EICR certificate saved: ${filename}`);
   console.log(
     `Quality Score: ${qualityMetrics.overallScore}% | Completion: ${validation.completionScore}%`

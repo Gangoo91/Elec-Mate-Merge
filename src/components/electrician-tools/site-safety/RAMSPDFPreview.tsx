@@ -6,6 +6,8 @@ import { generateRAMSPDFPreview } from '@/utils/rams-pdf-professional';
 import { RAMSData, RAMSReportOptions } from '@/types/rams';
 import { safeFileName } from '@/utils/rams-pdf-helpers';
 import { toast } from '@/hooks/use-toast';
+import { Capacitor } from '@capacitor/core';
+import { saveBase64Pdf } from '@/utils/pdf-native';
 import {
   Loader2,
   Download,
@@ -34,6 +36,8 @@ export const RAMSPDFPreview: React.FC<RAMSPDFPreviewProps> = ({
   signOff = {},
 }) => {
   const [pdfUrl, setPdfUrl] = useState<string>('');
+  const [pdfBase64, setPdfBase64] = useState<string>('');
+  const isNative = Capacitor.isNativePlatform();
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string>('');
   const [retryCount, setRetryCount] = useState(0);
@@ -114,8 +118,12 @@ export const RAMSPDFPreview: React.FC<RAMSPDFPreviewProps> = ({
 
       setProgress(90);
 
+      // Store raw base64 for native download (Capacitor Filesystem + Share)
+      const base64Data = dataUri.split(',')[1];
+      setPdfBase64(base64Data);
+
       // Convert data URI to blob URL for preview
-      const byteCharacters = atob(dataUri.split(',')[1]);
+      const byteCharacters = atob(base64Data);
       const byteNumbers = new Array(byteCharacters.length);
 
       for (let i = 0; i < byteCharacters.length; i++) {
@@ -166,31 +174,33 @@ export const RAMSPDFPreview: React.FC<RAMSPDFPreviewProps> = ({
     }
   }, [ramsData, reportOptions, signOff, cacheKey, retryCount]);
 
-  const handleDownload = useCallback(() => {
-    if (pdfUrl) {
-      const fileName =
-        safeFileName(ramsData.projectName) +
-        '_' +
-        new Date().toISOString().split('T')[0].replace(/-/g, '') +
-        '.pdf';
+  const handleDownload = useCallback(async () => {
+    const fileName =
+      safeFileName(ramsData.projectName) +
+      '_' +
+      new Date().toISOString().split('T')[0].replace(/-/g, '') +
+      '.pdf';
 
+    if (isNative && pdfBase64) {
+      // Native: Filesystem write + Share sheet (no <a download> in WKWebView)
+      await saveBase64Pdf(pdfBase64, fileName);
+      return;
+    }
+
+    if (pdfUrl) {
       const link = document.createElement('a');
       link.href = pdfUrl;
       link.download = fileName;
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
-
-      toast({
-        title: 'Download Started',
-        description: `Downloading ${fileName}`,
-      });
+      toast({ title: 'Download Started', description: `Downloading ${fileName}` });
     }
-  }, [pdfUrl, ramsData.projectName]);
+  }, [pdfUrl, pdfBase64, ramsData.projectName, isNative]);
 
   const handlePrint = useCallback(() => {
     if (pdfUrl) {
-      const printWindow = window.open(pdfUrl, '_blank');
+      const printWindow = handleDownload();
       if (printWindow) {
         printWindow.addEventListener('load', () => {
           printWindow.print();
@@ -367,7 +377,7 @@ export const RAMSPDFPreview: React.FC<RAMSPDFPreviewProps> = ({
                       description: 'Opening PDF in new tab instead.',
                       variant: 'destructive',
                     });
-                    window.open(pdfUrl, '_blank');
+                    handleDownload();
                   }}
                 />
               ) : (
@@ -383,7 +393,7 @@ export const RAMSPDFPreview: React.FC<RAMSPDFPreviewProps> = ({
                     </div>
                     <div className="flex flex-col gap-2">
                       <Button
-                        onClick={() => window.open(pdfUrl, '_blank')}
+                        onClick={() => handleDownload()}
                         className="bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90"
                       >
                         <ExternalLink className="h-4 w-4 mr-2" />
@@ -406,7 +416,7 @@ export const RAMSPDFPreview: React.FC<RAMSPDFPreviewProps> = ({
               {isMobile && pdfSupported && (
                 <div className="absolute bottom-4 right-4 flex flex-col gap-2">
                   <Button
-                    onClick={() => window.open(pdfUrl, '_blank')}
+                    onClick={() => handleDownload()}
                     size="sm"
                     className="bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90 shadow-lg"
                   >

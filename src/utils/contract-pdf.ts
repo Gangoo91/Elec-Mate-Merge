@@ -1,6 +1,7 @@
 import jsPDF from 'jspdf';
 import { format } from 'date-fns';
 import type { EmploymentContractTemplate, Contract } from '@/hooks/useContracts';
+import { savePdf } from '@/utils/pdf-native';
 
 interface ContractPdfOptions {
   template?: EmploymentContractTemplate | null;
@@ -665,5 +666,5 @@ export async function downloadContractPDF(options: ContractPdfOptions): Promise<
   const dateStr = format(new Date(), 'yyyyMMdd');
   const fileName = `${safeName}_${dateStr}.pdf`;
 
-  doc.save(fileName);
+  await savePdf(doc, fileName);
 }
