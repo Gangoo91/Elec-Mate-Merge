@@ -13,7 +13,6 @@ import { useNavigate } from 'react-router-dom';
 import { cn } from '@/lib/utils';
 import { useNotifications } from '@/components/notifications/NotificationProvider';
 import { useCombinedUnreadWithNotifications } from '@/hooks/useCombinedUnread';
-import { useTotalAlertCount } from '@/hooks/useTotalAlertCount';
 import { MessagesSheet } from './MessagesSheet';
 import { NotificationsSheet } from './NotificationsSheet';
 
@@ -26,25 +25,16 @@ const UserProfileDropdown = () => {
   const [notificationsOpen, setNotificationsOpen] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
-  // Push notification count (system alerts, announcements)
-  let notificationUnread = 0;
-  try {
-    const { unreadCount } = useNotifications();
-    notificationUnread = unreadCount;
-  } catch (e) {
-    // NotificationProvider not available
-  }
-
-  // All actionable alerts (overdue invoices, tasks, equipment, elec-id etc)
-  const alertCount = useTotalAlertCount();
+  // Push notification count (clearable system notifications)
+  const { unreadCount: notificationUnread } = useNotifications();
 
   // Get combined unread counts
-  const { messageUnread, hasUnread } = useCombinedUnreadWithNotifications(notificationUnread);
+  const { messageUnread } = useCombinedUnreadWithNotifications(notificationUnread);
 
-  // Total for badge — alerts + push notifications + messages
-  const totalUnread = alertCount + notificationUnread + messageUnread;
-  // Bell badge uses alerts + push notifications
-  const bellBadgeCount = alertCount + notificationUnread;
+  // Total for avatar badge — push notifications + messages
+  const totalUnread = notificationUnread + messageUnread;
+  // Bell badge uses push notifications only (matches what NotificationsSheet shows)
+  const bellBadgeCount = notificationUnread;
 
   const handleOpenMessages = () => {
     setDropdownOpen(false);
@@ -115,7 +105,7 @@ const UserProfileDropdown = () => {
             <span className="absolute bottom-0 right-0 block h-3 w-3 rounded-full border-2 border-elec-dark bg-green-500" />
 
             {/* Notification badge - positioned to not overflow */}
-            {hasUnread && totalUnread > 0 && (
+            {totalUnread > 0 && (
               <span className="absolute -top-1 -right-1 flex items-center justify-center">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-50" />
                 <span className="relative flex h-4 min-w-4 items-center justify-center rounded-full bg-red-500 px-1 text-[10px] font-bold text-white">
