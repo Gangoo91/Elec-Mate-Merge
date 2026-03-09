@@ -22,6 +22,7 @@ import { formatDistanceToNow } from 'date-fns';
 import { SavedAgentResult, AgentType } from '@/hooks/useSavedAgentResults';
 import { supabase } from '@/integrations/supabase/client';
 import {
+import { openOrDownloadPdf } from '@/utils/pdf-download';
   generateDesignerPDF,
   generateRAMSFromAgents,
   generateMethodStatementFromInstaller,
@@ -146,7 +147,7 @@ export const SavedResultItem: React.FC<SavedResultItemProps> = ({ result, onClos
             'Risk Assessor'
           );
           // Open the PDF URL in new tab (it's a data URL or blob URL)
-          window.open(pdfUrl, '_blank');
+          await openOrDownloadPdf(pdfUrl, 'Saved-Result.pdf');
           toast.success('RAMS PDF generated');
           break;
         }

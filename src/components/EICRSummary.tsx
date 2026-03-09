@@ -69,6 +69,7 @@ import type { RemedialQuoteItem } from '@/utils/defectToQuoteItems';
 import { mapDefectsToQuoteItems } from '@/utils/defectToQuoteItems';
 import QuoteOptionsSheet from '@/components/inspection/eicr/QuoteOptionsSheet';
 import AIEstimatorSheet from '@/components/inspection/eicr/AIEstimatorSheet';
+import { openOrDownloadPdf } from '@/utils/pdf-download';
 
 interface EICRSummaryProps {
   formData: any;
@@ -2857,22 +2858,8 @@ const EICRSummary = ({ formData: propFormData, onUpdate: propOnUpdate }: EICRSum
                     onClick={async () => {
                       if (pdfUrl) {
                         try {
-                          // Fetch PDF as blob to ensure correct filename
-                          const response = await fetch(pdfUrl);
-                          const blob = await response.blob();
-                          const blobUrl = URL.createObjectURL(blob);
-
                           const filename = `${formData.metadata?.certificate_number || formData.certificateNumber || 'certificate'}.pdf`;
-
-                          const link = document.createElement('a');
-                          link.href = blobUrl;
-                          link.download = filename;
-                          document.body.appendChild(link);
-                          link.click();
-                          document.body.removeChild(link);
-
-                          // Clean up blob URL
-                          setTimeout(() => URL.revokeObjectURL(blobUrl), 100);
+                          await openOrDownloadPdf(pdfUrl, filename);
 
                           setShowDialog(false);
 

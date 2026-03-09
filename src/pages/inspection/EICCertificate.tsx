@@ -39,6 +39,7 @@ import EICFormTabs from '@/components/inspection/eic/EICFormTabs';
 import { useEICTabs, EICTabValue } from '@/hooks/useEICTabs';
 import { useEICObservations, EICObservation } from '@/hooks/useEICObservations';
 import { useCompanyProfile } from '@/hooks/useCompanyProfile';
+import { openOrDownloadPdf } from '@/utils/pdf-download';
 
 // Default empty form data
 const getDefaultFormData = () => ({
@@ -352,17 +353,7 @@ export default function EICCertificate() {
         formData.installationDate || new Date()
       );
 
-      const response = await fetch(functionData.pdfUrl);
-      const blob = await response.blob();
-      const blobUrl = URL.createObjectURL(blob);
-
-      const link = document.createElement('a');
-      link.href = blobUrl;
-      link.download = filename;
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-      setTimeout(() => URL.revokeObjectURL(blobUrl), 100);
+      await openOrDownloadPdf(functionData.pdfUrl, filename);
 
       toast.success('Certificate generated and downloaded');
 

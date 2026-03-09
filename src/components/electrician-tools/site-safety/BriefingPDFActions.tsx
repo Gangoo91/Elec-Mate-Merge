@@ -3,6 +3,7 @@ import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
 import { FileText, Download, Printer, Loader2, ExternalLink, RefreshCw } from 'lucide-react';
+import { openOrDownloadPdf } from '@/utils/pdf-download';
 
 interface BriefingPDFActionsProps {
   briefing: any;
@@ -225,7 +226,7 @@ export const BriefingPDFActions = ({ briefing, companyProfile }: BriefingPDFActi
     }
 
     // Directly open PDF - don't validate with HEAD request (causes CORS issues)
-    window.open(pdfUrl, '_blank');
+    await openOrDownloadPdf(pdfUrl, 'Site-Briefing.pdf');
   };
 
   const handleDownloadPDF = async () => {

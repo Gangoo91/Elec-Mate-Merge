@@ -9,6 +9,7 @@ import { toast } from '@/hooks/use-toast';
 import { useCompanyProfile } from '@/hooks/useCompanyProfile';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import {
+import { openOrDownloadPdf } from '@/utils/pdf-download';
   ProjectDetailsForm,
   ProjectDetailsData,
 } from '@/components/install-planner/ProjectDetailsForm';
@@ -285,7 +286,7 @@ const InstallPlannerResults = () => {
       }
 
       // Open PDF in new tab
-      window.open(data.downloadUrl, '_blank');
+      await openOrDownloadPdf(data.downloadUrl, 'Installation-Design-Spec.pdf');
 
       toast({
         title: 'PDF Generated',
