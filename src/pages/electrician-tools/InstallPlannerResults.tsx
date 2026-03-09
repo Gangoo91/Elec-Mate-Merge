@@ -9,10 +9,10 @@ import { toast } from '@/hooks/use-toast';
 import { useCompanyProfile } from '@/hooks/useCompanyProfile';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import {
-import { openOrDownloadPdf } from '@/utils/pdf-download';
   ProjectDetailsForm,
   ProjectDetailsData,
 } from '@/components/install-planner/ProjectDetailsForm';
+import { openOrDownloadPdf } from '@/utils/pdf-download';
 
 interface Message {
   role: 'user' | 'assistant';

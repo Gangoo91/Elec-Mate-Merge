@@ -22,11 +22,11 @@ import { formatDistanceToNow } from 'date-fns';
 import { SavedAgentResult, AgentType } from '@/hooks/useSavedAgentResults';
 import { supabase } from '@/integrations/supabase/client';
 import {
-import { openOrDownloadPdf } from '@/utils/pdf-download';
   generateDesignerPDF,
   generateRAMSFromAgents,
   generateMethodStatementFromInstaller,
 } from '@/utils/agent-pdf-generator';
+import { openOrDownloadPdf } from '@/utils/pdf-download';
 
 interface SavedResultItemProps {
   result: SavedAgentResult;
