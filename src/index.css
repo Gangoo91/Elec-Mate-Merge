@@ -2861,30 +2861,9 @@ input[type='datetime-local']::-webkit-datetime-edit {
   -moz-appearance: textfield;
 }
 
-}
-@media (max-width: 600px) {
-  [data-sonner-toaster][data-y-position='top'] {
-    top: calc(env(safe-area-inset-top, 44px) + 6px) !important;
-  }
-}
-
-}
-[data-sonner-toast][data-type='warning'] {
-  border-left-color: #f59e0b !important;
-}
-[data-sonner-toast][data-type='info'] {
-  border-left-color: #3b82f6 !important;
-}
-[data-sonner-toast][data-type='success'],
-[data-sonner-toast]:not([data-type]) {
-  border-left-color: #FFC800 !important;
-}
-
 /* ─── Toast (Sonner) — safe area + Elec-Mate branding ────────────────────
  * Guarantee toasts clear the iOS status bar on all viewport widths.
  * Sonner uses --offset-top on >600px and --mobile-offset-top on <600px.
- * Both are set via props in sonner.tsx; these !important rules are the
- * safety net.
  * ───────────────────────────────────────────────────────────────────────── */
 [data-sonner-toaster][data-y-position='top'] {
   top: calc(env(safe-area-inset-top, 44px) + 6px) !important;
@@ -2895,26 +2874,18 @@ input[type='datetime-local']::-webkit-datetime-edit {
   }
 }
 
-/* Type-specific left border + left glow via box-shadow.
-   The base border-left is set as an inline style in sonner.tsx.
-   These override just the accent colour. */
+/* Type-specific left border + left glow */
 [data-sonner-toast][data-type='error'] {
   border-left-color: #ef4444 !important;
-  box-shadow: 0 0 0 1px rgba(239,68,68,0.05),
-              -6px 0 24px rgba(239,68,68,0.14),
-              0 20px 60px rgba(0,0,0,0.65) !important;
+  box-shadow: 0 0 0 1px rgba(239,68,68,0.05), -6px 0 24px rgba(239,68,68,0.14), 0 20px 60px rgba(0,0,0,0.65) !important;
 }
 [data-sonner-toast][data-type='warning'] {
   border-left-color: #f59e0b !important;
-  box-shadow: 0 0 0 1px rgba(245,158,11,0.05),
-              -6px 0 24px rgba(245,158,11,0.14),
-              0 20px 60px rgba(0,0,0,0.65) !important;
+  box-shadow: 0 0 0 1px rgba(245,158,11,0.05), -6px 0 24px rgba(245,158,11,0.14), 0 20px 60px rgba(0,0,0,0.65) !important;
 }
 [data-sonner-toast][data-type='info'] {
   border-left-color: #3b82f6 !important;
-  box-shadow: 0 0 0 1px rgba(59,130,246,0.05),
-              -6px 0 24px rgba(59,130,246,0.14),
-              0 20px 60px rgba(0,0,0,0.65) !important;
+  box-shadow: 0 0 0 1px rgba(59,130,246,0.05), -6px 0 24px rgba(59,130,246,0.14), 0 20px 60px rgba(0,0,0,0.65) !important;
 }
 [data-sonner-toast][data-type='success'],
 [data-sonner-toast]:not([data-type]) {
