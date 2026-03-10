@@ -1,78 +1,57 @@
 /**
- * Sonner Toaster — best-in-class native mobile design
+ * Sonner Toaster — best-in-class design, safe-area aware
  *
- * - Bottom-center on mobile (matches native iOS/Android UX patterns)
- * - Top-right on desktop (conventional web placement)
- * - Full safe-area awareness: env(safe-area-inset-bottom/top) so toasts
- *   never overlap the Dynamic Island, notch, or home indicator
- * - Frosted glass dark design with coloured left accent per type
- * - Swipe-down on mobile to dismiss
+ * Position: top-center, sitting just below the iOS status bar / Dynamic Island.
+ * Uses env(safe-area-inset-top) so toasts never overlap the time/battery.
+ * Frosted glass dark design with coloured left accent per type.
  */
 
-import { useEffect, useState } from 'react';
 import { Toaster as Sonner, toast } from 'sonner';
 import { CheckCircle2, XCircle, AlertTriangle, Info } from 'lucide-react';
 
 type ToasterProps = React.ComponentProps<typeof Sonner>;
 
 const Toaster = ({ ...props }: ToasterProps) => {
-  const [isMobile, setIsMobile] = useState(() =>
-    typeof window !== 'undefined' ? window.innerWidth < 768 : true
-  );
-
-  useEffect(() => {
-    const mq = window.matchMedia('(min-width: 768px)');
-    const handler = (e: MediaQueryListEvent) => setIsMobile(!e.matches);
-    mq.addEventListener('change', handler);
-    setIsMobile(!mq.matches);
-    return () => mq.removeEventListener('change', handler);
-  }, []);
-
-  const position = isMobile ? 'bottom-center' : 'top-right';
-
-  // On mobile: sit just above the home indicator / bottom bar
-  // On desktop: sit just below the nav bar / top edge with some breathing room
-  const offset = isMobile
-    ? 'calc(env(safe-area-inset-bottom, 0px) + 8px)'
-    : 'calc(env(safe-area-inset-top, 0px) + 16px)';
-
   return (
     <Sonner
       theme="dark"
       className="toaster group"
-      position={position}
+      position="top-center"
       expand={false}
       closeButton={true}
       duration={4000}
       richColors={false}
       gap={8}
-      offset={offset}
-      swipeDirections={isMobile ? ['down'] : ['right']}
+      // Sit just below the iOS status bar / Dynamic Island / notch.
+      // env(safe-area-inset-top) = status bar height (44–59px on iPhone).
+      // Extra 6px gives a small breathing gap below it.
+      offset="calc(env(safe-area-inset-top, 44px) + 6px)"
+      swipeDirections={['up', 'right']}
       style={
         {
-          '--width': isMobile ? 'calc(100vw - 2rem)' : 'min(420px, calc(100vw - 2rem))',
-          // On desktop, pin to the right edge with some padding
-          ...(!isMobile && { right: '1rem', left: 'auto', transform: 'none' }),
+          '--width': 'min(calc(100vw - 2rem), 420px)',
+          left: '50%',
+          transform: 'translateX(-50%)',
         } as React.CSSProperties
       }
       icons={{
         success: (
-          <div className="w-7 h-7 rounded-lg flex items-center justify-center bg-emerald-500/20 flex-shrink-0">
+          <div className="w-8 h-8 rounded-xl flex items-center justify-center bg-emerald-500/20 flex-shrink-0">
             <CheckCircle2 className="w-4 h-4 text-emerald-400" />
           </div>
         ),
         error: (
-          <div className="w-7 h-7 rounded-lg flex items-center justify-center bg-red-500/20 flex-shrink-0">
+          <div className="w-8 h-8 rounded-xl flex items-center justify-center bg-red-500/20 flex-shrink-0">
             <XCircle className="w-4 h-4 text-red-400" />
           </div>
         ),
         warning: (
-          <div className="w-7 h-7 rounded-lg flex items-center justify-center bg-amber-500/20 flex-shrink-0">
+          <div className="w-8 h-8 rounded-xl flex items-center justify-center bg-amber-500/20 flex-shrink-0">
             <AlertTriangle className="w-4 h-4 text-amber-400" />
           </div>
         ),
         info: (
-          <div className="w-7 h-7 rounded-lg flex items-center justify-center bg-blue-500/20 flex-shrink-0">
+          <div className="w-8 h-8 rounded-xl flex items-center justify-center bg-blue-500/20 flex-shrink-0">
             <Info className="w-4 h-4 text-blue-400" />
           </div>
         ),
@@ -85,7 +64,6 @@ const Toaster = ({ ...props }: ToasterProps) => {
             '!ring-1 !ring-inset !ring-white/[0.04]',
             '!shadow-[0_8px_40px_rgba(0,0,0,0.6),0_2px_8px_rgba(0,0,0,0.4)]',
             '!px-4 !py-3.5 !min-h-[64px] !items-center !gap-3 !w-full',
-            // Frosted glass — darker on mobile for legibility over app content
             '!bg-[#141420]/96 !backdrop-blur-2xl',
           ].join(' '),
           title: '!text-white !font-semibold !text-[14px] !leading-snug',
