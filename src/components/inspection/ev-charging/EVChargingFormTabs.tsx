@@ -69,6 +69,7 @@ const EVChargingFormTabs: React.FC<EVChargingFormTabsProps> = ({
     {
       value: 'installation',
       label: 'Installation',
+      shortLabel: 'Install',
       icon: <Car className="h-4 w-4" />,
       content: (
         <div className={contentWrapperClass}>
@@ -86,6 +87,7 @@ const EVChargingFormTabs: React.FC<EVChargingFormTabsProps> = ({
     {
       value: 'supply',
       label: 'Supply',
+      shortLabel: 'Supply',
       icon: <Zap className="h-4 w-4" />,
       content: (
         <div className={contentWrapperClass}>
@@ -103,6 +105,7 @@ const EVChargingFormTabs: React.FC<EVChargingFormTabsProps> = ({
     {
       value: 'testing',
       label: 'Testing',
+      shortLabel: 'Test',
       icon: <TestTube className="h-4 w-4" />,
       content: (
         <div className={contentWrapperClass}>
@@ -120,6 +123,7 @@ const EVChargingFormTabs: React.FC<EVChargingFormTabsProps> = ({
     {
       value: 'declarations',
       label: 'Declarations',
+      shortLabel: 'Sign',
       icon: <FileText className="h-4 w-4" />,
       content: (
         <div className={contentWrapperClass}>

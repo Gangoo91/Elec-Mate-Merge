@@ -622,7 +622,7 @@ export default function EVChargingCertificate() {
       </AlertDialog>
 
       {/* Header */}
-      <div className="bg-[#242428] border-t-2 border-t-green-500 border-b border-b-green-500/20 sticky top-0 z-10 pt-[env(safe-area-inset-top)]">
+      <div className="bg-[#242428] border-t-2 border-t-green-500 border-b border-b-green-500/20 sticky top-0 z-10">
         {/* Mobile Header */}
         <div className="sm:hidden px-4 py-2.5">
           <div className="flex items-center justify-between">

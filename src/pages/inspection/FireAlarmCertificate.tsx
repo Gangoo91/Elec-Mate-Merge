@@ -45,7 +45,6 @@ import {
   createQuoteFromCertificate,
   createInvoiceFromCertificate,
 } from '@/utils/certificateToQuote';
-import { WhatsAppShareButton } from '@/components/ui/WhatsAppShareButton';
 import { supabase } from '@/integrations/supabase/client';
 import { formatFireAlarmJson } from '@/utils/fireAlarmJsonFormatter';
 
@@ -581,7 +580,7 @@ export default function FireAlarmCertificate() {
       </AlertDialog>
 
       {/* Mobile-First Header */}
-      <div className="bg-[#242428] border-b border-elec-yellow/20 sticky top-0 z-10 pt-[env(safe-area-inset-top)]">
+      <div className="bg-[#242428] border-b border-elec-yellow/20 sticky top-0 z-10">
         <div className="px-4 py-3">
           {/* Top Row - Back & Actions */}
           <div className="flex items-center justify-between mb-3">
@@ -627,15 +626,7 @@ export default function FireAlarmCertificate() {
                 )}
               </Button>
 
-              <WhatsAppShareButton
-                type="fire-alarm"
-                id={savedReportId || id || 'new'}
-                recipientPhone={formData.clientTelephone || ''}
-                recipientName={formData.clientName || ''}
-                documentLabel="Fire Alarm Certificate"
-                variant="ghost"
-                className="h-11 w-11 touch-manipulation active:scale-[0.98] transition-transform"
-              />
+
             </div>
           </div>
 
@@ -675,6 +666,13 @@ export default function FireAlarmCertificate() {
             isCurrentTabComplete: tabProps.isCurrentTabComplete,
             onGenerateCertificate: handleGenerateCertificate,
             canGenerateCertificate: !isGenerating,
+            whatsApp: {
+              type: 'fire-alarm',
+              id: savedReportId || id || 'new',
+              recipientPhone: formData.clientTelephone || '',
+              recipientName: formData.clientName || '',
+              documentLabel: 'Fire Alarm Certificate',
+            },
           }}
           onGenerateCertificate={handleGenerateCertificate}
           onCreateInvoice={handleCreateInvoice}

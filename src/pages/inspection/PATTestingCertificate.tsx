@@ -42,7 +42,6 @@ import { useCompanyProfile } from '@/hooks/useCompanyProfile';
 import { formatPATTestingJson } from '@/utils/patTestingJsonFormatter';
 import { useCertificateEmail } from '@/hooks/useCertificateEmail';
 import { EmailCertificateDialog } from '@/components/certificate-completion/EmailCertificateDialog';
-import { WhatsAppShareButton } from '@/components/ui/WhatsAppShareButton';
 import { openOrDownloadPdf } from '@/utils/pdf-download';
 
 // ─── Constants ───────────────────────────────────────────────────────────────
@@ -607,15 +606,7 @@ export default function PATTestingCertificate() {
                 )}
               </Button>
 
-              <WhatsAppShareButton
-                type="pat-testing"
-                id={savedReportId || id || 'new'}
-                recipientPhone={formData.clientPhone || ''}
-                recipientName={formData.clientName || ''}
-                documentLabel="PAT Testing Certificate"
-                variant="ghost"
-                className="h-9 w-9 touch-manipulation"
-              />
+
             </div>
           </div>
 
@@ -655,6 +646,13 @@ export default function PATTestingCertificate() {
             isCurrentTabComplete: tabProps.isCurrentTabComplete,
             onGenerateCertificate: handleGenerateCertificate,
             canGenerateCertificate: !isGenerating,
+            whatsApp: {
+              type: 'pat-testing',
+              id: savedReportId || id || 'new',
+              recipientPhone: formData.clientPhone || '',
+              recipientName: formData.clientName || '',
+              documentLabel: 'PAT Testing Certificate',
+            },
           }}
           onGenerateCertificate={handleGenerateCertificate}
           onCreateInvoice={handleCreateInvoice}

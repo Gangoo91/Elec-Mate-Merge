@@ -65,6 +65,7 @@ const FireAlarmFormTabs: React.FC<FireAlarmFormTabsProps> = ({
     {
       value: 'installation',
       label: 'Installation',
+      shortLabel: 'Install',
       icon: <Building2 className="h-4 w-4" />,
       content: (
         <div className={contentWrapperClass}>
@@ -76,6 +77,7 @@ const FireAlarmFormTabs: React.FC<FireAlarmFormTabsProps> = ({
     {
       value: 'system',
       label: 'System Design',
+      shortLabel: 'System',
       icon: <Settings className="h-4 w-4" />,
       content: (
         <div className={contentWrapperClass}>
@@ -87,6 +89,7 @@ const FireAlarmFormTabs: React.FC<FireAlarmFormTabsProps> = ({
     {
       value: 'testing',
       label: 'Testing',
+      shortLabel: 'Test',
       icon: <TestTube className="h-4 w-4" />,
       content: (
         <div className={contentWrapperClass}>
@@ -98,6 +101,7 @@ const FireAlarmFormTabs: React.FC<FireAlarmFormTabsProps> = ({
     {
       value: 'declarations',
       label: 'Declarations',
+      shortLabel: 'Sign',
       icon: <FileText className="h-4 w-4" />,
       content: (
         <div className={contentWrapperClass}>
