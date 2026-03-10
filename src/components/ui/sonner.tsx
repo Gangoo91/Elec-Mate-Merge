@@ -1,18 +1,58 @@
 /**
- * Sonner Toaster — Elec-Mate branded
+ * Sonner Toaster — Elec-Mate premium design
  *
- * Dark app-matched background, yellow accent for success/default,
- * type-specific left border, no close button.
- * Safe-area aware: clears iOS status bar on all viewports.
+ * Dark zinc (no blue tint), thick yellow left accent with glow,
+ * big branded icon, no close button. Safe-area aware.
  */
 
 import { Toaster as Sonner, toast } from 'sonner';
-import { CheckCircle2, XCircle, AlertTriangle, Info, Zap } from 'lucide-react';
+import { Zap, XCircle, AlertTriangle, Info, CheckCircle2 } from 'lucide-react';
 
 type ToasterProps = React.ComponentProps<typeof Sonner>;
 
-// Elec-Mate brand yellow
-const YELLOW = '#FFC800';
+interface IconPillProps {
+  color: string;
+  children: React.ReactNode;
+}
+
+const IconPill = ({ color, children }: IconPillProps) => (
+  <div
+    style={{
+      width: 40,
+      height: 40,
+      borderRadius: 12,
+      background: `${color}22`,
+      border: `1px solid ${color}33`,
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      flexShrink: 0,
+    }}
+  >
+    {children}
+  </div>
+);
+
+// Shared base style — zinc-900 background, no blue tint
+const baseStyle: React.CSSProperties = {
+  background: 'rgba(24, 24, 27, 0.97)',
+  backdropFilter: 'blur(24px)',
+  WebkitBackdropFilter: 'blur(24px)',
+  border: '1px solid rgba(255,255,255,0.07)',
+  borderLeft: '4px solid #FFC800',
+  borderRadius: 14,
+  padding: '13px 14px',
+  minHeight: 62,
+  display: 'flex',
+  alignItems: 'center',
+  gap: 12,
+  // Yellow left glow — makes the accent pop
+  boxShadow:
+    '0 0 0 1px rgba(255,200,0,0.05), -6px 0 24px rgba(255,200,0,0.14), 0 20px 60px rgba(0,0,0,0.65)',
+  color: '#ffffff',
+  width: '100%',
+  opacity: 1,
+};
 
 const Toaster = ({ ...props }: ToasterProps) => {
   return (
@@ -37,95 +77,31 @@ const Toaster = ({ ...props }: ToasterProps) => {
       }
       icons={{
         success: (
-          <div
-            style={{
-              width: 32,
-              height: 32,
-              borderRadius: 10,
-              background: 'rgba(255,200,0,0.15)',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              flexShrink: 0,
-            }}
-          >
-            <Zap style={{ width: 16, height: 16, color: YELLOW, fill: YELLOW }} />
-          </div>
+          <IconPill color="#FFC800">
+            <Zap style={{ width: 18, height: 18, color: '#FFC800', fill: '#FFC800' }} />
+          </IconPill>
         ),
         error: (
-          <div
-            style={{
-              width: 32,
-              height: 32,
-              borderRadius: 10,
-              background: 'rgba(239,68,68,0.15)',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              flexShrink: 0,
-            }}
-          >
-            <XCircle style={{ width: 16, height: 16, color: '#ef4444' }} />
-          </div>
+          <IconPill color="#ef4444">
+            <XCircle style={{ width: 18, height: 18, color: '#ef4444' }} />
+          </IconPill>
         ),
         warning: (
-          <div
-            style={{
-              width: 32,
-              height: 32,
-              borderRadius: 10,
-              background: 'rgba(245,158,11,0.15)',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              flexShrink: 0,
-            }}
-          >
-            <AlertTriangle style={{ width: 16, height: 16, color: '#f59e0b' }} />
-          </div>
+          <IconPill color="#f59e0b">
+            <AlertTriangle style={{ width: 18, height: 18, color: '#f59e0b' }} />
+          </IconPill>
         ),
         info: (
-          <div
-            style={{
-              width: 32,
-              height: 32,
-              borderRadius: 10,
-              background: 'rgba(59,130,246,0.15)',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              flexShrink: 0,
-            }}
-          >
-            <Info style={{ width: 16, height: 16, color: '#3b82f6' }} />
-          </div>
+          <IconPill color="#3b82f6">
+            <Info style={{ width: 18, height: 18, color: '#3b82f6' }} />
+          </IconPill>
         ),
       }}
       toastOptions={{
-        style: {
-          background: 'rgba(18, 18, 30, 0.97)',
-          backdropFilter: 'blur(20px)',
-          WebkitBackdropFilter: 'blur(20px)',
-          border: '1px solid rgba(255,255,255,0.08)',
-          borderLeft: `3px solid ${YELLOW}`,
-          borderRadius: 16,
-          padding: '12px 16px',
-          minHeight: 64,
-          display: 'flex',
-          alignItems: 'center',
-          gap: 12,
-          boxShadow: '0 8px 32px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.04)',
-          color: '#ffffff',
-          width: '100%',
-          opacity: 1,
-        },
+        style: baseStyle,
         classNames: {
-          title: '!text-white !font-semibold !text-[14px] !leading-snug',
-          description: '!text-white/60 !text-[12px] !leading-snug !mt-0.5',
-          // Type-specific left border colours
-          error: '!border-l-[#ef4444]',
-          warning: '!border-l-[#f59e0b]',
-          info: '!border-l-[#3b82f6]',
+          title: '!text-white !font-semibold !text-[15px] !leading-snug',
+          description: '!text-white/60 !text-[13px] !leading-snug !mt-0.5',
           icon: '!self-center !shrink-0',
         },
       }}
