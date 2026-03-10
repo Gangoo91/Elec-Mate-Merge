@@ -54,6 +54,7 @@ import {
 } from '@/types/emergency-lighting';
 import { useEmergencyLightingSmartForm } from '@/hooks/inspection/useEmergencyLightingSmartForm';
 import { formatEmergencyLightingJson } from '@/utils/emergencyLightingJsonFormatter';
+import { openOrDownloadPdf } from '@/utils/pdf-download';
 
 // Constants
 const REPORT_TYPE = 'emergency-lighting';
@@ -516,17 +517,7 @@ export default function EmergencyLightingCertificate() {
         dataWithCertNumber.testDate || new Date()
       );
 
-      const response = await fetch(functionData.pdfUrl);
-      const blob = await response.blob();
-      const blobUrl = URL.createObjectURL(blob);
-
-      const link = document.createElement('a');
-      link.href = blobUrl;
-      link.download = filename;
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-      setTimeout(() => URL.revokeObjectURL(blobUrl), 100);
+      await openOrDownloadPdf(functionData.pdfUrl, filename);
 
       toast.success('Certificate generated and downloaded');
     } catch (error) {

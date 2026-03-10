@@ -23,6 +23,7 @@ import { FaultDiagnosisStepCard } from './redesign/FaultDiagnosisStepCard';
 import { CorrectiveActionStepCard } from './redesign/CorrectiveActionStepCard';
 import { useFaultDiagnosisProgress } from '@/hooks/useFaultDiagnosisProgress';
 import type { FaultDiagnosis } from '@/types/commissioning-response';
+import { openOrDownloadPdf } from '@/utils/pdf-download';
 
 interface FaultDiagnosisViewProps {
   diagnosis: FaultDiagnosis | null;
@@ -91,7 +92,7 @@ const FaultDiagnosisView = ({
       if (error) throw error;
 
       if (data?.success && data?.downloadUrl) {
-        window.open(data.downloadUrl, '_blank');
+        await openOrDownloadPdf(data.downloadUrl, 'Fault-Diagnosis-Report.pdf');
         toast({
           title: 'PDF Generated',
           description: 'Your fault diagnosis PDF has been generated successfully.',

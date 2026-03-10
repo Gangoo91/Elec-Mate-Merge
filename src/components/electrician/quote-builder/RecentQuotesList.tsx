@@ -15,6 +15,7 @@ import QuoteTableView from '@/components/electrician/quote-builder/QuoteTableVie
 import QuoteCardView from '@/components/electrician/quote-builder/QuoteCardView';
 import { format } from 'date-fns';
 import { generateSequentialInvoiceNumber } from '@/utils/invoice-number-generator';
+import { openOrDownloadPdf } from '@/utils/pdf-download';
 
 interface RecentQuotesListProps {
   quotes: Quote[];
@@ -151,17 +152,8 @@ const RecentQuotesList: React.FC<RecentQuotesListProps> = ({
           })
           .eq('id', quote.id);
 
-        // Download the PDF
-        const response = await fetch(downloadUrl);
-        const blob = await response.blob();
-        const url = window.URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = `quote-${quote.quoteNumber}.pdf`;
-        document.body.appendChild(a);
-        a.click();
-        window.URL.revokeObjectURL(url);
-        document.body.removeChild(a);
+        // Open / download the PDF (native-aware)
+        await openOrDownloadPdf(downloadUrl, `Quote-${quote.quoteNumber}.pdf`);
 
         toast({
           title: 'PDF Generated',

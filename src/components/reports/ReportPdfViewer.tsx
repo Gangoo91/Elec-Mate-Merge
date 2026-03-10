@@ -40,6 +40,7 @@ import {
   AlertDialogTitle,
 } from '@/components/ui/alert-dialog';
 import { useIsMobile } from '@/hooks/use-mobile';
+import { openOrDownloadPdf } from '@/utils/pdf-download';
 
 interface ReportPdfViewerProps {
   reportId: string;
@@ -500,7 +501,7 @@ export const ReportPdfViewer = ({ reportId, open, onOpenChange }: ReportPdfViewe
 
     // Fallback: open PDF URL in new tab (browser handles CORS for navigation)
     if (pdfUrl) {
-      window.open(pdfUrl, '_blank');
+      await openOrDownloadPdf(pdfUrl, 'Certificate.pdf');
     } else {
       toast({
         title: 'No PDF Available',

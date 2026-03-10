@@ -55,6 +55,7 @@ import SolarPVFormTabs from '@/components/inspection/solar-pv/SolarPVFormTabs';
 import { useSolarPVTabs, SolarPVTabValue } from '@/hooks/useSolarPVTabs';
 import { getDefaultSolarPVFormData, SolarPVFormData } from '@/types/solar-pv';
 import { useCompanyProfile } from '@/hooks/useCompanyProfile';
+import { openOrDownloadPdf } from '@/utils/pdf-download';
 
 // Constants
 const REPORT_TYPE = 'solar-pv';
@@ -502,17 +503,7 @@ export default function SolarPVCertificate() {
         formData.commissioningDate || new Date()
       );
 
-      const response = await fetch(functionData.pdfUrl);
-      const blob = await response.blob();
-      const blobUrl = URL.createObjectURL(blob);
-
-      const link = document.createElement('a');
-      link.href = blobUrl;
-      link.download = filename;
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-      setTimeout(() => URL.revokeObjectURL(blobUrl), 100);
+      await openOrDownloadPdf(functionData.pdfUrl, filename);
 
       // Save pdf_url to reports table and create Part P notification
       if (savedReportId) {

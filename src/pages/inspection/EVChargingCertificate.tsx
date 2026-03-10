@@ -49,6 +49,7 @@ import EVChargingFormTabs from '@/components/inspection/ev-charging/EVChargingFo
 import { useEVChargingTabs } from '@/hooks/useEVChargingTabs';
 import { getDefaultEVChargingFormData } from '@/types/ev-charging';
 import { useEVChargingSmartForm } from '@/hooks/inspection/useEVChargingSmartForm';
+import { openOrDownloadPdf } from '@/utils/pdf-download';
 
 // Constants
 const REPORT_TYPE = 'ev-charging';
@@ -513,17 +514,7 @@ export default function EVChargingCertificate() {
         formData.installationDate || new Date()
       );
 
-      const response = await fetch(functionData.pdfUrl);
-      const blob = await response.blob();
-      const blobUrl = URL.createObjectURL(blob);
-
-      const link = document.createElement('a');
-      link.href = blobUrl;
-      link.download = filename;
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-      setTimeout(() => URL.revokeObjectURL(blobUrl), 100);
+      await openOrDownloadPdf(functionData.pdfUrl, filename);
 
       // Save pdf_url to reports table and create Part P notification
       if (savedReportId) {

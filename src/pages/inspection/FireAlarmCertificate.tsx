@@ -53,6 +53,7 @@ import FireAlarmFormTabs from '@/components/inspection/fire-alarm/FireAlarmFormT
 import { useFireAlarmTabs, FireAlarmTabValue } from '@/hooks/useFireAlarmTabs';
 import { getDefaultFireAlarmFormData } from '@/types/fire-alarm';
 import { useFireAlarmSmartForm } from '@/hooks/inspection/useFireAlarmSmartForm';
+import { openOrDownloadPdf } from '@/utils/pdf-download';
 
 // Constants
 const REPORT_TYPE = 'fire-alarm';
@@ -460,17 +461,7 @@ export default function FireAlarmCertificate() {
         formData.commissioningDate || new Date()
       );
 
-      const response = await fetch(functionData.pdfUrl);
-      const blob = await response.blob();
-      const blobUrl = URL.createObjectURL(blob);
-
-      const link = document.createElement('a');
-      link.href = blobUrl;
-      link.download = filename;
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-      setTimeout(() => URL.revokeObjectURL(blobUrl), 100);
+      await openOrDownloadPdf(functionData.pdfUrl, filename);
 
       toast.success('Certificate generated and downloaded');
     } catch (error) {

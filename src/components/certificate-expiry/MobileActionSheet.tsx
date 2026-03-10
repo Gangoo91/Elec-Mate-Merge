@@ -12,6 +12,7 @@ import { format, parseISO } from 'date-fns';
 import { useState, useEffect } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
+import { openOrDownloadPdf } from '@/utils/pdf-download';
 
 interface MobileActionSheetProps {
   reminder: ExpiryReminder | null;
@@ -184,7 +185,7 @@ export const MobileActionSheet = ({
             className="w-full min-h-[56px] justify-start gap-3 text-base bg-card border-border text-foreground hover:bg-muted hover:border-elec-yellow hover:shadow-[0_0_15px_rgba(252,211,77,0.3)] active:scale-[0.98] transition-all"
             onClick={() => {
               if (pdfUrl) {
-                window.open(pdfUrl, '_blank');
+                await openOrDownloadPdf(pdfUrl, 'Certificate.pdf');
                 toast({
                   title: 'Opening Certificate',
                   description: 'PDF certificate opened in new tab',

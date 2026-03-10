@@ -11,6 +11,7 @@ import ProjectResultsTabs from './ProjectResultsTabs';
 import { useProjectPlanState } from '@/hooks/useProjectPlanState';
 import { EditableProjectPlan } from '@/types/projectPlan';
 import { v4 as uuidv4 } from 'uuid';
+import { openOrDownloadPdf } from '@/utils/pdf-download';
 
 interface ProjectManagerResultsProps {
   results: any;
@@ -206,7 +207,7 @@ const ProjectManagerResults = ({
       if (error) throw error;
 
       if (data?.success && data.downloadUrl) {
-        window.open(data.downloadUrl, '_blank');
+        await openOrDownloadPdf(data.downloadUrl, 'Project-Management-Report.pdf');
         toast.success('PDF generated', { description: 'Project Execution Plan ready' });
       } else {
         throw new Error('PDF generation failed');

@@ -37,6 +37,7 @@ import {
 } from '@/utils/certificateToQuote';
 import { useMinorWorksSmartForm } from '@/hooks/useMinorWorksSmartForm';
 import { generatePdfFilename } from '@/utils/pdfFilenameGenerator';
+import { openOrDownloadPdf } from '@/utils/pdf-download';
 
 interface MinorWorksPdfGeneratorProps {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -538,7 +539,7 @@ const MinorWorksPdfGenerator: React.FC<MinorWorksPdfGeneratorProps> = ({
           variant: 'default',
         });
         // Fallback: Open in new window
-        window.open(pdfUrl, '_blank');
+        await openOrDownloadPdf(pdfUrl, 'Minor-Works-Certificate.pdf');
       }
     }
   };

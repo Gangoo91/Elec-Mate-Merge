@@ -48,6 +48,7 @@ import {
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { format } from 'date-fns';
+import { openOrDownloadPdf } from '@/utils/pdf-download';
 
 const CERTIFICATE_TYPE_LABELS: Record<CertificateType, string> = {
   eicr: 'EICR',
@@ -100,7 +101,7 @@ export default function LegacyCertificates() {
     try {
       const url = await getDownloadUrl(cert.storage_path);
       if (url) {
-        window.open(url, '_blank');
+        await openOrDownloadPdf(url, `${cert.type || 'certificate'}.pdf`);
       }
     } finally {
       setIsDownloading(null);

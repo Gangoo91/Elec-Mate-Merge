@@ -12,6 +12,7 @@ import {
   ProjectDetailsForm,
   ProjectDetailsData,
 } from '@/components/install-planner/ProjectDetailsForm';
+import { openOrDownloadPdf } from '@/utils/pdf-download';
 
 interface Message {
   role: 'user' | 'assistant';
@@ -285,7 +286,7 @@ const InstallPlannerResults = () => {
       }
 
       // Open PDF in new tab
-      window.open(data.downloadUrl, '_blank');
+      await openOrDownloadPdf(data.downloadUrl, 'Installation-Design-Spec.pdf');
 
       toast({
         title: 'PDF Generated',

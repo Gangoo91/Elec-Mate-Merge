@@ -18,6 +18,7 @@ import { useToast } from '@/hooks/use-toast';
 import { useCompanyProfile } from '@/hooks/useCompanyProfile';
 import { supabase } from '@/integrations/supabase/client';
 import { cn } from '@/lib/utils';
+import { openOrDownloadPdf } from '@/utils/pdf-download';
 
 interface QuoteReviewStepProps {
   quote: Partial<Quote>;
@@ -100,7 +101,7 @@ export const QuoteReviewStep = ({ quote }: QuoteReviewStepProps) => {
           })
           .eq('id', quote.id);
 
-        window.open(downloadUrl, '_blank');
+        await openOrDownloadPdf(downloadUrl, 'Quote.pdf');
         toast({ title: 'PDF ready', variant: 'success' });
       } else if (documentId) {
         toast({ title: 'PDF in progress', description: 'Check back in a moment' });
