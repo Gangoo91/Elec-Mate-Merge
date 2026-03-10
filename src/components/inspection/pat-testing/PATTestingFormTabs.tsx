@@ -30,6 +30,13 @@ interface PATTestingFormTabsProps {
     isCurrentTabComplete: boolean;
     onGenerateCertificate?: () => void;
     canGenerateCertificate?: boolean;
+    whatsApp?: {
+      type: string;
+      id: string;
+      recipientPhone: string;
+      recipientName: string;
+      documentLabel: string;
+    };
   };
   onGenerateCertificate: () => void;
   onCreateInvoice?: () => void;
@@ -65,6 +72,7 @@ const PATTestingFormTabs: React.FC<PATTestingFormTabsProps> = ({
     {
       value: 'client',
       label: 'Client',
+      shortLabel: 'Client',
       icon: <User className="h-4 w-4" />,
       content: (
         <div className={cn(isMobile ? '' : 'md:max-w-6xl mx-auto space-y-6')}>
@@ -76,6 +84,7 @@ const PATTestingFormTabs: React.FC<PATTestingFormTabsProps> = ({
     {
       value: 'appliances',
       label: 'Appliances',
+      shortLabel: 'Items',
       icon: <Plug className="h-4 w-4" />,
       content: (
         <div className={cn(isMobile ? '' : 'md:max-w-6xl mx-auto space-y-6')}>
@@ -95,6 +104,7 @@ const PATTestingFormTabs: React.FC<PATTestingFormTabsProps> = ({
     {
       value: 'declarations',
       label: 'Summary',
+      shortLabel: 'Sign',
       icon: <FileText className="h-4 w-4" />,
       content: (
         <div className={cn(isMobile ? '' : 'md:max-w-6xl mx-auto space-y-6')}>

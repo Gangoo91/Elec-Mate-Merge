@@ -612,7 +612,7 @@ export default function EmergencyLightingCertificate() {
       </AlertDialog>
 
       {/* Mobile-First Header */}
-      <div className="bg-background border-b border-white/[0.06] sticky top-0 z-10 pt-[env(safe-area-inset-top)]">
+      <div className="bg-background border-b border-white/[0.06] sticky top-0 z-10">
         <div className="px-4 py-3">
           {/* Top Row - Back & Actions */}
           <div className="flex items-center justify-between mb-3">

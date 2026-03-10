@@ -64,6 +64,7 @@ const EmergencyLightingFormTabs: React.FC<EmergencyLightingFormTabsProps> = ({
     {
       value: 'installation',
       label: 'Installation',
+      shortLabel: 'Install',
       icon: <Building2 className="h-4 w-4" />,
       content: (
         <div className={cn(isMobile ? 'pb-24' : 'md:max-w-6xl mx-auto space-y-6')}>
@@ -75,6 +76,7 @@ const EmergencyLightingFormTabs: React.FC<EmergencyLightingFormTabsProps> = ({
     {
       value: 'luminaires',
       label: 'Luminaires',
+      shortLabel: 'Lights',
       icon: <Lightbulb className="h-4 w-4" />,
       content: (
         <div className={cn(isMobile ? 'pb-24' : 'md:max-w-6xl mx-auto space-y-6')}>
@@ -86,6 +88,7 @@ const EmergencyLightingFormTabs: React.FC<EmergencyLightingFormTabsProps> = ({
     {
       value: 'testing',
       label: 'Testing',
+      shortLabel: 'Test',
       icon: <TestTube className="h-4 w-4" />,
       content: (
         <div className={cn(isMobile ? 'pb-24' : 'md:max-w-6xl mx-auto space-y-6')}>
@@ -97,6 +100,7 @@ const EmergencyLightingFormTabs: React.FC<EmergencyLightingFormTabsProps> = ({
     {
       value: 'declarations',
       label: 'Declarations',
+      shortLabel: 'Sign',
       icon: <FileText className="h-4 w-4" />,
       content: (
         <div className={cn(isMobile ? 'pb-24' : 'md:max-w-6xl mx-auto space-y-6')}>

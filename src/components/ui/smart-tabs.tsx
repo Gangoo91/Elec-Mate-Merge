@@ -111,7 +111,7 @@ export const SmartTabs = ({
           ref={scrollRef}
           className={cn(
             'flex overflow-x-auto scrollbar-hide',
-            isMobile ? 'gap-1.5 px-4 pb-2' : 'gap-2'
+            isMobile ? 'gap-1 px-4 pb-2' : 'gap-2'
           )}
           style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
         >
@@ -126,20 +126,22 @@ export const SmartTabs = ({
                 ref={isActive ? activeTabRef : null}
                 onClick={() => handleValueChange(tab.value)}
                 className={cn(
-                  'flex items-center gap-1.5 px-3 py-2.5 rounded-lg font-medium touch-manipulation whitespace-nowrap shrink-0',
+                  'flex items-center gap-1.5 rounded-lg font-medium touch-manipulation whitespace-nowrap shrink-0',
                   'active:scale-95 transition-[background-color,color,transform] duration-150',
                   isActive
                     ? 'bg-elec-yellow text-black shadow-lg shadow-elec-yellow/20'
                     : tabComplete
                       ? 'bg-green-500/10 text-green-400 border border-green-500/30'
                       : 'bg-card/50 text-muted-foreground hover:text-foreground hover:bg-card border border-transparent',
-                  isMobile ? 'text-sm h-11 min-w-[70px]' : 'text-sm h-10'
+                  isMobile
+                    ? 'text-[13px] h-10 px-2.5 py-2 min-w-[58px]'
+                    : 'text-sm h-10 px-3 py-2.5'
                 )}
               >
                 {/* Step number badge */}
                 <span
                   className={cn(
-                    'flex items-center justify-center h-5 w-5 rounded-full text-xs font-bold shrink-0',
+                    'flex items-center justify-center h-[18px] w-[18px] rounded-full text-[11px] font-bold shrink-0',
                     isActive
                       ? 'bg-black/20 text-black'
                       : tabComplete
@@ -147,7 +149,7 @@ export const SmartTabs = ({
                         : 'bg-white/10 text-current'
                   )}
                 >
-                  {tabComplete && !isActive ? <CheckCircle className="h-3 w-3" /> : index + 1}
+                  {tabComplete && !isActive ? <CheckCircle className="h-2.5 w-2.5" /> : index + 1}
                 </span>
                 <span>{displayLabel}</span>
               </button>

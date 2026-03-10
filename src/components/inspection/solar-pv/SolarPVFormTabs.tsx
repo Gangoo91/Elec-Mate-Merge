@@ -67,6 +67,7 @@ const SolarPVFormTabs: React.FC<SolarPVFormTabsProps> = ({
     {
       value: 'installation',
       label: 'Installation',
+      shortLabel: 'Install',
       icon: <Building2 className="h-4 w-4" />,
       content: (
         <div className={contentWrapperClass}>
@@ -102,6 +103,7 @@ const SolarPVFormTabs: React.FC<SolarPVFormTabsProps> = ({
     {
       value: 'testing',
       label: 'Testing',
+      shortLabel: 'Test',
       icon: <TestTube className="h-4 w-4" />,
       content: (
         <div className={contentWrapperClass}>
@@ -113,6 +115,7 @@ const SolarPVFormTabs: React.FC<SolarPVFormTabsProps> = ({
     {
       value: 'signoff',
       label: 'Sign-Off',
+      shortLabel: 'Sign',
       icon: <FileText className="h-4 w-4" />,
       content: (
         <div className={contentWrapperClass}>
