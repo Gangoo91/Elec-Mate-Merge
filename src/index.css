@@ -2861,14 +2861,12 @@ input[type='datetime-local']::-webkit-datetime-edit {
   -moz-appearance: textfield;
 }
 
-}
 @media (max-width: 600px) {
   [data-sonner-toaster][data-y-position='top'] {
     top: calc(env(safe-area-inset-top, 44px) + 6px) !important;
   }
 }
 
-}
 [data-sonner-toast][data-type='warning'] {
   border-left-color: #f59e0b !important;
 }
