@@ -2874,3 +2874,22 @@ input[type='datetime-local']::-webkit-datetime-edit {
     top: calc(env(safe-area-inset-top, 44px) + 6px) !important;
   }
 }
+
+/* ─── Toast (Sonner) — Elec-Mate branding ────────────────────────────────
+ * Type-specific left accent colour.
+ * The base border-left (yellow) is set via inline style in sonner.tsx.
+ * These overrides change only the left border colour per type.
+ * ───────────────────────────────────────────────────────────────────────── */
+[data-sonner-toast][data-type='error'] {
+  border-left-color: #ef4444 !important;
+}
+[data-sonner-toast][data-type='warning'] {
+  border-left-color: #f59e0b !important;
+}
+[data-sonner-toast][data-type='info'] {
+  border-left-color: #3b82f6 !important;
+}
+[data-sonner-toast][data-type='success'],
+[data-sonner-toast]:not([data-type]) {
+  border-left-color: #FFC800 !important;
+}
