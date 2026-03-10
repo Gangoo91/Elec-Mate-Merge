@@ -25,7 +25,10 @@ const Toaster = ({ ...props }: ToasterProps) => {
       // Sit just below the iOS status bar / Dynamic Island / notch.
       // env(safe-area-inset-top) = status bar height (44–59px on iPhone).
       // Extra 6px gives a small breathing gap below it.
+      // NOTE: Sonner uses --mobile-offset-top on screens <600px (separate from --offset-top).
+      // Both props must be set or the mobile override CSS variable stays at its default (0).
       offset="calc(env(safe-area-inset-top, 44px) + 6px)"
+      mobileOffset="calc(env(safe-area-inset-top, 44px) + 6px)"
       swipeDirections={['up', 'right']}
       style={
         {

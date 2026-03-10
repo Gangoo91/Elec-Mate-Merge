@@ -2860,3 +2860,17 @@ input[type='datetime-local']::-webkit-datetime-edit {
 .calendar-input[type='time'] {
   -moz-appearance: textfield;
 }
+
+/* ─── Toast (Sonner) — safe area positioning ──────────────────────────────
+ * Ensure toasts always clear the iOS status bar / Dynamic Island / notch
+ * on both desktop and mobile. Sonner uses different CSS vars below 600px.
+ * We override both to be consistent.
+ * ───────────────────────────────────────────────────────────────────────── */
+[data-sonner-toaster][data-y-position='top'] {
+  top: calc(env(safe-area-inset-top, 44px) + 6px) !important;
+}
+@media (max-width: 600px) {
+  [data-sonner-toaster][data-y-position='top'] {
+    top: calc(env(safe-area-inset-top, 44px) + 6px) !important;
+  }
+}
