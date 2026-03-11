@@ -1,36 +1,24 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import {
   ArrowLeft,
   MessageSquare,
   Receipt,
-  FileText,
   ListTodo,
   Users,
   ClipboardCheck,
   BookOpen,
   BellRing,
   Zap,
-  CheckCircle,
-  Mail,
-  Calendar,
-  FileDown,
-  ShieldCheck,
-  BarChart3,
-  Calculator,
-  Loader2,
-  Shield,
-  Banknote,
   Phone,
   Check,
   Star,
-  Quote,
+  Shield,
+  BarChart3,
+  ChevronRight,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { useToast } from '@/components/ui/use-toast';
-import { useAuth } from '@/contexts/AuthContext';
-import { supabase } from '@/integrations/supabase/client';
 
 /* ── animation ── */
 const fade = {
@@ -146,82 +134,21 @@ const included = [
 
 /* ── component ── */
 export function BusinessAISalesView() {
-  const [loading, setLoading] = useState(false);
-  const [waitlistJoined, setWaitlistJoined] = useState(false);
-  const { toast } = useToast();
-  const { user } = useAuth();
   const navigate = useNavigate();
 
-  useEffect(() => {
-    if (!user) return;
-    supabase
-      .from('business_ai_waitlist')
-      .select('id')
-      .eq('user_id', user.id)
-      .maybeSingle()
-      .then(({ data }) => {
-        if (data) setWaitlistJoined(true);
-      });
-  }, [user]);
-
-  const handleJoinWaitlist = async () => {
-    if (!user) {
-      toast({
-        title: 'Sign in required',
-        description: 'Please sign in or create an account to join the waitlist.',
-      });
-      navigate('/auth/signin');
-      return;
-    }
-    if (waitlistJoined) return;
-    setLoading(true);
-    try {
-      const { error } = await supabase.from('business_ai_waitlist').insert({ user_id: user.id });
-      if (error && error.code !== '23505') throw error;
-      setWaitlistJoined(true);
-      toast({
-        title: "You're on the list!",
-        description: "We'll be in touch as soon as Mate is ready for you.",
-        variant: 'success',
-      });
-    } catch (err) {
-      console.error('Waitlist error:', err);
-      toast({
-        title: 'Something went wrong',
-        description: 'Please try again.',
-        variant: 'destructive',
-      });
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const CtaButton = () =>
-    waitlistJoined ? (
-      <div className="flex items-center justify-center gap-2.5 py-4 rounded-2xl bg-green-500/10 border border-green-500/25">
-        <CheckCircle className="h-5 w-5 text-green-400 shrink-0" />
-        <span className="text-sm font-bold text-green-400">You're on the waitlist!</span>
-      </div>
-    ) : (
-      <Button
-        onClick={handleJoinWaitlist}
-        disabled={loading}
-        className="w-full touch-manipulation font-bold text-[15px] rounded-2xl bg-amber-500 hover:bg-amber-400 active:bg-amber-600 active:scale-[0.98] text-black shadow-lg shadow-amber-500/25 transition-all"
-        style={{ height: 56 }}
-      >
-        {loading ? (
-          <span className="flex items-center gap-2">
-            <Loader2 className="h-5 w-5 animate-spin" />
-            One sec...
-          </span>
-        ) : (
-          <span className="flex items-center gap-2">
-            <Zap className="h-5 w-5" />
-            Join the Waitlist — Free
-          </span>
-        )}
-      </Button>
-    );
+  const CtaButton = () => (
+    <Button
+      onClick={() => navigate('/subscriptions')}
+      className="w-full touch-manipulation font-bold text-[15px] rounded-2xl bg-amber-500 hover:bg-amber-400 active:bg-amber-600 active:scale-[0.98] text-black shadow-lg shadow-amber-500/25 transition-all"
+      style={{ height: 56 }}
+    >
+      <span className="flex items-center gap-2">
+        <Zap className="h-5 w-5" />
+        Subscribe — £29.99/mo
+        <ChevronRight className="h-4 w-4" />
+      </span>
+    </Button>
+  );
 
   return (
     <div className="min-h-screen bg-background">
@@ -613,13 +540,13 @@ export function BusinessAISalesView() {
               {/* Price */}
               <div className="space-y-2">
                 <div className="inline-flex items-center px-3 py-1.5 rounded-full bg-amber-500/15 border border-amber-500/25">
-                  <span className="text-xs font-bold text-amber-400">Early Access</span>
+                  <span className="text-xs font-bold text-amber-400">Business AI</span>
                 </div>
                 <div className="flex items-baseline gap-1">
                   <span className="text-5xl font-extrabold text-white">£29.99</span>
                   <span className="text-sm text-white font-medium">/mo</span>
                 </div>
-                <p className="text-sm text-white">Launching soon</p>
+                <p className="text-sm text-white">Includes everything in the Electrician plan</p>
               </div>
 
               {/* What's included */}
@@ -637,9 +564,7 @@ export function BusinessAISalesView() {
               {/* CTA */}
               <CtaButton />
 
-              <p className="text-xs text-white">
-                No card required. We'll notify you when Mate is ready.
-              </p>
+              <p className="text-xs text-white">Cancel anytime. 7-day free trial included.</p>
             </div>
           </div>
         </motion.section>
