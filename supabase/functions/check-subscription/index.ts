@@ -131,6 +131,41 @@ serve(async (req) => {
 
     const stripe = new Stripe(stripeKey, { apiVersion: '2023-10-16' });
 
+    // Complete price-to-tier mapping (matches webhook)
+    const PRICE_TO_TIER: Record<string, string> = {
+      // Apprentice
+      price_1SmUef2RKw5t5RAmRIMTWTqU: 'apprentice',
+      price_1SmUfK2RKw5t5RAml6bj1I77: 'apprentice_yearly',
+      // Electrician Pro
+      price_1SqJVr2RKw5t5RAmaiTGelLN: 'electrician',
+      price_1SqJVs2RKw5t5RAmVeD2QVsb: 'electrician_yearly',
+      // Business AI - £29.99/month, £299.99/year
+      price_1T6DUx2RKw5t5RAmpb177NJV: 'business_ai',
+      price_1T6DUy2RKw5t5RAmo9HgAukW: 'business_ai_yearly',
+      // Employer
+      price_1SlyAT2RKw5t5RAmUmTRGimH: 'Employer',
+      price_1SlyB82RKw5t5RAmN447YJUW: 'employer_yearly',
+      // Founders
+      price_1SPK8c2RKw5t5RAmRGJxXfjc: 'Employer',
+      // Electrician Win-Back (20% discount offer)
+      price_1SvggR2RKw5t5RAmDN29FBzx: 'electrician',
+      price_1SvggR2RKw5t5RAmsrerSmdG: 'electrician_yearly',
+      // Legacy
+      price_1RhtdT2RKw5t5RAmv6b2xE6p: 'apprentice',
+      price_1Rhtgl2RKw5t5RAmkQVKVnKn: 'apprentice_yearly',
+      price_1RhteS2RKw5t5RAmzRbaTE8U: 'electrician',
+      price_1RhtiS2RKw5t5RAmha0s6PJA: 'electrician_yearly',
+    };
+
+    // Tiers that include Business AI agent access
+    const BUSINESS_AI_TIERS = new Set([
+      'business_ai',
+      'business_ai_yearly',
+      'employer',
+      'employer_yearly',
+      'Employer',
+    ]);
+
     // Fetch Stripe customers with retry and timeout
     const customers = await withRetry(
       () =>
@@ -203,42 +238,6 @@ serve(async (req) => {
 
       // Determine subscription tier from price ID
       const priceId = activeSub.items.data[0].price.id;
-
-      // Complete price-to-tier mapping (matches webhook)
-      const PRICE_TO_TIER: Record<string, string> = {
-        // Apprentice
-        price_1SmUef2RKw5t5RAmRIMTWTqU: 'apprentice',
-        price_1SmUfK2RKw5t5RAml6bj1I77: 'apprentice_yearly',
-        // Electrician Pro
-        price_1SqJVr2RKw5t5RAmaiTGelLN: 'electrician',
-        price_1SqJVs2RKw5t5RAmVeD2QVsb: 'electrician_yearly',
-        // Business AI - £29.99/month, £299.99/year
-        price_1T6DUx2RKw5t5RAmpb177NJV: 'business_ai', // £29.99/month
-        price_1T6DUy2RKw5t5RAmo9HgAukW: 'business_ai_yearly', // £299.99/year
-        // Employer
-        price_1SlyAT2RKw5t5RAmUmTRGimH: 'Employer',
-        price_1SlyB82RKw5t5RAmN447YJUW: 'employer_yearly',
-        // Founders
-        price_1SPK8c2RKw5t5RAmRGJxXfjc: 'Employer',
-        // Electrician Win-Back (20% discount offer)
-        price_1SvggR2RKw5t5RAmDN29FBzx: 'electrician',
-        price_1SvggR2RKw5t5RAmsrerSmdG: 'electrician_yearly',
-        // Legacy
-        price_1RhtdT2RKw5t5RAmv6b2xE6p: 'apprentice',
-        price_1Rhtgl2RKw5t5RAmkQVKVnKn: 'apprentice_yearly',
-        price_1RhteS2RKw5t5RAmzRbaTE8U: 'electrician',
-        price_1RhtiS2RKw5t5RAmha0s6PJA: 'electrician_yearly',
-      };
-
-      // Tiers that include Business AI agent access
-      const BUSINESS_AI_TIERS = new Set([
-        'business_ai',
-        'business_ai_yearly',
-        'employer',
-        'employer_yearly',
-        'Employer',
-      ]);
-
       subscriptionTier = PRICE_TO_TIER[priceId] || 'electrician';
       logger.info('Determined subscription tier', { priceId, subscriptionTier });
 
