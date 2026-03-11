@@ -134,7 +134,6 @@ const BusinessHub = () => {
       icon: Cog,
       link: '/electrician/business-admin',
       gradient: 'from-yellow-400 to-amber-500',
-      comingSoon: true,
     },
   ];
 

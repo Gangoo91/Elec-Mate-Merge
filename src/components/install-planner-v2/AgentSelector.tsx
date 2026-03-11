@@ -46,31 +46,6 @@ const AVAILABLE_AGENTS: Agent[] = [
     description: 'Risk assessments, PPE requirements and safety procedures',
     expertise: 'Risk assessments, RAMS documents, PPE requirements, emergency procedures',
   },
-  // Coming Soon Agents
-  {
-    id: 'commissioning',
-    name: 'Testing & Commissioning',
-    emoji: '✅',
-    description: 'Test procedures, EICR defect coding and fault diagnosis',
-    expertise: 'Testing procedures, EICR photo analysis, defect coding (C1-C3)',
-    comingSoon: true,
-  },
-  {
-    id: 'project-manager',
-    name: 'Project Manager',
-    emoji: '📋',
-    description: 'Project coordination & handover',
-    expertise: 'Scheduling, documentation, certification handover',
-    comingSoon: true,
-  },
-  {
-    id: 'tutor',
-    name: 'Training Tutor',
-    emoji: '📚',
-    description: 'Exam preparation and concept explanations',
-    expertise: 'BS 7671 revision, exam techniques, practical demonstrations',
-    comingSoon: true,
-  },
 ];
 
 interface AgentSelectorProps {

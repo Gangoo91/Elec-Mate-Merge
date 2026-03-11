@@ -147,10 +147,13 @@ export function useEVChargingSmartForm() {
       companyAddress: fullAddress,
       companyPhone: companyProfile.company_phone || '',
       companyEmail: companyProfile.company_email || '',
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       companyWebsite: (companyProfile as any).company_website || '',
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       companyTagline: (companyProfile as any).company_tagline || '',
       companyAccentColor: companyProfile.primary_color || '#f59e0b',
-      registrationSchemeLogo: companyProfile.registration_scheme_logo || '',
+      registrationSchemeLogo:
+        companyProfile.scheme_logo_data_url || companyProfile.registration_scheme_logo || '',
       registrationScheme: companyProfile.registration_scheme || '',
       registrationNumber: companyProfile.registration_number || '',
     };
@@ -254,6 +257,7 @@ export function useEVChargingSmartForm() {
   // Validate Test Results
   // ---------------------------------------------------------------------------
   const validateTestResults = useCallback(
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     (testResults: any, maxZs?: number): TestResultValidation[] => {
       const validations: TestResultValidation[] = [];
 

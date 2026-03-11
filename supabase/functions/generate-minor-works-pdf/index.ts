@@ -214,7 +214,8 @@ function transformFormDataForTemplate(formData: any): any {
       tagline: formData.brandingTagline || formData.companyTagline || '',
       accent_color: formData.brandingAccentColor || formData.companyAccentColor || '#d69e2e',
       website: formData.brandingWebsite || formData.companyWebsite || '',
-      scheme_logo: formData.schemeLogo || formData.schemeLogoDataUrl || '',
+      scheme_logo:
+        formData.schemeLogo || formData.schemeLogoDataUrl || formData.registrationSchemeLogo || '',
     },
 
     // Client details

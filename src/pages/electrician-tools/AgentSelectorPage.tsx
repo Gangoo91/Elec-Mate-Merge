@@ -90,40 +90,6 @@ const AGENTS: Agent[] = [
     description: 'Risk assessments, PPE requirements and safety procedures',
     expertise: ['Risk assessments', 'RAMS documents', 'PPE requirements', 'Emergency procedures'],
   },
-  {
-    id: 'commissioning',
-    name: 'Testing & Commissioning',
-    icon: CheckCircle2,
-    description: 'Test procedures, EICR defect coding and fault diagnosis',
-    expertise: [
-      'Testing procedures',
-      'EICR photo analysis',
-      'Defect coding (C1-C3)',
-      'Fault diagnosis',
-    ],
-    comingSoon: true,
-  },
-  {
-    id: 'project-manager',
-    name: 'Project Manager',
-    icon: Clipboard,
-    description: 'Scheduling, coordination, handover documentation',
-    expertise: ['Project planning', 'Coordination', 'Documentation', 'Client communication'],
-    comingSoon: true,
-  },
-  {
-    id: 'tutor',
-    name: 'Training Tutor',
-    icon: GraduationCap,
-    description: 'Educational guidance, exam prep & concept explanations',
-    expertise: [
-      'Level 3 guidance',
-      'Concept explanations',
-      'Exam preparation',
-      'Practice questions',
-    ],
-    comingSoon: true,
-  },
 ];
 
 const AgentSelectorPage = () => {
@@ -249,55 +215,6 @@ const AgentSelectorPage = () => {
               );
             })}
           </motion.div>
-        </motion.section>
-
-        {/* Coming Soon Section */}
-        <motion.section variants={itemVariants} className="space-y-3">
-          <div className="flex items-center gap-2.5">
-            <div className="h-1.5 w-1.5 rounded-full bg-white/20" />
-            <h2 className="text-base font-bold text-white">Coming Soon</h2>
-            <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-medium bg-white/[0.06] text-white border border-white/[0.08]">
-              {comingSoonAgents.length} Planned
-            </span>
-          </div>
-
-          <div className="space-y-3">
-            {comingSoonAgents.map((agent) => {
-              const IconComponent = agent.icon;
-              return (
-                <div
-                  key={agent.id}
-                  className={cn(
-                    'rounded-xl p-4 opacity-40',
-                    'bg-white/[0.04] border border-white/[0.06]'
-                  )}
-                >
-                  <div className="flex items-center gap-3.5">
-                    {/* Icon — muted */}
-                    <div className="flex-shrink-0 w-11 h-11 rounded-xl bg-white/[0.06] border border-white/[0.08] flex items-center justify-center">
-                      <IconComponent className="h-5 w-5 text-white" />
-                    </div>
-
-                    {/* Text */}
-                    <div className="flex-1 min-w-0">
-                      <div className="flex items-center gap-2">
-                        <h3 className="text-[15px] font-semibold text-white tracking-tight">
-                          {agent.name}
-                        </h3>
-                        <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-medium bg-white/[0.06] text-white border border-white/[0.08]">
-                          <Lock className="h-2.5 w-2.5" />
-                          Soon
-                        </span>
-                      </div>
-                      <p className="text-[13px] text-white line-clamp-1 mt-0.5">
-                        {agent.description}
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
         </motion.section>
       </motion.main>
     </div>

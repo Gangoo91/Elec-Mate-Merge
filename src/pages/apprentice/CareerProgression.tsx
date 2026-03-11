@@ -269,7 +269,7 @@ const CareerProgression = () => {
                 description={section.description}
                 icon={section.icon}
                 onClick={() => setActiveSection(section.id)}
-                showComingSoon={section.id === 'cpd'}
+                showComingSoon={false}
                 stats={section.stats}
                 badge={section.badge}
                 accentColor={section.accentColor}

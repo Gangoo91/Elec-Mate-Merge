@@ -152,7 +152,8 @@ export function useEmergencyLightingSmartForm() {
       companyPhone: companyProfile.company_phone || '',
       companyEmail: companyProfile.company_email || '',
       companyAccentColor: companyProfile.primary_color || '#f59e0b',
-      registrationSchemeLogo: companyProfile.registration_scheme_logo || '',
+      registrationSchemeLogo:
+        companyProfile.scheme_logo_data_url || companyProfile.registration_scheme_logo || '',
       registrationScheme: companyProfile.registration_scheme || '',
       registrationNumber: companyProfile.registration_number || '',
     };

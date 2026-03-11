@@ -41,7 +41,6 @@ const hubs = [
     href: '/employer',
     gradient: 'bg-gradient-to-br from-purple-500/15 to-purple-600/5',
     iconColor: 'text-purple-400',
-    comingSoon: true,
   },
 ];
 

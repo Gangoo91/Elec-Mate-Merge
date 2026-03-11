@@ -78,19 +78,6 @@ export const careerSections: CareerSection[] = [
     features: ['Part-Time Options', 'Distance Learning', 'Degree Pathways', 'Funding Guides'],
   },
   {
-    id: 'cpd',
-    title: 'CPD Tracker',
-    description:
-      'Track your Continuing Professional Development hours, set goals and stay compliant',
-    icon: <Clock className="h-10 w-10 sm:h-12 sm:w-12" />,
-    stats: [
-      { label: 'Target', value: '35 hrs/yr' },
-      { label: 'Categories', value: '8+' },
-    ],
-    accentColor: 'orange',
-    features: ['Hour Logging', 'Goal Setting', 'Progress Reports', 'Reminders'],
-  },
-  {
     id: 'business',
     title: 'Business Builder',
     description:

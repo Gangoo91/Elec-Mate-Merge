@@ -62,14 +62,6 @@ const careerSections = [
     color: 'purple' as const,
   },
   {
-    id: 'cpd',
-    title: 'CPD Tracker',
-    subtitle: 'Track your development hours',
-    icon: ClipboardCheck,
-    color: 'orange' as const,
-    comingSoon: true,
-  },
-  {
     id: 'job-vacancies',
     title: 'Job Vacancies',
     subtitle: 'Browse live opportunities',

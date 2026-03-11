@@ -81,9 +81,11 @@ export default function SolarPVCertificate() {
   const [syncStatus, setSyncStatus] = useState<SyncStatus>('synced');
   const [isOnline, setIsOnline] = useState(navigator.onLine);
   const [showRecoveryDialog, setShowRecoveryDialog] = useState(false);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [recoveryDraft, setRecoveryDraft] = useState<{ data: any; lastModified: Date } | null>(
     null
   );
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [user, setUser] = useState<any>(null);
 
   // Refs for auto-save
@@ -120,7 +122,8 @@ export default function SolarPVCertificate() {
       companyPhone: companyProfile.company_phone || '',
       companyEmail: companyProfile.company_email || '',
       companyAccentColor: companyProfile.primary_color || '#f59e0b',
-      registrationSchemeLogo: companyProfile.registration_scheme_logo || '',
+      registrationSchemeLogo:
+        companyProfile.scheme_logo_data_url || companyProfile.registration_scheme_logo || '',
       registrationScheme: companyProfile.registration_scheme || '',
     };
   };
@@ -357,6 +360,7 @@ export default function SolarPVCertificate() {
   }, [formData, savedReportId, syncStatus]);
 
   // Update form field
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleUpdate = useCallback((field: string, value: any) => {
     setFormData((prev: SolarPVFormData) => ({
       ...prev,
@@ -517,7 +521,9 @@ export default function SolarPVCertificate() {
           .eq('report_id', savedReportId);
 
         // Solar PV is always Part P notifiable (new circuit to dwelling)
-        const { data: { user } } = await supabase.auth.getUser();
+        const {
+          data: { user },
+        } = await supabase.auth.getUser();
         if (user) {
           await createNotificationFromCertificate(savedReportId, 'solar-pv', formData, user.id);
         }

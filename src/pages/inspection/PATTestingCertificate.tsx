@@ -153,7 +153,8 @@ export default function PATTestingCertificate() {
       companyPhone: companyProfile.company_phone || '',
       companyEmail: companyProfile.company_email || '',
       companyAccentColor: companyProfile.primary_color || '#3b82f6',
-      registrationSchemeLogo: companyProfile.registration_scheme_logo || '',
+      registrationSchemeLogo:
+        companyProfile.scheme_logo_data_url || companyProfile.registration_scheme_logo || '',
       registrationScheme: companyProfile.registration_scheme || '',
     };
   }, [companyProfile]);
@@ -605,8 +606,6 @@ export default function PATTestingCertificate() {
                   <Download className="h-4 w-4" />
                 )}
               </Button>
-
-
             </div>
           </div>
 

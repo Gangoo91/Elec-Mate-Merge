@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { DropdownTabs, DropdownTab } from '@/components/ui/dropdown-tabs';
-import { Clock, Target, TrendingUp, Award, Construction, ArrowLeft } from 'lucide-react';
+import { Clock, Target, TrendingUp, Award, ArrowLeft } from 'lucide-react';
 import CPDOverview from './CPDOverview';
 import CPDEntryForm from './CPDEntryForm';
 import CPDHistory from './CPDHistory';
@@ -14,7 +14,6 @@ import { useCPDAutoTracking } from '@/hooks/cpd/useCPDAutoTracking';
 const CPDTracker = () => {
   const [activeTab, setActiveTab] = useState('overview');
   const [isMobile, setIsMobile] = useState(false);
-  const [showComingSoonBanner, setShowComingSoonBanner] = useState(true);
 
   // Initialize auto-tracking for the CPD tracker
   const { startTracking, stopTracking } = useCPDAutoTracking({
@@ -73,32 +72,6 @@ const CPDTracker = () => {
             </div>
           </div>
         </div>
-
-        {/* Coming Soon Banner */}
-        {showComingSoonBanner && (
-          <div className="mx-4 mt-4 relative bg-gradient-to-br from-amber-500/15 to-amber-500/5 border border-amber-500/30 rounded-xl p-4 overflow-hidden">
-            <div className="absolute top-0 right-0 w-32 h-32 bg-amber-500/10 rounded-full blur-2xl -translate-y-1/2 translate-x-1/2" />
-            <button
-              onClick={() => setShowComingSoonBanner(false)}
-              className="absolute top-3 right-3 text-white hover:text-white transition-colors p-1"
-              aria-label="Dismiss banner"
-            >
-              ✕
-            </button>
-            <div className="flex items-start gap-3 pr-6 relative">
-              <div className="p-2 rounded-lg bg-amber-500/20 border border-amber-500/30">
-                <Construction className="h-5 w-5 text-amber-400" />
-              </div>
-              <div>
-                <h3 className="text-base font-bold text-amber-400 mb-1">Coming Soon</h3>
-                <p className="text-sm text-white">
-                  Enhanced CPD features are currently in development. All existing functionality
-                  remains fully accessible below.
-                </p>
-              </div>
-            </div>
-          </div>
-        )}
 
         {/* Mobile Content */}
         <div className="p-4">
@@ -214,34 +187,6 @@ const CPDTracker = () => {
           professional body requirements. Set goals, log activities, and monitor your progress.
         </p>
       </div>
-
-      {/* Coming Soon Banner */}
-      {showComingSoonBanner && (
-        <Card className="bg-gradient-to-br from-amber-500/10 to-amber-500/5 border border-amber-500/30 overflow-hidden relative">
-          <div className="absolute top-0 right-0 w-48 h-48 bg-amber-500/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
-          <CardContent className="p-6 relative">
-            <button
-              onClick={() => setShowComingSoonBanner(false)}
-              className="absolute top-4 right-4 text-white hover:text-white transition-colors p-1"
-              aria-label="Dismiss banner"
-            >
-              ✕
-            </button>
-            <div className="flex items-start gap-4 pr-8">
-              <div className="p-2.5 rounded-xl bg-amber-500/20 border border-amber-500/30">
-                <Construction className="h-6 w-6 text-amber-400" />
-              </div>
-              <div>
-                <h3 className="text-xl font-bold text-amber-400 mb-1">Coming Soon</h3>
-                <p className="text-base text-white">
-                  Enhanced CPD features are currently in development. All existing functionality
-                  remains fully accessible below.
-                </p>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-      )}
 
       {/* Main Content */}
       <DropdownTabs

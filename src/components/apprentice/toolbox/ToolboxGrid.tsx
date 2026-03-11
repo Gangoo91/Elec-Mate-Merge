@@ -46,7 +46,6 @@ const ToolboxGrid = ({ onToolSelection }: ToolboxGridProps) => {
       icon: <FileText className="h-5 w-5 text-elec-yellow" />,
       description:
         'Step-by-step installation guides for domestic, commercial, industrial, and outdoor environments',
-      comingSoon: true,
     },
     {
       id: 3,

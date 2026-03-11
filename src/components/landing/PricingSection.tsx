@@ -70,10 +70,9 @@ const tiers: PricingTier[] = [
       'Apprentice progress',
       'Company branding',
     ],
-    cta: 'Coming Soon',
+    cta: 'Get Started',
     gradient: 'from-purple-500/10 to-purple-600/5',
-    buttonClass: 'bg-purple-500/50 text-white cursor-not-allowed',
-    disabled: true,
+    buttonClass: 'bg-purple-500 hover:bg-purple-400 text-white',
   },
 ];
 

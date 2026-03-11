@@ -119,7 +119,10 @@ export const useFireAlarmSmartForm = () => {
         companyProfile?.logo_data_url || companyProfile?.logo_url || profile?.companyLogo || '',
       accentColor: companyProfile?.primary_color || '#dc2626',
       registrationSchemeLogo:
-        companyProfile?.registration_scheme_logo || profile?.registrationSchemeLogo || '',
+        companyProfile?.scheme_logo_data_url ||
+        companyProfile?.registration_scheme_logo ||
+        profile?.registrationSchemeLogo ||
+        '',
       registrationScheme: companyProfile?.registration_scheme || profile?.registrationScheme || '',
     };
   }, [getDefaultProfile, companyProfile]);
