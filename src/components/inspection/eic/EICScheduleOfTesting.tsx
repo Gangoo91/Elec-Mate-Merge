@@ -1577,6 +1577,42 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
             <BoardManagement boards={distributionBoards} onAddBoard={handleAddBoard} />
           </div>
 
+          {/* Quick Fill Panels — Inline above table for mobile discoverability */}
+          {testResults.length > 0 && (
+            <div className="px-4 pb-2">
+              <Collapsible>
+                <CollapsibleTrigger asChild>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className="w-full h-11 touch-manipulation flex items-center justify-between gap-2 text-sm font-medium border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10"
+                  >
+                    <span className="flex items-center gap-2">
+                      <Zap className="h-4 w-4" />
+                      Quick Fill All Circuits
+                    </span>
+                    <ChevronDown className="h-4 w-4 transition-transform duration-200 [[data-state=open]_&]:rotate-180" />
+                  </Button>
+                </CollapsibleTrigger>
+                <CollapsibleContent>
+                  <div className="mt-3 space-y-3">
+                    <QuickFillIrPanel
+                      onFillAllInsulationVoltage={handleFillAllInsulationVoltage}
+                      onFillAllInsulationLiveNeutral={handleFillAllInsulationLiveNeutral}
+                      onFillAllInsulationLiveEarth={handleFillAllInsulationLiveEarth}
+                    />
+                    <QuickFillRcdPanel
+                      onFillAllRcdBsStandard={handleFillAllRcdBsStandard}
+                      onFillAllRcdType={handleFillAllRcdType}
+                      onFillAllRcdRating={handleFillAllRcdRating}
+                      onFillAllRcdRatingA={handleFillAllRcdRatingA}
+                    />
+                  </div>
+                </CollapsibleContent>
+              </Collapsible>
+            </div>
+          )}
+
           {/* Distribution Boards with Circuits */}
           <div className="px-2 pb-4 space-y-3">
             {sortedBoards.map((board) => {

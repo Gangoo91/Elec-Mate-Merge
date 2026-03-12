@@ -249,17 +249,36 @@ export async function formatEicJson(
 
     earthing_bonding: {
       means_of_earthing: formData.meansOfEarthing || '',
-      earth_electrode_type: formData.earthElectrodeType || '',
-      earth_electrode_location: formData.earthElectrodeLocation || '',
-      earth_electrode_resistance: formData.earthElectrodeResistance || '',
-      earthing_conductor_material: formData.earthingConductorMaterial || '',
-      earthing_conductor_csa: formData.earthingConductorCsa || '',
-      earthing_conductor_verified: formData.earthingConductorVerified ?? false,
+      earth_electrode_type: formData.earthElectrodeNA ? 'N/A' : formData.earthElectrodeType || '',
+      earth_electrode_location: formData.earthElectrodeNA
+        ? 'N/A'
+        : formData.earthElectrodeLocation || '',
+      earth_electrode_resistance: formData.earthElectrodeNA
+        ? 'N/A'
+        : formData.earthElectrodeResistance || '',
+      earth_electrode_na: formData.earthElectrodeNA ?? false,
+      earthing_conductor_material: formData.earthingConductorNA
+        ? 'N/A'
+        : formData.earthingConductorMaterial || '',
+      earthing_conductor_csa: formData.earthingConductorNA
+        ? 'N/A'
+        : formData.earthingConductorCsa || '',
+      earthing_conductor_verified: formData.earthingConductorNA
+        ? false
+        : formData.earthingConductorVerified ?? false,
+      earthing_conductor_na: formData.earthingConductorNA ?? false,
       main_bonding_conductor: formData.mainBondingConductor || '',
-      main_bonding_material: formData.mainBondingMaterial || '',
-      main_bonding_size: formData.mainBondingSize || formData.mainBondingCsa || '',
+      main_bonding_material: formData.mainBondingNA
+        ? 'N/A'
+        : formData.mainBondingMaterial || '',
+      main_bonding_size: formData.mainBondingNA
+        ? 'N/A'
+        : formData.mainBondingSize || formData.mainBondingCsa || '',
       main_bonding_size_custom: formData.mainBondingSizeCustom || '',
-      main_bonding_verified: formData.mainBondingVerified ?? false,
+      main_bonding_verified: formData.mainBondingNA
+        ? false
+        : formData.mainBondingVerified ?? false,
+      main_bonding_na: formData.mainBondingNA ?? false,
       maximum_demand: formData.maximumDemand || '',
       maximum_demand_unit: formData.maximumDemandUnit || 'A',
       bonding_water:
@@ -506,6 +525,72 @@ export async function formatEicJson(
     // Accent colour for PDF theming (CSS --accent-color variable)
     company_accent_color: companyProfile?.accent_color || '',
   };
+
+  // --- Global "render blank as N/A" post-processing ---
+  if (formData.renderBlankAsNA) {
+    // Keys that should NEVER be replaced with N/A (required fields, branding, booleans, signatures)
+    const excludeFromNA = new Set([
+      // Top-level non-form keys
+      'company_logo',
+      'registration_scheme_logo',
+      'company_accent_color',
+    ]);
+
+    // Sections that should never be N/A-filled
+    const excludeSections = new Set([
+      'metadata',
+      'company_details',
+      'observations',
+      'schedule_of_tests',
+      'inspection_checklist',
+      'distribution_boards',
+    ]);
+
+    // Keys within sections to skip (signatures, required identifiers, booleans)
+    const excludeKeys = new Set([
+      'signature',
+      'name',
+      'date',
+      'client_name',
+      'client_address',
+      'address',
+      'same_as_client_address',
+      'same_as_designer',
+      'same_as_constructor',
+      'same_as_inspector',
+      'supply_polarity_confirmed',
+      'other_sources_of_supply',
+      'spd_fitted',
+      'spd_na',
+      'polarity_confirmed',
+      'phase_sequence_confirmed',
+      'bs7671_compliance',
+      'building_regs_compliance',
+      'competent_person_scheme',
+      'cp_scheme_na',
+      'earth_electrode_na',
+      'earthing_conductor_na',
+      'main_bonding_na',
+      'earthing_conductor_verified',
+      'main_bonding_verified',
+      'risk_assessment_attached',
+    ]);
+
+    const fillBlanks = (obj: any, sectionKey?: string) => {
+      if (excludeSections.has(sectionKey || '')) return;
+      for (const key of Object.keys(obj)) {
+        if (excludeFromNA.has(key) || excludeKeys.has(key)) continue;
+        const val = obj[key];
+        if (val === '') {
+          obj[key] = 'N/A';
+        } else if (val && typeof val === 'object' && !Array.isArray(val)) {
+          fillBlanks(val, key);
+        }
+      }
+    };
+
+    fillBlanks(json);
+  }
 
   return json;
 }

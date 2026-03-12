@@ -315,6 +315,7 @@ const EICElectricalInstallationSection = ({
                         </SelectItem>
                       ))}
                       <SelectItem value="custom">Other/Custom</SelectItem>
+                      <SelectItem value="n/a">N/A</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
@@ -334,6 +335,7 @@ const EICElectricalInstallationSection = ({
                       <SelectItem value="xlpe">XLPE</SelectItem>
                       <SelectItem value="paper">Paper Insulated</SelectItem>
                       <SelectItem value="other">Other</SelectItem>
+                      <SelectItem value="n/a">N/A</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
@@ -356,6 +358,7 @@ const EICElectricalInstallationSection = ({
                       <SelectItem value="35mm">35mm²</SelectItem>
                       <SelectItem value="50mm">50mm²</SelectItem>
                       <SelectItem value="custom">Other/Custom</SelectItem>
+                      <SelectItem value="n/a">N/A</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
@@ -379,6 +382,7 @@ const EICElectricalInstallationSection = ({
                       <SelectItem value="4m">4m</SelectItem>
                       <SelectItem value="5m">5m</SelectItem>
                       <SelectItem value="custom">Custom Length</SelectItem>
+                      <SelectItem value="n/a">N/A</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>

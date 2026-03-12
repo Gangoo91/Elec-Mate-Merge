@@ -4,6 +4,13 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Checkbox } from '@/components/ui/checkbox';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { AlertTriangle, Shield, FileCheck, User } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -11,6 +18,14 @@ import SignatureInput from '@/components/signature/SignatureInput';
 import { useInspectorProfiles } from '@/hooks/useInspectorProfiles';
 import { useToast } from '@/hooks/use-toast';
 import { cn } from '@/lib/utils';
+
+const POSITION_PRESETS = [
+  'Inspector & Tester',
+  'Electrical Engineer',
+  'Approved Contractor',
+  'Electrician',
+  'Qualifying Supervisor',
+] as const;
 
 interface EICDeclarationsProps {
   formData: any;
@@ -22,6 +37,16 @@ const EICDeclarations: React.FC<EICDeclarationsProps> = ({ formData, onUpdate })
   const { getDefaultProfile } = useInspectorProfiles();
   const { toast } = useToast();
   const [isInitialMount, setIsInitialMount] = useState(true);
+  const [inspectedByPositionCustom, setInspectedByPositionCustom] = useState(
+    () =>
+      !!formData.inspectedByPosition &&
+      !POSITION_PRESETS.includes(formData.inspectedByPosition)
+  );
+  const [reportAuthorisedByPositionCustom, setReportAuthorisedByPositionCustom] = useState(
+    () =>
+      !!formData.reportAuthorisedByPosition &&
+      !POSITION_PRESETS.includes(formData.reportAuthorisedByPosition)
+  );
 
   // Check if all required fields are completed
   const isDesignerComplete = formData.designerName && formData.designerSignature;
@@ -522,15 +547,46 @@ const EICDeclarations: React.FC<EICDeclarationsProps> = ({ formData, onUpdate })
                   />
                 </div>
 
-                <div>
+                <div className="space-y-2">
                   <Label htmlFor="inspectedByPosition">Position:</Label>
-                  <Input
-                    id="inspectedByPosition"
-                    value={formData.inspectedByPosition || ''}
-                    onChange={(e) => onUpdate('inspectedByPosition', e.target.value)}
-                    placeholder="Job title or position"
-                    className="h-11 text-base touch-manipulation"
-                  />
+                  <Select
+                    value={
+                      inspectedByPositionCustom
+                        ? 'custom'
+                        : formData.inspectedByPosition || ''
+                    }
+                    onValueChange={(value) => {
+                      if (value === 'custom') {
+                        setInspectedByPositionCustom(true);
+                        onUpdate('inspectedByPosition', '');
+                      } else {
+                        setInspectedByPositionCustom(false);
+                        onUpdate('inspectedByPosition', value);
+                      }
+                    }}
+                  >
+                    <SelectTrigger className="h-11 touch-manipulation bg-elec-gray border-elec-gray focus:border-elec-yellow focus:ring-elec-yellow">
+                      <SelectValue placeholder="Select position" />
+                    </SelectTrigger>
+                    <SelectContent className="bg-elec-gray border-elec-gray text-foreground z-50">
+                      {POSITION_PRESETS.map((preset) => (
+                        <SelectItem key={preset} value={preset}>
+                          {preset}
+                        </SelectItem>
+                      ))}
+                      <SelectItem value="custom">Custom...</SelectItem>
+                    </SelectContent>
+                  </Select>
+                  {inspectedByPositionCustom && (
+                    <Input
+                      id="inspectedByPositionCustom"
+                      value={formData.inspectedByPosition || ''}
+                      onChange={(e) => onUpdate('inspectedByPosition', e.target.value)}
+                      placeholder="Enter custom position"
+                      className="h-11 text-base touch-manipulation"
+                      autoFocus
+                    />
+                  )}
                 </div>
 
                 <div>
@@ -665,15 +721,46 @@ const EICDeclarations: React.FC<EICDeclarationsProps> = ({ formData, onUpdate })
                   />
                 </div>
 
-                <div>
+                <div className="space-y-2">
                   <Label htmlFor="reportAuthorisedByPosition">Position:</Label>
-                  <Input
-                    id="reportAuthorisedByPosition"
-                    value={formData.reportAuthorisedByPosition || ''}
-                    onChange={(e) => onUpdate('reportAuthorisedByPosition', e.target.value)}
-                    placeholder="Job title or position"
-                    className="h-11 text-base touch-manipulation"
-                  />
+                  <Select
+                    value={
+                      reportAuthorisedByPositionCustom
+                        ? 'custom'
+                        : formData.reportAuthorisedByPosition || ''
+                    }
+                    onValueChange={(value) => {
+                      if (value === 'custom') {
+                        setReportAuthorisedByPositionCustom(true);
+                        onUpdate('reportAuthorisedByPosition', '');
+                      } else {
+                        setReportAuthorisedByPositionCustom(false);
+                        onUpdate('reportAuthorisedByPosition', value);
+                      }
+                    }}
+                  >
+                    <SelectTrigger className="h-11 touch-manipulation bg-elec-gray border-elec-gray focus:border-elec-yellow focus:ring-elec-yellow">
+                      <SelectValue placeholder="Select position" />
+                    </SelectTrigger>
+                    <SelectContent className="bg-elec-gray border-elec-gray text-foreground z-50">
+                      {POSITION_PRESETS.map((preset) => (
+                        <SelectItem key={preset} value={preset}>
+                          {preset}
+                        </SelectItem>
+                      ))}
+                      <SelectItem value="custom">Custom...</SelectItem>
+                    </SelectContent>
+                  </Select>
+                  {reportAuthorisedByPositionCustom && (
+                    <Input
+                      id="reportAuthorisedByPositionCustom"
+                      value={formData.reportAuthorisedByPosition || ''}
+                      onChange={(e) => onUpdate('reportAuthorisedByPosition', e.target.value)}
+                      placeholder="Enter custom position"
+                      className="h-11 text-base touch-manipulation"
+                      autoFocus
+                    />
+                  )}
                 </div>
 
                 <div>
