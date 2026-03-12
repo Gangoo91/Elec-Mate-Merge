@@ -7,7 +7,8 @@ interface BusinessCardProps {
   title: string;
   description: string;
   icon: LucideIcon;
-  href: string;
+  href?: string;
+  onClick?: () => void;
   gradient?: string;
   comingSoon?: boolean;
   className?: string;
@@ -27,6 +28,7 @@ const BusinessCard = ({
   description,
   icon: Icon,
   href,
+  onClick,
   gradient = 'from-yellow-400 to-amber-500',
   comingSoon = false,
   className,
@@ -85,10 +87,24 @@ const BusinessCard = ({
     return <motion.div variants={itemVariants}>{CardContent}</motion.div>;
   }
 
+  if (onClick) {
+    return (
+      <motion.div variants={itemVariants}>
+        <button
+          type="button"
+          onClick={onClick}
+          className="block w-full text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-elec-yellow/50 rounded-xl touch-manipulation"
+        >
+          {CardContent}
+        </button>
+      </motion.div>
+    );
+  }
+
   return (
     <motion.div variants={itemVariants}>
       <Link
-        to={href}
+        to={href || '#'}
         className="block w-full text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-elec-yellow/50 rounded-xl touch-manipulation"
       >
         {CardContent}

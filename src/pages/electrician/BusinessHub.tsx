@@ -23,9 +23,12 @@ import {
   CalendarDays,
   FolderKanban,
   AlertTriangle,
+  Share2,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { BusinessCard, BusinessKPIStrip } from '@/components/business-hub';
+import { supabase } from '@/integrations/supabase/client';
+import { toast } from '@/hooks/use-toast';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { QuoteInvoiceAnalytics } from '@/components/electrician/analytics/QuoteInvoiceAnalytics';
 import { useBusinessHubData } from '@/hooks/useBusinessHubData';
@@ -66,6 +69,25 @@ const BusinessHub = () => {
   const overdueCount = useSparkTaskOverdueCount();
   const { counts: projectCounts } = useSparkProjects('active');
   const { counts: snagCounts } = useSnags();
+
+  const handleShareBookingLink = async () => {
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
+    if (!user) return;
+    const url = `${window.location.origin}/book/${user.id}`;
+    const shareData = { title: 'Book an Appointment', text: 'Book a time slot with me:', url };
+    if (navigator.share && navigator.canShare?.(shareData)) {
+      try {
+        await navigator.share(shareData);
+      } catch {
+        /* cancelled */
+      }
+    } else {
+      await navigator.clipboard.writeText(url);
+      toast({ title: 'Booking link copied to clipboard' });
+    }
+  };
 
   const todayFormatted = new Date().toLocaleDateString('en-GB', {
     weekday: 'short',
@@ -180,6 +202,14 @@ const BusinessHub = () => {
               icon={Users}
               href="/customers"
               gradient="from-blue-400 to-cyan-500"
+              variant="standard"
+            />
+            <BusinessCard
+              title="Booking Link"
+              description="Share with clients"
+              icon={Share2}
+              onClick={handleShareBookingLink}
+              gradient="from-emerald-400 to-teal-500"
               variant="standard"
             />
             <BusinessCard

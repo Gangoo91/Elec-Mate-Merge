@@ -1,6 +1,8 @@
 import { format, isToday } from 'date-fns';
-import { Settings, ChevronLeft, ChevronRight, Plus } from 'lucide-react';
+import { Settings, ChevronLeft, ChevronRight, Plus, Share2 } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { supabase } from '@/integrations/supabase/client';
+import { toast } from '@/hooks/use-toast';
 import type { CalendarView } from '@/types/calendar';
 
 interface CalendarHeaderProps {
@@ -42,6 +44,33 @@ const CalendarHeader = ({
   onCreateEvent,
 }: CalendarHeaderProps) => {
   const todayVisible = isToday(currentDate);
+
+  const handleShareBookingLink = async () => {
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
+    if (!user) {
+      toast({ title: 'Please sign in to share your booking link', variant: 'destructive' });
+      return;
+    }
+    const url = `${window.location.origin}/book/${user.id}`;
+    const shareData = {
+      title: 'Book an Appointment',
+      text: 'Book a time slot with me:',
+      url,
+    };
+
+    if (navigator.share && navigator.canShare?.(shareData)) {
+      try {
+        await navigator.share(shareData);
+      } catch {
+        // User cancelled share — not an error
+      }
+    } else {
+      await navigator.clipboard.writeText(url);
+      toast({ title: 'Booking link copied to clipboard' });
+    }
+  };
 
   return (
     <div className="flex items-center justify-between">
@@ -91,8 +120,16 @@ const CalendarHeader = ({
         </button>
         <button
           type="button"
+          onClick={handleShareBookingLink}
+          className="h-11 w-10 flex items-center justify-center rounded-xl text-white active:bg-white/[0.08] touch-manipulation"
+          title="Share booking link"
+        >
+          <Share2 className="h-[18px] w-[18px]" />
+        </button>
+        <button
+          type="button"
           onClick={onOpenSettings}
-          className="h-11 w-10 flex items-center justify-center rounded-xl text-white/60 active:bg-white/[0.08] touch-manipulation"
+          className="h-11 w-10 flex items-center justify-center rounded-xl text-white active:bg-white/[0.08] touch-manipulation"
         >
           <Settings className="h-[18px] w-[18px]" />
         </button>
