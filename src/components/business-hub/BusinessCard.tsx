@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { ArrowRight, LucideIcon } from 'lucide-react';
+import { LucideIcon } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { cn } from '@/lib/utils';
 
@@ -11,6 +11,10 @@ interface BusinessCardProps {
   gradient?: string;
   comingSoon?: boolean;
   className?: string;
+  variant?: 'hero' | 'standard' | 'compact';
+  badge?: string;
+  badgeVariant?: 'danger' | 'info';
+  liveSubtitle?: string;
 }
 
 const itemVariants = {
@@ -26,50 +30,54 @@ const BusinessCard = ({
   gradient = 'from-yellow-400 to-amber-500',
   comingSoon = false,
   className,
+  variant = 'standard',
+  liveSubtitle,
 }: BusinessCardProps) => {
+  const subtitle = liveSubtitle || description;
+  const isOverdue = liveSubtitle?.includes('overdue');
+
   const CardContent = (
     <div
       className={cn(
-        'relative overflow-hidden rounded-2xl',
+        'relative overflow-hidden rounded-xl',
         'bg-white/[0.03] border border-white/[0.08]',
-        'group active:bg-white/[0.06] transition-colors',
+        'active:bg-white/[0.06] active:scale-[0.98] transition-all',
+        'flex flex-col items-center justify-center text-center p-4 min-h-[100px]',
         comingSoon && 'opacity-50 cursor-not-allowed',
         className
       )}
     >
-      <div className="p-5">
-        <div className="flex items-center gap-3">
-          {/* Icon with gradient background */}
-          <div
-            className={cn(
-              'flex-shrink-0 w-12 h-12 rounded-xl flex items-center justify-center bg-gradient-to-br',
-              gradient
-            )}
-          >
-            <Icon className="h-6 w-6 text-white" />
-          </div>
-
-          {/* Text */}
-          <div className="flex-1 min-w-0">
-            <div className="flex items-center gap-2">
-              <h3 className="text-[15px] font-bold text-white">{title}</h3>
-              {comingSoon && (
-                <span className="px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider bg-elec-yellow text-black rounded-full">
-                  Soon
-                </span>
-              )}
-            </div>
-            <p className="text-[13px] text-white line-clamp-1">{description}</p>
-          </div>
-
-          {/* Circular arrow */}
-          {!comingSoon && (
-            <div className="flex-shrink-0 w-10 h-10 rounded-full bg-white/[0.08] flex items-center justify-center group-active:bg-white/[0.12] transition-colors">
-              <ArrowRight className="h-4 w-4 text-white" />
-            </div>
-          )}
-        </div>
+      {/* Icon */}
+      <div
+        className={cn(
+          'flex-shrink-0 w-11 h-11 rounded-xl flex items-center justify-center bg-gradient-to-br mb-2.5',
+          gradient
+        )}
+      >
+        <Icon className="h-5 w-5 text-white" />
       </div>
+
+      {/* Title */}
+      <h3 className="text-[14px] font-bold text-white leading-tight">{title}</h3>
+
+      {/* Subtitle / live data */}
+      {variant !== 'compact' && subtitle && (
+        <p
+          className={cn(
+            'text-[12px] mt-0.5 leading-tight line-clamp-1',
+            isOverdue ? 'text-red-400 font-semibold' : 'text-white'
+          )}
+        >
+          {subtitle}
+        </p>
+      )}
+
+      {/* Coming soon pill */}
+      {comingSoon && (
+        <span className="mt-1.5 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider bg-elec-yellow text-black rounded-full">
+          Soon
+        </span>
+      )}
     </div>
   );
 
@@ -81,7 +89,7 @@ const BusinessCard = ({
     <motion.div variants={itemVariants}>
       <Link
         to={href}
-        className="block w-full text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-elec-yellow/50 rounded-2xl touch-manipulation"
+        className="block w-full text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-elec-yellow/50 rounded-xl touch-manipulation"
       >
         {CardContent}
       </Link>

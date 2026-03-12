@@ -21,7 +21,7 @@
  */
 
 import { type Request, type Response } from 'express';
-import { spawn } from 'node:child_process';
+import { spawn, execSync } from 'node:child_process';
 import { chmod, mkdir, symlink, writeFile, readFile, readdir } from 'node:fs/promises';
 import { join } from 'node:path';
 import { config } from '../config.js';
@@ -34,18 +34,17 @@ const OPENCLAW_BIN = '/usr/lib/node_modules/openclaw/openclaw.mjs';
 /** Host Node 22 binary mounted into container (openclaw requires >=22.12) */
 const NODE22_BIN = '/usr/local/bin/node22';
 
-/** Files to symlink from the shared workspace */
+/** Files to symlink from the shared workspace — must match what actually exists */
 const SHARED_FILES = [
-  'SKILL.md',
+  'AGENTS.md',
   'SOUL.md',
   'TOOLS.md',
-  'AGENTS.md',
-  'RAILS.md',
-  'SECURITY.md',
-  'DATA_POLICY.md',
-  'USER_PROFILE.md',
-  'HEARTBEAT.md',
+  'BOOTSTRAP.md',
   'IDENTITY.md',
+  'HEARTBEAT.md',
+  'SKILL_REFERENCE.md',
+  'RAILS_REFERENCE.md',
+  'USER_PROFILE.md',
 ];
 
 /** Convert phone number to WhatsApp JID format */
@@ -247,6 +246,25 @@ exec /opt/elec-ai/mcp-call "$@"
     } catch (err: unknown) {
       // Non-fatal — agent still works, just needs manual config entry
       console.error(`[provision] Failed to update openclaw.json: ${(err as Error).message}`);
+    }
+
+    // 8. Fix ownership — Docker runs as root, OpenClaw gateway runs as openclaw user
+    try {
+      execSync(`chown -R openclaw:openclaw ${workspaceDir}`);
+      const agentDir = join(OPENCLAW_HOME, 'agents', user_id);
+      execSync(`chown -R openclaw:openclaw ${agentDir}`);
+      console.log(`[provision] Fixed ownership for workspace and agent dirs`);
+    } catch (chownErr) {
+      // Non-fatal — log but continue (dirs may still work if permissions are open)
+      console.error(`[provision] chown failed: ${(chownErr as Error).message}`);
+    }
+
+    // 9. Signal gateway restart by writing a marker file (host systemd watches this)
+    try {
+      await writeFile(join(OPENCLAW_HOME, '.restart-gateway'), Date.now().toString());
+      console.log(`[provision] Gateway restart marker written`);
+    } catch (restartErr) {
+      console.error(`[provision] Failed to write restart marker: ${(restartErr as Error).message}`);
     }
 
     // Verify workspace

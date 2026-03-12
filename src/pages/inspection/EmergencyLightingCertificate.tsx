@@ -121,7 +121,7 @@ export default function EmergencyLightingCertificate() {
       window.removeEventListener('online', handleOnline);
       window.removeEventListener('offline', handleOffline);
     };
-  }, []);
+  }, [syncToCloud]);
 
   // Get current user
   useEffect(() => {
@@ -445,6 +445,7 @@ export default function EmergencyLightingCertificate() {
             companyAddress: branding.companyAddress || dataWithCertNumber.companyAddress,
             companyPhone: branding.companyPhone || dataWithCertNumber.companyPhone,
             companyEmail: branding.companyEmail || dataWithCertNumber.companyEmail,
+            companyWebsite: branding.companyWebsite || dataWithCertNumber.companyWebsite,
             accentColor: branding.companyAccentColor || dataWithCertNumber.accentColor,
             registrationSchemeLogo:
               branding.registrationSchemeLogo || dataWithCertNumber.registrationSchemeLogo,

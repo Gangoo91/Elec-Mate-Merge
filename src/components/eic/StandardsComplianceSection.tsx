@@ -15,8 +15,8 @@ import { useIsMobile } from '@/hooks/use-mobile';
 import { cn } from '@/lib/utils';
 
 interface StandardsComplianceSectionProps {
-  formData: any;
-  onUpdate: (field: string, value: any) => void;
+  formData: Record<string, string | boolean | undefined>;
+  onUpdate: (field: string, value: string | boolean) => void;
   isOpen: boolean;
   onToggle: () => void;
 }
@@ -35,7 +35,7 @@ const StandardsComplianceSection: React.FC<StandardsComplianceSectionProps> = ({
         {isMobile ? (
           <button
             onClick={onToggle}
-            className="flex items-center gap-3 py-4 px-4 mx-4 my-1 rounded-xl bg-white/[0.04] border border-white/[0.08] w-full text-left"
+            className="flex items-center gap-3 py-4 px-4 my-1 rounded-xl bg-white/[0.04] border border-white/[0.08] w-full text-left"
           >
             <div className="h-10 w-10 rounded-xl bg-orange-500/15 flex items-center justify-center shrink-0">
               <Award className="h-5 w-5 text-orange-400" />

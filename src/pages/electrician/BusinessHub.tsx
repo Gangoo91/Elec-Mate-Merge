@@ -24,7 +24,7 @@ import {
   FolderKanban,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { BusinessCard } from '@/components/business-hub';
+import { BusinessCard, BusinessKPIStrip } from '@/components/business-hub';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { QuoteInvoiceAnalytics } from '@/components/electrician/analytics/QuoteInvoiceAnalytics';
 import { useBusinessHubData } from '@/hooks/useBusinessHubData';
@@ -48,94 +48,27 @@ const BusinessHub = () => {
   const navigate = useNavigate();
   const [insightsOpen, setInsightsOpen] = useState(false);
 
-  const { revenue, quotes, invoices, isLoading, lastUpdated, refresh, formatCurrency } =
-    useBusinessHubData();
+  const {
+    revenue,
+    paidThisMonth,
+    outstanding,
+    overdueAmount,
+    winRate,
+    quotes,
+    invoices,
+    isLoading,
+    lastUpdated,
+    refresh,
+    formatCurrency,
+  } = useBusinessHubData();
   const overdueCount = useSparkTaskOverdueCount();
   const { counts: projectCounts } = useSparkProjects('active');
 
-  // Money In
-  const moneyInTools = [
-    {
-      id: 1,
-      title: 'Quotes',
-      description: 'Create & manage quotes',
-      icon: FileText,
-      link: '/electrician/quotes',
-      gradient: 'from-emerald-400 to-green-500',
-    },
-    {
-      id: 2,
-      title: 'Invoices',
-      description: 'Billing & payments',
-      icon: PoundSterling,
-      link: '/electrician/invoices',
-      gradient: 'from-emerald-400 to-teal-500',
-    },
-    {
-      id: 3,
-      title: 'Live Pricing',
-      description: 'Market rates & pricing',
-      icon: PoundSterling,
-      link: '/electrician/live-pricing',
-      gradient: 'from-emerald-400 to-cyan-500',
-    },
-  ];
-
-  // Money Out
-  const moneyOutTools = [
-    {
-      id: 4,
-      title: 'Expenses',
-      description: 'Receipts & mileage',
-      icon: Receipt,
-      link: '/electrician/expenses',
-      gradient: 'from-red-400 to-rose-500',
-    },
-    {
-      id: 5,
-      title: 'Materials',
-      description: 'Stock and inventory management',
-      icon: Package,
-      link: '/electrician/materials',
-      gradient: 'from-red-400 to-orange-500',
-    },
-    {
-      id: 9,
-      title: 'Tools',
-      description: 'Equipment tracking and management',
-      icon: Wrench,
-      link: '/electrician/tools',
-      gradient: 'from-red-400 to-amber-500',
-    },
-  ];
-
-  // Growth
-  const growthTools = [
-    {
-      id: 7,
-      title: 'Start & Grow',
-      description: 'Business development guides and strategies',
-      icon: TrendingUp,
-      link: '/electrician/business-development',
-      gradient: 'from-yellow-400 to-amber-500',
-    },
-    {
-      id: 8,
-      title: 'Business Calculators',
-      description: 'Financial planning and costing tools',
-      icon: Calculator,
-      link: '/electrician/business-development/tools',
-      gradient: 'from-yellow-400 to-orange-500',
-    },
-    {
-      id: 10,
-      title: 'Business Admin',
-      description: 'Documents, staff and analytics',
-      icon: Cog,
-      link: '/electrician/business-admin',
-      gradient: 'from-yellow-400 to-amber-500',
-    },
-  ];
+  const todayFormatted = new Date().toLocaleDateString('en-GB', {
+    weekday: 'short',
+    day: 'numeric',
+    month: 'short',
+  });
 
   const canonical = `${window.location.origin}/electrician/business`;
 
@@ -171,178 +104,189 @@ const BusinessHub = () => {
         variants={containerVariants}
         initial="hidden"
         animate="visible"
-        className="px-4 py-4 space-y-6"
+        className="px-4 py-4 space-y-5"
       >
-        {/* Hero — Centred Title */}
-        <motion.div
-          variants={itemVariants}
-          className="flex flex-col items-center text-center pt-2 pb-1"
-        >
-          <div className="p-3 rounded-xl bg-elec-yellow/10 border border-elec-yellow/20 mb-3">
-            <Briefcase className="h-7 w-7 text-elec-yellow" />
+        {/* Compact Title */}
+        <motion.div variants={itemVariants} className="flex items-center gap-2.5 pt-2">
+          <div className="p-2 rounded-lg bg-elec-yellow/10">
+            <Briefcase className="h-5 w-5 text-elec-yellow" />
           </div>
-          <h1 className="text-xl font-bold text-white">Business Hub</h1>
-          <p className="text-sm text-white mt-1">Clients, jobs & business tools</p>
+          <h1 className="text-lg font-bold text-white">Business Hub</h1>
         </motion.div>
 
-        {/* Tasks — Top Position */}
-        <motion.section variants={itemVariants} className="space-y-3">
-          <div className="flex items-center gap-2.5">
-            <div className="h-1.5 w-1.5 rounded-full bg-purple-400" />
-            <h2 className="text-base font-bold text-white">Tasks</h2>
-            {overdueCount > 0 && (
-              <span className="text-[11px] font-bold bg-red-500 text-white px-2 py-0.5 rounded-full">
-                {overdueCount} overdue
-              </span>
-            )}
-          </div>
-          <div className="space-y-2">
+        {/* KPI Strip */}
+        <motion.div variants={itemVariants}>
+          <BusinessKPIStrip
+            paidThisMonth={paidThisMonth}
+            outstanding={outstanding}
+            overdueAmount={overdueAmount}
+            winRate={winRate}
+            isLoading={isLoading}
+            formatCurrency={formatCurrency}
+          />
+        </motion.div>
+
+        {/* YOUR DAY — Hero Cards */}
+        <motion.section variants={itemVariants} className="space-y-2.5">
+          <h2 className="text-[11px] font-bold text-white uppercase tracking-widest">Your Day</h2>
+          <div className="grid grid-cols-2 gap-3">
             <BusinessCard
               title="Tasks"
-              description={
-                overdueCount > 0
-                  ? `${overdueCount} overdue — tap to review`
-                  : 'To-dos, reminders & follow-ups'
-              }
+              description="To-dos, reminders & follow-ups"
               icon={ClipboardCheck}
               href="/electrician/tasks"
-              gradient="from-purple-400 to-fuchsia-500"
-            />
-          </div>
-        </motion.section>
-
-        {/* Projects — Featured Position */}
-        <motion.section variants={itemVariants} className="space-y-3">
-          <div className="flex items-center gap-2.5">
-            <div className="h-1.5 w-1.5 rounded-full bg-amber-400" />
-            <h2 className="text-base font-bold text-white">Projects</h2>
-            {projectCounts.active > 0 && (
-              <span className="text-[11px] font-bold bg-amber-500/20 text-amber-400 px-2 py-0.5 rounded-full">
-                {projectCounts.active} active
-              </span>
-            )}
-          </div>
-          <div className="space-y-2">
-            <BusinessCard
-              title="Projects"
-              description={
-                projectCounts.active > 0
-                  ? `${projectCounts.active} active — tap to manage`
-                  : 'Group jobs, quotes, certs & tasks'
-              }
-              icon={FolderKanban}
-              href="/electrician/projects"
-              gradient="from-amber-400 to-orange-500"
-            />
-          </div>
-        </motion.section>
-
-        {/* Customers */}
-        <motion.section variants={itemVariants} className="space-y-3">
-          <div className="flex items-center gap-2.5">
-            <div className="h-1.5 w-1.5 rounded-full bg-blue-400" />
-            <h2 className="text-base font-bold text-white">Customers</h2>
-          </div>
-          <div className="space-y-2">
-            <BusinessCard
-              title="Customers"
-              description="Client management & work history"
-              icon={Users}
-              href="/customers"
-              gradient="from-blue-400 to-cyan-500"
-            />
-          </div>
-        </motion.section>
-
-        {/* Job Management */}
-        <motion.section variants={itemVariants} className="space-y-3">
-          <div className="flex items-center gap-2.5">
-            <div className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
-            <h2 className="text-base font-bold text-white">Job Management</h2>
-          </div>
-          <div className="space-y-2">
-            <BusinessCard
-              title="Site Visits"
-              description="Pre-site, post-site & saved visits"
-              icon={ClipboardList}
-              href="/electrician/site-visits"
-              gradient="from-emerald-400 to-green-500"
-            />
-            <BusinessCard
-              title="Photo Docs"
-              description="Project photos & documentation"
-              icon={Camera}
-              href="/electrician/photo-docs"
-              gradient="from-blue-400 to-cyan-500"
+              gradient="from-purple-500 to-fuchsia-500"
+              variant="hero"
+              liveSubtitle={overdueCount > 0 ? `${overdueCount} overdue` : 'All clear'}
             />
             <BusinessCard
               title="Calendar"
               description="Jobs, meetings & appointments"
               icon={CalendarDays}
               href="/electrician/business/calendar"
-              gradient="from-blue-400 to-indigo-500"
+              gradient="from-blue-500 to-indigo-500"
+              variant="hero"
+              liveSubtitle={todayFormatted}
             />
           </div>
         </motion.section>
 
-        {/* Money In */}
-        <motion.section variants={itemVariants} className="space-y-3">
-          <div className="flex items-center gap-2.5">
-            <div className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
-            <h2 className="text-base font-bold text-white">Money In</h2>
-          </div>
-          <div className="space-y-2">
-            {moneyInTools.map((card) => (
-              <BusinessCard
-                key={card.id}
-                title={card.title}
-                description={card.description}
-                icon={card.icon}
-                href={card.link}
-                gradient={card.gradient}
-              />
-            ))}
+        {/* FINANCIALS — Standard Cards */}
+        <motion.section variants={itemVariants} className="space-y-2.5">
+          <h2 className="text-[11px] font-bold text-white uppercase tracking-widest">Financials</h2>
+          <div className="grid grid-cols-2 gap-3">
+            <BusinessCard
+              title="Quotes"
+              description="Create & manage"
+              icon={FileText}
+              href="/electrician/quotes"
+              gradient="from-emerald-400 to-green-500"
+              variant="standard"
+            />
+            <BusinessCard
+              title="Invoices"
+              description="Billing & payments"
+              icon={PoundSterling}
+              href="/electrician/invoices"
+              gradient="from-emerald-400 to-teal-500"
+              variant="standard"
+            />
+            <BusinessCard
+              title="Customers"
+              description="Clients & history"
+              icon={Users}
+              href="/customers"
+              gradient="from-blue-400 to-cyan-500"
+              variant="standard"
+            />
+            <BusinessCard
+              title="Projects"
+              description={
+                projectCounts.active > 0 ? `${projectCounts.active} active` : 'Group jobs & tasks'
+              }
+              icon={FolderKanban}
+              href="/electrician/projects"
+              gradient="from-amber-400 to-orange-500"
+              variant="standard"
+            />
           </div>
         </motion.section>
 
-        {/* Money Out */}
-        <motion.section variants={itemVariants} className="space-y-3">
-          <div className="flex items-center gap-2.5">
-            <div className="h-1.5 w-1.5 rounded-full bg-red-400" />
-            <h2 className="text-base font-bold text-white">Money Out</h2>
-          </div>
-          <div className="space-y-2">
-            {moneyOutTools.map((card) => (
-              <BusinessCard
-                key={card.id}
-                title={card.title}
-                description={card.description}
-                icon={card.icon}
-                href={card.link}
-                gradient={card.gradient}
-              />
-            ))}
+        {/* ON THE JOB — Standard Cards */}
+        <motion.section variants={itemVariants} className="space-y-2.5">
+          <h2 className="text-[11px] font-bold text-white uppercase tracking-widest">On the Job</h2>
+          <div className="grid grid-cols-2 gap-3">
+            <BusinessCard
+              title="Site Visits"
+              description="Pre & post-site"
+              icon={ClipboardList}
+              href="/electrician/site-visits"
+              gradient="from-emerald-400 to-green-500"
+              variant="standard"
+            />
+            <BusinessCard
+              title="Photo Docs"
+              description="Project photos"
+              icon={Camera}
+              href="/electrician/photo-docs"
+              gradient="from-blue-400 to-cyan-500"
+              variant="standard"
+            />
           </div>
         </motion.section>
 
-        {/* Grow Your Business */}
-        <motion.section variants={itemVariants} className="space-y-3">
-          <div className="flex items-center gap-2.5">
-            <div className="h-1.5 w-1.5 rounded-full bg-elec-yellow" />
-            <h2 className="text-base font-bold text-white">Grow Your Business</h2>
+        {/* MONEY & STOCK — Compact Cards */}
+        <motion.section variants={itemVariants} className="space-y-2.5">
+          <h2 className="text-[11px] font-bold text-white uppercase tracking-widest">
+            Money & Stock
+          </h2>
+          <div className="grid grid-cols-2 gap-3">
+            <BusinessCard
+              title="Expenses"
+              description="Receipts & mileage"
+              icon={Receipt}
+              href="/electrician/expenses"
+              gradient="from-red-400 to-rose-500"
+              variant="compact"
+            />
+            <BusinessCard
+              title="Materials"
+              description="Stock & inventory"
+              icon={Package}
+              href="/electrician/materials"
+              gradient="from-red-400 to-orange-500"
+              variant="compact"
+            />
+            <BusinessCard
+              title="Tools"
+              description="Equipment tracking"
+              icon={Wrench}
+              href="/electrician/tools"
+              gradient="from-red-400 to-amber-500"
+              variant="compact"
+            />
+            <BusinessCard
+              title="Live Pricing"
+              description="Market rates"
+              icon={PoundSterling}
+              href="/electrician/live-pricing"
+              gradient="from-emerald-400 to-cyan-500"
+              variant="compact"
+            />
           </div>
-          <div className="space-y-2">
-            {growthTools.map((card) => (
-              <BusinessCard
-                key={card.id}
-                title={card.title}
-                description={card.description}
-                icon={card.icon}
-                href={card.link}
-                gradient={card.gradient}
-                comingSoon={card.comingSoon}
-              />
-            ))}
+        </motion.section>
+
+        {/* GROW YOUR BUSINESS — Compact Cards */}
+        <motion.section variants={itemVariants} className="space-y-2.5">
+          <h2 className="text-[11px] font-bold text-white uppercase tracking-widest">
+            Grow Your Business
+          </h2>
+          <div className="grid grid-cols-2 gap-3">
+            <BusinessCard
+              title="Start & Grow"
+              description="Business development"
+              icon={TrendingUp}
+              href="/electrician/business-development"
+              gradient="from-yellow-400 to-amber-500"
+              variant="compact"
+            />
+            <BusinessCard
+              title="Calculators"
+              description="Financial planning"
+              icon={Calculator}
+              href="/electrician/business-development/tools"
+              gradient="from-yellow-400 to-orange-500"
+              variant="compact"
+            />
+            <BusinessCard
+              title="Business Admin"
+              description="Documents, staff & analytics"
+              icon={Cog}
+              href="/electrician/business-admin"
+              gradient="from-yellow-400 to-amber-500"
+              variant="compact"
+              className="col-span-2"
+            />
           </div>
         </motion.section>
 

@@ -18,7 +18,7 @@ interface EICObservationsSectionProps {
   observations: EICObservation[];
   reportId: string;
   onAddObservation: () => void;
-  onUpdateObservation: (id: string, field: keyof EICObservation, value: any) => void;
+  onUpdateObservation: (id: string, field: keyof EICObservation, value: string | boolean) => void;
   onRemoveObservation: (id: string) => void;
   onSyncToInspectionItem?: (inspectionItemId: string, newOutcome: string) => void;
   className?: string;
@@ -52,7 +52,7 @@ const EICObservationsSection: React.FC<EICObservationsSectionProps> = ({
         className={cn(
           'flex items-center justify-between',
           isMobile
-            ? 'px-4 py-4 mx-4 my-1 rounded-xl bg-white/[0.04] border border-white/[0.08]'
+            ? 'px-4 py-4 my-1 rounded-xl bg-white/[0.04] border border-white/[0.08]'
             : 'pb-3 border-b border-border/30'
         )}
       >

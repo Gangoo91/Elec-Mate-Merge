@@ -50,6 +50,7 @@ export interface CompanyBranding {
   companyAddress: string;
   companyPhone: string;
   companyEmail: string;
+  companyWebsite: string;
   companyAccentColor: string;
   registrationSchemeLogo: string;
   registrationScheme: string;
@@ -151,6 +152,7 @@ export function useEmergencyLightingSmartForm() {
       companyAddress: fullAddress,
       companyPhone: companyProfile.company_phone || '',
       companyEmail: companyProfile.company_email || '',
+      companyWebsite: companyProfile.company_website || '',
       companyAccentColor: companyProfile.primary_color || '#f59e0b',
       registrationSchemeLogo:
         companyProfile.scheme_logo_data_url || companyProfile.registration_scheme_logo || '',

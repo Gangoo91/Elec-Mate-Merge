@@ -17,6 +17,21 @@ const corsHeaders = {
  * Auth header: your REVENUECAT_WEBHOOK_SECRET
  */
 
+// Tiers that include Business AI agent access (must match stripe-subscription-webhook)
+const BUSINESS_AI_TIERS = new Set([
+  'business_ai',
+  'business_ai_yearly',
+  'employer',
+  'employer_yearly',
+  'Employer',
+]);
+
+// Map RevenueCat resolved tier names → internal tier IDs for BUSINESS_AI_TIERS lookup
+const TIER_NAME_TO_ID: Record<string, string> = {
+  'Business AI': 'business_ai',
+  Employer: 'employer',
+};
+
 // Map RevenueCat product IDs → subscription tier names
 // Product IDs are set in App Store Connect / Google Play Console
 // Format: com.elecmate.app.<tier>.<period>
@@ -118,6 +133,10 @@ serve(async (req) => {
     }
 
     if (subscribed !== null) {
+      // Resolve whether this tier includes Business AI
+      const tierId = subscriptionTier ? TIER_NAME_TO_ID[subscriptionTier] : null;
+      const isBusinessAiTier = tierId ? BUSINESS_AI_TIERS.has(tierId) : false;
+
       const updateData: Record<string, unknown> = {
         subscribed,
         subscription_end: subscriptionEnd,
@@ -125,10 +144,25 @@ serve(async (req) => {
 
       if (subscribed) {
         updateData.onboarding_completed = true;
+        updateData.business_ai_enabled = isBusinessAiTier;
+      } else {
+        // Inactive event — disable Business AI
+        updateData.business_ai_enabled = false;
       }
 
       if (subscriptionTier) {
         updateData.subscription_tier = subscriptionTier;
+      }
+
+      // Check if user previously had Business AI before we update
+      let previouslyHadBusinessAI = false;
+      if (!subscribed) {
+        const { data: preProfile } = await supabase
+          .from('profiles')
+          .select('business_ai_enabled')
+          .eq('id', app_user_id)
+          .single();
+        previouslyHadBusinessAI = preProfile?.business_ai_enabled === true;
       }
 
       const { error } = await supabase.from('profiles').update(updateData).eq('id', app_user_id);
@@ -141,8 +175,33 @@ serve(async (req) => {
         });
       }
 
+      // Deactivate agent and revoke JWT when user loses Business AI
+      if (!subscribed && previouslyHadBusinessAI) {
+        console.log(`Deprovisioning Business AI agent for cancelled user ${app_user_id}`);
+
+        await supabase
+          .from('profiles')
+          .update({ agent_status: 'deactivated' })
+          .eq('id', app_user_id);
+
+        await supabase
+          .from('agent_jwt_tokens')
+          .update({ revoked_at: new Date().toISOString() })
+          .eq('user_id', app_user_id)
+          .is('revoked_at', null);
+
+        await supabase.from('agent_action_log').insert({
+          user_id: app_user_id,
+          action_type: 'agent_deprovisioned',
+          description: `Business AI agent deactivated via RevenueCat ${type} event. JWT revoked.`,
+          outcome: 'success',
+        });
+
+        console.log(`Agent deprovisioned — status set to deactivated, JWT revoked`);
+      }
+
       console.log(
-        `Updated profile ${app_user_id}: subscribed=${subscribed}, tier=${subscriptionTier}`
+        `Updated profile ${app_user_id}: subscribed=${subscribed}, tier=${subscriptionTier}, business_ai=${isBusinessAiTier}`
       );
     } else {
       console.log(`Unhandled event type: ${type}`);

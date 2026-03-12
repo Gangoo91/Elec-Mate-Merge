@@ -83,27 +83,32 @@ serve(async (req) => {
       throw new ValidationError('Phone number must be verified before provisioning');
     }
 
-    // Idempotent — if already active, return existing status
+    // Idempotent — if already active AND has valid JWT, return existing status
     if (profile.agent_status === 'active') {
       const { data: existingToken } = await supabase
         .from('agent_jwt_tokens')
         .select('expires_at')
         .eq('user_id', user_id)
         .is('revoked_at', null)
+        .gt('expires_at', new Date().toISOString())
         .single();
 
-      return new Response(
-        JSON.stringify({
-          provisioned: true,
-          agent_status: 'active',
-          expires_at: existingToken?.expires_at || 'unknown',
-          message: 'Agent is already active',
-        }),
-        {
-          status: 200,
-          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-        }
-      );
+      if (existingToken) {
+        return new Response(
+          JSON.stringify({
+            provisioned: true,
+            agent_status: 'active',
+            expires_at: existingToken.expires_at,
+            message: 'Agent is already active',
+          }),
+          {
+            status: 200,
+            headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+          }
+        );
+      }
+      // JWT missing or expired — fall through to create one
+      console.log(`Agent ${user_id} is active but JWT missing/expired — re-provisioning JWT`);
     }
 
     // Generate custom JWT

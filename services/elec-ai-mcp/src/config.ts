@@ -34,9 +34,6 @@ export const config = {
   /** VPS API key for API key auth mode (mcporter / localhost tools) */
   vpsApiKey: process.env.VPS_API_KEY || '',
 
-  /** Default phone number for API key auth → JWT resolution */
-  defaultPhone: process.env.DEFAULT_PHONE || '+447506026934',
-
   /** Anthropic API key for vision analysis (Claude) */
   anthropicApiKey: process.env.ANTHROPIC_API_KEY || '',
 } as const;

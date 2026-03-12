@@ -84,20 +84,33 @@ serve(async (req) => {
       );
     }
 
-    // Check not already active
+    // Check not already active — but only skip if JWT actually exists
     if (profile.agent_status === 'active') {
-      // Return existing status — idempotent
-      return new Response(
-        JSON.stringify({
-          provisioned: true,
-          agent_status: 'active',
-          message: 'Agent is already active',
-        }),
-        {
-          status: 200,
-          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-        }
-      );
+      const { data: existingToken } = await supabase
+        .from('agent_jwt_tokens')
+        .select('expires_at')
+        .eq('user_id', user.id)
+        .is('revoked_at', null)
+        .gt('expires_at', new Date().toISOString())
+        .single();
+
+      if (existingToken) {
+        // Truly idempotent — agent active AND valid JWT exists
+        return new Response(
+          JSON.stringify({
+            provisioned: true,
+            agent_status: 'active',
+            expires_at: existingToken.expires_at,
+            message: 'Agent is already active',
+          }),
+          {
+            status: 200,
+            headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+          }
+        );
+      }
+      // JWT missing or expired — fall through to create one
+      console.log(`Agent ${user.id} is active but JWT missing/expired — re-provisioning JWT`);
     }
 
     // Generate custom JWT using shared signer

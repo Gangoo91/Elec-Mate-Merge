@@ -81,7 +81,7 @@ const EICClientDetailsSection = ({
         <CollapsibleTrigger className="w-full">
           {isMobile ? (
             // Mobile: Flat section header - no card wrapper
-            <div className="flex items-center gap-3 py-4 px-4 mx-4 my-1 rounded-xl bg-white/[0.04] border border-white/[0.08]">
+            <div className="flex items-center gap-3 py-4 px-4 my-1 rounded-xl bg-white/[0.04] border border-white/[0.08]">
               <div className="h-10 w-10 rounded-xl bg-blue-500/15 flex items-center justify-center shrink-0">
                 <Users className="h-5 w-5 text-blue-400" />
               </div>
