@@ -51,7 +51,7 @@ import { useSolarPVSmartForm } from '@/hooks/inspection/useSolarPVSmartForm';
 
 interface SolarPVInstallationDetailsProps {
   formData: SolarPVFormData;
-  onUpdate: (field: string, value: any) => void;
+  onUpdate: (field: string, value: unknown) => void;
 }
 
 interface SectionHeaderProps {
@@ -91,9 +91,9 @@ const SectionHeader: React.FC<SectionHeaderProps> = ({
       </div>
     </div>
     {isOpen ? (
-      <ChevronUp className="h-5 w-5 text-muted-foreground" />
+      <ChevronUp className="h-5 w-5 text-white" />
     ) : (
-      <ChevronDown className="h-5 w-5 text-muted-foreground" />
+      <ChevronDown className="h-5 w-5 text-white" />
     )}
   </CollapsibleTrigger>
 );
@@ -575,7 +575,7 @@ const SolarPVInstallationDetails: React.FC<SolarPVInstallationDetailsProps> = ({
                       >
                         Safe Isolation Verified
                       </Label>
-                      <p className="text-xs text-muted-foreground mt-0.5">
+                      <p className="text-xs text-white mt-0.5">
                         Confirmed safe isolation can be achieved at the property
                       </p>
                     </div>
@@ -602,7 +602,7 @@ const SolarPVInstallationDetails: React.FC<SolarPVInstallationDetailsProps> = ({
                           >
                             Asbestos Survey Required
                           </Label>
-                          <p className="text-xs text-muted-foreground mt-0.5">
+                          <p className="text-xs text-white mt-0.5">
                             Pre-2000 property - check for asbestos in roof/soffit materials
                           </p>
                         </div>
@@ -648,7 +648,7 @@ const SolarPVInstallationDetails: React.FC<SolarPVInstallationDetailsProps> = ({
                       >
                         Structural Assessment Required
                       </Label>
-                      <p className="text-xs text-muted-foreground mt-0.5">
+                      <p className="text-xs text-white mt-0.5">
                         For older roofs, flat roofs, or systems over 4kWp
                       </p>
                     </div>
@@ -819,7 +819,7 @@ const SolarPVInstallationDetails: React.FC<SolarPVInstallationDetailsProps> = ({
                     placeholder="Generated after registration"
                     className="h-11 text-base touch-manipulation border-white/30 focus:border-yellow-500 focus:ring-yellow-500"
                   />
-                  <p className="text-xs text-muted-foreground">
+                  <p className="text-xs text-white">
                     This is generated when you register the installation on the MCS database
                   </p>
                 </div>
@@ -868,15 +868,13 @@ const SolarPVInstallationDetails: React.FC<SolarPVInstallationDetailsProps> = ({
                   Auto-calculated
                 </Badge>
               </h3>
-              <p className="text-xs text-muted-foreground">
-                Values update as you add arrays and inverters
-              </p>
+              <p className="text-xs text-white">Values update as you add arrays and inverters</p>
             </div>
           </div>
 
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-4">
             <div className="p-3 bg-background/50 rounded-lg border border-white/10">
-              <p className="text-xs text-muted-foreground mb-1">Total Capacity</p>
+              <p className="text-xs text-white mb-1">Total Capacity</p>
               <p className="text-xl font-bold text-amber-400">
                 {formData.totalCapacity?.toFixed(2) || '0.00'}{' '}
                 <span className="text-sm font-normal">kWp</span>
@@ -884,7 +882,7 @@ const SolarPVInstallationDetails: React.FC<SolarPVInstallationDetailsProps> = ({
             </div>
 
             <div className="p-3 bg-background/50 rounded-lg border border-white/10">
-              <p className="text-xs text-muted-foreground mb-1">Est. Annual Yield</p>
+              <p className="text-xs text-white mb-1">Est. Annual Yield</p>
               <p className="text-xl font-bold text-green-400">
                 {formData.estimatedAnnualYield?.toLocaleString() || '0'}{' '}
                 <span className="text-sm font-normal">kWh</span>
@@ -892,12 +890,12 @@ const SolarPVInstallationDetails: React.FC<SolarPVInstallationDetailsProps> = ({
             </div>
 
             <div className="p-3 bg-background/50 rounded-lg border border-white/10">
-              <p className="text-xs text-muted-foreground mb-1">Arrays</p>
+              <p className="text-xs text-white mb-1">Arrays</p>
               <p className="text-xl font-bold text-blue-400">{formData.arrays?.length || 0}</p>
             </div>
 
             <div className="p-3 bg-background/50 rounded-lg border border-white/10">
-              <p className="text-xs text-muted-foreground mb-1">CO₂ Savings</p>
+              <p className="text-xs text-white mb-1">CO₂ Savings</p>
               <p className="text-xl font-bold text-emerald-400">
                 {formData.co2SavingsAnnual?.toLocaleString() ||
                   Math.round((formData.estimatedAnnualYield || 0) * 0.233).toLocaleString()}{' '}

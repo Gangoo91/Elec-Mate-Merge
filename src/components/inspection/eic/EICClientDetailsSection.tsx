@@ -85,8 +85,7 @@ const EICClientDetailsSection = ({
             {/* Certificate Number (Read-only) */}
             <div className="space-y-4">
               <div className="bg-gradient-to-r from-blue-500/20 to-blue-600/20 border border-blue-500/30 rounded-lg px-4 py-3">
-                <h3 className="text-sm sm:text-base font-semibold text-foreground flex items-center gap-2">
-                  <div className="w-1.5 h-1.5 rounded-full bg-blue-400"></div>
+                <h3 className="text-sm sm:text-base font-semibold text-foreground pl-2.5 border-l-2 border-l-blue-400">
                   Certificate Details
                 </h3>
               </div>
@@ -101,9 +100,7 @@ const EICClientDetailsSection = ({
                   className="bg-muted/50 cursor-not-allowed font-mono text-foreground"
                   tabIndex={-1}
                 />
-                <p className="text-xs text-white">
-                  Auto-generated and cannot be changed
-                </p>
+                <p className="text-xs text-white">Auto-generated and cannot be changed</p>
               </div>
             </div>
 
@@ -111,9 +108,8 @@ const EICClientDetailsSection = ({
 
             {/* Client Information */}
             <div className="space-y-4">
-              <h3 className="text-sm sm:text-base font-semibold text-foreground border-b border-elec-gray pb-2 flex items-start gap-2">
-                <div className="w-1.5 h-1.5 rounded-full bg-yellow-400 mt-1.5 shrink-0"></div>
-                <span className="break-words min-w-0">Client Information</span>
+              <h3 className="text-sm sm:text-base font-semibold text-foreground border-b border-elec-gray pb-2 pl-2.5 border-l-2 border-l-yellow-400">
+                Client Information
               </h3>
 
               {/* Customer Selector */}
@@ -227,8 +223,7 @@ const EICClientDetailsSection = ({
             {/* Installation Details */}
             <div className="space-y-4">
               <div className="bg-gradient-to-r from-elec-yellow/20 to-amber-600/20 border border-elec-yellow/30 rounded-lg px-4 py-3">
-                <h3 className="text-sm sm:text-base font-semibold text-foreground flex items-center gap-2">
-                  <div className="w-1.5 h-1.5 rounded-full bg-elec-yellow"></div>
+                <h3 className="text-sm sm:text-base font-semibold text-foreground pl-2.5 border-l-2 border-l-elec-yellow">
                   Installation Details
                 </h3>
               </div>
@@ -302,9 +297,8 @@ const EICClientDetailsSection = ({
 
             {/* Installation Dates */}
             <div className="space-y-4">
-              <h3 className="text-sm sm:text-base font-semibold text-foreground border-b border-border pb-2 flex items-start gap-2">
-                <div className="w-1.5 h-1.5 rounded-full bg-green-400 mt-1.5 shrink-0"></div>
-                <span className="break-words min-w-0">Installation Dates</span>
+              <h3 className="text-sm sm:text-base font-semibold text-foreground border-b border-border pb-2 pl-2.5 border-l-2 border-l-green-400">
+                Installation Dates
               </h3>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="space-y-2">

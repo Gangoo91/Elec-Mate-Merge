@@ -19,7 +19,7 @@ import { Customer } from '@/hooks/inspection/useCustomers';
 import { useIsMobile } from '@/hooks/use-mobile';
 
 interface EICClientDetailsSectionProps {
-  formData: any;
+  formData: Record<string, unknown>;
   onUpdate: (field: string, value: string) => void;
   isOpen: boolean;
   onToggle: () => void;
@@ -87,9 +87,7 @@ const EICClientDetailsSection = ({
               </div>
               <div className="flex-1 text-left min-w-0">
                 <h3 className="font-semibold text-foreground">Client & Installation Details</h3>
-                <span className="text-xs text-white">
-                  {getCompletionPercentage()}% complete
-                </span>
+                <span className="text-xs text-white">{getCompletionPercentage()}% complete</span>
               </div>
               <ChevronDown
                 className={cn(
@@ -130,8 +128,7 @@ const EICClientDetailsSection = ({
 
             {/* Client Information */}
             <div className="space-y-4">
-              <h4 className="text-sm font-semibold text-elec-yellow border-b border-white/10 pb-2 flex items-center gap-2">
-                <div className="w-1.5 h-1.5 rounded-full bg-elec-yellow"></div>
+              <h4 className="text-sm font-semibold text-elec-yellow border-b border-white/10 pb-2 pl-2.5 border-l-2 border-l-elec-yellow">
                 Client Information
               </h4>
 
@@ -197,8 +194,7 @@ const EICClientDetailsSection = ({
 
             {/* Installation Details */}
             <div className="space-y-4">
-              <h4 className="text-sm font-semibold text-elec-yellow border-b border-white/10 pb-2 flex items-center gap-2">
-                <div className="w-1.5 h-1.5 rounded-full bg-elec-yellow"></div>
+              <h4 className="text-sm font-semibold text-elec-yellow border-b border-white/10 pb-2 pl-2.5 border-l-2 border-l-elec-yellow">
                 Installation Details
               </h4>
 
@@ -274,8 +270,7 @@ const EICClientDetailsSection = ({
 
             {/* Description and Extent of Installation (IET Form Section) */}
             <div className="space-y-4">
-              <h4 className="text-sm font-semibold text-elec-yellow border-b border-white/10 pb-2 flex items-center gap-2">
-                <div className="w-1.5 h-1.5 rounded-full bg-elec-yellow"></div>
+              <h4 className="text-sm font-semibold text-elec-yellow border-b border-white/10 pb-2 pl-2.5 border-l-2 border-l-elec-yellow">
                 Description and Extent of Installation
               </h4>
 
@@ -392,8 +387,7 @@ const EICClientDetailsSection = ({
 
             {/* Installation Dates */}
             <div className="space-y-4">
-              <h4 className="text-sm font-semibold text-elec-yellow border-b border-white/10 pb-2 flex items-center gap-2">
-                <div className="w-1.5 h-1.5 rounded-full bg-elec-yellow"></div>
+              <h4 className="text-sm font-semibold text-elec-yellow border-b border-white/10 pb-2 pl-2.5 border-l-2 border-l-elec-yellow">
                 Installation Dates
               </h4>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">

@@ -33,6 +33,7 @@ import * as dayPlanner from './day-planner.js';
 import * as jobProfit from './job-profit.js';
 import * as snagging from './snagging.js';
 import * as photoEstimate from './photo-estimate.js';
+import * as googleApis from './google-apis.js';
 
 /** Handler function signature — every tool handler takes args + user context */
 export type ToolHandler = (args: Record<string, unknown>, user: UserContext) => Promise<unknown>;
@@ -251,6 +252,14 @@ const handlers: Record<string, ToolHandler> = {
 
   // Photo Estimate
   estimate_from_photo: photoEstimate.estimateFromPhoto,
+
+  // Google APIs (Solar, Geocoding, Address Validation, Maps, YouTube, Weather)
+  analyse_solar_roof: googleApis.analyseSolarRoof,
+  geocode_address: googleApis.geocodeAddress,
+  validate_address: googleApis.validateAddress,
+  generate_map_image: googleApis.generateMapImage,
+  search_youtube_videos: googleApis.searchYoutubeVideos,
+  get_weather: googleApis.getWeather,
 };
 
 /**

@@ -32,8 +32,8 @@ import {
 } from '@/hooks/inspection/useEVChargingSmartForm';
 
 interface EVChargingTestScheduleProps {
-  formData: any;
-  onUpdate: (field: string, value: any) => void;
+  formData: Record<string, unknown>;
+  onUpdate: (field: string, value: unknown) => void;
 }
 
 type TestResult = 'pass' | 'fail' | '';
@@ -119,7 +119,7 @@ const EVChargingTestSchedule: React.FC<EVChargingTestScheduleProps> = ({ formDat
     setOpenSections((prev) => ({ ...prev, [section]: !prev[section] }));
   };
 
-  const updateTestResult = (field: string, value: any) => {
+  const updateTestResult = (field: string, value: unknown) => {
     const currentResults = formData.testResults || {};
     onUpdate('testResults', { ...currentResults, [field]: value });
   };
@@ -172,7 +172,13 @@ const EVChargingTestSchedule: React.FC<EVChargingTestScheduleProps> = ({ formDat
       return calculateVoltageDrop(cableSize, cableLength, current, cableType);
     }
     return null;
-  }, [formData.cableSize, formData.cableLength, formData.ratedCurrent, formData.cableType, calculateVoltageDrop]);
+  }, [
+    formData.cableSize,
+    formData.cableLength,
+    formData.ratedCurrent,
+    formData.cableType,
+    calculateVoltageDrop,
+  ]);
 
   // Auto-update voltage drop in test results when calculated
   useEffect(() => {
@@ -207,11 +213,11 @@ const EVChargingTestSchedule: React.FC<EVChargingTestScheduleProps> = ({ formDat
                 </div>
                 <div className="flex-1 text-left min-w-0">
                   <h3 className="font-semibold text-foreground">Circuit Tests</h3>
-                  <span className="text-xs text-muted-foreground">R1+R2, Zs, insulation</span>
+                  <span className="text-xs text-white">R1+R2, Zs, insulation</span>
                 </div>
                 <ChevronDown
                   className={cn(
-                    'h-5 w-5 text-muted-foreground transition-transform shrink-0',
+                    'h-5 w-5 text-white transition-transform shrink-0',
                     openSections.circuit && 'rotate-180'
                   )}
                 />
@@ -245,14 +251,23 @@ const EVChargingTestSchedule: React.FC<EVChargingTestScheduleProps> = ({ formDat
                 )}
               >
                 <div className="flex items-center gap-3">
-                  <div className={cn(
-                    'h-9 w-9 rounded-xl flex items-center justify-center shrink-0',
-                    applyTempCorrection ? 'bg-orange-500/15' : 'bg-white/[0.06]'
-                  )}>
-                    <Thermometer className={cn('h-4 w-4', applyTempCorrection ? 'text-orange-400' : 'text-white')} />
+                  <div
+                    className={cn(
+                      'h-9 w-9 rounded-xl flex items-center justify-center shrink-0',
+                      applyTempCorrection ? 'bg-orange-500/15' : 'bg-white/[0.06]'
+                    )}
+                  >
+                    <Thermometer
+                      className={cn(
+                        'h-4 w-4',
+                        applyTempCorrection ? 'text-orange-400' : 'text-white'
+                      )}
+                    />
                   </div>
                   <div>
-                    <span className="text-sm font-medium text-white block">Temp Correction (1.2×)</span>
+                    <span className="text-sm font-medium text-white block">
+                      Temp Correction (1.2×)
+                    </span>
                     <span className="text-xs text-white">BS 7671 — 70°C operating temp</span>
                   </div>
                 </div>
@@ -273,7 +288,8 @@ const EVChargingTestSchedule: React.FC<EVChargingTestScheduleProps> = ({ formDat
                     <div className="min-w-0">
                       <p className="text-xs font-medium text-white">Calculated Zs</p>
                       <p className="text-[10px] text-white">
-                        Ze ({formData.ze}) + R1+R2 ({testResults.r1r2}) × {applyTempCorrection ? '1.2' : '1.0'}
+                        Ze ({formData.ze}) + R1+R2 ({testResults.r1r2}) ×{' '}
+                        {applyTempCorrection ? '1.2' : '1.0'}
                       </p>
                     </div>
                   </div>
@@ -299,10 +315,14 @@ const EVChargingTestSchedule: React.FC<EVChargingTestScheduleProps> = ({ formDat
 
               {/* Continuity & impedance readings */}
               <div className="space-y-3">
-                <h4 className="text-xs font-medium text-white uppercase tracking-wider px-0.5">Continuity & Impedance</h4>
+                <h4 className="text-xs font-medium text-white uppercase tracking-wider px-0.5">
+                  Continuity & Impedance
+                </h4>
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 items-start">
                   <div className="space-y-1.5">
-                    <Label htmlFor="r1r2" className="text-xs h-5 flex items-center">R1+R2 (Ω)</Label>
+                    <Label htmlFor="r1r2" className="text-xs h-5 flex items-center">
+                      R1+R2 (Ω)
+                    </Label>
                     <Input
                       id="r1r2"
                       placeholder="0.25"
@@ -314,7 +334,9 @@ const EVChargingTestSchedule: React.FC<EVChargingTestScheduleProps> = ({ formDat
                     />
                   </div>
                   <div className="space-y-1.5">
-                    <Label htmlFor="r2" className="text-xs h-5 flex items-center">R2 (Ω)</Label>
+                    <Label htmlFor="r2" className="text-xs h-5 flex items-center">
+                      R2 (Ω)
+                    </Label>
                     <Input
                       id="r2"
                       placeholder="0.12"
@@ -327,7 +349,9 @@ const EVChargingTestSchedule: React.FC<EVChargingTestScheduleProps> = ({ formDat
                   </div>
                   <div className="space-y-1.5">
                     <div className="flex items-center gap-1 h-5">
-                      <Label htmlFor="zs" className="text-xs">Zs (Ω)</Label>
+                      <Label htmlFor="zs" className="text-xs">
+                        Zs (Ω)
+                      </Label>
                       <ValidationBadge validation={validations.zs} />
                     </div>
                     <div className="relative">
@@ -367,7 +391,9 @@ const EVChargingTestSchedule: React.FC<EVChargingTestScheduleProps> = ({ formDat
                     )}
                   </div>
                   <div className="space-y-1.5">
-                    <Label htmlFor="maxZs" className="text-xs h-5 flex items-center">Max Zs (Ω)</Label>
+                    <Label htmlFor="maxZs" className="text-xs h-5 flex items-center">
+                      Max Zs (Ω)
+                    </Label>
                     <Input
                       id="maxZs"
                       placeholder="1.09"
@@ -390,11 +416,15 @@ const EVChargingTestSchedule: React.FC<EVChargingTestScheduleProps> = ({ formDat
 
               {/* Insulation & Polarity */}
               <div className="space-y-3">
-                <h4 className="text-xs font-medium text-white uppercase tracking-wider px-0.5">Insulation & Polarity</h4>
+                <h4 className="text-xs font-medium text-white uppercase tracking-wider px-0.5">
+                  Insulation & Polarity
+                </h4>
                 <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 items-start">
                   <div className="space-y-1.5">
                     <div className="flex items-center gap-1 h-5">
-                      <Label htmlFor="insulationResistance" className="text-xs">Insulation (MΩ)</Label>
+                      <Label htmlFor="insulationResistance" className="text-xs">
+                        Insulation (MΩ)
+                      </Label>
                       <ValidationBadge validation={validations.insulationResistance} />
                     </div>
                     <Input
@@ -406,7 +436,8 @@ const EVChargingTestSchedule: React.FC<EVChargingTestScheduleProps> = ({ formDat
                       onChange={(e) => updateTestResult('insulationResistance', e.target.value)}
                       className={cn(
                         'h-11 text-base touch-manipulation border-white/30 focus:border-elec-yellow focus:ring-elec-yellow',
-                        validations.insulationResistance?.status === 'pass' && 'border-green-500/50',
+                        validations.insulationResistance?.status === 'pass' &&
+                          'border-green-500/50',
                         validations.insulationResistance?.status === 'fail' && 'border-red-500/50'
                       )}
                     />
@@ -445,7 +476,9 @@ const EVChargingTestSchedule: React.FC<EVChargingTestScheduleProps> = ({ formDat
                   </div>
                   {formData.earthElectrodeInstalled && (
                     <div className="space-y-1.5">
-                      <Label htmlFor="earthElectrodeRa" className="text-xs h-5 flex items-center">Earth Electrode Ra (Ω)</Label>
+                      <Label htmlFor="earthElectrodeRa" className="text-xs h-5 flex items-center">
+                        Earth Electrode Ra (Ω)
+                      </Label>
                       <Input
                         id="earthElectrodeRa"
                         placeholder="150"
@@ -466,7 +499,10 @@ const EVChargingTestSchedule: React.FC<EVChargingTestScheduleProps> = ({ formDat
 
       {/* Additional Tests (IET CoP 5th Edition) */}
       <div>
-        <Collapsible open={openSections.additional} onOpenChange={() => toggleSection('additional')}>
+        <Collapsible
+          open={openSections.additional}
+          onOpenChange={() => toggleSection('additional')}
+        >
           <CollapsibleTrigger className="w-full">
             {isMobile ? (
               <div className="flex items-center gap-3 py-4 px-4 bg-card/30 border-b border-border/20">
@@ -475,11 +511,11 @@ const EVChargingTestSchedule: React.FC<EVChargingTestScheduleProps> = ({ formDat
                 </div>
                 <div className="flex-1 text-left min-w-0">
                   <h3 className="font-semibold text-foreground">Additional Tests</h3>
-                  <span className="text-xs text-muted-foreground">PE continuity, voltage drop</span>
+                  <span className="text-xs text-white">PE continuity, voltage drop</span>
                 </div>
                 <ChevronDown
                   className={cn(
-                    'h-5 w-5 text-muted-foreground transition-transform shrink-0',
+                    'h-5 w-5 text-white transition-transform shrink-0',
                     openSections.additional && 'rotate-180'
                   )}
                 />
@@ -545,9 +581,14 @@ const EVChargingTestSchedule: React.FC<EVChargingTestScheduleProps> = ({ formDat
                         )}
                       >
                         {voltageDrop.satisfactory ? (
-                          <><CheckCircle2 className="h-2.5 w-2.5 mr-0.5" /> {voltageDrop.percentOf230V}%</>
+                          <>
+                            <CheckCircle2 className="h-2.5 w-2.5 mr-0.5" />{' '}
+                            {voltageDrop.percentOf230V}%
+                          </>
                         ) : (
-                          <><XCircle className="h-2.5 w-2.5 mr-0.5" /> {voltageDrop.percentOf230V}%</>
+                          <>
+                            <XCircle className="h-2.5 w-2.5 mr-0.5" /> {voltageDrop.percentOf230V}%
+                          </>
                         )}
                       </Badge>
                     )}
@@ -576,12 +617,14 @@ const EVChargingTestSchedule: React.FC<EVChargingTestScheduleProps> = ({ formDat
 
               {/* Voltage Drop Auto-calculation Info */}
               {voltageDrop && (
-                <div className={cn(
-                  'rounded-lg p-3 border',
-                  voltageDrop.satisfactory
-                    ? 'bg-green-500/5 border-green-500/20'
-                    : 'bg-red-500/5 border-red-500/20'
-                )}>
+                <div
+                  className={cn(
+                    'rounded-lg p-3 border',
+                    voltageDrop.satisfactory
+                      ? 'bg-green-500/5 border-green-500/20'
+                      : 'bg-red-500/5 border-red-500/20'
+                  )}
+                >
                   <div className="flex items-center gap-2">
                     <Calculator className="h-4 w-4 text-white" />
                     <span className="text-sm font-medium text-foreground">
@@ -600,7 +643,8 @@ const EVChargingTestSchedule: React.FC<EVChargingTestScheduleProps> = ({ formDat
                     </Badge>
                   </div>
                   <p className="text-xs text-white mt-1">
-                    Cable: {formData.cableSize}mm² × {formData.cableLength}m @ {formData.ratedCurrent}A
+                    Cable: {formData.cableSize}mm² × {formData.cableLength}m @{' '}
+                    {formData.ratedCurrent}A
                   </p>
                 </div>
               )}
@@ -620,11 +664,11 @@ const EVChargingTestSchedule: React.FC<EVChargingTestScheduleProps> = ({ formDat
                 </div>
                 <div className="flex-1 text-left min-w-0">
                   <h3 className="font-semibold text-foreground">RCD Tests</h3>
-                  <span className="text-xs text-muted-foreground">Trip times, test button</span>
+                  <span className="text-xs text-white">Trip times, test button</span>
                 </div>
                 <ChevronDown
                   className={cn(
-                    'h-5 w-5 text-muted-foreground transition-transform shrink-0',
+                    'h-5 w-5 text-white transition-transform shrink-0',
                     openSections.rcd && 'rotate-180'
                   )}
                 />
@@ -651,7 +695,9 @@ const EVChargingTestSchedule: React.FC<EVChargingTestScheduleProps> = ({ formDat
               <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 items-start">
                 <div className="space-y-1.5">
                   <div className="flex items-center gap-1 h-5">
-                    <Label htmlFor="rcdTripTime" className="text-sm">Trip @ IΔn (ms)</Label>
+                    <Label htmlFor="rcdTripTime" className="text-sm">
+                      Trip @ IΔn (ms)
+                    </Label>
                     <ValidationBadge validation={validations.rcdTripTime} />
                   </div>
                   <Input
@@ -684,7 +730,9 @@ const EVChargingTestSchedule: React.FC<EVChargingTestScheduleProps> = ({ formDat
                 </div>
                 <div className="space-y-1.5">
                   <div className="flex items-center gap-1 h-5">
-                    <Label htmlFor="rcdTripTimeX5" className="text-sm">Trip @ 5×IΔn (ms)</Label>
+                    <Label htmlFor="rcdTripTimeX5" className="text-sm">
+                      Trip @ 5×IΔn (ms)
+                    </Label>
                     <ValidationBadge validation={validations.rcdTripTimeX5} />
                   </div>
                   <Input
@@ -753,11 +801,11 @@ const EVChargingTestSchedule: React.FC<EVChargingTestScheduleProps> = ({ formDat
                 </div>
                 <div className="flex-1 text-left min-w-0">
                   <h3 className="font-semibold text-foreground">Functional Tests</h3>
-                  <span className="text-xs text-muted-foreground">Charger, load, verification</span>
+                  <span className="text-xs text-white">Charger, load, verification</span>
                 </div>
                 <ChevronDown
                   className={cn(
-                    'h-5 w-5 text-muted-foreground transition-transform shrink-0',
+                    'h-5 w-5 text-white transition-transform shrink-0',
                     openSections.functional && 'rotate-180'
                   )}
                 />
@@ -802,7 +850,9 @@ const EVChargingTestSchedule: React.FC<EVChargingTestScheduleProps> = ({ formDat
 
               <div className="grid grid-cols-2 gap-3 items-start">
                 <div className="space-y-1.5">
-                  <Label htmlFor="loadTestCurrent" className="text-sm h-5 flex items-center">Load Current (A)</Label>
+                  <Label htmlFor="loadTestCurrent" className="text-sm h-5 flex items-center">
+                    Load Current (A)
+                  </Label>
                   <Input
                     id="loadTestCurrent"
                     placeholder="e.g., 32"
@@ -830,7 +880,10 @@ const EVChargingTestSchedule: React.FC<EVChargingTestScheduleProps> = ({ formDat
                   <h4 className="font-medium text-sm text-white">Verification Checklist</h4>
                 </div>
                 <div className="divide-y divide-white/[0.04]">
-                  <label htmlFor="chargerPowerUp" className="flex items-center gap-3 px-4 py-3 cursor-pointer hover:bg-white/5 transition-colors touch-manipulation">
+                  <label
+                    htmlFor="chargerPowerUp"
+                    className="flex items-center gap-3 px-4 py-3 cursor-pointer hover:bg-white/5 transition-colors touch-manipulation"
+                  >
                     <Checkbox
                       id="chargerPowerUp"
                       checked={formData.chargerPowerUpVerified || false}
@@ -839,7 +892,10 @@ const EVChargingTestSchedule: React.FC<EVChargingTestScheduleProps> = ({ formDat
                     />
                     <span className="text-sm text-white">Charger powers up correctly</span>
                   </label>
-                  <label htmlFor="ledIndicators" className="flex items-center gap-3 px-4 py-3 cursor-pointer hover:bg-white/5 transition-colors touch-manipulation">
+                  <label
+                    htmlFor="ledIndicators"
+                    className="flex items-center gap-3 px-4 py-3 cursor-pointer hover:bg-white/5 transition-colors touch-manipulation"
+                  >
                     <Checkbox
                       id="ledIndicators"
                       checked={formData.ledIndicatorsVerified || false}
@@ -848,7 +904,10 @@ const EVChargingTestSchedule: React.FC<EVChargingTestScheduleProps> = ({ formDat
                     />
                     <span className="text-sm text-white">LED indicators function correctly</span>
                   </label>
-                  <label htmlFor="cableSecure" className="flex items-center gap-3 px-4 py-3 cursor-pointer hover:bg-white/5 transition-colors touch-manipulation">
+                  <label
+                    htmlFor="cableSecure"
+                    className="flex items-center gap-3 px-4 py-3 cursor-pointer hover:bg-white/5 transition-colors touch-manipulation"
+                  >
                     <Checkbox
                       id="cableSecure"
                       checked={formData.cableSecureVerified || false}
@@ -857,7 +916,10 @@ const EVChargingTestSchedule: React.FC<EVChargingTestScheduleProps> = ({ formDat
                     />
                     <span className="text-sm text-white">Cable/connector secure and undamaged</span>
                   </label>
-                  <label htmlFor="earthContinuity" className="flex items-center gap-3 px-4 py-3 cursor-pointer hover:bg-white/5 transition-colors touch-manipulation">
+                  <label
+                    htmlFor="earthContinuity"
+                    className="flex items-center gap-3 px-4 py-3 cursor-pointer hover:bg-white/5 transition-colors touch-manipulation"
+                  >
                     <Checkbox
                       id="earthContinuity"
                       checked={formData.earthContinuityVerified || false}
@@ -884,13 +946,11 @@ const EVChargingTestSchedule: React.FC<EVChargingTestScheduleProps> = ({ formDat
                 </div>
                 <div className="flex-1 text-left min-w-0">
                   <h3 className="font-semibold text-foreground">Smart Features</h3>
-                  <span className="text-xs text-muted-foreground">
-                    App control, load management
-                  </span>
+                  <span className="text-xs text-white">App control, load management</span>
                 </div>
                 <ChevronDown
                   className={cn(
-                    'h-5 w-5 text-muted-foreground transition-transform shrink-0',
+                    'h-5 w-5 text-white transition-transform shrink-0',
                     openSections.smart && 'rotate-180'
                   )}
                 />
@@ -925,11 +985,18 @@ const EVChargingTestSchedule: React.FC<EVChargingTestScheduleProps> = ({ formDat
                   )}
                 >
                   <div className="flex items-center gap-3">
-                    <div className={cn(
-                      'h-9 w-9 rounded-xl flex items-center justify-center shrink-0',
-                      formData.smartChargingEnabled ? 'bg-purple-500/15' : 'bg-white/[0.06]'
-                    )}>
-                      <Zap className={cn('h-4 w-4', formData.smartChargingEnabled ? 'text-purple-400' : 'text-white')} />
+                    <div
+                      className={cn(
+                        'h-9 w-9 rounded-xl flex items-center justify-center shrink-0',
+                        formData.smartChargingEnabled ? 'bg-purple-500/15' : 'bg-white/[0.06]'
+                      )}
+                    >
+                      <Zap
+                        className={cn(
+                          'h-4 w-4',
+                          formData.smartChargingEnabled ? 'text-purple-400' : 'text-white'
+                        )}
+                      />
                     </div>
                     <div>
                       <span className="text-sm font-medium text-white block">Smart Charging</span>
@@ -942,13 +1009,17 @@ const EVChargingTestSchedule: React.FC<EVChargingTestScheduleProps> = ({ formDat
                     onCheckedChange={(checked) => onUpdate('smartChargingEnabled', checked)}
                     className="sr-only"
                   />
-                  <div className={cn(
-                    'h-5 w-5 rounded-full border-2 flex items-center justify-center shrink-0 transition-colors',
-                    formData.smartChargingEnabled
-                      ? 'border-purple-400 bg-purple-400'
-                      : 'border-white/30'
-                  )}>
-                    {formData.smartChargingEnabled && <CheckCircle2 className="h-3.5 w-3.5 text-white" />}
+                  <div
+                    className={cn(
+                      'h-5 w-5 rounded-full border-2 flex items-center justify-center shrink-0 transition-colors',
+                      formData.smartChargingEnabled
+                        ? 'border-purple-400 bg-purple-400'
+                        : 'border-white/30'
+                    )}
+                  >
+                    {formData.smartChargingEnabled && (
+                      <CheckCircle2 className="h-3.5 w-3.5 text-white" />
+                    )}
                   </div>
                 </label>
                 <label
@@ -961,11 +1032,18 @@ const EVChargingTestSchedule: React.FC<EVChargingTestScheduleProps> = ({ formDat
                   )}
                 >
                   <div className="flex items-center gap-3">
-                    <div className={cn(
-                      'h-9 w-9 rounded-xl flex items-center justify-center shrink-0',
-                      formData.loadManagement ? 'bg-purple-500/15' : 'bg-white/[0.06]'
-                    )}>
-                      <Calculator className={cn('h-4 w-4', formData.loadManagement ? 'text-purple-400' : 'text-white')} />
+                    <div
+                      className={cn(
+                        'h-9 w-9 rounded-xl flex items-center justify-center shrink-0',
+                        formData.loadManagement ? 'bg-purple-500/15' : 'bg-white/[0.06]'
+                      )}
+                    >
+                      <Calculator
+                        className={cn(
+                          'h-4 w-4',
+                          formData.loadManagement ? 'text-purple-400' : 'text-white'
+                        )}
+                      />
                     </div>
                     <div>
                       <span className="text-sm font-medium text-white block">Load Management</span>
@@ -978,12 +1056,14 @@ const EVChargingTestSchedule: React.FC<EVChargingTestScheduleProps> = ({ formDat
                     onCheckedChange={(checked) => onUpdate('loadManagement', checked)}
                     className="sr-only"
                   />
-                  <div className={cn(
-                    'h-5 w-5 rounded-full border-2 flex items-center justify-center shrink-0 transition-colors',
-                    formData.loadManagement
-                      ? 'border-purple-400 bg-purple-400'
-                      : 'border-white/30'
-                  )}>
+                  <div
+                    className={cn(
+                      'h-5 w-5 rounded-full border-2 flex items-center justify-center shrink-0 transition-colors',
+                      formData.loadManagement
+                        ? 'border-purple-400 bg-purple-400'
+                        : 'border-white/30'
+                    )}
+                  >
                     {formData.loadManagement && <CheckCircle2 className="h-3.5 w-3.5 text-white" />}
                   </div>
                 </label>

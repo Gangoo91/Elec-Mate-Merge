@@ -1,6 +1,6 @@
 /**
  * Master tool registry.
- * Registers all 89 core tools + 21 apprentice tools onto the MCP server (110 total).
+ * Registers all 95 core tools + 21 apprentice tools onto the MCP server (116 total).
  * Tools are role-filtered: electricians get core tools, apprentices get learning tools.
  */
 
@@ -75,6 +75,9 @@ export function registerAllTools(server: McpServer, user: UserContext): void {
 
   // Photo Estimate
   registerPhotoEstimateTools(server, user);
+
+  // Google APIs (Solar, Geocoding, Address Validation, Maps, YouTube, Weather)
+  registerGoogleApiTools(server, user);
 }
 
 // ─── Helper to wrap handler calls with rate limiting + audit logging ────
@@ -2000,7 +2003,7 @@ function registerProjectLinkTools(server: McpServer, user: UserContext): void {
 function registerMarketplaceTools(server: McpServer, user: UserContext): void {
   server.tool(
     'search_products',
-    'Search electrical products by name, category, or supplier.',
+    'Search electrical products by name, category, or supplier. Returns product details including image_url (send to user via MEDIA:<image_url> to show product photos), current_price, product_url, and supplier name.',
     {
       query: z.string().describe('Product search query'),
       category: z.string().optional().describe('Product category filter'),
@@ -2012,7 +2015,7 @@ function registerMarketplaceTools(server: McpServer, user: UserContext): void {
 
   server.tool(
     'compare_prices',
-    'Compare prices for a product across multiple suppliers.',
+    'Compare prices for a product across multiple suppliers. Returns products grouped by supplier with image_url (send via MEDIA:<image_url>), current_price, product_url, and cheapest option highlighted.',
     {
       product_name: z.string().describe('Product name to compare'),
     },
@@ -2021,7 +2024,7 @@ function registerMarketplaceTools(server: McpServer, user: UserContext): void {
 
   server.tool(
     'price_materials_for_job',
-    'Price up materials for a job. Describe the job and the tool will extract material keywords, look up prices across suppliers, and return an itemised price list with the cheapest option per item. Useful for quick cost estimates.',
+    'Price up materials for a job. Describe the job and the tool will extract material keywords, look up prices across suppliers, and return an itemised price list with the cheapest option per item including image_url and product_url. Useful for quick cost estimates.',
     {
       job_description: z
         .string()
@@ -2031,7 +2034,9 @@ function registerMarketplaceTools(server: McpServer, user: UserContext): void {
       preferred_supplier: z
         .string()
         .optional()
-        .describe('Preferred supplier (e.g. "CEF", "Screwfix"). If set, only prices from this supplier.'),
+        .describe(
+          'Preferred supplier (e.g. "CEF", "Screwfix"). If set, only prices from this supplier.'
+        ),
       budget_limit: z
         .number()
         .optional()
@@ -2042,10 +2047,9 @@ function registerMarketplaceTools(server: McpServer, user: UserContext): void {
 
   server.tool(
     'get_deals',
-    'Get current deals and discount codes from electrical suppliers.',
+    'Get current deals from electrical suppliers. Returns deal details with discount_percentage, deal_price, original_price, supplier name, and product image_url.',
     {
-      supplier: z.string().optional().describe('Filter by supplier'),
-      category: z.string().optional().describe('Filter by product category'),
+      supplier: z.string().optional().describe('Filter by supplier name (e.g. CEF, Screwfix, TLC)'),
       limit: z.number().optional().describe('Max deals (default 10)'),
     },
     callTool('get_deals', user)
@@ -2171,17 +2175,16 @@ function registerVisionTools(server: McpServer, user: UserContext): void {
 function registerRoutingTools(server: McpServer, user: UserContext): void {
   server.tool(
     'get_route_to_job',
-    'Get driving directions to a job site with real-time traffic estimates. Uses Google Maps Directions API. Returns route options with duration, distance, and traffic-adjusted times. Defaults to the user\'s business address as origin.',
+    "Get driving directions to a job site with real-time traffic estimates. Uses Google Maps Directions API. Returns route options with duration, distance, and traffic-adjusted times. Defaults to the user's business address as origin.",
     {
-      destination: z.string().describe('Destination address (e.g. "42 High Street, Birmingham B1 1AA")'),
+      destination: z
+        .string()
+        .describe('Destination address (e.g. "42 High Street, Birmingham B1 1AA")'),
       origin: z
         .string()
         .optional()
         .describe('Starting address (defaults to business address from company profile)'),
-      departure_time: z
-        .string()
-        .optional()
-        .describe('Departure time (ISO-8601, defaults to now)'),
+      departure_time: z.string().optional().describe('Departure time (ISO-8601, defaults to now)'),
     },
     callTool('get_route_to_job', user)
   );
@@ -2244,10 +2247,7 @@ function registerDayPlannerTools(server: McpServer, user: UserContext): void {
     'plan_my_day',
     "Optimise today's schedule by finding the best driving route between calendar events. Fetches events with addresses, calls Google Maps Distance Matrix API, and solves the Travelling Salesman Problem to minimise total driving time. Returns optimised route order with travel times and minutes saved.",
     {
-      date: z
-        .string()
-        .optional()
-        .describe('Date to plan (ISO-8601, default today)'),
+      date: z.string().optional().describe('Date to plan (ISO-8601, default today)'),
       start_address: z
         .string()
         .optional()
@@ -2290,17 +2290,29 @@ function registerSnaggingTools(server: McpServer, user: UserContext): void {
       severity: z
         .enum(['low', 'normal', 'high', 'critical'])
         .optional()
-        .describe('Severity — maps to task priority. If a photo is provided and severity is normal, AI may upgrade it based on observations.'),
-      location: z.string().optional().describe('Location on site (e.g. "Kitchen", "First floor landing")'),
+        .describe(
+          'Severity — maps to task priority. If a photo is provided and severity is normal, AI may upgrade it based on observations.'
+        ),
+      location: z
+        .string()
+        .optional()
+        .describe('Location on site (e.g. "Kitchen", "First floor landing")'),
       image_url: z
         .string()
         .optional()
-        .describe('URL of a photo showing the issue. Will be analysed by AI if no photo_analysis_id is provided.'),
+        .describe(
+          'URL of a photo showing the issue. Will be analysed by AI if no photo_analysis_id is provided.'
+        ),
       photo_analysis_id: z
         .string()
         .optional()
-        .describe('Existing photo_analyses UUID — skips re-analysis if the photo was already analysed'),
-      due_date: z.string().optional().describe('ISO date string for when this snag should be resolved'),
+        .describe(
+          'Existing photo_analyses UUID — skips re-analysis if the photo was already analysed'
+        ),
+      due_date: z
+        .string()
+        .optional()
+        .describe('ISO date string for when this snag should be resolved'),
       customer_id: z.string().optional().describe('Client UUID to associate the snag with'),
     },
     callTool('create_snag', user)
@@ -2354,11 +2366,15 @@ function registerSnaggingTools(server: McpServer, user: UserContext): void {
       project_id: z
         .string()
         .optional()
-        .describe('spark_projects UUID. If given alone, returns existing snags without cert validation. If given with certificate_id, merges cert gaps with project snags.'),
+        .describe(
+          'spark_projects UUID. If given alone, returns existing snags without cert validation. If given with certificate_id, merges cert gaps with project snags.'
+        ),
       create_tasks: z
         .boolean()
         .optional()
-        .describe('Create a snagging project with tasks for each missing item (default true). Only applies when certificate_id is provided.'),
+        .describe(
+          'Create a snagging project with tasks for each missing item (default true). Only applies when certificate_id is provided.'
+        ),
     },
     callTool('generate_snagging_list', user)
   );
@@ -2393,5 +2409,97 @@ function registerPhotoEstimateTools(server: McpServer, user: UserContext): void 
         .describe('Client details — if provided, a quote is automatically created'),
     },
     callTool('estimate_from_photo', user)
+  );
+}
+
+// ─── Google API Tools (6) ────────────────────────────────────────────────
+
+function registerGoogleApiTools(server: McpServer, user: UserContext): void {
+  server.tool(
+    'analyse_solar_roof',
+    'Analyse a roof for solar panel potential using Google Solar API. Geocodes the address, returns max panel count, array area, yearly energy estimate, roof segment details, and carbon offset. Useful when a customer asks about solar installations or EV charger pairing.',
+    {
+      address: z
+        .string()
+        .describe('Property address to analyse (e.g. "42 High Street, Birmingham B1 1AA")'),
+      panel_capacity_watts: z
+        .number()
+        .optional()
+        .describe('Panel wattage to use for calculations (default 400W)'),
+    },
+    callTool('analyse_solar_roof', user)
+  );
+
+  server.tool(
+    'geocode_address',
+    'Convert an address to lat/lng (forward geocode) or lat/lng to an address (reverse geocode). Returns formatted address, postcode, locality, country, and place_id. Use this when you need coordinates for another tool or to verify an address.',
+    {
+      address: z
+        .string()
+        .optional()
+        .describe('Address to geocode (forward). Omit if using lat+lng for reverse.'),
+      lat: z.number().optional().describe('Latitude for reverse geocoding'),
+      lng: z.number().optional().describe('Longitude for reverse geocoding'),
+    },
+    callTool('geocode_address', user)
+  );
+
+  server.tool(
+    'validate_address',
+    'Validate and standardise a UK address using Google Address Validation API. Returns the corrected/standardised address, postcode, coordinates, and whether the address is valid. Use when creating client records or before sending post.',
+    {
+      address: z.string().describe('Address to validate (e.g. "42 high st birmingham")'),
+    },
+    callTool('validate_address', user)
+  );
+
+  server.tool(
+    'generate_map_image',
+    'Generate a static map image with labelled markers for one or more addresses. Returns a direct image URL that can be sent via MEDIA:<url>. Useful for showing job locations, route overviews, or multi-site plans.',
+    {
+      locations: z
+        .array(
+          z.object({
+            label: z
+              .string()
+              .optional()
+              .describe(
+                'Single-character label for the marker (A, B, C...). Auto-assigned if omitted.'
+              ),
+            address: z.string().describe('Address to plot on the map'),
+          })
+        )
+        .describe('Array of locations to plot on the map'),
+      size: z.string().optional().describe('Map image size as "WIDTHxHEIGHT" (default "600x400")'),
+      zoom: z
+        .number()
+        .optional()
+        .describe('Zoom level (auto-fit if omitted). 1=world, 10=city, 15=street, 20=building.'),
+    },
+    callTool('generate_map_image', user)
+  );
+
+  server.tool(
+    'search_youtube_videos',
+    'Search YouTube for trade-relevant videos. Auto-prepends "electrical" to queries that don\'t mention it. Returns video titles, descriptions, thumbnails, and watch URLs. Great for finding how-to guides, training content, or product reviews.',
+    {
+      query: z.string().describe('Search query (e.g. "consumer unit wiring", "RCBO testing")'),
+      max_results: z
+        .number()
+        .optional()
+        .describe('Number of results to return (default 5, max 10)'),
+    },
+    callTool('search_youtube_videos', user)
+  );
+
+  server.tool(
+    'get_weather',
+    'Get current weather and 3-day forecast for a location using Google Weather API. Returns temperature, conditions, wind speed, precipitation, humidity, UV index, and rain chance. Useful for planning outdoor work, site visits, or advising on weather-sensitive installations.',
+    {
+      address: z.string().optional().describe('Address to get weather for. Omit if using lat+lng.'),
+      lat: z.number().optional().describe('Latitude'),
+      lng: z.number().optional().describe('Longitude'),
+    },
+    callTool('get_weather', user)
   );
 }

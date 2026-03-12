@@ -321,8 +321,7 @@ const EICSupplyCharacteristicsSection: React.FC<EICSupplyCharacteristicsSectionP
 
             {/* Earthing */}
             <div className="space-y-4">
-              <h4 className="text-sm font-semibold text-green-400 border-b border-white/10 pb-2 flex items-center gap-2">
-                <div className="w-1.5 h-1.5 rounded-full bg-green-400"></div>
+              <h4 className="text-sm font-semibold text-green-400 border-b border-white/10 pb-2 pl-2.5 border-l-2 border-l-green-400">
                 Earthing Arrangement
               </h4>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -376,8 +375,7 @@ const EICSupplyCharacteristicsSection: React.FC<EICSupplyCharacteristicsSectionP
 
             {/* Number and Type of Live Conductors (IET Form) */}
             <div className="space-y-4">
-              <h4 className="text-sm font-semibold text-blue-400 border-b border-white/10 pb-2 flex items-center gap-2">
-                <div className="w-1.5 h-1.5 rounded-full bg-blue-400"></div>
+              <h4 className="text-sm font-semibold text-blue-400 border-b border-white/10 pb-2 pl-2.5 border-l-2 border-l-blue-400">
                 Number and Type of Live Conductors
               </h4>
               <div className="space-y-2">
@@ -404,8 +402,7 @@ const EICSupplyCharacteristicsSection: React.FC<EICSupplyCharacteristicsSectionP
 
             {/* Nature of Supply Parameters (IET Form) */}
             <div className="space-y-4">
-              <h4 className="text-sm font-semibold text-purple-400 border-b border-white/10 pb-2 flex items-center gap-2">
-                <div className="w-1.5 h-1.5 rounded-full bg-purple-400"></div>
+              <h4 className="text-sm font-semibold text-purple-400 border-b border-white/10 pb-2 pl-2.5 border-l-2 border-l-purple-400">
                 Nature of Supply Parameters
               </h4>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -526,7 +523,12 @@ const EICSupplyCharacteristicsSection: React.FC<EICSupplyCharacteristicsSectionP
                     onValueChange={handleBsStandardChange}
                     disabled={formData.supplyDeviceRating === 'LIM'}
                   >
-                    <SelectTrigger className={cn('h-11 touch-manipulation', formData.supplyDeviceRating === 'LIM' && 'opacity-40')}>
+                    <SelectTrigger
+                      className={cn(
+                        'h-11 touch-manipulation',
+                        formData.supplyDeviceRating === 'LIM' && 'opacity-40'
+                      )}
+                    >
                       <SelectValue placeholder="Select BS standard" />
                     </SelectTrigger>
                     <SelectContent className="max-w-[calc(100vw-2rem)]">
@@ -550,7 +552,12 @@ const EICSupplyCharacteristicsSection: React.FC<EICSupplyCharacteristicsSectionP
                     onValueChange={(value) => onUpdate('supplyDeviceType', value)}
                     disabled={formData.supplyDeviceRating === 'LIM'}
                   >
-                    <SelectTrigger className={cn('h-11 touch-manipulation', formData.supplyDeviceRating === 'LIM' && 'opacity-40')}>
+                    <SelectTrigger
+                      className={cn(
+                        'h-11 touch-manipulation',
+                        formData.supplyDeviceRating === 'LIM' && 'opacity-40'
+                      )}
+                    >
                       <SelectValue placeholder="Select type" />
                     </SelectTrigger>
                     <SelectContent className="max-w-[calc(100vw-2rem)]">
@@ -568,9 +575,7 @@ const EICSupplyCharacteristicsSection: React.FC<EICSupplyCharacteristicsSectionP
                   </Label>
                   <Select
                     value={
-                      formData.supplyDeviceRating === 'LIM'
-                        ? ''
-                        : formData.supplyDeviceRating || ''
+                      formData.supplyDeviceRating === 'LIM' ? '' : formData.supplyDeviceRating || ''
                     }
                     onValueChange={(value) => onUpdate('supplyDeviceRating', value)}
                     disabled={formData.supplyDeviceRating === 'LIM'}

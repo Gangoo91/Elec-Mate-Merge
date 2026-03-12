@@ -51,7 +51,7 @@ import { useSolarPVSmartForm } from '@/hooks/inspection/useSolarPVSmartForm';
 
 interface SolarPVSystemDesignProps {
   formData: SolarPVFormData;
-  onUpdate: (field: string, value: any) => void;
+  onUpdate: (field: string, value: unknown) => void;
 }
 
 interface SectionHeaderProps {
@@ -88,9 +88,9 @@ const SectionHeader: React.FC<SectionHeaderProps> = ({
       </div>
     </div>
     {isOpen ? (
-      <ChevronUp className="h-5 w-5 text-muted-foreground" />
+      <ChevronUp className="h-5 w-5 text-white" />
     ) : (
-      <ChevronDown className="h-5 w-5 text-muted-foreground" />
+      <ChevronDown className="h-5 w-5 text-white" />
     )}
   </CollapsibleTrigger>
 );
@@ -128,7 +128,7 @@ const SolarPVSystemDesign: React.FC<SolarPVSystemDesignProps> = ({ formData, onU
 
   // Update array field
   const updateArray = useCallback(
-    (index: number, field: string, value: any) => {
+    (index: number, field: string, value: unknown) => {
       const updatedArrays = [...formData.arrays];
       updatedArrays[index] = { ...updatedArrays[index], [field]: value };
 
@@ -162,6 +162,7 @@ const SolarPVSystemDesign: React.FC<SolarPVSystemDesignProps> = ({ formData, onU
       onUpdate('totalCapacity', Math.round(totalCapacity * 100) / 100);
 
       // Recalculate yield
+      // eslint-disable-next-line @typescript-eslint/no-require-imports
       const { estimateAnnualYield } = require('@/data/solarPanelDatabase');
       const totalYield = updatedArrays.reduce((sum, a) => {
         const cap = (a.panelWattage * a.panelCount) / 1000;
@@ -189,7 +190,7 @@ const SolarPVSystemDesign: React.FC<SolarPVSystemDesignProps> = ({ formData, onU
 
   // Update inverter field
   const updateInverter = useCallback(
-    (index: number, field: string, value: any) => {
+    (index: number, field: string, value: unknown) => {
       const updatedInverters = [...formData.inverters];
       updatedInverters[index] = { ...updatedInverters[index], [field]: value };
       onUpdate('inverters', updatedInverters);
@@ -275,7 +276,7 @@ const SolarPVSystemDesign: React.FC<SolarPVSystemDesignProps> = ({ formData, onU
 
                     <div className="grid grid-cols-1 sm:grid-cols-4 gap-3">
                       <div className="space-y-2">
-                        <Label className="text-xs text-muted-foreground">Wattage (Wp)</Label>
+                        <Label className="text-xs text-white">Wattage (Wp)</Label>
                         <Input
                           type="number"
                           value={array.panelWattage || ''}
@@ -291,7 +292,7 @@ const SolarPVSystemDesign: React.FC<SolarPVSystemDesignProps> = ({ formData, onU
                       </div>
 
                       <div className="space-y-2">
-                        <Label className="text-xs text-muted-foreground">Panel Count</Label>
+                        <Label className="text-xs text-white">Panel Count</Label>
                         <Input
                           type="number"
                           value={array.panelCount || ''}
@@ -307,7 +308,7 @@ const SolarPVSystemDesign: React.FC<SolarPVSystemDesignProps> = ({ formData, onU
                       </div>
 
                       <div className="space-y-2">
-                        <Label className="text-xs text-muted-foreground">Voc (V)</Label>
+                        <Label className="text-xs text-white">Voc (V)</Label>
                         <Input
                           type="number"
                           step="0.01"
@@ -324,7 +325,7 @@ const SolarPVSystemDesign: React.FC<SolarPVSystemDesignProps> = ({ formData, onU
                       </div>
 
                       <div className="space-y-2">
-                        <Label className="text-xs text-muted-foreground">Isc (A)</Label>
+                        <Label className="text-xs text-white">Isc (A)</Label>
                         <Input
                           type="number"
                           step="0.01"
@@ -344,7 +345,7 @@ const SolarPVSystemDesign: React.FC<SolarPVSystemDesignProps> = ({ formData, onU
                     {/* String Configuration */}
                     <div className="grid grid-cols-1 sm:grid-cols-4 gap-3">
                       <div className="space-y-2">
-                        <Label className="text-xs text-muted-foreground">Panels/String</Label>
+                        <Label className="text-xs text-white">Panels/String</Label>
                         <Input
                           type="number"
                           value={array.panelsPerString || array.panelCount}
@@ -360,7 +361,7 @@ const SolarPVSystemDesign: React.FC<SolarPVSystemDesignProps> = ({ formData, onU
                       </div>
 
                       <div className="space-y-2">
-                        <Label className="text-xs text-muted-foreground">Strings Parallel</Label>
+                        <Label className="text-xs text-white">Strings Parallel</Label>
                         <Input
                           type="number"
                           value={array.stringsInParallel || 1}
@@ -376,7 +377,7 @@ const SolarPVSystemDesign: React.FC<SolarPVSystemDesignProps> = ({ formData, onU
                       </div>
 
                       <div className="space-y-2">
-                        <Label className="text-xs text-muted-foreground">String Voc (V)</Label>
+                        <Label className="text-xs text-white">String Voc (V)</Label>
                         <Input
                           type="number"
                           value={array.stringVoltageVoc?.toFixed(1) || ''}
@@ -386,7 +387,7 @@ const SolarPVSystemDesign: React.FC<SolarPVSystemDesignProps> = ({ formData, onU
                       </div>
 
                       <div className="space-y-2">
-                        <Label className="text-xs text-muted-foreground">Total Isc (A)</Label>
+                        <Label className="text-xs text-white">Total Isc (A)</Label>
                         <Input
                           type="number"
                           value={array.stringCurrentIsc?.toFixed(2) || ''}
@@ -399,7 +400,7 @@ const SolarPVSystemDesign: React.FC<SolarPVSystemDesignProps> = ({ formData, onU
                     {/* Orientation & Mounting */}
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
                       <div className="space-y-2">
-                        <Label className="text-xs text-muted-foreground flex items-center gap-1">
+                        <Label className="text-xs text-white flex items-center gap-1">
                           <Compass className="h-3 w-3" />
                           Orientation
                         </Label>
@@ -421,7 +422,7 @@ const SolarPVSystemDesign: React.FC<SolarPVSystemDesignProps> = ({ formData, onU
                       </div>
 
                       <div className="space-y-2">
-                        <Label className="text-xs text-muted-foreground">Tilt Angle (°)</Label>
+                        <Label className="text-xs text-white">Tilt Angle (°)</Label>
                         <Input
                           type="number"
                           value={array.tiltAngle || 35}
@@ -433,7 +434,7 @@ const SolarPVSystemDesign: React.FC<SolarPVSystemDesignProps> = ({ formData, onU
                       </div>
 
                       <div className="space-y-2">
-                        <Label className="text-xs text-muted-foreground">Shading Factor</Label>
+                        <Label className="text-xs text-white">Shading Factor</Label>
                         <Select
                           value={array.shadingFactor?.toString() || '1'}
                           onValueChange={(value) =>
@@ -454,7 +455,7 @@ const SolarPVSystemDesign: React.FC<SolarPVSystemDesignProps> = ({ formData, onU
                       </div>
 
                       <div className="space-y-2">
-                        <Label className="text-xs text-muted-foreground">Mounting Type</Label>
+                        <Label className="text-xs text-white">Mounting Type</Label>
                         <Select
                           value={array.mountingType || 'roof-mounted'}
                           onValueChange={(value) =>
@@ -567,7 +568,7 @@ const SolarPVSystemDesign: React.FC<SolarPVSystemDesignProps> = ({ formData, onU
 
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
                       <div className="space-y-2">
-                        <Label className="text-xs text-muted-foreground">Serial Number</Label>
+                        <Label className="text-xs text-white">Serial Number</Label>
                         <Input
                           value={inverter.serialNumber || ''}
                           onChange={(e) => updateInverter(index, 'serialNumber', e.target.value)}
@@ -576,7 +577,7 @@ const SolarPVSystemDesign: React.FC<SolarPVSystemDesignProps> = ({ formData, onU
                       </div>
 
                       <div className="space-y-2">
-                        <Label className="text-xs text-muted-foreground">AC Power (kW)</Label>
+                        <Label className="text-xs text-white">AC Power (kW)</Label>
                         <Input
                           type="number"
                           step="0.1"
@@ -589,7 +590,7 @@ const SolarPVSystemDesign: React.FC<SolarPVSystemDesignProps> = ({ formData, onU
                       </div>
 
                       <div className="space-y-2">
-                        <Label className="text-xs text-muted-foreground">Type</Label>
+                        <Label className="text-xs text-white">Type</Label>
                         <Select
                           value={inverter.type || 'string'}
                           onValueChange={(value) =>
@@ -609,7 +610,7 @@ const SolarPVSystemDesign: React.FC<SolarPVSystemDesignProps> = ({ formData, onU
                       </div>
 
                       <div className="space-y-2">
-                        <Label className="text-xs text-muted-foreground">MPPT Count</Label>
+                        <Label className="text-xs text-white">MPPT Count</Label>
                         <Input
                           type="number"
                           value={inverter.mpptCount || 2}
@@ -623,7 +624,7 @@ const SolarPVSystemDesign: React.FC<SolarPVSystemDesignProps> = ({ formData, onU
 
                     <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
                       <div className="space-y-2">
-                        <Label className="text-xs text-muted-foreground">Max DC Voltage (V)</Label>
+                        <Label className="text-xs text-white">Max DC Voltage (V)</Label>
                         <Input
                           type="number"
                           value={inverter.maxInputVoltage || ''}
@@ -635,7 +636,7 @@ const SolarPVSystemDesign: React.FC<SolarPVSystemDesignProps> = ({ formData, onU
                       </div>
 
                       <div className="space-y-2">
-                        <Label className="text-xs text-muted-foreground">Location</Label>
+                        <Label className="text-xs text-white">Location</Label>
                         <Input
                           value={inverter.location || ''}
                           onChange={(e) => updateInverter(index, 'location', e.target.value)}
@@ -645,7 +646,7 @@ const SolarPVSystemDesign: React.FC<SolarPVSystemDesignProps> = ({ formData, onU
                       </div>
 
                       <div className="space-y-2">
-                        <Label className="text-xs text-muted-foreground">Phases</Label>
+                        <Label className="text-xs text-white">Phases</Label>
                         <Select
                           value={inverter.phases || 'single'}
                           onValueChange={(value) =>
@@ -715,7 +716,7 @@ const SolarPVSystemDesign: React.FC<SolarPVSystemDesignProps> = ({ formData, onU
                 <div className="space-y-4">
                   <div className="grid grid-cols-2 gap-3">
                     <div className="space-y-2">
-                      <Label className="text-xs text-muted-foreground">Make</Label>
+                      <Label className="text-xs text-white">Make</Label>
                       <Input
                         value={formData.battery?.make || ''}
                         onChange={(e) =>
@@ -727,7 +728,7 @@ const SolarPVSystemDesign: React.FC<SolarPVSystemDesignProps> = ({ formData, onU
                     </div>
 
                     <div className="space-y-2">
-                      <Label className="text-xs text-muted-foreground">Model</Label>
+                      <Label className="text-xs text-white">Model</Label>
                       <Input
                         value={formData.battery?.model || ''}
                         onChange={(e) =>
@@ -741,7 +742,7 @@ const SolarPVSystemDesign: React.FC<SolarPVSystemDesignProps> = ({ formData, onU
 
                   <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
                     <div className="space-y-2">
-                      <Label className="text-xs text-muted-foreground">Serial Number</Label>
+                      <Label className="text-xs text-white">Serial Number</Label>
                       <Input
                         value={formData.battery?.serialNumber || ''}
                         onChange={(e) =>
@@ -752,7 +753,7 @@ const SolarPVSystemDesign: React.FC<SolarPVSystemDesignProps> = ({ formData, onU
                     </div>
 
                     <div className="space-y-2">
-                      <Label className="text-xs text-muted-foreground">Usable Capacity (kWh)</Label>
+                      <Label className="text-xs text-white">Usable Capacity (kWh)</Label>
                       <Input
                         type="number"
                         step="0.1"
@@ -768,7 +769,7 @@ const SolarPVSystemDesign: React.FC<SolarPVSystemDesignProps> = ({ formData, onU
                     </div>
 
                     <div className="space-y-2">
-                      <Label className="text-xs text-muted-foreground">Chemistry</Label>
+                      <Label className="text-xs text-white">Chemistry</Label>
                       <Select
                         value={formData.battery?.chemistry || 'lithium-ion'}
                         onValueChange={(value) =>
@@ -792,7 +793,7 @@ const SolarPVSystemDesign: React.FC<SolarPVSystemDesignProps> = ({ formData, onU
                   </div>
 
                   <div className="space-y-2">
-                    <Label className="text-xs text-muted-foreground">Location</Label>
+                    <Label className="text-xs text-white">Location</Label>
                     <Input
                       value={formData.battery?.location || ''}
                       onChange={(e) =>

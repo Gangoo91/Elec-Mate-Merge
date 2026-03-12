@@ -316,8 +316,7 @@ const EarthingAndBondingSection: React.FC<EarthingAndBondingSectionProps> = ({
 
             {/* Main Protective Conductors (IET Form) */}
             <div className="space-y-4">
-              <h4 className="text-sm font-semibold text-purple-400 border-b border-white/10 pb-2 flex items-center gap-2">
-                <div className="w-1.5 h-1.5 rounded-full bg-purple-400"></div>
+              <h4 className="text-sm font-semibold text-purple-400 border-b border-white/10 pb-2 pl-2.5 border-l-2 border-l-purple-400">
                 Main Protective Conductors
               </h4>
 
@@ -455,8 +454,7 @@ const EarthingAndBondingSection: React.FC<EarthingAndBondingSectionProps> = ({
 
             {/* Bonding Connections (IET Form) */}
             <div className="space-y-3">
-              <h4 className="text-sm font-semibold text-amber-400 border-b border-white/10 pb-2 flex items-center gap-2">
-                <div className="w-1.5 h-1.5 rounded-full bg-amber-400"></div>
+              <h4 className="text-sm font-semibold text-amber-400 border-b border-white/10 pb-2 pl-2.5 border-l-2 border-l-amber-400">
                 Bonding Connections To
               </h4>
               <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">

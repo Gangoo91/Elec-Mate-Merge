@@ -43,7 +43,7 @@ import { supabase } from '@/integrations/supabase/client';
 
 interface SolarPVDeclarationsProps {
   formData: SolarPVFormData;
-  onUpdate: (field: string, value: any) => void;
+  onUpdate: (field: string, value: unknown) => void;
 }
 
 interface SectionHeaderProps {
@@ -83,9 +83,9 @@ const SectionHeader: React.FC<SectionHeaderProps> = ({
       </div>
     </div>
     {isOpen ? (
-      <ChevronUp className="h-5 w-5 text-muted-foreground" />
+      <ChevronUp className="h-5 w-5 text-white" />
     ) : (
-      <ChevronDown className="h-5 w-5 text-muted-foreground" />
+      <ChevronDown className="h-5 w-5 text-white" />
     )}
   </CollapsibleTrigger>
 );
@@ -195,7 +195,7 @@ const SignatureCanvas: React.FC<SignatureCanvasProps> = ({ value, onChange, labe
           variant="ghost"
           size="sm"
           onClick={clearSignature}
-          className="text-xs text-muted-foreground hover:text-foreground"
+          className="text-xs text-white hover:text-foreground"
         >
           <RotateCcw className="h-3 w-3 mr-1" />
           Clear
@@ -214,7 +214,7 @@ const SignatureCanvas: React.FC<SignatureCanvasProps> = ({ value, onChange, labe
           onTouchEnd={stopDrawing}
         />
       </div>
-      <p className="text-xs text-muted-foreground">Draw signature above</p>
+      <p className="text-xs text-white">Draw signature above</p>
     </div>
   );
 };
@@ -246,7 +246,7 @@ const SolarPVDeclarations: React.FC<SolarPVDeclarationsProps> = ({ formData, onU
 
   // Update defect
   const updateDefect = useCallback(
-    (id: string, field: string, value: any) => {
+    (id: string, field: string, value: unknown) => {
       const updatedDefects = (formData.defects || []).map((defect) => {
         if (defect.id === id) {
           return { ...defect, [field]: value };
@@ -269,7 +269,7 @@ const SolarPVDeclarations: React.FC<SolarPVDeclarationsProps> = ({ formData, onU
 
   // Update installer declaration
   const updateInstaller = useCallback(
-    (field: string, value: any) => {
+    (field: string, value: unknown) => {
       onUpdate('installerDeclaration', {
         ...formData.installerDeclaration,
         [field]: value,
@@ -280,7 +280,7 @@ const SolarPVDeclarations: React.FC<SolarPVDeclarationsProps> = ({ formData, onU
 
   // Update electrician declaration
   const updateElectrician = useCallback(
-    (field: string, value: any) => {
+    (field: string, value: unknown) => {
       onUpdate('electricianDeclaration', {
         ...formData.electricianDeclaration,
         [field]: value,
@@ -291,7 +291,7 @@ const SolarPVDeclarations: React.FC<SolarPVDeclarationsProps> = ({ formData, onU
 
   // Update handover
   const updateHandover = useCallback(
-    (field: string, value: any) => {
+    (field: string, value: unknown) => {
       onUpdate('handover', {
         ...formData.handover,
         [field]: value,
@@ -310,7 +310,7 @@ const SolarPVDeclarations: React.FC<SolarPVDeclarationsProps> = ({ formData, onU
       case 'recommendation':
         return 'bg-blue-500/20 text-blue-400 border-blue-500/30';
       default:
-        return 'bg-gray-500/20 text-gray-400 border-gray-500/30';
+        return 'bg-white/20 text-white border-white/30';
     }
   };
 
@@ -352,7 +352,7 @@ const SolarPVDeclarations: React.FC<SolarPVDeclarationsProps> = ({ formData, onU
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                     <div className="space-y-1 sm:col-span-2">
-                      <Label className="text-xs text-muted-foreground">Description</Label>
+                      <Label className="text-xs text-white">Description</Label>
                       <Textarea
                         value={defect.description}
                         onChange={(e) => updateDefect(defect.id, 'description', e.target.value)}
@@ -362,7 +362,7 @@ const SolarPVDeclarations: React.FC<SolarPVDeclarationsProps> = ({ formData, onU
                     </div>
 
                     <div className="space-y-1">
-                      <Label className="text-xs text-muted-foreground">Severity</Label>
+                      <Label className="text-xs text-white">Severity</Label>
                       <Select
                         value={defect.severity}
                         onValueChange={(value) =>
@@ -381,7 +381,7 @@ const SolarPVDeclarations: React.FC<SolarPVDeclarationsProps> = ({ formData, onU
                     </div>
 
                     <div className="space-y-1">
-                      <Label className="text-xs text-muted-foreground">Location</Label>
+                      <Label className="text-xs text-white">Location</Label>
                       <Input
                         value={defect.location}
                         onChange={(e) => updateDefect(defect.id, 'location', e.target.value)}
@@ -463,6 +463,7 @@ const SolarPVDeclarations: React.FC<SolarPVDeclarationsProps> = ({ formData, onU
                     className="flex items-center gap-3 p-3 bg-muted/30 rounded-lg min-h-[48px]"
                   >
                     <Checkbox
+                      // eslint-disable-next-line @typescript-eslint/no-explicit-any
                       checked={(formData.handover as any)?.[item.field] || false}
                       onCheckedChange={(checked) => updateHandover(item.field, checked)}
                       className="h-5 w-5 border-white/40 data-[state=checked]:bg-green-500 data-[state=checked]:border-green-500"

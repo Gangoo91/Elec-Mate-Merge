@@ -1,14 +1,81 @@
 /**
- * Marketplace tools (3)
+ * Marketplace tools (4)
  * Product search, price comparison, and deals from the marketplace tables.
+ *
+ * Tables:
+ *   - marketplace_products  (supplier_id FK → marketplace_suppliers)
+ *   - marketplace_deals     (supplier_id FK → marketplace_suppliers, product_id FK → marketplace_products)
  *
  * Tools:
  *   - search_products — search marketplace_products by name/category
  *   - compare_prices — compare across suppliers (CEF, Screwfix, TLC)
- *   - get_deals — current deals and discount codes
+ *   - price_materials_for_job — price up materials from a job description
+ *   - get_deals — current deals from electrical suppliers
  */
 
 import type { UserContext } from '../auth.js';
+
+/** Look up supplier IDs matching a name (ILIKE). Returns array of UUIDs. */
+async function resolveSupplierIds(
+  supabase: UserContext['supabase'],
+  supplierName: string
+): Promise<string[]> {
+  const { data } = await supabase
+    .from('marketplace_suppliers')
+    .select('id')
+    .ilike('name', `%${supplierName}%`);
+  return (data || []).map((r: { id: string }) => r.id);
+}
+
+/** Columns selected for product queries (joins supplier name via FK) */
+const PRODUCT_SELECT =
+  'id, name, description, category, brand, current_price, regular_price, is_on_sale, discount_percentage, product_type, image_url, product_url, stock_status, sku, marketplace_suppliers(name)' as const;
+
+interface ShapedProduct {
+  id: unknown;
+  name: unknown;
+  description: unknown;
+  category: unknown;
+  brand: unknown;
+  price: number;
+  regular_price: number | null;
+  is_on_sale: unknown;
+  discount_percentage: number | null;
+  supplier: string;
+  product_type: unknown;
+  image_url: unknown;
+  product_url: unknown;
+  stock_status: unknown;
+  sku: unknown;
+}
+
+/** Shape a raw product row into a clean result object */
+function shapeProduct(row: Record<string, unknown>): ShapedProduct {
+  const supplier =
+    row.marketplace_suppliers &&
+    typeof row.marketplace_suppliers === 'object' &&
+    (row.marketplace_suppliers as Record<string, unknown>).name
+      ? String((row.marketplace_suppliers as Record<string, unknown>).name)
+      : 'Unknown';
+
+  return {
+    id: row.id,
+    name: row.name,
+    description: row.description,
+    category: row.category,
+    brand: row.brand,
+    price: Number(row.current_price) || 0,
+    regular_price: row.regular_price != null ? Number(row.regular_price) : null,
+    is_on_sale: row.is_on_sale ?? false,
+    discount_percentage: row.discount_percentage != null ? Number(row.discount_percentage) : null,
+    supplier,
+    product_type: row.product_type ?? null,
+    image_url: row.image_url ?? null,
+    product_url: row.product_url ?? null,
+    stock_status: row.stock_status ?? null,
+    sku: row.sku ?? null,
+  };
+}
 
 export async function searchProducts(args: Record<string, unknown>, user: UserContext) {
   if (typeof args.query !== 'string' || args.query.trim().length === 0) {
@@ -18,30 +85,63 @@ export async function searchProducts(args: Record<string, unknown>, user: UserCo
   const supabase = user.supabase;
   const limit = typeof args.limit === 'number' && args.limit > 0 ? Math.min(args.limit, 50) : 20;
 
-  let query = supabase
-    .from('marketplace_products')
-    .select('id, name, description, category, brand, price, supplier, unit, image_url, url');
+  // Sanitise to prevent PostgREST filter injection
+  const rawQuery = args.query.trim();
+  const searchTerm = rawQuery.replace(/[,.()"'\\]/g, '');
+
+  // Resolve supplier filter to IDs if given
+  let supplierIds: string[] | null = null;
+  if (typeof args.supplier === 'string' && args.supplier.length > 0) {
+    supplierIds = await resolveSupplierIds(supabase, args.supplier);
+  }
+
+  // Use full-text search via search_vector for queries with 3+ chars
+  if (searchTerm.length >= 3) {
+    const tsQuery = searchTerm
+      .split(/\s+/)
+      .filter((w) => w.length > 0)
+      .join(' & ');
+
+    const { data, error } = await supabase.rpc('search_marketplace_products', {
+      search_query: tsQuery,
+      category_filter:
+        typeof args.category === 'string' && args.category.length > 0 ? args.category : null,
+      result_limit: limit,
+    });
+
+    if (!error && data && data.length > 0) {
+      let results: ShapedProduct[] = data.map(shapeProduct);
+      // Post-filter by supplier if specified (RPC doesn't support supplier filter)
+      if (supplierIds && supplierIds.length > 0) {
+        const supplierArg = (args.supplier as string).toLowerCase();
+        const filtered = results.filter((r) => r.supplier.toLowerCase().includes(supplierArg));
+        if (filtered.length > 0) results = filtered;
+      }
+      return { products: results, currency: 'GBP', search_method: 'full_text' };
+    }
+  }
+
+  // Fallback: ILIKE for short queries or when full-text returns nothing
+  let query = supabase.from('marketplace_products').select(PRODUCT_SELECT);
 
   if (typeof args.category === 'string' && args.category.length > 0) {
     query = query.eq('category', args.category);
   }
 
-  if (typeof args.supplier === 'string' && args.supplier.length > 0) {
-    query = query.ilike('supplier', `%${args.supplier}%`);
+  if (supplierIds && supplierIds.length > 0) {
+    query = query.in('supplier_id', supplierIds);
   }
 
-  // Sanitise to prevent PostgREST filter injection
-  const searchTerm = args.query.trim().replace(/[,.()"'\\]/g, '');
   if (searchTerm.length > 0) {
     query = query.or(`name.ilike.%${searchTerm}%,description.ilike.%${searchTerm}%`);
   }
 
-  query = query.order('name', { ascending: true }).limit(limit);
+  query = query.order('current_price', { ascending: true }).limit(limit);
 
   const { data, error } = await query;
   if (error) throw new Error(`Failed to search products: ${error.message}`);
 
-  return { products: data || [], currency: 'GBP' };
+  return { products: (data || []).map(shapeProduct), currency: 'GBP', search_method: 'ilike' };
 }
 
 export async function comparePrices(args: Record<string, unknown>, user: UserContext) {
@@ -56,14 +156,14 @@ export async function comparePrices(args: Record<string, unknown>, user: UserCon
 
   const { data, error } = await supabase
     .from('marketplace_products')
-    .select('id, name, supplier, price, unit, url, last_updated')
+    .select(PRODUCT_SELECT)
     .ilike('name', `%${searchTerm}%`)
-    .order('price', { ascending: true })
+    .order('current_price', { ascending: true })
     .limit(20);
 
   if (error) throw new Error(`Failed to compare prices: ${error.message}`);
 
-  const products = data || [];
+  const products = (data || []).map(shapeProduct);
 
   // Group by supplier
   const bySupplier: Record<
@@ -71,12 +171,11 @@ export async function comparePrices(args: Record<string, unknown>, user: UserCon
     { supplier: string; cheapest: number; products: typeof products }
   > = {};
   for (const p of products) {
-    const supplier = (p.supplier as string) || 'Unknown';
+    const supplier = p.supplier;
     if (!bySupplier[supplier]) {
       bySupplier[supplier] = { supplier, cheapest: Infinity, products: [] };
     }
-    const price = Number(p.price) || 0;
-    if (price < bySupplier[supplier].cheapest) bySupplier[supplier].cheapest = price;
+    if (p.price < bySupplier[supplier].cheapest) bySupplier[supplier].cheapest = p.price;
     bySupplier[supplier].products.push(p);
   }
 
@@ -93,7 +192,9 @@ export async function comparePrices(args: Record<string, unknown>, user: UserCon
 
 export async function priceMaterialsForJob(args: Record<string, unknown>, user: UserContext) {
   if (typeof args.job_description !== 'string' || args.job_description.trim().length === 0) {
-    throw new Error('job_description is required (e.g. "consumer unit change, 10 ways, 30m 2.5mm T&E")');
+    throw new Error(
+      'job_description is required (e.g. "consumer unit change, 10 ways, 30m 2.5mm T&E")'
+    );
   }
 
   const supabase = user.supabase;
@@ -140,8 +241,17 @@ export async function priceMaterialsForJob(args: Record<string, unknown>, user: 
 
   // If no patterns matched, split on commas and use raw terms
   if (searchKeywords.length === 0) {
-    const parts = description.split(/[,;]+/).map((s) => s.trim()).filter((s) => s.length > 2);
+    const parts = description
+      .split(/[,;]+/)
+      .map((s) => s.trim())
+      .filter((s) => s.length > 2);
     searchKeywords.push(...parts.slice(0, 10));
+  }
+
+  // Resolve preferred supplier to IDs (if given)
+  let supplierIds: string[] | null = null;
+  if (preferredSupplier) {
+    supplierIds = await resolveSupplierIds(supabase, preferredSupplier);
   }
 
   // Query marketplace_products for each keyword
@@ -150,7 +260,8 @@ export async function priceMaterialsForJob(args: Record<string, unknown>, user: 
     product_name: string;
     unit_price: number;
     supplier: string;
-    url: string | null;
+    image_url: string | null;
+    product_url: string | null;
   }> = [];
 
   for (const keyword of searchKeywords) {
@@ -160,12 +271,12 @@ export async function priceMaterialsForJob(args: Record<string, unknown>, user: 
 
     let query = supabase
       .from('marketplace_products')
-      .select('name, price, supplier, url')
+      .select(PRODUCT_SELECT)
       .or(`name.ilike.%${searchTerm}%,description.ilike.%${searchTerm}%`)
-      .order('price', { ascending: true });
+      .order('current_price', { ascending: true });
 
-    if (preferredSupplier) {
-      query = query.ilike('supplier', `%${preferredSupplier}%`);
+    if (supplierIds && supplierIds.length > 0) {
+      query = query.in('supplier_id', supplierIds);
     }
 
     query = query.limit(3);
@@ -174,14 +285,14 @@ export async function priceMaterialsForJob(args: Record<string, unknown>, user: 
     if (error) continue;
 
     if (data && data.length > 0) {
-      // Pick cheapest result for this keyword
-      const cheapest = data[0];
+      const shaped = shapeProduct(data[0]);
       items.push({
         material: keyword,
-        product_name: cheapest.name as string,
-        unit_price: Number(cheapest.price) || 0,
-        supplier: (cheapest.supplier as string) || 'Unknown',
-        url: (cheapest.url as string) || null,
+        product_name: shaped.name as string,
+        unit_price: shaped.price,
+        supplier: shaped.supplier,
+        image_url: shaped.image_url as string | null,
+        product_url: shaped.product_url as string | null,
       });
     }
   }
@@ -206,20 +317,23 @@ export async function getDeals(args: Record<string, unknown>, user: UserContext)
   const supabase = user.supabase;
   const now = new Date().toISOString();
 
+  // Resolve supplier filter to IDs if given
+  let supplierIds: string[] | null = null;
+  if (typeof args.supplier === 'string' && args.supplier.length > 0) {
+    supplierIds = await resolveSupplierIds(supabase, args.supplier);
+  }
+
   let query = supabase
     .from('marketplace_deals')
     .select(
-      'id, title, description, supplier, discount_code, discount_percent, valid_until, url, category'
+      'id, title, description, deal_type, original_price, deal_price, discount_percentage, expires_at, source_url, is_active, marketplace_suppliers(name), marketplace_products(name, image_url, product_url)'
     )
-    .gte('valid_until', now)
-    .order('discount_percent', { ascending: false });
+    .eq('is_active', true)
+    .gte('expires_at', now)
+    .order('discount_percentage', { ascending: false });
 
-  if (typeof args.supplier === 'string' && args.supplier.length > 0) {
-    query = query.ilike('supplier', `%${args.supplier}%`);
-  }
-
-  if (typeof args.category === 'string' && args.category.length > 0) {
-    query = query.eq('category', args.category);
+  if (supplierIds && supplierIds.length > 0) {
+    query = query.in('supplier_id', supplierIds);
   }
 
   const limit = typeof args.limit === 'number' && args.limit > 0 ? Math.min(args.limit, 30) : 10;
@@ -228,5 +342,26 @@ export async function getDeals(args: Record<string, unknown>, user: UserContext)
   const { data, error } = await query;
   if (error) throw new Error(`Failed to get deals: ${error.message}`);
 
-  return { deals: data || [] };
+  // Shape deals to flatten supplier/product names
+  const deals = (data || []).map((row: Record<string, unknown>) => {
+    const supplierObj = row.marketplace_suppliers as Record<string, unknown> | null;
+    const productObj = row.marketplace_products as Record<string, unknown> | null;
+    return {
+      id: row.id,
+      title: row.title,
+      description: row.description,
+      deal_type: row.deal_type,
+      original_price: row.original_price != null ? Number(row.original_price) : null,
+      deal_price: row.deal_price != null ? Number(row.deal_price) : null,
+      discount_percentage: row.discount_percentage != null ? Number(row.discount_percentage) : null,
+      supplier: supplierObj?.name ? String(supplierObj.name) : 'Unknown',
+      product_name: productObj?.name ? String(productObj.name) : null,
+      product_image_url: productObj?.image_url ?? null,
+      product_url: productObj?.product_url ?? null,
+      source_url: row.source_url,
+      expires_at: row.expires_at,
+    };
+  });
+
+  return { deals, currency: 'GBP' };
 }

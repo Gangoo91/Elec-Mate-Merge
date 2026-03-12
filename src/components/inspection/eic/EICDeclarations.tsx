@@ -28,8 +28,8 @@ const POSITION_PRESETS = [
 ] as const;
 
 interface EICDeclarationsProps {
-  formData: any;
-  onUpdate: (field: string, value: any) => void;
+  formData: Record<string, unknown>;
+  onUpdate: (field: string, value: unknown) => void;
 }
 
 const EICDeclarations: React.FC<EICDeclarationsProps> = ({ formData, onUpdate }) => {
@@ -38,9 +38,7 @@ const EICDeclarations: React.FC<EICDeclarationsProps> = ({ formData, onUpdate })
   const { toast } = useToast();
   const [isInitialMount, setIsInitialMount] = useState(true);
   const [inspectedByPositionCustom, setInspectedByPositionCustom] = useState(
-    () =>
-      !!formData.inspectedByPosition &&
-      !POSITION_PRESETS.includes(formData.inspectedByPosition)
+    () => !!formData.inspectedByPosition && !POSITION_PRESETS.includes(formData.inspectedByPosition)
   );
   const [reportAuthorisedByPositionCustom, setReportAuthorisedByPositionCustom] = useState(
     () =>
@@ -75,6 +73,7 @@ const EICDeclarations: React.FC<EICDeclarationsProps> = ({ formData, onUpdate })
   // Load profile data into a specific declaration section
   const loadProfileToSection = (
     section: 'designer' | 'constructor' | 'inspector',
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     profile?: any
   ) => {
     const selectedProfile = profile || getDefaultProfile();
@@ -551,9 +550,7 @@ const EICDeclarations: React.FC<EICDeclarationsProps> = ({ formData, onUpdate })
                   <Label htmlFor="inspectedByPosition">Position:</Label>
                   <Select
                     value={
-                      inspectedByPositionCustom
-                        ? 'custom'
-                        : formData.inspectedByPosition || ''
+                      inspectedByPositionCustom ? 'custom' : formData.inspectedByPosition || ''
                     }
                     onValueChange={(value) => {
                       if (value === 'custom') {
@@ -828,8 +825,7 @@ const EICDeclarations: React.FC<EICDeclarationsProps> = ({ formData, onUpdate })
           {/* Part P Notification */}
           <div className="space-y-3 pt-4 border-t border-border">
             <div className="space-y-1.5">
-              <h3 className="text-base sm:text-lg font-semibold text-elec-gray flex items-center gap-2">
-                <div className="w-1.5 h-1.5 rounded-full bg-amber-400"></div>
+              <h3 className="text-base sm:text-lg font-semibold text-foreground pl-2.5 border-l-2 border-l-amber-400">
                 Part P Building Regulations
               </h3>
               <p className="text-xs sm:text-sm text-white leading-relaxed">

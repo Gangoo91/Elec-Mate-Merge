@@ -44,7 +44,7 @@ import {
 
 interface SolarPVTestScheduleProps {
   formData: SolarPVFormData;
-  onUpdate: (field: string, value: any) => void;
+  onUpdate: (field: string, value: unknown) => void;
 }
 
 interface SectionHeaderProps {
@@ -84,9 +84,9 @@ const SectionHeader: React.FC<SectionHeaderProps> = ({
       </div>
     </div>
     {isOpen ? (
-      <ChevronUp className="h-5 w-5 text-muted-foreground" />
+      <ChevronUp className="h-5 w-5 text-white" />
     ) : (
-      <ChevronDown className="h-5 w-5 text-muted-foreground" />
+      <ChevronDown className="h-5 w-5 text-white" />
     )}
   </CollapsibleTrigger>
 );
@@ -113,7 +113,7 @@ const ResultBadge: React.FC<{ value: boolean | null | undefined; className?: str
     );
   }
   return (
-    <Badge className={cn('bg-gray-500/20 text-gray-400 border-gray-500/30', className)}>
+    <Badge className={cn('bg-white/20 text-white border-white/30', className)}>
       <Minus className="h-3 w-3 mr-1" />
       N/A
     </Badge>
@@ -171,7 +171,7 @@ const SolarPVTestSchedule: React.FC<SolarPVTestScheduleProps> = ({ formData, onU
   }, [formData.arrays, formData.inverters]);
 
   // Update array test
-  const updateArrayTest = (arrayId: string, field: string, value: any) => {
+  const updateArrayTest = (arrayId: string, field: string, value: unknown) => {
     const currentTests = formData.testResults?.arrayTests || [];
     const updatedTests = currentTests.map((test) => {
       if (test.arrayId === arrayId) {
@@ -186,7 +186,7 @@ const SolarPVTestSchedule: React.FC<SolarPVTestScheduleProps> = ({ formData, onU
   };
 
   // Update inverter test
-  const updateInverterTest = (inverterId: string, field: string, value: any) => {
+  const updateInverterTest = (inverterId: string, field: string, value: unknown) => {
     const currentTests = formData.testResults?.inverterTests || [];
     const updatedTests = currentTests.map((test) => {
       if (test.inverterId === inverterId) {
@@ -201,7 +201,7 @@ const SolarPVTestSchedule: React.FC<SolarPVTestScheduleProps> = ({ formData, onU
   };
 
   // Update AC test
-  const updateAcTest = (field: string, value: any) => {
+  const updateAcTest = (field: string, value: unknown) => {
     onUpdate('testResults', {
       ...formData.testResults,
       acTests: {
@@ -212,7 +212,7 @@ const SolarPVTestSchedule: React.FC<SolarPVTestScheduleProps> = ({ formData, onU
   };
 
   // Update commissioning
-  const updateCommissioning = (field: string, value: any) => {
+  const updateCommissioning = (field: string, value: unknown) => {
     onUpdate('testResults', {
       ...formData.testResults,
       commissioning: {
@@ -270,7 +270,7 @@ const SolarPVTestSchedule: React.FC<SolarPVTestScheduleProps> = ({ formData, onU
                       </Label>
                       <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                         <div className="space-y-1">
-                          <Label className="text-xs text-muted-foreground">Expected (V)</Label>
+                          <Label className="text-xs text-white">Expected (V)</Label>
                           <Input
                             type="number"
                             step="0.1"
@@ -286,7 +286,7 @@ const SolarPVTestSchedule: React.FC<SolarPVTestScheduleProps> = ({ formData, onU
                           />
                         </div>
                         <div className="space-y-1">
-                          <Label className="text-xs text-muted-foreground">Measured (V)</Label>
+                          <Label className="text-xs text-white">Measured (V)</Label>
                           <Input
                             type="number"
                             step="0.1"
@@ -306,7 +306,7 @@ const SolarPVTestSchedule: React.FC<SolarPVTestScheduleProps> = ({ formData, onU
                           />
                         </div>
                         <div className="space-y-1">
-                          <Label className="text-xs text-muted-foreground">Result</Label>
+                          <Label className="text-xs text-white">Result</Label>
                           <div className="h-11 flex items-center">
                             <ResultBadge value={test.vocWithinTolerance} />
                           </div>
@@ -321,7 +321,7 @@ const SolarPVTestSchedule: React.FC<SolarPVTestScheduleProps> = ({ formData, onU
                       </Label>
                       <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                         <div className="space-y-1">
-                          <Label className="text-xs text-muted-foreground">Expected (A)</Label>
+                          <Label className="text-xs text-white">Expected (A)</Label>
                           <Input
                             type="number"
                             step="0.01"
@@ -337,7 +337,7 @@ const SolarPVTestSchedule: React.FC<SolarPVTestScheduleProps> = ({ formData, onU
                           />
                         </div>
                         <div className="space-y-1">
-                          <Label className="text-xs text-muted-foreground">Measured (A)</Label>
+                          <Label className="text-xs text-white">Measured (A)</Label>
                           <Input
                             type="number"
                             step="0.01"
@@ -356,7 +356,7 @@ const SolarPVTestSchedule: React.FC<SolarPVTestScheduleProps> = ({ formData, onU
                           />
                         </div>
                         <div className="space-y-1">
-                          <Label className="text-xs text-muted-foreground">Result</Label>
+                          <Label className="text-xs text-white">Result</Label>
                           <div className="h-11 flex items-center">
                             <ResultBadge value={test.iscWithinTolerance} />
                           </div>
@@ -371,7 +371,7 @@ const SolarPVTestSchedule: React.FC<SolarPVTestScheduleProps> = ({ formData, onU
                       </Label>
                       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
                         <div className="space-y-1">
-                          <Label className="text-xs text-muted-foreground">+ve to Earth</Label>
+                          <Label className="text-xs text-white">+ve to Earth</Label>
                           <Input
                             type="number"
                             step="0.1"
@@ -387,7 +387,7 @@ const SolarPVTestSchedule: React.FC<SolarPVTestScheduleProps> = ({ formData, onU
                           />
                         </div>
                         <div className="space-y-1">
-                          <Label className="text-xs text-muted-foreground">-ve to Earth</Label>
+                          <Label className="text-xs text-white">-ve to Earth</Label>
                           <Input
                             type="number"
                             step="0.1"
@@ -403,7 +403,7 @@ const SolarPVTestSchedule: React.FC<SolarPVTestScheduleProps> = ({ formData, onU
                           />
                         </div>
                         <div className="space-y-1">
-                          <Label className="text-xs text-muted-foreground">Min Required</Label>
+                          <Label className="text-xs text-white">Min Required</Label>
                           <Input
                             type="number"
                             value={test.irMinimumRequired || 1}
@@ -418,7 +418,7 @@ const SolarPVTestSchedule: React.FC<SolarPVTestScheduleProps> = ({ formData, onU
                           />
                         </div>
                         <div className="space-y-1">
-                          <Label className="text-xs text-muted-foreground">Result</Label>
+                          <Label className="text-xs text-white">Result</Label>
                           <div className="h-11 flex items-center">
                             <ResultBadge
                               value={
@@ -445,7 +445,7 @@ const SolarPVTestSchedule: React.FC<SolarPVTestScheduleProps> = ({ formData, onU
                       </Label>
                       <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                         <div className="space-y-1">
-                          <Label className="text-xs text-muted-foreground">Irradiance (W/m²)</Label>
+                          <Label className="text-xs text-white">Irradiance (W/m²)</Label>
                           <Input
                             type="number"
                             step="10"
@@ -462,7 +462,7 @@ const SolarPVTestSchedule: React.FC<SolarPVTestScheduleProps> = ({ formData, onU
                           />
                         </div>
                         <div className="space-y-1">
-                          <Label className="text-xs text-muted-foreground">Ambient Temp (°C)</Label>
+                          <Label className="text-xs text-white">Ambient Temp (°C)</Label>
                           <Input
                             type="number"
                             step="0.5"
@@ -479,7 +479,7 @@ const SolarPVTestSchedule: React.FC<SolarPVTestScheduleProps> = ({ formData, onU
                           />
                         </div>
                         <div className="space-y-1">
-                          <Label className="text-xs text-muted-foreground">Module Temp (°C)</Label>
+                          <Label className="text-xs text-white">Module Temp (°C)</Label>
                           <Input
                             type="number"
                             step="0.5"
@@ -496,7 +496,7 @@ const SolarPVTestSchedule: React.FC<SolarPVTestScheduleProps> = ({ formData, onU
                           />
                         </div>
                       </div>
-                      <p className="text-xs text-muted-foreground">
+                      <p className="text-xs text-white">
                         Record irradiance &gt;400 W/m² for valid Isc measurements. Temperature
                         affects Voc readings.
                       </p>
@@ -533,7 +533,7 @@ const SolarPVTestSchedule: React.FC<SolarPVTestScheduleProps> = ({ formData, onU
 
                     {/* Array Test Notes */}
                     <div className="space-y-1">
-                      <Label className="text-xs text-muted-foreground">Array Test Notes</Label>
+                      <Label className="text-xs text-white">Array Test Notes</Label>
                       <Input
                         value={test.notes || ''}
                         onChange={(e) => updateArrayTest(test.arrayId, 'notes', e.target.value)}
@@ -547,7 +547,7 @@ const SolarPVTestSchedule: React.FC<SolarPVTestScheduleProps> = ({ formData, onU
 
               {(!formData.testResults?.arrayTests ||
                 formData.testResults.arrayTests.length === 0) && (
-                <div className="p-6 text-center text-muted-foreground">
+                <div className="p-6 text-center text-white">
                   <AlertTriangle className="h-8 w-8 mx-auto mb-2 opacity-50" />
                   <p>No arrays configured. Add arrays in the System Design tab first.</p>
                 </div>
@@ -696,7 +696,7 @@ const SolarPVTestSchedule: React.FC<SolarPVTestScheduleProps> = ({ formData, onU
 
                       {/* Anti-Islanding Test Method */}
                       <div className="space-y-1">
-                        <Label className="text-xs text-muted-foreground">
+                        <Label className="text-xs text-white">
                           Anti-Islanding Verification Method
                         </Label>
                         <Select
@@ -797,7 +797,7 @@ const SolarPVTestSchedule: React.FC<SolarPVTestScheduleProps> = ({ formData, onU
 
               {(!formData.testResults?.inverterTests ||
                 formData.testResults.inverterTests.length === 0) && (
-                <div className="p-6 text-center text-muted-foreground">
+                <div className="p-6 text-center text-white">
                   <AlertTriangle className="h-8 w-8 mx-auto mb-2 opacity-50" />
                   <p>No inverters configured. Add inverters in the System Design tab first.</p>
                 </div>
@@ -824,7 +824,7 @@ const SolarPVTestSchedule: React.FC<SolarPVTestScheduleProps> = ({ formData, onU
                 <Label className="text-sm font-medium text-foreground">Earthing</Label>
                 <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
                   <div className="space-y-1">
-                    <Label className="text-xs text-muted-foreground">Arrangement</Label>
+                    <Label className="text-xs text-white">Arrangement</Label>
                     <Select
                       value={formData.testResults?.acTests?.earthingArrangement || 'TN-C-S'}
                       onValueChange={(value) =>
@@ -843,7 +843,7 @@ const SolarPVTestSchedule: React.FC<SolarPVTestScheduleProps> = ({ formData, onU
                   </div>
 
                   <div className="space-y-1">
-                    <Label className="text-xs text-muted-foreground">Ze (Ω)</Label>
+                    <Label className="text-xs text-white">Ze (Ω)</Label>
                     <Input
                       type="number"
                       step="0.01"
@@ -854,7 +854,7 @@ const SolarPVTestSchedule: React.FC<SolarPVTestScheduleProps> = ({ formData, onU
                   </div>
 
                   <div className="space-y-1">
-                    <Label className="text-xs text-muted-foreground">Zs (Ω)</Label>
+                    <Label className="text-xs text-white">Zs (Ω)</Label>
                     <Input
                       type="number"
                       step="0.01"
@@ -871,7 +871,7 @@ const SolarPVTestSchedule: React.FC<SolarPVTestScheduleProps> = ({ formData, onU
                 <Label className="text-sm font-medium text-foreground">RCD Protection</Label>
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
                   <div className="space-y-1">
-                    <Label className="text-xs text-muted-foreground">Type</Label>
+                    <Label className="text-xs text-white">Type</Label>
                     <Select
                       value={formData.testResults?.acTests?.rcdType || 'Type A'}
                       onValueChange={(value) => updateAcTest('rcdType', value)}
@@ -889,7 +889,7 @@ const SolarPVTestSchedule: React.FC<SolarPVTestScheduleProps> = ({ formData, onU
                   </div>
 
                   <div className="space-y-1">
-                    <Label className="text-xs text-muted-foreground">Rating (mA)</Label>
+                    <Label className="text-xs text-white">Rating (mA)</Label>
                     <Input
                       type="number"
                       value={formData.testResults?.acTests?.rcdRating || 30}
@@ -899,7 +899,7 @@ const SolarPVTestSchedule: React.FC<SolarPVTestScheduleProps> = ({ formData, onU
                   </div>
 
                   <div className="space-y-1">
-                    <Label className="text-xs text-muted-foreground">Trip Time (ms)</Label>
+                    <Label className="text-xs text-white">Trip Time (ms)</Label>
                     <Input
                       type="number"
                       value={formData.testResults?.acTests?.rcdTripTime || ''}
@@ -909,7 +909,7 @@ const SolarPVTestSchedule: React.FC<SolarPVTestScheduleProps> = ({ formData, onU
                   </div>
 
                   <div className="space-y-1">
-                    <Label className="text-xs text-muted-foreground">Result</Label>
+                    <Label className="text-xs text-white">Result</Label>
                     <div className="h-11 flex items-center">
                       <ResultBadge
                         value={
@@ -930,7 +930,7 @@ const SolarPVTestSchedule: React.FC<SolarPVTestScheduleProps> = ({ formData, onU
                 </Label>
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
                   <div className="space-y-1">
-                    <Label className="text-xs text-muted-foreground">R1+R2 (Ω)</Label>
+                    <Label className="text-xs text-white">R1+R2 (Ω)</Label>
                     <Input
                       type="number"
                       step="0.01"
@@ -941,7 +941,7 @@ const SolarPVTestSchedule: React.FC<SolarPVTestScheduleProps> = ({ formData, onU
                   </div>
 
                   <div className="space-y-1">
-                    <Label className="text-xs text-muted-foreground">IR (MΩ)</Label>
+                    <Label className="text-xs text-white">IR (MΩ)</Label>
                     <Input
                       type="number"
                       step="0.1"
@@ -954,7 +954,7 @@ const SolarPVTestSchedule: React.FC<SolarPVTestScheduleProps> = ({ formData, onU
                   </div>
 
                   <div className="space-y-1">
-                    <Label className="text-xs text-muted-foreground">Test Voltage (V)</Label>
+                    <Label className="text-xs text-white">Test Voltage (V)</Label>
                     <Select
                       value={String(formData.testResults?.acTests?.irTestVoltage || 500)}
                       onValueChange={(value) => updateAcTest('irTestVoltage', parseInt(value))}
@@ -971,7 +971,7 @@ const SolarPVTestSchedule: React.FC<SolarPVTestScheduleProps> = ({ formData, onU
                   </div>
 
                   <div className="space-y-1">
-                    <Label className="text-xs text-muted-foreground">IR Result</Label>
+                    <Label className="text-xs text-white">IR Result</Label>
                     <div className="h-11 flex items-center">
                       <ResultBadge
                         value={
@@ -990,7 +990,7 @@ const SolarPVTestSchedule: React.FC<SolarPVTestScheduleProps> = ({ formData, onU
                 <Label className="text-sm font-medium text-foreground">Protection Device</Label>
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
                   <div className="space-y-1">
-                    <Label className="text-xs text-muted-foreground">MCB Rating (A)</Label>
+                    <Label className="text-xs text-white">MCB Rating (A)</Label>
                     <Input
                       type="number"
                       value={formData.testResults?.acTests?.mcbRating || ''}
@@ -1000,7 +1000,7 @@ const SolarPVTestSchedule: React.FC<SolarPVTestScheduleProps> = ({ formData, onU
                   </div>
 
                   <div className="space-y-1">
-                    <Label className="text-xs text-muted-foreground">MCB Type</Label>
+                    <Label className="text-xs text-white">MCB Type</Label>
                     <Select
                       value={formData.testResults?.acTests?.mcbType || 'B'}
                       onValueChange={(value) => updateAcTest('mcbType', value)}
@@ -1017,7 +1017,7 @@ const SolarPVTestSchedule: React.FC<SolarPVTestScheduleProps> = ({ formData, onU
                   </div>
 
                   <div className="space-y-1">
-                    <Label className="text-xs text-muted-foreground">PFC (kA)</Label>
+                    <Label className="text-xs text-white">PFC (kA)</Label>
                     <Input
                       type="number"
                       step="0.1"
@@ -1041,9 +1041,7 @@ const SolarPVTestSchedule: React.FC<SolarPVTestScheduleProps> = ({ formData, onU
 
               {/* MCB Location */}
               <div className="space-y-1">
-                <Label className="text-xs text-muted-foreground">
-                  MCB Location / Consumer Unit
-                </Label>
+                <Label className="text-xs text-white">MCB Location / Consumer Unit</Label>
                 <Input
                   value={formData.testResults?.acTests?.mcbLocation || ''}
                   onChange={(e) => updateAcTest('mcbLocation', e.target.value)}
@@ -1078,7 +1076,7 @@ const SolarPVTestSchedule: React.FC<SolarPVTestScheduleProps> = ({ formData, onU
                 </Label>
                 <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
                   <div className="space-y-1">
-                    <Label className="text-xs text-muted-foreground">Power Output (kW)</Label>
+                    <Label className="text-xs text-white">Power Output (kW)</Label>
                     <Input
                       type="number"
                       step="0.1"
@@ -1091,7 +1089,7 @@ const SolarPVTestSchedule: React.FC<SolarPVTestScheduleProps> = ({ formData, onU
                     />
                   </div>
                   <div className="space-y-1 sm:col-span-2">
-                    <Label className="text-xs text-muted-foreground">Weather Conditions</Label>
+                    <Label className="text-xs text-white">Weather Conditions</Label>
                     <Input
                       value={formData.testResults?.commissioning?.weatherConditions || ''}
                       onChange={(e) => updateCommissioning('weatherConditions', e.target.value)}
@@ -1139,7 +1137,7 @@ const SolarPVTestSchedule: React.FC<SolarPVTestScheduleProps> = ({ formData, onU
                 </Label>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   <div className="space-y-1">
-                    <Label className="text-xs text-muted-foreground">Generation Meter (kWh)</Label>
+                    <Label className="text-xs text-white">Generation Meter (kWh)</Label>
                     <Input
                       type="number"
                       step="0.1"
@@ -1155,7 +1153,7 @@ const SolarPVTestSchedule: React.FC<SolarPVTestScheduleProps> = ({ formData, onU
                     />
                   </div>
                   <div className="space-y-1">
-                    <Label className="text-xs text-muted-foreground">Export Meter (kWh)</Label>
+                    <Label className="text-xs text-white">Export Meter (kWh)</Label>
                     <Input
                       type="number"
                       step="0.1"

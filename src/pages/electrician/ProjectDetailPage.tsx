@@ -692,7 +692,7 @@ const ProjectDetailPage = () => {
                       className="w-full flex items-center justify-between p-3 rounded-xl bg-white/[0.04] border border-white/[0.08] touch-manipulation active:bg-white/[0.08] transition-colors"
                     >
                       <div className="min-w-0 text-left">
-                        <p className="text-sm font-medium text-white">{r.job_type}</p>
+                        <p className="text-sm font-medium text-white">{r.job_description}</p>
                         <p className="text-[11px] text-white capitalize">{r.status}</p>
                       </div>
                       <div className="flex items-center gap-2 flex-shrink-0">

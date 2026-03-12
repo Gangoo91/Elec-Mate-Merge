@@ -33,8 +33,8 @@ import {
 } from '@/hooks/inspection/useEVChargingSmartForm';
 
 interface EVChargingDeclarationsProps {
-  formData: any;
-  onUpdate: (field: string, value: any) => void;
+  formData: Record<string, unknown>;
+  onUpdate: (field: string, value: unknown) => void;
 }
 
 const EVChargingDeclarations: React.FC<EVChargingDeclarationsProps> = ({ formData, onUpdate }) => {
@@ -82,11 +82,11 @@ const EVChargingDeclarations: React.FC<EVChargingDeclarationsProps> = ({ formDat
                 </div>
                 <div className="flex-1 text-left min-w-0">
                   <h3 className="font-semibold text-foreground">OZEV Grant Details</h3>
-                  <span className="text-xs text-muted-foreground">EVHS, WCS schemes</span>
+                  <span className="text-xs text-white">EVHS, WCS schemes</span>
                 </div>
                 <ChevronDown
                   className={cn(
-                    'h-5 w-5 text-muted-foreground transition-transform shrink-0',
+                    'h-5 w-5 text-white transition-transform shrink-0',
                     openSections.ozev && 'rotate-180'
                   )}
                 />
@@ -120,14 +120,23 @@ const EVChargingDeclarations: React.FC<EVChargingDeclarationsProps> = ({ formDat
                 )}
               >
                 <div className="flex items-center gap-3">
-                  <div className={cn(
-                    'h-9 w-9 rounded-xl flex items-center justify-center shrink-0',
-                    formData.ozevGrantApplicable ? 'bg-green-500/15' : 'bg-white/[0.06]'
-                  )}>
-                    <Receipt className={cn('h-4 w-4', formData.ozevGrantApplicable ? 'text-green-400' : 'text-white')} />
+                  <div
+                    className={cn(
+                      'h-9 w-9 rounded-xl flex items-center justify-center shrink-0',
+                      formData.ozevGrantApplicable ? 'bg-green-500/15' : 'bg-white/[0.06]'
+                    )}
+                  >
+                    <Receipt
+                      className={cn(
+                        'h-4 w-4',
+                        formData.ozevGrantApplicable ? 'text-green-400' : 'text-white'
+                      )}
+                    />
                   </div>
                   <div>
-                    <span className="text-sm font-medium text-white block">OZEV Grant Applicable</span>
+                    <span className="text-sm font-medium text-white block">
+                      OZEV Grant Applicable
+                    </span>
                     <span className="text-xs text-white">EVHS or WCS scheme</span>
                   </div>
                 </div>
@@ -137,20 +146,26 @@ const EVChargingDeclarations: React.FC<EVChargingDeclarationsProps> = ({ formDat
                   onCheckedChange={(checked) => onUpdate('ozevGrantApplicable', checked)}
                   className="sr-only"
                 />
-                <div className={cn(
-                  'h-5 w-5 rounded-full border-2 flex items-center justify-center shrink-0 transition-colors',
-                  formData.ozevGrantApplicable
-                    ? 'border-green-400 bg-green-400'
-                    : 'border-white/30'
-                )}>
-                  {formData.ozevGrantApplicable && <CheckCircle2 className="h-3.5 w-3.5 text-white" />}
+                <div
+                  className={cn(
+                    'h-5 w-5 rounded-full border-2 flex items-center justify-center shrink-0 transition-colors',
+                    formData.ozevGrantApplicable
+                      ? 'border-green-400 bg-green-400'
+                      : 'border-white/30'
+                  )}
+                >
+                  {formData.ozevGrantApplicable && (
+                    <CheckCircle2 className="h-3.5 w-3.5 text-white" />
+                  )}
                 </div>
               </label>
 
               {formData.ozevGrantApplicable && (
                 <div className="grid grid-cols-2 gap-3 items-start">
                   <div className="space-y-1.5">
-                    <Label htmlFor="ozevScheme" className="text-sm h-5 flex items-center">Grant Scheme</Label>
+                    <Label htmlFor="ozevScheme" className="text-sm h-5 flex items-center">
+                      Grant Scheme
+                    </Label>
                     <Select
                       value={formData.ozevScheme || ''}
                       onValueChange={(value) => onUpdate('ozevScheme', value)}
@@ -159,6 +174,7 @@ const EVChargingDeclarations: React.FC<EVChargingDeclarationsProps> = ({ formDat
                         <SelectValue placeholder="Select" />
                       </SelectTrigger>
                       <SelectContent className="z-[100] bg-background border-border text-foreground">
+                        <SelectItem value="n/a">N/A</SelectItem>
                         <SelectItem value="EVHS">EVHS</SelectItem>
                         <SelectItem value="WCS">WCS</SelectItem>
                         <SelectItem value="OZEV-flat">Flat Owner-Occupier</SelectItem>
@@ -166,7 +182,9 @@ const EVChargingDeclarations: React.FC<EVChargingDeclarationsProps> = ({ formDat
                     </Select>
                   </div>
                   <div className="space-y-1.5">
-                    <Label htmlFor="ozevGrantRef" className="text-sm h-5 flex items-center">Reference Number</Label>
+                    <Label htmlFor="ozevGrantRef" className="text-sm h-5 flex items-center">
+                      Reference Number
+                    </Label>
                     <Input
                       id="ozevGrantRef"
                       placeholder="e.g., EVHS-12345"
@@ -193,11 +211,11 @@ const EVChargingDeclarations: React.FC<EVChargingDeclarationsProps> = ({ formDat
                 </div>
                 <div className="flex-1 text-left min-w-0">
                   <h3 className="font-semibold text-foreground">Handover & Documentation</h3>
-                  <span className="text-xs text-muted-foreground">Instructions, manuals</span>
+                  <span className="text-xs text-white">Instructions, manuals</span>
                 </div>
                 <ChevronDown
                   className={cn(
-                    'h-5 w-5 text-muted-foreground transition-transform shrink-0',
+                    'h-5 w-5 text-white transition-transform shrink-0',
                     openSections.handover && 'rotate-180'
                   )}
                 />
@@ -232,13 +250,22 @@ const EVChargingDeclarations: React.FC<EVChargingDeclarationsProps> = ({ formDat
                   )}
                 >
                   <div className="flex items-center gap-3">
-                    <div className={cn(
-                      'h-9 w-9 rounded-xl flex items-center justify-center shrink-0',
-                      formData.userInstructionsProvided ? 'bg-green-500/15' : 'bg-white/[0.06]'
-                    )}>
-                      <FileCheck className={cn('h-4 w-4', formData.userInstructionsProvided ? 'text-green-400' : 'text-white')} />
+                    <div
+                      className={cn(
+                        'h-9 w-9 rounded-xl flex items-center justify-center shrink-0',
+                        formData.userInstructionsProvided ? 'bg-green-500/15' : 'bg-white/[0.06]'
+                      )}
+                    >
+                      <FileCheck
+                        className={cn(
+                          'h-4 w-4',
+                          formData.userInstructionsProvided ? 'text-green-400' : 'text-white'
+                        )}
+                      />
                     </div>
-                    <span className="text-sm font-medium text-white">User instructions provided</span>
+                    <span className="text-sm font-medium text-white">
+                      User instructions provided
+                    </span>
                   </div>
                   <Checkbox
                     id="userInstructionsProvided"
@@ -246,13 +273,17 @@ const EVChargingDeclarations: React.FC<EVChargingDeclarationsProps> = ({ formDat
                     onCheckedChange={(checked) => onUpdate('userInstructionsProvided', checked)}
                     className="sr-only"
                   />
-                  <div className={cn(
-                    'h-5 w-5 rounded-full border-2 flex items-center justify-center shrink-0 transition-colors',
-                    formData.userInstructionsProvided
-                      ? 'border-green-400 bg-green-400'
-                      : 'border-white/30'
-                  )}>
-                    {formData.userInstructionsProvided && <CheckCircle2 className="h-3.5 w-3.5 text-white" />}
+                  <div
+                    className={cn(
+                      'h-5 w-5 rounded-full border-2 flex items-center justify-center shrink-0 transition-colors',
+                      formData.userInstructionsProvided
+                        ? 'border-green-400 bg-green-400'
+                        : 'border-white/30'
+                    )}
+                  >
+                    {formData.userInstructionsProvided && (
+                      <CheckCircle2 className="h-3.5 w-3.5 text-white" />
+                    )}
                   </div>
                 </label>
                 <label
@@ -265,13 +296,22 @@ const EVChargingDeclarations: React.FC<EVChargingDeclarationsProps> = ({ formDat
                   )}
                 >
                   <div className="flex items-center gap-3">
-                    <div className={cn(
-                      'h-9 w-9 rounded-xl flex items-center justify-center shrink-0',
-                      formData.operatingManualProvided ? 'bg-green-500/15' : 'bg-white/[0.06]'
-                    )}>
-                      <FileCheck className={cn('h-4 w-4', formData.operatingManualProvided ? 'text-green-400' : 'text-white')} />
+                    <div
+                      className={cn(
+                        'h-9 w-9 rounded-xl flex items-center justify-center shrink-0',
+                        formData.operatingManualProvided ? 'bg-green-500/15' : 'bg-white/[0.06]'
+                      )}
+                    >
+                      <FileCheck
+                        className={cn(
+                          'h-4 w-4',
+                          formData.operatingManualProvided ? 'text-green-400' : 'text-white'
+                        )}
+                      />
                     </div>
-                    <span className="text-sm font-medium text-white">Operating manual provided</span>
+                    <span className="text-sm font-medium text-white">
+                      Operating manual provided
+                    </span>
                   </div>
                   <Checkbox
                     id="operatingManualProvided"
@@ -279,19 +319,25 @@ const EVChargingDeclarations: React.FC<EVChargingDeclarationsProps> = ({ formDat
                     onCheckedChange={(checked) => onUpdate('operatingManualProvided', checked)}
                     className="sr-only"
                   />
-                  <div className={cn(
-                    'h-5 w-5 rounded-full border-2 flex items-center justify-center shrink-0 transition-colors',
-                    formData.operatingManualProvided
-                      ? 'border-green-400 bg-green-400'
-                      : 'border-white/30'
-                  )}>
-                    {formData.operatingManualProvided && <CheckCircle2 className="h-3.5 w-3.5 text-white" />}
+                  <div
+                    className={cn(
+                      'h-5 w-5 rounded-full border-2 flex items-center justify-center shrink-0 transition-colors',
+                      formData.operatingManualProvided
+                        ? 'border-green-400 bg-green-400'
+                        : 'border-white/30'
+                    )}
+                  >
+                    {formData.operatingManualProvided && (
+                      <CheckCircle2 className="h-3.5 w-3.5 text-white" />
+                    )}
                   </div>
                 </label>
               </div>
 
               <div className="space-y-1.5">
-                <Label htmlFor="specialConditions" className="text-sm">Special Conditions / Notes</Label>
+                <Label htmlFor="specialConditions" className="text-sm">
+                  Special Conditions / Notes
+                </Label>
                 <Textarea
                   id="specialConditions"
                   placeholder="Any special conditions, limitations, or notes..."
@@ -316,11 +362,11 @@ const EVChargingDeclarations: React.FC<EVChargingDeclarationsProps> = ({ formDat
                 </div>
                 <div className="flex-1 text-left min-w-0">
                   <h3 className="font-semibold text-foreground">Installer Declaration</h3>
-                  <span className="text-xs text-muted-foreground">Name, signature, scheme</span>
+                  <span className="text-xs text-white">Name, signature, scheme</span>
                 </div>
                 <ChevronDown
                   className={cn(
-                    'h-5 w-5 text-muted-foreground transition-transform shrink-0',
+                    'h-5 w-5 text-white transition-transform shrink-0',
                     openSections.installer && 'rotate-180'
                   )}
                 />
@@ -346,17 +392,21 @@ const EVChargingDeclarations: React.FC<EVChargingDeclarationsProps> = ({ formDat
             <div className={cn('space-y-3', isMobile ? 'px-4 py-4' : 'px-4 pb-4')}>
               {/* Smart Auto-fill from Business Settings */}
               {hasSavedInstallerDetails && (
-                <div className={cn(
-                  'flex items-center justify-between px-4 py-3 rounded-xl border transition-all',
-                  detailsLoaded
-                    ? 'border-green-500/30 bg-green-500/[0.06]'
-                    : 'border-elec-yellow/30 bg-elec-yellow/[0.04]'
-                )}>
+                <div
+                  className={cn(
+                    'flex items-center justify-between px-4 py-3 rounded-xl border transition-all',
+                    detailsLoaded
+                      ? 'border-green-500/30 bg-green-500/[0.06]'
+                      : 'border-elec-yellow/30 bg-elec-yellow/[0.04]'
+                  )}
+                >
                   <div className="flex items-center gap-3 min-w-0">
-                    <div className={cn(
-                      'h-9 w-9 rounded-xl flex items-center justify-center shrink-0',
-                      detailsLoaded ? 'bg-green-500/15' : 'bg-elec-yellow/15'
-                    )}>
+                    <div
+                      className={cn(
+                        'h-9 w-9 rounded-xl flex items-center justify-center shrink-0',
+                        detailsLoaded ? 'bg-green-500/15' : 'bg-elec-yellow/15'
+                      )}
+                    >
                       {detailsLoaded ? (
                         <CheckCircle2 className="h-4 w-4 text-green-400" />
                       ) : (
@@ -368,7 +418,9 @@ const EVChargingDeclarations: React.FC<EVChargingDeclarationsProps> = ({ formDat
                         {detailsLoaded ? 'Profile loaded' : 'Auto-fill available'}
                       </p>
                       <p className="text-xs text-white">
-                        {detailsLoaded ? 'From your business settings' : 'Load your installer profile'}
+                        {detailsLoaded
+                          ? 'From your business settings'
+                          : 'Load your installer profile'}
                       </p>
                     </div>
                   </div>
@@ -381,8 +433,9 @@ const EVChargingDeclarations: React.FC<EVChargingDeclarationsProps> = ({ formDat
 
               <div className="rounded-xl border border-amber-500/20 bg-amber-500/[0.04] px-4 py-3">
                 <p className="text-xs text-white leading-relaxed">
-                  <span className="font-semibold text-amber-400">Declaration: </span>
-                  I certify this EV charging installation has been designed, constructed, inspected and tested per BS 7671:2018+A3:2024, IET CoP for EV Charging (5th Ed), and Building Regulations.
+                  <span className="font-semibold text-amber-400">Declaration: </span>I certify this
+                  EV charging installation has been designed, constructed, inspected and tested per
+                  BS 7671:2018+A3:2024, IET CoP for EV Charging (5th Ed), and Building Regulations.
                 </p>
               </div>
 
@@ -391,7 +444,10 @@ const EVChargingDeclarations: React.FC<EVChargingDeclarationsProps> = ({ formDat
                   <Label htmlFor="installerName" className="text-sm h-5 flex items-center gap-1">
                     Name *
                     {detailsLoaded && formData.installerName && (
-                      <Badge variant="outline" className="text-[9px] px-1 py-0 border-green-500/50 text-green-400">
+                      <Badge
+                        variant="outline"
+                        className="text-[9px] px-1 py-0 border-green-500/50 text-green-400"
+                      >
                         Auto
                       </Badge>
                     )}
@@ -408,7 +464,10 @@ const EVChargingDeclarations: React.FC<EVChargingDeclarationsProps> = ({ formDat
                   <Label htmlFor="installerCompany" className="text-sm h-5 flex items-center gap-1">
                     Company
                     {detailsLoaded && formData.installerCompany && (
-                      <Badge variant="outline" className="text-[9px] px-1 py-0 border-green-500/50 text-green-400">
+                      <Badge
+                        variant="outline"
+                        className="text-[9px] px-1 py-0 border-green-500/50 text-green-400"
+                      >
                         Auto
                       </Badge>
                     )}
@@ -425,7 +484,9 @@ const EVChargingDeclarations: React.FC<EVChargingDeclarationsProps> = ({ formDat
 
               <div className="grid grid-cols-2 gap-3 items-start">
                 <div className="space-y-1.5">
-                  <Label htmlFor="installerScheme" className="text-sm h-5 flex items-center">Scheme *</Label>
+                  <Label htmlFor="installerScheme" className="text-sm h-5 flex items-center">
+                    Scheme *
+                  </Label>
                   <Select
                     value={formData.installerScheme || ''}
                     onValueChange={(value) => onUpdate('installerScheme', value)}
@@ -444,7 +505,9 @@ const EVChargingDeclarations: React.FC<EVChargingDeclarationsProps> = ({ formDat
                   </Select>
                 </div>
                 <div className="space-y-1.5">
-                  <Label htmlFor="installerSchemeNumber" className="text-sm h-5 flex items-center">Membership No.</Label>
+                  <Label htmlFor="installerSchemeNumber" className="text-sm h-5 flex items-center">
+                    Membership No.
+                  </Label>
                   <Input
                     id="installerSchemeNumber"
                     placeholder="e.g., 12345678"
@@ -457,7 +520,12 @@ const EVChargingDeclarations: React.FC<EVChargingDeclarationsProps> = ({ formDat
 
               <div className="grid grid-cols-2 gap-3 items-start">
                 <div className="space-y-1.5">
-                  <Label htmlFor="installerQualifications" className="text-sm h-5 flex items-center">Qualifications</Label>
+                  <Label
+                    htmlFor="installerQualifications"
+                    className="text-sm h-5 flex items-center"
+                  >
+                    Qualifications
+                  </Label>
                   <Input
                     id="installerQualifications"
                     placeholder="C&G 2391, EV Qual"
@@ -467,7 +535,9 @@ const EVChargingDeclarations: React.FC<EVChargingDeclarationsProps> = ({ formDat
                   />
                 </div>
                 <div className="space-y-1.5">
-                  <Label htmlFor="installerDate" className="text-sm h-5 flex items-center">Date</Label>
+                  <Label htmlFor="installerDate" className="text-sm h-5 flex items-center">
+                    Date
+                  </Label>
                   <Input
                     id="installerDate"
                     type="date"
@@ -504,11 +574,11 @@ const EVChargingDeclarations: React.FC<EVChargingDeclarationsProps> = ({ formDat
                 </div>
                 <div className="flex-1 text-left min-w-0">
                   <h3 className="font-semibold text-foreground">Compliance & Standards</h3>
-                  <span className="text-xs text-muted-foreground">BS 7671, IET, Part P</span>
+                  <span className="text-xs text-white">BS 7671, IET, Part P</span>
                 </div>
                 <ChevronDown
                   className={cn(
-                    'h-5 w-5 text-muted-foreground transition-transform shrink-0',
+                    'h-5 w-5 text-white transition-transform shrink-0',
                     openSections.compliance && 'rotate-180'
                   )}
                 />
@@ -534,9 +604,17 @@ const EVChargingDeclarations: React.FC<EVChargingDeclarationsProps> = ({ formDat
             <div className={cn('space-y-3', isMobile ? 'px-4 py-4' : 'px-4 pb-4')}>
               <div className="space-y-2">
                 {[
-                  { id: 'bs7671Compliance', label: 'BS 7671:2018+A3:2024', sub: '18th Edition Wiring Regulations' },
+                  {
+                    id: 'bs7671Compliance',
+                    label: 'BS 7671:2018+A3:2024',
+                    sub: '18th Edition Wiring Regulations',
+                  },
                   { id: 'ietCopCompliance', label: 'IET CoP for EV Charging', sub: '5th Edition' },
-                  { id: 'buildingRegsCompliance', label: 'Building Regulations Part P', sub: 'Electrical safety in dwellings' },
+                  {
+                    id: 'buildingRegsCompliance',
+                    label: 'Building Regulations Part P',
+                    sub: 'Electrical safety in dwellings',
+                  },
                 ].map((item) => (
                   <label
                     key={item.id}
@@ -549,11 +627,18 @@ const EVChargingDeclarations: React.FC<EVChargingDeclarationsProps> = ({ formDat
                     )}
                   >
                     <div className="flex items-center gap-3">
-                      <div className={cn(
-                        'h-9 w-9 rounded-xl flex items-center justify-center shrink-0',
-                        formData[item.id] ? 'bg-green-500/15' : 'bg-white/[0.06]'
-                      )}>
-                        <Shield className={cn('h-4 w-4', formData[item.id] ? 'text-green-400' : 'text-white')} />
+                      <div
+                        className={cn(
+                          'h-9 w-9 rounded-xl flex items-center justify-center shrink-0',
+                          formData[item.id] ? 'bg-green-500/15' : 'bg-white/[0.06]'
+                        )}
+                      >
+                        <Shield
+                          className={cn(
+                            'h-4 w-4',
+                            formData[item.id] ? 'text-green-400' : 'text-white'
+                          )}
+                        />
                       </div>
                       <div>
                         <span className="text-sm font-medium text-white block">{item.label}</span>
@@ -566,12 +651,12 @@ const EVChargingDeclarations: React.FC<EVChargingDeclarationsProps> = ({ formDat
                       onCheckedChange={(checked) => onUpdate(item.id, checked)}
                       className="sr-only"
                     />
-                    <div className={cn(
-                      'h-5 w-5 rounded-full border-2 flex items-center justify-center shrink-0 transition-colors',
-                      formData[item.id]
-                        ? 'border-green-400 bg-green-400'
-                        : 'border-white/30'
-                    )}>
+                    <div
+                      className={cn(
+                        'h-5 w-5 rounded-full border-2 flex items-center justify-center shrink-0 transition-colors',
+                        formData[item.id] ? 'border-green-400 bg-green-400' : 'border-white/30'
+                      )}
+                    >
                       {formData[item.id] && <CheckCircle2 className="h-3.5 w-3.5 text-white" />}
                     </div>
                   </label>
@@ -579,7 +664,9 @@ const EVChargingDeclarations: React.FC<EVChargingDeclarationsProps> = ({ formDat
               </div>
 
               <div className="space-y-1.5">
-                <Label htmlFor="additionalNotes" className="text-sm">Additional Notes</Label>
+                <Label htmlFor="additionalNotes" className="text-sm">
+                  Additional Notes
+                </Label>
                 <Textarea
                   id="additionalNotes"
                   placeholder="Any additional notes or comments..."

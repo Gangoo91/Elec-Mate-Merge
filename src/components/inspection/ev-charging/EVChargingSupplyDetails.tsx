@@ -12,22 +12,14 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
-import {
-  ChevronDown,
-  Zap,
-  Cable,
-  Shield,
-  AlertTriangle,
-  Globe,
-  Info,
-} from 'lucide-react';
+import { ChevronDown, Zap, Cable, Shield, AlertTriangle, Globe, Info } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { useEVChargingSmartForm } from '@/hooks/inspection/useEVChargingSmartForm';
 
 interface EVChargingSupplyDetailsProps {
-  formData: any;
-  onUpdate: (field: string, value: any) => void;
+  formData: Record<string, unknown>;
+  onUpdate: (field: string, value: unknown) => void;
 }
 
 const EVChargingSupplyDetails: React.FC<EVChargingSupplyDetailsProps> = ({
@@ -98,11 +90,11 @@ const EVChargingSupplyDetails: React.FC<EVChargingSupplyDetailsProps> = ({
                 </div>
                 <div className="flex-1 text-left min-w-0">
                   <h3 className="font-semibold text-foreground">Supply Characteristics</h3>
-                  <span className="text-xs text-muted-foreground">Voltage, phases, earthing</span>
+                  <span className="text-xs text-white">Voltage, phases, earthing</span>
                 </div>
                 <ChevronDown
                   className={cn(
-                    'h-5 w-5 text-muted-foreground transition-transform shrink-0',
+                    'h-5 w-5 text-white transition-transform shrink-0',
                     openSections.supply && 'rotate-180'
                   )}
                 />
@@ -231,16 +223,16 @@ const EVChargingSupplyDetails: React.FC<EVChargingSupplyDetailsProps> = ({
                 <div
                   className={cn(
                     'h-10 w-10 rounded-xl flex items-center justify-center shrink-0',
-                    isPME ? 'bg-amber-500/20' : 'bg-gray-500/20'
+                    isPME ? 'bg-amber-500/20' : 'bg-white/20'
                   )}
                 >
                   <AlertTriangle
-                    className={cn('h-5 w-5', isPME ? 'text-amber-400' : 'text-gray-400')}
+                    className={cn('h-5 w-5', isPME ? 'text-amber-400' : 'text-white')}
                   />
                 </div>
                 <div className="flex-1 text-left min-w-0">
                   <h3 className="font-semibold text-foreground">PME Considerations</h3>
-                  <span className="text-xs text-muted-foreground">
+                  <span className="text-xs text-white">
                     {isPME ? 'PME detected - review earthing' : 'Earthing measures'}
                   </span>
                 </div>
@@ -254,7 +246,7 @@ const EVChargingSupplyDetails: React.FC<EVChargingSupplyDetailsProps> = ({
                 )}
                 <ChevronDown
                   className={cn(
-                    'h-5 w-5 text-muted-foreground transition-transform shrink-0',
+                    'h-5 w-5 text-white transition-transform shrink-0',
                     openSections.pme && 'rotate-180'
                   )}
                 />
@@ -265,11 +257,11 @@ const EVChargingSupplyDetails: React.FC<EVChargingSupplyDetailsProps> = ({
                   <div
                     className={cn(
                       'w-9 h-9 rounded-xl flex items-center justify-center',
-                      isPME ? 'bg-amber-500/15' : 'bg-gray-500/15'
+                      isPME ? 'bg-amber-500/15' : 'bg-white/15'
                     )}
                   >
                     <AlertTriangle
-                      className={cn('h-4 w-4', isPME ? 'text-amber-400' : 'text-gray-400')}
+                      className={cn('h-4 w-4', isPME ? 'text-amber-400' : 'text-white')}
                     />
                   </div>
                   <span className="text-white font-semibold">PME Earthing Considerations</span>
@@ -394,11 +386,11 @@ const EVChargingSupplyDetails: React.FC<EVChargingSupplyDetailsProps> = ({
                 </div>
                 <div className="flex-1 text-left min-w-0">
                   <h3 className="font-semibold text-foreground">Circuit Details</h3>
-                  <span className="text-xs text-muted-foreground">Cable type & size</span>
+                  <span className="text-xs text-white">Cable type & size</span>
                 </div>
                 <ChevronDown
                   className={cn(
-                    'h-5 w-5 text-muted-foreground transition-transform shrink-0',
+                    'h-5 w-5 text-white transition-transform shrink-0',
                     openSections.circuit && 'rotate-180'
                   )}
                 />
@@ -443,6 +435,7 @@ const EVChargingSupplyDetails: React.FC<EVChargingSupplyDetailsProps> = ({
                       <SelectValue placeholder="Select" />
                     </SelectTrigger>
                     <SelectContent className="z-[100] bg-background border-border text-foreground">
+                      <SelectItem value="n/a">N/A</SelectItem>
                       <SelectItem value="6242Y">6242Y Twin & Earth</SelectItem>
                       <SelectItem value="6243Y">6243Y (3C + E)</SelectItem>
                       <SelectItem value="SWA">SWA Armoured Cable</SelectItem>
@@ -497,6 +490,7 @@ const EVChargingSupplyDetails: React.FC<EVChargingSupplyDetailsProps> = ({
                       <SelectValue placeholder="Select" />
                     </SelectTrigger>
                     <SelectContent className="z-[100] bg-background border-border text-foreground">
+                      <SelectItem value="n/a">N/A</SelectItem>
                       <SelectItem value="clipped-direct">Clipped Direct</SelectItem>
                       <SelectItem value="trunking">In Trunking</SelectItem>
                       <SelectItem value="conduit">In Conduit</SelectItem>
@@ -526,7 +520,7 @@ const EVChargingSupplyDetails: React.FC<EVChargingSupplyDetailsProps> = ({
                 </div>
                 <div className="flex-1 text-left min-w-0">
                   <h3 className="font-semibold text-foreground">Circuit Protection</h3>
-                  <span className="text-xs text-muted-foreground">MCB/RCBO & RCD</span>
+                  <span className="text-xs text-white">MCB/RCBO & RCD</span>
                 </div>
                 {maxZsLookup && (
                   <Badge
@@ -538,7 +532,7 @@ const EVChargingSupplyDetails: React.FC<EVChargingSupplyDetailsProps> = ({
                 )}
                 <ChevronDown
                   className={cn(
-                    'h-5 w-5 text-muted-foreground transition-transform shrink-0',
+                    'h-5 w-5 text-white transition-transform shrink-0',
                     openSections.protection && 'rotate-180'
                   )}
                 />
@@ -731,7 +725,7 @@ const EVChargingSupplyDetails: React.FC<EVChargingSupplyDetailsProps> = ({
                 </div>
                 <div className="flex-1 text-left min-w-0">
                   <h3 className="font-semibold text-foreground">DNO Notification</h3>
-                  <span className="text-xs text-muted-foreground">
+                  <span className="text-xs text-white">
                     {dnoRequirement.required ? dnoRequirement.type : 'G98/G99 compliance'}
                   </span>
                 </div>
@@ -750,7 +744,7 @@ const EVChargingSupplyDetails: React.FC<EVChargingSupplyDetailsProps> = ({
                 )}
                 <ChevronDown
                   className={cn(
-                    'h-5 w-5 text-muted-foreground transition-transform shrink-0',
+                    'h-5 w-5 text-white transition-transform shrink-0',
                     openSections.dno && 'rotate-180'
                   )}
                 />
@@ -827,14 +821,16 @@ const EVChargingSupplyDetails: React.FC<EVChargingSupplyDetailsProps> = ({
                   )}
                 </div>
                 <div className="flex-1 min-w-0">
-                  <p className={cn(
-                    'text-sm font-medium',
-                    dnoRequirement.type === 'G99'
-                      ? 'text-red-400'
-                      : dnoRequirement.type === 'G98'
-                        ? 'text-orange-400'
-                        : 'text-green-400'
-                  )}>
+                  <p
+                    className={cn(
+                      'text-sm font-medium',
+                      dnoRequirement.type === 'G99'
+                        ? 'text-red-400'
+                        : dnoRequirement.type === 'G98'
+                          ? 'text-orange-400'
+                          : 'text-green-400'
+                    )}
+                  >
                     {dnoRequirement.message}
                   </p>
                   <p className="text-xs text-white mt-0.5">{dnoRequirement.details}</p>
@@ -858,14 +854,22 @@ const EVChargingSupplyDetails: React.FC<EVChargingSupplyDetailsProps> = ({
                     onCheckedChange={(checked) => onUpdate('g98Notification', checked)}
                     className="sr-only"
                   />
-                  <span className={cn(
-                    'text-lg font-bold',
-                    formData.g98Notification ? 'text-orange-400' : 'text-white'
-                  )}>G98</span>
-                  <span className={cn(
-                    'text-xs',
-                    formData.g98Notification ? 'text-orange-300' : 'text-white'
-                  )}>Notification</span>
+                  <span
+                    className={cn(
+                      'text-lg font-bold',
+                      formData.g98Notification ? 'text-orange-400' : 'text-white'
+                    )}
+                  >
+                    G98
+                  </span>
+                  <span
+                    className={cn(
+                      'text-xs',
+                      formData.g98Notification ? 'text-orange-300' : 'text-white'
+                    )}
+                  >
+                    Notification
+                  </span>
                   {formData.g98Notification && (
                     <div className="w-2 h-2 rounded-full bg-orange-400 mt-0.5" />
                   )}
@@ -885,14 +889,22 @@ const EVChargingSupplyDetails: React.FC<EVChargingSupplyDetailsProps> = ({
                     onCheckedChange={(checked) => onUpdate('g99Application', checked)}
                     className="sr-only"
                   />
-                  <span className={cn(
-                    'text-lg font-bold',
-                    formData.g99Application ? 'text-red-400' : 'text-white'
-                  )}>G99</span>
-                  <span className={cn(
-                    'text-xs',
-                    formData.g99Application ? 'text-red-300' : 'text-white'
-                  )}>Application</span>
+                  <span
+                    className={cn(
+                      'text-lg font-bold',
+                      formData.g99Application ? 'text-red-400' : 'text-white'
+                    )}
+                  >
+                    G99
+                  </span>
+                  <span
+                    className={cn(
+                      'text-xs',
+                      formData.g99Application ? 'text-red-300' : 'text-white'
+                    )}
+                  >
+                    Application
+                  </span>
                   {formData.g99Application && (
                     <div className="w-2 h-2 rounded-full bg-red-400 mt-0.5" />
                   )}
@@ -917,7 +929,9 @@ const EVChargingSupplyDetails: React.FC<EVChargingSupplyDetailsProps> = ({
                 />
                 <div className="flex-1">
                   <span className="text-sm font-medium text-white">DNO has been notified</span>
-                  <p className="text-xs text-white">Confirm notification sent to distribution network operator</p>
+                  <p className="text-xs text-white">
+                    Confirm notification sent to distribution network operator
+                  </p>
                 </div>
               </label>
 

@@ -126,16 +126,14 @@ export function InverterAutocomplete({
       className={cn(
         'w-full justify-between h-11 touch-manipulation',
         'bg-elec-gray border-white/30 text-foreground',
-        'hover:bg-gray-700 hover:border-white/40',
+        'hover:bg-white/10 hover:border-white/40',
         'focus:border-yellow-500 focus:ring-yellow-500',
         'data-[state=open]:border-elec-yellow data-[state=open]:ring-2',
         disabled && 'opacity-50 cursor-not-allowed',
         className
       )}
     >
-      <span className={cn('truncate', !selectedInverter && 'text-muted-foreground')}>
-        {displayValue}
-      </span>
+      <span className={cn('truncate', !selectedInverter && 'text-white')}>{displayValue}</span>
       <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
     </Button>
   );
@@ -165,7 +163,7 @@ export function InverterAutocomplete({
           <span className={cn('font-medium truncate', forMobile && 'text-base')}>
             {showMake ? `${inverter.make} ${inverter.model}` : inverter.model}
           </span>
-          <span className={cn('text-gray-400 truncate', forMobile ? 'text-sm' : 'text-xs')}>
+          <span className={cn('text-white truncate', forMobile ? 'text-sm' : 'text-xs')}>
             {inverter.ratedPowerAc}kW • {inverter.phases === 'three' ? '3Φ' : '1Φ'} •{' '}
             {inverter.mpptCount} MPPT
           </span>
@@ -203,7 +201,7 @@ export function InverterAutocomplete({
           <div className="flex flex-col max-h-[70vh]">
             {/* Search input */}
             <div className="flex items-center gap-2 px-4 py-3 border-b border-border/50 bg-background sticky top-0">
-              <Search className="h-5 w-5 text-muted-foreground shrink-0" />
+              <Search className="h-5 w-5 text-white shrink-0" />
               <Input
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
@@ -227,15 +225,13 @@ export function InverterAutocomplete({
             <div className="flex-1 overflow-y-auto momentum-scroll-y">
               {filteredInverters && filteredInverters.length > 0 ? (
                 <div className="px-2 py-2">
-                  <p className="px-4 py-2 text-sm text-muted-foreground font-medium">
-                    Search Results
-                  </p>
+                  <p className="px-4 py-2 text-sm text-white font-medium">Search Results</p>
                   <div className="space-y-1">
                     {filteredInverters.map((inverter) => renderInverterItem(inverter, true, true))}
                   </div>
                 </div>
               ) : search.trim() ? (
-                <div className="py-12 text-center text-muted-foreground">
+                <div className="py-12 text-center text-white">
                   <Zap className="h-12 w-12 mx-auto mb-3 opacity-30" />
                   <p className="text-base">No inverters found</p>
                   <p className="text-sm mt-1">Try a different search term</p>
@@ -244,7 +240,7 @@ export function InverterAutocomplete({
                 <div className="px-2 py-2">
                   {Object.entries(invertersGrouped).map(([manufacturer, inverters]) => (
                     <div key={manufacturer} className="mb-4">
-                      <p className="px-4 py-2 text-sm text-muted-foreground font-medium sticky top-0 bg-background">
+                      <p className="px-4 py-2 text-sm text-white font-medium sticky top-0 bg-background">
                         {manufacturer}
                       </p>
                       <div className="space-y-1">
@@ -258,7 +254,7 @@ export function InverterAutocomplete({
 
             {/* Footer */}
             <div className="border-t border-border/50 px-4 py-3 bg-card/30">
-              <p className="text-xs text-muted-foreground text-center">
+              <p className="text-xs text-white text-center">
                 {getInverterCount()} MCS-certified inverters
               </p>
             </div>
@@ -291,10 +287,10 @@ export function InverterAutocomplete({
               placeholder="Search inverters..."
               value={search}
               onValueChange={setSearch}
-              className="border-none bg-elec-gray text-foreground placeholder:text-gray-400"
+              className="border-none bg-elec-gray text-foreground placeholder:text-white"
             />
             <CommandList className="bg-elec-gray max-h-[300px]">
-              <CommandEmpty className="p-4 text-sm text-gray-400">No inverters found.</CommandEmpty>
+              <CommandEmpty className="p-4 text-sm text-white">No inverters found.</CommandEmpty>
 
               {/* Show search results if searching */}
               {filteredInverters && filteredInverters.length > 0 ? (
@@ -304,7 +300,7 @@ export function InverterAutocomplete({
                       key={inverter.id}
                       value={inverter.id}
                       onSelect={() => handleSelect(inverter)}
-                      className="bg-elec-gray hover:bg-gray-700 cursor-pointer text-foreground py-2"
+                      className="bg-elec-gray hover:bg-white/10 cursor-pointer text-foreground py-2"
                     >
                       <Check
                         className={cn(
@@ -318,7 +314,7 @@ export function InverterAutocomplete({
                         <span className="font-medium truncate">
                           {inverter.make} {inverter.model}
                         </span>
-                        <span className="text-xs text-gray-400 truncate">
+                        <span className="text-xs text-white truncate">
                           {inverter.ratedPowerAc}kW • {inverter.phases === 'three' ? '3Φ' : '1Φ'} •{' '}
                           {inverter.mpptCount} MPPT
                         </span>
@@ -346,7 +342,7 @@ export function InverterAutocomplete({
                         key={inverter.id}
                         value={inverter.id}
                         onSelect={() => handleSelect(inverter)}
-                        className="bg-elec-gray hover:bg-gray-700 cursor-pointer text-foreground py-2"
+                        className="bg-elec-gray hover:bg-white/10 cursor-pointer text-foreground py-2"
                       >
                         <Check
                           className={cn(
@@ -358,7 +354,7 @@ export function InverterAutocomplete({
                         />
                         <div className="flex flex-col flex-1 min-w-0">
                           <span className="font-medium truncate">{inverter.model}</span>
-                          <span className="text-xs text-gray-400 truncate">
+                          <span className="text-xs text-white truncate">
                             {inverter.ratedPowerAc}kW • {inverter.phases === 'three' ? '3Φ' : '1Φ'}
                           </span>
                         </div>
@@ -374,7 +370,7 @@ export function InverterAutocomplete({
               )}
 
               {/* Database footer */}
-              <div className="p-2 text-xs text-gray-500 border-t border-white/10 text-center">
+              <div className="p-2 text-xs text-white border-t border-white/10 text-center">
                 {getInverterCount()} MCS-certified inverters
               </div>
             </CommandList>
@@ -417,7 +413,7 @@ export function InverterInfoDisplay({ inverterId, className }: InverterInfoDispl
           <p className="font-medium text-foreground">
             {inverter.make} {inverter.model}
           </p>
-          <p className="text-xs text-gray-400 mt-0.5">
+          <p className="text-xs text-white mt-0.5">
             {inverter.type} inverter •{' '}
             {inverter.phases === 'three' ? 'Three Phase' : 'Single Phase'}
           </p>
@@ -429,19 +425,19 @@ export function InverterInfoDisplay({ inverterId, className }: InverterInfoDispl
 
       <div className="mt-2 grid grid-cols-2 gap-2 text-xs">
         <div>
-          <span className="text-gray-400">MPPT:</span>{' '}
+          <span className="text-white">MPPT:</span>{' '}
           <span className="text-foreground">{inverter.mpptCount} inputs</span>
         </div>
         <div>
-          <span className="text-gray-400">Efficiency:</span>{' '}
+          <span className="text-white">Efficiency:</span>{' '}
           <span className="text-foreground">{inverter.efficiency}%</span>
         </div>
         <div>
-          <span className="text-gray-400">Max DC:</span>{' '}
+          <span className="text-white">Max DC:</span>{' '}
           <span className="text-foreground">{inverter.maxInputVoltage}V</span>
         </div>
         <div>
-          <span className="text-gray-400">Warranty:</span>{' '}
+          <span className="text-white">Warranty:</span>{' '}
           <span className="text-foreground">{inverter.warranty} years</span>
         </div>
       </div>
@@ -453,14 +449,14 @@ export function InverterInfoDisplay({ inverterId, className }: InverterInfoDispl
             MCS
           </span>
         )}
-        {inverter.g98g99Compliant && <span className="text-xs text-gray-400">G98/G99</span>}
+        {inverter.g98g99Compliant && <span className="text-xs text-white">G98/G99</span>}
         {inverter.hybridCapable && (
           <span className="flex items-center gap-1 text-green-400 text-xs">
             <Battery className="h-3 w-3" />
             Hybrid
           </span>
         )}
-        {inverter.wifi && <span className="text-xs text-gray-400">WiFi</span>}
+        {inverter.wifi && <span className="text-xs text-white">WiFi</span>}
       </div>
     </div>
   );

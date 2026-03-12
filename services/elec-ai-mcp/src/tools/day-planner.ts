@@ -5,6 +5,7 @@
  */
 
 import type { UserContext } from '../auth.js';
+import { getWeather } from './google-apis.js';
 
 const GOOGLE_MAPS_API_KEY = process.env.GOOGLE_MAPS_API_KEY || '';
 
@@ -96,7 +97,8 @@ function mergeFixedAndFlexible(
   events: CalendarEvent[]
 ): number[] {
   if (fixed.length === 0) return flexible;
-  if (flexible.length === 0) return [...fixed].sort((a, b) => events[a].start_at.localeCompare(events[b].start_at));
+  if (flexible.length === 0)
+    return [...fixed].sort((a, b) => events[a].start_at.localeCompare(events[b].start_at));
 
   // Sort fixed by start time
   const sortedFixed = [...fixed].sort(
@@ -113,9 +115,7 @@ function mergeFixedAndFlexible(
   for (const fi of sortedFixed) {
     // Add flexible events before this fixed event
     // Heuristic: add roughly equal number of flexible events between fixed events
-    const flexPerSlot = Math.ceil(
-      (flexible.length - flexIdx) / (sortedFixed.length - fixIdx)
-    );
+    const flexPerSlot = Math.ceil((flexible.length - flexIdx) / (sortedFixed.length - fixIdx));
     for (let i = 0; i < flexPerSlot && flexIdx < flexible.length; i++) {
       result.push(flexible[flexIdx++]);
     }
@@ -269,7 +269,8 @@ export async function planMyDay(args: Record<string, unknown>, user: UserContext
       home_address: homeAddress,
       first_departure: events[0].start_at,
       last_arrival_home: events[events.length - 1].end_at || events[events.length - 1].start_at,
-      message: 'Google Maps API key not configured — route sorted by time without driving estimates.',
+      message:
+        'Google Maps API key not configured — route sorted by time without driving estimates.',
     };
   }
 
@@ -373,6 +374,17 @@ export async function planMyDay(args: Record<string, unknown>, user: UserContext
   const totalDrivingMinutes = Math.round(optimisedCost / 60);
   const savedMinutes = Math.round((originalCost - optimisedCost) / 60);
 
+  // Fetch weather for first job location (non-critical — don't fail the whole plan)
+  let weather = null;
+  try {
+    const firstEvent = events[bestOrder[0] - 1];
+    if (firstEvent?.address) {
+      weather = await getWeather({ address: firstEvent.address }, user);
+    }
+  } catch {
+    // Weather is non-critical — return null if it fails
+  }
+
   return {
     date: dateStr,
     optimised_route: route,
@@ -381,5 +393,6 @@ export async function planMyDay(args: Record<string, unknown>, user: UserContext
     home_address: homeAddress,
     first_departure: route[0]?.arrive_by,
     last_arrival_home: route[route.length - 1]?.depart_at,
+    weather,
   };
 }

@@ -47,7 +47,7 @@ export interface ProjectCertificate {
 export interface ProjectRams {
   id: string;
   status: string;
-  job_type: string;
+  job_description: string;
   created_at: string;
 }
 
@@ -110,7 +110,7 @@ export function useProjectEntities(projectId: string | undefined) {
           .eq('project_id', projectId),
         s()
           .from('rams_generation_jobs')
-          .select('id, status, job_type, created_at')
+          .select('id, status, job_description, created_at')
           .eq('project_id', projectId),
       ]);
 
@@ -344,10 +344,14 @@ export function useProjectEntities(projectId: string | undefined) {
   }
 
   async function fetchUnlinkedRams(): Promise<UnlinkedItem[]> {
-    const rows = await fetchUnlinked('rams_generation_jobs', 'id, job_type, status, created_at');
-    return rows.map((r: { id: string; job_type?: string; status?: string }) => ({
+    const rows = await fetchUnlinked(
+      'rams_generation_jobs',
+      'id, job_description, status, created_at',
+      (q) => q.eq('status', 'complete')
+    );
+    return rows.map((r: { id: string; job_description?: string; status?: string }) => ({
       id: r.id,
-      label: r.job_type || 'RAMS',
+      label: r.job_description || 'RAMS',
       sublabel: r.status,
     }));
   }

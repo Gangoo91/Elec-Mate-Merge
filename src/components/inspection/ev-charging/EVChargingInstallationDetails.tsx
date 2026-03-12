@@ -13,7 +13,17 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
-import { ChevronDown, User, Car, Zap, Building2, Sparkles, ArrowRightLeft, X, CheckCircle2 } from 'lucide-react';
+import {
+  ChevronDown,
+  User,
+  Car,
+  Zap,
+  Building2,
+  Sparkles,
+  ArrowRightLeft,
+  X,
+  CheckCircle2,
+} from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useIsMobile } from '@/hooks/use-mobile';
 import ChargerAutocomplete from './ChargerAutocomplete';
@@ -28,8 +38,8 @@ import { getVehicleMakes, getVehicleModels } from '@/data/evVehicleDatabase';
 import { useEVChargingSmartForm } from '@/hooks/inspection/useEVChargingSmartForm';
 
 interface EVChargingInstallationDetailsProps {
-  formData: any;
-  onUpdate: (field: string, value: any) => void;
+  formData: Record<string, unknown>;
+  onUpdate: (field: string, value: unknown) => void;
   customerId?: string;
   onCustomerIdChange?: (id: string | undefined) => void;
 }
@@ -150,11 +160,11 @@ const EVChargingInstallationDetails: React.FC<EVChargingInstallationDetailsProps
                 </div>
                 <div className="flex-1 text-left min-w-0">
                   <h3 className="font-semibold text-foreground">Client Details</h3>
-                  <span className="text-xs text-muted-foreground">Name, contact & address</span>
+                  <span className="text-xs text-white">Name, contact & address</span>
                 </div>
                 <ChevronDown
                   className={cn(
-                    'h-5 w-5 text-muted-foreground transition-transform shrink-0',
+                    'h-5 w-5 text-white transition-transform shrink-0',
                     openSections.client && 'rotate-180'
                   )}
                 />
@@ -264,11 +274,11 @@ const EVChargingInstallationDetails: React.FC<EVChargingInstallationDetailsProps
                 </div>
                 <div className="flex-1 text-left min-w-0">
                   <h3 className="font-semibold text-foreground">Vehicle Details</h3>
-                  <span className="text-xs text-muted-foreground">Optional - make, model, reg</span>
+                  <span className="text-xs text-white">Optional - make, model, reg</span>
                 </div>
                 <ChevronDown
                   className={cn(
-                    'h-5 w-5 text-muted-foreground transition-transform shrink-0',
+                    'h-5 w-5 text-white transition-transform shrink-0',
                     openSections.vehicle && 'rotate-180'
                   )}
                 />
@@ -331,7 +341,9 @@ const EVChargingInstallationDetails: React.FC<EVChargingInstallationDetailsProps
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="vehicleModel">Vehicle Model</Label>
-                  {formData.vehicleMake && formData.vehicleMake !== '__other' && getVehicleModels(formData.vehicleMake).length > 0 ? (
+                  {formData.vehicleMake &&
+                  formData.vehicleMake !== '__other' &&
+                  getVehicleModels(formData.vehicleMake).length > 0 ? (
                     <Select
                       value={formData.vehicleModel || ''}
                       onValueChange={(value) => {
@@ -363,13 +375,16 @@ const EVChargingInstallationDetails: React.FC<EVChargingInstallationDetailsProps
                       className="h-11 text-base touch-manipulation border-white/30 focus:border-elec-yellow focus:ring-elec-yellow"
                     />
                   )}
-                  {formData.vehicleMake && formData.vehicleMake !== '__other' && formData.vehicleModel === '' && getVehicleModels(formData.vehicleMake).length > 0 && (
-                    <Input
-                      placeholder="Or type model"
-                      onChange={(e) => onUpdate('vehicleModel', e.target.value)}
-                      className="h-11 text-base touch-manipulation border-white/30 focus:border-elec-yellow focus:ring-elec-yellow mt-2"
-                    />
-                  )}
+                  {formData.vehicleMake &&
+                    formData.vehicleMake !== '__other' &&
+                    formData.vehicleModel === '' &&
+                    getVehicleModels(formData.vehicleMake).length > 0 && (
+                      <Input
+                        placeholder="Or type model"
+                        onChange={(e) => onUpdate('vehicleModel', e.target.value)}
+                        className="h-11 text-base touch-manipulation border-white/30 focus:border-elec-yellow focus:ring-elec-yellow mt-2"
+                      />
+                    )}
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="vehicleRegistration">Registration</Label>
@@ -401,11 +416,11 @@ const EVChargingInstallationDetails: React.FC<EVChargingInstallationDetailsProps
                 </div>
                 <div className="flex-1 text-left min-w-0">
                   <h3 className="font-semibold text-foreground">Installation Details</h3>
-                  <span className="text-xs text-muted-foreground">Address & type</span>
+                  <span className="text-xs text-white">Address & type</span>
                 </div>
                 <ChevronDown
                   className={cn(
-                    'h-5 w-5 text-muted-foreground transition-transform shrink-0',
+                    'h-5 w-5 text-white transition-transform shrink-0',
                     openSections.installation && 'rotate-180'
                   )}
                 />
@@ -500,11 +515,11 @@ const EVChargingInstallationDetails: React.FC<EVChargingInstallationDetailsProps
                 </div>
                 <div className="flex-1 text-left min-w-0">
                   <h3 className="font-semibold text-foreground">Charger Details</h3>
-                  <span className="text-xs text-muted-foreground">Make, model & specs</span>
+                  <span className="text-xs text-white">Make, model & specs</span>
                 </div>
                 <ChevronDown
                   className={cn(
-                    'h-5 w-5 text-muted-foreground transition-transform shrink-0',
+                    'h-5 w-5 text-white transition-transform shrink-0',
                     openSections.charger && 'rotate-180'
                   )}
                 />
@@ -647,6 +662,7 @@ const EVChargingInstallationDetails: React.FC<EVChargingInstallationDetailsProps
                       <SelectValue placeholder="Select" />
                     </SelectTrigger>
                     <SelectContent className="z-[100] bg-background border-border text-foreground">
+                      <SelectItem value="n/a">N/A</SelectItem>
                       <SelectItem value="Type 1">Type 1 (J1772)</SelectItem>
                       <SelectItem value="Type 2">Type 2 (Mennekes)</SelectItem>
                       <SelectItem value="CCS">CCS (Combo)</SelectItem>

@@ -479,6 +479,31 @@ export default function SolarPVCertificate() {
         }
       }
 
+      // Auto-resolve scheme logo if scheme is set but logo is missing or is a placeholder SVG
+      const schemeName = dataWithCertNumber.registrationScheme;
+      const currentLogo = dataWithCertNumber.registrationSchemeLogo || '';
+      const isPlaceholderLogo =
+        !currentLogo || currentLogo.length < 2000 || currentLogo.includes('image/svg+xml');
+      if (schemeName && schemeName !== 'none' && schemeName !== 'other' && isPlaceholderLogo) {
+        try {
+          const { getSchemeInfo } = await import('@/constants/schemeLogos');
+          const info = getSchemeInfo(schemeName);
+          if (info) {
+            const resp = await fetch(info.logoPath);
+            const blob = await resp.blob();
+            const dataUrl = await new Promise<string>((resolve, reject) => {
+              const reader = new FileReader();
+              reader.onload = () => resolve(reader.result as string);
+              reader.onerror = reject;
+              reader.readAsDataURL(blob);
+            });
+            dataWithCertNumber = { ...dataWithCertNumber, registrationSchemeLogo: dataUrl };
+          }
+        } catch (err) {
+          console.warn('[SolarPV] Failed to resolve scheme logo:', err);
+        }
+      }
+
       // Format data for PDF generation using MCS compliant formatter
       const pdfData = formatSolarPVJson(dataWithCertNumber);
 

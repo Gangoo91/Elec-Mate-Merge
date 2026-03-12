@@ -112,16 +112,14 @@ export function PVPanelAutocomplete({
       className={cn(
         'w-full justify-between h-11 touch-manipulation',
         'bg-elec-gray border-white/30 text-foreground',
-        'hover:bg-gray-700 hover:border-white/40',
+        'hover:bg-white/10 hover:border-white/40',
         'focus:border-yellow-500 focus:ring-yellow-500',
         'data-[state=open]:border-elec-yellow data-[state=open]:ring-2',
         disabled && 'opacity-50 cursor-not-allowed',
         className
       )}
     >
-      <span className={cn('truncate', !selectedPanel && 'text-muted-foreground')}>
-        {displayValue}
-      </span>
+      <span className={cn('truncate', !selectedPanel && 'text-white')}>{displayValue}</span>
       <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
     </Button>
   );
@@ -151,21 +149,17 @@ export function PVPanelAutocomplete({
           <span className={cn('font-medium truncate', forMobile && 'text-base')}>
             {showMake ? `${panel.make} ${panel.model}` : panel.model}
           </span>
-          <span className={cn('text-gray-400 truncate', forMobile ? 'text-sm' : 'text-xs')}>
+          <span className={cn('text-white truncate', forMobile ? 'text-sm' : 'text-xs')}>
             {panel.wattage}W • {panel.efficiency}%{showMake ? ` • ${panel.cellType}` : ''}
           </span>
         </div>
         {panel.yearIntroduced && panel.yearIntroduced >= 2024 && (
-          <span
-            className="ml-2 px-1.5 py-0.5 text-xs font-medium bg-elec-yellow/20 text-elec-yellow rounded"
-          >
+          <span className="ml-2 px-1.5 py-0.5 text-xs font-medium bg-elec-yellow/20 text-elec-yellow rounded">
             NEW
           </span>
         )}
         {showMake && (
-          <span
-            className="ml-2 px-1.5 py-0.5 text-xs font-medium bg-amber-500/20 text-amber-400 rounded"
-          >
+          <span className="ml-2 px-1.5 py-0.5 text-xs font-medium bg-amber-500/20 text-amber-400 rounded">
             {panel.wattage}W
           </span>
         )}
@@ -188,7 +182,7 @@ export function PVPanelAutocomplete({
           <div className="flex flex-col max-h-[70vh]">
             {/* Search input */}
             <div className="flex items-center gap-2 px-4 py-3 border-b border-border/50 bg-background sticky top-0">
-              <Search className="h-5 w-5 text-muted-foreground shrink-0" />
+              <Search className="h-5 w-5 text-white shrink-0" />
               <Input
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
@@ -212,15 +206,13 @@ export function PVPanelAutocomplete({
             <div className="flex-1 overflow-y-auto momentum-scroll-y">
               {filteredPanels && filteredPanels.length > 0 ? (
                 <div className="px-2 py-2">
-                  <p className="px-4 py-2 text-sm text-muted-foreground font-medium">
-                    Search Results
-                  </p>
+                  <p className="px-4 py-2 text-sm text-white font-medium">Search Results</p>
                   <div className="space-y-1">
                     {filteredPanels.map((panel) => renderPanelItem(panel, true, true))}
                   </div>
                 </div>
               ) : search.trim() ? (
-                <div className="py-12 text-center text-muted-foreground">
+                <div className="py-12 text-center text-white">
                   <Zap className="h-12 w-12 mx-auto mb-3 opacity-30" />
                   <p className="text-base">No panels found</p>
                   <p className="text-sm mt-1">Try a different search term</p>
@@ -229,7 +221,7 @@ export function PVPanelAutocomplete({
                 <div className="px-2 py-2">
                   {Object.entries(panelsGrouped).map(([manufacturer, panels]) => (
                     <div key={manufacturer} className="mb-4">
-                      <p className="px-4 py-2 text-sm text-muted-foreground font-medium sticky top-0 bg-background">
+                      <p className="px-4 py-2 text-sm text-white font-medium sticky top-0 bg-background">
                         {manufacturer}
                       </p>
                       <div className="space-y-1">
@@ -243,7 +235,7 @@ export function PVPanelAutocomplete({
 
             {/* Footer */}
             <div className="border-t border-border/50 px-4 py-3 bg-card/30">
-              <p className="text-xs text-muted-foreground text-center">
+              <p className="text-xs text-white text-center">
                 {getPanelCount()} MCS-certified panels
               </p>
             </div>
@@ -276,10 +268,10 @@ export function PVPanelAutocomplete({
               placeholder="Search panels..."
               value={search}
               onValueChange={setSearch}
-              className="border-none bg-elec-gray text-foreground placeholder:text-gray-400"
+              className="border-none bg-elec-gray text-foreground placeholder:text-white"
             />
             <CommandList className="bg-elec-gray max-h-[300px]">
-              <CommandEmpty className="p-4 text-sm text-gray-400">No panels found.</CommandEmpty>
+              <CommandEmpty className="p-4 text-sm text-white">No panels found.</CommandEmpty>
 
               {/* Show search results if searching */}
               {filteredPanels && filteredPanels.length > 0 ? (
@@ -289,7 +281,7 @@ export function PVPanelAutocomplete({
                       key={panel.id}
                       value={panel.id}
                       onSelect={() => handleSelect(panel)}
-                      className="bg-elec-gray hover:bg-gray-700 cursor-pointer text-foreground py-2"
+                      className="bg-elec-gray hover:bg-white/10 cursor-pointer text-foreground py-2"
                     >
                       <Check
                         className={cn(
@@ -303,7 +295,7 @@ export function PVPanelAutocomplete({
                         <span className="font-medium truncate">
                           {panel.make} {panel.model}
                         </span>
-                        <span className="text-xs text-gray-400 truncate">
+                        <span className="text-xs text-white truncate">
                           {panel.wattage}W • {panel.efficiency}% • {panel.cellType}
                         </span>
                       </div>
@@ -322,7 +314,7 @@ export function PVPanelAutocomplete({
                         key={panel.id}
                         value={panel.id}
                         onSelect={() => handleSelect(panel)}
-                        className="bg-elec-gray hover:bg-gray-700 cursor-pointer text-foreground py-2"
+                        className="bg-elec-gray hover:bg-white/10 cursor-pointer text-foreground py-2"
                       >
                         <Check
                           className={cn(
@@ -334,7 +326,7 @@ export function PVPanelAutocomplete({
                         />
                         <div className="flex flex-col flex-1 min-w-0">
                           <span className="font-medium truncate">{panel.model}</span>
-                          <span className="text-xs text-gray-400 truncate">
+                          <span className="text-xs text-white truncate">
                             {panel.wattage}W • {panel.efficiency}%
                           </span>
                         </div>
@@ -350,7 +342,7 @@ export function PVPanelAutocomplete({
               )}
 
               {/* Database footer */}
-              <div className="p-2 text-xs text-gray-500 border-t border-white/10 text-center">
+              <div className="p-2 text-xs text-white border-t border-white/10 text-center">
                 {getPanelCount()} MCS-certified panels
               </div>
             </CommandList>
@@ -393,7 +385,7 @@ export function PanelInfoDisplay({ panelId, className }: PanelInfoDisplayProps) 
           <p className="font-medium text-foreground">
             {panel.make} {panel.model}
           </p>
-          <p className="text-xs text-gray-400 mt-0.5">
+          <p className="text-xs text-white mt-0.5">
             {panel.cellType} • {panel.cells} cells
           </p>
         </div>
@@ -404,19 +396,19 @@ export function PanelInfoDisplay({ panelId, className }: PanelInfoDisplayProps) 
 
       <div className="mt-2 grid grid-cols-2 gap-2 text-xs">
         <div>
-          <span className="text-gray-400">Efficiency:</span>{' '}
+          <span className="text-white">Efficiency:</span>{' '}
           <span className="text-foreground">{panel.efficiency}%</span>
         </div>
         <div>
-          <span className="text-gray-400">Voc:</span>{' '}
+          <span className="text-white">Voc:</span>{' '}
           <span className="text-foreground">{panel.voc}V</span>
         </div>
         <div>
-          <span className="text-gray-400">Isc:</span>{' '}
+          <span className="text-white">Isc:</span>{' '}
           <span className="text-foreground">{panel.isc}A</span>
         </div>
         <div>
-          <span className="text-gray-400">Vmp:</span>{' '}
+          <span className="text-white">Vmp:</span>{' '}
           <span className="text-foreground">{panel.vmp}V</span>
         </div>
       </div>
@@ -428,7 +420,7 @@ export function PanelInfoDisplay({ panelId, className }: PanelInfoDisplayProps) 
             MCS Certified
           </span>
         )}
-        <span className="text-xs text-gray-500">
+        <span className="text-xs text-white">
           {panel.warranty.product}yr product / {panel.warranty.performance}yr performance
         </span>
       </div>

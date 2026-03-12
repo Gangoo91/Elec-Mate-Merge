@@ -20,7 +20,7 @@ import { useIsMobile } from '@/hooks/use-mobile';
 import { cn } from '@/lib/utils';
 
 interface EICElectricalInstallationSectionProps {
-  formData: any;
+  formData: Record<string, unknown>;
   onUpdate: (field: string, value: string) => void;
   isOpen: boolean;
   onToggle: () => void;
@@ -57,15 +57,17 @@ const EICElectricalInstallationSection = ({
     // Otherwise, create main board from legacy fields
     const mainBoard = createMainBoard();
     if (formData.boardLocation) mainBoard.location = formData.boardLocation;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     if (formData.boardType) mainBoard.type = formData.boardType as any;
     if (formData.boardSize) {
-      mainBoard.totalWays = parseInt(formData.boardSize) || 0;
+      mainBoard.totalWays = parseInt(formData.boardSize as string) || 0;
     }
     return [mainBoard];
   }, [formData.distributionBoards, formData.boardLocation, formData.boardType, formData.boardSize]);
 
   // Handle board changes - sync to both new and legacy fields for backward compatibility
   const handleBoardsChange = (newBoards: DistributionBoard[]) => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     onUpdate('distributionBoards', newBoards as any);
 
     // Also update legacy fields from main board for backward compatibility
@@ -110,9 +112,8 @@ const EICElectricalInstallationSection = ({
           <div className={cn('space-y-6', isMobile ? 'px-4 py-4' : 'p-4 sm:p-6')}>
             {/* Main Switch / Switch-fuse / Circuit-breaker / RCD (IET Form) */}
             <div className="space-y-4">
-              <h3 className="text-sm sm:text-base font-semibold text-foreground border-b border-elec-gray pb-2 flex items-start gap-2">
-                <div className="w-1.5 h-1.5 rounded-full bg-yellow-400 mt-1.5 shrink-0"></div>
-                <span className="break-words min-w-0">Main Switch / Switch-fuse / Circuit-breaker / RCD</span>
+              <h3 className="text-sm sm:text-base font-semibold text-foreground border-b border-elec-gray pb-2 pl-2.5 border-l-2 border-l-yellow-400">
+                Main Switch / Switch-fuse / Circuit-breaker / RCD
               </h3>
 
               {/* Location (IET Form) */}
@@ -386,9 +387,8 @@ const EICElectricalInstallationSection = ({
 
             {/* RCD Protection */}
             <div className="space-y-4">
-              <h3 className="text-sm sm:text-base font-semibold text-foreground border-b border-elec-gray pb-2 flex items-start gap-2">
-                <div className="w-1.5 h-1.5 rounded-full bg-blue-400 mt-1.5 shrink-0"></div>
-                <span className="break-words min-w-0">RCD Protection</span>
+              <h3 className="text-sm sm:text-base font-semibold text-foreground border-b border-elec-gray pb-2 pl-2.5 border-l-2 border-l-blue-400">
+                RCD Protection
               </h3>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <div>
@@ -532,9 +532,8 @@ const EICElectricalInstallationSection = ({
 
             {/* Supply Cables */}
             <div className="space-y-4">
-              <h3 className="text-sm sm:text-base font-semibold text-foreground border-b border-elec-gray pb-2 flex items-start gap-2">
-                <div className="w-1.5 h-1.5 rounded-full bg-purple-400 mt-1.5 shrink-0"></div>
-                <span className="break-words min-w-0">Supply Cables</span>
+              <h3 className="text-sm sm:text-base font-semibold text-foreground border-b border-elec-gray pb-2 pl-2.5 border-l-2 border-l-purple-400">
+                Supply Cables
               </h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>

@@ -35,7 +35,7 @@ import { useSolarPVSmartForm } from '@/hooks/inspection/useSolarPVSmartForm';
 
 interface SolarPVGridConnectionProps {
   formData: SolarPVFormData;
-  onUpdate: (field: string, value: any) => void;
+  onUpdate: (field: string, value: unknown) => void;
 }
 
 interface SectionHeaderProps {
@@ -75,9 +75,9 @@ const SectionHeader: React.FC<SectionHeaderProps> = ({
       </div>
     </div>
     {isOpen ? (
-      <ChevronUp className="h-5 w-5 text-muted-foreground" />
+      <ChevronUp className="h-5 w-5 text-white" />
     ) : (
-      <ChevronDown className="h-5 w-5 text-muted-foreground" />
+      <ChevronDown className="h-5 w-5 text-white" />
     )}
   </CollapsibleTrigger>
 );
@@ -97,7 +97,7 @@ const SolarPVGridConnection: React.FC<SolarPVGridConnectionProps> = ({ formData,
   };
 
   // Update grid connection field
-  const updateGridConnection = (field: string, value: any) => {
+  const updateGridConnection = (field: string, value: unknown) => {
     onUpdate('gridConnection', {
       ...formData.gridConnection,
       [field]: value,
@@ -105,7 +105,7 @@ const SolarPVGridConnection: React.FC<SolarPVGridConnectionProps> = ({ formData,
   };
 
   // Update metering field
-  const updateMetering = (field: string, value: any) => {
+  const updateMetering = (field: string, value: unknown) => {
     onUpdate('metering', {
       ...formData.metering,
       [field]: value,
@@ -207,7 +207,7 @@ const SolarPVGridConnection: React.FC<SolarPVGridConnectionProps> = ({ formData,
                 {mpanValidation && !mpanValidation.valid && (
                   <p className="text-xs text-orange-400">{mpanValidation.error}</p>
                 )}
-                <p className="text-xs text-muted-foreground">
+                <p className="text-xs text-white">
                   Found on the electricity bill. Can be 13 or 21 digits.
                 </p>
               </div>
@@ -546,7 +546,7 @@ const SolarPVGridConnection: React.FC<SolarPVGridConnectionProps> = ({ formData,
                     >
                       Smart Export Guarantee (SEG) registered
                     </Label>
-                    <p className="text-xs text-muted-foreground">
+                    <p className="text-xs text-white">
                       Customer is signed up to receive payment for exported electricity
                     </p>
                   </div>

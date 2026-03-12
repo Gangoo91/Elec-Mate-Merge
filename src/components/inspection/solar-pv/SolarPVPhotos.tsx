@@ -55,7 +55,7 @@ const PHOTO_CATEGORIES = [
   { value: 'meter', label: 'Meter', icon: Gauge, color: 'text-green-400' },
   { value: 'isolator', label: 'Isolator', icon: Power, color: 'text-red-400' },
   { value: 'label', label: 'Labels & Signage', icon: Tag, color: 'text-purple-400' },
-  { value: 'general', label: 'General', icon: Image, color: 'text-gray-400' },
+  { value: 'general', label: 'General', icon: Image, color: 'text-white' },
 ] as const;
 
 export const SolarPVPhotos: React.FC<SolarPVPhotosProps> = ({
@@ -216,7 +216,7 @@ export const SolarPVPhotos: React.FC<SolarPVPhotosProps> = ({
 
   const getCategoryColor = (category: CertificatePhoto['category']) => {
     const cat = PHOTO_CATEGORIES.find((c) => c.value === category);
-    return cat ? cat.color : 'text-gray-400';
+    return cat ? cat.color : 'text-white';
   };
 
   const getCategoryLabel = (category: CertificatePhoto['category']): string => {
@@ -258,7 +258,7 @@ export const SolarPVPhotos: React.FC<SolarPVPhotosProps> = ({
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div className="space-y-2">
-            <Label className="text-xs text-muted-foreground">Photo Category</Label>
+            <Label className="text-xs text-white">Photo Category</Label>
             <Select
               value={selectedCategory}
               onValueChange={(v) => setSelectedCategory(v as CertificatePhoto['category'])}
@@ -284,7 +284,7 @@ export const SolarPVPhotos: React.FC<SolarPVPhotosProps> = ({
 
           {linkOptions.length > 0 && (
             <div className="space-y-2">
-              <Label className="text-xs text-muted-foreground">
+              <Label className="text-xs text-white">
                 Link to {selectedCategory === 'array' ? 'Array' : 'Inverter'} (Optional)
               </Label>
               <Select value={selectedLinkedId} onValueChange={setSelectedLinkedId}>
@@ -305,7 +305,7 @@ export const SolarPVPhotos: React.FC<SolarPVPhotosProps> = ({
         </div>
 
         <div className="space-y-2">
-          <Label className="text-xs text-muted-foreground">Caption (Optional)</Label>
+          <Label className="text-xs text-white">Caption (Optional)</Label>
           <Input
             value={caption}
             onChange={(e) => setCaption(e.target.value)}
@@ -344,7 +344,7 @@ export const SolarPVPhotos: React.FC<SolarPVPhotosProps> = ({
         </div>
 
         {/* Photo Requirements Info */}
-        <div className="text-xs text-muted-foreground bg-amber-500/10 border border-amber-500/20 rounded-lg p-3">
+        <div className="text-xs text-white bg-amber-500/10 border border-amber-500/20 rounded-lg p-3">
           <p className="font-medium text-amber-400 mb-1">MCS Photo Requirements:</p>
           <ul className="space-y-0.5 list-disc list-inside">
             <li>At least one photo of each PV array</li>
@@ -363,7 +363,7 @@ export const SolarPVPhotos: React.FC<SolarPVPhotosProps> = ({
             const Icon = category.icon;
             return (
               <div key={category.value} className="space-y-2">
-                <h4 className="text-sm font-medium text-muted-foreground flex items-center gap-2">
+                <h4 className="text-sm font-medium text-white flex items-center gap-2">
                   <Icon className={`h-4 w-4 ${category.color}`} />
                   {category.label} ({category.photos.length})
                 </h4>
@@ -390,9 +390,7 @@ export const SolarPVPhotos: React.FC<SolarPVPhotosProps> = ({
                             className="w-full h-auto rounded-lg"
                           />
                           {photo.caption && (
-                            <p className="text-center text-sm text-muted-foreground mt-2">
-                              {photo.caption}
-                            </p>
+                            <p className="text-center text-sm text-white mt-2">{photo.caption}</p>
                           )}
                         </DialogContent>
                       </Dialog>
@@ -420,7 +418,7 @@ export const SolarPVPhotos: React.FC<SolarPVPhotosProps> = ({
           })}
         </div>
       ) : (
-        <div className="text-center py-8 text-muted-foreground">
+        <div className="text-center py-8 text-white">
           <Sun className="h-12 w-12 mx-auto mb-2 opacity-30" />
           <p className="text-sm">No photos added yet</p>
           <p className="text-xs">Upload photos to document the installation</p>
@@ -431,7 +429,7 @@ export const SolarPVPhotos: React.FC<SolarPVPhotosProps> = ({
       {photos.length > 0 && (
         <div className="bg-card/50 border border-white/10 rounded-lg p-3">
           <div className="flex items-center justify-between text-sm">
-            <span className="text-muted-foreground">Total Photos</span>
+            <span className="text-white">Total Photos</span>
             <span className="font-semibold text-amber-400">{photos.length}</span>
           </div>
           <div className="mt-2 flex flex-wrap gap-2">
@@ -440,10 +438,7 @@ export const SolarPVPhotos: React.FC<SolarPVPhotosProps> = ({
               if (count === 0) return null;
               const Icon = cat.icon;
               return (
-                <div
-                  key={cat.value}
-                  className="flex items-center gap-1 text-xs text-muted-foreground"
-                >
+                <div key={cat.value} className="flex items-center gap-1 text-xs text-white">
                   <Icon className={`h-3 w-3 ${cat.color}`} />
                   {count}
                 </div>
