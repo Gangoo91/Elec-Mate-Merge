@@ -81,6 +81,70 @@ export async function createSafeIsolationRecord(args: Record<string, unknown>, u
   return { record_id: data.id, created: true };
 }
 
+export async function readSiteDiary(args: Record<string, unknown>, user: UserContext) {
+  const supabase = user.supabase;
+
+  let query = supabase
+    .from('electrician_site_diary')
+    .select(
+      'id, date, summary, location, work_completed, issues_encountered, materials_used, weather_conditions, hours_worked, customer_id, project_id, photos, created_at'
+    )
+    .eq('user_id', user.userId);
+
+  if (typeof args.date_from === 'string') {
+    query = query.gte('date', args.date_from);
+  }
+  if (typeof args.date_to === 'string') {
+    query = query.lte('date', args.date_to);
+  }
+  if (typeof args.location === 'string' && args.location.length > 0) {
+    query = query.ilike('location', `%${args.location}%`);
+  }
+  if (typeof args.project_id === 'string') {
+    query = query.eq('project_id', args.project_id);
+  }
+
+  const limit = typeof args.limit === 'number' && args.limit > 0 ? Math.min(args.limit, 50) : 50;
+
+  const { data, error } = await query.order('date', { ascending: false }).limit(limit);
+
+  if (error) throw new Error(`Failed to read site diary: ${error.message}`);
+
+  return { items: data || [], count: (data || []).length };
+}
+
+export async function readSafeIsolationRecords(args: Record<string, unknown>, user: UserContext) {
+  const supabase = user.supabase;
+
+  let query = supabase
+    .from('safe_isolation_records')
+    .select(
+      'id, location, circuit_description, supply_type, isolation_point, voltage_before, voltage_after, proving_unit_used, lock_off_applied, caution_notice_posted, gs38_compliant, notes, date, customer_id, job_id, created_at'
+    )
+    .eq('user_id', user.userId);
+
+  if (typeof args.date_from === 'string') {
+    query = query.gte('date', args.date_from);
+  }
+  if (typeof args.date_to === 'string') {
+    query = query.lte('date', args.date_to);
+  }
+  if (typeof args.location === 'string' && args.location.length > 0) {
+    query = query.ilike('location', `%${args.location}%`);
+  }
+  if (typeof args.gs38_compliant === 'boolean') {
+    query = query.eq('gs38_compliant', args.gs38_compliant);
+  }
+
+  const limit = typeof args.limit === 'number' && args.limit > 0 ? Math.min(args.limit, 50) : 50;
+
+  const { data, error } = await query.order('date', { ascending: false }).limit(limit);
+
+  if (error) throw new Error(`Failed to read safe isolation records: ${error.message}`);
+
+  return { items: data || [], count: (data || []).length };
+}
+
 export async function logSiteDiaryEntry(args: Record<string, unknown>, user: UserContext) {
   if (typeof args.date !== 'string') {
     throw new Error('date is required (ISO-8601)');

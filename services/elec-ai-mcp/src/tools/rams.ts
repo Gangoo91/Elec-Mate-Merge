@@ -15,6 +15,37 @@ import { callEdgeFunction } from '../lib/edge-function.js';
 const POLL_INTERVAL_MS = 5_000;
 const POLL_TIMEOUT_MS = 180_000;
 
+export async function readRams(args: Record<string, unknown>, user: UserContext) {
+  const supabase = user.supabase;
+
+  let query = supabase
+    .from('rams_generation_jobs')
+    .select('id, status, progress, project_info, error_message, created_at, updated_at')
+    .eq('user_id', user.userId);
+
+  if (typeof args.status === 'string' && args.status.length > 0) {
+    query = query.eq('status', args.status);
+  }
+  if (typeof args.date_from === 'string') {
+    query = query.gte('created_at', args.date_from);
+  }
+  if (typeof args.date_to === 'string') {
+    query = query.lte('created_at', args.date_to);
+  }
+  if (typeof args.search === 'string' && args.search.length > 0) {
+    const term = args.search.replace(/[,.()"'\\]/g, '');
+    query = query.ilike('project_info->>projectName', `%${term}%`);
+  }
+
+  const limit = typeof args.limit === 'number' && args.limit > 0 ? Math.min(args.limit, 50) : 50;
+
+  const { data, error } = await query.order('created_at', { ascending: false }).limit(limit);
+
+  if (error) throw new Error(`Failed to read RAMS: ${error.message}`);
+
+  return { items: data || [], count: (data || []).length };
+}
+
 export async function createRams(args: Record<string, unknown>, user: UserContext) {
   if (typeof args.job_description !== 'string' || args.job_description.trim().length === 0) {
     throw new Error('job_description is required');

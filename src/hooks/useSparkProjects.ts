@@ -150,7 +150,66 @@ export const useSparkProjects = (view: ProjectView = 'active') => {
 
   useEffect(() => {
     loadProjects();
-  }, [loadProjects]);
+
+    // Realtime subscription — toast on INSERT, debounced refresh on UPDATE
+    let channel: ReturnType<typeof supabase.channel> | null = null;
+    let debounceTimer: ReturnType<typeof setTimeout> | null = null;
+
+    const debouncedLoad = () => {
+      if (debounceTimer) clearTimeout(debounceTimer);
+      debounceTimer = setTimeout(() => loadProjects(), 200);
+    };
+
+    const setupRealtime = async () => {
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+      if (!user) return;
+
+      channel = supabase
+        .channel('spark-projects-realtime')
+        .on(
+          'postgres_changes',
+          {
+            event: 'INSERT',
+            schema: 'public',
+            table: 'spark_projects',
+            filter: `user_id=eq.${user.id}`,
+          },
+          (payload) => {
+            const newProject = payload.new as ProjectRow;
+            if (newProject.status !== 'cancelled') {
+              toast({
+                title: 'New Project',
+                description: newProject.title,
+                duration: 4000,
+              });
+              debouncedLoad();
+            }
+          }
+        )
+        .on(
+          'postgres_changes',
+          {
+            event: 'UPDATE',
+            schema: 'public',
+            table: 'spark_projects',
+            filter: `user_id=eq.${user.id}`,
+          },
+          () => {
+            debouncedLoad();
+          }
+        )
+        .subscribe();
+    };
+
+    setupRealtime();
+
+    return () => {
+      if (debounceTimer) clearTimeout(debounceTimer);
+      if (channel) supabase.removeChannel(channel);
+    };
+  }, [loadProjects, toast]);
 
   // Filter by view
   const projects =

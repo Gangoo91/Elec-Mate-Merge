@@ -144,6 +144,7 @@ const AIMethodStatementPage = lazy(() => import('@/pages/electrician-tools/AIMet
 const PremiumCVBuilder = lazy(() => import('@/components/cv-builder/premium/PremiumCVBuilder'));
 const WorkerToolsHub = lazy(() => import('@/pages/electrician/WorkerToolsHub'));
 const CalendarPage = lazy(() => import('@/pages/electrician/CalendarPage'));
+const SnaggingPage = lazy(() => import('@/pages/electrician/SnaggingPage'));
 const BusinessAIPage = lazy(() => import('@/components/business-ai/BusinessAIPage'));
 
 const ElectricianHubRoutes = () => (
@@ -410,6 +411,16 @@ const ElectricianHubRoutes = () => (
       element={
         <LazyRoute>
           <TasksPage />
+        </LazyRoute>
+      }
+    />
+
+    {/* Snagging */}
+    <Route
+      path="snagging"
+      element={
+        <LazyRoute>
+          <SnaggingPage />
         </LazyRoute>
       }
     />

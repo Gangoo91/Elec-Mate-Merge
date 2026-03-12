@@ -899,6 +899,22 @@ function registerInvoicingTools(server: McpServer, user: UserContext): void {
 
 function registerRamsTools(server: McpServer, user: UserContext): void {
   server.tool(
+    'read_rams',
+    'Read RAMS generation job history. Returns status, progress, project info for each job.',
+    {
+      status: z
+        .string()
+        .optional()
+        .describe('Filter by status (e.g. complete, partial, failed, processing)'),
+      date_from: z.string().optional().describe('Start date (ISO-8601)'),
+      date_to: z.string().optional().describe('End date (ISO-8601)'),
+      search: z.string().optional().describe('Search project name'),
+      limit: z.number().optional().describe('Max results (default 50)'),
+    },
+    callTool('read_rams', user)
+  );
+
+  server.tool(
     'create_rams',
     'Generate a full RAMS (Risk Assessment & Method Statement) for a job using the full pipeline — runs H&S Agent + Install Planner in parallel with RAG-enhanced content and caching. May take up to 3 minutes. Returns rams_job_id, hazard count, method step count, top risks, and PPE list. Then call generate_rams_pdf with the rams_job_id to create the PDF.',
     {
@@ -1038,6 +1054,15 @@ function registerCalendarTools(server: McpServer, user: UserContext): void {
     },
     callTool('get_availability', user)
   );
+
+  server.tool(
+    'share_booking_link',
+    'Get a shareable booking link for clients to book a time slot. Include the URL in a WhatsApp message to let clients self-serve.',
+    {
+      message: z.string().optional().describe('Custom message to include when sharing the link'),
+    },
+    callTool('share_booking_link', user)
+  );
 }
 
 // ─── Messaging Tools (2) ────────────────────────────────────────────────
@@ -1072,6 +1097,36 @@ function registerMessagingTools(server: McpServer, user: UserContext): void {
 // ─── Expense Tools (3) ──────────────────────────────────────────────────
 
 function registerExpenseTools(server: McpServer, user: UserContext): void {
+  server.tool(
+    'read_expenses',
+    'Read expense history with optional filters. Returns items, count, and total amount.',
+    {
+      date_from: z.string().optional().describe('Start date (ISO-8601)'),
+      date_to: z.string().optional().describe('End date (ISO-8601)'),
+      category: z
+        .enum([
+          'materials',
+          'tools',
+          'fuel',
+          'mileage',
+          'ppe',
+          'hotels',
+          'training',
+          'vehicle',
+          'insurance',
+          'subscriptions',
+          'meals',
+          'other',
+        ])
+        .optional()
+        .describe('Filter by category'),
+      min_amount: z.number().optional().describe('Minimum amount (GBP)'),
+      max_amount: z.number().optional().describe('Maximum amount (GBP)'),
+      limit: z.number().optional().describe('Max results (default 50)'),
+    },
+    callTool('read_expenses', user)
+  );
+
   server.tool(
     'create_expense',
     'Log an expense manually or from OCR receipt scan.',
@@ -2110,6 +2165,32 @@ function registerSafetyTools(server: McpServer, user: UserContext): void {
       photos: z.array(z.string()).optional().describe('Photo URLs'),
     },
     callTool('log_site_diary_entry', user)
+  );
+
+  server.tool(
+    'read_site_diary',
+    'Read site diary entries with optional filters. Returns diary entries with summaries, locations, and work details.',
+    {
+      date_from: z.string().optional().describe('Start date (ISO-8601)'),
+      date_to: z.string().optional().describe('End date (ISO-8601)'),
+      location: z.string().optional().describe('Filter by location (partial match)'),
+      project_id: z.string().optional().describe('Filter by project UUID'),
+      limit: z.number().optional().describe('Max results (default 50)'),
+    },
+    callTool('read_site_diary', user)
+  );
+
+  server.tool(
+    'read_safe_isolation_records',
+    'Read safe isolation records. Returns GS38 procedure records with voltage readings, lock-off status, and compliance details.',
+    {
+      date_from: z.string().optional().describe('Start date (ISO-8601)'),
+      date_to: z.string().optional().describe('End date (ISO-8601)'),
+      location: z.string().optional().describe('Filter by location (partial match)'),
+      gs38_compliant: z.boolean().optional().describe('Filter by GS38 compliance status'),
+      limit: z.number().optional().describe('Max results (default 50)'),
+    },
+    callTool('read_safe_isolation_records', user)
   );
 }
 

@@ -186,6 +186,44 @@ export async function addReceiptToExpense(args: Record<string, unknown>, user: U
   };
 }
 
+export async function readExpenses(args: Record<string, unknown>, user: UserContext) {
+  const supabase = user.supabase;
+
+  let query = supabase
+    .from('sole_trader_expenses')
+    .select(
+      'id, amount, category, description, vendor, date, receipt_url, tax_deductible, mileage_miles, mileage_from, mileage_to, created_at'
+    )
+    .eq('user_id', user.userId);
+
+  if (typeof args.date_from === 'string') {
+    query = query.gte('date', args.date_from);
+  }
+  if (typeof args.date_to === 'string') {
+    query = query.lte('date', args.date_to);
+  }
+  if (typeof args.category === 'string' && args.category.length > 0) {
+    query = query.eq('category', args.category);
+  }
+  if (typeof args.min_amount === 'number') {
+    query = query.gte('amount', args.min_amount);
+  }
+  if (typeof args.max_amount === 'number') {
+    query = query.lte('amount', args.max_amount);
+  }
+
+  const limit = typeof args.limit === 'number' && args.limit > 0 ? Math.min(args.limit, 50) : 50;
+
+  const { data, error, count } = await query.order('date', { ascending: false }).limit(limit);
+
+  if (error) throw new Error(`Failed to read expenses: ${error.message}`);
+
+  const items = data || [];
+  const total = items.reduce((sum, e) => sum + (e.amount || 0), 0);
+
+  return { items, count: items.length, total: Math.round(total * 100) / 100 };
+}
+
 export async function syncExpenseToAccounting(args: Record<string, unknown>, user: UserContext) {
   if (typeof args.expense_id !== 'string') {
     throw new Error('expense_id is required');

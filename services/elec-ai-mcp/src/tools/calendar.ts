@@ -343,3 +343,13 @@ export async function getAvailability(args: Record<string, unknown>, user: UserC
     existing_events: (events || []).length,
   };
 }
+
+export async function shareBookingLink(args: Record<string, unknown>, user: UserContext) {
+  const url = `https://www.elec-mate.com/book/${user.userId}`;
+  const customMessage =
+    typeof args.message === 'string' && args.message.trim().length > 0
+      ? args.message.trim()
+      : 'Share this link with clients to let them book a time slot';
+
+  return { url, message: customMessage };
+}

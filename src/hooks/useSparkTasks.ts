@@ -4,7 +4,7 @@ import { useToast } from '@/hooks/use-toast';
 
 export type TaskStatus = 'open' | 'done' | 'snoozed' | 'cancelled';
 export type TaskPriority = 'low' | 'normal' | 'high' | 'urgent';
-export type TaskView = 'today' | 'week' | 'all' | 'completed';
+export type TaskView = 'today' | 'week' | 'all' | 'completed' | 'snagging';
 
 export interface SparkTask {
   id: string;
@@ -54,6 +54,7 @@ export interface SparkTaskCounts {
   all: number;
   completed: number;
   overdue: number;
+  snagging: number;
 }
 
 interface SparkTaskRow {
@@ -171,6 +172,8 @@ function filterByView(tasks: SparkTask[], view: TaskView, now: Date): SparkTask[
 
   const open = tasks.filter((t) => t.status === 'open' && isNotSnoozed(t, now));
 
+  if (view === 'snagging')
+    return sortTasks(tasks.filter((t) => t.status !== 'cancelled' && t.tags.includes('snagging')));
   if (view === 'today') return sortTasks(open.filter((t) => matchesToday(t, now)));
   if (view === 'week') return sortTasks(open.filter((t) => matchesWeek(t, now)));
   return sortTasks(open);
@@ -215,7 +218,59 @@ export const useSparkTasks = (view: TaskView = 'all') => {
 
   useEffect(() => {
     loadTasks();
-  }, [loadTasks]);
+
+    // Realtime subscription — toast on INSERT, silent refresh on UPDATE
+    let channel: ReturnType<typeof supabase.channel> | null = null;
+
+    const setupRealtime = async () => {
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+      if (!user) return;
+
+      channel = supabase
+        .channel('spark-tasks-realtime')
+        .on(
+          'postgres_changes',
+          {
+            event: 'INSERT',
+            schema: 'public',
+            table: 'spark_tasks',
+            filter: `user_id=eq.${user.id}`,
+          },
+          (payload) => {
+            const newTask = payload.new as SparkTaskRow;
+            if (newTask.status !== 'cancelled') {
+              toast({
+                title: 'New Task',
+                description: newTask.title,
+                duration: 4000,
+              });
+              loadTasks();
+            }
+          }
+        )
+        .on(
+          'postgres_changes',
+          {
+            event: 'UPDATE',
+            schema: 'public',
+            table: 'spark_tasks',
+            filter: `user_id=eq.${user.id}`,
+          },
+          () => {
+            loadTasks();
+          }
+        )
+        .subscribe();
+    };
+
+    setupRealtime();
+
+    return () => {
+      if (channel) supabase.removeChannel(channel);
+    };
+  }, [loadTasks, toast]);
 
   // Derived: filtered + sorted tasks for the current view
   const now = new Date();
@@ -228,6 +283,8 @@ export const useSparkTasks = (view: TaskView = 'all') => {
     all: allTasks.filter((t) => t.status === 'open' && isNotSnoozed(t, now)).length,
     completed: allTasks.filter((t) => t.status === 'done').length,
     overdue: allTasks.filter((t) => t.status === 'open' && isOverdue(t, now)).length,
+    snagging: allTasks.filter((t) => t.status !== 'cancelled' && t.tags.includes('snagging'))
+      .length,
   };
 
   const logEvent = async (

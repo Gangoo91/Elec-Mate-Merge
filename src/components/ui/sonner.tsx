@@ -2,36 +2,12 @@
  * Sonner Toaster — Elec-Mate premium design
  *
  * Dark zinc (no blue tint), thick yellow left accent with glow,
- * big branded icon, no close button. Safe-area aware.
+ * no icon, no close button. Safe-area aware.
  */
 
 import { Toaster as Sonner, toast } from 'sonner';
-import { Zap, XCircle, AlertTriangle, Info, CheckCircle2 } from 'lucide-react';
 
 type ToasterProps = React.ComponentProps<typeof Sonner>;
-
-interface IconPillProps {
-  color: string;
-  children: React.ReactNode;
-}
-
-const IconPill = ({ color, children }: IconPillProps) => (
-  <div
-    style={{
-      width: 40,
-      height: 40,
-      borderRadius: 12,
-      background: `${color}22`,
-      border: `1px solid ${color}33`,
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      flexShrink: 0,
-    }}
-  >
-    {children}
-  </div>
-);
 
 // Shared base style — zinc-900 background, no blue tint
 const baseStyle: React.CSSProperties = {
@@ -76,33 +52,17 @@ const Toaster = ({ ...props }: ToasterProps) => {
         } as React.CSSProperties
       }
       icons={{
-        success: (
-          <IconPill color="#FFC800">
-            <Zap style={{ width: 18, height: 18, color: '#FFC800', fill: '#FFC800' }} />
-          </IconPill>
-        ),
-        error: (
-          <IconPill color="#ef4444">
-            <XCircle style={{ width: 18, height: 18, color: '#ef4444' }} />
-          </IconPill>
-        ),
-        warning: (
-          <IconPill color="#f59e0b">
-            <AlertTriangle style={{ width: 18, height: 18, color: '#f59e0b' }} />
-          </IconPill>
-        ),
-        info: (
-          <IconPill color="#3b82f6">
-            <Info style={{ width: 18, height: 18, color: '#3b82f6' }} />
-          </IconPill>
-        ),
+        success: <span />,
+        error: <span />,
+        warning: <span />,
+        info: <span />,
       }}
       toastOptions={{
         style: baseStyle,
         classNames: {
           title: '!text-white !font-semibold !text-[15px] !leading-snug',
           description: '!text-white/60 !text-[13px] !leading-snug !mt-0.5',
-          icon: '!self-center !shrink-0',
+          icon: '!hidden',
         },
       }}
       {...props}

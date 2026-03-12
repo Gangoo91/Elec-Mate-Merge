@@ -23,6 +23,7 @@ import CalendarSettingsSheet from './CalendarSettingsSheet';
 import CalendarEmptyState from './CalendarEmptyState';
 import {
   useCalendarEvents,
+  useCalendarRealtimeInvalidation,
   useCreateCalendarEvent,
   useUpdateCalendarEvent,
   useDeleteCalendarEvent,
@@ -55,6 +56,9 @@ const CalendarPageContent = () => {
   const [newEventDate, setNewEventDate] = useState<Date | undefined>(undefined);
   const [newEventHour, setNewEventHour] = useState<number | undefined>(undefined);
 
+  // Realtime — invalidate queries on INSERT/UPDATE/DELETE
+  useCalendarRealtimeInvalidation();
+
   // Google sync
   const googleSync = useGoogleCalendarSync();
 
@@ -78,6 +82,7 @@ const CalendarPageContent = () => {
       searchParams.delete('google_error');
       setSearchParams(searchParams, { replace: true });
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // Compute query date range based on view

@@ -51,6 +51,14 @@ export interface ProjectRams {
   created_at: string;
 }
 
+export interface ProjectSiteVisit {
+  id: string;
+  status: string;
+  property_address?: string;
+  property_postcode?: string;
+  created_at: string;
+}
+
 export interface UnlinkedItem {
   id: string;
   label: string;
@@ -69,6 +77,7 @@ export function useProjectEntities(projectId: string | undefined) {
   const [invoices, setInvoices] = useState<ProjectInvoice[]>([]);
   const [certificates, setCertificates] = useState<ProjectCertificate[]>([]);
   const [rams, setRams] = useState<ProjectRams[]>([]);
+  const [siteVisits, setSiteVisits] = useState<ProjectSiteVisit[]>([]);
 
   const refresh = useCallback(async () => {
     if (!projectId) return;
@@ -88,7 +97,7 @@ export function useProjectEntities(projectId: string | undefined) {
 
       if (error || !proj) throw error || new Error('Project not found');
 
-      const [tasksRes, quotesRes, invoicesRes, certsRes, ramsRes] = await Promise.all([
+      const [tasksRes, quotesRes, invoicesRes, certsRes, ramsRes, visitsRes] = await Promise.all([
         s()
           .from('spark_tasks')
           .select('*, customers(name)')
@@ -112,6 +121,11 @@ export function useProjectEntities(projectId: string | undefined) {
           .from('rams_generation_jobs')
           .select('id, status, job_description, created_at')
           .eq('project_id', projectId),
+        s()
+          .from('site_visits')
+          .select('id, status, property_address, property_postcode, created_at')
+          .eq('project_id', projectId)
+          .order('created_at', { ascending: false }),
       ]);
 
       setProject({
@@ -211,6 +225,7 @@ export function useProjectEntities(projectId: string | undefined) {
 
       setCertificates(certsRes.data || []);
       setRams(ramsRes.data || []);
+      setSiteVisits(visitsRes.data || []);
     } catch (err) {
       console.error('Failed to load project entities:', err);
       toast({ title: 'Error', description: 'Could not load project.', variant: 'destructive' });
@@ -262,6 +277,8 @@ export function useProjectEntities(projectId: string | undefined) {
   const unlinkCertificate = (id: string) => unlinkEntity('reports', id);
   const linkRams = (id: string) => linkEntity('rams_generation_jobs', id);
   const unlinkRams = (id: string) => unlinkEntity('rams_generation_jobs', id);
+  const linkSiteVisit = (id: string) => linkEntity('site_visits', id);
+  const unlinkSiteVisit = (id: string) => unlinkEntity('site_visits', id);
 
   // Fetch unlinked entities for the link sheet
   async function fetchUnlinked(
@@ -343,6 +360,25 @@ export function useProjectEntities(projectId: string | undefined) {
     );
   }
 
+  async function fetchUnlinkedSiteVisits(): Promise<UnlinkedItem[]> {
+    const rows = await fetchUnlinked(
+      'site_visits',
+      'id, property_address, property_postcode, status, created_at'
+    );
+    return rows.map(
+      (r: {
+        id: string;
+        property_address?: string;
+        property_postcode?: string;
+        status?: string;
+      }) => ({
+        id: r.id,
+        label: r.property_address || 'Site Visit',
+        sublabel: [r.property_postcode, r.status].filter(Boolean).join(' — '),
+      })
+    );
+  }
+
   async function fetchUnlinkedRams(): Promise<UnlinkedItem[]> {
     const rows = await fetchUnlinked(
       'rams_generation_jobs',
@@ -382,6 +418,7 @@ export function useProjectEntities(projectId: string | undefined) {
     invoices,
     certificates,
     rams,
+    siteVisits,
     isLoading,
     progress,
     totalTasks,
@@ -397,10 +434,13 @@ export function useProjectEntities(projectId: string | undefined) {
     unlinkCertificate,
     linkRams,
     unlinkRams,
+    linkSiteVisit,
+    unlinkSiteVisit,
     fetchUnlinkedQuotes,
     fetchUnlinkedInvoices,
     fetchUnlinkedCertificates,
     fetchUnlinkedRams,
+    fetchUnlinkedSiteVisits,
     completeProject,
     refresh,
   };

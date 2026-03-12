@@ -22,6 +22,7 @@ import {
   Camera,
   CalendarDays,
   FolderKanban,
+  AlertTriangle,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { BusinessCard, BusinessKPIStrip } from '@/components/business-hub';
@@ -30,6 +31,7 @@ import { QuoteInvoiceAnalytics } from '@/components/electrician/analytics/QuoteI
 import { useBusinessHubData } from '@/hooks/useBusinessHubData';
 import { useSparkTaskOverdueCount } from '@/hooks/useSparkTaskOverdueCount';
 import { useSparkProjects } from '@/hooks/useSparkProjects';
+import { useSnags } from '@/hooks/useSnags';
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -63,6 +65,7 @@ const BusinessHub = () => {
   } = useBusinessHubData();
   const overdueCount = useSparkTaskOverdueCount();
   const { counts: projectCounts } = useSparkProjects('active');
+  const { counts: snagCounts } = useSnags();
 
   const todayFormatted = new Date().toLocaleDateString('en-GB', {
     weekday: 'short',
@@ -211,6 +214,15 @@ const BusinessHub = () => {
               href="/electrician/photo-docs"
               gradient="from-blue-400 to-cyan-500"
               variant="standard"
+            />
+            <BusinessCard
+              title="Snagging"
+              description="Track & resolve snags"
+              icon={AlertTriangle}
+              href="/electrician/snagging"
+              gradient="from-orange-400 to-red-500"
+              variant="standard"
+              liveSubtitle={snagCounts.open > 0 ? `${snagCounts.open} open` : 'All clear'}
             />
           </div>
         </motion.section>

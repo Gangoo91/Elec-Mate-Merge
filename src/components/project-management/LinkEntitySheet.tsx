@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Drawer } from 'vaul';
 import { X, Loader2, Link2, Plus } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
@@ -29,14 +29,17 @@ export function LinkEntitySheet({
   const [items, setItems] = useState<UnlinkedItem[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [linking, setLinking] = useState<string | null>(null);
+  const fetchRef = useRef(fetchItems);
+  fetchRef.current = fetchItems;
 
   useEffect(() => {
     if (!isOpen) return;
     setIsLoading(true);
-    fetchItems()
+    fetchRef
+      .current()
       .then(setItems)
       .finally(() => setIsLoading(false));
-  }, [isOpen, fetchItems]);
+  }, [isOpen]);
 
   async function handleSelect(id: string) {
     setLinking(id);
@@ -73,7 +76,10 @@ export function LinkEntitySheet({
             {createLabel && createUrl && (
               <button
                 type="button"
-                onClick={() => { onClose(); navigate(createUrl); }}
+                onClick={() => {
+                  onClose();
+                  navigate(createUrl);
+                }}
                 className="w-full flex items-center gap-3 min-h-[48px] px-4 py-3 rounded-xl bg-elec-yellow/10 border border-elec-yellow/30 text-left touch-manipulation active:bg-elec-yellow/20 transition-colors mb-1"
               >
                 <Plus className="h-4 w-4 text-elec-yellow flex-shrink-0" />

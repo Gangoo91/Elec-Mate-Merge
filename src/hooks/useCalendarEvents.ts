@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
@@ -6,6 +7,78 @@ import type {
   CreateCalendarEventInput,
   UpdateCalendarEventInput,
 } from '@/types/calendar';
+
+/**
+ * Subscribe to calendar_events realtime changes and invalidate React Query cache.
+ * Call this from any component that renders calendar data (e.g. CalendarPageContent).
+ */
+export function useCalendarRealtimeInvalidation() {
+  const queryClient = useQueryClient();
+  const { toast } = useToast();
+
+  useEffect(() => {
+    let channel: ReturnType<typeof supabase.channel> | null = null;
+
+    const setup = async () => {
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+      if (!user) return;
+
+      channel = supabase
+        .channel('calendar-events-realtime')
+        .on(
+          'postgres_changes',
+          {
+            event: 'INSERT',
+            schema: 'public',
+            table: 'calendar_events',
+            filter: `user_id=eq.${user.id}`,
+          },
+          (payload) => {
+            const evt = payload.new as Record<string, unknown>;
+            toast({
+              title: 'New event',
+              description: (evt.title as string) || 'Calendar event added',
+              duration: 4000,
+            });
+            queryClient.invalidateQueries({ queryKey: ['calendar-events'] });
+          }
+        )
+        .on(
+          'postgres_changes',
+          {
+            event: 'UPDATE',
+            schema: 'public',
+            table: 'calendar_events',
+            filter: `user_id=eq.${user.id}`,
+          },
+          () => {
+            queryClient.invalidateQueries({ queryKey: ['calendar-events'] });
+          }
+        )
+        .on(
+          'postgres_changes',
+          {
+            event: 'DELETE',
+            schema: 'public',
+            table: 'calendar_events',
+            filter: `user_id=eq.${user.id}`,
+          },
+          () => {
+            queryClient.invalidateQueries({ queryKey: ['calendar-events'] });
+          }
+        )
+        .subscribe();
+    };
+
+    setup();
+
+    return () => {
+      if (channel) supabase.removeChannel(channel);
+    };
+  }, [queryClient, toast]);
+}
 
 // Fetch events for a date range
 export function useCalendarEvents(dateFrom: string, dateTo: string) {
@@ -35,7 +108,7 @@ export function useCalendarEvents(dateFrom: string, dateTo: string) {
       return (data ?? []) as CalendarEvent[];
     },
     enabled: !!dateFrom && !!dateTo,
-    refetchInterval: 30_000,
+    staleTime: 30_000,
   });
 }
 
@@ -78,7 +151,7 @@ export function useTodayEvents() {
       if (error) throw error;
       return (data ?? []) as CalendarEvent[];
     },
-    refetchInterval: 30_000,
+    staleTime: 30_000,
   });
 }
 
@@ -112,7 +185,7 @@ export function useUpcomingEvents(days: number = 7) {
       if (error) throw error;
       return (data ?? []) as CalendarEvent[];
     },
-    refetchInterval: 30_000,
+    staleTime: 30_000,
   });
 }
 

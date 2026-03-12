@@ -14,7 +14,9 @@ interface FireAlarmFormTabsProps {
   currentTab: FireAlarmTabValue;
   onTabChange: (value: string) => void;
   canAccessTab: (tabId: FireAlarmTabValue) => boolean;
-  formData: any;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  formData: Record<string, any>;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   onUpdate: (field: string, value: any) => void;
   tabNavigationProps: {
     currentTab: FireAlarmTabValue;
@@ -40,6 +42,8 @@ interface FireAlarmFormTabsProps {
   onCreateInvoice?: () => void;
   onSaveDraft: () => void;
   canGenerateCertificate?: boolean;
+  onOpenEmailDialog?: () => void;
+  canEmail?: boolean;
 }
 
 const FireAlarmFormTabs: React.FC<FireAlarmFormTabsProps> = ({
@@ -53,6 +57,8 @@ const FireAlarmFormTabs: React.FC<FireAlarmFormTabsProps> = ({
   onCreateInvoice,
   onSaveDraft,
   canGenerateCertificate = true,
+  onOpenEmailDialog,
+  canEmail = false,
 }) => {
   const isMobile = useIsMobile();
 
@@ -111,6 +117,8 @@ const FireAlarmFormTabs: React.FC<FireAlarmFormTabsProps> = ({
             onGenerateCertificate={onGenerateCertificate}
             onCreateInvoice={onCreateInvoice}
             canGenerateCertificate={canGenerateCertificate}
+            onOpenEmailDialog={onOpenEmailDialog}
+            canEmail={canEmail}
           />
         </div>
       ),

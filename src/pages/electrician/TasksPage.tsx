@@ -1,7 +1,7 @@
 import { useState, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowLeft, Plus, ClipboardCheck, Loader2 } from 'lucide-react';
+import { ArrowLeft, Plus, ClipboardCheck, Loader2, AlertTriangle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { PullToRefresh } from '@/components/ui/pull-to-refresh';
 import { TaskCard } from '@/components/tasks/TaskCard';
@@ -32,10 +32,11 @@ const itemVariants = {
 };
 
 // "All Open" is the default — shows everything, most useful landing view
-const VIEWS: { key: TaskView; label: string }[] = [
+const VIEWS: { key: TaskView; label: string; icon?: typeof AlertTriangle }[] = [
   { key: 'all', label: 'All Open' },
   { key: 'today', label: 'Today' },
   { key: 'week', label: 'This Week' },
+  { key: 'snagging', label: 'Snagging', icon: AlertTriangle },
   { key: 'completed', label: 'Completed' },
 ];
 
@@ -51,6 +52,10 @@ const EMPTY_MESSAGES: Record<TaskView, { title: string; subtitle: string }> = {
   week: {
     title: 'Nothing due this week',
     subtitle: 'Looking clear. Tap + to plan ahead.',
+  },
+  snagging: {
+    title: 'No snags yet',
+    subtitle: 'Ask your AI assistant to create a snagging list.',
   },
   completed: {
     title: 'No completed tasks yet',
@@ -240,6 +245,7 @@ const TasksPage = () => {
                     : 'bg-white/[0.06] text-white active:bg-white/10'
                 )}
               >
+                {v.icon && <v.icon className="h-3 w-3" />}
                 {v.label}
                 {counts[v.key] > 0 && (
                   <span

@@ -1,6 +1,6 @@
 import { useState, useRef } from 'react';
 import { motion, useMotionValue, useTransform, PanInfo } from 'framer-motion';
-import { Clock, MapPin, Users, AlarmClock, CheckCircle2 } from 'lucide-react';
+import { Clock, MapPin, Users, AlarmClock, CheckCircle2, AlertTriangle } from 'lucide-react';
 import { SparkTask } from '@/hooks/useSparkTasks';
 import { cn } from '@/lib/utils';
 
@@ -194,8 +194,14 @@ export function TaskCard({ task, onTap, onSwipeComplete }: TaskCardProps) {
               {task.tags.slice(0, 3).map((tag) => (
                 <span
                   key={tag}
-                  className="text-[10px] font-medium px-1.5 py-0.5 rounded bg-white/10 text-white"
+                  className={cn(
+                    'text-[10px] font-medium px-1.5 py-0.5 rounded inline-flex items-center gap-0.5',
+                    tag === 'snagging'
+                      ? 'bg-orange-500/20 text-orange-400'
+                      : 'bg-white/10 text-white'
+                  )}
                 >
+                  {tag === 'snagging' && <AlertTriangle className="h-2.5 w-2.5" />}
                   {tag}
                 </span>
               ))}

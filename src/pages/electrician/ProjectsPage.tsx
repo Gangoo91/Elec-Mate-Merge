@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
@@ -9,11 +9,7 @@ import {
   MapPin,
   Calendar,
   Users,
-  ChevronRight,
   CheckCircle2,
-  PoundSterling,
-  Clock,
-  ListTodo,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -67,13 +63,6 @@ const PRIORITY_COLOURS: Record<ProjectPriority, string> = {
   low: 'bg-white/30',
 };
 
-const PRIORITY_BORDER_COLOURS: Record<ProjectPriority, string> = {
-  urgent: 'border-l-red-500',
-  high: 'border-l-orange-500',
-  normal: 'border-l-blue-500',
-  low: 'border-l-white/10',
-};
-
 const STATUS_COLOURS: Record<string, string> = {
   open: 'bg-blue-500/20 text-blue-400',
   active: 'bg-emerald-500/20 text-emerald-400',
@@ -90,9 +79,6 @@ const ProjectsPage = () => {
   const [view, setView] = useState<ProjectView>('active');
   const [showCreate, setShowCreate] = useState(false);
   const { projects, counts, isLoading, createProject, refreshProjects } = useSparkProjects(view);
-
-  // We need all projects for stats (not just filtered view)
-  const { projects: allActiveProjects } = useSparkProjects('active');
 
   // Customers for the create form
   const [customers, setCustomers] = useState<SimpleCustomer[]>([]);
@@ -176,24 +162,6 @@ const ProjectsPage = () => {
     }).format(val);
   };
 
-  // Compute stats from all active projects
-  const stats = useMemo(() => {
-    const totalTasks = allActiveProjects.reduce((sum, p) => sum + p.totalTasks, 0);
-    const totalValue = allActiveProjects.reduce((sum, p) => sum + (p.estimatedValue || 0), 0);
-
-    const now = new Date();
-    const sevenDaysFromNow = new Date(now.getTime() + 7 * 24 * 60 * 60 * 1000);
-    const dueSoon = allActiveProjects.filter((p) => {
-      if (!p.dueDate) return false;
-      const due = new Date(p.dueDate);
-      return due >= now && due <= sevenDaysFromNow;
-    }).length;
-
-    return { totalTasks, totalValue, dueSoon };
-  }, [allActiveProjects]);
-
-  const hasProjects = counts.all > 0;
-
   return (
     <div className="-mt-3 sm:-mt-4 md:-mt-6 bg-background pb-24">
       {/* Sticky Header */}
@@ -257,44 +225,6 @@ const ProjectsPage = () => {
         </div>
       </div>
 
-      {/* Stats Bar — show when user has projects */}
-      {hasProjects && !isLoading && (
-        <div className="px-4 pb-2">
-          <div className="grid grid-cols-4 gap-2">
-            <div className="p-3 rounded-xl bg-white/[0.04] border border-white/[0.08] text-center">
-              <div className="flex items-center justify-center gap-1 mb-1">
-                <FolderKanban className="h-3.5 w-3.5 text-amber-400" />
-              </div>
-              <p className="text-lg font-bold text-white">{counts.active}</p>
-              <p className="text-[10px] text-white">Active</p>
-            </div>
-            <div className="p-3 rounded-xl bg-white/[0.04] border border-white/[0.08] text-center">
-              <div className="flex items-center justify-center gap-1 mb-1">
-                <ListTodo className="h-3.5 w-3.5 text-purple-400" />
-              </div>
-              <p className="text-lg font-bold text-white">{stats.totalTasks}</p>
-              <p className="text-[10px] text-white">Tasks</p>
-            </div>
-            <div className="p-3 rounded-xl bg-white/[0.04] border border-white/[0.08] text-center">
-              <div className="flex items-center justify-center gap-1 mb-1">
-                <PoundSterling className="h-3.5 w-3.5 text-emerald-400" />
-              </div>
-              <p className="text-lg font-bold text-white">
-                {stats.totalValue > 0 ? formatCurrency(stats.totalValue) : '—'}
-              </p>
-              <p className="text-[10px] text-white">Value</p>
-            </div>
-            <div className="p-3 rounded-xl bg-white/[0.04] border border-white/[0.08] text-center">
-              <div className="flex items-center justify-center gap-1 mb-1">
-                <Clock className="h-3.5 w-3.5 text-red-400" />
-              </div>
-              <p className="text-lg font-bold text-white">{stats.dueSoon}</p>
-              <p className="text-[10px] text-white">Due soon</p>
-            </div>
-          </div>
-        </div>
-      )}
-
       {/* Content */}
       <PullToRefresh onRefresh={refreshProjects}>
         <div className="px-4 py-2">
@@ -348,91 +278,89 @@ const ProjectsPage = () => {
                     layout
                     exit={{ opacity: 0, scale: 0.95 }}
                     onClick={() => navigate(`/electrician/projects/${project.id}`)}
-                    className={cn(
-                      'w-full text-left p-4 rounded-2xl bg-white/[0.04] border border-white/[0.08] active:bg-white/[0.08] transition-colors touch-manipulation',
-                      'border-l-4',
-                      PRIORITY_BORDER_COLOURS[project.priority]
-                    )}
+                    className="w-full text-left rounded-2xl bg-white/[0.04] border border-white/[0.08] active:bg-white/[0.08] transition-colors touch-manipulation overflow-hidden"
                   >
-                    <div className="flex items-start justify-between gap-3">
-                      <div className="flex-1 min-w-0">
-                        {/* Title row with customer initial + value */}
-                        <div className="flex items-center gap-2">
-                          {project.customerName && (
-                            <div className="w-7 h-7 rounded-full bg-amber-500/20 border border-amber-500/30 flex items-center justify-center flex-shrink-0">
-                              <span className="text-xs font-bold text-amber-400">
-                                {project.customerName.charAt(0).toUpperCase()}
-                              </span>
-                            </div>
-                          )}
-                          <h3 className="text-base font-semibold text-white truncate flex-1">
+                    {/* Priority accent bar */}
+                    <div className={cn('h-1 w-full', PRIORITY_COLOURS[project.priority])} />
+
+                    <div className="p-4 space-y-3">
+                      {/* Title — full width, no truncation on 2 lines */}
+                      <div className="flex items-start justify-between gap-3">
+                        <div className="flex-1 min-w-0">
+                          <h3 className="text-[15px] font-bold text-white leading-snug line-clamp-2">
                             {project.title}
                           </h3>
-                          {project.estimatedValue && (
-                            <span className="text-sm font-bold text-emerald-400 flex-shrink-0">
-                              {formatCurrency(project.estimatedValue)}
-                            </span>
-                          )}
-                        </div>
-
-                        {/* Meta row */}
-                        <div className="flex items-center gap-2.5 mt-2 flex-wrap">
-                          {project.projectType && (
-                            <span className="text-[11px] font-medium bg-elec-yellow/15 text-elec-yellow px-2 py-0.5 rounded-full">
-                              {project.projectType}
-                            </span>
-                          )}
-                          <span
-                            className={cn(
-                              'text-[11px] font-medium px-2 py-0.5 rounded-full',
-                              STATUS_COLOURS[project.status] || 'bg-white/10 text-white'
-                            )}
-                          >
-                            {project.status}
-                          </span>
                           {project.customerName && (
-                            <span className="text-[12px] text-white flex items-center gap-1">
-                              <Users className="h-3 w-3" />
+                            <p className="text-[13px] text-white mt-0.5 flex items-center gap-1">
+                              <Users className="h-3 w-3 flex-shrink-0" />
                               {project.customerName}
-                            </span>
+                              {project.location && (
+                                <>
+                                  <span className="mx-1">·</span>
+                                  <MapPin className="h-3 w-3 flex-shrink-0" />
+                                  {project.location}
+                                </>
+                              )}
+                            </p>
                           )}
-                          {project.location && (
-                            <span className="text-[12px] text-white flex items-center gap-1">
-                              <MapPin className="h-3 w-3" />
+                          {!project.customerName && project.location && (
+                            <p className="text-[13px] text-white mt-0.5 flex items-center gap-1">
+                              <MapPin className="h-3 w-3 flex-shrink-0" />
                               {project.location}
-                            </span>
+                            </p>
                           )}
-                          {project.dueDate && (
-                            <span className="text-[12px] text-white flex items-center gap-1">
-                              <Calendar className="h-3 w-3" />
-                              {formatDate(project.dueDate)}
+                        </div>
+                        {project.estimatedValue ? (
+                          <span className="text-base font-bold text-emerald-400 flex-shrink-0 tabular-nums">
+                            {formatCurrency(project.estimatedValue)}
+                          </span>
+                        ) : null}
+                      </div>
+
+                      {/* Badges row */}
+                      <div className="flex items-center gap-2 flex-wrap">
+                        <span
+                          className={cn(
+                            'text-[11px] font-medium px-2 py-0.5 rounded-full',
+                            STATUS_COLOURS[project.status] || 'bg-white/10 text-white'
+                          )}
+                        >
+                          {project.status}
+                        </span>
+                        {project.projectType && (
+                          <span className="text-[11px] font-medium bg-elec-yellow/15 text-elec-yellow px-2 py-0.5 rounded-full">
+                            {project.projectType}
+                          </span>
+                        )}
+                        {project.dueDate && (
+                          <span className="text-[11px] font-medium text-white flex items-center gap-1">
+                            <Calendar className="h-3 w-3" />
+                            {formatDate(project.dueDate)}
+                          </span>
+                        )}
+                      </div>
+
+                      {/* Progress bar */}
+                      <div>
+                        <div className="flex items-center justify-between mb-1">
+                          <span className="text-[11px] text-white">
+                            {project.totalTasks > 0
+                              ? `${project.completedTasks}/${project.totalTasks} tasks`
+                              : 'No tasks yet'}
+                          </span>
+                          {project.totalTasks > 0 && (
+                            <span className="text-[11px] font-bold text-elec-yellow">
+                              {project.progress}%
                             </span>
                           )}
                         </div>
-
-                        {/* Progress bar — always visible */}
-                        <div className="mt-3">
-                          <div className="flex items-center justify-between mb-1">
-                            <span className="text-[11px] text-white">
-                              {project.totalTasks > 0
-                                ? `${project.completedTasks}/${project.totalTasks} tasks`
-                                : '0 tasks — add some'}
-                            </span>
-                            {project.totalTasks > 0 && (
-                              <span className="text-[11px] font-medium text-white">
-                                {project.progress}%
-                              </span>
-                            )}
-                          </div>
-                          <div className="h-1.5 bg-white/10 rounded-full overflow-hidden">
-                            <div
-                              className="h-full bg-elec-yellow rounded-full transition-all duration-500"
-                              style={{ width: `${project.progress}%` }}
-                            />
-                          </div>
+                        <div className="h-1.5 bg-white/10 rounded-full overflow-hidden">
+                          <div
+                            className="h-full bg-elec-yellow rounded-full transition-all duration-500"
+                            style={{ width: `${project.progress}%` }}
+                          />
                         </div>
                       </div>
-                      <ChevronRight className="h-5 w-5 text-white flex-shrink-0 mt-0.5" />
                     </div>
                   </motion.button>
                 ))}

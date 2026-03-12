@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button } from '@/components/ui/button';
-import { ChevronLeft, ChevronRight, CheckCircle2, PoundSterling } from 'lucide-react';
+import { ChevronLeft, ChevronRight, CheckCircle2, PoundSterling, Mail } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { WhatsAppShareButton } from '@/components/ui/WhatsAppShareButton';
@@ -25,6 +25,8 @@ interface FireAlarmTabNavigationProps {
     recipientName: string;
     documentLabel: string;
   };
+  onOpenEmailDialog?: () => void;
+  canEmail?: boolean;
 }
 
 const FireAlarmTabNavigation: React.FC<FireAlarmTabNavigationProps> = ({
@@ -41,6 +43,8 @@ const FireAlarmTabNavigation: React.FC<FireAlarmTabNavigationProps> = ({
   canGenerateCertificate = true,
   onCreateInvoice,
   whatsApp,
+  onOpenEmailDialog,
+  canEmail = false,
 }) => {
   const isMobile = useIsMobile();
   const progress = getProgressPercentage();
@@ -109,6 +113,7 @@ const FireAlarmTabNavigation: React.FC<FireAlarmTabNavigationProps> = ({
             <div className="flex items-center gap-2">
               {whatsApp && (
                 <WhatsAppShareButton
+                  // eslint-disable-next-line @typescript-eslint/no-explicit-any
                   type={whatsApp.type as any}
                   id={whatsApp.id}
                   recipientPhone={whatsApp.recipientPhone}
@@ -117,6 +122,18 @@ const FireAlarmTabNavigation: React.FC<FireAlarmTabNavigationProps> = ({
                   variant="ghost"
                   className="h-11 w-11 touch-manipulation active:scale-[0.98] transition-transform"
                 />
+              )}
+              {onOpenEmailDialog && (
+                <Button
+                  variant="outline"
+                  size="icon"
+                  onClick={onOpenEmailDialog}
+                  disabled={!canEmail}
+                  className="h-11 w-11 touch-manipulation bg-blue-500/10 border-blue-500/30 hover:bg-blue-500/20 text-blue-400 active:scale-[0.98] transition-transform"
+                  aria-label="Email certificate"
+                >
+                  <Mail className="h-5 w-5" />
+                </Button>
               )}
               {onCreateInvoice && (
                 <Button

@@ -38,6 +38,7 @@ const PublicSignature = lazy(() => import('@/pages/PublicSignature'));
 const BriefingSignOff = lazy(() => import('@/pages/BriefingSignOff'));
 const PublicBriefingSign = lazy(() => import('@/pages/PublicBriefingSign'));
 const ClientPortalView = lazy(() => import('@/pages/public/ClientPortalView'));
+const PublicBooking = lazy(() => import('@/pages/public/PublicBooking'));
 const PublicElecIdView = lazy(() => import('@/pages/public/PublicElecIdView'));
 const SupervisorVerificationPage = lazy(() => import('@/pages/public/SupervisorVerificationPage'));
 const PhotoSharePage = lazy(() => import('@/pages/public/PhotoSharePage'));
@@ -428,6 +429,14 @@ const AppRouter = () => {
           element={
             <LazyRoute>
               <ClientPortalView />
+            </LazyRoute>
+          }
+        />
+        <Route
+          path="/book/:electricianId"
+          element={
+            <LazyRoute>
+              <PublicBooking />
             </LazyRoute>
           }
         />

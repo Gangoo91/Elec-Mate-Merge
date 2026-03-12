@@ -85,6 +85,7 @@ const handlers: Record<string, ToolHandler> = {
   get_overdue_invoices: invoicing.getOverdueInvoices,
 
   // RAMS & Compliance
+  read_rams: rams.readRams,
   create_rams: rams.createRams,
   generate_rams_pdf: rams.generateRamsPdf,
   generate_method_statement: rams.generateMethodStatement,
@@ -96,12 +97,14 @@ const handlers: Record<string, ToolHandler> = {
   update_calendar_event: calendar.updateCalendarEvent,
   delete_calendar_event: calendar.deleteCalendarEvent,
   get_availability: calendar.getAvailability,
+  share_booking_link: calendar.shareBookingLink,
 
   // Messaging
   draft_message: messaging.draftMessage,
   send_approved_message: messaging.sendApprovedMessage,
 
   // Expenses
+  read_expenses: expenses.readExpenses,
   create_expense: expenses.createExpense,
   log_mileage: expenses.logMileage,
   sync_expense_to_accounting: expenses.syncExpenseToAccounting,
@@ -215,7 +218,9 @@ const handlers: Record<string, ToolHandler> = {
   // Safety
   get_safety_templates: safety.getSafetyTemplates,
   create_safe_isolation_record: safety.createSafeIsolationRecord,
+  read_safe_isolation_records: safety.readSafeIsolationRecords,
   log_site_diary_entry: safety.logSiteDiaryEntry,
+  read_site_diary: safety.readSiteDiary,
 
   // Vision
   analyse_photo: vision.analysePhoto,

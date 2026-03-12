@@ -36,6 +36,7 @@ import {
   CloudOff,
   CheckCircle2,
   AlertCircle,
+  Mail,
 } from 'lucide-react';
 import { toast } from 'sonner';
 import { cn } from '@/lib/utils';
@@ -47,6 +48,9 @@ import {
 } from '@/utils/certificateToQuote';
 import { supabase } from '@/integrations/supabase/client';
 import { formatFireAlarmJson } from '@/utils/fireAlarmJsonFormatter';
+import { useCertificateEmail } from '@/hooks/useCertificateEmail';
+import { EmailCertificateDialog } from '@/components/certificate-completion/EmailCertificateDialog';
+import { useCompanyProfile } from '@/hooks/useCompanyProfile';
 
 import FireAlarmFormTabs from '@/components/inspection/fire-alarm/FireAlarmFormTabs';
 import { useFireAlarmTabs, FireAlarmTabValue } from '@/hooks/useFireAlarmTabs';
@@ -68,7 +72,8 @@ export default function FireAlarmCertificate() {
   const isNew = id === 'new' || !id;
 
   // State
-  const [formData, setFormData] = useState<any>(getDefaultFireAlarmFormData());
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const [formData, setFormData] = useState<Record<string, any>>(getDefaultFireAlarmFormData());
   const [isSaving, setIsSaving] = useState(false);
   const [isGenerating, setIsGenerating] = useState(false);
   const [isLoading, setIsLoading] = useState(!isNew);
@@ -78,10 +83,13 @@ export default function FireAlarmCertificate() {
   const [syncStatus, setSyncStatus] = useState<SyncStatus>('synced');
   const [isOnline, setIsOnline] = useState(navigator.onLine);
   const [showRecoveryDialog, setShowRecoveryDialog] = useState(false);
-  const [recoveryDraft, setRecoveryDraft] = useState<{ data: any; lastModified: Date } | null>(
-    null
-  );
-  const [user, setUser] = useState<any>(null);
+  const [recoveryDraft, setRecoveryDraft] = useState<{
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    data: Record<string, any>;
+    lastModified: Date;
+  } | null>(null);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const [user, setUser] = useState<Record<string, any> | null>(null);
 
   // Refs for auto-save
   const autoSaveTimerRef = useRef<NodeJS.Timeout | null>(null);
@@ -94,6 +102,24 @@ export default function FireAlarmCertificate() {
 
   // Smart form hook for company branding
   const { loadCompanyBranding, hasSavedCompanyBranding } = useFireAlarmSmartForm();
+
+  // Company profile for email
+  const { companyProfile } = useCompanyProfile();
+
+  // Email state
+  const [showEmailDialog, setShowEmailDialog] = useState(false);
+
+  // Email hook
+  const { sendCertificateEmail, isLoading: isEmailSending } = useCertificateEmail({
+    certificateType: 'fire-alarm',
+    reportId: savedReportId || '',
+    certificateNumber: formData.certificateNumber,
+    clientName: formData.clientName,
+    clientEmail: formData.clientEmail,
+    installationAddress: formData.premisesAddress,
+    inspectionDate: formData.commissioningDate,
+    companyName: companyProfile?.company_name,
+  });
 
   // Track online/offline status
   useEffect(() => {
@@ -115,6 +141,7 @@ export default function FireAlarmCertificate() {
       window.removeEventListener('online', handleOnline);
       window.removeEventListener('offline', handleOffline);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // Get current user
@@ -312,7 +339,9 @@ export default function FireAlarmCertificate() {
   }, [formData, savedReportId, syncStatus]);
 
   // Update form field
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleUpdate = useCallback((field: string, value: any) => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     setFormData((prev: any) => ({
       ...prev,
       [field]: value,
@@ -500,6 +529,21 @@ export default function FireAlarmCertificate() {
     navigate(url);
   };
 
+  // Email handler
+  const handleSendEmail = async (email: string, cc?: string[], message?: string) => {
+    try {
+      await handleSaveDraft();
+      await sendCertificateEmail({
+        recipientEmail: email,
+        cc,
+        customMessage: message,
+      });
+    } catch (error) {
+      toast.error(error instanceof Error ? error.message : 'Failed to send email');
+      throw error;
+    }
+  };
+
   // Render sync status indicator
   const renderSyncStatus = () => {
     switch (syncStatus) {
@@ -613,6 +657,17 @@ export default function FireAlarmCertificate() {
               </Button>
 
               <Button
+                variant="ghost"
+                size="icon"
+                onClick={() => setShowEmailDialog(true)}
+                disabled={!savedReportId}
+                aria-label="Email certificate"
+                className="h-11 w-11 text-white hover:text-white hover:bg-white/10 touch-manipulation active:scale-[0.98] transition-transform"
+              >
+                <Mail className="h-4 w-4" />
+              </Button>
+
+              <Button
                 size="sm"
                 onClick={handleGenerateCertificate}
                 disabled={isGenerating}
@@ -625,8 +680,6 @@ export default function FireAlarmCertificate() {
                   <Download className="h-4 w-4" />
                 )}
               </Button>
-
-
             </div>
           </div>
 
@@ -678,8 +731,25 @@ export default function FireAlarmCertificate() {
           onCreateInvoice={handleCreateInvoice}
           onSaveDraft={handleSaveDraft}
           canGenerateCertificate={!isGenerating}
+          onOpenEmailDialog={() => setShowEmailDialog(true)}
+          canEmail={!!savedReportId}
         />
       </main>
+
+      {/* Email Certificate Dialog */}
+      <EmailCertificateDialog
+        open={showEmailDialog}
+        onOpenChange={setShowEmailDialog}
+        certificateType="Fire Alarm"
+        certificateNumber={formData.certificateNumber}
+        clientName={formData.clientName}
+        clientEmail={formData.clientEmail}
+        installationAddress={formData.premisesAddress}
+        inspectionDate={formData.commissioningDate}
+        companyName={companyProfile?.company_name}
+        onSend={handleSendEmail}
+        isLoading={isEmailSending}
+      />
     </div>
   );
 }
