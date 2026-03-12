@@ -59,6 +59,20 @@ export interface ProjectSiteVisit {
   created_at: string;
 }
 
+export interface ProjectCircuitDesign {
+  id: string;
+  status: string;
+  job_inputs: Record<string, unknown>;
+  created_at: string;
+}
+
+export interface ProjectCostEstimate {
+  id: string;
+  status: string;
+  query: string;
+  created_at: string;
+}
+
 export interface UnlinkedItem {
   id: string;
   label: string;
@@ -78,6 +92,8 @@ export function useProjectEntities(projectId: string | undefined) {
   const [certificates, setCertificates] = useState<ProjectCertificate[]>([]);
   const [rams, setRams] = useState<ProjectRams[]>([]);
   const [siteVisits, setSiteVisits] = useState<ProjectSiteVisit[]>([]);
+  const [circuitDesigns, setCircuitDesigns] = useState<ProjectCircuitDesign[]>([]);
+  const [costEstimates, setCostEstimates] = useState<ProjectCostEstimate[]>([]);
 
   const refresh = useCallback(async () => {
     if (!projectId) return;
@@ -97,36 +113,47 @@ export function useProjectEntities(projectId: string | undefined) {
 
       if (error || !proj) throw error || new Error('Project not found');
 
-      const [tasksRes, quotesRes, invoicesRes, certsRes, ramsRes, visitsRes] = await Promise.all([
-        s()
-          .from('spark_tasks')
-          .select('*, customers(name)')
-          .eq('project_id', projectId)
-          .neq('status', 'cancelled')
-          .order('due_at', { ascending: true }),
-        s()
-          .from('quotes')
-          .select('id, status, total, quote_number, client_data, created_at')
-          .eq('project_id', projectId)
-          .eq('invoice_raised', false),
-        s()
-          .from('invoices')
-          .select('id, status, total, invoice_number, client_data, created_at')
-          .eq('project_id', projectId),
-        s()
-          .from('reports')
-          .select('id, report_type, status, client_name, created_at')
-          .eq('project_id', projectId),
-        s()
-          .from('rams_generation_jobs')
-          .select('id, status, job_description, created_at')
-          .eq('project_id', projectId),
-        s()
-          .from('site_visits')
-          .select('id, status, property_address, property_postcode, created_at')
-          .eq('project_id', projectId)
-          .order('created_at', { ascending: false }),
-      ]);
+      const [tasksRes, quotesRes, invoicesRes, certsRes, ramsRes, visitsRes, circuitRes, costRes] =
+        await Promise.all([
+          s()
+            .from('spark_tasks')
+            .select('*, customers(name)')
+            .eq('project_id', projectId)
+            .neq('status', 'cancelled')
+            .order('due_at', { ascending: true }),
+          s()
+            .from('quotes')
+            .select('id, status, total, quote_number, client_data, created_at')
+            .eq('project_id', projectId)
+            .eq('invoice_raised', false),
+          s()
+            .from('invoices')
+            .select('id, status, total, invoice_number, client_data, created_at')
+            .eq('project_id', projectId),
+          s()
+            .from('reports')
+            .select('id, report_type, status, client_name, created_at')
+            .eq('project_id', projectId),
+          s()
+            .from('rams_generation_jobs')
+            .select('id, status, job_description, created_at')
+            .eq('project_id', projectId),
+          s()
+            .from('site_visits')
+            .select('id, status, property_address, property_postcode, created_at')
+            .eq('project_id', projectId)
+            .order('created_at', { ascending: false }),
+          s()
+            .from('circuit_design_jobs')
+            .select('id, status, job_inputs, created_at')
+            .eq('project_id', projectId)
+            .eq('status', 'complete'),
+          s()
+            .from('cost_engineer_jobs')
+            .select('id, status, query, created_at')
+            .eq('project_id', projectId)
+            .eq('status', 'complete'),
+        ]);
 
       setProject({
         id: proj.id,
@@ -226,6 +253,8 @@ export function useProjectEntities(projectId: string | undefined) {
       setCertificates(certsRes.data || []);
       setRams(ramsRes.data || []);
       setSiteVisits(visitsRes.data || []);
+      setCircuitDesigns(circuitRes.data || []);
+      setCostEstimates(costRes.data || []);
     } catch (err) {
       console.error('Failed to load project entities:', err);
       toast({ title: 'Error', description: 'Could not load project.', variant: 'destructive' });
@@ -279,6 +308,10 @@ export function useProjectEntities(projectId: string | undefined) {
   const unlinkRams = (id: string) => unlinkEntity('rams_generation_jobs', id);
   const linkSiteVisit = (id: string) => linkEntity('site_visits', id);
   const unlinkSiteVisit = (id: string) => unlinkEntity('site_visits', id);
+  const linkCircuitDesign = (id: string) => linkEntity('circuit_design_jobs', id);
+  const unlinkCircuitDesign = (id: string) => unlinkEntity('circuit_design_jobs', id);
+  const linkCostEstimate = (id: string) => linkEntity('cost_engineer_jobs', id);
+  const unlinkCostEstimate = (id: string) => unlinkEntity('cost_engineer_jobs', id);
 
   // Fetch unlinked entities for the link sheet
   async function fetchUnlinked(
@@ -392,6 +425,36 @@ export function useProjectEntities(projectId: string | undefined) {
     }));
   }
 
+  async function fetchUnlinkedCircuitDesigns(): Promise<UnlinkedItem[]> {
+    const rows = await fetchUnlinked(
+      'circuit_design_jobs',
+      'id, job_inputs, status, created_at',
+      (q) => q.eq('status', 'complete')
+    );
+    return rows.map(
+      (r: {
+        id: string;
+        job_inputs?: { project_name?: string; description?: string };
+        status?: string;
+      }) => ({
+        id: r.id,
+        label: r.job_inputs?.project_name || r.job_inputs?.description || 'Circuit Design',
+        sublabel: r.status,
+      })
+    );
+  }
+
+  async function fetchUnlinkedCostEstimates(): Promise<UnlinkedItem[]> {
+    const rows = await fetchUnlinked('cost_engineer_jobs', 'id, query, status, created_at', (q) =>
+      q.eq('status', 'complete')
+    );
+    return rows.map((r: { id: string; query?: string; status?: string }) => ({
+      id: r.id,
+      label: r.query || 'Cost Estimate',
+      sublabel: r.status,
+    }));
+  }
+
   async function completeProject() {
     if (!projectId) return;
     try {
@@ -419,6 +482,8 @@ export function useProjectEntities(projectId: string | undefined) {
     certificates,
     rams,
     siteVisits,
+    circuitDesigns,
+    costEstimates,
     isLoading,
     progress,
     totalTasks,
@@ -436,11 +501,17 @@ export function useProjectEntities(projectId: string | undefined) {
     unlinkRams,
     linkSiteVisit,
     unlinkSiteVisit,
+    linkCircuitDesign,
+    unlinkCircuitDesign,
+    linkCostEstimate,
+    unlinkCostEstimate,
     fetchUnlinkedQuotes,
     fetchUnlinkedInvoices,
     fetchUnlinkedCertificates,
     fetchUnlinkedRams,
     fetchUnlinkedSiteVisits,
+    fetchUnlinkedCircuitDesigns,
+    fetchUnlinkedCostEstimates,
     completeProject,
     refresh,
   };

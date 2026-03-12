@@ -705,6 +705,198 @@ function generateFortnightReportHTML(user: EligibleUser): string {
 </body></html>`;
 }
 
+// V5 "Last Chance" winback email — final offer, show the full scale, all white text
+function generateV5WinbackHTML(user: EligibleUser): string {
+  const firstName = user.full_name?.split(' ')[0] || 'mate';
+  const t = 'color:#ffffff;font-size:14px;line-height:1.6;margin:0 0 5px';
+  const b = 'color:#fff;font-weight:700';
+  const h =
+    'font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;margin:0 0 10px';
+
+  return `<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><meta name="color-scheme" content="dark"><!--[if mso]><style>body,table,td{font-family:Arial,sans-serif!important}</style><![endif]--></head>
+<body style="margin:0;padding:0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;background:#0f172a">
+<table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background:#0f172a"><tr><td style="padding:24px 12px">
+<table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="max-width:500px;margin:0 auto;background:linear-gradient(180deg,#1e293b,#0f172a);border-radius:24px;overflow:hidden;border:1px solid rgba(251,191,36,0.2)">
+
+<!-- Opening -->
+<tr><td style="padding:32px 24px 20px">
+<p style="margin:0 0 16px;font-size:17px;color:#fff;line-height:1.6">Hey ${firstName},</p>
+<p style="margin:0 0 14px;font-size:16px;color:#fff;line-height:1.7">I'll keep this short because I know you've seen emails from me before.</p>
+<p style="margin:0 0 14px;font-size:16px;color:#fff;line-height:1.7">You tried Elec-Mate a while back. Fair enough if it wasn't ready &mdash; I've shipped <strong style="color:#fbbf24">40 updates this week alone</strong>. It's not the same app.</p>
+<p style="margin:0;font-size:16px;color:#fff;line-height:1.7">I'm not going to waffle. Here's everything you get for <strong style="color:#fbbf24">&pound;7.99 a month</strong>:</p>
+</td></tr>
+
+<!-- Stats Strip — 4 gold boxes -->
+<tr><td style="padding:0 20px 16px">
+<table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%"><tr>
+<td width="25%" style="padding:0 3px 0 0"><div style="background:linear-gradient(135deg,#fbbf24,#f59e0b);border-radius:12px;padding:14px 6px;text-align:center">
+<p style="margin:0;font-size:24px;font-weight:800;color:#0f172a;line-height:1">122</p>
+<p style="margin:4px 0 0;font-size:9px;font-weight:800;color:#0f172a;text-transform:uppercase;letter-spacing:0.5px">AI Tools</p>
+</div></td>
+<td width="25%" style="padding:0 2px"><div style="background:linear-gradient(135deg,#fbbf24,#f59e0b);border-radius:12px;padding:14px 6px;text-align:center">
+<p style="margin:0;font-size:24px;font-weight:800;color:#0f172a;line-height:1">8</p>
+<p style="margin:4px 0 0;font-size:9px;font-weight:800;color:#0f172a;text-transform:uppercase;letter-spacing:0.5px">Cert Types</p>
+</div></td>
+<td width="25%" style="padding:0 2px"><div style="background:linear-gradient(135deg,#fbbf24,#f59e0b);border-radius:12px;padding:14px 6px;text-align:center">
+<p style="margin:0;font-size:24px;font-weight:800;color:#0f172a;line-height:1">15</p>
+<p style="margin:4px 0 0;font-size:9px;font-weight:800;color:#0f172a;text-transform:uppercase;letter-spacing:0.5px">AI Agents</p>
+</div></td>
+<td width="25%" style="padding:0 0 0 3px"><div style="background:linear-gradient(135deg,#fbbf24,#f59e0b);border-radius:12px;padding:14px 6px;text-align:center">
+<p style="margin:0;font-size:24px;font-weight:800;color:#0f172a;line-height:1">64+</p>
+<p style="margin:4px 0 0;font-size:9px;font-weight:800;color:#0f172a;text-transform:uppercase;letter-spacing:0.5px">Calculators</p>
+</div></td>
+</tr></table>
+</td></tr>
+
+<!-- Certs & Testing (green) -->
+<tr><td style="padding:0 20px 12px"><div style="background:linear-gradient(135deg,rgba(34,197,94,0.12),rgba(34,197,94,0.03));border:1px solid rgba(34,197,94,0.3);border-radius:14px;padding:18px">
+<p style="${h};color:#22c55e">&#x1F4CB; Certificates &amp; Testing</p>
+<p style="${t}">&#x2713; EICR (Electrical Installation Condition Report)</p>
+<p style="${t}">&#x2713; EIC (Electrical Installation Certificate)</p>
+<p style="${t}">&#x2713; Minor Works</p>
+<p style="${t}">&#x2713; Fire Alarm (BS 5839-1:2017 &mdash; 7 certificate sub-types)</p>
+<p style="${t}">&#x2713; EV Charging Installation</p>
+<p style="${t}">&#x2713; Emergency Lighting</p>
+<p style="${t}">&#x2713; Solar PV Installation</p>
+<p style="${t}">&#x2713; PAT Testing</p>
+<p style="margin:10px 0 0;font-size:13px;color:#22c55e;line-height:1.6;font-weight:600">Every one: photo capture, defect coding, PDF export, email to client. Fill it in on site &rarr; client gets it before you're back in the van.</p>
+</div></td></tr>
+
+<!-- AI Tools (yellow) -->
+<tr><td style="padding:0 20px 12px"><div style="background:linear-gradient(135deg,rgba(251,191,36,0.12),rgba(251,191,36,0.03));border:1px solid rgba(251,191,36,0.3);border-radius:14px;padding:18px">
+<p style="${h};color:#fbbf24">&#x1F916; AI Tools &mdash; Point Your Camera, Get Answers</p>
+<p style="${t}">&#x2713; <strong style="${b}">Circuit Designer</strong> &mdash; BS 7671 compliant designs, cable sizing, CU layouts</p>
+<p style="${t}">&#x2713; <strong style="${b}">Cost Engineer</strong> &mdash; quotes with live material pricing + labour rates</p>
+<p style="${t}">&#x2713; <strong style="${b}">RAMS Generator</strong> &mdash; risk assessment from a job description in 2 minutes flat</p>
+<p style="${t}">&#x2713; <strong style="${b}">Fault Diagnosis</strong> &mdash; describe the fault, get step-by-step fixes</p>
+<p style="${t}">&#x2713; <strong style="${b}">Photo Analysis</strong> &mdash; photograph a component &rarr; get specs + regs</p>
+<p style="${t}">&#x2713; <strong style="${b}">Installation Verification</strong> &mdash; snap your work &rarr; BS 7671 compliance check</p>
+<p style="${t}">&#x2713; <strong style="${b}">Report Writer</strong> &mdash; professional fault reports, no typing essays</p>
+<p style="${t}">&#x2713; <strong style="${b}">Wiring Instructions</strong> &mdash; step-by-step from your photo</p>
+<p style="${t}">&#x2713; <strong style="${b}">Client Explainer</strong> &mdash; turn technical findings into plain English for Mrs Jones</p>
+<p style="margin:0;font-size:13px;color:#fbbf24;font-weight:600">+ 6 more specialist tools</p>
+</div></td></tr>
+
+<!-- Business Tools (amber) -->
+<tr><td style="padding:0 20px 12px"><div style="background:linear-gradient(135deg,rgba(245,158,11,0.12),rgba(245,158,11,0.03));border:1px solid rgba(245,158,11,0.3);border-radius:14px;padding:18px">
+<p style="${h};color:#f59e0b">&#x1F4BC; Business Tools &mdash; Run Your Business From Your Phone</p>
+<p style="${t}">&#x2713; Quote &amp; Invoice Builder with Stripe payments</p>
+<p style="${t}">&#x2713; Customer database</p>
+<p style="${t}">&#x2713; Project management with photos &amp; drawings</p>
+<p style="${t}">&#x2713; Expense tracking</p>
+<p style="${t}">&#x2713; Booking Portal &mdash; your own booking page, clients pick slots</p>
+<p style="${t}">&#x2713; 50+ electrical calculators (cable sizing, Zs, voltage drop, solar, EV)</p>
+<p style="${t}">&#x2713; 14 business calculators (hourly rate, job profit, tax, cash flow)</p>
+<p style="margin:0;${t}">&#x2713; Referral system &mdash; get paid when you refer other sparkies</p>
+</div></td></tr>
+
+<!-- Materials Marketplace (blue) -->
+<tr><td style="padding:0 20px 12px"><div style="background:linear-gradient(135deg,rgba(59,130,246,0.12),rgba(59,130,246,0.03));border:1px solid rgba(59,130,246,0.3);border-radius:14px;padding:18px">
+<p style="${h};color:#3b82f6">&#x1F6D2; Materials Marketplace</p>
+<p style="${t}">Live pricing from 6 suppliers:</p>
+<p style="margin:0 0 8px;font-size:15px;color:#fff;font-weight:700;line-height:1.6">Screwfix &middot; Toolstation &middot; CEF &middot; Edmundson &middot; Wickes &middot; B&amp;Q</p>
+<p style="margin:0;font-size:13px;color:#3b82f6;font-weight:600;line-height:1.6">Deals of the day. Coupon finder. Price comparison. Find the cheapest 6mm T&amp;E in 10 seconds.</p>
+</div></td></tr>
+
+<!-- Study Centre (cyan) -->
+<tr><td style="padding:0 20px 12px"><div style="background:linear-gradient(135deg,rgba(6,182,212,0.12),rgba(6,182,212,0.03));border:1px solid rgba(6,182,212,0.3);border-radius:14px;padding:18px">
+<p style="${h};color:#06b6d4">&#x1F393; Study Centre</p>
+<p style="${t}">&#x2713; <strong style="${b}">Apprentice Hub</strong> &mdash; Level 2 &amp; 3 courses, 60+ video lessons</p>
+<p style="${t}">&#x2713; <strong style="${b}">780 Flash Cards</strong> &mdash; spaced repetition, exam-ready</p>
+<p style="${t}">&#x2713; <strong style="${b}">AM2 &amp; EPA Exam Simulators</strong> &mdash; timed, realistic, scored</p>
+<p style="${t}">&#x2713; <strong style="${b}">CPD Courses</strong> &mdash; upskilling for qualified electricians</p>
+<p style="margin:0;${t}">&#x2713; <strong style="${b}">College Tutor Dashboard</strong> &mdash; manage cohorts, track progress</p>
+</div></td></tr>
+
+<!-- New This Week (purple) -->
+<tr><td style="padding:0 20px 12px"><div style="background:linear-gradient(135deg,rgba(168,85,247,0.12),rgba(168,85,247,0.03));border:1px solid rgba(168,85,247,0.3);border-radius:14px;padding:18px">
+<p style="${h};color:#a855f7">&#x2728; Shipped This Week</p>
+<p style="${t}">&#x2713; <strong style="${b}">Snagging</strong> &mdash; photograph defects, track by project, one-tap resolve</p>
+<p style="${t}">&#x2713; <strong style="${b}">Route Planning</strong> &mdash; optimised daily driving route with weather on each job</p>
+<p style="${t}">&#x2713; <strong style="${b}">Solar Roof Analysis</strong> &mdash; Google satellite data for PV quotes</p>
+<p style="${t}">&#x2713; <strong style="${b}">Realtime Sync</strong> &mdash; everything updates live across all your devices</p>
+<p style="margin:0;${t}">&#x2713; <strong style="${b}">iOS App in TestFlight</strong> &mdash; push notifications, camera, morning briefings</p>
+</div></td></tr>
+
+<!-- Site Safety (red) -->
+<tr><td style="padding:0 20px 12px"><div style="background:linear-gradient(135deg,rgba(239,68,68,0.12),rgba(239,68,68,0.03));border:1px solid rgba(239,68,68,0.3);border-radius:14px;padding:18px">
+<p style="${h};color:#ef4444">&#x1F6E1;&#xFE0F; Site Safety</p>
+<p style="${t}">&#x2713; RAMS from a job description</p>
+<p style="${t}">&#x2713; Method statements</p>
+<p style="${t}">&#x2713; Safe isolation records</p>
+<p style="${t}">&#x2713; Equipment tracking</p>
+<p style="margin:0;${t}">&#x2713; Team briefing templates</p>
+</div></td></tr>
+
+<!-- Pricing CTA (gold) -->
+<tr><td style="padding:0 20px 16px"><div style="background:linear-gradient(135deg,rgba(251,191,36,0.15),rgba(251,191,36,0.05));border:2px solid rgba(251,191,36,0.4);border-radius:16px;padding:24px 18px;text-align:center">
+<p style="margin:0 0 8px;font-size:16px;color:#fff;font-weight:600;line-height:1.5">All of that. &pound;7.99 a month.</p>
+<p style="margin:0;font-size:52px;font-weight:800;color:#fbbf24;line-height:1">&pound;${WINBACK_CONFIG.monthlyPrice.toFixed(2)}<span style="font-size:18px;font-weight:600;color:#fff">/mo</span></p>
+<p style="margin:6px 0 4px;font-size:14px;color:#fff"><span style="text-decoration:line-through">&pound;${WINBACK_CONFIG.standardMonthlyPrice.toFixed(2)}</span> &middot; <span style="color:#22c55e;font-weight:600">20% off</span> &middot; locked forever</p>
+<p style="margin:0 0 18px;font-size:14px;color:#fff;line-height:1.5">That's less than two coffees. For 122 tools, 8 cert types, 15 AI specialists, and 6 supplier price feeds. In your pocket.</p>
+<a href="${WINBACK_CONFIG.monthlyPaymentLink}" style="display:block;padding:16px;background:linear-gradient(135deg,#fbbf24,#f59e0b);color:#0f172a;text-decoration:none;font-size:16px;font-weight:700;border-radius:12px;text-align:center;margin-bottom:10px">Lock in &pound;${WINBACK_CONFIG.monthlyPrice.toFixed(2)}/mo forever &rarr;</a>
+<a href="${WINBACK_CONFIG.yearlyPaymentLink}" style="display:block;padding:14px;background:rgba(251,191,36,0.15);border:2px solid rgba(251,191,36,0.5);color:#fbbf24;text-decoration:none;font-size:15px;font-weight:600;border-radius:12px;text-align:center">Or go yearly: &pound;${WINBACK_CONFIG.yearlyPrice.toFixed(2)} (&pound;${(WINBACK_CONFIG.yearlyPrice / 12).toFixed(2)}/mo)</a>
+</div></td></tr>
+
+<!-- Mate Section (gold/dark gradient, chat bubble style) -->
+<tr><td style="padding:0 20px 12px"><div style="background:linear-gradient(135deg,rgba(251,191,36,0.12),rgba(15,23,42,0.9));border:2px solid rgba(251,191,36,0.3);border-radius:14px;padding:18px">
+<p style="margin:0 0 12px;font-size:15px;font-weight:800;color:#fbbf24;text-transform:uppercase;letter-spacing:1px">&#x1F4AC; And Then There's Mate.</p>
+<p style="margin:0 0 12px;font-size:14px;color:#fff;line-height:1.6">Mate is your AI business assistant on WhatsApp.</p>
+<p style="margin:0 0 6px;font-size:14px;color:#fff;line-height:1.6">Message Mate like you'd message a colleague:</p>
+
+<div style="background:rgba(37,211,102,0.08);border-left:3px solid #25D366;border-radius:0 8px 8px 0;padding:10px 12px;margin:8px 0">
+<p style="margin:0 0 4px;font-size:13px;color:#fff;line-height:1.5;font-style:italic">"Quote Mrs Johnson's rewire &mdash; 4 bed semi, full rewire, new CU, 12 circuits"</p>
+<p style="margin:0;font-size:12px;color:#25D366;font-weight:600">&rarr; Mate prices it up, creates the quote, sends it to the client.</p>
+</div>
+
+<div style="background:rgba(37,211,102,0.08);border-left:3px solid #25D366;border-radius:0 8px 8px 0;padding:10px 12px;margin:8px 0">
+<p style="margin:0 0 4px;font-size:13px;color:#fff;line-height:1.5;font-style:italic">"What time's my first job tomorrow?"</p>
+<p style="margin:0;font-size:12px;color:#25D366;font-weight:600">&rarr; Mate checks your diary and tells you.</p>
+</div>
+
+<div style="background:rgba(37,211,102,0.08);border-left:3px solid #25D366;border-radius:0 8px 8px 0;padding:10px 12px;margin:8px 0">
+<p style="margin:0 0 4px;font-size:13px;color:#fff;line-height:1.5;font-style:italic">"Raise an invoice for the Smith job, &pound;2,400"</p>
+<p style="margin:0;font-size:12px;color:#25D366;font-weight:600">&rarr; Done. Invoice created, PDF generated, ready to send.</p>
+</div>
+
+<div style="background:rgba(37,211,102,0.08);border-left:3px solid #25D366;border-radius:0 8px 8px 0;padding:10px 12px;margin:8px 0">
+<p style="margin:0 0 4px;font-size:13px;color:#fff;line-height:1.5;font-style:italic">"Write me a RAMS for a bathroom refit in a care home"</p>
+<p style="margin:0;font-size:12px;color:#25D366;font-weight:600">&rarr; Full RAMS document, BS 7671 compliant, in your inbox in 90 seconds.</p>
+</div>
+
+<p style="margin:12px 0 8px;font-size:14px;color:#fff;line-height:1.6"><strong style="color:#fbbf24">122 tools. Works while you're on the tools.</strong> Everything Mate does syncs straight back to your app &mdash; tasks, invoices, calendar, certificates. One system.</p>
+<p style="margin:0 0 8px;font-size:14px;color:#fff;line-height:1.6">Beta users are already running their whole admin through it.</p>
+<p style="margin:0;font-size:13px;color:#fff;line-height:1.5">Mate is an add-on &mdash; separate to the &pound;7.99 app subscription. If you want in on the beta, reply to this email and I'll get you set up. Spaces are limited while we scale it up.</p>
+</div></td></tr>
+
+<!-- Free trial offer (blue) -->
+<tr><td style="padding:0 20px 12px"><div style="background:rgba(59,130,246,0.08);border:1px solid rgba(59,130,246,0.25);border-radius:12px;padding:16px;text-align:center">
+<p style="margin:0;font-size:14px;color:#fff;line-height:1.6">Not sure about the app? Reply and I'll give you <strong style="color:#60a5fa">another free week</strong>. No card, no strings. Just try it properly this time.</p>
+</div></td></tr>
+
+<!-- Last Chance block -->
+<tr><td style="padding:0 20px 20px">
+<p style="margin:0 0 8px;font-size:14px;color:#fff;line-height:1.6">I won't send this price again. When it goes, it goes. New users are already paying more.</p>
+<p style="margin:0;font-size:14px;color:#fff;line-height:1.6">This is the last winback email I'll send you. If it's not for you, no hard feelings &mdash; I'll take you off the list.</p>
+</td></tr>
+
+<!-- Sign-off -->
+<tr><td style="padding:0 24px 28px">
+<p style="margin:0 0 10px;font-size:14px;color:#fff;line-height:1.6">Hit reply &mdash; this goes straight to me. Not a chatbot, not a support team. Me, Andrew. I read every one.</p>
+<p style="margin:0 0 4px;font-size:15px;color:#fff">Cheers,</p>
+<p style="margin:0 0 2px;font-size:16px;color:#fff;font-weight:600">Andrew</p>
+<p style="margin:0;font-size:13px;color:#fff">Founder &amp; sparky, Elec-Mate</p>
+</td></tr>
+
+<!-- Footer -->
+<tr><td style="padding:14px 24px;text-align:center;background:rgba(15,23,42,0.6);border-top:1px solid rgba(255,255,255,0.05)">
+<p style="margin:0;font-size:12px;color:#fff">&copy; ${new Date().getFullYear()} Elec-Mate &middot; Built for UK Sparks &#x1F1EC;&#x1F1E7;&#x26A1;</p>
+</td></tr>
+
+</table></td></tr></table>
+</body></html>`;
+}
+
 Deno.serve(async (req) => {
   if (req.method === 'OPTIONS') {
     return new Response('ok', { headers: corsHeaders });
@@ -952,7 +1144,11 @@ Deno.serve(async (req) => {
 
         // Send email — select template by version
         let emailHtml, emailSubject;
-        if (email_version === 'v4b') {
+        if (email_version === 'v5') {
+          emailHtml = generateV5WinbackHTML(userWithEmail);
+          const fn = userWithEmail.full_name?.split(' ')[0] || 'mate';
+          emailSubject = `Last time I'll send this, ${fn}`;
+        } else if (email_version === 'v4b') {
           emailHtml = generateFortnightReportHTML(userWithEmail);
           emailSubject = '18 features shipped in 2 weeks ⚡';
         } else if (email_version === 'v4') {
@@ -969,17 +1165,20 @@ Deno.serve(async (req) => {
           emailSubject = 'Fancy another look?';
         }
         const versionTag =
-          email_version === 'v4b'
-            ? 'v4b'
-            : email_version === 'v4'
-              ? 'v4'
-              : email_version === 'v3'
-                ? 'v3'
-                : email_version === 'v2'
-                  ? 'v2'
-                  : 'v1';
+          email_version === 'v5'
+            ? 'v5'
+            : email_version === 'v4b'
+              ? 'v4b'
+              : email_version === 'v4'
+                ? 'v4'
+                : email_version === 'v3'
+                  ? 'v3'
+                  : email_version === 'v2'
+                    ? 'v2'
+                    : 'v1';
         const { data: emailData, error: emailError } = await resend.emails.send({
           from: 'Elec-Mate <offers@elec-mate.com>',
+          replyTo: 'founder@elec-mate.com',
           to: [userWithEmail.email.trim().toLowerCase()],
           subject: emailSubject,
           html: emailHtml,
@@ -1007,15 +1206,17 @@ Deno.serve(async (req) => {
 
         // Log to email_logs table
         const templateName =
-          email_version === 'v4b'
-            ? 'winback_fortnight_report'
-            : email_version === 'v4'
-              ? 'winback_offer_v4'
-              : email_version === 'v3'
-                ? 'winback_offer_v3'
-                : email_version === 'v2'
-                  ? 'winback_offer_v2'
-                  : 'winback_offer';
+          email_version === 'v5'
+            ? 'winback_offer_v5'
+            : email_version === 'v4b'
+              ? 'winback_fortnight_report'
+              : email_version === 'v4'
+                ? 'winback_offer_v4'
+                : email_version === 'v3'
+                  ? 'winback_offer_v3'
+                  : email_version === 'v2'
+                    ? 'winback_offer_v2'
+                    : 'winback_offer';
         await supabaseAdmin.from('email_logs').insert({
           to_email: userWithEmail.email,
           subject: emailSubject,
@@ -1084,7 +1285,11 @@ Deno.serve(async (req) => {
 
             // Send email — select template by version
             let emailHtml, bulkSubject;
-            if (email_version === 'v4b') {
+            if (email_version === 'v5') {
+              emailHtml = generateV5WinbackHTML(userWithEmail);
+              const fn = userWithEmail.full_name?.split(' ')[0] || 'mate';
+              bulkSubject = `Last time I'll send this, ${fn}`;
+            } else if (email_version === 'v4b') {
               emailHtml = generateFortnightReportHTML(userWithEmail);
               bulkSubject = '18 features shipped in 2 weeks ⚡';
             } else if (email_version === 'v4') {
@@ -1101,17 +1306,20 @@ Deno.serve(async (req) => {
               bulkSubject = 'Fancy another look?';
             }
             const bulkVersionTag =
-              email_version === 'v4b'
-                ? 'v4b'
-                : email_version === 'v4'
-                  ? 'v4'
-                  : email_version === 'v3'
-                    ? 'v3'
-                    : email_version === 'v2'
-                      ? 'v2'
-                      : 'v1';
+              email_version === 'v5'
+                ? 'v5'
+                : email_version === 'v4b'
+                  ? 'v4b'
+                  : email_version === 'v4'
+                    ? 'v4'
+                    : email_version === 'v3'
+                      ? 'v3'
+                      : email_version === 'v2'
+                        ? 'v2'
+                        : 'v1';
             const { data: bulkEmailData, error: emailError } = await resend.emails.send({
               from: 'Elec-Mate <offers@elec-mate.com>',
+              replyTo: 'founder@elec-mate.com',
               to: [userWithEmail.email.trim().toLowerCase()],
               subject: bulkSubject,
               html: emailHtml,
@@ -1135,15 +1343,17 @@ Deno.serve(async (req) => {
 
             // Log email
             const bulkTemplateName =
-              email_version === 'v4b'
-                ? 'winback_fortnight_report'
-                : email_version === 'v4'
-                  ? 'winback_offer_v4'
-                  : email_version === 'v3'
-                    ? 'winback_offer_v3'
-                    : email_version === 'v2'
-                      ? 'winback_offer_v2'
-                      : 'winback_offer';
+              email_version === 'v5'
+                ? 'winback_offer_v5'
+                : email_version === 'v4b'
+                  ? 'winback_fortnight_report'
+                  : email_version === 'v4'
+                    ? 'winback_offer_v4'
+                    : email_version === 'v3'
+                      ? 'winback_offer_v3'
+                      : email_version === 'v2'
+                        ? 'winback_offer_v2'
+                        : 'winback_offer';
             await supabaseAdmin.from('email_logs').insert({
               to_email: userWithEmail.email,
               subject: bulkSubject,
@@ -1258,7 +1468,11 @@ Deno.serve(async (req) => {
 
         // Generate and send the email — select template by version
         let emailHtml, testSubject;
-        if (email_version === 'v4b') {
+        if (email_version === 'v5') {
+          emailHtml = generateV5WinbackHTML(testUser);
+          const fn = testUser.full_name?.split(' ')[0] || 'mate';
+          testSubject = `[TEST] Last time I'll send this, ${fn}`;
+        } else if (email_version === 'v4b') {
           emailHtml = generateFortnightReportHTML(testUser);
           testSubject = '[TEST] 18 features shipped in 2 weeks ⚡';
         } else if (email_version === 'v4') {
@@ -1275,17 +1489,20 @@ Deno.serve(async (req) => {
           testSubject = '[TEST] Fancy another look?';
         }
         const testVersionTag =
-          email_version === 'v4b'
-            ? 'v4b'
-            : email_version === 'v4'
-              ? 'v4'
-              : email_version === 'v3'
-                ? 'v3'
-                : email_version === 'v2'
-                  ? 'v2'
-                  : 'v1';
+          email_version === 'v5'
+            ? 'v5'
+            : email_version === 'v4b'
+              ? 'v4b'
+              : email_version === 'v4'
+                ? 'v4'
+                : email_version === 'v3'
+                  ? 'v3'
+                  : email_version === 'v2'
+                    ? 'v2'
+                    : 'v1';
         const { data: testEmailData, error: emailError } = await resend.emails.send({
           from: 'Elec-Mate <offers@elec-mate.com>',
+          replyTo: 'founder@elec-mate.com',
           to: [testEmail.trim().toLowerCase()],
           subject: testSubject,
           html: emailHtml,
@@ -1324,7 +1541,11 @@ Deno.serve(async (req) => {
 
         // Generate and send the email — select template by version
         let manualEmailHtml, manualSubject;
-        if (email_version === 'v4b') {
+        if (email_version === 'v5') {
+          manualEmailHtml = generateV5WinbackHTML(manualUser);
+          const fn = manualUser.full_name?.split(' ')[0] || 'mate';
+          manualSubject = `Last time I'll send this, ${fn}`;
+        } else if (email_version === 'v4b') {
           manualEmailHtml = generateFortnightReportHTML(manualUser);
           manualSubject = '18 features shipped in 2 weeks ⚡';
         } else if (email_version === 'v4') {
@@ -1341,17 +1562,20 @@ Deno.serve(async (req) => {
           manualSubject = 'Fancy another look?';
         }
         const manualVersionTag =
-          email_version === 'v4b'
-            ? 'v4b'
-            : email_version === 'v4'
-              ? 'v4'
-              : email_version === 'v3'
-                ? 'v3'
-                : email_version === 'v2'
-                  ? 'v2'
-                  : 'v1';
+          email_version === 'v5'
+            ? 'v5'
+            : email_version === 'v4b'
+              ? 'v4b'
+              : email_version === 'v4'
+                ? 'v4'
+                : email_version === 'v3'
+                  ? 'v3'
+                  : email_version === 'v2'
+                    ? 'v2'
+                    : 'v1';
         const { data: manualEmailData, error: manualEmailError } = await resend.emails.send({
           from: 'Elec-Mate <offers@elec-mate.com>',
+          replyTo: 'founder@elec-mate.com',
           to: [manualEmail.trim().toLowerCase()],
           subject: manualSubject,
           html: manualEmailHtml,
@@ -1369,15 +1593,17 @@ Deno.serve(async (req) => {
 
         // Log to email_logs table
         const manualTemplateName =
-          email_version === 'v4b'
-            ? 'winback_fortnight_report_manual'
-            : email_version === 'v4'
-              ? 'winback_offer_v4_manual'
-              : email_version === 'v3'
-                ? 'winback_offer_v3_manual'
-                : email_version === 'v2'
-                  ? 'winback_offer_v2_manual'
-                  : 'winback_offer_manual';
+          email_version === 'v5'
+            ? 'winback_offer_v5_manual'
+            : email_version === 'v4b'
+              ? 'winback_fortnight_report_manual'
+              : email_version === 'v4'
+                ? 'winback_offer_v4_manual'
+                : email_version === 'v3'
+                  ? 'winback_offer_v3_manual'
+                  : email_version === 'v2'
+                    ? 'winback_offer_v2_manual'
+                    : 'winback_offer_manual';
         await supabaseAdmin.from('email_logs').insert({
           to_email: manualEmail.trim().toLowerCase(),
           subject: manualSubject,

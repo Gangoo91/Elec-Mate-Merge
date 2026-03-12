@@ -128,7 +128,7 @@ export default function AdminWinback() {
   });
   const [confirmResend, setConfirmResend] = useState(false);
   const [resetting, setResetting] = useState(false);
-  const [emailVersion, setEmailVersion] = useState<'v1' | 'v2' | 'v3' | 'v4' | 'v4b'>('v4');
+  const [emailVersion, setEmailVersion] = useState<'v1' | 'v2' | 'v3' | 'v4' | 'v4b' | 'v5'>('v5');
   const [showPreview, setShowPreview] = useState(false);
 
   // Fetch campaign stats
@@ -803,26 +803,31 @@ export default function AdminWinback() {
               </div>
               <div className="flex items-center gap-1.5 flex-wrap">
                 <Button
-                  variant={emailVersion === 'v4' ? 'default' : 'outline'}
+                  variant={emailVersion === 'v5' ? 'default' : 'outline'}
                   size="sm"
-                  onClick={() => setEmailVersion('v4')}
-                  className={`h-8 touch-manipulation text-xs relative ${emailVersion === 'v4' ? 'bg-amber-500 text-black hover:bg-amber-600' : ''}`}
+                  onClick={() => setEmailVersion('v5')}
+                  className={`h-8 touch-manipulation text-xs relative ${emailVersion === 'v5' ? 'bg-red-500 text-white hover:bg-red-600' : ''}`}
                 >
-                  v4 Big Update
+                  v5 Last Chance
                   <Badge className="absolute -top-1.5 -right-1.5 bg-green-500 text-[9px] px-1 py-0 h-4 text-white border-0">
                     NEW
                   </Badge>
                 </Button>
                 <Button
+                  variant={emailVersion === 'v4' ? 'default' : 'outline'}
+                  size="sm"
+                  onClick={() => setEmailVersion('v4')}
+                  className={`h-8 touch-manipulation text-xs ${emailVersion === 'v4' ? 'bg-amber-500 text-black hover:bg-amber-600' : ''}`}
+                >
+                  v4 Big Update
+                </Button>
+                <Button
                   variant={emailVersion === 'v4b' ? 'default' : 'outline'}
                   size="sm"
                   onClick={() => setEmailVersion('v4b')}
-                  className={`h-8 touch-manipulation text-xs relative ${emailVersion === 'v4b' ? 'bg-purple-500 text-white hover:bg-purple-600' : ''}`}
+                  className={`h-8 touch-manipulation text-xs ${emailVersion === 'v4b' ? 'bg-purple-500 text-white hover:bg-purple-600' : ''}`}
                 >
                   v4b Fortnight
-                  <Badge className="absolute -top-1.5 -right-1.5 bg-green-500 text-[9px] px-1 py-0 h-4 text-white border-0">
-                    NEW
-                  </Badge>
                 </Button>
                 <Button
                   variant={emailVersion === 'v3' ? 'default' : 'outline'}
@@ -874,15 +879,17 @@ export default function AdminWinback() {
               <div className="p-3 rounded-xl bg-yellow-500/10 border border-yellow-500/20 space-y-2">
                 <p className="text-xs text-yellow-400 font-semibold">
                   Send Test Email (
-                  {emailVersion === 'v4b'
-                    ? 'Fortnight Report'
-                    : emailVersion === 'v4'
-                      ? 'Big Update'
-                      : emailVersion === 'v3'
-                        ? 'This Week'
-                        : emailVersion === 'v2'
-                          ? 'Sunday Round-Up'
-                          : 'Original'}
+                  {emailVersion === 'v5'
+                    ? 'Last Chance'
+                    : emailVersion === 'v4b'
+                      ? 'Fortnight Report'
+                      : emailVersion === 'v4'
+                        ? 'Big Update'
+                        : emailVersion === 'v3'
+                          ? 'This Week'
+                          : emailVersion === 'v2'
+                            ? 'Sunday Round-Up'
+                            : 'Original'}
                   )
                 </p>
                 <div className="flex gap-2">
@@ -1137,6 +1144,7 @@ export default function AdminWinback() {
                       v3: 'bg-emerald-500/20 text-emerald-400',
                       v4: 'bg-amber-500/20 text-amber-400',
                       v4b: 'bg-purple-500/20 text-purple-400',
+                      v5: 'bg-red-500/20 text-red-400',
                     };
                     const vClass = versionColours[user.email_version] || versionColours.v1;
 
@@ -1281,11 +1289,13 @@ export default function AdminWinback() {
             <AlertDialogHeader className="space-y-3">
               <AlertDialogTitle className="text-base sm:text-lg leading-tight">
                 Resend{' '}
-                {emailVersion === 'v4b'
-                  ? 'Fortnight Report'
-                  : emailVersion === 'v4'
-                    ? 'Big Update'
-                    : emailVersion.toUpperCase()}{' '}
+                {emailVersion === 'v5'
+                  ? 'Last Chance'
+                  : emailVersion === 'v4b'
+                    ? 'Fortnight Report'
+                    : emailVersion === 'v4'
+                      ? 'Big Update'
+                      : emailVersion.toUpperCase()}{' '}
                 to all?
               </AlertDialogTitle>
               <AlertDialogDescription asChild>
@@ -1413,15 +1423,17 @@ export default function AdminWinback() {
                 <SheetTitle className="flex items-center gap-2 text-sm">
                   <FileText className="h-4 w-4 text-purple-400" />
                   Preview:{' '}
-                  {emailVersion === 'v4b'
-                    ? 'Fortnight Report'
-                    : emailVersion === 'v4'
-                      ? 'Big Update'
-                      : emailVersion === 'v3'
-                        ? 'This Week'
-                        : emailVersion === 'v2'
-                          ? 'Sunday Round-Up'
-                          : 'Original'}
+                  {emailVersion === 'v5'
+                    ? 'Last Chance'
+                    : emailVersion === 'v4b'
+                      ? 'Fortnight Report'
+                      : emailVersion === 'v4'
+                        ? 'Big Update'
+                        : emailVersion === 'v3'
+                          ? 'This Week'
+                          : emailVersion === 'v2'
+                            ? 'Sunday Round-Up'
+                            : 'Original'}
                   <Badge className="bg-purple-500/20 text-purple-400 text-[10px] border-0">
                     {emailVersion.toUpperCase()}
                   </Badge>
@@ -1448,6 +1460,7 @@ export default function AdminWinback() {
                       v3: 'This week at Elec-Mate',
                       v4: "You won't recognise this app",
                       v4b: '18 features shipped in 2 weeks',
+                      v5: "Last time I'll send this",
                     };
                     return `<!DOCTYPE html><html><head><meta name="color-scheme" content="dark"><style>body{margin:0;padding:40px 20px;font-family:-apple-system,system-ui,sans-serif;background:#0f172a;color:#e2e8f0;text-align:center;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:90vh}h2{color:#fbbf24;margin-bottom:8px}p{color:#94a3b8;font-size:14px;line-height:1.6;max-width:300px}.btn{display:inline-block;margin-top:20px;padding:12px 24px;background:linear-gradient(135deg,#fbbf24,#f59e0b);color:#0f172a;border-radius:12px;font-weight:700;font-size:14px;text-decoration:none;cursor:pointer}</style></head><body><h2>${versionLabels[emailVersion] || emailVersion}</h2><p>Send a test email to preview the full rendered template in your inbox.</p><p style="color:#64748b;font-size:12px;margin-top:4px">Email templates are rendered server-side for security. Use the test send button above to see the exact email.</p></body></html>`;
                   })()}

@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { Drawer } from 'vaul';
-import { X, Loader2, Link2, Plus } from 'lucide-react';
+import { X, Loader2, Link2, Plus, CheckCircle2, AlertTriangle } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import type { UnlinkedItem } from '@/hooks/useProjectEntities';
 
@@ -29,23 +29,42 @@ export function LinkEntitySheet({
   const [items, setItems] = useState<UnlinkedItem[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [linking, setLinking] = useState<string | null>(null);
+  const [linkedIds, setLinkedIds] = useState<Set<string>>(new Set());
+  const [error, setError] = useState<string | null>(null);
   const fetchRef = useRef(fetchItems);
   fetchRef.current = fetchItems;
 
-  useEffect(() => {
-    if (!isOpen) return;
+  function loadItems() {
     setIsLoading(true);
+    setError(null);
     fetchRef
       .current()
       .then(setItems)
+      .catch(() => setError('Failed to load items. Please try again.'))
       .finally(() => setIsLoading(false));
+  }
+
+  useEffect(() => {
+    if (!isOpen) return;
+    setLinkedIds(new Set());
+    loadItems();
   }, [isOpen]);
 
   async function handleSelect(id: string) {
     setLinking(id);
     const ok = await onSelect(id);
     setLinking(null);
-    if (ok) onClose();
+    if (ok) {
+      setLinkedIds((prev) => new Set(prev).add(id));
+      setTimeout(() => {
+        setItems((prev) => prev.filter((item) => item.id !== id));
+        setLinkedIds((prev) => {
+          const s = new Set(prev);
+          s.delete(id);
+          return s;
+        });
+      }, 500);
+    }
   }
 
   return (
@@ -91,10 +110,22 @@ export function LinkEntitySheet({
               <div className="flex justify-center py-8">
                 <Loader2 className="h-5 w-5 animate-spin text-white" />
               </div>
+            ) : error ? (
+              <div className="flex flex-col items-center py-6 text-center">
+                <AlertTriangle className="h-5 w-5 text-orange-400 mb-2" />
+                <p className="text-sm text-white mb-3">{error}</p>
+                <button
+                  type="button"
+                  onClick={loadItems}
+                  className="h-11 px-4 rounded-xl bg-white/[0.06] border border-white/[0.08] text-sm font-medium text-elec-yellow touch-manipulation active:bg-white/[0.08] transition-colors"
+                >
+                  Try again
+                </button>
+              </div>
             ) : items.length === 0 ? (
               <div className="flex flex-col items-center py-6 text-center">
-                <Link2 className="h-5 w-5 text-white/40 mb-2" />
-                <p className="text-sm text-white/60">No existing items to link.</p>
+                <Link2 className="h-5 w-5 text-white mb-2" />
+                <p className="text-sm text-white">No existing items to link.</p>
               </div>
             ) : (
               items.map((item) => (
@@ -102,8 +133,12 @@ export function LinkEntitySheet({
                   key={item.id}
                   type="button"
                   onClick={() => handleSelect(item.id)}
-                  disabled={linking !== null}
-                  className="w-full flex items-center justify-between min-h-[44px] px-4 py-3 rounded-xl bg-white/[0.04] border border-white/[0.08] text-left touch-manipulation active:bg-white/[0.08] transition-colors disabled:opacity-50"
+                  disabled={linking !== null || linkedIds.has(item.id)}
+                  className={`w-full flex items-center justify-between min-h-[44px] px-4 py-3 rounded-xl text-left touch-manipulation transition-all disabled:opacity-50 ${
+                    linkedIds.has(item.id)
+                      ? 'bg-emerald-500/10 border border-emerald-500/30'
+                      : 'bg-white/[0.04] border border-white/[0.08] active:bg-white/[0.08]'
+                  }`}
                 >
                   <div className="min-w-0 flex-1">
                     <p className="text-sm font-medium text-white truncate">{item.label}</p>
@@ -111,7 +146,9 @@ export function LinkEntitySheet({
                       <p className="text-[12px] text-white truncate">{item.sublabel}</p>
                     )}
                   </div>
-                  {linking === item.id ? (
+                  {linkedIds.has(item.id) ? (
+                    <CheckCircle2 className="h-4 w-4 text-emerald-400 ml-2 flex-shrink-0" />
+                  ) : linking === item.id ? (
                     <Loader2 className="h-4 w-4 animate-spin text-white ml-2 flex-shrink-0" />
                   ) : (
                     <Link2 className="h-4 w-4 text-white ml-2 flex-shrink-0" />

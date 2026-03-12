@@ -44,6 +44,8 @@ import type { ProjectPriority } from '@/hooks/useSparkProjects';
 import { TaskForm } from '@/components/tasks/TaskForm';
 import { TaskDetailSheet } from '@/components/tasks/TaskDetailSheet';
 import { LinkEntitySheet } from '@/components/project-management/LinkEntitySheet';
+import { ProjectDocumentSheet } from '@/components/project-management/ProjectDocumentSheet';
+import { useProjectDocuments } from '@/hooks/useProjectDocuments';
 import { supabase } from '@/integrations/supabase/client';
 import { cn } from '@/lib/utils';
 
@@ -94,7 +96,14 @@ interface SimpleCustomer {
 
 const TASK_PREVIEW_COUNT = 5;
 
-type LinkType = 'quote' | 'invoice' | 'certificate' | 'rams' | 'siteVisit';
+type LinkType =
+  | 'quote'
+  | 'invoice'
+  | 'certificate'
+  | 'rams'
+  | 'siteVisit'
+  | 'circuitDesign'
+  | 'costEstimate';
 
 const ProjectDetailPage = () => {
   const navigate = useNavigate();
@@ -107,6 +116,8 @@ const ProjectDetailPage = () => {
     certificates,
     rams,
     siteVisits,
+    circuitDesigns,
+    costEstimates,
     isLoading,
     progress,
     totalTasks,
@@ -119,11 +130,15 @@ const ProjectDetailPage = () => {
     linkCertificate,
     linkRams,
     linkSiteVisit,
+    linkCircuitDesign,
+    linkCostEstimate,
     fetchUnlinkedQuotes,
     fetchUnlinkedInvoices,
     fetchUnlinkedCertificates,
     fetchUnlinkedRams,
     fetchUnlinkedSiteVisits,
+    fetchUnlinkedCircuitDesigns,
+    fetchUnlinkedCostEstimates,
     completeProject,
     refresh,
   } = useProjectEntities(id);
@@ -151,6 +166,11 @@ const ProjectDetailPage = () => {
     };
     loadCustomers();
   }, []);
+
+  // Fetch project photos on mount
+  useEffect(() => {
+    if (id) fetchDocuments();
+  }, [id, fetchDocuments]);
 
   // Split tasks into regular and snagging
   const regularTasks = useMemo(() => tasks.filter((t) => !t.tags.includes('snagging')), [tasks]);
@@ -185,6 +205,8 @@ const ProjectDetailPage = () => {
   const [detailSheetOpen, setDetailSheetOpen] = useState(false);
   const [linkType, setLinkType] = useState<LinkType | null>(null);
   const [editProjectOpen, setEditProjectOpen] = useState(false);
+  const [photoSheetOpen, setPhotoSheetOpen] = useState(false);
+  const { photos: projectPhotos, fetchDocuments } = useProjectDocuments(id || '');
 
   // Edit project form state
   const [editTitle, setEditTitle] = useState('');
@@ -340,6 +362,20 @@ const ProjectDetailPage = () => {
       link: linkSiteVisit,
       createLabel: 'Start new site visit',
       createUrl: siteVisitNewUrl,
+    },
+    circuitDesign: {
+      title: 'Link Circuit Design',
+      fetch: fetchUnlinkedCircuitDesigns,
+      link: linkCircuitDesign,
+      createLabel: 'New circuit design',
+      createUrl: '/electrician-tools/circuit-designer',
+    },
+    costEstimate: {
+      title: 'Link Cost Estimate',
+      fetch: fetchUnlinkedCostEstimates,
+      link: linkCostEstimate,
+      createLabel: 'New cost estimate',
+      createUrl: '/electrician-tools/cost-engineer',
     },
   };
 
@@ -520,22 +556,21 @@ const ProjectDetailPage = () => {
                   <span className="text-[15px] font-bold text-white">Site Visits</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  {siteVisits.length > 0 ? (
+                  {siteVisits.length > 0 && (
                     <span className="text-[12px] font-bold text-white bg-white/10 px-2.5 py-0.5 rounded-full">
                       {siteVisits.length}
                     </span>
-                  ) : (
-                    <span
-                      role="button"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        setLinkType('siteVisit');
-                      }}
-                      className="text-[12px] font-medium text-elec-yellow"
-                    >
-                      + Link
-                    </span>
                   )}
+                  <span
+                    role="button"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setLinkType('siteVisit');
+                    }}
+                    className="text-[12px] font-medium text-elec-yellow"
+                  >
+                    + Link
+                  </span>
                   {openSections.has('siteVisits') ? (
                     <ChevronUp className="h-4 w-4 text-white" />
                   ) : (
@@ -735,22 +770,21 @@ const ProjectDetailPage = () => {
                   <span className="text-[15px] font-bold text-white">Quotes</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  {quotes.length > 0 ? (
+                  {quotes.length > 0 && (
                     <span className="text-[12px] font-bold text-white bg-white/10 px-2.5 py-0.5 rounded-full">
                       {quotes.length}
                     </span>
-                  ) : (
-                    <span
-                      role="button"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        setLinkType('quote');
-                      }}
-                      className="text-[12px] font-medium text-elec-yellow"
-                    >
-                      + Link
-                    </span>
                   )}
+                  <span
+                    role="button"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setLinkType('quote');
+                    }}
+                    className="text-[12px] font-medium text-elec-yellow"
+                  >
+                    + Link
+                  </span>
                   {openSections.has('quotes') ? (
                     <ChevronUp className="h-4 w-4 text-white" />
                   ) : (
@@ -820,22 +854,21 @@ const ProjectDetailPage = () => {
                   <span className="text-[15px] font-bold text-white">Invoices</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  {invoices.length > 0 ? (
+                  {invoices.length > 0 && (
                     <span className="text-[12px] font-bold text-white bg-white/10 px-2.5 py-0.5 rounded-full">
                       {invoices.length}
                     </span>
-                  ) : (
-                    <span
-                      role="button"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        setLinkType('invoice');
-                      }}
-                      className="text-[12px] font-medium text-elec-yellow"
-                    >
-                      + Link
-                    </span>
                   )}
+                  <span
+                    role="button"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setLinkType('invoice');
+                    }}
+                    className="text-[12px] font-medium text-elec-yellow"
+                  >
+                    + Link
+                  </span>
                   {openSections.has('invoices') ? (
                     <ChevronUp className="h-4 w-4 text-white" />
                   ) : (
@@ -905,22 +938,21 @@ const ProjectDetailPage = () => {
                   <span className="text-[15px] font-bold text-white">Certificates</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  {certificates.length > 0 ? (
+                  {certificates.length > 0 && (
                     <span className="text-[12px] font-bold text-white bg-white/10 px-2.5 py-0.5 rounded-full">
                       {certificates.length}
                     </span>
-                  ) : (
-                    <span
-                      role="button"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        setLinkType('certificate');
-                      }}
-                      className="text-[12px] font-medium text-elec-yellow"
-                    >
-                      + Link
-                    </span>
                   )}
+                  <span
+                    role="button"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setLinkType('certificate');
+                    }}
+                    className="text-[12px] font-medium text-elec-yellow"
+                  >
+                    + Link
+                  </span>
                   {openSections.has('certificates') ? (
                     <ChevronUp className="h-4 w-4 text-white" />
                   ) : (
@@ -982,22 +1014,21 @@ const ProjectDetailPage = () => {
                   <span className="text-[15px] font-bold text-white">RAMS</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  {rams.length > 0 ? (
+                  {rams.length > 0 && (
                     <span className="text-[12px] font-bold text-white bg-white/10 px-2.5 py-0.5 rounded-full">
                       {rams.length}
                     </span>
-                  ) : (
-                    <span
-                      role="button"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        setLinkType('rams');
-                      }}
-                      className="text-[12px] font-medium text-elec-yellow"
-                    >
-                      + Link
-                    </span>
                   )}
+                  <span
+                    role="button"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setLinkType('rams');
+                    }}
+                    className="text-[12px] font-medium text-elec-yellow"
+                  >
+                    + Link
+                  </span>
                   {openSections.has('rams') ? (
                     <ChevronUp className="h-4 w-4 text-white" />
                   ) : (
@@ -1035,6 +1066,152 @@ const ProjectDetailPage = () => {
                     <div className="flex items-center gap-2 flex-shrink-0">
                       <ChevronRight className="h-4 w-4 text-white" />
                     </div>
+                  </button>
+                ))
+              )}
+            </CollapsibleContent>
+          </Collapsible>
+        </motion.div>
+
+        {/* ── Circuit Design Section ── */}
+        <motion.div variants={itemVariants}>
+          <Collapsible
+            open={openSections.has('circuitDesign')}
+            onOpenChange={() => toggleSection('circuitDesign')}
+          >
+            <CollapsibleTrigger asChild>
+              <button className="w-full flex items-center justify-between p-4 rounded-xl bg-white/[0.04] border border-white/[0.08] touch-manipulation h-14 active:bg-white/[0.06] transition-colors">
+                <div className="flex items-center gap-3">
+                  <Zap className="h-5 w-5 text-purple-400" />
+                  <span className="text-[15px] font-bold text-white">Circuit Design</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  {circuitDesigns.length > 0 && (
+                    <span className="text-[12px] font-bold text-white bg-white/10 px-2.5 py-0.5 rounded-full">
+                      {circuitDesigns.length}
+                    </span>
+                  )}
+                  <span
+                    role="button"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setLinkType('circuitDesign');
+                    }}
+                    className="text-[12px] font-medium text-elec-yellow"
+                  >
+                    + Link
+                  </span>
+                  {openSections.has('circuitDesign') ? (
+                    <ChevronUp className="h-4 w-4 text-white" />
+                  ) : (
+                    <ChevronDown className="h-4 w-4 text-white" />
+                  )}
+                </div>
+              </button>
+            </CollapsibleTrigger>
+            <CollapsibleContent className="mt-2 space-y-2">
+              {circuitDesigns.length === 0 ? (
+                <div className="flex flex-col items-center py-6 text-center">
+                  <p className="text-sm text-white mb-3">
+                    Link an existing circuit design or create a new one
+                  </p>
+                  <button
+                    type="button"
+                    onClick={() => setLinkType('circuitDesign')}
+                    className="h-11 px-4 rounded-xl bg-white/[0.06] border border-white/[0.08] text-sm font-medium text-elec-yellow touch-manipulation active:bg-white/[0.08] transition-colors"
+                  >
+                    + Link Circuit Design
+                  </button>
+                </div>
+              ) : (
+                circuitDesigns.map((cd) => (
+                  <button
+                    key={cd.id}
+                    type="button"
+                    onClick={() => navigate('/electrician-tools/circuit-designer')}
+                    className="w-full flex items-center justify-between p-3 rounded-xl bg-white/[0.04] border border-white/[0.08] touch-manipulation active:bg-white/[0.08] transition-colors"
+                  >
+                    <div className="min-w-0 text-left">
+                      <p className="text-sm font-medium text-white">
+                        {(cd.job_inputs?.project_name as string) ||
+                          (cd.job_inputs?.description as string) ||
+                          'Circuit Design'}
+                      </p>
+                      <p className="text-[11px] text-white capitalize">{cd.status}</p>
+                    </div>
+                    <ChevronRight className="h-4 w-4 text-white flex-shrink-0" />
+                  </button>
+                ))
+              )}
+            </CollapsibleContent>
+          </Collapsible>
+        </motion.div>
+
+        {/* ── Cost Estimates Section ── */}
+        <motion.div variants={itemVariants}>
+          <Collapsible
+            open={openSections.has('costEstimate')}
+            onOpenChange={() => toggleSection('costEstimate')}
+          >
+            <CollapsibleTrigger asChild>
+              <button className="w-full flex items-center justify-between p-4 rounded-xl bg-white/[0.04] border border-white/[0.08] touch-manipulation h-14 active:bg-white/[0.06] transition-colors">
+                <div className="flex items-center gap-3">
+                  <PoundSterling className="h-5 w-5 text-green-400" />
+                  <span className="text-[15px] font-bold text-white">Cost Estimates</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  {costEstimates.length > 0 && (
+                    <span className="text-[12px] font-bold text-white bg-white/10 px-2.5 py-0.5 rounded-full">
+                      {costEstimates.length}
+                    </span>
+                  )}
+                  <span
+                    role="button"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setLinkType('costEstimate');
+                    }}
+                    className="text-[12px] font-medium text-elec-yellow"
+                  >
+                    + Link
+                  </span>
+                  {openSections.has('costEstimate') ? (
+                    <ChevronUp className="h-4 w-4 text-white" />
+                  ) : (
+                    <ChevronDown className="h-4 w-4 text-white" />
+                  )}
+                </div>
+              </button>
+            </CollapsibleTrigger>
+            <CollapsibleContent className="mt-2 space-y-2">
+              {costEstimates.length === 0 ? (
+                <div className="flex flex-col items-center py-6 text-center">
+                  <p className="text-sm text-white mb-3">
+                    Link an existing cost estimate or create a new one
+                  </p>
+                  <button
+                    type="button"
+                    onClick={() => setLinkType('costEstimate')}
+                    className="h-11 px-4 rounded-xl bg-white/[0.06] border border-white/[0.08] text-sm font-medium text-elec-yellow touch-manipulation active:bg-white/[0.08] transition-colors"
+                  >
+                    + Link Cost Estimate
+                  </button>
+                </div>
+              ) : (
+                costEstimates.map((ce) => (
+                  <button
+                    key={ce.id}
+                    type="button"
+                    onClick={() => navigate('/electrician-tools/cost-engineer')}
+                    className="w-full flex items-center justify-between p-3 rounded-xl bg-white/[0.04] border border-white/[0.08] touch-manipulation active:bg-white/[0.08] transition-colors"
+                  >
+                    <div className="min-w-0 text-left">
+                      <p className="text-sm font-medium text-white truncate">
+                        {ce.query || 'Cost Estimate'}
+                      </p>
+                      <p className="text-[11px] text-white capitalize">{ce.status}</p>
+                    </div>
+                    <ChevronRight className="h-4 w-4 text-white flex-shrink-0" />
                   </button>
                 ))
               )}
@@ -1130,19 +1307,95 @@ const ProjectDetailPage = () => {
           </motion.div>
         )}
 
-        {/* ── Photos Section — links to Photo Documentation ── */}
+        {/* ── Photos Section ── */}
         <motion.div variants={itemVariants}>
-          <button
-            type="button"
-            onClick={() => navigate('/electrician/photo-docs')}
-            className="w-full flex items-center justify-between p-4 rounded-xl bg-white/[0.04] border border-white/[0.08] touch-manipulation h-14 active:bg-white/[0.06] transition-colors"
+          <Collapsible
+            open={openSections.has('photos')}
+            onOpenChange={() => toggleSection('photos')}
           >
-            <div className="flex items-center gap-3">
-              <Camera className="h-5 w-5 text-sky-400" />
-              <span className="text-[15px] font-bold text-white">Photos</span>
-            </div>
-            <ChevronRight className="h-4 w-4 text-white" />
-          </button>
+            <CollapsibleTrigger asChild>
+              <button className="w-full flex items-center justify-between p-4 rounded-xl bg-white/[0.04] border border-white/[0.08] touch-manipulation h-14 active:bg-white/[0.06] transition-colors">
+                <div className="flex items-center gap-3">
+                  <Camera className="h-5 w-5 text-sky-400" />
+                  <span className="text-[15px] font-bold text-white">Photos</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  {projectPhotos.length > 0 && (
+                    <span className="text-[12px] font-bold text-white bg-white/10 px-2.5 py-0.5 rounded-full">
+                      {projectPhotos.length}
+                    </span>
+                  )}
+                  <span
+                    role="button"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setPhotoSheetOpen(true);
+                    }}
+                    className="text-[12px] font-medium text-elec-yellow"
+                  >
+                    + Add
+                  </span>
+                  {openSections.has('photos') ? (
+                    <ChevronUp className="h-4 w-4 text-white" />
+                  ) : (
+                    <ChevronDown className="h-4 w-4 text-white" />
+                  )}
+                </div>
+              </button>
+            </CollapsibleTrigger>
+            <CollapsibleContent className="mt-2 space-y-2">
+              {projectPhotos.length === 0 ? (
+                <div className="flex flex-col items-center py-6 text-center">
+                  <Camera className="h-7 w-7 text-white mb-2" />
+                  <p className="text-sm text-white mb-3">No photos yet</p>
+                  <button
+                    type="button"
+                    onClick={() => setPhotoSheetOpen(true)}
+                    className="h-11 px-4 rounded-xl bg-gradient-to-r from-sky-400 to-sky-500 text-black text-sm font-bold touch-manipulation active:scale-[0.98] transition-transform"
+                  >
+                    Add Photo
+                  </button>
+                </div>
+              ) : (
+                <>
+                  <div className="grid grid-cols-3 gap-1.5">
+                    {projectPhotos.slice(0, 6).map((photo) => (
+                      <div
+                        key={photo.id}
+                        className="relative aspect-square rounded-xl overflow-hidden bg-white/[0.04]"
+                      >
+                        {photo.signedUrl && (
+                          <img
+                            src={photo.signedUrl}
+                            alt={photo.name}
+                            className="w-full h-full object-cover"
+                            loading="lazy"
+                          />
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                  <div className="flex gap-2">
+                    <button
+                      type="button"
+                      onClick={() => navigate('/electrician/photo-docs')}
+                      className="flex-1 h-11 rounded-xl bg-white/[0.06] border border-white/[0.08] text-sm font-medium text-white touch-manipulation active:bg-white/[0.08] transition-colors"
+                    >
+                      View all in Photo Docs
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setPhotoSheetOpen(true)}
+                      className="h-11 px-4 rounded-xl bg-gradient-to-r from-sky-400 to-sky-500 text-black text-sm font-bold touch-manipulation active:scale-[0.98] transition-transform"
+                    >
+                      <Plus className="h-4 w-4 inline mr-1" />
+                      Add
+                    </button>
+                  </div>
+                </>
+              )}
+            </CollapsibleContent>
+          </Collapsible>
         </motion.div>
       </motion.div>
 
@@ -1363,6 +1616,19 @@ const ProjectDetailPage = () => {
           refresh();
         }}
       />
+
+      {id && (
+        <ProjectDocumentSheet
+          isOpen={photoSheetOpen}
+          onClose={() => {
+            setPhotoSheetOpen(false);
+            fetchDocuments();
+          }}
+          docType="photo"
+          projectId={id}
+          projectName={project.title}
+        />
+      )}
 
       {linkType && (
         <LinkEntitySheet
