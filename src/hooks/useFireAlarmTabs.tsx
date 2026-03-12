@@ -9,7 +9,18 @@ interface TabConfig {
   requiredFields: string[];
 }
 
-const tabConfigs: TabConfig[] = [
+// Per-type required fields for declarations tab
+const declarationRequiredFields: Record<string, string[]> = {
+  design: ['designerName', 'designerSignature'],
+  installation: ['installerName', 'installerSignature'],
+  commissioning: ['commissionerName', 'commissionerSignature'],
+  acceptance: ['responsiblePersonName', 'responsiblePersonSignature'],
+  verification: ['verificationOrganisation', 'verifierName', 'verifierSignature'],
+  periodic: ['installerName', 'installerSignature'],
+  modification: ['installerName', 'installerSignature'],
+};
+
+const getTabConfigs = (certificateType: string): TabConfig[] => [
   {
     id: 'installation',
     label: 'Installation Details',
@@ -32,12 +43,13 @@ const tabConfigs: TabConfig[] = [
     id: 'declarations',
     label: 'Declarations',
     shortLabel: 'Declarations',
-    requiredFields: ['installerName', 'commissionerName'],
+    requiredFields: declarationRequiredFields[certificateType] || ['installerName'],
   },
 ];
 
 export const useFireAlarmTabs = (formData: any) => {
   const [currentTab, setCurrentTab] = useState<FireAlarmTabValue>('installation');
+  const tabConfigs = getTabConfigs(formData.certificateType || 'installation');
 
   const currentTabIndex = tabConfigs.findIndex((tab) => tab.id === currentTab);
   const totalTabs = tabConfigs.length;
@@ -72,14 +84,14 @@ export const useFireAlarmTabs = (formData: any) => {
           completedSections[tabId] ||
           (formData.panelTests?.powerOnTest && formData.powerTests?.mainsSupply)
         );
-      case 'declarations':
-        return (
-          completedSections[tabId] ||
-          (formData.installerName &&
-            formData.installerSignature &&
-            formData.commissionerName &&
-            formData.commissionerSignature)
+      case 'declarations': {
+        if (completedSections[tabId]) return true;
+        const certType = formData.certificateType || 'installation';
+        const reqFields = declarationRequiredFields[certType] || ['installerName'];
+        return reqFields.every(
+          (f: string) => formData[f] && String(formData[f]).trim() !== ''
         );
+      }
       default:
         return completedSections[tabId] === true;
     }

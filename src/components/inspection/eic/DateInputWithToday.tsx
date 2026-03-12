@@ -46,7 +46,7 @@ const DateInputWithToday: React.FC<DateInputWithTodayProps> = ({
             variant="outline"
             className={cn(
               'flex-1 justify-start text-left font-normal',
-              !value && 'text-muted-foreground',
+              !value && 'text-white',
               className
             )}
           >

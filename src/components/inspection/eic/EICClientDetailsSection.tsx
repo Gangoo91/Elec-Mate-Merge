@@ -101,7 +101,7 @@ const EICClientDetailsSection = ({
                   className="bg-muted/50 cursor-not-allowed font-mono text-foreground"
                   tabIndex={-1}
                 />
-                <p className="text-xs text-muted-foreground">
+                <p className="text-xs text-white">
                   Auto-generated and cannot be changed
                 </p>
               </div>
@@ -128,7 +128,7 @@ const EICClientDetailsSection = ({
                       <p className="text-sm font-medium text-emerald-400">
                         {selectedCustomer.name}
                       </p>
-                      <p className="text-xs text-muted-foreground truncate">
+                      <p className="text-xs text-white truncate">
                         {selectedCustomer.email || selectedCustomer.phone || ''}
                       </p>
                     </div>
@@ -137,7 +137,7 @@ const EICClientDetailsSection = ({
                       onClick={handleClearCustomer}
                       className="p-2 rounded-lg hover:bg-white/5 touch-manipulation"
                     >
-                      <X className="h-4 w-4 text-muted-foreground" />
+                      <X className="h-4 w-4 text-white" />
                     </button>
                   </div>
                 ) : (

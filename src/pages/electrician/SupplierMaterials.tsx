@@ -76,19 +76,28 @@ const SupplierMaterials = () => {
     if (!supplierSlug) return;
     setIsFetchingLive(true);
     try {
-      const { data, error } = await supabase.functions.invoke('scrape-supplier-products', {
-        body: { supplierSlug: supplierSlug.toLowerCase(), searchTerm: 'cable' },
-      });
+      // Search pipeline-populated materials cache
+      const { data: cacheRow, error } = await supabase
+        .from('materials_weekly_cache')
+        .select('products')
+        .order('created_at', { ascending: false })
+        .limit(1)
+        .maybeSingle();
 
       if (error) {
         throw new Error(error.message);
       }
 
-      if (data?.products && Array.isArray(data.products) && data.products.length > 0) {
-        setProducts(data.products);
+      const allProducts = (cacheRow?.products as any[]) || [];
+      const filtered = allProducts.filter(
+        (p: any) => p.name?.toLowerCase().includes('cable')
+      );
+
+      if (filtered.length > 0) {
+        setProducts(filtered);
         toast({
-          title: 'Live deals loaded',
-          description: `Showing latest products from ${data.supplier || supplier}.`,
+          title: 'Products loaded',
+          description: `Showing ${filtered.length} products from ${supplier}.`,
         });
       } else {
         toast({

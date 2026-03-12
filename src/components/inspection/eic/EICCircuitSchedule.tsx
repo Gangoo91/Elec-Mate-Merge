@@ -69,7 +69,7 @@ const EICCircuitSchedule: React.FC<EICCircuitScheduleProps> = ({ formData, onUpd
       <Card>
         <CardHeader>
           <CardTitle className="text-lg font-semibold text-elec-gray">Circuit Schedule</CardTitle>
-          <p className="text-sm text-muted-foreground">
+          <p className="text-sm text-white">
             Record details of all circuits in the installation
           </p>
         </CardHeader>

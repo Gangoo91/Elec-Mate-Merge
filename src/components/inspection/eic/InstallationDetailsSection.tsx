@@ -157,9 +157,9 @@ const InstallationDetailsSection: React.FC<InstallationDetailsSectionProps> = ({
                   {section.isComplete && <CheckCircle2 className="h-4 w-4 text-elec-yellow" />}
                 </div>
                 {openSections.has(section.id) ? (
-                  <ChevronDown className="h-4 w-4 text-muted-foreground" />
+                  <ChevronDown className="h-4 w-4 text-white" />
                 ) : (
-                  <ChevronRight className="h-4 w-4 text-muted-foreground" />
+                  <ChevronRight className="h-4 w-4 text-white" />
                 )}
               </div>
             </CollapsibleTrigger>

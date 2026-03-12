@@ -42,7 +42,7 @@ const EICFormHeaderWithDraft: React.FC<EICFormHeaderWithDraftProps> = ({
             <Zap className="h-6 w-6 text-elec-yellow" />
             EIC - Electrical Installation Certificate
           </h1>
-          <p className="text-sm text-muted-foreground flex items-center gap-2">
+          <p className="text-sm text-white flex items-center gap-2">
             New Installation Certification - BS 7671:18+A3:2024
             {currentReportId && ` • Report ID: ${currentReportId}`}
             <SaveStatusIndicator

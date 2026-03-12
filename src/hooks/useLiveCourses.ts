@@ -49,40 +49,51 @@ export const useLiveCourses = () => {
   const fetchLiveCourses = useCallback(async (): Promise<LiveCoursesResponse | null> => {
     setIsLoading(true);
     try {
-      const { data, error } = await supabase.functions.invoke('live-courses-scraper');
+      // Read from live_education_cache (populated by pipeline)
+      const { data: cacheData, error } = await supabase
+        .from('live_education_cache')
+        .select('education_data, last_refreshed')
+        .order('created_at', { ascending: false })
+        .limit(1)
+        .maybeSingle();
 
       if (error) {
-        console.error('Error fetching live courses:', error);
+        console.error('Error fetching cached courses:', error);
         toast({
           title: 'Error',
-          description: 'Failed to fetch live course data. Using cached data if available.',
+          description: 'Failed to fetch course data.',
           variant: 'destructive',
         });
         return null;
       }
 
-      if (data.success) {
-        setLastUpdated(data.lastUpdated);
+      if (cacheData?.education_data) {
+        const courses = cacheData.education_data as unknown as LiveCourse[];
+        setLastUpdated(cacheData.last_refreshed);
         toast({
-          title: data.cached ? 'Cached Data Loaded' : 'Fresh Data Loaded',
-          description: `Loaded ${data.data.length} courses from providers`,
+          title: 'Courses Loaded',
+          description: `Loaded ${courses.length} courses`,
           variant: 'success',
         });
-        return data;
-      } else {
-        console.error('API returned error:', data.error);
-        toast({
-          title: 'Error',
-          description: data.error || 'Failed to fetch course data',
-          variant: 'destructive',
-        });
-        return null;
+        return {
+          success: true,
+          cached: true,
+          data: courses,
+          lastUpdated: cacheData.last_refreshed || new Date().toISOString(),
+          totalCourses: courses.length,
+        };
       }
+
+      toast({
+        title: 'No Courses Available',
+        description: 'Course data is being updated. Please try again later.',
+      });
+      return null;
     } catch (error) {
       console.error('Error in fetchLiveCourses:', error);
       toast({
         title: 'Connection Error',
-        description: 'Unable to connect to course providers. Please try again later.',
+        description: 'Unable to load course data. Please try again later.',
         variant: 'destructive',
       });
       return null;

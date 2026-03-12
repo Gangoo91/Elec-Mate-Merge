@@ -26,6 +26,12 @@ import {
   Scan,
   X,
   Check,
+  Cable,
+  Link2,
+  Plus,
+  Trash2,
+  AlertTriangle,
+  Wrench,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { FireAlarmSystemCategory } from '@/types/fire-alarm';
@@ -39,6 +45,11 @@ import {
 import { FireAlarmPanel } from '@/data/fireAlarmEquipmentDatabase';
 import { SerialNumberScannerSheet } from './SerialNumberScannerSheet';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
+import { UnifiedAddressFinder } from '@/components/ui/unified-address-finder';
+import { PreviousCertPreFillSheet } from './PreviousCertPreFillSheet';
+import { useFireAlarmRecentValues } from '@/hooks/inspection/useFireAlarmRecentValues';
+import { supabase } from '@/integrations/supabase/client';
+import { useToast } from '@/hooks/use-toast';
 
 interface FireAlarmInstallationDetailsProps {
   formData: any;
@@ -75,6 +86,12 @@ const FireAlarmInstallationDetails: React.FC<FireAlarmInstallationDetailsProps> 
     certification: false,
     fra: false,
     monitoring: false,
+    cableWiring: false,
+    interfaceEquipment: false,
+    causeEffect: false,
+    falseAlarm: false,
+    designDetails: false,
+    modificationDetails: false,
   });
   const [sameAsClientAddress, setSameAsClientAddress] = useState(false);
   const [categorySuggestion, setCategorySuggestion] = useState<CategorySuggestion | null>(null);
@@ -83,13 +100,26 @@ const FireAlarmInstallationDetails: React.FC<FireAlarmInstallationDetailsProps> 
   );
   const [panelAutoFilled, setPanelAutoFilled] = useState(false);
   const [serialScannerOpen, setSerialScannerOpen] = useState(false);
+  const [preFillOpen, setPreFillOpen] = useState(false);
+  const [preFillData, setPreFillData] = useState<any>(null);
+  const { recentValues } = useFireAlarmRecentValues();
+  const { toast } = useToast();
+
+  // B1: Auto-sum zone counts from zone schedule
+  const zonesArray = formData.zones || [];
+  const hasZonesInSchedule = zonesArray.length > 0;
+  useEffect(() => {
+    if (hasZonesInSchedule && zonesArray.length !== formData.zonesCount) {
+      onUpdate('zonesCount', zonesArray.length);
+    }
+  }, [zonesArray.length, hasZonesInSchedule, formData.zonesCount, onUpdate]);
 
   const toggleSection = (section: string) => {
     setOpenSections((prev) => ({ ...prev, [section]: !prev[section] }));
   };
 
   // Handle existing client selection
-  const handleClientSelect = (client: ClientFormData | null) => {
+  const handleClientSelect = async (client: ClientFormData | null) => {
     if (!client) return;
 
     // Update all client-related fields
@@ -101,6 +131,83 @@ const FireAlarmInstallationDetails: React.FC<FireAlarmInstallationDetailsProps> 
     onUpdate('premisesAddress', client.premisesAddress);
     onUpdate('premisesType', client.premisesType);
     onUpdate('floorsCount', client.floorsCount);
+
+    // C2: Check for previous cert at same premises for pre-fill
+    if (client.premisesAddress) {
+      try {
+        const { data: { session } } = await supabase.auth.getSession();
+        if (!session?.user?.id) return;
+
+        const { data } = await supabase
+          .from('reports')
+          .select('data')
+          .eq('user_id', session.user.id)
+          .eq('report_type', 'fire-alarm')
+          .is('deleted_at', null)
+          .order('updated_at', { ascending: false })
+          .limit(1)
+          .single();
+
+        if (data?.data) {
+          const prevData = data.data as any;
+          const cert = prevData.thirdPartyCertification || {};
+          const fra = prevData.fireRiskAssessment || {};
+          const hasPrefillableData = cert.bafeRegistration || cert.fiaMembership ||
+            cert.nsiSsaibCertification || fra.fraReference ||
+            prevData.monitoringDetails?.isMonitored || prevData.monitoringDetails?.arcName;
+          if (hasPrefillableData) {
+            setPreFillData(prevData);
+            setPreFillOpen(true);
+          }
+        }
+      } catch {
+        // Silent - pre-fill is optional
+      }
+    }
+  };
+
+  // C2: Handle pre-fill confirmation
+  const handlePreFillConfirm = (selectedSections: string[]) => {
+    if (!preFillData) return;
+
+    for (const section of selectedSections) {
+      if (section === 'thirdParty') {
+        const prevCert = preFillData.thirdPartyCertification || {};
+        onUpdate('thirdPartyCertification', {
+          ...formData.thirdPartyCertification,
+          ...(prevCert.bafeRegistration && { bafeRegistration: prevCert.bafeRegistration }),
+          ...(prevCert.fiaMembership && { fiaMembership: prevCert.fiaMembership }),
+          ...(prevCert.nsiSsaibCertification && { nsiSsaibCertification: prevCert.nsiSsaibCertification }),
+        });
+      }
+      if (section === 'fra') {
+        const prevFra = preFillData.fireRiskAssessment || {};
+        onUpdate('fireRiskAssessment', {
+          ...formData.fireRiskAssessment,
+          ...(prevFra.fraReference && { fraReference: prevFra.fraReference }),
+          ...(prevFra.fraDate && { fraDate: prevFra.fraDate }),
+          ...(prevFra.fraCompany && { fraCompany: prevFra.fraCompany }),
+          ...(prevFra.fraAuthor && { fraAuthor: prevFra.fraAuthor }),
+        });
+      }
+      if (section === 'monitoring') {
+        const md = preFillData.monitoringDetails || {};
+        onUpdate('monitoringDetails', {
+          ...formData.monitoringDetails,
+          isMonitored: md.isMonitored || false,
+          monitoringType: md.monitoringType || '',
+          arcName: md.arcName || '',
+          arcAccountNumber: md.arcAccountNumber || '',
+          arcTelephone: md.arcTelephone || '',
+        });
+      }
+    }
+
+    toast({
+      title: 'Pre-Fill Applied',
+      description: `${selectedSections.length} section(s) pre-filled from previous certificate.`,
+    });
+    setPreFillData(null);
   };
 
   // Handle "Same as client address" checkbox
@@ -146,6 +253,7 @@ const FireAlarmInstallationDetails: React.FC<FireAlarmInstallationDetailsProps> 
       networkType: string;
       zonesCount: number;
       loopCapacity: number;
+      deviceCapacity: number;
       protocol: string;
     } | null
   ) => {
@@ -162,6 +270,7 @@ const FireAlarmInstallationDetails: React.FC<FireAlarmInstallationDetailsProps> 
       if (defaults) {
         onUpdate('networkType', defaults.networkType);
         if (defaults.zonesCount) onUpdate('zonesCount', defaults.zonesCount);
+        if (defaults.deviceCapacity) onUpdate('maxLoopCapacity', defaults.deviceCapacity);
         setPanelAutoFilled(true);
       }
     } else {
@@ -184,11 +293,11 @@ const FireAlarmInstallationDetails: React.FC<FireAlarmInstallationDetailsProps> 
                 </div>
                 <div className="flex-1 text-left min-w-0">
                   <h3 className="font-semibold text-foreground">Certificate Details</h3>
-                  <span className="text-xs text-muted-foreground">Type, number & date</span>
+                  <span className="text-xs text-white">Type, number & date</span>
                 </div>
                 <ChevronDown
                   className={cn(
-                    'h-5 w-5 text-muted-foreground transition-transform shrink-0',
+                    'h-5 w-5 text-white transition-transform shrink-0',
                     openSections.metadata && 'rotate-180'
                   )}
                 />
@@ -218,12 +327,16 @@ const FireAlarmInstallationDetails: React.FC<FireAlarmInstallationDetailsProps> 
                 <RadioGroup
                   value={formData.certificateType || 'installation'}
                   onValueChange={(value) => onUpdate('certificateType', value)}
-                  className={cn('gap-2', isMobile ? 'flex flex-col' : 'grid grid-cols-3 gap-2')}
+                  className={cn('gap-2', isMobile ? 'flex flex-col' : 'grid grid-cols-2 sm:grid-cols-4 gap-2')}
                 >
                   {[
-                    { value: 'installation', label: 'Installation', desc: 'New system install' },
-                    { value: 'commissioning', label: 'Commissioning', desc: 'System handover' },
-                    { value: 'periodic', label: 'Periodic Test', desc: 'Routine inspection' },
+                    { value: 'design', label: 'Design', desc: 'System design (G.1)' },
+                    { value: 'installation', label: 'Installation', desc: 'New system install (G.2)' },
+                    { value: 'commissioning', label: 'Commissioning', desc: 'System handover (G.3)' },
+                    { value: 'acceptance', label: 'Acceptance', desc: 'System handover (G.4)' },
+                    { value: 'verification', label: 'Verification', desc: 'Independent audit (G.5)' },
+                    { value: 'periodic', label: 'Periodic Test', desc: 'Routine inspection (G.6)' },
+                    { value: 'modification', label: 'Modification', desc: 'System alteration (G.7)' },
                   ].map((option) => (
                     <div key={option.value} className="relative">
                       <RadioGroupItem
@@ -236,7 +349,7 @@ const FireAlarmInstallationDetails: React.FC<FireAlarmInstallationDetailsProps> 
                         className={cn(
                           'flex items-center gap-3 rounded-xl cursor-pointer touch-manipulation transition-all border-2',
                           isMobile ? 'p-4' : 'flex-col justify-center p-3 h-20 text-center',
-                          'peer-data-[state=unchecked]:bg-black/30 peer-data-[state=unchecked]:border-white/10 peer-data-[state=unchecked]:text-gray-400',
+                          'peer-data-[state=unchecked]:bg-black/30 peer-data-[state=unchecked]:border-white/10 peer-data-[state=unchecked]:text-white',
                           'peer-data-[state=checked]:bg-red-500/20 peer-data-[state=checked]:border-red-500 peer-data-[state=checked]:text-white'
                         )}
                       >
@@ -244,10 +357,10 @@ const FireAlarmInstallationDetails: React.FC<FireAlarmInstallationDetailsProps> 
                           className={cn(
                             'rounded-full flex items-center justify-center shrink-0',
                             isMobile ? 'w-5 h-5 border-2' : 'w-4 h-4 border-2',
-                            'peer-data-[state=unchecked]:border-gray-500',
+                            'peer-data-[state=unchecked]:border-white/30',
                             formData.certificateType === option.value
                               ? 'border-red-500 bg-red-500'
-                              : 'border-gray-500'
+                              : 'border-white/30'
                           )}
                         >
                           {formData.certificateType === option.value && (
@@ -259,7 +372,7 @@ const FireAlarmInstallationDetails: React.FC<FireAlarmInstallationDetailsProps> 
                             {option.label}
                           </span>
                           {isMobile && (
-                            <p className="text-xs text-muted-foreground mt-0.5">{option.desc}</p>
+                            <p className="text-xs text-white mt-0.5">{option.desc}</p>
                           )}
                         </div>
                       </Label>
@@ -291,8 +404,20 @@ const FireAlarmInstallationDetails: React.FC<FireAlarmInstallationDetailsProps> 
                 </div>
               </div>
 
-              {/* Previous Certificate Reference - Only for periodic */}
-              {formData.certificateType === 'periodic' && (
+              {/* Standard Edition Reference */}
+              <div className="space-y-2">
+                <Label htmlFor="standardEdition">Standard Edition</Label>
+                <Input
+                  id="standardEdition"
+                  placeholder="BS 5839-1:2017+A1:2024"
+                  value={formData.standardEdition || 'BS 5839-1:2017+A1:2024'}
+                  onChange={(e) => onUpdate('standardEdition', e.target.value)}
+                  className="h-11 text-base touch-manipulation border-white/30 focus:border-red-500 focus:ring-red-500"
+                />
+              </div>
+
+              {/* Previous Certificate Reference - For periodic/verification/modification */}
+              {['periodic', 'verification', 'modification'].includes(formData.certificateType) && (
                 <div className="space-y-2">
                   <Label htmlFor="previousCertificateRef">Previous Certificate Reference</Label>
                   <Input
@@ -302,7 +427,7 @@ const FireAlarmInstallationDetails: React.FC<FireAlarmInstallationDetailsProps> 
                     onChange={(e) => onUpdate('previousCertificateRef', e.target.value)}
                     className="h-11 text-base touch-manipulation border-white/30 focus:border-red-500 focus:ring-red-500"
                   />
-                  <p className="text-xs text-muted-foreground">
+                  <p className="text-xs text-white">
                     Reference to the previous certificate for this installation
                   </p>
                 </div>
@@ -323,11 +448,11 @@ const FireAlarmInstallationDetails: React.FC<FireAlarmInstallationDetailsProps> 
                 </div>
                 <div className="flex-1 text-left min-w-0">
                   <h3 className="font-semibold text-foreground">Client Details</h3>
-                  <span className="text-xs text-muted-foreground">Name, contact & address</span>
+                  <span className="text-xs text-white">Name, contact & address</span>
                 </div>
                 <ChevronDown
                   className={cn(
-                    'h-5 w-5 text-muted-foreground transition-transform shrink-0',
+                    'h-5 w-5 text-white transition-transform shrink-0',
                     openSections.client && 'rotate-180'
                   )}
                 />
@@ -361,7 +486,7 @@ const FireAlarmInstallationDetails: React.FC<FireAlarmInstallationDetailsProps> 
                   onClientSelect={handleClientSelect}
                   placeholder="Select a previous client to auto-fill..."
                 />
-                <p className="text-xs text-muted-foreground">
+                <p className="text-xs text-white">
                   Auto-fill from a previous fire alarm certificate
                 </p>
               </div>
@@ -391,12 +516,11 @@ const FireAlarmInstallationDetails: React.FC<FireAlarmInstallationDetailsProps> 
               </div>
               <div className="space-y-2">
                 <Label htmlFor="clientAddress">Client Address</Label>
-                <Textarea
-                  id="clientAddress"
-                  placeholder="Full address"
-                  value={formData.clientAddress || ''}
-                  onChange={(e) => onUpdate('clientAddress', e.target.value)}
-                  className="text-base touch-manipulation min-h-[80px] border-white/30 focus:border-elec-yellow focus:ring-elec-yellow"
+                <UnifiedAddressFinder
+                  onAddressSelect={(address, postcode) =>
+                    onUpdate('clientAddress', postcode ? `${address}, ${postcode}` : address)
+                  }
+                  defaultValue={formData.clientAddress || ''}
                 />
               </div>
               <div className="space-y-2">
@@ -426,11 +550,11 @@ const FireAlarmInstallationDetails: React.FC<FireAlarmInstallationDetailsProps> 
                 </div>
                 <div className="flex-1 text-left min-w-0">
                   <h3 className="font-semibold text-foreground">Premises Details</h3>
-                  <span className="text-xs text-muted-foreground">Location & building type</span>
+                  <span className="text-xs text-white">Location & building type</span>
                 </div>
                 <ChevronDown
                   className={cn(
-                    'h-5 w-5 text-muted-foreground transition-transform shrink-0',
+                    'h-5 w-5 text-white transition-transform shrink-0',
                     openSections.premises && 'rotate-180'
                   )}
                 />
@@ -476,23 +600,21 @@ const FireAlarmInstallationDetails: React.FC<FireAlarmInstallationDetailsProps> 
                     />
                     <Label
                       htmlFor="sameAsClient"
-                      className="text-xs text-muted-foreground cursor-pointer"
+                      className="text-xs text-white cursor-pointer"
                     >
                       Same as client address
                     </Label>
                   </div>
                 </div>
-                <Textarea
-                  id="premisesAddress"
-                  placeholder="Full installation address"
-                  value={formData.premisesAddress || ''}
-                  onChange={(e) => {
-                    onUpdate('premisesAddress', e.target.value);
-                    if (sameAsClientAddress && e.target.value !== formData.clientAddress) {
+                <UnifiedAddressFinder
+                  onAddressSelect={(address, postcode) => {
+                    const fullAddress = postcode ? `${address}, ${postcode}` : address;
+                    onUpdate('premisesAddress', fullAddress);
+                    if (sameAsClientAddress && fullAddress !== formData.clientAddress) {
                       setSameAsClientAddress(false);
                     }
                   }}
-                  className="text-base touch-manipulation min-h-[80px] border-white/30 focus:border-elec-yellow focus:ring-elec-yellow"
+                  defaultValue={formData.premisesAddress || ''}
                 />
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -537,21 +659,67 @@ const FireAlarmInstallationDetails: React.FC<FireAlarmInstallationDetailsProps> 
                   </Select>
                 </div>
               </div>
-              <div className="space-y-2">
-                <Label htmlFor="floorsCount">Number of Floors</Label>
-                <Input
-                  id="floorsCount"
-                  type="number"
-                  min="1"
-                  value={formData.floorsCount ?? ''}
-                  onChange={(e) =>
-                    onUpdate(
-                      'floorsCount',
-                      e.target.value === '' ? '' : parseInt(e.target.value) || 0
-                    )
-                  }
-                  className="h-11 text-base touch-manipulation w-32 border-white/30 focus:border-elec-yellow focus:ring-elec-yellow"
-                />
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                <div className="space-y-2">
+                  <Label htmlFor="floorsCount">Number of Floors</Label>
+                  <Input
+                    id="floorsCount"
+                    type="number"
+                    min="1"
+                    value={formData.floorsCount ?? ''}
+                    onChange={(e) =>
+                      onUpdate(
+                        'floorsCount',
+                        e.target.value === '' ? '' : parseInt(e.target.value) || 0
+                      )
+                    }
+                    className="h-11 text-base touch-manipulation border-white/30 focus:border-elec-yellow focus:ring-elec-yellow"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="estimatedOccupancy">Estimated Occupancy</Label>
+                  <Input
+                    id="estimatedOccupancy"
+                    type="number"
+                    min="0"
+                    placeholder="Number of persons"
+                    value={formData.estimatedOccupancy || ''}
+                    onChange={(e) => onUpdate('estimatedOccupancy', e.target.value === '' ? 0 : parseInt(e.target.value) || 0)}
+                    className="h-11 text-base touch-manipulation border-white/30 focus:border-elec-yellow focus:ring-elec-yellow"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="occupancyBasis">Occupancy Basis</Label>
+                  <Input
+                    id="occupancyBasis"
+                    placeholder="e.g., Fire Risk Assessment"
+                    value={formData.occupancyBasis || ''}
+                    onChange={(e) => onUpdate('occupancyBasis', e.target.value)}
+                    className="h-11 text-base touch-manipulation border-white/30 focus:border-elec-yellow focus:ring-elec-yellow"
+                  />
+                </div>
+              </div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <Label htmlFor="buildingPlanRef">Building Plan Reference</Label>
+                  <Input
+                    id="buildingPlanRef"
+                    placeholder="e.g., DWG-001"
+                    value={formData.buildingPlanRef || ''}
+                    onChange={(e) => onUpdate('buildingPlanRef', e.target.value)}
+                    className="h-11 text-base touch-manipulation border-white/30 focus:border-elec-yellow focus:ring-elec-yellow"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="buildingPlanDate">Building Plan Date</Label>
+                  <Input
+                    id="buildingPlanDate"
+                    type="date"
+                    value={formData.buildingPlanDate || ''}
+                    onChange={(e) => onUpdate('buildingPlanDate', e.target.value)}
+                    className="h-11 text-base touch-manipulation border-white/30 focus:border-elec-yellow focus:ring-elec-yellow"
+                  />
+                </div>
               </div>
             </div>
           </CollapsibleContent>
@@ -569,11 +737,11 @@ const FireAlarmInstallationDetails: React.FC<FireAlarmInstallationDetailsProps> 
                 </div>
                 <div className="flex-1 text-left min-w-0">
                   <h3 className="font-semibold text-foreground">System Classification</h3>
-                  <span className="text-xs text-muted-foreground">BS 5839 category & panel</span>
+                  <span className="text-xs text-white">BS 5839 category & panel</span>
                 </div>
                 <ChevronDown
                   className={cn(
-                    'h-5 w-5 text-muted-foreground transition-transform shrink-0',
+                    'h-5 w-5 text-white transition-transform shrink-0',
                     openSections.system && 'rotate-180'
                   )}
                 />
@@ -611,7 +779,7 @@ const FireAlarmInstallationDetails: React.FC<FireAlarmInstallationDetailsProps> 
                       <SelectItem key={cat.value} value={cat.value}>
                         <div className="flex flex-col">
                           <span className="font-medium">{cat.label}</span>
-                          <span className="text-xs text-muted-foreground">{cat.description}</span>
+                          <span className="text-xs text-white">{cat.description}</span>
                         </div>
                       </SelectItem>
                     ))}
@@ -627,7 +795,7 @@ const FireAlarmInstallationDetails: React.FC<FireAlarmInstallationDetailsProps> 
                         Suggested:{' '}
                         <span className="text-elec-yellow">{categorySuggestion.recommended}</span>
                       </p>
-                      <p className="text-xs text-muted-foreground mt-0.5">
+                      <p className="text-xs text-white mt-0.5">
                         {categorySuggestion.reason}
                       </p>
                       <button
@@ -669,14 +837,20 @@ const FireAlarmInstallationDetails: React.FC<FireAlarmInstallationDetailsProps> 
                     type="number"
                     min="1"
                     value={formData.zonesCount ?? ''}
-                    onChange={(e) =>
-                      onUpdate(
-                        'zonesCount',
-                        e.target.value === '' ? '' : parseInt(e.target.value) || 0
-                      )
-                    }
-                    className="h-11 text-base touch-manipulation border-white/30 focus:border-elec-yellow focus:ring-elec-yellow"
+                    readOnly={hasZonesInSchedule}
+                    onChange={(e) => {
+                      if (!hasZonesInSchedule) {
+                        onUpdate('zonesCount', e.target.value === '' ? '' : parseInt(e.target.value) || 0);
+                      }
+                    }}
+                    className={cn(
+                      'h-11 text-base touch-manipulation border-white/30 focus:border-elec-yellow focus:ring-elec-yellow',
+                      hasZonesInSchedule && 'border-green-500/30 bg-green-500/5 cursor-not-allowed'
+                    )}
                   />
+                  {hasZonesInSchedule && (
+                    <p className="text-xs text-green-400">Auto-calculated from zone schedule ({zonesArray.length} zones)</p>
+                  )}
                 </div>
               </div>
 
@@ -704,58 +878,36 @@ const FireAlarmInstallationDetails: React.FC<FireAlarmInstallationDetailsProps> 
                 </Label>
               </div>
 
-              {/* Panel Selection with Auto-fill - Mobile-optimised */}
-              <div
-                className={cn(
-                  'rounded-xl border overflow-hidden',
-                  panelAutoFilled
-                    ? 'border-elec-yellow/40 bg-elec-yellow/5'
-                    : 'border-white/10 bg-black/20'
-                )}
-              >
-                {/* Header */}
-                <div
-                  className={cn(
-                    'flex items-center justify-between px-4 py-3',
-                    panelAutoFilled ? 'bg-elec-yellow/10' : 'bg-white/5'
-                  )}
-                >
+              {/* Panel Selection with Auto-fill */}
+              <div className="space-y-3">
+                <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
                     <Sparkles
                       className={cn(
                         'h-4 w-4',
-                        panelAutoFilled ? 'text-elec-yellow' : 'text-muted-foreground'
+                        panelAutoFilled ? 'text-elec-yellow' : 'text-white'
                       )}
                     />
                     <span className="text-sm font-medium">Control Panel</span>
                   </div>
                   {panelAutoFilled && (
-                    <span className="flex items-center gap-1 px-2 py-1 bg-elec-yellow/20 rounded-full text-xs font-medium text-elec-yellow">
+                    <span className="flex items-center gap-1 text-xs font-medium text-elec-yellow">
                       <Sparkles className="h-3 w-3" />
                       Auto-filled
                     </span>
                   )}
                 </div>
 
-                {/* Autocomplete */}
-                <div className="px-4 py-3">
-                  <FireAlarmPanelAutocomplete
-                    value={selectedPanelId || undefined}
-                    onValueChange={(id) => setSelectedPanelId(id)}
-                    onPanelSelect={handlePanelSelect}
-                    placeholder="Search panels by make/model..."
-                    showAutoFillBadge={false}
-                  />
-                  <p className="text-xs text-muted-foreground mt-2">
-                    Select a panel to auto-fill network type and specifications
-                  </p>
-                </div>
+                <FireAlarmPanelAutocomplete
+                  value={selectedPanelId || undefined}
+                  onValueChange={(id) => setSelectedPanelId(id)}
+                  onPanelSelect={handlePanelSelect}
+                  placeholder="Search panels by make/model..."
+                  showAutoFillBadge={false}
+                />
 
-                {/* Show panel info if selected */}
                 {selectedPanelId && (
-                  <div className="px-4 pb-4">
-                    <PanelInfoDisplay panelId={selectedPanelId} />
-                  </div>
+                  <PanelInfoDisplay panelId={selectedPanelId} />
                 )}
               </div>
 
@@ -765,11 +917,17 @@ const FireAlarmInstallationDetails: React.FC<FireAlarmInstallationDetailsProps> 
                   <Label htmlFor="systemMake">Control Panel Make *</Label>
                   <Input
                     id="systemMake"
+                    list="recentSystemMakes"
                     placeholder="e.g., Morley, Gent, Hochiki"
                     value={formData.systemMake || ''}
                     onChange={(e) => onUpdate('systemMake', e.target.value)}
                     className="h-11 text-base touch-manipulation border-white/30 focus:border-elec-yellow focus:ring-elec-yellow"
                   />
+                  {recentValues.systemMakes.length > 0 && (
+                    <datalist id="recentSystemMakes">
+                      {recentValues.systemMakes.map((v) => <option key={v} value={v} />)}
+                    </datalist>
+                  )}
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="systemModel">Control Panel Model</Label>
@@ -788,12 +946,30 @@ const FireAlarmInstallationDetails: React.FC<FireAlarmInstallationDetailsProps> 
                   <Label htmlFor="panelLocation">Panel Location *</Label>
                   <Input
                     id="panelLocation"
+                    list="recentPanelLocations"
                     placeholder="e.g., Main reception, Ground floor lobby"
                     value={formData.panelLocation || ''}
                     onChange={(e) => onUpdate('panelLocation', e.target.value)}
                     className="h-11 text-base touch-manipulation border-white/30 focus:border-elec-yellow focus:ring-elec-yellow"
                   />
+                  {recentValues.panelLocations.length > 0 && (
+                    <datalist id="recentPanelLocations">
+                      {recentValues.panelLocations.map((v) => <option key={v} value={v} />)}
+                    </datalist>
+                  )}
                 </div>
+                <div className="space-y-2">
+                  <Label htmlFor="panelFirmwareVersion">Panel Firmware Version</Label>
+                  <Input
+                    id="panelFirmwareVersion"
+                    placeholder="e.g., V3.2.1"
+                    value={formData.panelFirmwareVersion || ''}
+                    onChange={(e) => onUpdate('panelFirmwareVersion', e.target.value)}
+                    className="h-11 text-base touch-manipulation border-white/30 focus:border-elec-yellow focus:ring-elec-yellow"
+                  />
+                </div>
+              </div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="space-y-2">
                   <Label htmlFor="panelSerialNumber">Panel Serial Number</Label>
                   <div className="flex gap-2">
@@ -831,7 +1007,7 @@ const FireAlarmInstallationDetails: React.FC<FireAlarmInstallationDetailsProps> 
                         variant="ghost"
                         size="icon"
                         onClick={clearSerialPhoto}
-                        className="ml-auto h-6 w-6 text-white hover:text-white hover:bg-white/10"
+                        className="ml-auto h-11 w-11 text-white hover:text-white hover:bg-white/10"
                       >
                         <X className="h-3 w-3" />
                       </Button>
@@ -851,6 +1027,13 @@ const FireAlarmInstallationDetails: React.FC<FireAlarmInstallationDetailsProps> 
         onSerialExtracted={handleSerialExtracted}
       />
 
+      <PreviousCertPreFillSheet
+        open={preFillOpen}
+        onOpenChange={setPreFillOpen}
+        previousData={preFillData}
+        onConfirm={handlePreFillConfirm}
+      />
+
       {/* Power Supply */}
       <div className={cn(isMobile ? '' : 'eicr-section-card')}>
         <Collapsible open={openSections.power} onOpenChange={() => toggleSection('power')}>
@@ -862,11 +1045,11 @@ const FireAlarmInstallationDetails: React.FC<FireAlarmInstallationDetailsProps> 
                 </div>
                 <div className="flex-1 text-left min-w-0">
                   <h3 className="font-semibold text-foreground">Power Supply</h3>
-                  <span className="text-xs text-muted-foreground">Battery backup & type</span>
+                  <span className="text-xs text-white">Battery backup & type</span>
                 </div>
                 <ChevronDown
                   className={cn(
-                    'h-5 w-5 text-muted-foreground transition-transform shrink-0',
+                    'h-5 w-5 text-white transition-transform shrink-0',
                     openSections.power && 'rotate-180'
                   )}
                 />
@@ -927,7 +1110,7 @@ const FireAlarmInstallationDetails: React.FC<FireAlarmInstallationDetailsProps> 
                     onChange={(e) => onUpdate('batteryBackupHours', parseInt(e.target.value) || 24)}
                     className="h-11 text-base touch-manipulation border-white/30 focus:border-elec-yellow focus:ring-elec-yellow"
                   />
-                  <p className="text-xs text-muted-foreground">
+                  <p className="text-xs text-white">
                     BS 5839 requires min 24 hours standby
                   </p>
                 </div>
@@ -967,11 +1150,11 @@ const FireAlarmInstallationDetails: React.FC<FireAlarmInstallationDetailsProps> 
                 </div>
                 <div className="flex-1 text-left min-w-0">
                   <h3 className="font-semibold text-foreground">Third-Party Certification</h3>
-                  <span className="text-xs text-muted-foreground">BAFE, FIA, NSI/SSAIB</span>
+                  <span className="text-xs text-white">BAFE, FIA, NSI/SSAIB</span>
                 </div>
                 <ChevronDown
                   className={cn(
-                    'h-5 w-5 text-muted-foreground transition-transform shrink-0',
+                    'h-5 w-5 text-white transition-transform shrink-0',
                     openSections.certification && 'rotate-180'
                   )}
                 />
@@ -995,7 +1178,7 @@ const FireAlarmInstallationDetails: React.FC<FireAlarmInstallationDetailsProps> 
           </CollapsibleTrigger>
           <CollapsibleContent>
             <div className={cn('space-y-4', isMobile ? 'px-4 py-4' : 'px-4 pb-4')}>
-              <p className="text-xs text-muted-foreground">
+              <p className="text-xs text-white">
                 Optional: Enter your third-party certification details if applicable.
               </p>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -1076,11 +1259,11 @@ const FireAlarmInstallationDetails: React.FC<FireAlarmInstallationDetailsProps> 
                 </div>
                 <div className="flex-1 text-left min-w-0">
                   <h3 className="font-semibold text-foreground">Fire Risk Assessment</h3>
-                  <span className="text-xs text-muted-foreground">FRA reference details</span>
+                  <span className="text-xs text-white">FRA reference details</span>
                 </div>
                 <ChevronDown
                   className={cn(
-                    'h-5 w-5 text-muted-foreground transition-transform shrink-0',
+                    'h-5 w-5 text-white transition-transform shrink-0',
                     openSections.fra && 'rotate-180'
                   )}
                 />
@@ -1104,7 +1287,7 @@ const FireAlarmInstallationDetails: React.FC<FireAlarmInstallationDetailsProps> 
           </CollapsibleTrigger>
           <CollapsibleContent>
             <div className={cn('space-y-4', isMobile ? 'px-4 py-4' : 'px-4 pb-4')}>
-              <p className="text-xs text-muted-foreground">
+              <p className="text-xs text-white">
                 Reference the Fire Risk Assessment that informed the system design.
               </p>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -1188,11 +1371,11 @@ const FireAlarmInstallationDetails: React.FC<FireAlarmInstallationDetailsProps> 
                 </div>
                 <div className="flex-1 text-left min-w-0">
                   <h3 className="font-semibold text-foreground">Monitoring & ARC</h3>
-                  <span className="text-xs text-muted-foreground">Alarm Receiving Centre</span>
+                  <span className="text-xs text-white">Alarm Receiving Centre</span>
                 </div>
                 <ChevronDown
                   className={cn(
-                    'h-5 w-5 text-muted-foreground transition-transform shrink-0',
+                    'h-5 w-5 text-white transition-transform shrink-0',
                     openSections.monitoring && 'rotate-180'
                   )}
                 />
@@ -1257,6 +1440,7 @@ const FireAlarmInstallationDetails: React.FC<FireAlarmInstallationDetailsProps> 
                       <Label htmlFor="arcName">ARC Name</Label>
                       <Input
                         id="arcName"
+                        list="recentArcNames"
                         placeholder="Alarm Receiving Centre name"
                         value={formData.monitoringDetails?.arcName || ''}
                         onChange={(e) =>
@@ -1267,6 +1451,11 @@ const FireAlarmInstallationDetails: React.FC<FireAlarmInstallationDetailsProps> 
                         }
                         className="h-11 text-base touch-manipulation border-white/30 focus:border-elec-yellow focus:ring-elec-yellow"
                       />
+                      {recentValues.arcNames.length > 0 && (
+                        <datalist id="recentArcNames">
+                          {recentValues.arcNames.map((v) => <option key={v} value={v} />)}
+                        </datalist>
+                      )}
                     </div>
                     <div className="space-y-2">
                       <Label htmlFor="arcContactNumber">ARC Contact Number</Label>
@@ -1342,6 +1531,580 @@ const FireAlarmInstallationDetails: React.FC<FireAlarmInstallationDetailsProps> 
                       />
                     </div>
                   )}
+                </>
+              )}
+
+              {/* Cause & Effect Reference */}
+              <div className="space-y-3 pt-2">
+                <h4 className="font-medium text-sm text-cyan-400 flex items-center gap-2">
+                  <div className="w-1.5 h-1.5 rounded-full bg-cyan-400"></div>
+                  Cause & Effect
+                </h4>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div className="space-y-2">
+                    <Label htmlFor="causeAndEffectRef">Document Reference</Label>
+                    <Input
+                      id="causeAndEffectRef"
+                      placeholder="e.g., C&E-001"
+                      value={formData.causeAndEffectRef || ''}
+                      onChange={(e) => onUpdate('causeAndEffectRef', e.target.value)}
+                      className="h-11 text-base touch-manipulation border-white/30 focus:border-elec-yellow focus:ring-elec-yellow"
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="causeAndEffectDate">Date Verified</Label>
+                    <Input
+                      id="causeAndEffectDate"
+                      type="date"
+                      value={formData.causeAndEffectDate || ''}
+                      onChange={(e) => onUpdate('causeAndEffectDate', e.target.value)}
+                      className="h-11 text-base touch-manipulation border-white/30 focus:border-elec-yellow focus:ring-elec-yellow"
+                    />
+                  </div>
+                </div>
+                <div
+                  className={cn(
+                    'flex items-center gap-3 h-12 px-4 rounded-lg cursor-pointer transition-colors',
+                    formData.causeAndEffectVerified
+                      ? 'bg-green-500/10 border border-green-500/30'
+                      : 'bg-black/30 border border-white/10 hover:border-white/20'
+                  )}
+                  onClick={() => onUpdate('causeAndEffectVerified', !formData.causeAndEffectVerified)}
+                >
+                  <Checkbox
+                    checked={formData.causeAndEffectVerified || false}
+                    onCheckedChange={(checked) => onUpdate('causeAndEffectVerified', checked as boolean)}
+                    className="border-white/40 data-[state=checked]:bg-green-500 data-[state=checked]:border-green-500 data-[state=checked]:text-white h-5 w-5 shrink-0"
+                  />
+                  <Label className="cursor-pointer text-sm font-medium text-foreground">
+                    Verified against installed system
+                  </Label>
+                </div>
+              </div>
+            </div>
+          </CollapsibleContent>
+        </Collapsible>
+      </div>
+
+      {/* Design Details - Only for design certificates */}
+      {formData.certificateType === 'design' && (
+        <div className={cn(isMobile ? '' : 'eicr-section-card')}>
+          <Collapsible open={openSections.designDetails} onOpenChange={() => toggleSection('designDetails')}>
+            <CollapsibleTrigger className="w-full">
+              {isMobile ? (
+                <div className="flex items-center gap-3 py-4 px-4 bg-card/30 border-b border-border/20">
+                  <div className="h-10 w-10 rounded-xl bg-indigo-500/20 flex items-center justify-center shrink-0">
+                    <FileText className="h-5 w-5 text-indigo-400" />
+                  </div>
+                  <div className="flex-1 text-left min-w-0">
+                    <h3 className="font-semibold text-foreground">Design Details</h3>
+                    <span className="text-xs text-white">BS 5839-1 Annex G.1</span>
+                  </div>
+                  <ChevronDown className={cn('h-5 w-5 text-white transition-transform shrink-0', openSections.designDetails && 'rotate-180')} />
+                </div>
+              ) : (
+                <div className="flex items-center justify-between py-4 px-4 cursor-pointer hover:bg-white/5 transition-colors">
+                  <div className="flex items-center gap-3">
+                    <div className="w-9 h-9 rounded-xl bg-indigo-500/15 flex items-center justify-center">
+                      <FileText className="h-4 w-4 text-indigo-400" />
+                    </div>
+                    <span className="text-white font-semibold">Design Details</span>
+                  </div>
+                  <ChevronDown className={cn('h-5 w-5 text-white transition-transform', openSections.designDetails && 'rotate-180')} />
+                </div>
+              )}
+            </CollapsibleTrigger>
+            <CollapsibleContent>
+              <div className={cn('space-y-4', isMobile ? 'px-4 py-4' : 'px-4 pb-4')}>
+                <div className="space-y-2">
+                  <Label htmlFor="designBasis">Design Basis</Label>
+                  <Textarea
+                    id="designBasis"
+                    placeholder="Description of the design basis and applicable standards..."
+                    value={formData.designBasis || ''}
+                    onChange={(e) => onUpdate('designBasis', e.target.value)}
+                    className="text-base touch-manipulation min-h-[80px] border-white/30 focus:border-elec-yellow focus:ring-elec-yellow"
+                  />
+                </div>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div className="space-y-2">
+                    <Label htmlFor="designCoverageCategory">Coverage Category</Label>
+                    <Input
+                      id="designCoverageCategory"
+                      placeholder="e.g., L1, L2, P1"
+                      value={formData.designCoverageCategory || ''}
+                      onChange={(e) => onUpdate('designCoverageCategory', e.target.value)}
+                      className="h-11 text-base touch-manipulation border-white/30 focus:border-elec-yellow focus:ring-elec-yellow"
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="designDocRef">Design Document Reference</Label>
+                    <Input
+                      id="designDocRef"
+                      placeholder="e.g., DES-2024-001"
+                      value={formData.designDocRef || ''}
+                      onChange={(e) => onUpdate('designDocRef', e.target.value)}
+                      className="h-11 text-base touch-manipulation border-white/30 focus:border-elec-yellow focus:ring-elec-yellow"
+                    />
+                  </div>
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="designDeviations">Deviations from Standard</Label>
+                  <Textarea
+                    id="designDeviations"
+                    placeholder="Any deviations from BS 5839-1 and justification..."
+                    value={formData.designDeviations || ''}
+                    onChange={(e) => onUpdate('designDeviations', e.target.value)}
+                    className="text-base touch-manipulation min-h-[80px] border-white/30 focus:border-elec-yellow focus:ring-elec-yellow"
+                  />
+                </div>
+              </div>
+            </CollapsibleContent>
+          </Collapsible>
+        </div>
+      )}
+
+      {/* Modification Details - Only for modification certificates */}
+      {formData.certificateType === 'modification' && (
+        <div className={cn(isMobile ? '' : 'eicr-section-card')}>
+          <Collapsible open={openSections.modificationDetails} onOpenChange={() => toggleSection('modificationDetails')}>
+            <CollapsibleTrigger className="w-full">
+              {isMobile ? (
+                <div className="flex items-center gap-3 py-4 px-4 bg-card/30 border-b border-border/20">
+                  <div className="h-10 w-10 rounded-xl bg-amber-500/20 flex items-center justify-center shrink-0">
+                    <Wrench className="h-5 w-5 text-amber-400" />
+                  </div>
+                  <div className="flex-1 text-left min-w-0">
+                    <h3 className="font-semibold text-foreground">Modification Details</h3>
+                    <span className="text-xs text-white">BS 5839-1 Annex G.7</span>
+                  </div>
+                  <ChevronDown className={cn('h-5 w-5 text-white transition-transform shrink-0', openSections.modificationDetails && 'rotate-180')} />
+                </div>
+              ) : (
+                <div className="flex items-center justify-between py-4 px-4 cursor-pointer hover:bg-white/5 transition-colors">
+                  <div className="flex items-center gap-3">
+                    <div className="w-9 h-9 rounded-xl bg-amber-500/15 flex items-center justify-center">
+                      <Wrench className="h-4 w-4 text-amber-400" />
+                    </div>
+                    <span className="text-white font-semibold">Modification Details</span>
+                  </div>
+                  <ChevronDown className={cn('h-5 w-5 text-white transition-transform', openSections.modificationDetails && 'rotate-180')} />
+                </div>
+              )}
+            </CollapsibleTrigger>
+            <CollapsibleContent>
+              <div className={cn('space-y-4', isMobile ? 'px-4 py-4' : 'px-4 pb-4')}>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div className="space-y-2">
+                    <Label htmlFor="originalCertRef">Original Certificate Reference</Label>
+                    <Input
+                      id="originalCertRef"
+                      placeholder="e.g., FA-2023-001"
+                      value={formData.originalCertRef || ''}
+                      onChange={(e) => onUpdate('originalCertRef', e.target.value)}
+                      className="h-11 text-base touch-manipulation border-white/30 focus:border-elec-yellow focus:ring-elec-yellow"
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="modificationExtent">Extent of Modification</Label>
+                    <Select
+                      value={formData.modificationExtent || ''}
+                      onValueChange={(value) => onUpdate('modificationExtent', value)}
+                    >
+                      <SelectTrigger className="h-11 touch-manipulation bg-elec-gray border-white/30 focus:border-elec-yellow focus:ring-elec-yellow">
+                        <SelectValue placeholder="Select extent" />
+                      </SelectTrigger>
+                      <SelectContent className="z-[100] bg-background border-border text-foreground">
+                        <SelectItem value="minor">Minor</SelectItem>
+                        <SelectItem value="significant">Significant</SelectItem>
+                        <SelectItem value="major">Major</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="modificationDescription">Description of Modification</Label>
+                  <Textarea
+                    id="modificationDescription"
+                    placeholder="Full description of the modification work undertaken..."
+                    value={formData.modificationDescription || ''}
+                    onChange={(e) => onUpdate('modificationDescription', e.target.value)}
+                    className="text-base touch-manipulation min-h-[100px] border-white/30 focus:border-elec-yellow focus:ring-elec-yellow"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="modificationReason">Reason for Modification</Label>
+                  <Textarea
+                    id="modificationReason"
+                    placeholder="Reason why the modification was required..."
+                    value={formData.modificationReason || ''}
+                    onChange={(e) => onUpdate('modificationReason', e.target.value)}
+                    className="text-base touch-manipulation min-h-[80px] border-white/30 focus:border-elec-yellow focus:ring-elec-yellow"
+                  />
+                </div>
+              </div>
+            </CollapsibleContent>
+          </Collapsible>
+        </div>
+      )}
+
+      {/* Cable & Wiring Details - For installation, design, modification, acceptance */}
+      {['installation', 'design', 'modification', 'acceptance'].includes(formData.certificateType) && (
+        <div className={cn(isMobile ? '' : 'eicr-section-card')}>
+          <Collapsible open={openSections.cableWiring} onOpenChange={() => toggleSection('cableWiring')}>
+            <CollapsibleTrigger className="w-full">
+              {isMobile ? (
+                <div className="flex items-center gap-3 py-4 px-4 bg-card/30 border-b border-border/20">
+                  <div className="h-10 w-10 rounded-xl bg-teal-500/20 flex items-center justify-center shrink-0">
+                    <Cable className="h-5 w-5 text-teal-400" />
+                  </div>
+                  <div className="flex-1 text-left min-w-0">
+                    <h3 className="font-semibold text-foreground">Cable & Wiring</h3>
+                    <span className="text-xs text-white">BS 5839-1 Cl.26-27</span>
+                  </div>
+                  <ChevronDown className={cn('h-5 w-5 text-white transition-transform shrink-0', openSections.cableWiring && 'rotate-180')} />
+                </div>
+              ) : (
+                <div className="flex items-center justify-between py-4 px-4 cursor-pointer hover:bg-white/5 transition-colors">
+                  <div className="flex items-center gap-3">
+                    <div className="w-9 h-9 rounded-xl bg-teal-500/15 flex items-center justify-center">
+                      <Cable className="h-4 w-4 text-teal-400" />
+                    </div>
+                    <span className="text-white font-semibold">Cable & Wiring Details</span>
+                  </div>
+                  <ChevronDown className={cn('h-5 w-5 text-white transition-transform', openSections.cableWiring && 'rotate-180')} />
+                </div>
+              )}
+            </CollapsibleTrigger>
+            <CollapsibleContent>
+              <div className={cn('space-y-4', isMobile ? 'px-4 py-4' : 'px-4 pb-4')}>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div className="space-y-2">
+                    <Label htmlFor="cableType">Cable Type</Label>
+                    <Select
+                      value={formData.cableType || ''}
+                      onValueChange={(value) => onUpdate('cableType', value)}
+                    >
+                      <SelectTrigger className="h-11 touch-manipulation bg-elec-gray border-white/30 focus:border-elec-yellow focus:ring-elec-yellow">
+                        <SelectValue placeholder="Select cable type" />
+                      </SelectTrigger>
+                      <SelectContent className="z-[100] bg-background border-border text-foreground">
+                        <SelectItem value="standard-ph30">Standard (PH30)</SelectItem>
+                        <SelectItem value="enhanced-ph120">Enhanced (PH120)</SelectItem>
+                        <SelectItem value="mineral-insulated">Mineral Insulated (MICC)</SelectItem>
+                        <SelectItem value="other">Other</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="cableFireRating">Fire Rating</Label>
+                    <Input
+                      id="cableFireRating"
+                      placeholder="e.g., PH30, PH120"
+                      value={formData.cableFireRating || ''}
+                      onChange={(e) => onUpdate('cableFireRating', e.target.value)}
+                      className="h-11 text-base touch-manipulation border-white/30 focus:border-elec-yellow focus:ring-elec-yellow"
+                    />
+                  </div>
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="circuitIntegrity">Circuit Integrity</Label>
+                  <Select
+                    value={formData.circuitIntegrity || ''}
+                    onValueChange={(value) => onUpdate('circuitIntegrity', value)}
+                  >
+                    <SelectTrigger className="h-11 touch-manipulation bg-elec-gray border-white/30 focus:border-elec-yellow focus:ring-elec-yellow">
+                      <SelectValue placeholder="Select integrity level" />
+                    </SelectTrigger>
+                    <SelectContent className="z-[100] bg-background border-border text-foreground">
+                      <SelectItem value="standard">Standard</SelectItem>
+                      <SelectItem value="enhanced">Enhanced (BS 5839-1 Cl.27)</SelectItem>
+                      <SelectItem value="critical-signal-path">Critical Signal Path</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="wiringNotes">Wiring Notes</Label>
+                  <Textarea
+                    id="wiringNotes"
+                    placeholder="Additional wiring details, routing, containment..."
+                    value={formData.wiringNotes || ''}
+                    onChange={(e) => onUpdate('wiringNotes', e.target.value)}
+                    className="text-base touch-manipulation min-h-[80px] border-white/30 focus:border-elec-yellow focus:ring-elec-yellow"
+                  />
+                </div>
+              </div>
+            </CollapsibleContent>
+          </Collapsible>
+        </div>
+      )}
+
+      {/* Interface Equipment - All certificate types */}
+      <div className={cn(isMobile ? '' : 'eicr-section-card')}>
+        <Collapsible open={openSections.interfaceEquipment} onOpenChange={() => toggleSection('interfaceEquipment')}>
+          <CollapsibleTrigger className="w-full">
+            {isMobile ? (
+              <div className="flex items-center gap-3 py-4 px-4 bg-card/30 border-b border-border/20">
+                <div className="h-10 w-10 rounded-xl bg-pink-500/20 flex items-center justify-center shrink-0">
+                  <Link2 className="h-5 w-5 text-pink-400" />
+                </div>
+                <div className="flex-1 text-left min-w-0">
+                  <h3 className="font-semibold text-foreground">Interface Equipment</h3>
+                  <span className="text-xs text-white">
+                    {(formData.interfaceEquipment || []).length} interfaces
+                  </span>
+                </div>
+                <ChevronDown className={cn('h-5 w-5 text-white transition-transform shrink-0', openSections.interfaceEquipment && 'rotate-180')} />
+              </div>
+            ) : (
+              <div className="flex items-center justify-between py-4 px-4 cursor-pointer hover:bg-white/5 transition-colors">
+                <div className="flex items-center gap-3">
+                  <div className="w-9 h-9 rounded-xl bg-pink-500/15 flex items-center justify-center">
+                    <Link2 className="h-4 w-4 text-pink-400" />
+                  </div>
+                  <span className="text-white font-semibold">Interface Equipment</span>
+                </div>
+                <ChevronDown className={cn('h-5 w-5 text-white transition-transform', openSections.interfaceEquipment && 'rotate-180')} />
+              </div>
+            )}
+          </CollapsibleTrigger>
+          <CollapsibleContent>
+            <div className={cn('space-y-4', isMobile ? 'px-4 py-4' : 'px-4 pb-4')}>
+              <p className="text-xs text-white">
+                Record interface equipment connected to the fire alarm system (BS 5839-1 Cl.26, Cl.44.2).
+              </p>
+
+              {(formData.interfaceEquipment || []).map((item: any, index: number) => (
+                <div key={item.id} className="bg-black/40 rounded-xl p-4">
+                  <div className="flex items-start justify-between mb-3">
+                    <h4 className="font-medium flex items-center gap-2 text-sm">
+                      <Link2 className="h-4 w-4 text-pink-400" />
+                      Interface {index + 1}
+                    </h4>
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => {
+                        const items = formData.interfaceEquipment || [];
+                        onUpdate('interfaceEquipment', items.filter((i: any) => i.id !== item.id));
+                      }}
+                      className="h-11 w-11 p-0 text-red-400 hover:text-red-300 hover:bg-red-500/10 touch-manipulation"
+                      aria-label="Remove interface"
+                    >
+                      <Trash2 className="h-4 w-4" />
+                    </Button>
+                  </div>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <div className="space-y-2">
+                      <Label className="text-sm">Type</Label>
+                      <Select
+                        value={item.type || ''}
+                        onValueChange={(v) => {
+                          const items = [...(formData.interfaceEquipment || [])];
+                          const idx = items.findIndex((i: any) => i.id === item.id);
+                          if (idx >= 0) { items[idx] = { ...items[idx], type: v }; onUpdate('interfaceEquipment', items); }
+                        }}
+                      >
+                        <SelectTrigger className="h-11 touch-manipulation bg-elec-gray border-white/30 focus:border-elec-yellow focus:ring-elec-yellow">
+                          <SelectValue placeholder="Select type" />
+                        </SelectTrigger>
+                        <SelectContent className="z-[100] bg-background border-border text-foreground">
+                          <SelectItem value="door-holders">Door Holders</SelectItem>
+                          <SelectItem value="sprinkler-interface">Sprinkler Interface</SelectItem>
+                          <SelectItem value="lift-recall">Lift Recall</SelectItem>
+                          <SelectItem value="ventilation-dampers">Ventilation/Dampers</SelectItem>
+                          <SelectItem value="gas-shutdown">Gas Shutdown</SelectItem>
+                          <SelectItem value="access-control">Access Control</SelectItem>
+                          <SelectItem value="suppression">Suppression</SelectItem>
+                          <SelectItem value="other">Other</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+                    <div className="space-y-2">
+                      <Label className="text-sm">Interface Method</Label>
+                      <Select
+                        value={item.interfaceMethod || ''}
+                        onValueChange={(v) => {
+                          const items = [...(formData.interfaceEquipment || [])];
+                          const idx = items.findIndex((i: any) => i.id === item.id);
+                          if (idx >= 0) { items[idx] = { ...items[idx], interfaceMethod: v }; onUpdate('interfaceEquipment', items); }
+                        }}
+                      >
+                        <SelectTrigger className="h-11 touch-manipulation bg-elec-gray border-white/30 focus:border-elec-yellow focus:ring-elec-yellow">
+                          <SelectValue placeholder="Select method" />
+                        </SelectTrigger>
+                        <SelectContent className="z-[100] bg-background border-border text-foreground">
+                          <SelectItem value="volt-free-relay">Volt-free Relay</SelectItem>
+                          <SelectItem value="monitored-output">Monitored Output</SelectItem>
+                          <SelectItem value="addressable-module">Addressable Module</SelectItem>
+                          <SelectItem value="hardwired">Hardwired</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+                    <div className="space-y-2">
+                      <Label className="text-sm">Location</Label>
+                      <Input
+                        placeholder="Location"
+                        value={item.location || ''}
+                        onChange={(e) => {
+                          const items = [...(formData.interfaceEquipment || [])];
+                          const idx = items.findIndex((i: any) => i.id === item.id);
+                          if (idx >= 0) { items[idx] = { ...items[idx], location: e.target.value }; onUpdate('interfaceEquipment', items); }
+                        }}
+                        className="h-11 text-sm touch-manipulation border-white/30 focus:border-elec-yellow focus:ring-elec-yellow"
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <Label className="text-sm">Details</Label>
+                      <Input
+                        placeholder="Additional details"
+                        value={item.details || ''}
+                        onChange={(e) => {
+                          const items = [...(formData.interfaceEquipment || [])];
+                          const idx = items.findIndex((i: any) => i.id === item.id);
+                          if (idx >= 0) { items[idx] = { ...items[idx], details: e.target.value }; onUpdate('interfaceEquipment', items); }
+                        }}
+                        className="h-11 text-sm touch-manipulation border-white/30 focus:border-elec-yellow focus:ring-elec-yellow"
+                      />
+                    </div>
+                  </div>
+                  {['periodic', 'acceptance'].includes(formData.certificateType) && (
+                    <div
+                      className={cn(
+                        'flex items-center gap-3 h-12 px-4 rounded-lg cursor-pointer transition-colors mt-3',
+                        item.tested ? 'bg-green-500/10 border border-green-500/30' : 'bg-black/30 border border-white/10'
+                      )}
+                      onClick={() => {
+                        const items = [...(formData.interfaceEquipment || [])];
+                        const idx = items.findIndex((i: any) => i.id === item.id);
+                        if (idx >= 0) { items[idx] = { ...items[idx], tested: !items[idx].tested }; onUpdate('interfaceEquipment', items); }
+                      }}
+                    >
+                      <Checkbox
+                        checked={item.tested || false}
+                        className="border-white/40 data-[state=checked]:bg-green-500 data-[state=checked]:border-green-500 data-[state=checked]:text-white h-5 w-5 shrink-0"
+                      />
+                      <Label className="cursor-pointer text-sm font-medium text-foreground">Tested</Label>
+                    </div>
+                  )}
+                </div>
+              ))}
+
+              <Button
+                variant="outline"
+                className="w-full h-11 touch-manipulation border-dashed border-white/20 hover:border-pink-500 hover:bg-pink-500/10"
+                onClick={() => {
+                  const items = formData.interfaceEquipment || [];
+                  onUpdate('interfaceEquipment', [...items, {
+                    id: `iface-${Date.now()}`,
+                    type: '',
+                    location: '',
+                    interfaceMethod: '',
+                    details: '',
+                    tested: false,
+                  }]);
+                }}
+              >
+                <Plus className="h-4 w-4 mr-2" />
+                Add Interface Equipment
+              </Button>
+            </div>
+          </CollapsibleContent>
+        </Collapsible>
+      </div>
+
+      {/* False Alarm Management */}
+      <div className={cn(isMobile ? '' : 'eicr-section-card')}>
+        <Collapsible open={openSections.falseAlarm} onOpenChange={() => toggleSection('falseAlarm')}>
+          <CollapsibleTrigger className="w-full">
+            {isMobile ? (
+              <div className="flex items-center gap-3 py-4 px-4 bg-card/30 border-b border-border/20">
+                <div className="h-10 w-10 rounded-xl bg-amber-500/20 flex items-center justify-center shrink-0">
+                  <AlertTriangle className="h-5 w-5 text-amber-400" />
+                </div>
+                <div className="flex-1 text-left min-w-0">
+                  <h3 className="font-semibold text-foreground">False Alarm Management</h3>
+                  <span className="text-xs text-white">BS 5839-1 Cl.19</span>
+                </div>
+                <ChevronDown className={cn('h-5 w-5 text-white transition-transform shrink-0', openSections.falseAlarm && 'rotate-180')} />
+              </div>
+            ) : (
+              <div className="flex items-center justify-between py-4 px-4 cursor-pointer hover:bg-white/5 transition-colors">
+                <div className="flex items-center gap-3">
+                  <div className="w-9 h-9 rounded-xl bg-amber-500/15 flex items-center justify-center">
+                    <AlertTriangle className="h-4 w-4 text-amber-400" />
+                  </div>
+                  <span className="text-white font-semibold">False Alarm Management</span>
+                </div>
+                <ChevronDown className={cn('h-5 w-5 text-white transition-transform', openSections.falseAlarm && 'rotate-180')} />
+              </div>
+            )}
+          </CollapsibleTrigger>
+          <CollapsibleContent>
+            <div className={cn('space-y-4', isMobile ? 'px-4 py-4' : 'px-4 pb-4')}>
+              <div
+                className={cn(
+                  'flex items-center gap-3 h-12 px-4 rounded-lg cursor-pointer transition-colors',
+                  formData.falseAlarmManagement
+                    ? 'bg-amber-500/10 border border-amber-500/30'
+                    : 'bg-black/30 border border-white/10 hover:border-white/20'
+                )}
+                onClick={() => onUpdate('falseAlarmManagement', !formData.falseAlarmManagement)}
+              >
+                <Checkbox
+                  checked={formData.falseAlarmManagement || false}
+                  onCheckedChange={(checked) => onUpdate('falseAlarmManagement', checked as boolean)}
+                  className="border-white/40 data-[state=checked]:bg-amber-500 data-[state=checked]:border-amber-500 data-[state=checked]:text-white h-5 w-5 shrink-0"
+                />
+                <Label className="cursor-pointer text-sm font-medium text-foreground">
+                  False alarm management strategy in place
+                </Label>
+              </div>
+
+              {formData.falseAlarmManagement && (
+                <>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div className="space-y-2">
+                      <Label htmlFor="falseAlarmStrategy">Strategy</Label>
+                      <Select
+                        value={formData.falseAlarmStrategy || ''}
+                        onValueChange={(value) => onUpdate('falseAlarmStrategy', value)}
+                      >
+                        <SelectTrigger className="h-11 touch-manipulation bg-elec-gray border-white/30 focus:border-elec-yellow focus:ring-elec-yellow">
+                          <SelectValue placeholder="Select strategy" />
+                        </SelectTrigger>
+                        <SelectContent className="z-[100] bg-background border-border text-foreground">
+                          <SelectItem value="none">None</SelectItem>
+                          <SelectItem value="coincidence-detection">Coincidence Detection</SelectItem>
+                          <SelectItem value="verification">Verification</SelectItem>
+                          <SelectItem value="intelligent-detectors">Intelligent Detectors</SelectItem>
+                          <SelectItem value="other">Other</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="investigationDelay">Investigation Delay (seconds)</Label>
+                      <Input
+                        id="investigationDelay"
+                        type="number"
+                        min="0"
+                        placeholder="0"
+                        value={formData.investigationDelay || ''}
+                        onChange={(e) => onUpdate('investigationDelay', e.target.value === '' ? 0 : parseInt(e.target.value) || 0)}
+                        className="h-11 text-base touch-manipulation border-white/30 focus:border-elec-yellow focus:ring-elec-yellow"
+                      />
+                    </div>
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="falseAlarmNotes">Notes</Label>
+                    <Textarea
+                      id="falseAlarmNotes"
+                      placeholder="Additional false alarm management notes..."
+                      value={formData.falseAlarmNotes || ''}
+                      onChange={(e) => onUpdate('falseAlarmNotes', e.target.value)}
+                      className="text-base touch-manipulation min-h-[80px] border-white/30 focus:border-elec-yellow focus:ring-elec-yellow"
+                    />
+                  </div>
                 </>
               )}
             </div>

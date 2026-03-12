@@ -29,6 +29,9 @@ import {
   Clock,
   X,
   History,
+  BookOpen,
+  UserCheck,
+  ClipboardList,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useIsMobile } from '@/hooks/use-mobile';
@@ -36,6 +39,7 @@ import SignatureInput from '@/components/signature/SignatureInput';
 import { useInspectorProfiles } from '@/hooks/useInspectorProfiles';
 import { useToast } from '@/hooks/use-toast';
 import { useFireAlarmSmartForm } from '@/hooks/inspection/useFireAlarmSmartForm';
+import { supabase } from '@/integrations/supabase/client';
 
 interface FireAlarmDeclarationsProps {
   formData: any;
@@ -51,6 +55,10 @@ const FireAlarmDeclarations: React.FC<FireAlarmDeclarationsProps> = ({ formData,
     defects: true,
     declarations: true,
     certification: true,
+    responsiblePerson: false,
+    extentLimitations: false,
+    previousCertDetails: false,
+    relatedStandards: false,
   });
 
   const { getDefaultProfile } = useInspectorProfiles();
@@ -176,6 +184,68 @@ const FireAlarmDeclarations: React.FC<FireAlarmDeclarationsProps> = ({ formData,
     }
   }, [formData.commissioningDate]);
 
+  // C3: Auto-query previous certificate for periodic inspections
+  const [prevCertQueried, setPrevCertQueried] = useState(false);
+  useEffect(() => {
+    if (
+      formData.certificateType !== 'periodic' ||
+      !formData.premisesAddress ||
+      formData.previousCertificateDate ||
+      prevCertQueried
+    ) {
+      return;
+    }
+
+    let cancelled = false;
+    (async () => {
+      try {
+        const { data: { session } } = await supabase.auth.getSession();
+        if (!session?.user?.id || cancelled) return;
+
+        const { data } = await supabase
+          .from('reports')
+          .select('data, report_id, updated_at')
+          .eq('user_id', session.user.id)
+          .eq('report_type', 'fire-alarm')
+          .is('deleted_at', null)
+          .order('updated_at', { ascending: false })
+          .limit(5);
+
+        if (cancelled || !data || data.length === 0) return;
+
+        // Find most recent cert at same premises (fuzzy match on first line)
+        const premisesFirst = formData.premisesAddress.split(',')[0].trim().toLowerCase();
+        const match = data.find((r: any) => {
+          const addr = r.data?.premisesAddress || '';
+          return addr.toLowerCase().includes(premisesFirst);
+        });
+
+        if (match && !cancelled) {
+          const prev = match.data as any;
+          if (prev.commissioningDate || prev.inspectionDate) {
+            onUpdate('previousCertificateDate', prev.commissioningDate || prev.inspectionDate || '');
+          }
+          if (prev.installerName) {
+            onUpdate('previousInspector', prev.installerName);
+          }
+          if (prev.installerCompany) {
+            onUpdate('previousInspectorCompany', prev.installerCompany);
+          }
+          toast({
+            title: 'Previous Certificate Found',
+            description: `Reference: ${match.report_id || 'N/A'}`,
+          });
+        }
+      } catch {
+        // Silent - auto-query is optional
+      } finally {
+        if (!cancelled) setPrevCertQueried(true);
+      }
+    })();
+
+    return () => { cancelled = true; };
+  }, [formData.certificateType, formData.premisesAddress, formData.previousCertificateDate, prevCertQueried]);
+
   // Load profile to section
   const loadProfileToSection = (section: 'designer' | 'installer' | 'commissioner') => {
     const profile = getDefaultProfile();
@@ -192,6 +262,12 @@ const FireAlarmDeclarations: React.FC<FireAlarmDeclarationsProps> = ({ formData,
     onUpdate(`${section}Date`, today);
     if (profile.signatureData) {
       onUpdate(`${section}Signature`, profile.signatureData);
+    }
+    if (profile.companyAddress) {
+      onUpdate(`${section}CompanyAddress`, profile.companyAddress);
+    }
+    if (profile.companyPhone) {
+      onUpdate(`${section}CompanyPhone`, profile.companyPhone);
     }
 
     toast({
@@ -233,11 +309,11 @@ const FireAlarmDeclarations: React.FC<FireAlarmDeclarationsProps> = ({ formData,
                 </div>
                 <div className="flex-1 text-left min-w-0">
                   <h3 className="font-semibold text-foreground">Commissioning Details</h3>
-                  <span className="text-xs text-muted-foreground">Dates & handover</span>
+                  <span className="text-xs text-white">Dates & handover</span>
                 </div>
                 <ChevronDown
                   className={cn(
-                    'h-5 w-5 text-muted-foreground transition-transform shrink-0',
+                    'h-5 w-5 text-white transition-transform shrink-0',
                     openSections.commissioning && 'rotate-180'
                   )}
                 />
@@ -293,7 +369,7 @@ const FireAlarmDeclarations: React.FC<FireAlarmDeclarationsProps> = ({ formData,
                       <Sparkles className="h-3.5 w-3.5 text-elec-yellow" />
                       Auto-calculated Service Dates
                     </p>
-                    <div className="mt-1 text-muted-foreground">
+                    <div className="mt-1 text-white">
                       <p>
                         Next service:{' '}
                         <span className="text-green-400 font-medium">
@@ -328,11 +404,11 @@ const FireAlarmDeclarations: React.FC<FireAlarmDeclarationsProps> = ({ formData,
                 </div>
                 <div className="flex-1 text-left min-w-0">
                   <h3 className="font-semibold text-foreground">Handover Documentation</h3>
-                  <span className="text-xs text-muted-foreground">Checklist items</span>
+                  <span className="text-xs text-white">Checklist items</span>
                 </div>
                 <ChevronDown
                   className={cn(
-                    'h-5 w-5 text-muted-foreground transition-transform shrink-0',
+                    'h-5 w-5 text-white transition-transform shrink-0',
                     openSections.handover && 'rotate-180'
                   )}
                 />
@@ -364,33 +440,49 @@ const FireAlarmDeclarations: React.FC<FireAlarmDeclarationsProps> = ({ formData,
                   { id: 'zoneChart', label: 'Zone chart/plan' },
                   { id: 'causeEffectMatrix', label: 'Cause & effect matrix' },
                   { id: 'trainingProvided', label: 'User training' },
+                  { id: 'handoverAsBuiltDrawings', label: 'As-fitted drawings provided', isTopLevel: true },
+                  { id: 'handoverOperatingInstructions', label: 'Operating & maintenance instructions', isTopLevel: true },
+                  { id: 'handoverLogBook', label: 'Log book provided', isTopLevel: true },
+                  { id: 'handoverSpares', label: 'Spare devices noted/provided', isTopLevel: true },
                 ].map((item) => (
                   <div
                     key={item.id}
                     className={cn(
                       'flex items-center gap-3 h-12 px-4 rounded-lg cursor-pointer transition-colors',
-                      handover[item.id]
+                      ((item as any).isTopLevel ? formData[item.id] : handover[item.id])
                         ? 'bg-green-500/10 border border-green-500/30'
                         : 'bg-black/30 border border-white/10 hover:border-white/20'
                     )}
-                    onClick={() => updateHandover(item.id, !handover[item.id])}
+                    onClick={() => {
+                      if ((item as any).isTopLevel) {
+                        onUpdate(item.id, !formData[item.id]);
+                      } else {
+                        updateHandover(item.id, !handover[item.id]);
+                      }
+                    }}
                   >
                     <Checkbox
                       id={item.id}
-                      checked={handover[item.id] || false}
-                      onCheckedChange={(checked) => updateHandover(item.id, checked as boolean)}
+                      checked={((item as any).isTopLevel ? formData[item.id] : handover[item.id]) || false}
+                      onCheckedChange={(checked) => {
+                        if ((item as any).isTopLevel) {
+                          onUpdate(item.id, checked as boolean);
+                        } else {
+                          updateHandover(item.id, checked as boolean);
+                        }
+                      }}
                       className="border-white/40 data-[state=checked]:bg-green-500 data-[state=checked]:border-green-500 data-[state=checked]:text-white h-5 w-5 shrink-0"
                     />
                     <Label
                       htmlFor={item.id}
                       className={cn(
                         'cursor-pointer text-sm font-medium',
-                        handover[item.id] ? 'text-green-300' : 'text-foreground'
+                        ((item as any).isTopLevel ? formData[item.id] : handover[item.id]) ? 'text-green-300' : 'text-foreground'
                       )}
                     >
                       {item.label}
                     </Label>
-                    {handover[item.id] && (
+                    {((item as any).isTopLevel ? formData[item.id] : handover[item.id]) && (
                       <CheckCircle2 className="h-4 w-4 text-green-400 ml-auto shrink-0" />
                     )}
                   </div>
@@ -416,13 +508,13 @@ const FireAlarmDeclarations: React.FC<FireAlarmDeclarationsProps> = ({ formData,
                   </div>
                   <div className="flex-1 text-left min-w-0">
                     <h3 className="font-semibold text-foreground">Previous Defects</h3>
-                    <span className="text-xs text-muted-foreground">
+                    <span className="text-xs text-white">
                       {(formData.previousDefects || []).length} from previous cert
                     </span>
                   </div>
                   <ChevronDown
                     className={cn(
-                      'h-5 w-5 text-muted-foreground transition-transform shrink-0',
+                      'h-5 w-5 text-white transition-transform shrink-0',
                       openSections.previousDefects && 'rotate-180'
                     )}
                   />
@@ -446,7 +538,7 @@ const FireAlarmDeclarations: React.FC<FireAlarmDeclarationsProps> = ({ formData,
             </CollapsibleTrigger>
             <CollapsibleContent>
               <div className={cn('space-y-4', isMobile ? 'px-4 py-4' : 'px-4 pb-4')}>
-                <p className="text-xs text-muted-foreground">
+                <p className="text-xs text-white">
                   Record the status of defects identified in the previous certificate.
                 </p>
 
@@ -474,7 +566,7 @@ const FireAlarmDeclarations: React.FC<FireAlarmDeclarationsProps> = ({ formData,
                             defect.status === 'outstanding' && 'bg-red-500/20 text-red-400',
                             defect.status === 'rectified' && 'bg-green-500/20 text-green-400',
                             defect.status === 'no-longer-applicable' &&
-                              'bg-gray-500/20 text-gray-400'
+                              'bg-gray-500/20 text-white'
                           )}
                         >
                           {index + 1}
@@ -497,7 +589,7 @@ const FireAlarmDeclarations: React.FC<FireAlarmDeclarationsProps> = ({ formData,
                     {/* Body */}
                     <div className="p-4 space-y-4">
                       <div className="space-y-2">
-                        <Label className="text-sm text-muted-foreground">
+                        <Label className="text-sm text-white">
                           Original Defect Description
                         </Label>
                         <Textarea
@@ -512,7 +604,7 @@ const FireAlarmDeclarations: React.FC<FireAlarmDeclarationsProps> = ({ formData,
 
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                         <div className="space-y-2">
-                          <Label className="text-sm text-muted-foreground">Original Date</Label>
+                          <Label className="text-sm text-white">Original Date</Label>
                           <Input
                             type="date"
                             value={defect.originalDate || ''}
@@ -523,7 +615,7 @@ const FireAlarmDeclarations: React.FC<FireAlarmDeclarationsProps> = ({ formData,
                           />
                         </div>
                         <div className="space-y-2">
-                          <Label className="text-sm text-muted-foreground">Current Status</Label>
+                          <Label className="text-sm text-white">Current Status</Label>
                           <Select
                             value={defect.status || 'outstanding'}
                             onValueChange={(v) => updatePreviousDefect(defect.id, 'status', v)}
@@ -549,7 +641,7 @@ const FireAlarmDeclarations: React.FC<FireAlarmDeclarationsProps> = ({ formData,
                                 <span className="text-green-400 font-medium">Rectified</span>
                               </SelectItem>
                               <SelectItem value="no-longer-applicable">
-                                <span className="text-gray-400 font-medium">
+                                <span className="text-white font-medium">
                                   No Longer Applicable
                                 </span>
                               </SelectItem>
@@ -559,7 +651,7 @@ const FireAlarmDeclarations: React.FC<FireAlarmDeclarationsProps> = ({ formData,
                       </div>
 
                       <div className="space-y-2">
-                        <Label className="text-sm text-muted-foreground">Notes</Label>
+                        <Label className="text-sm text-white">Notes</Label>
                         <Textarea
                           placeholder="Any notes about rectification or current status..."
                           value={defect.notes || ''}
@@ -596,13 +688,13 @@ const FireAlarmDeclarations: React.FC<FireAlarmDeclarationsProps> = ({ formData,
                 </div>
                 <div className="flex-1 text-left min-w-0">
                   <h3 className="font-semibold text-foreground">Defects & Observations</h3>
-                  <span className="text-xs text-muted-foreground">
+                  <span className="text-xs text-white">
                     {(formData.defectsFound || []).length} recorded
                   </span>
                 </div>
                 <ChevronDown
                   className={cn(
-                    'h-5 w-5 text-muted-foreground transition-transform shrink-0',
+                    'h-5 w-5 text-white transition-transform shrink-0',
                     openSections.defects && 'rotate-180'
                   )}
                 />
@@ -684,7 +776,7 @@ const FireAlarmDeclarations: React.FC<FireAlarmDeclarationsProps> = ({ formData,
                   <div className="p-4 space-y-4">
                     {/* Description */}
                     <div className="space-y-2">
-                      <Label className="text-sm text-muted-foreground">Description</Label>
+                      <Label className="text-sm text-white">Description</Label>
                       <Textarea
                         placeholder="Describe the defect or observation..."
                         value={defect.description || ''}
@@ -692,7 +784,7 @@ const FireAlarmDeclarations: React.FC<FireAlarmDeclarationsProps> = ({ formData,
                         className="text-base touch-manipulation min-h-[80px] border-white/30 focus:border-elec-yellow focus:ring-elec-yellow"
                       />
                       {defect.description && defect.description.length > 10 && (
-                        <p className="text-[10px] text-muted-foreground flex items-center gap-1">
+                        <p className="text-[10px] text-white flex items-center gap-1">
                           <Lightbulb className="h-3 w-3 text-elec-yellow" />
                           Severity auto-suggested based on description
                         </p>
@@ -702,7 +794,7 @@ const FireAlarmDeclarations: React.FC<FireAlarmDeclarationsProps> = ({ formData,
                     {/* Severity & Rectified Row */}
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                       <div className="space-y-2">
-                        <Label className="text-sm text-muted-foreground">Severity</Label>
+                        <Label className="text-sm text-white">Severity</Label>
                         <Select
                           value={defect.severity || 'non-critical'}
                           onValueChange={(v) => updateDefect(defect.id, 'severity', v)}
@@ -725,7 +817,7 @@ const FireAlarmDeclarations: React.FC<FireAlarmDeclarationsProps> = ({ formData,
                       </div>
 
                       <div className="space-y-2">
-                        <Label className="text-sm text-muted-foreground">Status</Label>
+                        <Label className="text-sm text-white">Status</Label>
                         <Select
                           value={defect.rectified ? 'rectified' : 'outstanding'}
                           onValueChange={(v) => {
@@ -763,7 +855,7 @@ const FireAlarmDeclarations: React.FC<FireAlarmDeclarationsProps> = ({ formData,
 
                     {defect.rectified && (
                       <div className="space-y-2">
-                        <Label className="text-sm text-muted-foreground">Rectification Date</Label>
+                        <Label className="text-sm text-white">Rectification Date</Label>
                         <Input
                           type="date"
                           value={defect.rectificationDate || ''}
@@ -848,11 +940,11 @@ const FireAlarmDeclarations: React.FC<FireAlarmDeclarationsProps> = ({ formData,
                 </div>
                 <div className="flex-1 text-left min-w-0">
                   <h3 className="font-semibold text-foreground">Declarations & Signatures</h3>
-                  <span className="text-xs text-muted-foreground">Installer & Commissioner</span>
+                  <span className="text-xs text-white">Installer & Commissioner</span>
                 </div>
                 <ChevronDown
                   className={cn(
-                    'h-5 w-5 text-muted-foreground transition-transform shrink-0',
+                    'h-5 w-5 text-white transition-transform shrink-0',
                     openSections.declarations && 'rotate-180'
                   )}
                 />
@@ -882,7 +974,7 @@ const FireAlarmDeclarations: React.FC<FireAlarmDeclarationsProps> = ({ formData,
                   <Button
                     variant="outline"
                     onClick={() => loadProfileToSection('installer')}
-                    className="h-10 touch-manipulation border-white/20 hover:border-elec-yellow hover:bg-elec-yellow/10"
+                    className="h-11 touch-manipulation border-white/20 hover:border-elec-yellow hover:bg-elec-yellow/10"
                   >
                     <User className="h-4 w-4 mr-2" />
                     Apply Profile to Installer
@@ -890,7 +982,7 @@ const FireAlarmDeclarations: React.FC<FireAlarmDeclarationsProps> = ({ formData,
                   <Button
                     variant="outline"
                     onClick={() => loadProfileToSection('commissioner')}
-                    className="h-10 touch-manipulation border-white/20 hover:border-elec-yellow hover:bg-elec-yellow/10"
+                    className="h-11 touch-manipulation border-white/20 hover:border-elec-yellow hover:bg-elec-yellow/10"
                   >
                     <User className="h-4 w-4 mr-2" />
                     Apply Profile to Commissioner
@@ -1122,6 +1214,456 @@ const FireAlarmDeclarations: React.FC<FireAlarmDeclarationsProps> = ({ formData,
         </Collapsible>
       </div>
 
+      {/* Verifier Declaration - Only for verification certificates */}
+      {formData.certificateType === 'verification' && (
+        <div className={cn(isMobile ? '' : 'eicr-section-card')}>
+          <div className={cn('space-y-4', isMobile ? 'px-4 py-4' : 'p-4')}>
+            <div className="bg-black/40 rounded-xl p-4">
+              <h4 className="text-sm font-semibold mb-4 text-white flex items-center gap-2">
+                Verifier Declaration *
+              </h4>
+              <div className="space-y-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div className="space-y-2">
+                    <Label>Verification Organisation *</Label>
+                    <Input
+                      placeholder="Organisation name"
+                      value={formData.verificationOrganisation || ''}
+                      onChange={(e) => onUpdate('verificationOrganisation', e.target.value)}
+                      className="h-11 text-base touch-manipulation border-white/30 focus:border-elec-yellow focus:ring-elec-yellow"
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Label>Verifier Name *</Label>
+                    <Input
+                      placeholder="Full name"
+                      value={formData.verifierName || ''}
+                      onChange={(e) => onUpdate('verifierName', e.target.value)}
+                      className="h-11 text-base touch-manipulation border-white/30 focus:border-elec-yellow focus:ring-elec-yellow"
+                    />
+                  </div>
+                </div>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div className="space-y-2">
+                    <Label>Company</Label>
+                    <Input
+                      placeholder="Company name"
+                      value={formData.verifierCompany || ''}
+                      onChange={(e) => onUpdate('verifierCompany', e.target.value)}
+                      className="h-11 text-base touch-manipulation border-white/30 focus:border-elec-yellow focus:ring-elec-yellow"
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Label>Qualifications</Label>
+                    <Input
+                      placeholder="e.g., FIA, BAFE"
+                      value={formData.verifierQualifications || ''}
+                      onChange={(e) => onUpdate('verifierQualifications', e.target.value)}
+                      className="h-11 text-base touch-manipulation border-white/30 focus:border-elec-yellow focus:ring-elec-yellow"
+                    />
+                  </div>
+                </div>
+                <div className="space-y-2">
+                  <Label>Date</Label>
+                  <Input
+                    type="date"
+                    value={formData.verifierDate || ''}
+                    onChange={(e) => onUpdate('verifierDate', e.target.value)}
+                    className="h-11 text-base touch-manipulation border-white/30 focus:border-elec-yellow focus:ring-elec-yellow"
+                  />
+                </div>
+                <SignatureInput
+                  label="Verifier Signature *"
+                  value={formData.verifierSignature}
+                  onChange={(sig) => onUpdate('verifierSignature', sig)}
+                  placeholder="Draw or type signature"
+                  required
+                />
+                <div className="space-y-2">
+                  <Label>Verification Scope</Label>
+                  <Textarea
+                    placeholder="Scope of the verification..."
+                    value={formData.verificationScope || ''}
+                    onChange={(e) => onUpdate('verificationScope', e.target.value)}
+                    className="text-base touch-manipulation min-h-[80px] border-white/30 focus:border-elec-yellow focus:ring-elec-yellow"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label>Verification Findings</Label>
+                  <Textarea
+                    placeholder="Summary of findings..."
+                    value={formData.verificationFindings || ''}
+                    onChange={(e) => onUpdate('verificationFindings', e.target.value)}
+                    className="text-base touch-manipulation min-h-[80px] border-white/30 focus:border-elec-yellow focus:ring-elec-yellow"
+                  />
+                </div>
+                <div
+                  className={cn(
+                    'flex items-center gap-3 h-12 px-4 rounded-lg cursor-pointer transition-colors',
+                    formData.verificationCompliant
+                      ? 'bg-green-500/10 border border-green-500/30'
+                      : 'bg-black/30 border border-white/10 hover:border-white/20'
+                  )}
+                  onClick={() => onUpdate('verificationCompliant', !formData.verificationCompliant)}
+                >
+                  <Checkbox
+                    checked={formData.verificationCompliant || false}
+                    onCheckedChange={(checked) => onUpdate('verificationCompliant', checked as boolean)}
+                    className="border-white/40 data-[state=checked]:bg-green-500 data-[state=checked]:border-green-500 data-[state=checked]:text-white h-5 w-5 shrink-0"
+                  />
+                  <Label className="cursor-pointer text-sm font-medium text-foreground">
+                    System compliant with BS 5839-1
+                  </Label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Responsible Person Acknowledgement - All types except design */}
+      {formData.certificateType !== 'design' && (
+        <div className={cn(isMobile ? '' : 'eicr-section-card')}>
+          <Collapsible open={openSections.responsiblePerson} onOpenChange={() => toggleSection('responsiblePerson')}>
+            <CollapsibleTrigger className="w-full">
+              {isMobile ? (
+                <div className="flex items-center gap-3 py-4 px-4 bg-card/30 border-b border-border/20">
+                  <div className="h-10 w-10 rounded-xl bg-emerald-500/20 flex items-center justify-center shrink-0">
+                    <UserCheck className="h-5 w-5 text-emerald-400" />
+                  </div>
+                  <div className="flex-1 text-left min-w-0">
+                    <h3 className="font-semibold text-foreground">Responsible Person</h3>
+                    <span className="text-xs text-white">Fire Safety Order 2005</span>
+                  </div>
+                  <ChevronDown className={cn('h-5 w-5 text-white transition-transform shrink-0', openSections.responsiblePerson && 'rotate-180')} />
+                </div>
+              ) : (
+                <div className="flex items-center justify-between py-4 px-4 cursor-pointer hover:bg-white/5 transition-colors">
+                  <div className="flex items-center gap-3">
+                    <div className="w-9 h-9 rounded-xl bg-emerald-500/15 flex items-center justify-center">
+                      <UserCheck className="h-4 w-4 text-emerald-400" />
+                    </div>
+                    <span className="text-white font-semibold">Responsible Person Acknowledgement</span>
+                  </div>
+                  <ChevronDown className={cn('h-5 w-5 text-white transition-transform', openSections.responsiblePerson && 'rotate-180')} />
+                </div>
+              )}
+            </CollapsibleTrigger>
+            <CollapsibleContent>
+              <div className={cn('space-y-4', isMobile ? 'px-4 py-4' : 'px-4 pb-4')}>
+                <p className="text-xs text-white">
+                  The responsible person under the Regulatory Reform (Fire Safety) Order 2005 acknowledges receipt of this certificate.
+                </p>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div className="space-y-2">
+                    <Label>Name</Label>
+                    <Input
+                      placeholder="Responsible person name"
+                      value={formData.responsiblePersonName || ''}
+                      onChange={(e) => onUpdate('responsiblePersonName', e.target.value)}
+                      className="h-11 text-base touch-manipulation border-white/30 focus:border-elec-yellow focus:ring-elec-yellow"
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Label>Position</Label>
+                    <Input
+                      placeholder="e.g., Building Manager"
+                      value={formData.responsiblePersonPosition || ''}
+                      onChange={(e) => onUpdate('responsiblePersonPosition', e.target.value)}
+                      className="h-11 text-base touch-manipulation border-white/30 focus:border-elec-yellow focus:ring-elec-yellow"
+                    />
+                  </div>
+                </div>
+                <div className="space-y-2">
+                  <Label>Date</Label>
+                  <Input
+                    type="date"
+                    value={formData.responsiblePersonDate || ''}
+                    onChange={(e) => onUpdate('responsiblePersonDate', e.target.value)}
+                    className="h-11 text-base touch-manipulation border-white/30 focus:border-elec-yellow focus:ring-elec-yellow"
+                  />
+                </div>
+                <div
+                  className={cn(
+                    'flex items-center gap-3 h-12 px-4 rounded-lg cursor-pointer transition-colors',
+                    formData.responsiblePersonAcknowledgement
+                      ? 'bg-green-500/10 border border-green-500/30'
+                      : 'bg-black/30 border border-white/10 hover:border-white/20'
+                  )}
+                  onClick={() => onUpdate('responsiblePersonAcknowledgement', !formData.responsiblePersonAcknowledgement)}
+                >
+                  <Checkbox
+                    checked={formData.responsiblePersonAcknowledgement || false}
+                    onCheckedChange={(checked) => onUpdate('responsiblePersonAcknowledgement', checked as boolean)}
+                    className="border-white/40 data-[state=checked]:bg-green-500 data-[state=checked]:border-green-500 data-[state=checked]:text-white h-5 w-5 shrink-0"
+                  />
+                  <Label className="cursor-pointer text-sm font-medium text-foreground">
+                    I acknowledge receipt of this certificate
+                  </Label>
+                </div>
+                <SignatureInput
+                  label="Responsible Person Signature"
+                  value={formData.responsiblePersonSignature}
+                  onChange={(sig) => onUpdate('responsiblePersonSignature', sig)}
+                  placeholder="Draw or type signature"
+                />
+              </div>
+            </CollapsibleContent>
+          </Collapsible>
+        </div>
+      )}
+
+      {/* Extent of Inspection / Limitations - Periodic & Verification only */}
+      {['periodic', 'verification'].includes(formData.certificateType) && (
+        <div className={cn(isMobile ? '' : 'eicr-section-card')}>
+          <Collapsible open={openSections.extentLimitations} onOpenChange={() => toggleSection('extentLimitations')}>
+            <CollapsibleTrigger className="w-full">
+              {isMobile ? (
+                <div className="flex items-center gap-3 py-4 px-4 bg-card/30 border-b border-border/20">
+                  <div className="h-10 w-10 rounded-xl bg-orange-500/20 flex items-center justify-center shrink-0">
+                    <ClipboardList className="h-5 w-5 text-orange-400" />
+                  </div>
+                  <div className="flex-1 text-left min-w-0">
+                    <h3 className="font-semibold text-foreground">Extent & Limitations</h3>
+                    <span className="text-xs text-white">BS 5839-1 Cl.45.2</span>
+                  </div>
+                  <ChevronDown className={cn('h-5 w-5 text-white transition-transform shrink-0', openSections.extentLimitations && 'rotate-180')} />
+                </div>
+              ) : (
+                <div className="flex items-center justify-between py-4 px-4 cursor-pointer hover:bg-white/5 transition-colors">
+                  <div className="flex items-center gap-3">
+                    <div className="w-9 h-9 rounded-xl bg-orange-500/15 flex items-center justify-center">
+                      <ClipboardList className="h-4 w-4 text-orange-400" />
+                    </div>
+                    <span className="text-white font-semibold">Extent of Inspection / Limitations</span>
+                  </div>
+                  <ChevronDown className={cn('h-5 w-5 text-white transition-transform', openSections.extentLimitations && 'rotate-180')} />
+                </div>
+              )}
+            </CollapsibleTrigger>
+            <CollapsibleContent>
+              <div className={cn('space-y-4', isMobile ? 'px-4 py-4' : 'px-4 pb-4')}>
+                <div className="space-y-2">
+                  <Label>Extent of Inspection</Label>
+                  <Select
+                    value={formData.extentOfInspection || ''}
+                    onValueChange={(value) => onUpdate('extentOfInspection', value)}
+                  >
+                    <SelectTrigger className="h-11 touch-manipulation bg-elec-gray border-white/30 focus:border-elec-yellow focus:ring-elec-yellow">
+                      <SelectValue placeholder="Select extent" />
+                    </SelectTrigger>
+                    <SelectContent className="z-[100] bg-background border-border text-foreground">
+                      <SelectItem value="full-system">Full System</SelectItem>
+                      <SelectItem value="partial">Partial</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+                <div className="space-y-2">
+                  <Label>Agreed Scope Reference</Label>
+                  <Input
+                    placeholder="Reference to scope document"
+                    value={formData.agreedScope || ''}
+                    onChange={(e) => onUpdate('agreedScope', e.target.value)}
+                    className="h-11 text-base touch-manipulation border-white/30 focus:border-elec-yellow focus:ring-elec-yellow"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label>Limitations</Label>
+                  <Textarea
+                    placeholder="Any limitations on the inspection..."
+                    value={formData.inspectionLimitations || ''}
+                    onChange={(e) => onUpdate('inspectionLimitations', e.target.value)}
+                    className="text-base touch-manipulation min-h-[80px] border-white/30 focus:border-elec-yellow focus:ring-elec-yellow"
+                  />
+                </div>
+              </div>
+            </CollapsibleContent>
+          </Collapsible>
+        </div>
+      )}
+
+      {/* Previous Certificate Details - Periodic only */}
+      {formData.certificateType === 'periodic' && (
+        <div className={cn(isMobile ? '' : 'eicr-section-card')}>
+          <Collapsible open={openSections.previousCertDetails} onOpenChange={() => toggleSection('previousCertDetails')}>
+            <CollapsibleTrigger className="w-full">
+              {isMobile ? (
+                <div className="flex items-center gap-3 py-4 px-4 bg-card/30 border-b border-border/20">
+                  <div className="h-10 w-10 rounded-xl bg-blue-500/20 flex items-center justify-center shrink-0">
+                    <History className="h-5 w-5 text-blue-400" />
+                  </div>
+                  <div className="flex-1 text-left min-w-0">
+                    <h3 className="font-semibold text-foreground">Previous Certificate</h3>
+                    <span className="text-xs text-white">Prior inspection details</span>
+                  </div>
+                  <ChevronDown className={cn('h-5 w-5 text-white transition-transform shrink-0', openSections.previousCertDetails && 'rotate-180')} />
+                </div>
+              ) : (
+                <div className="flex items-center justify-between py-4 px-4 cursor-pointer hover:bg-white/5 transition-colors">
+                  <div className="flex items-center gap-3">
+                    <div className="w-9 h-9 rounded-xl bg-blue-500/15 flex items-center justify-center">
+                      <History className="h-4 w-4 text-blue-400" />
+                    </div>
+                    <span className="text-white font-semibold">Previous Certificate Details</span>
+                  </div>
+                  <ChevronDown className={cn('h-5 w-5 text-white transition-transform', openSections.previousCertDetails && 'rotate-180')} />
+                </div>
+              )}
+            </CollapsibleTrigger>
+            <CollapsibleContent>
+              <div className={cn('space-y-4', isMobile ? 'px-4 py-4' : 'px-4 pb-4')}>
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                  <div className="space-y-2">
+                    <Label>Previous Certificate Date</Label>
+                    <Input
+                      type="date"
+                      value={formData.previousCertificateDate || ''}
+                      onChange={(e) => onUpdate('previousCertificateDate', e.target.value)}
+                      className="h-11 text-base touch-manipulation border-white/30 focus:border-elec-yellow focus:ring-elec-yellow"
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Label>Previous Inspector</Label>
+                    <Input
+                      placeholder="Inspector name"
+                      value={formData.previousInspector || ''}
+                      onChange={(e) => onUpdate('previousInspector', e.target.value)}
+                      className="h-11 text-base touch-manipulation border-white/30 focus:border-elec-yellow focus:ring-elec-yellow"
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Label>Previous Inspector Company</Label>
+                    <Input
+                      placeholder="Company name"
+                      value={formData.previousInspectorCompany || ''}
+                      onChange={(e) => onUpdate('previousInspectorCompany', e.target.value)}
+                      className="h-11 text-base touch-manipulation border-white/30 focus:border-elec-yellow focus:ring-elec-yellow"
+                    />
+                  </div>
+                </div>
+              </div>
+            </CollapsibleContent>
+          </Collapsible>
+        </div>
+      )}
+
+      {/* Installer/Commissioner Contact Details */}
+      <div className={cn(isMobile ? 'px-4 py-3' : '')}>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div className="space-y-2">
+            <Label className="text-sm text-white">Installer Company Address</Label>
+            <Input
+              placeholder="Address"
+              value={formData.installerCompanyAddress || ''}
+              onChange={(e) => onUpdate('installerCompanyAddress', e.target.value)}
+              className="h-11 text-base touch-manipulation border-white/30 focus:border-elec-yellow focus:ring-elec-yellow"
+            />
+          </div>
+          <div className="space-y-2">
+            <Label className="text-sm text-white">Installer Company Phone</Label>
+            <Input
+              placeholder="Phone number"
+              value={formData.installerCompanyPhone || ''}
+              onChange={(e) => onUpdate('installerCompanyPhone', e.target.value)}
+              className="h-11 text-base touch-manipulation border-white/30 focus:border-elec-yellow focus:ring-elec-yellow"
+            />
+          </div>
+          <div className="space-y-2">
+            <Label className="text-sm text-white">Commissioner Company Address</Label>
+            <Input
+              placeholder="Address"
+              value={formData.commissionerCompanyAddress || ''}
+              onChange={(e) => onUpdate('commissionerCompanyAddress', e.target.value)}
+              className="h-11 text-base touch-manipulation border-white/30 focus:border-elec-yellow focus:ring-elec-yellow"
+            />
+          </div>
+          <div className="space-y-2">
+            <Label className="text-sm text-white">Commissioner Company Phone</Label>
+            <Input
+              placeholder="Phone number"
+              value={formData.commissionerCompanyPhone || ''}
+              onChange={(e) => onUpdate('commissionerCompanyPhone', e.target.value)}
+              className="h-11 text-base touch-manipulation border-white/30 focus:border-elec-yellow focus:ring-elec-yellow"
+            />
+          </div>
+        </div>
+      </div>
+
+      {/* Related Standards References */}
+      <div className={cn(isMobile ? '' : 'eicr-section-card')}>
+        <Collapsible open={openSections.relatedStandards} onOpenChange={() => toggleSection('relatedStandards')}>
+          <CollapsibleTrigger className="w-full">
+            {isMobile ? (
+              <div className="flex items-center gap-3 py-4 px-4 bg-card/30 border-b border-border/20">
+                <div className="h-10 w-10 rounded-xl bg-indigo-500/20 flex items-center justify-center shrink-0">
+                  <BookOpen className="h-5 w-5 text-indigo-400" />
+                </div>
+                <div className="flex-1 text-left min-w-0">
+                  <h3 className="font-semibold text-foreground">Related Standards</h3>
+                  <span className="text-xs text-white">
+                    {(formData.relatedStandards || []).length} selected
+                  </span>
+                </div>
+                <ChevronDown className={cn('h-5 w-5 text-white transition-transform shrink-0', openSections.relatedStandards && 'rotate-180')} />
+              </div>
+            ) : (
+              <div className="flex items-center justify-between py-4 px-4 cursor-pointer hover:bg-white/5 transition-colors">
+                <div className="flex items-center gap-3">
+                  <div className="w-9 h-9 rounded-xl bg-indigo-500/15 flex items-center justify-center">
+                    <BookOpen className="h-4 w-4 text-indigo-400" />
+                  </div>
+                  <span className="text-white font-semibold">Related Standards</span>
+                </div>
+                <ChevronDown className={cn('h-5 w-5 text-white transition-transform', openSections.relatedStandards && 'rotate-180')} />
+              </div>
+            )}
+          </CollapsibleTrigger>
+          <CollapsibleContent>
+            <div className={cn(isMobile ? 'px-4 py-4' : 'px-4 pb-4')}>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                {[
+                  { id: 'bs-en-54', label: 'BS EN 54 series' },
+                  { id: 'bs-5839-6', label: 'BS 5839-6 (Domestic)' },
+                  { id: 'bs-8629', label: 'BS 8629 (Evacuation Alert)' },
+                  { id: 'bs-7273', label: 'BS 7273 (Actuation)' },
+                  { id: 'bs-5266', label: 'BS 5266 (Emergency Lighting)' },
+                  { id: 'bs-7671', label: 'BS 7671 (Wiring Regulations)' },
+                ].map((standard) => {
+                  const selected = (formData.relatedStandards || []).includes(standard.id);
+                  return (
+                    <div
+                      key={standard.id}
+                      className={cn(
+                        'flex items-center gap-3 h-12 px-4 rounded-lg cursor-pointer transition-colors',
+                        selected
+                          ? 'bg-indigo-500/10 border border-indigo-500/30'
+                          : 'bg-black/30 border border-white/10 hover:border-white/20'
+                      )}
+                      onClick={() => {
+                        const current = formData.relatedStandards || [];
+                        if (selected) {
+                          onUpdate('relatedStandards', current.filter((s: string) => s !== standard.id));
+                        } else {
+                          onUpdate('relatedStandards', [...current, standard.id]);
+                        }
+                      }}
+                    >
+                      <Checkbox
+                        checked={selected}
+                        className="border-white/40 data-[state=checked]:bg-indigo-500 data-[state=checked]:border-indigo-500 data-[state=checked]:text-white h-5 w-5 shrink-0"
+                      />
+                      <Label className={cn('cursor-pointer text-sm font-medium', selected ? 'text-indigo-300' : 'text-foreground')}>
+                        {standard.label}
+                      </Label>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          </CollapsibleContent>
+        </Collapsible>
+      </div>
+
       {/* Certification & Next Service */}
       <div className={cn(isMobile ? '' : 'eicr-section-card')}>
         <Collapsible
@@ -1136,11 +1678,11 @@ const FireAlarmDeclarations: React.FC<FireAlarmDeclarationsProps> = ({ formData,
                 </div>
                 <div className="flex-1 text-left min-w-0">
                   <h3 className="font-semibold text-foreground">Certification & Service</h3>
-                  <span className="text-xs text-muted-foreground">Result & next due dates</span>
+                  <span className="text-xs text-white">Result & next due dates</span>
                 </div>
                 <ChevronDown
                   className={cn(
-                    'h-5 w-5 text-muted-foreground transition-transform shrink-0',
+                    'h-5 w-5 text-white transition-transform shrink-0',
                     openSections.certification && 'rotate-180'
                   )}
                 />
@@ -1197,7 +1739,7 @@ const FireAlarmDeclarations: React.FC<FireAlarmDeclarationsProps> = ({ formData,
                     onChange={(e) => onUpdate('nextServiceDue', e.target.value)}
                     className="h-11 text-base touch-manipulation border-white/30 focus:border-elec-yellow focus:ring-elec-yellow"
                   />
-                  <p className="text-xs text-muted-foreground">
+                  <p className="text-xs text-white">
                     BS 5839 recommends 6-monthly service
                   </p>
                 </div>
@@ -1209,7 +1751,7 @@ const FireAlarmDeclarations: React.FC<FireAlarmDeclarationsProps> = ({ formData,
                     onChange={(e) => onUpdate('nextInspectionDue', e.target.value)}
                     className="h-11 text-base touch-manipulation border-white/30 focus:border-elec-yellow focus:ring-elec-yellow"
                   />
-                  <p className="text-xs text-muted-foreground">Annual inspection recommended</p>
+                  <p className="text-xs text-white">Annual inspection recommended</p>
                 </div>
               </div>
 

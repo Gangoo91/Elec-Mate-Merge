@@ -45,16 +45,29 @@ const MaterialSearch = ({ supplierSlug, onResults }: MaterialSearchProps) => {
 
     setIsLoading(true);
     try {
-      const { data, error } = await supabase.functions.invoke('scrape-supplier-products', {
-        body: { supplierSlug: selectedSupplier, searchTerm: term },
-      });
+      // Search pipeline-populated materials cache
+      const { data: cacheRow, error } = await supabase
+        .from('materials_weekly_cache')
+        .select('products')
+        .order('created_at', { ascending: false })
+        .limit(1)
+        .maybeSingle();
+
       if (error) throw new Error(error.message);
 
-      const items = Array.isArray(data?.products) ? (data.products as MaterialItem[]) : [];
-      onResults?.(items, data?.supplier || supplierName);
-      sessionStorage.setItem(cacheKey, JSON.stringify(data ?? {}));
+      const allProducts = (cacheRow?.products as any[]) || [];
+      const termLower = term.toLowerCase();
+      const filtered = allProducts.filter(
+        (p: any) =>
+          p.name?.toLowerCase().includes(termLower) ||
+          p.category?.toLowerCase().includes(termLower)
+      );
+
+      const items = filtered as MaterialItem[];
+      onResults?.(items, supplierName);
+      sessionStorage.setItem(cacheKey, JSON.stringify({ products: items, supplier: supplierName }));
     } catch (e) {
-      console.error('Live search failed', e);
+      console.error('Material search failed', e);
       toast({
         title: 'Search failed',
         description: 'Please try again in a moment.',

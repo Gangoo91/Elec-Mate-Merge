@@ -129,7 +129,7 @@ export function FireAlarmPanelAutocomplete({
         className
       )}
     >
-      <span className={cn('truncate', !selectedPanel && 'text-muted-foreground')}>
+      <span className={cn('truncate', !selectedPanel && 'text-white')}>
         {displayValue}
       </span>
       <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
@@ -161,7 +161,7 @@ export function FireAlarmPanelAutocomplete({
           <span className={cn('font-medium truncate', forMobile && 'text-base')}>
             {showManufacturer ? `${panel.manufacturer} ${panel.model}` : panel.model}
           </span>
-          <span className={cn('text-gray-400 truncate', forMobile ? 'text-sm' : 'text-xs')}>
+          <span className={cn('text-white truncate', forMobile ? 'text-sm' : 'text-xs')}>
             {panel.type} • {panel.protocol || 'Conventional'}
             {panel.loops && ` • ${panel.loops} loops`}
             {panel.zones && ` • ${panel.zones} zones`}
@@ -196,7 +196,7 @@ export function FireAlarmPanelAutocomplete({
           <div className="flex flex-col max-h-[70vh]">
             {/* Search input */}
             <div className="flex items-center gap-2 px-4 py-3 border-b border-border/50 bg-background sticky top-0">
-              <Search className="h-5 w-5 text-muted-foreground shrink-0" />
+              <Search className="h-5 w-5 text-white shrink-0" />
               <Input
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
@@ -220,7 +220,7 @@ export function FireAlarmPanelAutocomplete({
             <div className="flex-1 overflow-y-auto momentum-scroll-y">
               {filteredPanels && filteredPanels.length > 0 ? (
                 <div className="px-2 py-2">
-                  <p className="px-4 py-2 text-sm text-muted-foreground font-medium">
+                  <p className="px-4 py-2 text-sm text-white font-medium">
                     Search Results
                   </p>
                   <div className="space-y-1">
@@ -228,7 +228,7 @@ export function FireAlarmPanelAutocomplete({
                   </div>
                 </div>
               ) : search.trim() ? (
-                <div className="py-12 text-center text-muted-foreground">
+                <div className="py-12 text-center text-white">
                   <Zap className="h-12 w-12 mx-auto mb-3 opacity-30" />
                   <p className="text-base">No panels found</p>
                   <p className="text-sm mt-1">Try a different search term</p>
@@ -237,7 +237,7 @@ export function FireAlarmPanelAutocomplete({
                 <div className="px-2 py-2">
                   {Object.entries(panelsGrouped).map(([manufacturer, panels]) => (
                     <div key={manufacturer} className="mb-4">
-                      <p className="px-4 py-2 text-sm text-muted-foreground font-medium sticky top-0 bg-background">
+                      <p className="px-4 py-2 text-sm text-white font-medium sticky top-0 bg-background">
                         {manufacturer}
                       </p>
                       <div className="space-y-1">
@@ -251,7 +251,7 @@ export function FireAlarmPanelAutocomplete({
 
             {/* Footer */}
             <div className="border-t border-border/50 px-4 py-3 bg-card/30">
-              <p className="text-xs text-muted-foreground text-center">
+              <p className="text-xs text-white text-center">
                 Select a panel to auto-fill specifications
               </p>
             </div>
@@ -287,7 +287,7 @@ export function FireAlarmPanelAutocomplete({
               className="border-none bg-elec-gray text-foreground placeholder:text-gray-400"
             />
             <CommandList className="bg-elec-gray max-h-[300px]">
-              <CommandEmpty className="p-4 text-sm text-gray-400">No panels found.</CommandEmpty>
+              <CommandEmpty className="p-4 text-sm text-white">No panels found.</CommandEmpty>
 
               {/* Show search results if searching */}
               {filteredPanels && filteredPanels.length > 0 ? (
@@ -309,7 +309,7 @@ export function FireAlarmPanelAutocomplete({
                         <span className="font-medium truncate">
                           {panel.manufacturer} {panel.model}
                         </span>
-                        <span className="text-xs text-gray-400 truncate">
+                        <span className="text-xs text-white truncate">
                           {panel.type} • {panel.protocol || 'Conventional'}
                           {panel.loops && ` • ${panel.loops} loops`}
                         </span>
@@ -341,7 +341,7 @@ export function FireAlarmPanelAutocomplete({
                         />
                         <div className="flex flex-col flex-1 min-w-0">
                           <span className="font-medium truncate">{panel.model}</span>
-                          <span className="text-xs text-gray-400 truncate">
+                          <span className="text-xs text-white truncate">
                             {panel.type}
                             {panel.zones && ` • ${panel.zones} zones`}
                             {panel.loops && ` • ${panel.loops} loops`}
@@ -390,74 +390,27 @@ export function PanelInfoDisplay({ panelId, className }: PanelInfoDisplayProps) 
 
   if (!panel) return null;
 
+  const specs = [
+    panel.type,
+    panel.protocol,
+    panel.zones && `${panel.zones} zones`,
+    panel.loops && `${panel.loops} loops`,
+    panel.devices && `${panel.devices} devices`,
+    panel.networkable && 'Networkable',
+  ].filter(Boolean);
+
   return (
-    <div
-      className={cn(
-        'p-4 bg-gradient-to-br from-red-500/10 to-red-500/5 border border-red-500/20 rounded-xl',
-        className
-      )}
-    >
-      {/* Header with panel name and badge */}
-      <div className="flex items-start justify-between gap-3">
-        <div className="flex-1 min-w-0">
-          <p className="font-semibold text-foreground text-base">
-            {panel.manufacturer} {panel.model}
-          </p>
-          <p className="text-sm text-muted-foreground mt-0.5">{panel.type}</p>
-        </div>
-        {panel.networkable && (
-          <span className="flex items-center gap-1 px-2 py-1 bg-green-500/20 border border-green-500/30 rounded-full text-xs font-medium text-green-400 shrink-0">
-            <Zap className="h-3 w-3" />
-            Networkable
-          </span>
-        )}
-      </div>
-
-      {/* Specs grid */}
-      <div className="mt-3 grid grid-cols-2 gap-3">
-        {panel.zones && (
-          <div className="bg-black/20 rounded-lg px-3 py-2">
-            <span className="text-xs text-muted-foreground block">Zones</span>
-            <span className="text-base font-semibold text-foreground">{panel.zones}</span>
-          </div>
-        )}
-        {panel.loops && (
-          <div className="bg-black/20 rounded-lg px-3 py-2">
-            <span className="text-xs text-muted-foreground block">Loops</span>
-            <span className="text-base font-semibold text-foreground">{panel.loops}</span>
-          </div>
-        )}
-        {panel.devices && (
-          <div className="bg-black/20 rounded-lg px-3 py-2">
-            <span className="text-xs text-muted-foreground block">Devices</span>
-            <span className="text-base font-semibold text-foreground">{panel.devices}</span>
-          </div>
-        )}
-        {panel.protocol && (
-          <div className="bg-black/20 rounded-lg px-3 py-2">
-            <span className="text-xs text-muted-foreground block">Protocol</span>
-            <span className="text-sm font-medium text-foreground">{panel.protocol}</span>
-          </div>
-        )}
-      </div>
-
-      {/* Features */}
+    <div className={cn('space-y-1.5', className)}>
+      <p className="font-semibold text-foreground text-base">
+        {panel.manufacturer} {panel.model}
+      </p>
+      <p className="text-sm text-white">
+        {specs.join(' · ')}
+      </p>
       {panel.features && panel.features.length > 0 && (
-        <div className="mt-3 flex flex-wrap gap-1.5">
-          {panel.features.slice(0, 4).map((feature, i) => (
-            <span
-              key={i}
-              className="px-2 py-1 bg-white/5 border border-white/10 rounded-full text-xs text-muted-foreground"
-            >
-              {feature}
-            </span>
-          ))}
-          {panel.features.length > 4 && (
-            <span className="px-2 py-1 text-xs text-muted-foreground">
-              +{panel.features.length - 4} more
-            </span>
-          )}
-        </div>
+        <p className="text-xs text-white">
+          {panel.features.join(' · ')}
+        </p>
       )}
     </div>
   );

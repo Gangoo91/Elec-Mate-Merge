@@ -82,10 +82,39 @@ export interface FireAlarmTestResult {
   bs5839Reference: string;
 }
 
+export interface InterfaceEquipment {
+  id: string;
+  type: 'door-holders' | 'sprinkler-interface' | 'lift-recall' | 'ventilation-dampers' | 'gas-shutdown' | 'access-control' | 'suppression' | 'other' | '';
+  location: string;
+  interfaceMethod: 'volt-free-relay' | 'monitored-output' | 'addressable-module' | 'hardwired' | '';
+  details: string;
+  tested: boolean;
+}
+
+export interface AspiratingUnit {
+  id: string;
+  make: string;
+  model: string;
+  samplingPoints: number;
+  pipeLength: string;
+  transportTime: string;
+  sensitivityLevel: 'class-a' | 'class-b' | 'class-c' | '';
+}
+
+export interface TestEquipmentItem {
+  id: string;
+  type: 'sound-level-meter' | 'smoke-detector-tester' | 'heat-detector-tester' | 'call-point-key' | 'multimeter' | 'other' | '';
+  make: string;
+  model: string;
+  serialNumber: string;
+  calibrationDate: string;
+  calibrationDue: string;
+}
+
 export interface FireAlarmFormData {
   // Certificate metadata
   certificateNumber: string;
-  certificateType: 'installation' | 'commissioning' | 'periodic';
+  certificateType: 'design' | 'installation' | 'commissioning' | 'acceptance' | 'verification' | 'periodic' | 'modification';
   inspectionDate: string;
   previousCertificateRef: string; // For periodic testing - reference to previous cert
 
@@ -178,6 +207,7 @@ export interface FireAlarmFormData {
     id: string;
     zone: string;
     location: string;
+    areaType: 'general' | 'sleeping' | 'stairwell' | 'plant-room' | '';
     dBReading: string;
     minRequired: string;
     result: 'pass' | 'fail' | '';
@@ -271,6 +301,130 @@ export interface FireAlarmFormData {
 
   // Additional notes
   additionalNotes: string;
+
+  // Standard edition reference (P1)
+  standardEdition: string;
+
+  // Panel firmware version (P1)
+  panelFirmwareVersion: string;
+
+  // Interface equipment (P1)
+  interfaceEquipment: InterfaceEquipment[];
+
+  // Cable & wiring details (P1)
+  cableType: 'standard-ph30' | 'enhanced-ph120' | 'mineral-insulated' | 'other' | '';
+  cableFireRating: string;
+  circuitIntegrity: 'standard' | 'enhanced' | 'critical-signal-path' | '';
+  wiringNotes: string;
+
+  // Cause & effect (P1)
+  causeAndEffectRef: string;
+  causeAndEffectVerified: boolean;
+  causeAndEffectDate: string;
+
+  // Responsible person acknowledgement (P1)
+  responsiblePersonName: string;
+  responsiblePersonPosition: string;
+  responsiblePersonSignature: string;
+  responsiblePersonDate: string;
+  responsiblePersonAcknowledgement: boolean;
+
+  // Devices tested count - periodic (P1)
+  devicesTestedCount: number;
+  devicesTotalCount: number;
+  deviceTestingComplete: boolean;
+
+  // Design certificate fields (Phase 1)
+  designBasis: string;
+  designCoverageCategory: string;
+  designDeviations: string;
+  designDocRef: string;
+
+  // Acceptance certificate fields (Phase 1)
+  acceptanceCriteria: string;
+  acceptanceTrainingProvided: boolean;
+  acceptanceLogBookProvided: boolean;
+
+  // Verification certificate fields (Phase 1)
+  verificationOrganisation: string;
+  verificationScope: string;
+  verificationFindings: string;
+  verificationCompliant: boolean;
+  verifierName: string;
+  verifierCompany: string;
+  verifierQualifications: string;
+  verifierSignature: string;
+  verifierDate: string;
+
+  // Modification certificate fields (Phase 1)
+  modificationDescription: string;
+  modificationReason: string;
+  modificationExtent: string;
+  originalCertRef: string;
+
+  // False alarm management (P2)
+  falseAlarmManagement: boolean;
+  falseAlarmStrategy: 'none' | 'coincidence-detection' | 'verification' | 'intelligent-detectors' | 'other' | '';
+  investigationDelay: number;
+  falseAlarmNotes: string;
+
+  // Loop/addressable device count (P2)
+  loopCount: number;
+  devicesPerLoop: string;
+  totalAddressableDevices: number;
+  maxLoopCapacity: number;
+
+  // Aspirating system details (P2)
+  aspiratingUnits: AspiratingUnit[];
+
+  // Previous certificate details - periodic (P2)
+  previousCertificateDate: string;
+  previousInspector: string;
+  previousInspectorCompany: string;
+
+  // Zone plan reference (P2)
+  zonePlanRef: string;
+  zonePlanDate: string;
+
+  // Extent of inspection/limitations - periodic (P2)
+  extentOfInspection: 'full-system' | 'partial' | '';
+  inspectionLimitations: string;
+  agreedScope: string;
+
+  // Detector spacing/siting compliance (P2)
+  detectorSpacingCompliant: boolean;
+  spacingNotes: string;
+
+  // Expanded handover checklist (P2)
+  handoverAsBuiltDrawings: boolean;
+  handoverOperatingInstructions: boolean;
+  handoverLogBook: boolean;
+  handoverSpares: boolean;
+
+  // Test equipment details (P3)
+  testEquipment: TestEquipmentItem[];
+
+  // Environmental conditions (P3)
+  ambientTemperature: string;
+  ambientNoiseLevel: string;
+  weatherConditions: 'dry' | 'wet' | 'windy' | 'extreme-heat' | 'extreme-cold' | '';
+
+  // Building plan reference (P3)
+  buildingPlanRef: string;
+  buildingPlanDate: string;
+
+  // Estimated occupancy (P3)
+  estimatedOccupancy: number;
+  occupancyBasis: string;
+
+  // Installer/commissioner contact details (P3)
+  installerCompanyAddress: string;
+  installerCompanyPhone: string;
+  commissionerCompanyAddress: string;
+  commissionerCompanyPhone: string;
+
+  // Related standards references (P3)
+  relatedStandards: string[];
 
   // Form state
   completedSections: { [key: string]: boolean };
@@ -417,6 +571,104 @@ export const getDefaultFireAlarmFormData = (): FireAlarmFormData => ({
   nextInspectionDue: '',
 
   additionalNotes: '',
+
+  standardEdition: 'BS 5839-1:2017+A1:2024',
+  panelFirmwareVersion: '',
+
+  interfaceEquipment: [],
+
+  cableType: '',
+  cableFireRating: '',
+  circuitIntegrity: '',
+  wiringNotes: '',
+
+  causeAndEffectRef: '',
+  causeAndEffectVerified: false,
+  causeAndEffectDate: '',
+
+  responsiblePersonName: '',
+  responsiblePersonPosition: '',
+  responsiblePersonSignature: '',
+  responsiblePersonDate: '',
+  responsiblePersonAcknowledgement: false,
+
+  devicesTestedCount: 0,
+  devicesTotalCount: 0,
+  deviceTestingComplete: false,
+
+  designBasis: '',
+  designCoverageCategory: '',
+  designDeviations: '',
+  designDocRef: '',
+
+  acceptanceCriteria: '',
+  acceptanceTrainingProvided: false,
+  acceptanceLogBookProvided: false,
+
+  verificationOrganisation: '',
+  verificationScope: '',
+  verificationFindings: '',
+  verificationCompliant: false,
+  verifierName: '',
+  verifierCompany: '',
+  verifierQualifications: '',
+  verifierSignature: '',
+  verifierDate: '',
+
+  modificationDescription: '',
+  modificationReason: '',
+  modificationExtent: '',
+  originalCertRef: '',
+
+  falseAlarmManagement: false,
+  falseAlarmStrategy: '',
+  investigationDelay: 0,
+  falseAlarmNotes: '',
+
+  loopCount: 0,
+  devicesPerLoop: '',
+  totalAddressableDevices: 0,
+  maxLoopCapacity: 0,
+
+  aspiratingUnits: [],
+
+  previousCertificateDate: '',
+  previousInspector: '',
+  previousInspectorCompany: '',
+
+  zonePlanRef: '',
+  zonePlanDate: '',
+
+  extentOfInspection: '',
+  inspectionLimitations: '',
+  agreedScope: '',
+
+  detectorSpacingCompliant: false,
+  spacingNotes: '',
+
+  handoverAsBuiltDrawings: false,
+  handoverOperatingInstructions: false,
+  handoverLogBook: false,
+  handoverSpares: false,
+
+  testEquipment: [],
+
+  ambientTemperature: '',
+  ambientNoiseLevel: '',
+  weatherConditions: '',
+
+  buildingPlanRef: '',
+  buildingPlanDate: '',
+
+  estimatedOccupancy: 0,
+  occupancyBasis: '',
+
+  installerCompanyAddress: '',
+  installerCompanyPhone: '',
+  commissionerCompanyAddress: '',
+  commissionerCompanyPhone: '',
+
+  relatedStandards: [],
 
   completedSections: {},
   status: 'draft',

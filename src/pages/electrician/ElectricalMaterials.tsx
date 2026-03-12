@@ -69,28 +69,13 @@ const ElectricalMaterials = () => {
   const handleForceUpdate = async () => {
     setIsForceUpdating(true);
     try {
-      const { data, error } = await supabase.functions.invoke(
-        'comprehensive-materials-weekly-scraper',
-        {
-          body: { forceRefresh: true, bypassCache: true },
-        }
-      );
-
-      if (error) {
-        console.error('Error forcing materials update:', error);
-        toast({
-          title: 'Force Update Failed',
-          description: 'Failed to force materials update. Please try again.',
-          variant: 'destructive',
-        });
-      } else {
-        toast({
-          title: 'Force Update Started',
-          description:
-            'Materials cache is being forcefully refreshed. This may take 5-10 minutes to complete.',
-          variant: 'success',
-        });
-      }
+      // Materials are refreshed automatically by the pipeline (weekly Sunday 2 AM UTC)
+      toast({
+        title: 'Materials Updated Automatically',
+        description:
+          'Materials data is refreshed weekly by the automated pipeline. Latest data is already loaded.',
+        variant: 'success',
+      });
     } catch (error) {
       console.error('Error:', error);
       toast({
@@ -244,8 +229,7 @@ const ElectricalMaterials = () => {
       <Card className="border-white/10 bg-white/5 backdrop-blur-sm rounded-xl">
         <CardContent className="p-6 text-center">
           <p className="text-muted-foreground text-sm">
-            Materials are automatically updated weekly using Firecrawl 2.0. Real-time pricing from
-            major UK suppliers.
+            Materials are automatically updated weekly. Real-time pricing from major UK suppliers.
           </p>
         </CardContent>
       </Card>

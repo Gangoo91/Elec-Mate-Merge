@@ -35,6 +35,7 @@ export function useCalendarEvents(dateFrom: string, dateTo: string) {
       return (data ?? []) as CalendarEvent[];
     },
     enabled: !!dateFrom && !!dateTo,
+    refetchInterval: 30_000,
   });
 }
 
@@ -77,6 +78,7 @@ export function useTodayEvents() {
       if (error) throw error;
       return (data ?? []) as CalendarEvent[];
     },
+    refetchInterval: 30_000,
   });
 }
 
@@ -110,6 +112,7 @@ export function useUpcomingEvents(days: number = 7) {
       if (error) throw error;
       return (data ?? []) as CalendarEvent[];
     },
+    refetchInterval: 30_000,
   });
 }
 

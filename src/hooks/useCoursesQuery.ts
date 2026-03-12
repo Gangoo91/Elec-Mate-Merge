@@ -30,19 +30,32 @@ async function fetchCourses({
   keywords,
   location,
 }: CourseSearchParams): Promise<CourseSearchResult> {
-  console.log('Fetching live course data:', { keywords, location });
+  console.log('Fetching course data from cache:', { keywords, location });
 
-  const { data: liveData, error } = await supabase.functions.invoke('live-course-aggregator', {
-    body: { keywords, location },
-  });
+  // Read from pipeline-populated education cache
+  const { data: cacheRow, error } = await supabase
+    .from('live_education_cache')
+    .select('education_data')
+    .order('created_at', { ascending: false })
+    .limit(1)
+    .maybeSingle();
 
   if (error) {
-    throw new Error(error.message || 'Failed to fetch live course data');
+    throw new Error(error.message || 'Failed to fetch course data');
   }
 
-  if (liveData && liveData.courses && liveData.courses.length > 0) {
-    // Enhanced mapping of live data with intelligent property inference
-    const liveCourses = liveData.courses.map((course: any) => ({
+  const cachedCourses = (cacheRow?.education_data as any[]) || [];
+
+  // Filter by keywords
+  const keywordsLower = keywords.toLowerCase();
+  const matchingCourses = cachedCourses.filter((course: any) => {
+    const text = `${course.title || ''} ${course.description || ''} ${course.category || ''}`.toLowerCase();
+    return keywordsLower.split(/\s+/).some((kw: string) => text.includes(kw));
+  });
+
+  if (matchingCourses.length > 0) {
+    // Enhanced mapping of cached data with intelligent property inference
+    const liveCourses = matchingCourses.map((course: any) => ({
       ...course,
       isLive: true,
       // Ensure all required properties exist with intelligent defaults
@@ -75,14 +88,12 @@ async function fetchCourses({
     return {
       courses: liveCourses,
       total: liveCourses.length,
-      summary: liveData.summary,
     };
   } else {
-    // No live courses found - return empty result
+    // No matching courses found
     return {
       courses: [],
       total: 0,
-      summary: liveData.summary,
     };
   }
 }

@@ -65,30 +65,32 @@ const AIGuideModal = ({ isOpen, onClose, guideType, guideTitle }: AIGuideModalPr
     }
 
     try {
-      const { data, error } = await supabase.functions.invoke('generate-tool-guide', {
-        body: {
-          guideType: guideType,
-          forceRefresh,
-          userProfile: {
-            experience: 'professional',
-            specialisation: 'general_electrical',
-            business_type: 'mobile_electrician',
-          },
-        },
-      });
+      // Read from cached guide data (populated by pipeline)
+      const { data: cacheRow, error } = await supabase
+        .from('tool_guide_cache')
+        .select('guide_data, cache_version, created_at, expires_at')
+        .eq('guide_type', guideType)
+        .order('created_at', { ascending: false })
+        .limit(1)
+        .maybeSingle();
 
-      if (error) {
+      if (error || !cacheRow?.guide_data) {
         console.error('Error loading guide:', error);
         toast({
-          title: 'Guide Loading Failed',
-          description: 'Unable to load guide. Please try again.',
+          title: 'Guide Unavailable',
+          description: 'No guide data available for this tool type.',
           variant: 'destructive',
         });
         return;
       }
 
-      setGuideData(data.guide);
-      setCacheInfo(data.cacheInfo || null);
+      const guideContent = cacheRow.guide_data as any;
+      setGuideData(guideContent.guide || guideContent);
+      setCacheInfo({
+        lastRefreshed: cacheRow.created_at,
+        expiresAt: cacheRow.expires_at,
+        cacheVersion: cacheRow.cache_version,
+      });
       setHasGenerated(true);
       setIsInitialLoad(false);
     } catch (error) {

@@ -858,7 +858,34 @@ serve(async (req) => {
         }
 
         if (!hasOtherActiveSub) {
+          // Check if user previously had Business AI before deactivating
+          const { data: preProfile } = await supabase
+            .from('profiles')
+            .select('business_ai_enabled, agent_status')
+            .eq('id', userId)
+            .single();
+
+          const previouslyHadBusinessAI = preProfile?.business_ai_enabled === true;
+
           await updateSubscriptionStatus(userId, false, customerId, null, null);
+
+          // Deactivate WhatsApp agent and revoke JWT if user had Business AI
+          if (previouslyHadBusinessAI) {
+            logger.info('Deprovisioning Business AI agent for cancelled user', { userId });
+
+            await supabase
+              .from('profiles')
+              .update({ agent_status: 'deactivated' })
+              .eq('id', userId);
+
+            await supabase
+              .from('agent_jwt_tokens')
+              .update({ revoked_at: new Date().toISOString() })
+              .eq('user_id', userId)
+              .is('revoked_at', null);
+
+            logger.info('Agent deprovisioned — status set to deactivated, JWT revoked', { userId });
+          }
 
           // Notify user
           await supabase.from('notifications').insert({

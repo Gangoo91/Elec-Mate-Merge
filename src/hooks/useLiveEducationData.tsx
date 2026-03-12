@@ -562,54 +562,9 @@ export const useLiveEducationData = (category: string = 'all'): UseLiveEducation
         setLoading(false);
       }
 
-      // Try to fetch fresh data in background with longer timeout
-      console.log('📡 Fetching fresh education data from Firecrawl...');
-
-      const fetchWithTimeout = async (timeoutMs: number) => {
-        return Promise.race([
-          supabase.functions.invoke('comprehensive-education-scraper', {
-            body: {
-              forceRefresh,
-            },
-          }),
-          new Promise((_, reject) =>
-            setTimeout(() => reject(new Error('Request timeout')), timeoutMs)
-          ),
-        ]);
-      };
-
-      let data, functionError;
-      try {
-        const result = (await fetchWithTimeout(60000)) as any; // 60 second timeout for Firecrawl
-        data = result.data;
-        functionError = result.error;
-      } catch (timeoutError) {
-        console.warn('⏰ Firecrawl request timed out, using cached data');
-        functionError = timeoutError;
-      }
-
-      if (functionError) {
-        console.error('❌ Function error:', functionError);
-
-        // Already showing cached data above, just log the error
-        if (!expiredCache?.education_data) {
-          setError('Unable to fetch fresh data - showing cached results if available');
-        }
-        setLoading(false);
-        return;
-      }
-
-      if (data?.success && data?.data && data?.data.length > 0 && data?.analytics) {
-        console.log(`✅ Loaded ${data.data.length} education programmes`);
-        setEducationData(data.data);
-        setAnalytics(data.analytics);
-        setLastUpdated(new Date().toISOString());
-        setIsFromCache(false);
-        setCacheInfo(data.cacheInfo || null);
-        setError(null);
-      } else {
-        console.warn('⚠️ Unexpected response or empty data, using fallback:', data);
-        // Use static fallback data
+      // No cached data available — use static fallback
+      if (!expiredCache?.education_data) {
+        console.log('📦 No cached data available, using static fallback');
         setEducationData(FALLBACK_EDUCATION_DATA);
         setAnalytics(generateFallbackAnalytics(FALLBACK_EDUCATION_DATA));
         setLastUpdated(new Date().toISOString());

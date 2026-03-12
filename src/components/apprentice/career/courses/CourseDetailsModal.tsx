@@ -20,7 +20,6 @@ import {
   TableRow,
 } from '@/components/ui/table';
 import { useToast } from '@/hooks/use-toast';
-import { supabase } from '@/integrations/supabase/client';
 import CourseEnquiryForm from './CourseEnquiryForm';
 import {
   X,
@@ -68,46 +67,16 @@ interface CourseDetailsModalProps {
 const CourseDetailsModal = ({ course, onClose }: CourseDetailsModalProps) => {
   const { toast } = useToast();
   const [contactInfo, setContactInfo] = useState<ContactInfo | null>(null);
-  const [loadingContact, setLoadingContact] = useState(false);
 
   const fetchContactDetails = async () => {
-    if (!course.external_url || loadingContact) return;
+    if (!course.external_url) return;
 
-    setLoadingContact(true);
-    try {
-      const { data, error } = await supabase.functions.invoke('extract-contact-details', {
-        body: {
-          courseUrl: course.external_url,
-          providerId: course.provider,
-        },
-      });
-
-      if (error) throw error;
-
-      if (data?.success && data?.contactInfo) {
-        setContactInfo(data.contactInfo);
-        toast({
-          title: 'Contact Details Found',
-          description: 'Successfully extracted provider contact information.',
-          variant: 'success',
-        });
-      } else {
-        toast({
-          title: 'Contact Details Unavailable',
-          description: "Could not extract contact information from provider's website.",
-          variant: 'destructive',
-        });
-      }
-    } catch (error) {
-      console.error('Error fetching contact details:', error);
-      toast({
-        title: 'Error',
-        description: 'Failed to extract contact details.',
-        variant: 'destructive',
-      });
-    } finally {
-      setLoadingContact(false);
-    }
+    // Open provider's website directly — contact details are on their site
+    window.open(course.external_url, '_blank', 'noopener,noreferrer');
+    toast({
+      title: 'Opening Provider Website',
+      description: 'Contact details are available on the provider\'s website.',
+    });
   };
 
   const handleOpenCourseUrl = () => {
@@ -260,10 +229,10 @@ const CourseDetailsModal = ({ course, onClose }: CourseDetailsModalProps) => {
                   size="sm"
                   className="h-10 border-blue-500/30 text-blue-400 hover:bg-blue-500/10 touch-manipulation active:scale-95 transition-all"
                   onClick={fetchContactDetails}
-                  disabled={loadingContact || !course.external_url}
+                  disabled={!course.external_url}
                 >
                   <Phone className="h-3.5 w-3.5 mr-1.5" />
-                  {loadingContact ? 'Getting Contact...' : 'Get Contact Details'}
+                  {'Visit Provider Website'}
                 </Button>
               </div>
 

@@ -34,3 +34,4 @@ nul
 
 # Playwright auth state
 e2e/.auth/
+__pycache__/

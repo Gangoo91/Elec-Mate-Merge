@@ -137,19 +137,19 @@ const EICDeclarations: React.FC<EICDeclarationsProps> = ({ formData, onUpdate })
             <span className="font-medium">Declaration Progress:</span>
             <div className="flex flex-wrap items-center gap-3 sm:gap-4">
               <div
-                className={`flex items-center gap-1.5 ${isDesignerComplete ? 'text-green-600' : 'text-gray-400'}`}
+                className={`flex items-center gap-1.5 ${isDesignerComplete ? 'text-green-400' : 'text-white'}`}
               >
                 <FileCheck className="h-4 w-4" />
                 <span>Designer</span>
               </div>
               <div
-                className={`flex items-center gap-1.5 ${isConstructorComplete ? 'text-green-600' : 'text-gray-400'}`}
+                className={`flex items-center gap-1.5 ${isConstructorComplete ? 'text-green-400' : 'text-white'}`}
               >
                 <FileCheck className="h-4 w-4" />
                 <span>Constructor</span>
               </div>
               <div
-                className={`flex items-center gap-1.5 ${isInspectorComplete ? 'text-green-600' : 'text-gray-400'}`}
+                className={`flex items-center gap-1.5 ${isInspectorComplete ? 'text-green-400' : 'text-white'}`}
               >
                 <FileCheck className="h-4 w-4" />
                 <span>Inspector</span>
@@ -164,13 +164,13 @@ const EICDeclarations: React.FC<EICDeclarationsProps> = ({ formData, onUpdate })
         <CardHeader>
           <CardTitle className="text-lg font-semibold text-elec-gray flex items-center gap-2">
             <span
-              className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold ${isDesignerComplete ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-600'}`}
+              className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold ${isDesignerComplete ? 'bg-green-500/20 text-green-400' : 'bg-white/10 text-white'}`}
             >
               1
             </span>
             Designer Declaration
           </CardTitle>
-          <p className="text-sm text-muted-foreground">
+          <p className="text-sm text-white">
             I being the person responsible for the design of the electrical installation (as
             indicated by my signature below), particulars of which are described above, having
             exercised reasonable skill and care when carrying out the design hereby CERTIFY that the
@@ -243,13 +243,13 @@ const EICDeclarations: React.FC<EICDeclarationsProps> = ({ formData, onUpdate })
         <CardHeader>
           <CardTitle className="text-lg font-semibold text-elec-gray flex items-center gap-2">
             <span
-              className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold ${isConstructorComplete ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-600'}`}
+              className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold ${isConstructorComplete ? 'bg-green-500/20 text-green-400' : 'bg-white/10 text-white'}`}
             >
               2
             </span>
             Constructor Declaration
           </CardTitle>
-          <p className="text-sm text-muted-foreground">
+          <p className="text-sm text-white">
             I being the person responsible for the construction of the electrical installation (as
             indicated by my signature below), particulars of which are described above, having
             exercised reasonable skill and care when carrying out the construction work hereby
@@ -350,13 +350,13 @@ const EICDeclarations: React.FC<EICDeclarationsProps> = ({ formData, onUpdate })
         <CardHeader>
           <CardTitle className="text-lg font-semibold text-elec-gray flex items-center gap-2">
             <span
-              className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold ${isInspectorComplete ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-600'}`}
+              className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold ${isInspectorComplete ? 'bg-green-500/20 text-green-400' : 'bg-white/10 text-white'}`}
             >
               3
             </span>
             Inspector Declaration
           </CardTitle>
-          <p className="text-sm text-muted-foreground">
+          <p className="text-sm text-white">
             I being the person responsible for the inspection & testing of the electrical
             installation (as indicated by my signature below), particulars of which are described
             above, having exercised reasonable skill and care when carrying out the inspection &
@@ -478,7 +478,7 @@ const EICDeclarations: React.FC<EICDeclarationsProps> = ({ formData, onUpdate })
               <h3 className="text-base sm:text-lg font-semibold text-elec-gray">
                 Authorisation Signatures
               </h3>
-              <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">
+              <p className="text-xs sm:text-sm text-white leading-relaxed">
                 Both signatures are required per BS 7671 regulations to authorise this EIC for
                 issue.
               </p>
@@ -832,7 +832,7 @@ const EICDeclarations: React.FC<EICDeclarationsProps> = ({ formData, onUpdate })
                 <div className="w-1.5 h-1.5 rounded-full bg-amber-400"></div>
                 Part P Building Regulations
               </h3>
-              <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">
+              <p className="text-xs sm:text-sm text-white leading-relaxed">
                 Under Part P of the Building Regulations, notifiable electrical work must be
                 submitted to your Competent Person Scheme (NICEIC/NAPIT) or Local Authority Building
                 Control within 30 days of completion.
@@ -854,7 +854,7 @@ const EICDeclarations: React.FC<EICDeclarationsProps> = ({ formData, onUpdate })
                   >
                     This work requires Part P notification
                   </Label>
-                  <p className="text-xs text-muted-foreground mt-1">
+                  <p className="text-xs text-white mt-1">
                     Tick this if the work includes: new circuits, consumer unit replacement, work in
                     bathrooms/kitchens, outdoor installations, or any other notifiable work under
                     Building Regulations.

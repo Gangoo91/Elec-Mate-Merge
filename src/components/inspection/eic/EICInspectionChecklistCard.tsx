@@ -55,14 +55,14 @@ const EICInspectionChecklistCard: React.FC<EICInspectionChecklistCardProps> = ({
           <FileText className="h-5 w-5" />
           Schedule of Inspections
         </CardTitle>
-        <p className="text-sm text-muted-foreground">
+        <p className="text-sm text-white">
           IET Model Forms - BS7671 18th Edition + A3:2024 compliant. For residential and similar
           premises with up to 100 A supply.
         </p>
       </CardHeader>
       <CardContent className="p-2 sm:p-4 md:p-6">
         {inspectionItems.length === 0 ? (
-          <div className="text-center py-8 text-muted-foreground">
+          <div className="text-center py-8 text-white">
             <p>No inspection items found. Please refresh the page or contact support.</p>
           </div>
         ) : (

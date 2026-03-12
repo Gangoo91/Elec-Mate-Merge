@@ -10,6 +10,8 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
+import { Checkbox } from '@/components/ui/checkbox';
+import { Textarea } from '@/components/ui/textarea';
 import {
   ChevronDown,
   CheckCircle2,
@@ -22,6 +24,9 @@ import {
   Plus,
   Trash2,
   Info,
+  Gauge,
+  Thermometer,
+  ClipboardCheck,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useIsMobile } from '@/hooks/use-mobile';
@@ -60,11 +65,11 @@ const TestResultSelect: React.FC<{
           </span>
         )}
         {value === 'na' && (
-          <span className="flex items-center gap-2 text-muted-foreground">
+          <span className="flex items-center gap-2 text-white">
             <Minus className="h-4 w-4" /> N/A
           </span>
         )}
-        {!value && <span className="text-muted-foreground">Select</span>}
+        {!value && <span className="text-white">Select</span>}
       </SelectValue>
     </SelectTrigger>
     <SelectContent className="z-[100] bg-background border-border text-foreground">
@@ -79,7 +84,7 @@ const TestResultSelect: React.FC<{
         </span>
       </SelectItem>
       <SelectItem value="na">
-        <span className="flex items-center gap-2 text-muted-foreground">
+        <span className="flex items-center gap-2 text-white">
           <Minus className="h-4 w-4" /> N/A
         </span>
       </SelectItem>
@@ -95,12 +100,40 @@ const FireAlarmTestSchedule: React.FC<FireAlarmTestScheduleProps> = ({ formData,
     power: true,
     fault: true,
     soundLevels: true,
+    devicesTested: false,
+    testEquipment: false,
+    environmental: false,
+    deviceSchedule: false,
   });
 
   // Store validation results for each sound reading
   const [validationResults, setValidationResults] = useState<Record<string, SoundValidationResult>>(
     {}
   );
+
+  // A3: Auto-calculate calibration due dates (+12 months)
+  useEffect(() => {
+    const items = formData.testEquipment || [];
+    if (items.length === 0) return;
+
+    let needsUpdate = false;
+    const updated = items.map((item: any) => {
+      if (item.calibrationDate && !item.calibrationDue) {
+        const calDate = new Date(item.calibrationDate);
+        if (!isNaN(calDate.getTime())) {
+          const dueDate = new Date(calDate);
+          dueDate.setFullYear(dueDate.getFullYear() + 1);
+          needsUpdate = true;
+          return { ...item, calibrationDue: dueDate.toISOString().split('T')[0] };
+        }
+      }
+      return item;
+    });
+
+    if (needsUpdate) {
+      onUpdate('testEquipment', updated);
+    }
+  }, [formData.testEquipment, onUpdate]);
 
   const toggleSection = (section: string) => {
     setOpenSections((prev) => ({ ...prev, [section]: !prev[section] }));
@@ -210,11 +243,11 @@ const FireAlarmTestSchedule: React.FC<FireAlarmTestScheduleProps> = ({ formData,
                 </div>
                 <div className="flex-1 text-left min-w-0">
                   <h3 className="font-semibold text-foreground">Control Panel Tests</h3>
-                  <span className="text-xs text-muted-foreground">Power, zones, indicators</span>
+                  <span className="text-xs text-white">Power, zones, indicators</span>
                 </div>
                 <ChevronDown
                   className={cn(
-                    'h-5 w-5 text-muted-foreground transition-transform shrink-0',
+                    'h-5 w-5 text-white transition-transform shrink-0',
                     openSections.panel && 'rotate-180'
                   )}
                 />
@@ -305,11 +338,11 @@ const FireAlarmTestSchedule: React.FC<FireAlarmTestScheduleProps> = ({ formData,
                 </div>
                 <div className="flex-1 text-left min-w-0">
                   <h3 className="font-semibold text-foreground">Power & Battery Tests</h3>
-                  <span className="text-xs text-muted-foreground">Mains, charger, backup</span>
+                  <span className="text-xs text-white">Mains, charger, backup</span>
                 </div>
                 <ChevronDown
                   className={cn(
-                    'h-5 w-5 text-muted-foreground transition-transform shrink-0',
+                    'h-5 w-5 text-white transition-transform shrink-0',
                     openSections.power && 'rotate-180'
                   )}
                 />
@@ -389,11 +422,11 @@ const FireAlarmTestSchedule: React.FC<FireAlarmTestScheduleProps> = ({ formData,
                 </div>
                 <div className="flex-1 text-left min-w-0">
                   <h3 className="font-semibold text-foreground">Fault Simulation Tests</h3>
-                  <span className="text-xs text-muted-foreground">Open, short, earth faults</span>
+                  <span className="text-xs text-white">Open, short, earth faults</span>
                 </div>
                 <ChevronDown
                   className={cn(
-                    'h-5 w-5 text-muted-foreground transition-transform shrink-0',
+                    'h-5 w-5 text-white transition-transform shrink-0',
                     openSections.fault && 'rotate-180'
                   )}
                 />
@@ -466,13 +499,13 @@ const FireAlarmTestSchedule: React.FC<FireAlarmTestScheduleProps> = ({ formData,
                 </div>
                 <div className="flex-1 text-left min-w-0">
                   <h3 className="font-semibold text-foreground">Sound Level Readings</h3>
-                  <span className="text-xs text-muted-foreground">
+                  <span className="text-xs text-white">
                     {(formData.soundLevelReadings || []).length} readings
                   </span>
                 </div>
                 <ChevronDown
                   className={cn(
-                    'h-5 w-5 text-muted-foreground transition-transform shrink-0',
+                    'h-5 w-5 text-white transition-transform shrink-0',
                     openSections.soundLevels && 'rotate-180'
                   )}
                 />
@@ -501,7 +534,7 @@ const FireAlarmTestSchedule: React.FC<FireAlarmTestScheduleProps> = ({ formData,
                 <Info className="h-5 w-5 text-purple-400 shrink-0 mt-0.5" />
                 <div className="text-sm">
                   <p className="font-medium text-foreground">BS 5839-1 Sound Level Requirements</p>
-                  <p className="text-muted-foreground mt-1">
+                  <p className="text-white mt-1">
                     Minimum <span className="text-green-400 font-medium">65 dB(A)</span> in general
                     occupied areas
                     <br />
@@ -645,6 +678,517 @@ const FireAlarmTestSchedule: React.FC<FireAlarmTestScheduleProps> = ({ formData,
                 <Plus className="h-4 w-4 mr-2" />
                 Add Sound Level Reading
               </Button>
+            </div>
+          </CollapsibleContent>
+        </Collapsible>
+      </div>
+
+      {/* Devices Tested Count - Periodic only */}
+      {formData.certificateType === 'periodic' && (
+        <div className={cn(isMobile ? '' : 'eicr-section-card')}>
+          <Collapsible open={openSections.devicesTested} onOpenChange={() => toggleSection('devicesTested')}>
+            <CollapsibleTrigger className="w-full">
+              {isMobile ? (
+                <div className="flex items-center gap-3 py-4 px-4 bg-card/30 border-b border-border/20">
+                  <div className="h-10 w-10 rounded-xl bg-cyan-500/20 flex items-center justify-center shrink-0">
+                    <Gauge className="h-5 w-5 text-cyan-400" />
+                  </div>
+                  <div className="flex-1 text-left min-w-0">
+                    <h3 className="font-semibold text-foreground">Devices Tested</h3>
+                    <span className="text-xs text-white">Rolling programme (Cl.45.4)</span>
+                  </div>
+                  <ChevronDown className={cn('h-5 w-5 text-white transition-transform shrink-0', openSections.devicesTested && 'rotate-180')} />
+                </div>
+              ) : (
+                <div className="flex items-center justify-between py-4 px-4 cursor-pointer hover:bg-white/5 transition-colors">
+                  <div className="flex items-center gap-3">
+                    <div className="w-9 h-9 rounded-xl bg-cyan-500/15 flex items-center justify-center">
+                      <Gauge className="h-4 w-4 text-cyan-400" />
+                    </div>
+                    <span className="text-white font-semibold">Devices Tested Count</span>
+                  </div>
+                  <ChevronDown className={cn('h-5 w-5 text-white transition-transform', openSections.devicesTested && 'rotate-180')} />
+                </div>
+              )}
+            </CollapsibleTrigger>
+            <CollapsibleContent>
+              <div className={cn('space-y-4', isMobile ? 'px-4 py-4' : 'px-4 pb-4')}>
+                {/* B3: Warning if devices tested exceeds total */}
+                {(formData.devicesTestedCount || 0) > 0 && (formData.devicesTotalCount || 0) > 0 && formData.devicesTestedCount > formData.devicesTotalCount && (
+                  <div className="flex items-start gap-3 p-3 bg-yellow-500/10 border border-yellow-500/30 rounded-xl">
+                    <AlertTriangle className="h-4 w-4 text-yellow-400 shrink-0 mt-0.5" />
+                    <p className="text-sm text-yellow-300">Devices tested ({formData.devicesTestedCount}) exceeds total devices ({formData.devicesTotalCount})</p>
+                  </div>
+                )}
+                <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
+                  <div className="space-y-2">
+                    <Label className="text-sm">Devices Tested</Label>
+                    <Input
+                      type="number"
+                      min="0"
+                      value={formData.devicesTestedCount || ''}
+                      onChange={(e) => onUpdate('devicesTestedCount', e.target.value === '' ? 0 : parseInt(e.target.value) || 0)}
+                      placeholder="0"
+                      className="h-11 text-base touch-manipulation border-white/30 focus:border-elec-yellow focus:ring-elec-yellow"
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Label className="text-sm">Total Devices</Label>
+                    <Input
+                      type="number"
+                      min="0"
+                      value={formData.devicesTotalCount || ''}
+                      onChange={(e) => onUpdate('devicesTotalCount', e.target.value === '' ? 0 : parseInt(e.target.value) || 0)}
+                      placeholder="0"
+                      className="h-11 text-base touch-manipulation border-white/30 focus:border-elec-yellow focus:ring-elec-yellow"
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Label className="text-sm">Percentage</Label>
+                    <div className="h-11 flex items-center px-3 rounded-md border border-white/20 bg-black/20 text-base">
+                      {formData.devicesTotalCount > 0
+                        ? `${Math.round((formData.devicesTestedCount / formData.devicesTotalCount) * 100)}%`
+                        : '0%'}
+                    </div>
+                  </div>
+                </div>
+                <div
+                  className={cn(
+                    'flex items-center gap-3 h-12 px-4 rounded-lg cursor-pointer transition-colors',
+                    formData.deviceTestingComplete
+                      ? 'bg-green-500/10 border border-green-500/30'
+                      : 'bg-black/30 border border-white/10 hover:border-white/20'
+                  )}
+                  onClick={() => onUpdate('deviceTestingComplete', !formData.deviceTestingComplete)}
+                >
+                  <Checkbox
+                    checked={formData.deviceTestingComplete || false}
+                    onCheckedChange={(checked) => onUpdate('deviceTestingComplete', checked as boolean)}
+                    className="border-white/40 data-[state=checked]:bg-green-500 data-[state=checked]:border-green-500 data-[state=checked]:text-white h-5 w-5 shrink-0"
+                  />
+                  <Label className="cursor-pointer text-sm font-medium text-foreground">
+                    All devices tested in rolling programme
+                  </Label>
+                </div>
+              </div>
+            </CollapsibleContent>
+          </Collapsible>
+        </div>
+      )}
+
+      {/* Test Equipment Details */}
+      <div className={cn(isMobile ? '' : 'eicr-section-card')}>
+        <Collapsible open={openSections.testEquipment} onOpenChange={() => toggleSection('testEquipment')}>
+          <CollapsibleTrigger className="w-full">
+            {isMobile ? (
+              <div className="flex items-center gap-3 py-4 px-4 bg-card/30 border-b border-border/20">
+                <div className="h-10 w-10 rounded-xl bg-indigo-500/20 flex items-center justify-center shrink-0">
+                  <ClipboardCheck className="h-5 w-5 text-indigo-400" />
+                </div>
+                <div className="flex-1 text-left min-w-0">
+                  <h3 className="font-semibold text-foreground">Test Equipment</h3>
+                  <span className="text-xs text-white">
+                    {(formData.testEquipment || []).length} instruments
+                  </span>
+                </div>
+                <ChevronDown className={cn('h-5 w-5 text-white transition-transform shrink-0', openSections.testEquipment && 'rotate-180')} />
+              </div>
+            ) : (
+              <div className="flex items-center justify-between py-4 px-4 cursor-pointer hover:bg-white/5 transition-colors">
+                <div className="flex items-center gap-3">
+                  <div className="w-9 h-9 rounded-xl bg-indigo-500/15 flex items-center justify-center">
+                    <ClipboardCheck className="h-4 w-4 text-indigo-400" />
+                  </div>
+                  <span className="text-white font-semibold">Test Equipment Details</span>
+                </div>
+                <ChevronDown className={cn('h-5 w-5 text-white transition-transform', openSections.testEquipment && 'rotate-180')} />
+              </div>
+            )}
+          </CollapsibleTrigger>
+          <CollapsibleContent>
+            <div className={cn('space-y-4', isMobile ? 'px-4 py-4' : 'px-4 pb-4')}>
+              {(formData.testEquipment || []).map((item: any, index: number) => (
+                <div key={item.id} className="bg-black/40 rounded-xl p-4">
+                  <div className="flex items-start justify-between mb-3">
+                    <h4 className="font-medium text-sm">Equipment {index + 1}</h4>
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => {
+                        const items = formData.testEquipment || [];
+                        onUpdate('testEquipment', items.filter((i: any) => i.id !== item.id));
+                      }}
+                      className="h-11 w-11 p-0 text-red-400 hover:text-red-300 hover:bg-red-500/10 touch-manipulation"
+                      aria-label="Remove equipment"
+                    >
+                      <Trash2 className="h-4 w-4" />
+                    </Button>
+                  </div>
+                  <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                    <div className="space-y-2">
+                      <Label className="text-sm">Type</Label>
+                      <Select
+                        value={item.type || ''}
+                        onValueChange={(v) => {
+                          const items = [...(formData.testEquipment || [])];
+                          const idx = items.findIndex((i: any) => i.id === item.id);
+                          if (idx >= 0) { items[idx] = { ...items[idx], type: v }; onUpdate('testEquipment', items); }
+                        }}
+                      >
+                        <SelectTrigger className="h-11 touch-manipulation bg-elec-gray border-white/30 focus:border-elec-yellow focus:ring-elec-yellow">
+                          <SelectValue placeholder="Select" />
+                        </SelectTrigger>
+                        <SelectContent className="z-[100] bg-background border-border text-foreground">
+                          <SelectItem value="sound-level-meter">Sound Level Meter</SelectItem>
+                          <SelectItem value="smoke-detector-tester">Smoke Detector Tester</SelectItem>
+                          <SelectItem value="heat-detector-tester">Heat Detector Tester</SelectItem>
+                          <SelectItem value="call-point-key">Call Point Key</SelectItem>
+                          <SelectItem value="multimeter">Multimeter</SelectItem>
+                          <SelectItem value="other">Other</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+                    <div className="space-y-2">
+                      <Label className="text-sm">Make</Label>
+                      <Input
+                        placeholder="Manufacturer"
+                        value={item.make || ''}
+                        onChange={(e) => {
+                          const items = [...(formData.testEquipment || [])];
+                          const idx = items.findIndex((i: any) => i.id === item.id);
+                          if (idx >= 0) { items[idx] = { ...items[idx], make: e.target.value }; onUpdate('testEquipment', items); }
+                        }}
+                        className="h-11 text-sm touch-manipulation border-white/30 focus:border-elec-yellow focus:ring-elec-yellow"
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <Label className="text-sm">Model</Label>
+                      <Input
+                        placeholder="Model"
+                        value={item.model || ''}
+                        onChange={(e) => {
+                          const items = [...(formData.testEquipment || [])];
+                          const idx = items.findIndex((i: any) => i.id === item.id);
+                          if (idx >= 0) { items[idx] = { ...items[idx], model: e.target.value }; onUpdate('testEquipment', items); }
+                        }}
+                        className="h-11 text-sm touch-manipulation border-white/30 focus:border-elec-yellow focus:ring-elec-yellow"
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <Label className="text-sm">Serial Number</Label>
+                      <Input
+                        placeholder="S/N"
+                        value={item.serialNumber || ''}
+                        onChange={(e) => {
+                          const items = [...(formData.testEquipment || [])];
+                          const idx = items.findIndex((i: any) => i.id === item.id);
+                          if (idx >= 0) { items[idx] = { ...items[idx], serialNumber: e.target.value }; onUpdate('testEquipment', items); }
+                        }}
+                        className="h-11 text-sm touch-manipulation border-white/30 focus:border-elec-yellow focus:ring-elec-yellow"
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <Label className="text-sm">Calibration Date</Label>
+                      <Input
+                        type="date"
+                        value={item.calibrationDate || ''}
+                        onChange={(e) => {
+                          const items = [...(formData.testEquipment || [])];
+                          const idx = items.findIndex((i: any) => i.id === item.id);
+                          if (idx >= 0) { items[idx] = { ...items[idx], calibrationDate: e.target.value }; onUpdate('testEquipment', items); }
+                        }}
+                        className="h-11 text-sm touch-manipulation border-white/30 focus:border-elec-yellow focus:ring-elec-yellow"
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <Label className="text-sm">Calibration Due</Label>
+                      <Input
+                        type="date"
+                        value={item.calibrationDue || ''}
+                        onChange={(e) => {
+                          const items = [...(formData.testEquipment || [])];
+                          const idx = items.findIndex((i: any) => i.id === item.id);
+                          if (idx >= 0) { items[idx] = { ...items[idx], calibrationDue: e.target.value }; onUpdate('testEquipment', items); }
+                        }}
+                        className="h-11 text-sm touch-manipulation border-white/30 focus:border-elec-yellow focus:ring-elec-yellow"
+                      />
+                      {item.calibrationDate && item.calibrationDue && (
+                        <p className="text-xs text-green-400">Auto-calculated: 12 months from calibration date</p>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              ))}
+
+              <Button
+                variant="outline"
+                className="w-full h-11 touch-manipulation border-dashed border-white/20 hover:border-indigo-500 hover:bg-indigo-500/10"
+                onClick={() => {
+                  const items = formData.testEquipment || [];
+                  onUpdate('testEquipment', [...items, {
+                    id: `te-${Date.now()}`,
+                    type: '',
+                    make: '',
+                    model: '',
+                    serialNumber: '',
+                    calibrationDate: '',
+                    calibrationDue: '',
+                  }]);
+                }}
+              >
+                <Plus className="h-4 w-4 mr-2" />
+                Add Test Equipment
+              </Button>
+            </div>
+          </CollapsibleContent>
+        </Collapsible>
+      </div>
+
+      {/* Environmental Conditions */}
+      <div className={cn(isMobile ? '' : 'eicr-section-card')}>
+        <Collapsible open={openSections.environmental} onOpenChange={() => toggleSection('environmental')}>
+          <CollapsibleTrigger className="w-full">
+            {isMobile ? (
+              <div className="flex items-center gap-3 py-4 px-4 bg-card/30 border-b border-border/20">
+                <div className="h-10 w-10 rounded-xl bg-teal-500/20 flex items-center justify-center shrink-0">
+                  <Thermometer className="h-5 w-5 text-teal-400" />
+                </div>
+                <div className="flex-1 text-left min-w-0">
+                  <h3 className="font-semibold text-foreground">Environmental Conditions</h3>
+                  <span className="text-xs text-white">Temperature, noise, weather</span>
+                </div>
+                <ChevronDown className={cn('h-5 w-5 text-white transition-transform shrink-0', openSections.environmental && 'rotate-180')} />
+              </div>
+            ) : (
+              <div className="flex items-center justify-between py-4 px-4 cursor-pointer hover:bg-white/5 transition-colors">
+                <div className="flex items-center gap-3">
+                  <div className="w-9 h-9 rounded-xl bg-teal-500/15 flex items-center justify-center">
+                    <Thermometer className="h-4 w-4 text-teal-400" />
+                  </div>
+                  <span className="text-white font-semibold">Environmental Conditions</span>
+                </div>
+                <ChevronDown className={cn('h-5 w-5 text-white transition-transform', openSections.environmental && 'rotate-180')} />
+              </div>
+            )}
+          </CollapsibleTrigger>
+          <CollapsibleContent>
+            <div className={cn('space-y-4', isMobile ? 'px-4 py-4' : 'px-4 pb-4')}>
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                <div className="space-y-2">
+                  <Label className="text-sm">Ambient Temperature (C)</Label>
+                  <Input
+                    placeholder="e.g., 21"
+                    value={formData.ambientTemperature || ''}
+                    onChange={(e) => onUpdate('ambientTemperature', e.target.value)}
+                    className="h-11 text-base touch-manipulation border-white/30 focus:border-elec-yellow focus:ring-elec-yellow"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label className="text-sm">Ambient Noise Level (dB)</Label>
+                  <Input
+                    placeholder="e.g., 45"
+                    value={formData.ambientNoiseLevel || ''}
+                    onChange={(e) => onUpdate('ambientNoiseLevel', e.target.value)}
+                    className="h-11 text-base touch-manipulation border-white/30 focus:border-elec-yellow focus:ring-elec-yellow"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label className="text-sm">Weather Conditions</Label>
+                  <Select
+                    value={formData.weatherConditions || ''}
+                    onValueChange={(value) => onUpdate('weatherConditions', value)}
+                  >
+                    <SelectTrigger className="h-11 touch-manipulation bg-elec-gray border-white/30 focus:border-elec-yellow focus:ring-elec-yellow">
+                      <SelectValue placeholder="Select" />
+                    </SelectTrigger>
+                    <SelectContent className="z-[100] bg-background border-border text-foreground">
+                      <SelectItem value="dry">Dry</SelectItem>
+                      <SelectItem value="wet">Wet</SelectItem>
+                      <SelectItem value="windy">Windy</SelectItem>
+                      <SelectItem value="extreme-heat">Extreme Heat</SelectItem>
+                      <SelectItem value="extreme-cold">Extreme Cold</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+              </div>
+            </div>
+          </CollapsibleContent>
+        </Collapsible>
+      </div>
+
+      {/* Individual Device Test Schedule */}
+      <div className={cn(isMobile ? '' : 'eicr-section-card')}>
+        <Collapsible open={openSections.deviceSchedule} onOpenChange={() => toggleSection('deviceSchedule')}>
+          <CollapsibleTrigger className="w-full">
+            {isMobile ? (
+              <div className="flex items-center gap-3 py-4 px-4 bg-card/30 border-b border-border/20">
+                <div className="h-10 w-10 rounded-xl bg-red-500/20 flex items-center justify-center shrink-0">
+                  <ClipboardCheck className="h-5 w-5 text-red-400" />
+                </div>
+                <div className="flex-1 text-left min-w-0">
+                  <h3 className="font-semibold text-foreground">Device Test Schedule</h3>
+                  <span className="text-xs text-white">
+                    Individual device results
+                  </span>
+                </div>
+                <ChevronDown className={cn('h-5 w-5 text-white transition-transform shrink-0', openSections.deviceSchedule && 'rotate-180')} />
+              </div>
+            ) : (
+              <div className="flex items-center justify-between py-4 px-4 cursor-pointer hover:bg-white/5 transition-colors">
+                <div className="flex items-center gap-3">
+                  <div className="w-9 h-9 rounded-xl bg-red-500/15 flex items-center justify-center">
+                    <ClipboardCheck className="h-4 w-4 text-red-400" />
+                  </div>
+                  <span className="text-white font-semibold">Individual Device Test Schedule</span>
+                </div>
+                <ChevronDown className={cn('h-5 w-5 text-white transition-transform', openSections.deviceSchedule && 'rotate-180')} />
+              </div>
+            )}
+          </CollapsibleTrigger>
+          <CollapsibleContent>
+            <div className={cn('space-y-6', isMobile ? 'px-4 py-4' : 'px-4 pb-4')}>
+              {/* Detectors */}
+              <div className="space-y-3">
+                <h4 className="font-medium text-sm text-red-400 flex items-center gap-2">
+                  <div className="w-1.5 h-1.5 rounded-full bg-red-400"></div>
+                  Detectors ({(formData.detectors || []).length})
+                </h4>
+                {(formData.detectors || []).map((device: any, index: number) => (
+                  <div key={device.id} className="bg-black/40 rounded-lg p-3">
+                    <div className="grid grid-cols-1 sm:grid-cols-5 gap-2">
+                      <Input placeholder="Location" value={device.location || ''} onChange={(e) => {
+                        const items = [...(formData.detectors || [])];
+                        items[index] = { ...items[index], location: e.target.value };
+                        onUpdate('detectors', items);
+                      }} className="h-11 text-sm touch-manipulation border-white/30 focus:border-elec-yellow focus:ring-elec-yellow" />
+                      <Input placeholder="Device ID" value={device.serialNumber || ''} onChange={(e) => {
+                        const items = [...(formData.detectors || [])];
+                        items[index] = { ...items[index], serialNumber: e.target.value };
+                        onUpdate('detectors', items);
+                      }} className="h-11 text-sm touch-manipulation border-white/30 focus:border-elec-yellow focus:ring-elec-yellow" />
+                      <Input placeholder="Type" value={device.type || ''} onChange={(e) => {
+                        const items = [...(formData.detectors || [])];
+                        items[index] = { ...items[index], type: e.target.value };
+                        onUpdate('detectors', items);
+                      }} className="h-11 text-sm touch-manipulation border-white/30 focus:border-elec-yellow focus:ring-elec-yellow" />
+                      <TestResultSelect value={device.testResult || ''} onChange={(v) => {
+                        const items = [...(formData.detectors || [])];
+                        items[index] = { ...items[index], testResult: v };
+                        onUpdate('detectors', items);
+                      }} />
+                      <Button variant="ghost" size="sm" onClick={() => {
+                        const items = (formData.detectors || []).filter((_: any, i: number) => i !== index);
+                        onUpdate('detectors', items);
+                      }} className="h-11 w-11 p-0 text-red-400 hover:bg-red-500/10 touch-manipulation"><Trash2 className="h-3.5 w-3.5" /></Button>
+                    </div>
+                  </div>
+                ))}
+                <Button variant="outline" size="sm" className="h-11 touch-manipulation border-dashed border-white/20 hover:border-red-500 hover:bg-red-500/10" onClick={() => {
+                  const items = formData.detectors || [];
+                  onUpdate('detectors', [...items, { id: `det-${Date.now()}`, zoneId: '', location: '', type: '', make: '', model: '', serialNumber: '', installDate: '', testResult: '', notes: '' }]);
+                }}><Plus className="h-3.5 w-3.5 mr-1" />Add Detector</Button>
+              </div>
+
+              {/* Call Points */}
+              <div className="space-y-3">
+                <h4 className="font-medium text-sm text-green-400 flex items-center gap-2">
+                  <div className="w-1.5 h-1.5 rounded-full bg-green-400"></div>
+                  Call Points ({(formData.callPoints || []).length})
+                </h4>
+                {(formData.callPoints || []).map((device: any, index: number) => (
+                  <div key={device.id} className="bg-black/40 rounded-lg p-3">
+                    <div className="grid grid-cols-1 sm:grid-cols-4 gap-2">
+                      <Input placeholder="Location" value={device.location || ''} onChange={(e) => {
+                        const items = [...(formData.callPoints || [])];
+                        items[index] = { ...items[index], location: e.target.value };
+                        onUpdate('callPoints', items);
+                      }} className="h-11 text-sm touch-manipulation border-white/30 focus:border-elec-yellow focus:ring-elec-yellow" />
+                      <Input placeholder="Type" value={device.type || ''} onChange={(e) => {
+                        const items = [...(formData.callPoints || [])];
+                        items[index] = { ...items[index], type: e.target.value };
+                        onUpdate('callPoints', items);
+                      }} className="h-11 text-sm touch-manipulation border-white/30 focus:border-elec-yellow focus:ring-elec-yellow" />
+                      <TestResultSelect value={device.testResult || ''} onChange={(v) => {
+                        const items = [...(formData.callPoints || [])];
+                        items[index] = { ...items[index], testResult: v };
+                        onUpdate('callPoints', items);
+                      }} />
+                      <Button variant="ghost" size="sm" onClick={() => {
+                        const items = (formData.callPoints || []).filter((_: any, i: number) => i !== index);
+                        onUpdate('callPoints', items);
+                      }} className="h-11 w-11 p-0 text-red-400 hover:bg-red-500/10 touch-manipulation"><Trash2 className="h-3.5 w-3.5" /></Button>
+                    </div>
+                  </div>
+                ))}
+                <Button variant="outline" size="sm" className="h-11 touch-manipulation border-dashed border-white/20 hover:border-green-500 hover:bg-green-500/10" onClick={() => {
+                  const items = formData.callPoints || [];
+                  onUpdate('callPoints', [...items, { id: `cp-${Date.now()}`, zoneId: '', location: '', type: 'resettable', make: '', model: '', testResult: '' }]);
+                }}><Plus className="h-3.5 w-3.5 mr-1" />Add Call Point</Button>
+              </div>
+
+              {/* Sounders */}
+              <div className="space-y-3">
+                <h4 className="font-medium text-sm text-orange-400 flex items-center gap-2">
+                  <div className="w-1.5 h-1.5 rounded-full bg-orange-400"></div>
+                  Sounders ({(formData.sounders || []).length})
+                </h4>
+                {(formData.sounders || []).map((device: any, index: number) => (
+                  <div key={device.id} className="bg-black/40 rounded-lg p-3">
+                    <div className="grid grid-cols-1 sm:grid-cols-4 gap-2">
+                      <Input placeholder="Location" value={device.location || ''} onChange={(e) => {
+                        const items = [...(formData.sounders || [])];
+                        items[index] = { ...items[index], location: e.target.value };
+                        onUpdate('sounders', items);
+                      }} className="h-11 text-sm touch-manipulation border-white/30 focus:border-elec-yellow focus:ring-elec-yellow" />
+                      <Input placeholder="dB Reading" value={device.dBReading || ''} onChange={(e) => {
+                        const items = [...(formData.sounders || [])];
+                        items[index] = { ...items[index], dBReading: e.target.value };
+                        onUpdate('sounders', items);
+                      }} className="h-11 text-sm touch-manipulation border-white/30 focus:border-elec-yellow focus:ring-elec-yellow" />
+                      <TestResultSelect value={device.testResult || ''} onChange={(v) => {
+                        const items = [...(formData.sounders || [])];
+                        items[index] = { ...items[index], testResult: v };
+                        onUpdate('sounders', items);
+                      }} />
+                      <Button variant="ghost" size="sm" onClick={() => {
+                        const items = (formData.sounders || []).filter((_: any, i: number) => i !== index);
+                        onUpdate('sounders', items);
+                      }} className="h-11 w-11 p-0 text-red-400 hover:bg-red-500/10 touch-manipulation"><Trash2 className="h-3.5 w-3.5" /></Button>
+                    </div>
+                  </div>
+                ))}
+                <Button variant="outline" size="sm" className="h-11 touch-manipulation border-dashed border-white/20 hover:border-orange-500 hover:bg-orange-500/10" onClick={() => {
+                  const items = formData.sounders || [];
+                  onUpdate('sounders', [...items, { id: `snd-${Date.now()}`, zoneId: '', location: '', type: 'electronic-sounder', make: '', model: '', dBReading: '', testResult: '' }]);
+                }}><Plus className="h-3.5 w-3.5 mr-1" />Add Sounder</Button>
+              </div>
+
+              {/* Summary */}
+              {((formData.detectors || []).length > 0 || (formData.callPoints || []).length > 0 || (formData.sounders || []).length > 0) && (
+                <div className="bg-black/40 rounded-xl p-4">
+                  <h4 className="font-medium mb-3 text-sm text-elec-yellow">Device Test Summary</h4>
+                  <div className="grid grid-cols-3 gap-3 text-sm">
+                    <div className="text-center p-2 bg-green-500/10 rounded-lg">
+                      <p className="text-lg font-bold text-green-400">
+                        {[...(formData.detectors || []), ...(formData.callPoints || []), ...(formData.sounders || [])].filter((d: any) => d.testResult === 'pass').length}
+                      </p>
+                      <p className="text-white text-xs">Pass</p>
+                    </div>
+                    <div className="text-center p-2 bg-red-500/10 rounded-lg">
+                      <p className="text-lg font-bold text-red-400">
+                        {[...(formData.detectors || []), ...(formData.callPoints || []), ...(formData.sounders || [])].filter((d: any) => d.testResult === 'fail').length}
+                      </p>
+                      <p className="text-white text-xs">Fail</p>
+                    </div>
+                    <div className="text-center p-2 bg-blue-500/10 rounded-lg">
+                      <p className="text-lg font-bold text-blue-400">
+                        {[...(formData.detectors || []), ...(formData.callPoints || []), ...(formData.sounders || [])].length}
+                      </p>
+                      <p className="text-white text-xs">Total</p>
+                    </div>
+                  </div>
+                </div>
+              )}
             </div>
           </CollapsibleContent>
         </Collapsible>

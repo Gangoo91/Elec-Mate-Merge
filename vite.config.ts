@@ -159,7 +159,6 @@ export default defineConfig(({ mode }) => ({
       '@tiptap/starter-kit',
       '@tiptap/extension-placeholder',
       '@react-google-maps/api',
-      '@mendable/firecrawl-js',
       '@elevenlabs/react',
       'html5-qrcode',
     ],

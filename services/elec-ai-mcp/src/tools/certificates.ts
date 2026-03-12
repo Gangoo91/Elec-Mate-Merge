@@ -1,7 +1,9 @@
 /**
  * Certificate tools — read_certificates, generate_certificate_pdf, send_certificate,
  *                     get_expiring_certificates, send_client_expiry_reminders,
- *                     create_eicr, update_eicr, read_eicr
+ *                     create_eicr, update_eicr, read_eicr,
+ *                     create_eic, update_eic, read_eic,
+ *                     create_minor_works, update_minor_works, read_minor_works
  *
  * SECURITY.md §7 — Certificate safeguards:
  *   - Only send certificates marked as complete
@@ -510,6 +512,525 @@ export async function readEicr(args: Record<string, unknown>, user: UserContext)
       .from('inspection_photos')
       .select('id, image_url, description, tags, created_at')
       .eq('report_id', eicr.report_id)
+      .order('created_at', { ascending: true });
+    result.photos = photos || [];
+  }
+
+  return result;
+}
+
+// ─── EIC Tools (3) ───────────────────────────────────────────────────────
+
+export async function createEic(args: Record<string, unknown>, user: UserContext) {
+  if (typeof args.client_name !== 'string' || args.client_name.trim().length === 0) {
+    throw new Error('client_name is required');
+  }
+  if (
+    typeof args.installation_address !== 'string' ||
+    args.installation_address.trim().length === 0
+  ) {
+    throw new Error('installation_address is required');
+  }
+
+  const supabase = user.supabase;
+
+  // Generate certificate number via DB RPC with hex fallback
+  let certificateNumber: string;
+  try {
+    const { data: certNum, error: certNumError } = await supabase.rpc(
+      'generate_certificate_number',
+      {
+        p_report_type: 'eic',
+      }
+    );
+    if (certNumError || !certNum) {
+      throw new Error('RPC failed');
+    }
+    certificateNumber = certNum as string;
+  } catch {
+    const hex = Array.from(crypto.getRandomValues(new Uint8Array(4)))
+      .map((b) => b.toString(16).padStart(2, '0'))
+      .join('');
+    certificateNumber = `EIC-${new Date().getFullYear()}-${hex.toUpperCase()}`;
+  }
+
+  const reportId = `eic-${crypto.randomUUID()}`;
+  const propertyType = typeof args.property_type === 'string' ? args.property_type : 'domestic';
+  const inspectionDate =
+    typeof args.inspection_date === 'string'
+      ? args.inspection_date
+      : new Date().toISOString().split('T')[0];
+  const inspectorName = typeof args.inspector_name === 'string' ? args.inspector_name : null;
+  const customerId = typeof args.customer_id === 'string' ? args.customer_id : null;
+  const descriptionOfInstallation =
+    typeof args.description_of_installation === 'string'
+      ? args.description_of_installation
+      : null;
+
+  // Calculate default expiry: 5 years for domestic, 3 years for commercial
+  const expiryYears = propertyType === 'commercial' ? 3 : 5;
+  const expiryDate = new Date(inspectionDate);
+  expiryDate.setFullYear(expiryDate.getFullYear() + expiryYears);
+
+  const initialData = {
+    client_name: (args.client_name as string).trim(),
+    installation_address: (args.installation_address as string).trim(),
+    property_type: propertyType,
+    description_of_installation: descriptionOfInstallation,
+    design: {},
+    construction: {},
+    inspection: {},
+    testing: {},
+    schedule_of_circuits: [],
+    inspector: inspectorName ? { name: inspectorName } : {},
+    company: {},
+  };
+
+  const { data, error } = await supabase
+    .from('reports')
+    .insert({
+      user_id: user.userId,
+      report_id: reportId,
+      report_type: 'eic',
+      certificate_number: certificateNumber,
+      status: 'draft',
+      client_name: (args.client_name as string).trim(),
+      installation_address: (args.installation_address as string).trim(),
+      inspection_date: inspectionDate,
+      inspector_name: inspectorName,
+      customer_id: customerId,
+      expiry_date: expiryDate.toISOString().split('T')[0],
+      edit_version: 1,
+      data: initialData,
+    })
+    .select('id, report_id, certificate_number, status, created_at')
+    .single();
+
+  if (error) throw new Error(`Failed to create EIC: ${error.message}`);
+
+  return {
+    eic_id: data.id,
+    report_id: data.report_id,
+    certificate_number: data.certificate_number,
+    status: data.status,
+    created_at: data.created_at,
+  };
+}
+
+export async function updateEic(args: Record<string, unknown>, user: UserContext) {
+  if (typeof args.eic_id !== 'string') {
+    throw new Error('eic_id is required');
+  }
+  if (typeof args.edit_version !== 'number') {
+    throw new Error('edit_version is required (optimistic concurrency)');
+  }
+  if (typeof args.data !== 'object' || args.data === null) {
+    throw new Error('data object is required');
+  }
+
+  const supabase = user.supabase;
+
+  // Fetch existing EIC
+  const { data: existing, error: fetchError } = await supabase
+    .from('reports')
+    .select('id, report_type, data, edit_version, certificate_number')
+    .eq('id', args.eic_id)
+    .single();
+
+  if (fetchError || !existing) {
+    throw new Error('EIC not found');
+  }
+  if (existing.report_type !== 'eic') {
+    throw new Error('Report is not an EIC');
+  }
+  if (existing.edit_version !== args.edit_version) {
+    throw new Error(
+      `Concurrent edit conflict: expected version ${args.edit_version} but found ${existing.edit_version}. Re-read the EIC and try again.`
+    );
+  }
+
+  // Deep merge new data into existing
+  const currentData = (existing.data as Record<string, unknown>) || {};
+  const newData = args.data as Record<string, unknown>;
+  const mergedData = { ...currentData, ...newData };
+
+  // Build update payload
+  const updatePayload: Record<string, unknown> = {
+    data: mergedData,
+    edit_version: (existing.edit_version as number) + 1,
+    updated_at: new Date().toISOString(),
+  };
+
+  // Sync relevant top-level columns from merged data
+  if (typeof mergedData.client_name === 'string') {
+    updatePayload.client_name = mergedData.client_name;
+  }
+  if (typeof mergedData.installation_address === 'string') {
+    updatePayload.installation_address = mergedData.installation_address;
+  }
+  if (typeof mergedData.inspection_date === 'string') {
+    updatePayload.inspection_date = mergedData.inspection_date;
+  }
+  if (typeof (mergedData.inspector as Record<string, unknown>)?.name === 'string') {
+    updatePayload.inspector_name = (mergedData.inspector as Record<string, unknown>).name;
+  }
+
+  // Allow status update if provided
+  if (typeof args.status === 'string') {
+    updatePayload.status = args.status;
+  }
+
+  // CAS guard: only update if edit_version still matches
+  const { data: updated, error: updateError } = await supabase
+    .from('reports')
+    .update(updatePayload)
+    .eq('id', args.eic_id)
+    .eq('edit_version', args.edit_version)
+    .select('id, certificate_number, edit_version, status, updated_at')
+    .single();
+
+  if (updateError) {
+    throw new Error(`Failed to update EIC: ${updateError.message}`);
+  }
+  if (!updated) {
+    throw new Error('Concurrent edit conflict: another update occurred. Re-read and try again.');
+  }
+
+  return {
+    eic_id: updated.id,
+    certificate_number: updated.certificate_number,
+    edit_version: updated.edit_version,
+    status: updated.status,
+    section: typeof args.section === 'string' ? args.section : undefined,
+    updated_fields_count: Object.keys(newData).length,
+    updated_at: updated.updated_at,
+  };
+}
+
+export async function readEic(args: Record<string, unknown>, user: UserContext) {
+  if (typeof args.eic_id !== 'string') {
+    throw new Error('eic_id is required');
+  }
+
+  const supabase = user.supabase;
+
+  const { data: eic, error } = await supabase
+    .from('reports')
+    .select('*')
+    .eq('id', args.eic_id)
+    .single();
+
+  if (error || !eic) {
+    throw new Error('EIC not found');
+  }
+  if (eic.report_type !== 'eic') {
+    throw new Error('Report is not an EIC');
+  }
+
+  const eicData = (eic.data as Record<string, unknown>) || {};
+  const includeSet = new Set<string>();
+
+  if (Array.isArray(args.include)) {
+    for (const item of args.include) {
+      if (typeof item === 'string') {
+        if (item === 'all') {
+          includeSet.add('circuits');
+          includeSet.add('photos');
+        } else {
+          includeSet.add(item);
+        }
+      }
+    }
+  }
+
+  // Count items from JSONB data
+  const scheduleOfCircuits = Array.isArray(eicData.schedule_of_circuits)
+    ? eicData.schedule_of_circuits
+    : [];
+
+  // Count photos from inspection_photos table
+  const { count: photoCount } = await supabase
+    .from('inspection_photos')
+    .select('id', { count: 'exact', head: true })
+    .eq('report_id', eic.report_id);
+
+  const result: Record<string, unknown> = {
+    id: eic.id,
+    certificate_number: eic.certificate_number,
+    report_id: eic.report_id,
+    status: eic.status,
+    client_name: eic.client_name,
+    installation_address: eic.installation_address,
+    inspection_date: eic.inspection_date,
+    property_type: eicData.property_type || 'domestic',
+    inspector_name: eic.inspector_name,
+    edit_version: eic.edit_version,
+    expiry_date: eic.expiry_date,
+    pdf_url: eic.pdf_url,
+    created_at: eic.created_at,
+    updated_at: eic.updated_at,
+    data: eicData,
+    circuits_count: scheduleOfCircuits.length,
+    photos_count: photoCount || 0,
+  };
+
+  // Include full arrays if requested
+  if (includeSet.has('circuits')) {
+    result.schedule_of_circuits = scheduleOfCircuits;
+  }
+  if (includeSet.has('photos')) {
+    const { data: photos } = await supabase
+      .from('inspection_photos')
+      .select('id, image_url, description, tags, created_at')
+      .eq('report_id', eic.report_id)
+      .order('created_at', { ascending: true });
+    result.photos = photos || [];
+  }
+
+  return result;
+}
+
+// ─── Minor Works Tools (3) ───────────────────────────────────────────────
+
+export async function createMinorWorks(args: Record<string, unknown>, user: UserContext) {
+  if (typeof args.client_name !== 'string' || args.client_name.trim().length === 0) {
+    throw new Error('client_name is required');
+  }
+  if (
+    typeof args.installation_address !== 'string' ||
+    args.installation_address.trim().length === 0
+  ) {
+    throw new Error('installation_address is required');
+  }
+
+  const supabase = user.supabase;
+
+  // Generate certificate number via DB RPC with hex fallback
+  let certificateNumber: string;
+  try {
+    const { data: certNum, error: certNumError } = await supabase.rpc(
+      'generate_certificate_number',
+      {
+        p_report_type: 'minor-works',
+      }
+    );
+    if (certNumError || !certNum) {
+      throw new Error('RPC failed');
+    }
+    certificateNumber = certNum as string;
+  } catch {
+    const hex = Array.from(crypto.getRandomValues(new Uint8Array(4)))
+      .map((b) => b.toString(16).padStart(2, '0'))
+      .join('');
+    certificateNumber = `MW-${new Date().getFullYear()}-${hex.toUpperCase()}`;
+  }
+
+  const reportId = `mw-${crypto.randomUUID()}`;
+  const inspectionDate =
+    typeof args.inspection_date === 'string'
+      ? args.inspection_date
+      : new Date().toISOString().split('T')[0];
+  const inspectorName = typeof args.inspector_name === 'string' ? args.inspector_name : null;
+  const customerId = typeof args.customer_id === 'string' ? args.customer_id : null;
+  const descriptionOfWork =
+    typeof args.description_of_work === 'string' ? args.description_of_work : null;
+
+  const initialData = {
+    client_name: (args.client_name as string).trim(),
+    installation_address: (args.installation_address as string).trim(),
+    description_of_work: descriptionOfWork,
+    part_1_description: {},
+    part_2_installation: {},
+    part_3_essential_tests: {},
+    part_4_declaration: {},
+    inspector: inspectorName ? { name: inspectorName } : {},
+    company: {},
+  };
+
+  // Minor works certificates don't expire
+  const { data, error } = await supabase
+    .from('reports')
+    .insert({
+      user_id: user.userId,
+      report_id: reportId,
+      report_type: 'minor-works',
+      certificate_number: certificateNumber,
+      status: 'draft',
+      client_name: (args.client_name as string).trim(),
+      installation_address: (args.installation_address as string).trim(),
+      inspection_date: inspectionDate,
+      inspector_name: inspectorName,
+      customer_id: customerId,
+      edit_version: 1,
+      data: initialData,
+    })
+    .select('id, report_id, certificate_number, status, created_at')
+    .single();
+
+  if (error) throw new Error(`Failed to create Minor Works: ${error.message}`);
+
+  return {
+    minor_works_id: data.id,
+    report_id: data.report_id,
+    certificate_number: data.certificate_number,
+    status: data.status,
+    created_at: data.created_at,
+  };
+}
+
+export async function updateMinorWorks(args: Record<string, unknown>, user: UserContext) {
+  if (typeof args.minor_works_id !== 'string') {
+    throw new Error('minor_works_id is required');
+  }
+  if (typeof args.edit_version !== 'number') {
+    throw new Error('edit_version is required (optimistic concurrency)');
+  }
+  if (typeof args.data !== 'object' || args.data === null) {
+    throw new Error('data object is required');
+  }
+
+  const supabase = user.supabase;
+
+  // Fetch existing Minor Works
+  const { data: existing, error: fetchError } = await supabase
+    .from('reports')
+    .select('id, report_type, data, edit_version, certificate_number')
+    .eq('id', args.minor_works_id)
+    .single();
+
+  if (fetchError || !existing) {
+    throw new Error('Minor Works certificate not found');
+  }
+  if (existing.report_type !== 'minor-works') {
+    throw new Error('Report is not a Minor Works certificate');
+  }
+  if (existing.edit_version !== args.edit_version) {
+    throw new Error(
+      `Concurrent edit conflict: expected version ${args.edit_version} but found ${existing.edit_version}. Re-read the Minor Works and try again.`
+    );
+  }
+
+  // Deep merge new data into existing
+  const currentData = (existing.data as Record<string, unknown>) || {};
+  const newData = args.data as Record<string, unknown>;
+  const mergedData = { ...currentData, ...newData };
+
+  // Build update payload
+  const updatePayload: Record<string, unknown> = {
+    data: mergedData,
+    edit_version: (existing.edit_version as number) + 1,
+    updated_at: new Date().toISOString(),
+  };
+
+  // Sync relevant top-level columns from merged data
+  if (typeof mergedData.client_name === 'string') {
+    updatePayload.client_name = mergedData.client_name;
+  }
+  if (typeof mergedData.installation_address === 'string') {
+    updatePayload.installation_address = mergedData.installation_address;
+  }
+  if (typeof mergedData.inspection_date === 'string') {
+    updatePayload.inspection_date = mergedData.inspection_date;
+  }
+  if (typeof (mergedData.inspector as Record<string, unknown>)?.name === 'string') {
+    updatePayload.inspector_name = (mergedData.inspector as Record<string, unknown>).name;
+  }
+
+  // Allow status update if provided
+  if (typeof args.status === 'string') {
+    updatePayload.status = args.status;
+  }
+
+  // CAS guard: only update if edit_version still matches
+  const { data: updated, error: updateError } = await supabase
+    .from('reports')
+    .update(updatePayload)
+    .eq('id', args.minor_works_id)
+    .eq('edit_version', args.edit_version)
+    .select('id, certificate_number, edit_version, status, updated_at')
+    .single();
+
+  if (updateError) {
+    throw new Error(`Failed to update Minor Works: ${updateError.message}`);
+  }
+  if (!updated) {
+    throw new Error('Concurrent edit conflict: another update occurred. Re-read and try again.');
+  }
+
+  return {
+    minor_works_id: updated.id,
+    certificate_number: updated.certificate_number,
+    edit_version: updated.edit_version,
+    status: updated.status,
+    section: typeof args.section === 'string' ? args.section : undefined,
+    updated_fields_count: Object.keys(newData).length,
+    updated_at: updated.updated_at,
+  };
+}
+
+export async function readMinorWorks(args: Record<string, unknown>, user: UserContext) {
+  if (typeof args.minor_works_id !== 'string') {
+    throw new Error('minor_works_id is required');
+  }
+
+  const supabase = user.supabase;
+
+  const { data: mw, error } = await supabase
+    .from('reports')
+    .select('*')
+    .eq('id', args.minor_works_id)
+    .single();
+
+  if (error || !mw) {
+    throw new Error('Minor Works certificate not found');
+  }
+  if (mw.report_type !== 'minor-works') {
+    throw new Error('Report is not a Minor Works certificate');
+  }
+
+  const mwData = (mw.data as Record<string, unknown>) || {};
+  const includeSet = new Set<string>();
+
+  if (Array.isArray(args.include)) {
+    for (const item of args.include) {
+      if (typeof item === 'string') {
+        if (item === 'all') {
+          includeSet.add('photos');
+        } else {
+          includeSet.add(item);
+        }
+      }
+    }
+  }
+
+  // Count photos from inspection_photos table
+  const { count: photoCount } = await supabase
+    .from('inspection_photos')
+    .select('id', { count: 'exact', head: true })
+    .eq('report_id', mw.report_id);
+
+  const result: Record<string, unknown> = {
+    id: mw.id,
+    certificate_number: mw.certificate_number,
+    report_id: mw.report_id,
+    status: mw.status,
+    client_name: mw.client_name,
+    installation_address: mw.installation_address,
+    inspection_date: mw.inspection_date,
+    inspector_name: mw.inspector_name,
+    edit_version: mw.edit_version,
+    pdf_url: mw.pdf_url,
+    created_at: mw.created_at,
+    updated_at: mw.updated_at,
+    data: mwData,
+    photos_count: photoCount || 0,
+  };
+
+  if (includeSet.has('photos')) {
+    const { data: photos } = await supabase
+      .from('inspection_photos')
+      .select('id, image_url, description, tags, created_at')
+      .eq('report_id', mw.report_id)
       .order('created_at', { ascending: true });
     result.photos = photos || [];
   }

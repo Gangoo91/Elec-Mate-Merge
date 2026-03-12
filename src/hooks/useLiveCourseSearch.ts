@@ -61,20 +61,28 @@ export const useLiveCourseSearch = (params: LiveCourseSearchParams = {}) => {
           location: searchLocation,
         });
 
-        const { data: liveData, error } = await supabase.functions.invoke(
-          'live-course-aggregator',
-          {
-            body: { keywords: searchKeywords, location: searchLocation },
-          }
-        );
+        // Read from pipeline-populated education cache
+        const { data: cacheRow, error } = await supabase
+          .from('live_education_cache')
+          .select('education_data')
+          .order('created_at', { ascending: false })
+          .limit(1)
+          .maybeSingle();
 
         if (error) {
-          throw new Error(error.message || 'Failed to fetch live course data');
+          throw new Error(error.message || 'Failed to fetch course data');
         }
 
-        if (liveData && liveData.courses && liveData.courses.length > 0) {
+        const cachedCourses = (cacheRow?.education_data as any[]) || [];
+        const keywordsLower = searchKeywords.toLowerCase();
+        const matchingCourses = cachedCourses.filter((course: any) => {
+          const text = `${course.title || ''} ${course.description || ''} ${course.category || ''}`.toLowerCase();
+          return keywordsLower.split(/\s+/).some((kw: string) => text.includes(kw));
+        });
+
+        if (matchingCourses.length > 0) {
           // Enhanced mapping of live data with intelligent property inference
-          const liveCourses = liveData.courses.map((course: any) => ({
+          const liveCourses = matchingCourses.map((course: any) => ({
             ...course,
             isLive: true,
             // Ensure all required properties exist with intelligent defaults
@@ -115,7 +123,7 @@ export const useLiveCourseSearch = (params: LiveCourseSearchParams = {}) => {
           setData({
             courses: deduplicatedCourses,
             total: deduplicatedCourses.length,
-            summary: liveData.summary,
+            summary: undefined,
             isLiveData: true,
             loading: false,
             error: null,
@@ -215,79 +223,30 @@ export const useLiveCourseSearch = (params: LiveCourseSearchParams = {}) => {
               });
             }
 
-            const { data: liveData, error } = await supabase.functions.invoke(
-              'live-course-aggregator',
-              {
-                body: {
-                  keywords: keywords || 'electrical course',
-                  location: location || 'United Kingdom',
-                },
-              }
-            );
+            // Read from pipeline-populated education cache
+            const { data: cacheRow, error } = await supabase
+              .from('live_education_cache')
+              .select('education_data')
+              .order('created_at', { ascending: false })
+              .limit(1)
+              .maybeSingle();
 
             if (error) {
-              console.error('Refresh API error:', error);
-
-              // Check for specific error types and provide helpful messages
-              if (error.message?.includes('Failed to fetch') || error.message?.includes('fetch')) {
-                throw new Error(
-                  'Network connection issue - please check your internet connection and try again.'
-                );
-              } else if (
-                error.message?.includes('timeout') ||
-                error.message?.includes('timed out')
-              ) {
-                throw new Error(
-                  'Search is taking too long - try using more specific keywords like "18th Edition" or "EV charging".'
-                );
-              } else if (
-                error.message?.includes('500') ||
-                error.message?.includes('502') ||
-                error.message?.includes('503')
-              ) {
-                throw new Error(
-                  'Course search service is temporarily busy - please try again in a moment.'
-                );
-              }
-
-              throw new Error(error.message || 'Unable to search for courses right now');
+              throw new Error(error.message || 'Failed to fetch course data');
             }
 
-            // Handle service-level errors with better messages
-            if (liveData?.error) {
-              console.error('Service error:', liveData.error, liveData.technical_error);
+            const cachedCourses = (cacheRow?.education_data as any[]) || [];
+            const refreshKeywords = (keywords || 'electrical course').toLowerCase();
+            const matchingCourses = cachedCourses.filter((course: any) => {
+              const text = `${course.title || ''} ${course.description || ''} ${course.category || ''}`.toLowerCase();
+              return refreshKeywords.split(/\s+/).some((kw: string) => text.includes(kw));
+            });
 
-              if (
-                liveData.technical_error?.includes('timeout') ||
-                liveData.technical_error?.includes('timed out')
-              ) {
-                throw new Error(
-                  'Course search is taking longer than expected. Try searching for specific terms like "electrical training" or "Level 2".'
-                );
-              } else if (
-                liveData.technical_error?.includes('API key') ||
-                liveData.technical_error?.includes('configuration')
-              ) {
-                throw new Error(
-                  'Course data service is temporarily unavailable. Please try again in a few minutes.'
-                );
-              } else if (
-                liveData.technical_error?.includes('rate limit') ||
-                liveData.technical_error?.includes('quota')
-              ) {
-                throw new Error('Too many searches right now. Please wait a moment and try again.');
-              }
+            console.log('Data refreshed from cache:', matchingCourses.length, 'courses');
 
-              throw new Error(
-                'Unable to fetch course data at the moment. Please try again shortly.'
-              );
-            }
-
-            console.log('✅ Data refreshed successfully:', liveData);
-
-            if (liveData && liveData.courses && liveData.courses.length > 0) {
+            if (matchingCourses.length > 0) {
               // Enhanced mapping of live data with intelligent property inference
-              const liveCourses = liveData.courses.map((course: any) => ({
+              const liveCourses = matchingCourses.map((course: any) => ({
                 ...course,
                 isLive: true,
                 // Ensure all required properties exist with intelligent defaults
@@ -329,7 +288,7 @@ export const useLiveCourseSearch = (params: LiveCourseSearchParams = {}) => {
               setData({
                 courses: deduplicatedCourses,
                 total: deduplicatedCourses.length,
-                summary: liveData.summary,
+                summary: undefined,
                 isLiveData: true,
                 loading: false,
                 error: null,

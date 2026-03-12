@@ -843,9 +843,16 @@
             <img src="{{ company_logo }}" alt="Company Logo" />
           </div>
           {% endif %}
+          {% if registration_scheme_logo %}
+          <div class="company-logo" style="margin-left: 8px;">
+            <img src="{{ registration_scheme_logo }}" alt="Scheme Logo" />
+          </div>
+          {% endif %}
           <div class="company-brand-info">
             <div class="company-brand-name">{{ company_name }}</div>
-            {% if bafe_registration %}
+            {% if registration_scheme %}
+            <div class="company-brand-reg">{{ registration_scheme }}</div>
+            {% elsif bafe_registration %}
             <div class="company-brand-reg">BAFE SP203-1: {{ bafe_registration }}</div>
             {% endif %}
           </div>
@@ -908,12 +915,48 @@
               >
               <label>Periodic Test</label>
             </div>
+            <div class="checkbox-item">
+              <span class="checkbox-box {% if certificate_type == 'design' %}checked{% endif %}"
+                >{% if certificate_type == 'design' %}&#10003;{% endif %}</span
+              >
+              <label>Design</label>
+            </div>
+            <div class="checkbox-item">
+              <span class="checkbox-box {% if certificate_type == 'acceptance' %}checked{% endif %}"
+                >{% if certificate_type == 'acceptance' %}&#10003;{% endif %}</span
+              >
+              <label>Acceptance</label>
+            </div>
+            <div class="checkbox-item">
+              <span class="checkbox-box {% if certificate_type == 'verification' %}checked{% endif %}"
+                >{% if certificate_type == 'verification' %}&#10003;{% endif %}</span
+              >
+              <label>Verification</label>
+            </div>
+            <div class="checkbox-item">
+              <span class="checkbox-box {% if certificate_type == 'modification' %}checked{% endif %}"
+                >{% if certificate_type == 'modification' %}&#10003;{% endif %}</span
+              >
+              <label>Modification</label>
+            </div>
           </div>
         </div>
         <div class="inline-group">
           <span class="inline-label">Inspection Date:</span>
           <span class="inline-value">{{ inspection_date }}</span>
         </div>
+        {% if commissioning_date %}
+        <div class="inline-group">
+          <span class="inline-label">Commissioning Date:</span>
+          <span class="inline-value">{{ commissioning_date }}</span>
+        </div>
+        {% endif %}
+        {% if standard_edition %}
+        <div class="inline-group">
+          <span class="inline-label">Standard:</span>
+          <span class="inline-value">{{ standard_edition }}</span>
+        </div>
+        {% endif %}
         {% if is_periodic and previous_certificate_ref %}
         <div class="inline-group">
           <span class="inline-label">Previous Certificate:</span>
@@ -995,8 +1038,124 @@
           <span class="inline-label">Number of Floors:</span>
           <span class="inline-value">{{ floors_count }}</span>
         </div>
+        {% if estimated_occupancy > 0 %}
+        <div class="inline-group">
+          <span class="inline-label">Est. Occupancy:</span>
+          <span class="inline-value">{{ estimated_occupancy }}</span>
+        </div>
+        {% endif %}
+        {% if occupancy_basis %}
+        <div class="inline-group">
+          <span class="inline-label">Basis:</span>
+          <span class="inline-value">{{ occupancy_basis }}</span>
+        </div>
+        {% endif %}
       </div>
     </div>
+
+    <!-- CERT-TYPE-SPECIFIC SECTIONS -->
+
+    <!-- DESIGN CERTIFICATE DETAILS -->
+    {% if is_design %}
+    <div class="section">
+      <div class="section-title">Design Certificate Details</div>
+      <div class="form-grid">
+        <div class="form-row">
+          <div class="form-label">Design Basis</div>
+          <div class="form-value">{{ design.basis }}</div>
+        </div>
+        <div class="form-row">
+          <div class="form-label">Coverage Category</div>
+          <div class="form-value">{{ design.coverage_category }}</div>
+        </div>
+        {% if design.deviations %}
+        <div class="form-row">
+          <div class="form-label">Deviations from Standard</div>
+          <div class="form-value">{{ design.deviations }}</div>
+        </div>
+        {% endif %}
+        <div class="form-row">
+          <div class="form-label">Document Reference</div>
+          <div class="form-value">{{ design.doc_ref }}</div>
+        </div>
+      </div>
+    </div>
+    {% endif %}
+
+    <!-- ACCEPTANCE CERTIFICATE DETAILS -->
+    {% if is_acceptance %}
+    <div class="section">
+      <div class="section-title">Acceptance Certificate Details</div>
+      <div class="form-grid">
+        <div class="form-row">
+          <div class="form-label">Acceptance Criteria</div>
+          <div class="form-value">{{ acceptance.criteria }}</div>
+        </div>
+      </div>
+      <div class="inline-form" style="margin-top: 2px;">
+        <div class="checkbox-item">
+          <span class="checkbox-box {% if acceptance.training_provided %}checked{% endif %}">{% if acceptance.training_provided %}&#10003;{% endif %}</span>
+          <label>Training Provided</label>
+        </div>
+        <div class="checkbox-item">
+          <span class="checkbox-box {% if acceptance.log_book_provided %}checked{% endif %}">{% if acceptance.log_book_provided %}&#10003;{% endif %}</span>
+          <label>Log Book Provided</label>
+        </div>
+      </div>
+    </div>
+    {% endif %}
+
+    <!-- VERIFICATION CERTIFICATE DETAILS -->
+    {% if is_verification %}
+    <div class="section">
+      <div class="section-title">Verification Certificate Details</div>
+      <div class="form-grid">
+        <div class="form-row">
+          <div class="form-label">Organisation</div>
+          <div class="form-value">{{ verification.organisation }}</div>
+        </div>
+        <div class="form-row">
+          <div class="form-label">Scope</div>
+          <div class="form-value">{{ verification.scope }}</div>
+        </div>
+        <div class="form-row">
+          <div class="form-label">Findings</div>
+          <div class="form-value">{{ verification.findings }}</div>
+        </div>
+      </div>
+      <div class="inline-form" style="margin-top: 2px;">
+        <div class="inline-group">
+          <span class="inline-label">Compliant:</span>
+          <span class="status-badge {% if verification.compliant %}pass{% else %}fail{% endif %}">{% if verification.compliant %}YES{% else %}NO{% endif %}</span>
+        </div>
+      </div>
+    </div>
+    {% endif %}
+
+    <!-- MODIFICATION CERTIFICATE DETAILS -->
+    {% if is_modification %}
+    <div class="section">
+      <div class="section-title">Modification Certificate Details</div>
+      <div class="form-grid">
+        <div class="form-row">
+          <div class="form-label">Description</div>
+          <div class="form-value">{{ modification.description }}</div>
+        </div>
+        <div class="form-row">
+          <div class="form-label">Reason</div>
+          <div class="form-value">{{ modification.reason }}</div>
+        </div>
+        <div class="form-row">
+          <div class="form-label">Extent</div>
+          <div class="form-value">{{ modification.extent }}</div>
+        </div>
+        <div class="form-row">
+          <div class="form-label">Original Cert Ref</div>
+          <div class="form-value">{{ modification.original_cert_ref }}</div>
+        </div>
+      </div>
+    </div>
+    {% endif %}
 
     <!-- SECTION E: SYSTEM DETAILS -->
     <div class="section">
@@ -1066,10 +1225,59 @@
               <span class="inline-label">Serial Number:</span>
               <span class="inline-value wide">{{ panel_serial }}</span>
             </div>
+            {% if panel_serial_photo %}
+            <div class="inline-group">
+              <img src="{{ panel_serial_photo }}" alt="Panel Serial" style="max-height: 40px; max-width: 80px; border-radius: 2px;" />
+            </div>
+            {% endif %}
           </div>
+          {% if panel_firmware_version %}
+          <div class="inline-form" style="border: none; padding: 0; margin-top: 2px">
+            <div class="inline-group">
+              <span class="inline-label">Firmware:</span>
+              <span class="inline-value">{{ panel_firmware_version }}</span>
+            </div>
+          </div>
+          {% endif %}
         </div>
       </div>
+      {% if loop_count > 0 %}
+      <div class="inline-form" style="margin-top: 2px;">
+        <div class="inline-group">
+          <span class="inline-label">Loops:</span>
+          <span class="inline-value">{{ loop_count }}</span>
+        </div>
+        <div class="inline-group">
+          <span class="inline-label">Devices/Loop:</span>
+          <span class="inline-value">{{ devices_per_loop }}</span>
+        </div>
+        <div class="inline-group">
+          <span class="inline-label">Total Addressable:</span>
+          <span class="inline-value">{{ total_addressable_devices }}</span>
+        </div>
+        <div class="inline-group">
+          <span class="inline-label">Max Capacity:</span>
+          <span class="inline-value">{{ max_loop_capacity }}</span>
+        </div>
+      </div>
+      {% endif %}
     </div>
+
+    <!-- DETECTOR SPACING & SITING -->
+    {% if detector_spacing_compliant or spacing_notes %}
+    <div class="section">
+      <div class="section-title">Detector Spacing & Siting</div>
+      <div class="inline-form">
+        <div class="inline-group">
+          <span class="inline-label">Compliant with BS 5839-1:</span>
+          <span class="status-badge {% if detector_spacing_compliant %}pass{% else %}warning{% endif %}">{% if detector_spacing_compliant %}YES{% else %}NO{% endif %}</span>
+        </div>
+      </div>
+      {% if spacing_notes %}
+      <div class="inline-form" style="margin-top: 2px;">{{ spacing_notes }}</div>
+      {% endif %}
+    </div>
+    {% endif %}
 
     <!-- SECTION F: EQUIPMENT SUMMARY -->
     <div class="section">
@@ -1171,6 +1379,133 @@
         {% endif %}
       </div>
     </div>
+
+    <!-- CABLE & WIRING -->
+    {% if cable_type %}
+    <div class="section">
+      <div class="section-title">Cable & Wiring</div>
+      <div class="inline-form">
+        <div class="inline-group">
+          <span class="inline-label">Cable Type:</span>
+          <span class="inline-value">{{ cable_type }}</span>
+        </div>
+        <div class="inline-group">
+          <span class="inline-label">Fire Rating:</span>
+          <span class="inline-value">{{ cable_fire_rating }}</span>
+        </div>
+        <div class="inline-group">
+          <span class="inline-label">Circuit Integrity:</span>
+          <span class="inline-value">{{ circuit_integrity }}</span>
+        </div>
+      </div>
+      {% if wiring_notes %}
+      <div class="inline-form" style="margin-top: 2px;">{{ wiring_notes }}</div>
+      {% endif %}
+    </div>
+    {% endif %}
+
+    <!-- INTERFACE EQUIPMENT -->
+    {% if has_interface_equipment %}
+    <div class="section">
+      <div class="section-title">Interface Equipment</div>
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Type</th>
+            <th>Location</th>
+            <th>Interface Method</th>
+            <th>Details</th>
+            <th>Tested</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for item in interface_equipment %}
+          <tr>
+            <td>{{ item.type }}</td>
+            <td>{{ item.location }}</td>
+            <td>{{ item.interface_method }}</td>
+            <td>{{ item.details }}</td>
+            <td class="result-{% if item.tested %}pass{% else %}na{% endif %}">{% if item.tested %}YES{% else %}NO{% endif %}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    {% endif %}
+
+    <!-- CAUSE & EFFECT -->
+    {% if cause_effect_ref %}
+    <div class="section">
+      <div class="section-title">Cause & Effect</div>
+      <div class="inline-form">
+        <div class="inline-group">
+          <span class="inline-label">Reference:</span>
+          <span class="inline-value">{{ cause_effect_ref }}</span>
+        </div>
+        <div class="inline-group">
+          <span class="inline-label">Date:</span>
+          <span class="inline-value">{{ cause_effect_date }}</span>
+        </div>
+        <div class="inline-group">
+          <span class="inline-label">Verified:</span>
+          <span class="checkbox-box {% if cause_effect_verified %}checked{% endif %}">{% if cause_effect_verified %}&#10003;{% endif %}</span>
+        </div>
+      </div>
+    </div>
+    {% endif %}
+
+    <!-- FALSE ALARM MANAGEMENT -->
+    {% if false_alarm_management %}
+    <div class="section">
+      <div class="section-title">False Alarm Management</div>
+      <div class="inline-form">
+        <div class="inline-group">
+          <span class="inline-label">Strategy:</span>
+          <span class="inline-value">{{ false_alarm_strategy }}</span>
+        </div>
+        {% if investigation_delay > 0 %}
+        <div class="inline-group">
+          <span class="inline-label">Investigation Delay:</span>
+          <span class="inline-value">{{ investigation_delay }}s</span>
+        </div>
+        {% endif %}
+      </div>
+      {% if false_alarm_notes %}
+      <div class="inline-form" style="margin-top: 2px;">{{ false_alarm_notes }}</div>
+      {% endif %}
+    </div>
+    {% endif %}
+
+    <!-- ASPIRATING DETECTION SYSTEM -->
+    {% if has_aspirating_units %}
+    <div class="section">
+      <div class="section-title">Aspirating Detection System</div>
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Make</th>
+            <th>Model</th>
+            <th>Sampling Points</th>
+            <th>Pipe Length</th>
+            <th>Transport Time</th>
+            <th>Sensitivity</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for unit in aspirating_units %}
+          <tr>
+            <td>{{ unit.make }}</td>
+            <td>{{ unit.model }}</td>
+            <td style="text-align: center;">{{ unit.sampling_points }}</td>
+            <td>{{ unit.pipe_length }}</td>
+            <td>{{ unit.transport_time }}</td>
+            <td>{{ unit.sensitivity_level }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    {% endif %}
 
     <!-- SECTION H: TEST RESULTS -->
     <div class="section">
@@ -1299,6 +1634,62 @@
       </div>
     </div>
 
+    <!-- TEST EQUIPMENT USED -->
+    {% if has_test_equipment %}
+    <div class="section">
+      <div class="section-title">Test Equipment Used</div>
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Type</th>
+            <th>Make/Model</th>
+            <th>Serial No.</th>
+            <th>Calibration Date</th>
+            <th>Calibration Due</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for item in test_equipment %}
+          <tr>
+            <td>{{ item.type }}</td>
+            <td>{{ item.make }} {{ item.model }}</td>
+            <td>{{ item.serial_number }}</td>
+            <td>{{ item.calibration_date }}</td>
+            <td>{{ item.calibration_due }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    {% endif %}
+
+    <!-- ENVIRONMENTAL CONDITIONS -->
+    {% if ambient_temperature or ambient_noise_level or weather_conditions %}
+    <div class="section">
+      <div class="section-title">Environmental Conditions</div>
+      <div class="inline-form">
+        {% if ambient_temperature %}
+        <div class="inline-group">
+          <span class="inline-label">Temperature:</span>
+          <span class="inline-value">{{ ambient_temperature }}&deg;C</span>
+        </div>
+        {% endif %}
+        {% if ambient_noise_level %}
+        <div class="inline-group">
+          <span class="inline-label">Ambient Noise:</span>
+          <span class="inline-value">{{ ambient_noise_level }} dB</span>
+        </div>
+        {% endif %}
+        {% if weather_conditions %}
+        <div class="inline-group">
+          <span class="inline-label">Weather:</span>
+          <span class="inline-value">{{ weather_conditions }}</span>
+        </div>
+        {% endif %}
+      </div>
+    </div>
+    {% endif %}
+
     <!-- SECTION I: MONITORING (if applicable) -->
     {% if monitoring.is_monitored %}
     <div class="section">
@@ -1319,6 +1710,81 @@
         <div class="inline-group">
           <span class="inline-label">Signalling Route:</span>
           <span class="inline-value">{{ monitoring.signalling_route_display }}</span>
+        </div>
+      </div>
+    </div>
+    {% endif %}
+
+    <!-- DEVICES TESTED (Periodic only) -->
+    {% if is_periodic %}
+    <div class="section">
+      <div class="section-title">Devices Tested</div>
+      <div class="equipment-grid">
+        <div class="equipment-box">
+          <div class="count">{{ devices_tested_count }}</div>
+          <div class="label">Devices Tested</div>
+        </div>
+        <div class="equipment-box">
+          <div class="count">{{ devices_total_count }}</div>
+          <div class="label">Total Devices</div>
+        </div>
+        <div class="equipment-box">
+          <div class="count">{{ devices_tested_percentage }}%</div>
+          <div class="label">Coverage</div>
+        </div>
+      </div>
+      <div class="inline-form" style="margin-top: 2px;">
+        <div class="checkbox-item">
+          <span class="checkbox-box {% if device_testing_complete %}checked{% endif %}">{% if device_testing_complete %}&#10003;{% endif %}</span>
+          <label>Testing Complete</label>
+        </div>
+      </div>
+    </div>
+    {% endif %}
+
+    <!-- EXTENT & LIMITATIONS (Periodic/Verification) -->
+    {% if is_periodic or is_verification %}
+    {% if extent_of_inspection %}
+    <div class="section">
+      <div class="section-title">Extent & Limitations of Inspection</div>
+      <div class="form-grid">
+        <div class="form-row">
+          <div class="form-label">Extent</div>
+          <div class="form-value">{{ extent_of_inspection }}</div>
+        </div>
+        {% if inspection_limitations %}
+        <div class="form-row">
+          <div class="form-label">Limitations</div>
+          <div class="form-value">{{ inspection_limitations }}</div>
+        </div>
+        {% endif %}
+        {% if agreed_scope %}
+        <div class="form-row">
+          <div class="form-label">Agreed Scope</div>
+          <div class="form-value">{{ agreed_scope }}</div>
+        </div>
+        {% endif %}
+      </div>
+    </div>
+    {% endif %}
+    {% endif %}
+
+    <!-- PREVIOUS CERTIFICATE DETAILS (Periodic only) -->
+    {% if is_periodic and previous_certificate_date %}
+    <div class="section">
+      <div class="section-title">Previous Certificate Details</div>
+      <div class="inline-form">
+        <div class="inline-group">
+          <span class="inline-label">Previous Cert Date:</span>
+          <span class="inline-value">{{ previous_certificate_date }}</span>
+        </div>
+        <div class="inline-group">
+          <span class="inline-label">Previous Inspector:</span>
+          <span class="inline-value">{{ previous_inspector }}</span>
+        </div>
+        <div class="inline-group">
+          <span class="inline-label">Company:</span>
+          <span class="inline-value">{{ previous_inspector_company }}</span>
         </div>
       </div>
     </div>
@@ -1345,6 +1811,11 @@
         {% if defect.rectified %}
         <div class="defect-status">
           Rectified on: <span class="rectified">{{ defect.rectification_date }}</span>
+        </div>
+        {% endif %}
+        {% if defect.photo_url %}
+        <div style="margin-top: 2px;">
+          <img src="{{ defect.photo_url }}" alt="Defect photo" style="max-height: 60px; max-width: 120px; border-radius: 2px; border: 1px solid #ddd;" />
         </div>
         {% endif %}
       </div>
@@ -1388,12 +1859,26 @@
     {% if certificate_type == 'commissioning' %}
     <div class="section">
       <div class="section-title">Section L: Handover Documentation</div>
+      {% if handover_date %}
+      <div class="inline-form" style="margin-bottom: 4px;">
+        <div class="inline-group">
+          <span class="inline-label">Handover Date:</span>
+          <span class="inline-value">{{ handover_date }}</span>
+        </div>
+      </div>
+      {% endif %}
       <div class="handover-grid">
         <div class="handover-item">
           <span class="checkbox-box {% if handover.as_built_drawings %}checked{% endif %}"
             >{% if handover.as_built_drawings %}&#10003;{% endif %}</span
           >
           <label>As-built drawings</label>
+        </div>
+        <div class="handover-item">
+          <span class="checkbox-box {% if handover.as_fitted_drawings %}checked{% endif %}"
+            >{% if handover.as_fitted_drawings %}&#10003;{% endif %}</span
+          >
+          <label>As-fitted drawings</label>
         </div>
         <div class="handover-item">
           <span class="checkbox-box {% if handover.operation_manual %}checked{% endif %}"
@@ -1425,6 +1910,69 @@
           >
           <label>User training provided</label>
         </div>
+        <div class="handover-item">
+          <span class="checkbox-box {% if handover.operating_instructions %}checked{% endif %}"
+            >{% if handover.operating_instructions %}&#10003;{% endif %}</span
+          >
+          <label>Operating instructions</label>
+        </div>
+        <div class="handover-item">
+          <span class="checkbox-box {% if handover.log_book %}checked{% endif %}"
+            >{% if handover.log_book %}&#10003;{% endif %}</span
+          >
+          <label>Log book</label>
+        </div>
+        <div class="handover-item">
+          <span class="checkbox-box {% if handover.spares %}checked{% endif %}"
+            >{% if handover.spares %}&#10003;{% endif %}</span
+          >
+          <label>Spares provided</label>
+        </div>
+      </div>
+    </div>
+    {% endif %}
+
+    <!-- PLAN REFERENCES -->
+    {% if zone_plan_ref or building_plan_ref %}
+    <div class="section">
+      <div class="section-title">Plan References</div>
+      <div class="inline-form">
+        {% if zone_plan_ref %}
+        <div class="inline-group">
+          <span class="inline-label">Zone Plan:</span>
+          <span class="inline-value">{{ zone_plan_ref }}</span>
+        </div>
+        {% endif %}
+        {% if zone_plan_date %}
+        <div class="inline-group">
+          <span class="inline-label">Date:</span>
+          <span class="inline-value">{{ zone_plan_date }}</span>
+        </div>
+        {% endif %}
+        {% if building_plan_ref %}
+        <div class="inline-group">
+          <span class="inline-label">Building Plan:</span>
+          <span class="inline-value">{{ building_plan_ref }}</span>
+        </div>
+        {% endif %}
+        {% if building_plan_date %}
+        <div class="inline-group">
+          <span class="inline-label">Date:</span>
+          <span class="inline-value">{{ building_plan_date }}</span>
+        </div>
+        {% endif %}
+      </div>
+    </div>
+    {% endif %}
+
+    <!-- RELATED STANDARDS -->
+    {% if has_related_standards %}
+    <div class="section">
+      <div class="section-title">Related Standards</div>
+      <div class="inline-form">
+        {% for std in related_standards %}
+        <span class="inline-value" style="margin-right: 4px;">{{ std }}</span>
+        {% endfor %}
       </div>
     </div>
     {% endif %}
@@ -1489,6 +2037,18 @@
               <span class="sig-field-label">Company</span>
               <span class="sig-field-value">{{ installer_company }}</span>
             </div>
+            {% if installer_company_address %}
+            <div class="sig-field">
+              <span class="sig-field-label">Address</span>
+              <span class="sig-field-value">{{ installer_company_address }}</span>
+            </div>
+            {% endif %}
+            {% if installer_company_phone %}
+            <div class="sig-field">
+              <span class="sig-field-label">Phone</span>
+              <span class="sig-field-value">{{ installer_company_phone }}</span>
+            </div>
+            {% endif %}
             <div class="sig-field">
               <span class="sig-field-label">Qualifications</span>
               <span class="sig-field-value">{{ installer_qualifications }}</span>
@@ -1520,6 +2080,18 @@
               <span class="sig-field-label">Company</span>
               <span class="sig-field-value">{{ commissioner_company }}</span>
             </div>
+            {% if commissioner_company_address %}
+            <div class="sig-field">
+              <span class="sig-field-label">Address</span>
+              <span class="sig-field-value">{{ commissioner_company_address }}</span>
+            </div>
+            {% endif %}
+            {% if commissioner_company_phone %}
+            <div class="sig-field">
+              <span class="sig-field-label">Phone</span>
+              <span class="sig-field-value">{{ commissioner_company_phone }}</span>
+            </div>
+            {% endif %}
             <div class="sig-field">
               <span class="sig-field-label">Qualifications</span>
               <span class="sig-field-value">{{ commissioner_qualifications }}</span>
@@ -1536,8 +2108,78 @@
             </div>
           </div>
         </div>
+        <!-- Verifier (Verification only) -->
+        {% if is_verification %}
+        <div class="signature-box">
+          <div class="signature-box-header">Verifier</div>
+          <div class="signature-box-body">
+            <div class="sig-field">
+              <span class="sig-field-label">Name</span>
+              <span class="sig-field-value">{{ verifier_name }}</span>
+            </div>
+            <div class="sig-field">
+              <span class="sig-field-label">Company</span>
+              <span class="sig-field-value">{{ verifier_company }}</span>
+            </div>
+            <div class="sig-field">
+              <span class="sig-field-label">Qualifications</span>
+              <span class="sig-field-value">{{ verifier_qualifications }}</span>
+            </div>
+            <div class="sig-field">
+              <span class="sig-field-label">Date</span>
+              <span class="sig-field-value">{{ verifier_date }}</span>
+            </div>
+            <div class="sig-field">
+              <span class="sig-field-label">Signature</span>
+              <span class="sig-field-value signature">
+                {% if verifier_signature %}<img src="{{ verifier_signature }}" />{% endif %}
+              </span>
+            </div>
+          </div>
+        </div>
+        {% endif %}
       </div>
     </div>
+
+    <!-- RESPONSIBLE PERSON ACKNOWLEDGEMENT -->
+    {% if responsible_person.name %}
+    <div class="section avoid-break">
+      <div class="section-title">Responsible Person Acknowledgement</div>
+      <div class="signature-grid">
+        <div class="signature-box" style="flex: 1;">
+          <div class="signature-box-header">Responsible Person</div>
+          <div class="signature-box-body">
+            <div class="sig-field">
+              <span class="sig-field-label">Name</span>
+              <span class="sig-field-value">{{ responsible_person.name }}</span>
+            </div>
+            <div class="sig-field">
+              <span class="sig-field-label">Position</span>
+              <span class="sig-field-value">{{ responsible_person.position }}</span>
+            </div>
+            <div class="sig-field">
+              <span class="sig-field-label">Date</span>
+              <span class="sig-field-value">{{ responsible_person.date }}</span>
+            </div>
+            <div class="sig-field">
+              <span class="sig-field-label">Signature</span>
+              <span class="sig-field-value signature">
+                {% if responsible_person.signature %}<img src="{{ responsible_person.signature }}" />{% endif %}
+              </span>
+            </div>
+            {% if responsible_person.acknowledgement %}
+            <div class="sig-field">
+              <span class="sig-field-label">Acknowledged</span>
+              <span class="sig-field-value">
+                <span class="checkbox-box checked">&#10003;</span> Confirmed
+              </span>
+            </div>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+    {% endif %}
 
     <!-- SECTION O: OVERALL ASSESSMENT -->
     <div class="section avoid-break">
@@ -1704,6 +2346,111 @@
         or 5 dB(A) above ambient (whichever is greater). Sleeping areas - minimum 75 dB(A) at
         bedhead.
       </div>
+    </div>
+    {% endif %}
+
+    <!-- DETECTOR SCHEDULE -->
+    {% if has_detectors %}
+    <div class="section">
+      <div class="section-title">Detector Schedule</div>
+      <table class="zone-table">
+        <thead>
+          <tr>
+            <th style="width: 5%">#</th>
+            <th style="width: 25%">Location</th>
+            <th style="width: 15%">Type</th>
+            <th style="width: 12%">Make</th>
+            <th style="width: 13%">Model</th>
+            <th style="width: 10%">Serial</th>
+            <th style="width: 10%">Install Date</th>
+            <th style="width: 10%">Result</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for det in detectors %}
+          <tr>
+            <td style="text-align: center;">{{ det.number }}</td>
+            <td style="text-align: left;">{{ det.location }}</td>
+            <td style="text-align: left;">{{ det.type }}</td>
+            <td style="text-align: left;">{{ det.make }}</td>
+            <td style="text-align: left;">{{ det.model }}</td>
+            <td>{{ det.serial_number }}</td>
+            <td>{{ det.install_date }}</td>
+            <td class="result-{{ det.test_result_class }}">{{ det.test_result }}</td>
+          </tr>
+          {% if det.notes %}
+          <tr>
+            <td></td>
+            <td colspan="7" style="font-style: italic; font-size: 7.5px; color: #555;">{{ det.notes }}</td>
+          </tr>
+          {% endif %}
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    {% endif %}
+
+    <!-- SOUNDER SCHEDULE -->
+    {% if has_sounders %}
+    <div class="section">
+      <div class="section-title">Sounder Schedule</div>
+      <table class="zone-table">
+        <thead>
+          <tr>
+            <th style="width: 5%">#</th>
+            <th style="width: 28%">Location</th>
+            <th style="width: 17%">Type</th>
+            <th style="width: 15%">Make</th>
+            <th style="width: 15%">Model</th>
+            <th style="width: 10%">dB Reading</th>
+            <th style="width: 10%">Result</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for snd in sounders %}
+          <tr>
+            <td style="text-align: center;">{{ snd.number }}</td>
+            <td style="text-align: left;">{{ snd.location }}</td>
+            <td style="text-align: left;">{{ snd.type }}</td>
+            <td style="text-align: left;">{{ snd.make }}</td>
+            <td style="text-align: left;">{{ snd.model }}</td>
+            <td>{{ snd.db_reading }}</td>
+            <td class="result-{{ snd.test_result_class }}">{{ snd.test_result }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    {% endif %}
+
+    <!-- CALL POINT SCHEDULE -->
+    {% if has_call_points %}
+    <div class="section">
+      <div class="section-title">Call Point Schedule</div>
+      <table class="zone-table">
+        <thead>
+          <tr>
+            <th style="width: 5%">#</th>
+            <th style="width: 30%">Location</th>
+            <th style="width: 20%">Type</th>
+            <th style="width: 17%">Make</th>
+            <th style="width: 18%">Model</th>
+            <th style="width: 10%">Result</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for cp in call_points %}
+          <tr>
+            <td style="text-align: center;">{{ cp.number }}</td>
+            <td style="text-align: left;">{{ cp.location }}</td>
+            <td style="text-align: left;">{{ cp.type }}</td>
+            <td style="text-align: left;">{{ cp.make }}</td>
+            <td style="text-align: left;">{{ cp.model }}</td>
+            <td class="result-{{ cp.test_result_class }}">{{ cp.test_result }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
     </div>
     {% endif %}
 

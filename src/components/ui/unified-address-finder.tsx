@@ -281,7 +281,7 @@ export const UnifiedAddressFinder = ({
               setSelectedAddress(null);
               setManualAddress('');
             }}
-            className="text-xs text-muted-foreground hover:text-foreground transition-colors"
+            className="text-xs text-white hover:text-foreground transition-colors"
           >
             Use Address Search
           </button>
@@ -292,7 +292,7 @@ export const UnifiedAddressFinder = ({
           placeholder="Enter full address including postcode&#10;e.g. 123 High Street, London, SW1A 1AA"
           className="min-h-[80px] text-base touch-manipulation resize-none"
         />
-        <p className="text-xs text-muted-foreground">
+        <p className="text-xs text-white">
           Include the postcode at the end of the address
         </p>
       </div>
@@ -305,7 +305,7 @@ export const UnifiedAddressFinder = ({
         <label className="text-sm font-medium mb-2 block">Search Address *</label>
         <div className="relative">
           {!searchValue && (
-            <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground pointer-events-none sm:hidden" />
+            <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-white pointer-events-none sm:hidden" />
           )}
           <Input
             value={searchValue}
@@ -314,7 +314,7 @@ export const UnifiedAddressFinder = ({
             className={cn(!searchValue && 'pl-12 sm:pl-4')}
           />
           {isLoading && (
-            <Loader2 className="absolute right-4 top-1/2 -translate-y-1/2 h-5 w-5 animate-spin text-muted-foreground" />
+            <Loader2 className="absolute right-4 top-1/2 -translate-y-1/2 h-5 w-5 animate-spin text-white" />
           )}
         </div>
       </div>
@@ -352,7 +352,7 @@ export const UnifiedAddressFinder = ({
               <MapPin className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <div className="flex-1 min-w-0">
                 <p className="text-sm font-medium text-white">{result.postcode}</p>
-                <p className="text-xs text-white/60 truncate">
+                <p className="text-xs text-white truncate">
                   {[result.line_2, result.post_town, result.county].filter(Boolean).join(', ')}
                 </p>
               </div>
@@ -378,14 +378,14 @@ export const UnifiedAddressFinder = ({
       <button
         type="button"
         onClick={() => setShowManualEntry(true)}
-        className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
+        className="flex items-center gap-2 text-sm text-white hover:text-foreground transition-colors"
       >
         <Edit3 className="h-4 w-4" />
         Can't find your address? Enter manually
       </button>
 
       {/* Google Attribution */}
-      <div className="text-xs text-muted-foreground">Powered by Google Places</div>
+      <div className="text-xs text-white">Powered by Google Places</div>
     </div>
   );
 };

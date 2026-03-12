@@ -42,7 +42,7 @@ const EICInspectionStatsSummary: React.FC<EICInspectionStatsSummaryProps> = ({
             <div className="text-xs text-foreground/80">Satisfactory</div>
           </div>
           <div className="space-y-1">
-            <div className="text-xl sm:text-2xl font-bold text-muted-foreground">
+            <div className="text-xl sm:text-2xl font-bold text-white">
               {notApplicable}
             </div>
             <div className="text-xs text-foreground/80">N/A</div>

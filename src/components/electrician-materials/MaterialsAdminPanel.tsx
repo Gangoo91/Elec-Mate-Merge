@@ -141,7 +141,7 @@ const MaterialsAdminPanel = () => {
               <span>Auto-refresh: Every Sunday 2 AM UTC</span>
             </div>
             <Badge variant="outline" className="text-xs border-elec-yellow/30 text-foreground">
-              Firecrawl 2.0 Enabled
+              Auto-Pipeline Enabled
             </Badge>
           </div>
         </div>

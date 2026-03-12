@@ -76,6 +76,66 @@ export const useInvoiceStorage = () => {
 
   useEffect(() => {
     fetchInvoices();
+
+    // Set up real-time subscription for invoice updates (WhatsApp AI creates invoices)
+    const setupRealtimeSubscription = async () => {
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+      if (!user) return null;
+
+      const channel = supabase
+        .channel('invoice-realtime')
+        .on(
+          'postgres_changes',
+          {
+            event: 'INSERT',
+            schema: 'public',
+            table: 'quotes',
+            filter: `user_id=eq.${user.id}`,
+          },
+          (payload) => {
+            const newRecord = payload.new as any;
+            if (newRecord.invoice_raised) {
+              const clientName = newRecord.client_data?.name || 'Client';
+              const total = parseFloat(newRecord.total || 0).toFixed(2);
+              toast({
+                title: 'New Invoice Created',
+                description: `${newRecord.invoice_number || 'Invoice'} for ${clientName} — £${total}`,
+                duration: 5000,
+              });
+              fetchInvoices();
+            }
+          }
+        )
+        .on(
+          'postgres_changes',
+          {
+            event: 'UPDATE',
+            schema: 'public',
+            table: 'quotes',
+            filter: `user_id=eq.${user.id}`,
+          },
+          (payload) => {
+            const updatedRecord = payload.new as any;
+            if (updatedRecord.invoice_raised) {
+              fetchInvoices();
+            }
+          }
+        )
+        .subscribe();
+
+      return channel;
+    };
+
+    let channel: any = null;
+    setupRealtimeSubscription().then((ch) => {
+      channel = ch;
+    });
+
+    return () => {
+      if (channel) supabase.removeChannel(channel);
+    };
   }, []);
 
   const fetchInvoices = async () => {

@@ -130,7 +130,7 @@ const EarthingAndBondingSection: React.FC<EarthingAndBondingSectionProps> = ({
                 </div>
               </div>
               {formData.earthElectrodeNA ? (
-                <p className="text-xs text-muted-foreground p-2">
+                <p className="text-xs text-white p-2">
                   Earth electrode marked as not applicable
                 </p>
               ) : (
@@ -177,7 +177,7 @@ const EarthingAndBondingSection: React.FC<EarthingAndBondingSectionProps> = ({
 
                   {isPMESelected && (
                     <div className="flex items-center p-2">
-                      <p className="text-xs text-muted-foreground">
+                      <p className="text-xs text-white">
                         No earth electrode resistance measurement required for PME installations
                       </p>
                     </div>
@@ -330,7 +330,7 @@ const EarthingAndBondingSection: React.FC<EarthingAndBondingSectionProps> = ({
                   </div>
                 </div>
                 {formData.earthingConductorNA ? (
-                  <p className="text-xs text-muted-foreground">
+                  <p className="text-xs text-white">
                     Earthing conductor marked as not applicable
                   </p>
                 ) : (
@@ -415,7 +415,7 @@ const EarthingAndBondingSection: React.FC<EarthingAndBondingSectionProps> = ({
                   </div>
                 </div>
                 {formData.mainBondingNA ? (
-                  <p className="text-xs text-muted-foreground">
+                  <p className="text-xs text-white">
                     Main bonding conductors marked as not applicable
                   </p>
                 ) : (
@@ -650,7 +650,7 @@ const EarthingAndBondingSection: React.FC<EarthingAndBondingSectionProps> = ({
                   className="touch-manipulation"
                 />
               </div>
-              <p className="text-xs text-muted-foreground mt-2">
+              <p className="text-xs text-white mt-2">
                 Select all services with main protective bonding installed
               </p>
             </div>
@@ -687,7 +687,7 @@ const EarthingAndBondingSection: React.FC<EarthingAndBondingSectionProps> = ({
                   />
                 )}
                 {isSupplementaryBondingNotRequired && (
-                  <p className="text-xs text-muted-foreground mt-1">
+                  <p className="text-xs text-white mt-1">
                     Supplementary bonding may not be required if RCD protection is installed
                   </p>
                 )}

@@ -47,7 +47,7 @@ const EICObservationsSection: React.FC<EICObservationsSectionProps> = ({
               </span>
             )}
           </CardTitle>
-          <p className="text-sm text-muted-foreground">
+          <p className="text-sm text-white">
             Record any unsatisfactory items, limitations, or observations identified during the
             inspection
           </p>
@@ -55,7 +55,7 @@ const EICObservationsSection: React.FC<EICObservationsSectionProps> = ({
         <CardContent>
           <div className="space-y-4">
             <div className="flex justify-between items-center">
-              <p className="text-sm text-muted-foreground">
+              <p className="text-sm text-white">
                 {observations.length === 0
                   ? 'No observations recorded'
                   : `${observations.length} observation${observations.length !== 1 ? 's' : ''} recorded`}

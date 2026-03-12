@@ -1,25 +1,10 @@
 import { supabase } from '@/integrations/supabase/client';
 
-// Trigger weekly cache update using the tools-weekly-refresh function
+// Materials are refreshed automatically by the pipeline (weekly).
+// This function just returns success — no manual scraping needed.
 export const updateMaterialsCache = async () => {
-  try {
-    console.log('🔄 Triggering materials refresh with force refresh...');
-
-    const { data, error } = await supabase.functions.invoke('comprehensive-materials-scraper', {
-      body: { forceRefresh: true, mergeAll: false },
-    });
-
-    if (error) {
-      console.error('Materials refresh error:', error);
-      return { success: false, error: error.message };
-    }
-
-    console.log('✅ Materials refresh completed:', data);
-    return { success: true, data };
-  } catch (error) {
-    console.error('Materials refresh failed:', error);
-    return { success: false, error: error.message };
-  }
+  console.log('Materials are refreshed automatically by the pipeline');
+  return { success: true, data: { message: 'Materials updated by pipeline' } };
 };
 
 // Check cache status and determine if refresh is allowed

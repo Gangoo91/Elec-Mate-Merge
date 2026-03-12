@@ -83,7 +83,7 @@ const InputWithValidation: React.FC<InputWithValidationProps> = ({
       />
 
       {helpText && (
-        <div className="flex items-start gap-1 text-xs text-muted-foreground">
+        <div className="flex items-start gap-1 text-xs text-white">
           <Info className="h-3 w-3 mt-0.5 flex-shrink-0" />
           <span>{helpText}</span>
         </div>

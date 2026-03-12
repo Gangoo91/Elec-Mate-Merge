@@ -1414,6 +1414,7 @@ export function getPanelDefaults(panelId: string): {
   networkType: string;
   zonesCount: number;
   loopCapacity: number;
+  deviceCapacity: number;
   protocol: string;
 } | null {
   const panel = findPanelById(panelId);
@@ -1430,6 +1431,7 @@ export function getPanelDefaults(panelId: string): {
             : 'networked',
     zonesCount: panel.zoneCapacity,
     loopCapacity: panel.loopCapacity,
+    deviceCapacity: panel.deviceCapacity || 0,
     protocol: panel.protocol,
   };
 }

@@ -66,7 +66,7 @@ const EICValidationPanel: React.FC<EICValidationPanelProps> = ({ formData, class
         <div className="space-y-2">
           <div className="flex justify-between text-sm">
             <span className="font-medium">Completion Progress</span>
-            <span className="text-muted-foreground">{validation.completionPercentage}%</span>
+            <span className="text-white">{validation.completionPercentage}%</span>
           </div>
           <Progress value={validation.completionPercentage} className="h-2" />
         </div>
@@ -75,17 +75,17 @@ const EICValidationPanel: React.FC<EICValidationPanelProps> = ({ formData, class
         <div className="grid grid-cols-3 gap-4 text-center">
           <div className="space-y-1">
             <div className="text-2xl font-bold text-red-600">{validation.errors.length}</div>
-            <div className="text-xs text-muted-foreground">Errors</div>
+            <div className="text-xs text-white">Errors</div>
           </div>
           <div className="space-y-1">
             <div className="text-2xl font-bold text-amber-600">{validation.warnings.length}</div>
-            <div className="text-xs text-muted-foreground">Warnings</div>
+            <div className="text-xs text-white">Warnings</div>
           </div>
           <div className="space-y-1">
             <div className="text-2xl font-bold text-green-600">
               {validation.isValid ? '✓' : '✗'}
             </div>
-            <div className="text-xs text-muted-foreground">Status</div>
+            <div className="text-xs text-white">Status</div>
           </div>
         </div>
 
@@ -103,7 +103,7 @@ const EICValidationPanel: React.FC<EICValidationPanelProps> = ({ formData, class
                   <div className="space-y-1">
                     <p className="font-medium">{error.message}</p>
                     {error.regulation && (
-                      <p className="text-xs text-muted-foreground">Reference: {error.regulation}</p>
+                      <p className="text-xs text-white">Reference: {error.regulation}</p>
                     )}
                   </div>
                 </AlertDescription>
@@ -125,7 +125,7 @@ const EICValidationPanel: React.FC<EICValidationPanelProps> = ({ formData, class
                   <div className="space-y-1">
                     <p className="font-medium">{warning.message}</p>
                     {warning.regulation && (
-                      <p className="text-xs text-muted-foreground">
+                      <p className="text-xs text-white">
                         Reference: {warning.regulation}
                       </p>
                     )}
@@ -149,7 +149,7 @@ const EICValidationPanel: React.FC<EICValidationPanelProps> = ({ formData, class
 
         {/* Legal Compliance Note */}
         <div className="pt-4 border-t">
-          <div className="flex items-start gap-2 text-xs text-muted-foreground">
+          <div className="flex items-start gap-2 text-xs text-white">
             <FileText className="h-4 w-4 mt-0.5 flex-shrink-0" />
             <div>
               <p className="font-medium mb-1">Legal Requirements:</p>

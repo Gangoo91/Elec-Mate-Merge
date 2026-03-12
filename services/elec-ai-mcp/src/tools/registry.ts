@@ -1,6 +1,6 @@
 /**
  * Master tool registry.
- * Registers all 76 core tools + 21 apprentice tools onto the MCP server (97 total).
+ * Registers all 89 core tools + 21 apprentice tools onto the MCP server (110 total).
  * Tools are role-filtered: electricians get core tools, apprentices get learning tools.
  */
 
@@ -58,8 +58,23 @@ export function registerAllTools(server: McpServer, user: UserContext): void {
   // Vision (photo analysis)
   registerVisionTools(server, user);
 
+  // Routing
+  registerRoutingTools(server, user);
+
   // Job Intake (ELE-209)
   registerJobIntakeTools(server, user);
+
+  // Day Planner
+  registerDayPlannerTools(server, user);
+
+  // Job Profit
+  registerJobProfitTools(server, user);
+
+  // Snagging
+  registerSnaggingTools(server, user);
+
+  // Photo Estimate
+  registerPhotoEstimateTools(server, user);
 }
 
 // ─── Helper to wrap handler calls with rate limiting + audit logging ────
@@ -476,7 +491,7 @@ function registerProjectTools(server: McpServer, user: UserContext): void {
   );
 }
 
-// ─── Certificate Tools (8) ──────────────────────────────────────────────
+// ─── Certificate Tools (14) ─────────────────────────────────────────────
 
 function registerCertificateTools(server: McpServer, user: UserContext): void {
   server.tool(
@@ -612,6 +627,145 @@ function registerCertificateTools(server: McpServer, user: UserContext): void {
         ),
     },
     callTool('read_eicr', user)
+  );
+
+  // ── EIC Tools ──────────────────────────────────────────────────────────
+
+  server.tool(
+    'create_eic',
+    'Create a new EIC (Electrical Installation Certificate) as a draft. Returns eic_id, certificate_number, and report_id. Use update_eic to fill in sections.',
+    {
+      client_name: z.string().describe('Client full name'),
+      installation_address: z.string().describe('Full installation address'),
+      inspection_date: z.string().optional().describe('Inspection date (ISO-8601, default today)'),
+      property_type: z
+        .enum(['domestic', 'commercial'])
+        .optional()
+        .describe(
+          'Property type (default domestic). Affects expiry: 5yr domestic, 3yr commercial.'
+        ),
+      inspector_name: z.string().optional().describe('Inspector/designer name'),
+      customer_id: z.string().optional().describe('Customer UUID from customers table'),
+      description_of_installation: z
+        .string()
+        .optional()
+        .describe('Description of the installation'),
+    },
+    callTool('create_eic', user)
+  );
+
+  server.tool(
+    'update_eic',
+    'Update an EIC section. Uses optimistic concurrency — pass edit_version from the last read. Merges new data into existing JSONB. Sections: client, installation, design, construction, inspection, testing, schedule_of_circuits, inspector, company.',
+    {
+      eic_id: z.string().describe('EIC UUID'),
+      edit_version: z
+        .number()
+        .describe('Current edit_version from read_eic. Prevents concurrent edit conflicts.'),
+      data: z
+        .record(z.unknown())
+        .describe(
+          'Data object to deep merge into the EIC. Keys match sections: design, construction, inspection, testing, schedule_of_circuits, inspector, company, etc.'
+        ),
+      section: z
+        .enum([
+          'client',
+          'installation',
+          'design',
+          'construction',
+          'inspection',
+          'testing',
+          'schedule_of_circuits',
+          'inspector',
+          'company',
+        ])
+        .optional()
+        .describe('Section being updated (for audit logging)'),
+      status: z
+        .enum(['draft', 'in_progress', 'completed'])
+        .optional()
+        .describe('Update EIC status'),
+    },
+    callTool('update_eic', user)
+  );
+
+  server.tool(
+    'read_eic',
+    'Read an EIC with all data. Optionally include full circuit schedule and photos.',
+    {
+      eic_id: z.string().describe('EIC UUID'),
+      include: z
+        .array(z.enum(['circuits', 'photos', 'all']))
+        .optional()
+        .describe('Include full arrays: circuits, photos, or "all" for everything.'),
+    },
+    callTool('read_eic', user)
+  );
+
+  // ── Minor Works Tools ──────────────────────────────────────────────────
+
+  server.tool(
+    'create_minor_works',
+    'Create a new Minor Works Certificate as a draft. Returns minor_works_id, certificate_number, and report_id. Use update_minor_works to fill in sections.',
+    {
+      client_name: z.string().describe('Client full name'),
+      installation_address: z.string().describe('Full installation address'),
+      inspection_date: z.string().optional().describe('Inspection date (ISO-8601, default today)'),
+      inspector_name: z.string().optional().describe('Inspector/responsible person name'),
+      customer_id: z.string().optional().describe('Customer UUID from customers table'),
+      description_of_work: z
+        .string()
+        .optional()
+        .describe('Description of the minor works carried out'),
+    },
+    callTool('create_minor_works', user)
+  );
+
+  server.tool(
+    'update_minor_works',
+    'Update a Minor Works Certificate section. Uses optimistic concurrency — pass edit_version from the last read. Sections: description, installation, essential_tests, declaration, inspector, company.',
+    {
+      minor_works_id: z.string().describe('Minor Works UUID'),
+      edit_version: z
+        .number()
+        .describe(
+          'Current edit_version from read_minor_works. Prevents concurrent edit conflicts.'
+        ),
+      data: z
+        .record(z.unknown())
+        .describe(
+          'Data object to deep merge. Keys match sections: part_1_description, part_2_installation, part_3_essential_tests, part_4_declaration, inspector, company.'
+        ),
+      section: z
+        .enum([
+          'description',
+          'installation',
+          'essential_tests',
+          'declaration',
+          'inspector',
+          'company',
+        ])
+        .optional()
+        .describe('Section being updated (for audit logging)'),
+      status: z
+        .enum(['draft', 'in_progress', 'completed'])
+        .optional()
+        .describe('Update Minor Works status'),
+    },
+    callTool('update_minor_works', user)
+  );
+
+  server.tool(
+    'read_minor_works',
+    'Read a Minor Works Certificate with all data. Optionally include photos.',
+    {
+      minor_works_id: z.string().describe('Minor Works UUID'),
+      include: z
+        .array(z.enum(['photos', 'all']))
+        .optional()
+        .describe('Include photos, or "all" for everything.'),
+    },
+    callTool('read_minor_works', user)
   );
 }
 
@@ -806,7 +960,7 @@ function registerRamsTools(server: McpServer, user: UserContext): void {
   );
 }
 
-// ─── Calendar Tools (3) ─────────────────────────────────────────────────
+// ─── Calendar Tools (5) ─────────────────────────────────────────────────
 
 function registerCalendarTools(server: McpServer, user: UserContext): void {
   server.tool(
@@ -838,6 +992,37 @@ function registerCalendarTools(server: McpServer, user: UserContext): void {
       notes: z.string().optional().describe('Event notes'),
     },
     callTool('create_calendar_event', user)
+  );
+
+  server.tool(
+    'update_calendar_event',
+    'Update an existing calendar event. Supports partial updates — only provide fields you want to change. Date/time changes are merged with existing values (e.g. change just the time without changing the date).',
+    {
+      event_id: z.string().describe('Calendar event UUID'),
+      title: z.string().optional().describe('New event title'),
+      date: z.string().optional().describe('New date (ISO-8601, e.g. 2026-03-05)'),
+      time: z.string().optional().describe('New time (HH:mm, e.g. 16:00)'),
+      duration_minutes: z.number().optional().describe('New duration in minutes'),
+      address: z.string().optional().describe('New location/address'),
+      event_type: z
+        .enum(['job', 'site_visit', 'inspection', 'meeting', 'personal', 'general'])
+        .optional()
+        .describe('New event type'),
+      client_id: z.string().optional().describe('New linked client UUID'),
+      job_id: z.string().optional().describe('New linked job UUID'),
+      notes: z.string().optional().describe('New event notes'),
+      description: z.string().optional().describe('New event description'),
+    },
+    callTool('update_calendar_event', user)
+  );
+
+  server.tool(
+    'delete_calendar_event',
+    'Delete a calendar event. Returns details of the deleted event for confirmation.',
+    {
+      event_id: z.string().describe('Calendar event UUID to delete'),
+    },
+    callTool('delete_calendar_event', user)
   );
 
   server.tool(
@@ -1810,7 +1995,7 @@ function registerProjectLinkTools(server: McpServer, user: UserContext): void {
   );
 }
 
-// ─── Marketplace Tools (3) ──────────────────────────────────────────────
+// ─── Marketplace Tools (4) ──────────────────────────────────────────────
 
 function registerMarketplaceTools(server: McpServer, user: UserContext): void {
   server.tool(
@@ -1832,6 +2017,27 @@ function registerMarketplaceTools(server: McpServer, user: UserContext): void {
       product_name: z.string().describe('Product name to compare'),
     },
     callTool('compare_prices', user)
+  );
+
+  server.tool(
+    'price_materials_for_job',
+    'Price up materials for a job. Describe the job and the tool will extract material keywords, look up prices across suppliers, and return an itemised price list with the cheapest option per item. Useful for quick cost estimates.',
+    {
+      job_description: z
+        .string()
+        .describe(
+          'Job description with materials needed (e.g. "consumer unit change, 10 ways, 30m 2.5mm T&E, 15m 6mm, 6x RCBOs")'
+        ),
+      preferred_supplier: z
+        .string()
+        .optional()
+        .describe('Preferred supplier (e.g. "CEF", "Screwfix"). If set, only prices from this supplier.'),
+      budget_limit: z
+        .number()
+        .optional()
+        .describe('Budget limit in GBP. Returns whether total is within budget.'),
+    },
+    callTool('price_materials_for_job', user)
   );
 
   server.tool(
@@ -1960,6 +2166,27 @@ function registerVisionTools(server: McpServer, user: UserContext): void {
   );
 }
 
+// ─── Routing Tools (1) ──────────────────────────────────────────────────
+
+function registerRoutingTools(server: McpServer, user: UserContext): void {
+  server.tool(
+    'get_route_to_job',
+    'Get driving directions to a job site with real-time traffic estimates. Uses Google Maps Directions API. Returns route options with duration, distance, and traffic-adjusted times. Defaults to the user\'s business address as origin.',
+    {
+      destination: z.string().describe('Destination address (e.g. "42 High Street, Birmingham B1 1AA")'),
+      origin: z
+        .string()
+        .optional()
+        .describe('Starting address (defaults to business address from company profile)'),
+      departure_time: z
+        .string()
+        .optional()
+        .describe('Departure time (ISO-8601, defaults to now)'),
+    },
+    callTool('get_route_to_job', user)
+  );
+}
+
 // ─── Job Intake Tools (1) — ELE-209 ─────────────────────────────────────
 
 function registerJobIntakeTools(server: McpServer, user: UserContext): void {
@@ -2007,5 +2234,164 @@ function registerJobIntakeTools(server: McpServer, user: UserContext): void {
         .describe('Site visit duration in minutes (default 60)'),
     },
     callTool('create_job_intake', user)
+  );
+}
+
+// ─── Day Planner Tools (1) ──────────────────────────────────────────────
+
+function registerDayPlannerTools(server: McpServer, user: UserContext): void {
+  server.tool(
+    'plan_my_day',
+    "Optimise today's schedule by finding the best driving route between calendar events. Fetches events with addresses, calls Google Maps Distance Matrix API, and solves the Travelling Salesman Problem to minimise total driving time. Returns optimised route order with travel times and minutes saved.",
+    {
+      date: z
+        .string()
+        .optional()
+        .describe('Date to plan (ISO-8601, default today)'),
+      start_address: z
+        .string()
+        .optional()
+        .describe('Home/start address (defaults to business address from company profile)'),
+    },
+    callTool('plan_my_day', user)
+  );
+}
+
+// ─── Job Profit Tools (1) ───────────────────────────────────────────────
+
+function registerJobProfitTools(server: McpServer, user: UserContext): void {
+  server.tool(
+    'calculate_job_profit',
+    'Calculate the profit/loss on a project. Aggregates revenue from linked invoices, matches expenses by description/location/date overlap, and calculates materials cost from quote line items. Returns gross profit, margin percentage, and matched expense breakdown.',
+    {
+      job_id: z.string().describe('Project UUID from spark_projects'),
+      include_estimates: z
+        .boolean()
+        .optional()
+        .describe('Include RAG-based labour cost estimates for gaps (default false)'),
+    },
+    callTool('calculate_job_profit', user)
+  );
+}
+
+// ─── Snagging Tools (1) ─────────────────────────────────────────────────
+
+function registerSnaggingTools(server: McpServer, user: UserContext): void {
+  server.tool(
+    'create_snag',
+    'Create a snagging item on a project. Optionally analyse a photo to enrich the description and auto-detect severity (C1 → critical, C2 → high). If no project_id is given, a new snagging project is created automatically.',
+    {
+      title: z.string().describe('Short title for the snag (e.g. "Exposed cable behind CU")'),
+      project_id: z
+        .string()
+        .optional()
+        .describe('Link snag to an existing spark_project. If omitted, a new project is created.'),
+      description: z.string().optional().describe('Detailed description of the issue'),
+      severity: z
+        .enum(['low', 'normal', 'high', 'critical'])
+        .optional()
+        .describe('Severity — maps to task priority. If a photo is provided and severity is normal, AI may upgrade it based on observations.'),
+      location: z.string().optional().describe('Location on site (e.g. "Kitchen", "First floor landing")'),
+      image_url: z
+        .string()
+        .optional()
+        .describe('URL of a photo showing the issue. Will be analysed by AI if no photo_analysis_id is provided.'),
+      photo_analysis_id: z
+        .string()
+        .optional()
+        .describe('Existing photo_analyses UUID — skips re-analysis if the photo was already analysed'),
+      due_date: z.string().optional().describe('ISO date string for when this snag should be resolved'),
+      customer_id: z.string().optional().describe('Client UUID to associate the snag with'),
+    },
+    callTool('create_snag', user)
+  );
+
+  server.tool(
+    'read_snags',
+    'Read snagging items for a project, or all snags for the user. Optionally filter by status and include linked photos. Returns items with summary counts (total, open, resolved, critical).',
+    {
+      project_id: z
+        .string()
+        .optional()
+        .describe('Filter snags to a specific project. If omitted, returns all user snags.'),
+      status: z
+        .enum(['open', 'done'])
+        .optional()
+        .describe('Filter by status — open (not done) or done'),
+      include_photos: z
+        .boolean()
+        .optional()
+        .describe('Include linked photo_analyses for each snag (default false)'),
+    },
+    callTool('read_snags', user)
+  );
+
+  server.tool(
+    'resolve_snag',
+    'Mark a snagging item as done. Optionally attach a completion photo and add resolution notes. Validates the task has a snagging tag before resolving.',
+    {
+      snag_id: z.string().describe('spark_tasks UUID of the snag to resolve'),
+      resolution_notes: z
+        .string()
+        .optional()
+        .describe('Notes on how the issue was resolved — appended to the task details'),
+      image_url: z
+        .string()
+        .optional()
+        .describe('URL of a completion photo showing the resolved issue'),
+    },
+    callTool('resolve_snag', user)
+  );
+
+  server.tool(
+    'generate_snagging_list',
+    'Check a certificate for completeness and/or list existing project snags. If certificate_id is provided, validates all required sections for EICR, EIC, or Minor Works and optionally creates tasks. If project_id is provided, returns existing snagging tasks on that project. Both can be combined for a unified view.',
+    {
+      certificate_id: z
+        .string()
+        .optional()
+        .describe('Report UUID from the reports table. Required if no project_id is given.'),
+      project_id: z
+        .string()
+        .optional()
+        .describe('spark_projects UUID. If given alone, returns existing snags without cert validation. If given with certificate_id, merges cert gaps with project snags.'),
+      create_tasks: z
+        .boolean()
+        .optional()
+        .describe('Create a snagging project with tasks for each missing item (default true). Only applies when certificate_id is provided.'),
+    },
+    callTool('generate_snagging_list', user)
+  );
+}
+
+// ─── Photo Estimate Tools (1) ───────────────────────────────────────────
+
+function registerPhotoEstimateTools(server: McpServer, user: UserContext): void {
+  server.tool(
+    'estimate_from_photo',
+    'Generate a cost estimate from a photo. Analyses the photo using AI vision, extracts material keywords, looks up pricing from RAG, and optionally creates a quote. Use when an electrician sends a photo asking "how much would this cost?" or "price this up".',
+    {
+      image_url: z
+        .string()
+        .describe('URL of the image to estimate from (WhatsApp or Supabase storage)'),
+      context: z
+        .string()
+        .optional()
+        .describe('Additional context (e.g. "consumer unit change", "full rewire")'),
+      job_description: z
+        .string()
+        .optional()
+        .describe('Detailed job description to improve material extraction'),
+      client_data: z
+        .object({
+          name: z.string().describe('Client name'),
+          email: z.string().optional().describe('Client email'),
+          phone: z.string().optional().describe('Client phone'),
+          address: z.string().optional().describe('Client/job address'),
+        })
+        .optional()
+        .describe('Client details — if provided, a quote is automatically created'),
+    },
+    callTool('estimate_from_photo', user)
   );
 }

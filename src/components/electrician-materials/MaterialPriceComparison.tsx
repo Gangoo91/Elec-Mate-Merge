@@ -55,26 +55,30 @@ const MaterialPriceComparison = ({
     try {
       toast({
         title: 'Searching materials...',
-        description: 'Fetching latest prices from Screwfix...',
+        description: 'Fetching latest prices...',
       });
 
-      const { data, error } = await supabase.functions.invoke('simple-materials-scraper', {
-        body: {},
-      });
-
-      console.log('✅ Scraper response:', { data, error });
+      // Read from pipeline-populated materials cache
+      const { data: cacheRows, error } = await supabase
+        .from('materials_weekly_cache')
+        .select('products')
+        .order('created_at', { ascending: false })
+        .limit(1)
+        .maybeSingle();
 
       if (error) {
-        console.error('❌ Scraper error:', error);
+        console.error('DB query error:', error);
         throw new Error(error.message);
       }
 
-      if (data?.materials && data.materials.length > 0) {
-        console.log(`✅ Found ${data.materials.length} materials`);
+      const materials = (cacheRows?.products as any[]) || [];
+
+      if (materials.length > 0) {
+        console.log(`Found ${materials.length} materials in cache`);
 
         // Filter by search query
         const searchLower = searchQuery.toLowerCase();
-        const filteredProducts = data.materials.filter((material: any) => {
+        const filteredProducts = materials.filter((material: any) => {
           const nameMatch = material.name?.toLowerCase().includes(searchLower);
           const categoryMatch =
             selectedCategory === 'all' || material.category === selectedCategory;

@@ -1664,7 +1664,7 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
               variant="ghost"
               size="sm"
               onClick={toggleMobileView}
-              className="h-8 text-xs gap-1.5 text-muted-foreground hover:text-foreground"
+              className="h-8 text-xs gap-1.5 text-white hover:text-foreground"
             >
               {mobileViewType === 'table' ? (
                 <Layout className="h-3.5 w-3.5" />

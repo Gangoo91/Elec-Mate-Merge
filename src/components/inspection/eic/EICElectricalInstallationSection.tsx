@@ -199,8 +199,8 @@ const EICElectricalInstallationSection = ({
                   </>
                 ) : (
                   formData.rcdMainSwitch === 'no' && (
-                    <div className="md:col-span-2 flex items-center justify-center p-4 bg-gray-50 border border-gray-200 rounded-md">
-                      <p className="text-sm text-gray-600 text-center">
+                    <div className="md:col-span-2 flex items-center justify-center p-4 bg-white/[0.03] border border-white/10 rounded-md">
+                      <p className="text-sm text-white text-center">
                         RCD rating and type fields are not applicable when no RCD protection is
                         installed
                       </p>

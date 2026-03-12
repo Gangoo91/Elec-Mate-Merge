@@ -503,7 +503,7 @@ const EICCertificateActions: React.FC<EICCertificateActionsProps> = ({
               <h4 className="font-medium text-sm">Section Completion</h4>
               <div className="space-y-1 text-sm">
                 <div
-                  className={`flex items-center gap-2 ${hasRequiredInstallationDetails ? 'text-green-600' : 'text-gray-500'}`}
+                  className={`flex items-center gap-2 ${hasRequiredInstallationDetails ? 'text-green-400' : 'text-white'}`}
                 >
                   {hasRequiredInstallationDetails ? (
                     <CheckCircle className="h-4 w-4" />
@@ -513,7 +513,7 @@ const EICCertificateActions: React.FC<EICCertificateActionsProps> = ({
                   Installation Details
                 </div>
                 <div
-                  className={`flex items-center gap-2 ${hasCompletedInspections ? 'text-green-600' : 'text-gray-500'}`}
+                  className={`flex items-center gap-2 ${hasCompletedInspections ? 'text-green-400' : 'text-white'}`}
                 >
                   {hasCompletedInspections ? (
                     <CheckCircle className="h-4 w-4" />
@@ -523,7 +523,7 @@ const EICCertificateActions: React.FC<EICCertificateActionsProps> = ({
                   Schedule of Inspections
                 </div>
                 <div
-                  className={`flex items-center gap-2 ${hasTestResults ? 'text-green-600' : 'text-gray-500'}`}
+                  className={`flex items-center gap-2 ${hasTestResults ? 'text-green-400' : 'text-white'}`}
                 >
                   {hasTestResults ? (
                     <CheckCircle className="h-4 w-4" />
@@ -533,7 +533,7 @@ const EICCertificateActions: React.FC<EICCertificateActionsProps> = ({
                   Schedule of Testing
                 </div>
                 <div
-                  className={`flex items-center gap-2 ${hasRequiredDeclarations ? 'text-green-600' : 'text-gray-500'}`}
+                  className={`flex items-center gap-2 ${hasRequiredDeclarations ? 'text-green-400' : 'text-white'}`}
                 >
                   {hasRequiredDeclarations ? (
                     <CheckCircle className="h-4 w-4" />
@@ -670,7 +670,7 @@ const EICCertificateActions: React.FC<EICCertificateActionsProps> = ({
           </div>
 
           {/* Certificate Information */}
-          <div className="pt-4 border-t text-xs text-muted-foreground space-y-1">
+          <div className="pt-4 border-t text-xs text-white space-y-1">
             <p>
               <strong>Certificate Type:</strong> Electrical Installation Certificate (EIC)
             </p>

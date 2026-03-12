@@ -71,7 +71,7 @@ const FireAlarmTabNavigation: React.FC<FireAlarmTabNavigationProps> = ({
         {/* Progress bar */}
         <div className="mb-3">
           <div className="flex items-center justify-between mb-1">
-            <span className="text-sm text-muted-foreground">
+            <span className="text-sm text-white">
               Section {currentTabIndex + 1} of {totalTabs}
             </span>
             <span className="text-sm font-medium text-foreground">{progress}% complete</span>

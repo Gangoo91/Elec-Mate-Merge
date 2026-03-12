@@ -99,7 +99,7 @@ const EICFormHeader: React.FC<EICFormHeaderProps> = ({
               <span className="truncate bg-gradient-to-r from-yellow-600 to-yellow-500 bg-clip-text text-transparent text-2xl font-bold">
                 EIC - Electrical Installation Certificate
               </span>
-              <p className="text-sm text-muted-foreground">
+              <p className="text-sm text-white">
                 BS7671:2018 New Installation Certificate
               </p>
             </div>

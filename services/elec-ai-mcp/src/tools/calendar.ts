@@ -117,6 +117,158 @@ export async function createCalendarEvent(args: Record<string, unknown>, user: U
   };
 }
 
+export async function updateCalendarEvent(args: Record<string, unknown>, user: UserContext) {
+  if (typeof args.event_id !== 'string') {
+    throw new Error('event_id is required');
+  }
+
+  const supabase = user.supabase;
+
+  // Fetch existing event to merge partial changes
+  const { data: existing, error: fetchError } = await supabase
+    .from('calendar_events')
+    .select('*')
+    .eq('id', args.event_id)
+    .eq('user_id', user.userId)
+    .single();
+
+  if (fetchError || !existing) {
+    throw new Error(`Event not found: ${args.event_id}`);
+  }
+
+  const updates: Record<string, unknown> = {};
+  const updatedFields: string[] = [];
+
+  if (typeof args.title === 'string') {
+    updates.title = args.title.trim();
+    updatedFields.push('title');
+  }
+
+  if (typeof args.address === 'string') {
+    updates.location = args.address.trim();
+    updatedFields.push('location');
+  }
+
+  if (typeof args.notes === 'string') {
+    updates.notes = args.notes.trim();
+    updatedFields.push('notes');
+  }
+
+  if (typeof args.description === 'string') {
+    updates.description = args.description.trim();
+    updatedFields.push('description');
+  }
+
+  if (typeof args.client_id === 'string') {
+    updates.client_id = args.client_id;
+    updatedFields.push('client_id');
+  }
+
+  if (typeof args.job_id === 'string') {
+    updates.job_id = args.job_id;
+    updatedFields.push('job_id');
+  }
+
+  if (typeof args.event_type === 'string' && VALID_EVENT_TYPES.includes(args.event_type)) {
+    updates.event_type = args.event_type;
+    updates.colour = COLOUR_MAP[args.event_type] || '#3B82F6';
+    updatedFields.push('event_type');
+  }
+
+  // Handle date/time changes — merge with existing if partial
+  const hasDateChange = typeof args.date === 'string';
+  const hasTimeChange = typeof args.time === 'string';
+  const hasDurationChange = typeof args.duration_minutes === 'number';
+
+  if (hasDateChange || hasTimeChange || hasDurationChange) {
+    const existingStart = new Date(existing.start_at as string);
+    const existingEnd = new Date(existing.end_at as string);
+    const existingDuration = existingEnd.getTime() - existingStart.getTime();
+
+    const dateStr = hasDateChange
+      ? (args.date as string)
+      : existingStart.toISOString().split('T')[0];
+    const timeStr = hasTimeChange
+      ? (args.time as string)
+      : existingStart.toTimeString().slice(0, 5);
+    const durationMs = hasDurationChange
+      ? (args.duration_minutes as number) * 60 * 1000
+      : existingDuration;
+
+    const newStart = new Date(`${dateStr}T${timeStr}:00`);
+    if (isNaN(newStart.getTime())) {
+      throw new Error(`Invalid date/time: ${dateStr} ${timeStr}`);
+    }
+    const newEnd = new Date(newStart.getTime() + durationMs);
+
+    updates.start_at = newStart.toISOString();
+    updates.end_at = newEnd.toISOString();
+
+    if (hasDateChange) updatedFields.push('date');
+    if (hasTimeChange) updatedFields.push('time');
+    if (hasDurationChange) updatedFields.push('duration');
+  }
+
+  if (updatedFields.length === 0) {
+    throw new Error('No fields to update. Provide at least one field to change.');
+  }
+
+  const { data, error } = await supabase
+    .from('calendar_events')
+    .update(updates)
+    .eq('id', args.event_id)
+    .eq('user_id', user.userId)
+    .select('id, title, start_at, end_at, location, event_type')
+    .single();
+
+  if (error) throw new Error(`Failed to update calendar event: ${error.message}`);
+
+  return {
+    event_id: data.id,
+    title: data.title,
+    start_at: data.start_at,
+    end_at: data.end_at,
+    location: data.location,
+    event_type: data.event_type,
+    updated_fields: updatedFields,
+  };
+}
+
+export async function deleteCalendarEvent(args: Record<string, unknown>, user: UserContext) {
+  if (typeof args.event_id !== 'string') {
+    throw new Error('event_id is required');
+  }
+
+  const supabase = user.supabase;
+
+  // Fetch event first for confirmation details
+  const { data: existing, error: fetchError } = await supabase
+    .from('calendar_events')
+    .select('id, title, start_at, end_at')
+    .eq('id', args.event_id)
+    .eq('user_id', user.userId)
+    .single();
+
+  if (fetchError || !existing) {
+    throw new Error(`Event not found: ${args.event_id}`);
+  }
+
+  const { error } = await supabase
+    .from('calendar_events')
+    .delete()
+    .eq('id', args.event_id)
+    .eq('user_id', user.userId);
+
+  if (error) throw new Error(`Failed to delete calendar event: ${error.message}`);
+
+  return {
+    deleted: true,
+    event_id: existing.id,
+    title: existing.title,
+    was_scheduled_for: existing.start_at,
+  };
+}
+
 export async function getAvailability(args: Record<string, unknown>, user: UserContext) {
   if (typeof args.date_from !== 'string') {
     throw new Error('date_from is required');

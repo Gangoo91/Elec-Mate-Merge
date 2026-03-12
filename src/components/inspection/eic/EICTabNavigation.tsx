@@ -84,7 +84,7 @@ const EICTabNavigation: React.FC<EICTabNavigationProps> = ({
             variant="ghost"
             size="sm"
             onClick={onToggleComplete}
-            className={`flex items-center space-x-1 ${isCurrentTabComplete ? 'text-green-600 dark:text-green-400' : 'text-muted-foreground'}`}
+            className={`flex items-center space-x-1 ${isCurrentTabComplete ? 'text-green-600 dark:text-green-400' : 'text-white'}`}
           >
             {isCurrentTabComplete ? (
               <CheckCircle className="h-4 w-4" />
@@ -97,7 +97,7 @@ const EICTabNavigation: React.FC<EICTabNavigationProps> = ({
       </div>
 
       <div className="space-y-2">
-        <div className="flex justify-between text-xs text-muted-foreground">
+        <div className="flex justify-between text-xs text-white">
           <span>Progress</span>
           <span>{getProgressPercentage()}%</span>
         </div>

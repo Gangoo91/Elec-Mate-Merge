@@ -27,7 +27,12 @@ import * as analytics from './analytics.js';
 import * as marketplace from './marketplace.js';
 import * as safety from './safety.js';
 import * as vision from './vision.js';
+import * as routing from './routing.js';
 import * as jobIntake from './job-intake.js';
+import * as dayPlanner from './day-planner.js';
+import * as jobProfit from './job-profit.js';
+import * as snagging from './snagging.js';
+import * as photoEstimate from './photo-estimate.js';
 
 /** Handler function signature — every tool handler takes args + user context */
 export type ToolHandler = (args: Record<string, unknown>, user: UserContext) => Promise<unknown>;
@@ -87,6 +92,8 @@ const handlers: Record<string, ToolHandler> = {
   // Calendar
   read_calendar: calendar.readCalendar,
   create_calendar_event: calendar.createCalendarEvent,
+  update_calendar_event: calendar.updateCalendarEvent,
+  delete_calendar_event: calendar.deleteCalendarEvent,
   get_availability: calendar.getAvailability,
 
   // Messaging
@@ -201,6 +208,7 @@ const handlers: Record<string, ToolHandler> = {
   // Marketplace
   search_products: marketplace.searchProducts,
   compare_prices: marketplace.comparePrices,
+  price_materials_for_job: marketplace.priceMaterialsForJob,
   get_deals: marketplace.getDeals,
 
   // Safety
@@ -213,8 +221,36 @@ const handlers: Record<string, ToolHandler> = {
   attach_photo_to_entity: vision.attachPhotoToEntity,
   get_entity_photos: vision.getEntityPhotos,
 
+  // Routing
+  get_route_to_job: routing.getRouteToJob,
+
   // Job Intake (ELE-209)
   create_job_intake: jobIntake.createJobIntake,
+
+  // EIC Certificates
+  create_eic: certificates.createEic,
+  update_eic: certificates.updateEic,
+  read_eic: certificates.readEic,
+
+  // Minor Works Certificates
+  create_minor_works: certificates.createMinorWorks,
+  update_minor_works: certificates.updateMinorWorks,
+  read_minor_works: certificates.readMinorWorks,
+
+  // Day Planner
+  plan_my_day: dayPlanner.planMyDay,
+
+  // Job Profit
+  calculate_job_profit: jobProfit.calculateJobProfit,
+
+  // Snagging
+  create_snag: snagging.createSnag,
+  read_snags: snagging.readSnags,
+  resolve_snag: snagging.resolveSnag,
+  generate_snagging_list: snagging.generateSnaggingList,
+
+  // Photo Estimate
+  estimate_from_photo: photoEstimate.estimateFromPhoto,
 };
 
 /**

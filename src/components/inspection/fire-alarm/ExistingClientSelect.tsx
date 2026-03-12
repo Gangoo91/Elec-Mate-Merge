@@ -222,7 +222,7 @@ export function ExistingClientSelect({
           <span
             className={cn(
               'truncate flex items-center gap-2',
-              !selectedClient && 'text-muted-foreground'
+              !selectedClient && 'text-white'
             )}
           >
             <User className="h-4 w-4 shrink-0 opacity-60" />
@@ -247,11 +247,11 @@ export function ExistingClientSelect({
             {loading ? (
               <div className="flex items-center justify-center py-6">
                 <Loader2 className="h-5 w-5 animate-spin text-elec-yellow" />
-                <span className="ml-2 text-sm text-gray-400">Loading clients...</span>
+                <span className="ml-2 text-sm text-white">Loading clients...</span>
               </div>
             ) : (
               <>
-                <CommandEmpty className="p-4 text-sm text-gray-400">
+                <CommandEmpty className="p-4 text-sm text-white">
                   {clients.length === 0
                     ? 'No previous fire alarm clients found.'
                     : 'No matching clients.'}
@@ -277,13 +277,13 @@ export function ExistingClientSelect({
                         <div className="flex flex-col flex-1 min-w-0 gap-0.5">
                           <span className="font-medium truncate">{client.clientName}</span>
                           {(client.premisesAddress || client.premisesName) && (
-                            <span className="text-xs text-gray-400 truncate flex items-center gap-1">
+                            <span className="text-xs text-white truncate flex items-center gap-1">
                               <MapPin className="h-3 w-3 shrink-0" />
                               {client.premisesName || client.premisesAddress}
                             </span>
                           )}
                           {client.inspectionDate && (
-                            <span className="text-xs text-gray-500 flex items-center gap-1">
+                            <span className="text-xs text-white flex items-center gap-1">
                               <Calendar className="h-3 w-3 shrink-0" />
                               Last: {formatDate(client.inspectionDate)}
                             </span>

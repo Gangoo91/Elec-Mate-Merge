@@ -3,7 +3,7 @@
  * Compliant with BS 5839-1:2025 Fire detection and fire alarm systems
  */
 
-import { FireAlarmFormData, FireAlarmZone } from '@/types/fire-alarm';
+import { FireAlarmFormData, FireAlarmZone, InterfaceEquipment, AspiratingUnit, TestEquipmentItem } from '@/types/fire-alarm';
 
 export const formatFireAlarmJson = (formData: Partial<FireAlarmFormData>) => {
   const data = formData as Record<string, unknown>;
@@ -76,12 +76,20 @@ export const formatFireAlarmJson = (formData: Partial<FireAlarmFormData>) => {
   // Format certificate type
   const formatCertificateType = (type: string): string => {
     switch (type) {
+      case 'design':
+        return 'Design Certificate';
       case 'installation':
         return 'Installation Certificate';
       case 'commissioning':
         return 'Commissioning Certificate';
+      case 'acceptance':
+        return 'Acceptance Certificate';
+      case 'verification':
+        return 'Verification Certificate';
       case 'periodic':
         return 'Periodic Test Certificate';
+      case 'modification':
+        return 'Modification Certificate';
       default:
         return type || 'Certificate';
     }
@@ -298,7 +306,7 @@ export const formatFireAlarmJson = (formData: Partial<FireAlarmFormData>) => {
       return {
         zone: r.zone || '',
         location: r.location || '',
-        area_type: r.areaType || 'general',
+        area_type: ({ general: 'General', sleeping: 'Sleeping', stairwell: 'Stairwell', 'plant-room': 'Plant Room' } as Record<string, string>)[r.areaType || 'general'] || r.areaType || 'General',
         db_reading: r.dBReading || '',
         min_required: r.minRequired || '65',
         result: isPassing ? 'PASS' : 'FAIL',
@@ -331,7 +339,98 @@ export const formatFireAlarmJson = (formData: Partial<FireAlarmFormData>) => {
       zone_chart: handover.zoneChart || false,
       cause_effect: handover.causeEffectMatrix || false,
       training: handover.trainingProvided || false,
+      as_fitted_drawings: formData.handoverAsBuiltDrawings || false,
+      operating_instructions: formData.handoverOperatingInstructions || false,
+      log_book: formData.handoverLogBook || false,
+      spares: formData.handoverSpares || false,
     };
+  };
+
+  // Format individual detector schedule
+  const formatDetectors = (): Record<string, any>[] => {
+    const items = formData.detectors || [];
+    return items.map((d, index: number) => ({
+      number: index + 1,
+      zone_id: d.zoneId || '',
+      location: d.location || '',
+      type: d.type || '',
+      make: d.make || '',
+      model: d.model || '',
+      serial_number: d.serialNumber || '',
+      install_date: formatDateUK(d.installDate || ''),
+      test_result: formatTestResult(d.testResult),
+      test_result_class: getResultClass(d.testResult),
+      notes: d.notes || '',
+    }));
+  };
+
+  // Format individual sounder schedule
+  const formatSounders = (): Record<string, any>[] => {
+    const items = formData.sounders || [];
+    return items.map((s, index: number) => ({
+      number: index + 1,
+      zone_id: s.zoneId || '',
+      location: s.location || '',
+      type: s.type || '',
+      make: s.make || '',
+      model: s.model || '',
+      db_reading: s.dBReading || '',
+      test_result: formatTestResult(s.testResult),
+      test_result_class: getResultClass(s.testResult),
+    }));
+  };
+
+  // Format individual call point schedule
+  const formatCallPoints = (): Record<string, any>[] => {
+    const items = formData.callPoints || [];
+    return items.map((cp, index: number) => ({
+      number: index + 1,
+      zone_id: cp.zoneId || '',
+      location: cp.location || '',
+      type: cp.type || '',
+      make: cp.make || '',
+      model: cp.model || '',
+      test_result: formatTestResult(cp.testResult),
+      test_result_class: getResultClass(cp.testResult),
+    }));
+  };
+
+  // Format interface equipment
+  const formatInterfaceEquipment = (): Record<string, any>[] => {
+    const items: InterfaceEquipment[] = formData.interfaceEquipment || [];
+    return items.map((item) => ({
+      type: item.type || '',
+      location: item.location || '',
+      interface_method: item.interfaceMethod || '',
+      details: item.details || '',
+      tested: item.tested || false,
+    }));
+  };
+
+  // Format aspirating units
+  const formatAspiratingUnits = (): Record<string, any>[] => {
+    const units: AspiratingUnit[] = formData.aspiratingUnits || [];
+    return units.map((unit) => ({
+      make: unit.make || '',
+      model: unit.model || '',
+      sampling_points: unit.samplingPoints || 0,
+      pipe_length: unit.pipeLength || '',
+      transport_time: unit.transportTime || '',
+      sensitivity_level: unit.sensitivityLevel || '',
+    }));
+  };
+
+  // Format test equipment
+  const formatTestEquipment = (): Record<string, any>[] => {
+    const items: TestEquipmentItem[] = formData.testEquipment || [];
+    return items.map((item) => ({
+      type: item.type || '',
+      make: item.make || '',
+      model: item.model || '',
+      serial_number: item.serialNumber || '',
+      calibration_date: formatDateUK(item.calibrationDate || ''),
+      calibration_due: formatDateUK(item.calibrationDue || ''),
+    }));
   };
 
   // Get overall result display
@@ -434,7 +533,14 @@ export const formatFireAlarmJson = (formData: Partial<FireAlarmFormData>) => {
     certificate_type_display: formatCertificateType(get('certificateType')),
     inspection_date: getDate('inspectionDate'),
     previous_certificate_ref: get('previousCertificateRef'),
+    standard_edition: get('standardEdition') || 'BS 5839-1:2017+A1:2024',
     is_periodic: get('certificateType') === 'periodic',
+    is_design: get('certificateType') === 'design',
+    is_installation: get('certificateType') === 'installation',
+    is_commissioning: get('certificateType') === 'commissioning',
+    is_acceptance: get('certificateType') === 'acceptance',
+    is_verification: get('certificateType') === 'verification',
+    is_modification: get('certificateType') === 'modification',
 
     // ============================================
     // THIRD-PARTY CERTIFICATION
@@ -484,6 +590,7 @@ export const formatFireAlarmJson = (formData: Partial<FireAlarmFormData>) => {
     panel_location: get('panelLocation'),
     panel_serial: get('panelSerialNumber'),
     panel_serial_photo: get('panelSerialPhoto'),
+    panel_firmware_version: get('panelFirmwareVersion'),
 
     // ============================================
     // POWER SUPPLY
@@ -515,12 +622,23 @@ export const formatFireAlarmJson = (formData: Partial<FireAlarmFormData>) => {
     sounder_count: formData.sounderCount || 0,
     visual_alarm_count: formData.visualAlarmCount || 0,
     total_alarm_devices: totalAlarmDevices,
+    total_devices: totalDetectors + (formData.callPointCount || 0) + (formData.sounderCount || 0) + (formData.visualAlarmCount || 0),
 
     // ============================================
     // ZONES
     // ============================================
     zones: formatZones(),
     has_zones: (formData.zones || []).length > 0,
+
+    // ============================================
+    // DEVICE SCHEDULES (individual items)
+    // ============================================
+    detectors: formatDetectors(),
+    has_detectors: (formData.detectors || []).length > 0,
+    sounders: formatSounders(),
+    has_sounders: (formData.sounders || []).length > 0,
+    call_points: formatCallPoints(),
+    has_call_points: (formData.callPoints || []).length > 0,
 
     // ============================================
     // TEST RESULTS
@@ -590,6 +708,179 @@ export const formatFireAlarmJson = (formData: Partial<FireAlarmFormData>) => {
     // ============================================
     additional_notes: get('additionalNotes'),
     has_additional_notes: !!(get('additionalNotes') && get('additionalNotes').trim()),
+
+    // ============================================
+    // INTERFACE EQUIPMENT
+    // ============================================
+    interface_equipment: formatInterfaceEquipment(),
+    has_interface_equipment: (formData.interfaceEquipment || []).length > 0,
+
+    // ============================================
+    // CABLE & WIRING
+    // ============================================
+    cable_type: get('cableType'),
+    cable_fire_rating: get('cableFireRating'),
+    circuit_integrity: get('circuitIntegrity'),
+    wiring_notes: get('wiringNotes'),
+
+    // ============================================
+    // CAUSE & EFFECT
+    // ============================================
+    cause_effect_ref: get('causeAndEffectRef'),
+    cause_effect_verified: getBool('causeAndEffectVerified'),
+    cause_effect_date: getDate('causeAndEffectDate'),
+
+    // ============================================
+    // RESPONSIBLE PERSON
+    // ============================================
+    responsible_person: {
+      name: get('responsiblePersonName'),
+      position: get('responsiblePersonPosition'),
+      signature: get('responsiblePersonSignature'),
+      date: getDate('responsiblePersonDate'),
+      acknowledgement: getBool('responsiblePersonAcknowledgement'),
+    },
+
+    // ============================================
+    // DEVICES TESTED (Periodic)
+    // ============================================
+    devices_tested_count: getNum('devicesTestedCount'),
+    devices_total_count: getNum('devicesTotalCount'),
+    devices_tested_percentage: getNum('devicesTotalCount') > 0
+      ? Math.round((getNum('devicesTestedCount') / getNum('devicesTotalCount')) * 100)
+      : 0,
+    device_testing_complete: getBool('deviceTestingComplete'),
+
+    // ============================================
+    // DESIGN CERTIFICATE
+    // ============================================
+    design: {
+      basis: get('designBasis'),
+      coverage_category: get('designCoverageCategory'),
+      deviations: get('designDeviations'),
+      doc_ref: get('designDocRef'),
+    },
+
+    // ============================================
+    // ACCEPTANCE CERTIFICATE
+    // ============================================
+    acceptance: {
+      criteria: get('acceptanceCriteria'),
+      training_provided: getBool('acceptanceTrainingProvided'),
+      log_book_provided: getBool('acceptanceLogBookProvided'),
+    },
+
+    // ============================================
+    // VERIFICATION CERTIFICATE
+    // ============================================
+    verification: {
+      organisation: get('verificationOrganisation'),
+      scope: get('verificationScope'),
+      findings: get('verificationFindings'),
+      compliant: getBool('verificationCompliant'),
+    },
+    verifier_name: get('verifierName'),
+    verifier_company: get('verifierCompany'),
+    verifier_qualifications: get('verifierQualifications'),
+    verifier_date: getDate('verifierDate'),
+    verifier_signature: get('verifierSignature'),
+
+    // ============================================
+    // MODIFICATION CERTIFICATE
+    // ============================================
+    modification: {
+      description: get('modificationDescription'),
+      reason: get('modificationReason'),
+      extent: get('modificationExtent'),
+      original_cert_ref: get('originalCertRef'),
+    },
+
+    // ============================================
+    // FALSE ALARM MANAGEMENT
+    // ============================================
+    false_alarm_management: getBool('falseAlarmManagement'),
+    false_alarm_strategy: get('falseAlarmStrategy'),
+    investigation_delay: getNum('investigationDelay'),
+    false_alarm_notes: get('falseAlarmNotes'),
+
+    // ============================================
+    // LOOP/ADDRESSABLE DETAILS
+    // ============================================
+    loop_count: getNum('loopCount'),
+    devices_per_loop: get('devicesPerLoop'),
+    total_addressable_devices: getNum('totalAddressableDevices'),
+    max_loop_capacity: getNum('maxLoopCapacity'),
+
+    // ============================================
+    // ASPIRATING SYSTEM
+    // ============================================
+    aspirating_units: formatAspiratingUnits(),
+    has_aspirating_units: (formData.aspiratingUnits || []).length > 0,
+
+    // ============================================
+    // PREVIOUS CERTIFICATE (Periodic)
+    // ============================================
+    previous_certificate_date: getDate('previousCertificateDate'),
+    previous_inspector: get('previousInspector'),
+    previous_inspector_company: get('previousInspectorCompany'),
+
+    // ============================================
+    // ZONE PLAN REFERENCE
+    // ============================================
+    zone_plan_ref: get('zonePlanRef'),
+    zone_plan_date: getDate('zonePlanDate'),
+
+    // ============================================
+    // EXTENT & LIMITATIONS (Periodic/Verification)
+    // ============================================
+    extent_of_inspection: get('extentOfInspection'),
+    inspection_limitations: get('inspectionLimitations'),
+    agreed_scope: get('agreedScope'),
+
+    // ============================================
+    // DETECTOR SPACING
+    // ============================================
+    detector_spacing_compliant: getBool('detectorSpacingCompliant'),
+    spacing_notes: get('spacingNotes'),
+
+    // ============================================
+    // TEST EQUIPMENT
+    // ============================================
+    test_equipment: formatTestEquipment(),
+    has_test_equipment: (formData.testEquipment || []).length > 0,
+
+    // ============================================
+    // ENVIRONMENTAL CONDITIONS
+    // ============================================
+    ambient_temperature: get('ambientTemperature'),
+    ambient_noise_level: get('ambientNoiseLevel'),
+    weather_conditions: get('weatherConditions'),
+
+    // ============================================
+    // BUILDING PLAN
+    // ============================================
+    building_plan_ref: get('buildingPlanRef'),
+    building_plan_date: getDate('buildingPlanDate'),
+
+    // ============================================
+    // OCCUPANCY
+    // ============================================
+    estimated_occupancy: getNum('estimatedOccupancy'),
+    occupancy_basis: get('occupancyBasis'),
+
+    // ============================================
+    // CONTACT DETAILS
+    // ============================================
+    installer_company_address: get('installerCompanyAddress'),
+    installer_company_phone: get('installerCompanyPhone'),
+    commissioner_company_address: get('commissionerCompanyAddress'),
+    commissioner_company_phone: get('commissionerCompanyPhone'),
+
+    // ============================================
+    // RELATED STANDARDS
+    // ============================================
+    related_standards: formData.relatedStandards || [],
+    has_related_standards: (formData.relatedStandards || []).length > 0,
 
     // ============================================
     // COMPANY BRANDING (from profile)

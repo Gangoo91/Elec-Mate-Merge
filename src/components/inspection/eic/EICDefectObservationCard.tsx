@@ -71,7 +71,7 @@ const EICDefectObservationCard: React.FC<EICDefectObservationCardProps> = ({
       case 'limitation':
         return <Info className="h-4 w-4 text-purple-500" />;
       case 'neutral':
-        return <Minus className="h-4 w-4 text-gray-500" />;
+        return <Minus className="h-4 w-4 text-white" />;
       default:
         return <FileText className="h-4 w-4 text-elec-yellow" />;
     }
@@ -206,7 +206,7 @@ const EICDefectObservationCard: React.FC<EICDefectObservationCardProps> = ({
         <div className="space-y-3 pt-4 border-t border-border">
           <div className="flex items-center justify-between">
             <Label className="text-sm font-medium">Photo Evidence</Label>
-            <span className="text-xs text-muted-foreground">
+            <span className="text-xs text-white">
               {photos.length} photo{photos.length !== 1 ? 's' : ''}
             </span>
           </div>
