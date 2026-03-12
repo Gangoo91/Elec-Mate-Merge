@@ -1375,16 +1375,6 @@ const ProjectDetailPage = () => {
           createUrl={linkConfig[linkType].createUrl}
         />
       )}
-
-      {docSheetType && project && (
-        <ProjectDocumentSheet
-          isOpen={true}
-          onClose={() => setDocSheetType(null)}
-          docType={docSheetType}
-          projectId={project.id}
-          projectName={project.title}
-        />
-      )}
     </div>
   );
 };
