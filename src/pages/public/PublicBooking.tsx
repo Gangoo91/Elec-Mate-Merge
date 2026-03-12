@@ -51,40 +51,42 @@ const PublicBooking = () => {
   const [bookingDate, setBookingDate] = useState('');
   const [bookingTime, setBookingTime] = useState('');
 
-  // Fetch available slots
-  useEffect(() => {
+  // Fetch available slots — extracted so we can re-fetch after booking or conflict
+  const refreshSlots = useCallback(async () => {
     if (!electricianId) return;
+    try {
+      const url = `${SUPABASE_URL}/functions/v1/public-booking?electrician_id=${electricianId}&days=14`;
+      const res = await fetch(url, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          apikey: SUPABASE_PUBLISHABLE_KEY,
+          Authorization: `Bearer ${SUPABASE_PUBLISHABLE_KEY}`,
+        },
+      });
 
-    const fetchSlots = async () => {
-      try {
-        const url = `${SUPABASE_URL}/functions/v1/public-booking?electrician_id=${electricianId}&days=14`;
-
-        const res = await fetch(url, {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-            apikey: SUPABASE_PUBLISHABLE_KEY,
-            Authorization: `Bearer ${SUPABASE_PUBLISHABLE_KEY}`,
-          },
-        });
-
-        if (!res.ok) {
-          const errData = await res.json().catch(() => ({}));
-          throw new Error(errData.error || 'Failed to load availability');
-        }
-
-        const result = await res.json();
-        setElectrician(result.electrician);
-        setSlots(result.slots || []);
-        setStep('date');
-      } catch (err) {
-        setError(err instanceof Error ? err.message : 'Failed to load availability');
-        setStep('error');
+      if (!res.ok) {
+        const errData = await res.json().catch(() => ({}));
+        throw new Error(errData.error || 'Failed to load availability');
       }
-    };
 
-    fetchSlots();
+      const result = await res.json();
+      setElectrician(result.electrician);
+      setSlots(result.slots || []);
+      return true;
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Failed to load availability');
+      return false;
+    }
   }, [electricianId]);
+
+  // Initial fetch
+  useEffect(() => {
+    refreshSlots().then((ok) => {
+      if (ok) setStep('date');
+      else setStep('error');
+    });
+  }, [refreshSlots]);
 
   // Available dates (unique)
   const availableDates = useMemo(() => {
@@ -158,12 +160,20 @@ const PublicBooking = () => {
 
       if (!res.ok) {
         const errData = await res.json().catch(() => ({}));
+        // On conflict (409), refresh slots so taken ones disappear
+        if (res.status === 409) {
+          setSelectedSlot(null);
+          setStep('time');
+          await refreshSlots();
+        }
         throw new Error(errData.error || 'Booking failed');
       }
 
       setBookingDate(selectedSlot.date);
       setBookingTime(selectedSlot.start);
       setStep('confirmed');
+      // Refresh slots in background so "Book another" shows updated availability
+      refreshSlots();
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Booking failed');
     } finally {
