@@ -291,19 +291,24 @@ async function handleBookSlot(req: Request, supabase: ReturnType<typeof createCl
     customerId = newCustomer.id;
   }
 
-  // Create calendar event
+  // Create calendar event (matches MCP calendar.ts createCalendarEvent fields)
   const { data: event, error: eventError } = await supabase
     .from('calendar_events')
     .insert({
       user_id: electrician_id,
       title: `Booking: ${client_name}`,
+      description: job_description || null,
       start_at: startAt.toISOString(),
       end_at: endAt.toISOString(),
+      all_day: false,
       event_type: 'site_visit',
-      source: 'booking_portal',
-      customer_id: customerId,
-      notes: job_description || null,
+      colour: '#F59E0B',
+      client_id: customerId,
+      notes: job_description
+        ? `Booked via portal\n\n${job_description}`
+        : 'Booked via booking portal',
       sync_status: 'local_only',
+      reminder_minutes: 30,
     })
     .select('id')
     .single();
@@ -316,9 +321,9 @@ async function handleBookSlot(req: Request, supabase: ReturnType<typeof createCl
     day: 'numeric',
     month: 'short',
   });
-  await supabase
-    .from('spark_tasks')
-    .insert({
+  // Non-critical: create task + log action (don't fail the booking if these error)
+  try {
+    await supabase.from('spark_tasks').insert({
       user_id: electrician_id,
       title: `Booking: ${client_name} — ${formattedDate} at ${start_time}`,
       details: [
@@ -335,23 +340,21 @@ async function handleBookSlot(req: Request, supabase: ReturnType<typeof createCl
       due_at: startAt.toISOString(),
       customer_id: customerId,
       tags: ['booking'],
-    })
-    .catch(() => {
-      /* non-critical */
     });
+  } catch {
+    /* non-critical */
+  }
 
-  // Log the action
-  await supabase
-    .from('agent_action_log')
-    .insert({
+  try {
+    await supabase.from('agent_action_log').insert({
       user_id: electrician_id,
       action_type: 'booking_portal',
       description: `Client ${client_name} booked ${date} ${start_time} via booking portal`,
       metadata: { customer_id: customerId, event_id: event.id, phone: client_phone },
-    })
-    .catch(() => {
-      /* non-critical */
     });
+  } catch {
+    /* non-critical */
+  }
 
   return new Response(
     JSON.stringify({
