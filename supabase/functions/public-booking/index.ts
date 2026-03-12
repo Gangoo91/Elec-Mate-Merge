@@ -76,10 +76,10 @@ async function handleGetSlots(req: Request, supabase: ReturnType<typeof createCl
     });
   }
 
-  // Fetch electrician profile
+  // Fetch electrician profile + company name
   const { data: profile, error: profileError } = await supabase
     .from('profiles')
-    .select('full_name, company_name')
+    .select('full_name')
     .eq('id', electricianId)
     .single();
 
@@ -89,6 +89,12 @@ async function handleGetSlots(req: Request, supabase: ReturnType<typeof createCl
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
     });
   }
+
+  const { data: companyProfile } = await supabase
+    .from('company_profiles')
+    .select('company_name')
+    .eq('id', electricianId)
+    .maybeSingle();
 
   // Compute date range (UK dates — we work in UTC as a proxy since all our times are UK)
   const now = new Date();
@@ -178,7 +184,7 @@ async function handleGetSlots(req: Request, supabase: ReturnType<typeof createCl
     JSON.stringify({
       electrician: {
         name: profile.full_name || 'Electrician',
-        company: profile.company_name || null,
+        company: companyProfile?.company_name || null,
       },
       slots,
     }),

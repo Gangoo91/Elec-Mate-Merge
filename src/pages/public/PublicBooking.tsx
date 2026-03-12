@@ -5,6 +5,7 @@ import { Check, CalendarDays, Clock, Loader2, AlertCircle, ChevronLeft, Zap } fr
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
+import { SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY } from '@/integrations/supabase/client';
 
 const SLOT_DURATION_MINUTES = 60;
 
@@ -56,13 +57,14 @@ const PublicBooking = () => {
 
     const fetchSlots = async () => {
       try {
-        const url = `${import.meta.env.VITE_SUPABASE_URL || 'https://jtwygbeceundfgnkirof.supabase.co'}/functions/v1/public-booking?electrician_id=${electricianId}&days=14`;
+        const url = `${SUPABASE_URL}/functions/v1/public-booking?electrician_id=${electricianId}&days=14`;
 
         const res = await fetch(url, {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
-            apikey: import.meta.env.VITE_SUPABASE_ANON_KEY || '',
+            apikey: SUPABASE_PUBLISHABLE_KEY,
+            Authorization: `Bearer ${SUPABASE_PUBLISHABLE_KEY}`,
           },
         });
 
@@ -130,13 +132,14 @@ const PublicBooking = () => {
     setSubmitting(true);
     setError('');
     try {
-      const url = `${import.meta.env.VITE_SUPABASE_URL || 'https://jtwygbeceundfgnkirof.supabase.co'}/functions/v1/public-booking`;
+      const url = `${SUPABASE_URL}/functions/v1/public-booking`;
 
       const res = await fetch(url, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          apikey: import.meta.env.VITE_SUPABASE_ANON_KEY || '',
+          apikey: SUPABASE_PUBLISHABLE_KEY,
+          Authorization: `Bearer ${SUPABASE_PUBLISHABLE_KEY}`,
         },
         body: JSON.stringify({
           electrician_id: electricianId,
