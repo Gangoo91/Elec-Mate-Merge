@@ -297,6 +297,10 @@ export const formatEICRJson = async (formData: any, reportId: string) => {
       ways: board.totalWays?.toString() || board.ways || '',
       zdb: board.zdb || '',
       ipf: board.ipf || '',
+      polarity_confirmed: board.confirmedCorrectPolarity ?? false,
+      phase_sequence_confirmed: board.confirmedPhaseSequence ?? false,
+      spd_operational: board.spdOperationalStatus ?? false,
+      spd_na: board.spdNA ?? false,
     }));
   };
 
@@ -1016,7 +1020,7 @@ export const formatEICRJson = async (formData: any, reportId: string) => {
       building_regs_compliance: getBool('buildingRegsCompliance'),
       competent_person_scheme: getBool('competentPersonScheme'),
       overall_assessment: get('overallAssessment'),
-      satisfactory_for_continued_use: getBool('satisfactoryForContinuedUse'),
+      satisfactory_for_continued_use: get('satisfactoryForContinuedUse'),
     },
 
     company_details: {
@@ -1188,8 +1192,8 @@ export const formatEICRJson = async (formData: any, reportId: string) => {
     // Overall Assessment & Summary
     overall_assessment: get('overallAssessment'),
     overallAssessment: get('overallAssessment'),
-    satisfactory_for_continued_use: getBool('satisfactoryForContinuedUse'),
-    satisfactoryForContinuedUse: getBool('satisfactoryForContinuedUse'),
+    satisfactory_for_continued_use: get('satisfactoryForContinuedUse'),
+    satisfactoryForContinuedUse: get('satisfactoryForContinuedUse'),
     additional_comments: get('additionalComments'),
     additionalComments: get('additionalComments'),
 
