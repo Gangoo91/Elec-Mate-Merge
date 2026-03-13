@@ -42,9 +42,11 @@ import {
   TrendingUp,
   TrendingDown,
   Minus,
+  Share2,
 } from 'lucide-react';
 import { LoadMoreButton } from './common/LoadMoreButton';
 import { useShowMore } from '@/hooks/useShowMore';
+import { SafetyDocumentShare } from './common/SafetyDocumentShare';
 
 // ─── Types ───
 
@@ -404,6 +406,377 @@ const TEMPLATES: ChecklistTemplate[] = [
       },
     ],
   },
+  {
+    id: 'db-inspection',
+    title: 'Distribution Board Inspection',
+    description: 'Consumer unit & distribution board check',
+    icon: Zap,
+    gradient: 'from-amber-400 to-yellow-600',
+    regulation: 'BS 7671:2018+A2:2022 / Electricity at Work Regulations 1989',
+    sections: [
+      {
+        title: 'Enclosure & Labelling',
+        items: [
+          'Enclosure undamaged with all covers fitted',
+          'IP rating appropriate for location',
+          'Circuit directory present, legible and up to date',
+          'Warning labels fitted (voltage, RCD test, dual supply)',
+          'Adequate working space in front of board (Reg 132.12)',
+          'Board securely fixed and level',
+        ],
+      },
+      {
+        title: 'Busbars & Connections',
+        items: [
+          'No signs of overheating, arcing or discolouration',
+          'All connections tight (torque-checked where required)',
+          'Neutral bar connections secure with no spare exposed cores',
+          'Earth bar connections secure',
+          'Correct cable entries — no sharp edges on knockouts',
+          'Cable glands used where required',
+        ],
+      },
+      {
+        title: 'Protective Devices',
+        items: [
+          'Main switch operates correctly',
+          'MCBs/RCBOs rated correctly per circuit directory',
+          'RCDs present where required (Reg 411.3.3)',
+          'RCD test button operates correctly (trips within limits)',
+          'SPD fitted where required (Reg 443)',
+          'No signs of tripping or overload history',
+        ],
+      },
+      {
+        title: 'Cables & Conductors',
+        items: [
+          'All cables correctly terminated and dressed',
+          'No exposed copper visible at terminations',
+          'CPC connected at every circuit',
+          'Correct cable sizes for protective device ratings',
+          'Fire barriers/seals in place at cable entries',
+          'Trunking/conduit entries properly bushed',
+        ],
+      },
+    ],
+  },
+  {
+    id: 'socket-lighting-check',
+    title: 'Socket & Lighting Circuit Check',
+    description: 'Final circuit inspection walkthrough',
+    icon: Zap,
+    gradient: 'from-green-400 to-emerald-600',
+    regulation: 'BS 7671:2018+A2:2022 Section 7',
+    sections: [
+      {
+        title: 'Socket Outlets',
+        items: [
+          'Sockets securely fixed to back boxes',
+          'No cracked, damaged or discoloured faceplates',
+          'Earth terminal connected at every socket',
+          'Correct polarity confirmed (L-N-E)',
+          'Mounting height appropriate for location',
+          'RCD protection confirmed on TT supplies / bathrooms / outdoors',
+        ],
+      },
+      {
+        title: 'Lighting Points',
+        items: [
+          'Luminaires securely fixed and appropriate for location',
+          'Correct lamp types installed (LED/fluorescent ratings)',
+          'Switches operate correctly and are labelled',
+          'Emergency luminaires identified and tested',
+          'No signs of overheating at ceiling roses or downlights',
+          'Dimmer switches rated for connected load',
+        ],
+      },
+      {
+        title: 'Wiring & Containment',
+        items: [
+          'No exposed cable runs in accessible areas',
+          'Cables clipped at correct intervals',
+          'All junction boxes accessible for future inspection',
+          'Correct cable type for installation method (e.g. SWA outdoors)',
+          'Conduit/trunking lids fitted and secure',
+          'Fire stopping in place at compartment boundaries',
+        ],
+      },
+      {
+        title: 'Accessories',
+        items: [
+          'Blank plates fitted to unused outlets',
+          'Connection units (FCUs) correctly fused for load',
+          'Isolator switches present at fixed appliances',
+          'Outdoor accessories rated to IP65 minimum',
+          'All faceplates flush with wall surface',
+        ],
+      },
+    ],
+  },
+  {
+    id: 'rcd-test-schedule',
+    title: 'RCD Testing Schedule',
+    description: 'Periodic RCD functional testing record',
+    icon: Shield,
+    gradient: 'from-blue-400 to-indigo-600',
+    regulation: 'BS 7671:2018+A2:2022 Reg 514.12.2 / IET Guidance Note 3',
+    sections: [
+      {
+        title: 'Pre-Test Checks',
+        items: [
+          'RCD type confirmed (Type AC / A / B / F)',
+          'Rated residual operating current (IΔn) noted',
+          'RCD rated current matches circuit requirements',
+          'Time delay (S type) or general purpose confirmed',
+          'Connected circuits identified and loads noted',
+          'Downstream equipment disconnection warnings given',
+        ],
+      },
+      {
+        title: 'Test Button (User) Test',
+        items: [
+          'RCD trips when test button pressed',
+          'RCD resets correctly after test button trip',
+          'Test button mechanism not stiff or jammed',
+          'Test performed quarterly as recommended',
+          'Date and result recorded in log',
+        ],
+      },
+      {
+        title: 'Instrument Test',
+        items: [
+          'Trip time at 1×IΔn within 300ms (general) / 200ms (no time delay)',
+          'Trip time at 5×IΔn within 40ms',
+          'No-trip test at 50% IΔn confirms device does not trip',
+          'Instrument calibration date current',
+          'Results compared with previous test records',
+        ],
+      },
+      {
+        title: 'Post-Test',
+        items: [
+          'RCD reset and all circuits re-energised',
+          'Loads confirmed operational after testing',
+          'Results logged with date, tester name and instrument serial',
+          'Next test date scheduled (6-monthly recommended)',
+          'Any out-of-specification results flagged for action',
+        ],
+      },
+    ],
+  },
+  {
+    id: 'earth-bonding-verification',
+    title: 'Earth Bonding Verification',
+    description: 'Earthing & bonding system inspection',
+    icon: Shield,
+    gradient: 'from-emerald-400 to-green-600',
+    regulation: 'BS 7671:2018+A2:2022 Chapter 54 / Reg 411.3.1.2',
+    sections: [
+      {
+        title: 'Main Earthing',
+        items: [
+          'Earthing conductor connected to MET (main earthing terminal)',
+          'Earthing conductor size adequate (Table 54.7)',
+          'Earth electrode present and accessible (TT systems)',
+          'Earth electrode resistance within acceptable limits',
+          'Labels fitted at MET and earth electrode',
+          'No signs of corrosion or deterioration',
+        ],
+      },
+      {
+        title: 'Main Protective Bonding',
+        items: [
+          'Gas pipe bonded within 600mm of meter outlet',
+          'Water pipe bonded within 600mm of meter outlet',
+          'Oil pipe bonded where present',
+          'Bonding conductors correct size (Table 54.8)',
+          'Bonding connections accessible for inspection',
+          'Labels fitted at every bonding connection',
+        ],
+      },
+      {
+        title: 'Supplementary Bonding',
+        items: [
+          'Supplementary bonding present in bathrooms (if required)',
+          'Bonding connections between exposed and extraneous conductive parts',
+          'Minimum 4mm² conductor (or 2.5mm² if mechanically protected)',
+          'Connections made with BS EN 60998 connectors (not tape/solder)',
+          'R value below 50V/Ia threshold',
+        ],
+      },
+      {
+        title: 'Test Results',
+        items: [
+          'Continuity of main earthing conductor confirmed (R1+R2)',
+          'Continuity of main bonding conductors confirmed',
+          'External earth fault loop impedance (Ze) measured and recorded',
+          'Test results within maximum values for protective device',
+          'Instrument calibration date current',
+        ],
+      },
+    ],
+  },
+  {
+    id: 'fire-alarm-check',
+    title: 'Fire Alarm System Check',
+    description: 'Fire detection & alarm system inspection',
+    icon: Flame,
+    gradient: 'from-red-400 to-orange-600',
+    regulation: 'BS 5839-1:2017 / Regulatory Reform (Fire Safety) Order 2005',
+    sections: [
+      {
+        title: 'Control Panel',
+        items: [
+          'Panel showing normal (no faults, no isolations)',
+          'All zone indicators checked and functional',
+          'Battery condition satisfactory (green indicator)',
+          'Standby battery test performed (24h capacity check)',
+          'Log book present and up to date',
+          'Panel access restricted (key/code)',
+        ],
+      },
+      {
+        title: 'Detection Devices',
+        items: [
+          'Correct detector types for areas (smoke/heat/multi-sensor)',
+          'Detectors unobstructed (no storage within 500mm)',
+          'Detector heads clean — no paint, dust or contamination',
+          'Detector base and head secure (no wobble)',
+          'Sample of detectors functionally tested',
+          'Beam detectors aligned and operational',
+        ],
+      },
+      {
+        title: 'Alarm Devices & Call Points',
+        items: [
+          'Sounders/bells audible throughout building (min 65dB / 75dB bedrooms)',
+          'Visual alarm devices (VADs) operational where fitted',
+          'Manual call points at every exit/storey (max 45m travel)',
+          'Call point glass/element intact',
+          'Call point tested with test key — system activates',
+          'Cause and effect confirmed (e.g. which zones trigger which outputs)',
+        ],
+      },
+      {
+        title: 'Wiring & Infrastructure',
+        items: [
+          'Fire-rated cable used throughout (FP200 or equivalent)',
+          'Cable clips/supports fire-rated and at correct centres',
+          'Junction boxes accessible and labelled',
+          'End-of-line devices present and measurable',
+          'No unauthorised modifications to wiring',
+          'Conduit/trunking integrity maintained',
+        ],
+      },
+    ],
+  },
+  {
+    id: 'emergency-lighting-test',
+    title: 'Emergency Lighting Test',
+    description: 'Emergency lighting system inspection & test',
+    icon: AlertTriangle,
+    gradient: 'from-yellow-400 to-orange-500',
+    regulation: 'BS 5266-1:2016 / BS EN 1838',
+    sections: [
+      {
+        title: 'Monthly Function Test',
+        items: [
+          'Simulate mains failure at distribution board',
+          'All emergency luminaires illuminate within 5 seconds',
+          'Illumination level appears adequate on escape routes',
+          'Exit signs legible and illuminated',
+          'Maintained luminaires switch to battery mode correctly',
+          'Charging indicators show normal after mains restored',
+        ],
+      },
+      {
+        title: 'Luminaire Condition',
+        items: [
+          'Luminaires clean and undamaged',
+          'Diffusers/lenses present and not discoloured',
+          'Luminaires correctly positioned (changes of direction, exits, stairs)',
+          'No luminaires obstructed by new partitions, signage or fittings',
+          'LED indicators (charge healthy) visible on self-contained units',
+        ],
+      },
+      {
+        title: 'Annual Full Duration Test (3h)',
+        items: [
+          'Full rated duration test conducted for 3 hours',
+          'All luminaires still lit at end of 3-hour period',
+          'Lux levels measured at floor level on escape routes (min 1 lux)',
+          'Anti-panic areas achieve minimum 0.5 lux',
+          'High-risk task areas achieve required lux level',
+          'Results recorded with date, tester name and instrument details',
+        ],
+      },
+      {
+        title: 'Documentation & Compliance',
+        items: [
+          'Emergency lighting log book present and up to date',
+          'Monthly test results recorded',
+          'Annual test certificate filed',
+          'Design certificate (BS 5266-1) available for installation',
+          'Any failed luminaires replaced and retested',
+          'Next scheduled test date recorded',
+        ],
+      },
+    ],
+  },
+  {
+    id: 'ev-charger-commissioning',
+    title: 'EV Charger Commissioning Check',
+    description: 'Electric vehicle charge point inspection',
+    icon: Zap,
+    gradient: 'from-teal-400 to-cyan-600',
+    regulation: 'BS 7671:2018+A2:2022 Section 722 / IET Code of Practice for EV Charging',
+    sections: [
+      {
+        title: 'Supply & Protection',
+        items: [
+          'Dedicated circuit from distribution board confirmed',
+          'Correct cable size for demand and route length',
+          'Protective device rated correctly (MCB/RCBO)',
+          'Type A or Type B RCD protection in place (Reg 722.531.3.101)',
+          'Earthing arrangement verified for charge point location',
+          'PME earth not used for outdoor installations (or risk assessed)',
+        ],
+      },
+      {
+        title: 'Charge Point Installation',
+        items: [
+          'Charge point securely mounted at correct height',
+          'Cable entry sealed and weatherproof',
+          'Tethered cable in good condition (no damage or kinking)',
+          'Socket/connector type correct for vehicle (Type 1/Type 2/CCS)',
+          'Emergency stop / isolation switch accessible',
+          'Signage displayed (EV charging, isolation, emergency)',
+        ],
+      },
+      {
+        title: 'Testing & Verification',
+        items: [
+          'Continuity of CPC confirmed (R1+R2)',
+          'Insulation resistance ≥ 1MΩ at 500V DC',
+          'Earth fault loop impedance (Zs) within limits for device',
+          'RCD trip time within specification',
+          'Functional test — charge initiated and terminated correctly',
+          'Smart features tested (app connectivity, scheduling, load management)',
+        ],
+      },
+      {
+        title: 'Commissioning Records',
+        items: [
+          'Electrical Installation Certificate (EIC) completed',
+          'OZEV grant notification submitted (if applicable)',
+          'DNO notification submitted (if load > 3.68kW / 16A per phase)',
+          'User manual and operating instructions provided to customer',
+          'Charge point registered with manufacturer portal',
+          'Warranty information provided to customer',
+        ],
+      },
+    ],
+  },
 ];
 
 const RESULT_CONFIG = {
@@ -445,6 +818,7 @@ export function InspectionChecklists({ onBack }: { onBack: () => void }) {
   const { data: dbRecords, isLoading: isLoadingRecords } = useInspectionRecords();
   const createInspectionRecord = useCreateInspectionRecord();
   const { exportPDF, isExporting, exportingId } = useSafetyPDFExport();
+  const [showShare, setShowShare] = useState(false);
 
   const completedInspections: CompletedInspection[] = (dbRecords ?? []).map((r) => ({
     id: r.id,
@@ -617,7 +991,11 @@ export function InspectionChecklists({ onBack }: { onBack: () => void }) {
     });
   };
 
-  const setItemRemedialAction = (sectionIndex: number, itemIndex: number, remedial_action: string) => {
+  const setItemRemedialAction = (
+    sectionIndex: number,
+    itemIndex: number,
+    remedial_action: string
+  ) => {
     setSections((prev) => {
       const updated = [...prev];
       const section = { ...updated[sectionIndex] };
@@ -914,9 +1292,7 @@ export function InspectionChecklists({ onBack }: { onBack: () => void }) {
                               {/* Remedial action */}
                               <SmartTextarea
                                 value={item.remedial_action}
-                                onChange={(val) =>
-                                  setItemRemedialAction(sectionIdx, itemIdx, val)
-                                }
+                                onChange={(val) => setItemRemedialAction(sectionIdx, itemIdx, val)}
                                 className="touch-manipulation text-sm min-h-[60px] border-white/20 focus:border-yellow-500 focus:ring-yellow-500/20 bg-transparent"
                                 placeholder="Remedial action required..."
                               />
@@ -1129,17 +1505,13 @@ export function InspectionChecklists({ onBack }: { onBack: () => void }) {
                   new Date(prev.date) < new Date(inspection.date)
               );
               const currentRate =
-                inspection.total_items > 0
-                  ? inspection.pass_count / inspection.total_items
-                  : 0;
+                inspection.total_items > 0 ? inspection.pass_count / inspection.total_items : 0;
               const previousRate =
                 previousSame && previousSame.total_items > 0
                   ? previousSame.pass_count / previousSame.total_items
                   : null;
               const rateChange =
-                previousRate !== null
-                  ? Math.round((currentRate - previousRate) * 100)
-                  : null;
+                previousRate !== null ? Math.round((currentRate - previousRate) * 100) : null;
 
               return (
                 <motion.button
@@ -1282,9 +1654,8 @@ export function InspectionChecklists({ onBack }: { onBack: () => void }) {
                 {/* Result summary */}
                 {(() => {
                   const answered = viewingInspection.pass_count + viewingInspection.fail_count;
-                  const overallRate = answered > 0
-                    ? Math.round((viewingInspection.pass_count / answered) * 100)
-                    : 0;
+                  const overallRate =
+                    answered > 0 ? Math.round((viewingInspection.pass_count / answered) * 100) : 0;
                   return (
                     <div className="space-y-2">
                       <div className="grid grid-cols-3 gap-2">
@@ -1450,46 +1821,48 @@ export function InspectionChecklists({ onBack }: { onBack: () => void }) {
                   const sAnswered = sPass + sFail;
                   const sRate = sAnswered > 0 ? Math.round((sPass / sAnswered) * 100) : 0;
                   return (
-                  <div key={section.id}>
-                    <div className="flex items-center justify-between mb-2">
-                      <h4 className="text-sm font-bold text-white">{section.title}</h4>
-                      <div className="flex items-center gap-1.5">
-                        <span className="text-[10px] text-green-400">{sPass}P</span>
-                        <span className="text-[10px] text-white">/</span>
-                        <span className="text-[10px] text-red-400">{sFail}F</span>
-                        <span className="text-[10px] text-white">/</span>
-                        <span className="text-[10px] text-white">{sNa}NA</span>
-                        {sAnswered > 0 && (
-                          <Badge
-                            variant="outline"
-                            className={`text-[9px] ml-1 ${
-                              sRate >= 80
-                                ? 'border-green-500/30 text-green-400'
-                                : sRate >= 50
-                                  ? 'border-amber-500/30 text-amber-400'
-                                  : 'border-red-500/30 text-red-400'
-                            }`}
-                          >
-                            {sRate}%
-                          </Badge>
-                        )}
+                    <div key={section.id}>
+                      <div className="flex items-center justify-between mb-2">
+                        <h4 className="text-sm font-bold text-white">{section.title}</h4>
+                        <div className="flex items-center gap-1.5">
+                          <span className="text-[10px] text-green-400">{sPass}P</span>
+                          <span className="text-[10px] text-white">/</span>
+                          <span className="text-[10px] text-red-400">{sFail}F</span>
+                          <span className="text-[10px] text-white">/</span>
+                          <span className="text-[10px] text-white">{sNa}NA</span>
+                          {sAnswered > 0 && (
+                            <Badge
+                              variant="outline"
+                              className={`text-[9px] ml-1 ${
+                                sRate >= 80
+                                  ? 'border-green-500/30 text-green-400'
+                                  : sRate >= 50
+                                    ? 'border-amber-500/30 text-amber-400'
+                                    : 'border-red-500/30 text-red-400'
+                              }`}
+                            >
+                              {sRate}%
+                            </Badge>
+                          )}
+                        </div>
+                      </div>
+                      <div className="space-y-1">
+                        {section.items.map((item) => {
+                          const result = item.result;
+                          if (!result) return null;
+                          const config = RESULT_CONFIG[result];
+                          const ResultIcon = config.icon;
+                          return (
+                            <div key={item.id} className="flex items-center gap-2 py-1">
+                              <ResultIcon
+                                className={`h-3.5 w-3.5 ${config.colour} flex-shrink-0`}
+                              />
+                              <span className="text-xs text-white">{item.text}</span>
+                            </div>
+                          );
+                        })}
                       </div>
                     </div>
-                    <div className="space-y-1">
-                      {section.items.map((item) => {
-                        const result = item.result;
-                        if (!result) return null;
-                        const config = RESULT_CONFIG[result];
-                        const ResultIcon = config.icon;
-                        return (
-                          <div key={item.id} className="flex items-center gap-2 py-1">
-                            <ResultIcon className={`h-3.5 w-3.5 ${config.colour} flex-shrink-0`} />
-                            <span className="text-xs text-white">{item.text}</span>
-                          </div>
-                        );
-                      })}
-                    </div>
-                  </div>
                   );
                 })}
 
@@ -1501,23 +1874,43 @@ export function InspectionChecklists({ onBack }: { onBack: () => void }) {
                 )}
               </div>
               <div className="px-4 py-3 border-t border-white/10 pb-[max(0.75rem,env(safe-area-inset-bottom))]">
-                <Button
-                  onClick={() => exportPDF('inspection', viewingInspection.id)}
-                  disabled={isExporting && exportingId === viewingInspection.id}
-                  className="w-full h-11 bg-elec-yellow text-black font-bold rounded-xl touch-manipulation active:scale-[0.98]"
-                >
-                  {isExporting && exportingId === viewingInspection.id ? (
-                    <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                  ) : (
-                    <FileDown className="h-4 w-4 mr-2" />
-                  )}
-                  Export PDF
-                </Button>
+                <div className="grid grid-cols-2 gap-2">
+                  <Button
+                    onClick={() => exportPDF('inspection', viewingInspection.id)}
+                    disabled={isExporting && exportingId === viewingInspection.id}
+                    className="h-11 bg-elec-yellow text-black font-bold rounded-xl touch-manipulation active:scale-[0.98]"
+                  >
+                    {isExporting && exportingId === viewingInspection.id ? (
+                      <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                    ) : (
+                      <FileDown className="h-4 w-4 mr-2" />
+                    )}
+                    Export PDF
+                  </Button>
+                  <Button
+                    onClick={() => setShowShare(true)}
+                    variant="outline"
+                    className="h-11 border-elec-yellow/20 bg-elec-yellow/10 text-elec-yellow font-bold rounded-xl touch-manipulation active:scale-[0.98]"
+                  >
+                    <Share2 className="h-4 w-4 mr-2" />
+                    Share
+                  </Button>
+                </div>
               </div>
             </div>
           )}
         </SheetContent>
       </Sheet>
+
+      {viewingInspection && (
+        <SafetyDocumentShare
+          open={showShare}
+          onClose={() => setShowShare(false)}
+          pdfType="inspection"
+          recordId={viewingInspection.id}
+          documentTitle={`Inspection — ${viewingInspection.equipment_name || viewingInspection.checklist_name}`}
+        />
+      )}
     </motion.div>
   );
 }

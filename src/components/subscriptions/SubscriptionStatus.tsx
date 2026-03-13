@@ -1,10 +1,10 @@
 import { Button } from '@/components/ui/button';
-import { Loader2, CheckCircle, Clock, AlertCircle, ExternalLink, X } from 'lucide-react';
+import { Loader2, CheckCircle, Clock, AlertCircle, ExternalLink } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
 import { useState } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/components/ui/use-toast';
-import CancelSubscriptionDialog from './CancelSubscriptionDialog';
+import { Capacitor } from '@capacitor/core';
 
 // Helper function to calculate days remaining in trial
 const getDaysRemaining = (trialEndsAt: Date | null): number => {
@@ -16,16 +16,28 @@ const getDaysRemaining = (trialEndsAt: Date | null): number => {
 };
 
 const SubscriptionStatus = () => {
-  const { isTrialActive, trialEndsAt, isSubscribed, subscriptionTier, checkSubscriptionStatus } =
-    useAuth();
+  const { isTrialActive, trialEndsAt, isSubscribed, subscriptionTier } = useAuth();
   const { toast } = useToast();
   const [isLoading, setIsLoading] = useState(false);
-  const [isCanceling, setIsCanceling] = useState(false);
-  const [showCancelDialog, setShowCancelDialog] = useState(false);
 
   const openCustomerPortal = async () => {
     try {
       setIsLoading(true);
+
+      const isNative = Capacitor.isNativePlatform();
+
+      if (isNative) {
+        // Native: redirect to platform subscription settings
+        const platform = Capacitor.getPlatform();
+        const url =
+          platform === 'ios'
+            ? 'https://apps.apple.com/account/subscriptions'
+            : 'https://play.google.com/store/account/subscriptions';
+        window.open(url, '_blank');
+        return;
+      }
+
+      // Web: open Stripe customer portal
       const { data, error } = await supabase.functions.invoke('customer-portal');
 
       if (error) throw new Error(error.message);
@@ -37,11 +49,6 @@ const SubscriptionStatus = () => {
             window.location.href = data.url;
           }, 500);
         }
-      } else if (data?.directManagement) {
-        toast({
-          title: 'Direct Management Mode',
-          description: 'Please use the Cancel Subscription button.',
-        });
       } else {
         throw new Error('No portal URL returned');
       }
@@ -49,7 +56,7 @@ const SubscriptionStatus = () => {
       console.error('Customer portal error:', error);
       toast({
         title: 'Error',
-        description: 'Could not open portal. Please use the Cancel button instead.',
+        description: 'Could not open subscription management. Please try again.',
         variant: 'destructive',
       });
     } finally {
@@ -59,60 +66,36 @@ const SubscriptionStatus = () => {
 
   const daysRemaining = getDaysRemaining(trialEndsAt);
 
-  // Subscribed users: Compact green badge with plan name and manage button
+  // Subscribed users: Compact green badge with plan name and single Manage button
   if (isSubscribed) {
     return (
-      <>
-        <div className="inline-flex items-center gap-3 bg-green-500/10 border border-green-500/20 rounded-xl py-2.5 px-4">
-          <div className="flex items-center gap-2">
-            <CheckCircle className="h-4 w-4 text-green-400" />
-            <span className="text-sm font-medium text-green-400">
-              {subscriptionTier || 'Pro'} Plan
-            </span>
-          </div>
-
-          <div className="h-4 w-px bg-green-500/20" />
-
-          <div className="flex items-center gap-2">
-            <Button
-              onClick={openCustomerPortal}
-              variant="ghost"
-              size="sm"
-              disabled={isLoading}
-              className="h-10 px-3 text-sm text-white hover:text-white hover:bg-green-500/20 active:bg-green-500/30 touch-manipulation"
-            >
-              {isLoading ? (
-                <Loader2 className="h-3 w-3 animate-spin" />
-              ) : (
-                <>
-                  <ExternalLink className="h-3 w-3 mr-1.5" />
-                  Manage
-                </>
-              )}
-            </Button>
-
-            <Button
-              onClick={() => setShowCancelDialog(true)}
-              variant="ghost"
-              size="sm"
-              disabled={isCanceling}
-              className="h-10 w-10 px-0 text-white hover:text-red-400 hover:bg-red-500/10 active:bg-red-500/20 touch-manipulation"
-            >
-              {isCanceling ? (
-                <Loader2 className="h-3 w-3 animate-spin" />
-              ) : (
-                <X className="h-3 w-3" />
-              )}
-            </Button>
-          </div>
+      <div className="inline-flex items-center gap-3 bg-green-500/10 border border-green-500/20 rounded-xl py-2.5 px-4">
+        <div className="flex items-center gap-2">
+          <CheckCircle className="h-4 w-4 text-green-400" />
+          <span className="text-sm font-medium text-green-400">
+            {subscriptionTier || 'Pro'} Plan
+          </span>
         </div>
 
-        <CancelSubscriptionDialog
-          isOpen={showCancelDialog}
-          setIsOpen={setShowCancelDialog}
-          onCancelled={checkSubscriptionStatus}
-        />
-      </>
+        <div className="h-4 w-px bg-green-500/20" />
+
+        <Button
+          onClick={openCustomerPortal}
+          variant="ghost"
+          size="sm"
+          disabled={isLoading}
+          className="h-10 px-3 text-sm text-white hover:text-white hover:bg-green-500/20 active:bg-green-500/30 touch-manipulation"
+        >
+          {isLoading ? (
+            <Loader2 className="h-3 w-3 animate-spin" />
+          ) : (
+            <>
+              <ExternalLink className="h-3 w-3 mr-1.5" />
+              Manage
+            </>
+          )}
+        </Button>
+      </div>
     );
   }
 

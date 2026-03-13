@@ -35,23 +35,21 @@ const SidebarNavLink = ({ item, onItemClick }: SidebarNavLinkProps) => {
         onClick={handleClick}
         onMouseEnter={handleMouseEnter}
         className={cn(
-          'flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium',
-          'transition-all duration-200 ease-out',
-          'hover:translate-x-1',
-          isActive
-            ? 'bg-gradient-to-r from-elec-yellow/20 to-transparent border-l-2 border-elec-yellow text-white'
-            : 'text-white hover:bg-white/5 hover:text-white'
+          'flex items-center gap-3 px-3 py-2 rounded-xl text-sm font-medium touch-manipulation',
+          'transition-all duration-150 ease-out',
+          isActive ? 'bg-elec-yellow/[0.12] text-white' : 'text-white hover:bg-white/5'
         )}
       >
-        <div
+        <span
           className={cn(
-            'p-2 rounded-lg transition-colors duration-200',
-            isActive ? 'bg-elec-yellow/20' : 'bg-white/5'
+            'shrink-0 transition-colors duration-150',
+            isActive ? 'text-elec-yellow' : 'text-white'
           )}
         >
           {item.icon}
-        </div>
+        </span>
         <span className={isActive ? 'font-semibold' : ''}>{item.name}</span>
+        {isActive && <span className="ml-auto h-1.5 w-1.5 rounded-full bg-elec-yellow" />}
       </SafeLink>
     );
   } catch (error) {
@@ -60,11 +58,11 @@ const SidebarNavLink = ({ item, onItemClick }: SidebarNavLinkProps) => {
     return (
       <div
         className={cn(
-          'flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium',
-          'text-white hover:bg-white/5 hover:text-white'
+          'flex items-center gap-3 px-3 py-2 rounded-xl text-sm font-medium',
+          'text-white hover:bg-white/5'
         )}
       >
-        <div className="p-2 rounded-lg bg-white/5">{item.icon}</div>
+        <span className="shrink-0 text-white">{item.icon}</span>
         <span>{item.name}</span>
       </div>
     );

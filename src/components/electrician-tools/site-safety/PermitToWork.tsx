@@ -62,11 +62,13 @@ import {
   FileDown,
   Loader2,
   Copy,
+  Share2,
 } from 'lucide-react';
 import { LoadMoreButton } from './common/LoadMoreButton';
 import { useShowMore } from '@/hooks/useShowMore';
 import { SaveAsTemplateSheet } from './common/SaveAsTemplateSheet';
 import { LoadTemplateSheet } from './common/LoadTemplateSheet';
+import { SafetyDocumentShare } from './common/SafetyDocumentShare';
 
 // ─── Types ───
 
@@ -538,7 +540,9 @@ export function PermitToWork({ onBack }: { onBack: () => void }) {
         ...prev,
         ...(data.title && { title: data.title as string }),
         ...(data.description && { description: data.description as string }),
-        ...(data.emergency_procedures && { emergency_procedures: data.emergency_procedures as string }),
+        ...(data.emergency_procedures && {
+          emergency_procedures: data.emergency_procedures as string,
+        }),
         ...(data.duration_hours && { duration_hours: data.duration_hours as number }),
       }));
     }
@@ -711,6 +715,7 @@ export function PermitToWork({ onBack }: { onBack: () => void }) {
   };
 
   const { exportPDF, isExporting, exportingId } = useSafetyPDFExport();
+  const [showShare, setShowShare] = useState(false);
 
   const filteredPermits = permits.filter((p) => {
     if (filterStatus !== 'all' && p.status !== filterStatus) return false;
@@ -1506,6 +1511,13 @@ export function PermitToWork({ onBack }: { onBack: () => void }) {
                       )}
                       Export PDF
                     </Button>
+                    <Button
+                      onClick={() => setShowShare(true)}
+                      variant="outline"
+                      className="h-11 border-elec-yellow/20 bg-elec-yellow/10 text-elec-yellow rounded-xl touch-manipulation active:scale-[0.98]"
+                    >
+                      <Share2 className="h-4 w-4" />
+                    </Button>
                     {(viewingPermit.status === 'active' || viewingPermit.status === 'expired') && (
                       <>
                         {viewingPermit.status === 'active' && (
@@ -1629,6 +1641,16 @@ export function PermitToWork({ onBack }: { onBack: () => void }) {
         moduleType="permit"
         onLoad={handleLoadTemplate}
       />
+
+      {viewingPermit && (
+        <SafetyDocumentShare
+          open={showShare}
+          onClose={() => setShowShare(false)}
+          pdfType="permit"
+          recordId={viewingPermit.id}
+          documentTitle={`Permit to Work — ${viewingPermit.title}`}
+        />
+      )}
     </div>
   );
 }

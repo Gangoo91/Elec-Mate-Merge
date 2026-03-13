@@ -176,6 +176,37 @@ const MyReports: React.FC<MyReportsProps> = ({ onBack, onNavigate, onEditReport 
     }
   }, [reportsData, currentPage]);
 
+  // Realtime subscription — show toast + refetch when agent creates/updates certs
+  useEffect(() => {
+    if (!user) return;
+    const channel = supabase
+      .channel('reports-realtime')
+      .on(
+        'postgres_changes',
+        {
+          event: '*',
+          schema: 'public',
+          table: 'reports',
+          filter: `user_id=eq.${user.id}`,
+        },
+        (payload) => {
+          if (payload.eventType === 'INSERT') {
+            const r = payload.new as { report_type?: string };
+            toast({
+              title: 'New Certificate',
+              description: `A new ${(r.report_type || 'certificate').replace(/-/g, ' ')} has been created`,
+            });
+          }
+          setCurrentPage(1);
+          refetchReports();
+        }
+      )
+      .subscribe();
+    return () => {
+      supabase.removeChannel(channel);
+    };
+  }, [user, refetchReports, toast]);
+
   const reports = allReports;
   const hasMore = reportsData?.hasMore || false;
   const totalCount = reportsData?.totalCount || 0;
@@ -677,10 +708,7 @@ const MyReports: React.FC<MyReportsProps> = ({ onBack, onNavigate, onEditReport 
                 navigator.vibrate?.(10);
                 setShowSearch(!showSearch);
               }}
-              className={cn(
-                'touch-manipulation',
-                showSearch ? 'text-elec-yellow' : 'text-white'
-              )}
+              className={cn('touch-manipulation', showSearch ? 'text-elec-yellow' : 'text-white')}
             >
               <Search className="h-5 w-5" />
             </Button>
@@ -1137,9 +1165,7 @@ const MyReports: React.FC<MyReportsProps> = ({ onBack, onNavigate, onEditReport 
                       <div className="flex-1 min-w-0">
                         <p className="font-medium text-sm truncate">{customer.name}</p>
                         {customer.address && (
-                          <p className="text-xs text-white truncate">
-                            {customer.address}
-                          </p>
+                          <p className="text-xs text-white truncate">{customer.address}</p>
                         )}
                       </div>
                     </div>

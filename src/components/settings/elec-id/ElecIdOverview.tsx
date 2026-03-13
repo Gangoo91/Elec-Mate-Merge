@@ -39,11 +39,9 @@ import {
   Shield,
   ChevronRight,
   Users,
-  Award,
   Eye,
   EyeOff,
   Crown,
-  Star,
   Power,
   AlertCircle,
   Copy,
@@ -79,7 +77,7 @@ interface ElecIdOverviewProps {
 const VERIFICATION_TIERS = {
   basic: {
     label: 'Basic',
-    color: 'text-foreground/80',
+    color: 'text-white',
     bgColor: 'bg-white/10',
     borderColor: 'border-white/20',
     icon: Shield,
@@ -523,11 +521,11 @@ const ElecIdOverview = ({ onNavigate }: ElecIdOverviewProps) => {
       <div className="space-y-2">
         <Label className="text-foreground text-sm">
           Your Rate
-          <span className="text-foreground/70 ml-2">(shown in Talent Pool)</span>
+          <span className="text-white ml-2">(shown in Talent Pool)</span>
         </Label>
         <div className="flex gap-2">
           <div className="relative flex-1">
-            <span className="absolute left-4 top-1/2 -translate-y-1/2 text-foreground/70">£</span>
+            <span className="absolute left-4 top-1/2 -translate-y-1/2 text-white">£</span>
             <Input
               type="number"
               inputMode="decimal"
@@ -559,7 +557,7 @@ const ElecIdOverview = ({ onNavigate }: ElecIdOverviewProps) => {
       <div className="space-y-2">
         <Label className="text-foreground text-sm">
           Professional Bio
-          <span className="text-foreground/70 ml-2">(optional)</span>
+          <span className="text-white ml-2">(optional)</span>
         </Label>
         <Textarea
           value={editFormData.bio}
@@ -575,7 +573,12 @@ const ElecIdOverview = ({ onNavigate }: ElecIdOverviewProps) => {
     <div className="space-y-4 sm:space-y-6">
       {/* Mobile: Bottom Sheet Edit Dialog */}
       {isMobile ? (
-        <Drawer.Root open={isEditSheetOpen} onOpenChange={setIsEditSheetOpen} shouldScaleBackground={false} noBodyStyles>
+        <Drawer.Root
+          open={isEditSheetOpen}
+          onOpenChange={setIsEditSheetOpen}
+          shouldScaleBackground={false}
+          noBodyStyles
+        >
           <Drawer.Portal>
             <Drawer.Overlay className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50" />
             <Drawer.Content className="fixed bottom-0 left-0 right-0 z-50 flex flex-col max-h-[90vh] bg-background rounded-t-[20px] border-t border-border">
@@ -584,7 +587,7 @@ const ElecIdOverview = ({ onNavigate }: ElecIdOverviewProps) => {
               </div>
               <div className="px-4 pb-2">
                 <h3 className="text-lg font-bold text-foreground">Edit Profile</h3>
-                <p className="text-sm text-foreground/70">Update your Elec-ID information</p>
+                <p className="text-sm text-white">Update your Elec-ID information</p>
               </div>
               <div className="flex-1 overflow-y-auto px-4 pb-4">{EditFormContent()}</div>
               <div className="p-4 border-t border-border bg-background/95 backdrop-blur-sm">
@@ -831,7 +834,7 @@ const ElecIdOverview = ({ onNavigate }: ElecIdOverviewProps) => {
               </div>
               <div className="flex items-center gap-1 sm:gap-1.5">
                 <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-                <span className="text-[9px] sm:text-[10px] text-emerald-400/60 font-medium">
+                <span className="text-[9px] sm:text-[10px] text-emerald-400 font-medium">
                   ACTIVE
                 </span>
               </div>
@@ -840,243 +843,209 @@ const ElecIdOverview = ({ onNavigate }: ElecIdOverviewProps) => {
         </Card>
       </motion.div>
 
-      {/* Settings Cards - Responsive Grid */}
-      <div className="grid grid-cols-2 gap-2 sm:gap-3">
-        {/* Verification Tier Card */}
-        <motion.div
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.1 }}
-        >
-          <Card
+      {/* Verification & Talent Pool */}
+      <motion.div
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.1 }}
+      >
+        <Card className="border-white/10 rounded-2xl overflow-hidden bg-white/[0.03]">
+          {/* Verification Tier Row */}
+          <div
             className={cn(
-              'h-full border overflow-hidden rounded-xl',
+              'p-4 flex items-center gap-3',
               verificationTier === 'premium'
-                ? 'bg-elec-yellow/[0.05] border-elec-yellow/20'
+                ? 'bg-gradient-to-r from-elec-yellow/15 to-transparent'
                 : verificationTier === 'verified'
-                  ? 'bg-blue-500/[0.05] border-blue-500/20'
-                  : 'bg-white/[0.03] border-white/10'
+                  ? 'bg-gradient-to-r from-blue-500/15 to-transparent'
+                  : ''
             )}
           >
-            <CardContent className="p-3 sm:p-4">
-              <div className="flex items-center gap-2 mb-2">
-                <div
+            <div
+              className={cn(
+                'w-11 h-11 rounded-xl flex items-center justify-center shrink-0',
+                verificationTier === 'premium'
+                  ? 'bg-elec-yellow/20'
+                  : verificationTier === 'verified'
+                    ? 'bg-blue-500/20'
+                    : 'bg-white/10'
+              )}
+            >
+              {React.createElement(VERIFICATION_TIERS[verificationTier].icon, {
+                className: cn('h-5 w-5', VERIFICATION_TIERS[verificationTier].color),
+              })}
+            </div>
+            <div className="flex-1 min-w-0">
+              <div className="flex items-center gap-2">
+                <h4 className={cn('font-bold text-sm', VERIFICATION_TIERS[verificationTier].color)}>
+                  {VERIFICATION_TIERS[verificationTier].label}
+                </h4>
+                <Badge
                   className={cn(
-                    'w-9 h-9 sm:w-10 sm:h-10 rounded-xl flex items-center justify-center shrink-0',
-                    verificationTier === 'premium'
-                      ? 'bg-elec-yellow/20'
-                      : verificationTier === 'verified'
-                        ? 'bg-blue-500/20'
-                        : 'bg-white/10'
+                    'text-[10px] px-1.5 py-0 border',
+                    VERIFICATION_TIERS[verificationTier].bgColor,
+                    VERIFICATION_TIERS[verificationTier].color,
+                    VERIFICATION_TIERS[verificationTier].borderColor
                   )}
                 >
-                  {React.createElement(VERIFICATION_TIERS[verificationTier].icon, {
-                    className: cn(
-                      'h-4 w-4 sm:h-5 sm:w-5',
-                      VERIFICATION_TIERS[verificationTier].color
-                    ),
-                  })}
-                </div>
-                <div className="min-w-0 flex-1">
-                  <h4
-                    className={cn(
-                      'font-semibold text-sm truncate',
-                      VERIFICATION_TIERS[verificationTier].color
-                    )}
-                  >
-                    {VERIFICATION_TIERS[verificationTier].label}
-                  </h4>
-                  <p className="text-[10px] text-foreground/60 truncate">Verification Tier</p>
-                </div>
+                  Tier
+                </Badge>
               </div>
-
-              {verificationTier !== 'premium' ? (
-                <div>
-                  <div className="flex items-center justify-between text-[10px] mb-1">
-                    <span className="text-foreground/60">Progress</span>
-                    <span className={VERIFICATION_TIERS[verificationTier].color}>
-                      {verificationTier === 'basic' ? '50%' : '75%'}
-                    </span>
-                  </div>
-                  <Progress value={verificationTier === 'basic' ? 50 : 75} className="h-1" />
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    className="w-full mt-2 h-9 text-[10px] sm:text-[11px] bg-white/5 hover:bg-white/10 touch-manipulation active:scale-[0.98]"
-                    onClick={() => onNavigate?.('documents')}
-                  >
-                    <Sparkles className="h-3 w-3 mr-1" />
-                    Upgrade
-                  </Button>
-                </div>
-              ) : (
-                <div className="flex items-center gap-1.5 text-[10px] text-elec-yellow/70">
-                  <Crown className="h-3 w-3" />
-                  <span>Max tier</span>
-                </div>
-              )}
-            </CardContent>
-          </Card>
-        </motion.div>
-
-        {/* Talent Pool Card */}
-        <motion.div
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.15 }}
-        >
-          <Card
-            className={cn(
-              'h-full border overflow-hidden rounded-xl',
-              availableForHire && !isOptedOut
-                ? 'bg-emerald-500/[0.08] border-emerald-500/30'
-                : 'bg-white/[0.03] border-white/10'
+              <p className="text-xs text-white mt-0.5">
+                {VERIFICATION_TIERS[verificationTier].description}
+              </p>
+            </div>
+            {verificationTier !== 'premium' ? (
+              <Button
+                size="sm"
+                className="h-11 px-4 bg-elec-yellow hover:bg-elec-yellow/90 text-elec-dark font-semibold rounded-xl touch-manipulation active:scale-[0.97] shrink-0"
+                onClick={() => onNavigate?.('documents')}
+              >
+                <Sparkles className="h-4 w-4 mr-1.5" />
+                Upgrade
+              </Button>
+            ) : (
+              <div className="flex items-center gap-1.5 text-elec-yellow shrink-0">
+                <Crown className="h-4 w-4" />
+                <span className="text-xs font-semibold">Max</span>
+              </div>
             )}
-          >
-            <CardContent className="p-3 sm:p-4">
-              {/* Header with toggle */}
-              <div className="flex items-center justify-between gap-2 mb-2">
-                <div className="flex items-center gap-2 min-w-0 flex-1">
-                  <div
-                    className={cn(
-                      'w-9 h-9 sm:w-10 sm:h-10 rounded-xl flex items-center justify-center shrink-0',
-                      availableForHire && !isOptedOut ? 'bg-emerald-500/20' : 'bg-white/10'
-                    )}
-                  >
-                    <Users
-                      className={cn(
-                        'h-4 w-4 sm:h-5 sm:w-5',
-                        availableForHire && !isOptedOut ? 'text-emerald-400' : 'text-foreground/70'
-                      )}
-                    />
-                  </div>
-                  <div className="min-w-0 flex-1">
-                    <h4 className="font-semibold text-sm text-foreground truncate">Talent Pool</h4>
-                    <p
-                      className={cn(
-                        'text-[10px] truncate',
-                        availableForHire && !isOptedOut ? 'text-emerald-400' : 'text-foreground/60'
-                      )}
-                    >
-                      {isOptedOut
-                        ? 'Disabled'
-                        : availableForHire
-                          ? 'Visible to employers'
-                          : 'Hidden'}
-                    </p>
-                  </div>
-                </div>
-                <Switch
-                  checked={availableForHire && !isOptedOut}
-                  onCheckedChange={handleAvailabilityChange}
-                  disabled={isOptedOut || isSaving}
-                  className="data-[state=checked]:bg-emerald-500 shrink-0"
-                />
+          </div>
+
+          {verificationTier !== 'premium' && (
+            <div className="px-4 pb-3">
+              <div className="flex items-center justify-between text-xs mb-1.5">
+                <span className="text-white">
+                  Progress to {verificationTier === 'basic' ? 'Verified' : 'Premium'}
+                </span>
+                <span className={cn('font-semibold', VERIFICATION_TIERS[verificationTier].color)}>
+                  {verificationTier === 'basic' ? '50%' : '75%'}
+                </span>
               </div>
+              <Progress value={verificationTier === 'basic' ? 50 : 75} className="h-2" />
+            </div>
+          )}
 
-              {/* Visibility selector - shown when active */}
-              {availableForHire && !isOptedOut && (
-                <Select
-                  value={profileVisibility}
-                  onValueChange={handleVisibilityChange}
-                  disabled={isSaving}
-                >
-                  <SelectTrigger className="h-9 text-[10px] sm:text-[11px] bg-white/5 border-white/10 rounded-lg w-full touch-manipulation">
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent className="bg-elec-gray border-white/20 z-50">
-                    <SelectItem value="public" className="text-xs py-2.5 touch-manipulation">
-                      <div className="flex items-center gap-2">
-                        <Eye className="h-3 w-3" />
-                        Public
-                      </div>
-                    </SelectItem>
-                    <SelectItem
-                      value="employers_only"
-                      className="text-xs py-2.5 touch-manipulation"
-                    >
-                      <div className="flex items-center gap-2">
-                        <Users className="h-3 w-3" />
-                        Employers Only
-                      </div>
-                    </SelectItem>
-                    <SelectItem value="private" className="text-xs py-2.5 touch-manipulation">
-                      <div className="flex items-center gap-2">
-                        <EyeOff className="h-3 w-3" />
-                        Private
-                      </div>
-                    </SelectItem>
-                  </SelectContent>
-                </Select>
+          {/* Divider */}
+          <div className="h-px bg-white/[0.06]" />
+
+          {/* Talent Pool Row */}
+          <div className="p-4 flex items-center gap-3">
+            <div
+              className={cn(
+                'w-11 h-11 rounded-xl flex items-center justify-center shrink-0',
+                availableForHire && !isOptedOut ? 'bg-emerald-500/20' : 'bg-white/10'
               )}
+            >
+              <Users
+                className={cn(
+                  'h-5 w-5',
+                  availableForHire && !isOptedOut ? 'text-emerald-400' : 'text-white'
+                )}
+              />
+            </div>
+            <div className="flex-1 min-w-0">
+              <h4 className="font-semibold text-sm text-white">Talent Pool</h4>
+              <p
+                className={cn(
+                  'text-xs mt-0.5',
+                  isOptedOut
+                    ? 'text-orange-400'
+                    : availableForHire
+                      ? 'text-emerald-400'
+                      : 'text-white'
+                )}
+              >
+                {isOptedOut
+                  ? 'Disabled'
+                  : availableForHire
+                    ? 'Visible to employers'
+                    : 'Hidden from search'}
+              </p>
+            </div>
+            <Switch
+              checked={availableForHire && !isOptedOut}
+              onCheckedChange={isOptedOut ? handleOptIn : handleAvailabilityChange}
+              disabled={isSaving}
+              className="data-[state=checked]:bg-emerald-500 shrink-0"
+            />
+          </div>
 
-              {/* Hint text when inactive */}
-              {(!availableForHire || isOptedOut) && (
-                <p className="text-[10px] text-foreground/60">
-                  {isOptedOut ? 'Re-enable to join' : 'Turn on to be discovered'}
-                </p>
-              )}
-            </CardContent>
-          </Card>
-        </motion.div>
-      </div>
+          {/* Visibility Selector */}
+          {availableForHire && !isOptedOut && (
+            <div className="px-4 pb-4">
+              <Select
+                value={profileVisibility}
+                onValueChange={handleVisibilityChange}
+                disabled={isSaving}
+              >
+                <SelectTrigger className="h-11 text-sm bg-white/5 border-white/10 rounded-xl w-full touch-manipulation">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent className="bg-elec-gray border-white/20 z-50">
+                  <SelectItem value="public" className="text-sm py-3 touch-manipulation">
+                    <div className="flex items-center gap-2">
+                      <Eye className="h-4 w-4" />
+                      Public
+                    </div>
+                  </SelectItem>
+                  <SelectItem value="employers_only" className="text-sm py-3 touch-manipulation">
+                    <div className="flex items-center gap-2">
+                      <Users className="h-4 w-4" />
+                      Employers Only
+                    </div>
+                  </SelectItem>
+                  <SelectItem value="private" className="text-sm py-3 touch-manipulation">
+                    <div className="flex items-center gap-2">
+                      <EyeOff className="h-4 w-4" />
+                      Private
+                    </div>
+                  </SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+          )}
 
-      {/* Opt-Out Banner (when opted out) */}
+          {/* Disable link - subtle at bottom */}
+          {!isOptedOut && (
+            <div className="px-4 pb-3 pt-1 border-t border-white/[0.04]">
+              <button
+                onClick={() => setIsOptOutDialogOpen(true)}
+                className="text-xs text-white touch-manipulation active:opacity-70"
+              >
+                Disable Elec-ID
+              </button>
+            </div>
+          )}
+        </Card>
+      </motion.div>
+
+      {/* Opted-Out Banner */}
       {isOptedOut && (
-        <Card className="bg-orange-500/10 border-orange-500/30">
-          <CardContent className="p-4">
-            <div className="flex items-start gap-3">
-              <div className="p-2 rounded-lg bg-orange-500/20">
+        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
+          <Card className="bg-orange-500/10 border-orange-500/30 rounded-2xl">
+            <CardContent className="p-4 flex items-center gap-3">
+              <div className="w-11 h-11 rounded-xl bg-orange-500/20 flex items-center justify-center shrink-0">
                 <Power className="h-5 w-5 text-orange-400" />
               </div>
               <div className="flex-1">
-                <h4 className="font-semibold text-orange-400">Elec-ID Disabled</h4>
-                <p className="text-sm text-foreground/70 mt-1">
-                  Your Elec-ID is hidden from the Talent Pool. Employers cannot discover your
-                  profile. Your credentials and data are still saved.
+                <h4 className="font-semibold text-orange-400 text-sm">Elec-ID Disabled</h4>
+                <p className="text-xs text-white mt-0.5">
+                  Hidden from Talent Pool. Your data is still saved.
                 </p>
               </div>
               <Button
-                variant="outline"
                 size="sm"
-                className="border-orange-500/30 text-orange-400 hover:bg-orange-500/10"
+                className="h-11 px-4 border-orange-500/30 text-orange-400 hover:bg-orange-500/10 rounded-xl touch-manipulation active:scale-[0.97] shrink-0"
+                variant="outline"
                 onClick={handleOptIn}
                 disabled={isSaving}
               >
                 Re-enable
               </Button>
-            </div>
-          </CardContent>
-        </Card>
-      )}
-
-      {/* Opt-Out Section (when not opted out) */}
-      {!isOptedOut && (
-        <Card className="bg-white/5 border-white/10">
-          <CardContent className="p-4">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-3">
-                <div className="p-2 rounded-lg bg-white/10">
-                  <Power className="h-5 w-5 text-foreground/70" />
-                </div>
-                <div>
-                  <h4 className="font-medium text-foreground">Disable Elec-ID</h4>
-                  <p className="text-xs text-foreground/70">
-                    Remove yourself from the Talent Pool completely
-                  </p>
-                </div>
-              </div>
-              <Button
-                variant="outline"
-                size="sm"
-                className="border-white/20 text-foreground/70 hover:text-red-400 hover:border-red-500/30"
-                onClick={() => setIsOptOutDialogOpen(true)}
-              >
-                Disable
-              </Button>
-            </div>
-          </CardContent>
-        </Card>
+            </CardContent>
+          </Card>
+        </motion.div>
       )}
 
       {/* Opt-Out Confirmation Dialog */}
@@ -1087,7 +1056,7 @@ const ElecIdOverview = ({ onNavigate }: ElecIdOverviewProps) => {
               <AlertCircle className="h-5 w-5 text-orange-400" />
               Disable Elec-ID?
             </DialogTitle>
-            <DialogDescription className="text-foreground/70">
+            <DialogDescription className="text-white">
               This will hide your profile from the Talent Pool. Employers will not be able to
               discover you through search.
             </DialogDescription>
@@ -1095,7 +1064,7 @@ const ElecIdOverview = ({ onNavigate }: ElecIdOverviewProps) => {
           <div className="space-y-4 pt-4">
             <div className="p-3 rounded-lg bg-white/5 border border-white/10">
               <p className="text-sm text-foreground font-medium mb-2">What happens:</p>
-              <ul className="space-y-1.5 text-sm text-foreground/70">
+              <ul className="space-y-1.5 text-sm text-white">
                 <li className="flex items-center gap-2">
                   <EyeOff className="h-4 w-4" />
                   Hidden from employer searches
@@ -1131,173 +1100,189 @@ const ElecIdOverview = ({ onNavigate }: ElecIdOverviewProps) => {
         </DialogContent>
       </Dialog>
 
-      {/* Profile Completeness - Mobile Optimized */}
+      {/* Profile Strength — Circular Ring */}
       <motion.div
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.2 }}
       >
-        <Card className="bg-gradient-to-br from-white/5 to-transparent border-white/10 overflow-hidden">
+        <Card className="border-white/10 rounded-2xl overflow-hidden bg-white/[0.03]">
           <CardContent className="p-4 sm:p-6">
-            <div className="flex items-center justify-between mb-3 sm:mb-4">
-              <div className="flex items-center gap-2">
-                <div className="p-2 rounded-xl bg-elec-yellow/20">
-                  <TrendingUp className="h-4 w-4 sm:h-5 sm:w-5 text-elec-yellow" />
+            <div className="flex items-center gap-4">
+              {/* Circular Progress Ring */}
+              <div className="relative w-20 h-20 sm:w-24 sm:h-24 shrink-0">
+                <svg className="w-full h-full -rotate-90" viewBox="0 0 100 100">
+                  <circle
+                    cx="50"
+                    cy="50"
+                    r="42"
+                    fill="none"
+                    stroke="rgba(255,255,255,0.08)"
+                    strokeWidth="8"
+                  />
+                  <circle
+                    cx="50"
+                    cy="50"
+                    r="42"
+                    fill="none"
+                    stroke={
+                      completeness.percentage >= 80
+                        ? '#22c55e'
+                        : completeness.percentage >= 50
+                          ? '#eab308'
+                          : '#f97316'
+                    }
+                    strokeWidth="8"
+                    strokeLinecap="round"
+                    strokeDasharray={`${2 * Math.PI * 42}`}
+                    strokeDashoffset={`${2 * Math.PI * 42 * (1 - completeness.percentage / 100)}`}
+                    className="transition-all duration-700 ease-out"
+                  />
+                </svg>
+                <div className="absolute inset-0 flex flex-col items-center justify-center">
+                  <span className="text-xl sm:text-2xl font-bold text-white">
+                    {completeness.percentage}
+                  </span>
+                  <span className="text-[9px] sm:text-[10px] text-white font-medium -mt-0.5">
+                    %
+                  </span>
                 </div>
-                <h4 className="text-sm sm:text-lg font-semibold text-foreground">
-                  Profile Strength
-                </h4>
               </div>
-              <div className="flex items-center gap-1">
-                <span className="text-xl sm:text-2xl font-bold text-elec-yellow">
-                  {completeness.percentage}
-                </span>
-                <span className="text-sm text-foreground/70">%</span>
+
+              {/* Text */}
+              <div className="flex-1 min-w-0">
+                <h4 className="font-bold text-sm sm:text-base text-white">Profile Strength</h4>
+                <p className="text-xs text-white mt-1">
+                  {completeness.percentage >= 80
+                    ? 'Looking great! Your profile is strong.'
+                    : completeness.percentage >= 50
+                      ? 'Good progress — a few more items to stand out.'
+                      : 'Add more details to attract employers.'}
+                </p>
               </div>
             </div>
 
-            <Progress value={completeness.percentage} className="h-2 sm:h-3 mb-3 sm:mb-4" />
-
+            {/* Missing items */}
             {completeness.missingItems.length > 0 && (
-              <div className="space-y-2">
-                <p className="text-xs sm:text-sm text-foreground/70">To improve your profile:</p>
-                <div className="grid grid-cols-1 gap-1.5">
-                  {completeness.missingItems.slice(0, 3).map((item, index) => (
-                    <div
-                      key={index}
-                      className="flex items-center gap-2 p-2 rounded-lg bg-white/5 text-xs sm:text-sm text-foreground/80"
-                    >
-                      <Zap className="h-3 w-3 text-elec-yellow shrink-0" />
-                      <span className="truncate">{item}</span>
-                    </div>
-                  ))}
-                  {completeness.missingItems.length > 3 && (
-                    <p className="text-xs text-foreground/70 text-center pt-1">
-                      +{completeness.missingItems.length - 3} more items
-                    </p>
-                  )}
-                </div>
+              <div className="mt-4 space-y-1.5">
+                {completeness.missingItems.slice(0, 3).map((item, index) => (
+                  <div
+                    key={index}
+                    className="flex items-center gap-2.5 p-2.5 rounded-xl bg-white/5 text-xs sm:text-sm text-white touch-manipulation"
+                  >
+                    <Zap className="h-3.5 w-3.5 text-elec-yellow shrink-0" />
+                    <span className="truncate">{item}</span>
+                    <ChevronRight className="h-3.5 w-3.5 text-white ml-auto shrink-0" />
+                  </div>
+                ))}
+                {completeness.missingItems.length > 3 && (
+                  <p className="text-xs text-white text-center pt-1">
+                    +{completeness.missingItems.length - 3} more items
+                  </p>
+                )}
               </div>
             )}
           </CardContent>
         </Card>
       </motion.div>
 
-      {/* Stats Grid - Mobile Optimized with Tap Animations */}
+      {/* Stats Grid — Clean Row Cards */}
       <motion.div
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.25 }}
-        className="grid grid-cols-2 sm:grid-cols-5 gap-2 sm:gap-4"
       >
-        {statsLoading ? (
-          // Loading skeletons
-          <>
-            {[1, 2, 3, 4, 5].map((i) => (
-              <div
-                key={i}
-                className={cn(
-                  'relative overflow-hidden rounded-2xl border border-white/10 bg-white/5 p-4 sm:p-5 min-h-[120px]',
-                  i === 5 ? 'col-span-2 sm:col-span-1' : ''
-                )}
-              >
-                <Skeleton className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl mb-2 sm:mb-3 bg-white/10" />
-                <Skeleton className="h-8 w-12 mb-1 bg-white/10" />
-                <Skeleton className="h-3 w-16 bg-white/10" />
-              </div>
-            ))}
-          </>
-        ) : (
-          [
-            {
-              id: 'qualifications',
-              icon: GraduationCap,
-              count: profileStats.qualificationsCount,
-              label: 'Qualifications',
-              shortLabel: 'Quals',
-              color: 'from-purple-500/20 to-pink-500/20',
-              iconColor: 'text-purple-400',
-              borderColor: 'hover:border-purple-500/50 active:border-purple-500/50',
-            },
-            {
-              id: 'experience',
-              icon: Briefcase,
-              count: profileStats.experienceCount,
-              label: 'Work History',
-              shortLabel: 'Work',
-              color: 'from-blue-500/20 to-cyan-500/20',
-              iconColor: 'text-blue-400',
-              borderColor: 'hover:border-blue-500/50 active:border-blue-500/50',
-            },
-            {
-              id: 'skills',
-              icon: Wrench,
-              count: profileStats.skillsCount,
-              label: 'Skills',
-              shortLabel: 'Skills',
-              color: 'from-emerald-500/20 to-teal-500/20',
-              iconColor: 'text-emerald-400',
-              borderColor: 'hover:border-emerald-500/50 active:border-emerald-500/50',
-            },
-            {
-              id: 'compliance',
-              icon: Shield,
-              count: profileStats.expiringItems,
-              label: 'Expiring Soon',
-              shortLabel: 'Expiry',
-              color: 'from-orange-500/20 to-red-500/20',
-              iconColor: 'text-orange-400',
-              borderColor: 'hover:border-orange-500/50 active:border-orange-500/50',
-              colSpan: '',
-            },
-            {
-              id: 'share',
-              icon: Eye,
-              count: profile?.profile_views ?? 0,
-              label: 'Profile Views',
-              shortLabel: 'Views',
-              color: 'from-yellow-500/20 to-amber-500/20',
-              iconColor: 'text-yellow-400',
-              borderColor: 'hover:border-yellow-500/50 active:border-yellow-500/50',
-              colSpan: 'col-span-2 sm:col-span-1',
-            },
-          ].map((stat, index) => (
-            <motion.button
-              key={stat.id}
-              whileTap={{ scale: 0.97 }}
-              onClick={() => handleStatClick(stat.id)}
-              className={cn(
-                'relative overflow-hidden rounded-2xl border border-white/10 bg-white/5 p-4 sm:p-5 text-left transition-all touch-manipulation min-h-[120px]',
-                stat.borderColor,
-                stat.colSpan
-              )}
-            >
-              {/* Gradient background */}
-              <div className={cn('absolute inset-0 bg-gradient-to-br opacity-50', stat.color)} />
-
-              <div className="relative">
-                <div
+        <Card className="border-white/10 rounded-2xl overflow-hidden bg-white/[0.03]">
+          {statsLoading ? (
+            <div className="p-4 space-y-3">
+              {[1, 2, 3, 4, 5].map((i) => (
+                <div key={i} className="flex items-center gap-3">
+                  <Skeleton className="w-11 h-11 rounded-xl bg-white/10 shrink-0" />
+                  <div className="flex-1">
+                    <Skeleton className="h-4 w-20 mb-1 bg-white/10" />
+                    <Skeleton className="h-3 w-12 bg-white/10" />
+                  </div>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <div>
+              {[
+                {
+                  id: 'qualifications',
+                  icon: GraduationCap,
+                  count: profileStats.qualificationsCount,
+                  label: 'Qualifications',
+                  iconBg: 'bg-purple-500/20',
+                  iconColor: 'text-purple-400',
+                  countColor: 'text-purple-400',
+                },
+                {
+                  id: 'experience',
+                  icon: Briefcase,
+                  count: profileStats.experienceCount,
+                  label: 'Work History',
+                  iconBg: 'bg-blue-500/20',
+                  iconColor: 'text-blue-400',
+                  countColor: 'text-blue-400',
+                },
+                {
+                  id: 'skills',
+                  icon: Wrench,
+                  count: profileStats.skillsCount,
+                  label: 'Skills',
+                  iconBg: 'bg-emerald-500/20',
+                  iconColor: 'text-emerald-400',
+                  countColor: 'text-emerald-400',
+                },
+                {
+                  id: 'compliance',
+                  icon: Shield,
+                  count: profileStats.expiringItems,
+                  label: 'Expiring Soon',
+                  iconBg: profileStats.expiringItems > 0 ? 'bg-orange-500/20' : 'bg-white/10',
+                  iconColor: profileStats.expiringItems > 0 ? 'text-orange-400' : 'text-white',
+                  countColor: profileStats.expiringItems > 0 ? 'text-orange-400' : 'text-white',
+                },
+                {
+                  id: 'share',
+                  icon: Eye,
+                  count: profile?.profile_views ?? 0,
+                  label: 'Profile Views',
+                  iconBg: 'bg-yellow-500/20',
+                  iconColor: 'text-yellow-400',
+                  countColor: 'text-yellow-400',
+                },
+              ].map((stat, index, arr) => (
+                <motion.button
+                  key={stat.id}
+                  whileTap={{ scale: 0.99 }}
+                  onClick={() => handleStatClick(stat.id)}
                   className={cn(
-                    'w-10 h-10 sm:w-12 sm:h-12 rounded-xl flex items-center justify-center mb-2 sm:mb-3',
-                    stat.color.replace('from-', 'bg-gradient-to-br from-').replace('/20', '/30')
+                    'w-full flex items-center gap-3 p-4 text-left touch-manipulation active:bg-white/[0.04] transition-colors',
+                    index < arr.length - 1 && 'border-b border-white/[0.06]'
                   )}
                 >
-                  <stat.icon className={cn('h-5 w-5 sm:h-6 sm:w-6', stat.iconColor)} />
-                </div>
-                <p className="text-2xl sm:text-3xl font-bold text-foreground">{stat.count}</p>
-                <p className="text-[10px] sm:text-xs text-foreground/70 mt-0.5 sm:hidden">
-                  {stat.shortLabel}
-                </p>
-                <p className="text-xs text-foreground/70 mt-0.5 hidden sm:block">{stat.label}</p>
-              </div>
-
-              {/* Chevron indicator */}
-              <div className="absolute top-3 right-3 sm:top-4 sm:right-4">
-                <ChevronRight className="h-4 w-4 text-foreground/70/50" />
-              </div>
-            </motion.button>
-          ))
-        )}
+                  <div
+                    className={cn(
+                      'w-11 h-11 rounded-xl flex items-center justify-center shrink-0',
+                      stat.iconBg
+                    )}
+                  >
+                    <stat.icon className={cn('h-5 w-5', stat.iconColor)} />
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <p className="text-sm font-medium text-white">{stat.label}</p>
+                  </div>
+                  <div className="flex items-center gap-2 shrink-0">
+                    <span className={cn('text-xl font-bold', stat.countColor)}>{stat.count}</span>
+                    <ChevronRight className="h-4 w-4 text-white" />
+                  </div>
+                </motion.button>
+              ))}
+            </div>
+          )}
+        </Card>
       </motion.div>
 
       {/* ── Your profile is live — share CTA ─────────────────────────────── */}
@@ -1319,15 +1304,18 @@ const ElecIdOverview = ({ onNavigate }: ElecIdOverviewProps) => {
               </div>
               <div>
                 <p className="font-bold text-white text-sm leading-none">Your profile is live</p>
-                <p className="text-[11px] text-slate-400 mt-0.5">Share with employers, clients, or anyone who needs to verify your credentials</p>
+                <p className="text-[11px] text-white mt-0.5">
+                  Share with employers, clients, or anyone who needs to verify your credentials
+                </p>
               </div>
             </div>
 
             {/* URL row */}
             <div className="flex items-center gap-2">
               <div className="flex-1 min-w-0 px-3 py-2 rounded-xl bg-black/30 border border-white/[0.07]">
-                <p className="text-xs text-slate-300 font-mono truncate">
-                  elec-mate.com/verify/<span className="text-yellow-400 font-bold">{elecIdProfile.elec_id_number}</span>
+                <p className="text-xs text-white font-mono truncate">
+                  elec-mate.com/verify/
+                  <span className="text-yellow-400 font-bold">{elecIdProfile.elec_id_number}</span>
                 </p>
               </div>
               <button
@@ -1352,7 +1340,7 @@ const ElecIdOverview = ({ onNavigate }: ElecIdOverviewProps) => {
             {/* Create QR / share link button */}
             <button
               onClick={() => onNavigate?.('share')}
-              className="mt-2.5 w-full flex items-center justify-center gap-2 py-2 rounded-xl bg-white/[0.04] border border-white/[0.08] hover:bg-white/[0.07] text-slate-300 hover:text-white text-xs font-medium transition-all touch-manipulation"
+              className="mt-2.5 w-full flex items-center justify-center gap-2 py-2.5 rounded-xl bg-white/[0.04] border border-white/[0.08] hover:bg-white/[0.07] text-white text-xs font-medium transition-all touch-manipulation"
             >
               <QrCode className="h-3.5 w-3.5" />
               Create QR code or timed share link

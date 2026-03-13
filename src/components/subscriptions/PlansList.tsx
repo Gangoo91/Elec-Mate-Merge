@@ -13,7 +13,7 @@ import {
   Clock,
   Bot,
 } from 'lucide-react';
-import React, { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/components/ui/use-toast';
 import { useAuth } from '@/contexts/AuthContext';
@@ -173,6 +173,11 @@ const PlansList = ({ billing }: PlansListProps) => {
           const isCurrentPlan = subscriptionTier === plan.name && isSubscribed;
           const isPremium = plan.name === 'Business AI';
 
+          // On native, try to get the store price from RevenueCat
+          const nativePackage = isNative ? getPackageForPlan(plan.id) : null;
+          const nativePrice = nativePackage?.product?.priceString ?? null;
+          const displayPrice = nativePrice || plan.price;
+
           return (
             <Card
               key={plan.id}
@@ -284,7 +289,7 @@ const PlansList = ({ billing }: PlansListProps) => {
                 {/* Price */}
                 <div className="flex items-baseline gap-1">
                   <span className="text-2xl sm:text-3xl font-bold tracking-tight text-foreground">
-                    {plan.price}
+                    {displayPrice}
                   </span>
                   {plan.period && <span className="text-sm text-white">{plan.period}</span>}
                 </div>
@@ -368,7 +373,7 @@ const PlansList = ({ billing }: PlansListProps) => {
                     </>
                   ) : (
                     <>
-                      Get Started
+                      {isNative ? 'Subscribe' : 'Get Started'}
                       <ChevronRight className="ml-2 h-4 w-4" />
                     </>
                   )}
@@ -398,29 +403,6 @@ const PlansList = ({ billing }: PlansListProps) => {
             aria-label={`View plan ${i + 1}`}
           />
         ))}
-      </div>
-
-      {/* Enterprise CTA */}
-      <div className="relative overflow-hidden rounded-2xl bg-white/[0.03] border border-white/10 p-4 sm:p-5">
-        <div className="flex items-center gap-3 sm:gap-4">
-          <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-gradient-to-br from-elec-yellow/20 to-elec-yellow/10 flex items-center justify-center flex-shrink-0 border border-elec-yellow/20">
-            <Building2 className="h-5 w-5 sm:h-6 sm:w-6 text-elec-yellow" />
-          </div>
-          <div className="flex-1 min-w-0">
-            <h3 className="text-sm sm:text-base font-bold text-foreground">
-              Need Enterprise or Team Pricing?
-            </h3>
-            <p className="text-[12px] sm:text-sm text-white mt-0.5">
-              Contact us at{' '}
-              <a
-                href="mailto:info@elec-mate.com"
-                className="text-elec-yellow hover:underline font-medium"
-              >
-                info@elec-mate.com
-              </a>
-            </p>
-          </div>
-        </div>
       </div>
 
       {/* Native IAP disclosure text — required by Apple & Google */}

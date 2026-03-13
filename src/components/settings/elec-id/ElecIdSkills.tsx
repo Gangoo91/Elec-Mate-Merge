@@ -392,7 +392,7 @@ const ElecIdSkills = () => {
     <div className="space-y-6">
       {/* Step 1: Category Selection - Visual Grid */}
       <div className="space-y-3">
-        <div className="flex items-center gap-2 text-sm font-medium text-foreground/70">
+        <div className="flex items-center gap-2 text-sm font-medium text-white">
           <span className="w-6 h-6 rounded-full bg-elec-yellow/20 text-elec-yellow flex items-center justify-center text-xs font-bold">
             1
           </span>
@@ -430,22 +430,15 @@ const ElecIdSkills = () => {
                       isSelected ? colors.bg : 'bg-white/[0.06]'
                     )}
                   >
-                    <Icon
-                      className={cn('h-4 w-4', isSelected ? colors.text : 'text-foreground/60')}
-                    />
+                    <Icon className={cn('h-4 w-4', isSelected ? colors.text : 'text-white')} />
                   </div>
                   <span
-                    className={cn(
-                      'text-sm font-medium',
-                      isSelected ? colors.text : 'text-foreground'
-                    )}
+                    className={cn('text-sm font-medium', isSelected ? colors.text : 'text-white')}
                   >
                     {cat.label}
                   </span>
                 </div>
-                <p className="text-[10px] text-foreground/50 mt-1 ml-10">
-                  {cat.skills.length} skills
-                </p>
+                <p className="text-[10px] text-white mt-1 ml-10">{cat.skills.length} skills</p>
               </button>
             );
           })}
@@ -455,7 +448,7 @@ const ElecIdSkills = () => {
       {/* Step 2: Skill Selection - Scrollable List */}
       {selectedCategory && (
         <div className="space-y-3">
-          <div className="flex items-center gap-2 text-sm font-medium text-foreground/70">
+          <div className="flex items-center gap-2 text-sm font-medium text-white">
             <span className="w-6 h-6 rounded-full bg-blue-500/20 text-blue-400 flex items-center justify-center text-xs font-bold">
               2
             </span>
@@ -489,7 +482,7 @@ const ElecIdSkills = () => {
                   <span
                     className={cn(
                       'text-sm text-left',
-                      isSelected ? catColors.text + ' font-medium' : 'text-foreground/80'
+                      isSelected ? catColors.text + ' font-medium' : 'text-white'
                     )}
                   >
                     {skill}
@@ -503,7 +496,7 @@ const ElecIdSkills = () => {
 
       {/* Step 3: Proficiency Level - Visual Cards */}
       <div className="space-y-3">
-        <div className="flex items-center gap-2 text-sm font-medium text-foreground/70">
+        <div className="flex items-center gap-2 text-sm font-medium text-white">
           <span className="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 flex items-center justify-center text-xs font-bold">
             3
           </span>
@@ -534,17 +527,13 @@ const ElecIdSkills = () => {
                       isSelected ? `bg-gradient-to-br ${colors.gradient}` : 'bg-white/[0.08]'
                     )}
                   >
-                    <Icon
-                      className={cn('h-4 w-4', isSelected ? 'text-white' : 'text-foreground/60')}
-                    />
+                    <Icon className={cn('h-4 w-4', isSelected ? 'text-white' : 'text-white')} />
                   </div>
-                  <span
-                    className={cn('font-semibold', isSelected ? colors.text : 'text-foreground')}
-                  >
+                  <span className={cn('font-semibold', isSelected ? colors.text : 'text-white')}>
                     {level.label}
                   </span>
                 </div>
-                <p className="text-xs text-foreground/60 leading-relaxed">{level.description}</p>
+                <p className="text-xs text-white leading-relaxed">{level.description}</p>
               </button>
             );
           })}
@@ -553,7 +542,7 @@ const ElecIdSkills = () => {
 
       {/* Step 4: Years of Experience */}
       <div className="space-y-3">
-        <div className="flex items-center gap-2 text-sm font-medium text-foreground/70">
+        <div className="flex items-center gap-2 text-sm font-medium text-white">
           <span className="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-xs font-bold">
             4
           </span>
@@ -563,7 +552,7 @@ const ElecIdSkills = () => {
         <div className="flex items-center gap-3">
           <div className="flex-1 relative">
             <div className="absolute left-4 top-1/2 -translate-y-1/2 pointer-events-none">
-              <Clock className="h-5 w-5 text-foreground/40" />
+              <Clock className="h-5 w-5 text-white" />
             </div>
             <Input
               type="number"
@@ -574,24 +563,24 @@ const ElecIdSkills = () => {
               placeholder="Years"
               className="h-14 pl-12 pr-16 bg-white/[0.06] border-white/[0.1] rounded-xl touch-manipulation text-lg font-medium"
             />
-            <div className="absolute right-4 top-1/2 -translate-y-1/2 text-foreground/50 text-sm">
+            <div className="absolute right-4 top-1/2 -translate-y-1/2 text-white text-sm">
               years
             </div>
           </div>
         </div>
 
         {/* Quick Select Buttons */}
-        <div className="flex gap-2">
+        <div className="grid grid-cols-6 gap-2">
           {[1, 2, 5, 10, 15, 20].map((years) => (
             <button
               key={years}
               type="button"
               onClick={() => setFormData({ ...formData, yearsExperience: years.toString() })}
               className={cn(
-                'flex-1 py-2 rounded-lg text-sm font-medium transition-all touch-manipulation',
+                'min-h-[44px] rounded-lg text-sm font-medium transition-all touch-manipulation',
                 formData.yearsExperience === years.toString()
                   ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/30'
-                  : 'bg-white/[0.04] text-foreground/60 hover:bg-white/[0.08]'
+                  : 'bg-white/[0.04] text-white hover:bg-white/[0.08]'
               )}
             >
               {years}y
@@ -603,7 +592,7 @@ const ElecIdSkills = () => {
       {/* Summary Preview */}
       {selectedSkill && formData.level && (
         <div className="p-4 rounded-xl bg-white/[0.03] border border-white/[0.08]">
-          <p className="text-xs text-foreground/50 uppercase tracking-wide mb-2">Preview</p>
+          <p className="text-xs text-white uppercase tracking-wide mb-2">Preview</p>
           <div className="flex items-center gap-3">
             {(() => {
               const CatIcon = getCategoryIcon(selectedCategory);
@@ -620,7 +609,7 @@ const ElecIdSkills = () => {
                     <CatIcon className={cn('h-5 w-5', catColors.text)} />
                   </div>
                   <div className="flex-1">
-                    <p className="font-medium text-foreground">{selectedSkill}</p>
+                    <p className="font-medium text-white">{selectedSkill}</p>
                     <div className="flex items-center gap-2 mt-0.5">
                       <Badge
                         className={cn(
@@ -633,9 +622,7 @@ const ElecIdSkills = () => {
                         {getLevelInfo(formData.level as SkillLevel)?.label}
                       </Badge>
                       {formData.yearsExperience && (
-                        <span className="text-xs text-foreground/50">
-                          {formData.yearsExperience} years
-                        </span>
+                        <span className="text-xs text-white">{formData.yearsExperience} years</span>
                       )}
                     </div>
                   </div>
@@ -666,7 +653,7 @@ const ElecIdSkills = () => {
 
           {/* Header */}
           <div className="flex items-center justify-between px-5 pb-4 border-b border-white/[0.06]">
-            <Drawer.Title className="text-lg font-semibold text-foreground">{title}</Drawer.Title>
+            <Drawer.Title className="text-lg font-semibold text-white">{title}</Drawer.Title>
             <button
               onClick={() => {
                 onOpenChange(false);
@@ -674,7 +661,7 @@ const ElecIdSkills = () => {
               }}
               className="p-2 -mr-2 rounded-full hover:bg-white/[0.08] touch-manipulation"
             >
-              <X className="w-5 h-5 text-foreground/70" />
+              <X className="w-5 h-5 text-white" />
             </button>
           </div>
 
@@ -728,7 +715,7 @@ const ElecIdSkills = () => {
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="bg-background border-white/[0.1] max-w-md">
         <DialogHeader>
-          <DialogTitle className="text-foreground">{title}</DialogTitle>
+          <DialogTitle className="text-white">{title}</DialogTitle>
         </DialogHeader>
         <div className="max-h-[60vh] overflow-y-auto pr-1">{renderFormContent(isEdit)}</div>
         <div className="flex gap-3 pt-4">
@@ -796,8 +783,8 @@ const ElecIdSkills = () => {
       {/* Header */}
       <div className="flex items-center justify-between px-1">
         <div>
-          <h3 className="text-lg font-semibold text-foreground">Your Skills</h3>
-          <p className="text-sm text-foreground/70">
+          <h3 className="text-lg font-semibold text-white">Your Skills</h3>
+          <p className="text-sm text-white">
             {skills.length} skill{skills.length !== 1 ? 's' : ''} recorded
           </p>
         </div>
@@ -826,7 +813,7 @@ const ElecIdSkills = () => {
                 </div>
                 <div>
                   <p className="text-2xl font-bold text-elec-yellow">{skills.length}</p>
-                  <p className="text-xs text-foreground/60">Total Skills</p>
+                  <p className="text-xs text-white">Total Skills</p>
                 </div>
               </div>
             </motion.div>
@@ -846,14 +833,14 @@ const ElecIdSkills = () => {
                   <p className="text-2xl font-bold text-purple-400">
                     {skills.reduce((sum, s) => sum + s.yearsExperience, 0)}
                   </p>
-                  <p className="text-xs text-foreground/60">Combined Years</p>
+                  <p className="text-xs text-white">Combined Years</p>
                 </div>
               </div>
             </motion.div>
           </div>
 
           {/* Level Distribution */}
-          <div className="grid grid-cols-4 gap-2">
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
             {SKILL_LEVELS.map((level, idx) => {
               const count = skills.filter((s) => s.level === level.value).length;
               const colors = getLevelColor(level.value);
@@ -872,20 +859,12 @@ const ElecIdSkills = () => {
                   )}
                 >
                   <Icon
-                    className={cn(
-                      'h-4 w-4 mx-auto mb-1',
-                      count > 0 ? colors.text : 'text-foreground/30'
-                    )}
+                    className={cn('h-4 w-4 mx-auto mb-1', count > 0 ? colors.text : 'text-white')}
                   />
-                  <div
-                    className={cn(
-                      'text-lg font-bold',
-                      count > 0 ? colors.text : 'text-foreground/30'
-                    )}
-                  >
+                  <div className={cn('text-lg font-bold', count > 0 ? colors.text : 'text-white')}>
                     {count}
                   </div>
-                  <div className="text-[10px] text-foreground/50 uppercase tracking-wide">
+                  <div className="text-[10px] text-white uppercase tracking-wide">
                     {level.label}
                   </div>
                 </motion.div>
@@ -922,8 +901,8 @@ const ElecIdSkills = () => {
                       <CatIcon className={cn('h-5 w-5', catColors.text)} />
                     </div>
                     <div className="flex-1">
-                      <h4 className="font-semibold text-foreground">{category.label}</h4>
-                      <p className="text-xs text-foreground/60">
+                      <h4 className="font-semibold text-white">{category.label}</h4>
+                      <p className="text-xs text-white">
                         {categorySkills.length} skill{categorySkills.length !== 1 ? 's' : ''}{' '}
                         recorded
                       </p>
@@ -972,10 +951,10 @@ const ElecIdSkills = () => {
                                 {/* Skill Info */}
                                 <div className="flex-1 min-w-0">
                                   <div className="flex items-start justify-between gap-2">
-                                    <h5 className="font-semibold text-foreground text-sm">
+                                    <h5 className="font-semibold text-white text-sm">
                                       {skill.skillName}
                                     </h5>
-                                    <Edit3 className="h-4 w-4 text-foreground/30 flex-shrink-0" />
+                                    <Edit3 className="h-4 w-4 text-white flex-shrink-0" />
                                   </div>
 
                                   {/* Stats Row */}
@@ -990,7 +969,7 @@ const ElecIdSkills = () => {
                                     >
                                       {levelInfo?.label}
                                     </Badge>
-                                    <span className="text-xs text-foreground/50 flex items-center gap-1">
+                                    <span className="text-xs text-white flex items-center gap-1">
                                       <Clock className="h-3 w-3" />
                                       {skill.yearsExperience} year
                                       {skill.yearsExperience !== 1 ? 's' : ''}
@@ -1007,19 +986,19 @@ const ElecIdSkills = () => {
                             </button>
 
                             {/* Quick Actions */}
-                            <div className="flex items-center justify-between px-4 py-2 border-t border-white/[0.04] bg-white/[0.01]">
+                            <div className="flex items-center justify-between px-3 py-1 border-t border-white/[0.04] bg-white/[0.01]">
                               <button
                                 onClick={() => openEditSheet(skill)}
-                                className="text-xs text-foreground/50 hover:text-foreground flex items-center gap-1 touch-manipulation"
+                                className="h-11 px-3 text-xs text-white hover:text-white flex items-center gap-1.5 touch-manipulation rounded-lg hover:bg-white/[0.06] transition-colors"
                               >
-                                <Edit3 className="h-3 w-3" />
+                                <Edit3 className="h-3.5 w-3.5" />
                                 Edit
                               </button>
                               <button
                                 onClick={() => setDeleteConfirm({ open: true, id: skill.id })}
-                                className="text-xs text-red-400/60 hover:text-red-400 flex items-center gap-1 touch-manipulation"
+                                className="h-11 px-3 text-xs text-red-400 hover:text-red-400 flex items-center gap-1.5 touch-manipulation rounded-lg hover:bg-red-500/10 transition-colors"
                               >
-                                <Trash2 className="h-3 w-3" />
+                                <Trash2 className="h-3.5 w-3.5" />
                                 Remove
                               </button>
                             </div>
@@ -1045,7 +1024,7 @@ const ElecIdSkills = () => {
                     <Sparkles className="h-5 w-5 text-purple-400" />
                   </div>
                   <div className="flex-1">
-                    <h4 className="font-semibold text-foreground">Other Skills</h4>
+                    <h4 className="font-semibold text-white">Other Skills</h4>
                   </div>
                 </div>
 
@@ -1077,7 +1056,7 @@ const ElecIdSkills = () => {
                             <LevelIcon className={cn('h-5 w-5', levelColors.text)} />
                           </div>
                           <div className="flex-1 text-left">
-                            <p className="font-medium text-foreground text-sm">{skill.skillName}</p>
+                            <p className="font-medium text-white text-sm">{skill.skillName}</p>
                             <div className="flex items-center gap-2 mt-1">
                               <Badge
                                 className={cn(
@@ -1089,12 +1068,10 @@ const ElecIdSkills = () => {
                               >
                                 {levelInfo?.label}
                               </Badge>
-                              <span className="text-xs text-foreground/50">
-                                {skill.yearsExperience}y
-                              </span>
+                              <span className="text-xs text-white">{skill.yearsExperience}y</span>
                             </div>
                           </div>
-                          <ChevronRight className="h-4 w-4 text-foreground/30" />
+                          <ChevronRight className="h-4 w-4 text-white" />
                         </motion.button>
                       );
                     })}
@@ -1110,8 +1087,8 @@ const ElecIdSkills = () => {
             <div className="w-20 h-20 mx-auto mb-5 rounded-2xl bg-gradient-to-br from-elec-yellow/20 to-amber-600/10 flex items-center justify-center">
               <Zap className="h-10 w-10 text-elec-yellow" />
             </div>
-            <h4 className="text-xl font-semibold text-foreground mb-2">Showcase Your Expertise</h4>
-            <p className="text-foreground/60 max-w-sm mx-auto mb-6 leading-relaxed">
+            <h4 className="text-xl font-semibold text-white mb-2">Showcase Your Expertise</h4>
+            <p className="text-white max-w-sm mx-auto mb-6 leading-relaxed">
               Add your electrical skills to build a comprehensive profile that employers can trust.
             </p>
 
@@ -1121,25 +1098,25 @@ const ElecIdSkills = () => {
                 <div className="w-10 h-10 rounded-lg bg-blue-500/20 flex items-center justify-center mx-auto mb-2">
                   <ClipboardCheck className="h-5 w-5 text-blue-400" />
                 </div>
-                <p className="text-xs text-foreground/60">Track proficiency levels</p>
+                <p className="text-xs text-white">Track proficiency levels</p>
               </div>
               <div className="p-3 rounded-xl bg-white/[0.03] border border-white/[0.06]">
                 <div className="w-10 h-10 rounded-lg bg-emerald-500/20 flex items-center justify-center mx-auto mb-2">
                   <BadgeCheck className="h-5 w-5 text-emerald-400" />
                 </div>
-                <p className="text-xs text-foreground/60">Verification ready</p>
+                <p className="text-xs text-white">Verification ready</p>
               </div>
               <div className="p-3 rounded-xl bg-white/[0.03] border border-white/[0.06]">
                 <div className="w-10 h-10 rounded-lg bg-purple-500/20 flex items-center justify-center mx-auto mb-2">
                   <TrendingUp className="h-5 w-5 text-purple-400" />
                 </div>
-                <p className="text-xs text-foreground/60">Show experience years</p>
+                <p className="text-xs text-white">Show experience years</p>
               </div>
               <div className="p-3 rounded-xl bg-white/[0.03] border border-white/[0.06]">
                 <div className="w-10 h-10 rounded-lg bg-orange-500/20 flex items-center justify-center mx-auto mb-2">
                   <Award className="h-5 w-5 text-orange-400" />
                 </div>
-                <p className="text-xs text-foreground/60">Build credibility</p>
+                <p className="text-xs text-white">Build credibility</p>
               </div>
             </div>
 
@@ -1166,7 +1143,7 @@ const ElecIdSkills = () => {
                     </div>
                   );
                 })}
-              <div className="px-3 py-1.5 rounded-full bg-white/[0.05] text-foreground/50 text-xs">
+              <div className="px-3 py-1.5 rounded-full bg-white/[0.05] text-white text-xs">
                 +{Object.keys(UK_ELECTRICAL_SKILLS).length - 4} more
               </div>
             </div>

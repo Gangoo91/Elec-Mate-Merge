@@ -48,9 +48,12 @@ const SidebarNavSection = ({
           </h3>
         </div>
       )}
-      <div className={cn('space-y-1', title ? '' : 'mt-6')}>
+      <div className={cn('space-y-1', title ? '' : 'mt-1')}>
         {filteredItems.map((item) => (
-          <SidebarNavLink key={item.path} item={item} onItemClick={onItemClick} />
+          <div key={item.path}>
+            <SidebarNavLink item={item} onItemClick={onItemClick} />
+            {item.dividerAfter && <div className="border-t border-white/5 my-2 mx-3" />}
+          </div>
         ))}
       </div>
     </div>

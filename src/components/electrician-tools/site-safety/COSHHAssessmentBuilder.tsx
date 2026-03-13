@@ -51,12 +51,14 @@ import {
   Cog,
   ClipboardList,
   ChevronDown,
+  Share2,
 } from 'lucide-react';
 import { LoadMoreButton } from './common/LoadMoreButton';
 import { SignaturePad } from './common/SignaturePad';
 import { useShowMore } from '@/hooks/useShowMore';
 import { SaveAsTemplateSheet } from './common/SaveAsTemplateSheet';
 import { LoadTemplateSheet } from './common/LoadTemplateSheet';
+import { SafetyDocumentShare } from './common/SafetyDocumentShare';
 
 // ─── Types ───
 
@@ -215,7 +217,8 @@ const COMMON_SUBSTANCES = [
     manufacturer: 'Various',
     ghs: ['harmful', 'environmental'],
     routes: ['inhalation', 'skin-contact', 'eye-contact'],
-    health: 'Respiratory irritation. Skin sensitisation possible. May contain isocyanates \u2014 WEL: 0.02 mg/m\u00B3 (8-hr TWA) for MDI/HDI per EH40/2005. Health surveillance required under COSHH Reg 11.',
+    health:
+      'Respiratory irritation. Skin sensitisation possible. May contain isocyanates \u2014 WEL: 0.02 mg/m\u00B3 (8-hr TWA) for MDI/HDI per EH40/2005. Health surveillance required under COSHH Reg 11.',
     controls: [
       'Adequate ventilation',
       'Avoid spray mist inhalation',
@@ -269,8 +272,7 @@ const COMMON_SUBSTANCES = [
     ppe: ['FFP3 respirator', 'Nitrile gloves', 'Safety glasses/goggles', 'Long sleeves'],
     storage:
       'Store upright below 50\u00B0C. Pressurised container \u2014 protect from sunlight. Check expiry date.',
-    spill:
-      'Allow to cure fully then remove mechanically. Do not use solvents. Ventilate area.',
+    spill: 'Allow to cure fully then remove mechanically. Do not use solvents. Ventilate area.',
     firstAid:
       'Inhalation: Move to fresh air immediately, seek medical attention if breathing difficulty. Skin: Wash with soap and water (do not use solvents). Eyes: Flush 15 min. Ingestion: Do not induce vomiting, seek medical advice.',
   },
@@ -287,7 +289,12 @@ const COMMON_SUBSTANCES = [
       'Keep away from metals \u2014 reacts to produce hydrogen gas',
       'Neutralising agent (sodium bicarbonate) available nearby',
     ],
-    ppe: ['Chemical splash goggles', 'Acid-resistant gloves', 'Face shield', 'Chemical-resistant apron'],
+    ppe: [
+      'Chemical splash goggles',
+      'Acid-resistant gloves',
+      'Face shield',
+      'Chemical-resistant apron',
+    ],
     storage:
       'Store in original acid-resistant container. Upright, in bunded area. Away from metals and combustibles.',
     spill:
@@ -308,7 +315,12 @@ const COMMON_SUBSTANCES = [
       'Check asbestos register before any work in pre-2000 buildings per CAR 2012 Reg 4',
       'Asbestos awareness training mandatory for all operatives',
     ],
-    ppe: ['RPE (FFP3 minimum) \u2014 face-fit tested', 'Disposable coveralls (Type 5/6)', 'Overshoes', 'Gloves'],
+    ppe: [
+      'RPE (FFP3 minimum) \u2014 face-fit tested',
+      'Disposable coveralls (Type 5/6)',
+      'Overshoes',
+      'Gloves',
+    ],
     storage:
       'N/A \u2014 do not collect or store. If encapsulated and undamaged, manage in situ per asbestos management plan.',
     spill:
@@ -330,8 +342,7 @@ const COMMON_SUBSTANCES = [
       'Blood lead level monitoring for regular exposure per CLAW 2002',
     ],
     ppe: ['FFP3 respirator', 'Nitrile gloves', 'Coveralls', 'Safety glasses'],
-    storage:
-      'N/A \u2014 collect debris in sealed bags for hazardous waste disposal.',
+    storage: 'N/A \u2014 collect debris in sealed bags for hazardous waste disposal.',
     spill:
       'Dampen area. Collect with HEPA vacuum or damp cloth. Do NOT dry sweep. Dispose as hazardous waste.',
     firstAid:
@@ -463,6 +474,7 @@ export function COSHHAssessmentBuilder({ onBack }: { onBack: () => void }) {
   const createCOSHH = useCreateCOSHH();
   const deleteCOSHH = useDeleteCOSHH();
   const { exportPDF, isExporting, exportingId } = useSafetyPDFExport();
+  const [showShare, setShowShare] = useState(false);
   const assessments: COSHHAssessment[] = (dbAssessments || []).map((a) => ({
     id: a.id,
     substance_name: a.substance_name,
@@ -557,10 +569,25 @@ export function COSHHAssessmentBuilder({ onBack }: { onBack: () => void }) {
   const [showLoadTemplate, setShowLoadTemplate] = useState(false);
 
   const getTemplateData = () => ({
-    substanceName, manufacturer, productCode, locationOfUse, taskDescription,
-    quantityUsed, frequencyOfUse, selectedGHS, healthEffects, oelValue,
-    controlMeasures, ppeRequired, storageRequirements, spillProcedure,
-    firstAid, disposalMethod, monitoringRequired, monitoringDetails, riskRating,
+    substanceName,
+    manufacturer,
+    productCode,
+    locationOfUse,
+    taskDescription,
+    quantityUsed,
+    frequencyOfUse,
+    selectedGHS,
+    healthEffects,
+    oelValue,
+    controlMeasures,
+    ppeRequired,
+    storageRequirements,
+    spillProcedure,
+    firstAid,
+    disposalMethod,
+    monitoringRequired,
+    monitoringDetails,
+    riskRating,
   });
 
   const handleLoadTemplate = (data: Record<string, unknown>) => {
@@ -580,7 +607,8 @@ export function COSHHAssessmentBuilder({ onBack }: { onBack: () => void }) {
     if (data.spillProcedure) setSpillProcedure(data.spillProcedure as string);
     if (data.firstAid) setFirstAid(data.firstAid as string);
     if (data.disposalMethod) setDisposalMethod(data.disposalMethod as string);
-    if (data.monitoringRequired !== undefined) setMonitoringRequired(data.monitoringRequired as boolean);
+    if (data.monitoringRequired !== undefined)
+      setMonitoringRequired(data.monitoringRequired as boolean);
     if (data.monitoringDetails) setMonitoringDetails(data.monitoringDetails as string);
     if (data.riskRating) setRiskRating(data.riskRating as 'low' | 'medium' | 'high' | 'very-high');
   };
@@ -1117,8 +1145,8 @@ export function COSHHAssessmentBuilder({ onBack }: { onBack: () => void }) {
           <div className="space-y-4">
             <h3 className="text-base font-bold text-white">Hierarchy of Controls</h3>
             <p className="text-xs text-white">
-              Work through each level — eliminate or substitute first, then engineer controls, before
-              relying on administrative measures or PPE.
+              Work through each level — eliminate or substitute first, then engineer controls,
+              before relying on administrative measures or PPE.
             </p>
 
             {HIERARCHY_LEVELS.map((level) => {
@@ -1162,9 +1190,7 @@ export function COSHHAssessmentBuilder({ onBack }: { onBack: () => void }) {
                           key={i}
                           className="flex items-center gap-2 p-2 rounded-lg border border-white/10 bg-white/[0.03]"
                         >
-                          <CheckCircle2
-                            className={`h-3.5 w-3.5 ${level.colour} flex-shrink-0`}
-                          />
+                          <CheckCircle2 className={`h-3.5 w-3.5 ${level.colour} flex-shrink-0`} />
                           <span className="text-sm text-white flex-1">{action}</span>
                           <button
                             onClick={() => removeHierarchyAction(level.key, i)}
@@ -1828,7 +1854,10 @@ export function COSHHAssessmentBuilder({ onBack }: { onBack: () => void }) {
                       <div className="p-3 rounded-xl border border-white/10 bg-white/[0.03]">
                         <p className="text-xs text-white mb-2">Assessor</p>
                         <img
-                          src={(viewingAssessment as Record<string, unknown>).assessor_signature as string}
+                          src={
+                            (viewingAssessment as Record<string, unknown>)
+                              .assessor_signature as string
+                          }
                           alt="Assessor signature"
                           className="h-16 rounded border border-white/10 bg-white"
                         />
@@ -1837,10 +1866,14 @@ export function COSHHAssessmentBuilder({ onBack }: { onBack: () => void }) {
                     {(viewingAssessment as Record<string, unknown>).reviewer_signature && (
                       <div className="p-3 rounded-xl border border-white/10 bg-white/[0.03]">
                         <p className="text-xs text-white mb-2">
-                          Reviewer: {(viewingAssessment as Record<string, unknown>).reviewer_name || 'N/A'}
+                          Reviewer:{' '}
+                          {(viewingAssessment as Record<string, unknown>).reviewer_name || 'N/A'}
                         </p>
                         <img
-                          src={(viewingAssessment as Record<string, unknown>).reviewer_signature as string}
+                          src={
+                            (viewingAssessment as Record<string, unknown>)
+                              .reviewer_signature as string
+                          }
                           alt="Reviewer signature"
                           className="h-16 rounded border border-white/10 bg-white"
                         />
@@ -1850,23 +1883,43 @@ export function COSHHAssessmentBuilder({ onBack }: { onBack: () => void }) {
                 )}
               </div>
               <div className="px-4 py-3 border-t border-white/10 pb-[max(0.75rem,env(safe-area-inset-bottom))]">
-                <Button
-                  onClick={() => exportPDF('coshh', viewingAssessment.id)}
-                  disabled={isExporting && exportingId === viewingAssessment.id}
-                  className="w-full h-11 bg-elec-yellow text-black font-bold rounded-xl touch-manipulation active:scale-[0.98]"
-                >
-                  {isExporting && exportingId === viewingAssessment.id ? (
-                    <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                  ) : (
-                    <FileDown className="h-4 w-4 mr-2" />
-                  )}
-                  Export PDF
-                </Button>
+                <div className="grid grid-cols-2 gap-2">
+                  <Button
+                    onClick={() => exportPDF('coshh', viewingAssessment.id)}
+                    disabled={isExporting && exportingId === viewingAssessment.id}
+                    className="h-11 bg-elec-yellow text-black font-bold rounded-xl touch-manipulation active:scale-[0.98]"
+                  >
+                    {isExporting && exportingId === viewingAssessment.id ? (
+                      <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                    ) : (
+                      <FileDown className="h-4 w-4 mr-2" />
+                    )}
+                    Export PDF
+                  </Button>
+                  <Button
+                    onClick={() => setShowShare(true)}
+                    variant="outline"
+                    className="h-11 border-elec-yellow/20 bg-elec-yellow/10 text-elec-yellow font-bold rounded-xl touch-manipulation active:scale-[0.98]"
+                  >
+                    <Share2 className="h-4 w-4 mr-2" />
+                    Share
+                  </Button>
+                </div>
               </div>
             </div>
           )}
         </SheetContent>
       </Sheet>
+
+      {viewingAssessment && (
+        <SafetyDocumentShare
+          open={showShare}
+          onClose={() => setShowShare(false)}
+          pdfType="coshh"
+          recordId={viewingAssessment.id}
+          documentTitle={`COSHH Assessment — ${viewingAssessment.substance_name}`}
+        />
+      )}
     </div>
   );
 }

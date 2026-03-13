@@ -372,7 +372,7 @@ const ElecIdExperience = () => {
     <div className="space-y-6">
       {/* Company Details Section */}
       <div className="space-y-4">
-        <div className="flex items-center gap-2 text-sm font-medium text-foreground/70">
+        <div className="flex items-center gap-2 text-sm font-medium text-white">
           <Building2 className="h-4 w-4 text-elec-yellow" />
           <span>Company Details</span>
         </div>
@@ -380,40 +380,40 @@ const ElecIdExperience = () => {
         {/* Employer Name */}
         <div className="relative">
           <div className="absolute left-4 top-1/2 -translate-y-1/2 pointer-events-none">
-            <Building2 className="h-5 w-5 text-foreground/40" />
+            <Building2 className="h-5 w-5 text-white" />
           </div>
           <Input
             value={formData.employerName}
             onChange={(e) => setFormData({ ...formData, employerName: e.target.value })}
             placeholder="Company name"
-            className="h-14 pl-12 bg-white/[0.06] border-white/[0.1] rounded-xl touch-manipulation text-base placeholder:text-foreground/40"
+            className="h-14 pl-12 bg-white/[0.06] border-white/[0.1] rounded-xl touch-manipulation text-base placeholder:text-white"
           />
         </div>
 
         {/* Location */}
         <div className="relative">
           <div className="absolute left-4 top-1/2 -translate-y-1/2 pointer-events-none">
-            <MapPin className="h-5 w-5 text-foreground/40" />
+            <MapPin className="h-5 w-5 text-white" />
           </div>
           <Input
             value={formData.location}
             onChange={(e) => setFormData({ ...formData, location: e.target.value })}
             placeholder="Location (e.g., London, Remote)"
-            className="h-14 pl-12 bg-white/[0.06] border-white/[0.1] rounded-xl touch-manipulation text-base placeholder:text-foreground/40"
+            className="h-14 pl-12 bg-white/[0.06] border-white/[0.1] rounded-xl touch-manipulation text-base placeholder:text-white"
           />
         </div>
       </div>
 
       {/* Role Section */}
       <div className="space-y-4">
-        <div className="flex items-center gap-2 text-sm font-medium text-foreground/70">
+        <div className="flex items-center gap-2 text-sm font-medium text-white">
           <Briefcase className="h-4 w-4 text-blue-400" />
           <span>Your Role</span>
         </div>
 
         {/* Job Title - Visual Grid Selection */}
         <div className="space-y-3">
-          <Label className="text-sm text-foreground/70">Select your job title</Label>
+          <Label className="text-sm text-white">Select your job title</Label>
           <div className="max-h-[200px] overflow-y-auto rounded-xl border border-white/[0.08] bg-white/[0.02]">
             {Object.entries(jobTitlesByCategory).map(([category, titles], catIndex) => (
               <div key={category}>
@@ -452,8 +452,8 @@ const ElecIdExperience = () => {
                         className={cn(
                           'text-sm',
                           formData.jobTitle === title.value
-                            ? 'text-foreground font-medium'
-                            : 'text-foreground/80'
+                            ? 'text-white font-medium'
+                            : 'text-white'
                         )}
                       >
                         {title.label}
@@ -469,7 +469,7 @@ const ElecIdExperience = () => {
 
       {/* Duration Section */}
       <div className="space-y-4">
-        <div className="flex items-center gap-2 text-sm font-medium text-foreground/70">
+        <div className="flex items-center gap-2 text-sm font-medium text-white">
           <Calendar className="h-4 w-4 text-emerald-400" />
           <span>Employment Period</span>
         </div>
@@ -494,7 +494,7 @@ const ElecIdExperience = () => {
             <Zap
               className={cn(
                 'h-6 w-6 transition-colors',
-                isCurrent ? 'text-emerald-400' : 'text-foreground/50'
+                isCurrent ? 'text-emerald-400' : 'text-white'
               )}
             />
           </div>
@@ -502,12 +502,12 @@ const ElecIdExperience = () => {
             <p
               className={cn(
                 'font-medium transition-colors',
-                isCurrent ? 'text-emerald-400' : 'text-foreground'
+                isCurrent ? 'text-emerald-400' : 'text-white'
               )}
             >
               Current Position
             </p>
-            <p className="text-xs text-foreground/60">
+            <p className="text-xs text-white">
               {isCurrent ? "You're still working here" : 'Toggle if this is your current role'}
             </p>
           </div>
@@ -529,7 +529,7 @@ const ElecIdExperience = () => {
         {/* Date Range */}
         <div className="grid grid-cols-2 gap-3">
           <div className="space-y-2">
-            <Label className="text-xs text-foreground/70 flex items-center gap-1">
+            <Label className="text-xs text-white flex items-center gap-1">
               <TrendingUp className="h-3 w-3" />
               Started
             </Label>
@@ -544,7 +544,7 @@ const ElecIdExperience = () => {
             <Label
               className={cn(
                 'text-xs flex items-center gap-1',
-                isCurrent ? 'text-foreground/30' : 'text-foreground/70'
+                isCurrent ? 'text-white opacity-40' : 'text-white'
               )}
             >
               <Calendar className="h-3 w-3" />
@@ -567,7 +567,7 @@ const ElecIdExperience = () => {
         {formData.startDate && (
           <div className="flex items-center justify-center gap-2 py-2 px-4 rounded-lg bg-white/[0.03] border border-white/[0.06]">
             <Clock className="h-4 w-4 text-elec-yellow" />
-            <span className="text-sm text-foreground/70">
+            <span className="text-sm text-white">
               Duration:{' '}
               <span className="text-elec-yellow font-semibold">
                 {calculateDuration(formData.startDate, isCurrent ? undefined : formData.endDate)}
@@ -579,18 +579,18 @@ const ElecIdExperience = () => {
 
       {/* Description Section */}
       <div className="space-y-4">
-        <div className="flex items-center gap-2 text-sm font-medium text-foreground/70">
+        <div className="flex items-center gap-2 text-sm font-medium text-white">
           <FileText className="h-4 w-4 text-purple-400" />
           <span>Description</span>
-          <span className="text-xs text-foreground/40">(optional)</span>
+          <span className="text-xs text-white">(optional)</span>
         </div>
         <Textarea
           value={formData.description}
           onChange={(e) => setFormData({ ...formData, description: e.target.value })}
           placeholder="Describe your key responsibilities, projects, and achievements..."
-          className="bg-white/[0.06] border-white/[0.1] rounded-xl touch-manipulation text-base min-h-[120px] resize-none placeholder:text-foreground/40"
+          className="bg-white/[0.06] border-white/[0.1] rounded-xl touch-manipulation text-base min-h-[120px] resize-none placeholder:text-white"
         />
-        <p className="text-xs text-foreground/50">
+        <p className="text-xs text-white">
           Tip: Mention specific projects, certifications earned, or skills developed
         </p>
       </div>
@@ -620,7 +620,7 @@ const ElecIdExperience = () => {
 
           {/* Header */}
           <div className="flex items-center justify-between px-5 pb-4 border-b border-white/[0.06]">
-            <Drawer.Title className="text-lg font-semibold text-foreground">{title}</Drawer.Title>
+            <Drawer.Title className="text-lg font-semibold text-white">{title}</Drawer.Title>
             <button
               onClick={() => {
                 onOpenChange(false);
@@ -628,7 +628,7 @@ const ElecIdExperience = () => {
               }}
               className="p-2 -mr-2 rounded-full hover:bg-white/[0.08] touch-manipulation"
             >
-              <X className="w-5 h-5 text-foreground/70" />
+              <X className="w-5 h-5 text-white" />
             </button>
           </div>
 
@@ -689,7 +689,7 @@ const ElecIdExperience = () => {
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="bg-background border-white/[0.1] max-w-md">
         <DialogHeader>
-          <DialogTitle className="text-foreground">{title}</DialogTitle>
+          <DialogTitle className="text-white">{title}</DialogTitle>
         </DialogHeader>
         <FormContent isEdit={isEdit} />
         <div className="flex gap-3 pt-4">
@@ -779,8 +779,8 @@ const ElecIdExperience = () => {
       {/* Header */}
       <div className="flex items-center justify-between px-1">
         <div>
-          <h3 className="text-lg font-semibold text-foreground">Work History</h3>
-          <p className="text-sm text-foreground/70">
+          <h3 className="text-lg font-semibold text-white">Work History</h3>
+          <p className="text-sm text-white">
             {workHistory.length} position{workHistory.length !== 1 ? 's' : ''} recorded
           </p>
         </div>
@@ -797,7 +797,7 @@ const ElecIdExperience = () => {
       {workHistory.length > 0 ? (
         <div className="relative pl-6">
           {/* Timeline line */}
-          <div className="absolute left-2 top-6 bottom-6 w-0.5 bg-gradient-to-b from-elec-yellow via-white/20 to-transparent" />
+          <div className="absolute left-2 top-6 bottom-6 w-[3px] bg-gradient-to-b from-elec-yellow via-white/20 to-transparent rounded-full" />
 
           <AnimatePresence mode="popLayout">
             {workHistory.map((exp, index) => (
@@ -812,14 +812,19 @@ const ElecIdExperience = () => {
                 {/* Timeline dot */}
                 <div
                   className={cn(
-                    'absolute left-[-14px] w-5 h-5 rounded-full border-2 transition-all z-10 flex items-center justify-center',
+                    'absolute left-[-15px] w-6 h-6 rounded-full border-2 transition-all z-10 flex items-center justify-center',
                     exp.isCurrent
                       ? 'bg-elec-yellow border-elec-yellow shadow-lg shadow-elec-yellow/40'
                       : 'bg-background border-white/30'
                   )}
                   style={{ top: '1.75rem' }}
                 >
-                  {exp.isCurrent && <div className="w-2 h-2 rounded-full bg-elec-dark" />}
+                  {exp.isCurrent && (
+                    <>
+                      <div className="w-2.5 h-2.5 rounded-full bg-elec-dark" />
+                      <div className="absolute inset-0 rounded-full border-2 border-elec-yellow/50 animate-ping" />
+                    </>
+                  )}
                 </div>
 
                 {/* Enhanced Card */}
@@ -874,13 +879,13 @@ const ElecIdExperience = () => {
                         <Clock
                           className={cn(
                             'h-5 w-5 mb-0.5',
-                            exp.isCurrent ? 'text-elec-yellow' : 'text-foreground/60'
+                            exp.isCurrent ? 'text-elec-yellow' : 'text-white'
                           )}
                         />
                         <span
                           className={cn(
                             'text-sm font-bold',
-                            exp.isCurrent ? 'text-elec-yellow' : 'text-foreground'
+                            exp.isCurrent ? 'text-elec-yellow' : 'text-white'
                           )}
                         >
                           {calculateDuration(
@@ -894,28 +899,28 @@ const ElecIdExperience = () => {
                       <div className="flex-1 min-w-0">
                         <div className="flex items-start justify-between gap-2">
                           <div className="min-w-0">
-                            <h4 className="font-semibold text-foreground text-base">
+                            <h4 className="font-semibold text-white text-base">
                               {getJobTitleLabel(exp.jobTitle)}
                             </h4>
-                            <p className="text-sm text-foreground/70 mt-0.5 flex items-center gap-1.5">
+                            <p className="text-sm text-white mt-0.5 flex items-center gap-1.5">
                               <Building2 className="h-3.5 w-3.5 flex-shrink-0" />
                               {exp.employerName}
                             </p>
                           </div>
-                          <Edit3 className="w-4 h-4 text-foreground/40 flex-shrink-0 mt-1" />
+                          <Edit3 className="w-4 h-4 text-white flex-shrink-0 mt-1" />
                         </div>
 
                         {/* Info Grid */}
                         <div className="grid grid-cols-2 gap-x-4 gap-y-1.5 mt-3 text-xs">
-                          <div className="flex items-center gap-1.5 text-foreground/60">
-                            <Calendar className="h-3.5 w-3.5 text-foreground/40" />
+                          <div className="flex items-center gap-1.5 text-white">
+                            <Calendar className="h-3.5 w-3.5 text-white" />
                             <span>
                               {formatDateRange(exp.startDate, exp.endDate, exp.isCurrent)}
                             </span>
                           </div>
                           {exp.location && (
-                            <div className="flex items-center gap-1.5 text-foreground/60">
-                              <MapPin className="h-3.5 w-3.5 text-foreground/40" />
+                            <div className="flex items-center gap-1.5 text-white">
+                              <MapPin className="h-3.5 w-3.5 text-white" />
                               <span>{exp.location}</span>
                             </div>
                           )}
@@ -923,7 +928,7 @@ const ElecIdExperience = () => {
 
                         {/* Description */}
                         {exp.description && (
-                          <p className="text-sm text-foreground/50 mt-3 line-clamp-2 leading-relaxed">
+                          <p className="text-sm text-white mt-3 line-clamp-2 leading-relaxed">
                             {exp.description}
                           </p>
                         )}
@@ -942,7 +947,7 @@ const ElecIdExperience = () => {
                           {!exp.verifiedByEmployer && (
                             <Badge
                               variant="outline"
-                              className="bg-white/[0.03] text-foreground/50 border-white/[0.1] text-xs"
+                              className="bg-white/[0.03] text-white border-white/[0.1] text-xs"
                             >
                               <User className="h-3 w-3 mr-1" />
                               Self-Reported
@@ -954,24 +959,24 @@ const ElecIdExperience = () => {
                   </button>
 
                   {/* Action Footer */}
-                  <div className="flex items-center justify-between px-4 py-3 border-t border-white/[0.06] bg-white/[0.02]">
-                    <button
-                      onClick={() => openEditSheet(exp)}
-                      className="flex items-center gap-1.5 text-xs text-foreground/60 hover:text-foreground transition-colors touch-manipulation"
-                    >
-                      <Edit3 className="h-3.5 w-3.5" />
-                      Edit Details
-                    </button>
+                  <div className="flex items-center justify-between px-4 py-2 border-t border-white/[0.06] bg-white/[0.02]">
                     <Button
                       variant="ghost"
-                      size="sm"
-                      className="h-8 px-3 text-red-400 hover:text-red-300 hover:bg-red-500/10 rounded-lg touch-manipulation text-xs"
+                      className="h-11 px-3 text-xs rounded-lg hover:bg-white/[0.08] touch-manipulation"
+                      onClick={() => openEditSheet(exp)}
+                    >
+                      <Edit3 className="h-3.5 w-3.5 mr-1.5" />
+                      Edit Details
+                    </Button>
+                    <Button
+                      variant="ghost"
+                      className="h-11 px-3 text-red-400 hover:text-red-300 hover:bg-red-500/10 rounded-lg touch-manipulation text-xs"
                       onClick={(e) => {
                         e.stopPropagation();
                         setDeleteConfirm({ open: true, id: exp.id });
                       }}
                     >
-                      <Trash2 className="h-3.5 w-3.5 mr-1" />
+                      <Trash2 className="h-3.5 w-3.5 mr-1.5" />
                       Delete
                     </Button>
                   </div>
@@ -987,10 +992,8 @@ const ElecIdExperience = () => {
             <div className="w-20 h-20 mx-auto mb-5 rounded-2xl bg-gradient-to-br from-elec-yellow/20 to-amber-600/10 flex items-center justify-center">
               <Briefcase className="h-10 w-10 text-elec-yellow" />
             </div>
-            <h4 className="text-xl font-semibold text-foreground mb-2">
-              Build Your Career Timeline
-            </h4>
-            <p className="text-foreground/60 max-w-sm mx-auto mb-6 leading-relaxed">
+            <h4 className="text-xl font-semibold text-white mb-2">Build Your Career Timeline</h4>
+            <p className="text-white max-w-sm mx-auto mb-6 leading-relaxed">
               Add your work experience to create a professional timeline that employers can verify.
             </p>
 
@@ -998,15 +1001,15 @@ const ElecIdExperience = () => {
             <div className="grid grid-cols-3 gap-3 mb-6 text-center">
               <div className="p-3 rounded-xl bg-white/[0.03]">
                 <CheckCircle2 className="h-5 w-5 text-emerald-400 mx-auto mb-1.5" />
-                <p className="text-xs text-foreground/60">Employer Verified</p>
+                <p className="text-xs text-white">Employer Verified</p>
               </div>
               <div className="p-3 rounded-xl bg-white/[0.03]">
                 <Clock className="h-5 w-5 text-blue-400 mx-auto mb-1.5" />
-                <p className="text-xs text-foreground/60">Track Duration</p>
+                <p className="text-xs text-white">Track Duration</p>
               </div>
               <div className="p-3 rounded-xl bg-white/[0.03]">
                 <TrendingUp className="h-5 w-5 text-purple-400 mx-auto mb-1.5" />
-                <p className="text-xs text-foreground/60">Show Progress</p>
+                <p className="text-xs text-white">Show Progress</p>
               </div>
             </div>
 

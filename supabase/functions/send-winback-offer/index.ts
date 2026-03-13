@@ -771,9 +771,9 @@ function generateV5WinbackHTML(user: EligibleUser): string {
 <p style="${t}">&#x2713; <strong style="${b}">Fault Diagnosis</strong> &mdash; describe the fault, get step-by-step fixes</p>
 <p style="${t}">&#x2713; <strong style="${b}">Photo Analysis</strong> &mdash; photograph a component &rarr; get specs + regs</p>
 <p style="${t}">&#x2713; <strong style="${b}">Installation Verification</strong> &mdash; snap your work &rarr; BS 7671 compliance check</p>
-<p style="${t}">&#x2713; <strong style="${b}">Report Writer</strong> &mdash; professional fault reports, no typing essays</p>
 <p style="${t}">&#x2713; <strong style="${b}">Wiring Instructions</strong> &mdash; step-by-step from your photo</p>
 <p style="${t}">&#x2713; <strong style="${b}">Client Explainer</strong> &mdash; turn technical findings into plain English for Mrs Jones</p>
+<p style="${t}">&#x2713; <strong style="${b}">Board Scanner</strong> &mdash; photograph a DB, auto circuit mapping</p>
 <p style="margin:0;font-size:13px;color:#fbbf24;font-weight:600">+ 6 more specialist tools</p>
 </div></td></tr>
 
@@ -801,11 +801,12 @@ function generateV5WinbackHTML(user: EligibleUser): string {
 <!-- Study Centre (cyan) -->
 <tr><td style="padding:0 20px 12px"><div style="background:linear-gradient(135deg,rgba(6,182,212,0.12),rgba(6,182,212,0.03));border:1px solid rgba(6,182,212,0.3);border-radius:14px;padding:18px">
 <p style="${h};color:#06b6d4">&#x1F393; Study Centre</p>
-<p style="${t}">&#x2713; <strong style="${b}">Apprentice Hub</strong> &mdash; Level 2 &amp; 3 courses, 60+ video lessons</p>
-<p style="${t}">&#x2713; <strong style="${b}">780 Flash Cards</strong> &mdash; spaced repetition, exam-ready</p>
-<p style="${t}">&#x2713; <strong style="${b}">AM2 &amp; EPA Exam Simulators</strong> &mdash; timed, realistic, scored</p>
-<p style="${t}">&#x2713; <strong style="${b}">CPD Courses</strong> &mdash; upskilling for qualified electricians</p>
-<p style="margin:0;${t}">&#x2713; <strong style="${b}">College Tutor Dashboard</strong> &mdash; manage cohorts, track progress</p>
+<p style="${t}">&#x2713; <strong style="${b}">Electrical Upskilling</strong> &mdash; 18th Edition, inspection &amp; testing, EV, solar, fire alarm</p>
+<p style="${t}">&#x2713; <strong style="${b}">General Upskilling</strong> &mdash; business management, project planning, client relations</p>
+<p style="${t}">&#x2713; <strong style="${b}">Personal Development</strong> &mdash; time management, communication, mental health resources</p>
+<p style="${t}">&#x2713; <strong style="${b}">780 Flash Cards</strong> &mdash; spaced repetition, exam-ready revision</p>
+<p style="${t}">&#x2713; <strong style="${b}">AM2 &amp; EPA Simulators</strong> &mdash; timed, realistic, scored</p>
+<p style="margin:0;${t}">&#x2713; <strong style="${b}">60+ Video Lessons</strong> &mdash; watch on site, learn at your pace</p>
 </div></td></tr>
 
 <!-- New This Week (purple) -->
@@ -864,33 +865,33 @@ function generateV5WinbackHTML(user: EligibleUser): string {
 <p style="margin:0;font-size:12px;color:#25D366;font-weight:600">&rarr; Full RAMS document, BS 7671 compliant, in your inbox in 90 seconds.</p>
 </div>
 
-<p style="margin:12px 0 8px;font-size:14px;color:#fff;line-height:1.6"><strong style="color:#fbbf24">122 tools. Works while you're on the tools.</strong> Everything Mate does syncs straight back to your app &mdash; tasks, invoices, calendar, certificates. One system.</p>
-<p style="margin:0 0 8px;font-size:14px;color:#fff;line-height:1.6">Beta users are already running their whole admin through it.</p>
+<p style="margin:12px 0 8px;font-size:14px;color:#fff;line-height:1.6"><strong style="color:#fbbf24">122 tools. Works while you're on the tools.</strong> Send Mate a message while you're up a ladder &mdash; it does the work and <strong style="color:#25D366">WhatsApps you back</strong> when it's done. Quote created, invoice raised, RAMS written &mdash; ping, it's in your chat.</p>
+<p style="margin:0 0 8px;font-size:14px;color:#fff;line-height:1.6">Everything syncs straight back to your app &mdash; tasks, invoices, calendar, certificates. One system. Beta users are already running their whole admin through it.</p>
 <p style="margin:0;font-size:13px;color:#fff;line-height:1.5">Mate is an add-on &mdash; separate to the &pound;7.99 app subscription. If you want in on the beta, reply to this email and I'll get you set up. Spaces are limited while we scale it up.</p>
 </div></td></tr>
 
 <!-- Free trial offer (blue) -->
 <tr><td style="padding:0 20px 12px"><div style="background:rgba(59,130,246,0.08);border:1px solid rgba(59,130,246,0.25);border-radius:12px;padding:16px;text-align:center">
-<p style="margin:0;font-size:14px;color:#fff;line-height:1.6">Not sure about the app? Reply and I'll give you <strong style="color:#60a5fa">another free week</strong>. No card, no strings. Just try it properly this time.</p>
+<p style="margin:0;font-size:14px;color:#fff;line-height:1.6">Not sure? Reply and I'll give you <strong style="color:#60a5fa">another free week</strong>. No card needed. No strings. Just have a proper look this time.</p>
 </div></td></tr>
 
 <!-- Last Chance block -->
-<tr><td style="padding:0 20px 20px">
-<p style="margin:0 0 8px;font-size:14px;color:#fff;line-height:1.6">I won't send this price again. When it goes, it goes. New users are already paying more.</p>
-<p style="margin:0;font-size:14px;color:#fff;line-height:1.6">This is the last winback email I'll send you. If it's not for you, no hard feelings &mdash; I'll take you off the list.</p>
-</td></tr>
+<tr><td style="padding:0 20px 16px"><div style="background:linear-gradient(135deg,rgba(251,191,36,0.06),rgba(251,191,36,0.02));border:1px solid rgba(251,191,36,0.15);border-radius:14px;padding:18px">
+<p style="margin:0 0 8px;font-size:14px;color:#fff;line-height:1.6">This is the last time I'll send this offer. &pound;7.99/mo is the lowest price this app will ever be &mdash; new users are already paying more.</p>
+<p style="margin:0;font-size:14px;color:#fff;line-height:1.6">If you've been meaning to come back, now's the time. If not, no worries at all &mdash; I appreciate you giving it a go.</p>
+</div></td></tr>
 
-<!-- Sign-off -->
-<tr><td style="padding:0 24px 28px">
-<p style="margin:0 0 10px;font-size:14px;color:#fff;line-height:1.6">Hit reply &mdash; this goes straight to me. Not a chatbot, not a support team. Me, Andrew. I read every one.</p>
+<!-- Sign-off (card style) -->
+<tr><td style="padding:0 20px 16px"><div style="background:linear-gradient(135deg,rgba(251,191,36,0.08),rgba(251,191,36,0.02));border:1px solid rgba(251,191,36,0.15);border-radius:14px;padding:18px">
+<p style="margin:0 0 12px;font-size:14px;color:#fff;line-height:1.6">Hit reply if you've got any questions &mdash; it comes straight to me. Not a chatbot, not a support team. Just me, Andrew.</p>
 <p style="margin:0 0 4px;font-size:15px;color:#fff">Cheers,</p>
-<p style="margin:0 0 2px;font-size:16px;color:#fff;font-weight:600">Andrew</p>
-<p style="margin:0;font-size:13px;color:#fff">Founder &amp; sparky, Elec-Mate</p>
-</td></tr>
+<p style="margin:0 0 2px;font-size:17px;color:#fbbf24;font-weight:700">Andrew</p>
+<p style="margin:0;font-size:13px;color:#fff">Founder &amp; sparky &middot; Elec-Mate</p>
+</div></td></tr>
 
 <!-- Footer -->
-<tr><td style="padding:14px 24px;text-align:center;background:rgba(15,23,42,0.6);border-top:1px solid rgba(255,255,255,0.05)">
-<p style="margin:0;font-size:12px;color:#fff">&copy; ${new Date().getFullYear()} Elec-Mate &middot; Built for UK Sparks &#x1F1EC;&#x1F1E7;&#x26A1;</p>
+<tr><td style="padding:16px 24px;text-align:center;border-top:1px solid rgba(255,255,255,0.08)">
+<p style="margin:0;font-size:12px;color:#fff">&copy; ${new Date().getFullYear()} Elec-Mate &middot; Built for UK Sparks &#x1F1EC;&#x1F1E7; &#x26A1;</p>
 </td></tr>
 
 </table></td></tr></table>
@@ -1146,8 +1147,7 @@ Deno.serve(async (req) => {
         let emailHtml, emailSubject;
         if (email_version === 'v5') {
           emailHtml = generateV5WinbackHTML(userWithEmail);
-          const fn = userWithEmail.full_name?.split(' ')[0] || 'mate';
-          emailSubject = `Last time I'll send this, ${fn}`;
+          emailSubject = 'How much are you paying for other apps?';
         } else if (email_version === 'v4b') {
           emailHtml = generateFortnightReportHTML(userWithEmail);
           emailSubject = '18 features shipped in 2 weeks ⚡';
@@ -1287,8 +1287,7 @@ Deno.serve(async (req) => {
             let emailHtml, bulkSubject;
             if (email_version === 'v5') {
               emailHtml = generateV5WinbackHTML(userWithEmail);
-              const fn = userWithEmail.full_name?.split(' ')[0] || 'mate';
-              bulkSubject = `Last time I'll send this, ${fn}`;
+              bulkSubject = 'How much are you paying for other apps?';
             } else if (email_version === 'v4b') {
               emailHtml = generateFortnightReportHTML(userWithEmail);
               bulkSubject = '18 features shipped in 2 weeks ⚡';
@@ -1470,8 +1469,7 @@ Deno.serve(async (req) => {
         let emailHtml, testSubject;
         if (email_version === 'v5') {
           emailHtml = generateV5WinbackHTML(testUser);
-          const fn = testUser.full_name?.split(' ')[0] || 'mate';
-          testSubject = `[TEST] Last time I'll send this, ${fn}`;
+          testSubject = '[TEST] How much are you paying for other apps?';
         } else if (email_version === 'v4b') {
           emailHtml = generateFortnightReportHTML(testUser);
           testSubject = '[TEST] 18 features shipped in 2 weeks ⚡';
@@ -1543,8 +1541,7 @@ Deno.serve(async (req) => {
         let manualEmailHtml, manualSubject;
         if (email_version === 'v5') {
           manualEmailHtml = generateV5WinbackHTML(manualUser);
-          const fn = manualUser.full_name?.split(' ')[0] || 'mate';
-          manualSubject = `Last time I'll send this, ${fn}`;
+          manualSubject = 'How much are you paying for other apps?';
         } else if (email_version === 'v4b') {
           manualEmailHtml = generateFortnightReportHTML(manualUser);
           manualSubject = '18 features shipped in 2 weeks ⚡';

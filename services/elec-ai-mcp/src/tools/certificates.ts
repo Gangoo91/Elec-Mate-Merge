@@ -14,6 +14,7 @@
 import type { UserContext } from '../auth.js';
 
 import { callEdgeFunction } from '../lib/edge-function.js';
+import { formatEicrForPdf, formatEicForPdf } from './cert-formatters.js';
 
 /** Map cert type to the correct edge function name.
  *  reports.report_type uses hyphens: eic, eicr, minor-works, ev-charging, etc.
@@ -82,12 +83,44 @@ export async function generateCertificatePdf(args: Record<string, unknown>, user
     );
   }
 
+  const supabase = user.supabase;
+
+  // ── Fetch report data from DB (matches quote/invoice/RAMS pattern) ──
+  const [reportRes, profileRes] = await Promise.all([
+    supabase
+      .from('reports')
+      .select('id, report_id, data, report_type, status, customer_id')
+      .eq('id', args.certificate_id)
+      .single(),
+    supabase.from('company_profiles').select('*').eq('user_id', user.userId).single(),
+  ]);
+
+  if (reportRes.error || !reportRes.data) {
+    throw new Error('Certificate not found');
+  }
+
+  const report = reportRes.data;
+  const rawFormData = (report.data || {}) as Record<string, unknown>;
+  const companyProfile = (profileRes.data || null) as Record<string, unknown> | null;
+
+  // ── Format data for the PDF template ────────────────────────────
+  let formData: Record<string, unknown>;
+
+  if (certType === 'eicr') {
+    formData = await formatEicrForPdf(rawFormData, companyProfile, report.id, supabase);
+  } else if (certType === 'eic') {
+    formData = await formatEicForPdf(rawFormData, companyProfile, report.id, supabase);
+  } else {
+    // Minor works + other cert types: pass raw data directly.
+    // The edge functions for these types have their own transformers.
+    formData = rawFormData;
+  }
+
+  // ── Call the PDF generation edge function ───────────────────────
   const result = await callEdgeFunction(
     functionName,
     user.jwt,
-    {
-      reportId: args.certificate_id,
-    },
+    { formData },
     { timeoutMs: 90_000 }
   );
 
@@ -286,19 +319,13 @@ export async function createEicr(args: Record<string, unknown>, user: UserContex
   const expiryDate = new Date(inspectionDate);
   expiryDate.setFullYear(expiryDate.getFullYear() + expiryYears);
 
-  const initialData = {
-    client_name: args.client_name.trim(),
-    installation_address: args.installation_address.trim(),
-    property_type: propertyType,
-    purpose_of_inspection: purposeOfInspection,
-    supply: {},
-    earthing: {},
-    boards: {},
-    inspection: {},
-    testing: {},
-    defects: {},
-    inspector: inspectorName ? { name: inspectorName } : {},
-    company: {},
+  // Flat camelCase keys matching the frontend form + JSON formatter
+  const initialData: Record<string, unknown> = {
+    clientName: (args.client_name as string).trim(),
+    installationAddress: (args.installation_address as string).trim(),
+    description: propertyType,
+    purposeOfInspection,
+    inspectorName: inspectorName || '',
   };
 
   const { data, error } = await supabase
@@ -332,7 +359,32 @@ export async function createEicr(args: Record<string, unknown>, user: UserContex
   };
 }
 
+/**
+ * Coerce `data` from JSON string to object and `edit_version` from string to number.
+ * Handles double-serialisation when args pass through the curl/shell wrapper.
+ */
+function coerceDataArg(args: Record<string, unknown>): void {
+  if (typeof args.data === 'string') {
+    try {
+      const parsed = JSON.parse(args.data);
+      if (typeof parsed !== 'object' || parsed === null || Array.isArray(parsed)) {
+        throw new Error('data must be a JSON object');
+      }
+      args.data = parsed;
+    } catch (e) {
+      if (e instanceof SyntaxError) throw new Error('data is not valid JSON');
+      throw e;
+    }
+  }
+  if (typeof args.edit_version === 'string') {
+    const v = parseInt(args.edit_version, 10);
+    if (isNaN(v)) throw new Error('edit_version must be a number');
+    args.edit_version = v;
+  }
+}
+
 export async function updateEicr(args: Record<string, unknown>, user: UserContext) {
+  coerceDataArg(args);
   if (typeof args.eicr_id !== 'string') {
     throw new Error('eicr_id is required');
   }
@@ -460,14 +512,12 @@ export async function readEicr(args: Record<string, unknown>, user: UserContext)
     }
   }
 
-  // Count items from JSONB data
-  const inspectionItems = Array.isArray(eicrData.inspection_items) ? eicrData.inspection_items : [];
-  const defectObservations = Array.isArray(eicrData.defect_observations)
-    ? eicrData.defect_observations
+  // Count items from JSONB data (camelCase — matches how app + agent store data)
+  const inspectionItems = Array.isArray(eicrData.inspectionItems) ? eicrData.inspectionItems : [];
+  const defectObservations = Array.isArray(eicrData.defectObservations)
+    ? eicrData.defectObservations
     : [];
-  const scheduleOfTests = Array.isArray(eicrData.schedule_of_tests)
-    ? eicrData.schedule_of_tests
-    : [];
+  const scheduleOfTests = Array.isArray(eicrData.scheduleOfTests) ? eicrData.scheduleOfTests : [];
 
   // Count photos from inspection_photos table
   const { count: photoCount } = await supabase
@@ -563,27 +613,20 @@ export async function createEic(args: Record<string, unknown>, user: UserContext
   const inspectorName = typeof args.inspector_name === 'string' ? args.inspector_name : null;
   const customerId = typeof args.customer_id === 'string' ? args.customer_id : null;
   const descriptionOfInstallation =
-    typeof args.description_of_installation === 'string'
-      ? args.description_of_installation
-      : null;
+    typeof args.description_of_installation === 'string' ? args.description_of_installation : null;
 
   // Calculate default expiry: 5 years for domestic, 3 years for commercial
   const expiryYears = propertyType === 'commercial' ? 3 : 5;
   const expiryDate = new Date(inspectionDate);
   expiryDate.setFullYear(expiryDate.getFullYear() + expiryYears);
 
-  const initialData = {
-    client_name: (args.client_name as string).trim(),
-    installation_address: (args.installation_address as string).trim(),
-    property_type: propertyType,
-    description_of_installation: descriptionOfInstallation,
-    design: {},
-    construction: {},
-    inspection: {},
-    testing: {},
-    schedule_of_circuits: [],
-    inspector: inspectorName ? { name: inspectorName } : {},
-    company: {},
+  // Flat camelCase keys matching the frontend form + JSON formatter
+  const initialData: Record<string, unknown> = {
+    clientName: (args.client_name as string).trim(),
+    installationAddress: (args.installation_address as string).trim(),
+    installationType: propertyType,
+    description: descriptionOfInstallation,
+    inspectorName: inspectorName || '',
   };
 
   const { data, error } = await supabase
@@ -618,6 +661,7 @@ export async function createEic(args: Record<string, unknown>, user: UserContext
 }
 
 export async function updateEic(args: Record<string, unknown>, user: UserContext) {
+  coerceDataArg(args);
   if (typeof args.eic_id !== 'string') {
     throw new Error('eic_id is required');
   }
@@ -743,10 +787,8 @@ export async function readEic(args: Record<string, unknown>, user: UserContext) 
     }
   }
 
-  // Count items from JSONB data
-  const scheduleOfCircuits = Array.isArray(eicData.schedule_of_circuits)
-    ? eicData.schedule_of_circuits
-    : [];
+  // Count items from JSONB data (camelCase — matches how app + agent store data)
+  const scheduleOfCircuits = Array.isArray(eicData.scheduleOfTests) ? eicData.scheduleOfTests : [];
 
   // Count photos from inspection_photos table
   const { count: photoCount } = await supabase
@@ -835,16 +877,13 @@ export async function createMinorWorks(args: Record<string, unknown>, user: User
   const descriptionOfWork =
     typeof args.description_of_work === 'string' ? args.description_of_work : null;
 
+  const installationAddr = (args.installation_address as string).trim();
   const initialData = {
-    client_name: (args.client_name as string).trim(),
-    installation_address: (args.installation_address as string).trim(),
-    description_of_work: descriptionOfWork,
-    part_1_description: {},
-    part_2_installation: {},
-    part_3_essential_tests: {},
-    part_4_declaration: {},
-    inspector: inspectorName ? { name: inspectorName } : {},
-    company: {},
+    // Flat camelCase keys matching the frontend form + PDF export
+    clientName: (args.client_name as string).trim(),
+    propertyAddress: installationAddr,
+    workDescription: descriptionOfWork,
+    electricianName: inspectorName || '',
   };
 
   // Minor works certificates don't expire
@@ -879,6 +918,7 @@ export async function createMinorWorks(args: Record<string, unknown>, user: User
 }
 
 export async function updateMinorWorks(args: Record<string, unknown>, user: UserContext) {
+  coerceDataArg(args);
   if (typeof args.minor_works_id !== 'string') {
     throw new Error('minor_works_id is required');
   }

@@ -10,12 +10,14 @@ import {
   RotateCcw,
   Search,
   X,
+  Share2,
 } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { type FireWatchRecord, type FireWatchChecklistItem } from '@/hooks/useFireWatchRecords';
 import { useSafetyPDFExport } from '@/hooks/useSafetyPDFExport';
 import { SafetyEmptyState } from '../common/SafetyEmptyState';
 import { SafetySkeletonLoader } from '../common/SafetySkeletonLoader';
+import { SafetyDocumentShare } from '../common/SafetyDocumentShare';
 
 interface FireWatchHistoryProps {
   records: FireWatchRecord[];
@@ -102,6 +104,7 @@ function RecordCard({
   onStartNewWatch?: () => void;
 }) {
   const [expanded, setExpanded] = useState(false);
+  const [showShare, setShowShare] = useState(false);
   const { exportPDF, isExporting, exportingId } = useSafetyPDFExport();
   const status = STATUS_CONFIG[record.status];
   const checklist: FireWatchChecklistItem[] = Array.isArray(record.checklist)
@@ -217,7 +220,20 @@ function RecordCard({
                     </>
                   )}
                 </button>
+                <button
+                  onClick={() => setShowShare(true)}
+                  className="h-11 px-4 rounded-xl bg-elec-yellow/10 border border-elec-yellow/20 text-elec-yellow font-bold text-sm touch-manipulation active:scale-[0.98] transition-all flex items-center justify-center gap-2"
+                >
+                  <Share2 className="w-4 h-4" />
+                </button>
               </div>
+              <SafetyDocumentShare
+                open={showShare}
+                onClose={() => setShowShare(false)}
+                pdfType="fire-watch"
+                recordId={record.id}
+                documentTitle={`Fire Watch Record — ${record.completed_by || 'Unknown'}`}
+              />
             </div>
           </motion.div>
         )}

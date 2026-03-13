@@ -20,6 +20,7 @@ import {
   Timer,
   BookOpen,
   ShieldAlert,
+  Share2,
 } from 'lucide-react';
 import type { SafeIsolationRecord } from '@/hooks/useSafeIsolationRecords';
 import {
@@ -36,6 +37,7 @@ import { SignaturePad } from '../common/SignaturePad';
 import { useRequestApproval } from '@/hooks/useSupervisorApproval';
 import { ReEnergisationSheet } from './ReEnergisationSheet';
 import { useSafetyPDFExport } from '@/hooks/useSafetyPDFExport';
+import { SafetyDocumentShare } from '../common/SafetyDocumentShare';
 
 // ─── Status Config ───
 
@@ -98,6 +100,7 @@ interface IsolationSummaryProps {
 export function IsolationSummary({ record, onBack }: IsolationSummaryProps) {
   const [showReEnergise, setShowReEnergise] = useState(false);
   const [showApproval, setShowApproval] = useState(false);
+  const [showShare, setShowShare] = useState(false);
   const { exportPDF, isExporting, exportingId } = useSafetyPDFExport();
   const requestApproval = useRequestApproval();
   const updateRecord = useUpdateIsolationRecord();
@@ -342,10 +345,12 @@ export function IsolationSummary({ record, onBack }: IsolationSummaryProps) {
         {(() => {
           const step3 = record.steps.find((s) => s.stepNumber === 3);
           const step6 = record.steps.find((s) => s.stepNumber === 6);
-          const hasInstrument = step3?.instrumentModel || step3?.instrumentSerial || record.voltage_detector_serial;
+          const hasInstrument =
+            step3?.instrumentModel || step3?.instrumentSerial || record.voltage_detector_serial;
           const hasReadings = step6?.voltageReadings;
 
-          if (!hasInstrument && !record.voltage_detector_calibration_date && !hasReadings) return null;
+          if (!hasInstrument && !record.voltage_detector_calibration_date && !hasReadings)
+            return null;
 
           return (
             <motion.div
@@ -601,12 +606,12 @@ export function IsolationSummary({ record, onBack }: IsolationSummaryProps) {
           </div>
         </motion.div>
 
-        {/* Export PDF */}
-        <motion.div variants={itemVariants}>
+        {/* Export & Share */}
+        <motion.div variants={itemVariants} className="grid grid-cols-2 gap-2">
           <button
             onClick={() => exportPDF('safe-isolation', record.id)}
             disabled={isExporting && exportingId === record.id}
-            className="w-full h-11 px-4 rounded-xl bg-white/5 border border-white/10 text-white text-sm font-medium flex items-center justify-center gap-2 touch-manipulation active:scale-[0.98] transition-all disabled:opacity-50"
+            className="h-11 px-4 rounded-xl bg-white/5 border border-white/10 text-white text-sm font-medium flex items-center justify-center gap-2 touch-manipulation active:scale-[0.98] transition-all disabled:opacity-50"
           >
             {isExporting && exportingId === record.id ? (
               <Loader2 className="h-4 w-4 animate-spin" />
@@ -614,6 +619,13 @@ export function IsolationSummary({ record, onBack }: IsolationSummaryProps) {
               <Download className="h-4 w-4" />
             )}
             Export PDF
+          </button>
+          <button
+            onClick={() => setShowShare(true)}
+            className="h-11 px-4 rounded-xl bg-elec-yellow/10 border border-elec-yellow/20 text-elec-yellow text-sm font-medium flex items-center justify-center gap-2 touch-manipulation active:scale-[0.98] transition-all"
+          >
+            <Share2 className="h-4 w-4" />
+            Share
           </button>
         </motion.div>
 
@@ -655,6 +667,15 @@ export function IsolationSummary({ record, onBack }: IsolationSummaryProps) {
         table="safe_isolation_records"
         recordId={record.id}
         recordTitle={record.circuit_description}
+      />
+
+      {/* Share sheet */}
+      <SafetyDocumentShare
+        open={showShare}
+        onClose={() => setShowShare(false)}
+        pdfType="safe-isolation"
+        recordId={record.id}
+        documentTitle={`Safe Isolation — ${record.circuit_description}`}
       />
     </>
   );

@@ -25,12 +25,14 @@ import {
   CheckCircle2,
   Clock,
   CircleDot,
+  Share2,
 } from 'lucide-react';
 import { NearMissReport, Witness } from './types';
 import { useSafetyPDFExport } from '@/hooks/useSafetyPDFExport';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 import { AuditTimeline } from './common/AuditTimeline';
+import { SafetyDocumentShare } from './common/SafetyDocumentShare';
 
 interface NearMissReportDetailProps {
   report: NearMissReport;
@@ -127,6 +129,7 @@ export const NearMissReportDetail: React.FC<NearMissReportDetailProps> = ({
   const navigate = useNavigate();
   const { toast } = useToast();
   const { exportPDF, isExporting, exportingId } = useSafetyPDFExport();
+  const [showShare, setShowShare] = useState(false);
   const category = CATEGORIES[report.category] || CATEGORIES['other'];
   const severity = SEVERITIES[report.severity] || SEVERITIES['low'];
   const CategoryIcon = category.icon;
@@ -624,18 +627,27 @@ export const NearMissReportDetail: React.FC<NearMissReportDetailProps> = ({
 
       {/* Fixed Action Buttons */}
       <div className="fixed bottom-0 left-0 right-0 p-4 bg-background/95 backdrop-blur-sm border-t border-border space-y-2">
-        <button
-          onClick={() => exportPDF('near-miss', report.id)}
-          disabled={isExporting && exportingId === report.id}
-          className="w-full h-11 px-4 rounded-xl bg-white/5 border border-white/10 text-white text-sm font-medium flex items-center justify-center gap-2 touch-manipulation active:scale-[0.98] transition-all disabled:opacity-50"
-        >
-          {isExporting && exportingId === report.id ? (
-            <Loader2 className="h-4 w-4 animate-spin" />
-          ) : (
-            <Download className="h-4 w-4" />
-          )}
-          Export PDF
-        </button>
+        <div className="grid grid-cols-2 gap-2">
+          <button
+            onClick={() => exportPDF('near-miss', report.id)}
+            disabled={isExporting && exportingId === report.id}
+            className="h-11 px-4 rounded-xl bg-white/5 border border-white/10 text-white text-sm font-medium flex items-center justify-center gap-2 touch-manipulation active:scale-[0.98] transition-all disabled:opacity-50"
+          >
+            {isExporting && exportingId === report.id ? (
+              <Loader2 className="h-4 w-4 animate-spin" />
+            ) : (
+              <Download className="h-4 w-4" />
+            )}
+            Export PDF
+          </button>
+          <button
+            onClick={() => setShowShare(true)}
+            className="h-11 px-4 rounded-xl bg-elec-yellow/10 border border-elec-yellow/20 text-elec-yellow text-sm font-medium flex items-center justify-center gap-2 touch-manipulation active:scale-[0.98] transition-all"
+          >
+            <Share2 className="h-4 w-4" />
+            Share
+          </button>
+        </div>
         <Button
           onClick={handleCreateTeamBriefing}
           className="w-full h-14 text-base font-medium bg-primary text-primary-foreground"
@@ -644,6 +656,15 @@ export const NearMissReportDetail: React.FC<NearMissReportDetailProps> = ({
           Create Team Briefing
         </Button>
       </div>
+
+      {/* Share sheet */}
+      <SafetyDocumentShare
+        open={showShare}
+        onClose={() => setShowShare(false)}
+        pdfType="near-miss"
+        recordId={report.id}
+        documentTitle={`Near Miss Report — ${report.location}`}
+      />
     </div>
   );
 };

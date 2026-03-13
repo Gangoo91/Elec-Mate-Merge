@@ -42,6 +42,8 @@ import {
   Send,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { useIsMobile } from '@/hooks/use-mobile';
+import { Drawer } from 'vaul';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from '@/hooks/use-toast';
 import DocumentCamera from './DocumentCamera';
@@ -223,6 +225,7 @@ interface DocumentUploaderProps {
 
 const DocumentUploader = ({ onNavigate }: DocumentUploaderProps) => {
   const { profile } = useElecIdProfile();
+  const isMobile = useIsMobile();
   const [documents, setDocuments] = useState<Document[]>([]);
   const [isUploadDialogOpen, setIsUploadDialogOpen] = useState(false);
   const [isCameraOpen, setIsCameraOpen] = useState(false);
@@ -833,8 +836,8 @@ const DocumentUploader = ({ onNavigate }: DocumentUploaderProps) => {
             </div>
           </div>
           <div className="flex-1 min-w-0">
-            <h3 className="text-lg font-semibold text-foreground">Document Verification</h3>
-            <p className="text-sm text-foreground/60 mt-0.5">
+            <h3 className="text-lg font-semibold text-white">Document Verification</h3>
+            <p className="text-sm text-white mt-0.5">
               {verifiedCount === 0
                 ? 'Upload documents to verify your identity'
                 : verifiedCount === 1
@@ -856,9 +859,9 @@ const DocumentUploader = ({ onNavigate }: DocumentUploaderProps) => {
         <div className="absolute -right-4 -bottom-4 w-24 h-24 rounded-full bg-amber-500/5 blur-xl" />
       </div>
 
-      {/* Document Types - Mobile-optimised list */}
-      <div className="space-y-3">
-        {DOCUMENT_TYPES.map((docType) => {
+      {/* Document Types List */}
+      <div className="space-y-2">
+        {DOCUMENT_TYPES.map((docType, docIndex) => {
           const Icon = docType.icon;
           const uploadedDocs = getDocumentsByType(docType.type);
           const hasVerified = uploadedDocs.some((d) => d.verification_status === 'verified');
@@ -873,32 +876,32 @@ const DocumentUploader = ({ onNavigate }: DocumentUploaderProps) => {
           const hasProcessing = uploadedDocs.some((d) => pendingVerifications.has(d.id));
 
           return (
-            <div
-              key={docType.type}
-              className={cn(
-                'relative rounded-xl border transition-all overflow-hidden',
-                'active:scale-[0.99] touch-manipulation',
-                hasVerified
-                  ? 'bg-green-500/5 border-green-500/30'
-                  : hasProcessing
-                    ? 'bg-blue-500/5 border-blue-500/30'
-                    : hasPending
-                      ? 'bg-amber-500/5 border-amber-500/30'
-                      : hasRejected
-                        ? 'bg-red-500/5 border-red-500/30'
-                        : 'bg-white/[0.03] border-white/10'
-              )}
-            >
-              {/* Main card content - tappable area */}
-              <button
-                onClick={() => handleOpenUpload(docType.type)}
-                className="w-full p-4 text-left flex items-center gap-3.5"
+            <div key={docType.type}>
+              {/* Card with status left-border accent */}
+              <div
+                className={cn(
+                  'rounded-xl border-l-[3px] border border-white/[0.06] transition-all overflow-hidden',
+                  'active:scale-[0.99] touch-manipulation bg-white/[0.03]',
+                  hasVerified
+                    ? 'border-l-green-500'
+                    : hasProcessing
+                      ? 'border-l-blue-500'
+                      : hasPending
+                        ? 'border-l-amber-500'
+                        : hasRejected
+                          ? 'border-l-red-500'
+                          : 'border-l-white/20'
+                )}
               >
-                {/* Icon with status indicator */}
-                <div className="relative flex-shrink-0">
+                {/* Main card content - tappable area */}
+                <button
+                  onClick={() => handleOpenUpload(docType.type)}
+                  className="w-full p-4 text-left flex items-center gap-3.5"
+                >
+                  {/* Icon */}
                   <div
                     className={cn(
-                      'w-12 h-12 rounded-xl flex items-center justify-center',
+                      'w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0',
                       hasVerified
                         ? 'bg-green-500/20'
                         : hasProcessing
@@ -925,176 +928,146 @@ const DocumentUploader = ({ onNavigate }: DocumentUploaderProps) => {
                       )}
                     />
                   </div>
-                  {/* Status badge */}
-                  {(hasVerified || hasProcessing || hasPending || hasRejected) && (
-                    <div
-                      className={cn(
-                        'absolute -top-1 -right-1 w-5 h-5 rounded-full flex items-center justify-center',
-                        hasVerified
-                          ? 'bg-green-500'
-                          : hasProcessing
-                            ? 'bg-blue-500'
-                            : hasPending
-                              ? 'bg-amber-500'
-                              : 'bg-red-500'
-                      )}
-                    >
-                      {hasVerified ? (
-                        <CheckCircle2 className="h-3 w-3 text-white" />
-                      ) : hasProcessing ? (
-                        <Loader2 className="h-3 w-3 text-white animate-spin" />
-                      ) : hasPending ? (
-                        <Clock className="h-3 w-3 text-white" />
-                      ) : (
-                        <AlertCircle className="h-3 w-3 text-white" />
+
+                  {/* Text content */}
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center gap-2">
+                      <h4 className="font-semibold text-white text-[15px]">{docType.label}</h4>
+                      {docType.required && (
+                        <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-elec-yellow/20 text-elec-yellow font-medium">
+                          Required
+                        </span>
                       )}
                     </div>
-                  )}
-                </div>
-
-                {/* Text content */}
-                <div className="flex-1 min-w-0">
-                  <div className="flex items-center gap-2">
-                    <h4 className="font-semibold text-foreground text-[15px]">{docType.label}</h4>
-                    {docType.required && (
-                      <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-elec-yellow/20 text-elec-yellow font-medium">
-                        Required
-                      </span>
-                    )}
+                    <p className="text-xs text-white mt-0.5 line-clamp-1">
+                      {hasVerified
+                        ? `${uploadedDocs.filter((d) => d.verification_status === 'verified').length} verified`
+                        : hasProcessing
+                          ? 'Verifying...'
+                          : hasPending
+                            ? 'Awaiting review'
+                            : hasRejected
+                              ? 'Action required'
+                              : docType.description}
+                    </p>
                   </div>
-                  <p className="text-xs text-foreground/50 mt-0.5 line-clamp-1">
+
+                  {/* Status label */}
+                  <span
+                    className={cn(
+                      'text-xs font-medium flex-shrink-0',
+                      hasVerified
+                        ? 'text-green-400'
+                        : hasProcessing
+                          ? 'text-blue-400'
+                          : hasPending
+                            ? 'text-amber-400'
+                            : hasRejected
+                              ? 'text-red-400'
+                              : 'text-white'
+                    )}
+                  >
                     {hasVerified
-                      ? `${uploadedDocs.filter((d) => d.verification_status === 'verified').length} verified`
+                      ? 'Verified'
                       : hasProcessing
-                        ? 'Verifying...'
+                        ? 'Processing'
                         : hasPending
-                          ? 'Awaiting review'
+                          ? 'Pending'
                           : hasRejected
-                            ? 'Action required'
-                            : docType.description}
-                  </p>
-                </div>
+                            ? 'Rejected'
+                            : 'Upload'}
+                  </span>
+                </button>
 
-                {/* Arrow indicator */}
-                <ChevronRight className="h-5 w-5 text-foreground/30 flex-shrink-0" />
-              </button>
+                {/* Uploaded documents list (expandable) */}
+                {uploadedDocs.length > 0 && (
+                  <div className="px-4 pb-4 pt-0 space-y-2 border-t border-white/5">
+                    {uploadedDocs.map((doc) => {
+                      const status = VERIFICATION_STATUS[doc.verification_status];
+                      const StatusIcon = status.icon;
+                      const isRejected = doc.verification_status === 'rejected';
+                      // Only show as "processing" if it's in the current session's pendingVerifications
+                      const isProcessing = pendingVerifications.has(doc.id);
 
-              {/* Uploaded documents list (expandable) */}
-              {uploadedDocs.length > 0 && (
-                <div className="px-4 pb-4 pt-0 space-y-2 border-t border-white/5">
-                  {uploadedDocs.map((doc) => {
-                    const status = VERIFICATION_STATUS[doc.verification_status];
-                    const StatusIcon = status.icon;
-                    const isRejected = doc.verification_status === 'rejected';
-                    // Only show as "processing" if it's in the current session's pendingVerifications
-                    const isProcessing = pendingVerifications.has(doc.id);
-
-                    return (
-                      <div
-                        key={doc.id}
-                        className={cn(
-                          'flex items-center gap-2.5 p-2.5 rounded-lg mt-2',
-                          isProcessing ? 'bg-blue-500/10' : 'bg-white/[0.03]'
-                        )}
-                      >
-                        {isProcessing ? (
-                          <div className="w-8 h-8 rounded-lg bg-blue-500/20 flex items-center justify-center">
-                            <Loader2 className="h-4 w-4 text-blue-400 animate-spin" />
-                          </div>
-                        ) : (
-                          <div
-                            className={cn(
-                              'w-8 h-8 rounded-lg flex items-center justify-center',
-                              status.bgColor
-                            )}
-                          >
-                            <StatusIcon className={cn('h-4 w-4', status.color)} />
-                          </div>
-                        )}
-                        <div className="flex-1 min-w-0">
-                          <p className="text-sm text-foreground truncate">
-                            {isProcessing ? 'Verifying document...' : doc.document_name}
-                          </p>
-                          <p
-                            className={cn('text-xs', isProcessing ? 'text-blue-400' : status.color)}
-                          >
-                            {isProcessing ? 'AI is analysing' : status.label}
-                            {!isProcessing &&
-                              doc.verification_confidence &&
-                              doc.verification_confidence > 0 && (
-                                <span className="text-foreground/40 ml-1">
-                                  • {Math.round(doc.verification_confidence * 100)}% confident
-                                </span>
+                      return (
+                        <div
+                          key={doc.id}
+                          className={cn(
+                            'flex items-center gap-2.5 p-2.5 rounded-lg mt-2',
+                            isProcessing ? 'bg-blue-500/10' : 'bg-white/[0.03]'
+                          )}
+                        >
+                          {isProcessing ? (
+                            <div className="w-8 h-8 rounded-lg bg-blue-500/20 flex items-center justify-center">
+                              <Loader2 className="h-4 w-4 text-blue-400 animate-spin" />
+                            </div>
+                          ) : (
+                            <div
+                              className={cn(
+                                'w-8 h-8 rounded-lg flex items-center justify-center',
+                                status.bgColor
                               )}
-                          </p>
-                        </div>
-                        <div className="flex items-center gap-1">
-                          {isRejected && (
+                            >
+                              <StatusIcon className={cn('h-4 w-4', status.color)} />
+                            </div>
+                          )}
+                          <div className="flex-1 min-w-0">
+                            <p className="text-sm text-white truncate">
+                              {isProcessing ? 'Verifying document...' : doc.document_name}
+                            </p>
+                            <p
+                              className={cn(
+                                'text-xs',
+                                isProcessing ? 'text-blue-400' : status.color
+                              )}
+                            >
+                              {isProcessing ? 'AI is analysing' : status.label}
+                              {!isProcessing &&
+                                doc.verification_confidence &&
+                                doc.verification_confidence > 0 && (
+                                  <span className="text-white ml-1">
+                                    • {Math.round(doc.verification_confidence * 100)}% confident
+                                  </span>
+                                )}
+                            </p>
+                          </div>
+                          <div className="flex items-center gap-1">
+                            {isRejected && (
+                              <button
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  handleOpenAppeal(doc);
+                                }}
+                                className="w-11 h-11 rounded-lg bg-purple-500/20 flex items-center justify-center text-purple-400 hover:bg-purple-500/30 transition-colors touch-manipulation"
+                              >
+                                <MessageSquare className="h-4 w-4" />
+                              </button>
+                            )}
                             <button
                               onClick={(e) => {
                                 e.stopPropagation();
-                                handleOpenAppeal(doc);
+                                handleDeleteDocument(doc.id);
                               }}
-                              className="w-9 h-9 rounded-lg bg-purple-500/20 flex items-center justify-center text-purple-400 hover:bg-purple-500/30 transition-colors touch-manipulation"
+                              className="w-11 h-11 rounded-lg bg-white/5 flex items-center justify-center text-white hover:bg-red-500/20 hover:text-red-400 transition-colors touch-manipulation"
                             >
-                              <MessageSquare className="h-4 w-4" />
+                              <Trash2 className="h-4 w-4" />
                             </button>
-                          )}
-                          <button
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              handleDeleteDocument(doc.id);
-                            }}
-                            className="w-9 h-9 rounded-lg bg-white/5 flex items-center justify-center text-foreground/40 hover:bg-red-500/20 hover:text-red-400 transition-colors touch-manipulation"
-                          >
-                            <Trash2 className="h-4 w-4" />
-                          </button>
+                          </div>
                         </div>
-                      </div>
-                    );
-                  })}
-                </div>
-              )}
+                      );
+                    })}
+                  </div>
+                )}
+              </div>
             </div>
           );
         })}
       </div>
 
-      {/* Quick action button for primary document */}
-      {!documents.some(
-        (d) => d.document_type === 'ecs_card' && d.verification_status === 'verified'
-      ) && (
-        <div className="fixed bottom-20 left-4 right-4 sm:relative sm:bottom-auto sm:left-auto sm:right-auto">
-          <Button
-            onClick={() => handleOpenUpload('ecs_card')}
-            className="w-full h-14 text-base font-semibold bg-elec-yellow hover:bg-elec-yellow/90 text-elec-dark rounded-xl shadow-lg shadow-elec-yellow/20 touch-manipulation active:scale-[0.98]"
-          >
-            <IdCard className="h-5 w-5 mr-2" />
-            Verify Your ECS Card
-          </Button>
-        </div>
-      )}
-
-      {/* Upload Dialog */}
-      <Dialog open={isUploadDialogOpen} onOpenChange={setIsUploadDialogOpen}>
-        <DialogContent className="bg-elec-gray border-white/20 max-w-2xl max-h-[90vh] overflow-y-auto">
-          <DialogHeader>
-            <DialogTitle className="flex items-center gap-2">
-              {selectedDocConfig && (
-                <>
-                  {React.createElement(selectedDocConfig.icon, {
-                    className: cn('h-5 w-5', selectedDocConfig.color),
-                  })}
-                  Upload {selectedDocConfig.label}
-                </>
-              )}
-            </DialogTitle>
-            <DialogDescription>
-              Upload a clear photo or scan of your document. Our AI will verify it automatically.
-            </DialogDescription>
-          </DialogHeader>
-
-          <div className="space-y-4 pt-4">
+      {/* Upload Dialog — Drawer on mobile, Dialog on desktop */}
+      {(() => {
+        const uploadContent = (
+          <div className="space-y-4">
             {/* Tips for this document type */}
             {selectedDocConfig && !uploadPreview && (
               <div className="p-3 rounded-lg bg-blue-500/10 border border-blue-500/20">
@@ -1102,7 +1075,7 @@ const DocumentUploader = ({ onNavigate }: DocumentUploaderProps) => {
                   <Lightbulb className="h-4 w-4 text-blue-400 mt-0.5" />
                   <div>
                     <p className="text-sm font-medium text-blue-400">Tips for best results</p>
-                    <ul className="text-xs text-foreground/70 mt-1 space-y-0.5">
+                    <ul className="text-xs text-white mt-1 space-y-0.5">
                       {selectedDocConfig.tips.map((tip, i) => (
                         <li key={i}>• {tip}</li>
                       ))}
@@ -1136,12 +1109,12 @@ const DocumentUploader = ({ onNavigate }: DocumentUploaderProps) => {
                     className="hidden"
                   />
                   <div className="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center mx-auto mb-3">
-                    <Upload className="h-6 w-6 text-foreground/70" />
+                    <Upload className="h-6 w-6 text-white" />
                   </div>
-                  <p className="text-sm font-medium text-foreground">
+                  <p className="text-sm font-medium text-white">
                     {isDragActive ? 'Drop your file here' : 'Upload file'}
                   </p>
-                  <p className="text-xs text-foreground/70 mt-1">PNG, JPG, PDF up to 10MB</p>
+                  <p className="text-xs text-white mt-1">PNG, JPG, PDF up to 10MB</p>
                 </div>
 
                 {/* Camera Option */}
@@ -1152,8 +1125,8 @@ const DocumentUploader = ({ onNavigate }: DocumentUploaderProps) => {
                   <div className="w-12 h-12 rounded-full bg-elec-yellow/20 flex items-center justify-center mx-auto mb-3">
                     <Camera className="h-6 w-6 text-elec-yellow" />
                   </div>
-                  <p className="text-sm font-medium text-foreground">Take photo</p>
-                  <p className="text-xs text-foreground/70 mt-1">Use camera for best results</p>
+                  <p className="text-sm font-medium text-white">Take photo</p>
+                  <p className="text-xs text-white mt-1">Use camera for best results</p>
                 </div>
               </div>
             ) : (
@@ -1227,53 +1200,53 @@ const DocumentUploader = ({ onNavigate }: DocumentUploaderProps) => {
                 {(isEditMode || verificationResult?.status === 'needs_review') && (
                   <div className="space-y-3 p-4 rounded-lg bg-white/5 border border-white/10">
                     <div className="flex items-center gap-2 mb-2">
-                      <Edit3 className="h-4 w-4 text-foreground/70" />
+                      <Edit3 className="h-4 w-4 text-white" />
                       <span className="text-sm font-medium">Verify or correct details</span>
                     </div>
                     <div className="grid grid-cols-2 gap-3">
                       <div className="col-span-2">
-                        <Label className="text-xs text-foreground/70">Document Name</Label>
+                        <Label className="text-xs text-white">Document Name</Label>
                         <Input
                           value={documentName}
                           onChange={(e) => setDocumentName(e.target.value)}
                           placeholder="e.g., City & Guilds 2391"
-                          className="h-9 text-sm bg-white/5 border-white/20"
+                          className="h-11 text-sm bg-white/5 border-white/20 touch-manipulation"
                         />
                       </div>
                       <div>
-                        <Label className="text-xs text-foreground/70">Issuing Body</Label>
+                        <Label className="text-xs text-white">Issuing Body</Label>
                         <Input
                           value={issuingBody}
                           onChange={(e) => setIssuingBody(e.target.value)}
                           placeholder="e.g., JIB"
-                          className="h-9 text-sm bg-white/5 border-white/20"
+                          className="h-11 text-sm bg-white/5 border-white/20 touch-manipulation"
                         />
                       </div>
                       <div>
-                        <Label className="text-xs text-foreground/70">Document/Card Number</Label>
+                        <Label className="text-xs text-white">Document/Card Number</Label>
                         <Input
                           value={documentNumber}
                           onChange={(e) => setDocumentNumber(e.target.value)}
                           placeholder="e.g., 1234-5678-9012"
-                          className="h-9 text-sm bg-white/5 border-white/20"
+                          className="h-11 text-sm bg-white/5 border-white/20 touch-manipulation"
                         />
                       </div>
                       <div>
-                        <Label className="text-xs text-foreground/70">Issue Date</Label>
+                        <Label className="text-xs text-white">Issue Date</Label>
                         <Input
                           type="date"
                           value={issueDate}
                           onChange={(e) => setIssueDate(e.target.value)}
-                          className="h-9 text-sm bg-white/5 border-white/20"
+                          className="h-11 text-sm bg-white/5 border-white/20 touch-manipulation"
                         />
                       </div>
                       <div>
-                        <Label className="text-xs text-foreground/70">Expiry Date</Label>
+                        <Label className="text-xs text-white">Expiry Date</Label>
                         <Input
                           type="date"
                           value={expiryDate}
                           onChange={(e) => setExpiryDate(e.target.value)}
-                          className="h-9 text-sm bg-white/5 border-white/20"
+                          className="h-11 text-sm bg-white/5 border-white/20 touch-manipulation"
                         />
                       </div>
                     </div>
@@ -1291,79 +1264,141 @@ const DocumentUploader = ({ onNavigate }: DocumentUploaderProps) => {
                   ) : (
                     <Loader2 className="h-4 w-4 text-elec-yellow animate-spin" />
                   )}
-                  <span className="text-sm text-foreground">
+                  <span className="text-sm text-white">
                     {isVerifying ? 'AI is analysing your document...' : 'Uploading...'}
                   </span>
                 </div>
                 <Progress value={isVerifying ? 100 : uploadProgress} className="h-2" />
               </div>
             )}
+          </div>
+        );
 
-            {/* Actions */}
-            <div className="flex gap-3 pt-2">
+        const uploadFooter = (
+          <div className="flex gap-3">
+            <Button
+              variant="outline"
+              className="flex-1 h-11 border-white/20 touch-manipulation"
+              onClick={() => setIsUploadDialogOpen(false)}
+              disabled={isUploading || isVerifying}
+            >
+              Cancel
+            </Button>
+
+            {!verificationResult ? (
               <Button
-                variant="outline"
-                className="flex-1 border-white/20"
-                onClick={() => setIsUploadDialogOpen(false)}
-                disabled={isUploading || isVerifying}
+                className="flex-1 h-11 bg-elec-yellow hover:bg-elec-yellow/90 text-elec-dark touch-manipulation"
+                onClick={handleUploadAndVerify}
+                disabled={!uploadFile || isUploading || isVerifying}
               >
-                Cancel
+                {isUploading || isVerifying ? (
+                  <Loader2 className="h-4 w-4 animate-spin mr-2" />
+                ) : (
+                  <Sparkles className="h-4 w-4 mr-2" />
+                )}
+                Upload & Verify
               </Button>
-
-              {!verificationResult ? (
+            ) : verificationResult.status === 'rejected' ? (
+              <>
                 <Button
-                  className="flex-1 bg-elec-yellow hover:bg-elec-yellow/90 text-elec-dark"
-                  onClick={handleUploadAndVerify}
-                  disabled={!uploadFile || isUploading || isVerifying}
+                  variant="outline"
+                  className="flex-1 h-11 border-white/20 touch-manipulation"
+                  onClick={handleRetry}
                 >
-                  {isUploading || isVerifying ? (
-                    <Loader2 className="h-4 w-4 animate-spin mr-2" />
-                  ) : (
-                    <Sparkles className="h-4 w-4 mr-2" />
-                  )}
-                  Upload & Verify
+                  <RefreshCw className="h-4 w-4 mr-2" />
+                  Try Again
                 </Button>
-              ) : verificationResult.status === 'rejected' ? (
-                <>
-                  <Button
-                    variant="outline"
-                    className="flex-1 border-white/20"
-                    onClick={handleRetry}
-                  >
-                    <RefreshCw className="h-4 w-4 mr-2" />
-                    Try Again
-                  </Button>
-                  <Button
-                    className="flex-1 bg-elec-yellow hover:bg-elec-yellow/90 text-elec-dark"
-                    onClick={handleSaveCorrections}
-                    disabled={isVerifying}
-                  >
-                    <Send className="h-4 w-4 mr-2" />
-                    Submit for Review
-                  </Button>
-                </>
-              ) : verificationResult.status === 'needs_review' ? (
                 <Button
-                  className="flex-1 bg-elec-yellow hover:bg-elec-yellow/90 text-elec-dark"
+                  className="flex-1 h-11 bg-elec-yellow hover:bg-elec-yellow/90 text-elec-dark touch-manipulation"
                   onClick={handleSaveCorrections}
                   disabled={isVerifying}
                 >
-                  <CheckCircle2 className="h-4 w-4 mr-2" />
-                  Save & Continue
+                  <Send className="h-4 w-4 mr-2" />
+                  Submit for Review
                 </Button>
-              ) : (
-                <Button
-                  className="flex-1 bg-green-500 hover:bg-green-600 text-white"
-                  onClick={() => setIsUploadDialogOpen(false)}
-                >
-                  <CheckCircle2 className="h-4 w-4 mr-2" />
-                  Done
-                </Button>
-              )}
-            </div>
+              </>
+            ) : verificationResult.status === 'needs_review' ? (
+              <Button
+                className="flex-1 h-11 bg-elec-yellow hover:bg-elec-yellow/90 text-elec-dark touch-manipulation"
+                onClick={handleSaveCorrections}
+                disabled={isVerifying}
+              >
+                <CheckCircle2 className="h-4 w-4 mr-2" />
+                Save & Continue
+              </Button>
+            ) : (
+              <Button
+                className="flex-1 h-11 bg-green-500 hover:bg-green-600 text-white touch-manipulation"
+                onClick={() => setIsUploadDialogOpen(false)}
+              >
+                <CheckCircle2 className="h-4 w-4 mr-2" />
+                Done
+              </Button>
+            )}
           </div>
-        </DialogContent>
-      </Dialog>
+        );
+
+        return isMobile ? (
+          <Drawer.Root
+            open={isUploadDialogOpen}
+            onOpenChange={setIsUploadDialogOpen}
+            shouldScaleBackground={false}
+            noBodyStyles
+          >
+            <Drawer.Portal>
+              <Drawer.Overlay className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50" />
+              <Drawer.Content className="fixed bottom-0 left-0 right-0 z-50 flex flex-col max-h-[92vh] bg-background rounded-t-[20px] border-t border-white/[0.08]">
+                <div className="flex justify-center pt-3 pb-2">
+                  <div className="w-12 h-1.5 rounded-full bg-white/20" />
+                </div>
+                <div className="px-5 pb-2">
+                  <h3 className="text-lg font-bold text-white flex items-center gap-2">
+                    {selectedDocConfig && (
+                      <>
+                        {React.createElement(selectedDocConfig.icon, {
+                          className: cn('h-5 w-5', selectedDocConfig.color),
+                        })}
+                        Upload {selectedDocConfig.label}
+                      </>
+                    )}
+                  </h3>
+                  <p className="text-sm text-white">
+                    Upload a clear photo or scan of your document. Our AI will verify it
+                    automatically.
+                  </p>
+                </div>
+                <div className="flex-1 overflow-y-auto px-5 pb-4">{uploadContent}</div>
+                <div className="p-5 border-t border-white/[0.08] bg-background/95 backdrop-blur-sm">
+                  {uploadFooter}
+                </div>
+              </Drawer.Content>
+            </Drawer.Portal>
+          </Drawer.Root>
+        ) : (
+          <Dialog open={isUploadDialogOpen} onOpenChange={setIsUploadDialogOpen}>
+            <DialogContent className="bg-elec-gray border-white/20 max-w-2xl max-h-[90vh] overflow-y-auto">
+              <DialogHeader>
+                <DialogTitle className="flex items-center gap-2">
+                  {selectedDocConfig && (
+                    <>
+                      {React.createElement(selectedDocConfig.icon, {
+                        className: cn('h-5 w-5', selectedDocConfig.color),
+                      })}
+                      Upload {selectedDocConfig.label}
+                    </>
+                  )}
+                </DialogTitle>
+                <DialogDescription>
+                  Upload a clear photo or scan of your document. Our AI will verify it
+                  automatically.
+                </DialogDescription>
+              </DialogHeader>
+              <div className="pt-4">{uploadContent}</div>
+              <DialogFooter className="pt-2">{uploadFooter}</DialogFooter>
+            </DialogContent>
+          </Dialog>
+        );
+      })()}
 
       {/* Camera Dialog */}
       <DocumentCamera
@@ -1392,7 +1427,7 @@ const DocumentUploader = ({ onNavigate }: DocumentUploaderProps) => {
               {/* Show rejection reason */}
               <div className="p-3 rounded-lg bg-red-500/10 border border-red-500/20">
                 <p className="text-sm font-medium text-red-400 mb-1">Rejection Reason:</p>
-                <p className="text-sm text-foreground/70">
+                <p className="text-sm text-white">
                   {rejectedDocument.rejection_reason ||
                     'Document could not be verified automatically.'}
                 </p>

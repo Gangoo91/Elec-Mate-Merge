@@ -16,6 +16,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from '@/components/ui/alert-dialog';
+import { Input } from '@/components/ui/input';
 import {
   Crown,
   Send,
@@ -36,6 +37,7 @@ import {
   Circle,
   Target,
   TrendingUp,
+  UserPlus,
 } from 'lucide-react';
 import { formatDistanceToNow } from 'date-fns';
 import { toast } from '@/hooks/use-toast';
@@ -72,6 +74,7 @@ export default function AdminFounders() {
   const [countdown, setCountdown] = useState(0);
   const [autoSending, setAutoSending] = useState(false);
   const countdownRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const [inviteEmail, setInviteEmail] = useState('');
   const [lastBatchResult, setLastBatchResult] = useState<{
     sent: number;
     failed: number;
@@ -120,6 +123,56 @@ export default function AdminFounders() {
     onError: (error: Error) => {
       haptic.error();
       toast({ title: 'Error', description: error.message, variant: 'destructive' });
+    },
+  });
+
+  // Send individual invite mutation
+  const sendInviteMutation = useMutation({
+    mutationFn: async (email: string) => {
+      // Step 1: Create the invite
+      const { data: createData, error: createError } = await supabase.functions.invoke(
+        'send-founder-invite',
+        { body: { action: 'bulk_create', emails: [email] } }
+      );
+      if (createError) throw createError;
+      if (createData?.error) throw new Error(createData.error);
+
+      // Step 2: Get the invite row so we have the ID
+      const { data: listData, error: listError } = await supabase.functions.invoke(
+        'send-founder-invite',
+        { body: { action: 'list' } }
+      );
+      if (listError) throw listError;
+      const invite = listData?.invites?.find(
+        (i: { email: string }) => i.email === email.trim().toLowerCase()
+      );
+      if (!invite) throw new Error('Invite created but could not find it to send');
+
+      // Step 3: Send the email
+      const { data: sendData, error: sendError } = await supabase.functions.invoke(
+        'send-founder-invite',
+        { body: { action: 'send_invite', inviteId: invite.id } }
+      );
+      if (sendError) throw sendError;
+      if (sendData?.error) throw new Error(sendData.error);
+
+      return sendData;
+    },
+    onSuccess: (data) => {
+      haptic.success();
+      setInviteEmail('');
+      toast({
+        title: 'Founder invite sent!',
+        description: `Email sent to ${data.email}`,
+      });
+    },
+    onError: (error: Error) => {
+      haptic.error();
+      toast({
+        title: 'Failed to send invite',
+        description: error.message,
+        variant: 'destructive',
+      });
     },
   });
 
@@ -313,6 +366,52 @@ export default function AdminFounders() {
                 </div>
                 <p className="text-xs text-yellow-100 uppercase tracking-wide font-medium">Total</p>
               </div>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Send Individual Invite */}
+        <Card className="border-emerald-500/30 bg-gradient-to-r from-emerald-500/10 to-green-500/10">
+          <CardContent className="pt-5 pb-5">
+            <div className="flex items-center gap-4 mb-4">
+              <div className="w-12 h-12 rounded-2xl bg-emerald-500/20 flex items-center justify-center shrink-0">
+                <UserPlus className="h-6 w-6 text-emerald-400" />
+              </div>
+              <div className="flex-1">
+                <h3 className="font-semibold text-foreground">Send Individual Invite</h3>
+                <p className="text-sm text-muted-foreground">
+                  Create &amp; send the £3.99 founder offer to anyone
+                </p>
+              </div>
+            </div>
+            <div className="flex gap-2">
+              <Input
+                type="email"
+                placeholder="email@example.com"
+                value={inviteEmail}
+                onChange={(e) => setInviteEmail(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' && inviteEmail.trim() && inviteEmail.includes('@')) {
+                    sendInviteMutation.mutate(inviteEmail.trim());
+                  }
+                }}
+                className="h-12 text-base touch-manipulation rounded-xl border-emerald-500/30 focus:border-emerald-500 focus:ring-emerald-500"
+                disabled={sendInviteMutation.isPending}
+              />
+              <Button
+                className="h-12 px-5 gap-2 bg-gradient-to-r from-emerald-500 to-green-500 hover:from-emerald-600 hover:to-green-600 text-white font-semibold touch-manipulation rounded-xl shadow-lg shadow-emerald-500/25 shrink-0"
+                onClick={() => sendInviteMutation.mutate(inviteEmail.trim())}
+                disabled={
+                  sendInviteMutation.isPending || !inviteEmail.trim() || !inviteEmail.includes('@')
+                }
+              >
+                {sendInviteMutation.isPending ? (
+                  <Loader2 className="h-5 w-5 animate-spin" />
+                ) : (
+                  <Send className="h-5 w-5" />
+                )}
+                Send
+              </Button>
             </div>
           </CardContent>
         </Card>

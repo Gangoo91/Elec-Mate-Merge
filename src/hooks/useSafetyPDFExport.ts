@@ -14,7 +14,10 @@ type PDFType =
   | 'observation'
   | 'site-diary'
   | 'equipment'
-  | 'riddor-report';
+  | 'riddor-report'
+  | 'method-statement'
+  | 'briefing'
+  | 'safety-document';
 
 const EDGE_FUNCTION_MAP: Record<PDFType, string> = {
   permit: 'generate-permit-pdf',
@@ -29,6 +32,9 @@ const EDGE_FUNCTION_MAP: Record<PDFType, string> = {
   'site-diary': 'generate-site-diary-pdf',
   equipment: 'generate-equipment-pdf',
   'riddor-report': 'generate-riddor-report-pdf',
+  'method-statement': 'generate-method-statement-pdf',
+  briefing: 'generate-pdf-monkey',
+  'safety-document': 'generate-safety-document-pdf',
 };
 
 export function useSafetyPDFExport() {
@@ -58,7 +64,9 @@ export function useSafetyPDFExport() {
             const body = await ctx.json();
             console.error('[PDF Export] Edge function error body:', body);
           }
-        } catch (_) { /* ignore */ }
+        } catch (_) {
+          /* ignore */
+        }
         throw error;
       }
 

@@ -33,6 +33,7 @@ import {
   FileText,
   Shield,
   CheckCircle2,
+  Share2,
 } from 'lucide-react';
 import {
   useElectricianSiteDiary,
@@ -57,6 +58,7 @@ import { DeleteConfirmSheet } from '../common/DeleteConfirmSheet';
 import { PullToRefresh } from '@/components/ui/pull-to-refresh';
 import { useSafetyPDFExport } from '@/hooks/useSafetyPDFExport';
 import { SignaturePad } from '../common/SignaturePad';
+import { SafetyDocumentShare } from '../common/SafetyDocumentShare';
 
 interface ElectricianSiteDiaryProps {
   onBack: () => void;
@@ -97,6 +99,8 @@ function formatDateKey(d: Date): string {
 export function ElectricianSiteDiary({ onBack }: ElectricianSiteDiaryProps) {
   const haptic = useHaptic();
   const { exportPDF, isExporting, exportingId } = useSafetyPDFExport();
+  const [shareRecordId, setShareRecordId] = useState<string | null>(null);
+  const [shareRecordTitle, setShareRecordTitle] = useState('');
   const today = useMemo(() => new Date(), []);
   const [selectedDate, setSelectedDate] = useState(today);
   const [showForm, setShowForm] = useState(false);
@@ -829,6 +833,15 @@ export function ElectricianSiteDiary({ onBack }: ElectricianSiteDiaryProps) {
                               Export PDF
                             </button>
                             <button
+                              onClick={() => {
+                                setShareRecordId(entry.id);
+                                setShareRecordTitle(entry.site_name || 'Site Diary');
+                              }}
+                              className="h-11 w-11 rounded-xl bg-elec-yellow/10 border border-elec-yellow/20 text-elec-yellow flex items-center justify-center touch-manipulation active:scale-[0.98] transition-all"
+                            >
+                              <Share2 className="h-4 w-4" />
+                            </button>
+                            <button
                               onClick={() => handleDuplicate(entry)}
                               className="h-11 px-3 rounded-xl bg-white/5 border border-white/[0.08] text-white text-xs font-medium flex items-center gap-1 touch-manipulation active:scale-[0.98] transition-all"
                             >
@@ -892,6 +905,16 @@ export function ElectricianSiteDiary({ onBack }: ElectricianSiteDiaryProps) {
         description="This entry will be permanently removed"
         isDeleting={deleteEntry.isPending}
       />
+
+      {shareRecordId && (
+        <SafetyDocumentShare
+          open={!!shareRecordId}
+          onClose={() => setShareRecordId(null)}
+          pdfType="site-diary"
+          recordId={shareRecordId}
+          documentTitle={`Site Diary — ${shareRecordTitle}`}
+        />
+      )}
     </div>
   );
 }

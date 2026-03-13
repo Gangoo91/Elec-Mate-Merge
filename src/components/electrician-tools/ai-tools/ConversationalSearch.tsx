@@ -1,12 +1,13 @@
 import { useState, useRef, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Brain, Camera, ImageIcon, X, ArrowLeft, Loader2, SquarePen } from 'lucide-react';
+import { Brain, Camera, ImageIcon, X, ArrowLeft, Loader2, SquarePen, Clock } from 'lucide-react';
 import { toast } from 'sonner';
 import { Button } from '@/components/ui/button';
 import { InspectorMessage } from './InspectorMessage';
 import { useSmoothedStreaming } from '@/hooks/useSmoothedStreaming';
 import { useHaptic } from '@/hooks/useHaptic';
+import { useAIChatHistory } from '@/hooks/useAIChatHistory';
 import { supabase } from '@/integrations/supabase/client';
 import { isImageFile, validateImageSize, compressImageForUpload } from '@/utils/imageUploadUtils';
 import {
@@ -17,6 +18,7 @@ import {
   FollowUpChips,
   MobileChatInput,
   WelcomeScreen,
+  ChatHistoryDrawer,
 } from './chat';
 
 interface Message {
@@ -27,66 +29,28 @@ interface Message {
   imageUrl?: string;
 }
 
-import { SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY as SUPABASE_KEY } from '@/integrations/supabase/client';
+import {
+  SUPABASE_URL,
+  SUPABASE_PUBLISHABLE_KEY as SUPABASE_KEY,
+} from '@/integrations/supabase/client';
 
-// Storage key for conversation persistence
-const STORAGE_KEY = 'elec-ai-conversation';
-const STORAGE_EXPIRY_HOURS = 24; // Clear conversations older than 24 hours
-
-// Load messages from localStorage
-const loadStoredMessages = (): Message[] => {
-  try {
-    const stored = localStorage.getItem(STORAGE_KEY);
-    if (!stored) return [];
-
-    const { messages, timestamp } = JSON.parse(stored);
-
-    // Check if conversation has expired
-    const storedTime = new Date(timestamp).getTime();
-    const now = Date.now();
-    const hoursSinceStored = (now - storedTime) / (1000 * 60 * 60);
-
-    if (hoursSinceStored > STORAGE_EXPIRY_HOURS) {
-      localStorage.removeItem(STORAGE_KEY);
-      return [];
-    }
-
-    // Restore Date objects for timestamps
-    return messages.map((m: Message) => ({
-      ...m,
-      timestamp: m.timestamp ? new Date(m.timestamp) : undefined,
-    }));
-  } catch (e) {
-    console.warn('Failed to load stored conversation:', e);
-    return [];
-  }
-};
-
-// Save messages to localStorage
-const saveMessages = (messages: Message[]) => {
-  try {
-    if (messages.length === 0) {
-      localStorage.removeItem(STORAGE_KEY);
-      return;
-    }
-
-    localStorage.setItem(
-      STORAGE_KEY,
-      JSON.stringify({
-        messages,
-        timestamp: new Date().toISOString(),
-      })
-    );
-  } catch (e) {
-    console.warn('Failed to save conversation:', e);
-  }
-};
+function formatRelativeTime(date: Date): string {
+  const now = new Date();
+  const diffMs = now.getTime() - date.getTime();
+  const diffMins = Math.floor(diffMs / 60000);
+  if (diffMins < 1) return 'Just now';
+  if (diffMins < 60) return `${diffMins}m ago`;
+  const diffHours = Math.floor(diffMins / 60);
+  if (diffHours < 24) return `${diffHours}h ago`;
+  return date.toLocaleDateString('en-GB', { day: 'numeric', month: 'short' });
+}
 
 export default function ConversationalSearch() {
   const navigate = useNavigate();
-  // Initialise messages from localStorage
-  const [messages, setMessages] = useState<Message[]>(() => loadStoredMessages());
+  const chatHistory = useAIChatHistory();
+  const [messages, setMessages] = useState<Message[]>(() => chatHistory.loadFromLocalStorage());
   const [hasRestoredSession, setHasRestoredSession] = useState(false);
+  const [historyOpen, setHistoryOpen] = useState(false);
   const [input, setInput] = useState('');
   const [isStreaming, setIsStreaming] = useState(false);
   const [isSearching, setIsSearching] = useState(false);
@@ -101,11 +65,10 @@ export default function ConversationalSearch() {
   const cameraInputRef = useRef<HTMLInputElement>(null);
   const haptic = useHaptic();
 
-  // RAF-based smooth streaming - optimised for butter-smooth experience
-  const streaming = useSmoothedStreaming({
-    charsPerFrame: 5,
-    stateUpdateInterval: 60,
-  });
+  // Batched token streaming — flush every 80ms (~12fps).
+  // ReactMarkdown re-parses the full content on every update, so we need to
+  // throttle aggressively. 12fps is still smooth for reading streaming text.
+  const streaming = useSmoothedStreaming({ flushInterval: 80 });
 
   // Auto-focus input on load (desktop only)
   useEffect(() => {
@@ -130,20 +93,12 @@ export default function ConversationalSearch() {
     }
   }, []); // Only run on mount
 
-  // Persist messages to localStorage when they change
+  // Persist messages to Supabase + localStorage when they change
   useEffect(() => {
-    // Only save complete messages (not during streaming)
     if (!isStreaming && messages.length > 0) {
-      // Small delay to ensure final message content is set
-      const timeoutId = setTimeout(() => {
-        saveMessages(messages);
-      }, 100);
-      return () => clearTimeout(timeoutId);
-    } else if (messages.length === 0) {
-      // Clear storage when conversation is cleared
-      saveMessages([]);
+      chatHistory.saveSession(messages);
     }
-  }, [messages, isStreaming]);
+  }, [messages, isStreaming, chatHistory.saveSession]);
 
   const SCROLL_THRESHOLD = 150;
 
@@ -171,14 +126,21 @@ export default function ConversationalSearch() {
     }
   }, [messages.length, isStreaming, scrollToBottomIfNeeded]);
 
+  // Pin-to-bottom during streaming — 150ms interval keeps scroll tracking content growth
   useEffect(() => {
-    if (isStreaming && isNearBottomRef.current) {
-      const timeoutId = setTimeout(() => {
-        scrollToBottomIfNeeded(true);
-      }, 500);
-      return () => clearTimeout(timeoutId);
-    }
-  }, [isStreaming, streaming.displayedText, scrollToBottomIfNeeded]);
+    if (!isStreaming) return;
+
+    const intervalId = setInterval(() => {
+      if (isNearBottomRef.current) {
+        messagesEndRef.current?.scrollIntoView({
+          behavior: 'instant',
+          block: 'end',
+        });
+      }
+    }, 150);
+
+    return () => clearInterval(intervalId);
+  }, [isStreaming]);
 
   // Image handling - supports large files with compression
   const handleImageSelect = useCallback(
@@ -415,15 +377,21 @@ export default function ConversationalSearch() {
     [input, messages, streaming, haptic, selectedImage, uploadImage, clearImage]
   );
 
-  const handleClearConversation = useCallback(() => {
-    if (messages.length === 0) return;
+  const handleNewChat = useCallback(() => {
+    chatHistory.startNewSession();
+    setMessages([]);
+    haptic.selection();
+    toast.success('New chat started');
+  }, [chatHistory, haptic]);
 
-    if (confirm('Clear conversation history?')) {
-      setMessages([]);
-      haptic.warning();
-      toast.success('Conversation cleared');
-    }
-  }, [messages.length, haptic]);
+  const handleLoadSession = useCallback(
+    async (id: string) => {
+      const loadedMessages = await chatHistory.loadSession(id);
+      setMessages(loadedMessages);
+      setHasRestoredSession(true);
+    },
+    [chatHistory]
+  );
 
   const handleFollowUpSelect = useCallback(
     (question: string) => {
@@ -447,23 +415,36 @@ export default function ConversationalSearch() {
           >
             <ArrowLeft className="h-5 w-5" />
           </Button>
-          <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-purple-500 to-violet-600 flex items-center justify-center shadow-lg shadow-purple-500/20">
+          <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-elec-yellow to-amber-500 flex items-center justify-center shadow-lg shadow-elec-yellow/20">
             <Brain className="w-5 h-5 text-white" />
           </div>
           <div className="flex-1 min-w-0">
             <h1 className="text-base font-semibold text-white truncate">Elec-AI</h1>
             <p className="text-[11px] text-white">Your electrical advisor</p>
           </div>
-          {messages.length > 0 && !isStreaming && (
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={handleClearConversation}
-              className="h-10 w-10 -mr-2 touch-manipulation active:scale-95 hover:bg-white/5"
-              aria-label="New chat"
-            >
-              <SquarePen className="h-5 w-5 text-white" />
-            </Button>
+          {!isStreaming && (
+            <>
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={() => setHistoryOpen(true)}
+                className="h-10 w-10 touch-manipulation active:scale-95 hover:bg-white/5"
+                aria-label="Chat history"
+              >
+                <Clock className="h-5 w-5 text-white" />
+              </Button>
+              {messages.length > 0 && (
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  onClick={handleNewChat}
+                  className="h-10 w-10 -mr-2 touch-manipulation active:scale-95 hover:bg-white/5"
+                  aria-label="New chat"
+                >
+                  <SquarePen className="h-5 w-5 text-white" />
+                </Button>
+              )}
+            </>
           )}
         </div>
       </header>
@@ -498,7 +479,7 @@ export default function ConversationalSearch() {
                     className="transform-gpu"
                   >
                     {message.role === 'user' ? (
-                      <div className="flex justify-end">
+                      <div className="flex flex-col items-end">
                         <div className="max-w-[85%] sm:max-w-[75%] space-y-2">
                           {/* User's attached image */}
                           {message.imageUrl && (
@@ -510,15 +491,20 @@ export default function ConversationalSearch() {
                               />
                             </div>
                           )}
-                          <div className="rounded-2xl rounded-tr-sm px-4 py-3 bg-gradient-to-br from-purple-500 to-violet-600 text-white shadow-lg shadow-purple-500/20">
+                          <div className="rounded-2xl rounded-tr-sm px-4 py-3 bg-gradient-to-br from-elec-yellow to-amber-500 text-black shadow-lg shadow-elec-yellow/20">
                             <div className="whitespace-pre-wrap break-words font-medium">
                               {message.content}
                             </div>
                           </div>
                         </div>
+                        {message.timestamp && (
+                          <p className="text-[10px] text-white mt-1 text-right">
+                            {formatRelativeTime(message.timestamp)}
+                          </p>
+                        )}
                       </div>
                     ) : (
-                      <div className="flex justify-start">
+                      <div className="flex flex-col items-start">
                         <div className="max-w-[95%] sm:max-w-[90%] space-y-3">
                           <InspectorMessage
                             message={{
@@ -542,6 +528,11 @@ export default function ConversationalSearch() {
                               />
                             )}
                         </div>
+                        {message.timestamp && !isCurrentlyStreaming && (
+                          <p className="text-[10px] text-white mt-1 ml-11">
+                            {formatRelativeTime(message.timestamp)}
+                          </p>
+                        )}
                       </div>
                     )}
                   </motion.div>
@@ -641,13 +632,25 @@ export default function ConversationalSearch() {
           value={input}
           onChange={setInput}
           onSubmit={() => handleSend()}
-          onClear={handleClearConversation}
+          onClear={handleNewChat}
           isStreaming={isStreaming}
           placeholder="Ask Elec-AI anything..."
           messageCount={messages.length}
           showClearButton={messages.length > 0}
         />
       </ChatInputArea>
+
+      {/* Chat History Drawer */}
+      <ChatHistoryDrawer
+        isOpen={historyOpen}
+        onClose={() => setHistoryOpen(false)}
+        sessions={chatHistory.sessions}
+        isLoading={chatHistory.isLoadingSessions}
+        currentSessionId={chatHistory.currentSessionId}
+        onSelectSession={handleLoadSession}
+        onDeleteSession={chatHistory.deleteSession}
+        onNewChat={handleNewChat}
+      />
     </ChatContainer>
   );
 }

@@ -54,9 +54,11 @@ import {
   Loader2,
   ExternalLink,
   Check,
+  Share2,
 } from 'lucide-react';
 import { LoadMoreButton } from './common/LoadMoreButton';
 import { useShowMore } from '@/hooks/useShowMore';
+import { SafetyDocumentShare } from './common/SafetyDocumentShare';
 
 // ─── Types ───
 
@@ -269,6 +271,7 @@ export function DigitalAccidentBook({ onBack }: { onBack: () => void }) {
   const { data: dbRecords, isLoading } = useAccidentRecords();
   const createRecord = useCreateAccidentRecord();
   const { exportPDF, isExporting, exportingId } = useSafetyPDFExport();
+  const [showShare, setShowShare] = useState(false);
 
   // RIDDOR deadline warning toasts
   useRIDDORDeadlineCheck();
@@ -1497,18 +1500,28 @@ export function DigitalAccidentBook({ onBack }: { onBack: () => void }) {
                 </div>
               </div>
               <div className="px-4 py-3 border-t border-white/10 pb-[max(0.75rem,env(safe-area-inset-bottom))] space-y-2">
-                <Button
-                  onClick={() => exportPDF('accident', viewingRecord.id)}
-                  disabled={isExporting && exportingId === viewingRecord.id}
-                  className="w-full h-11 bg-elec-yellow text-black font-bold rounded-xl touch-manipulation active:scale-[0.98]"
-                >
-                  {isExporting && exportingId === viewingRecord.id ? (
-                    <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                  ) : (
-                    <FileDown className="h-4 w-4 mr-2" />
-                  )}
-                  Export PDF
-                </Button>
+                <div className="grid grid-cols-2 gap-2">
+                  <Button
+                    onClick={() => exportPDF('accident', viewingRecord.id)}
+                    disabled={isExporting && exportingId === viewingRecord.id}
+                    className="h-11 bg-elec-yellow text-black font-bold rounded-xl touch-manipulation active:scale-[0.98]"
+                  >
+                    {isExporting && exportingId === viewingRecord.id ? (
+                      <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                    ) : (
+                      <FileDown className="h-4 w-4 mr-2" />
+                    )}
+                    Export PDF
+                  </Button>
+                  <Button
+                    onClick={() => setShowShare(true)}
+                    variant="outline"
+                    className="h-11 border-elec-yellow/20 bg-elec-yellow/10 text-elec-yellow font-bold rounded-xl touch-manipulation active:scale-[0.98]"
+                  >
+                    <Share2 className="h-4 w-4 mr-2" />
+                    Share
+                  </Button>
+                </div>
                 {viewingRecord.is_riddor_reportable && (
                   <Button
                     onClick={() => exportPDF('riddor-report', viewingRecord.id)}
@@ -1615,6 +1628,16 @@ export function DigitalAccidentBook({ onBack }: { onBack: () => void }) {
           </div>
         </SheetContent>
       </Sheet>
+
+      {viewingRecord && (
+        <SafetyDocumentShare
+          open={showShare}
+          onClose={() => setShowShare(false)}
+          pdfType="accident"
+          recordId={viewingRecord.id}
+          documentTitle={`Accident Record — ${viewingRecord.injured_name || 'Unknown'}`}
+        />
+      )}
     </div>
   );
 }

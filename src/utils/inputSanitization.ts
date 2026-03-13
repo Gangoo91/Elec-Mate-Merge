@@ -172,6 +172,40 @@ export const sanitizeObject = <T extends Record<string, any>>(obj: T): T => {
 };
 
 /**
+ * Sanitises document HTML with an expanded tag whitelist
+ * Use for: Safety documents, structured content HTML output
+ * Allows headings, tables, and basic formatting
+ */
+export const sanitizeDocumentHtml = (input: string | null | undefined): string => {
+  if (!input) return '';
+
+  const cleaned = DOMPurify.sanitize(input, {
+    ALLOWED_TAGS: [
+      'h2',
+      'h3',
+      'p',
+      'br',
+      'b',
+      'i',
+      'em',
+      'strong',
+      'ul',
+      'ol',
+      'li',
+      'table',
+      'thead',
+      'tbody',
+      'tr',
+      'th',
+      'td',
+    ],
+    ALLOWED_ATTR: [],
+  });
+
+  return cleaned.trim();
+};
+
+/**
  * Validates and sanitises a URL
  * Use for: External links, image URLs
  */

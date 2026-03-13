@@ -121,29 +121,6 @@ export default function FireAlarmCertificate() {
     companyName: companyProfile?.company_name,
   });
 
-  // Track online/offline status
-  useEffect(() => {
-    const handleOnline = () => {
-      setIsOnline(true);
-      if (hasUnsavedChangesRef.current) {
-        syncToCloud();
-      }
-    };
-    const handleOffline = () => {
-      setIsOnline(false);
-      setSyncStatus('offline');
-    };
-
-    window.addEventListener('online', handleOnline);
-    window.addEventListener('offline', handleOffline);
-
-    return () => {
-      window.removeEventListener('online', handleOnline);
-      window.removeEventListener('offline', handleOffline);
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
   // Get current user
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => {
@@ -281,6 +258,28 @@ export default function FireAlarmCertificate() {
       setSyncStatus('error');
     }
   }, [formData, savedReportId, user, isOnline]);
+
+  // Track online/offline status
+  useEffect(() => {
+    const handleOnline = () => {
+      setIsOnline(true);
+      if (hasUnsavedChangesRef.current) {
+        syncToCloud();
+      }
+    };
+    const handleOffline = () => {
+      setIsOnline(false);
+      setSyncStatus('offline');
+    };
+
+    window.addEventListener('online', handleOnline);
+    window.addEventListener('offline', handleOffline);
+
+    return () => {
+      window.removeEventListener('online', handleOnline);
+      window.removeEventListener('offline', handleOffline);
+    };
+  }, [syncToCloud]);
 
   // Auto-save effect - runs every 10 seconds
   useEffect(() => {

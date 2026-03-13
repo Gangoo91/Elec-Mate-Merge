@@ -9,6 +9,7 @@ import FeatureComparison from '@/components/subscriptions/FeatureComparison';
 import { useRevenueCat } from '@/hooks/useRevenueCat';
 import { useAuth } from '@/contexts/AuthContext';
 import { useToast } from '@/components/ui/use-toast';
+import { Capacitor } from '@capacitor/core';
 
 const Subscriptions = () => {
   const { user } = useAuth();
@@ -26,12 +27,22 @@ const Subscriptions = () => {
     });
   };
 
+  const trustItems = [
+    {
+      icon: Lock,
+      text: isNative
+        ? `Secure payment via ${Capacitor.getPlatform() === 'ios' ? 'Apple' : 'Google Play'}`
+        : 'Secure payment via Stripe',
+    },
+    { icon: RotateCcw, text: 'Cancel anytime' },
+    { icon: Zap, text: 'Instant access' },
+  ];
+
   return (
     <div className="animate-fade-in relative min-h-screen">
-      {/* Ambient background — subtle, consistent with app */}
+      {/* Ambient background — subtle gradient only */}
       <div className="fixed inset-0 pointer-events-none">
         <div className="absolute inset-0 bg-gradient-to-b from-elec-yellow/[0.03] via-transparent to-transparent" />
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/3 w-[800px] h-[500px] bg-elec-yellow/[0.06] rounded-full blur-[150px]" />
       </div>
 
       {/* Top bar */}
@@ -47,31 +58,28 @@ const Subscriptions = () => {
         </Link>
       </div>
 
-      {/* Header — minimal */}
+      {/* Header */}
       <div className="relative z-10 text-center px-4 pt-2 pb-1">
-        <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-foreground">
+        <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-foreground">
           Choose your plan
         </h1>
-        <div className="flex justify-center mt-2">
+        <p className="text-sm text-white mt-1.5">7-day free trial on all plans. Cancel anytime.</p>
+        <div className="flex justify-center mt-3">
           <SubscriptionStatus />
         </div>
       </div>
 
       {/* Content */}
-      <div className="relative z-10 px-4 max-w-5xl mx-auto pb-20 space-y-10 sm:space-y-14">
+      <div className="relative z-10 px-4 max-w-5xl mx-auto pb-20 space-y-8 sm:space-y-10">
         {/* Plans */}
         <section>
           <PlanSelection />
         </section>
 
-        {/* Trust strip — inline, not boxed */}
+        {/* Trust strip — platform-aware */}
         <section>
           <div className="flex flex-wrap justify-center gap-x-5 gap-y-2 sm:gap-x-8">
-            {[
-              { icon: Lock, text: 'Secure payment via Stripe' },
-              { icon: RotateCcw, text: 'Cancel anytime' },
-              { icon: Zap, text: 'Instant access' },
-            ].map((item, i) => (
+            {trustItems.map((item, i) => (
               <div key={i} className="flex items-center gap-1.5 text-white">
                 <item.icon className="h-3.5 w-3.5" />
                 <span className="text-xs">{item.text}</span>
@@ -82,7 +90,7 @@ const Subscriptions = () => {
 
         {/* Restore Purchases — native only (required by Apple) */}
         {isNative && (
-          <section className="flex justify-center">
+          <section className="flex justify-center -mt-4">
             <Button
               variant="ghost"
               onClick={handleRestore}

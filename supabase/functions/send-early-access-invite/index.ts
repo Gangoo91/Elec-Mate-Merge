@@ -10,6 +10,16 @@ const corsHeaders = {
     'authorization, x-client-info, apikey, content-type, x-request-id',
 };
 
+// Early access £7.99 offer configuration (same Stripe product as winback: prod_TtTdELbwjYaZQn)
+const EA_OFFER_CONFIG = {
+  monthlyPrice: 7.99,
+  yearlyPrice: 79.99,
+  standardMonthlyPrice: 9.99,
+  discountPercent: 20,
+  monthlyPaymentLink: 'https://buy.stripe.com/7sYcMY1gm67a6U96FgbjW00',
+  yearlyPaymentLink: 'https://buy.stripe.com/5kQ3cobV0anqguJe7IbjW01',
+};
+
 // Generate unique invite token with EA prefix
 function generateToken(): string {
   const chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
@@ -283,7 +293,8 @@ function generateConversionEmailHTML(email: string): string {
   const landingUrl = 'https://www.elec-mate.com';
   const t = 'color:#e2e8f0;font-size:14px;line-height:1.6;margin:0 0 5px';
   const b = 'color:#fff;font-weight:700';
-  const h = 'font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;margin:0 0 8px';
+  const h =
+    'font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;margin:0 0 8px';
 
   return `<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><meta name="color-scheme" content="dark"><!--[if mso]><style>body,table,td{font-family:Arial,sans-serif!important}</style><![endif]--></head>
 <body style="margin:0;padding:0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;background:#0f172a">
@@ -586,6 +597,187 @@ function generateInviteEmailHTML(email: string, inviteToken: string): string {
 </body>
 </html>
   `;
+}
+
+// Generate early access offer email HTML — adapted from winback V5, for leads who never created accounts
+function generateEarlyAccessOfferHTML(email: string): string {
+  const t = 'color:#ffffff;font-size:14px;line-height:1.6;margin:0 0 5px';
+  const b = 'color:#fff;font-weight:700';
+  const h =
+    'font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;margin:0 0 10px';
+
+  return `<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><meta name="color-scheme" content="dark"><!--[if mso]><style>body,table,td{font-family:Arial,sans-serif!important}</style><![endif]--></head>
+<body style="margin:0;padding:0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;background:#0f172a">
+<table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background:#0f172a"><tr><td style="padding:24px 12px">
+<table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="max-width:500px;margin:0 auto;background:linear-gradient(180deg,#1e293b,#0f172a);border-radius:24px;overflow:hidden;border:1px solid rgba(251,191,36,0.2)">
+
+<!-- Opening -->
+<tr><td style="padding:32px 24px 20px">
+<p style="margin:0 0 16px;font-size:17px;color:#fff;line-height:1.6">Hey,</p>
+<p style="margin:0 0 14px;font-size:16px;color:#fff;line-height:1.7">You signed up for early access to Elec-Mate a while back. Since then, I've built it into a full platform with <strong style="color:#fbbf24">122 tools, 8 certificate types, and 15 AI specialists</strong> &mdash; all designed for UK electricians.</p>
+<p style="margin:0 0 14px;font-size:16px;color:#fff;line-height:1.7">I wanted to give you first look &mdash; and a price that won't be around forever.</p>
+<p style="margin:0;font-size:16px;color:#fff;line-height:1.7">Here's exactly what you get for <strong style="color:#fbbf24">&pound;7.99 a month</strong>:</p>
+</td></tr>
+
+<!-- Stats Strip — 4 gold boxes -->
+<tr><td style="padding:0 20px 16px">
+<table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%"><tr>
+<td width="25%" style="padding:0 3px 0 0"><div style="background:linear-gradient(135deg,#fbbf24,#f59e0b);border-radius:12px;padding:14px 6px;text-align:center">
+<p style="margin:0;font-size:24px;font-weight:800;color:#0f172a;line-height:1">122</p>
+<p style="margin:4px 0 0;font-size:9px;font-weight:800;color:#0f172a;text-transform:uppercase;letter-spacing:0.5px">AI Tools</p>
+</div></td>
+<td width="25%" style="padding:0 2px"><div style="background:linear-gradient(135deg,#fbbf24,#f59e0b);border-radius:12px;padding:14px 6px;text-align:center">
+<p style="margin:0;font-size:24px;font-weight:800;color:#0f172a;line-height:1">8</p>
+<p style="margin:4px 0 0;font-size:9px;font-weight:800;color:#0f172a;text-transform:uppercase;letter-spacing:0.5px">Cert Types</p>
+</div></td>
+<td width="25%" style="padding:0 2px"><div style="background:linear-gradient(135deg,#fbbf24,#f59e0b);border-radius:12px;padding:14px 6px;text-align:center">
+<p style="margin:0;font-size:24px;font-weight:800;color:#0f172a;line-height:1">15</p>
+<p style="margin:4px 0 0;font-size:9px;font-weight:800;color:#0f172a;text-transform:uppercase;letter-spacing:0.5px">AI Agents</p>
+</div></td>
+<td width="25%" style="padding:0 0 0 3px"><div style="background:linear-gradient(135deg,#fbbf24,#f59e0b);border-radius:12px;padding:14px 6px;text-align:center">
+<p style="margin:0;font-size:24px;font-weight:800;color:#0f172a;line-height:1">64+</p>
+<p style="margin:4px 0 0;font-size:9px;font-weight:800;color:#0f172a;text-transform:uppercase;letter-spacing:0.5px">Calculators</p>
+</div></td>
+</tr></table>
+</td></tr>
+
+<!-- Certs & Testing (green) -->
+<tr><td style="padding:0 20px 12px"><div style="background:linear-gradient(135deg,rgba(34,197,94,0.12),rgba(34,197,94,0.03));border:1px solid rgba(34,197,94,0.3);border-radius:14px;padding:18px">
+<p style="${h};color:#22c55e">&#x1F4CB; Certificates &amp; Testing</p>
+<p style="${t}">&#x2713; EICR (Electrical Installation Condition Report)</p>
+<p style="${t}">&#x2713; EIC (Electrical Installation Certificate)</p>
+<p style="${t}">&#x2713; Minor Works</p>
+<p style="${t}">&#x2713; Fire Alarm (BS 5839-1:2017 &mdash; 7 certificate sub-types)</p>
+<p style="${t}">&#x2713; EV Charging Installation</p>
+<p style="${t}">&#x2713; Emergency Lighting</p>
+<p style="${t}">&#x2713; Solar PV Installation</p>
+<p style="${t}">&#x2713; PAT Testing</p>
+<p style="margin:10px 0 0;font-size:13px;color:#22c55e;line-height:1.6;font-weight:600">Every one: photo capture, defect coding, PDF export, email to client. Fill it in on site &rarr; client gets it before you're back in the van.</p>
+</div></td></tr>
+
+<!-- AI Tools (yellow) -->
+<tr><td style="padding:0 20px 12px"><div style="background:linear-gradient(135deg,rgba(251,191,36,0.12),rgba(251,191,36,0.03));border:1px solid rgba(251,191,36,0.3);border-radius:14px;padding:18px">
+<p style="${h};color:#fbbf24">&#x1F916; AI Tools &mdash; Point Your Camera, Get Answers</p>
+<p style="${t}">&#x2713; <strong style="${b}">Circuit Designer</strong> &mdash; BS 7671 compliant designs, cable sizing, CU layouts</p>
+<p style="${t}">&#x2713; <strong style="${b}">Cost Engineer</strong> &mdash; quotes with live material pricing + labour rates</p>
+<p style="${t}">&#x2713; <strong style="${b}">RAMS Generator</strong> &mdash; risk assessment from a job description in 2 minutes flat</p>
+<p style="${t}">&#x2713; <strong style="${b}">Fault Diagnosis</strong> &mdash; describe the fault, get step-by-step fixes</p>
+<p style="${t}">&#x2713; <strong style="${b}">Photo Analysis</strong> &mdash; photograph a component &rarr; get specs + regs</p>
+<p style="${t}">&#x2713; <strong style="${b}">Installation Verification</strong> &mdash; snap your work &rarr; BS 7671 compliance check</p>
+<p style="${t}">&#x2713; <strong style="${b}">Wiring Instructions</strong> &mdash; step-by-step from your photo</p>
+<p style="${t}">&#x2713; <strong style="${b}">Client Explainer</strong> &mdash; turn technical findings into plain English for Mrs Jones</p>
+<p style="${t}">&#x2713; <strong style="${b}">Board Scanner</strong> &mdash; photograph a DB, auto circuit mapping</p>
+<p style="margin:0;font-size:13px;color:#fbbf24;font-weight:600">+ 6 more specialist tools</p>
+</div></td></tr>
+
+<!-- Business Tools (amber) -->
+<tr><td style="padding:0 20px 12px"><div style="background:linear-gradient(135deg,rgba(245,158,11,0.12),rgba(245,158,11,0.03));border:1px solid rgba(245,158,11,0.3);border-radius:14px;padding:18px">
+<p style="${h};color:#f59e0b">&#x1F4BC; Business Tools &mdash; Run Your Business From Your Phone</p>
+<p style="${t}">&#x2713; Quote &amp; Invoice Builder with Stripe payments</p>
+<p style="${t}">&#x2713; Customer database</p>
+<p style="${t}">&#x2713; Project management with photos &amp; drawings</p>
+<p style="${t}">&#x2713; Expense tracking</p>
+<p style="${t}">&#x2713; Booking Portal &mdash; your own booking page, clients pick slots</p>
+<p style="${t}">&#x2713; 50+ electrical calculators (cable sizing, Zs, voltage drop, solar, EV)</p>
+<p style="${t}">&#x2713; 14 business calculators (hourly rate, job profit, tax, cash flow)</p>
+<p style="margin:0;${t}">&#x2713; Referral system &mdash; get paid when you refer other sparkies</p>
+</div></td></tr>
+
+<!-- Materials Marketplace (blue) -->
+<tr><td style="padding:0 20px 12px"><div style="background:linear-gradient(135deg,rgba(59,130,246,0.12),rgba(59,130,246,0.03));border:1px solid rgba(59,130,246,0.3);border-radius:14px;padding:18px">
+<p style="${h};color:#3b82f6">&#x1F6D2; Materials Marketplace</p>
+<p style="${t}">Live pricing from 6 suppliers:</p>
+<p style="margin:0 0 8px;font-size:15px;color:#fff;font-weight:700;line-height:1.6">Screwfix &middot; Toolstation &middot; CEF &middot; Edmundson &middot; Wickes &middot; B&amp;Q</p>
+<p style="margin:0;font-size:13px;color:#3b82f6;font-weight:600;line-height:1.6">Deals of the day. Coupon finder. Price comparison. Find the cheapest 6mm T&amp;E in 10 seconds.</p>
+</div></td></tr>
+
+<!-- Study Centre (cyan) -->
+<tr><td style="padding:0 20px 12px"><div style="background:linear-gradient(135deg,rgba(6,182,212,0.12),rgba(6,182,212,0.03));border:1px solid rgba(6,182,212,0.3);border-radius:14px;padding:18px">
+<p style="${h};color:#06b6d4">&#x1F393; Study Centre</p>
+<p style="${t}">&#x2713; <strong style="${b}">Electrical Upskilling</strong> &mdash; 18th Edition, inspection &amp; testing, EV, solar, fire alarm</p>
+<p style="${t}">&#x2713; <strong style="${b}">General Upskilling</strong> &mdash; business management, project planning, client relations</p>
+<p style="${t}">&#x2713; <strong style="${b}">Personal Development</strong> &mdash; time management, communication, mental health resources</p>
+<p style="${t}">&#x2713; <strong style="${b}">780 Flash Cards</strong> &mdash; spaced repetition, exam-ready revision</p>
+<p style="${t}">&#x2713; <strong style="${b}">AM2 &amp; EPA Simulators</strong> &mdash; timed, realistic, scored</p>
+<p style="margin:0;${t}">&#x2713; <strong style="${b}">60+ Video Lessons</strong> &mdash; watch on site, learn at your pace</p>
+</div></td></tr>
+
+<!-- New This Week (purple) -->
+<tr><td style="padding:0 20px 12px"><div style="background:linear-gradient(135deg,rgba(168,85,247,0.12),rgba(168,85,247,0.03));border:1px solid rgba(168,85,247,0.3);border-radius:14px;padding:18px">
+<p style="${h};color:#a855f7">&#x2728; Shipped This Week</p>
+<p style="${t}">&#x2713; <strong style="${b}">Snagging</strong> &mdash; photograph defects, track by project, one-tap resolve</p>
+<p style="${t}">&#x2713; <strong style="${b}">Route Planning</strong> &mdash; optimised daily driving route with weather on each job</p>
+<p style="${t}">&#x2713; <strong style="${b}">Solar Roof Analysis</strong> &mdash; Google satellite data for PV quotes</p>
+<p style="${t}">&#x2713; <strong style="${b}">Realtime Sync</strong> &mdash; everything updates live across all your devices</p>
+<p style="margin:0;${t}">&#x2713; <strong style="${b}">iOS App in TestFlight</strong> &mdash; push notifications, camera, morning briefings</p>
+</div></td></tr>
+
+<!-- Site Safety (red) -->
+<tr><td style="padding:0 20px 12px"><div style="background:linear-gradient(135deg,rgba(239,68,68,0.12),rgba(239,68,68,0.03));border:1px solid rgba(239,68,68,0.3);border-radius:14px;padding:18px">
+<p style="${h};color:#ef4444">&#x1F6E1;&#xFE0F; Site Safety</p>
+<p style="${t}">&#x2713; RAMS from a job description</p>
+<p style="${t}">&#x2713; Method statements</p>
+<p style="${t}">&#x2713; Safe isolation records</p>
+<p style="${t}">&#x2713; Equipment tracking</p>
+<p style="margin:0;${t}">&#x2713; Team briefing templates</p>
+</div></td></tr>
+
+<!-- Pricing CTA (gold) -->
+<tr><td style="padding:0 20px 16px"><div style="background:linear-gradient(135deg,rgba(251,191,36,0.15),rgba(251,191,36,0.05));border:2px solid rgba(251,191,36,0.4);border-radius:16px;padding:24px 18px;text-align:center">
+<p style="margin:0 0 8px;font-size:16px;color:#fff;font-weight:600;line-height:1.5">All of that. &pound;7.99 a month.</p>
+<p style="margin:0;font-size:52px;font-weight:800;color:#fbbf24;line-height:1">&pound;${EA_OFFER_CONFIG.monthlyPrice.toFixed(2)}<span style="font-size:18px;font-weight:600;color:#fff">/mo</span></p>
+<p style="margin:6px 0 4px;font-size:14px;color:#fff"><span style="text-decoration:line-through">&pound;${EA_OFFER_CONFIG.standardMonthlyPrice.toFixed(2)}</span> &middot; <span style="color:#22c55e;font-weight:600">20% off</span> &middot; locked forever</p>
+<p style="margin:0 0 18px;font-size:14px;color:#fff;line-height:1.5">That's less than two coffees. For 122 tools, 8 cert types, 15 AI specialists, and 6 supplier price feeds. In your pocket.</p>
+<a href="${EA_OFFER_CONFIG.monthlyPaymentLink}" style="display:block;padding:16px;background:linear-gradient(135deg,#fbbf24,#f59e0b);color:#0f172a;text-decoration:none;font-size:16px;font-weight:700;border-radius:12px;text-align:center;margin-bottom:10px">Lock in &pound;${EA_OFFER_CONFIG.monthlyPrice.toFixed(2)}/mo forever &rarr;</a>
+<a href="${EA_OFFER_CONFIG.yearlyPaymentLink}" style="display:block;padding:14px;background:rgba(251,191,36,0.15);border:2px solid rgba(251,191,36,0.5);color:#fbbf24;text-decoration:none;font-size:15px;font-weight:600;border-radius:12px;text-align:center">Or go yearly: &pound;${EA_OFFER_CONFIG.yearlyPrice.toFixed(2)} (&pound;${(EA_OFFER_CONFIG.yearlyPrice / 12).toFixed(2)}/mo)</a>
+</div></td></tr>
+
+<!-- Mate Section (gold/dark gradient, chat bubble style) -->
+<tr><td style="padding:0 20px 12px"><div style="background:linear-gradient(135deg,rgba(251,191,36,0.12),rgba(15,23,42,0.9));border:2px solid rgba(251,191,36,0.3);border-radius:14px;padding:18px">
+<p style="margin:0 0 12px;font-size:15px;font-weight:800;color:#fbbf24;text-transform:uppercase;letter-spacing:1px">&#x1F4AC; And Then There's Mate.</p>
+<p style="margin:0 0 12px;font-size:14px;color:#fff;line-height:1.6">Mate is your AI business assistant on WhatsApp.</p>
+<p style="margin:0 0 6px;font-size:14px;color:#fff;line-height:1.6">Message Mate like you'd message a colleague:</p>
+
+<div style="background:rgba(37,211,102,0.08);border-left:3px solid #25D366;border-radius:0 8px 8px 0;padding:10px 12px;margin:8px 0">
+<p style="margin:0 0 4px;font-size:13px;color:#fff;line-height:1.5;font-style:italic">"Quote Mrs Johnson's rewire &mdash; 4 bed semi, full rewire, new CU, 12 circuits"</p>
+<p style="margin:0;font-size:12px;color:#25D366;font-weight:600">&rarr; Mate prices it up, creates the quote, sends it to the client.</p>
+</div>
+
+<div style="background:rgba(37,211,102,0.08);border-left:3px solid #25D366;border-radius:0 8px 8px 0;padding:10px 12px;margin:8px 0">
+<p style="margin:0 0 4px;font-size:13px;color:#fff;line-height:1.5;font-style:italic">"What time's my first job tomorrow?"</p>
+<p style="margin:0;font-size:12px;color:#25D366;font-weight:600">&rarr; Mate checks your diary and tells you.</p>
+</div>
+
+<div style="background:rgba(37,211,102,0.08);border-left:3px solid #25D366;border-radius:0 8px 8px 0;padding:10px 12px;margin:8px 0">
+<p style="margin:0 0 4px;font-size:13px;color:#fff;line-height:1.5;font-style:italic">"Raise an invoice for the Smith job, &pound;2,400"</p>
+<p style="margin:0;font-size:12px;color:#25D366;font-weight:600">&rarr; Done. Invoice created, PDF generated, ready to send.</p>
+</div>
+
+<p style="margin:12px 0 8px;font-size:14px;color:#fff;line-height:1.6"><strong style="color:#fbbf24">122 tools. Works while you're on the tools.</strong> Send Mate a message while you're up a ladder &mdash; it does the work and <strong style="color:#25D366">WhatsApps you back</strong> when it's done.</p>
+<p style="margin:0;font-size:13px;color:#fff;line-height:1.5">Mate is an add-on &mdash; separate to the &pound;7.99 app subscription. Reply to this email if you want in on the beta.</p>
+</div></td></tr>
+
+<!-- Urgency block -->
+<tr><td style="padding:0 20px 16px"><div style="background:linear-gradient(135deg,rgba(251,191,36,0.06),rgba(251,191,36,0.02));border:1px solid rgba(251,191,36,0.15);border-radius:14px;padding:18px">
+<p style="margin:0 0 8px;font-size:14px;color:#fff;line-height:1.6">This is a one-off offer for early access supporters. Once it's gone, new users pay &pound;9.99/month.</p>
+<p style="margin:0;font-size:14px;color:#fff;line-height:1.6">If you've been thinking about it, now's the time. If not, no worries &mdash; thanks for signing up back then.</p>
+</div></td></tr>
+
+<!-- Sign-off -->
+<tr><td style="padding:0 20px 16px"><div style="background:linear-gradient(135deg,rgba(251,191,36,0.08),rgba(251,191,36,0.02));border:1px solid rgba(251,191,36,0.15);border-radius:14px;padding:18px">
+<p style="margin:0 0 12px;font-size:14px;color:#fff;line-height:1.6">Hit reply if you've got any questions &mdash; it comes straight to me. Not a chatbot, not a support team. Just me, Andrew.</p>
+<p style="margin:0 0 4px;font-size:15px;color:#fff">Cheers,</p>
+<p style="margin:0 0 2px;font-size:17px;color:#fbbf24;font-weight:700">Andrew</p>
+<p style="margin:0;font-size:13px;color:#fff">Founder &amp; sparky &middot; Elec-Mate</p>
+</div></td></tr>
+
+<!-- Footer -->
+<tr><td style="padding:16px 24px;text-align:center;border-top:1px solid rgba(255,255,255,0.08)">
+<p style="margin:0;font-size:12px;color:#fff">&copy; ${new Date().getFullYear()} Elec-Mate &middot; Built for UK Sparks &#x1F1EC;&#x1F1E7; &#x26A1;</p>
+</td></tr>
+
+</table></td></tr></table>
+</body></html>`;
 }
 
 Deno.serve(async (req) => {
@@ -1938,7 +2130,9 @@ Deno.serve(async (req) => {
           throw new Error(`Failed to send test email: ${convTestError.message}`);
         }
 
-        console.log(`Conversion test email sent to ${testEmail}${user ? ` by admin ${user.id}` : ''}`);
+        console.log(
+          `Conversion test email sent to ${testEmail}${user ? ` by admin ${user.id}` : ''}`
+        );
         result = { success: true, email: testEmail, resendId: convTestData?.id };
         break;
       }
@@ -1959,9 +2153,7 @@ Deno.serve(async (req) => {
           perPage: 1000,
         });
         const convSignedUpEmails = new Set(
-          convAuthData?.users
-            ?.map((u) => u.email?.toLowerCase().trim())
-            .filter(Boolean) || []
+          convAuthData?.users?.map((u) => u.email?.toLowerCase().trim()).filter(Boolean) || []
         );
 
         // Get tracking events for conversion emails
@@ -1984,8 +2176,7 @@ Deno.serve(async (req) => {
           const bouncedSet = new Set<string>();
 
           (convEvents || []).forEach((e: any) => {
-            if (!convTrackingMap.has(e.email_id))
-              convTrackingMap.set(e.email_id, new Set());
+            if (!convTrackingMap.has(e.email_id)) convTrackingMap.set(e.email_id, new Set());
             convTrackingMap.get(e.email_id)!.add(e.event_type);
 
             if (e.event_type === 'email.delivered') deliveredSet.add(e.email_id);
@@ -2000,9 +2191,7 @@ Deno.serve(async (req) => {
         }
 
         // Get profiles for converted users
-        const convUserIds = (allConvInvites || [])
-          .filter((i) => i.user_id)
-          .map((i) => i.user_id);
+        const convUserIds = (allConvInvites || []).filter((i) => i.user_id).map((i) => i.user_id);
         let convProfilesMap: Record<string, any> = {};
         if (convUserIds.length > 0) {
           const { data: convProfiles } = await supabaseAdmin
@@ -2168,9 +2357,7 @@ Deno.serve(async (req) => {
           perPage: 1000,
         });
         const convCampSignedUp = new Set(
-          convCampAuthData?.users
-            ?.map((u) => u.email?.toLowerCase().trim())
-            .filter(Boolean) || []
+          convCampAuthData?.users?.map((u) => u.email?.toLowerCase().trim()).filter(Boolean) || []
         );
 
         // Get ALL unsent, non-bounced invites (only ~200-300 rows, tiny payload)
@@ -2267,6 +2454,171 @@ Deno.serve(async (req) => {
           message: convComplete
             ? `All done! Sent ${convSentCount} emails.`
             : `Sent ${convSentCount}. ~${convRemaining} remaining.`,
+        };
+        break;
+      }
+
+      // ── Early Access £7.99 Offer Campaign ──────────────────────────────
+
+      case 'get_ea_offer_status': {
+        // Get offer campaign stats — how many sent, remaining, total
+        const { data: allInvites, error: eaErr } = await supabaseAdmin
+          .from('early_access_invites')
+          .select('id, email, offer_sent_at, bounced_at, user_id');
+        if (eaErr) throw eaErr;
+
+        // Get auth users to exclude signed-up
+        const { data: eaAuthData } = await supabaseAdmin.auth.admin.listUsers({ perPage: 1000 });
+        const eaSignedUp = new Set(
+          eaAuthData?.users?.map((u) => u.email?.toLowerCase().trim()).filter(Boolean) || []
+        );
+
+        let eaTotal = 0;
+        let eaSent = 0;
+        let eaRemaining = 0;
+
+        for (const invite of allInvites || []) {
+          if (invite.bounced_at) continue;
+          if (eaSignedUp.has(invite.email.toLowerCase().trim())) continue;
+          eaTotal++;
+          if (invite.offer_sent_at) {
+            eaSent++;
+          } else {
+            eaRemaining++;
+          }
+        }
+
+        result = { total: eaTotal, sent: eaSent, remaining: eaRemaining };
+        break;
+      }
+
+      case 'send_ea_offer_test': {
+        // Send a test offer email to a specific address
+        if (!testEmail) throw new Error('testEmail is required');
+
+        const eaTestHtml = generateEarlyAccessOfferHTML(testEmail);
+        const { data: eaTestData, error: eaTestErr } = await resend.emails.send({
+          from: 'Elec-Mate <founder@elec-mate.com>',
+          replyTo: 'founder@elec-mate.com',
+          to: [testEmail.trim().toLowerCase()],
+          subject: '[TEST] One-off offer — £7.99/month, locked forever',
+          html: eaTestHtml,
+          tags: [
+            { name: 'campaign', value: 'early_access_offer' },
+            { name: 'version', value: 'v1' },
+            { name: 'type', value: 'test' },
+          ],
+        });
+
+        if (eaTestErr) throw new Error(`Failed to send: ${eaTestErr.message}`);
+
+        console.log(`EA offer test email sent to ${testEmail} by admin ${user.id}`);
+        result = { success: true, email: testEmail, resendId: eaTestData?.id };
+        break;
+      }
+
+      case 'send_ea_offer_campaign': {
+        // Batch send offer emails — called repeatedly by frontend until complete
+        const EA_BATCH_SIZE = 10;
+        const EA_DELAY_MS = 500;
+
+        // Get auth users to exclude signed-up
+        const { data: eaCampAuthData } = await supabaseAdmin.auth.admin.listUsers({
+          perPage: 1000,
+        });
+        const eaCampSignedUp = new Set(
+          eaCampAuthData?.users?.map((u) => u.email?.toLowerCase().trim()).filter(Boolean) || []
+        );
+
+        // Get ALL unsent, non-bounced invites
+        const { data: eaUnsent, error: eaUnsentErr } = await supabaseAdmin
+          .from('early_access_invites')
+          .select('id, email')
+          .is('offer_sent_at', null)
+          .is('bounced_at', null)
+          .order('created_at', { ascending: true });
+
+        if (eaUnsentErr) throw eaUnsentErr;
+
+        // Filter out signed-up users then take first batch
+        const eaEligible = (eaUnsent || []).filter(
+          (i) => !eaCampSignedUp.has(i.email.toLowerCase().trim())
+        );
+        const eaBatch = eaEligible.slice(0, EA_BATCH_SIZE);
+
+        if (eaBatch.length === 0) {
+          result = { sent: 0, remaining: 0, complete: true, message: 'All offer emails sent!' };
+          break;
+        }
+
+        let eaSentCount = 0;
+        const eaErrors: string[] = [];
+
+        for (let i = 0; i < eaBatch.length; i++) {
+          const invite = eaBatch[i];
+          try {
+            const emailHtml = generateEarlyAccessOfferHTML(invite.email);
+
+            const { data: emailData, error: emailError } = await resend.emails.send({
+              from: 'Elec-Mate <founder@elec-mate.com>',
+              replyTo: 'founder@elec-mate.com',
+              to: [invite.email.trim().toLowerCase()],
+              subject: 'One-off offer — £7.99/month, locked forever',
+              html: emailHtml,
+              tags: [
+                { name: 'campaign', value: 'early_access_offer' },
+                { name: 'version', value: 'v1' },
+              ],
+            });
+
+            if (emailError) {
+              eaErrors.push(`${invite.email}: ${emailError.message}`);
+              continue;
+            }
+
+            await supabaseAdmin
+              .from('early_access_invites')
+              .update({
+                offer_sent_at: new Date().toISOString(),
+                offer_email_id: emailData?.id || null,
+              })
+              .eq('id', invite.id);
+
+            eaSentCount++;
+
+            // Rate limit between sends
+            if (i < eaBatch.length - 1) {
+              await new Promise((r) => setTimeout(r, EA_DELAY_MS));
+            }
+          } catch (err: any) {
+            eaErrors.push(`${invite.email}: ${err.message}`);
+          }
+        }
+
+        // Count remaining
+        const { data: eaRemainingRows } = await supabaseAdmin
+          .from('early_access_invites')
+          .select('email')
+          .is('offer_sent_at', null)
+          .is('bounced_at', null);
+
+        const eaRemainingCount = (eaRemainingRows || []).filter(
+          (r) => !eaCampSignedUp.has(r.email.toLowerCase().trim())
+        ).length;
+        const eaComplete = eaRemainingCount === 0;
+
+        console.log(
+          `EA offer campaign: Sent ${eaSentCount}/${eaBatch.length} by admin ${user.id}. ~${eaRemainingCount} remaining.`
+        );
+
+        result = {
+          sent: eaSentCount,
+          remaining: eaRemainingCount,
+          complete: eaComplete,
+          errors: eaErrors.length > 0 ? eaErrors : undefined,
+          message: eaComplete
+            ? `All done! Sent ${eaSentCount} emails.`
+            : `Sent ${eaSentCount}. ~${eaRemainingCount} remaining.`,
         };
         break;
       }

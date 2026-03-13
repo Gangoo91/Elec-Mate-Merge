@@ -100,29 +100,6 @@ export default function EmergencyLightingCertificate() {
   // Hooks for tabs
   const tabProps = useEmergencyLightingTabs(formData);
 
-  // Track online/offline status
-  useEffect(() => {
-    const handleOnline = () => {
-      setIsOnline(true);
-      // Trigger cloud sync when back online
-      if (hasUnsavedChangesRef.current) {
-        syncToCloud();
-      }
-    };
-    const handleOffline = () => {
-      setIsOnline(false);
-      setSyncStatus('offline');
-    };
-
-    window.addEventListener('online', handleOnline);
-    window.addEventListener('offline', handleOffline);
-
-    return () => {
-      window.removeEventListener('online', handleOnline);
-      window.removeEventListener('offline', handleOffline);
-    };
-  }, [syncToCloud]);
-
   // Get current user
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => {
@@ -269,6 +246,29 @@ export default function EmergencyLightingCertificate() {
       // Data is still safe in localStorage
     }
   }, [formData, savedReportId, user, isOnline]);
+
+  // Track online/offline status
+  useEffect(() => {
+    const handleOnline = () => {
+      setIsOnline(true);
+      // Trigger cloud sync when back online
+      if (hasUnsavedChangesRef.current) {
+        syncToCloud();
+      }
+    };
+    const handleOffline = () => {
+      setIsOnline(false);
+      setSyncStatus('offline');
+    };
+
+    window.addEventListener('online', handleOnline);
+    window.addEventListener('offline', handleOffline);
+
+    return () => {
+      window.removeEventListener('online', handleOnline);
+      window.removeEventListener('offline', handleOffline);
+    };
+  }, [syncToCloud]);
 
   // Auto-save effect - runs every 10 seconds
   useEffect(() => {

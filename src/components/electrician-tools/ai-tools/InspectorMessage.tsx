@@ -6,6 +6,7 @@ import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import { motion, AnimatePresence } from 'framer-motion';
 import { cn } from '@/lib/utils';
+import { TypingIndicator } from './chat';
 
 interface InspectorMessageProps {
   message: {
@@ -73,9 +74,17 @@ export const InspectorMessage = memo(
     }
 
     // Strip any ---FOLLOWUP--- block from display (shown as clickable chips instead)
-    const displayContent = message.content
+    let displayContent = message.content
       .replace(/---FOLLOWUP---[\s\S]*?(?:---END_FOLLOWUP---|$)/g, '')
       .trim();
+
+    // During streaming, also strip partial followup markers as they build up
+    // (e.g. "\n---", "\n---F", "\n---FOLLO") to prevent them flashing on screen
+    if (isStreaming) {
+      displayContent = displayContent
+        .replace(/\n-{2,3}(?:F(?:O(?:L(?:L(?:O(?:W(?:U(?:P(?:-{0,3})?)?)?)?)?)?)?)?)?$/, '')
+        .trim();
+    }
 
     // Assistant message - premium design
     return (
@@ -123,136 +132,141 @@ export const InspectorMessage = memo(
 
             {/* Content */}
             <div className="relative px-4 sm:px-5 py-4 sm:py-5">
-              <div className="inspector-message prose prose-sm sm:prose-base max-w-none text-foreground text-left">
-                <ReactMarkdown
-                  remarkPlugins={[remarkGfm]}
-                  components={{
-                    // Section Headers - Clear visual hierarchy
-                    h1: ({ children }) => (
-                      <h1 className="text-lg sm:text-xl font-bold mt-6 mb-3 first:mt-0 text-foreground flex items-center gap-2">
-                        <span className="w-1 h-6 bg-elec-yellow rounded-full" />
-                        {children}
-                      </h1>
-                    ),
-                    h2: ({ children }) => (
-                      <h2 className="text-base sm:text-lg font-bold mt-6 mb-3 first:mt-0 text-foreground pb-2 border-b border-elec-yellow/20 flex items-center gap-2">
-                        <span className="w-1 h-5 bg-gradient-to-b from-elec-yellow to-elec-yellow/40 rounded-full shrink-0" />
-                        {children}
-                      </h2>
-                    ),
-                    h3: ({ children }) => (
-                      <h3 className="text-sm sm:text-base font-semibold mt-5 mb-2 first:mt-0 text-elec-yellow/90">
-                        {children}
-                      </h3>
-                    ),
-                    // Paragraphs - Readable line height
-                    p: ({ children }) => (
-                      <p className="text-sm sm:text-[15px] leading-relaxed my-3 text-foreground/90">
-                        {children}
-                      </p>
-                    ),
-                    // Lists - Clear spacing with native markers
-                    ul: ({ children }) => (
-                      <ul className="my-4 ml-5 space-y-1.5 list-disc marker:text-elec-yellow">
-                        {children}
-                      </ul>
-                    ),
-                    ol: ({ children }) => (
-                      <ol className="my-4 ml-5 space-y-1.5 list-decimal marker:text-elec-yellow marker:font-semibold">
-                        {children}
-                      </ol>
-                    ),
-                    li: ({ children }) => {
-                      const childArray = React.Children.toArray(children);
-                      const firstChild = childArray[0];
-                      const isSubheading =
-                        React.isValidElement(firstChild) && firstChild.type === 'strong';
+              {/* Show typing indicator inside bubble while waiting for first token */}
+              {isStreaming && !displayContent ? (
+                <TypingIndicator label="Composing" />
+              ) : (
+                <div className="inspector-message prose prose-sm sm:prose-base max-w-none text-foreground text-left">
+                  <ReactMarkdown
+                    remarkPlugins={[remarkGfm]}
+                    components={{
+                      // Section Headers - Clear visual hierarchy
+                      h1: ({ children }) => (
+                        <h1 className="text-lg sm:text-xl font-bold mt-6 mb-3 first:mt-0 text-foreground flex items-center gap-2">
+                          <span className="w-1 h-6 bg-elec-yellow rounded-full" />
+                          {children}
+                        </h1>
+                      ),
+                      h2: ({ children }) => (
+                        <h2 className="text-base sm:text-lg font-bold mt-6 mb-3 first:mt-0 text-foreground pb-2 border-b border-elec-yellow/20 flex items-center gap-2">
+                          <span className="w-1 h-5 bg-gradient-to-b from-elec-yellow to-elec-yellow/40 rounded-full shrink-0" />
+                          {children}
+                        </h2>
+                      ),
+                      h3: ({ children }) => (
+                        <h3 className="text-sm sm:text-base font-semibold mt-5 mb-2 first:mt-0 text-elec-yellow/90">
+                          {children}
+                        </h3>
+                      ),
+                      // Paragraphs - Readable line height
+                      p: ({ children }) => (
+                        <p className="text-sm sm:text-[15px] leading-relaxed my-3 text-foreground/90">
+                          {children}
+                        </p>
+                      ),
+                      // Lists - Clear spacing with native markers
+                      ul: ({ children }) => (
+                        <ul className="my-4 ml-5 space-y-1.5 list-disc marker:text-elec-yellow">
+                          {children}
+                        </ul>
+                      ),
+                      ol: ({ children }) => (
+                        <ol className="my-4 ml-5 space-y-1.5 list-decimal marker:text-elec-yellow marker:font-semibold">
+                          {children}
+                        </ol>
+                      ),
+                      li: ({ children }) => {
+                        const childArray = React.Children.toArray(children);
+                        const firstChild = childArray[0];
+                        const isSubheading =
+                          React.isValidElement(firstChild) && firstChild.type === 'strong';
 
-                      if (isSubheading) {
+                        if (isSubheading) {
+                          return (
+                            <li className="text-sm sm:text-[15px] leading-relaxed text-foreground list-none -ml-5 mt-3 first:mt-0 mb-1">
+                              <div className="font-semibold text-foreground flex items-center gap-1.5">
+                                <span className="w-1.5 h-1.5 rounded-full bg-elec-yellow shrink-0" />
+                                {children}
+                              </div>
+                            </li>
+                          );
+                        }
                         return (
-                          <li className="text-sm sm:text-[15px] leading-relaxed text-foreground list-none -ml-5 mt-3 first:mt-0 mb-1">
-                            <div className="font-semibold text-foreground flex items-center gap-1.5">
-                              <span className="w-1.5 h-1.5 rounded-full bg-elec-yellow shrink-0" />
-                              {children}
-                            </div>
+                          <li className="text-sm sm:text-[15px] leading-relaxed text-foreground/90">
+                            {children}
                           </li>
                         );
-                      }
-                      return (
-                        <li className="text-sm sm:text-[15px] leading-relaxed text-foreground/90">
-                          {children}
-                        </li>
-                      );
-                    },
-                    // Strong - Accent color
-                    strong: ({ children }) => (
-                      <strong className="font-semibold text-foreground">{children}</strong>
-                    ),
-                    // Code - Technical styling
-                    code: ({ className, children }) => {
-                      const isInline = !className;
-                      if (isInline) {
+                      },
+                      // Strong - Accent color
+                      strong: ({ children }) => (
+                        <strong className="font-semibold text-foreground">{children}</strong>
+                      ),
+                      // Code - Technical styling
+                      code: ({ className, children }) => {
+                        const isInline = !className;
+                        if (isInline) {
+                          return (
+                            <code className="bg-elec-yellow/10 text-elec-yellow px-1.5 py-0.5 rounded text-[13px] font-mono border border-elec-yellow/20">
+                              {children}
+                            </code>
+                          );
+                        }
                         return (
-                          <code className="bg-elec-yellow/10 text-elec-yellow px-1.5 py-0.5 rounded text-[13px] font-mono border border-elec-yellow/20">
+                          <code
+                            className={cn(
+                              'block bg-black/40 rounded-lg p-4 my-3 text-sm font-mono overflow-x-auto',
+                              'border border-white/10',
+                              className
+                            )}
+                          >
                             {children}
                           </code>
                         );
-                      }
-                      return (
-                        <code
-                          className={cn(
-                            'block bg-black/40 rounded-lg p-4 my-3 text-sm font-mono overflow-x-auto',
-                            'border border-white/10',
-                            className
-                          )}
-                        >
+                      },
+                      // Blockquote - Important notes with warning icon
+                      blockquote: ({ children }) => (
+                        <blockquote className="border-l-3 border-elec-yellow bg-elec-yellow/5 rounded-r-lg pl-4 pr-3 py-3 my-4 text-foreground/90 flex gap-2">
+                          <AlertTriangle className="w-4 h-4 text-elec-yellow shrink-0 mt-0.5" />
+                          <div>{children}</div>
+                        </blockquote>
+                      ),
+                      // Tables - Clean professional look
+                      table: ({ children }) => (
+                        <div className="overflow-x-auto my-4 rounded-lg border border-border/50">
+                          <table className="w-full text-sm">{children}</table>
+                        </div>
+                      ),
+                      thead: ({ children }) => (
+                        <thead className="bg-muted/50 border-b border-border/50">{children}</thead>
+                      ),
+                      th: ({ children }) => (
+                        <th className="px-3 py-2 text-left font-semibold text-foreground">
                           {children}
-                        </code>
-                      );
-                    },
-                    // Blockquote - Important notes with warning icon
-                    blockquote: ({ children }) => (
-                      <blockquote className="border-l-3 border-elec-yellow bg-elec-yellow/5 rounded-r-lg pl-4 pr-3 py-3 my-4 text-foreground/90 flex gap-2">
-                        <AlertTriangle className="w-4 h-4 text-elec-yellow shrink-0 mt-0.5" />
-                        <div>{children}</div>
-                      </blockquote>
-                    ),
-                    // Tables - Clean professional look
-                    table: ({ children }) => (
-                      <div className="overflow-x-auto my-4 rounded-lg border border-border/50">
-                        <table className="w-full text-sm">{children}</table>
-                      </div>
-                    ),
-                    thead: ({ children }) => (
-                      <thead className="bg-muted/50 border-b border-border/50">{children}</thead>
-                    ),
-                    th: ({ children }) => (
-                      <th className="px-3 py-2 text-left font-semibold text-foreground">
-                        {children}
-                      </th>
-                    ),
-                    td: ({ children }) => (
-                      <td className="px-3 py-2 border-t border-border/30 text-foreground/90">
-                        {children}
-                      </td>
-                    ),
-                  }}
-                >
-                  {displayContent}
-                </ReactMarkdown>
+                        </th>
+                      ),
+                      td: ({ children }) => (
+                        <td className="px-3 py-2 border-t border-border/30 text-foreground/90">
+                          {children}
+                        </td>
+                      ),
+                    }}
+                  >
+                    {displayContent}
+                  </ReactMarkdown>
 
-                {/* Streaming cursor */}
-                <AnimatePresence>
-                  {isStreaming && (
-                    <motion.span
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      exit={{ opacity: 0 }}
-                      className="inline-block w-0.5 h-5 ml-0.5 bg-elec-yellow rounded-full animate-[blink_0.8s_ease-in-out_infinite]"
-                    />
-                  )}
-                </AnimatePresence>
-              </div>
+                  {/* Streaming cursor */}
+                  <AnimatePresence>
+                    {isStreaming && (
+                      <motion.span
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        className="inline-block w-0.5 h-5 ml-0.5 bg-elec-yellow rounded-full animate-[blink_0.8s_ease-in-out_infinite]"
+                      />
+                    )}
+                  </AnimatePresence>
+                </div>
+              )}
             </div>
 
             {/* Footer Actions - Only show when not streaming */}

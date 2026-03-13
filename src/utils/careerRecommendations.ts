@@ -892,6 +892,176 @@ export interface AllRecommendations {
   hasAnyRecommendations: boolean;
 }
 
+// ═══════════════════════════════════════════════════════════════════════════
+// Smart Next Steps — Context-Aware Priority List
+// ═══════════════════════════════════════════════════════════════════════════
+
+export type SmartNextStepPriority = 'urgent' | 'important' | 'warning' | 'growth' | 'nice_to_have';
+
+export interface SmartNextStep {
+  id: string;
+  priority: SmartNextStepPriority;
+  title: string;
+  subtitle: string;
+  actionType: 'renew' | 'upload' | 'add' | 'view_course' | 'navigate';
+  navigateTo?: string; // Tab name or route
+  searchQuery?: string; // For course lookup
+  icon: string;
+  colour: 'red' | 'orange' | 'yellow' | 'blue' | 'purple';
+}
+
+interface ComplianceItemInput {
+  id: string;
+  name: string;
+  type: 'qualification' | 'card' | 'training';
+  expiryDate: string;
+  renewalUrl?: string;
+}
+
+interface ProfileCompletenessInput {
+  hasEcsCard: boolean;
+  hasQualifications: boolean;
+  hasSkills: boolean;
+  hasWorkHistory: boolean;
+  hasDocuments: boolean;
+}
+
+/**
+ * Generate context-aware, prioritised next steps.
+ * Priority: URGENT (expired) > IMPORTANT (missing) > WARNING (30d) > GROWTH (career) > NICE-TO-HAVE (skills)
+ */
+export function getSmartNextSteps(
+  complianceItems: ComplianceItemInput[],
+  profileCompleteness: ProfileCompletenessInput,
+  careerProgression: CareerRecommendation[],
+  skillsGaps: SkillGap[]
+): SmartNextStep[] {
+  const steps: SmartNextStep[] = [];
+  const now = new Date();
+
+  // ── 1. URGENT: Expired items ──────────────────────────────────────────
+  for (const item of complianceItems) {
+    const expiry = new Date(item.expiryDate);
+    if (expiry < now) {
+      const daysAgo = Math.floor((now.getTime() - expiry.getTime()) / (1000 * 60 * 60 * 24));
+      steps.push({
+        id: `urgent-${item.id}`,
+        priority: 'urgent',
+        title: `Renew your ${item.name}`,
+        subtitle: `Expired ${daysAgo} day${daysAgo !== 1 ? 's' : ''} ago`,
+        actionType: 'renew',
+        navigateTo:
+          item.renewalUrl || (item.type === 'qualification' ? 'qualifications' : 'training'),
+        icon: 'alert-circle',
+        colour: 'red',
+      });
+    }
+  }
+
+  // ── 2. IMPORTANT: Missing profile data ────────────────────────────────
+  if (!profileCompleteness.hasEcsCard) {
+    steps.push({
+      id: 'important-ecs',
+      priority: 'important',
+      title: 'Upload ECS Card',
+      subtitle: 'Required for identity verification',
+      actionType: 'upload',
+      navigateTo: 'documents',
+      icon: 'id-card',
+      colour: 'orange',
+    });
+  }
+  if (!profileCompleteness.hasQualifications) {
+    steps.push({
+      id: 'important-quals',
+      priority: 'important',
+      title: 'Add qualifications',
+      subtitle: 'Build your verified profile',
+      actionType: 'add',
+      navigateTo: 'qualifications',
+      icon: 'graduation-cap',
+      colour: 'orange',
+    });
+  }
+  if (!profileCompleteness.hasWorkHistory) {
+    steps.push({
+      id: 'important-experience',
+      priority: 'important',
+      title: 'Add work experience',
+      subtitle: 'Show your career history',
+      actionType: 'add',
+      navigateTo: 'experience',
+      icon: 'briefcase',
+      colour: 'orange',
+    });
+  }
+  if (!profileCompleteness.hasSkills) {
+    steps.push({
+      id: 'important-skills',
+      priority: 'important',
+      title: 'Add your skills',
+      subtitle: 'Showcase your expertise',
+      actionType: 'add',
+      navigateTo: 'skills',
+      icon: 'zap',
+      colour: 'orange',
+    });
+  }
+
+  // ── 3. WARNING: Expiring within 30 days ───────────────────────────────
+  for (const item of complianceItems) {
+    const expiry = new Date(item.expiryDate);
+    const daysUntil = Math.floor((expiry.getTime() - now.getTime()) / (1000 * 60 * 60 * 24));
+    if (daysUntil >= 0 && daysUntil <= 30) {
+      const formattedDate = expiry.toLocaleDateString('en-GB', {
+        day: 'numeric',
+        month: 'short',
+      });
+      steps.push({
+        id: `warning-${item.id}`,
+        priority: 'warning',
+        title: `Renew ${item.name}`,
+        subtitle: `Expires ${formattedDate} (${daysUntil} day${daysUntil !== 1 ? 's' : ''})`,
+        actionType: 'renew',
+        navigateTo:
+          item.renewalUrl || (item.type === 'qualification' ? 'qualifications' : 'training'),
+        icon: 'clock',
+        colour: 'yellow',
+      });
+    }
+  }
+
+  // ── 4. GROWTH: Top 2 career progression ───────────────────────────────
+  for (const rec of careerProgression.slice(0, 2)) {
+    steps.push({
+      id: `growth-${rec.id}`,
+      priority: 'growth',
+      title: rec.title,
+      subtitle: rec.reason,
+      actionType: 'view_course',
+      searchQuery: rec.searchQuery,
+      icon: rec.icon,
+      colour: 'blue',
+    });
+  }
+
+  // ── 5. NICE-TO-HAVE: Top 2 skills gaps ────────────────────────────────
+  for (const gap of skillsGaps.slice(0, 2)) {
+    steps.push({
+      id: `gap-${gap.id}`,
+      priority: 'nice_to_have',
+      title: gap.skillName,
+      subtitle: gap.reason,
+      actionType: 'view_course',
+      searchQuery: gap.searchQuery,
+      icon: gap.icon,
+      colour: 'purple',
+    });
+  }
+
+  return steps;
+}
+
 export function getAllRecommendations(
   ecsCardType: string | null,
   qualifications: ElecIdQualification[],

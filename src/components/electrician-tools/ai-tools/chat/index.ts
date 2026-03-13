@@ -6,3 +6,4 @@ export { MessageSkeleton, SearchingSkeleton } from './MessageSkeleton';
 export { FollowUpChips } from './FollowUpChips';
 export { MobileChatInput } from './MobileChatInput';
 export { WelcomeScreen } from './WelcomeScreen';
+export { ChatHistoryDrawer } from './ChatHistoryDrawer';

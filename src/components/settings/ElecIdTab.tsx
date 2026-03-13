@@ -185,7 +185,7 @@ const ElecIdTab = () => {
               <IdCard className="h-6 w-6 text-elec-yellow" />
             </div>
           </div>
-          <p className="text-foreground/70 text-sm">Loading your Elec-ID...</p>
+          <p className="text-white text-sm">Loading your Elec-ID...</p>
         </motion.div>
       </div>
     );
@@ -302,7 +302,7 @@ const ElecIdTab = () => {
                 </div>
                 <div>
                   <p className="font-semibold text-foreground">{activeConfig?.label}</p>
-                  <p className="text-xs text-foreground/70">{activeConfig?.description}</p>
+                  <p className="text-xs text-white">{activeConfig?.description}</p>
                 </div>
               </motion.div>
 
@@ -351,7 +351,7 @@ const ElecIdTab = () => {
                         'relative flex items-center gap-2 px-4 py-2.5 rounded-2xl text-sm font-medium transition-all duration-200 whitespace-nowrap flex-shrink-0 touch-manipulation',
                         isActive
                           ? 'bg-gradient-to-r from-elec-yellow to-amber-400 text-elec-dark shadow-lg shadow-elec-yellow/30'
-                          : 'bg-white/[0.06] text-foreground/70 border border-white/[0.08] active:bg-white/[0.12] active:scale-[0.97]'
+                          : 'bg-white/[0.06] text-white border border-white/[0.08] active:bg-white/[0.12] active:scale-[0.97]'
                       )}
                     >
                       <Icon className={cn('h-4 w-4', isActive ? 'text-elec-dark' : '')} />
@@ -388,7 +388,7 @@ const ElecIdTab = () => {
                 ))}
               </div>
               <div className="flex justify-between mt-1.5">
-                <span className="text-xs text-foreground/70">
+                <span className="text-xs text-white">
                   {activeIndex + 1} of {ELEC_ID_TABS.length}
                 </span>
                 <span className="text-xs text-elec-yellow font-medium">
@@ -412,7 +412,7 @@ const ElecIdTab = () => {
                       'flex items-center justify-center gap-2 px-4 py-3 rounded-xl text-sm font-medium transition-all whitespace-nowrap',
                       isActive
                         ? 'bg-elec-yellow text-elec-dark shadow-lg shadow-elec-yellow/20'
-                        : 'text-foreground/70 hover:text-foreground hover:bg-white/10'
+                        : 'text-white hover:text-white hover:bg-white/10'
                     )}
                   >
                     <Icon className="h-4 w-4 flex-shrink-0" />

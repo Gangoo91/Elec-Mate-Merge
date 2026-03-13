@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Sheet, SheetContent } from '@/components/ui/sheet';
 import { Badge } from '@/components/ui/badge';
@@ -16,11 +17,13 @@ import {
   CircleDot,
   Shield,
   ArrowUpRight,
+  Share2,
 } from 'lucide-react';
 import type { SafetyObservation } from '@/hooks/useSafetyObservations';
 import { useUpdateObservation } from '@/hooks/useSafetyObservations';
 import { useSafetyPDFExport } from '@/hooks/useSafetyPDFExport';
 import { AuditTimeline } from '../common/AuditTimeline';
+import { SafetyDocumentShare } from '../common/SafetyDocumentShare';
 
 const STATUS_CONFIG: Record<
   string,
@@ -58,6 +61,7 @@ export function ObservationDetailSheet({
   onClose,
 }: ObservationDetailSheetProps) {
   const { exportPDF, isExporting, exportingId } = useSafetyPDFExport();
+  const [showShare, setShowShare] = useState(false);
   const updateObservation = useUpdateObservation();
 
   if (!observation) return null;
@@ -354,19 +358,28 @@ export function ObservationDetailSheet({
               {/* Audit Trail */}
               <AuditTimeline recordType="observation" recordId={observation.id} />
 
-              {/* Export PDF */}
-              <button
-                onClick={() => exportPDF('observation', observation.id)}
-                disabled={isExporting && exportingId === observation.id}
-                className="w-full h-11 px-4 rounded-xl bg-white/5 border border-white/10 text-white text-sm font-medium flex items-center justify-center gap-2 touch-manipulation active:scale-[0.98] transition-all disabled:opacity-50"
-              >
-                {isExporting && exportingId === observation.id ? (
-                  <Loader2 className="h-4 w-4 animate-spin" />
-                ) : (
-                  <Download className="h-4 w-4" />
-                )}
-                Export PDF
-              </button>
+              {/* Export & Share */}
+              <div className="grid grid-cols-2 gap-2">
+                <button
+                  onClick={() => exportPDF('observation', observation.id)}
+                  disabled={isExporting && exportingId === observation.id}
+                  className="h-11 px-4 rounded-xl bg-white/5 border border-white/10 text-white text-sm font-medium flex items-center justify-center gap-2 touch-manipulation active:scale-[0.98] transition-all disabled:opacity-50"
+                >
+                  {isExporting && exportingId === observation.id ? (
+                    <Loader2 className="h-4 w-4 animate-spin" />
+                  ) : (
+                    <Download className="h-4 w-4" />
+                  )}
+                  Export PDF
+                </button>
+                <button
+                  onClick={() => setShowShare(true)}
+                  className="h-11 px-4 rounded-xl bg-elec-yellow/10 border border-elec-yellow/20 text-elec-yellow text-sm font-medium flex items-center justify-center gap-2 touch-manipulation active:scale-[0.98] transition-all"
+                >
+                  <Share2 className="h-4 w-4" />
+                  Share
+                </button>
+              </div>
 
               {/* Bottom spacer */}
               <div className="h-6" />
@@ -374,6 +387,14 @@ export function ObservationDetailSheet({
           </div>
         </div>
       </SheetContent>
+
+      <SafetyDocumentShare
+        open={showShare}
+        onClose={() => setShowShare(false)}
+        pdfType="observation"
+        recordId={observation.id}
+        documentTitle={`Safety Observation — ${observation.location || 'Site'}`}
+      />
     </Sheet>
   );
 }

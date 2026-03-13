@@ -1,6 +1,6 @@
 import { useState, useMemo } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { supabase } from '@/integrations/supabase/client';
+import { supabase, SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY } from '@/integrations/supabase/client';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -37,6 +37,8 @@ import {
   UserPlus,
   GraduationCap,
   Zap,
+  Gift,
+  Square,
 } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { format, formatDistanceToNow, parseISO } from 'date-fns';
@@ -303,6 +305,152 @@ export default function AdminIncompleteSignup() {
     sendBatchedEmails(Array.from(selectedUsers));
   };
 
+  // ── V2 "Come Back" Campaign ─────────────────────────────────────
+  const [v2TestEmail, setV2TestEmail] = useState('');
+  const [showV2Test, setShowV2Test] = useState(false);
+  const [confirmV2Send, setConfirmV2Send] = useState(false);
+  const [v2BatchSending, setV2BatchSending] = useState(() => !!(window as any).__v2BatchRunning);
+  const [v2BatchProgress, setV2BatchProgress] = useState(
+    () => (window as any).__v2BatchProgress || { sent: 0, remaining: 0 }
+  );
+
+  // Fetch V2 stats
+  const { data: v2Stats, refetch: refetchV2 } = useQuery<{
+    totalEligible: number;
+    sent: number;
+    conversions: number;
+    conversionRate: string;
+  }>({
+    queryKey: ['admin-incomplete-signup-v2-stats'],
+    queryFn: async () => {
+      const { data, error } = await supabase.functions.invoke('send-incomplete-signup', {
+        body: { action: 'get_v2_stats' },
+      });
+      if (error) throw error;
+      if (data?.error) throw new Error(data.error);
+      return data;
+    },
+    staleTime: 30 * 1000,
+    refetchInterval: 30 * 1000,
+  });
+
+  // Send V2 test email
+  const sendV2TestMutation = useMutation({
+    mutationFn: async (email: string) => {
+      const { data, error } = await supabase.functions.invoke('send-incomplete-signup', {
+        body: { action: 'send_v2_test', testEmail: email },
+      });
+      if (error) throw error;
+      if (data?.error) throw new Error(data.error);
+      return data;
+    },
+    onSuccess: () => {
+      haptic.success();
+      toast({ title: 'V2 test email sent! Check your inbox.', variant: 'success' });
+      setV2TestEmail('');
+      setShowV2Test(false);
+    },
+    onError: (error) => {
+      haptic.error();
+      toast({ title: `Failed: ${error.message}`, variant: 'destructive' });
+    },
+  });
+
+  // V2 batch sender — window-based pattern
+  const startV2BatchLoop = () => {
+    if ((window as any).__v2BatchRunning) return;
+
+    (window as any).__v2BatchRunning = true;
+    (window as any).__v2BatchStopped = false;
+    (window as any).__v2BatchTotal = 0;
+    (window as any).__v2BatchProgress = { sent: 0, remaining: v2Stats?.totalEligible || 0 };
+
+    setV2BatchSending(true);
+    setV2BatchProgress({ sent: 0, remaining: v2Stats?.totalEligible || 0 });
+
+    const sendOneBatch = async () => {
+      if ((window as any).__v2BatchStopped) {
+        toast({
+          title: `Stopped — sent ${(window as any).__v2BatchTotal} V2 emails so far`,
+          variant: 'success',
+        });
+        v2Cleanup();
+        return;
+      }
+
+      try {
+        const session = (await supabase.auth.getSession()).data.session;
+        const resp = await fetch(`${SUPABASE_URL}/functions/v1/send-incomplete-signup`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${session?.access_token}`,
+            apikey: SUPABASE_PUBLISHABLE_KEY,
+          },
+          body: JSON.stringify({ action: 'send_v2_campaign' }),
+        });
+
+        const data = await resp.json();
+        if (!resp.ok || data.error) throw new Error(data.error || `HTTP ${resp.status}`);
+
+        (window as any).__v2BatchTotal += data.sent;
+        const progress = {
+          sent: (window as any).__v2BatchTotal,
+          remaining: data.remaining,
+        };
+        (window as any).__v2BatchProgress = progress;
+        setV2BatchProgress(progress);
+
+        if (data.complete || data.sent === 0) {
+          toast({
+            title: `All done! Sent ${(window as any).__v2BatchTotal} V2 emails`,
+            variant: 'success',
+          });
+          v2Cleanup();
+          return;
+        }
+
+        toast({
+          title: `Batch of ${data.sent} sent (${(window as any).__v2BatchTotal} total) — next batch in 10s...`,
+        });
+
+        (window as any).__v2BatchTimer = window.setTimeout(sendOneBatch, 10000);
+      } catch (err: any) {
+        toast({
+          title: `Batch error: ${err.message} — retrying in 15s...`,
+          variant: 'destructive',
+        });
+        (window as any).__v2BatchTimer = window.setTimeout(sendOneBatch, 15000);
+      }
+    };
+
+    const v2Cleanup = () => {
+      (window as any).__v2BatchRunning = false;
+      if ((window as any).__v2BatchTimer) {
+        window.clearTimeout((window as any).__v2BatchTimer);
+      }
+      setV2BatchSending(false);
+      setConfirmV2Send(false);
+      queryClient.invalidateQueries({ queryKey: ['admin-incomplete-signup-v2-stats'] });
+    };
+
+    sendOneBatch();
+  };
+
+  const stopV2BatchLoop = () => {
+    (window as any).__v2BatchStopped = true;
+    if ((window as any).__v2BatchTimer) {
+      window.clearTimeout((window as any).__v2BatchTimer);
+      toast({
+        title: `Stopped — sent ${(window as any).__v2BatchTotal || 0} V2 emails so far`,
+        variant: 'success',
+      });
+      (window as any).__v2BatchRunning = false;
+      setV2BatchSending(false);
+      queryClient.invalidateQueries({ queryKey: ['admin-incomplete-signup-v2-stats'] });
+    }
+  };
+
   const getRoleBadge = (role: string | null) => {
     if (role === 'apprentice') {
       return (
@@ -327,6 +475,218 @@ export default function AdminIncompleteSignup() {
       }}
     >
       <div className="space-y-4 pb-20">
+        {/* ── V2 "Come Back" Campaign ──────────────────────────────── */}
+        <div className="flex items-center justify-between">
+          <div>
+            <h2 className="text-lg font-semibold flex items-center gap-2">
+              <Gift className="h-5 w-5 text-green-400" />
+              V2 — Come Back Campaign
+            </h2>
+            <p className="text-sm text-white">
+              All abandoned signups — "you were put off by the card deets"
+            </p>
+          </div>
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => refetchV2()}
+            className="gap-2 h-11 touch-manipulation"
+          >
+            <RefreshCw className="h-4 w-4" />
+            <span className="hidden sm:inline">Refresh</span>
+          </Button>
+        </div>
+
+        {/* V2 Stats — 3 cards */}
+        <div className="grid grid-cols-3 gap-2">
+          {[
+            {
+              label: 'Eligible',
+              value: v2Stats?.totalEligible || 0,
+              icon: Users,
+              colour: 'text-green-400',
+              bg: 'from-green-500/10 to-emerald-500/5',
+              border: 'border-green-500/20',
+            },
+            {
+              label: 'Sent',
+              value: v2Stats?.sent || 0,
+              icon: Mail,
+              colour: 'text-blue-400',
+              bg: 'from-blue-500/10 to-cyan-500/5',
+              border: 'border-blue-500/20',
+            },
+            {
+              label: 'Converted',
+              value: v2Stats?.conversions || 0,
+              icon: TrendingUp,
+              colour: 'text-amber-400',
+              bg: 'from-amber-500/10 to-yellow-500/5',
+              border: 'border-amber-500/20',
+            },
+          ].map((s) => (
+            <Card key={s.label} className={`bg-gradient-to-br ${s.bg} ${s.border}`}>
+              <CardContent className="p-2.5 sm:p-3 text-center">
+                <s.icon className={`h-4 w-4 ${s.colour} mx-auto mb-1`} />
+                <p className="text-lg sm:text-xl font-bold">
+                  {v2Stats ? s.value.toLocaleString() : '...'}
+                </p>
+                <p className="text-[10px] sm:text-xs text-white">{s.label}</p>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
+
+        {/* V2 Controls */}
+        <Card className="border-green-500/30 bg-gradient-to-br from-green-500/5 to-emerald-500/5">
+          <CardHeader className="pb-2">
+            <CardTitle className="text-sm flex items-center justify-between">
+              <span className="flex items-center gap-2">
+                <Send className="h-4 w-4 text-green-400" />
+                V2 Campaign Controls
+              </span>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => setShowV2Test(!showV2Test)}
+                className="gap-1.5 h-9 touch-manipulation text-green-400 border-green-400/30 hover:bg-green-500/10"
+              >
+                <TestTube className="h-3.5 w-3.5" />
+                Test
+              </Button>
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-3">
+            {/* Email preview */}
+            <div className="p-3 rounded-xl bg-muted/50 border border-border/50 space-y-1.5">
+              <p className="text-xs text-white font-semibold">Email Preview</p>
+              <p className="text-xs text-green-400 font-medium">
+                Subject: Your Elec-Mate account — here's what you're missing
+              </p>
+              <p className="text-xs text-white">
+                From: Andrew at Elec-Mate &lt;founder@elec-mate.com&gt;
+              </p>
+              <p className="text-xs text-white">
+                Opening: "You came to sign up but were put off by the card deets..." · 7-day free
+                trial · Cancel anytime · V5-style feature sections
+              </p>
+            </div>
+
+            {/* Test email */}
+            {showV2Test && (
+              <div className="p-3 rounded-xl bg-green-500/10 border border-green-500/20 space-y-2">
+                <p className="text-xs text-green-400 font-semibold">Send V2 Test Email</p>
+                <div className="flex gap-2">
+                  <Input
+                    type="email"
+                    value={v2TestEmail}
+                    onChange={(e) => setV2TestEmail(e.target.value)}
+                    placeholder="your@email.com"
+                    className="h-11 text-base touch-manipulation flex-1"
+                  />
+                  <Button
+                    onClick={() => v2TestEmail && sendV2TestMutation.mutate(v2TestEmail)}
+                    disabled={!v2TestEmail || sendV2TestMutation.isPending}
+                    className="h-11 px-4 touch-manipulation bg-green-500 hover:bg-green-600"
+                  >
+                    {sendV2TestMutation.isPending ? (
+                      <Loader2 className="h-4 w-4 animate-spin" />
+                    ) : (
+                      <Send className="h-4 w-4" />
+                    )}
+                  </Button>
+                </div>
+              </div>
+            )}
+
+            {/* Batch progress */}
+            {v2BatchSending && (
+              <div className="p-3 rounded-xl bg-green-500/10 border border-green-500/20 space-y-2">
+                <div className="flex items-center justify-between text-sm">
+                  <span className="flex items-center gap-2 text-green-400 font-semibold">
+                    <Loader2 className="h-4 w-4 animate-spin" />
+                    Sending...
+                  </span>
+                  <span className="text-white">
+                    {v2BatchProgress.sent} sent · {v2BatchProgress.remaining} left
+                  </span>
+                </div>
+                <div className="w-full h-3 bg-muted rounded-full overflow-hidden">
+                  <div
+                    className="h-full bg-gradient-to-r from-green-500 to-emerald-500 rounded-full transition-all duration-500"
+                    style={{
+                      width: `${
+                        v2BatchProgress.sent + v2BatchProgress.remaining > 0
+                          ? (v2BatchProgress.sent /
+                              (v2BatchProgress.sent + v2BatchProgress.remaining)) *
+                            100
+                          : 0
+                      }%`,
+                    }}
+                  />
+                </div>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="w-full h-9 touch-manipulation text-red-400 border-red-500/30 hover:bg-red-500/10 gap-1.5"
+                  onClick={stopV2BatchLoop}
+                >
+                  <Square className="h-3 w-3 fill-current" />
+                  Stop Sending
+                </Button>
+              </div>
+            )}
+
+            {/* Send all button */}
+            {!v2BatchSending && (v2Stats?.totalEligible || 0) > 0 && (
+              <div className="pt-1">
+                <Button
+                  onClick={() => setConfirmV2Send(true)}
+                  className="w-full h-12 touch-manipulation text-sm font-bold bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 text-white rounded-xl gap-2"
+                >
+                  <Send className="h-4 w-4" />
+                  Send to All Eligible ({v2Stats?.totalEligible || 0})
+                </Button>
+                <p className="text-[10px] text-white text-center mt-1">
+                  Sends in batches of 10 · Excludes subscribed users
+                </p>
+              </div>
+            )}
+          </CardContent>
+        </Card>
+
+        {/* Confirm V2 Send Dialog */}
+        <AlertDialog open={confirmV2Send} onOpenChange={setConfirmV2Send}>
+          <AlertDialogContent className="max-w-[calc(100vw-2rem)] sm:max-w-lg rounded-2xl p-5 sm:p-6">
+            <AlertDialogHeader className="space-y-3">
+              <AlertDialogTitle className="text-base sm:text-lg leading-tight">
+                Send V2 "Come Back" email to {v2Stats?.totalEligible || 0} users?
+              </AlertDialogTitle>
+              <AlertDialogDescription className="text-sm leading-relaxed">
+                This sends the new V2 email to all abandoned signups who haven't received it yet.
+                Subscribed users are excluded. Sends in batches of 10. You can stop at any time.
+              </AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter className="flex-col-reverse sm:flex-row gap-2 sm:gap-2 pt-2">
+              <AlertDialogCancel className="h-12 sm:h-11 touch-manipulation text-base sm:text-sm w-full sm:w-auto mt-0">
+                Cancel
+              </AlertDialogCancel>
+              <AlertDialogAction
+                onClick={() => {
+                  setConfirmV2Send(false);
+                  window.setTimeout(startV2BatchLoop, 200);
+                }}
+                className="h-12 sm:h-11 touch-manipulation text-base sm:text-sm bg-green-500 hover:bg-green-600 text-white font-semibold w-full sm:w-auto"
+              >
+                <Send className="h-4 w-4 mr-2" />
+                Start Sending
+              </AlertDialogAction>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
+
+        {/* ── Original V1 Campaign ──────────────────────────────────── */}
+
         {/* Header */}
         <div className="flex items-center justify-between">
           <div>

@@ -17,6 +17,7 @@ import {
   Search,
   X,
   RotateCcw,
+  Share2,
 } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import {
@@ -32,6 +33,7 @@ import { SafetyEmptyState } from '../common/SafetyEmptyState';
 import { SafetySkeletonLoader } from '../common/SafetySkeletonLoader';
 import { useHaptic } from '@/hooks/useHaptic';
 import { useSafetyPDFExport } from '@/hooks/useSafetyPDFExport';
+import { SafetyDocumentShare } from '../common/SafetyDocumentShare';
 
 interface PreUseCheckToolProps {
   onBack: () => void;
@@ -58,6 +60,8 @@ function resultBadge(result: string) {
 export function PreUseCheckTool({ onBack }: PreUseCheckToolProps) {
   const haptic = useHaptic();
   const { exportPDF, isExporting, exportingId } = useSafetyPDFExport();
+  const [shareRecordId, setShareRecordId] = useState<string | null>(null);
+  const [shareRecordTitle, setShareRecordTitle] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<CategoryKey | null>(null);
   const [showForm, setShowForm] = useState(false);
   const { data: checks = [], isLoading } = usePreUseChecks();
@@ -316,6 +320,15 @@ export function PreUseCheckTool({ onBack }: PreUseCheckToolProps) {
                             )}
                             Export PDF
                           </button>
+                          <button
+                            onClick={() => {
+                              setShareRecordId(check.id);
+                              setShareRecordTitle(check.equipment_type);
+                            }}
+                            className="h-11 w-11 rounded-xl bg-elec-yellow/10 border border-elec-yellow/20 text-elec-yellow flex items-center justify-center touch-manipulation active:scale-[0.98] transition-all"
+                          >
+                            <Share2 className="h-4 w-4" />
+                          </button>
                         </div>
                       </motion.div>
                     ))}
@@ -326,6 +339,16 @@ export function PreUseCheckTool({ onBack }: PreUseCheckToolProps) {
           )}
         </AnimatePresence>
       </div>
+
+      {shareRecordId && (
+        <SafetyDocumentShare
+          open={!!shareRecordId}
+          onClose={() => setShareRecordId(null)}
+          pdfType="pre-use-check"
+          recordId={shareRecordId}
+          documentTitle={`Pre-Use Check — ${shareRecordTitle}`}
+        />
+      )}
     </div>
   );
 }

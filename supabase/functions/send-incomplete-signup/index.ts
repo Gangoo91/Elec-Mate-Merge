@@ -264,6 +264,128 @@ function generateApprenticeEmailHTML(user: EligibleUser): string {
 </body></html>`;
 }
 
+// V2 "Come Back" email — V5-style, targets ALL abandoned signups (no 10-day window)
+function generateV2EmailHTML(user: EligibleUser): string {
+  const firstName = user.full_name?.split(' ')[0] || 'mate';
+  const t = 'color:#ffffff;font-size:14px;line-height:1.6;margin:0 0 5px';
+  const b = 'color:#fff;font-weight:700';
+  const h =
+    'font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;margin:0 0 10px';
+
+  return `<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><meta name="color-scheme" content="dark"><!--[if mso]><style>body,table,td{font-family:Arial,sans-serif!important}</style><![endif]--></head>
+<body style="margin:0;padding:0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;background:#0f172a">
+<table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background:#0f172a"><tr><td style="padding:24px 12px">
+<table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="max-width:500px;margin:0 auto;background:linear-gradient(180deg,#1e293b,#0f172a);border-radius:24px;overflow:hidden;border:1px solid rgba(251,191,36,0.2)">
+
+<!-- Opening -->
+<tr><td style="padding:32px 24px 20px">
+<p style="margin:0 0 16px;font-size:17px;color:#fff;line-height:1.6">Hey ${firstName},</p>
+<p style="margin:0 0 14px;font-size:16px;color:#fff;line-height:1.7">You came to sign up to Elec-Mate, but were put off by putting your card deets in. Fair enough &mdash; I get it.</p>
+<p style="margin:0 0 14px;font-size:16px;color:#fff;line-height:1.7">But here's the thing: <strong style="color:#22c55e">you won't be charged for 7 full days</strong>. You can cancel any time with one tap &mdash; no questions, no hassle, no hidden fees. If it's not for you, you pay nothing.</p>
+<p style="margin:0;font-size:16px;color:#fff;line-height:1.7">Since you last looked, we've been shipping features every single day. Here's what's actually in it now:</p>
+</td></tr>
+
+<!-- Stats Strip — 4 gold boxes -->
+<tr><td style="padding:0 20px 16px">
+<table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%"><tr>
+<td width="25%" style="padding:0 3px 0 0"><div style="background:linear-gradient(135deg,#fbbf24,#f59e0b);border-radius:12px;padding:14px 6px;text-align:center">
+<p style="margin:0;font-size:24px;font-weight:800;color:#0f172a;line-height:1">122</p>
+<p style="margin:4px 0 0;font-size:9px;font-weight:800;color:#0f172a;text-transform:uppercase;letter-spacing:0.5px">AI Tools</p>
+</div></td>
+<td width="25%" style="padding:0 2px"><div style="background:linear-gradient(135deg,#fbbf24,#f59e0b);border-radius:12px;padding:14px 6px;text-align:center">
+<p style="margin:0;font-size:24px;font-weight:800;color:#0f172a;line-height:1">8</p>
+<p style="margin:4px 0 0;font-size:9px;font-weight:800;color:#0f172a;text-transform:uppercase;letter-spacing:0.5px">Cert Types</p>
+</div></td>
+<td width="25%" style="padding:0 2px"><div style="background:linear-gradient(135deg,#fbbf24,#f59e0b);border-radius:12px;padding:14px 6px;text-align:center">
+<p style="margin:0;font-size:24px;font-weight:800;color:#0f172a;line-height:1">15</p>
+<p style="margin:4px 0 0;font-size:9px;font-weight:800;color:#0f172a;text-transform:uppercase;letter-spacing:0.5px">AI Agents</p>
+</div></td>
+<td width="25%" style="padding:0 0 0 3px"><div style="background:linear-gradient(135deg,#fbbf24,#f59e0b);border-radius:12px;padding:14px 6px;text-align:center">
+<p style="margin:0;font-size:24px;font-weight:800;color:#0f172a;line-height:1">64+</p>
+<p style="margin:4px 0 0;font-size:9px;font-weight:800;color:#0f172a;text-transform:uppercase;letter-spacing:0.5px">Calculators</p>
+</div></td>
+</tr></table>
+</td></tr>
+
+<!-- Certs & Testing (green) -->
+<tr><td style="padding:0 20px 12px"><div style="background:linear-gradient(135deg,rgba(34,197,94,0.12),rgba(34,197,94,0.03));border:1px solid rgba(34,197,94,0.3);border-radius:14px;padding:18px">
+<p style="${h};color:#22c55e">&#x1F4CB; Certificates &amp; Testing</p>
+<p style="${t}">&#x2713; EICR, EIC, Minor Works, Fire Alarm, EV Charging, Emergency Lighting, Solar PV, PAT Testing</p>
+<p style="margin:10px 0 0;font-size:13px;color:#22c55e;line-height:1.6;font-weight:600">Photo capture, defect coding, PDF export, email to client. Fill it in on site &rarr; client gets it before you're back in the van.</p>
+</div></td></tr>
+
+<!-- AI Tools (yellow) -->
+<tr><td style="padding:0 20px 12px"><div style="background:linear-gradient(135deg,rgba(251,191,36,0.12),rgba(251,191,36,0.03));border:1px solid rgba(251,191,36,0.3);border-radius:14px;padding:18px">
+<p style="${h};color:#fbbf24">&#x1F916; AI Tools &mdash; Point Your Camera, Get Answers</p>
+<p style="${t}">&#x2713; <strong style="${b}">Circuit Designer</strong> &mdash; BS 7671 compliant designs, cable sizing, CU layouts</p>
+<p style="${t}">&#x2713; <strong style="${b}">Cost Engineer</strong> &mdash; quotes with live material pricing + labour rates</p>
+<p style="${t}">&#x2713; <strong style="${b}">RAMS Generator</strong> &mdash; risk assessment from a job description in 2 minutes</p>
+<p style="${t}">&#x2713; <strong style="${b}">Photo Analysis</strong> &mdash; photograph a component &rarr; get specs + regs</p>
+<p style="${t}">&#x2713; <strong style="${b}">Board Scanner</strong> &mdash; photograph a DB, auto circuit mapping</p>
+<p style="margin:0;font-size:13px;color:#fbbf24;font-weight:600">+ Fault Diagnosis, Installation Verification, Wiring Instructions, Client Explainer and more</p>
+</div></td></tr>
+
+<!-- Business Tools (amber) -->
+<tr><td style="padding:0 20px 12px"><div style="background:linear-gradient(135deg,rgba(245,158,11,0.12),rgba(245,158,11,0.03));border:1px solid rgba(245,158,11,0.3);border-radius:14px;padding:18px">
+<p style="${h};color:#f59e0b">&#x1F4BC; Business Tools</p>
+<p style="${t}">&#x2713; Quote &amp; Invoice Builder with Stripe payments</p>
+<p style="${t}">&#x2713; Customer database &middot; Project management &middot; Expense tracking</p>
+<p style="${t}">&#x2713; 50+ electrical calculators &middot; 14 business calculators</p>
+<p style="margin:0;${t}">&#x2713; Booking Portal &middot; Referral system &middot; Materials marketplace</p>
+</div></td></tr>
+
+<!-- Study Centre (cyan) -->
+<tr><td style="padding:0 20px 12px"><div style="background:linear-gradient(135deg,rgba(6,182,212,0.12),rgba(6,182,212,0.03));border:1px solid rgba(6,182,212,0.3);border-radius:14px;padding:18px">
+<p style="${h};color:#06b6d4">&#x1F393; Study Centre</p>
+<p style="${t}">&#x2713; 60+ Video Lessons &middot; 780 Flash Cards &middot; AM2 &amp; EPA Simulators</p>
+<p style="margin:0;${t}">&#x2713; Electrical &amp; business upskilling courses &middot; Mental health resources</p>
+</div></td></tr>
+
+<!-- Site Safety (red) -->
+<tr><td style="padding:0 20px 12px"><div style="background:linear-gradient(135deg,rgba(239,68,68,0.12),rgba(239,68,68,0.03));border:1px solid rgba(239,68,68,0.3);border-radius:14px;padding:18px">
+<p style="${h};color:#ef4444">&#x1F6E1;&#xFE0F; Site Safety</p>
+<p style="margin:0;${t}">&#x2713; RAMS from a job description &middot; Method statements &middot; Safe isolation &middot; Equipment tracking</p>
+</div></td></tr>
+
+<!-- Mate Section (gold/dark gradient) -->
+<tr><td style="padding:0 20px 12px"><div style="background:linear-gradient(135deg,rgba(251,191,36,0.12),rgba(15,23,42,0.9));border:2px solid rgba(251,191,36,0.3);border-radius:14px;padding:18px">
+<p style="margin:0 0 12px;font-size:15px;font-weight:800;color:#fbbf24;text-transform:uppercase;letter-spacing:1px">&#x1F4AC; And Then There's Mate.</p>
+<p style="margin:0 0 12px;font-size:14px;color:#fff;line-height:1.6">Your AI business assistant on WhatsApp. Message it like a colleague &mdash; it creates quotes, raises invoices, answers BS 7671 questions, manages your diary. Works while you're on the tools.</p>
+<p style="margin:0;font-size:13px;color:#fff;line-height:1.5">Mate is an optional add-on. Reply to this email if you want in on the beta.</p>
+</div></td></tr>
+
+<!-- Free Trial CTA (green highlight) -->
+<tr><td style="padding:0 20px 16px"><div style="background:linear-gradient(135deg,rgba(34,197,94,0.15),rgba(34,197,94,0.05));border:2px solid rgba(34,197,94,0.4);border-radius:16px;padding:24px 18px;text-align:center">
+<p style="margin:0 0 8px;font-size:20px;color:#22c55e;font-weight:800">7 Days Free. No Charge.</p>
+<p style="margin:0 0 6px;font-size:15px;color:#fff;line-height:1.5">Your card won't be touched for a full week. Try everything &mdash; certs, AI tools, calculators, the lot.</p>
+<p style="margin:0 0 18px;font-size:15px;color:#fff;line-height:1.5"><strong style="color:#22c55e">Cancel any time</strong> with one tap. No questions asked. No hidden fees. If it's not for you, you pay absolutely nothing.</p>
+<p style="margin:0 0 6px;font-size:14px;color:#fff">Then just <strong style="color:#fbbf24">&pound;9.99/mo</strong> &mdash; less than two coffees for 122 tools in your pocket.</p>
+<p style="margin:12px 0 0;font-size:14px;color:#fff">Apprentice? It's only <strong style="color:#a855f7">&pound;4.99/mo</strong>.</p>
+</div></td></tr>
+
+<!-- CTA Button -->
+<tr><td style="padding:0 20px 16px">
+<a href="https://elec-mate.com" style="display:block;padding:18px;background:linear-gradient(135deg,#22c55e,#16a34a);color:#fff;text-decoration:none;font-size:17px;font-weight:700;border-radius:14px;text-align:center;box-shadow:0 8px 24px rgba(34,197,94,0.35)">Start Your Free Trial &rarr;</a>
+<p style="margin:8px 0 0;font-size:13px;color:#fff;text-align:center">No charge for 7 days &middot; Cancel anytime</p>
+</td></tr>
+
+<!-- Sign-off -->
+<tr><td style="padding:0 20px 16px"><div style="background:linear-gradient(135deg,rgba(251,191,36,0.08),rgba(251,191,36,0.02));border:1px solid rgba(251,191,36,0.15);border-radius:14px;padding:18px">
+<p style="margin:0 0 12px;font-size:14px;color:#fff;line-height:1.6">Hit reply if you've got any questions &mdash; it comes straight to me. Not a chatbot, not a support team. Just me, Andrew.</p>
+<p style="margin:0 0 4px;font-size:15px;color:#fff">Cheers,</p>
+<p style="margin:0 0 2px;font-size:17px;color:#fbbf24;font-weight:700">Andrew</p>
+<p style="margin:0;font-size:13px;color:#fff">Founder &amp; sparky &middot; Elec-Mate</p>
+</div></td></tr>
+
+<!-- Footer -->
+<tr><td style="padding:16px 24px;text-align:center;border-top:1px solid rgba(255,255,255,0.08)">
+<p style="margin:0;font-size:12px;color:#fff">&copy; ${new Date().getFullYear()} Elec-Mate &middot; Built for UK Sparks &#x1F1EC;&#x1F1E7; &#x26A1;</p>
+</td></tr>
+
+</table></td></tr></table>
+</body></html>`;
+}
+
 Deno.serve(async (req) => {
   if (req.method === 'OPTIONS') {
     return new Response('ok', { headers: corsHeaders });
@@ -781,6 +903,202 @@ Deno.serve(async (req) => {
         result = {
           reset: resetIds.length,
           message: `${resetIds.length} users reset and eligible for resend`,
+        };
+        break;
+      }
+
+      // ── V2 Campaign — targets ALL abandoned signups (no 10-day window) ──
+
+      case 'get_v2_stats': {
+        // Only target abandoned checkout users — those with a stripe_customer_id
+        // (they started checkout but never completed payment)
+        const { data: v2Profiles, error: v2StatsErr } = await supabaseAdmin
+          .from('profiles')
+          .select('id, incomplete_signup_v2_sent_at, subscribed, free_access_granted')
+          .or('role.eq.electrician,role.eq.apprentice')
+          .not('stripe_customer_id', 'is', null);
+        if (v2StatsErr) throw v2StatsErr;
+
+        // Filter to non-subscribed, non-free-access (the actual abandoned checkout cohort)
+        const abandonedCheckout = (v2Profiles || []).filter((p) => {
+          if (p.subscribed === true) return false;
+          if (p.free_access_granted === true) return false;
+          return true;
+        });
+
+        const v2Eligible = abandonedCheckout.filter((p) => !p.incomplete_signup_v2_sent_at);
+        const v2Sent = abandonedCheckout.filter((p) => p.incomplete_signup_v2_sent_at);
+        const v2Conversions = v2Sent.filter((p) => p.subscribed);
+
+        result = {
+          totalEligible: v2Eligible.length,
+          sent: v2Sent.length,
+          conversions: v2Conversions.length,
+          conversionRate:
+            v2Sent.length > 0 ? ((v2Conversions.length / v2Sent.length) * 100).toFixed(1) : '0',
+        };
+        break;
+      }
+
+      case 'send_v2_test': {
+        if (!testEmail) throw new Error('testEmail is required');
+
+        const testUser: EligibleUser = {
+          id: 'test',
+          full_name: recipientName || 'Test User',
+          username: 'test',
+          email: testEmail,
+          role: 'electrician',
+          created_at: new Date().toISOString(),
+        };
+
+        const v2TestHtml = generateV2EmailHTML(testUser);
+        const { data: v2TestData, error: v2TestErr } = await resend.emails.send({
+          from: 'Andrew at Elec-Mate <founder@elec-mate.com>',
+          replyTo: 'founder@elec-mate.com',
+          to: [testEmail.trim().toLowerCase()],
+          subject: "[TEST] Your Elec-Mate account — here's what you're missing",
+          html: v2TestHtml,
+          tags: [
+            { name: 'campaign', value: 'incomplete_signup_v2' },
+            { name: 'type', value: 'test' },
+          ],
+        });
+
+        if (v2TestErr) throw new Error(`Failed to send: ${v2TestErr.message}`);
+
+        console.log(`V2 test email sent to ${testEmail} by admin ${user.id}`);
+        result = { success: true, email: testEmail, resendId: v2TestData?.id };
+        break;
+      }
+
+      case 'send_v2_campaign': {
+        // Batch send V2 emails — called repeatedly by frontend until complete
+        const V2_BATCH_SIZE = 10;
+
+        // Only abandoned checkout users: has stripe_customer_id, not subscribed, no free access
+        const { data: v2AllProfiles, error: v2AllErr } = await supabaseAdmin
+          .from('profiles')
+          .select('id, full_name, username, role, created_at, subscribed, free_access_granted')
+          .or('role.eq.electrician,role.eq.apprentice')
+          .not('stripe_customer_id', 'is', null)
+          .is('incomplete_signup_v2_sent_at', null)
+          .order('created_at', { ascending: true });
+        if (v2AllErr) throw v2AllErr;
+
+        // Filter out subscribed and free-access (supabase-js OR/null edge cases)
+        const v2Filtered = (v2AllProfiles || []).filter(
+          (p: any) => !p.subscribed && !p.free_access_granted
+        );
+
+        // Get emails from auth
+        const { data: v2AuthData } = await supabaseAdmin.rpc('get_auth_user_emails');
+        const v2EmailMap = new Map<string, string>();
+        (v2AuthData || []).forEach((u: any) => {
+          if (u.email) v2EmailMap.set(u.id, u.email);
+        });
+
+        const v2WithEmails = v2Filtered
+          .map((p: any) => ({ ...p, email: v2EmailMap.get(p.id) || null }))
+          .filter((p: any) => p.email);
+
+        const v2Batch = v2WithEmails.slice(0, V2_BATCH_SIZE);
+
+        if (v2Batch.length === 0) {
+          result = { sent: 0, remaining: 0, complete: true, message: 'All V2 emails sent!' };
+          break;
+        }
+
+        let v2SentCount = 0;
+        const v2Errors: string[] = [];
+
+        for (let i = 0; i < v2Batch.length; i++) {
+          const profile = v2Batch[i];
+          try {
+            const emailUser: EligibleUser = {
+              id: profile.id,
+              full_name: profile.full_name,
+              username: profile.username,
+              email: profile.email,
+              role: profile.role,
+              created_at: profile.created_at,
+            };
+
+            const emailHtml = generateV2EmailHTML(emailUser);
+
+            const { data: emailData, error: emailError } = await resend.emails.send({
+              from: 'Andrew at Elec-Mate <founder@elec-mate.com>',
+              replyTo: 'founder@elec-mate.com',
+              to: [profile.email.trim().toLowerCase()],
+              subject: "Your Elec-Mate account — here's what you're missing",
+              html: emailHtml,
+              tags: [
+                { name: 'campaign', value: 'incomplete_signup_v2' },
+                { name: 'role', value: profile.role || 'electrician' },
+                { name: 'user_id', value: profile.id },
+              ],
+            });
+
+            if (emailError) {
+              v2Errors.push(`${profile.email}: ${emailError.message}`);
+              continue;
+            }
+
+            // Mark as sent
+            await supabaseAdmin
+              .from('profiles')
+              .update({ incomplete_signup_v2_sent_at: new Date().toISOString() })
+              .eq('id', profile.id);
+
+            // Log to email_logs
+            await supabaseAdmin.from('email_logs').insert({
+              to_email: profile.email,
+              subject: "Your Elec-Mate account — here's what you're missing",
+              template: 'incomplete_signup_v2',
+              status: 'sent',
+              metadata: {
+                resend_id: emailData?.id,
+                user_id: profile.id,
+                role: profile.role,
+              },
+            });
+
+            v2SentCount++;
+
+            // Rate limit between sends
+            if (i < v2Batch.length - 1) {
+              await sleep(SEND_DELAY_MS);
+            }
+          } catch (err: any) {
+            v2Errors.push(`${profile.email}: ${err.message}`);
+          }
+        }
+
+        // Count remaining — same abandoned checkout filter
+        const { data: v2RemainingProfiles } = await supabaseAdmin
+          .from('profiles')
+          .select('id, subscribed, free_access_granted')
+          .or('role.eq.electrician,role.eq.apprentice')
+          .not('stripe_customer_id', 'is', null)
+          .is('incomplete_signup_v2_sent_at', null);
+
+        const v2RemainingCount = (v2RemainingProfiles || []).filter(
+          (p: any) => !p.subscribed && !p.free_access_granted
+        ).length;
+        const v2Complete = v2RemainingCount === 0;
+
+        console.log(
+          `V2 campaign: Sent ${v2SentCount}/${v2Batch.length} by admin ${user.id}. ~${v2RemainingCount} remaining.`
+        );
+
+        result = {
+          sent: v2SentCount,
+          remaining: v2RemainingCount,
+          complete: v2Complete,
+          errors: v2Errors.length > 0 ? v2Errors : undefined,
+          message: v2Complete
+            ? `All done! Sent ${v2SentCount} emails.`
+            : `Sent ${v2SentCount}. ~${v2RemainingCount} remaining.`,
         };
         break;
       }

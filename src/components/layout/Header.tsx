@@ -1,9 +1,10 @@
-import { Menu, Search } from 'lucide-react';
+import { Menu, Search, Info } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useIsMobile } from '@/hooks/use-mobile';
 import RecordingIndicator from '../apprentice/timer/RecordingIndicator';
 import UserProfileDropdown from '../auth/UserProfileDropdown';
 import { CommandPalette } from '../search/CommandPalette';
+import AppTipsSheet from './AppTipsSheet';
 import { useRef, useEffect, useState } from 'react';
 import { format } from 'date-fns';
 import { cn } from '@/lib/utils';
@@ -85,6 +86,7 @@ const Header = ({ toggleSidebar }: HeaderProps) => {
   const headerRef = useRef<HTMLElement>(null);
   const [isScrolled, setIsScrolled] = useState(false);
   const [commandOpen, setCommandOpen] = useState(false);
+  const [tipsOpen, setTipsOpen] = useState(false);
 
   // Cmd+K / Ctrl+K keyboard shortcut
   useEffect(() => {
@@ -188,6 +190,22 @@ const Header = ({ toggleSidebar }: HeaderProps) => {
             <Button
               variant="ghost"
               size="icon"
+              onClick={() => setTipsOpen(true)}
+              className={cn(
+                'h-10 w-10 min-w-[40px] min-h-[40px]',
+                'hover:bg-white/10 active:bg-white/15',
+                'touch-manipulation rounded-xl',
+                'transition-all duration-150'
+              )}
+              aria-label="Tips and guidance"
+            >
+              <Info className="h-4.5 w-4.5 text-white" />
+            </Button>
+          </motion.div>
+          <motion.div whileTap={{ scale: 0.92 }}>
+            <Button
+              variant="ghost"
+              size="icon"
               onClick={() => setCommandOpen(true)}
               className={cn(
                 'h-10 w-10 min-w-[40px] min-h-[40px]',
@@ -204,6 +222,7 @@ const Header = ({ toggleSidebar }: HeaderProps) => {
         </div>
       </div>
       <CommandPalette open={commandOpen} onOpenChange={setCommandOpen} />
+      <AppTipsSheet open={tipsOpen} onOpenChange={setTipsOpen} />
     </header>
   );
 };

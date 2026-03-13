@@ -42,6 +42,8 @@ import {
   ChevronRight,
   Square,
   Eye,
+  Gift,
+  Zap,
 } from 'lucide-react';
 import { format, formatDistanceToNow } from 'date-fns';
 import { toast } from 'sonner';
@@ -299,6 +301,146 @@ export default function AdminEarlyAccess() {
     }
   };
 
+  // ── £7.99 Offer Campaign ─────────────────────────────────────────
+  const [offerTestEmail, setOfferTestEmail] = useState('');
+  const [showOfferTest, setShowOfferTest] = useState(false);
+  const [confirmOfferSend, setConfirmOfferSend] = useState(false);
+  const [offerBatchSending, setOfferBatchSending] = useState(
+    () => !!(window as any).__eaOfferBatchRunning
+  );
+  const [offerBatchProgress, setOfferBatchProgress] = useState(
+    () => (window as any).__eaOfferBatchProgress || { sent: 0, remaining: 0 }
+  );
+  const offerStopRef = useRef(false);
+
+  // Fetch offer status
+  const { data: offerStatus, refetch: refetchOffer } = useQuery<{
+    total: number;
+    sent: number;
+    remaining: number;
+  }>({
+    queryKey: ['admin-ea-offer-status'],
+    queryFn: async () => {
+      const { data, error } = await supabase.functions.invoke('send-early-access-invite', {
+        body: { action: 'get_ea_offer_status' },
+      });
+      if (error) throw error;
+      if (data?.error) throw new Error(data.error);
+      return data;
+    },
+    staleTime: 30 * 1000,
+    refetchInterval: 30 * 1000,
+  });
+
+  // Send test offer email
+  const sendOfferTestMutation = useMutation({
+    mutationFn: async (email: string) => {
+      const { data, error } = await supabase.functions.invoke('send-early-access-invite', {
+        body: { action: 'send_ea_offer_test', testEmail: email },
+      });
+      if (error) throw error;
+      if (data?.error) throw new Error(data.error);
+      return data;
+    },
+    onSuccess: () => {
+      haptic.success();
+      toast.success('Test offer email sent! Check your inbox.');
+      setOfferTestEmail('');
+      setShowOfferTest(false);
+    },
+    onError: (error) => {
+      haptic.error();
+      toast.error(`Failed: ${error.message}`);
+    },
+  });
+
+  // Offer batch sender — same window pattern as conversion campaign
+  const startOfferBatchLoop = () => {
+    if ((window as any).__eaOfferBatchRunning) return;
+
+    (window as any).__eaOfferBatchRunning = true;
+    (window as any).__eaOfferBatchStopped = false;
+    (window as any).__eaOfferBatchTotal = 0;
+    (window as any).__eaOfferBatchProgress = { sent: 0, remaining: offerStatus?.remaining || 0 };
+
+    offerStopRef.current = false;
+    setOfferBatchSending(true);
+    setOfferBatchProgress({ sent: 0, remaining: offerStatus?.remaining || 0 });
+
+    const sendOneBatch = async () => {
+      if ((window as any).__eaOfferBatchStopped) {
+        toast.success(`Stopped — sent ${(window as any).__eaOfferBatchTotal} offer emails so far`);
+        offerCleanup();
+        return;
+      }
+
+      try {
+        const session = (await supabase.auth.getSession()).data.session;
+        const resp = await fetch(`${SUPABASE_URL}/functions/v1/send-early-access-invite`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${session?.access_token}`,
+            apikey: SUPABASE_PUBLISHABLE_KEY,
+          },
+          body: JSON.stringify({ action: 'send_ea_offer_campaign' }),
+        });
+
+        const data = await resp.json();
+        if (!resp.ok || data.error) throw new Error(data.error || `HTTP ${resp.status}`);
+
+        (window as any).__eaOfferBatchTotal += data.sent;
+        const progress = {
+          sent: (window as any).__eaOfferBatchTotal,
+          remaining: data.remaining,
+        };
+        (window as any).__eaOfferBatchProgress = progress;
+        setOfferBatchProgress(progress);
+
+        if (data.complete || data.sent === 0) {
+          toast.success(`All done! Sent ${(window as any).__eaOfferBatchTotal} offer emails`);
+          offerCleanup();
+          return;
+        }
+
+        toast.info(
+          `Batch of ${data.sent} sent (${(window as any).__eaOfferBatchTotal} total) — next batch in 10s...`
+        );
+
+        (window as any).__eaOfferBatchTimer = window.setTimeout(sendOneBatch, 10000);
+      } catch (err: any) {
+        toast.error(`Batch error: ${err.message} — retrying in 15s...`);
+        (window as any).__eaOfferBatchTimer = window.setTimeout(sendOneBatch, 15000);
+      }
+    };
+
+    const offerCleanup = () => {
+      (window as any).__eaOfferBatchRunning = false;
+      if ((window as any).__eaOfferBatchTimer) {
+        window.clearTimeout((window as any).__eaOfferBatchTimer);
+      }
+      setOfferBatchSending(false);
+      setConfirmOfferSend(false);
+      queryClient.invalidateQueries({ queryKey: ['admin-ea-offer-status'] });
+    };
+
+    sendOneBatch();
+  };
+
+  const stopOfferBatchLoop = () => {
+    (window as any).__eaOfferBatchStopped = true;
+    offerStopRef.current = true;
+    if ((window as any).__eaOfferBatchTimer) {
+      window.clearTimeout((window as any).__eaOfferBatchTimer);
+      toast.success(
+        `Stopped — sent ${(window as any).__eaOfferBatchTotal || 0} offer emails so far`
+      );
+      (window as any).__eaOfferBatchRunning = false;
+      setOfferBatchSending(false);
+      queryClient.invalidateQueries({ queryKey: ['admin-ea-offer-status'] });
+    }
+  };
+
   // Filter leads
   const filteredUnsent = useMemo(() => {
     const leads = (conversionData?.unconverted || []).filter(
@@ -405,6 +547,232 @@ export default function AdminEarlyAccess() {
           } as React.CSSProperties
         }
       >
+        {/* ── £7.99 Offer Campaign ──────────────────────────────────── */}
+        <div className="flex items-center justify-between">
+          <div>
+            <h2 className="text-lg font-semibold flex items-center gap-2">
+              <Gift className="h-5 w-5 text-amber-400" />
+              £7.99 Offer Campaign
+            </h2>
+            <p className="text-sm text-white">
+              One-off early access offer — £7.99/month locked forever
+            </p>
+          </div>
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => refetchOffer()}
+            className="gap-2 h-11 touch-manipulation"
+          >
+            <RefreshCw className="h-4 w-4" />
+            <span className="hidden sm:inline">Refresh</span>
+          </Button>
+        </div>
+
+        {/* Offer Stats — 3 cards */}
+        <div className="grid grid-cols-3 gap-2">
+          {[
+            {
+              label: 'Total',
+              value: offerStatus?.total || 0,
+              icon: Users,
+              colour: 'text-amber-400',
+              bg: 'from-amber-500/10 to-yellow-500/5',
+              border: 'border-amber-500/20',
+            },
+            {
+              label: 'Sent',
+              value: offerStatus?.sent || 0,
+              icon: Mail,
+              colour: 'text-green-400',
+              bg: 'from-green-500/10 to-emerald-500/5',
+              border: 'border-green-500/20',
+            },
+            {
+              label: 'Remaining',
+              value: offerStatus?.remaining || 0,
+              icon: Clock,
+              colour: 'text-zinc-400',
+              bg: 'from-zinc-500/10 to-zinc-600/5',
+              border: 'border-zinc-500/20',
+            },
+          ].map((s) => (
+            <Card key={s.label} className={`bg-gradient-to-br ${s.bg} ${s.border}`}>
+              <CardContent className="p-2.5 sm:p-3 text-center">
+                <s.icon className={`h-4 w-4 ${s.colour} mx-auto mb-1`} />
+                <p className="text-lg sm:text-xl font-bold">
+                  {offerStatus ? s.value.toLocaleString() : '...'}
+                </p>
+                <p className="text-[10px] sm:text-xs text-white">{s.label}</p>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
+
+        {/* Offer Campaign Controls */}
+        <Card className="border-amber-500/30 bg-gradient-to-br from-amber-500/5 to-yellow-500/5">
+          <CardHeader className="pb-2">
+            <CardTitle className="text-sm flex items-center justify-between">
+              <span className="flex items-center gap-2">
+                <Zap className="h-4 w-4 text-amber-400" />
+                Offer Controls
+              </span>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => setShowOfferTest(!showOfferTest)}
+                className="gap-1.5 h-9 touch-manipulation text-amber-400 border-amber-400/30 hover:bg-amber-500/10"
+              >
+                <TestTube className="h-3.5 w-3.5" />
+                Test
+              </Button>
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-3">
+            {/* Pricing preview */}
+            <div className="grid grid-cols-2 gap-2">
+              <div className="p-2 rounded-xl bg-amber-500/10 border border-amber-500/20 text-center">
+                <p className="text-xs text-amber-400 font-semibold">Monthly</p>
+                <p className="text-lg font-bold text-amber-400">£7.99</p>
+                <p className="text-[10px] text-white">locked forever</p>
+              </div>
+              <div className="p-2 rounded-xl bg-amber-500/10 border border-amber-500/20 text-center">
+                <p className="text-xs text-amber-400 font-semibold">Yearly</p>
+                <p className="text-lg font-bold text-amber-400">£79.99</p>
+                <p className="text-[10px] text-white">£6.67/mo</p>
+              </div>
+            </div>
+
+            {/* Email preview */}
+            <div className="p-3 rounded-xl bg-muted/50 border border-border/50 space-y-1.5">
+              <p className="text-xs text-white font-semibold">Email Preview</p>
+              <p className="text-xs text-amber-400 font-medium">
+                Subject: One-off offer — £7.99/month, locked forever
+              </p>
+              <p className="text-xs text-white">
+                From: Elec-Mate &lt;offers@elec-mate.com&gt; · Reply-To: founder@elec-mate.com
+              </p>
+              <p className="text-xs text-white">
+                V5-style template with stats strip, feature sections, Stripe payment links, and Mate
+                WhatsApp section
+              </p>
+            </div>
+
+            {/* Test email section */}
+            {showOfferTest && (
+              <div className="p-3 rounded-xl bg-amber-500/10 border border-amber-500/20 space-y-2">
+                <p className="text-xs text-amber-400 font-semibold">Send Test Offer Email</p>
+                <div className="flex gap-2">
+                  <Input
+                    type="email"
+                    value={offerTestEmail}
+                    onChange={(e) => setOfferTestEmail(e.target.value)}
+                    placeholder="your@email.com"
+                    className="h-11 text-base touch-manipulation flex-1"
+                  />
+                  <Button
+                    onClick={() => offerTestEmail && sendOfferTestMutation.mutate(offerTestEmail)}
+                    disabled={!offerTestEmail || sendOfferTestMutation.isPending}
+                    className="h-11 px-4 touch-manipulation bg-amber-500 hover:bg-amber-600"
+                  >
+                    {sendOfferTestMutation.isPending ? (
+                      <Loader2 className="h-4 w-4 animate-spin" />
+                    ) : (
+                      <Send className="h-4 w-4" />
+                    )}
+                  </Button>
+                </div>
+              </div>
+            )}
+
+            {/* Batch progress */}
+            {offerBatchSending && (
+              <div className="p-3 rounded-xl bg-amber-500/10 border border-amber-500/20 space-y-2">
+                <div className="flex items-center justify-between text-sm">
+                  <span className="flex items-center gap-2 text-amber-400 font-semibold">
+                    <Loader2 className="h-4 w-4 animate-spin" />
+                    Sending...
+                  </span>
+                  <span className="text-white">
+                    {offerBatchProgress.sent} sent · {offerBatchProgress.remaining} left
+                  </span>
+                </div>
+                <div className="w-full h-3 bg-muted rounded-full overflow-hidden">
+                  <div
+                    className="h-full bg-gradient-to-r from-amber-500 to-yellow-500 rounded-full transition-all duration-500"
+                    style={{
+                      width: `${
+                        offerBatchProgress.sent + offerBatchProgress.remaining > 0
+                          ? (offerBatchProgress.sent /
+                              (offerBatchProgress.sent + offerBatchProgress.remaining)) *
+                            100
+                          : 0
+                      }%`,
+                    }}
+                  />
+                </div>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="w-full h-9 touch-manipulation text-red-400 border-red-500/30 hover:bg-red-500/10 gap-1.5"
+                  onClick={stopOfferBatchLoop}
+                >
+                  <Square className="h-3 w-3 fill-current" />
+                  Stop Sending
+                </Button>
+              </div>
+            )}
+
+            {/* Send all button */}
+            {!offerBatchSending && (offerStatus?.remaining || 0) > 0 && (
+              <div className="pt-1">
+                <Button
+                  onClick={() => setConfirmOfferSend(true)}
+                  className="w-full h-12 touch-manipulation text-sm font-bold bg-gradient-to-r from-amber-500 to-yellow-500 hover:from-amber-600 hover:to-yellow-600 text-black rounded-xl gap-2"
+                >
+                  <Send className="h-4 w-4" />
+                  Send to All Remaining ({offerStatus?.remaining || 0})
+                </Button>
+                <p className="text-[10px] text-white text-center mt-1">
+                  Sends in batches of 10 · Excludes signed-up users and bounced emails
+                </p>
+              </div>
+            )}
+          </CardContent>
+        </Card>
+
+        {/* Confirm Offer Send Dialog */}
+        <AlertDialog open={confirmOfferSend} onOpenChange={setConfirmOfferSend}>
+          <AlertDialogContent className="max-w-[calc(100vw-2rem)] sm:max-w-lg rounded-2xl p-5 sm:p-6">
+            <AlertDialogHeader className="space-y-3">
+              <AlertDialogTitle className="text-base sm:text-lg leading-tight">
+                Send £7.99 offer to {offerStatus?.remaining || 0} leads?
+              </AlertDialogTitle>
+              <AlertDialogDescription className="text-sm leading-relaxed">
+                This sends the early access offer email in batches of 10. People who have already
+                signed up and bounced emails are automatically excluded. You can stop at any time.
+              </AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter className="flex-col-reverse sm:flex-row gap-2 sm:gap-2 pt-2">
+              <AlertDialogCancel className="h-12 sm:h-11 touch-manipulation text-base sm:text-sm w-full sm:w-auto mt-0">
+                Cancel
+              </AlertDialogCancel>
+              <AlertDialogAction
+                onClick={() => {
+                  setConfirmOfferSend(false);
+                  window.setTimeout(startOfferBatchLoop, 200);
+                }}
+                className="h-12 sm:h-11 touch-manipulation text-base sm:text-sm bg-amber-500 hover:bg-amber-600 text-black font-semibold w-full sm:w-auto"
+              >
+                <Send className="h-4 w-4 mr-2" />
+                Start Sending
+              </AlertDialogAction>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
+
+        {/* ── Conversion Campaign (existing) ─────────────────────────── */}
+
         {/* Header */}
         <div className="flex items-center justify-between">
           <div>

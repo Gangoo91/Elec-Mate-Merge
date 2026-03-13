@@ -20,6 +20,7 @@ export type NavItem = {
   roles: string[];
   adminOnly?: boolean; // Requires admin_role to be set
   allowedEmails?: string[]; // Only show to specific email addresses
+  dividerAfter?: boolean; // Render a thin divider line after this item
 };
 
 export const mainNavItems: NavItem[] = [
@@ -67,6 +68,7 @@ export const mainNavItems: NavItem[] = [
     path: '/mental-health',
     icon: <Heart className="h-5 w-5" />,
     roles: ['visitor', 'apprentice', 'electrician', 'employer', 'admin', 'beta_tester'],
+    dividerAfter: true,
   },
   {
     name: 'Subscriptions',

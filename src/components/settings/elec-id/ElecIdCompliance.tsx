@@ -1,9 +1,9 @@
-import React, { useState, useEffect, useCallback, useRef } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Skeleton } from '@/components/ui/skeleton';
 import { cn } from '@/lib/utils';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import {
   AlertTriangle,
   CheckCircle2,
@@ -14,7 +14,6 @@ import {
   Shield,
   XCircle,
   ChevronRight,
-  ChevronLeft,
   Sparkles,
   Edit2,
   Plus,
@@ -51,6 +50,7 @@ import { getECSCardType } from '@/data/uk-electrician-constants';
 import { toast } from '@/hooks/use-toast';
 import {
   getAllRecommendations,
+  getSmartNextSteps,
   getCourseSearchUrl,
   isInternalUrl,
   CareerRecommendation,
@@ -58,6 +58,7 @@ import {
   BrushUpSuggestion,
   TrendingSkill,
   AllRecommendations,
+  SmartNextStep,
 } from '@/utils/careerRecommendations';
 import { useNavigate } from 'react-router-dom';
 
@@ -128,8 +129,7 @@ const ElecIdCompliance = ({ onNavigateToTab }: ElecIdComplianceProps = {}) => {
 
   // Recommendation state
   const [recommendations, setRecommendations] = useState<AllRecommendations | null>(null);
-  const [carouselIndex, setCarouselIndex] = useState(0);
-  const carouselRef = useRef<HTMLDivElement>(null);
+  const [smartSteps, setSmartSteps] = useState<SmartNextStep[]>([]);
 
   // Helper to navigate to course - internal routes use React Router, external use window.open
   const navigateToCourse = useCallback(
@@ -219,6 +219,21 @@ const ElecIdCompliance = ({ onNavigateToTab }: ElecIdComplianceProps = {}) => {
         workHistory
       );
       setRecommendations(recs);
+
+      // Generate smart next steps
+      const steps = getSmartNextSteps(
+        items,
+        {
+          hasEcsCard: !!profile.ecs_card_type,
+          hasQualifications: qualifications.length > 0,
+          hasSkills: skills.length > 0,
+          hasWorkHistory: workHistory.length > 0,
+          hasDocuments: !!profile.ecs_card_type, // simplified check
+        },
+        recs.careerProgression,
+        recs.skillsGaps
+      );
+      setSmartSteps(steps);
     } catch (err) {
       console.error('Error loading compliance data:', err);
       setError('Failed to load compliance data');
@@ -337,13 +352,13 @@ const ElecIdCompliance = ({ onNavigateToTab }: ElecIdComplianceProps = {}) => {
           {/* Content */}
           <div className="flex-1 min-w-0">
             <div className="flex items-center gap-2 mb-1">
-              <h4 className="font-semibold text-foreground truncate">{item.name}</h4>
+              <h4 className="font-semibold text-white truncate">{item.name}</h4>
               <Badge variant="outline" className={cn('text-[10px] px-1.5 py-0', typeConfig.color)}>
                 {typeConfig.label}
               </Badge>
             </div>
             <div className="flex items-center gap-3 text-sm">
-              <span className="text-foreground/70 flex items-center gap-1">
+              <span className="text-white flex items-center gap-1">
                 <Calendar className="h-3.5 w-3.5" />
                 {new Date(item.expiryDate).toLocaleDateString('en-GB', {
                   day: 'numeric',
@@ -367,17 +382,17 @@ const ElecIdCompliance = ({ onNavigateToTab }: ElecIdComplianceProps = {}) => {
                 className="p-2 rounded-lg bg-white/[0.06] hover:bg-white/[0.12] transition-colors touch-manipulation"
                 title={`Edit in ${item.type === 'qualification' ? 'Qualifications' : 'Training'} tab`}
               >
-                <Edit2 className="h-4 w-4 text-foreground/70" />
+                <Edit2 className="h-4 w-4 text-white" />
               </button>
             )}
             {/* Renew action */}
             {item.renewalUrl ? (
-              <div className="flex items-center gap-1 text-foreground/70">
+              <div className="flex items-center gap-1 text-white">
                 <RefreshCw className="h-4 w-4" />
                 <ChevronRight className="h-4 w-4" />
               </div>
             ) : (
-              <ChevronRight className="h-5 w-5 text-foreground/70/50" />
+              <ChevronRight className="h-5 w-5 text-white" />
             )}
           </div>
         </div>
@@ -385,20 +400,44 @@ const ElecIdCompliance = ({ onNavigateToTab }: ElecIdComplianceProps = {}) => {
     );
   };
 
-  // Carousel navigation
-  const handleCarouselNext = () => {
-    if (recommendations && carouselIndex < recommendations.careerProgression.length - 1) {
-      setCarouselIndex((prev) => prev + 1);
-    }
-  };
-
-  const handleCarouselPrev = () => {
-    if (carouselIndex > 0) {
-      setCarouselIndex((prev) => prev - 1);
-    }
-  };
-
   const allClear = expiredItems.length === 0 && expiringIn30Days.length === 0;
+
+  // Smart step helpers
+  const getStepColourClasses = (colour: SmartNextStep['colour']) => {
+    const map = {
+      red: { bg: 'bg-red-500/10', border: 'border-l-red-500', text: 'text-red-400' },
+      orange: { bg: 'bg-orange-500/10', border: 'border-l-orange-500', text: 'text-orange-400' },
+      yellow: { bg: 'bg-yellow-500/10', border: 'border-l-yellow-500', text: 'text-yellow-400' },
+      blue: { bg: 'bg-blue-500/10', border: 'border-l-blue-500', text: 'text-blue-400' },
+      purple: { bg: 'bg-purple-500/10', border: 'border-l-purple-500', text: 'text-purple-400' },
+    };
+    return map[colour];
+  };
+
+  const getStepActionLabel = (actionType: SmartNextStep['actionType']) => {
+    const map = {
+      renew: 'Renew',
+      upload: 'Upload',
+      add: 'Add',
+      view_course: 'View Course',
+      navigate: 'View',
+    };
+    return map[actionType];
+  };
+
+  const handleStepAction = (step: SmartNextStep) => {
+    if (step.actionType === 'view_course' && step.searchQuery) {
+      navigateToCourse(step.searchQuery);
+    } else if (step.navigateTo) {
+      if (step.navigateTo.startsWith('http')) {
+        window.open(step.navigateTo, '_blank');
+      } else if (step.navigateTo.startsWith('/')) {
+        navigate(step.navigateTo);
+      } else if (onNavigateToTab) {
+        onNavigateToTab(step.navigateTo);
+      }
+    }
+  };
 
   // Show loading skeleton
   if (isLoading || profileLoading) {
@@ -412,8 +451,8 @@ const ElecIdCompliance = ({ onNavigateToTab }: ElecIdComplianceProps = {}) => {
         <div className="w-16 h-16 mx-auto mb-4 rounded-2xl bg-red-500/10 flex items-center justify-center">
           <AlertTriangle className="h-8 w-8 text-red-400" />
         </div>
-        <h4 className="text-lg font-medium text-foreground mb-2">Failed to load compliance data</h4>
-        <p className="text-foreground/70 mb-4">{error}</p>
+        <h4 className="text-lg font-medium text-white mb-2">Failed to load compliance data</h4>
+        <p className="text-white mb-4">{error}</p>
         <Button onClick={loadComplianceData} className="gap-2">
           <RefreshCw className="h-4 w-4" />
           Try Again
@@ -479,14 +518,14 @@ const ElecIdCompliance = ({ onNavigateToTab }: ElecIdComplianceProps = {}) => {
             </div>
 
             <div>
-              <h3 className="text-lg font-semibold text-foreground">
+              <h3 className="text-lg font-semibold text-white">
                 {allClear
                   ? 'All Clear'
                   : expiredItems.length > 0
                     ? 'Action Required'
                     : 'Attention Needed'}
               </h3>
-              <p className="text-sm text-foreground/70">
+              <p className="text-sm text-white">
                 {compliantItems} of {totalItems} items valid
               </p>
               {!allClear && (
@@ -558,10 +597,10 @@ const ElecIdCompliance = ({ onNavigateToTab }: ElecIdComplianceProps = {}) => {
                 : 'bg-white/[0.02] border-white/[0.04]',
           };
           const textClasses = {
-            red: stat.count > 0 ? 'text-red-400' : 'text-foreground/70/50',
-            orange: stat.count > 0 ? 'text-orange-400' : 'text-foreground/70/50',
-            yellow: stat.count > 0 ? 'text-yellow-400' : 'text-foreground/70/50',
-            green: stat.count > 0 ? 'text-green-400' : 'text-foreground/70/50',
+            red: stat.count > 0 ? 'text-red-400' : 'text-white',
+            orange: stat.count > 0 ? 'text-orange-400' : 'text-white',
+            yellow: stat.count > 0 ? 'text-yellow-400' : 'text-white',
+            green: stat.count > 0 ? 'text-green-400' : 'text-white',
           };
           const Icon = stat.icon;
 
@@ -590,18 +629,16 @@ const ElecIdCompliance = ({ onNavigateToTab }: ElecIdComplianceProps = {}) => {
               >
                 {stat.count}
               </div>
-              <div className="text-[10px] text-foreground/70 uppercase tracking-wide">
-                {stat.label}
-              </div>
+              <div className="text-[10px] text-white uppercase tracking-wide">{stat.label}</div>
             </motion.div>
           );
         })}
       </div>
 
       {/* ═══════════════════════════════════════════════════════════════════════════ */}
-      {/* YOUR NEXT STEP - Career Progression Carousel */}
+      {/* SMART NEXT STEPS - Context-Aware Priority List */}
       {/* ═══════════════════════════════════════════════════════════════════════════ */}
-      {recommendations && recommendations.careerProgression.length > 0 && (
+      {smartSteps.length > 0 && (
         <motion.div
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
@@ -609,97 +646,55 @@ const ElecIdCompliance = ({ onNavigateToTab }: ElecIdComplianceProps = {}) => {
         >
           <div className="flex items-center gap-2 px-1">
             <Rocket className="h-4 w-4 text-elec-yellow" />
-            <h4 className="text-sm font-medium text-elec-yellow">Your Next Step</h4>
+            <h4 className="text-sm font-medium text-elec-yellow">Your Next Steps</h4>
           </div>
 
-          <div className="relative">
-            {/* Carousel Container */}
-            <div ref={carouselRef} className="overflow-hidden rounded-2xl">
-              <AnimatePresence mode="wait">
-                {recommendations.careerProgression[carouselIndex] && (
-                  <motion.div
-                    key={carouselIndex}
-                    initial={{ opacity: 0, x: 50 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    exit={{ opacity: 0, x: -50 }}
-                    transition={{ duration: 0.2 }}
-                    className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-elec-yellow/20 to-amber-600/10 border border-elec-yellow/30 p-5"
+          <div className="space-y-2">
+            {smartSteps.slice(0, 5).map((step, index) => {
+              const colours = getStepColourClasses(step.colour);
+              return (
+                <motion.button
+                  key={step.id}
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: index * 0.05 }}
+                  onClick={() => handleStepAction(step)}
+                  className={cn(
+                    'w-full flex items-center gap-3 p-4 rounded-xl border-l-4 transition-all touch-manipulation active:scale-[0.99]',
+                    colours.bg,
+                    colours.border,
+                    'border border-white/[0.06]'
+                  )}
+                >
+                  {/* Priority icon */}
+                  <div
+                    className={cn(
+                      'w-11 h-11 rounded-xl flex items-center justify-center flex-shrink-0',
+                      colours.bg
+                    )}
                   >
-                    {/* Background decoration */}
-                    <div className="absolute -top-10 -right-10 w-32 h-32 rounded-full bg-elec-yellow/10 blur-2xl" />
+                    <RecommendationIcon icon={step.icon} className={cn('h-5 w-5', colours.text)} />
+                  </div>
 
-                    <div className="relative text-center">
-                      <h4 className="font-semibold text-foreground text-lg mb-1">
-                        {recommendations.careerProgression[carouselIndex].title}
-                      </h4>
-                      <p className="text-sm text-foreground/70 mb-3">
-                        {recommendations.careerProgression[carouselIndex].description}
-                      </p>
-                      <p className="text-xs text-elec-yellow/80 mb-4">
-                        {recommendations.careerProgression[carouselIndex].reason}
-                      </p>
+                  {/* Content */}
+                  <div className="flex-1 min-w-0 text-left">
+                    <h5 className="font-semibold text-white text-sm">{step.title}</h5>
+                    <p className="text-xs text-white mt-0.5 line-clamp-1">{step.subtitle}</p>
+                  </div>
 
-                      <Button
-                        onClick={() =>
-                          navigateToCourse(
-                            recommendations.careerProgression[carouselIndex].searchQuery
-                          )
-                        }
-                        className="h-10 px-4 rounded-xl bg-elec-yellow hover:bg-elec-yellow/90 text-elec-dark font-semibold touch-manipulation active:scale-[0.97] gap-2"
-                      >
-                        View Course
-                        <ChevronRight className="h-4 w-4" />
-                      </Button>
-                    </div>
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </div>
-
-            {/* Carousel Navigation */}
-            {recommendations.careerProgression.length > 1 && (
-              <div className="flex items-center justify-center gap-3 mt-3">
-                <button
-                  onClick={handleCarouselPrev}
-                  disabled={carouselIndex === 0}
-                  className={cn(
-                    'p-2 rounded-lg transition-all touch-manipulation',
-                    carouselIndex === 0
-                      ? 'opacity-30 cursor-not-allowed'
-                      : 'bg-white/[0.06] hover:bg-white/[0.12] active:scale-95'
-                  )}
-                >
-                  <ChevronLeft className="h-4 w-4" />
-                </button>
-
-                {/* Dots */}
-                <div className="flex gap-1.5">
-                  {recommendations.careerProgression.map((_, i) => (
-                    <button
-                      key={i}
-                      onClick={() => setCarouselIndex(i)}
-                      className={cn(
-                        'w-2 h-2 rounded-full transition-all touch-manipulation',
-                        i === carouselIndex ? 'bg-elec-yellow w-4' : 'bg-white/20 hover:bg-white/40'
-                      )}
-                    />
-                  ))}
-                </div>
-
-                <button
-                  onClick={handleCarouselNext}
-                  disabled={carouselIndex === recommendations.careerProgression.length - 1}
-                  className={cn(
-                    'p-2 rounded-lg transition-all touch-manipulation',
-                    carouselIndex === recommendations.careerProgression.length - 1
-                      ? 'opacity-30 cursor-not-allowed'
-                      : 'bg-white/[0.06] hover:bg-white/[0.12] active:scale-95'
-                  )}
-                >
-                  <ChevronRight className="h-4 w-4" />
-                </button>
-              </div>
-            )}
+                  {/* Action button */}
+                  <div
+                    className={cn(
+                      'flex-shrink-0 px-3 h-11 rounded-lg flex items-center justify-center text-xs font-semibold touch-manipulation',
+                      colours.bg,
+                      colours.text
+                    )}
+                  >
+                    {getStepActionLabel(step.actionType)}
+                  </div>
+                </motion.button>
+              );
+            })}
           </div>
         </motion.div>
       )}
@@ -757,7 +752,7 @@ const ElecIdCompliance = ({ onNavigateToTab }: ElecIdComplianceProps = {}) => {
             <h4 className="text-sm font-medium text-purple-400">Skills to Develop</h4>
           </div>
 
-          <p className="text-xs text-foreground/60 px-1">Based on your experience, consider:</p>
+          <p className="text-xs text-white px-1">Based on your experience, consider:</p>
 
           <div className="grid grid-cols-2 gap-2">
             {recommendations.skillsGaps.slice(0, 4).map((gap, index) => (
@@ -785,12 +780,12 @@ const ElecIdCompliance = ({ onNavigateToTab }: ElecIdComplianceProps = {}) => {
                         ? 'text-purple-400'
                         : gap.importance === 'recommended'
                           ? 'text-blue-400'
-                          : 'text-foreground/60'
+                          : 'text-white'
                     )}
                   />
                 </div>
-                <h5 className="font-medium text-foreground text-sm mb-1">{gap.skillName}</h5>
-                <p className="text-xs text-foreground/60 line-clamp-2">{gap.reason}</p>
+                <h5 className="font-medium text-white text-sm mb-1">{gap.skillName}</h5>
+                <p className="text-xs text-white line-clamp-2">{gap.reason}</p>
               </motion.button>
             ))}
           </div>
@@ -832,10 +827,10 @@ const ElecIdCompliance = ({ onNavigateToTab }: ElecIdComplianceProps = {}) => {
                     )}
                   </div>
                   <div className="flex-1 min-w-0">
-                    <h5 className="font-medium text-foreground mb-1">{item.skillName}</h5>
-                    <p className="text-sm text-foreground/70">{item.suggestion}</p>
+                    <h5 className="font-medium text-white mb-1">{item.skillName}</h5>
+                    <p className="text-sm text-white">{item.suggestion}</p>
                   </div>
-                  <ChevronRight className="h-5 w-5 text-foreground/40 flex-shrink-0 mt-0.5" />
+                  <ChevronRight className="h-5 w-5 text-white flex-shrink-0 mt-0.5" />
                 </div>
               </motion.button>
             ))}
@@ -867,7 +862,7 @@ const ElecIdCompliance = ({ onNavigateToTab }: ElecIdComplianceProps = {}) => {
                     'px-3 py-1.5 rounded-full text-sm font-medium transition-all touch-manipulation',
                     trend.userHasSkill
                       ? 'bg-green-500/20 text-green-400 border border-green-500/30'
-                      : 'bg-white/[0.06] text-foreground/80 border border-white/[0.1] hover:bg-white/[0.12] active:scale-95'
+                      : 'bg-white/[0.06] text-white border border-white/[0.1] hover:bg-white/[0.12] active:scale-95'
                   )}
                 >
                   <span className="flex items-center gap-1.5">
@@ -878,7 +873,7 @@ const ElecIdCompliance = ({ onNavigateToTab }: ElecIdComplianceProps = {}) => {
                 </button>
               ))}
             </div>
-            <p className="text-xs text-foreground/50">
+            <p className="text-xs text-white">
               Skills employers are actively seeking. Tap to find courses.
             </p>
           </div>
@@ -940,10 +935,10 @@ const ElecIdCompliance = ({ onNavigateToTab }: ElecIdComplianceProps = {}) => {
           <Bell className="h-6 w-6 text-elec-yellow" />
         </div>
         <div className="flex-1 text-left">
-          <p className="font-medium text-foreground">Expiry Reminders</p>
-          <p className="text-sm text-foreground/70">Get notified before qualifications expire</p>
+          <p className="font-medium text-white">Expiry Reminders</p>
+          <p className="text-sm text-white">Get notified before qualifications expire</p>
         </div>
-        <ChevronRight className="h-5 w-5 text-foreground/70" />
+        <ChevronRight className="h-5 w-5 text-white" />
       </motion.button>
 
       {/* Empty State */}
@@ -955,10 +950,10 @@ const ElecIdCompliance = ({ onNavigateToTab }: ElecIdComplianceProps = {}) => {
             className="py-12 text-center"
           >
             <div className="w-20 h-20 mx-auto mb-4 rounded-2xl bg-white/[0.04] flex items-center justify-center">
-              <Shield className="h-10 w-10 text-foreground/70/50" />
+              <Shield className="h-10 w-10 text-white" />
             </div>
-            <h4 className="text-lg font-medium text-foreground mb-2">No compliance items yet</h4>
-            <p className="text-foreground/70 max-w-xs mx-auto mb-6">
+            <h4 className="text-lg font-medium text-white mb-2">No compliance items yet</h4>
+            <p className="text-white max-w-xs mx-auto mb-6">
               Add qualifications with expiry dates to track your compliance status.
             </p>
             {onNavigateToTab && (

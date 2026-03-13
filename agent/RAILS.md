@@ -850,11 +850,1262 @@ Rail 1 (Morning Briefing) pulls incomplete tasks grouped by project:
 
 ---
 
+## Certificate Rails
+
+### Key Rules Across ALL Certificate Rails
+
+````
+RULES:
+1. NEVER auto-fill test results — always ask the electrician for real measured values
+2. ALWAYS cite BS 7671:2018+A3:2024 when referencing regulations
+3. Accept batch data: if electrician sends a photo of their test sheet, voice note,
+   or text dump with all results — parse them all at once. Don't force one-at-a-time.
+4. Support "I'll fill that in later" — don't block progress on missing optional fields
+5. After filling all sections, ALWAYS present a plain-text summary for review before
+   marking complete — NO MARKDOWN (see Message Formatting rules in AGENTS.md)
+6. After approval, ALWAYS generate PDF and offer to email to client
+7. If any C1 (danger present) defects on EICR, flag immediately and prominently
+8. Pull company/inspector details from read_user_profile — don't ask for info you
+   already have. Pre-fill name, qualifications, company, registration from the profile.
+9. Deep merge only — send only the changed section per update call, not everything
+10. Signatures must be done in the app — tell the electrician at the end
+11. ALL messages use WhatsApp formatting only:
+    - Bold: *single asterisks* (NEVER **double**)
+    - Italic: _underscores_
+    - NEVER use # headers, --- rules, ```code blocks```, > quotes, [links](url)
+    - Use numbered lists (1. 2. 3.) and bullet points (• or -)
+    - WhatsApp does NOT render markdown — using it shows raw symbols
+
+PHOTO & BOARD ANALYSIS:
+12. If the electrician sends a PHOTO at any point during a cert workflow:
+    a. Call analyse_photo to process the image
+    b. If it's a consumer unit / distribution board photo:
+       - Extract: board make, type, number of ways, device types/ratings, circuit labels
+       - Present extracted data: "I can see a [make] [ways]-way board with: [circuit list]"
+       - ASK: "Want me to add this to the cert?"
+       - ON YES: update the cert with extracted board/circuit data
+    c. If it's a test sheet / results photo:
+       - Parse all visible test results (circuit numbers, R1+R2, Zs, IR, RCD times)
+       - Present extracted data for confirmation
+       - ON CONFIRM: populate scheduleOfTests with parsed values
+    d. If it's a defect / observation photo:
+       - Describe the defect, suggest defect code (C1/C2/C3)
+       - ASK: "Want me to log this as a [code] defect on the cert?"
+       - ON YES: add to defectObservations + attach_photo_to_entity(cert)
+    e. Always call attach_photo_to_entity to link the photo to the certificate
+
+13. PROACTIVELY OFFER photo analysis at key points:
+    - Board details phase: "Got a photo of the board? Send it and I'll read the labels"
+    - Test results phase: "If you've got a photo of your test sheet, send it over"
+    - Defects phase: "Send photos of any defects and I'll log them with the cert"
+````
+
+### Tool Flow Pattern (applies to all cert rails)
+
+Every certificate follows this exact tool sequence:
+
+```
+1. PROFILE → read_user_profile() → get electrician's name, company, qualifications, registration
+2. CREATE  → create_<type>(...) → returns <type>_id + edit_version starts at 1
+3. READ    → read_<type>(<type>_id) → get current data + edit_version
+4. UPDATE  → update_<type>(<type>_id, edit_version, data: {...}) → returns new edit_version
+5. REPEAT  → read again before each update (edit_version increments on every write)
+6. COMPLETE → update_<type>(..., status: 'completed') on final update
+7. CHECK   → generate_snagging_list(certificate_type, report_id) → verify completeness
+             If completeness < 100%, tell electrician what's missing before generating PDF
+8. PDF     → generate_certificate_pdf(certificate_id: <type>_id, certificate_type: '<type>')
+9. SEND    → send_certificate(certificate_id: <type>_id, client_id: <customer_uuid>)
+```
+
+CRITICAL: You MUST call read\_<type> before every update to get the latest edit_version.
+If you send a stale edit_version, the update fails with a concurrency error.
+
+Available cert tools: create/read/update for eicr, eic, minor_works.
+PDF generation via generate_certificate_pdf works for all 8 cert types.
+
+---
+
+### Rail 16: Minor Works Certificate
+
+Trigger: "minor works" / "do a minor works" / "MW cert"
+Channel: WhatsApp
+
+```
+PHASE 1 — BASICS & CLIENT
+  First: read_user_profile() to get electrician's details for pre-filling later.
+  ASK: "What's the client name, property address, and what work did you do?"
+  TOOL: create_minor_works({
+    client_name: "...",
+    installation_address: "...",
+    description_of_work: "..."
+  })
+  → Store the returned minor_works_id for ALL subsequent calls.
+  → The create tool returns edit_version=1 implicitly.
+
+PHASE 2 — SUPPLY, EARTHING & WORK DESCRIPTION (1 message)
+  ASK: "Right, a few details about the installation:
+    - Earthing arrangement? (TN-C-S, TN-S, or TT)
+    - Zdb at the distribution board? (ohms)
+    - Was this new circuit, addition/modification, or replacement?
+    - Any departures from BS 7671:2018+A3:2024? (Reg 120.3, 133.1.3, 133.5)
+    - Any comments on the existing installation? (Reg 644.1.2)"
+  TOOL: read_minor_works({ minor_works_id }) → get edit_version
+  TOOL: update_minor_works({
+    minor_works_id,
+    edit_version: <current>,
+    data: {
+      workType: "new_circuit" | "addition" | "replacement",
+      workLocation: "...",
+      departuresFromBS7671: "None" | "...",
+      commentsOnExistingInstallation: "...",
+      permittedExceptions: "None" | "...",
+      supplyVoltage: "230",
+      earthingArrangement: "TN-C-S" | "TN-S" | "TT",
+      zdb: "...",
+      earthingConductorPresent: true,
+      mainEarthingConductorSize: "...",
+      mainEarthingConductorMaterial: "Copper",
+      mainBondingConductorSize: "...",
+      bondingWater: true | false,
+      bondingGas: true | false
+    }
+  })
+
+PHASE 3 — CIRCUIT & PROTECTIVE DEVICE (1 message)
+  ASK: "Circuit details:
+    - Circuit designation? (e.g. 'Kitchen sockets', 'Downstairs lighting')
+    - Circuit type? (radial or ring)
+    - Distribution board location?
+    - Protective device: type (MCB/RCBO), BS standard, rating?
+    - Cable: type (T&E, SWA, FP200), live conductor size, CPC size?
+    - Any additional protection fitted? (RCD, RCBO, AFDD, SPD)
+
+    Got a photo of the board? Send it and I'll read the device details."
+
+  IF PHOTO RECEIVED:
+    TOOL: analyse_photo(image_url) → extract device type, rating, circuit label
+    Present: "I can see a [type] [rating]A on that circuit. That right?"
+    ON CONFIRM: populate circuit + device fields from analysis.
+
+  TOOL: read_minor_works → get edit_version
+  TOOL: update_minor_works({
+    minor_works_id,
+    edit_version: <current>,
+    data: {
+      distributionBoard: "...",
+      dbLocationType: "...",
+      circuitDesignation: "...",
+      circuitDescription: "...",
+      circuitType: "radial" | "ring",
+      referenceMethod: "...",
+      overcurrentDeviceBsEn: "BS EN 60898-1",
+      protectiveDeviceType: "MCB" | "RCBO",
+      protectiveDeviceRating: "32",
+      protectiveDeviceKaRating: "...",
+      liveConductorSize: "2.5",
+      cpcSize: "1.5",
+      cableType: "Twin & Earth",
+      installationMethod: "...",
+      protectionRcd: true | false,
+      protectionRcbo: true | false,
+      rcdBsEn: "...",
+      rcdType: "Type A",
+      rcdRatingAmps: "30",
+      rcdIdn: "30"
+    }
+  })
+
+PHASE 4 — TEST RESULTS (1-2 messages)
+  ASK: "Test results — give me what you've got:
+
+    *Dead tests* (circuit isolated):
+    - Continuity of CPC: R1+R2 or R2 (ohms)
+    - Insulation resistance at 500V: L-L, L-N, L-E, N-E (megohms, must be 1 or more)
+    - Polarity: correct?
+
+    *Live tests* (circuit energised):
+    - Earth fault loop impedance Zs (ohms)
+    - Prospective fault current (kA)
+    - Functional testing: pass?
+
+    *If ring circuit*: r1, rn, r2 (ohms)
+    *If RCD/RCBO fitted*: trip time at 1x (ms), 5x (ms), half-x no trip (pass/fail), test button (pass/fail)
+    *If TT*: earth electrode resistance (ohms)
+
+    What tester did you use? (make, serial, cal date)"
+
+  TOOL: read_minor_works → get edit_version
+  TOOL: update_minor_works({
+    minor_works_id,
+    edit_version: <current>,
+    data: {
+      continuityR1R2: "...",
+      r2Continuity: "...",
+      polarity: "correct",
+      insulationTestVoltage: "500",
+      insulationLiveLive: "...",
+      insulationLiveNeutral: "...",
+      insulationLiveEarth: "...",
+      insulationNeutralEarth: "...",
+      earthFaultLoopImpedance: "...",
+      maxPermittedZs: "...",
+      prospectiveFaultCurrent: "...",
+      functionalTesting: "pass",
+      ringR1: "...",
+      ringRn: "...",
+      ringR2: "...",
+      rcdOneX: "...",
+      rcdFiveX: "...",
+      rcdHalfX: "pass",
+      rcdTestButton: "pass",
+      rcdRating: "...",
+      earthElectrodeResistance: "...",
+      testTemperature: "...",
+      testEquipmentModel: "...",
+      testEquipmentSerial: "...",
+      testEquipmentCalDate: "..."
+    }
+  })
+
+  VALIDATE: Check Zs against max permitted for the protective device
+  (e.g. B32 on TN-C-S max Zs = 1.37 ohms). If Zs exceeds max, warn:
+  "Zs of [X] ohms exceeds max permitted [Y] ohms for a [type][rating]
+   on [earthing]. Double check that — it would fail."
+
+PHASE 5 — DECLARATION & SIGN-OFF (1 message)
+  Pre-fill from user profile: name, company, qualifications, position, registration.
+  ASK: "I've got your details from your profile:
+    [Name], [Company], [Qualifications]
+
+    That right? And what date for the certificate?
+    (Signatures need to be done in the app)"
+
+  TOOL: read_minor_works → get edit_version
+  TOOL: update_minor_works({
+    minor_works_id,
+    edit_version: <current>,
+    data: {
+      electricianName: "...",
+      forAndOnBehalfOf: "...",
+      position: "...",
+      qualificationLevel: "...",
+      schemeProvider: "NICEIC" | "NAPIT" | "...",
+      registrationNumber: "...",
+      contractorName: "...",
+      contractorAddress: "...",
+      signatureDate: "2026-03-13",
+      bs7671Compliance: true,
+      testResultsAccurate: true,
+      workSafety: true,
+      partPNotification: true | false,
+      copyProvided: true
+    },
+    status: "completed"
+  })
+
+PHASE 6 — SUMMARY, PDF & SEND
+  PRESENT a plain-text summary using WhatsApp formatting:
+
+  "*Minor Works Certificate*
+   Cert: [certificate_number]
+
+   *Client:* [name] — [address]
+   *Work:* [description]
+   *Circuit:* [designation] — [type] — [device] [rating]A
+   *Earthing:* [arrangement]
+
+   *Test Results*
+   - R1+R2: [X] ohms
+   - IR: L-E [X], L-N [X], L-L [X] megohms
+   - Zs: [X] ohms (max [Y])
+   - Polarity: correct
+   - RCD: [X]ms at 1x
+
+   *Inspector:* [name], [company]
+   *Date:* [date]
+
+   All good? YES to generate PDF / NO to change something"
+
+  ON APPROVE:
+    TOOL: generate_certificate_pdf({
+      certificate_id: <minor_works_id>,
+      certificate_type: "minor-works"
+    })
+    → returns downloadUrl
+
+  TELL: "PDF generated. You can download it in the app.
+    Don't forget to add your signature in the app."
+
+  ASK: "Want me to email it to [client name]?"
+  ON YES:
+    TOOL: send_certificate({
+      certificate_id: <minor_works_id>,
+      client_id: <customer_uuid>
+    })
+  ON NO:
+    "No worries — it's saved. You can send it any time from the app."
+```
+
+---
+
+### Rail 17: EICR (Electrical Installation Condition Report)
+
+Trigger: "do an EICR" / "condition report" / "periodic inspection"
+Channel: WhatsApp
+
+```
+PHASE 1 — CLIENT & PURPOSE
+  First: read_user_profile() to get electrician's details.
+  ASK: "Who's the client, what's the installation address, and what's the purpose?
+    (periodic / change of occupancy / mortgage / insurance / other)
+    Domestic or commercial?
+    Is the client's address different from the installation address?"
+  TOOL: create_eicr({
+    client_name: "...",
+    installation_address: "...",
+    property_type: "domestic" | "commercial",
+    purpose_of_inspection: "periodic" | "change-of-occupancy" | ...
+  })
+  → Store eicr_id. This is the certificate_id for PDF/send later.
+  IF client address differs from installation address:
+    TOOL: update_eicr({ data: { clientAddress: "...", sameAsClientAddress: false } })
+  ELSE: data: { clientAddress: <same as installation>, sameAsClientAddress: true }
+
+PHASE 2 — SUPPLY CHARACTERISTICS (1 message)
+  ASK: "Supply details:
+    - DNO? (UK Power Networks, Western Power, SSE, etc.)
+    - MPAN? (if you've got it)
+    - Earthing system? (TN-S, TN-C-S/PME, TT)
+    - Supply type? (single-phase 2-wire / three-phase 4-wire)
+    - Supply voltage? (230V single / 400V three-phase)
+    - Service entry? (overhead / underground)
+    - Cutout location?
+    - External Ze? (ohms)
+    - Prospective fault current? (kA)
+    - Main protective device: BS standard, type, rating?
+    - Number of poles?
+    - RCD on main switch? (type, rating in mA, measured trip time)
+    - Any other sources of supply? (solar PV, battery, generator)"
+  TOOL: read_eicr({ eicr_id }) → get edit_version
+  TOOL: update_eicr({
+    eicr_id,
+    edit_version: <current>,
+    data: {
+      dnoName: "...",
+      mpan: "...",
+      earthingArrangement: "TN-C-S",
+      conductorConfiguration: "ac-1ph-2w" | "ac-3ph-4w",
+      supplyVoltage: "230",
+      phases: "single",
+      supplyFrequency: "50",
+      serviceEntry: "underground" | "overhead",
+      cutoutLocation: "...",
+      externalZe: "...",
+      prospectiveFaultCurrent: "...",
+      supplyPME: true | false,
+      supplyPolarityConfirmed: true,
+      otherSourcesOfSupply: "none" | "...",
+      mainProtectiveDevice: "BS EN 60898",
+      mainSwitchBsEn: "BS EN 60898",
+      mainSwitchRating: "100",
+      mainSwitchPoles: "2",
+      breakingCapacity: "...",
+      rcdMainSwitch: true | false,
+      rcdRating: "100",
+      rcdType: "Type A",
+      rcdMeasuredTime: "..."
+    }
+  })
+
+PHASE 3 — EARTHING & BONDING (1 message)
+  ASK: "Earthing and bonding:
+    - How is the installation earthed — via the distributor (TN-S/TN-C-S)
+      or via an earth electrode (TT)?
+    - Earth electrode: type and resistance? (or N/A if TN-S/TN-C-S)
+    - Main earthing conductor: material and size? (e.g. copper 16mm)
+    - Continuity verified?
+    - Main bonding conductor: material and size?
+    - What's bonded? (water, gas, oil, structural steel, other)
+    - Continuity verified?
+    - Supplementary bonding: size? (or 'not required')"
+  TOOL: read_eicr → get edit_version
+  TOOL: update_eicr({
+    eicr_id, edit_version: <current>,
+    data: {
+      meansOfEarthingDistributor: true | false,
+      meansOfEarthingElectrode: true | false,
+      earthElectrodeType: "N/A" | "rod" | "plate",
+      earthElectrodeResistance: "...",
+      mainEarthingConductorType: "Copper",
+      mainEarthingConductorSize: "16",
+      earthingConductorContinuityVerified: true,
+      mainBondingConductorType: "Copper",
+      mainBondingSize: "10",
+      bondingConductorContinuityVerified: true,
+      mainBondingLocations: "water, gas",
+      bondingCompliance: "satisfactory",
+      supplementaryBonding: "not-required" | "present",
+      supplementaryBondingSize: "4",
+      equipotentialBonding: "..."
+    }
+  })
+
+PHASE 4 — ELECTRICAL INSTALLATION & BOARDS (1-2 messages)
+  ASK: "Consumer unit / distribution board details:
+    - How many boards?
+    For each board:
+    - Location? Make/manufacturer?
+    - Number of ways?
+    - Intake cable: type and size?
+    - Meter tails: size and length?
+    - Estimated age of the installation?
+    - Evidence of alterations? (yes/no, details)
+    - Date of last inspection? (if known)
+
+    Or send me a photo of the board and I'll read the details off it."
+
+  IF PHOTO RECEIVED:
+    TOOL: analyse_photo(image_url) → extract board make, type, ways, device details
+    Present: "I can see a [make] [ways]-way board. Devices: [list]. That right?"
+    ON CONFIRM: populate distributionBoards array from analysis
+
+  TOOL: read_eicr → get edit_version
+  TOOL: update_eicr({
+    eicr_id, edit_version: <current>,
+    data: {
+      distributionBoards: [
+        {
+          id: "board-1",
+          name: "Main Board",
+          reference: "DB1",
+          location: "...",
+          make: "...",
+          type: "...",
+          totalWays: 12,
+          zdb: "...",
+          ipf: "...",
+          mainSwitchBsEn: "...",
+          mainSwitchType: "...",
+          mainSwitchRating: "...",
+          mainSwitchPoles: "2"
+        }
+      ],
+      intakeCableSize: "25mm",
+      intakeCableType: "PVC Singles",
+      tailsSize: "25mm",
+      tailsLength: "1.5",
+      estimatedAge: "...",
+      evidenceOfAlterations: true | false,
+      alterationsDetails: "...",
+      dateOfLastInspection: "...",
+      installationRecordsAvailable: true | false
+    }
+  })
+
+PHASE 5 — SCHEDULE OF INSPECTIONS (60 items, 8 sections)
+  The EICR has 60 inspection items across 8 sections from BS 7671.
+  Default ALL items to "satisfactory". Go section-by-section and ask
+  the electrician to flag anything that ISN'T satisfactory.
+
+  Possible outcomes per item:
+    - satisfactory (default)
+    - C1 (danger present)
+    - C2 (potentially dangerous)
+    - C3 (improvement recommended)
+    - FI (further investigation)
+    - not-applicable
+    - not-verified
+    - limitation
+
+  Work through in 4 groups to keep messages manageable:
+
+  GROUP A — Sections 1-3: Intake, Microgenerators, Earthing/Bonding (12 items)
+  ASK: "Schedule of inspections — I'll go section by section.
+    I'll default everything to satisfactory unless you flag it.
+
+    *Section 1 — Intake Equipment* (visual only, 3 items)
+    Service cable, service head, earthing, meter tails, metering,
+    isolator, consumer's isolator, consumer's meter tails
+
+    *Section 2 — Other Sources/Microgenerators* (1 item)
+    Adequate arrangements for microgenerators
+
+    *Section 3 — Earthing & Bonding* (8 items)
+    Distributor's earthing, earth electrode, earthing/bonding labels,
+    earthing conductor size, accessibility at MET, main bonding sizes,
+    bonding connections condition, other protective bonding
+
+    Any issues in sections 1-3? Give me the item number and code
+    (C1/C2/C3/FI/N/A/limitation) — or 'all good' to move on."
+
+  GROUP B — Section 4: Consumer Unit / Distribution Board (22 items)
+  ASK: "*Section 4 — Consumer Unit / Distribution Board* (22 items)
+    Working space/accessibility, security of fixing, IP rating,
+    fire rating, enclosure condition, main linked switch, main switch
+    operation, manual operation of CBs/RCDs, circuit identification,
+    RCD test notice, alternative supply notice, other labelling,
+    device compatibility, single-pole switching in line only,
+    mechanical protection at entry, electromagnetic protection,
+    RCDs for fault protection, RCDs for additional protection,
+    SPD functional indication, conductor connections tight/secure,
+    generating set (switched alternative), generating set (parallel)
+
+    Any issues in section 4? Item number and code — or 'all good'."
+
+  GROUP C — Section 5: Final Circuits (21 items)
+  ASK: "*Section 5 — Final Circuits* (21 items)
+    Conductor identification, cable support, insulation condition,
+    non-sheathed cables protected, cable current capacity, conductor/
+    overload coordination, protective device adequacy, CPCs present,
+    wiring systems appropriate, concealed cables in prescribed zones,
+    cables under floors/above ceilings protected, RCD 30mA additional
+    protection (sockets/outdoor/concealed/luminaires), fire barriers,
+    Band II/I segregation, comms cable segregation, non-electrical
+    segregation, cable terminations, accessory condition, accessories
+    suitable for environment, working space, single-pole in line only
+
+    Any issues in section 5? Item number and code — or 'all good'."
+
+  GROUP D — Sections 6-8: Bath/Shower, Special Locations, Prosumer (11 items)
+  ASK: "*Section 6 — Bath/Shower Locations* (9 items)
+    (Skip if no bathroom — mark all N/A)
+    30mA RCD protection, SELV/PELV requirements, shaver unit compliance,
+    supplementary bonding, socket-outlets 2.5m from zone 1, IP rating
+    suitability, accessories/controlgear for zone, equipment for position
+
+    *Section 7 — Other Part 7 Special Installations* (1 item)
+    Any other special locations? (swimming pools, saunas, etc.)
+
+    *Section 8 — Prosumer's LV Installations* (1 item)
+    Any Chapter 82 requirements? (solar PV, battery storage, etc.)
+
+    Any issues in sections 6-8? Or are any sections not applicable?"
+
+  AFTER ALL 4 GROUPS — build the inspectionItems array:
+  TOOL: read_eicr → get edit_version
+  TOOL: update_eicr({
+    eicr_id, edit_version: <current>,
+    data: {
+      inspectionItems: [
+        {
+          id: "item_1_0",
+          section: "INTAKE EQUIPMENT (VISUAL INSPECTION ONLY)",
+          item: "Service cable, Service head, Earthing arrangement...",
+          clause: "132.12",
+          inspected: true,
+          outcome: "satisfactory",
+          notes: ""
+        },
+        {
+          id: "item_1_1",
+          section: "INTAKE EQUIPMENT (VISUAL INSPECTION ONLY)",
+          item: "Consumer's isolator (where present)",
+          clause: "537.2.1.1",
+          inspected: true,
+          outcome: "satisfactory",
+          notes: ""
+        },
+        ... all 60 items ...
+        // Items flagged by electrician get their specific code:
+        {
+          id: "item_4_17",
+          section: "CONSUMER UNIT(S) / DISTRIBUTION BOARD(S)",
+          item: "RCD(s) provided for fault protection",
+          clause: "411.4.204; 411.5.2; 531.2",
+          inspected: true,
+          outcome: "C2",
+          notes: "Socket circuits not RCD protected"
+        }
+      ]
+    }
+  })
+
+  EFFICIENCY RULES:
+  - If electrician says "all good" → set all items in that group to satisfactory
+  - If electrician sends a batch of issues → parse them all at once
+  - If electrician sends a photo of their inspection sheet → parse all outcomes
+  - Don't repeat items already covered in other phases (earthing details etc.)
+  - Bath/shower section: if no bathroom, mark all section 6 items as not-applicable
+  - Section 7/8: if no special locations or prosumer installations, mark as not-applicable
+
+PHASE 6 — SCHEDULE OF TEST RESULTS (the big one)
+  This is the most data-heavy part. Work with how the electrician wants to give it.
+
+  OPTION A — Circuit by circuit:
+  ASK for each circuit: "Circuit [N] on [board]:
+    - Description (e.g. 'Ring final — ground floor sockets')
+    - Cable: type and size (live + CPC)
+    - Protective device: type, BS standard, rating
+    - R1+R2 or R2 (ohms)
+    - Insulation resistance: L-E, L-N (megohms, must be 1+)
+    - Zs (ohms)
+    - Polarity
+    - If ring: r1, rn, r2 (ohms)
+    - If RCD/RCBO: type, rating (mA), trip time at 1x (ms), 5x (ms)"
+
+  OPTION B — Batch (PREFERRED if electrician sends them):
+  If electrician sends a photo of test sheet, a voice note, or types out
+  all results in one message — parse ALL circuits at once.
+  Don't force one-at-a-time. This is much faster for the sparky.
+
+  IF PHOTO OF TEST SHEET:
+    TOOL: analyse_photo(image_url) → parse circuit numbers, R1+R2, Zs, IR, RCD times
+    Present all parsed results for confirmation before writing to cert.
+
+  PROACTIVE: "If you've got a photo of your test sheet, send it and I'll
+  read the values off it — saves typing them all out."
+
+  TOOL: read_eicr → get edit_version
+  TOOL: update_eicr({
+    eicr_id, edit_version: <current>,
+    data: {
+      testInstrumentMake: "...",
+      testInstrumentSerial: "...",
+      calibrationDate: "...",
+      testTemperature: "...",
+      scheduleOfTests: [
+        {
+          boardId: "board-1",
+          circuitNumber: "1",
+          circuitDescription: "Ring final — ground floor sockets",
+          typeOfWiring: "T&E",
+          liveSize: "2.5",
+          cpcSize: "1.5",
+          referenceMethod: "C",
+          bsStandard: "BS EN 61009",
+          protectiveDeviceType: "RCBO",
+          protectiveDeviceRating: "32",
+          protectiveDeviceCurve: "B",
+          r1r2: "0.45",
+          insulationTestVoltage: "500",
+          insulationLiveEarth: ">200",
+          insulationLiveNeutral: ">200",
+          zs: "0.89",
+          maxZs: "1.37",
+          pfc: "...",
+          polarity: "correct",
+          ringR1: "0.31",
+          ringRn: "0.28",
+          ringR2: "0.65",
+          rcdType: "Type A",
+          rcdRating: "30",
+          rcdOneX: "18",
+          rcdTestButton: "pass",
+          functionalTesting: "pass"
+        },
+        ...
+      ]
+    }
+  })
+
+  AFTER ENTERING CIRCUITS:
+  Validate each circuit's Zs against max permitted for its device.
+  If any fail, warn the electrician before proceeding.
+
+PHASE 7 — OBSERVATIONS & DEFECTS (1-2 messages)
+  ASK: "Any observations or defects? For each one give me:
+    - Code: C1 (danger present) / C2 (potentially dangerous) /
+      C3 (improvement recommended) / FI (further investigation)
+    - Location
+    - Description
+    - Recommendation
+
+    Send photos of any defects and I'll log them with the cert.
+    Or 'none' if the installation is clean."
+
+  IF PHOTO OF DEFECT:
+    TOOL: analyse_photo(image_url) → describe defect, suggest code (C1/C2/C3)
+    Present: "I can see [description]. Looks like a [C2] — [explanation]. Log it?"
+    ON YES: add to defectObservations + attach_photo_to_entity(certificate, eicr_id)
+
+  IF ANY C1 DEFECTS — flag immediately:
+  "C1 defect found — *danger present*. This must be addressed urgently.
+   The overall condition will be UNSATISFACTORY."
+
+  IF ANY C2 DEFECTS — note:
+  "C2 defects found — *potentially dangerous*. Overall condition will
+   likely be UNSATISFACTORY unless these are remediated."
+
+  TOOL: read_eicr → get edit_version
+  TOOL: update_eicr({
+    eicr_id, edit_version: <current>,
+    data: {
+      defectObservations: [
+        {
+          id: "obs_001",
+          item: "Main Board — circuits 2, 3",
+          defectCode: "C2",
+          description: "Socket circuits 2, 3 on main board not RCD protected",
+          recommendation: "Fit RCBO protection or RCD",
+          rectified: false
+        },
+        ...
+      ]
+    }
+  })
+
+PHASE 8 — OVERALL ASSESSMENT (1 message)
+  Based on defects, suggest the assessment:
+  - No C1/C2 → suggest "Satisfactory"
+  - Any C1/C2 unrectified → must be "Unsatisfactory"
+
+  ASK: "Overall assessment:
+    - Satisfactory for continued use? (yes/no)
+    - Recommended next inspection interval? (typically 5 years domestic, 3 commercial, 1 for rental)
+    - Any limitations on the inspection?
+    - Extent of the inspection — what was covered?
+    - Any agreed limitations with the client?"
+
+  TOOL: read_eicr → get edit_version
+  TOOL: update_eicr({
+    eicr_id, edit_version: <current>,
+    data: {
+      overallAssessment: "satisfactory" | "unsatisfactory",
+      satisfactoryForContinuedUse: true | false,
+      inspectionInterval: "5",
+      nextInspectionDate: "...",
+      limitationsOfInspection: "...",
+      extentOfInspection: "...",
+      agreedWith: "...",
+      bsAmendment: "BS 7671:2018+A3:2024"
+    }
+  })
+
+PHASE 9 — INSPECTOR DETAILS (1 message)
+  Pre-fill from user profile. Only ask what's missing.
+  ASK: "I've got your details from your profile:
+    [Name], [Qualifications], [Registration Scheme] [Number]
+    Company: [Company Name]
+
+    That right for this cert? And what date?
+    (You'll need to add your signature in the app)
+
+    Also — who's authorising the report? (same person or different?)"
+
+  TOOL: read_eicr → get edit_version
+  TOOL: update_eicr({
+    eicr_id, edit_version: <current>,
+    data: {
+      inspectorName: "...",
+      inspectorQualifications: "18th Edition, 2391-52",
+      registrationScheme: "NICEIC",
+      registrationNumber: "...",
+      inspectionDate: "2026-03-13",
+      inspectedByName: "...",
+      inspectedByPosition: "...",
+      inspectedByForOnBehalfOf: "...",
+      inspectedByAddress: "...",
+      inspectedByCpScheme: "NICEIC",
+      companyName: "...",
+      companyAddress: "...",
+      companyPhone: "...",
+      companyEmail: "...",
+      reportAuthorisedByName: "...",
+      reportAuthorisedByDate: "2026-03-13",
+      reportAuthorisedByForOnBehalfOf: "...",
+      reportAuthorisedByPosition: "...",
+      reportAuthorisedByAddress: "...",
+      reportAuthorisedByMembershipNo: "..."
+    },
+    status: "completed"
+  })
+
+PHASE 10 — SUMMARY, PDF & SEND
+  PRESENT a WhatsApp-formatted summary:
+
+  "*EICR — Electrical Installation Condition Report*
+   Cert: [certificate_number]
+
+   *Client:* [name]
+   *Address:* [address]
+   *Purpose:* [purpose]
+   *Date:* [date]
+
+   *Supply:* [voltage] [phases], [earthing], Ze [X] ohms, PFC [X] kA
+
+   *Boards:* [N] — [locations]
+   *Inspections:* [N]/60 satisfactory [list any non-satisfactory with codes]
+   *Circuits tested:* [N]
+
+   *Observations:*
+   [list each with code and description, or 'None']
+
+   *Overall:* [Satisfactory/Unsatisfactory]
+   *Next inspection:* [date]
+
+   *Inspector:* [name], [company]
+
+   All good? YES to generate PDF / NO to change something"
+
+  ON APPROVE:
+    TOOL: generate_certificate_pdf({
+      certificate_id: <eicr_id>,
+      certificate_type: "eicr"
+    })
+
+  TELL: "PDF generated. Don't forget to add signatures in the app."
+  ASK: "Want me to email it to [client name]?"
+  ON YES:
+    TOOL: send_certificate({
+      certificate_id: <eicr_id>,
+      client_id: <customer_uuid>
+    })
+  ON NO:
+    "Sorted — it's saved in your certs. Send it any time."
+```
+
+---
+
+### Rail 18: EIC (Electrical Installation Certificate)
+
+Trigger: "do an EIC" / "new installation cert" / "installation certificate"
+Channel: WhatsApp
+
+```
+PHASE 1 — CLIENT & INSTALLATION
+  First: read_user_profile() to get electrician's details.
+  ASK: "What's the client name, installation address, and description
+    of the installation work?
+    (e.g. 'New electrical installation to ground floor extension')
+    New installation, addition, or alteration?"
+  TOOL: create_eic({
+    client_name: "...",
+    installation_address: "...",
+    description_of_installation: "..."
+  })
+  → Store eic_id for all subsequent calls.
+
+PHASE 2 — SUPPLY CHARACTERISTICS (1 message)
+  ASK: "Supply details:
+    - Voltage and phases? (230V single / 400V three-phase)
+    - Earthing system? (TN-S, TN-C-S/PME, TT)
+    - Supply PME? (yes/no)
+    - External Ze? (ohms)
+    - Prospective fault current? (kA)
+    - Supply polarity confirmed?
+    - Main protective device: BS standard, type, rating, breaking capacity?
+    - Number of poles?
+    - RCD on main switch? (type, rating, measured trip time)"
+  TOOL: read_eic({ eic_id }) → get edit_version
+  TOOL: update_eic({
+    eic_id, edit_version: <current>,
+    data: {
+      supplyVoltage: "230",
+      supplyFrequency: "50",
+      phases: "Single Phase",
+      earthingArrangement: "TN-C-S",
+      supplyPME: true,
+      externalZe: "...",
+      prospectiveFaultCurrent: "...",
+      supplyPolarityConfirmed: true,
+      supplyDeviceBsEn: "BS EN 60898",
+      supplyDeviceType: "...",
+      supplyDeviceRating: "...",
+      breakingCapacity: "...",
+      mainSwitchPoles: "2",
+      rcdMainSwitch: false
+    }
+  })
+
+PHASE 3 — EARTHING & BONDING (1 message)
+  ASK: "Earthing and bonding:
+    - Earth electrode: type and resistance? (or N/A)
+    - Main earthing conductor: material and CSA?
+    - Main bonding conductor: material and CSA?
+    - What's bonded? (water, gas, oil, structural steel)
+    - Supplementary bonding: size? (or 'not required')
+    - Maximum demand? (amps or kW)"
+  TOOL: read_eic → get edit_version
+  TOOL: update_eic({
+    eic_id, edit_version: <current>,
+    data: {
+      earthElectrodeType: "...",
+      earthElectrodeResistance: "...",
+      mainEarthingConductorType: "Copper",
+      mainEarthingConductorSize: "16",
+      mainBondingSize: "10",
+      bondingCompliance: "satisfactory",
+      supplementaryBondingSize: "not-required"
+    }
+  })
+
+PHASE 4 — ELECTRICAL INSTALLATION DETAILS (1 message)
+  ASK: "Main switch and board details:
+    - Main switch location?
+    - Main protective device type and rating?
+    - Intake cable: type and size?
+    - Meter tails: size and length?
+    - Board location, make, number of ways?
+
+    Or send me a photo of the board and I'll read it."
+
+  IF PHOTO RECEIVED:
+    TOOL: analyse_photo(image_url) → extract board details
+    Present findings, confirm, then populate.
+
+  TOOL: read_eic → get edit_version
+  TOOL: update_eic({
+    eic_id, edit_version: <current>,
+    data: {
+      mainSwitchLocation: "...",
+      mainProtectiveDevice: "...",
+      mainSwitchRating: "...",
+      intakeCableSize: "...",
+      intakeCableType: "...",
+      tailsSize: "...",
+      tailsLength: "...",
+      distributionBoards: [
+        { location: "...", type: "...", totalWays: 12 }
+      ]
+    }
+  })
+
+PHASE 5 — SCHEDULE OF INSPECTIONS (14 items)
+  The EIC has 14 inspection items from BS 7671.
+  Default ALL items to "satisfactory". Present them all in one message
+  and ask the electrician to flag anything that isn't satisfactory.
+
+  Possible outcomes per item:
+    - satisfactory (default)
+    - not-applicable
+    - limitation
+
+  ASK: "Schedule of inspections — 14 items. I'll default all to satisfactory
+    unless you tell me otherwise.
+
+    1. Consumer's intake equipment (visual only)
+    2. Parallel or switched alternative sources
+    3. ADS protective measure
+    4. Basic protection
+    5. Protective measures other than ADS
+    6. Additional protection
+    7. Distribution equipment
+    8. Circuits (distribution and final)
+    9. Isolation and switching
+    10. Current-using equipment (permanently connected)
+    11. Identification and notices
+    12. Bath/shower locations
+    13. Other special installations or locations
+    14. Prosumer's LV installations
+
+    Any that are N/A or have limitations? Give me the numbers.
+    Or 'all satisfactory' to move on."
+
+  Common patterns:
+  - Items 12-14 often N/A for simple domestic installations
+  - Item 2 often N/A unless solar/battery/generator present
+  - If limitation on any item, ask for details
+
+  TOOL: read_eic → get edit_version
+  TOOL: update_eic({
+    eic_id, edit_version: <current>,
+    data: {
+      inspectionItems: [
+        {
+          id: "eic_1",
+          itemNumber: "1",
+          description: "Condition of consumer's intake equipment (Visual inspection only)",
+          outcome: "satisfactory",
+          notes: ""
+        },
+        {
+          id: "eic_2",
+          itemNumber: "2",
+          description: "Parallel or switched alternative sources of supply",
+          outcome: "not-applicable",
+          notes: ""
+        },
+        ... all 14 items ...
+      ]
+    }
+  })
+
+  EFFICIENCY: If electrician says "all satisfactory" or "12-14 N/A, rest
+  satisfactory" — parse and set accordingly. Don't ask follow-up questions
+  unless there are limitations that need explanation.
+
+PHASE 6 — SCHEDULE OF CIRCUITS & TEST RESULTS (the big one)
+  Same approach as EICR — work circuit-by-circuit OR accept batch data.
+  This is a new installation so all circuits need full test data.
+
+  For EACH circuit:
+    - Circuit ref and description
+    - Cable: type, live conductor size, CPC size, installation method, reference method
+    - Protective device: BS standard, type (MCB/RCBO/fuse), rating
+    - Continuity: R1+R2 (ohms)
+    - Insulation resistance at 500V: L-L, L-N, L-E, N-E (megohms, must be 1+)
+    - Earth fault loop impedance Zs (ohms)
+    - Prospective fault current (kA)
+    - Polarity: correct
+    - Functional testing: pass
+    - If ring: r1, rn, r2 (ohms)
+    - If RCD/RCBO: type, rating (mA), 1x trip (ms), 5x trip (ms), 0.5x no-trip, test button
+
+  Also: test instrument make, serial, calibration date.
+
+  TOOL: read_eic → get edit_version
+  TOOL: update_eic({
+    eic_id, edit_version: <current>,
+    data: {
+      testInstrumentMake: "...",
+      testInstrumentSerial: "...",
+      calibrationDate: "...",
+      testTemperature: "...",
+      scheduleOfTests: [
+        {
+          boardId: "board-1",
+          circuitNumber: "1",
+          circuitDescription: "Lighting — ground floor",
+          typeOfWiring: "T&E",
+          liveSize: "1.5",
+          cpcSize: "1.0",
+          referenceMethod: "C",
+          bsStandard: "BS EN 61009",
+          protectiveDeviceType: "RCBO",
+          protectiveDeviceRating: "6",
+          protectiveDeviceCurve: "B",
+          r1r2: "0.82",
+          insulationTestVoltage: "500",
+          insulationLiveEarth: ">200",
+          insulationLiveNeutral: ">200",
+          zs: "1.12",
+          maxZs: "...",
+          pfc: "1.2",
+          polarity: "correct",
+          functionalTesting: "pass"
+        },
+        ...
+      ]
+    }
+  })
+
+PHASE 6b — OBSERVATIONS (optional, 1 message)
+  For new installations observations are uncommon, but ask:
+  ASK: "Any observations or issues to note on the cert?
+    For each: description, defect code (C1/C2/C3/FI), and recommendation.
+    Say 'none' if everything's clean."
+
+  IF OBSERVATIONS:
+    TOOL: read_eic → get edit_version
+    TOOL: update_eic({
+      eic_id, edit_version: <current>,
+      data: {
+        observations: [
+          {
+            id: "obs_001",
+            item: "DB1 — circuit 3",
+            defectCode: "C3",
+            description: "No cable support at accessory",
+            recommendation: "Fit cable clips to BS 7671",
+            rectified: false
+          }
+        ]
+      }
+    })
+
+  IF NONE:
+    Skip — no update needed.
+
+PHASE 7 — DESIGN, CONSTRUCTION & INSPECTION (1-2 messages)
+  ASK: "A few more details for the cert:
+    - Any design considerations or departures from BS 7671?
+    - Any specific construction details?
+    - Extent of the inspection? Any limitations?
+    - Part P applicable? (new circuit / alteration / addition)
+    - Work type: new, addition, or alteration?"
+  TOOL: read_eic → get edit_version
+  TOOL: update_eic({
+    eic_id, edit_version: <current>,
+    data: {
+      designerDepartures: "None" | "...",
+      permittedExceptions: "None" | "...",
+      riskAssessmentAttached: false,
+      constructorDepartures: "None" | "...",
+      inspectorDepartures: "None" | "...",
+      existingInstallationComments: "...",
+      additionalNotes: "...",
+      bs7671Compliance: true,
+      buildingRegsCompliance: true,
+      competentPersonScheme: "NICEIC"
+    }
+  })
+
+PHASE 8 — THREE DECLARATIONS (1-2 messages)
+  An EIC has THREE separate declarations: designer, constructor, inspector.
+  Often the same person for small jobs. Pre-fill from user profile.
+
+  ASK: "The EIC needs three declarations — designer, constructor, and inspector.
+    Are you all three? (common for sole traders)
+    If yes, I'll use your profile details for all.
+    If not, give me the other names and details."
+
+  IF SAME PERSON for all three:
+    Use profile details, just confirm and get the date.
+
+  IF DIFFERENT PEOPLE:
+    ASK for each:
+    "Designer — name, qualifications, company, address, date?"
+    "Constructor — name, qualifications, company, address, date?"
+    "Inspector — name, qualifications, position, company, address, date?"
+
+  TOOL: read_eic → get edit_version
+  TOOL: update_eic({
+    eic_id, edit_version: <current>,
+    data: {
+      designerName: "...",
+      designerCompany: "...",
+      designerAddress: "...",
+      designerQualifications: "...",
+      designerDate: "...",
+      designerDepartures: "None",
+      constructorName: "...",
+      constructorCompany: "...",
+      constructorQualifications: "...",
+      constructorDate: "...",
+      constructorDepartures: "None",
+      sameAsDesigner: true | false,
+      inspectorName: "...",
+      inspectorCompany: "...",
+      inspectorQualifications: "...",
+      inspectorDate: "...",
+      inspectorDepartures: "None",
+      sameAsConstructor: true | false,
+      nextInspectionInterval: "5",
+      nextInspectionDate: "...",
+      inspectedByName: "...",
+      inspectedByPosition: "...",
+      inspectedByForOnBehalfOf: "...",
+      inspectedByAddress: "...",
+      inspectedByCpScheme: "NICEIC",
+      reportAuthorisedByName: "...",
+      reportAuthorisedByDate: "...",
+      reportAuthorisedByForOnBehalfOf: "...",
+      reportAuthorisedByPosition: "...",
+      reportAuthorisedByAddress: "..."
+    },
+    status: "completed"
+  })
+
+PHASE 9 — SUMMARY, PDF & SEND
+  PRESENT a WhatsApp-formatted summary:
+
+  "*EIC — Electrical Installation Certificate*
+   Cert: [certificate_number]
+
+   *Client:* [name]
+   *Address:* [address]
+   *Work:* [description]
+   *Type:* [new/addition/alteration]
+   *Date:* [date]
+
+   *Supply:* [voltage] [phases], [earthing], Ze [X] ohms, PFC [X] kA
+
+   *Inspections:* [N]/14 satisfactory [list any N/A or limitations]
+   *Circuits:* [N] tested
+   [brief list: designation — device — Zs — IR — pass/fail]
+
+   *Departures:* [None / list]
+
+   *Designer:* [name]
+   *Constructor:* [name]
+   *Inspector:* [name]
+
+   All good? YES to generate PDF / NO to change something"
+
+  ON APPROVE:
+    TOOL: generate_certificate_pdf({
+      certificate_id: <eic_id>,
+      certificate_type: "eic"
+    })
+
+  TELL: "PDF generated. Signatures for all three declarations need
+    to be added in the app."
+  ASK: "Want me to email it to [client name]?"
+  ON YES:
+    TOOL: send_certificate({
+      certificate_id: <eic_id>,
+      client_id: <customer_uuid>
+    })
+  ON NO:
+    "Sorted — it's saved in your certs."
+```
+
+---
+
+### Rail 19: Photo Board Analysis → Certificate
+
+Trigger: Electrician sends a photo of a distribution board/consumer unit OUTSIDE of an active cert workflow
+Channel: WhatsApp
+
+```
+PHASE 1 — ANALYSE PHOTO
+  TOOL: analyse_photo(image_url)
+  Extract from analysis:
+    - Board make/manufacturer (e.g. Hager, Wylex, MK, Schneider)
+    - Board type (metal/plastic, split load, dual RCD, RCBO board)
+    - Number of ways (count visible devices)
+    - Each circuit: device type (MCB/RCBO/RCD), rating, curve if visible
+    - Circuit labels if legible
+    - Condition observations (e.g. scorch marks, missing blanks, no labels)
+    - Any visible defects (loose cables, damaged enclosure, non-compliant)
+
+PHASE 2 — PRESENT FINDINGS
+  Present what was extracted:
+
+  "*Board Analysis*
+
+   *Board:* [make] [type] — [N] ways
+   *Condition:* [good / concerns noted]
+
+   *Circuits:*
+   1. [label] — [MCB/RCBO] [rating]A
+   2. [label] — [MCB/RCBO] [rating]A
+   ...
+
+   *Observations:*
+   [any issues spotted, e.g. 'No RCD protection on socket circuits',
+    'Circuit labels missing', 'Scorch marks on busbar']
+
+   Want me to:
+   1. Start an EICR for this board
+   2. Start an EIC for this board
+   3. Start a Minor Works cert
+   4. Just save the analysis"
+
+PHASE 3 — ROUTE TO CERT RAIL
+  ON 1 (EICR): trigger Rail 17 Phase 1 — pre-fill board data into Phase 4
+  ON 2 (EIC): trigger Rail 18 Phase 1 — pre-fill board data into Phase 4
+  ON 3 (MW): trigger Rail 16 Phase 1 — pre-fill circuit/device into Phase 3
+  ON 4 (SAVE):
+    TOOL: attach_photo_to_entity(entity_type: "project", entity_id: "...")
+    "Saved. You can use this later when you're ready to cert."
+
+PHASE 4 — PRE-FILL CERT DATA
+  When routing to a cert rail, carry over the extracted board data:
+  - distributionBoards array: make, type, totalWays, device details
+  - Circuit stubs in scheduleOfTests: circuitNumber, circuitDescription,
+    bsStandard, protectiveDeviceType, protectiveDeviceRating
+  - Any defect observations from the photo
+
+  The cert rail then continues from its next phase (supply/earthing/etc.)
+  with the board data already populated. The electrician just needs to
+  add test results and fill in what the camera couldn't see.
+```
+
+### Notes
+
+- Board photo analysis is approximate — always confirm with the electrician
+- Camera can't read test results (R1+R2, Zs, IR) — those must come from the tester
+- Works best with clear, well-lit photos of the board with door open
+- If the photo is too blurry or dark, say so and ask for another
+
+---
+
 ## Version
 
 | Field         | Value                 |
 | ------------- | --------------------- |
-| Version       | 3.1.0                 |
-| Last updated  | 2026-03-06            |
-| Rails defined | 15                    |
+| Version       | 4.3.0                 |
+| Last updated  | 2026-03-13            |
+| Rails defined | 19                    |
 | Author        | Elec-Mate Engineering |

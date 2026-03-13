@@ -410,15 +410,12 @@ const ElecIdShare = () => {
                 )}
               >
                 <Icon
-                  className={cn(
-                    'h-5 w-5 mb-1',
-                    isSelected ? 'text-elec-yellow' : 'text-foreground/70'
-                  )}
+                  className={cn('h-5 w-5 mb-1', isSelected ? 'text-elec-yellow' : 'text-white')}
                 />
                 <div
                   className={cn(
                     'text-sm font-medium',
-                    isSelected ? 'text-foreground' : 'text-foreground/70'
+                    isSelected ? 'text-foreground' : 'text-white'
                   )}
                 >
                   {section.label}
@@ -433,7 +430,12 @@ const ElecIdShare = () => {
 
   // Mobile bottom sheet for creating links
   const MobileCreateLinkSheet = () => (
-    <Drawer.Root open={isCreateLinkOpen} onOpenChange={setIsCreateLinkOpen} shouldScaleBackground={false} noBodyStyles>
+    <Drawer.Root
+      open={isCreateLinkOpen}
+      onOpenChange={setIsCreateLinkOpen}
+      shouldScaleBackground={false}
+      noBodyStyles
+    >
       <Drawer.Portal>
         <Drawer.Overlay className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50" />
         <Drawer.Content className="fixed bottom-0 left-0 right-0 z-50 flex flex-col max-h-[85vh] bg-background rounded-t-[20px] border-t border-white/[0.08]">
@@ -448,7 +450,7 @@ const ElecIdShare = () => {
               onClick={() => setIsCreateLinkOpen(false)}
               className="p-2 -mr-2 rounded-full hover:bg-white/[0.08] touch-manipulation"
             >
-              <X className="w-5 h-5 text-foreground/70" />
+              <X className="w-5 h-5 text-white" />
             </button>
           </div>
           <div className="flex-1 overflow-y-auto px-5 py-5">
@@ -565,7 +567,7 @@ const ElecIdShare = () => {
             <span className="text-lg font-bold text-foreground">{elecIdNumber}</span>
           </div>
 
-          <p className="text-sm text-foreground/70 mb-4 text-center">
+          <p className="text-sm text-white mb-4 text-center">
             Scan to instantly verify your credentials
           </p>
 
@@ -577,7 +579,7 @@ const ElecIdShare = () => {
             <span className="font-mono text-xs text-foreground flex-1 truncate text-left">
               {shareUrl}
             </span>
-            <Copy className="h-4 w-4 text-foreground/70 flex-shrink-0" />
+            <Copy className="h-4 w-4 text-white flex-shrink-0" />
           </button>
 
           {/* Action Buttons */}
@@ -617,7 +619,7 @@ const ElecIdShare = () => {
         >
           <Link2 className="h-7 w-7 text-elec-yellow" />
           <span className="text-sm font-medium text-foreground">Create Link</span>
-          <span className="text-xs text-foreground/60">Generate shareable URL</span>
+          <span className="text-xs text-white">Generate shareable URL</span>
         </motion.button>
         <motion.button
           initial={{ opacity: 0, y: 10 }}
@@ -628,7 +630,7 @@ const ElecIdShare = () => {
         >
           <Copy className="h-7 w-7 text-elec-yellow" />
           <span className="text-sm font-medium text-foreground">Copy URL</span>
-          <span className="text-xs text-foreground/60">Quick share link</span>
+          <span className="text-xs text-white">Quick share link</span>
         </motion.button>
       </div>
 
@@ -676,13 +678,13 @@ const ElecIdShare = () => {
                       onClick={() => handleCopyLink(link.url)}
                       className="p-2 rounded-lg hover:bg-white/[0.08] touch-manipulation active:scale-[0.95]"
                     >
-                      <Copy className="h-4 w-4 text-foreground/70" />
+                      <Copy className="h-4 w-4 text-white" />
                     </button>
                     <button
                       onClick={() => window.open(link.url, '_blank')}
                       className="p-2 rounded-lg hover:bg-white/[0.08] touch-manipulation active:scale-[0.95]"
                     >
-                      <ExternalLink className="h-4 w-4 text-foreground/70" />
+                      <ExternalLink className="h-4 w-4 text-white" />
                     </button>
                     <button
                       onClick={() => setDeleteConfirm({ open: true, id: link.id })}
@@ -692,7 +694,7 @@ const ElecIdShare = () => {
                     </button>
                   </div>
                 </div>
-                <div className="flex items-center gap-3 text-xs text-foreground/70">
+                <div className="flex items-center gap-3 text-xs text-white">
                   <span className="flex items-center gap-1">
                     <Clock className="h-3 w-3" />
                     {link.expiresAt
@@ -723,8 +725,8 @@ const ElecIdShare = () => {
               animate={{ opacity: 1 }}
               className="py-8 text-center"
             >
-              <Link2 className="h-10 w-10 text-foreground/70/50 mx-auto mb-2" />
-              <p className="text-sm text-foreground/70">No active links</p>
+              <Link2 className="h-10 w-10 text-white mx-auto mb-2" />
+              <p className="text-sm text-white">No active links</p>
             </motion.div>
           )}
         </AnimatePresence>
@@ -739,7 +741,7 @@ const ElecIdShare = () => {
         <Shield className="h-5 w-5 text-green-400 flex-shrink-0 mt-0.5" />
         <div>
           <p className="font-medium text-foreground text-sm">Your data is protected</p>
-          <p className="text-xs text-foreground/70">
+          <p className="text-xs text-white">
             Only sections you choose will be visible to recipients.
           </p>
         </div>

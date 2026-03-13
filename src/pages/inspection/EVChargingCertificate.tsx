@@ -93,29 +93,6 @@ export default function EVChargingCertificate() {
   // Hooks for tabs
   const tabProps = useEVChargingTabs(formData);
 
-  // Track online/offline status
-  useEffect(() => {
-    const handleOnline = () => {
-      setIsOnline(true);
-      // Trigger cloud sync when back online
-      if (hasUnsavedChangesRef.current) {
-        syncToCloud();
-      }
-    };
-    const handleOffline = () => {
-      setIsOnline(false);
-      setSyncStatus('offline');
-    };
-
-    window.addEventListener('online', handleOnline);
-    window.addEventListener('offline', handleOffline);
-
-    return () => {
-      window.removeEventListener('online', handleOnline);
-      window.removeEventListener('offline', handleOffline);
-    };
-  }, []);
-
   // Get current user
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => {
@@ -262,6 +239,28 @@ export default function EVChargingCertificate() {
       // Data is still safe in localStorage
     }
   }, [formData, savedReportId, user, isOnline]);
+
+  // Track online/offline status
+  useEffect(() => {
+    const handleOnline = () => {
+      setIsOnline(true);
+      if (hasUnsavedChangesRef.current) {
+        syncToCloud();
+      }
+    };
+    const handleOffline = () => {
+      setIsOnline(false);
+      setSyncStatus('offline');
+    };
+
+    window.addEventListener('online', handleOnline);
+    window.addEventListener('offline', handleOffline);
+
+    return () => {
+      window.removeEventListener('online', handleOnline);
+      window.removeEventListener('offline', handleOffline);
+    };
+  }, [syncToCloud]);
 
   // Auto-save effect - runs every 10 seconds
   useEffect(() => {
@@ -436,7 +435,8 @@ export default function EVChargingCertificate() {
             companyAddress: branding.companyAddress || dataWithCertNumber.companyAddress,
             companyPhone: branding.companyPhone || dataWithCertNumber.companyPhone,
             companyEmail: branding.companyEmail || dataWithCertNumber.companyEmail,
-            companyAccentColor: branding.companyAccentColor || dataWithCertNumber.companyAccentColor,
+            companyAccentColor:
+              branding.companyAccentColor || dataWithCertNumber.companyAccentColor,
             registrationSchemeLogo:
               branding.registrationSchemeLogo || dataWithCertNumber.registrationSchemeLogo,
             registrationScheme:
@@ -452,13 +452,9 @@ export default function EVChargingCertificate() {
       // Auto-resolve scheme logo if scheme is set but logo is missing or is a placeholder SVG
       const schemeName = dataWithCertNumber.registrationScheme;
       const currentLogo = dataWithCertNumber.registrationSchemeLogo || '';
-      const isPlaceholderLogo = !currentLogo || currentLogo.length < 2000 || currentLogo.includes('image/svg+xml');
-      if (
-        schemeName &&
-        schemeName !== 'none' &&
-        schemeName !== 'other' &&
-        isPlaceholderLogo
-      ) {
+      const isPlaceholderLogo =
+        !currentLogo || currentLogo.length < 2000 || currentLogo.includes('image/svg+xml');
+      if (schemeName && schemeName !== 'none' && schemeName !== 'other' && isPlaceholderLogo) {
         try {
           const { getSchemeInfo } = await import('@/constants/schemeLogos');
           const info = getSchemeInfo(schemeName);
@@ -528,7 +524,9 @@ export default function EVChargingCertificate() {
           .eq('report_id', savedReportId);
 
         // EV Charging is always Part P notifiable (new circuit to dwelling)
-        const { data: { user } } = await supabase.auth.getUser();
+        const {
+          data: { user },
+        } = await supabase.auth.getUser();
         if (user) {
           await createNotificationFromCertificate(savedReportId, 'ev-charging', formData, user.id);
         }
@@ -654,7 +652,11 @@ export default function EVChargingCertificate() {
                 aria-label="Save draft"
                 className="h-9 w-9 text-white hover:text-white hover:bg-white/10 touch-manipulation active:scale-[0.98] transition-transform"
               >
-                {isSaving ? <Loader2 className="h-4 w-4 animate-spin" /> : <Save className="h-4 w-4" />}
+                {isSaving ? (
+                  <Loader2 className="h-4 w-4 animate-spin" />
+                ) : (
+                  <Save className="h-4 w-4" />
+                )}
               </Button>
               <Button
                 size="icon"
@@ -663,7 +665,11 @@ export default function EVChargingCertificate() {
                 aria-label="Generate certificate PDF"
                 className="bg-green-500 hover:bg-green-600 text-white h-9 w-9 rounded-lg touch-manipulation active:scale-[0.98] transition-transform"
               >
-                {isGenerating ? <Loader2 className="h-4 w-4 animate-spin" /> : <Download className="h-4 w-4" />}
+                {isGenerating ? (
+                  <Loader2 className="h-4 w-4 animate-spin" />
+                ) : (
+                  <Download className="h-4 w-4" />
+                )}
               </Button>
             </div>
           </div>
@@ -706,7 +712,11 @@ export default function EVChargingCertificate() {
                 disabled={isSaving}
                 className="text-white hover:text-white hover:bg-white/10 h-11 px-4 touch-manipulation active:scale-[0.98] transition-transform"
               >
-                {isSaving ? <Loader2 className="h-4 w-4 animate-spin mr-2" /> : <Save className="h-4 w-4 mr-2" />}
+                {isSaving ? (
+                  <Loader2 className="h-4 w-4 animate-spin mr-2" />
+                ) : (
+                  <Save className="h-4 w-4 mr-2" />
+                )}
                 Save
               </Button>
               <Button
@@ -715,7 +725,11 @@ export default function EVChargingCertificate() {
                 disabled={isGenerating}
                 className="bg-green-500 hover:bg-green-600 text-white h-11 px-5 font-semibold rounded-lg touch-manipulation active:scale-[0.98] transition-transform"
               >
-                {isGenerating ? <Loader2 className="h-4 w-4 animate-spin mr-2" /> : <Download className="h-4 w-4 mr-2" />}
+                {isGenerating ? (
+                  <Loader2 className="h-4 w-4 animate-spin mr-2" />
+                ) : (
+                  <Download className="h-4 w-4 mr-2" />
+                )}
                 Generate PDF
               </Button>
             </div>
