@@ -14,7 +14,6 @@ import {
 } from '@/components/ui/drawer';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { Progress } from '@/components/ui/progress';
 import { SwipeableCard } from '@/components/ui/SwipeableCard';
 import { cn } from '@/lib/utils';
 import {
@@ -28,11 +27,9 @@ import {
   PoundSterling,
   MapPin,
   GraduationCap,
-  ChevronRight,
 } from 'lucide-react';
 import { fadeUpVariants } from './animations/variants';
 import type { LiveEducationData } from '@/hooks/useLiveEducationData';
-import type { ComparisonMetric } from './hooks/useCompare';
 
 interface CompareDrawerProps {
   open: boolean;
@@ -57,17 +54,17 @@ const MiniCompareCard = ({
   onClick?: () => void;
   index: number;
 }) => {
-  const colors = ['purple', 'blue', 'green'] as const;
+  const colors = ['elec-yellow', 'emerald', 'blue'] as const;
   const color = colors[index % colors.length];
   const colorClasses = {
-    purple: 'border-purple-500/30 hover:border-purple-500/50',
+    'elec-yellow': 'border-elec-yellow/30 hover:border-elec-yellow/50',
+    emerald: 'border-emerald-500/30 hover:border-emerald-500/50',
     blue: 'border-blue-500/30 hover:border-blue-500/50',
-    green: 'border-green-500/30 hover:border-green-500/50',
   };
   const dotClasses = {
-    purple: 'bg-purple-500',
+    'elec-yellow': 'bg-elec-yellow',
+    emerald: 'bg-emerald-500',
     blue: 'bg-blue-500',
-    green: 'bg-green-500',
   };
 
   return (
@@ -87,7 +84,7 @@ const MiniCompareCard = ({
         exit="exit"
         onClick={onClick}
         className={cn(
-          'w-[180px] bg-white/5 rounded-xl border overflow-hidden cursor-pointer active:scale-[0.98] transition-all touch-manipulation',
+          'w-[160px] bg-white/[0.04] rounded-xl border overflow-hidden cursor-pointer active:scale-[0.98] transition-all touch-manipulation',
           colorClasses[color]
         )}
       >
@@ -95,22 +92,22 @@ const MiniCompareCard = ({
         <div className={cn('h-1', dotClasses[color])} />
 
         {/* Image */}
-        <div className="h-20 overflow-hidden">
+        <div className="h-16 overflow-hidden">
           {programme.imageUrl ? (
             <img src={programme.imageUrl} alt="" className="w-full h-full object-cover" />
           ) : (
             <div className="w-full h-full bg-white/10 flex items-center justify-center">
-              <GraduationCap className="h-8 w-8 text-white" />
+              <GraduationCap className="h-6 w-6 text-white" />
             </div>
           )}
         </div>
 
         {/* Content */}
-        <div className="p-3">
-          <h4 className="text-sm font-medium text-white line-clamp-2 leading-tight">
+        <div className="p-2.5">
+          <h4 className="text-xs font-medium text-white line-clamp-2 leading-tight">
             {programme.title}
           </h4>
-          <p className="text-xs text-purple-400 mt-1 line-clamp-1">{programme.institution}</p>
+          <p className="text-[11px] text-elec-yellow mt-1 line-clamp-1">{programme.institution}</p>
         </div>
       </motion.div>
     </SwipeableCard>
@@ -133,12 +130,7 @@ const ComparisonRow = ({
   format?: (v: number) => string;
   icon?: typeof Star;
 }) => {
-  const colors = ['purple', 'blue', 'green'] as const;
-  const progressColors = {
-    purple: 'bg-purple-500',
-    blue: 'bg-blue-500',
-    green: 'bg-green-500',
-  };
+  const barColors = ['bg-elec-yellow', 'bg-emerald-500', 'bg-blue-500'];
 
   // Find the winner (highest value for progress type)
   let winnerIndex = -1;
@@ -152,14 +144,13 @@ const ComparisonRow = ({
   }
 
   return (
-    <div className="space-y-2">
+    <div className="space-y-2 py-3 border-b border-white/[0.06] last:border-0">
       <div className="flex items-center gap-2">
-        {Icon && <Icon className="h-4 w-4 text-white" />}
-        <span className="text-sm text-white">{label}</span>
+        {Icon && <Icon className="h-3.5 w-3.5 text-white" />}
+        <span className="text-xs font-medium text-white uppercase tracking-wide">{label}</span>
       </div>
-      <div className="grid gap-2" style={{ gridTemplateColumns: `repeat(${values.length}, 1fr)` }}>
+      <div className="grid gap-3" style={{ gridTemplateColumns: `repeat(${values.length}, 1fr)` }}>
         {values.map((value, index) => {
-          const color = colors[index % colors.length];
           const isWinner = index === winnerIndex;
 
           if (type === 'progress') {
@@ -168,25 +159,21 @@ const ComparisonRow = ({
             const percentage = (numericValue / max) * 100;
 
             return (
-              <div key={index} className="space-y-1">
+              <div key={index} className="space-y-1.5">
                 <div className="flex items-center justify-between">
-                  <span
-                    className={cn('text-sm font-medium', isWinner ? 'text-white' : 'text-white')}
-                  >
-                    {displayValue}
-                  </span>
+                  <span className="text-sm font-semibold text-white">{displayValue}</span>
                   {isWinner && (
-                    <Badge className="bg-green-500/20 border-green-500/30 text-green-400 text-[10px] px-1.5">
+                    <Badge className="bg-emerald-500/15 border-emerald-500/25 text-emerald-400 text-[9px] px-1.5 py-0">
                       Best
                     </Badge>
                   )}
                 </div>
-                <div className="h-2 rounded-full bg-white/10 overflow-hidden">
+                <div className="h-1.5 rounded-full bg-white/10 overflow-hidden">
                   <motion.div
                     initial={{ width: 0 }}
                     animate={{ width: `${percentage}%` }}
                     transition={{ duration: 0.5, delay: index * 0.1 }}
-                    className={cn('h-full rounded-full', progressColors[color])}
+                    className={cn('h-full rounded-full', barColors[index % barColors.length])}
                   />
                 </div>
               </div>
@@ -194,8 +181,8 @@ const ComparisonRow = ({
           }
 
           return (
-            <div key={index} className="text-sm text-white text-center py-1">
-              {String(value)}
+            <div key={index} className="text-sm text-white text-center py-0.5">
+              {String(value) || 'Not specified'}
             </div>
           );
         })}
@@ -222,7 +209,7 @@ const CompareDrawer = ({
           title: `Comparing: ${titles}`,
           text: `Check out this programme comparison:\n${programmes.map((p) => `- ${p.title} at ${p.institution}`).join('\n')}`,
         });
-      } catch (error) {
+      } catch {
         // User cancelled or error
       }
     }
@@ -231,20 +218,20 @@ const CompareDrawer = ({
   return (
     <Drawer open={open} onOpenChange={onOpenChange}>
       <DrawerContent className="h-[85vh] rounded-t-3xl">
-        <DrawerHeader className="border-b border-white/10">
+        <DrawerHeader className="border-b border-white/10 px-4 py-3">
           <div className="flex items-center justify-between">
-            <DrawerTitle className="text-lg font-semibold">
-              Compare Programmes ({programmes.length}/{maxItems})
+            <DrawerTitle className="text-base font-semibold text-white">
+              Compare ({programmes.length}/{maxItems})
             </DrawerTitle>
-            <DrawerClose className="h-8 w-8 rounded-full hover:bg-white/10 flex items-center justify-center">
-              <X className="h-4 w-4" />
+            <DrawerClose className="h-8 w-8 rounded-full hover:bg-white/10 flex items-center justify-center touch-manipulation">
+              <X className="h-4 w-4 text-white" />
             </DrawerClose>
           </div>
         </DrawerHeader>
 
-        <div className="flex-1 overflow-y-auto p-4">
+        <div className="flex-1 overflow-y-auto px-4 py-3">
           {/* Programme Cards Row */}
-          <div className="flex gap-3 overflow-x-auto scrollbar-hide -mx-4 px-4 pb-4">
+          <div className="flex gap-2.5 overflow-x-auto scrollbar-hide -mx-4 px-4 pb-3">
             <AnimatePresence mode="popLayout">
               {programmes.map((programme, index) => (
                 <MiniCompareCard
@@ -263,16 +250,16 @@ const CompareDrawer = ({
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
                 onClick={onAddMore}
-                className="min-w-[180px] h-[160px] rounded-xl border-2 border-dashed border-white/20 flex flex-col items-center justify-center gap-2 hover:border-purple-500/50 hover:bg-white/5 transition-colors"
+                className="min-w-[160px] h-[130px] rounded-xl border-2 border-dashed border-white/15 flex flex-col items-center justify-center gap-2 hover:border-elec-yellow/40 hover:bg-white/[0.03] transition-colors touch-manipulation"
               >
-                <Plus className="h-8 w-8 text-white" />
-                <span className="text-sm text-white">Add Programme</span>
+                <Plus className="h-6 w-6 text-white" />
+                <span className="text-xs text-white">Add Programme</span>
               </motion.button>
             )}
           </div>
 
           {/* Swipe hint */}
-          <p className="text-xs text-white text-center mb-6">
+          <p className="text-[11px] text-white text-center mb-4">
             Swipe left on a card to remove it
           </p>
 
@@ -282,12 +269,8 @@ const CompareDrawer = ({
               variants={fadeUpVariants}
               initial="initial"
               animate="animate"
-              className="space-y-6"
+              className="bg-white/[0.03] rounded-xl border border-white/[0.06] px-3 py-1"
             >
-              <h3 className="text-sm font-medium text-white uppercase tracking-wide">
-                Comparison
-              </h3>
-
               <ComparisonRow
                 label="Rating"
                 icon={Star}
@@ -335,13 +318,16 @@ const CompareDrawer = ({
               />
             </motion.div>
           ) : (
-            <div className="text-center py-12">
-              <GraduationCap className="h-16 w-16 text-white/10 mx-auto mb-4" />
-              <h3 className="text-lg font-semibold text-white mb-2">Add programmes to compare</h3>
-              <p className="text-sm text-white max-w-xs mx-auto">
+            <div className="text-center py-10">
+              <GraduationCap className="h-12 w-12 text-white/10 mx-auto mb-3" />
+              <h3 className="text-base font-semibold text-white mb-1">Add programmes to compare</h3>
+              <p className="text-sm text-white max-w-xs mx-auto mb-4">
                 Select at least 2 programmes to see a side-by-side comparison
               </p>
-              <Button onClick={onAddMore} className="mt-4 bg-purple-500 hover:bg-purple-600">
+              <Button
+                onClick={onAddMore}
+                className="bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90 font-semibold touch-manipulation h-11"
+              >
                 <Plus className="h-4 w-4 mr-2" />
                 Browse Programmes
               </Button>
@@ -349,36 +335,39 @@ const CompareDrawer = ({
           )}
         </div>
 
-        {/* Footer Actions */}
-        <DrawerFooter className="border-t border-white/10 safe-area-inset-bottom">
-          <div className="flex gap-3">
+        {/* Footer Actions — stacked on mobile for proper touch targets */}
+        <DrawerFooter
+          className="border-t border-white/10 px-4 pb-6 pt-3"
+          style={{ paddingBottom: 'max(1.5rem, env(safe-area-inset-bottom))' }}
+        >
+          {programmes.length >= 2 && (
+            <Button
+              onClick={handleShare}
+              className="w-full h-11 bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90 font-semibold touch-manipulation rounded-xl"
+            >
+              <Share2 className="h-4 w-4 mr-2" />
+              Share Comparison
+            </Button>
+          )}
+          <div className="flex gap-2">
             {programmes.length > 0 && (
               <Button
                 variant="outline"
                 onClick={onClear}
-                className="border-white/20 hover:bg-white/10"
+                className="flex-1 h-11 border-white/15 text-white hover:bg-white/10 hover:text-white touch-manipulation rounded-xl"
               >
                 <Trash2 className="h-4 w-4 mr-2" />
                 Clear All
               </Button>
             )}
-            {programmes.length >= 2 && (
-              <Button
-                variant="outline"
-                onClick={handleShare}
-                className="flex-1 border-white/20 hover:bg-white/10"
-              >
-                <Share2 className="h-4 w-4 mr-2" />
-                Share Comparison
-              </Button>
-            )}
             <Button
               onClick={onAddMore}
               disabled={programmes.length >= maxItems}
-              className="flex-1 bg-purple-500 hover:bg-purple-600"
+              variant="outline"
+              className="flex-1 h-11 border-white/15 text-white hover:bg-white/10 hover:text-white touch-manipulation rounded-xl"
             >
               <Plus className="h-4 w-4 mr-2" />
-              Add Programme
+              Add More
             </Button>
           </div>
         </DrawerFooter>

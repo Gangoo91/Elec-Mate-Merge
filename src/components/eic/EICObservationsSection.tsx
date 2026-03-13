@@ -117,7 +117,7 @@ const EICObservationsSection: React.FC<EICObservationsSectionProps> = ({
 
       {/* Empty State */}
       {observations.length === 0 && (
-        <div className={cn('text-center py-6 text-muted-foreground/60', isMobile && 'px-4')}>
+        <div className={cn('text-center py-6 text-white', isMobile && 'px-4')}>
           <FileWarning className="w-8 h-8 mx-auto mb-2 opacity-40" />
           <p className="text-sm">No observations recorded</p>
           <p className="text-xs mt-1">Tap above to add any defects or limitations</p>

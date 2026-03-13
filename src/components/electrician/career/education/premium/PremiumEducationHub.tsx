@@ -390,19 +390,22 @@ const PremiumEducationHub = ({ onBack }: PremiumEducationHubProps) => {
         animate={{ y: 0, opacity: 1 }}
         className="sticky top-0 z-40 bg-elec-dark/95 backdrop-blur-xl border-b border-white/10"
       >
-        <div className="flex items-center gap-2 h-12 px-3 sm:px-4">
+        <div className="flex items-center gap-1.5 sm:gap-2 h-12 px-2 sm:px-4">
           {/* Back button */}
           {onBack && (
-            <Button variant="ghost" size="icon" onClick={onBack} className="h-9 w-9 flex-shrink-0 hover:bg-white/10 rounded-xl touch-manipulation">
-              <ArrowLeft className="h-5 w-5 text-white" />
-            </Button>
+            <button
+              onClick={onBack}
+              className="h-8 w-8 flex-shrink-0 flex items-center justify-center hover:bg-white/10 rounded-lg touch-manipulation active:scale-95 transition-all"
+            >
+              <ArrowLeft className="h-4 w-4 text-white" />
+            </button>
           )}
 
-          {/* Tab navigation — always shows labels */}
-          <div className="flex-1 flex justify-center">
-            <div className="flex bg-white/5 rounded-xl p-1 gap-0.5">
+          {/* Tab navigation — text only on mobile, icons on desktop */}
+          <div className="flex-1 flex justify-center min-w-0">
+            <div className="flex bg-white/5 rounded-lg p-0.5 gap-px">
               {[
-                { id: 'explore' as TabType, label: 'Programmes', icon: GraduationCap },
+                { id: 'explore' as TabType, label: 'Browse', icon: GraduationCap },
                 {
                   id: 'saved' as TabType,
                   label: 'Saved',
@@ -420,21 +423,19 @@ const PremiumEducationHub = ({ onBack }: PremiumEducationHubProps) => {
                   key={tab.id}
                   onClick={() => setActiveTab(tab.id)}
                   className={cn(
-                    'relative flex items-center gap-1.5 px-3 sm:px-4 py-2 rounded-lg text-sm font-medium transition-all touch-manipulation min-h-[36px]',
+                    'relative flex items-center gap-1 px-3 sm:px-3.5 py-1.5 rounded-md sm:rounded-lg text-[13px] sm:text-sm font-medium transition-all touch-manipulation',
                     activeTab === tab.id
-                      ? 'bg-elec-yellow text-elec-dark shadow-sm'
+                      ? 'bg-elec-yellow text-elec-dark'
                       : 'text-white hover:bg-white/5'
                   )}
                 >
-                  <tab.icon className="h-4 w-4" />
+                  <tab.icon className="hidden sm:block h-3.5 w-3.5" />
                   <span>{tab.label}</span>
                   {tab.count !== undefined && tab.count > 0 && (
                     <span
                       className={cn(
-                        'flex h-5 min-w-[20px] items-center justify-center rounded-full px-1.5 text-[10px] font-bold',
-                        activeTab === tab.id
-                          ? 'bg-elec-dark/20 text-elec-dark'
-                          : 'bg-white/10 text-white'
+                        'ml-0.5 text-[10px] font-bold',
+                        activeTab === tab.id ? 'text-elec-dark/60' : 'text-white'
                       )}
                     >
                       {tab.count}
@@ -446,14 +447,12 @@ const PremiumEducationHub = ({ onBack }: PremiumEducationHubProps) => {
           </div>
 
           {/* Search button */}
-          <Button
-            variant="ghost"
-            size="icon"
+          <button
             onClick={() => setSearchOpen(true)}
-            className="h-9 w-9 flex-shrink-0 hover:bg-white/10 rounded-xl touch-manipulation bg-white/5 border border-white/10"
+            className="h-8 w-8 flex-shrink-0 flex items-center justify-center hover:bg-white/10 rounded-lg touch-manipulation bg-white/5 border border-white/10 active:scale-95 transition-all"
           >
-            <Search className="h-4 w-4 text-white" />
-          </Button>
+            <Search className="h-3.5 w-3.5 text-white" />
+          </button>
         </div>
       </motion.header>
 

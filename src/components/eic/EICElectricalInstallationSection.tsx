@@ -505,6 +505,21 @@ const EICElectricalInstallationSection = ({
                     </Select>
                   </div>
                   <div>
+                    <Label htmlFor="rcdOperatingTime" className="font-medium text-sm">
+                      Operating Time (ms)
+                    </Label>
+                    <Input
+                      id="rcdOperatingTime"
+                      type="text"
+                      inputMode="numeric"
+                      value={formData.rcdOperatingTime || ''}
+                      onChange={(e) => onUpdate('rcdOperatingTime', e.target.value)}
+                      placeholder="e.g., 40"
+                      className="h-11 text-base touch-manipulation"
+                    />
+                    <p className="text-xs text-white mt-1">Manufacturer rated operating time</p>
+                  </div>
+                  <div>
                     <Label htmlFor="rcdMeasuredTime" className="font-medium text-sm">
                       Measured Operating Time (ms)
                     </Label>

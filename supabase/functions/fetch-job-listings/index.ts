@@ -76,6 +76,7 @@ Deno.serve(async (req) => {
     }
 
     // Transform and insert new jobs
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const jobsToInsert = aggregatedData.jobs.map((job: any) => ({
       title: job.title || 'Electrician Position',
       company: job.company || 'Unknown Company',
@@ -83,12 +84,13 @@ Deno.serve(async (req) => {
       location: job.location || 'UK',
       salary: job.salary || 'Competitive',
       type: job.type || 'Full-time',
-      description: job.description || job.summary || 'Job description not available',
+      description: (job.description || job.summary || 'Job description not available').slice(
+        0,
+        5000
+      ),
       external_url: job.apply_url || job.url || '#',
-      posted_date: job.posted_date || new Date().toISOString(),
+      posted_date: job.posted_date || new Date().toISOString().slice(0, 10),
       source: job.source || 'aggregated',
-      expires_at: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString(), // 30 days from now
-      is_remote: job.is_remote || false,
     }));
 
     logger.info('Inserting new jobs', { count: jobsToInsert.length });

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import {
@@ -9,21 +10,21 @@ import {
   AlertTriangle,
   CheckCircle,
   Clock,
-  Shield,
-  Printer,
   Loader2,
+  MessageCircle,
+  Receipt,
 } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { useCompanyProfile } from '@/hooks/useCompanyProfile';
 import { supabase } from '@/integrations/supabase/client';
 import { saveCertificatePdf } from '@/utils/certificate-pdf-storage';
 import { formatEicJson } from '@/utils/eicJsonFormatter';
+import { createInvoiceFromCertificate } from '@/utils/certificateToQuote';
 import PDFExportProgress from '@/components/PDFExportProgress';
 import {
   Dialog,
   DialogContent,
   DialogDescription,
-  DialogFooter,
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog';
@@ -49,6 +50,7 @@ const EICCertificateActions: React.FC<EICCertificateActionsProps> = ({
   onSaveDraft,
   onUpdate,
 }) => {
+  const navigate = useNavigate();
   const isMobile = useIsMobile();
   const haptics = useHaptics();
   const { toast } = useToast();
@@ -61,6 +63,7 @@ const EICCertificateActions: React.FC<EICCertificateActionsProps> = ({
   const [showEmailDialog, setShowEmailDialog] = useState(false);
   const [emailRecipient, setEmailRecipient] = useState('');
   const [isSendingEmail, setIsSendingEmail] = useState(false);
+  const [isSendingWhatsApp, setIsSendingWhatsApp] = useState(false);
 
   // Validation checks
   const hasRequiredInstallationDetails =
@@ -394,44 +397,22 @@ const EICCertificateActions: React.FC<EICCertificateActionsProps> = ({
           </Badge>
         </div>
 
-        {/* Completion Status + Legal Compliance Grid */}
-        <div className={cn('grid gap-4', isMobile ? 'grid-cols-1' : 'grid-cols-2')}>
-          {/* Section Completion */}
-          <div className="space-y-3">
-            <h4 className="text-sm font-semibold text-white">Section Completion</h4>
-            <div className="space-y-2">
-              {completionSections.map((section) => (
-                <div key={section.label} className="flex items-center gap-2.5">
-                  {section.done ? (
-                    <CheckCircle className="h-4 w-4 text-green-400 shrink-0" />
-                  ) : (
-                    <Clock className="h-4 w-4 text-amber-400 shrink-0" />
-                  )}
-                  <span className={cn('text-sm', section.done ? 'text-green-400' : 'text-white')}>
-                    {section.label}
-                  </span>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Legal Compliance */}
-          <div className="space-y-3">
-            <h4 className="text-sm font-semibold text-white">Legal Compliance</h4>
-            <div className="space-y-2">
-              <div className="flex items-center gap-2.5">
-                <Shield className="h-4 w-4 text-elec-yellow shrink-0" />
-                <span className="text-sm text-white">BS 7671:2018 Compliant</span>
+        {/* Section Completion */}
+        <div className="space-y-3">
+          <h4 className="text-sm font-semibold text-white">Section Completion</h4>
+          <div className="space-y-2">
+            {completionSections.map((section) => (
+              <div key={section.label} className="flex items-center gap-2.5">
+                {section.done ? (
+                  <CheckCircle className="h-4 w-4 text-green-400 shrink-0" />
+                ) : (
+                  <Clock className="h-4 w-4 text-amber-400 shrink-0" />
+                )}
+                <span className={cn('text-sm', section.done ? 'text-green-400' : 'text-white')}>
+                  {section.label}
+                </span>
               </div>
-              <div className="flex items-center gap-2.5">
-                <Shield className="h-4 w-4 text-elec-yellow shrink-0" />
-                <span className="text-sm text-white">Digital Signatures Valid</span>
-              </div>
-              <div className="flex items-center gap-2.5">
-                <Shield className="h-4 w-4 text-elec-yellow shrink-0" />
-                <span className="text-sm text-white">Building Regs Ready</span>
-              </div>
-            </div>
+            ))}
           </div>
         </div>
 
@@ -474,7 +455,7 @@ const EICCertificateActions: React.FC<EICCertificateActionsProps> = ({
         </Button>
 
         {/* Secondary Actions */}
-        <div className={cn('grid gap-3', isMobile ? 'grid-cols-1' : 'grid-cols-3')}>
+        <div className="grid grid-cols-2 gap-3">
           <Button
             onClick={handleSaveDraft}
             variant="outline"
@@ -495,33 +476,90 @@ const EICCertificateActions: React.FC<EICCertificateActionsProps> = ({
           </Button>
 
           <Button
-            onClick={() => window.print()}
+            onClick={async () => {
+              if (!canGenerateCertificate) return;
+              setIsSendingWhatsApp(true);
+              try {
+                // Fetch the PDF URL from the reports table
+                const { data: report } = await supabase
+                  .from('reports')
+                  .select('pdf_url, pdf_generated_at')
+                  .eq('report_id', reportId)
+                  .single();
+
+                if (!report?.pdf_url) {
+                  toast({
+                    title: 'No PDF Generated',
+                    description: 'Please generate the EIC PDF first before sharing via WhatsApp.',
+                    variant: 'destructive',
+                  });
+                  return;
+                }
+
+                const certRef = formData.certificateNumber || 'EIC';
+                const clientName = formData.clientName || '';
+                const address = formData.installationAddress || 'your property';
+
+                const text = `Hi ${clientName},\n\nPlease find your Electrical Installation Certificate (${certRef}) for ${address}.\n\nDownload your certificate:\n${report.pdf_url}\n\nKind regards`;
+
+                // Build WhatsApp URL — use client phone if available
+                let whatsappUrl: string;
+                const clientPhone = formData.clientPhone || '';
+                if (
+                  clientPhone &&
+                  (clientPhone.startsWith('+44') || clientPhone.startsWith('44'))
+                ) {
+                  const cleanPhone = clientPhone.replace(/\s/g, '').replace(/^44/, '+44');
+                  whatsappUrl = `https://wa.me/${cleanPhone.replace('+', '')}?text=${encodeURIComponent(text)}`;
+                } else {
+                  whatsappUrl = `https://wa.me/?text=${encodeURIComponent(text)}`;
+                }
+
+                window.open(whatsappUrl, '_blank');
+              } catch (err) {
+                console.error('[EIC WhatsApp] Error:', err);
+                toast({
+                  title: 'WhatsApp Error',
+                  description: 'Failed to prepare WhatsApp message. Please try again.',
+                  variant: 'destructive',
+                });
+              } finally {
+                setIsSendingWhatsApp(false);
+              }
+            }}
+            variant="outline"
+            disabled={!canGenerateCertificate || isSendingWhatsApp}
+            className="h-12 touch-manipulation border-green-500/30 text-green-400 hover:bg-green-500/10 rounded-xl active:scale-[0.98] transition-transform disabled:opacity-50"
+          >
+            {isSendingWhatsApp ? (
+              <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+            ) : (
+              <MessageCircle className="h-4 w-4 mr-2" />
+            )}
+            WhatsApp
+          </Button>
+
+          <Button
+            onClick={() => {
+              const url = createInvoiceFromCertificate({
+                clientName: formData.clientName || '',
+                clientEmail: formData.clientEmail || '',
+                clientPhone: formData.clientPhone || '',
+                clientAddress: formData.clientAddress || formData.clientAddress || '',
+                installationAddress: formData.installationAddress || '',
+                certificateType: 'EIC',
+                certificateReference: formData.certificateNumber || '',
+                reportId: reportId,
+              });
+              navigate(url);
+            }}
             variant="outline"
             disabled={!canGenerateCertificate}
-            className="h-12 touch-manipulation border-white/20 text-white hover:bg-white/5 rounded-xl active:scale-[0.98] transition-transform disabled:opacity-50"
+            className="h-12 touch-manipulation border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10 rounded-xl active:scale-[0.98] transition-transform disabled:opacity-50"
           >
-            <Printer className="h-4 w-4 mr-2" />
-            Print Preview
+            <Receipt className="h-4 w-4 mr-2" />
+            Create Invoice
           </Button>
-        </div>
-
-        {/* Certificate Info */}
-        <div className="pt-4 border-t border-white/10 space-y-1.5">
-          <p className="text-xs text-white">
-            <span className="font-medium">Certificate Type:</span> Electrical Installation
-            Certificate (EIC)
-          </p>
-          <p className="text-xs text-white">
-            <span className="font-medium">Standard:</span> BS 7671:2018 (18th Edition)
-          </p>
-          <p className="text-xs text-white">
-            <span className="font-medium">Generated:</span> {new Date().toLocaleString('en-GB')}
-          </p>
-          {formData.clientName && (
-            <p className="text-xs text-white">
-              <span className="font-medium">Client:</span> {formData.clientName}
-            </p>
-          )}
         </div>
       </div>
 
@@ -531,52 +569,54 @@ const EICCertificateActions: React.FC<EICCertificateActionsProps> = ({
         exportType="complete"
         progress={exportProgress}
         status={exportStatus}
+        certificateType="EIC"
       />
 
       {/* Email Dialog */}
       <Dialog open={showEmailDialog} onOpenChange={setShowEmailDialog}>
-        <DialogContent>
-          <DialogHeader>
-            <DialogTitle>Email EIC Certificate</DialogTitle>
-            <DialogDescription>
-              Enter the recipient's email address. The certificate will be generated and sent as a
-              PDF attachment.
+        <DialogContent className="max-w-[calc(100vw-2rem)] sm:max-w-md overflow-hidden">
+          <DialogHeader className="text-left">
+            <DialogTitle className="flex items-center gap-2">
+              <Mail className="h-5 w-5 text-elec-yellow shrink-0" />
+              Email EIC Certificate
+            </DialogTitle>
+            <DialogDescription className="text-left">
+              The certificate will be generated and sent as a PDF attachment.
             </DialogDescription>
           </DialogHeader>
-          <div className="space-y-4 py-4">
+          <div className="space-y-4 py-2 min-w-0">
             <div className="space-y-2">
-              <label htmlFor="email" className="text-sm font-medium">
+              <label htmlFor="email" className="text-sm font-medium text-white">
                 Recipient Email
               </label>
               <Input
                 id="email"
                 type="email"
+                autoComplete="off"
                 placeholder="client@example.com"
                 value={emailRecipient}
                 onChange={(e) => setEmailRecipient(e.target.value)}
                 disabled={isSendingEmail}
+                className="h-12 text-base text-left touch-manipulation w-full"
               />
             </div>
             {formData.clientEmail && emailRecipient !== formData.clientEmail && (
-              <Button
-                variant="outline"
-                size="sm"
+              <button
+                type="button"
                 onClick={() => setEmailRecipient(formData.clientEmail)}
-                className="w-full"
+                className="w-full h-11 flex items-center gap-2 px-3 text-sm touch-manipulation border border-white/20 rounded-lg text-white hover:bg-white/5 active:scale-[0.98] transition-transform overflow-hidden"
               >
-                Use Client Email: {formData.clientEmail}
-              </Button>
+                <Mail className="h-4 w-4 text-elec-yellow shrink-0" />
+                <span className="truncate">Use Client Email: {formData.clientEmail}</span>
+              </button>
             )}
           </div>
-          <DialogFooter>
+          <div className="flex flex-col gap-3 pt-2">
             <Button
-              variant="outline"
-              onClick={() => setShowEmailDialog(false)}
-              disabled={isSendingEmail}
+              onClick={handleSendEmail}
+              disabled={isSendingEmail || !emailRecipient}
+              className="h-12 w-full touch-manipulation bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold rounded-xl active:scale-[0.98] transition-transform"
             >
-              Cancel
-            </Button>
-            <Button onClick={handleSendEmail} disabled={isSendingEmail || !emailRecipient}>
               {isSendingEmail ? (
                 <>
                   <Loader2 className="h-4 w-4 mr-2 animate-spin" />
@@ -589,7 +629,15 @@ const EICCertificateActions: React.FC<EICCertificateActionsProps> = ({
                 </>
               )}
             </Button>
-          </DialogFooter>
+            <Button
+              variant="ghost"
+              onClick={() => setShowEmailDialog(false)}
+              disabled={isSendingEmail}
+              className="h-11 w-full touch-manipulation text-white hover:bg-white/5"
+            >
+              Cancel
+            </Button>
+          </div>
         </DialogContent>
       </Dialog>
     </>

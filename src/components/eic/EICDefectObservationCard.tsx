@@ -29,6 +29,7 @@ interface EICDefectObservationCardProps {
   observation: EICObservation;
   reportId: string;
   index: number;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   onUpdate: (id: string, field: keyof EICObservation, value: any) => void;
   onRemove: (id: string) => void;
   onSyncToInspectionItem?: (inspectionItemId: string, newOutcome: string) => void;
@@ -160,7 +161,7 @@ const EICDefectObservationCard: React.FC<EICDefectObservationCardProps> = ({
               </span>
             </div>
             {observation.item && (
-              <p className="text-xs text-foreground/50 truncate mt-0.5">{observation.item}</p>
+              <p className="text-xs text-white truncate mt-0.5">{observation.item}</p>
             )}
           </div>
         </div>
@@ -177,7 +178,7 @@ const EICDefectObservationCard: React.FC<EICDefectObservationCardProps> = ({
           >
             <Trash2 className="w-4 h-4" />
           </button>
-          <div className="h-10 w-10 flex items-center justify-center text-foreground/40">
+          <div className="h-10 w-10 flex items-center justify-center text-white">
             {isExpanded ? <ChevronUp className="w-5 h-5" /> : <ChevronDown className="w-5 h-5" />}
           </div>
         </div>
@@ -197,8 +198,8 @@ const EICDefectObservationCard: React.FC<EICDefectObservationCardProps> = ({
               {/* Location Field */}
               <div>
                 <div className="flex items-center gap-1.5 mb-2">
-                  <MapPin className="w-3.5 h-3.5 text-foreground/50" />
-                  <span className="text-xs text-foreground/50">Item/Location</span>
+                  <MapPin className="w-3.5 h-3.5 text-white" />
+                  <span className="text-xs text-white">Item/Location</span>
                 </div>
                 <Input
                   placeholder="e.g., Consumer unit, Kitchen socket"
@@ -211,7 +212,7 @@ const EICDefectObservationCard: React.FC<EICDefectObservationCardProps> = ({
 
               {/* Classification */}
               <div>
-                <span className="text-xs text-foreground/50 mb-2 block">Classification</span>
+                <span className="text-xs text-white mb-2 block">Classification</span>
                 <div className="flex gap-2">
                   {defectCodes.map((code) => (
                     <button
@@ -232,7 +233,7 @@ const EICDefectObservationCard: React.FC<EICDefectObservationCardProps> = ({
                             : code.color === 'purple'
                               ? 'bg-purple-600 text-white'
                               : 'bg-neutral-600 text-white'
-                          : 'bg-white/[0.05] text-foreground/70 border border-white/[0.08]'
+                          : 'bg-white/[0.05] text-white border border-white/[0.08]'
                       )}
                     >
                       {code.label}
@@ -243,7 +244,7 @@ const EICDefectObservationCard: React.FC<EICDefectObservationCardProps> = ({
 
               {/* Description */}
               <div>
-                <span className="text-xs text-foreground/50 mb-2 block">
+                <span className="text-xs text-white mb-2 block">
                   {observation.defectCode === 'not-applicable'
                     ? 'Reason'
                     : observation.defectCode === 'limitation'
@@ -268,7 +269,7 @@ const EICDefectObservationCard: React.FC<EICDefectObservationCardProps> = ({
               {/* Recommendation */}
               {observation.defectCode !== 'not-applicable' && (
                 <div>
-                  <span className="text-xs text-foreground/50 mb-2 block">
+                  <span className="text-xs text-white mb-2 block">
                     {observation.defectCode === 'limitation'
                       ? 'Further Action Required'
                       : 'Recommendation'}
@@ -291,11 +292,11 @@ const EICDefectObservationCard: React.FC<EICDefectObservationCardProps> = ({
               <div className="pt-3 border-t border-white/[0.06]">
                 <div className="flex items-center justify-between mb-3">
                   <div className="flex items-center gap-1.5">
-                    <Camera className="w-3.5 h-3.5 text-foreground/50" />
-                    <span className="text-xs text-foreground/50">Photo Evidence</span>
+                    <Camera className="w-3.5 h-3.5 text-white" />
+                    <span className="text-xs text-white">Photo Evidence</span>
                   </div>
                   {photos.length > 0 && (
-                    <span className="text-xs text-foreground/40">
+                    <span className="text-xs text-white">
                       {photos.length} photo{photos.length !== 1 ? 's' : ''}
                     </span>
                   )}

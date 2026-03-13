@@ -1,9 +1,9 @@
 /**
  * ElectricalHub
  *
- * Premium electrician command center with glass morphism styling,
+ * Premium electrician command centre with glass morphism styling,
  * real-time business stats, and best-in-class mobile experience.
- * Yellow/gold theme throughout.
+ * Yellow/gold theme throughout. Tools-first layout.
  */
 
 import React, { useState, useEffect } from 'react';
@@ -21,112 +21,75 @@ import {
   Wrench,
   GraduationCap,
   Sparkles,
-  ArrowRight,
   ArrowLeft,
-  ChevronRight,
   AlertCircle,
   CheckCircle,
   Users,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
 import { useDashboardData } from '@/hooks/useDashboardData';
 import { AnimatedCounter } from '@/components/dashboard/AnimatedCounter';
 import { useAuth } from '@/contexts/AuthContext';
 import { ElecIdBanner } from '@/components/elec-id/ElecIdBanner';
 import { SetupWizard } from '@/components/onboarding/SetupWizard';
 import { SetupIncompleteBanner } from '@/components/onboarding/SetupIncompleteBanner';
-import { BusinessAICard } from '@/components/business-ai/BusinessAICard';
 import { LatestJobsWidget } from '@/components/job-vacancies/LatestJobsWidget';
-import { TasksDueWidget } from '@/components/tasks/TasksDueWidget';
+import { useBusinessAIProfile } from '@/components/business-ai/useBusinessAIProfile';
 import { useQuery } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { useMyEmployeeRecord } from '@/hooks/useWorkerLocations';
 
-// Email whitelist for Worker Tools (beta testing)
 const EMPLOYER_ALLOWED_EMAILS = ['founder@elec-mate.com', 'andrewgangoo91@gmail.com'];
 
-// Animation variants - Smooth, fast entrance
+// Animation variants
 const containerVariants = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
-    transition: { staggerChildren: 0.02, delayChildren: 0 },
+    transition: { staggerChildren: 0.04, delayChildren: 0 },
   },
 };
 
 const itemVariants = {
-  hidden: { opacity: 0, y: 8 },
+  hidden: { opacity: 0, y: 12 },
   visible: {
     opacity: 1,
     y: 0,
-    transition: { duration: 0.2, ease: 'easeOut' },
+    transition: { type: 'spring', stiffness: 300, damping: 24 },
   },
 };
 
-// Premium Hero Component - Centered layout matching main dashboard
+// ─── Hero ────────────────────────────────────────────────────────
+// Left-aligned, compact. Glass card with yellow glow.
+
 function ElectricalHero() {
   const { profile } = useAuth();
-  const { business } = useDashboardData();
-
   const firstName = profile?.full_name?.split(' ')[0] || 'Electrician';
 
   const getGreeting = () => {
     const hour = new Date().getHours();
-    if (hour < 12) return 'Good morning';
-    if (hour < 18) return 'Good afternoon';
-    return 'Good evening';
+    if (hour < 12) return 'Good morning,';
+    if (hour < 18) return 'Good afternoon,';
+    return 'Good evening,';
   };
 
   return (
     <div className="relative overflow-hidden glass-premium rounded-2xl glow-yellow">
-      {/* Gradient accent line */}
       <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-elec-yellow via-amber-400 to-elec-yellow" />
-
-      {/* Decorative blob */}
       <div className="absolute top-0 right-0 w-40 sm:w-56 h-40 sm:h-56 bg-elec-yellow/[0.04] rounded-full blur-3xl -translate-y-1/2 translate-x-1/4 pointer-events-none" />
 
-      {/* Content - centered layout */}
       <div className="relative z-10 p-5 sm:p-6">
-        <div className="flex flex-col items-center text-center">
-          {/* Icon */}
-          <div className="w-20 h-20 rounded-full bg-elec-yellow/10 border-2 border-elec-yellow/20 flex items-center justify-center mb-3">
-            <Zap className="h-10 w-10 text-elec-yellow" />
+        <div className="flex items-center gap-4">
+          <div className="flex-shrink-0 p-3 rounded-xl bg-elec-yellow/10 border border-elec-yellow/20">
+            <Zap className="h-7 w-7 text-elec-yellow" />
           </div>
 
-          {/* Greeting and Name */}
-          <p className="text-sm text-white mb-0.5">{getGreeting()}</p>
-          <h1 className="text-2xl sm:text-3xl font-bold text-white">{firstName}</h1>
-
-          {/* Status badges - horizontal row */}
-          <div className="flex items-center gap-2 mt-3">
-            {business.activeQuotes > 0 && (
-              <Badge
-                variant="outline"
-                className="bg-elec-yellow/10 border-elec-yellow/30 text-elec-yellow text-[11px]"
-              >
-                <FileText className="w-3 h-3 mr-1" />
-                {business.activeQuotes} quotes
-              </Badge>
-            )}
-            {business.overdueInvoices > 0 ? (
-              <Badge
-                variant="outline"
-                className="bg-red-500/10 border-red-500/30 text-red-400 text-[11px]"
-              >
-                <AlertCircle className="w-3 h-3 mr-1" />
-                {business.overdueInvoices} overdue
-              </Badge>
-            ) : (
-              <Badge
-                variant="outline"
-                className="bg-green-500/10 border-green-500/30 text-green-400 text-[11px]"
-              >
-                <CheckCircle className="w-3 h-3 mr-1" />
-                All paid
-              </Badge>
-            )}
+          <div className="flex-1 min-w-0">
+            <p className="text-sm text-white mb-0.5">{getGreeting()}</p>
+            <h1 className="text-xl sm:text-2xl font-bold text-elec-yellow tracking-tight">
+              {firstName}
+            </h1>
           </div>
         </div>
       </div>
@@ -134,7 +97,8 @@ function ElectricalHero() {
   );
 }
 
-// Stats Bar Component
+// ─── Stats Bar ──────────────────────────────────────────────────
+
 function ElectricalStatsBar() {
   const { business, certificates, isLoading } = useDashboardData();
   const navigate = useNavigate();
@@ -242,43 +206,72 @@ function ElectricalStatsBar() {
   );
 }
 
-// Featured Card Component - Elec-AI
-function FeaturedCard() {
+// ─── Primary Tool Card (2-col grid) ─────────────────────────────
+
+interface PrimaryToolCardProps {
+  title: string;
+  description: string;
+  icon: typeof Zap;
+  link: string;
+  accent?: 'yellow' | 'amber' | 'purple';
+  badge?: boolean;
+}
+
+function PrimaryToolCard({
+  title,
+  description,
+  icon: Icon,
+  link,
+  accent = 'yellow',
+  badge,
+}: PrimaryToolCardProps) {
+  const iconBg =
+    accent === 'purple'
+      ? 'bg-purple-500/10'
+      : accent === 'amber'
+        ? 'bg-amber-500/10'
+        : 'bg-elec-yellow/10';
+  const iconColor =
+    accent === 'purple'
+      ? 'text-purple-400'
+      : accent === 'amber'
+        ? 'text-amber-400'
+        : 'text-elec-yellow';
+  const activeBg =
+    accent === 'purple'
+      ? 'group-active:bg-purple-500/20'
+      : accent === 'amber'
+        ? 'group-active:bg-amber-500/20'
+        : 'group-active:bg-elec-yellow/20';
+
   return (
-    <Link
-      to="/electrician-tools/ai-tooling/assistant"
-      className="block group touch-manipulation active:opacity-90"
-    >
+    <Link to={link} className="block group touch-manipulation active:opacity-90">
       <motion.div
-        whileHover={{ y: -2, scale: 1.01 }}
-        whileTap={{ scale: 0.97 }}
+        whileTap={{ scale: 0.96 }}
         transition={{ type: 'spring', stiffness: 400, damping: 25 }}
-        className="relative overflow-hidden glass-premium rounded-2xl active:bg-white/[0.02]"
+        className="glass-premium rounded-xl h-full min-h-[110px] active:bg-white/[0.02]"
       >
-        <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-purple-500 via-violet-400 to-purple-500" />
-        <div className="absolute -top-16 -right-16 w-32 h-32 bg-purple-500/[0.08] blur-3xl rounded-full pointer-events-none" />
-
-        <div className="relative z-10 p-5 sm:p-6 text-center">
-          <div className="inline-flex p-3 rounded-2xl bg-purple-500/10 mb-4 group-hover:bg-purple-500/20 group-active:bg-purple-500/25 transition-colors">
-            <Brain className="h-8 w-8 text-purple-400" />
+        <div className="p-4 flex flex-col items-center justify-center text-center h-full">
+          <div
+            className={cn('relative p-2.5 rounded-xl mb-2.5 transition-colors', iconBg, activeBg)}
+          >
+            <Icon className={cn('h-6 w-6', iconColor)} />
+            {badge && (
+              <div className="absolute -top-0.5 -right-0.5 w-2.5 h-2.5 rounded-full bg-green-500 border-2 border-[hsl(240,5.9%,10%)]" />
+            )}
           </div>
-
-          <h3 className="text-lg sm:text-xl font-semibold text-white mb-2">Elec-AI</h3>
-          <p className="text-sm text-white max-w-md mx-auto mb-4">
-            Your personal electrical adviser — circuit design, fault finding, regs queries & more
-          </p>
-
-          <div className="inline-flex items-center gap-2 text-purple-400 font-medium text-sm group-hover:gap-3 group-active:gap-3 transition-all">
-            <span>Start Chat</span>
-            <ArrowRight className="h-4 w-4 group-hover:translate-x-1 group-active:translate-x-1 transition-transform" />
-          </div>
+          <h3 className="text-sm font-semibold text-white mb-0.5 group-active:text-elec-yellow transition-colors">
+            {title}
+          </h3>
+          <p className="text-xs text-white leading-relaxed line-clamp-2">{description}</p>
         </div>
       </motion.div>
     </Link>
   );
 }
 
-// Tool Card Component
+// ─── Compact Tool Card (secondary section) ──────────────────────
+
 interface ToolCardProps {
   title: string;
   description: string;
@@ -286,49 +279,19 @@ interface ToolCardProps {
   link: string;
 }
 
-function ToolCard({ title, description, icon: Icon, link }: ToolCardProps) {
-  return (
-    <Link to={link} className="block group touch-manipulation active:opacity-90">
-      <motion.div
-        whileHover={{ y: -2, scale: 1.01 }}
-        whileTap={{ scale: 0.97 }}
-        transition={{ type: 'spring', stiffness: 400, damping: 25 }}
-        className="glass-premium rounded-xl h-full min-h-[140px] active:bg-white/[0.02]"
-      >
-        <div className="p-4 sm:p-5 flex items-start gap-4">
-          <div className="flex-shrink-0 p-2.5 rounded-lg bg-elec-yellow/10 group-hover:bg-elec-yellow/20 group-active:bg-elec-yellow/25 transition-colors">
-            <Icon className="h-6 w-6 sm:h-7 sm:w-7 text-elec-yellow" />
-          </div>
-
-          <div className="flex-1 min-w-0">
-            <h3 className="text-base sm:text-lg font-semibold text-white mb-1 group-hover:text-elec-yellow group-active:text-elec-yellow transition-colors">
-              {title}
-            </h3>
-            <p className="text-sm text-white leading-relaxed line-clamp-2">{description}</p>
-          </div>
-
-          <ChevronRight className="h-5 w-5 text-white group-hover:text-elec-yellow group-hover:translate-x-1 group-active:text-elec-yellow group-active:translate-x-1 transition-all flex-shrink-0" />
-        </div>
-      </motion.div>
-    </Link>
-  );
-}
-
-// Compact Tool Card
 function CompactToolCard({ title, description, icon: Icon, link }: ToolCardProps) {
   return (
     <Link to={link} className="block group touch-manipulation active:opacity-90">
       <motion.div
-        whileHover={{ y: -2, scale: 1.02 }}
         whileTap={{ scale: 0.96 }}
         transition={{ type: 'spring', stiffness: 400, damping: 25 }}
-        className="glass-premium rounded-xl h-full min-h-[120px] sm:min-h-[130px] active:bg-white/[0.02]"
+        className="glass-premium rounded-xl h-full min-h-[110px] active:bg-white/[0.02]"
       >
         <div className="p-4 flex flex-col items-center justify-center text-center h-full">
-          <div className="p-2 rounded-lg bg-elec-yellow/10 mb-2 group-hover:bg-elec-yellow/20 transition-colors">
-            <Icon className="h-6 w-6 text-elec-yellow" />
+          <div className="p-2 rounded-lg bg-elec-yellow/10 mb-2 group-active:bg-elec-yellow/20 transition-colors">
+            <Icon className="h-5 w-5 text-elec-yellow" />
           </div>
-          <h3 className="text-sm sm:text-base font-semibold text-white mb-1 group-hover:text-elec-yellow transition-colors">
+          <h3 className="text-sm font-semibold text-white mb-0.5 group-active:text-elec-yellow transition-colors">
             {title}
           </h3>
           <p className="text-xs text-white line-clamp-2 hidden sm:block">{description}</p>
@@ -338,7 +301,8 @@ function CompactToolCard({ title, description, icon: Icon, link }: ToolCardProps
   );
 }
 
-// Section Header
+// ─── Section Header ─────────────────────────────────────────────
+
 function SectionHeader({ title }: { title: string }) {
   return (
     <div className="flex items-center gap-2 px-1">
@@ -348,82 +312,15 @@ function SectionHeader({ title }: { title: string }) {
   );
 }
 
-// Main resources - Core Daily Tools
-const mainResources: ToolCardProps[] = [
-  {
-    title: 'Elec-AI',
-    description: 'Your electrical adviser — circuit design, fault finding & regs',
-    icon: Brain,
-    link: '/electrician-tools/ai-tooling/assistant',
-  },
-  {
-    title: 'Inspection & Testing',
-    description: 'EICR, EIC & Minor Works certificates',
-    icon: Zap,
-    link: '/electrician/inspection-testing',
-  },
-  {
-    title: 'Business',
-    description: 'Quotes, invoices, customers, expenses & pricing',
-    icon: Briefcase,
-    link: '/electrician/business',
-  },
-  {
-    title: 'Site Safety & RAMS',
-    description: 'Risk assessments and method statements',
-    icon: Shield,
-    link: '/electrician/site-safety',
-  },
-  {
-    title: 'Electrical Calculations',
-    description: 'Cable sizing, voltage drop and more',
-    icon: Calculator,
-    link: '/electrician/calculations',
-  },
+// ─── Tool Definitions ───────────────────────────────────────────
+
+const secondaryTools: ToolCardProps[] = [
   {
     title: 'Build Partners',
-    description: 'AI specialists for design, costing, safety & testing',
+    description: 'AI design & costing specialists',
     icon: Sparkles,
     link: '/electrician/agent-selector',
   },
-  {
-    title: 'AI Tooling',
-    description: 'Smart analysis and design tools',
-    icon: Brain,
-    link: '/electrician-tools/ai-tooling',
-  },
-];
-
-// Company resources - employer integration features (Hidden until employer area launches)
-// const companyResources: ToolCardProps[] = [
-//   {
-//     title: 'My Expenses',
-//     description: 'Submit & track claims',
-//     icon: Receipt,
-//     link: '/employer?section=expenses',
-//   },
-//   {
-//     title: 'Timesheets',
-//     description: 'Log work hours',
-//     icon: Clock,
-//     link: '/employer?section=timesheets',
-//   },
-//   {
-//     title: 'Team Comms',
-//     description: 'Messages & updates',
-//     icon: MessageSquare,
-//     link: '/employer?section=comms',
-//   },
-//   {
-//     title: 'My Elec-ID',
-//     description: 'Professional profile',
-//     icon: BadgeCheck,
-//     link: '/employer?section=elecid',
-//   },
-// ];
-
-// Additional resources - business development
-const additionalResources: ToolCardProps[] = [
   {
     title: 'Industry Updates',
     description: 'News and changes',
@@ -438,10 +335,12 @@ const additionalResources: ToolCardProps[] = [
   },
 ];
 
+// ─── Main Page ──────────────────────────────────────────────────
+
 const ElectricalHub = () => {
   const [showSetupWizard, setShowSetupWizard] = useState(false);
+  const { isAgentActive } = useBusinessAIProfile();
 
-  // SEO for electrician hub - high priority for Google ranking
   useSEO({
     title: 'Electrician Tools & Certificates | BS 7671 Compliant',
     description:
@@ -458,7 +357,6 @@ const ElectricalHub = () => {
     },
   });
 
-  // Check if onboarding is complete and get user email
   const { data: profileData } = useQuery({
     queryKey: ['onboarding-check-with-email'],
     queryFn: async () => {
@@ -481,13 +379,10 @@ const ElectricalHub = () => {
   const userEmail = profileData?.email;
   const isWhitelistedEmail = userEmail && EMPLOYER_ALLOWED_EMAILS.includes(userEmail);
 
-  // Check if user has an employee record (for Worker Tools)
-  // Also show for whitelisted emails for testing
   const { data: employeeRecord } = useMyEmployeeRecord();
   const showWorkerTools = employeeRecord || isWhitelistedEmail;
 
   useEffect(() => {
-    // Show wizard if onboarding not complete and not already shown this session
     if (profile && !profile.onboarding_completed) {
       const hasSeenWizard = sessionStorage.getItem('setup_wizard_shown');
       if (!hasSeenWizard) {
@@ -504,9 +399,9 @@ const ElectricalHub = () => {
           variants={containerVariants}
           initial="hidden"
           animate="visible"
-          className="space-y-4 sm:space-y-6"
+          className="space-y-5 sm:space-y-6"
         >
-          {/* Back Button - Larger touch target */}
+          {/* Back Button */}
           <motion.div variants={itemVariants} className="px-4 sm:px-0">
             <Link to="/dashboard">
               <Button
@@ -519,49 +414,82 @@ const ElectricalHub = () => {
             </Link>
           </motion.div>
 
-          {/* Hero */}
+          {/* Hero — compact, left-aligned */}
           <motion.section variants={itemVariants} className="px-4 sm:px-0">
             <ElectricalHero />
           </motion.section>
 
-          {/* Stats Bar */}
+          {/* Primary Tools — 2-col grid, tools visible in first screenful */}
+          <motion.section variants={itemVariants} className="space-y-4 px-4 sm:px-0">
+            <SectionHeader title="Core Tools" />
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
+              <PrimaryToolCard
+                title="Certificates"
+                description="EICR, EIC & Minor Works"
+                icon={Zap}
+                link="/electrician/inspection-testing"
+              />
+              <PrimaryToolCard
+                title="Business"
+                description="Quotes, invoices & customers"
+                icon={Briefcase}
+                link="/electrician/business"
+              />
+              <PrimaryToolCard
+                title="Calculations"
+                description="Cable sizing, voltage drop"
+                icon={Calculator}
+                link="/electrician/calculations"
+              />
+              <PrimaryToolCard
+                title="Site Safety"
+                description="Risk assessments & RAMS"
+                icon={Shield}
+                link="/electrician/site-safety"
+              />
+              <PrimaryToolCard
+                title="Mate"
+                description="Your business AI agent"
+                icon={Wrench}
+                link="/electrician/business-ai"
+                accent="amber"
+                badge={isAgentActive}
+              />
+              <PrimaryToolCard
+                title="AI Tools"
+                description="Smart analysis & design"
+                icon={Brain}
+                link="/electrician-tools/ai-tooling"
+                accent="purple"
+              />
+            </div>
+          </motion.section>
+
+          {/* Stats — moved below tools */}
           <motion.section variants={itemVariants} className="px-4 sm:px-0">
             <ElectricalStatsBar />
           </motion.section>
 
-          {/* Tasks Due Widget — only renders when overdue tasks exist */}
-          <motion.section variants={itemVariants} className="px-4 sm:px-0">
-            <TasksDueWidget />
-          </motion.section>
-
-          {/* Elec-ID Banner */}
+          {/* Banners — below tools, not blocking access */}
           <motion.section variants={itemVariants} className="px-4 sm:px-0">
             <ElecIdBanner variant="electrician" />
           </motion.section>
 
-          {/* Setup Incomplete Banner */}
           <motion.section variants={itemVariants} className="px-4 sm:px-0">
             <SetupIncompleteBanner />
           </motion.section>
 
-          {/* Business AI Card */}
+          {/* Secondary Tools */}
           <motion.section variants={itemVariants} className="space-y-4 px-4 sm:px-0">
-            <SectionHeader title="Business AI" />
-            <BusinessAICard />
-          </motion.section>
-
-          {/* Core Daily Tools */}
-          <motion.section variants={itemVariants} className="space-y-4 px-4 sm:px-0">
-            <SectionHeader title="Core Daily Tools" />
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 touch-grid">
-              {mainResources.map((resource) => (
-                <ToolCard key={resource.link} {...resource} />
+            <SectionHeader title="More Tools" />
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+              {secondaryTools.map((tool) => (
+                <CompactToolCard key={tool.link} {...tool} />
               ))}
-              {/* Worker Tools - visible when user has employee record or is whitelisted */}
               {showWorkerTools && (
-                <ToolCard
+                <CompactToolCard
                   title="Worker Tools"
-                  description="Status, timesheets, leave & comms"
+                  description="Status, timesheets & leave"
                   icon={Users}
                   link="/electrician/worker-tools"
                 />
@@ -569,28 +497,16 @@ const ElectricalHub = () => {
             </div>
           </motion.section>
 
-          {/* Business & Development */}
-          <motion.section variants={itemVariants} className="space-y-4 px-4 sm:px-0">
-            <SectionHeader title="Business & Development" />
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 touch-grid">
-              {additionalResources.map((resource) => (
-                <CompactToolCard key={resource.link} {...resource} />
-              ))}
-            </div>
-          </motion.section>
-
-          {/* Latest Jobs */}
+          {/* Career Opportunities */}
           <motion.section variants={itemVariants} className="space-y-4 px-4 sm:px-0">
             <SectionHeader title="Career Opportunities" />
             <LatestJobsWidget />
           </motion.section>
 
-          {/* Footer spacing for mobile nav */}
           <div className="h-6 sm:h-8" />
         </motion.div>
       </div>
 
-      {/* Setup Wizard */}
       <SetupWizard
         isOpen={showSetupWizard}
         onComplete={() => setShowSetupWizard(false)}

@@ -8,13 +8,9 @@ services:
       - 1.1.1.1
     ports:
       - "3002:3002"
+    env_file:
+      - .env.pipeline
     environment:
-      - SUPABASE_URL=${SUPABASE_URL}
-      - SUPABASE_SERVICE_ROLE_KEY=${SUPABASE_SERVICE_ROLE_KEY}
-      - REED_API_KEY=${REED_API_KEY}
-      - ADZUNA_APP_ID=${ADZUNA_APP_ID}
-      - ADZUNA_API_KEY=${ADZUNA_API_KEY}
-      - RS_API_KEY=${RS_API_KEY}
       - TZ=Europe/London
     shm_size: '1g'
     deploy:

@@ -38,36 +38,59 @@ const BusinessCard = ({
   const subtitle = liveSubtitle || description;
   const isOverdue = liveSubtitle?.includes('overdue');
 
+  const isHero = variant === 'hero';
+
   const CardContent = (
     <div
       className={cn(
         'relative overflow-hidden rounded-xl',
-        'bg-white/[0.03] border border-white/[0.08]',
-        'active:bg-white/[0.06] active:scale-[0.98] transition-all',
-        'flex flex-col items-center justify-center text-center p-4 min-h-[100px]',
+        'active:scale-[0.98] transition-all',
+        isHero
+          ? 'border border-white/[0.12] p-5 min-h-[120px] flex flex-col items-center justify-center text-center'
+          : 'bg-white/[0.03] border border-white/[0.08] flex flex-col items-center justify-center text-center p-4 min-h-[100px]',
+        isHero && 'active:brightness-110',
+        !isHero && 'active:bg-white/[0.06]',
         comingSoon && 'opacity-50 cursor-not-allowed',
         className
       )}
     >
+      {/* Hero gradient background wash */}
+      {isHero && (
+        <div className={cn('absolute inset-0 bg-gradient-to-br opacity-[0.08]', gradient)} />
+      )}
+
       {/* Icon */}
       <div
         className={cn(
-          'flex-shrink-0 w-11 h-11 rounded-xl flex items-center justify-center bg-gradient-to-br mb-2.5',
+          'relative flex-shrink-0 rounded-xl flex items-center justify-center bg-gradient-to-br',
+          isHero ? 'w-12 h-12 mb-3 shadow-lg' : 'w-11 h-11 mb-2.5',
           gradient
         )}
       >
-        <Icon className="h-5 w-5 text-white" />
+        <Icon className={cn('text-white', isHero ? 'h-6 w-6' : 'h-5 w-5')} />
+        {/* Overdue dot on icon */}
+        {isHero && isOverdue && (
+          <span className="absolute -top-1 -right-1 w-3 h-3 rounded-full bg-red-500 border-2 border-[#0d0d0d] animate-pulse" />
+        )}
       </div>
 
       {/* Title */}
-      <h3 className="text-[14px] font-bold text-white leading-tight">{title}</h3>
+      <h3
+        className={cn(
+          'relative font-bold text-white leading-tight',
+          isHero ? 'text-[15px]' : 'text-[14px]'
+        )}
+      >
+        {title}
+      </h3>
 
       {/* Subtitle / live data */}
       {variant !== 'compact' && subtitle && (
         <p
           className={cn(
-            'text-[12px] mt-0.5 leading-tight line-clamp-1',
-            isOverdue ? 'text-red-400 font-semibold' : 'text-white'
+            'relative mt-0.5 leading-tight line-clamp-1',
+            isHero ? 'text-[12px]' : 'text-[12px]',
+            isOverdue ? 'text-red-400 font-semibold' : isHero ? 'text-white/70' : 'text-white'
           )}
         >
           {subtitle}
@@ -76,7 +99,7 @@ const BusinessCard = ({
 
       {/* Coming soon pill */}
       {comingSoon && (
-        <span className="mt-1.5 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider bg-elec-yellow text-black rounded-full">
+        <span className="relative mt-1.5 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider bg-elec-yellow text-black rounded-full">
           Soon
         </span>
       )}

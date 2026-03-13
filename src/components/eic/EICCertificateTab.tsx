@@ -9,7 +9,6 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { Button } from '@/components/ui/button';
 import {
   Award,
-  Beaker,
   Shield,
   User,
   FileText,
@@ -32,10 +31,11 @@ import { useIsMobile } from '@/hooks/use-mobile';
 import { useHaptics } from '@/hooks/useHaptics';
 import { useCompanyProfile } from '@/hooks/useCompanyProfile';
 import { useInspectorProfiles } from '@/hooks/useInspectorProfiles';
-import { applyEICDevFill } from '@/utils/eicDevFill';
 
 interface EICCertificateTabProps {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   formData: any;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   onUpdate: (field: string, value: any) => void;
   reportId: string;
   onGenerateCertificate: () => void;
@@ -275,38 +275,23 @@ const EICCertificateTab: React.FC<EICCertificateTabProps> = ({
             />
           )}
           <CollapsibleContent>
-            <div
-              className={cn(
-                'p-4 sm:p-5 space-y-5',
-                isMobile && 'px-3'
-              )}
-            >
-              {/* Quick Fill Buttons */}
-              <div className={cn('flex gap-3', isMobile ? 'flex-col' : 'flex-row')}>
-                {/* Fill from Business Settings - Primary action */}
-                <Button
-                  onClick={fillFromBusinessSettings}
-                  className={cn(
-                    'h-12 touch-manipulation bg-elec-yellow/20 hover:bg-elec-yellow/30 border border-elec-yellow/40 text-elec-yellow font-medium rounded-xl active:scale-[0.98] transition-transform',
-                    isMobile ? 'w-full' : 'flex-1'
-                  )}
-                  variant="outline"
-                >
-                  <Sparkles className="h-5 w-5 mr-2" />
-                  Fill from Business Settings
-                </Button>
-                <Button
-                  onClick={() => applyEICDevFill(onUpdate)}
-                  className={cn(
-                    'h-12 touch-manipulation bg-purple-500/20 hover:bg-purple-500/30 border border-purple-500/40 text-purple-400 font-medium rounded-xl active:scale-[0.98] transition-transform',
-                    isMobile ? 'w-full' : 'flex-1'
-                  )}
-                  variant="outline"
-                >
-                  <Beaker className="h-5 w-5 mr-2" />
-                  Dev Fill All
-                </Button>
-              </div>
+            <div className={cn('p-4 sm:p-5 space-y-5', isMobile && 'px-3')}>
+              {/* Quick Fill */}
+              <button
+                type="button"
+                onClick={fillFromBusinessSettings}
+                className="w-full flex items-center gap-3 px-4 py-3 rounded-xl bg-white/[0.03] border border-white/10 hover:bg-white/[0.06] active:scale-[0.98] transition-all touch-manipulation"
+              >
+                <div className="h-8 w-8 rounded-lg bg-elec-yellow/15 flex items-center justify-center shrink-0">
+                  <Sparkles className="h-4 w-4 text-elec-yellow" />
+                </div>
+                <div className="text-left">
+                  <p className="text-sm font-medium text-white">Auto-fill from Business Settings</p>
+                  <p className="text-xs text-white/50">
+                    Pre-fill names, addresses and company details
+                  </p>
+                </div>
+              </button>
 
               {/* Signatory Details */}
               <div className="space-y-4">
@@ -578,7 +563,12 @@ const EICCertificateTab: React.FC<EICCertificateTabProps> = ({
 
       {/* Validation Summary */}
       {allComplete ? (
-        <div className={cn('border-green-500/30 bg-green-500/10 border rounded-xl p-5', isMobile && 'mx-4')}>
+        <div
+          className={cn(
+            'border-green-500/30 bg-green-500/10 border rounded-xl p-5',
+            isMobile && 'mx-4'
+          )}
+        >
           <div className="flex gap-3">
             <div className="p-2 rounded-lg bg-green-500/20 h-fit">
               <CheckCircle className="h-5 w-5 text-green-400" />
@@ -592,7 +582,12 @@ const EICCertificateTab: React.FC<EICCertificateTabProps> = ({
           </div>
         </div>
       ) : (
-        <div className={cn('border-amber-500/30 bg-amber-500/10 border rounded-xl p-5', isMobile && 'mx-4')}>
+        <div
+          className={cn(
+            'border-amber-500/30 bg-amber-500/10 border rounded-xl p-5',
+            isMobile && 'mx-4'
+          )}
+        >
           <div className="flex gap-3">
             <div className="p-2 rounded-lg bg-amber-500/20 h-fit">
               <AlertTriangle className="h-5 w-5 text-amber-400" />

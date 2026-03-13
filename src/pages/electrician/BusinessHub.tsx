@@ -8,7 +8,6 @@ import {
   FileText,
   Package,
   PoundSterling,
-  Settings as Cog,
   TrendingUp,
   Users,
   Wrench,
@@ -319,15 +318,6 @@ const BusinessHub = () => {
               href="/electrician/business-development/tools"
               gradient="from-yellow-400 to-orange-500"
               variant="compact"
-            />
-            <BusinessCard
-              title="Business Admin"
-              description="Documents, staff & analytics"
-              icon={Cog}
-              href="/electrician/business-admin"
-              gradient="from-yellow-400 to-amber-500"
-              variant="compact"
-              className="col-span-2"
             />
           </div>
         </motion.section>

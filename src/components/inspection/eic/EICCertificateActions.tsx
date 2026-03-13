@@ -695,6 +695,7 @@ const EICCertificateActions: React.FC<EICCertificateActionsProps> = ({
         exportType="complete"
         progress={exportProgress}
         status={exportStatus}
+        certificateType="EIC"
       />
 
       {/* Email Dialog */}

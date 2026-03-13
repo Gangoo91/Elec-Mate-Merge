@@ -8,10 +8,10 @@ class Settings(BaseSettings):
     supabase_url: str = ""
     supabase_service_role_key: str = ""
 
-    # Reed API (jobs + courses)
+    # Reed API (jobs + courses) — optional, scrapers replace API usage
     reed_api_key: str = ""
 
-    # Adzuna API (jobs)
+    # Adzuna API (jobs) — optional, scrapers replace API usage
     adzuna_app_id: str = ""
     adzuna_api_key: str = ""
 

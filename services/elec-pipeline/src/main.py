@@ -58,7 +58,7 @@ async def root():
 @app.post("/pipeline/run/{pipeline_name}")
 async def trigger_pipeline(pipeline_name: str):
     """Manually trigger a pipeline (for testing / on-demand)."""
-    from src.pipelines.courses import run_courses_api_pipeline
+    from src.pipelines.courses import run_courses_api_pipeline, run_courses_scrape_pipeline
     from src.pipelines.deals import run_coupons_pipeline, run_deals_pipeline
     from src.pipelines.jobs import run_jobs_api_pipeline, run_jobs_scrape_pipeline
     from src.pipelines.materials import (
@@ -76,6 +76,7 @@ async def trigger_pipeline(pipeline_name: str):
         "materials_scrape": run_full_materials_scrape,
         "price_history": run_price_history_snapshot,
         "courses_api": run_courses_api_pipeline,
+        "courses_scrape": run_courses_scrape_pipeline,
         "deals": run_deals_pipeline,
         "coupons": run_coupons_pipeline,
     }

@@ -17,8 +17,10 @@ interface PDFExportProgressProps {
   exportType: 'observations' | 'complete' | null;
   progress: number;
   status: 'preparing' | 'generating' | 'complete' | 'error';
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   formData?: any;
   onEmailClick?: () => void;
+  certificateType?: string;
 }
 
 const PDFExportProgress = ({
@@ -29,6 +31,7 @@ const PDFExportProgress = ({
   status,
   formData,
   onEmailClick,
+  certificateType = 'EICR',
 }: PDFExportProgressProps) => {
   const [displayProgress, setDisplayProgress] = useState(0);
 
@@ -78,7 +81,10 @@ const PDFExportProgress = ({
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2">
             {getIcon()}
-            Exporting {exportType === 'complete' ? 'Complete EICR' : 'Observations'} to PDF
+            Exporting {exportType === 'complete'
+              ? `Complete ${certificateType}`
+              : 'Observations'}{' '}
+            to PDF
           </DialogTitle>
           <DialogDescription>{getStatusText()}</DialogDescription>
         </DialogHeader>

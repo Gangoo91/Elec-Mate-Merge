@@ -7,14 +7,15 @@ import EICDeclarations from './EICDeclarations';
 import EICCertificateTab from './EICCertificateTab';
 import EICTabNavigation from './EICTabNavigation';
 import EICObservationsSection from './EICObservationsSection';
-import EICValidationPanel from './EICValidationPanel';
 import { EICObservation } from '@/hooks/useEICObservations';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { cn } from '@/lib/utils';
 
 interface EICTabContentProps {
   tabValue: EICTabValue;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   formData: any;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   onUpdate: (field: string, value: any) => void;
   tabNavigationProps: {
     currentTab: EICTabValue;
@@ -35,6 +36,7 @@ interface EICTabContentProps {
     observations: EICObservation[];
     reportId: string;
     onAddObservation: () => string;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     onUpdateObservation: (id: string, field: keyof EICObservation, value: any) => void;
     onRemoveObservation: (id: string) => void;
     onAutoCreateObservation: (inspectionItem: {
@@ -116,7 +118,6 @@ const EICTabContent: React.FC<EICTabContentProps> = ({
             onSaveDraft={onSaveDraft}
             canGenerateCertificate={canGenerateCertificate}
           />
-          <EICValidationPanel formData={formData} />
           <EICTabNavigation {...tabNavigationProps} showGenerate />
         </div>
       );

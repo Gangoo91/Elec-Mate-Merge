@@ -88,9 +88,11 @@ export const useInspectionPhotos = ({
               url: publicUrl,
               thumbnailUrl: publicUrl,
               uploadedAt: new Date(photo.uploaded_at),
+              // eslint-disable-next-line @typescript-eslint/no-explicit-any
               faultCode: photo.fault_code as any,
               observationId: photo.observation_id,
               faultDescription: photo.fault_description,
+              // eslint-disable-next-line @typescript-eslint/no-explicit-any
               aiAnalysis: photo.ai_analysis as any,
             };
           });
@@ -142,10 +144,12 @@ export const useInspectionPhotos = ({
         throw new Error('Please save the report details first before adding photos');
       }
 
-      // Compress image if needed (max 1920px width)
+      // Compress and convert to JPEG (handles HEIC/HEIF → JPEG conversion)
       const compressedFile = await compressImage(file);
 
-      const fileExt = file.name.split('.').pop();
+      // Use extension from compressed file type (always jpeg after compression)
+      const fileExt =
+        compressedFile.type === 'image/jpeg' ? 'jpg' : file.name.split('.').pop() || 'jpg';
       const fileName = `${crypto.randomUUID()}.${fileExt}`;
       // Use itemId if available, otherwise use observationId for the folder path
       const folderIdentifier = itemId || observationId;
@@ -188,6 +192,7 @@ export const useInspectionPhotos = ({
         url: publicUrl,
         thumbnailUrl: publicUrl,
         uploadedAt: new Date(photoData.uploaded_at),
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         faultCode: photoData.fault_code as any,
         observationId: photoData.observation_id,
         faultDescription: photoData.fault_description,
@@ -316,6 +321,7 @@ export const useInspectionPhotos = ({
 
       const updatedPhoto: InspectionPhoto = {
         ...photo,
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         aiAnalysis: aiAnalysis as any,
       };
 
@@ -340,6 +346,7 @@ export const useInspectionPhotos = ({
       });
 
       return aiAnalysis;
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
       console.error('Error scanning photo:', error);
       // Try to get more details from the error
@@ -375,30 +382,60 @@ function isUuid(str: string): boolean {
 // Helper function to compress images
 async function compressImage(file: File): Promise<File> {
   return new Promise((resolve) => {
+    // Safety timeout — if compression hangs, use original file
+    const timeout = setTimeout(() => {
+      console.warn('[compressImage] Timed out after 10s, using original file');
+      resolve(file);
+    }, 10000);
+
+    const cleanup = () => clearTimeout(timeout);
+
     const reader = new FileReader();
+
+    reader.onerror = () => {
+      console.warn('[compressImage] FileReader error, using original file');
+      cleanup();
+      resolve(file);
+    };
+
     reader.onload = (e) => {
       const img = new Image();
-      img.onload = () => {
-        const canvas = document.createElement('canvas');
-        const maxWidth = 1920;
-        const scaleSize = maxWidth / img.width;
-        canvas.width = maxWidth;
-        canvas.height = img.height * scaleSize;
 
-        const ctx = canvas.getContext('2d');
-        ctx?.drawImage(img, 0, 0, canvas.width, canvas.height);
-
-        canvas.toBlob(
-          (blob) => {
-            if (blob) {
-              resolve(new File([blob], file.name, { type: 'image/jpeg' }));
-            } else {
-              resolve(file);
-            }
-          },
-          'image/jpeg',
-          0.8
+      img.onerror = () => {
+        console.warn(
+          '[compressImage] Image decode failed (unsupported format?), using original file'
         );
+        cleanup();
+        resolve(file);
+      };
+
+      img.onload = () => {
+        try {
+          const maxWidth = 1920;
+          const needsDownscale = img.width > maxWidth;
+          const canvas = document.createElement('canvas');
+          canvas.width = needsDownscale ? maxWidth : img.width;
+          canvas.height = needsDownscale ? img.height * (maxWidth / img.width) : img.height;
+
+          const ctx = canvas.getContext('2d');
+          ctx?.drawImage(img, 0, 0, canvas.width, canvas.height);
+
+          canvas.toBlob(
+            (blob) => {
+              cleanup();
+              if (blob) {
+                resolve(new File([blob], file.name, { type: 'image/jpeg' }));
+              } else {
+                resolve(file);
+              }
+            },
+            'image/jpeg',
+            0.8
+          );
+        } catch {
+          cleanup();
+          resolve(file);
+        }
       };
       img.src = e.target?.result as string;
     };

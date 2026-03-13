@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import hashlib
+import re
 import uuid
 from datetime import datetime, timedelta, timezone
 from typing import Any
@@ -148,6 +149,24 @@ def upsert_jobs(jobs: list[dict], source: str, region: str) -> int:
 # ---------------------------------------------------------------------------
 
 
+def _safe_date(raw: str | None) -> str | None:
+    """Return an ISO date string if raw looks like a valid date, else None."""
+    if not raw:
+        return None
+    raw = raw.strip()
+    # Already ISO format (2026-03-13 or 2026-03-13T...)
+    if re.match(r"^\d{4}-\d{2}-\d{2}", raw):
+        return raw[:10]
+    # Try parsing common formats
+    for fmt in ("%d %B %Y", "%d %b %Y", "%d/%m/%Y", "%Y-%m-%dT%H:%M:%S"):
+        try:
+            return datetime.strptime(raw, fmt).strftime("%Y-%m-%d")
+        except ValueError:
+            continue
+    # Not a valid date — return None (caller will use today's date)
+    return None
+
+
 def upsert_job_listings(jobs: list[dict]) -> int:
     """Upsert individual job rows into job_listings table for the frontend.
 
@@ -159,18 +178,26 @@ def upsert_job_listings(jobs: list[dict]) -> int:
     client = get_client()
     now = datetime.now(timezone.utc).isoformat()
 
+    # Deduplicate by (title, company) to match DB constraint
+    seen_keys: set[tuple[str, str]] = set()
     rows = []
     for j in jobs:
+        title = j.get("title", "")
+        company = j.get("company") or "Unknown"
+        key = (title.lower().strip(), company.lower().strip())
+        if key in seen_keys:
+            continue
+        seen_keys.add(key)
         rows.append(
             {
-                "title": j.get("title", ""),
-                "company": j.get("company", "Unknown"),
+                "title": title,
+                "company": company,
                 "location": j.get("location", "UK"),
                 "salary": j.get("salary"),
                 "type": j.get("employment_type") or j.get("type") or "Full-time",
                 "description": (j.get("description") or "")[:5000],
                 "external_url": j.get("apply_url") or j.get("url"),
-                "posted_date": j.get("date_posted") or now[:10],
+                "posted_date": _safe_date(j.get("date_posted")) or now[:10],
                 "source": j.get("source", "reed"),
                 "updated_at": now,
             }

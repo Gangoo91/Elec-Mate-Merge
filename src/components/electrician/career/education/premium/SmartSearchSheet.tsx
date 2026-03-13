@@ -8,7 +8,6 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Drawer, DrawerContent, DrawerHeader, DrawerTitle } from '@/components/ui/drawer';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { cn } from '@/lib/utils';
 import {
@@ -16,7 +15,6 @@ import {
   X,
   Clock,
   TrendingUp,
-  Mic,
   Star,
   GraduationCap,
   ChevronRight,
@@ -61,15 +59,15 @@ const MiniResultCard = ({
     animate="animate"
     exit="exit"
     onClick={onClick}
-    className="w-full flex items-center gap-3 p-3 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 hover:border-purple-500/30 transition-all text-left"
+    className="w-full flex items-center gap-3 p-3 rounded-xl bg-white/[0.04] border border-white/[0.08] hover:bg-white/[0.06] hover:border-elec-yellow/20 transition-all text-left touch-manipulation active:scale-[0.98]"
   >
     {/* Image thumbnail */}
-    <div className="w-12 h-12 rounded-lg overflow-hidden flex-shrink-0 bg-white/10">
+    <div className="w-11 h-11 rounded-lg overflow-hidden flex-shrink-0 bg-white/10">
       {programme.imageUrl ? (
         <img src={programme.imageUrl} alt="" className="w-full h-full object-cover" />
       ) : (
         <div className="w-full h-full flex items-center justify-center">
-          <GraduationCap className="h-5 w-5 text-purple-400" />
+          <GraduationCap className="h-4 w-4 text-elec-yellow" />
         </div>
       )}
     </div>
@@ -77,13 +75,13 @@ const MiniResultCard = ({
     {/* Content */}
     <div className="flex-1 min-w-0">
       <h4 className="text-sm font-medium text-white line-clamp-1">{programme.title}</h4>
-      <p className="text-xs text-purple-400 line-clamp-1">{programme.institution}</p>
-      <div className="flex items-center gap-2 mt-1 text-xs text-white">
+      <p className="text-xs text-elec-yellow line-clamp-1">{programme.institution}</p>
+      <div className="flex items-center gap-2 mt-0.5 text-xs text-white">
         <span className="flex items-center gap-0.5">
-          <Star className="h-3 w-3 fill-yellow-400 text-yellow-400" />
+          <Star className="h-3 w-3 fill-amber-400 text-amber-400" />
           {programme.rating?.toFixed(1)}
         </span>
-        <span>•</span>
+        <span className="text-white/20">•</span>
         <span>{programme.studyMode}</span>
       </div>
     </div>
@@ -202,25 +200,27 @@ const SmartSearchSheet = ({
   return (
     <Drawer open={open} onOpenChange={onOpenChange}>
       <DrawerContent className="h-[95vh] rounded-t-3xl">
-        <DrawerHeader className="pb-0">
+        <DrawerHeader className="pb-0 px-4">
           <div className="flex items-center justify-between">
-            <DrawerTitle className="text-lg font-semibold">Search Programmes</DrawerTitle>
+            <DrawerTitle className="text-base font-semibold text-white">
+              Search Programmes
+            </DrawerTitle>
             <Button
               variant="ghost"
               size="icon"
               onClick={() => onOpenChange(false)}
-              className="h-8 w-8"
+              className="h-8 w-8 hover:bg-white/10 rounded-full touch-manipulation"
             >
-              <X className="h-4 w-4" />
+              <X className="h-4 w-4 text-white" />
             </Button>
           </div>
         </DrawerHeader>
 
-        <div className="flex-1 overflow-hidden flex flex-col p-4">
+        <div className="flex-1 overflow-hidden flex flex-col px-4 pt-3">
           {/* Search Input */}
-          <div className="relative mb-4">
+          <div className="relative mb-3">
             {!searchTerm && (
-              <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground pointer-events-none" />
+              <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-white pointer-events-none" />
             )}
             <Input
               ref={inputRef}
@@ -229,23 +229,23 @@ const SmartSearchSheet = ({
               onChange={(e) => setSearchTerm(e.target.value)}
               onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
               className={cn(
-                'pr-12 h-14 text-base rounded-2xl bg-white/5 border-white/10 focus:border-purple-500/50',
-                !searchTerm && 'pl-12'
+                'h-12 text-base rounded-xl bg-white/[0.06] border-white/10 focus:border-elec-yellow/50 focus:ring-elec-yellow/20 text-white',
+                !searchTerm && 'pl-10'
               )}
             />
-            <button
-              className="absolute right-4 top-1/2 -translate-y-1/2 h-8 w-8 flex items-center justify-center rounded-full hover:bg-white/10 transition-colors"
-              onClick={() => {
-                // Voice search placeholder
-              }}
-            >
-              <Mic className="h-5 w-5 text-muted-foreground" />
-            </button>
+            {searchTerm && (
+              <button
+                className="absolute right-3 top-1/2 -translate-y-1/2 h-7 w-7 flex items-center justify-center rounded-full bg-white/10 hover:bg-white/15 transition-colors touch-manipulation"
+                onClick={() => setSearchTerm('')}
+              >
+                <X className="h-3.5 w-3.5 text-white" />
+              </button>
+            )}
           </div>
 
           {/* Quick Filters */}
-          <div className="overflow-x-auto scrollbar-hide -mx-4 px-4 mb-4">
-            <div className="flex gap-2">
+          <div className="overflow-x-auto scrollbar-hide -mx-4 px-4 mb-3">
+            <div className="flex gap-1.5 pr-4">
               {QUICK_FILTERS.map((filter) => {
                 const isActive = activeFilters.includes(filter.id);
                 const Icon = filter.icon;
@@ -255,14 +255,14 @@ const SmartSearchSheet = ({
                     whileTap={{ scale: 0.95 }}
                     onClick={() => toggleFilter(filter.id)}
                     className={cn(
-                      'flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap',
-                      'border transition-all duration-200',
+                      'flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-[11px] font-medium whitespace-nowrap',
+                      'border transition-all duration-200 touch-manipulation',
                       isActive
-                        ? 'bg-purple-500 text-white border-purple-500'
-                        : 'bg-white/5 text-white border-white/10 hover:bg-white/10'
+                        ? 'bg-elec-yellow text-elec-dark border-elec-yellow'
+                        : 'bg-white/[0.04] text-white border-white/10 hover:bg-white/[0.08]'
                     )}
                   >
-                    <Icon className="h-4 w-4" />
+                    <Icon className="h-3 w-3" />
                     {filter.label}
                   </motion.button>
                 );
@@ -280,10 +280,10 @@ const SmartSearchSheet = ({
                   initial="initial"
                   animate="animate"
                   exit="exit"
-                  className="space-y-4"
+                  className="space-y-3"
                 >
                   <div className="flex items-center justify-between">
-                    <h3 className="text-sm font-medium text-white">
+                    <h3 className="text-xs font-medium text-white uppercase tracking-wide">
                       {isSearching ? 'Searching...' : `${searchResults.length} results`}
                     </h3>
                     {searchResults.length > 0 && (
@@ -291,10 +291,10 @@ const SmartSearchSheet = ({
                         variant="ghost"
                         size="sm"
                         onClick={handleSearch}
-                        className="text-purple-400 hover:text-purple-300"
+                        className="text-elec-yellow hover:text-elec-yellow/80 text-xs h-7 px-2"
                       >
                         See all
-                        <ChevronRight className="h-4 w-4 ml-1" />
+                        <ChevronRight className="h-3.5 w-3.5 ml-0.5" />
                       </Button>
                     )}
                   </div>
@@ -312,9 +312,9 @@ const SmartSearchSheet = ({
 
                     {!isSearching && searchResults.length === 0 && (
                       <div className="text-center py-8">
-                        <Search className="h-12 w-12 text-white mx-auto mb-3" />
-                        <p className="text-white">No programmes found</p>
-                        <p className="text-sm text-white mt-1">Try different keywords</p>
+                        <Search className="h-10 w-10 text-white/10 mx-auto mb-3" />
+                        <p className="text-white text-sm">No programmes found</p>
+                        <p className="text-xs text-white mt-1">Try different keywords</p>
                       </div>
                     )}
                   </div>
@@ -329,23 +329,23 @@ const SmartSearchSheet = ({
                   initial="initial"
                   animate="animate"
                   exit="exit"
-                  className="space-y-6"
+                  className="space-y-5"
                 >
                   {/* Recent Searches */}
                   {recentSearches.length > 0 && (
                     <div>
-                      <div className="flex items-center justify-between mb-3">
-                        <h3 className="text-sm font-medium text-white flex items-center gap-2">
-                          <Clock className="h-4 w-4 text-white" />
+                      <div className="flex items-center justify-between mb-2.5">
+                        <h3 className="text-xs font-medium text-white uppercase tracking-wide flex items-center gap-1.5">
+                          <Clock className="h-3.5 w-3.5" />
                           Recent Searches
                         </h3>
                         <Button
                           variant="ghost"
                           size="sm"
                           onClick={onClearRecentSearches}
-                          className="text-xs text-white hover:text-white"
+                          className="text-xs text-white hover:text-white h-7 px-2"
                         >
-                          Clear all
+                          Clear
                         </Button>
                       </div>
                       <div className="flex flex-wrap gap-2">
@@ -357,7 +357,7 @@ const SmartSearchSheet = ({
                             transition={{ delay: index * 0.05 }}
                             whileTap={{ scale: 0.95 }}
                             onClick={() => handleRecentSearchClick(term)}
-                            className="flex items-center gap-2 px-3 py-2 rounded-lg bg-white/5 border border-white/10 hover:bg-white/10 transition-colors"
+                            className="flex items-center gap-1.5 px-3 py-2 rounded-lg bg-white/[0.04] border border-white/[0.08] hover:bg-white/[0.08] transition-colors touch-manipulation"
                           >
                             <Clock className="h-3 w-3 text-white" />
                             <span className="text-sm text-white">{term}</span>
@@ -370,30 +370,29 @@ const SmartSearchSheet = ({
                   {/* Trending Categories */}
                   {categories.length > 0 && (
                     <div>
-                      <h3 className="text-sm font-medium text-white flex items-center gap-2 mb-3">
-                        <Sparkles className="h-4 w-4 text-purple-400" />
+                      <h3 className="text-xs font-medium text-white uppercase tracking-wide flex items-center gap-1.5 mb-2.5">
+                        <Sparkles className="h-3.5 w-3.5 text-elec-yellow" />
                         Trending Categories
                       </h3>
-                      <div className="grid grid-cols-2 gap-2">
+                      <div className="space-y-1.5">
                         {categories.slice(0, 6).map((category, index) => (
                           <motion.button
                             key={category.name}
                             initial={{ opacity: 0, y: 10 }}
                             animate={{ opacity: 1, y: 0 }}
-                            transition={{ delay: 0.1 + index * 0.05 }}
+                            transition={{ delay: 0.05 + index * 0.03 }}
                             whileTap={{ scale: 0.98 }}
                             onClick={() => handleCategoryClick(category.name)}
-                            className="flex items-center gap-3 p-3 rounded-xl bg-white/5 border border-white/10 hover:bg-purple-500/10 hover:border-purple-500/30 transition-all text-left"
+                            className="flex items-center gap-3 w-full p-3 rounded-xl bg-white/[0.03] border border-white/[0.06] hover:bg-white/[0.06] hover:border-elec-yellow/20 transition-all text-left touch-manipulation"
                           >
-                            <div className="w-10 h-10 rounded-lg bg-purple-500/10 flex items-center justify-center">
-                              <GraduationCap className="h-5 w-5 text-purple-400" />
+                            <div className="w-9 h-9 rounded-lg bg-elec-yellow/10 flex items-center justify-center flex-shrink-0">
+                              <GraduationCap className="h-4 w-4 text-elec-yellow" />
                             </div>
                             <div className="flex-1 min-w-0">
-                              <p className="text-sm font-medium text-white truncate">
-                                {category.name}
-                              </p>
+                              <p className="text-sm font-medium text-white">{category.name}</p>
                               <p className="text-xs text-white">{category.count} programmes</p>
                             </div>
+                            <ChevronRight className="h-4 w-4 text-white flex-shrink-0" />
                           </motion.button>
                         ))}
                       </div>
@@ -401,12 +400,12 @@ const SmartSearchSheet = ({
                   )}
 
                   {/* Browse All Prompt */}
-                  <div className="text-center pt-4">
+                  <div className="text-center pt-2 pb-4">
                     <p className="text-sm text-white">
                       Or{' '}
                       <button
                         onClick={() => onOpenChange(false)}
-                        className="text-purple-400 hover:text-purple-300 underline underline-offset-2"
+                        className="text-elec-yellow hover:text-elec-yellow/80 underline underline-offset-2 touch-manipulation"
                       >
                         browse all programmes
                       </button>

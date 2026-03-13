@@ -178,30 +178,30 @@ export async function formatEicJson(
     },
 
     supply_protective_device: {
-      bs_en: formData.supplyDeviceBsEn || formData.supplyProtectiveDeviceBsEn || '',
-      type: formData.supplyDeviceType || formData.supplyProtectiveDeviceType || '',
-      rated_current: formData.supplyDeviceRating || formData.supplyProtectiveDeviceRating || '',
+      bs_en: formData.supplyDeviceBsEn || formData.supplyProtectiveDeviceBsEn || 'N/A',
+      type: formData.supplyDeviceType || formData.supplyProtectiveDeviceType || 'N/A',
+      rated_current: formData.supplyDeviceRating || formData.supplyProtectiveDeviceRating || 'N/A',
     },
 
     main_protective_device: {
-      device_type: formData.mainProtectiveDevice || formData.mainProtectiveDeviceType || '',
-      main_switch_rating: formData.mainSwitchRating || formData.mainSwitchCurrentRating || '',
-      main_switch_location: formData.mainSwitchLocation || '',
-      breaking_capacity: formData.breakingCapacity || '',
-      bs_en: formData.mainSwitchBsEn || '',
-      poles: formData.mainSwitchPoles || '',
-      fuse_setting: formData.mainSwitchFuseRating || '',
-      voltage_rating: formData.mainSwitchVoltageRating || '',
+      device_type: formData.mainProtectiveDevice || formData.mainProtectiveDeviceType || 'N/A',
+      main_switch_rating: formData.mainSwitchRating || formData.mainSwitchCurrentRating || 'N/A',
+      main_switch_location: formData.mainSwitchLocation || 'N/A',
+      breaking_capacity: formData.breakingCapacity || 'N/A',
+      bs_en: formData.mainSwitchBsEn || 'N/A',
+      poles: formData.mainSwitchPoles || 'N/A',
+      fuse_setting: formData.mainSwitchFuseRating || 'N/A',
+      voltage_rating: formData.mainSwitchVoltageRating || 'N/A',
     },
 
     rcd_details: {
       rcd_main_switch: formData.rcdMainSwitch || '',
-      rcd_rating: formData.rcdRating || formData.mainSwitchRcdRating || '',
-      rcd_type: formData.rcdType || formData.mainSwitchRcdType || '',
-      rcd_operating_time: formData.rcdOperatingTime || formData.mainSwitchRcdOperatingTime || '',
-      rcd_rated_time_delay: formData.rcdTimeDelay || formData.rcdRatedTimeDelay || '',
+      rcd_rating: formData.rcdRating || formData.mainSwitchRcdRating || 'N/A',
+      rcd_type: formData.rcdType || formData.mainSwitchRcdType || 'N/A',
+      rcd_operating_time: formData.rcdOperatingTime || formData.mainSwitchRcdOperatingTime || 'N/A',
+      rcd_rated_time_delay: formData.rcdTimeDelay || formData.rcdRatedTimeDelay || 'N/A',
       rcd_measured_operating_time:
-        formData.rcdMeasuredTime || formData.rcdMeasuredOperatingTime || '',
+        formData.rcdMeasuredTime || formData.rcdMeasuredOperatingTime || 'N/A',
     },
 
     distribution_board: {
@@ -250,12 +250,14 @@ export async function formatEicJson(
     earthing_bonding: {
       means_of_earthing: formData.meansOfEarthing || '',
       earth_electrode_type: formData.earthElectrodeNA ? 'N/A' : formData.earthElectrodeType || '',
-      earth_electrode_location: formData.earthElectrodeNA
-        ? 'N/A'
-        : formData.earthElectrodeLocation || '',
-      earth_electrode_resistance: formData.earthElectrodeNA
-        ? 'N/A'
-        : formData.earthElectrodeResistance || '',
+      earth_electrode_location:
+        formData.earthElectrodeNA || formData.earthElectrodeType === 'pme'
+          ? 'N/A'
+          : formData.earthElectrodeLocation || '',
+      earth_electrode_resistance:
+        formData.earthElectrodeNA || formData.earthElectrodeType === 'pme'
+          ? 'N/A'
+          : formData.earthElectrodeResistance || '',
       earth_electrode_na: formData.earthElectrodeNA ?? false,
       earthing_conductor_material: formData.earthingConductorNA
         ? 'N/A'
@@ -265,19 +267,17 @@ export async function formatEicJson(
         : formData.earthingConductorCsa || '',
       earthing_conductor_verified: formData.earthingConductorNA
         ? false
-        : formData.earthingConductorVerified ?? false,
+        : (formData.earthingConductorVerified ?? false),
       earthing_conductor_na: formData.earthingConductorNA ?? false,
       main_bonding_conductor: formData.mainBondingConductor || '',
-      main_bonding_material: formData.mainBondingNA
-        ? 'N/A'
-        : formData.mainBondingMaterial || '',
+      main_bonding_material: formData.mainBondingNA ? 'N/A' : formData.mainBondingMaterial || '',
       main_bonding_size: formData.mainBondingNA
         ? 'N/A'
         : formData.mainBondingSize || formData.mainBondingCsa || '',
       main_bonding_size_custom: formData.mainBondingSizeCustom || '',
       main_bonding_verified: formData.mainBondingNA
         ? false
-        : formData.mainBondingVerified ?? false,
+        : (formData.mainBondingVerified ?? false),
       main_bonding_na: formData.mainBondingNA ?? false,
       maximum_demand: formData.maximumDemand || '',
       maximum_demand_unit: formData.maximumDemandUnit || 'A',
@@ -373,7 +373,13 @@ export async function formatEicJson(
         phase_balance_l2: test.phaseBalanceL2 || 'N/A',
         phase_balance_l3: test.phaseBalanceL3 || 'N/A',
         line_to_line_voltage: test.lineToLineVoltage || 'N/A',
-        db_reference: boardRefMap[test.boardId] || test.dbReference || test.boardReference || '',
+        db_reference:
+          boardRefMap[test.boardId] ||
+          test.dbReference ||
+          test.boardReference ||
+          formData.distributionBoards?.[0]?.dbReference ||
+          formData.distributionBoards?.[0]?.reference ||
+          'DB1',
         source_circuit_id: test.sourceCircuitId ?? null,
         auto_filled: test.autoFilled ?? false,
       })) || [],

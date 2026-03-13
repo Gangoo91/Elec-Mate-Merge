@@ -33,8 +33,11 @@ import { Bell } from 'lucide-react';
 import { useDesignedCircuit, useUpdateDesignedCircuitStatus } from '@/hooks/useDesignedCircuits';
 
 interface EICFormContextType {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   formData: any;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   updateFormData: (field: string, value: any) => void;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   getLatestFormData: () => any;
   currentReportId: string | null;
   effectiveReportId: string;
@@ -45,6 +48,7 @@ interface EICFormContextType {
   confirmDuplicate: () => Promise<void>;
   handleManualSave: () => Promise<void>;
   handleGenerateCertificate: () => Promise<void>;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   syncState: any;
   isOnline: boolean;
   isAuthenticated: boolean;
@@ -59,6 +63,7 @@ interface EICFormContextType {
     observations: EICObservation[];
     reportId: string;
     onAddObservation: () => string;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     onUpdateObservation: (id: string, field: keyof EICObservation, value: any) => void;
     onRemoveObservation: (id: string) => void;
     onAutoCreateObservation: (inspectionItem: {
@@ -71,6 +76,7 @@ interface EICFormContextType {
   };
   showBoardScan: boolean;
   setShowBoardScan: (v: boolean) => void;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   handleBoardScanComplete: (data: any) => void;
   isLoadingDesign: boolean;
   canGenerateCertificate: () => boolean;
@@ -188,6 +194,7 @@ export const EICFormProvider: React.FC<EICFormProviderProps> = ({
   });
 
   // Ref to always have the latest formData
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const formDataRef = useRef<any>(formData);
   useLayoutEffect(() => {
     formDataRef.current = formData;
@@ -376,6 +383,7 @@ export const EICFormProvider: React.FC<EICFormProviderProps> = ({
       const scheduleData = designData.schedule_data;
 
       const transformedCircuits =
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         scheduleData.circuits?.map((circuit: any, idx: number) => ({
           id: `design-${Date.now()}-${idx + 1}`,
           circuitNumber: circuit.circuitNumber || (idx + 1).toString(),
@@ -493,9 +501,12 @@ export const EICFormProvider: React.FC<EICFormProviderProps> = ({
 
       loadFromCloudRef.current(initialReportId).then((cloudResult) => {
         if (cloudResult && cloudResult.data && typeof cloudResult.data === 'object') {
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
           const data = cloudResult.data as any;
           // Use the database timestamp from cloudResult (not data.updated_at which is the form JSON and won't have this field)
-          const cloudTime = new Date(cloudResult.updatedAt || cloudResult.lastSyncedAt || data.updated_at || 0).getTime();
+          const cloudTime = new Date(
+            cloudResult.updatedAt || cloudResult.lastSyncedAt || data.updated_at || 0
+          ).getTime();
           const localTime = localDraft?.lastModified
             ? new Date(localDraft.lastModified).getTime()
             : 0;
@@ -602,6 +613,7 @@ export const EICFormProvider: React.FC<EICFormProviderProps> = ({
   }, [observations]);
 
   // Form update handler
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const updateFormData = useCallback((field: string, value: any) => {
     if (field === 'certificateNumber') {
       console.warn('Certificate number cannot be modified');
@@ -622,6 +634,7 @@ export const EICFormProvider: React.FC<EICFormProviderProps> = ({
 
   // Board scan completion handler
   const handleBoardScanComplete = useCallback(
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     (data: { board: any; circuits: any[]; metadata?: any; warnings?: string[] }) => {
       const newCircuits = data.circuits.map((circuit, index) => {
         const ratingAmps = circuit.rating || null;
@@ -783,6 +796,7 @@ export const EICFormProvider: React.FC<EICFormProviderProps> = ({
     const { generateCertificateNumber } = await import('@/utils/certificateNumbering');
     const certificateNumber = await generateCertificateNumber('eic');
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const duplicatedData: any =
       typeof structuredClone === 'function'
         ? structuredClone(formData)
@@ -835,26 +849,34 @@ export const EICFormProvider: React.FC<EICFormProviderProps> = ({
       // EIC is always notifiable under Part P — no keyword check needed
       {
         let complianceWarning = false;
-        if (
-          formData.scheduleOfTests &&
-          Array.isArray(formData.scheduleOfTests) &&
-          formData.scheduleOfTests.length > 0
-        ) {
-          const { checkAllResultsCompliance } = require('@/utils/autoRegChecker');
-          const complianceResult = checkAllResultsCompliance(formData.scheduleOfTests);
-          const hasFailures = complianceResult.some((result: any) =>
-            result.warnings.some((w: any) => w.severity === 'error')
-          );
-          if (hasFailures) {
-            complianceWarning = true;
-            toast({
-              title: 'Compliance Warning',
-              description:
-                'Test results show BS7671 compliance issues. Part P notification will include these non-compliances.',
-              variant: 'destructive',
-              duration: 8000,
-            });
+        try {
+          if (
+            formData.scheduleOfTests &&
+            Array.isArray(formData.scheduleOfTests) &&
+            formData.scheduleOfTests.length > 0
+          ) {
+            const { checkAllResultsCompliance } = await import('@/utils/autoRegChecker');
+            if (checkAllResultsCompliance) {
+              const complianceResult = checkAllResultsCompliance(formData.scheduleOfTests);
+              // eslint-disable-next-line @typescript-eslint/no-explicit-any
+              const hasFailures = complianceResult.some((result: any) =>
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                result.warnings.some((w: any) => w.severity === 'error')
+              );
+              if (hasFailures) {
+                complianceWarning = true;
+                toast({
+                  title: 'Compliance Warning',
+                  description:
+                    'Test results show BS7671 compliance issues. Part P notification will include these non-compliances.',
+                  variant: 'destructive',
+                  duration: 8000,
+                });
+              }
+            }
           }
+        } catch (complianceErr) {
+          console.warn('[EIC] Auto-reg compliance check skipped:', complianceErr);
         }
 
         try {
@@ -993,6 +1015,7 @@ export const EICFormProvider: React.FC<EICFormProviderProps> = ({
       );
 
       const items = formDataRef.current.inspectionItems || [];
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const updatedItems = items.map((item: any) =>
         item.id === inspectionItemId ? { ...item, outcome: newOutcome, inspected: true } : item
       );

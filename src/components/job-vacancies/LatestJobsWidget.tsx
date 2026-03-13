@@ -1,7 +1,22 @@
 import { Link } from 'react-router-dom';
-import { ChevronRight, MapPin, Building2, Loader2, Zap } from 'lucide-react';
+import { ChevronRight, MapPin, Building2, Loader2, Zap, Briefcase } from 'lucide-react';
 import { useLatestJobs, LatestJob } from '@/hooks/job-vacancies/useLatestJobs';
 import { motion } from 'framer-motion';
+
+// Accent colours for company avatars — cycles to add visual variety
+const avatarAccents = [
+  { bg: 'bg-elec-yellow/15', text: 'text-elec-yellow' },
+  { bg: 'bg-purple-500/15', text: 'text-purple-400' },
+  { bg: 'bg-blue-500/15', text: 'text-blue-400' },
+  { bg: 'bg-amber-500/15', text: 'text-amber-400' },
+  { bg: 'bg-emerald-500/15', text: 'text-emerald-400' },
+];
+
+const getInitials = (company: string): string => {
+  const words = company.split(/\s+/).filter(Boolean);
+  if (words.length >= 2) return (words[0][0] + words[1][0]).toUpperCase();
+  return company.slice(0, 2).toUpperCase();
+};
 
 // Format salary for display - convert "45059.00 GBP Annual" to "£45k"
 const formatSalary = (salary: string | undefined): string | null => {
@@ -41,6 +56,8 @@ const JobRow = ({ job, index }: { job: LatestJob; index: number }) => {
   const salary = formatSalary(job.salary);
   const company = formatCompany(job.company);
   const location = formatLocation(job.location);
+  const accent = avatarAccents[index % avatarAccents.length];
+  const initials = getInitials(company);
 
   return (
     <motion.div
@@ -54,40 +71,30 @@ const JobRow = ({ job, index }: { job: LatestJob; index: number }) => {
         rel={job.external_url ? 'noopener noreferrer' : undefined}
         className="block"
       >
-        <div className="flex items-start gap-3 p-3 rounded-xl bg-white/[0.03] border border-white/[0.06] touch-manipulation active:bg-white/[0.06] active:scale-[0.98] transition-all">
-          {/* Job icon */}
-          <div className="w-11 h-11 rounded-xl bg-elec-yellow flex items-center justify-center flex-shrink-0 mt-0.5">
-            <Zap className="h-5 w-5 text-black" />
+        <div className="flex items-center gap-3 p-3.5 rounded-xl bg-white/[0.03] border border-white/[0.06] touch-manipulation active:bg-white/[0.06] active:scale-[0.98] transition-all">
+          {/* Company initials avatar */}
+          <div
+            className={`w-11 h-11 rounded-xl ${accent.bg} flex items-center justify-center flex-shrink-0`}
+          >
+            <span className={`text-sm font-bold ${accent.text}`}>{initials}</span>
           </div>
 
-          {/* Job details - stacked layout */}
+          {/* Job details */}
           <div className="flex-1 min-w-0">
-            {/* Title */}
-            <p className="font-semibold text-[14px] text-white leading-tight">{job.title}</p>
-
-            {/* Company & Location */}
-            <div className="flex items-center gap-2 mt-1.5">
-              <span className="flex items-center gap-1 text-[12px] text-white">
-                <Building2 className="h-3 w-3 flex-shrink-0 text-white" />
-                <span className="truncate max-w-[120px]">{company}</span>
-              </span>
-              <span className="w-1 h-1 rounded-full bg-white/30" />
-              <span className="flex items-center gap-1 text-[12px] text-white">
-                <MapPin className="h-3 w-3 flex-shrink-0 text-white" />
-                {location}
-              </span>
+            <p className="font-semibold text-[14px] text-white leading-tight truncate">
+              {job.title}
+            </p>
+            <div className="flex items-center gap-1.5 mt-1">
+              <span className="text-[12px] text-white truncate max-w-[100px]">{company}</span>
+              <span className="w-1 h-1 rounded-full bg-white/30 flex-shrink-0" />
+              <span className="text-[12px] text-white truncate">{location}</span>
             </div>
-
-            {/* Salary badge - stacked below */}
-            {salary && (
-              <div className="inline-flex mt-2 bg-green-500/20 text-green-400 text-[12px] font-bold px-2.5 py-1 rounded-lg">
-                {salary}
-              </div>
-            )}
           </div>
 
-          {/* Arrow */}
-          <ChevronRight className="h-4 w-4 text-white flex-shrink-0 mt-2" />
+          {/* Salary — right-aligned */}
+          {salary && (
+            <span className="text-sm font-bold text-green-400 flex-shrink-0">{salary}</span>
+          )}
         </div>
       </Link>
     </motion.div>

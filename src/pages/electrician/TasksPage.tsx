@@ -215,7 +215,16 @@ const TasksPage = () => {
               </Button>
               <h1 className="text-lg font-bold text-white">Tasks</h1>
               {counts[activeView] > 0 && (
-                <span className="text-[11px] font-bold bg-white/10 text-white px-2 py-0.5 rounded-full">
+                <span
+                  className={cn(
+                    'text-[11px] font-bold px-2.5 py-0.5 rounded-full min-w-[24px] text-center shadow-sm',
+                    activeView === 'completed'
+                      ? 'bg-emerald-500/20 text-emerald-400 ring-1 ring-emerald-500/20'
+                      : (counts.overdue ?? 0) > 0 && activeView === 'all'
+                        ? 'bg-gradient-to-r from-red-500 to-orange-500 text-white shadow-red-500/25'
+                        : 'bg-gradient-to-r from-yellow-400/90 to-amber-500/90 text-black shadow-yellow-500/20'
+                  )}
+                >
                   {counts[activeView]}
                 </span>
               )}
@@ -252,7 +261,11 @@ const TasksPage = () => {
                     <span
                       className={cn(
                         'text-[10px] font-bold px-1.5 py-0.5 rounded-full min-w-[18px] text-center',
-                        activeView === v.key ? 'bg-black/20 text-black' : 'bg-white/10 text-white'
+                        activeView === v.key
+                          ? 'bg-black/20 text-black'
+                          : v.key === 'snagging'
+                            ? 'bg-orange-500/20 text-orange-400'
+                            : 'bg-white/10 text-white'
                       )}
                     >
                       {counts[v.key]}
@@ -326,23 +339,20 @@ const TasksPage = () => {
                   <div className="flex items-center justify-between px-1">
                     <div className="flex items-center gap-2">
                       <div className={cn('w-1 h-4 rounded-full', group.dot)} />
-                      <span
-                        className={cn(
-                          'text-[13px] font-bold',
-                          group.labelColour
-                        )}
-                      >
+                      <span className={cn('text-[13px] font-bold', group.labelColour)}>
                         {group.label}
                       </span>
                     </div>
                     <span
                       className={cn(
-                        'text-[11px] font-bold px-2 py-0.5 rounded-full',
+                        'text-[11px] font-bold px-2 py-0.5 rounded-full min-w-[22px] text-center',
                         group.key === 'overdue'
-                          ? 'bg-red-500/20 text-red-400'
+                          ? 'bg-red-500/20 text-red-400 ring-1 ring-red-500/20'
                           : group.key === 'today'
-                            ? 'bg-yellow-500/20 text-yellow-400'
-                            : 'bg-white/10 text-white'
+                            ? 'bg-yellow-500/20 text-yellow-400 ring-1 ring-yellow-500/20'
+                            : group.key === 'week'
+                              ? 'bg-blue-500/20 text-blue-400 ring-1 ring-blue-500/20'
+                              : 'bg-white/[0.06] text-white ring-1 ring-white/10'
                       )}
                     >
                       {group.tasks.length}

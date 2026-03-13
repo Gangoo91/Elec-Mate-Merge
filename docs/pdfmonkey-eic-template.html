@@ -50,7 +50,7 @@
         .doc-header {
             background: linear-gradient(180deg, #0a1628 0%, #152238 100%);
             color: #fff;
-            padding: 10px 12px;
+            padding: 9px 11px;
             margin-bottom: 2px;
             border-radius: 2px;
             position: relative;
@@ -94,7 +94,7 @@
         .cert-number {
             font-size: 11px;
             font-weight: 700;
-            color: #ffffff;
+            color: #f59e0b;
             letter-spacing: 0.5px;
         }
 
@@ -159,7 +159,7 @@
         /* =============================================
            SECTION STYLING
            ============================================= */
-        .section { margin-bottom: 4px; }
+        .section { margin-bottom: 3px; }
 
         .section-title {
             background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
@@ -168,8 +168,8 @@
             font-weight: 600;
             text-transform: uppercase;
             letter-spacing: 0.8px;
-            padding: 4px 8px;
-            margin-bottom: 3px;
+            padding: 3px 8px;
+            margin-bottom: 2px;
             border-left: 3px solid var(--accent-color);
         }
 
@@ -178,7 +178,7 @@
             color: #334155;
             font-size: 8px;
             font-weight: 600;
-            padding: 3px 10px;
+            padding: 2px 10px;
             margin-bottom: 2px;
             border-left: 3px solid #64748b;
         }
@@ -519,7 +519,7 @@
             color: #fff;
             font-size: 7.5px;
             font-weight: 600;
-            padding: 3px 8px;
+            padding: 2px 8px;
             border-bottom: 2px solid var(--accent-color);
         }
 
@@ -528,7 +528,7 @@
         .sig-field {
             display: flex;
             align-items: center;
-            margin-bottom: 3px;
+            margin-bottom: 2px;
             gap: 4px;
         }
 
@@ -554,12 +554,12 @@
         }
 
         .sig-field-value.signature {
-            min-height: 35px;
+            min-height: 28px;
             display: flex;
             align-items: center;
         }
 
-        .sig-field-value img { max-height: 30px; }
+        .sig-field-value img { max-height: 25px; }
 
         /* =============================================
            DECLARATION BOX
@@ -569,14 +569,14 @@
             border: 1px solid #86efac;
             border-left: 3px solid var(--accent-color);
             border-radius: 2px;
-            padding: 6px 10px;
-            margin-bottom: 4px;
+            padding: 5px 9px;
+            margin-bottom: 3px;
         }
 
         .declaration-text {
             font-size: 7.5px;
             color: #166534;
-            line-height: 1.5;
+            line-height: 1.4;
             text-align: justify;
         }
 
@@ -702,6 +702,24 @@
             background: #f5f3ff;
             color: #7c3aed;
             border: 2px solid #7c3aed;
+        }
+
+        .classification-badge.unsatisfactory {
+            background: #fef2f2;
+            color: #dc2626;
+            border: 2px solid #dc2626;
+        }
+
+        .classification-badge.limitation {
+            background: #f5f3ff;
+            color: #7c3aed;
+            border: 2px solid #7c3aed;
+        }
+
+        .classification-badge.na {
+            background: #f1f5f9;
+            color: #64748b;
+            border: 2px solid #94a3b8;
         }
 
         .observation-section { margin-bottom: 6px; }
@@ -890,7 +908,7 @@
     <div class="form-grid">
         <div class="form-row">
             <div class="form-label">Description of Installation</div>
-            <div class="form-value" style="min-height: 24px">{{ installation_details.description }}</div>
+            <div class="form-value">{{ installation_details.description }}</div>
         </div>
     </div>
     <div class="inline-form" style="margin-top: 2px">
@@ -915,7 +933,7 @@
     <div class="form-grid" style="margin-top: 2px">
         <div class="form-row">
             <div class="form-label">Extent of Installation Covered by this Certificate</div>
-            <div class="form-value" style="min-height: 24px">{{ installation_details.extent_of_installation }}</div>
+            <div class="form-value">{{ installation_details.extent_of_installation }}</div>
         </div>
     </div>
     <div class="inline-form" style="margin-top: 2px">
@@ -963,7 +981,7 @@
             <span class="checkbox-label">Risk assessment attached</span>
         </div>
     </div>
-    <div class="signature-grid" style="margin-top: 4px">
+    <div class="signature-grid" style="margin-top: 3px">
         <div class="signature-box">
             <div class="signature-box-header">Designer</div>
             <div class="signature-box-body">
@@ -1009,7 +1027,7 @@
             <div class="form-value">{{ constructor.departures }}</div>
         </div>
     </div>
-    <div class="signature-grid" style="margin-top: 4px">
+    <div class="signature-grid" style="margin-top: 3px">
         <div class="signature-box">
             <div class="signature-box-header">Constructor</div>
             <div class="signature-box-body">
@@ -1055,7 +1073,7 @@
             <div class="form-value">{{ inspector.departures }}</div>
         </div>
     </div>
-    <div class="signature-grid" style="margin-top: 4px">
+    <div class="signature-grid" style="margin-top: 3px">
         <div class="signature-box">
             <div class="signature-box-header">Inspector</div>
             <div class="signature-box-body">
@@ -1741,41 +1759,45 @@
     </div>
 </div>
 
-<!-- Distribution Board Verification -->
+<!-- Distribution Board Verification (multi-board loop) -->
 <div class="section">
-    <div class="section-subtitle">Distribution Board Verification</div>
+    {% for board in distribution_boards %}
+    <div class="section-subtitle" {% if forloop.index > 1 %}style="margin-top: 4px"{% endif %}>
+        Distribution Board Verification {% if distribution_boards.size > 1 %}({{ board.db_reference }}){% endif %}
+    </div>
     <div class="inline-form">
         <div class="inline-group">
             <span class="inline-label">DB Reference:</span>
-            <span class="inline-value">{{ distribution_board_verification.db_reference }}</span>
+            <span class="inline-value">{{ board.db_reference }}</span>
         </div>
         <div class="inline-group">
             <span class="inline-label">Zdb (&Omega;):</span>
-            <span class="inline-value">{{ distribution_board_verification.zdb }}</span>
+            <span class="inline-value">{{ board.zdb }}</span>
         </div>
         <div class="inline-group">
             <span class="inline-label">Ipf (kA):</span>
-            <span class="inline-value">{{ distribution_board_verification.ipf }}</span>
+            <span class="inline-value">{{ board.ipf }}</span>
         </div>
     </div>
     <div class="inline-form" style="margin-top: 2px">
         <div class="checkbox-item">
-            <span class="checkbox-box {% if distribution_board_verification.confirmed_correct_polarity %}checked{% endif %}">{% if distribution_board_verification.confirmed_correct_polarity %}&#10003;{% endif %}</span>
+            <span class="checkbox-box {% if board.polarity_confirmed %}checked{% endif %}">{% if board.polarity_confirmed %}&#10003;{% endif %}</span>
             <span class="checkbox-label">Correct polarity</span>
         </div>
         <div class="checkbox-item">
-            <span class="checkbox-box {% if distribution_board_verification.confirmed_phase_sequence %}checked{% endif %}">{% if distribution_board_verification.confirmed_phase_sequence %}&#10003;{% endif %}</span>
+            <span class="checkbox-box {% if board.phase_sequence_confirmed %}checked{% endif %}">{% if board.phase_sequence_confirmed %}&#10003;{% endif %}</span>
             <span class="checkbox-label">Phase sequence</span>
         </div>
         <div class="checkbox-item" style="margin-left: 8px">
-            <span class="checkbox-box {% if distribution_board_verification.spd_operational_status %}checked{% endif %}">{% if distribution_board_verification.spd_operational_status %}&#10003;{% endif %}</span>
+            <span class="checkbox-box {% if board.spd_operational %}checked{% endif %}">{% if board.spd_operational %}&#10003;{% endif %}</span>
             <span class="checkbox-label">SPD Operational status confirmed</span>
         </div>
         <div class="checkbox-item">
-            <span class="checkbox-box {% if distribution_board_verification.spd_na %}checked{% endif %}">{% if distribution_board_verification.spd_na %}&#10003;{% endif %}</span>
+            <span class="checkbox-box {% if board.spd_na %}checked{% endif %}">{% if board.spd_na %}&#10003;{% endif %}</span>
             <span class="checkbox-label">SPD N/A</span>
         </div>
     </div>
+    {% endfor %}
 </div>
 
 <!-- Test Instruments -->
@@ -1819,7 +1841,7 @@
     <div class="form-grid" style="margin-top: 2px">
         <div class="form-row">
             <div class="form-label">Test Notes</div>
-            <div class="form-value" style="min-height: 24px">{{ test_information.test_notes }}</div>
+            <div class="form-value">{{ test_information.test_notes }}</div>
         </div>
     </div>
     {% endif %}
@@ -2241,7 +2263,13 @@
     </div>
     <div class="observation-card-body">
         <div class="observation-classification">
-            {% if observation.defect_code == "C1" %}
+            {% if observation.defect_code == "unsatisfactory" %}
+            <span class="classification-badge unsatisfactory">UNSATISFACTORY</span>
+            {% elsif observation.defect_code == "limitation" %}
+            <span class="classification-badge limitation">LIMITATION</span>
+            {% elsif observation.defect_code == "not-applicable" %}
+            <span class="classification-badge na">NOT APPLICABLE</span>
+            {% elsif observation.defect_code == "C1" %}
             <span class="classification-badge c1">C1 - DANGER PRESENT</span>
             {% elsif observation.defect_code == "C2" %}
             <span class="classification-badge c2">C2 - POTENTIALLY DANGEROUS</span>

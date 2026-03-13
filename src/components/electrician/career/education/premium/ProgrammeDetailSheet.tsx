@@ -4,11 +4,10 @@
  */
 
 import { useState, useRef } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { Drawer, DrawerContent, DrawerClose } from '@/components/ui/drawer';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { ScrollArea } from '@/components/ui/scroll-area';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { cn } from '@/lib/utils';
 import {
@@ -61,16 +60,16 @@ const Section = ({
 
   return (
     <Collapsible open={isOpen} onOpenChange={setIsOpen}>
-      <CollapsibleTrigger className="w-full flex items-center justify-between p-4 bg-white/5 rounded-xl border border-white/10 hover:bg-white/10 transition-colors">
-        <div className="flex items-center gap-3">
-          <div className="w-8 h-8 rounded-lg bg-purple-500/10 flex items-center justify-center">
-            <Icon className="h-4 w-4 text-purple-400" />
+      <CollapsibleTrigger className="w-full flex items-center justify-between p-3.5 bg-white/[0.04] rounded-xl border border-white/[0.08] hover:bg-white/[0.06] transition-colors touch-manipulation">
+        <div className="flex items-center gap-2.5">
+          <div className="w-7 h-7 rounded-lg bg-elec-yellow/10 flex items-center justify-center">
+            <Icon className="h-3.5 w-3.5 text-elec-yellow" />
           </div>
-          <span className="font-medium text-white">{title}</span>
+          <span className="font-medium text-white text-sm">{title}</span>
         </div>
         <ChevronDown
           className={cn(
-            'h-5 w-5 text-white transition-transform duration-200',
+            'h-4 w-4 text-white transition-transform duration-200',
             isOpen && 'rotate-180'
           )}
         />
@@ -79,7 +78,7 @@ const Section = ({
         <motion.div
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
-          className="px-4 py-3 mt-2"
+          className="px-3.5 py-3 mt-1.5"
         >
           {children}
         </motion.div>
@@ -87,25 +86,6 @@ const Section = ({
     </Collapsible>
   );
 };
-
-// Stat item component
-const StatItem = ({
-  icon: Icon,
-  label,
-  value,
-  iconColor = 'text-purple-400',
-}: {
-  icon: typeof Star;
-  label: string;
-  value: string | number;
-  iconColor?: string;
-}) => (
-  <div className="bg-white/5 rounded-xl p-3 text-center border border-white/5">
-    <Icon className={cn('h-5 w-5 mx-auto mb-1', iconColor)} />
-    <div className="text-sm font-semibold text-white">{value}</div>
-    <div className="text-[10px] text-white uppercase">{label}</div>
-  </div>
-);
 
 // Category image fallbacks
 const getCategoryImage = (category: string) => {
@@ -158,8 +138,8 @@ const ProgrammeDetailSheet = ({
           text: `Check out this programme: ${programme.title} at ${programme.institution}`,
           url: programme.courseUrl || window.location.href,
         });
-      } catch (error) {
-        // User cancelled or error
+      } catch {
+        // User cancelled
       }
     }
   };
@@ -170,7 +150,7 @@ const ProgrammeDetailSheet = ({
         {/* Custom scroll area with parallax */}
         <div ref={scrollRef} onScroll={handleScroll} className="h-full overflow-y-auto">
           {/* Hero Image with Parallax */}
-          <div className="relative h-56 sm:h-64 overflow-hidden">
+          <div className="relative h-52 sm:h-60 overflow-hidden">
             <motion.img
               src={programme.imageUrl || getCategoryImage(programme.category)}
               alt={programme.title}
@@ -185,77 +165,85 @@ const ProgrammeDetailSheet = ({
             <div className="absolute inset-0 bg-gradient-to-t from-background via-background/60 to-transparent" />
 
             {/* Close button */}
-            <DrawerClose className="absolute top-4 right-4 h-10 w-10 rounded-full bg-black/50 backdrop-blur-sm flex items-center justify-center hover:bg-black/70 transition-colors">
-              <X className="h-5 w-5 text-white" />
+            <DrawerClose className="absolute top-3 right-3 h-9 w-9 rounded-full bg-black/50 backdrop-blur-sm flex items-center justify-center hover:bg-black/70 transition-colors touch-manipulation">
+              <X className="h-4 w-4 text-white" />
             </DrawerClose>
 
             {/* Badges */}
-            <div className="absolute top-4 left-4 flex gap-2">
-              <Badge className="bg-purple-500/80 text-white border-purple-500/80 backdrop-blur-sm">
+            <div className="absolute top-3 left-3 flex gap-1.5">
+              <Badge className="bg-elec-yellow/90 text-elec-dark border-elec-yellow/90 backdrop-blur-sm text-xs font-semibold">
                 {programme.category}
               </Badge>
-              <Badge className="bg-white/20 text-white border-white/20 backdrop-blur-sm">
+              <Badge className="bg-white/20 text-white border-white/20 backdrop-blur-sm text-xs">
                 {programme.level}
               </Badge>
             </div>
 
             {/* Title overlay */}
-            <div className="absolute bottom-4 left-4 right-4">
-              <h1 className="text-xl sm:text-2xl font-bold text-white leading-tight">
+            <div className="absolute bottom-3 left-3 right-3">
+              <h1 className="text-lg sm:text-xl font-bold text-white leading-tight">
                 {programme.title}
               </h1>
-              <p className="text-purple-300 font-medium mt-1">{programme.institution}</p>
+              <p className="text-elec-yellow font-medium text-sm mt-1">{programme.institution}</p>
             </div>
           </div>
 
           {/* Content */}
-          <div className="p-4 space-y-4 pb-28">
-            {/* Stats Grid */}
+          <div className="px-4 py-4 space-y-4 pb-28">
+            {/* Stats — 2x2 grid on mobile, clean and readable */}
             <motion.div
               variants={fadeUpVariants}
               initial="initial"
               animate="animate"
-              className="grid grid-cols-4 gap-2"
+              className="grid grid-cols-2 gap-2"
             >
-              <StatItem
-                icon={Star}
-                label="Rating"
-                value={(programme.rating || 0).toFixed(1)}
-                iconColor="text-yellow-400"
-              />
-              <StatItem
-                icon={TrendingUp}
-                label="Employed"
-                value={`${programme.employmentRate || 0}%`}
-                iconColor="text-green-400"
-              />
-              <StatItem
-                icon={Clock}
-                label="Duration"
-                value={programme.duration}
-                iconColor="text-blue-400"
-              />
-              <StatItem
-                icon={BookOpen}
-                label="Mode"
-                value={programme.studyMode}
-                iconColor="text-purple-400"
-              />
+              <div className="bg-white/[0.04] rounded-xl p-3 border border-white/[0.06]">
+                <div className="flex items-center gap-2 mb-1">
+                  <Star className="h-3.5 w-3.5 text-amber-400" />
+                  <span className="text-[11px] text-white uppercase tracking-wide">Rating</span>
+                </div>
+                <span className="text-lg font-bold text-white">
+                  {(programme.rating || 0).toFixed(1)}
+                </span>
+              </div>
+              <div className="bg-white/[0.04] rounded-xl p-3 border border-white/[0.06]">
+                <div className="flex items-center gap-2 mb-1">
+                  <TrendingUp className="h-3.5 w-3.5 text-emerald-400" />
+                  <span className="text-[11px] text-white uppercase tracking-wide">Employed</span>
+                </div>
+                <span className="text-lg font-bold text-white">
+                  {programme.employmentRate || 0}%
+                </span>
+              </div>
+              <div className="bg-white/[0.04] rounded-xl p-3 border border-white/[0.06]">
+                <div className="flex items-center gap-2 mb-1">
+                  <Clock className="h-3.5 w-3.5 text-blue-400" />
+                  <span className="text-[11px] text-white uppercase tracking-wide">Duration</span>
+                </div>
+                <span className="text-sm font-semibold text-white">{programme.duration}</span>
+              </div>
+              <div className="bg-white/[0.04] rounded-xl p-3 border border-white/[0.06]">
+                <div className="flex items-center gap-2 mb-1">
+                  <BookOpen className="h-3.5 w-3.5 text-elec-yellow" />
+                  <span className="text-[11px] text-white uppercase tracking-wide">Mode</span>
+                </div>
+                <span className="text-sm font-semibold text-white">{programme.studyMode}</span>
+              </div>
             </motion.div>
 
             {/* Quick Info */}
             <div className="flex flex-wrap gap-2">
               {programme.locations.length > 0 && (
-                <Badge variant="outline" className="bg-white/5 border-white/10">
+                <Badge variant="outline" className="bg-white/[0.04] border-white/10 text-white">
                   <MapPin className="h-3 w-3 mr-1" />
                   {programme.locations[0]}
                   {programme.locations.length > 1 && ` +${programme.locations.length - 1}`}
                 </Badge>
               )}
-              {programme.nextIntakes && programme.nextIntakes.length > 0 && (
-                <Badge variant="outline" className="bg-white/5 border-white/10">
+              {programme.nextIntake && (
+                <Badge variant="outline" className="bg-white/[0.04] border-white/10 text-white">
                   <Calendar className="h-3 w-3 mr-1" />
-                  Next: {programme.nextIntakes[0]}
+                  {programme.nextIntake}
                 </Badge>
               )}
             </div>
@@ -265,57 +253,57 @@ const ProgrammeDetailSheet = ({
               {onBookmark && (
                 <Button
                   variant="outline"
-                  size="sm"
                   onClick={() => onBookmark(programme.id)}
                   className={cn(
-                    'flex-1 border-white/20 hover:bg-white/10',
-                    isBookmarked && 'bg-elec-yellow/10 border-elec-yellow/30 text-elec-yellow'
+                    'flex-1 h-10 border-white/15 hover:bg-white/10 text-white hover:text-white rounded-xl touch-manipulation',
+                    isBookmarked &&
+                      'bg-elec-yellow/10 border-elec-yellow/30 text-elec-yellow hover:text-elec-yellow'
                   )}
                 >
-                  <Bookmark className={cn('h-4 w-4 mr-2', isBookmarked && 'fill-current')} />
+                  <Bookmark className={cn('h-4 w-4 mr-1.5', isBookmarked && 'fill-current')} />
                   {isBookmarked ? 'Saved' : 'Save'}
                 </Button>
               )}
               {onAddToCompare && (
                 <Button
                   variant="outline"
-                  size="sm"
                   onClick={() => onAddToCompare(programme)}
                   className={cn(
-                    'flex-1 border-white/20 hover:bg-white/10',
-                    isInCompare && 'bg-purple-500/10 border-purple-500/30 text-purple-400'
+                    'flex-1 h-10 border-white/15 hover:bg-white/10 text-white hover:text-white rounded-xl touch-manipulation',
+                    isInCompare &&
+                      'bg-elec-yellow/10 border-elec-yellow/30 text-elec-yellow hover:text-elec-yellow'
                   )}
                 >
-                  <GitCompare className="h-4 w-4 mr-2" />
+                  <GitCompare className="h-4 w-4 mr-1.5" />
                   {isInCompare ? 'Added' : 'Compare'}
                 </Button>
               )}
               <Button
                 variant="outline"
-                size="sm"
+                size="icon"
                 onClick={handleShare}
-                className="border-white/20 hover:bg-white/10"
+                className="h-10 w-10 border-white/15 hover:bg-white/10 text-white hover:text-white rounded-xl touch-manipulation"
               >
                 <Share2 className="h-4 w-4" />
               </Button>
             </div>
 
             {/* Collapsible Sections */}
-            <div className="space-y-3">
+            <div className="space-y-2.5">
               {/* Overview */}
               <Section title="Programme Overview" icon={BookOpen} defaultOpen>
-                <p className="text-white leading-relaxed">{programme.description}</p>
+                <p className="text-white text-sm leading-relaxed">{programme.description}</p>
               </Section>
 
               {/* Key Topics */}
               {programme.keyTopics && programme.keyTopics.length > 0 && (
                 <Section title="Key Topics" icon={Award}>
-                  <div className="flex flex-wrap gap-2">
+                  <div className="flex flex-wrap gap-1.5">
                     {programme.keyTopics.map((topic, index) => (
                       <Badge
                         key={index}
                         variant="outline"
-                        className="bg-purple-500/10 border-purple-500/30 text-purple-300"
+                        className="bg-elec-yellow/10 border-elec-yellow/20 text-elec-yellow text-xs"
                       >
                         {topic}
                       </Badge>
@@ -329,8 +317,8 @@ const ProgrammeDetailSheet = ({
                 <Section title="Entry Requirements" icon={GraduationCap}>
                   <ul className="space-y-2">
                     {programme.entryRequirements.map((req, index) => (
-                      <li key={index} className="flex items-start gap-2 text-white">
-                        <ChevronRight className="h-4 w-4 mt-0.5 text-purple-400 flex-shrink-0" />
+                      <li key={index} className="flex items-start gap-2 text-sm text-white">
+                        <ChevronRight className="h-3.5 w-3.5 mt-0.5 text-elec-yellow flex-shrink-0" />
                         <span>{req}</span>
                       </li>
                     ))}
@@ -340,28 +328,30 @@ const ProgrammeDetailSheet = ({
 
               {/* Funding & Fees */}
               <Section title="Funding & Fees" icon={PoundSterling}>
-                <div className="space-y-3">
-                  <div className="flex items-center justify-between py-2 border-b border-white/10">
-                    <span className="text-white">Tuition Fees</span>
-                    <span className="font-semibold text-white">{programme.tuitionFees}</span>
+                <div className="space-y-2.5">
+                  <div className="flex items-center justify-between py-2 border-b border-white/[0.06]">
+                    <span className="text-sm text-white">Tuition Fees</span>
+                    <span className="text-sm font-semibold text-white">
+                      {programme.tuitionFees}
+                    </span>
                   </div>
                   {programme.averageStartingSalary && (
-                    <div className="flex items-center justify-between py-2 border-b border-white/10">
-                      <span className="text-white">Avg Starting Salary</span>
-                      <span className="font-semibold text-green-400">
+                    <div className="flex items-center justify-between py-2 border-b border-white/[0.06]">
+                      <span className="text-sm text-white">Avg Starting Salary</span>
+                      <span className="text-sm font-semibold text-emerald-400">
                         {programme.averageStartingSalary}
                       </span>
                     </div>
                   )}
                   {programme.fundingOptions && programme.fundingOptions.length > 0 && (
-                    <div className="pt-2">
-                      <p className="text-sm text-white mb-2">Funding Options:</p>
-                      <div className="flex flex-wrap gap-2">
+                    <div className="pt-1">
+                      <p className="text-xs text-white mb-2">Funding Options:</p>
+                      <div className="flex flex-wrap gap-1.5">
                         {programme.fundingOptions.map((option, index) => (
                           <Badge
                             key={index}
                             variant="outline"
-                            className="bg-green-500/10 border-green-500/30 text-green-300"
+                            className="bg-emerald-500/10 border-emerald-500/20 text-emerald-400 text-xs"
                           >
                             {option}
                           </Badge>
@@ -372,16 +362,32 @@ const ProgrammeDetailSheet = ({
                 </div>
               </Section>
 
-              {/* Career Outcomes */}
-              {programme.careerOutcomes && programme.careerOutcomes.length > 0 && (
-                <Section title="Career Outcomes" icon={Users}>
+              {/* Progression Options */}
+              {programme.progressionOptions && programme.progressionOptions.length > 0 && (
+                <Section title="Progression Options" icon={TrendingUp}>
                   <ul className="space-y-2">
-                    {programme.careerOutcomes.map((outcome, index) => (
-                      <li key={index} className="flex items-start gap-2 text-white">
-                        <TrendingUp className="h-4 w-4 mt-0.5 text-green-400 flex-shrink-0" />
-                        <span>{outcome}</span>
+                    {programme.progressionOptions.map((option, index) => (
+                      <li key={index} className="flex items-start gap-2 text-sm text-white">
+                        <ChevronRight className="h-3.5 w-3.5 mt-0.5 text-emerald-400 flex-shrink-0" />
+                        <span>{option}</span>
                       </li>
                     ))}
+                  </ul>
+                </Section>
+              )}
+
+              {/* Career Outcomes */}
+              {programme.careerOutcomes && (programme.careerOutcomes as string[]).length > 0 && (
+                <Section title="Career Outcomes" icon={Users}>
+                  <ul className="space-y-2">
+                    {(programme.careerOutcomes as string[]).map(
+                      (outcome: string, index: number) => (
+                        <li key={index} className="flex items-start gap-2 text-sm text-white">
+                          <TrendingUp className="h-3.5 w-3.5 mt-0.5 text-emerald-400 flex-shrink-0" />
+                          <span>{outcome}</span>
+                        </li>
+                      )
+                    )}
                   </ul>
                 </Section>
               )}
@@ -389,29 +395,31 @@ const ProgrammeDetailSheet = ({
 
             {/* Similar Programmes */}
             {similarProgrammes.length > 0 && onSelectSimilar && (
-              <div className="pt-4">
-                <h3 className="font-semibold text-white mb-3">Similar Programmes</h3>
-                <div className="flex gap-3 overflow-x-auto scrollbar-hide -mx-4 px-4 pb-2">
+              <div className="pt-2">
+                <h3 className="text-xs font-medium text-white uppercase tracking-wider mb-2.5">
+                  Similar Programmes
+                </h3>
+                <div className="flex gap-2.5 overflow-x-auto scrollbar-hide -mx-4 px-4 pb-2">
                   {similarProgrammes.slice(0, 4).map((similar) => (
                     <button
                       key={similar.id}
                       onClick={() => onSelectSimilar(similar)}
-                      className="min-w-[200px] bg-white/5 rounded-xl border border-white/10 overflow-hidden hover:border-purple-500/30 transition-colors text-left"
+                      className="min-w-[180px] bg-white/[0.04] rounded-xl border border-white/[0.08] overflow-hidden hover:border-elec-yellow/30 transition-colors text-left touch-manipulation active:scale-[0.98]"
                     >
-                      <div className="h-24 overflow-hidden">
+                      <div className="h-20 overflow-hidden">
                         <img
                           src={similar.imageUrl || getCategoryImage(similar.category)}
                           alt=""
                           className="w-full h-full object-cover"
                         />
                       </div>
-                      <div className="p-3">
-                        <h4 className="text-sm font-medium text-white line-clamp-1">
+                      <div className="p-2.5">
+                        <h4 className="text-xs font-medium text-white line-clamp-1">
                           {similar.title}
                         </h4>
-                        <p className="text-xs text-purple-400 mt-0.5">{similar.institution}</p>
-                        <div className="flex items-center gap-2 mt-2 text-xs text-white">
-                          <Star className="h-3 w-3 fill-yellow-400 text-yellow-400" />
+                        <p className="text-[11px] text-elec-yellow mt-0.5">{similar.institution}</p>
+                        <div className="flex items-center gap-1.5 mt-1.5 text-[11px] text-white">
+                          <Star className="h-3 w-3 fill-amber-400 text-amber-400" />
                           {similar.rating?.toFixed(1)}
                         </div>
                       </div>
@@ -424,11 +432,14 @@ const ProgrammeDetailSheet = ({
         </div>
 
         {/* Sticky CTA Bar */}
-        <div className="absolute bottom-0 left-0 right-0 p-4 bg-background/95 backdrop-blur-lg border-t border-white/10 safe-area-inset-bottom">
-          <div className="flex gap-3">
+        <div
+          className="absolute bottom-0 left-0 right-0 p-4 bg-elec-dark/95 backdrop-blur-xl border-t border-white/10"
+          style={{ paddingBottom: 'max(1rem, env(safe-area-inset-bottom))' }}
+        >
+          <div className="flex gap-2.5">
             <Button
               variant="outline"
-              className="flex-1 border-white/20 hover:bg-white/10"
+              className="flex-1 h-12 border-white/15 hover:bg-white/10 text-white hover:text-white rounded-xl touch-manipulation font-medium"
               onClick={() => {
                 if (programme.courseUrl) {
                   window.open(programme.courseUrl, '_blank');
@@ -438,7 +449,7 @@ const ProgrammeDetailSheet = ({
               Enquire
             </Button>
             <Button
-              className="flex-1 bg-purple-500 text-white hover:bg-purple-600"
+              className="flex-1 h-12 bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90 rounded-xl touch-manipulation font-semibold shadow-lg shadow-elec-yellow/15"
               onClick={() => {
                 if (programme.courseUrl) {
                   window.open(programme.courseUrl, '_blank');

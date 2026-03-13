@@ -32,6 +32,7 @@ import { useToast } from '@/hooks/use-toast';
 interface InspectionPhotoGalleryProps {
   photos: InspectionPhoto[];
   onDeletePhoto: (photoId: string) => void;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   onScanPhoto: (photoId: string) => Promise<any>;
   isScanning: string | null;
   inspectorContext?: {
@@ -135,6 +136,7 @@ const InspectionPhotoGallery: React.FC<InspectionPhotoGalleryProps> = ({
 
   if (photos.length === 0) return null;
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const getAgreementBadge = (aiAnalysis: any, inspectorClassification?: string) => {
     if (!aiAnalysis?.qualityAssurance) return null;
 
@@ -167,93 +169,86 @@ const InspectionPhotoGallery: React.FC<InspectionPhotoGalleryProps> = ({
 
   return (
     <>
-      <div className="space-y-3">
-        {photos.map((photo) => (
-          <div key={photo.id} className="space-y-2">
-            {/* Photo Thumbnail */}
-            <div className="relative">
+      <div className="space-y-2">
+        {photos.map((photo, idx) => (
+          <div
+            key={photo.id}
+            className="rounded-xl bg-white/[0.03] border border-white/[0.08] overflow-hidden"
+          >
+            {/* Photo row: thumbnail + info + actions */}
+            <div className="flex items-center gap-3 p-3">
+              {/* Thumbnail — tap to view full */}
               <div
-                className="relative group w-32 sm:w-40 md:w-48 aspect-square rounded-lg overflow-hidden bg-muted border-2 border-border cursor-pointer hover:border-primary transition-all"
+                className="relative flex-shrink-0 w-16 h-16 rounded-lg overflow-hidden bg-muted cursor-pointer active:scale-[0.97] transition-transform touch-manipulation"
                 onClick={() => setSelectedPhoto(photo)}
               >
                 <img
                   src={photo.thumbnailUrl}
-                  alt="Inspection evidence"
+                  alt="Evidence photo"
                   className="w-full h-full object-cover"
                   loading="lazy"
                 />
-
-                {/* AI Agreement Badge Overlay */}
-                {photo.aiAnalysis && (
-                  <div className="absolute top-2 right-2">
-                    {getAgreementBadge(photo.aiAnalysis, photo.faultCode)}
-                  </div>
-                )}
-
-                {/* Zoom Indicator */}
-                <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center pointer-events-none">
-                  <ZoomIn className="h-8 w-8 text-foreground" />
-                </div>
+                <div className="absolute inset-0 bg-black/0 active:bg-black/20 transition-colors" />
               </div>
 
-              {/* Action Buttons */}
-              <div className="absolute top-1 left-1 flex gap-1">
-                {!photo.aiAnalysis && (
-                  <Button
-                    size="icon"
-                    variant="secondary"
-                    className="h-7 w-7 bg-primary/90 hover:bg-primary text-primary-foreground"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      handleScanClick(photo);
-                    }}
-                    disabled={isScanning === photo.id}
-                  >
-                    {isScanning === photo.id ? (
-                      <Loader2 className="h-3 w-3 animate-spin" />
-                    ) : (
-                      <Sparkles className="h-3 w-3" />
-                    )}
-                  </Button>
+              {/* Info */}
+              <div className="flex-1 min-w-0">
+                <p className="text-sm font-medium text-white truncate">Photo {idx + 1}</p>
+                {photo.aiAnalysis ? (
+                  <div className="mt-1">{getAgreementBadge(photo.aiAnalysis, photo.faultCode)}</div>
+                ) : (
+                  <p className="text-xs text-white mt-0.5">Tap to view full size</p>
                 )}
-                <Button
-                  size="icon"
-                  variant="secondary"
-                  className="h-7 w-7 bg-elec-yellow/90 hover:bg-elec-yellow text-black"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    handleSendToPhotoDocs(photo);
-                  }}
-                  disabled={sendingToDocsId === photo.id}
-                  title="Send to Photo Documentation"
+              </div>
+
+              {/* Delete */}
+              <button
+                onClick={() => onDeletePhoto(photo.id)}
+                className="flex-shrink-0 h-10 w-10 flex items-center justify-center rounded-lg text-red-400 hover:bg-red-500/10 transition-colors touch-manipulation"
+              >
+                <X className="w-4 h-4" />
+              </button>
+            </div>
+
+            {/* Action buttons row */}
+            <div className="flex gap-2 px-3 pb-3">
+              {!photo.aiAnalysis && (
+                <button
+                  onClick={() => handleScanClick(photo)}
+                  disabled={isScanning === photo.id}
+                  className="flex-1 h-10 rounded-lg text-xs font-medium flex items-center justify-center gap-1.5 bg-white/[0.05] text-white border border-white/[0.08] hover:bg-white/[0.08] transition-colors touch-manipulation disabled:opacity-50"
                 >
-                  {sendingToDocsId === photo.id ? (
-                    <Loader2 className="h-3 w-3 animate-spin" />
+                  {isScanning === photo.id ? (
+                    <Loader2 className="h-3.5 w-3.5 animate-spin" />
                   ) : (
-                    <FolderOutput className="h-3 w-3" />
+                    <Sparkles className="h-3.5 w-3.5" />
                   )}
-                </Button>
-                <Button
-                  size="icon"
-                  variant="destructive"
-                  className="h-7 w-7"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    onDeletePhoto(photo.id);
-                  }}
-                >
-                  <X className="h-3 w-3" />
-                </Button>
-              </div>
+                  AI Scan
+                </button>
+              )}
+              <button
+                onClick={() => handleSendToPhotoDocs(photo)}
+                disabled={sendingToDocsId === photo.id}
+                className="flex-1 h-10 rounded-lg text-xs font-medium flex items-center justify-center gap-1.5 bg-elec-yellow/10 text-elec-yellow border border-elec-yellow/20 hover:bg-elec-yellow/15 transition-colors touch-manipulation disabled:opacity-50"
+              >
+                {sendingToDocsId === photo.id ? (
+                  <Loader2 className="h-3.5 w-3.5 animate-spin" />
+                ) : (
+                  <FolderOutput className="h-3.5 w-3.5" />
+                )}
+                Save to Docs
+              </button>
             </div>
 
             {/* Inline AI Summary Card */}
             {photo.aiAnalysis && (
-              <AIAnalysisSummaryCard
-                aiAnalysis={photo.aiAnalysis}
-                inspectorClassification={photo.faultCode}
-                onViewFullAnalysis={() => setSelectedPhoto(photo)}
-              />
+              <div className="px-3 pb-3">
+                <AIAnalysisSummaryCard
+                  aiAnalysis={photo.aiAnalysis}
+                  inspectorClassification={photo.faultCode}
+                  onViewFullAnalysis={() => setSelectedPhoto(photo)}
+                />
+              </div>
             )}
           </div>
         ))}
@@ -279,7 +274,7 @@ const InspectionPhotoGallery: React.FC<InspectionPhotoGalleryProps> = ({
         <DialogContent className="max-w-2xl sm:max-w-4xl max-h-[85vh] sm:max-h-[90vh] overflow-y-auto">
           <DialogHeader>
             <DialogTitle>Photo Evidence & AI Quality Assurance</DialogTitle>
-            <p className="text-sm text-muted-foreground">BS7671:2018+A3:2024 Compliance Check</p>
+            <p className="text-sm text-white">BS7671:2018+A3:2024 Compliance Check</p>
           </DialogHeader>
           {selectedPhoto && (
             <div className="space-y-4">
@@ -330,16 +325,14 @@ const InspectionPhotoGallery: React.FC<InspectionPhotoGalleryProps> = ({
                         <CardContent className="space-y-3">
                           <div className="flex items-center gap-4">
                             <div className="flex-1">
-                              <p className="text-xs text-muted-foreground mb-1.5">
-                                Inspector classified as:
-                              </p>
+                              <p className="text-xs text-white mb-1.5">Inspector classified as:</p>
                               <Badge variant="outline" className="text-sm">
                                 {selectedPhoto.faultCode || 'Unknown'}
                               </Badge>
                             </div>
                             <ArrowRight className="h-5 w-5 text-elec-yellow shrink-0" />
                             <div className="flex-1">
-                              <p className="text-xs text-muted-foreground mb-1.5">AI suggests:</p>
+                              <p className="text-xs text-white mb-1.5">AI suggests:</p>
                               <Badge className="text-sm bg-elec-yellow text-black">
                                 {selectedPhoto.aiAnalysis.qualityAssurance.suggestedClassification}
                               </Badge>
@@ -347,7 +340,7 @@ const InspectionPhotoGallery: React.FC<InspectionPhotoGalleryProps> = ({
                           </div>
                           {selectedPhoto.aiAnalysis.qualityAssurance.reasonForChallenge && (
                             <div className="pt-3 border-t border-elec-yellow/20">
-                              <p className="text-xs text-muted-foreground mb-1">Reasoning:</p>
+                              <p className="text-xs text-white mb-1">Reasoning:</p>
                               <p className="text-sm leading-relaxed">
                                 {selectedPhoto.aiAnalysis.qualityAssurance.reasonForChallenge}
                               </p>
@@ -363,6 +356,7 @@ const InspectionPhotoGallery: React.FC<InspectionPhotoGalleryProps> = ({
                       <div className="space-y-2">
                         <h4 className="font-semibold text-sm">Regulation References</h4>
                         <div className="space-y-2">
+                          {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
                           {selectedPhoto.aiAnalysis.regulations.map((reg: any, idx: number) => (
                             <Card key={idx}>
                               <CardContent className="p-3">
@@ -374,7 +368,7 @@ const InspectionPhotoGallery: React.FC<InspectionPhotoGalleryProps> = ({
                                     {reg.title && (
                                       <p className="font-medium text-sm">{reg.title}</p>
                                     )}
-                                    <p className="text-xs text-muted-foreground">
+                                    <p className="text-xs text-white">
                                       <strong>Requirement:</strong> {reg.requirement}
                                     </p>
                                     <p className="text-xs">
@@ -405,7 +399,7 @@ const InspectionPhotoGallery: React.FC<InspectionPhotoGalleryProps> = ({
                               <ul className="text-xs space-y-1">
                                 {selectedPhoto.aiAnalysis.observations.safetyFeatures.map(
                                   (item: string, i: number) => (
-                                    <li key={i} className="text-muted-foreground">
+                                    <li key={i} className="text-white">
                                       ✓ {item}
                                     </li>
                                   )
@@ -422,7 +416,7 @@ const InspectionPhotoGallery: React.FC<InspectionPhotoGalleryProps> = ({
                               <ul className="text-xs space-y-1">
                                 {selectedPhoto.aiAnalysis.observations.concerns.map(
                                   (item: string, i: number) => (
-                                    <li key={i} className="text-muted-foreground">
+                                    <li key={i} className="text-white">
                                       ⚠️ {item}
                                     </li>
                                   )
@@ -433,13 +427,13 @@ const InspectionPhotoGallery: React.FC<InspectionPhotoGalleryProps> = ({
 
                           {selectedPhoto.aiAnalysis.observations?.cannotVerify?.length > 0 && (
                             <div>
-                              <h5 className="text-xs font-medium text-muted-foreground mb-1">
+                              <h5 className="text-xs font-medium text-white mb-1">
                                 🔍 Cannot Verify from Photo
                               </h5>
                               <ul className="text-xs space-y-1">
                                 {selectedPhoto.aiAnalysis.observations.cannotVerify.map(
                                   (item: string, i: number) => (
-                                    <li key={i} className="text-muted-foreground">
+                                    <li key={i} className="text-white">
                                       • {item}
                                     </li>
                                   )
@@ -470,7 +464,7 @@ const InspectionPhotoGallery: React.FC<InspectionPhotoGalleryProps> = ({
                               <ul className="text-xs space-y-1">
                                 {selectedPhoto.aiAnalysis.inspectorGuidance.additionalChecks.map(
                                   (check: string, i: number) => (
-                                    <li key={i} className="text-muted-foreground">
+                                    <li key={i} className="text-white">
                                       • {check}
                                     </li>
                                   )
@@ -486,7 +480,7 @@ const InspectionPhotoGallery: React.FC<InspectionPhotoGalleryProps> = ({
                               <ul className="text-xs space-y-1">
                                 {selectedPhoto.aiAnalysis.inspectorGuidance.questionsToConsider.map(
                                   (q: string, i: number) => (
-                                    <li key={i} className="text-muted-foreground">
+                                    <li key={i} className="text-white">
                                       • {q}
                                     </li>
                                   )

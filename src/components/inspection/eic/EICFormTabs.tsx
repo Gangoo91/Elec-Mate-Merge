@@ -9,7 +9,6 @@ import EICDeclarations from './EICDeclarations';
 import EICTabNavigation from './EICTabNavigation';
 import EICCertificateActions from './EICCertificateActions';
 import EICObservationsSection from './EICObservationsSection';
-import EICValidationPanel from './EICValidationPanel';
 import { EICObservation } from '@/hooks/useEICObservations';
 import { Home, Search, TestTube, FileText } from 'lucide-react';
 
@@ -17,7 +16,9 @@ interface EICFormTabsProps {
   currentTab: EICTabValue;
   onTabChange: (value: string) => void;
   canAccessTab: (tabId: EICTabValue) => boolean;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   formData: any;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   onUpdate: (field: string, value: any) => void;
   tabNavigationProps: {
     currentTab: EICTabValue;
@@ -45,6 +46,7 @@ interface EICFormTabsProps {
     observations: EICObservation[];
     reportId: string;
     onAddObservation: () => string;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     onUpdateObservation: (id: string, field: keyof EICObservation, value: any) => void;
     onRemoveObservation: (id: string) => void;
     onAutoCreateObservation: (inspectionItem: {
@@ -129,7 +131,6 @@ const EICFormTabs: React.FC<EICFormTabsProps> = ({
       content: (
         <div className="space-y-6">
           <EICDeclarations formData={formData} onUpdate={onUpdate} />
-          <EICValidationPanel formData={formData} />
           <EICTabNavigation {...tabNavigationProps} />
           <EICCertificateActions
             formData={formData}
