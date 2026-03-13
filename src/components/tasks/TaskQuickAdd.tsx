@@ -104,116 +104,113 @@ export function TaskQuickAdd({ onQuickSave, onExpandForm, onShowTemplates }: Tas
   const hasText = title.trim().length > 0;
 
   return (
-    <div className="space-y-2.5">
-      {/* Card container for input */}
-      <div
-        className={cn(
-          'rounded-2xl border transition-colors',
-          isListening
-            ? 'border-red-400/40 bg-red-500/[0.06]'
-            : hasText
-              ? 'border-yellow-500/30 bg-yellow-500/[0.04]'
-              : 'border-white/[0.08] bg-white/[0.03]'
-        )}
-      >
-        {/* Input row */}
-        <div className="flex items-center gap-2 p-2">
-          {/* Leading icon */}
-          <div
+    <div
+      className={cn(
+        'rounded-2xl border transition-colors',
+        isListening
+          ? 'border-red-400/40 bg-red-500/[0.06]'
+          : hasText
+            ? 'border-yellow-500/30 bg-yellow-500/[0.04]'
+            : 'border-white/[0.08] bg-white/[0.03]'
+      )}
+    >
+      {/* Input row */}
+      <div className="flex items-center gap-2 p-2">
+        {/* Leading icon */}
+        <div
+          className={cn(
+            'w-10 h-10 rounded-xl flex items-center justify-center shrink-0 transition-colors',
+            hasText ? 'bg-gradient-to-br from-yellow-400/20 to-amber-500/20' : 'bg-white/[0.06]'
+          )}
+        >
+          <PenLine
             className={cn(
-              'w-10 h-10 rounded-xl flex items-center justify-center shrink-0 transition-colors',
-              hasText ? 'bg-gradient-to-br from-yellow-400/20 to-amber-500/20' : 'bg-white/[0.06]'
+              'h-4.5 w-4.5 transition-colors',
+              hasText ? 'text-yellow-400' : 'text-white'
             )}
-          >
-            <PenLine
-              className={cn(
-                'h-4.5 w-4.5 transition-colors',
-                hasText ? 'text-yellow-400' : 'text-white'
-              )}
-            />
-          </div>
-
-          {/* Input */}
-          <input
-            ref={inputRef}
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-            onKeyDown={handleKeyDown}
-            placeholder="Add a task..."
-            className="flex-1 h-10 bg-transparent text-[15px] text-white placeholder:text-white outline-none touch-manipulation"
           />
-
-          {/* Right actions */}
-          <div className="flex items-center gap-1 shrink-0">
-            {/* Mic button */}
-            {speechSupported && (
-              <button
-                type="button"
-                onClick={isListening ? stopListening : startListening}
-                className={cn(
-                  'w-9 h-9 flex items-center justify-center rounded-xl touch-manipulation transition-all',
-                  isListening
-                    ? 'bg-red-500 text-white animate-pulse'
-                    : 'bg-white/[0.06] text-white active:bg-white/10'
-                )}
-              >
-                {isListening ? <MicOff className="h-4 w-4" /> : <Mic className="h-4 w-4" />}
-              </button>
-            )}
-
-            {/* Send button — appears when text entered */}
-            <AnimatePresence>
-              {hasText && (
-                <motion.button
-                  type="button"
-                  initial={{ scale: 0, opacity: 0 }}
-                  animate={{ scale: 1, opacity: 1 }}
-                  exit={{ scale: 0, opacity: 0 }}
-                  transition={{ type: 'spring', stiffness: 500, damping: 30 }}
-                  onClick={handleSubmit}
-                  disabled={saving}
-                  className="w-10 h-10 flex items-center justify-center rounded-xl bg-gradient-to-r from-yellow-400 to-amber-500 text-black touch-manipulation active:scale-[0.95] disabled:opacity-50"
-                >
-                  {saving ? (
-                    <div className="w-4 h-4 border-2 border-black/30 border-t-black rounded-full animate-spin" />
-                  ) : (
-                    <Send className="h-4 w-4" />
-                  )}
-                </motion.button>
-              )}
-            </AnimatePresence>
-          </div>
         </div>
 
-        {/* Listening indicator bar */}
-        {isListening && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            className="px-4 pb-2 flex items-center gap-2"
-          >
-            <div className="flex gap-0.5">
-              {[0, 1, 2, 3, 4].map((i) => (
-                <motion.div
-                  key={i}
-                  className="w-1 bg-red-400 rounded-full"
-                  animate={{ height: [4, 12, 4] }}
-                  transition={{
-                    repeat: Infinity,
-                    duration: 0.6,
-                    delay: i * 0.1,
-                    ease: 'easeInOut',
-                  }}
-                />
-              ))}
-            </div>
-            <span className="text-[12px] text-red-400 font-medium">Listening...</span>
-          </motion.div>
-        )}
+        {/* Input */}
+        <input
+          ref={inputRef}
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+          onKeyDown={handleKeyDown}
+          placeholder="Add a task..."
+          className="flex-1 h-10 bg-transparent text-[15px] text-white placeholder:text-white outline-none touch-manipulation"
+        />
+
+        {/* Right actions */}
+        <div className="flex items-center gap-1 shrink-0">
+          {/* Mic button */}
+          {speechSupported && (
+            <button
+              type="button"
+              onClick={isListening ? stopListening : startListening}
+              className={cn(
+                'w-9 h-9 flex items-center justify-center rounded-xl touch-manipulation transition-all',
+                isListening
+                  ? 'bg-red-500 text-white animate-pulse'
+                  : 'bg-white/[0.06] text-white active:bg-white/10'
+              )}
+            >
+              {isListening ? <MicOff className="h-4 w-4" /> : <Mic className="h-4 w-4" />}
+            </button>
+          )}
+
+          {/* Send button — appears when text entered */}
+          <AnimatePresence>
+            {hasText && (
+              <motion.button
+                type="button"
+                initial={{ scale: 0, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                exit={{ scale: 0, opacity: 0 }}
+                transition={{ type: 'spring', stiffness: 500, damping: 30 }}
+                onClick={handleSubmit}
+                disabled={saving}
+                className="w-10 h-10 flex items-center justify-center rounded-xl bg-gradient-to-r from-yellow-400 to-amber-500 text-black touch-manipulation active:scale-[0.95] disabled:opacity-50"
+              >
+                {saving ? (
+                  <div className="w-4 h-4 border-2 border-black/30 border-t-black rounded-full animate-spin" />
+                ) : (
+                  <Send className="h-4 w-4" />
+                )}
+              </motion.button>
+            )}
+          </AnimatePresence>
+        </div>
       </div>
 
-      {/* Action pills */}
-      <div className="flex items-center gap-2">
+      {/* Listening indicator bar */}
+      {isListening && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          className="px-4 pb-2 flex items-center gap-2"
+        >
+          <div className="flex gap-0.5">
+            {[0, 1, 2, 3, 4].map((i) => (
+              <motion.div
+                key={i}
+                className="w-1 bg-red-400 rounded-full"
+                animate={{ height: [4, 12, 4] }}
+                transition={{
+                  repeat: Infinity,
+                  duration: 0.6,
+                  delay: i * 0.1,
+                  ease: 'easeInOut',
+                }}
+              />
+            ))}
+          </div>
+          <span className="text-[12px] text-red-400 font-medium">Listening...</span>
+        </motion.div>
+      )}
+
+      {/* Action pills — inside card */}
+      <div className="flex items-center gap-2 px-2 pb-2 pt-1.5 border-t border-white/[0.06]">
         <button
           type="button"
           onClick={onExpandForm}

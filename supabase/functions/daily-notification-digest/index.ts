@@ -552,30 +552,67 @@ serve(async (req: Request): Promise<Response> => {
           return !prefCat || !disabledCategories.has(prefCat);
         });
 
-        for (const alert of filteredAlerts) {
-          // Deduplicate — skip if already sent today
-          const sent = await alreadySent(supabase, userId, alert.type, alert.referenceId);
+        // ── Send ONE consolidated push instead of many individual ones ──
+        // Find the morning briefing (always first if it exists)
+        const briefing = filteredAlerts.find((a) => a.type === 'morning_briefing');
+        const detailAlerts = filteredAlerts.filter((a) => a.type !== 'morning_briefing');
+
+        if (briefing) {
+          const sent = await alreadySent(supabase, userId, briefing.type, briefing.referenceId);
           if (sent) {
-            totalSkipped++;
-            continue;
+            totalSkipped += filteredAlerts.length;
+          } else {
+            // Build a detailed body from all individual alerts
+            const detailLines = detailAlerts.map((a) => `${a.title}: ${a.body}`);
+            const consolidatedBody = detailLines.length > 0
+              ? detailLines.join('\n')
+              : briefing.body;
+
+            await sendPush(
+              supabaseUrl,
+              serviceKey,
+              userId,
+              briefing.title,
+              consolidatedBody,
+              briefing.pushType,
+              { ...briefing.data, alertCount: filteredAlerts.length }
+            );
+            await logPush(supabase, userId, briefing);
+            totalSent++;
+
+            // Log all individual alerts as sent (for dedup) without sending separate pushes
+            for (const alert of detailAlerts) {
+              const alertSent = await alreadySent(supabase, userId, alert.type, alert.referenceId);
+              if (!alertSent) {
+                await logPush(supabase, userId, alert);
+              }
+            }
           }
-
-          // Send push notification
-          await sendPush(
-            supabaseUrl,
-            serviceKey,
-            userId,
-            alert.title,
-            alert.body,
-            alert.pushType,
-            alert.data
-          );
-          await logPush(supabase, userId, alert);
-          totalSent++;
-
-          // Longer delay after briefing so it displays first; shorter for others
-          const delay = alert.type === 'morning_briefing' ? 2000 : 100;
-          await new Promise((r) => setTimeout(r, delay));
+        } else if (filteredAlerts.length > 0) {
+          // Edge case: no briefing but alerts exist (shouldn't happen, but be safe)
+          // Send just one summary
+          const first = filteredAlerts[0];
+          const sent = await alreadySent(supabase, userId, first.type, first.referenceId);
+          if (!sent) {
+            await sendPush(
+              supabaseUrl,
+              serviceKey,
+              userId,
+              first.title,
+              first.body,
+              first.pushType,
+              first.data
+            );
+            await logPush(supabase, userId, first);
+            totalSent++;
+          }
+          // Log rest as sent for dedup
+          for (const alert of filteredAlerts.slice(1)) {
+            const alertSent = await alreadySent(supabase, userId, alert.type, alert.referenceId);
+            if (!alertSent) {
+              await logPush(supabase, userId, alert);
+            }
+          }
         }
       } catch (userErr) {
         console.error(`[daily-digest] Error processing user ${userId}:`, userErr);

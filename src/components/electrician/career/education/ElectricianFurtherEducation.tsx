@@ -7,8 +7,12 @@
 
 import { PremiumEducationHub } from './premium';
 
-const ElectricianFurtherEducation = () => {
-  return <PremiumEducationHub />;
+interface ElectricianFurtherEducationProps {
+  onBack?: () => void;
+}
+
+const ElectricianFurtherEducation = ({ onBack }: ElectricianFurtherEducationProps) => {
+  return <PremiumEducationHub onBack={onBack} />;
 };
 
 export default ElectricianFurtherEducation;

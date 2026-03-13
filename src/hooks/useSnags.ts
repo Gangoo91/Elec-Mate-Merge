@@ -48,10 +48,24 @@ interface ProjectGroup {
   snags: Snag[];
 }
 
+export interface CreateSnagInput {
+  title: string;
+  details?: string;
+  priority: 'low' | 'normal' | 'high' | 'urgent';
+  location?: string;
+  projectId?: string;
+}
+
+export interface ProjectOption {
+  id: string;
+  title: string;
+}
+
 export const useSnags = () => {
   const { toast } = useToast();
   const [snags, setSnags] = useState<Snag[]>([]);
   const [projects, setProjects] = useState<ProjectGroup[]>([]);
+  const [projectList, setProjectList] = useState<ProjectOption[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const loadingRef = useRef(false);
 
@@ -103,34 +117,52 @@ export const useSnags = () => {
         }
       }
 
+      // Fetch all user projects for the add-snag project picker
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const { data: allProjects } = await (supabase as any)
+        .from('spark_projects')
+        .select('id, title')
+        .eq('user_id', user.id)
+        .order('title', { ascending: true });
+
+      if (allProjects) {
+        setProjectList(
+          allProjects.map((p: { id: string; title: string }) => ({ id: p.id, title: p.title }))
+        );
+      }
+
       // Fetch photos linked to snag tasks via photo_analyses
       const snagIds = rows.map((r) => r.id);
       const photoMap: Record<string, SnagPhoto[]> = {};
 
       if (snagIds.length > 0) {
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        const { data: photoData } = await (supabase as any)
-          .from('photo_analyses')
-          .select('id, image_url, analysis_result, linked_task_id')
-          .in('linked_task_id', snagIds);
+        try {
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          const { data: photoData } = await (supabase as any)
+            .from('photo_analyses')
+            .select('id, image_url, analysis_result, linked_task_id')
+            .in('linked_task_id', snagIds);
 
-        if (photoData) {
-          for (const p of photoData as {
-            id: string;
-            image_url: string;
-            analysis_result?: Record<string, unknown> | null;
-            linked_task_id: string;
-          }[]) {
-            const taskId = p.linked_task_id;
-            if (!photoMap[taskId]) photoMap[taskId] = [];
-            photoMap[taskId].push({
-              id: p.id,
-              url: p.image_url,
-              caption: (p.analysis_result as Record<string, unknown>)?.caption as
-                | string
-                | undefined,
-            });
+          if (photoData) {
+            for (const p of photoData as {
+              id: string;
+              image_url: string;
+              analysis_result?: Record<string, unknown> | null;
+              linked_task_id: string;
+            }[]) {
+              const taskId = p.linked_task_id;
+              if (!photoMap[taskId]) photoMap[taskId] = [];
+              photoMap[taskId].push({
+                id: p.id,
+                url: p.image_url,
+                caption: (p.analysis_result as Record<string, unknown>)?.caption as
+                  | string
+                  | undefined,
+              });
+            }
           }
+        } catch {
+          // photo_analyses query may fail if column doesn't exist — non-critical
         }
       }
 
@@ -251,6 +283,35 @@ export const useSnags = () => {
     }
   };
 
+  const createSnag = async (input: CreateSnagInput) => {
+    try {
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+      if (!user) throw new Error('Not authenticated');
+
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const { error } = await (supabase as any).from('spark_tasks').insert({
+        user_id: user.id,
+        title: input.title,
+        details: input.details || null,
+        status: 'open',
+        priority: input.priority,
+        location: input.location || null,
+        project_id: input.projectId || null,
+        tags: ['snagging'],
+      });
+
+      if (error) throw error;
+
+      toast({ title: 'Snag added', description: input.title });
+      loadSnags();
+    } catch (error) {
+      console.error('Failed to create snag:', error);
+      toast({ title: 'Failed to add snag', variant: 'destructive' });
+    }
+  };
+
   const counts: SnagCounts = {
     open: snags.filter((s) => s.status === 'open').length,
     resolved: snags.filter((s) => s.status === 'done').length,
@@ -262,8 +323,10 @@ export const useSnags = () => {
   return {
     snags,
     projects,
+    projectList,
     isLoading,
     counts,
+    createSnag,
     resolveSnag,
     refreshSnags: loadSnags,
   };

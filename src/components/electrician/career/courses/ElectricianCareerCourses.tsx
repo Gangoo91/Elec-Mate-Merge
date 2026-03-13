@@ -197,13 +197,12 @@ const ElectricianCareerCourses = () => {
   }
 
   return (
-    <div className="space-y-4 sm:space-y-6">
+    <div className="space-y-2 sm:space-y-4">
       {/* Hero with Search + Location + Category Pills */}
       <ModernCoursesHero
         analytics={analytics}
         searchQuery={searchQuery}
         onSearchChange={handleSearchChange}
-        onFundingCalculator={handleShowFundingCalculator}
         onRefreshData={forceRefresh}
         isRefreshing={isRefreshing}
         locationQuery={locationQuery}
@@ -212,13 +211,14 @@ const ElectricianCareerCourses = () => {
         selectedCategory={selectedCategory}
       />
 
-      {/* Filters with Category Pills */}
+      {/* Filters Toolbar */}
       <ModernCoursesFilters
         courses={allCourses}
         filters={filters}
         onFiltersChange={handleFiltersChange}
         onReset={handleReset}
         resultCount={filteredCourses.length}
+        onFundingCalculator={handleShowFundingCalculator}
       />
 
       {/* Course Grid */}

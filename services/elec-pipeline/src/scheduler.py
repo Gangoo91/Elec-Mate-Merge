@@ -29,7 +29,7 @@ def create_scheduler() -> AsyncIOScheduler:
     scheduler = AsyncIOScheduler(timezone="Europe/London")
 
     # Lazy imports to avoid circular deps
-    from src.pipelines.courses import run_courses_api_pipeline, run_courses_scrape_pipeline
+    from src.pipelines.courses import run_courses_api_pipeline
     from src.pipelines.deals import run_coupons_pipeline, run_deals_pipeline
     from src.pipelines.jobs import run_jobs_api_pipeline, run_jobs_scrape_pipeline
     from src.pipelines.materials import (
@@ -68,6 +68,15 @@ def create_scheduler() -> AsyncIOScheduler:
         CronTrigger(hour=6, minute=30),
         id="jobs_scrape",
         name="Jobs scrape (Phase 2)",
+        misfire_grace_time=3600,
+    )
+
+    # Courses — APIs — daily 05:00
+    scheduler.add_job(
+        run_courses_api_pipeline,
+        CronTrigger(hour=5, minute=0),
+        id="courses_api",
+        name="Courses API aggregate",
         misfire_grace_time=3600,
     )
 
@@ -122,24 +131,6 @@ def create_scheduler() -> AsyncIOScheduler:
         id="price_history",
         name="Price history snapshot",
         misfire_grace_time=7200,
-    )
-
-    # Courses — APIs — Monday 05:00
-    scheduler.add_job(
-        run_courses_api_pipeline,
-        CronTrigger(day_of_week="mon", hour=5, minute=0),
-        id="courses_api",
-        name="Courses API aggregate",
-        misfire_grace_time=3600,
-    )
-
-    # Courses — Scrape (Phase 3) — Monday 06:00
-    scheduler.add_job(
-        run_courses_scrape_pipeline,
-        CronTrigger(day_of_week="mon", hour=6, minute=0),
-        id="courses_scrape",
-        name="Courses scrape (Phase 3)",
-        misfire_grace_time=3600,
     )
 
     # -----------------------------------------------------------------------

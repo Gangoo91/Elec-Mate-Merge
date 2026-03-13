@@ -1,7 +1,11 @@
 import ElectricianFurtherEducation from './education/ElectricianFurtherEducation';
 
-const EnhancedFurtherEducation = () => {
-  return <ElectricianFurtherEducation />;
+interface EnhancedFurtherEducationProps {
+  onBack?: () => void;
+}
+
+const EnhancedFurtherEducation = ({ onBack }: EnhancedFurtherEducationProps) => {
+  return <ElectricianFurtherEducation onBack={onBack} />;
 };
 
 export default EnhancedFurtherEducation;

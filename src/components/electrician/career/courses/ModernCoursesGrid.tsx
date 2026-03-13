@@ -16,7 +16,7 @@ const containerVariants = {
   visible: {
     opacity: 1,
     transition: {
-      staggerChildren: 0.02,
+      staggerChildren: 0.01,
     },
   },
 };
@@ -29,21 +29,34 @@ const ModernCoursesGrid = ({
 }: ModernCoursesGridProps) => {
   const filteredCourses = excludeId ? courses.filter((course) => course.id !== excludeId) : courses;
 
-  // Loading State
+  // Loading State — horizontal skeletons on mobile, vertical on desktop
   if (isLoading) {
     return (
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+      <div className="flex flex-col -mx-4 sm:mx-0 sm:grid sm:grid-cols-2 lg:grid-cols-3 sm:gap-4">
         {Array.from({ length: 6 }).map((_, idx) => (
           <div
             key={idx}
-            className="rounded-xl border border-white/10 bg-elec-gray/50 overflow-hidden animate-pulse"
+            className="border-b border-white/10 sm:border sm:rounded-xl bg-elec-gray/50 overflow-hidden animate-pulse"
           >
-            <div className="h-36 bg-white/5" />
-            <div className="p-4 space-y-3">
-              <div className="h-3 bg-white/10 rounded w-1/4" />
-              <div className="h-4 bg-white/10 rounded w-3/4" />
-              <div className="h-3 bg-white/10 rounded w-1/2" />
-              <div className="h-8 bg-white/5 rounded mt-3" />
+            {/* Mobile: horizontal skeleton */}
+            <div className="flex gap-3 p-3 sm:hidden">
+              <div className="w-20 h-20 rounded-lg bg-white/5 flex-shrink-0" />
+              <div className="flex-1 space-y-2">
+                <div className="h-4 bg-white/10 rounded w-3/4" />
+                <div className="h-3 bg-white/10 rounded w-1/2" />
+                <div className="h-3 bg-white/10 rounded w-2/3" />
+                <div className="h-3 bg-white/10 rounded w-1/4" />
+              </div>
+            </div>
+            {/* Desktop: vertical skeleton */}
+            <div className="hidden sm:block">
+              <div className="h-32 bg-white/5" />
+              <div className="p-4 space-y-3">
+                <div className="h-3 bg-white/10 rounded w-1/4" />
+                <div className="h-4 bg-white/10 rounded w-3/4" />
+                <div className="h-3 bg-white/10 rounded w-1/2" />
+                <div className="h-8 bg-white/5 rounded mt-3" />
+              </div>
             </div>
           </div>
         ))}
@@ -84,7 +97,7 @@ const ModernCoursesGrid = ({
       variants={containerVariants}
       initial="hidden"
       animate="visible"
-      className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"
+      className="flex flex-col -mx-4 sm:mx-0 sm:grid sm:grid-cols-2 lg:grid-cols-3 sm:gap-4"
     >
       {filteredCourses.map((course, index) => (
         <PremiumCourseCard

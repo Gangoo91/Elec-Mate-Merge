@@ -20,7 +20,6 @@ import {
   Loader2,
   Shield,
   Building2,
-  IdCard,
 } from 'lucide-react';
 
 // Premium components
@@ -32,7 +31,6 @@ import EmployerJobDetailSheet from './EmployerJobDetailSheet';
 import JobSearchSheet from './JobSearchSheet';
 import SavedJobsTab from './SavedJobsTab';
 import JobCardSkeleton from './JobCardSkeleton';
-import QuickCVSheet from './QuickCVSheet';
 import JobMarketInsights from './JobMarketInsights';
 
 // Hooks
@@ -61,9 +59,9 @@ const TABS: Tab[] = [
 
 // Default filters
 const DEFAULT_FILTERS: JobFilters = {
+  category: null,
   jobTypes: [],
   salaryRanges: [],
-  experience: [],
   sources: [],
 };
 
@@ -127,7 +125,6 @@ const PremiumJobsHub = () => {
   const [isDetailOpen, setIsDetailOpen] = useState(false);
   const [isEmployerDetailOpen, setIsEmployerDetailOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
-  const [isCVSheetOpen, setIsCVSheetOpen] = useState(false);
   const [isApplyDialogOpen, setIsApplyDialogOpen] = useState(false);
   const [jobToApply, setJobToApply] = useState<InternalVacancy | null>(null);
 
@@ -176,26 +173,34 @@ const PremiumJobsHub = () => {
       return posted.toDateString() === today.toDateString();
     }).length;
 
-    // Calculate average salary
-    const salaries = allJobs.map((job) => parseSalary(job.salary)).filter((s) => s > 0);
-    const avgSalary =
-      salaries.length > 0
-        ? Math.round(salaries.reduce((a, b) => a + b, 0) / salaries.length)
-        : 35000;
-
     return {
       totalJobs,
       newToday,
       employerJobCount,
       externalJobCount,
-      avgSalary: `£${avgSalary.toLocaleString()}`,
-      matchPercentage: 85,
     };
   }, [employerJobs, externalJobs, employerJobCount, externalJobCount]);
+
+  // Category keyword map
+  const categoryKeywords: Record<string, string> = {
+    electrician: 'electric',
+    solar: 'solar',
+    ev: 'ev',
+    apprentice: 'apprentice',
+    'site-manager': 'site manager',
+  };
 
   // Filter jobs
   const filteredJobs = useMemo(() => {
     return jobs.filter((job) => {
+      // Category filter (keyword match on title)
+      if (filters.category) {
+        const keyword = categoryKeywords[filters.category];
+        if (keyword && !job.title.toLowerCase().includes(keyword)) {
+          return false;
+        }
+      }
+
       // Job type filter
       if (filters.jobTypes.length > 0) {
         const jobType = job.type.toLowerCase();
@@ -294,10 +299,6 @@ const PremiumJobsHub = () => {
     setIsSearchOpen(true);
   };
 
-  const handleUploadCV = () => {
-    navigate('/electrician/cv-builder');
-  };
-
   const handleApplyDialogClose = () => {
     setIsApplyDialogOpen(false);
     setJobToApply(null);
@@ -312,37 +313,39 @@ const PremiumJobsHub = () => {
     return Array.from(sources);
   }, [employerJobs, externalJobs]);
 
+  // Shared filter logic
+  const applyCommonFilters = (job: UnifiedJobListing): boolean => {
+    // Category filter
+    if (filters.category) {
+      const keyword = categoryKeywords[filters.category];
+      if (keyword && !job.title.toLowerCase().includes(keyword)) {
+        return false;
+      }
+    }
+    // Job type filter
+    if (filters.jobTypes.length > 0) {
+      const jobType = job.type.toLowerCase();
+      if (!filters.jobTypes.some((t) => jobType.includes(t.toLowerCase()))) {
+        return false;
+      }
+    }
+    // Salary range filter
+    if (filters.salaryRanges.length > 0) {
+      if (!filters.salaryRanges.some((range) => salaryMatchesRange(job.salary, range))) {
+        return false;
+      }
+    }
+    return true;
+  };
+
   // Filter employer and external jobs separately
   const filteredEmployerJobs = useMemo(() => {
-    return employerJobs.filter((job) => {
-      if (filters.jobTypes.length > 0) {
-        const jobType = job.type.toLowerCase();
-        if (!filters.jobTypes.some((t) => jobType.includes(t.toLowerCase()))) {
-          return false;
-        }
-      }
-      if (filters.salaryRanges.length > 0) {
-        if (!filters.salaryRanges.some((range) => salaryMatchesRange(job.salary, range))) {
-          return false;
-        }
-      }
-      return true;
-    });
+    return employerJobs.filter(applyCommonFilters);
   }, [employerJobs, filters]);
 
   const filteredExternalJobs = useMemo(() => {
     return externalJobs.filter((job) => {
-      if (filters.jobTypes.length > 0) {
-        const jobType = job.type.toLowerCase();
-        if (!filters.jobTypes.some((t) => jobType.includes(t.toLowerCase()))) {
-          return false;
-        }
-      }
-      if (filters.salaryRanges.length > 0) {
-        if (!filters.salaryRanges.some((range) => salaryMatchesRange(job.salary, range))) {
-          return false;
-        }
-      }
+      if (!applyCommonFilters(job)) return false;
       if (filters.sources.length > 0) {
         if (!filters.sources.includes(job.source || '')) {
           return false;
@@ -379,25 +382,11 @@ const PremiumJobsHub = () => {
           </div>
 
           <div className="flex items-center gap-2">
-            <div className="relative">
-              <Button
-                variant="ghost"
-                size="icon"
-                onClick={() => setIsCVSheetOpen(true)}
-                disabled
-                className="h-10 w-10 rounded-xl text-cyan-400/50 cursor-not-allowed"
-              >
-                <IdCard className="h-5 w-5" />
-              </Button>
-              <Badge className="absolute -top-1 -right-1 px-1 py-0.5 text-[9px] bg-amber-500 text-black border-0 whitespace-nowrap">
-                Soon
-              </Badge>
-            </div>
             <Button
               variant="ghost"
               size="icon"
               onClick={() => setIsSearchOpen(true)}
-              className="h-10 w-10 rounded-xl text-white hover:text-white hover:bg-white/10"
+              className="h-10 w-10 rounded-xl text-white hover:text-white hover:bg-white/10 touch-manipulation"
             >
               <Search className="h-5 w-5" />
             </Button>
@@ -406,7 +395,7 @@ const PremiumJobsHub = () => {
               size="icon"
               onClick={handleRefresh}
               disabled={isRefreshing}
-              className="h-10 w-10 rounded-xl text-white hover:text-white hover:bg-white/10"
+              className="h-10 w-10 rounded-xl text-white hover:text-white hover:bg-white/10 touch-manipulation"
             >
               {isRefreshing ? (
                 <Loader2 className="h-5 w-5 animate-spin" />
@@ -429,7 +418,7 @@ const PremiumJobsHub = () => {
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id)}
                 className={cn(
-                  'flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl text-sm font-medium transition-all',
+                  'flex-1 flex items-center justify-center gap-2 h-11 min-h-[44px] rounded-xl text-sm font-medium transition-all touch-manipulation',
                   isActive
                     ? 'bg-blue-500/20 text-blue-300 border border-blue-500/30'
                     : 'text-white hover:text-white hover:bg-white/5'
@@ -457,20 +446,14 @@ const PremiumJobsHub = () => {
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: 20 }}
-              className="px-3 sm:px-4 py-3 space-y-3"
+              className="px-2 sm:px-4 py-3 space-y-3"
             >
               {/* Hero Card */}
               <JobsHeroCard
                 totalJobs={stats.totalJobs}
                 newJobsToday={stats.newToday}
-                avgSalary={stats.avgSalary}
-                matchPercentage={stats.matchPercentage}
                 isSearching={isLoading}
-                lastUpdated={isLoading ? undefined : 'Just now'}
                 onSmartSearch={handleSmartSearch}
-                onUploadCV={handleUploadCV}
-                onRefresh={handleRefresh}
-                isRefreshing={isRefreshing}
               />
 
               {/* Filters */}
@@ -701,9 +684,6 @@ const PremiumJobsHub = () => {
         initialQuery={searchQuery}
         initialLocation={searchLocation}
       />
-
-      {/* Quick CV Sheet */}
-      <QuickCVSheet isOpen={isCVSheetOpen} onClose={() => setIsCVSheetOpen(false)} />
 
       {/* Apply Dialog for Employer Jobs */}
       <ApplyToVacancyDialog

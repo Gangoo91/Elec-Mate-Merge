@@ -144,6 +144,51 @@ def upsert_jobs(jobs: list[dict], source: str, region: str) -> int:
 
 
 # ---------------------------------------------------------------------------
+# Job listings (individual rows for frontend)
+# ---------------------------------------------------------------------------
+
+
+def upsert_job_listings(jobs: list[dict]) -> int:
+    """Upsert individual job rows into job_listings table for the frontend.
+
+    Maps pipeline fields to job_listings columns. Deduplicates on (title, company).
+    """
+    if not jobs:
+        return 0
+
+    client = get_client()
+    now = datetime.now(timezone.utc).isoformat()
+
+    rows = []
+    for j in jobs:
+        rows.append(
+            {
+                "title": j.get("title", ""),
+                "company": j.get("company", "Unknown"),
+                "location": j.get("location", "UK"),
+                "salary": j.get("salary"),
+                "type": j.get("employment_type") or j.get("type") or "Full-time",
+                "description": (j.get("description") or "")[:5000],
+                "external_url": j.get("apply_url") or j.get("url"),
+                "posted_date": j.get("date_posted") or now[:10],
+                "source": j.get("source", "reed"),
+                "updated_at": now,
+            }
+        )
+
+    total = 0
+    for i in range(0, len(rows), settings.batch_size):
+        batch = rows[i : i + settings.batch_size]
+        client.table("job_listings").upsert(
+            batch, on_conflict="title,company"
+        ).execute()
+        total += len(batch)
+
+    log.info("job_listings_upserted", count=total)
+    return total
+
+
+# ---------------------------------------------------------------------------
 # Courses cache
 # ---------------------------------------------------------------------------
 
@@ -165,6 +210,124 @@ def upsert_courses(courses: list[dict], source: str, search_query: str) -> int:
     client.table("live_course_cache").insert(row).execute()
     log.info("courses_cached", source=source, query=search_query, count=len(courses))
     return len(courses)
+
+
+# Category keywords — order matters (first match wins)
+_CATEGORY_RULES: list[tuple[list[str], str]] = [
+    (["18th edition", "bs 7671"], "18th Edition"),
+    (["2391", "inspection", "testing"], "Inspection & Testing"),
+    (["ev charging", "electric vehicle"], "EV Charging"),
+    (["fire alarm", "bs 5839"], "Fire Alarm Systems"),
+    (["pat testing"], "PAT Testing"),
+    (["solar", " pv"], "Solar PV Installation"),
+    (["2365", "2357", "installation", "am2"], "Electrical Installation"),
+    (["heat pump", "renewable"], "Renewable Energy"),
+    (["emergency lighting"], "Emergency Lighting"),
+    (["part p"], "Building Regulations"),
+    (["smart home", "bms"], "Smart Home / BMS"),
+    (["battery storage"], "Battery Storage"),
+    (["first aid", "health and safety"], "Health & Safety"),
+    (["jib", "gold card"], "JIB Card"),
+]
+
+
+def _infer_category(title: str) -> str:
+    """Infer a training category from the course title."""
+    t = title.lower()
+    for keywords, category in _CATEGORY_RULES:
+        if any(kw in t for kw in keywords):
+            return category
+    return "Electrical"
+
+
+def upsert_training_courses(courses: list[dict]) -> int:
+    """Write courses into training_courses table (what the frontend reads).
+
+    Uses delete-then-insert per source since there is no unique constraint
+    on title+provider. Deduplicates by (title, provider) before inserting.
+    """
+    if not courses:
+        return 0
+
+    client = get_client()
+    now = datetime.now(timezone.utc).isoformat()
+
+    # Deduplicate by (title, provider) — keep first occurrence
+    seen: set[tuple[str, str]] = set()
+    unique: list[dict] = []
+    for c in courses:
+        key = (
+            (c.get("title") or "").lower().strip(),
+            (c.get("provider") or "Unknown").lower().strip(),
+        )
+        if key not in seen:
+            seen.add(key)
+            unique.append(c)
+
+    # Build rows
+    rows: list[dict[str, Any]] = []
+    for c in unique:
+        title = c.get("title") or ""
+        location = c.get("location") or ""
+        is_online = any(
+            kw in location.lower() for kw in ("online", "distance")
+        )
+        price_raw = c.get("price")
+        price_str = None
+        price_pence = None
+        if price_raw is not None:
+            try:
+                price_float = float(price_raw)
+                price_str = f"\u00a3{price_float:,.2f}"
+                price_pence = int(price_float * 100)
+            except (ValueError, TypeError):
+                pass
+
+        dates_raw = c.get("dates")
+        next_dates = None
+        if dates_raw:
+            next_dates = [dates_raw] if isinstance(dates_raw, str) else dates_raw
+
+        rows.append(
+            {
+                "title": title,
+                "provider_name": c.get("provider") or "Unknown",
+                "category": _infer_category(title),
+                "description": c.get("entry_requirements"),
+                "duration": c.get("duration"),
+                "price": price_str,
+                "price_numeric": price_pence,
+                "level": c.get("qualification"),
+                "format": "Online" if is_online else "Classroom",
+                "venue_city": location if not is_online else None,
+                "is_online": is_online,
+                "next_dates": next_dates,
+                "external_url": c.get("url") or "",
+                "booking_url": c.get("url"),
+                "source": c.get("source", "unknown"),
+                "rating": None,
+                "scraped_at": now,
+                "updated_at": now,
+            }
+        )
+
+    if not rows:
+        return 0
+
+    # Delete existing rows per source, then batch insert
+    sources = {r["source"] for r in rows}
+    for src in sources:
+        client.table("training_courses").delete().eq("source", src).execute()
+        log.info("training_courses_deleted", source=src)
+
+    total = 0
+    for i in range(0, len(rows), settings.batch_size):
+        batch = rows[i : i + settings.batch_size]
+        client.table("training_courses").insert(batch).execute()
+        total += len(batch)
+
+    log.info("training_courses_upserted", count=total, sources=list(sources))
+    return total
 
 
 # ---------------------------------------------------------------------------

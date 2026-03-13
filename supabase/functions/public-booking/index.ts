@@ -356,6 +356,29 @@ async function handleBookSlot(req: Request, supabase: ReturnType<typeof createCl
     /* non-critical */
   }
 
+  // In-app notification for the electrician
+  try {
+    await supabase.from('user_notifications').insert({
+      user_id: electrician_id,
+      type: 'booking_received',
+      title: `New Booking: ${client_name}`,
+      message: `${client_name} booked ${formattedDate} at ${start_time}${job_description ? ` — ${job_description}` : ''}`,
+      link: '/electrician?tab=calendar',
+      metadata: {
+        customer_id: customerId,
+        event_id: event.id,
+        client_name,
+        client_phone,
+        client_email: client_email || null,
+        date,
+        start_time,
+      },
+      is_read: false,
+    });
+  } catch {
+    /* non-critical */
+  }
+
   return new Response(
     JSON.stringify({
       booking_id: event.id,

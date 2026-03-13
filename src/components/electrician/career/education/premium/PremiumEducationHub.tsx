@@ -350,7 +350,7 @@ const PremiumEducationHub = ({ onBack }: PremiumEducationHubProps) => {
               <div className="space-y-4">
                 <Button
                   onClick={() => setCompareDrawerOpen(true)}
-                  className="w-full bg-purple-500 hover:bg-purple-600"
+                  className="w-full bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90 font-semibold"
                 >
                   <GitCompare className="h-4 w-4 mr-2" />
                   View Comparison ({compareCount} programmes)
@@ -384,25 +384,25 @@ const PremiumEducationHub = ({ onBack }: PremiumEducationHubProps) => {
 
   return (
     <div className="min-h-screen bg-background pb-20">
-      {/* Sticky Header - Mobile Optimized */}
+      {/* Sticky Header */}
       <motion.header
         initial={{ y: -20, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
-        className="sticky top-0 z-40 bg-background/95 backdrop-blur-lg border-b border-white/10 safe-area-inset-top"
+        className="sticky top-0 z-40 bg-elec-dark/95 backdrop-blur-xl border-b border-white/10"
       >
-        <div className="flex items-center justify-between h-12 sm:h-14 px-3 sm:px-4">
-          {/* Left: Back button */}
+        <div className="flex items-center gap-2 h-12 px-3 sm:px-4">
+          {/* Back button */}
           {onBack && (
-            <Button variant="ghost" size="icon" onClick={onBack} className="h-9 w-9">
-              <ArrowLeft className="h-5 w-5" />
+            <Button variant="ghost" size="icon" onClick={onBack} className="h-9 w-9 flex-shrink-0 hover:bg-white/10 rounded-xl touch-manipulation">
+              <ArrowLeft className="h-5 w-5 text-white" />
             </Button>
           )}
 
-          {/* Center: Tab navigation */}
+          {/* Tab navigation — always shows labels */}
           <div className="flex-1 flex justify-center">
-            <div className="flex bg-white/5 rounded-full p-1">
+            <div className="flex bg-white/5 rounded-xl p-1 gap-0.5">
               {[
-                { id: 'explore' as TabType, label: 'Explore', icon: GraduationCap },
+                { id: 'explore' as TabType, label: 'Programmes', icon: GraduationCap },
                 {
                   id: 'saved' as TabType,
                   label: 'Saved',
@@ -420,45 +420,45 @@ const PremiumEducationHub = ({ onBack }: PremiumEducationHubProps) => {
                   key={tab.id}
                   onClick={() => setActiveTab(tab.id)}
                   className={cn(
-                    'relative flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm font-medium transition-all',
+                    'relative flex items-center gap-1.5 px-3 sm:px-4 py-2 rounded-lg text-sm font-medium transition-all touch-manipulation min-h-[36px]',
                     activeTab === tab.id
-                      ? 'bg-purple-500 text-white'
-                      : 'text-white hover:text-white'
+                      ? 'bg-elec-yellow text-elec-dark shadow-sm'
+                      : 'text-white hover:bg-white/5'
                   )}
                 >
                   <tab.icon className="h-4 w-4" />
-                  <span className="hidden sm:inline">{tab.label}</span>
+                  <span>{tab.label}</span>
                   {tab.count !== undefined && tab.count > 0 && (
-                    <Badge
+                    <span
                       className={cn(
-                        'h-5 min-w-[20px] px-1.5 text-[10px]',
+                        'flex h-5 min-w-[20px] items-center justify-center rounded-full px-1.5 text-[10px] font-bold',
                         activeTab === tab.id
-                          ? 'bg-white/20 text-white'
-                          : 'bg-purple-500/20 text-purple-400'
+                          ? 'bg-elec-dark/20 text-elec-dark'
+                          : 'bg-white/10 text-white'
                       )}
                     >
                       {tab.count}
-                    </Badge>
+                    </span>
                   )}
                 </button>
               ))}
             </div>
           </div>
 
-          {/* Right: Search button */}
+          {/* Search button */}
           <Button
             variant="ghost"
             size="icon"
             onClick={() => setSearchOpen(true)}
-            className="h-9 w-9"
+            className="h-9 w-9 flex-shrink-0 hover:bg-white/10 rounded-xl touch-manipulation bg-white/5 border border-white/10"
           >
-            <Search className="h-5 w-5" />
+            <Search className="h-4 w-4 text-white" />
           </Button>
         </div>
       </motion.header>
 
       {/* Main Content */}
-      <main className="px-4 py-6">
+      <main className="px-3 sm:px-4 py-4">
         <AnimatePresence mode="wait">{renderTabContent()}</AnimatePresence>
       </main>
 

@@ -99,6 +99,8 @@ const sourceColors: Record<JobSourceType, { bg: string; text: string }> = {
   totaljobs: { bg: 'bg-green-500/15', text: 'text-green-400' },
   cvlibrary: { bg: 'bg-teal-500/15', text: 'text-teal-400' },
   jobscouk: { bg: 'bg-cyan-500/15', text: 'text-cyan-400' },
+  adzuna: { bg: 'bg-orange-500/15', text: 'text-orange-400' },
+  gov_apprenticeships: { bg: 'bg-cyan-500/15', text: 'text-cyan-400' },
 };
 
 const sourceLabels: Record<JobSourceType, string> = {
@@ -108,6 +110,8 @@ const sourceLabels: Record<JobSourceType, string> = {
   totaljobs: 'TotalJobs',
   cvlibrary: 'CV Library',
   jobscouk: 'Jobs.co.uk',
+  adzuna: 'Adzuna',
+  gov_apprenticeships: 'Apprenticeships',
 };
 
 const UnifiedJobCard = ({
@@ -188,14 +192,6 @@ const UnifiedJobCard = ({
                 New
               </Badge>
             )}
-            <Badge
-              className={cn(
-                'text-[10px] font-medium px-2 py-0.5',
-                isEmployer ? 'bg-emerald-500/15 text-emerald-400' : `${colors.bg} ${colors.text}`
-              )}
-            >
-              {isEmployer ? 'Direct' : sourceLabels[job.source] || job.source}
-            </Badge>
           </div>
         </div>
 
@@ -212,6 +208,11 @@ const UnifiedJobCard = ({
           <span className="flex items-center gap-1 ml-auto">
             <Clock className="h-3.5 w-3.5" />
             {formatPostedDate(job.posted_date)}
+            {!isEmployer && (
+              <span className={cn('text-[10px] ml-1', colors.text)}>
+                via {sourceLabels[job.source] || job.source}
+              </span>
+            )}
           </span>
         </div>
 

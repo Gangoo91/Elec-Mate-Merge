@@ -167,7 +167,7 @@ const CareerProgression = () => {
       case 'courses':
         return <CareerCourses />;
       case 'education':
-        return <EnhancedFurtherEducation />;
+        return <EnhancedFurtherEducation onBack={handleBackToSections} />;
       case 'accreditation':
         return <ProfessionalAccreditation />;
       case 'cpd':
@@ -190,31 +190,31 @@ const CareerProgression = () => {
         <link rel="canonical" href="/electrician/career-progression" />
       </Helmet>
 
-      {/* Sticky Header */}
-      <header className="sticky top-0 z-40 bg-[#1a1a1a]/95 backdrop-blur-xl border-b border-white/10">
-        <div className="max-w-5xl mx-auto px-4 sm:px-6">
-          <div className="flex items-center h-14 sm:h-16">
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={() => (activeSection ? handleBackToSections() : navigate('/electrician'))}
-              className="text-white hover:text-white hover:bg-white/10 rounded-xl mr-3 h-11 w-11 touch-manipulation active:scale-[0.98]"
-            >
-              <ArrowLeft className="h-5 w-5" />
-            </Button>
-            <div className="flex-1">
-              <h1 className="text-lg sm:text-xl font-bold text-white">
-                {activeSection ? 'Career Progression' : 'Career Progression'}
-              </h1>
-              {activeSection && (
-                <p className="text-xs text-white hidden sm:block">
-                  {careerSections.find((s) => s.id === activeSection)?.title}
-                </p>
-              )}
+      {/* Sticky Header — hidden when education section has its own header */}
+      {activeSection !== 'education' && (
+        <header className="sticky top-0 z-40 bg-[#1a1a1a]/95 backdrop-blur-xl border-b border-white/10">
+          <div className="max-w-5xl mx-auto px-4 sm:px-6">
+            <div className="flex items-center h-14 sm:h-16">
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={() => (activeSection ? handleBackToSections() : navigate('/electrician'))}
+                className="text-white hover:text-white hover:bg-white/10 rounded-xl mr-3 h-11 w-11 touch-manipulation active:scale-[0.98]"
+              >
+                <ArrowLeft className="h-5 w-5" />
+              </Button>
+              <div className="flex-1">
+                <h1 className="text-lg sm:text-xl font-bold text-white">Career Progression</h1>
+                {activeSection && (
+                  <p className="text-xs text-white hidden sm:block">
+                    {careerSections.find((s) => s.id === activeSection)?.title}
+                  </p>
+                )}
+              </div>
             </div>
           </div>
-        </div>
-      </header>
+        </header>
+      )}
 
       {activeSection === null ? (
         <>
@@ -365,7 +365,9 @@ const CareerProgression = () => {
           </main>
         </>
       ) : (
-        <main className="max-w-5xl mx-auto px-4 sm:px-6 py-6">
+        <main className={cn(
+          activeSection === 'education' ? '' : 'max-w-5xl mx-auto px-4 sm:px-6 py-6'
+        )}>
           <motion.div
             initial={{ opacity: 0, y: 8 }}
             animate={{ opacity: 1, y: 0 }}

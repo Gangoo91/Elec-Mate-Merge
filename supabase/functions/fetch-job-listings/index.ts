@@ -89,7 +89,6 @@ Deno.serve(async (req) => {
       source: job.source || 'aggregated',
       expires_at: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString(), // 30 days from now
       is_remote: job.is_remote || false,
-      count: 1,
     }));
 
     logger.info('Inserting new jobs', { count: jobsToInsert.length });
@@ -101,7 +100,7 @@ Deno.serve(async (req) => {
           onConflict: 'title,company',
           ignoreDuplicates: false,
         })
-        .select('count'),
+        .select('id'),
       Timeouts.STANDARD,
       'job listings upsert'
     );

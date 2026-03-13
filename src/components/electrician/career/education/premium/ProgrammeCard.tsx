@@ -124,15 +124,15 @@ const ProgrammeCard = ({
       className={cn(
         'group relative bg-card/80 backdrop-blur-sm',
         'rounded-2xl border border-white/10 overflow-hidden cursor-pointer',
-        'hover:border-purple-500/40 transition-all duration-300',
-        'hover:shadow-2xl hover:shadow-purple-500/20',
+        'hover:border-elec-yellow/30 transition-all duration-300',
+        'hover:shadow-2xl hover:shadow-elec-yellow/10',
         'hover:-translate-y-1',
         'active:scale-[0.98]',
         className
       )}
     >
       {/* Subtle gradient overlay */}
-      <div className="absolute inset-0 bg-gradient-to-br from-purple-500/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" />
+      <div className="absolute inset-0 bg-gradient-to-br from-elec-yellow/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" />
 
       {/* Image section */}
       <div className="relative h-40 overflow-hidden">
@@ -149,7 +149,7 @@ const ProgrammeCard = ({
         <div className="absolute inset-0 bg-gradient-to-t from-background via-background/50 to-transparent" />
 
         {/* Glowing accent line at top */}
-        <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-transparent via-purple-500/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+        <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-transparent via-elec-yellow/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
 
         {/* Category badge - top left */}
         <Badge
@@ -223,16 +223,16 @@ const ProgrammeCard = ({
         </div>
 
         {/* Title */}
-        <h3 className="font-bold text-white line-clamp-2 leading-snug text-base group-hover:text-purple-200 transition-colors">
+        <h3 className="font-bold text-white line-clamp-2 leading-snug text-base group-hover:text-elec-yellow/90 transition-colors">
           {programme.title}
         </h3>
 
         {/* Institution with icon */}
         <div className="flex items-center gap-2">
-          <div className="w-6 h-6 rounded-full bg-purple-500/20 flex items-center justify-center flex-shrink-0">
-            <GraduationCap className="h-3.5 w-3.5 text-purple-400" />
+          <div className="w-6 h-6 rounded-full bg-elec-yellow/10 flex items-center justify-center flex-shrink-0">
+            <GraduationCap className="h-3.5 w-3.5 text-elec-yellow" />
           </div>
-          <p className="text-purple-400 text-sm font-medium line-clamp-1">
+          <p className="text-elec-yellow text-sm font-medium line-clamp-1">
             {programme.institution}
           </p>
         </div>
@@ -245,7 +245,7 @@ const ProgrammeCard = ({
               <MapPin className="h-3 w-3" />
               <span className="line-clamp-1 max-w-[100px]">{programme.locations[0]}</span>
               {programme.locations.length > 1 && (
-                <span className="text-purple-400 font-medium">
+                <span className="text-elec-yellow font-medium">
                   +{programme.locations.length - 1}
                 </span>
               )}
@@ -264,7 +264,7 @@ const ProgrammeCard = ({
             {/* Desktop button - hidden on mobile */}
             <Button
               size="sm"
-              className="hidden sm:flex h-10 px-4 bg-purple-500 hover:bg-purple-400 text-white font-medium shadow-lg shadow-purple-500/25 group-hover:shadow-purple-500/40 transition-all touch-manipulation active:scale-[0.95]"
+              className="hidden sm:flex h-10 px-4 bg-elec-yellow hover:bg-elec-yellow/90 text-elec-dark font-semibold shadow-lg shadow-elec-yellow/15 group-hover:shadow-elec-yellow/25 transition-all touch-manipulation active:scale-[0.95]"
               onClick={(e) => {
                 e.stopPropagation();
                 onSelect(programme);
@@ -277,7 +277,7 @@ const ProgrammeCard = ({
           {/* Full width button on mobile only */}
           <Button
             size="lg"
-            className="sm:hidden w-full h-12 bg-purple-500 hover:bg-purple-400 text-white font-semibold shadow-lg shadow-purple-500/25 touch-manipulation active:scale-[0.98]"
+            className="sm:hidden w-full h-12 bg-elec-yellow hover:bg-elec-yellow/90 text-elec-dark font-semibold shadow-lg shadow-elec-yellow/15 touch-manipulation active:scale-[0.98]"
             onClick={(e) => {
               e.stopPropagation();
               onSelect(programme);

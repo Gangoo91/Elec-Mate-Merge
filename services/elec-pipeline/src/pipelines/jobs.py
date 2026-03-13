@@ -10,6 +10,7 @@ from src.apis.reed_jobs import fetch_jobs as fetch_reed
 from src.db.supabase_client import (
     log_pipeline_end,
     log_pipeline_start,
+    upsert_job_listings,
     upsert_jobs,
 )
 from src.utils.alerting import alert_pipeline_failure
@@ -36,7 +37,10 @@ async def run_jobs_api_pipeline() -> None:
                 log.error("jobs_source_failed", source=name, error=str(e))
         unique_jobs = deduplicate_jobs(all_jobs)
 
-        # Group by region and cache
+        # Upsert individual rows to job_listings for the frontend
+        listings_count = upsert_job_listings(unique_jobs)
+
+        # Group by region and cache (pops "region" key from dicts)
         by_region: dict[str, list[dict]] = {}
         for job in unique_jobs:
             region = job.pop("region", "UK")
@@ -52,12 +56,14 @@ async def run_jobs_api_pipeline() -> None:
             status="completed",
             records_found=len(all_jobs),
             records_inserted=total_cached,
+            records_updated=listings_count,
         )
         log.info(
             "jobs_api_pipeline_done",
             total=len(all_jobs),
             unique=len(unique_jobs),
             cached=total_cached,
+            listings=listings_count,
             regions=len(by_region),
         )
     except Exception as e:

@@ -232,37 +232,41 @@ const TasksPage = () => {
 
         {/* Filter tabs */}
         <div className="px-4 pb-2">
-          <div className="flex gap-1 overflow-x-auto scrollbar-hide">
-            {VIEWS.map((v) => (
-              <button
-                key={v.key}
-                type="button"
-                onClick={() => setActiveView(v.key)}
-                className={cn(
-                  'relative flex items-center gap-1.5 px-3 py-1.5 rounded-full text-[13px] font-medium whitespace-nowrap transition-colors touch-manipulation',
-                  activeView === v.key
-                    ? 'bg-elec-yellow text-black'
-                    : 'bg-white/[0.06] text-white active:bg-white/10'
-                )}
-              >
-                {v.icon && <v.icon className="h-3 w-3" />}
-                {v.label}
-                {counts[v.key] > 0 && (
-                  <span
-                    className={cn(
-                      'text-[10px] font-bold px-1.5 py-0.5 rounded-full min-w-[18px] text-center',
-                      activeView === v.key ? 'bg-black/20 text-black' : 'bg-white/10 text-white'
-                    )}
-                  >
-                    {counts[v.key]}
-                  </span>
-                )}
-                {/* Red overdue dot — show on Today tab when overdue tasks exist */}
-                {v.key === 'today' && counts.overdue > 0 && activeView !== 'today' && (
-                  <span className="absolute -top-0.5 -right-0.5 w-2.5 h-2.5 rounded-full bg-red-500 border-2 border-background" />
-                )}
-              </button>
-            ))}
+          <div className="relative">
+            <div className="flex gap-1 overflow-x-auto scrollbar-hide">
+              {VIEWS.map((v) => (
+                <button
+                  key={v.key}
+                  type="button"
+                  onClick={() => setActiveView(v.key)}
+                  className={cn(
+                    'relative flex items-center gap-1.5 px-3 py-1.5 rounded-full text-[13px] font-medium whitespace-nowrap transition-colors touch-manipulation',
+                    activeView === v.key
+                      ? 'bg-elec-yellow text-black'
+                      : 'bg-white/[0.06] text-white active:bg-white/10'
+                  )}
+                >
+                  {v.icon && <v.icon className="h-3 w-3" />}
+                  {v.label}
+                  {counts[v.key] > 0 && (
+                    <span
+                      className={cn(
+                        'text-[10px] font-bold px-1.5 py-0.5 rounded-full min-w-[18px] text-center',
+                        activeView === v.key ? 'bg-black/20 text-black' : 'bg-white/10 text-white'
+                      )}
+                    >
+                      {counts[v.key]}
+                    </span>
+                  )}
+                  {/* Red overdue dot — show on Today tab when overdue tasks exist */}
+                  {v.key === 'today' && counts.overdue > 0 && activeView !== 'today' && (
+                    <span className="absolute -top-0.5 -right-0.5 w-2.5 h-2.5 rounded-full bg-red-500 border-2 border-background" />
+                  )}
+                </button>
+              ))}
+            </div>
+            {/* Right fade */}
+            <div className="absolute right-0 top-0 bottom-0 w-8 bg-gradient-to-l from-background to-transparent pointer-events-none" />
           </div>
         </div>
       </div>
@@ -319,17 +323,30 @@ const TasksPage = () => {
               {groups.map((group) => (
                 <motion.div key={group.key} variants={itemVariants} className="space-y-2">
                   {/* Section header */}
-                  <div className="flex items-center gap-2 px-1">
-                    <div className={cn('w-1.5 h-1.5 rounded-full', group.dot)} />
+                  <div className="flex items-center justify-between px-1">
+                    <div className="flex items-center gap-2">
+                      <div className={cn('w-1 h-4 rounded-full', group.dot)} />
+                      <span
+                        className={cn(
+                          'text-[13px] font-bold',
+                          group.labelColour
+                        )}
+                      >
+                        {group.label}
+                      </span>
+                    </div>
                     <span
                       className={cn(
-                        'text-xs font-semibold uppercase tracking-wider',
-                        group.labelColour
+                        'text-[11px] font-bold px-2 py-0.5 rounded-full',
+                        group.key === 'overdue'
+                          ? 'bg-red-500/20 text-red-400'
+                          : group.key === 'today'
+                            ? 'bg-yellow-500/20 text-yellow-400'
+                            : 'bg-white/10 text-white'
                       )}
                     >
-                      {group.label}
+                      {group.tasks.length}
                     </span>
-                    <span className="text-xs text-white font-medium">{group.tasks.length}</span>
                   </div>
                   {/* Tasks in this group */}
                   <AnimatePresence mode="popLayout">

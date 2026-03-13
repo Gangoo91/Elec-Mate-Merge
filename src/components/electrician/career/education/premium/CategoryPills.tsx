@@ -5,7 +5,6 @@
 
 import { useRef, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Badge } from '@/components/ui/badge';
 import { cn } from '@/lib/utils';
 import {
   GraduationCap,
@@ -46,43 +45,20 @@ const getCategoryIcon = (category: string) => {
   return iconMap[category] || Zap;
 };
 
-// Map category names to colors
-const getCategoryColor = (category: string, isActive: boolean) => {
-  if (isActive) {
-    return 'bg-purple-500 text-white border-purple-500 shadow-lg shadow-purple-500/30';
-  }
-
-  const colorMap: Record<string, string> = {
-    Degree: 'hover:bg-blue-500/20 hover:border-blue-500/40',
-    HNC: 'hover:bg-yellow-500/20 hover:border-yellow-500/40',
-    HND: 'hover:bg-pink-500/20 hover:border-pink-500/40',
-    Certificate: 'hover:bg-green-500/20 hover:border-green-500/40',
-    Diploma: 'hover:bg-purple-500/20 hover:border-purple-500/40',
-    Apprenticeship: 'hover:bg-orange-500/20 hover:border-orange-500/40',
-    Foundation: 'hover:bg-cyan-500/20 hover:border-cyan-500/40',
-    Master: 'hover:bg-red-500/20 hover:border-red-500/40',
-  };
-
-  return colorMap[category] || 'hover:bg-white/10 hover:border-white/20';
-};
-
 const CategoryPills = ({ categories, selected, onSelect, className }: CategoryPillsProps) => {
   const scrollRef = useRef<HTMLDivElement>(null);
   const activeRef = useRef<HTMLButtonElement>(null);
 
   // Scroll active category into view
-  // Uses requestAnimationFrame to batch DOM reads and prevent layout thrashing
   useEffect(() => {
     if (activeRef.current && scrollRef.current) {
       const container = scrollRef.current;
       const active = activeRef.current;
 
-      // Batch DOM reads in rAF to avoid layout thrashing
       requestAnimationFrame(() => {
         const containerRect = container.getBoundingClientRect();
         const activeRect = active.getBoundingClientRect();
 
-        // Check if active is out of view
         if (activeRect.left < containerRect.left || activeRect.right > containerRect.right) {
           active.scrollIntoView({
             behavior: 'smooth',
@@ -104,17 +80,13 @@ const CategoryPills = ({ categories, selected, onSelect, className }: CategoryPi
 
   return (
     <div className={cn('relative', className)}>
-      {/* Left fade edge */}
-      <div className="absolute left-0 top-0 bottom-0 w-8 bg-gradient-to-r from-background to-transparent z-10 pointer-events-none" />
-
       {/* Right fade edge */}
-      <div className="absolute right-0 top-0 bottom-0 w-8 bg-gradient-to-l from-background to-transparent z-10 pointer-events-none" />
+      <div className="absolute right-0 top-0 bottom-0 w-12 bg-gradient-to-l from-background to-transparent z-10 pointer-events-none" />
 
       {/* Scrollable container */}
       <div
         ref={scrollRef}
-        className="flex gap-2 overflow-x-auto scrollbar-hide px-4 py-3 scroll-snap-x -mx-4"
-        style={{ scrollPaddingInline: '1rem' }}
+        className="flex gap-2 overflow-x-auto scrollbar-hide py-1 pr-10 scroll-snap-x"
       >
         {allCategories.map((category, index) => {
           const isActive = selected === category.name || (category.name === 'All' && !selected);
@@ -131,26 +103,23 @@ const CategoryPills = ({ categories, selected, onSelect, className }: CategoryPi
               whileTap="tap"
               onClick={() => onSelect(category.name === 'All' ? null : category.name)}
               className={cn(
-                'flex items-center gap-2 px-4 py-2.5 rounded-full text-sm font-medium whitespace-nowrap',
-                'border transition-all duration-200 scroll-snap-item touch-manipulation',
-                'bg-white/5 text-white border-white/10',
-                getCategoryColor(category.name, isActive),
-                isActive && 'text-white'
+                'flex items-center gap-1.5 px-3 py-2 rounded-xl text-sm font-medium whitespace-nowrap',
+                'border transition-all duration-200 scroll-snap-item touch-manipulation min-h-[36px]',
+                isActive
+                  ? 'bg-elec-yellow text-elec-dark border-elec-yellow shadow-sm shadow-elec-yellow/20'
+                  : 'bg-white/5 text-white border-white/10 hover:bg-white/10 hover:border-white/15'
               )}
             >
-              <Icon className="h-4 w-4" />
+              <Icon className="h-3.5 w-3.5" />
               <span>{category.name}</span>
-              <Badge
-                variant="secondary"
+              <span
                 className={cn(
-                  'ml-1 px-1.5 py-0.5 text-xs min-w-[1.5rem] justify-center',
-                  isActive
-                    ? 'bg-white/20 text-white border-transparent'
-                    : 'bg-white/10 text-white border-white/10'
+                  'ml-0.5 text-xs font-semibold',
+                  isActive ? 'text-elec-dark/60' : 'text-white'
                 )}
               >
                 {category.count}
-              </Badge>
+              </span>
             </motion.button>
           );
         })}

@@ -1,11 +1,10 @@
 /**
  * EducationHeroCard - Compact hero with animated stat counters
- * Premium glass morphism styling with spring-based counter animations
+ * Clean dark card with yellow accent, inline stats
  */
 
 import { useEffect, useState } from 'react';
 import { motion, useSpring, useTransform } from 'framer-motion';
-import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import {
@@ -14,9 +13,8 @@ import {
   Star,
   TrendingUp,
   Calculator,
-  ChevronDown,
   RefreshCw,
-  Sparkles,
+  MapPin,
 } from 'lucide-react';
 import { pageVariants, counterSpringConfig } from './animations/variants';
 import type { LiveEducationAnalytics } from '@/hooks/useLiveEducationData';
@@ -65,38 +63,6 @@ const AnimatedCounter = ({
   );
 };
 
-// Stat pill component for horizontal scroll on mobile
-const StatPill = ({
-  icon: Icon,
-  value,
-  label,
-  suffix = '',
-  decimals = 0,
-  iconColor = 'text-purple-400',
-}: {
-  icon: typeof GraduationCap;
-  value: number;
-  label: string;
-  suffix?: string;
-  decimals?: number;
-  iconColor?: string;
-}) => (
-  <motion.div
-    initial={{ opacity: 0, scale: 0.95 }}
-    animate={{ opacity: 1, scale: 1 }}
-    transition={{ type: 'spring', stiffness: 300, damping: 25 }}
-    className="flex-shrink-0 flex items-center gap-2 bg-white/5 hover:bg-white/10 rounded-full px-3 py-2 border border-white/10 transition-colors"
-  >
-    <div className="w-7 h-7 rounded-full bg-white/5 flex items-center justify-center">
-      <Icon className={cn('h-4 w-4', iconColor)} />
-    </div>
-    <div className="text-sm font-semibold text-white whitespace-nowrap">
-      <AnimatedCounter value={value} suffix={suffix} decimals={decimals} />
-    </div>
-    <div className="text-xs text-white whitespace-nowrap">{label}</div>
-  </motion.div>
-);
-
 const EducationHeroCard = ({
   analytics,
   isFromCache = false,
@@ -112,33 +78,25 @@ const EducationHeroCard = ({
       variants={pageVariants}
       initial="initial"
       animate="animate"
-      className={cn('space-y-4', className)}
+      className={cn('space-y-3', className)}
     >
-      {/* Main Hero Card - Premium Design */}
-      <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-purple-900/40 via-background to-background border border-purple-500/20">
-        {/* Animated gradient accent line */}
-        <div className="absolute inset-x-0 top-0 h-[3px] bg-gradient-to-r from-purple-600 via-violet-400 to-purple-600 animate-pulse" />
+      {/* Compact Hero Card */}
+      <div className="relative overflow-hidden rounded-2xl bg-white/[0.03] border border-white/10">
+        {/* Subtle accent line */}
+        <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-elec-yellow/60 via-amber-400/40 to-elec-yellow/60" />
 
-        {/* Multiple decorative gradient blobs */}
-        <div className="absolute -right-20 -top-20 w-60 h-60 rounded-full bg-purple-500/20 blur-3xl pointer-events-none animate-pulse" />
-        <div className="absolute -left-10 top-10 w-40 h-40 rounded-full bg-violet-500/10 blur-3xl pointer-events-none" />
-        <div className="absolute right-20 bottom-0 w-32 h-32 rounded-full bg-blue-500/10 blur-2xl pointer-events-none" />
-
-        <div className="relative z-10 p-4 sm:p-6">
-          {/* Compact Header row */}
+        <div className="relative z-10 p-4">
+          {/* Header row */}
           <div className="flex items-center justify-between gap-3">
             <div className="flex items-center gap-3">
-              {/* Compact Icon */}
-              <div className="p-2.5 rounded-xl bg-gradient-to-br from-purple-500/30 to-purple-600/20 border border-purple-400/30">
-                <GraduationCap className="h-6 w-6 text-purple-300" />
+              <div className="p-2 rounded-xl bg-elec-yellow/10 border border-elec-yellow/20">
+                <GraduationCap className="h-5 w-5 text-elec-yellow" />
               </div>
-
-              {/* Title */}
               <div>
-                <h1 className="text-lg sm:text-2xl font-semibold text-white">
-                  Further <span className="text-purple-400">Education</span>
+                <h1 className="text-lg font-semibold text-white">
+                  Further Education
                 </h1>
-                <p className="text-xs sm:text-sm text-white hidden sm:block">
+                <p className="text-xs text-white mt-0.5">
                   HNC, HND, degrees & apprenticeships
                 </p>
               </div>
@@ -151,7 +109,7 @@ const EducationHeroCard = ({
                 disabled={isRefreshing}
                 size="icon"
                 variant="ghost"
-                className="h-9 w-9 text-white hover:text-white hover:bg-white/10 rounded-lg"
+                className="h-9 w-9 text-white hover:text-white hover:bg-white/10 rounded-xl touch-manipulation"
               >
                 <RefreshCw className={cn('h-4 w-4', isRefreshing && 'animate-spin')} />
               </Button>
@@ -160,110 +118,73 @@ const EducationHeroCard = ({
 
           {/* Live data indicator */}
           {isFromCache && lastUpdated && (
-            <motion.div
-              initial={{ opacity: 0, y: -5 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="inline-flex items-center gap-2 mt-4 px-3 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/20"
-            >
-              <div className="w-2 h-2 bg-emerald-400 rounded-full animate-pulse" />
-              <span className="text-xs font-medium text-emerald-300">
+            <div className="inline-flex items-center gap-2 mt-3 px-2.5 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20">
+              <div className="w-1.5 h-1.5 bg-emerald-400 rounded-full animate-pulse" />
+              <span className="text-[11px] font-medium text-emerald-300">
                 Live data • Updated{' '}
                 {new Date(lastUpdated).toLocaleDateString('en-GB', {
                   day: 'numeric',
                   month: 'short',
                 })}
               </span>
-            </motion.div>
-          )}
-
-          {/* Stats - Horizontal Scroll on Mobile */}
-          {analytics && (
-            <div className="flex gap-2 overflow-x-auto mt-4 -mx-5 px-5 pb-1 sm:mx-0 sm:px-0 scrollbar-hide">
-              <StatPill
-                icon={GraduationCap}
-                value={analytics.totalCourses}
-                label="Programmes"
-                iconColor="text-purple-300"
-              />
-              <StatPill
-                icon={Users}
-                value={analytics.totalProviders}
-                label="Providers"
-                iconColor="text-emerald-300"
-              />
-              <StatPill
-                icon={Star}
-                value={analytics.averageRating}
-                label="Rating"
-                decimals={1}
-                iconColor="text-amber-300"
-              />
-              <StatPill
-                icon={TrendingUp}
-                value={analytics.averageEmploymentRate || 0}
-                label="Employed"
-                suffix="%"
-                iconColor="text-blue-300"
-              />
             </div>
           )}
 
-          {/* Action Buttons - Mobile-Optimized */}
-          <div className="flex gap-2 mt-4">
-            {onFundingCalculator && (
+          {/* Inline Stats Row */}
+          {analytics && (
+            <div className="flex items-center gap-3 mt-3 flex-wrap">
+              <div className="flex items-center gap-1.5 text-sm">
+                <GraduationCap className="h-3.5 w-3.5 text-elec-yellow" />
+                <span className="font-semibold text-white">
+                  <AnimatedCounter value={analytics.totalCourses} />
+                </span>
+                <span className="text-white text-xs">programmes</span>
+              </div>
+              <span className="text-white/20">•</span>
+              <div className="flex items-center gap-1.5 text-sm">
+                <Users className="h-3.5 w-3.5 text-emerald-400" />
+                <span className="font-semibold text-white">
+                  <AnimatedCounter value={analytics.totalProviders} />
+                </span>
+                <span className="text-white text-xs">providers</span>
+              </div>
+              <span className="text-white/20">•</span>
+              <div className="flex items-center gap-1.5 text-sm">
+                <Star className="h-3.5 w-3.5 text-amber-400" />
+                <span className="font-semibold text-white">
+                  <AnimatedCounter value={analytics.averageRating} decimals={1} />
+                </span>
+                <span className="text-white text-xs">avg</span>
+              </div>
+              {analytics.averageEmploymentRate && analytics.averageEmploymentRate > 0 && (
+                <>
+                  <span className="text-white/20 hidden sm:inline">•</span>
+                  <div className="hidden sm:flex items-center gap-1.5 text-sm">
+                    <TrendingUp className="h-3.5 w-3.5 text-blue-400" />
+                    <span className="font-semibold text-white">
+                      <AnimatedCounter value={analytics.averageEmploymentRate} suffix="%" />
+                    </span>
+                    <span className="text-white text-xs">employed</span>
+                  </div>
+                </>
+              )}
+            </div>
+          )}
+
+          {/* Single CTA */}
+          {onFundingCalculator && (
+            <div className="mt-3">
               <Button
                 onClick={onFundingCalculator}
-                className="flex-1 h-11 bg-gradient-to-r from-purple-500 to-violet-500 text-white hover:from-purple-400 hover:to-violet-400 gap-2 font-medium rounded-xl touch-manipulation active:scale-[0.98]"
+                className="h-10 px-4 bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90 gap-2 font-semibold rounded-xl touch-manipulation active:scale-[0.98] text-sm"
               >
                 <Calculator className="h-4 w-4" />
-                Funding
+                Funding Calculator
               </Button>
-            )}
-            {onBrowseAll && (
-              <Button
-                onClick={onBrowseAll}
-                variant="outline"
-                className="flex-1 h-11 border-white/20 text-white hover:text-white hover:bg-white/10 gap-2 font-medium rounded-xl touch-manipulation active:scale-[0.98]"
-              >
-                <ChevronDown className="h-4 w-4" />
-                Browse
-              </Button>
-            )}
-          </div>
+            </div>
+          )}
         </div>
       </div>
-
-      {/* Popular Categories */}
-      {analytics?.topCategories && analytics.topCategories.length > 0 && (
-        <motion.div
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.1 }}
-          className="bg-white/[0.03] backdrop-blur-sm border border-white/10 rounded-xl p-4"
-        >
-          <div className="flex items-center gap-2 mb-3">
-            <Sparkles className="h-4 w-4 text-purple-400" />
-            <h3 className="text-sm font-medium text-white">Popular Categories</h3>
-          </div>
-          <div className="flex flex-wrap gap-2">
-            {analytics.topCategories.slice(0, 6).map((category, index) => (
-              <motion.div
-                key={category.name}
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ delay: 0.15 + index * 0.05 }}
-              >
-                <Badge
-                  variant="secondary"
-                  className="bg-white/10 text-white border-white/10 hover:bg-purple-500/20 hover:text-purple-300 hover:border-purple-500/30 transition-colors cursor-pointer"
-                >
-                  {category.name} <span className="text-white ml-1">({category.count})</span>
-                </Badge>
-              </motion.div>
-            ))}
-          </div>
-        </motion.div>
-      )}
     </motion.div>
   );
 };

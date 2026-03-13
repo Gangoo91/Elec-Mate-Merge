@@ -10,7 +10,9 @@ export type JobSourceType =
   | 'indeed' // Indeed
   | 'totaljobs' // TotalJobs
   | 'cvlibrary' // CV Library
-  | 'jobscouk'; // Jobs.co.uk
+  | 'jobscouk' // Jobs.co.uk
+  | 'adzuna' // Adzuna
+  | 'gov_apprenticeships'; // Gov.uk Apprenticeships
 
 // Unified job listing that works for both employer and external jobs
 export interface UnifiedJobListing {
@@ -148,10 +150,14 @@ export function externalJobToUnified(job: ExternalJob): UnifiedJobListing {
   const mapSource = (source: string): JobSourceType => {
     const sourceMap: Record<string, JobSourceType> = {
       Reed: 'reed',
+      reed: 'reed',
       Indeed: 'indeed',
       TotalJobs: 'totaljobs',
       'CV Library': 'cvlibrary',
       'Jobs.co.uk': 'jobscouk',
+      adzuna: 'adzuna',
+      Adzuna: 'adzuna',
+      gov_apprenticeships: 'gov_apprenticeships',
     };
     return sourceMap[source] || 'reed';
   };
@@ -181,4 +187,6 @@ export const JOB_SOURCE_INFO: Record<JobSourceType, { label: string; color: stri
   totaljobs: { label: 'TotalJobs', color: 'orange' },
   cvlibrary: { label: 'CV Library', color: 'teal' },
   jobscouk: { label: 'Jobs.co.uk', color: 'pink' },
+  adzuna: { label: 'Adzuna', color: 'orange' },
+  gov_apprenticeships: { label: 'Apprenticeships', color: 'cyan' },
 };

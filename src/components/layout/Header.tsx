@@ -138,19 +138,19 @@ const Header = ({ toggleSidebar }: HeaderProps) => {
       ref={headerRef}
       className={cn(
         'fixed top-0 left-0 right-0 z-50 md:left-64',
-        'backdrop-blur-xl bg-background/95',
+        'backdrop-blur-xl bg-elec-dark/90',
         'border-b transition-all duration-300',
-        isScrolled ? 'border-white/10 shadow-lg shadow-black/20' : 'border-white/[0.06]'
+        isScrolled ? 'border-white/10 shadow-2xl shadow-black/40' : 'border-white/[0.06]'
       )}
       style={{
         // Use CSS variable with fallback for safe area
         paddingTop: 'var(--safe-area-top, env(safe-area-inset-top, 0px))',
       }}
     >
-      {/* Mobile: 48px | Desktop: 56px */}
-      <div className="flex items-center justify-between h-12 sm:h-14 px-3 sm:px-4">
+      {/* Mobile: 48px | Desktop: 64px (matches sidebar logo section h-16) */}
+      <div className="flex items-center justify-between h-12 md:h-16 px-3 sm:px-4">
         {/* Left side - Menu toggle and branding */}
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2.5">
           {isMobile && (
             <motion.div whileTap={{ scale: 0.92 }}>
               <Button
@@ -170,36 +170,43 @@ const Header = ({ toggleSidebar }: HeaderProps) => {
             </motion.div>
           )}
 
-          {/* Branding - Clean single wordmark */}
-          <motion.div className="flex items-center" whileTap={{ scale: 0.97 }}>
-            <h1 className="text-xl sm:text-2xl font-bold tracking-tight flex items-center">
-              <span className="text-elec-yellow">Elec</span>
-              <span className="text-white">-</span>
-              <span className="text-white">Mate</span>
+          {/* Branding - Logo + gradient wordmark (mobile only — sidebar shows it on desktop) */}
+          <motion.div className="flex items-center gap-2 md:hidden" whileTap={{ scale: 0.97 }}>
+            <div className="rounded-lg overflow-hidden h-8 w-8 border border-elec-yellow/20 shadow-md shadow-elec-yellow/5 flex-shrink-0">
+              <img src="/logo.jpg" alt="Elec-Mate" className="h-full w-full object-cover" />
+            </div>
+            <h1 className="text-lg font-bold tracking-tight flex items-center">
+              <span className="bg-gradient-to-r from-elec-yellow to-amber-400 bg-clip-text text-transparent">
+                Elec
+              </span>
+              <span className="text-white">-Mate</span>
             </h1>
-            <RecordingIndicator className="ml-1.5" />
+            <RecordingIndicator className="ml-0.5" />
           </motion.div>
+          {/* Desktop: just the recording indicator (branding is in sidebar) */}
+          <RecordingIndicator className="hidden md:block" />
         </div>
 
         {/* Center - Live Clock (desktop only) */}
         <LiveClock className="hidden md:flex" />
 
-        {/* Right side - Search + Profile */}
-        <div className="flex items-center gap-1.5">
+        {/* Right side - Action buttons + Profile */}
+        <div className="flex items-center gap-1">
           <motion.div whileTap={{ scale: 0.92 }}>
             <Button
               variant="ghost"
               size="icon"
               onClick={() => setTipsOpen(true)}
               className={cn(
-                'h-10 w-10 min-w-[40px] min-h-[40px]',
+                'h-9 w-9 min-w-[36px] min-h-[36px] sm:h-10 sm:w-10 sm:min-w-[40px] sm:min-h-[40px]',
+                'bg-white/5 border border-white/10',
                 'hover:bg-white/10 active:bg-white/15',
                 'touch-manipulation rounded-xl',
                 'transition-all duration-150'
               )}
               aria-label="Tips and guidance"
             >
-              <Info className="h-4.5 w-4.5 text-white" />
+              <Info className="h-4 w-4 sm:h-4.5 sm:w-4.5 text-white" />
             </Button>
           </motion.div>
           <motion.div whileTap={{ scale: 0.92 }}>
@@ -208,19 +215,23 @@ const Header = ({ toggleSidebar }: HeaderProps) => {
               size="icon"
               onClick={() => setCommandOpen(true)}
               className={cn(
-                'h-10 w-10 min-w-[40px] min-h-[40px]',
+                'h-9 w-9 min-w-[36px] min-h-[36px] sm:h-10 sm:w-10 sm:min-w-[40px] sm:min-h-[40px]',
+                'bg-white/5 border border-white/10',
                 'hover:bg-white/10 active:bg-white/15',
                 'touch-manipulation rounded-xl',
                 'transition-all duration-150'
               )}
               aria-label="Search pages"
             >
-              <Search className="h-4.5 w-4.5 text-white" />
+              <Search className="h-4 w-4 sm:h-4.5 sm:w-4.5 text-white" />
             </Button>
           </motion.div>
-          <UserProfileDropdown />
+          <div className="ml-0.5">
+            <UserProfileDropdown />
+          </div>
         </div>
       </div>
+
       <CommandPalette open={commandOpen} onOpenChange={setCommandOpen} />
       <AppTipsSheet open={tipsOpen} onOpenChange={setTipsOpen} />
     </header>

@@ -5,7 +5,6 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { LogOut, MessageSquare, Bell, ChevronRight, Sparkles } from 'lucide-react';
@@ -89,22 +88,24 @@ const UserProfileDropdown = () => {
           <button
             className={cn(
               'relative touch-manipulation',
+              'h-9 w-9 sm:h-10 sm:w-10 min-w-[36px] min-h-[36px] sm:min-w-[40px] sm:min-h-[40px]',
+              'flex items-center justify-center',
               'rounded-full',
               'active:scale-95 transition-transform duration-150'
             )}
             aria-label="User profile"
           >
-            <Avatar className="h-10 w-10 border-2 border-white/20 hover:border-elec-yellow/50 transition-colors">
+            <Avatar className="h-[30px] w-[30px] sm:h-[34px] sm:w-[34px] ring-2 ring-white/20 hover:ring-elec-yellow/40 transition-all">
               <AvatarImage src={profile?.avatar_url || ''} className="object-cover" />
-              <AvatarFallback className="bg-gradient-to-br from-elec-yellow to-amber-500 text-elec-dark font-bold text-sm">
+              <AvatarFallback className="bg-gradient-to-br from-elec-yellow to-amber-500 text-elec-dark font-bold text-xs sm:text-sm">
                 {getInitials()}
               </AvatarFallback>
             </Avatar>
 
             {/* Online status indicator */}
-            <span className="absolute bottom-0 right-0 block h-3 w-3 rounded-full border-2 border-elec-dark bg-green-500" />
+            <span className="absolute bottom-0.5 right-0.5 block h-2.5 w-2.5 rounded-full border-2 border-elec-dark bg-green-500" />
 
-            {/* Notification badge - positioned to not overflow */}
+            {/* Notification badge */}
             {totalUnread > 0 && (
               <span className="absolute -top-1 -right-1 flex items-center justify-center">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-50" />
@@ -117,47 +118,50 @@ const UserProfileDropdown = () => {
         </DropdownMenuTrigger>
 
         <DropdownMenuContent
-          className="w-64 p-0 bg-card/95 backdrop-blur-xl border-border/50 shadow-2xl"
+          className="w-72 p-0 bg-elec-dark/95 backdrop-blur-2xl border border-white/10 shadow-2xl shadow-black/50 rounded-2xl overflow-hidden"
           align="end"
           sideOffset={8}
           forceMount
         >
           {/* Profile header */}
-          <div className="p-4 bg-gradient-to-br from-elec-yellow/10 to-transparent border-b border-border/50">
+          <div className="p-4 bg-gradient-to-br from-elec-yellow/[0.08] to-transparent">
             <div className="flex items-center gap-3">
-              <div className="relative">
-                <Avatar className="h-12 w-12 border-2 border-elec-yellow/30">
-                  <AvatarImage src={profile?.avatar_url || ''} />
+              <div className="relative flex-shrink-0">
+                <Avatar className="h-12 w-12 ring-2 ring-elec-yellow/30 ring-offset-2 ring-offset-elec-dark">
+                  <AvatarImage src={profile?.avatar_url || ''} className="object-cover" />
                   <AvatarFallback className="bg-gradient-to-br from-elec-yellow to-amber-500 text-elec-dark font-bold">
                     {getInitials()}
                   </AvatarFallback>
                 </Avatar>
-                <span className="absolute -bottom-0.5 -right-0.5 block h-3.5 w-3.5 rounded-full border-2 border-card bg-green-500" />
+                <span className="absolute -bottom-0.5 -right-0.5 block h-3 w-3 rounded-full border-2 border-elec-dark bg-green-500" />
               </div>
               <div className="flex-1 min-w-0">
-                <p className="font-semibold text-foreground truncate">
+                <p className="font-semibold text-white text-[15px] truncate">
                   {profile?.full_name || 'User'}
                 </p>
-                <p className="text-xs text-muted-foreground truncate">{user.email}</p>
-                <div className="flex items-center gap-1 mt-1">
-                  <Sparkles className="h-3 w-3 text-elec-yellow" />
-                  <span className="text-[10px] font-medium text-elec-yellow">Pro Member</span>
+                <p className="text-xs text-white truncate mt-0.5">{user.email}</p>
+                <div className="inline-flex items-center gap-1 mt-1.5 px-2 py-0.5 rounded-full bg-elec-yellow/15 border border-elec-yellow/25">
+                  <Sparkles className="h-2.5 w-2.5 text-elec-yellow" />
+                  <span className="text-[10px] font-semibold text-elec-yellow">Pro Member</span>
                 </div>
               </div>
             </div>
           </div>
 
+          {/* Divider */}
+          <div className="h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
+
           {/* Menu items */}
-          <div className="p-2">
+          <div className="p-1.5">
             <DropdownMenuItem
               onClick={handleOpenNotifications}
-              className="flex items-center justify-between px-3 py-2.5 rounded-lg cursor-pointer hover:bg-elec-yellow/10 focus:bg-elec-yellow/10 group"
+              className="flex items-center justify-between px-3 py-3 rounded-xl cursor-pointer hover:bg-white/[0.06] focus:bg-white/[0.06] group touch-manipulation min-h-[44px]"
             >
               <div className="flex items-center gap-3">
-                <div className="p-1.5 rounded-lg bg-red-500/10 text-red-400 group-hover:bg-red-500/20 transition-colors">
+                <div className="p-2 rounded-xl bg-red-500/10 text-red-400 group-hover:bg-red-500/15 transition-colors">
                   <Bell className="h-4 w-4" />
                 </div>
-                <span className="font-medium">Notifications</span>
+                <span className="font-medium text-white text-sm">Notifications</span>
               </div>
               <div className="flex items-center gap-2">
                 {bellBadgeCount > 0 && (
@@ -165,19 +169,19 @@ const UserProfileDropdown = () => {
                     {bellBadgeCount > 9 ? '9+' : bellBadgeCount}
                   </span>
                 )}
-                <ChevronRight className="h-4 w-4 text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity" />
+                <ChevronRight className="h-4 w-4 text-white opacity-0 group-hover:opacity-50 transition-opacity" />
               </div>
             </DropdownMenuItem>
 
             <DropdownMenuItem
               onClick={handleOpenMessages}
-              className="flex items-center justify-between px-3 py-2.5 rounded-lg cursor-pointer hover:bg-elec-yellow/10 focus:bg-elec-yellow/10 group"
+              className="flex items-center justify-between px-3 py-3 rounded-xl cursor-pointer hover:bg-white/[0.06] focus:bg-white/[0.06] group touch-manipulation min-h-[44px]"
             >
               <div className="flex items-center gap-3">
-                <div className="p-1.5 rounded-lg bg-elec-yellow/10 text-elec-yellow group-hover:bg-elec-yellow/20 transition-colors">
+                <div className="p-2 rounded-xl bg-elec-yellow/10 text-elec-yellow group-hover:bg-elec-yellow/15 transition-colors">
                   <MessageSquare className="h-4 w-4" />
                 </div>
-                <span className="font-medium">Messages</span>
+                <span className="font-medium text-white text-sm">Messages</span>
               </div>
               <div className="flex items-center gap-2">
                 {messageUnread > 0 && (
@@ -185,23 +189,24 @@ const UserProfileDropdown = () => {
                     {messageUnread > 9 ? '9+' : messageUnread}
                   </span>
                 )}
-                <ChevronRight className="h-4 w-4 text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity" />
+                <ChevronRight className="h-4 w-4 text-white opacity-0 group-hover:opacity-50 transition-opacity" />
               </div>
             </DropdownMenuItem>
           </div>
 
-          <DropdownMenuSeparator className="bg-border/50" />
+          {/* Divider */}
+          <div className="h-px bg-gradient-to-r from-transparent via-white/10 to-transparent mx-3" />
 
           {/* Sign out */}
-          <div className="p-2">
+          <div className="p-1.5">
             <DropdownMenuItem
               onClick={handleSignOut}
-              className="flex items-center gap-3 px-3 py-2.5 rounded-lg cursor-pointer text-red-400 hover:bg-red-500/10 focus:bg-red-500/10 hover:text-red-400 focus:text-red-400"
+              className="flex items-center gap-3 px-3 py-3 rounded-xl cursor-pointer text-red-400 hover:bg-red-500/10 focus:bg-red-500/10 hover:text-red-400 focus:text-red-400 touch-manipulation min-h-[44px]"
             >
-              <div className="p-1.5 rounded-lg bg-red-500/10">
+              <div className="p-2 rounded-xl bg-red-500/10">
                 <LogOut className="h-4 w-4" />
               </div>
-              <span className="font-medium">Sign out</span>
+              <span className="font-medium text-sm">Sign out</span>
             </DropdownMenuItem>
           </div>
         </DropdownMenuContent>

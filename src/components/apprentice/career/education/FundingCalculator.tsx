@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -11,11 +11,9 @@ import {
   GraduationCap,
   PoundSterling,
   Briefcase,
-  MapPin,
   ChevronRight,
   CheckCircle2,
   AlertTriangle,
-  TrendingUp,
   ExternalLink,
   Clock,
   Building2,
@@ -46,7 +44,7 @@ const FUNDING_TYPES = [
     id: 'level6',
     title: 'Degree (Level 6)',
     subtitle: "Bachelor's, BEng",
-    amount: '£9,250/year',
+    amount: '£9,250/yr',
     icon: GraduationCap,
     color: 'text-blue-400',
     bgColor: 'bg-blue-500/10',
@@ -62,9 +60,9 @@ const FUNDING_TYPES = [
   },
   {
     id: 'hnc',
-    title: 'HNC/HND (Level 4-5)',
+    title: 'HNC/HND (L4-5)',
     subtitle: 'Higher National',
-    amount: '£6,500-£9,250',
+    amount: '£6.5-9.2K',
     icon: Building2,
     color: 'text-green-400',
     bgColor: 'bg-green-500/10',
@@ -73,11 +71,18 @@ const FUNDING_TYPES = [
     id: 'professional',
     title: 'Professional',
     subtitle: 'PRINCE2, NEBOSH',
-    amount: '£500-£5,000',
+    amount: '£500-5K',
     icon: Briefcase,
     color: 'text-amber-400',
     bgColor: 'bg-amber-500/10',
   },
+];
+
+const OFFICIAL_LINKS = [
+  { label: 'Student Finance', url: 'https://www.gov.uk/student-finance' },
+  { label: 'Learner Loans', url: 'https://www.gov.uk/advanced-learner-loan' },
+  { label: 'Skills Bootcamps', url: 'https://www.gov.uk/government/publications/skills-bootcamps-funding-allocations' },
+  { label: 'IET Awards', url: 'https://www.theiet.org/impact-society/awards-prizes-and-scholarships' },
 ];
 
 const FundingCalculator = () => {
@@ -105,28 +110,31 @@ const FundingCalculator = () => {
 
     // Add funding based on type
     switch (selectedType) {
-      case 'level6':
+      case 'level6': {
         const tuition = Math.min(cost - employer, FUNDING_2025.undergraduate.tuitionMax);
         if (tuition > 0) {
           sources.push({ name: 'Tuition Fee Loan', amount: tuition, type: 'loan' });
           totalFunding += tuition;
         }
         break;
-      case 'level7':
+      }
+      case 'level7': {
         const pgLoan = Math.min(cost - employer, FUNDING_2025.postgraduate.maxLoan);
         if (pgLoan > 0) {
           sources.push({ name: 'Postgraduate Loan', amount: pgLoan, type: 'loan' });
           totalFunding += pgLoan;
         }
         break;
-      case 'hnc':
+      }
+      case 'hnc': {
         const allLoan = Math.min(cost - employer, 9250);
         if (allLoan > 0) {
           sources.push({ name: 'Advanced Learner Loan', amount: allLoan, type: 'loan' });
           totalFunding += allLoan;
         }
         break;
-      case 'professional':
+      }
+      case 'professional': {
         // Skills Bank / Professional grants
         const skillsBank = Math.min(cost * 0.5, 2000);
         if (skillsBank > 0) {
@@ -134,6 +142,7 @@ const FundingCalculator = () => {
           totalFunding += skillsBank;
         }
         break;
+      }
     }
 
     const fundingGap = Math.max(0, cost - totalFunding);
@@ -169,106 +178,69 @@ const FundingCalculator = () => {
 
   return (
     <div className="space-y-4">
-      {/* Hero Section */}
+      {/* Compact Header */}
       <motion.div
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
-        className="relative overflow-hidden bg-gradient-to-br from-purple-900/40 via-background to-background border border-purple-500/20 rounded-xl"
+        className="flex items-center gap-3"
       >
-        <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-purple-500 via-violet-400 to-purple-500" />
-
-        <div className="p-4 sm:p-5">
-          <div className="flex items-center gap-3">
-            <div className="p-2.5 rounded-xl bg-purple-500/20 border border-purple-400/30">
-              <Calculator className="h-5 w-5 text-purple-300" />
-            </div>
-            <div>
-              <h2 className="text-lg sm:text-xl font-semibold text-white">
-                Funding <span className="text-purple-400">Calculator</span>
-              </h2>
-              <p className="text-xs text-white hidden sm:block">
-                2025 rates • Find your funding options
-              </p>
-            </div>
-          </div>
-
-          {/* Quick Stats */}
-          <div className="flex gap-2 overflow-x-auto mt-3 -mx-4 px-4 pb-1 sm:mx-0 sm:px-0 scrollbar-hide">
-            <div className="flex-shrink-0 flex items-center gap-2 bg-white/5 rounded-full px-3 py-1.5 border border-white/10">
-              <PoundSterling className="h-4 w-4 text-green-400" />
-              <span className="text-sm font-medium text-white">£9,250</span>
-              <span className="text-xs text-white">Undergrad</span>
-            </div>
-            <div className="flex-shrink-0 flex items-center gap-2 bg-white/5 rounded-full px-3 py-1.5 border border-white/10">
-              <TrendingUp className="h-4 w-4 text-purple-400" />
-              <span className="text-sm font-medium text-white">£12,858</span>
-              <span className="text-xs text-white">Postgrad</span>
-            </div>
-            <div className="flex-shrink-0 flex items-center gap-2 bg-white/5 rounded-full px-3 py-1.5 border border-white/10">
-              <Clock className="h-4 w-4 text-amber-400" />
-              <span className="text-sm font-medium text-white">£27,295</span>
-              <span className="text-xs text-white">Threshold</span>
-            </div>
-          </div>
+        <div className="p-2.5 rounded-xl bg-purple-500/20 border border-purple-400/30">
+          <Calculator className="h-5 w-5 text-purple-300" />
+        </div>
+        <div>
+          <h2 className="text-lg font-semibold text-white">
+            Funding <span className="text-purple-400">Calculator</span>
+          </h2>
+          <p className="text-xs text-white">2025 UK rates</p>
         </div>
       </motion.div>
 
-      {/* Funding Type Selection */}
-      <div className="space-y-3">
-        <p className="text-sm text-white px-1">Select your qualification type:</p>
-
-        <div className="grid grid-cols-2 gap-3">
-          {FUNDING_TYPES.map((type) => (
-            <motion.button
-              key={type.id}
-              whileTap={{ scale: 0.98 }}
-              onClick={() => {
-                setSelectedType(type.id);
-                setShowCalculator(true);
-              }}
+      {/* Funding Type Selection — compact 2x2 grid */}
+      <div className="grid grid-cols-2 gap-2">
+        {FUNDING_TYPES.map((type) => (
+          <motion.button
+            key={type.id}
+            whileTap={{ scale: 0.98 }}
+            onClick={() => {
+              setSelectedType(type.id);
+              setShowCalculator(true);
+            }}
+            className={cn(
+              'relative flex items-center gap-3 p-3 rounded-xl text-left transition-all touch-manipulation',
+              'bg-white/5 border border-white/10 hover:bg-white/10 active:scale-[0.98]',
+              selectedType === type.id && 'ring-2 ring-purple-500 border-purple-500/50'
+            )}
+          >
+            <div
               className={cn(
-                'relative p-4 rounded-xl text-left transition-all touch-manipulation',
-                'bg-white/5 border border-white/10 hover:bg-white/10',
-                selectedType === type.id && 'ring-2 ring-purple-500 border-purple-500/50'
+                'w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0',
+                type.bgColor
               )}
             >
-              <div
-                className={cn(
-                  'w-10 h-10 rounded-lg flex items-center justify-center mb-2',
-                  type.bgColor
-                )}
-              >
-                <type.icon className={cn('h-5 w-5', type.color)} />
-              </div>
-              <h3 className="font-medium text-white text-sm">{type.title}</h3>
-              <p className="text-xs text-white mt-0.5">{type.subtitle}</p>
-              <p className={cn('text-sm font-semibold mt-2', type.color)}>{type.amount}</p>
-              <ChevronRight className="absolute top-4 right-3 h-4 w-4 text-white" />
-            </motion.button>
-          ))}
-        </div>
+              <type.icon className={cn('h-4 w-4', type.color)} />
+            </div>
+            <div className="min-w-0 flex-1">
+              <h3 className="font-medium text-white text-xs leading-tight">{type.title}</h3>
+              <p className={cn('text-xs font-semibold mt-0.5', type.color)}>{type.amount}</p>
+            </div>
+            <ChevronRight className="h-3.5 w-3.5 text-white flex-shrink-0" />
+          </motion.button>
+        ))}
       </div>
 
-      {/* Quick Links */}
+      {/* Official Resources — wrapping grid instead of scroll */}
       <div className="space-y-2">
-        <p className="text-xs text-white px-1">Official resources:</p>
-        <div className="flex gap-2 overflow-x-auto -mx-4 px-4 pb-1 scrollbar-hide">
-          {[
-            { label: 'Student Finance', url: 'https://www.gov.uk/student-finance' },
-            { label: 'Learner Loans', url: 'https://www.gov.uk/advanced-learner-loan' },
-            { label: 'Skills Bank', url: 'https://www.gov.uk/guidance/skills-bank' },
-            { label: 'IET Funding', url: 'https://www.theiet.org/membership/awards-scholarships/' },
-          ].map((link) => (
-            <a
+        <p className="text-xs text-white">Official resources:</p>
+        <div className="grid grid-cols-2 gap-2">
+          {OFFICIAL_LINKS.map((link) => (
+            <button
               key={link.label}
-              href={link.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex-shrink-0 flex items-center gap-1.5 px-3 py-2 bg-white/5 border border-white/10 rounded-lg text-xs text-white hover:bg-white/10 transition-colors touch-manipulation"
+              onClick={() => window.open(link.url, '_blank', 'noopener,noreferrer')}
+              className="flex items-center gap-1.5 px-3 py-2.5 bg-white/5 border border-white/10 rounded-lg text-xs text-white hover:bg-white/10 transition-colors touch-manipulation active:scale-[0.98] text-left"
             >
-              <ExternalLink className="h-3 w-3" />
-              {link.label}
-            </a>
+              <ExternalLink className="h-3 w-3 flex-shrink-0" />
+              <span className="truncate">{link.label}</span>
+            </button>
           ))}
         </div>
       </div>

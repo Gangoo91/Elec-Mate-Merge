@@ -1,6 +1,6 @@
 import { useState, useRef } from 'react';
 import { motion, useMotionValue, useTransform, PanInfo } from 'framer-motion';
-import { Clock, MapPin, Users, AlarmClock, CheckCircle2, AlertTriangle } from 'lucide-react';
+import { Clock, MapPin, Users, AlarmClock, CheckCircle2, AlertTriangle, Check } from 'lucide-react';
 import { SparkTask } from '@/hooks/useSparkTasks';
 import { cn } from '@/lib/utils';
 
@@ -22,6 +22,23 @@ const PRIORITY_LABEL: Record<string, string> = {
   high: 'High',
   normal: 'Normal',
   low: 'Low',
+};
+
+const PRIORITY_TINT: Record<string, string> = {
+  urgent: 'bg-red-500/[0.04]',
+  high: 'bg-orange-500/[0.03]',
+  normal: '',
+  low: '',
+};
+
+const TAG_COLOUR: Record<string, string> = {
+  snagging: 'bg-orange-500/20 text-orange-400',
+  quote: 'bg-yellow-500/20 text-yellow-400',
+  'follow-up': 'bg-blue-500/20 text-blue-400',
+  booking: 'bg-purple-500/20 text-purple-400',
+  urgent: 'bg-red-500/20 text-red-400',
+  inspection: 'bg-cyan-500/20 text-cyan-400',
+  testing: 'bg-green-500/20 text-green-400',
 };
 
 const SWIPE_THRESHOLD = 100;
@@ -111,31 +128,51 @@ export function TaskCard({ task, onTap, onSwipeComplete }: TaskCardProps) {
           'active:bg-white/[0.06] transition-colors',
           'touch-manipulation focus:outline-none focus-visible:ring-2 focus-visible:ring-elec-yellow/50',
           PRIORITY_BORDER[task.priority] || 'border-l-white/20',
+          !isDone && (PRIORITY_TINT[task.priority] || ''),
           isDone && 'opacity-80'
         )}
       >
-        {/* Title + priority */}
-        <div className="flex items-start justify-between gap-2">
-          <h3
-            className={cn(
-              'text-[15px] font-semibold text-white truncate flex-1',
-              isDone && 'line-through'
-            )}
-          >
-            {task.title}
-          </h3>
-          {task.priority !== 'normal' && (
-            <span
+        {/* Title + priority + checkbox */}
+        <div className="flex items-start gap-3">
+          {/* Checkbox */}
+          {canSwipe ? (
+            <button
+              type="button"
+              onClick={(e) => {
+                e.stopPropagation();
+                onSwipeComplete(task.id);
+              }}
+              className="w-6 h-6 rounded-full border-2 border-white/30 shrink-0 flex items-center justify-center touch-manipulation active:border-green-400 active:bg-green-500/20 transition-colors mt-0.5"
+            >
+              {/* Empty circle — tapping completes */}
+            </button>
+          ) : isDone ? (
+            <div className="w-6 h-6 rounded-full bg-emerald-500 shrink-0 flex items-center justify-center mt-0.5">
+              <Check className="h-3.5 w-3.5 text-white" />
+            </div>
+          ) : null}
+          <div className="flex-1 min-w-0 flex items-start justify-between gap-2">
+            <h3
               className={cn(
-                'text-[11px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full shrink-0',
-                task.priority === 'urgent' && 'bg-red-500/20 text-red-400',
-                task.priority === 'high' && 'bg-orange-500/20 text-orange-400',
-                task.priority === 'low' && 'bg-white/10 text-white'
+                'text-[15px] font-semibold text-white line-clamp-2 flex-1',
+                isDone && 'line-through'
               )}
             >
-              {PRIORITY_LABEL[task.priority]}
-            </span>
-          )}
+              {task.title}
+            </h3>
+            {task.priority !== 'normal' && (
+              <span
+                className={cn(
+                  'text-[11px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full shrink-0',
+                  task.priority === 'urgent' && 'bg-red-500/20 text-red-400',
+                  task.priority === 'high' && 'bg-orange-500/20 text-orange-400',
+                  task.priority === 'low' && 'bg-white/10 text-white'
+                )}
+              >
+                {PRIORITY_LABEL[task.priority]}
+              </span>
+            )}
+          </div>
         </div>
 
         {/* Details preview */}
@@ -196,9 +233,7 @@ export function TaskCard({ task, onTap, onSwipeComplete }: TaskCardProps) {
                   key={tag}
                   className={cn(
                     'text-[10px] font-medium px-1.5 py-0.5 rounded inline-flex items-center gap-0.5',
-                    tag === 'snagging'
-                      ? 'bg-orange-500/20 text-orange-400'
-                      : 'bg-white/10 text-white'
+                    TAG_COLOUR[tag] || 'bg-white/10 text-white'
                   )}
                 >
                   {tag === 'snagging' && <AlertTriangle className="h-2.5 w-2.5" />}
@@ -212,8 +247,6 @@ export function TaskCard({ task, onTap, onSwipeComplete }: TaskCardProps) {
           )}
         </div>
 
-        {/* Swipe hint for open tasks */}
-        {canSwipe && <p className="text-[10px] text-white mt-2">Swipe right to complete</p>}
       </motion.button>
     </div>
   );

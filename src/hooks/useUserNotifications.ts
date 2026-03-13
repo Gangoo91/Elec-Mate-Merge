@@ -11,6 +11,7 @@ export interface UserNotification {
     | 'invoice_overdue'
     | 'cert_expiring'
     | 'payment_reminder'
+    | 'booking_received'
     | 'general';
   title: string;
   message: string;

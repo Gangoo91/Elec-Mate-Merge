@@ -10,6 +10,7 @@ from src.db.supabase_client import (
     log_pipeline_end,
     log_pipeline_start,
     upsert_courses,
+    upsert_training_courses,
 )
 from src.utils.alerting import alert_pipeline_failure
 
@@ -39,18 +40,29 @@ async def run_courses_api_pipeline() -> None:
             )
             total_cached += cached
 
+        # Tag each course with its source and write to training_courses
+        for c in gov_courses:
+            c.setdefault("source", "gov_find_course")
+        for c in reed_courses:
+            c.setdefault("source", "reed_courses")
+
+        combined = gov_courses + reed_courses
+        tc_count = upsert_training_courses(combined)
+
         total = len(gov_courses) + len(reed_courses)
         log_pipeline_end(
             run_id,
             status="completed",
             records_found=total,
             records_inserted=total_cached,
+            records_updated=tc_count,
         )
         log.info(
             "courses_api_pipeline_done",
             gov=len(gov_courses),
             reed=len(reed_courses),
             cached=total_cached,
+            training_courses=tc_count,
         )
     except Exception as e:
         log_pipeline_end(run_id, status="failed", errors=[str(e)])
@@ -58,14 +70,3 @@ async def run_courses_api_pipeline() -> None:
         raise
 
 
-async def run_courses_scrape_pipeline() -> None:
-    """Fetch courses from scraped providers (Phase 3)."""
-    run_id = log_pipeline_start("courses_scrape")
-    try:
-        # Phase 3: Import and run scraped course providers here
-        log_pipeline_end(run_id, status="completed", records_found=0)
-        log.info("courses_scrape_pipeline_skipped", reason="phase_3")
-    except Exception as e:
-        log_pipeline_end(run_id, status="failed", errors=[str(e)])
-        alert_pipeline_failure("courses_scrape", str(e))
-        raise
