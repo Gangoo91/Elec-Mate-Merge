@@ -68,6 +68,7 @@ export const MarkAsPaidDialog = ({
           invoice_paid_at: paymentDate.toISOString(),
           invoice_payment_method: paymentMethod,
           invoice_payment_reference: paymentReference || null,
+          total_paid: invoice.total,
         })
         .eq('id', invoice.id);
 
