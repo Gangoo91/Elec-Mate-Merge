@@ -7,6 +7,8 @@ import {
   Wrench,
   Sparkles,
   Loader2,
+  MessageSquare,
+  Users,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Link, useSearchParams, useNavigate } from 'react-router-dom';
@@ -26,9 +28,9 @@ const planInfo: Record<
     color: 'from-yellow-500 to-amber-500',
     features: [
       'Unlimited certificates',
-      'AI tools & calculators',
-      'Invoice management',
-      'Cloud storage',
+      '8 AI specialist agents',
+      'Quote & invoice builder',
+      'Inspection & testing suite',
     ],
   },
   'electrician-annual': {
@@ -37,22 +39,76 @@ const planInfo: Record<
     color: 'from-yellow-500 to-amber-500',
     features: [
       'Unlimited certificates',
-      'AI tools & calculators',
-      'Invoice management',
-      'Cloud storage',
+      '8 AI specialist agents',
+      'Quote & invoice builder',
+      'Inspection & testing suite',
     ],
   },
   'apprentice-monthly': {
     name: 'Apprentice',
     icon: BookOpen,
     color: 'from-blue-500 to-cyan-500',
-    features: ['Full study centre access', 'Practice exams', 'Progress tracking', 'Tutor support'],
+    features: [
+      '2,000+ practice questions',
+      'AM2 & City & Guilds exam prep',
+      'BS 7671 study guides',
+      '50+ electrical calculators',
+    ],
   },
   'apprentice-annual': {
     name: 'Apprentice',
     icon: BookOpen,
     color: 'from-blue-500 to-cyan-500',
-    features: ['Full study centre access', 'Practice exams', 'Progress tracking', 'Tutor support'],
+    features: [
+      '2,000+ practice questions',
+      'AM2 & City & Guilds exam prep',
+      'BS 7671 study guides',
+      '50+ electrical calculators',
+    ],
+  },
+  'business-ai-monthly': {
+    name: 'Business AI',
+    icon: MessageSquare,
+    color: 'from-amber-500 to-orange-500',
+    features: [
+      'Mate — your WhatsApp AI assistant',
+      'Morning briefings & day planner',
+      'Automated invoice chasing',
+      'Email lead monitoring',
+    ],
+  },
+  'business-ai-yearly': {
+    name: 'Business AI',
+    icon: MessageSquare,
+    color: 'from-amber-500 to-orange-500',
+    features: [
+      'Mate — your WhatsApp AI assistant',
+      'Morning briefings & day planner',
+      'Automated invoice chasing',
+      'Email lead monitoring',
+    ],
+  },
+  'employer-monthly': {
+    name: 'Employer',
+    icon: Users,
+    color: 'from-violet-500 to-purple-500',
+    features: [
+      'Team GPS & job tracking',
+      'Job packs & assignments',
+      'Timesheets & scheduling',
+      'Everything in Business AI',
+    ],
+  },
+  'employer-yearly': {
+    name: 'Employer',
+    icon: Users,
+    color: 'from-violet-500 to-purple-500',
+    features: [
+      'Team GPS & job tracking',
+      'Job packs & assignments',
+      'Timesheets & scheduling',
+      'Everything in Business AI',
+    ],
   },
   'contractor-monthly': {
     name: 'Contractor',
@@ -93,12 +149,13 @@ const PaymentSuccess = () => {
   // Derive role from planId so Dashboard doesn't redirect to complete-profile
   const roleFromPlan = planId.startsWith('apprentice')
     ? 'apprentice'
-    : planId.startsWith('contractor')
-      ? 'electrician'
+    : planId.startsWith('employer')
+      ? 'employer'
       : 'electrician';
 
   // Ensure profile has a role set — fills the gap if webhook didn't set one
   const ensureRole = useCallback(
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     async (freshProfile: any) => {
       if (!user?.id || freshProfile?.role) return;
       try {
@@ -240,7 +297,7 @@ const PaymentSuccess = () => {
             className="text-center mb-8"
           >
             <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3">
-              {isTrial ? 'Your 7-day free trial has started!' : 'Welcome to Elec-Mate!'}
+              {isTrial ? 'Your 7-day free trial has started!' : `Welcome to ${plan.name}!`}
             </h1>
             <p className="text-white text-[15px] sm:text-base">
               {isTrial ? (
@@ -248,6 +305,8 @@ const PaymentSuccess = () => {
                   You won&apos;t be charged until{' '}
                   <span className="text-white font-medium">{trialEndDate}</span>
                 </>
+              ) : planId.startsWith('business-ai') || planId.startsWith('employer') ? (
+                <>Your plan is live. We&apos;ll set up your WhatsApp AI agent shortly.</>
               ) : (
                 <>
                   Your <span className="text-white font-medium">{plan.name}</span> subscription is
@@ -363,10 +422,7 @@ const PaymentSuccess = () => {
             </p>
             <p className="text-[12px] text-white">
               Need help? Email{' '}
-              <a
-                href="mailto:info@elec-mate.com"
-                className="text-white hover:text-white underline"
-              >
+              <a href="mailto:info@elec-mate.com" className="text-white hover:text-white underline">
                 info@elec-mate.com
               </a>{' '}
               or use the chat icon in the top right corner.

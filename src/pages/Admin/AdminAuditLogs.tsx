@@ -2,7 +2,6 @@ import { useState, useMemo, useEffect } from 'react';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import PullToRefresh from '@/components/admin/PullToRefresh';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
@@ -28,6 +27,26 @@ import {
   Eye,
 } from 'lucide-react';
 import { format, formatDistanceToNow } from 'date-fns';
+import { motion } from 'framer-motion';
+
+const sectionVariants = {
+  hidden: { opacity: 0, y: 12 },
+  visible: (i: number) => ({
+    opacity: 1,
+    y: 0,
+    transition: { delay: i * 0.06, duration: 0.35, ease: 'easeOut' },
+  }),
+};
+
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: { opacity: 1, transition: { staggerChildren: 0.04 } },
+};
+
+const listItemVariants = {
+  hidden: { opacity: 0, x: -8 },
+  visible: { opacity: 1, x: 0, transition: { duration: 0.2, ease: 'easeOut' } },
+};
 
 // Static action badge styles - extracted to module scope for performance
 const ACTION_BADGE_STYLES: Record<string, string> = {
@@ -108,7 +127,7 @@ export default function AdminAuditLogs() {
     if (action.includes('delete') || action.includes('remove'))
       return <Trash2 className="h-4 w-4 text-red-400" />;
     if (action.includes('view') || action.includes('read'))
-      return <Eye className="h-4 w-4 text-gray-400" />;
+      return <Eye className="h-4 w-4 !text-white" />;
     if (action.includes('login') || action.includes('auth'))
       return <Shield className="h-4 w-4 text-yellow-400" />;
     return <Settings className="h-4 w-4 text-amber-400" />;
@@ -120,9 +139,6 @@ export default function AdminAuditLogs() {
     if (style) return <Badge className={style}>{actionType}</Badge>;
     return <Badge variant="outline">{actionType}</Badge>;
   };
-
-  // Get unique entity types for filter - memoized to avoid recreation
-  const entityTypes = useMemo(() => [...new Set(logs?.map((l) => l.entity_type) || [])], [logs]);
 
   // Pagination
   const totalPages = Math.ceil((logs?.length || 0) / itemsPerPage);
@@ -145,24 +161,26 @@ export default function AdminAuditLogs() {
     >
       <div className="space-y-4 pb-20">
         {/* Header */}
-        <div className="flex items-center justify-between">
-          <div>
-            <h2 className="text-lg font-semibold">Audit Logs</h2>
-            <p className="text-xs text-muted-foreground">{logs?.length || 0} recent actions</p>
+        <motion.section variants={sectionVariants} initial="hidden" animate="visible" custom={0}>
+          <div className="flex items-center justify-between">
+            <div>
+              <h2 className="text-2xl font-bold !text-white">Audit Logs</h2>
+              <p className="text-xs !text-white">{logs?.length || 0} recent actions</p>
+            </div>
+            <Button
+              variant="outline"
+              size="icon"
+              className="h-11 w-11 touch-manipulation"
+              onClick={() => refetch()}
+            >
+              <RefreshCw className="h-4 w-4" />
+            </Button>
           </div>
-          <Button
-            variant="outline"
-            size="icon"
-            className="h-11 w-11 touch-manipulation"
-            onClick={() => refetch()}
-          >
-            <RefreshCw className="h-4 w-4" />
-          </Button>
-        </div>
+        </motion.section>
 
         {/* Filters */}
-        <Card>
-          <CardContent className="pt-4 pb-4">
+        <motion.section variants={sectionVariants} initial="hidden" animate="visible" custom={1}>
+          <div className="glass-premium rounded-2xl overflow-hidden p-4">
             <div className="flex gap-3">
               <AdminSearchInput
                 value={search}
@@ -171,7 +189,7 @@ export default function AdminAuditLogs() {
                 className="flex-1"
               />
               <Select value={actionFilter} onValueChange={setActionFilter}>
-                <SelectTrigger className="w-[120px] h-12 touch-manipulation">
+                <SelectTrigger className="w-[120px] h-11 touch-manipulation">
                   <SelectValue placeholder="Action" />
                 </SelectTrigger>
                 <SelectContent>
@@ -183,51 +201,51 @@ export default function AdminAuditLogs() {
                 </SelectContent>
               </Select>
             </div>
-          </CardContent>
-        </Card>
+          </div>
+        </motion.section>
 
         {/* Logs List */}
         {isLoading ? (
-          <div className="space-y-2">
+          <div className="glass-premium rounded-2xl overflow-hidden p-4 space-y-2">
             {[...Array(10)].map((_, i) => (
-              <Card key={i} className="animate-pulse">
-                <CardContent className="pt-4 pb-4">
-                  <div className="h-14 bg-muted rounded" />
-                </CardContent>
-              </Card>
+              <div key={i} className="h-14 bg-white/[0.06] animate-pulse rounded-lg" />
             ))}
           </div>
         ) : logs?.length === 0 ? (
-          <Card>
-            <CardContent className="pt-6">
-              <AdminEmptyState
-                icon={History}
-                title="No audit logs"
-                description="Activity will be logged here when actions are performed."
-              />
-            </CardContent>
-          </Card>
+          <div className="glass-premium rounded-2xl overflow-hidden p-6">
+            <AdminEmptyState
+              icon={History}
+              title="No audit logs"
+              description="Activity will be logged here when actions are performed."
+            />
+          </div>
         ) : (
           <>
-            <div className="space-y-1">
-              {paginatedLogs.map((log) => (
-                <Card
-                  key={log.id}
-                  className="touch-manipulation active:scale-[0.99] transition-transform cursor-pointer"
-                  onClick={() => setSelectedLog(log)}
-                >
-                  <CardContent className="pt-3 pb-3">
-                    <div className="flex items-center justify-between gap-3">
+            <motion.section
+              variants={sectionVariants}
+              initial="hidden"
+              animate="visible"
+              custom={2}
+            >
+              <div className="glass-premium rounded-2xl overflow-hidden">
+                <motion.div variants={containerVariants} initial="hidden" animate="visible">
+                  {paginatedLogs.map((log, i) => (
+                    <motion.button
+                      key={log.id}
+                      variants={listItemVariants}
+                      className={`w-full text-left p-3 touch-manipulation active:scale-[0.99] active:bg-white/5 transition-all cursor-pointer flex items-center justify-between gap-3 ${i > 0 ? 'border-t border-white/[0.04]' : ''}`}
+                      onClick={() => setSelectedLog(log)}
+                    >
                       <div className="flex items-center gap-3 min-w-0 flex-1">
-                        <div className="w-9 h-9 rounded-lg bg-muted flex items-center justify-center shrink-0">
+                        <div className="w-9 h-9 rounded-lg bg-white/[0.06] flex items-center justify-center shrink-0">
                           {getActionIcon(log.action)}
                         </div>
                         <div className="min-w-0 flex-1">
                           <div className="flex items-center gap-2">
-                            <p className="text-sm font-medium truncate">{log.action}</p>
+                            <p className="text-sm font-medium truncate !text-white">{log.action}</p>
                             {getActionBadge(log.action)}
                           </div>
-                          <div className="flex items-center gap-2 text-xs text-muted-foreground mt-0.5">
+                          <div className="flex items-center gap-2 text-xs !text-white mt-0.5">
                             <span>{log.profiles?.full_name || 'System'}</span>
                             <span>·</span>
                             <span>{log.entity_type}</span>
@@ -238,12 +256,12 @@ export default function AdminAuditLogs() {
                           </div>
                         </div>
                       </div>
-                      <ChevronRight className="h-4 w-4 text-muted-foreground shrink-0" />
-                    </div>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
+                      <ChevronRight className="h-4 w-4 !text-white shrink-0" />
+                    </motion.button>
+                  ))}
+                </motion.div>
+              </div>
+            </motion.section>
 
             {/* Pagination */}
             {totalPages > 1 && (
@@ -268,9 +286,9 @@ export default function AdminAuditLogs() {
           <SheetContent side="bottom" className="h-[80vh] rounded-t-2xl p-0">
             <div className="flex flex-col h-full">
               <div className="flex justify-center pt-3 pb-2">
-                <div className="w-10 h-1 rounded-full bg-muted-foreground/30" />
+                <div className="w-12 h-1.5 bg-white/20 rounded-full" />
               </div>
-              <SheetHeader className="px-4 pb-4 border-b border-border">
+              <SheetHeader className="px-4 pb-4 border-b border-white/[0.06]">
                 <SheetTitle className="flex items-center gap-2">
                   {selectedLog && getActionIcon(selectedLog.action)}
                   {selectedLog?.action}
@@ -278,82 +296,62 @@ export default function AdminAuditLogs() {
               </SheetHeader>
 
               <div className="flex-1 overflow-y-auto p-4 space-y-4">
-                <Card>
-                  <CardHeader className="pb-2">
-                    <CardTitle className="text-sm">Details</CardTitle>
-                  </CardHeader>
-                  <CardContent className="space-y-2">
+                <div className="glass-premium rounded-2xl overflow-hidden p-4 space-y-2">
+                  <h4 className="text-sm font-semibold !text-white mb-2">Details</h4>
+                  <div className="flex justify-between">
+                    <span className="text-sm !text-white">User</span>
+                    <span className="text-sm">{selectedLog?.profiles?.full_name || 'System'}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-sm !text-white">Entity Type</span>
+                    <span className="text-sm font-mono">{selectedLog?.entity_type}</span>
+                  </div>
+                  {selectedLog?.entity_id && (
                     <div className="flex justify-between">
-                      <span className="text-sm text-muted-foreground">User</span>
-                      <span className="text-sm">
-                        {selectedLog?.profiles?.full_name || 'System'}
+                      <span className="text-sm !text-white">Entity ID</span>
+                      <span className="text-xs font-mono !text-white">
+                        {selectedLog.entity_id.slice(0, 8)}...
                       </span>
                     </div>
+                  )}
+                  <div className="flex justify-between">
+                    <span className="text-sm !text-white">Time</span>
+                    <span className="text-sm">
+                      {selectedLog?.created_at &&
+                        format(new Date(selectedLog.created_at), 'dd MMM yyyy HH:mm:ss')}
+                    </span>
+                  </div>
+                  {selectedLog?.ip_address && (
                     <div className="flex justify-between">
-                      <span className="text-sm text-muted-foreground">Entity Type</span>
-                      <span className="text-sm font-mono">{selectedLog?.entity_type}</span>
+                      <span className="text-sm !text-white">IP Address</span>
+                      <span className="text-sm font-mono">{selectedLog.ip_address}</span>
                     </div>
-                    {selectedLog?.entity_id && (
-                      <div className="flex justify-between">
-                        <span className="text-sm text-muted-foreground">Entity ID</span>
-                        <span className="text-xs font-mono text-muted-foreground">
-                          {selectedLog.entity_id.slice(0, 8)}...
-                        </span>
-                      </div>
-                    )}
-                    <div className="flex justify-between">
-                      <span className="text-sm text-muted-foreground">Time</span>
-                      <span className="text-sm">
-                        {selectedLog?.created_at &&
-                          format(new Date(selectedLog.created_at), 'dd MMM yyyy HH:mm:ss')}
-                      </span>
-                    </div>
-                    {selectedLog?.ip_address && (
-                      <div className="flex justify-between">
-                        <span className="text-sm text-muted-foreground">IP Address</span>
-                        <span className="text-sm font-mono">{selectedLog.ip_address}</span>
-                      </div>
-                    )}
-                  </CardContent>
-                </Card>
+                  )}
+                </div>
 
                 {selectedLog?.old_values && (
-                  <Card>
-                    <CardHeader className="pb-2">
-                      <CardTitle className="text-sm text-red-400">Old Values</CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                      <pre className="text-xs bg-muted p-3 rounded-lg overflow-x-auto">
-                        {JSON.stringify(selectedLog.old_values, null, 2)}
-                      </pre>
-                    </CardContent>
-                  </Card>
+                  <div className="glass-premium rounded-2xl overflow-hidden p-4">
+                    <h4 className="text-sm font-semibold text-red-400 mb-2">Old Values</h4>
+                    <pre className="text-xs bg-white/[0.05] p-3 rounded-lg overflow-x-auto">
+                      {JSON.stringify(selectedLog.old_values, null, 2)}
+                    </pre>
+                  </div>
                 )}
 
                 {selectedLog?.new_values && (
-                  <Card>
-                    <CardHeader className="pb-2">
-                      <CardTitle className="text-sm text-green-400">New Values</CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                      <pre className="text-xs bg-muted p-3 rounded-lg overflow-x-auto">
-                        {JSON.stringify(selectedLog.new_values, null, 2)}
-                      </pre>
-                    </CardContent>
-                  </Card>
+                  <div className="glass-premium rounded-2xl overflow-hidden p-4">
+                    <h4 className="text-sm font-semibold text-green-400 mb-2">New Values</h4>
+                    <pre className="text-xs bg-white/[0.05] p-3 rounded-lg overflow-x-auto">
+                      {JSON.stringify(selectedLog.new_values, null, 2)}
+                    </pre>
+                  </div>
                 )}
 
                 {selectedLog?.user_agent && (
-                  <Card>
-                    <CardHeader className="pb-2">
-                      <CardTitle className="text-sm">User Agent</CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                      <p className="text-xs text-muted-foreground break-all">
-                        {selectedLog.user_agent}
-                      </p>
-                    </CardContent>
-                  </Card>
+                  <div className="glass-premium rounded-2xl overflow-hidden p-4">
+                    <h4 className="text-sm font-semibold !text-white mb-2">User Agent</h4>
+                    <p className="text-xs !text-white break-all">{selectedLog.user_agent}</p>
+                  </div>
                 )}
               </div>
             </div>

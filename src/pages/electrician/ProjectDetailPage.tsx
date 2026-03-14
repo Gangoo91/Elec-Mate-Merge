@@ -24,6 +24,7 @@ import {
   AlertTriangle,
   Pencil,
   HardHat,
+  Trash2,
   X,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -167,8 +168,13 @@ const ProjectDetailPage = () => {
     loadCustomers();
   }, []);
 
-  // Project photos
-  const { photos: projectPhotos, fetchDocuments } = useProjectDocuments(id || '');
+  // Project photos & documents
+  const {
+    photos: projectPhotos,
+    documents: projectDocuments,
+    fetchDocuments,
+    deleteDocument,
+  } = useProjectDocuments(id || '');
 
   // Fetch project photos on mount
   useEffect(() => {
@@ -209,6 +215,8 @@ const ProjectDetailPage = () => {
   const [linkType, setLinkType] = useState<LinkType | null>(null);
   const [editProjectOpen, setEditProjectOpen] = useState(false);
   const [photoSheetOpen, setPhotoSheetOpen] = useState(false);
+  const [docSheetOpen, setDocSheetOpen] = useState(false);
+  const [confirmDeleteDoc, setConfirmDeleteDoc] = useState<string | null>(null);
 
   // Edit project form state
   const [editTitle, setEditTitle] = useState('');
@@ -1400,6 +1408,119 @@ const ProjectDetailPage = () => {
             </CollapsibleContent>
           </Collapsible>
         </motion.div>
+
+        {/* ── Documents Section ── */}
+        <motion.div variants={itemVariants}>
+          <Collapsible
+            open={openSections.has('documents')}
+            onOpenChange={() => toggleSection('documents')}
+          >
+            <CollapsibleTrigger asChild>
+              <button className="w-full flex items-center justify-between p-4 rounded-xl bg-white/[0.04] border border-white/[0.08] touch-manipulation h-14 active:bg-white/[0.06] transition-colors">
+                <div className="flex items-center gap-3">
+                  <FileText className="h-5 w-5 text-amber-400" />
+                  <span className="text-[15px] font-bold text-white">Documents</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  {projectDocuments.length > 0 && (
+                    <span className="text-[12px] font-bold text-white bg-white/10 px-2.5 py-0.5 rounded-full">
+                      {projectDocuments.length}
+                    </span>
+                  )}
+                  <span
+                    role="button"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setDocSheetOpen(true);
+                    }}
+                    className="text-[12px] font-medium text-elec-yellow"
+                  >
+                    + Add
+                  </span>
+                  {openSections.has('documents') ? (
+                    <ChevronUp className="h-4 w-4 text-white" />
+                  ) : (
+                    <ChevronDown className="h-4 w-4 text-white" />
+                  )}
+                </div>
+              </button>
+            </CollapsibleTrigger>
+            <CollapsibleContent className="mt-2 space-y-2">
+              {projectDocuments.length === 0 ? (
+                <div className="flex flex-col items-center py-6 text-center">
+                  <FileText className="h-7 w-7 text-white mb-2" />
+                  <p className="text-sm text-white mb-1">No documents yet</p>
+                  <p className="text-xs text-white mb-3">
+                    Upload works orders, drawings, specs or any project files
+                  </p>
+                  <button
+                    type="button"
+                    onClick={() => setDocSheetOpen(true)}
+                    className="h-11 px-4 rounded-xl bg-gradient-to-r from-amber-400 to-amber-500 text-black text-sm font-bold touch-manipulation active:scale-[0.98] transition-transform"
+                  >
+                    Upload Document
+                  </button>
+                </div>
+              ) : (
+                <>
+                  <div className="space-y-1.5">
+                    {projectDocuments.slice(0, 5).map((doc) => (
+                      <div
+                        key={doc.id}
+                        className="flex items-center gap-3 p-3 rounded-xl bg-white/[0.04] border border-white/[0.08]"
+                      >
+                        <button
+                          type="button"
+                          onClick={() => doc.signedUrl && window.open(doc.signedUrl, '_blank')}
+                          className="flex items-center gap-3 min-w-0 flex-1 touch-manipulation text-left"
+                        >
+                          <FileText className="h-5 w-5 text-amber-400 flex-shrink-0" />
+                          <div className="min-w-0 flex-1">
+                            <p className="text-sm text-white font-medium truncate">{doc.name}</p>
+                            {doc.file_size != null && (
+                              <p className="text-[11px] text-white">
+                                {doc.file_size < 1024
+                                  ? `${doc.file_size} B`
+                                  : doc.file_size < 1024 * 1024
+                                    ? `${(doc.file_size / 1024).toFixed(0)} KB`
+                                    : `${(doc.file_size / (1024 * 1024)).toFixed(1)} MB`}
+                              </p>
+                            )}
+                          </div>
+                          <ChevronRight className="h-4 w-4 text-white flex-shrink-0" />
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => setConfirmDeleteDoc(doc.id)}
+                          className="w-9 h-9 flex items-center justify-center rounded-full hover:bg-white/10 active:bg-white/10 touch-manipulation flex-shrink-0"
+                        >
+                          <Trash2 className="h-4 w-4 text-white" />
+                        </button>
+                      </div>
+                    ))}
+                  </div>
+                  {projectDocuments.length > 5 && (
+                    <button
+                      type="button"
+                      onClick={() => setDocSheetOpen(true)}
+                      className="w-full h-11 flex items-center justify-center text-sm font-medium text-elec-yellow touch-manipulation active:bg-white/[0.04] rounded-xl transition-colors"
+                    >
+                      View all {projectDocuments.length} documents
+                    </button>
+                  )}
+                  <button
+                    type="button"
+                    onClick={() => setDocSheetOpen(true)}
+                    className="w-full h-11 rounded-xl bg-gradient-to-r from-amber-400 to-amber-500 text-black text-sm font-bold touch-manipulation active:scale-[0.98] transition-transform flex items-center justify-center gap-1.5"
+                  >
+                    <Plus className="h-4 w-4" />
+                    Upload Document
+                  </button>
+                </>
+              )}
+            </CollapsibleContent>
+          </Collapsible>
+        </motion.div>
       </motion.div>
 
       {/* Edit Project Sheet */}
@@ -1621,16 +1742,28 @@ const ProjectDetailPage = () => {
       />
 
       {id && (
-        <ProjectDocumentSheet
-          isOpen={photoSheetOpen}
-          onClose={() => {
-            setPhotoSheetOpen(false);
-            fetchDocuments();
-          }}
-          docType="photo"
-          projectId={id}
-          projectName={project.title}
-        />
+        <>
+          <ProjectDocumentSheet
+            isOpen={photoSheetOpen}
+            onClose={() => {
+              setPhotoSheetOpen(false);
+              fetchDocuments();
+            }}
+            docType="photo"
+            projectId={id}
+            projectName={project.title}
+          />
+          <ProjectDocumentSheet
+            isOpen={docSheetOpen}
+            onClose={() => {
+              setDocSheetOpen(false);
+              fetchDocuments();
+            }}
+            docType="document"
+            projectId={id}
+            projectName={project.title}
+          />
+        </>
       )}
 
       {linkType && (
@@ -1643,6 +1776,38 @@ const ProjectDetailPage = () => {
           createLabel={linkConfig[linkType].createLabel}
           createUrl={linkConfig[linkType].createUrl}
         />
+      )}
+
+      {/* Delete document confirmation */}
+      {confirmDeleteDoc && (
+        <div className="fixed inset-0 z-[60] bg-black/80 flex items-end justify-center px-4 pb-8">
+          <div className="w-full max-w-sm bg-[#1A1A1A] rounded-3xl p-5 space-y-4">
+            <h3 className="text-base font-bold text-white">Delete document?</h3>
+            <p className="text-sm text-white">
+              This file will be permanently deleted from the project.
+            </p>
+            <div className="grid grid-cols-2 gap-3">
+              <button
+                type="button"
+                onClick={() => setConfirmDeleteDoc(null)}
+                className="h-11 rounded-xl bg-white/[0.06] text-white text-sm font-medium touch-manipulation"
+              >
+                Cancel
+              </button>
+              <button
+                type="button"
+                onClick={async () => {
+                  const doc = projectDocuments.find((d) => d.id === confirmDeleteDoc);
+                  if (doc) await deleteDocument(doc);
+                  setConfirmDeleteDoc(null);
+                }}
+                className="h-11 rounded-xl bg-red-500/80 text-white text-sm font-semibold touch-manipulation"
+              >
+                Delete
+              </button>
+            </div>
+          </div>
+        </div>
       )}
     </div>
   );

@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { useQuery, useMutation } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/contexts/AuthContext';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Checkbox } from '@/components/ui/checkbox';
@@ -27,17 +26,36 @@ import {
   GraduationCap,
   Settings,
   Loader2,
-  Check,
-  Calendar,
   type LucideIcon,
 } from 'lucide-react';
 import { format, subDays } from 'date-fns';
 import { toast } from '@/hooks/use-toast';
 import PullToRefresh from '@/components/admin/PullToRefresh';
 import { useHaptic } from '@/hooks/useHaptic';
-import type { Database } from '@/integrations/supabase/types';
+import { motion } from 'framer-motion';
+import { AnimatedCounter } from '@/components/dashboard/AnimatedCounter';
+import type { Database as DbTypes } from '@/integrations/supabase/types';
 
-type TableName = keyof Database['public']['Tables'];
+type TableName = keyof DbTypes['public']['Tables'];
+
+const sectionVariants = {
+  hidden: { opacity: 0, y: 12 },
+  visible: (i: number) => ({
+    opacity: 1,
+    y: 0,
+    transition: { delay: i * 0.06, duration: 0.35, ease: 'easeOut' },
+  }),
+};
+
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: { opacity: 1, transition: { staggerChildren: 0.04 } },
+};
+
+const listItemVariants = {
+  hidden: { opacity: 0, x: -8 },
+  visible: { opacity: 1, x: 0, transition: { duration: 0.2, ease: 'easeOut' } },
+};
 
 interface ExportConfig {
   table: string;
@@ -248,93 +266,100 @@ export default function AdminDataExport() {
     >
       <div className="space-y-4 pb-20">
         {/* Header */}
-        <div>
-          <h2 className="text-lg font-semibold">Data Export</h2>
-          <p className="text-xs text-muted-foreground">Export platform data for analysis</p>
-        </div>
+        <motion.section variants={sectionVariants} initial="hidden" animate="visible" custom={0}>
+          <div>
+            <h2 className="text-2xl font-bold !text-white">Data Export</h2>
+            <p className="text-xs !text-white">Export platform data for analysis</p>
+          </div>
+        </motion.section>
 
         {!isSuperAdmin && (
-          <Card className="border-amber-500/30 bg-amber-500/10">
-            <CardContent className="pt-4 pb-4">
-              <p className="text-sm text-amber-300">
-                Data export is restricted to super admins only.
-              </p>
-            </CardContent>
-          </Card>
+          <div className="glass-premium rounded-2xl overflow-hidden border-amber-500/30 p-4">
+            <p className="text-sm text-amber-300">
+              Data export is restricted to super admins only.
+            </p>
+          </div>
         )}
 
         {/* Export Options */}
-        <div className="grid gap-3">
-          {EXPORT_CONFIGS.map((config) => {
-            const Icon = config.icon;
-            return (
-              <Card
-                key={config.table}
-                className={`touch-manipulation transition-all ${
-                  isSuperAdmin
-                    ? 'active:scale-[0.99] cursor-pointer hover:border-primary/50'
-                    : 'opacity-60'
-                }`}
-                onClick={() => isSuperAdmin && handleOpenExport(config)}
-              >
-                <CardContent className="pt-4 pb-4">
-                  <div className="flex items-center justify-between gap-3">
+        <motion.section variants={sectionVariants} initial="hidden" animate="visible" custom={1}>
+          <div className="glass-premium rounded-2xl overflow-hidden">
+            <motion.div variants={containerVariants} initial="hidden" animate="visible">
+              {EXPORT_CONFIGS.map((config, i) => {
+                const Icon = config.icon;
+                return (
+                  <motion.button
+                    key={config.table}
+                    variants={listItemVariants}
+                    className={`w-full text-left p-4 touch-manipulation transition-all flex items-center justify-between gap-3 ${
+                      i > 0 ? 'border-t border-white/[0.04]' : ''
+                    } ${
+                      isSuperAdmin
+                        ? 'active:scale-[0.99] active:bg-white/5 cursor-pointer'
+                        : 'opacity-60'
+                    }`}
+                    onClick={() => isSuperAdmin && handleOpenExport(config)}
+                    disabled={!isSuperAdmin}
+                  >
                     <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center">
-                        <Icon className="h-5 w-5 text-primary" />
+                      <div className="w-10 h-10 rounded-xl bg-white/[0.06] flex items-center justify-center">
+                        <Icon className="h-5 w-5 !text-white" />
                       </div>
                       <div>
-                        <p className="font-medium text-sm">{config.name}</p>
-                        <p className="text-xs text-muted-foreground">{config.description}</p>
+                        <p className="font-medium text-sm !text-white">{config.name}</p>
+                        <p className="text-xs !text-white">{config.description}</p>
                       </div>
                     </div>
                     <div className="flex items-center gap-2">
                       <Badge variant="outline">
                         {tableCounts?.[config.table]?.toLocaleString() || 0} rows
                       </Badge>
-                      <Download className="h-4 w-4 text-muted-foreground" />
+                      <Download className="h-4 w-4 !text-white" />
                     </div>
-                  </div>
-                </CardContent>
-              </Card>
-            );
-          })}
-        </div>
+                  </motion.button>
+                );
+              })}
+            </motion.div>
+          </div>
+        </motion.section>
 
-        {/* Quick Stats */}
-        <Card className="bg-gradient-to-br from-blue-500/5 to-yellow-500/5">
-          <CardHeader className="pb-2">
-            <CardTitle className="text-sm flex items-center gap-2">
-              <Database className="h-4 w-4 text-blue-400" />
-              Database Overview
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="grid grid-cols-2 gap-3">
-              <div className="text-center p-3 rounded-lg bg-muted/50">
-                <p className="text-2xl font-bold">
-                  {Object.values(tableCounts || {})
-                    .reduce((a, b) => a + b, 0)
-                    .toLocaleString()}
-                </p>
-                <p className="text-xs text-muted-foreground">Total Records</p>
-              </div>
-              <div className="text-center p-3 rounded-lg bg-muted/50">
-                <p className="text-2xl font-bold">{EXPORT_CONFIGS.length}</p>
-                <p className="text-xs text-muted-foreground">Tables Available</p>
+        {/* Database Overview */}
+        <motion.section variants={sectionVariants} initial="hidden" animate="visible" custom={2}>
+          <div className="glass-premium rounded-2xl overflow-hidden">
+            <div className="h-1 bg-gradient-to-r from-blue-500 to-yellow-500" />
+            <div className="p-4">
+              <h3 className="text-sm font-semibold !text-white flex items-center gap-2 mb-4">
+                <Database className="h-4 w-4 text-blue-400" />
+                Database Overview
+              </h3>
+              <div className="grid grid-cols-2 gap-3">
+                <div className="text-center p-3 rounded-lg bg-white/5">
+                  <p className="text-2xl font-bold">
+                    <AnimatedCounter
+                      value={Object.values(tableCounts || {}).reduce((a, b) => a + b, 0)}
+                    />
+                  </p>
+                  <p className="text-xs !text-white">Total Records</p>
+                </div>
+                <div className="text-center p-3 rounded-lg bg-white/5">
+                  <p className="text-2xl font-bold">
+                    <AnimatedCounter value={EXPORT_CONFIGS.length} />
+                  </p>
+                  <p className="text-xs !text-white">Tables Available</p>
+                </div>
               </div>
             </div>
-          </CardContent>
-        </Card>
+          </div>
+        </motion.section>
 
         {/* Export Sheet */}
         <Sheet open={exportOpen} onOpenChange={setExportOpen}>
           <SheetContent side="bottom" className="h-[80vh] rounded-t-2xl p-0">
             <div className="flex flex-col h-full">
               <div className="flex justify-center pt-3 pb-2">
-                <div className="w-10 h-1 rounded-full bg-muted-foreground/30" />
+                <div className="w-12 h-1.5 bg-white/20 rounded-full" />
               </div>
-              <SheetHeader className="px-4 pb-4 border-b border-border">
+              <SheetHeader className="px-4 pb-4 border-b border-white/[0.06]">
                 <SheetTitle className="flex items-center gap-2">
                   <Download className="h-5 w-5" />
                   Export {selectedConfig?.name}
@@ -344,11 +369,11 @@ export default function AdminDataExport() {
               <div className="flex-1 overflow-y-auto p-4 space-y-4">
                 {/* Format Selection */}
                 <div className="space-y-2">
-                  <Label>Export Format</Label>
+                  <Label className="!text-white">Export Format</Label>
                   <div className="grid grid-cols-2 gap-2">
                     <Button
                       variant={exportFormat === 'csv' ? 'default' : 'outline'}
-                      className="h-12 touch-manipulation"
+                      className="h-11 touch-manipulation"
                       onClick={() => setExportFormat('csv')}
                     >
                       <FileSpreadsheet className="h-4 w-4 mr-2" />
@@ -356,7 +381,7 @@ export default function AdminDataExport() {
                     </Button>
                     <Button
                       variant={exportFormat === 'json' ? 'default' : 'outline'}
-                      className="h-12 touch-manipulation"
+                      className="h-11 touch-manipulation"
                       onClick={() => setExportFormat('json')}
                     >
                       <FileJson className="h-4 w-4 mr-2" />
@@ -367,7 +392,7 @@ export default function AdminDataExport() {
 
                 {/* Date Range */}
                 <div className="space-y-2">
-                  <Label>Date Range</Label>
+                  <Label className="!text-white">Date Range</Label>
                   <Select value={dateRange} onValueChange={setDateRange}>
                     <SelectTrigger className="h-11 touch-manipulation">
                       <SelectValue />
@@ -385,7 +410,7 @@ export default function AdminDataExport() {
                 {/* Field Selection */}
                 <div className="space-y-2">
                   <div className="flex items-center justify-between">
-                    <Label>Fields to Export</Label>
+                    <Label className="!text-white">Fields to Export</Label>
                     <Button
                       variant="ghost"
                       size="sm"
@@ -395,55 +420,54 @@ export default function AdminDataExport() {
                       Select All
                     </Button>
                   </div>
-                  <Card>
-                    <CardContent className="pt-4 pb-4 space-y-3">
-                      {selectedConfig?.fields.map((field) => (
-                        <div key={field} className="flex items-center space-x-3">
-                          <Checkbox
-                            id={field}
-                            checked={selectedFields.includes(field)}
-                            onCheckedChange={() => toggleField(field)}
-                            className="touch-manipulation"
-                          />
-                          <Label htmlFor={field} className="font-mono text-sm cursor-pointer">
-                            {field}
-                          </Label>
-                        </div>
-                      ))}
-                    </CardContent>
-                  </Card>
+                  <div className="glass-premium rounded-2xl overflow-hidden p-4 space-y-3">
+                    {selectedConfig?.fields.map((field) => (
+                      <div key={field} className="flex items-center space-x-3">
+                        <Checkbox
+                          id={field}
+                          checked={selectedFields.includes(field)}
+                          onCheckedChange={() => toggleField(field)}
+                          className="touch-manipulation"
+                        />
+                        <Label
+                          htmlFor={field}
+                          className="font-mono text-sm cursor-pointer !text-white"
+                        >
+                          {field}
+                        </Label>
+                      </div>
+                    ))}
+                  </div>
                 </div>
 
                 {/* Export Summary */}
-                <Card className="bg-muted/50">
-                  <CardContent className="pt-4 pb-4">
-                    <div className="space-y-2 text-sm">
-                      <div className="flex justify-between">
-                        <span className="text-muted-foreground">Table</span>
-                        <span className="font-mono">{selectedConfig?.table}</span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span className="text-muted-foreground">Format</span>
-                        <Badge variant="outline">{exportFormat.toUpperCase()}</Badge>
-                      </div>
-                      <div className="flex justify-between">
-                        <span className="text-muted-foreground">Fields</span>
-                        <span>{selectedFields.length} selected</span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span className="text-muted-foreground">Approx. Rows</span>
-                        <span>
-                          {tableCounts?.[selectedConfig?.table || '']?.toLocaleString() || 0}
-                        </span>
-                      </div>
+                <div className="glass-premium rounded-2xl overflow-hidden p-4">
+                  <div className="space-y-2 text-sm">
+                    <div className="flex justify-between">
+                      <span className="!text-white">Table</span>
+                      <span className="font-mono">{selectedConfig?.table}</span>
                     </div>
-                  </CardContent>
-                </Card>
+                    <div className="flex justify-between">
+                      <span className="!text-white">Format</span>
+                      <Badge variant="outline">{exportFormat.toUpperCase()}</Badge>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="!text-white">Fields</span>
+                      <span>{selectedFields.length} selected</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="!text-white">Approx. Rows</span>
+                      <span>
+                        {tableCounts?.[selectedConfig?.table || '']?.toLocaleString() || 0}
+                      </span>
+                    </div>
+                  </div>
+                </div>
               </div>
 
-              <SheetFooter className="p-4 border-t border-border">
+              <SheetFooter className="p-4 border-t border-white/[0.06]">
                 <Button
-                  className="w-full h-12 touch-manipulation gap-2"
+                  className="w-full h-11 touch-manipulation gap-2"
                   onClick={() => exportMutation.mutate()}
                   disabled={exportMutation.isPending || selectedFields.length === 0}
                 >

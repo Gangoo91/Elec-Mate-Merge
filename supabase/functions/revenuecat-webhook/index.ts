@@ -18,38 +18,25 @@ const corsHeaders = {
  */
 
 // Tiers that include Business AI agent access (must match stripe-subscription-webhook)
-const BUSINESS_AI_TIERS = new Set([
-  'business_ai',
-  'business_ai_yearly',
-  'employer',
-  'employer_yearly',
-  'Employer',
-]);
+const MATE_TIERS = new Set(['mate', 'mate_yearly', 'employer', 'employer_yearly', 'Employer']);
 
-// Map RevenueCat resolved tier names → internal tier IDs for BUSINESS_AI_TIERS lookup
+// Map RevenueCat resolved tier names → internal tier IDs for MATE_TIERS lookup
 const TIER_NAME_TO_ID: Record<string, string> = {
-  'Business AI': 'business_ai',
+  Mate: 'mate',
   Employer: 'employer',
 };
 
 // Map RevenueCat product IDs → subscription tier names
 // Product IDs are set in App Store Connect / Google Play Console
-// Format: com.elecmate.app.<tier>.<period>
 const PRODUCT_TIER_MAP: Record<string, string> = {
-  // iOS products
-  'com.elecmate.app.apprentice.monthly': 'Apprentice',
-  'com.elecmate.app.apprentice.yearly': 'Apprentice',
-  'com.elecmate.app.electrician.monthly': 'Electrician Pro',
-  'com.elecmate.app.electrician.yearly': 'Electrician Pro',
-  'com.elecmate.app.business_ai.monthly': 'Business AI',
-  'com.elecmate.app.business_ai.yearly': 'Business AI',
-  // Android products (same naming convention)
-  apprentice_monthly: 'Apprentice',
-  apprentice_yearly: 'Apprentice',
-  electrician_monthly: 'Electrician Pro',
-  electrician_yearly: 'Electrician Pro',
-  business_ai_monthly: 'Business AI',
-  business_ai_yearly: 'Business AI',
+  // iOS products (match App Store Connect product IDs)
+  elecmate_apprentice_monthly: 'Apprentice',
+  elecmate_electrician_monthly: 'Electrician Pro',
+  elecmate_mate_monthly: 'Mate',
+  // Android products (Google Play format: subscriptionId:basePlanId)
+  'apprentice:monthly': 'Apprentice',
+  'electrician:monthly': 'Electrician Pro',
+  'mate:monthly': 'Mate',
 };
 
 function resolveTierFromProduct(productId: string | null, store: string | null): string {
@@ -59,7 +46,7 @@ function resolveTierFromProduct(productId: string | null, store: string | null):
   // Fallback: pattern matching on product ID
   if (productId) {
     const id = productId.toLowerCase();
-    if (id.includes('business_ai') || id.includes('business-ai')) return 'Business AI';
+    if (id.includes('mate')) return 'Mate';
     if (id.includes('electrician')) return 'Electrician Pro';
     if (id.includes('apprentice')) return 'Apprentice';
   }
@@ -135,7 +122,7 @@ serve(async (req) => {
     if (subscribed !== null) {
       // Resolve whether this tier includes Business AI
       const tierId = subscriptionTier ? TIER_NAME_TO_ID[subscriptionTier] : null;
-      const isBusinessAiTier = tierId ? BUSINESS_AI_TIERS.has(tierId) : false;
+      const isBusinessAiTier = tierId ? MATE_TIERS.has(tierId) : false;
 
       const updateData: Record<string, unknown> = {
         subscribed,

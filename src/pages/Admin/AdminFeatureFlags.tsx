@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/contexts/AuthContext';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Button } from '@/components/ui/button';
@@ -36,6 +35,26 @@ import {
   Loader2,
 } from 'lucide-react';
 import { toast } from '@/hooks/use-toast';
+import { motion } from 'framer-motion';
+
+const sectionVariants = {
+  hidden: { opacity: 0, y: 12 },
+  visible: (i: number) => ({
+    opacity: 1,
+    y: 0,
+    transition: { delay: i * 0.06, duration: 0.35, ease: 'easeOut' },
+  }),
+};
+
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: { opacity: 1, transition: { staggerChildren: 0.04 } },
+};
+
+const listItemVariants = {
+  hidden: { opacity: 0, x: -8 },
+  visible: { opacity: 1, x: 0, transition: { duration: 0.2, ease: 'easeOut' } },
+};
 
 interface FeatureFlag {
   id: string;
@@ -187,128 +206,136 @@ export default function AdminFeatureFlags() {
     >
       <div className="space-y-4 pb-20">
         {/* Header */}
-        <div className="flex items-center justify-between">
-          <div>
-            <h2 className="text-lg font-semibold">Feature Flags</h2>
-            <p className="text-xs text-muted-foreground">
-              {enabledCount} of {flags?.length || 0} enabled
-            </p>
-          </div>
-          <div className="flex gap-2">
-            <Button
-              variant="outline"
-              size="icon"
-              className="h-11 w-11 touch-manipulation"
-              onClick={() => refetch()}
-            >
-              <RefreshCw className="h-4 w-4" />
-            </Button>
-            {isSuperAdmin && (
-              <Button className="h-11 gap-2 touch-manipulation" onClick={() => setCreateOpen(true)}>
-                <Plus className="h-4 w-4" />
-                Add Flag
+        <motion.section variants={sectionVariants} initial="hidden" animate="visible" custom={0}>
+          <div className="flex items-center justify-between">
+            <div>
+              <h2 className="text-2xl font-bold !text-white">Feature Flags</h2>
+              <p className="text-xs !text-white">
+                {enabledCount} of {flags?.length || 0} enabled
+              </p>
+            </div>
+            <div className="flex gap-2">
+              <Button
+                variant="outline"
+                size="icon"
+                className="h-11 w-11 touch-manipulation"
+                onClick={() => refetch()}
+              >
+                <RefreshCw className="h-4 w-4" />
               </Button>
-            )}
+              {isSuperAdmin && (
+                <Button
+                  className="h-11 gap-2 touch-manipulation"
+                  onClick={() => setCreateOpen(true)}
+                >
+                  <Plus className="h-4 w-4" />
+                  Add Flag
+                </Button>
+              )}
+            </div>
           </div>
-        </div>
+        </motion.section>
 
         {/* Search */}
-        <AdminSearchInput value={search} onChange={setSearch} placeholder="Search flags..." />
+        <motion.section variants={sectionVariants} initial="hidden" animate="visible" custom={1}>
+          <AdminSearchInput value={search} onChange={setSearch} placeholder="Search flags..." />
+        </motion.section>
 
         {/* Flags List */}
         {isLoading ? (
-          <div className="space-y-2">
+          <div className="glass-premium rounded-2xl overflow-hidden p-4 space-y-2">
             {[...Array(5)].map((_, i) => (
-              <Card key={i} className="animate-pulse">
-                <CardContent className="pt-4 pb-4">
-                  <div className="h-16 bg-muted rounded" />
-                </CardContent>
-              </Card>
+              <div key={i} className="h-16 bg-white/[0.06] animate-pulse rounded-lg" />
             ))}
           </div>
         ) : filteredFlags?.length === 0 ? (
-          <Card>
-            <CardContent className="pt-6">
-              <AdminEmptyState
-                icon={Flag}
-                title="No feature flags"
-                description="Create flags to control feature rollouts."
-                action={
-                  isSuperAdmin
-                    ? {
-                        label: 'Add Flag',
-                        onClick: () => setCreateOpen(true),
-                      }
-                    : undefined
-                }
-              />
-            </CardContent>
-          </Card>
+          <div className="glass-premium rounded-2xl overflow-hidden p-6">
+            <AdminEmptyState
+              icon={Flag}
+              title="No feature flags"
+              description="Create flags to control feature rollouts."
+              action={
+                isSuperAdmin
+                  ? {
+                      label: 'Add Flag',
+                      onClick: () => setCreateOpen(true),
+                    }
+                  : undefined
+              }
+            />
+          </div>
         ) : (
-          <div className="space-y-2">
-            {filteredFlags?.map((flag) => (
-              <Card key={flag.id} className={!flag.is_enabled ? 'opacity-60' : ''}>
-                <CardContent className="pt-4 pb-4">
-                  <div className="flex items-center justify-between gap-3">
-                    <div className="flex items-center gap-3 min-w-0 flex-1">
-                      <div
-                        className={`w-10 h-10 rounded-xl flex items-center justify-center ${
-                          flag.is_enabled ? 'bg-green-500/10' : 'bg-muted'
-                        }`}
-                      >
-                        {flag.is_enabled ? (
-                          <ToggleRight className="h-5 w-5 text-green-400" />
-                        ) : (
-                          <ToggleLeft className="h-5 w-5 text-muted-foreground" />
-                        )}
-                      </div>
-                      <div className="min-w-0 flex-1">
-                        <div className="flex items-center gap-2">
-                          <p className="font-mono text-sm">{flag.name}</p>
-                          {flag.percentage_rollout < 100 && (
-                            <Badge variant="outline" className="text-xs">
-                              <Percent className="h-2.5 w-2.5 mr-1" />
-                              {flag.percentage_rollout}%
-                            </Badge>
+          <motion.section variants={sectionVariants} initial="hidden" animate="visible" custom={2}>
+            <div className="glass-premium rounded-2xl overflow-hidden">
+              <div className="h-1 bg-gradient-to-r from-green-500 to-emerald-400" />
+              <motion.div variants={containerVariants} initial="hidden" animate="visible">
+                {filteredFlags?.map((flag, i) => (
+                  <motion.div
+                    key={flag.id}
+                    variants={listItemVariants}
+                    className={`p-4 ${!flag.is_enabled ? 'opacity-40' : ''} ${i > 0 ? 'border-t border-white/[0.04]' : ''}`}
+                  >
+                    <div className="flex items-center justify-between gap-3">
+                      <div className="flex items-center gap-3 min-w-0 flex-1">
+                        <div
+                          className={`w-10 h-10 rounded-xl flex items-center justify-center ${
+                            flag.is_enabled ? 'bg-green-500/10' : 'bg-white/[0.06]'
+                          }`}
+                        >
+                          {flag.is_enabled ? (
+                            <ToggleRight className="h-5 w-5 text-green-400" />
+                          ) : (
+                            <ToggleLeft className="h-5 w-5 !text-white" />
                           )}
                         </div>
-                        <p className="text-xs text-muted-foreground truncate">
-                          {flag.description || 'No description'}
-                        </p>
+                        <div className="min-w-0 flex-1">
+                          <div className="flex items-center gap-2">
+                            <p className="font-mono text-sm !text-white">{flag.name}</p>
+                            {flag.percentage_rollout < 100 && (
+                              <Badge variant="outline" className="text-xs">
+                                <Percent className="h-2.5 w-2.5 mr-1" />
+                                {flag.percentage_rollout}%
+                              </Badge>
+                            )}
+                          </div>
+                          <p className="text-xs !text-white truncate">
+                            {flag.description || 'No description'}
+                          </p>
+                        </div>
                       </div>
-                    </div>
-                    <div className="flex items-center gap-2 shrink-0">
-                      <Switch
-                        checked={flag.is_enabled}
-                        onCheckedChange={(checked) =>
-                          toggleMutation.mutate({ id: flag.id, is_enabled: checked })
-                        }
-                        className="touch-manipulation"
-                      />
-                      <Button
-                        variant="ghost"
-                        size="icon"
-                        className="h-11 w-11 touch-manipulation"
-                        onClick={() => setEditFlag(flag)}
-                      >
-                        <Edit className="h-4 w-4" />
-                      </Button>
-                      {isSuperAdmin && (
+                      <div className="flex items-center gap-2 shrink-0">
+                        <Switch
+                          checked={flag.is_enabled}
+                          onCheckedChange={(checked) =>
+                            toggleMutation.mutate({ id: flag.id, is_enabled: checked })
+                          }
+                          className="touch-manipulation"
+                        />
                         <Button
                           variant="ghost"
                           size="icon"
-                          className="h-11 w-11 touch-manipulation text-red-400"
-                          onClick={() => setDeleteId(flag.id)}
+                          className="h-11 w-11 touch-manipulation"
+                          onClick={() => setEditFlag(flag)}
                         >
-                          <Trash2 className="h-4 w-4" />
+                          <Edit className="h-4 w-4" />
                         </Button>
-                      )}
+                        {isSuperAdmin && (
+                          <Button
+                            variant="ghost"
+                            size="icon"
+                            className="h-11 w-11 touch-manipulation text-red-400"
+                            onClick={() => setDeleteId(flag.id)}
+                          >
+                            <Trash2 className="h-4 w-4" />
+                          </Button>
+                        )}
+                      </div>
                     </div>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
+                  </motion.div>
+                ))}
+              </motion.div>
+            </div>
+          </motion.section>
         )}
 
         {/* Create/Edit Sheet */}
@@ -325,14 +352,14 @@ export default function AdminFeatureFlags() {
           <SheetContent side="bottom" className="h-[75vh] rounded-t-2xl p-0">
             <div className="flex flex-col h-full">
               <div className="flex justify-center pt-3 pb-2">
-                <div className="w-10 h-1 rounded-full bg-muted-foreground/30" />
+                <div className="w-12 h-1.5 bg-white/20 rounded-full" />
               </div>
-              <SheetHeader className="px-4 pb-4 border-b border-border">
+              <SheetHeader className="px-4 pb-4 border-b border-white/[0.06]">
                 <SheetTitle>{editFlag ? 'Edit Flag' : 'New Feature Flag'}</SheetTitle>
               </SheetHeader>
               <div className="flex-1 overflow-y-auto p-4 space-y-4">
                 <div className="space-y-2">
-                  <Label>Name (snake_case)</Label>
+                  <Label className="!text-white">Name (snake_case)</Label>
                   <Input
                     value={editFlag?.name || formData.name}
                     onChange={(e) =>
@@ -346,7 +373,7 @@ export default function AdminFeatureFlags() {
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label>Description</Label>
+                  <Label className="!text-white">Description</Label>
                   <Input
                     value={editFlag?.description || formData.description}
                     onChange={(e) =>
@@ -359,7 +386,7 @@ export default function AdminFeatureFlags() {
                   />
                 </div>
                 <div className="space-y-3">
-                  <Label>
+                  <Label className="!text-white">
                     Rollout Percentage:{' '}
                     {editFlag?.percentage_rollout || formData.percentage_rollout}%
                   </Label>
@@ -374,14 +401,14 @@ export default function AdminFeatureFlags() {
                     step={5}
                     className="touch-manipulation"
                   />
-                  <p className="text-xs text-muted-foreground">
+                  <p className="text-xs !text-white">
                     Gradually roll out features to a percentage of users
                   </p>
                 </div>
-                <div className="flex items-center justify-between p-3 rounded-lg bg-muted/50">
+                <div className="flex items-center justify-between p-3 rounded-lg bg-white/[0.04]">
                   <div>
-                    <p className="text-sm font-medium">Enabled</p>
-                    <p className="text-xs text-muted-foreground">Turn this feature on/off</p>
+                    <p className="text-sm font-medium !text-white">Enabled</p>
+                    <p className="text-xs !text-white">Turn this feature on/off</p>
                   </div>
                   <Switch
                     checked={editFlag?.is_enabled ?? formData.is_enabled}
@@ -393,9 +420,9 @@ export default function AdminFeatureFlags() {
                   />
                 </div>
               </div>
-              <SheetFooter className="p-4 border-t border-border">
+              <SheetFooter className="p-4 border-t border-white/[0.06]">
                 <Button
-                  className="w-full h-12 touch-manipulation"
+                  className="w-full h-11 touch-manipulation"
                   onClick={() => {
                     if (editFlag) {
                       updateMutation.mutate({ id: editFlag.id, data: editFlag });

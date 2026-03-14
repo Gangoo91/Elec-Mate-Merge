@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/contexts/AuthContext';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Textarea } from '@/components/ui/textarea';
@@ -17,10 +16,39 @@ import {
 import AdminSearchInput from '@/components/admin/AdminSearchInput';
 import AdminEmptyState from '@/components/admin/AdminEmptyState';
 import PullToRefresh from '@/components/admin/PullToRefresh';
-import { Ticket, User, Send, RefreshCw, ChevronRight, Loader2 } from 'lucide-react';
+import { Ticket, User, Send, RefreshCw, ChevronRight, Loader2, CheckCircle } from 'lucide-react';
 import { format, formatDistanceToNow } from 'date-fns';
 import { toast } from '@/hooks/use-toast';
 import { useHaptic } from '@/hooks/useHaptic';
+import { motion } from 'framer-motion';
+import { AnimatedCounter } from '@/components/dashboard/AnimatedCounter';
+
+const sectionVariants = {
+  hidden: { opacity: 0, y: 12 },
+  visible: (i: number) => ({
+    opacity: 1,
+    y: 0,
+    transition: { delay: i * 0.06, duration: 0.35, ease: 'easeOut' },
+  }),
+};
+
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: { opacity: 1, transition: { staggerChildren: 0.04 } },
+};
+
+const listItemVariants = {
+  hidden: { opacity: 0, x: -8 },
+  visible: { opacity: 1, x: 0, transition: { duration: 0.2, ease: 'easeOut' } },
+};
+
+const STATUS_BORDER_COLORS: Record<string, string> = {
+  open: 'border-l-4 border-l-blue-500',
+  in_progress: 'border-l-4 border-l-amber-500',
+  waiting: 'border-l-4 border-l-yellow-500',
+  resolved: 'border-l-4 border-l-green-500',
+  closed: 'border-l-4 border-l-gray-500',
+};
 
 interface SupportTicket {
   id: string;
@@ -185,30 +213,52 @@ export default function AdminSupport() {
     >
       <div className="space-y-4 pb-20">
         {/* Stats */}
-        <div className="grid grid-cols-3 gap-3">
-          <Card className="bg-gradient-to-br from-blue-500/10 to-blue-600/5 border-blue-500/20">
-            <CardContent className="pt-4 pb-4">
-              <p className="text-xl font-bold">{stats.open}</p>
-              <p className="text-xs text-muted-foreground">Open</p>
-            </CardContent>
-          </Card>
-          <Card className="bg-gradient-to-br from-amber-500/10 to-amber-600/5 border-amber-500/20">
-            <CardContent className="pt-4 pb-4">
-              <p className="text-xl font-bold">{stats.inProgress}</p>
-              <p className="text-xs text-muted-foreground">In Progress</p>
-            </CardContent>
-          </Card>
-          <Card className="bg-gradient-to-br from-green-500/10 to-green-600/5 border-green-500/20">
-            <CardContent className="pt-4 pb-4">
-              <p className="text-xl font-bold">{stats.resolved}</p>
-              <p className="text-xs text-muted-foreground">Resolved</p>
-            </CardContent>
-          </Card>
-        </div>
+        <motion.section variants={sectionVariants} initial="hidden" animate="visible" custom={0}>
+          <motion.div
+            variants={containerVariants}
+            initial="hidden"
+            animate="visible"
+            className="grid grid-cols-3 gap-2"
+          >
+            <motion.div
+              variants={listItemVariants}
+              whileTap={{ scale: 0.97 }}
+              className="bg-white/5 rounded-xl p-3 text-center touch-manipulation"
+            >
+              <Ticket className="h-5 w-5 text-blue-400 mx-auto mb-1" />
+              <p className="text-2xl sm:text-xl font-bold text-blue-400">
+                <AnimatedCounter value={stats.open} />
+              </p>
+              <p className="text-xs text-white">Open</p>
+            </motion.div>
+            <motion.div
+              variants={listItemVariants}
+              whileTap={{ scale: 0.97 }}
+              className="bg-white/5 rounded-xl p-3 text-center touch-manipulation"
+            >
+              <RefreshCw className="h-5 w-5 text-amber-400 mx-auto mb-1" />
+              <p className="text-2xl sm:text-xl font-bold text-amber-400">
+                <AnimatedCounter value={stats.inProgress} />
+              </p>
+              <p className="text-xs text-white">In Progress</p>
+            </motion.div>
+            <motion.div
+              variants={listItemVariants}
+              whileTap={{ scale: 0.97 }}
+              className="bg-white/5 rounded-xl p-3 text-center touch-manipulation"
+            >
+              <CheckCircle className="h-5 w-5 text-green-400 mx-auto mb-1" />
+              <p className="text-2xl sm:text-xl font-bold text-green-400">
+                <AnimatedCounter value={stats.resolved} />
+              </p>
+              <p className="text-xs text-white">Resolved</p>
+            </motion.div>
+          </motion.div>
+        </motion.section>
 
         {/* Filters */}
-        <Card>
-          <CardContent className="pt-4 pb-4">
+        <motion.section variants={sectionVariants} initial="hidden" animate="visible" custom={1}>
+          <div className="glass-premium rounded-2xl overflow-hidden p-4">
             <div className="flex gap-3">
               <AdminSearchInput
                 value={search}
@@ -217,7 +267,7 @@ export default function AdminSupport() {
                 className="flex-1"
               />
               <Select value={statusFilter} onValueChange={setStatusFilter}>
-                <SelectTrigger className="w-[120px] h-12 touch-manipulation">
+                <SelectTrigger className="w-[120px] h-11 touch-manipulation">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
@@ -232,71 +282,70 @@ export default function AdminSupport() {
               <Button
                 variant="outline"
                 size="icon"
-                className="h-12 w-12 touch-manipulation"
+                className="h-11 w-11 touch-manipulation"
                 onClick={() => refetch()}
               >
                 <RefreshCw className="h-4 w-4" />
               </Button>
             </div>
-          </CardContent>
-        </Card>
+          </div>
+        </motion.section>
 
         {/* Tickets List */}
         {isLoading ? (
-          <div className="space-y-2">
+          <div className="glass-premium rounded-2xl overflow-hidden p-4 space-y-2">
             {[...Array(5)].map((_, i) => (
-              <Card key={i} className="animate-pulse">
-                <CardContent className="pt-4 pb-4">
-                  <div className="h-16 bg-muted rounded" />
-                </CardContent>
-              </Card>
+              <div key={i} className="h-16 bg-white/[0.06] animate-pulse rounded-lg" />
             ))}
           </div>
         ) : tickets?.length === 0 ? (
-          <Card>
-            <CardContent className="pt-6">
-              <AdminEmptyState
-                icon={Ticket}
-                title="No support tickets"
-                description="Tickets will appear here when users submit them."
-              />
-            </CardContent>
-          </Card>
-        ) : (
-          <div className="space-y-2">
-            {tickets?.map((ticket) => (
-              <Card
-                key={ticket.id}
-                className="touch-manipulation active:scale-[0.99] transition-transform cursor-pointer"
-                onClick={() => setSelectedTicket(ticket)}
-              >
-                <CardContent className="pt-4 pb-4">
-                  <div className="flex items-center justify-between gap-3">
-                    <div className="min-w-0 flex-1">
-                      <div className="flex items-center gap-2 mb-1">
-                        <p className="font-medium text-sm truncate">{ticket.subject}</p>
-                        {getStatusBadge(ticket.status)}
-                        {getPriorityBadge(ticket.priority)}
-                      </div>
-                      <p className="text-xs text-muted-foreground line-clamp-1">
-                        {ticket.description}
-                      </p>
-                      <div className="flex items-center gap-3 mt-2 text-xs text-muted-foreground">
-                        <span className="flex items-center gap-1">
-                          <User className="h-3 w-3" />
-                          {ticket.profiles?.full_name || 'Unknown'}
-                        </span>
-                        <span>
-                          {formatDistanceToNow(new Date(ticket.created_at), { addSuffix: true })}
-                        </span>
-                      </div>
-                    </div>
-                    <ChevronRight className="h-5 w-5 text-muted-foreground shrink-0" />
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
+          <div className="glass-premium rounded-2xl overflow-hidden p-6">
+            <AdminEmptyState
+              icon={Ticket}
+              title="No support tickets"
+              description="Tickets will appear here when users submit them."
+            />
           </div>
+        ) : (
+          <motion.section variants={sectionVariants} initial="hidden" animate="visible" custom={2}>
+            <div className="glass-premium rounded-2xl overflow-hidden">
+              <motion.div variants={containerVariants} initial="hidden" animate="visible">
+                {tickets?.map((ticket, i) => (
+                  <motion.button
+                    key={ticket.id}
+                    variants={listItemVariants}
+                    className={`w-full text-left p-4 touch-manipulation active:scale-[0.99] active:bg-white/5 transition-all cursor-pointer ${
+                      STATUS_BORDER_COLORS[ticket.status] || ''
+                    } ${i > 0 ? 'border-t border-white/[0.04]' : ''}`}
+                    onClick={() => setSelectedTicket(ticket)}
+                  >
+                    <div className="flex items-center justify-between gap-3">
+                      <div className="min-w-0 flex-1">
+                        <div className="flex items-center gap-2 mb-1">
+                          <p className="font-medium text-sm truncate !text-white">
+                            {ticket.subject}
+                          </p>
+                          {getStatusBadge(ticket.status)}
+                          {getPriorityBadge(ticket.priority)}
+                        </div>
+                        <p className="text-xs !text-white line-clamp-1">{ticket.description}</p>
+                        <div className="flex items-center gap-3 mt-2 text-xs !text-white">
+                          <span className="flex items-center gap-1">
+                            <User className="h-3 w-3" />
+                            {ticket.profiles?.full_name || 'Unknown'}
+                          </span>
+                          <span>
+                            {formatDistanceToNow(new Date(ticket.created_at), { addSuffix: true })}
+                          </span>
+                        </div>
+                      </div>
+                      <ChevronRight className="h-5 w-5 !text-white shrink-0" />
+                    </div>
+                  </motion.button>
+                ))}
+              </motion.div>
+            </div>
+          </motion.section>
         )}
 
         {/* Ticket Detail Sheet */}
@@ -304,13 +353,13 @@ export default function AdminSupport() {
           <SheetContent side="bottom" className="h-[90vh] rounded-t-2xl p-0">
             <div className="flex flex-col h-full">
               <div className="flex justify-center pt-3 pb-2">
-                <div className="w-10 h-1 rounded-full bg-muted-foreground/30" />
+                <div className="w-12 h-1.5 bg-white/20 rounded-full" />
               </div>
-              <SheetHeader className="px-4 pb-4 border-b border-border">
+              <SheetHeader className="px-4 pb-4 border-b border-white/[0.06]">
                 <div className="flex items-start justify-between">
                   <div>
                     <SheetTitle className="text-left">{selectedTicket?.subject}</SheetTitle>
-                    <p className="text-sm text-muted-foreground mt-1">
+                    <p className="text-sm !text-white mt-1">
                       {selectedTicket?.profiles?.full_name} · {selectedTicket?.category}
                     </p>
                   </div>
@@ -337,50 +386,46 @@ export default function AdminSupport() {
 
               <div className="flex-1 overflow-y-auto p-4 space-y-4">
                 {/* Original description */}
-                <Card>
-                  <CardContent className="pt-4 pb-4">
-                    <p className="text-xs text-muted-foreground mb-2">
-                      {selectedTicket?.created_at &&
-                        format(new Date(selectedTicket.created_at), 'dd MMM yyyy HH:mm')}
-                    </p>
-                    <p className="text-sm whitespace-pre-wrap">{selectedTicket?.description}</p>
-                  </CardContent>
-                </Card>
+                <div className="glass-premium rounded-2xl overflow-hidden p-4">
+                  <p className="text-xs !text-white mb-2">
+                    {selectedTicket?.created_at &&
+                      format(new Date(selectedTicket.created_at), 'dd MMM yyyy HH:mm')}
+                  </p>
+                  <p className="text-sm whitespace-pre-wrap">{selectedTicket?.description}</p>
+                </div>
 
                 {/* Responses */}
                 {responses?.map((response) => (
-                  <Card
+                  <div
                     key={response.id}
-                    className={response.is_admin_response ? 'border-blue-500/30 bg-blue-500/5' : ''}
+                    className={`glass-premium rounded-2xl overflow-hidden p-4 ${
+                      response.is_admin_response ? 'bg-blue-500/[0.05]' : ''
+                    }`}
                   >
-                    <CardContent className="pt-4 pb-4">
-                      <div className="flex items-center gap-2 mb-2">
-                        <p className="text-xs font-medium">
-                          {response.profiles?.full_name || 'Unknown'}
-                          {response.is_admin_response && (
-                            <Badge className="ml-2 bg-blue-500/20 text-blue-400 text-xs">
-                              Admin
-                            </Badge>
-                          )}
-                        </p>
-                        <span className="text-xs text-muted-foreground">
-                          {formatDistanceToNow(new Date(response.created_at), { addSuffix: true })}
-                        </span>
-                      </div>
-                      <p className="text-sm whitespace-pre-wrap">{response.message}</p>
-                    </CardContent>
-                  </Card>
+                    <div className="flex items-center gap-2 mb-2">
+                      <p className="text-xs font-medium !text-white">
+                        {response.profiles?.full_name || 'Unknown'}
+                        {response.is_admin_response && (
+                          <Badge className="ml-2 bg-blue-500/20 text-blue-400 text-xs">Admin</Badge>
+                        )}
+                      </p>
+                      <span className="text-xs !text-white">
+                        {formatDistanceToNow(new Date(response.created_at), { addSuffix: true })}
+                      </span>
+                    </div>
+                    <p className="text-sm whitespace-pre-wrap">{response.message}</p>
+                  </div>
                 ))}
               </div>
 
               {/* Reply Form */}
-              <SheetFooter className="p-4 border-t border-border">
+              <SheetFooter className="p-4 border-t border-white/[0.06]">
                 <div className="flex gap-2 w-full">
                   <Textarea
                     value={replyMessage}
                     onChange={(e) => setReplyMessage(e.target.value)}
                     placeholder="Type your reply..."
-                    className="flex-1 min-h-[44px] max-h-[120px] touch-manipulation"
+                    className="flex-1 min-h-[44px] max-h-[120px] touch-manipulation bg-white/[0.04] border-white/[0.08] focus:border-yellow-500"
                   />
                   <Button
                     size="icon"

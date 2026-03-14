@@ -2,12 +2,16 @@ import { useEffect, useRef, useState } from 'react';
 import { Drawer } from 'vaul';
 import { X, Camera, Images, Upload, FileText, Loader2, Trash2 } from 'lucide-react';
 import { Camera as CapCamera, CameraResultType, CameraSource } from '@capacitor/camera';
-import { useProjectDocuments, type ProjectDocument } from '@/hooks/useProjectDocuments';
+import {
+  useProjectDocuments,
+  type ProjectDocument,
+  type DocType,
+} from '@/hooks/useProjectDocuments';
 
 interface ProjectDocumentSheetProps {
   isOpen: boolean;
   onClose: () => void;
-  docType: 'photo' | 'drawing';
+  docType: DocType;
   projectId: string;
   projectName?: string;
 }
@@ -28,14 +32,22 @@ export function ProjectDocumentSheet({
   projectId,
   projectName,
 }: ProjectDocumentSheetProps) {
-  const { photos, drawings, isLoading, isUploading, fetchDocuments, uploadDocument, deleteDocument } =
-    useProjectDocuments(projectId);
+  const {
+    photos,
+    drawings,
+    documents,
+    isLoading,
+    isUploading,
+    fetchDocuments,
+    uploadDocument,
+    deleteDocument,
+  } = useProjectDocuments(projectId);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [lightboxUrl, setLightboxUrl] = useState<string | null>(null);
   const [confirmDelete, setConfirmDelete] = useState<ProjectDocument | null>(null);
   const [uploadError, setUploadError] = useState<string | null>(null);
 
-  const items = docType === 'photo' ? photos : drawings;
+  const items = docType === 'photo' ? photos : docType === 'drawing' ? drawings : documents;
 
   useEffect(() => {
     if (isOpen && projectId) fetchDocuments();
@@ -77,7 +89,8 @@ export function ProjectDocumentSheet({
     try {
       await uploadDocument(file, docType);
     } catch (err: unknown) {
-      setUploadError('Upload failed. Please try again.');
+      const msg = err instanceof Error ? err.message : 'Upload failed. Please try again.';
+      setUploadError(msg);
       console.error(err);
     }
     // Reset so same file can be re-selected
@@ -99,11 +112,11 @@ export function ProjectDocumentSheet({
     return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
   }
 
-  const title = docType === 'photo' ? 'Photos' : 'Drawings';
+  const title = docType === 'photo' ? 'Photos' : docType === 'drawing' ? 'Drawings' : 'Documents';
   const accept =
     docType === 'photo'
       ? 'image/*'
-      : '.pdf,.doc,.docx,.jpg,.jpeg,.png,.heic,.heif,.dwg,.dxf,.svg';
+      : '.pdf,.doc,.docx,.xls,.xlsx,.csv,.txt,.rtf,.jpg,.jpeg,.png,.heic,.heif,.dwg,.dxf,.svg,.zip';
 
   return (
     <>
@@ -121,7 +134,7 @@ export function ProjectDocumentSheet({
               <div>
                 <h2 className="text-lg font-bold text-white">{title}</h2>
                 {projectName && (
-                  <p className="text-xs text-white/50 mt-0.5 truncate max-w-[220px]">{projectName}</p>
+                  <p className="text-xs text-white mt-0.5 truncate max-w-[220px]">{projectName}</p>
                 )}
               </div>
               <button
@@ -170,7 +183,11 @@ export function ProjectDocumentSheet({
                     <Upload className="h-5 w-5 text-elec-yellow flex-shrink-0" />
                   )}
                   <span className="text-sm font-semibold text-elec-yellow">
-                    {isUploading ? 'Uploading...' : 'Upload Drawing / Document'}
+                    {isUploading
+                      ? 'Uploading...'
+                      : docType === 'drawing'
+                        ? 'Upload Drawing / Document'
+                        : 'Upload File'}
                   </span>
                 </button>
               )}
@@ -179,18 +196,16 @@ export function ProjectDocumentSheet({
               {isUploading && docType === 'photo' && (
                 <div className="flex items-center justify-center gap-2 py-2">
                   <Loader2 className="h-4 w-4 text-elec-yellow animate-spin" />
-                  <span className="text-sm text-white/60">Uploading...</span>
+                  <span className="text-sm text-white">Uploading...</span>
                 </div>
               )}
 
-              {uploadError && (
-                <p className="text-sm text-red-400 text-center">{uploadError}</p>
-              )}
+              {uploadError && <p className="text-sm text-red-400 text-center">{uploadError}</p>}
 
               {/* List / grid */}
               {isLoading ? (
                 <div className="flex justify-center py-8">
-                  <Loader2 className="h-5 w-5 animate-spin text-white/40" />
+                  <Loader2 className="h-5 w-5 animate-spin text-white" />
                 </div>
               ) : items.length === 0 ? (
                 <div className="flex flex-col items-center py-8 text-center">
@@ -199,11 +214,13 @@ export function ProjectDocumentSheet({
                   ) : (
                     <FileText className="h-8 w-8 text-white/20 mb-3" />
                   )}
-                  <p className="text-sm text-white/40">No {title.toLowerCase()} yet.</p>
-                  <p className="text-xs text-white/30 mt-1">
+                  <p className="text-sm text-white">No {title.toLowerCase()} yet.</p>
+                  <p className="text-xs text-white mt-1">
                     {docType === 'photo'
                       ? 'Take a photo or upload from your gallery.'
-                      : 'Upload drawings, PDFs or any site documents.'}
+                      : docType === 'drawing'
+                        ? 'Upload drawings, PDFs or any site documents.'
+                        : 'Upload works orders, specs, PDFs or any project files.'}
                   </p>
                 </div>
               ) : docType === 'photo' ? (
@@ -239,18 +256,20 @@ export function ProjectDocumentSheet({
                   ))}
                 </div>
               ) : (
-                // Drawings list
+                // Drawings / documents list
                 <div className="space-y-2">
                   {items.map((drawing) => (
                     <div
                       key={drawing.id}
                       className="flex items-center gap-3 p-3 rounded-xl bg-white/[0.04] border border-white/[0.08]"
                     >
-                      <FileText className="h-5 w-5 text-purple-400 flex-shrink-0" />
+                      <FileText
+                        className={`h-5 w-5 flex-shrink-0 ${docType === 'document' ? 'text-amber-400' : 'text-purple-400'}`}
+                      />
                       <div className="min-w-0 flex-1">
                         <p className="text-sm text-white font-medium truncate">{drawing.name}</p>
                         {drawing.file_size != null && (
-                          <p className="text-xs text-white/40">{formatSize(drawing.file_size)}</p>
+                          <p className="text-xs text-white">{formatSize(drawing.file_size)}</p>
                         )}
                       </div>
                       <div className="flex items-center gap-2 flex-shrink-0">
@@ -270,7 +289,7 @@ export function ProjectDocumentSheet({
                           onClick={() => setConfirmDelete(drawing)}
                           className="w-8 h-8 flex items-center justify-center rounded-full hover:bg-white/10 touch-manipulation"
                         >
-                          <Trash2 className="h-4 w-4 text-white/40" />
+                          <Trash2 className="h-4 w-4 text-white" />
                         </button>
                       </div>
                     </div>
@@ -318,7 +337,7 @@ export function ProjectDocumentSheet({
         <div className="fixed inset-0 z-[60] bg-black/80 flex items-end justify-center px-4 pb-8">
           <div className="w-full max-w-sm bg-[#1A1A1A] rounded-3xl p-5 space-y-4">
             <h3 className="text-base font-bold text-white">Delete {docType}?</h3>
-            <p className="text-sm text-white/60 truncate">
+            <p className="text-sm text-white truncate">
               "{confirmDelete.name}" will be permanently deleted.
             </p>
             <div className="grid grid-cols-2 gap-3">

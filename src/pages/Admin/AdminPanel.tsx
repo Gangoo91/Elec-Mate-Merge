@@ -73,6 +73,11 @@ const adminToolItems = [
   { name: 'Emails', path: '/admin/emails', icon: Mail },
   { name: 'Analytics', path: '/admin/analytics', icon: BarChart3 },
   { name: 'System', path: '/admin/system', icon: Activity },
+  { name: 'Flags', path: '/admin/feature-flags', icon: Flag },
+  { name: 'Settings', path: '/admin/settings', icon: Settings },
+  { name: 'Audit', path: '/admin/audit', icon: History },
+  { name: 'Export', path: '/admin/export', icon: Download },
+  { name: 'Support', path: '/admin/support', icon: HeadphonesIcon },
 ];
 
 export default function AdminPanel() {
@@ -171,7 +176,7 @@ export default function AdminPanel() {
           'shrink-0 gap-1.5 sm:gap-2 touch-manipulation h-11 sm:h-9 px-3 sm:px-4 text-xs sm:text-sm',
           isActive
             ? 'bg-red-500/20 text-red-400 hover:bg-red-500/30'
-            : 'text-muted-foreground hover:text-foreground'
+            : '!text-white hover:text-foreground'
         )}
       >
         <Icon className="h-4 w-4" />
@@ -194,7 +199,7 @@ export default function AdminPanel() {
               onClick={() => navigate('/dashboard')}
               className="flex items-center justify-center -ml-2 h-11 w-11 rounded-xl hover:bg-white/5 active:scale-95 transition-all touch-manipulation"
             >
-              <ArrowLeft className="h-5 w-5 text-muted-foreground" />
+              <ArrowLeft className="h-5 w-5 !text-white" />
             </button>
 
             <div className="p-1.5 rounded-lg bg-red-500/10">
@@ -209,7 +214,7 @@ export default function AdminPanel() {
                 ) : (
                   <Shield className="h-3 w-3 text-orange-400" />
                 )}
-                <span className="text-xs text-muted-foreground">
+                <span className="text-xs !text-white">
                   {isSuperAdmin ? 'Super Admin' : 'Admin'}
                 </span>
               </div>
@@ -225,7 +230,7 @@ export default function AdminPanel() {
               variant={showMore ? 'secondary' : 'ghost'}
               size="sm"
               onClick={() => setShowMore(!showMore)}
-              className="shrink-0 gap-1 touch-manipulation h-11 sm:h-9 px-3 text-xs sm:text-sm text-muted-foreground"
+              className="shrink-0 gap-1 touch-manipulation h-11 sm:h-9 px-3 text-xs sm:text-sm !text-white"
             >
               More
               {showMore ? <ChevronUp className="h-3 w-3" /> : <ChevronDown className="h-3 w-3" />}
@@ -236,7 +241,7 @@ export default function AdminPanel() {
               variant={showTools ? 'secondary' : 'ghost'}
               size="sm"
               onClick={() => setShowTools(!showTools)}
-              className="shrink-0 gap-1 touch-manipulation h-11 sm:h-9 px-3 text-xs sm:text-sm text-muted-foreground"
+              className="shrink-0 gap-1 touch-manipulation h-11 sm:h-9 px-3 text-xs sm:text-sm !text-white"
             >
               Tools
               {showTools ? <ChevronUp className="h-3 w-3" /> : <ChevronDown className="h-3 w-3" />}

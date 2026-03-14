@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/contexts/AuthContext';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Button } from '@/components/ui/button';
@@ -20,12 +19,21 @@ import {
   Shield,
   Server,
   Edit,
-  Check,
   type LucideIcon,
 } from 'lucide-react';
 import { toast } from '@/hooks/use-toast';
 import PullToRefresh from '@/components/admin/PullToRefresh';
 import { useHaptic } from '@/hooks/useHaptic';
+import { motion } from 'framer-motion';
+
+const sectionVariants = {
+  hidden: { opacity: 0, y: 12 },
+  visible: (i: number) => ({
+    opacity: 1,
+    y: 0,
+    transition: { delay: i * 0.06, duration: 0.35, ease: 'easeOut' },
+  }),
+};
 
 interface AppSetting {
   id: string;
@@ -45,12 +53,12 @@ const categoryIcons: Record<string, LucideIcon> = {
   general: Settings,
 };
 
-const categoryColors: Record<string, string> = {
-  billing: 'bg-green-500/10 text-green-400 border-green-500/30',
-  contact: 'bg-blue-500/10 text-blue-400 border-blue-500/30',
-  limits: 'bg-amber-500/10 text-amber-400 border-amber-500/30',
-  system: 'bg-red-500/10 text-red-400 border-red-500/30',
-  general: 'bg-gray-500/10 text-gray-400 border-gray-500/30',
+const categoryAccentColors: Record<string, string> = {
+  billing: 'from-green-500 to-emerald-400',
+  contact: 'from-blue-500 to-cyan-400',
+  limits: 'from-amber-500 to-orange-400',
+  system: 'from-red-500 to-rose-400',
+  general: 'from-gray-500 to-gray-400',
 };
 
 export default function AdminSettings() {
@@ -131,62 +139,68 @@ export default function AdminSettings() {
     >
       <div className="space-y-4 pb-20">
         {/* Header */}
-        <div className="flex items-center justify-between">
-          <div>
-            <h2 className="text-lg font-semibold">App Settings</h2>
-            <p className="text-xs text-muted-foreground">Global configuration</p>
+        <motion.section variants={sectionVariants} initial="hidden" animate="visible" custom={0}>
+          <div className="flex items-center justify-between">
+            <div>
+              <h2 className="text-2xl font-bold !text-white">App Settings</h2>
+              <p className="text-xs !text-white">Global configuration</p>
+            </div>
+            <Button
+              variant="outline"
+              size="icon"
+              className="h-11 w-11 touch-manipulation"
+              onClick={() => refetch()}
+            >
+              <RefreshCw className="h-4 w-4" />
+            </Button>
           </div>
-          <Button
-            variant="outline"
-            size="icon"
-            className="h-11 w-11 touch-manipulation"
-            onClick={() => refetch()}
-          >
-            <RefreshCw className="h-4 w-4" />
-          </Button>
-        </div>
+        </motion.section>
 
         {/* Settings by Category */}
         {isLoading ? (
           <div className="space-y-4">
             {[...Array(3)].map((_, i) => (
-              <Card key={i} className="animate-pulse">
-                <CardContent className="pt-6">
-                  <div className="h-32 bg-muted rounded" />
-                </CardContent>
-              </Card>
+              <div key={i} className="glass-premium rounded-2xl overflow-hidden p-6">
+                <div className="h-32 bg-white/[0.06] animate-pulse rounded-lg" />
+              </div>
             ))}
           </div>
         ) : (
-          Object.entries(groupedSettings || {}).map(([category, categorySettings]) => {
+          Object.entries(groupedSettings || {}).map(([category, categorySettings], catIdx) => {
             const Icon = categoryIcons[category] || Settings;
+            const accentColor = categoryAccentColors[category] || categoryAccentColors.general;
             return (
-              <Card key={category}>
-                <CardHeader className="pb-2">
-                  <CardTitle className="text-sm flex items-center gap-2 capitalize">
-                    <Icon className="h-4 w-4" />
-                    {category}
-                  </CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-3">
-                  {categorySettings.map((setting) => (
+              <motion.section
+                key={category}
+                variants={sectionVariants}
+                initial="hidden"
+                animate="visible"
+                custom={catIdx + 1}
+              >
+                <p className="text-[10px] uppercase tracking-wider !text-white font-semibold mb-2 pl-1">
+                  {category}
+                </p>
+                <div className="glass-premium rounded-2xl overflow-hidden">
+                  <div className={`h-1 bg-gradient-to-r ${accentColor}`} />
+                  {categorySettings.map((setting, i) => (
                     <div
                       key={setting.key}
-                      className="flex items-start justify-between p-3 rounded-lg bg-muted/50 gap-3"
+                      className={`flex items-start justify-between p-4 gap-3 ${i > 0 ? 'border-t border-white/[0.04]' : ''}`}
                     >
                       <div className="min-w-0 flex-1">
                         <div className="flex items-center gap-2 mb-1">
-                          <p className="font-mono text-sm">{setting.key}</p>
+                          <Icon className="h-3.5 w-3.5 !text-white shrink-0" />
+                          <p className="font-mono text-sm !text-white">{setting.key}</p>
                           {setting.is_public && (
                             <Badge variant="outline" className="text-xs">
                               public
                             </Badge>
                           )}
                         </div>
-                        <p className="text-xs text-muted-foreground mb-2">
+                        <p className="text-xs !text-white mb-2">
                           {setting.description || 'No description'}
                         </p>
-                        <code className="text-xs bg-background px-2 py-1 rounded block truncate">
+                        <code className="text-xs bg-white/[0.05] px-2 py-1 rounded block truncate">
                           {formatValue(setting.value)}
                         </code>
                       </div>
@@ -205,82 +219,79 @@ export default function AdminSettings() {
                       )}
                     </div>
                   ))}
-                </CardContent>
-              </Card>
+                </div>
+              </motion.section>
             );
           })
         )}
 
-        {/* Quick Settings Cards */}
-        <div className="grid grid-cols-2 gap-3">
-          <Card className="bg-gradient-to-br from-red-500/10 to-red-600/5 border-red-500/20">
-            <CardContent className="pt-4 pb-4">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-sm font-medium">Maintenance Mode</p>
-                  <p className="text-xs text-muted-foreground">Take app offline</p>
-                </div>
-                <Switch
-                  checked={settings?.find((s) => s.key === 'maintenance_mode')?.value === 'true'}
-                  onCheckedChange={(checked) => {
-                    if (isSuperAdmin) {
-                      updateMutation.mutate({ key: 'maintenance_mode', value: String(checked) });
-                    }
-                  }}
-                  disabled={!isSuperAdmin}
-                  className="touch-manipulation"
-                />
+        {/* Quick Settings */}
+        <motion.section
+          variants={sectionVariants}
+          initial="hidden"
+          animate="visible"
+          custom={Object.keys(groupedSettings || {}).length + 1}
+        >
+          <div className="glass-premium rounded-2xl overflow-hidden">
+            <div className="h-1 bg-gradient-to-r from-red-500 to-amber-500" />
+            <div className="p-4 flex items-center justify-between">
+              <div>
+                <p className="text-sm font-medium !text-white">Maintenance Mode</p>
+                <p className="text-xs !text-white">Take app offline</p>
               </div>
-            </CardContent>
-          </Card>
-
-          <Card className="bg-gradient-to-br from-green-500/10 to-green-600/5 border-green-500/20">
-            <CardContent className="pt-4 pb-4">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-sm font-medium">Trial Days</p>
-                  <p className="text-xs text-muted-foreground">Free trial length</p>
-                </div>
-                <Badge className="bg-green-500/20 text-green-400">
-                  {settings?.find((s) => s.key === 'trial_days')?.value || '7'} days
-                </Badge>
+              <Switch
+                checked={settings?.find((s) => s.key === 'maintenance_mode')?.value === 'true'}
+                onCheckedChange={(checked) => {
+                  if (isSuperAdmin) {
+                    updateMutation.mutate({ key: 'maintenance_mode', value: String(checked) });
+                  }
+                }}
+                disabled={!isSuperAdmin}
+                className="touch-manipulation"
+              />
+            </div>
+            <div className="border-t border-white/[0.04] p-4 flex items-center justify-between">
+              <div>
+                <p className="text-sm font-medium !text-white">Trial Days</p>
+                <p className="text-xs !text-white">Free trial length</p>
               </div>
-            </CardContent>
-          </Card>
-        </div>
+              <Badge className="bg-green-500/20 text-green-400">
+                {settings?.find((s) => s.key === 'trial_days')?.value || '7'} days
+              </Badge>
+            </div>
+          </div>
+        </motion.section>
 
         {/* Edit Sheet */}
         <Sheet open={!!editSetting} onOpenChange={() => setEditSetting(null)}>
           <SheetContent side="bottom" className="h-[60vh] rounded-t-2xl p-0">
             <div className="flex flex-col h-full">
               <div className="flex justify-center pt-3 pb-2">
-                <div className="w-10 h-1 rounded-full bg-muted-foreground/30" />
+                <div className="w-12 h-1.5 bg-white/20 rounded-full" />
               </div>
-              <SheetHeader className="px-4 pb-4 border-b border-border">
+              <SheetHeader className="px-4 pb-4 border-b border-white/[0.06]">
                 <SheetTitle className="font-mono">{editSetting?.key}</SheetTitle>
               </SheetHeader>
               <div className="flex-1 overflow-y-auto p-4 space-y-4">
                 <div className="space-y-2">
-                  <Label>Description</Label>
-                  <p className="text-sm text-muted-foreground">
+                  <Label className="!text-white">Description</Label>
+                  <p className="text-sm !text-white">
                     {editSetting?.description || 'No description'}
                   </p>
                 </div>
                 <div className="space-y-2">
-                  <Label>Value</Label>
+                  <Label className="!text-white">Value</Label>
                   <Textarea
                     value={editValue}
                     onChange={(e) => setEditValue(e.target.value)}
                     className="min-h-[120px] font-mono text-sm touch-manipulation"
                   />
-                  <p className="text-xs text-muted-foreground">
-                    For JSON values, ensure valid formatting
-                  </p>
+                  <p className="text-xs !text-white">For JSON values, ensure valid formatting</p>
                 </div>
               </div>
-              <SheetFooter className="p-4 border-t border-border">
+              <SheetFooter className="p-4 border-t border-white/[0.06]">
                 <Button
-                  className="w-full h-12 touch-manipulation gap-2"
+                  className="w-full h-11 touch-manipulation gap-2"
                   onClick={() =>
                     editSetting && updateMutation.mutate({ key: editSetting.key, value: editValue })
                   }

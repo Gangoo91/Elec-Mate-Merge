@@ -152,7 +152,7 @@ export function BusinessAISalesView() {
 
   return (
     <div className="min-h-screen bg-background">
-      <div className="max-w-lg mx-auto pb-32">
+      <div className="max-w-lg lg:max-w-4xl mx-auto pb-32">
         {/* ── Nav ── */}
         <div className="px-4 pt-4 pb-2">
           <Link to="/electrician">
@@ -240,7 +240,7 @@ export function BusinessAISalesView() {
           </div>
 
           <div
-            className="rounded-2xl overflow-hidden border border-green-500/15"
+            className="rounded-2xl overflow-hidden border border-green-500/15 lg:max-w-xl"
             style={{ background: '#0b1612' }}
           >
             {/* Header */}
@@ -360,7 +360,7 @@ export function BusinessAISalesView() {
             <p className="text-sm text-white">Everything you need to run your business</p>
           </div>
 
-          <div className="space-y-3">
+          <div className="grid gap-3 lg:grid-cols-2">
             {features.map(({ icon: Icon, title, desc, colour }) => {
               const c = featureColours[colour];
               return (
@@ -449,7 +449,7 @@ export function BusinessAISalesView() {
             <h2 className="text-xl font-extrabold text-white">Up and Running in 60 Seconds</h2>
           </div>
 
-          <div className="space-y-3">
+          <div className="grid gap-3 lg:grid-cols-3">
             {[
               {
                 n: '1',
@@ -510,7 +510,7 @@ export function BusinessAISalesView() {
               </div>
             </div>
 
-            <div className="space-y-3 pl-1">
+            <div className="grid gap-3 lg:grid-cols-2 pl-1">
               {trustPoints.map((point) => (
                 <div key={point} className="flex items-start gap-3">
                   <Check className="h-4 w-4 text-green-400 shrink-0 mt-0.5" />
@@ -550,7 +550,7 @@ export function BusinessAISalesView() {
               </div>
 
               {/* What's included */}
-              <div className="space-y-2.5">
+              <div className="grid gap-2.5 lg:grid-cols-2">
                 {included.map((item) => (
                   <div key={item} className="flex items-center gap-3">
                     <div className="w-5 h-5 rounded-full bg-amber-500/15 flex items-center justify-center shrink-0">
@@ -564,7 +564,7 @@ export function BusinessAISalesView() {
               {/* CTA */}
               <CtaButton />
 
-              <p className="text-xs text-white">Cancel anytime. 7-day free trial included.</p>
+              <p className="text-xs text-white">Cancel anytime. No contract.</p>
             </div>
           </div>
         </motion.section>

@@ -93,6 +93,7 @@ const handler = async (req: Request): Promise<Response> => {
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       }
     );
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (error: any) {
     console.error('Error in send-confirmation-email function:', error);
     await captureException(error, {
@@ -141,25 +142,24 @@ function generateConfirmationEmailHTML(firstName: string, confirmLink: string): 
   <![endif]-->
   <style>
     :root { color-scheme: dark; supported-color-schemes: dark; }
-    body { margin: 0; padding: 0; width: 100%; background-color: #000000; }
+    body { margin: 0; padding: 0; width: 100%; background-color: #0a0a0a; }
     table { border-collapse: collapse; mso-table-lspace: 0pt; mso-table-rspace: 0pt; }
     img { border: 0; height: auto; line-height: 100%; outline: none; text-decoration: none; -ms-interpolation-mode: bicubic; }
     a { color: #fbbf24; text-decoration: none; }
-    @media screen and (max-width: 600px) {
+    @media screen and (max-width: 480px) {
       .mobile-padding { padding-left: 20px !important; padding-right: 20px !important; }
-      .mobile-stack { display: block !important; width: 100% !important; }
     }
   </style>
 </head>
-<body style="margin: 0; padding: 0; background-color: #000000; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">
+<body style="margin: 0; padding: 0; background-color: #0a0a0a; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">
   <!-- Preheader text -->
   <div style="display: none; max-height: 0; overflow: hidden; mso-hide: all;">
-    Welcome to Elec-Mate! Confirm your email to start your 7-day free trial.
+    Confirm your email to activate your Elec-Mate account.
     &nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;
   </div>
 
   <!-- Email wrapper -->
-  <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #000000;">
+  <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #0a0a0a;">
     <tr>
       <td align="center" style="padding: 40px 16px;">
 
@@ -168,12 +168,12 @@ function generateConfirmationEmailHTML(firstName: string, confirmLink: string): 
 
           <!-- Logo & Header -->
           <tr>
-            <td align="center" style="padding: 40px 32px 32px;" class="mobile-padding">
+            <td align="center" style="padding: 40px 32px 24px;" class="mobile-padding">
               <img src="${logoUrl}" alt="Elec-Mate" width="72" height="72" style="display: block; border-radius: 14px; margin-bottom: 24px;">
               <h1 style="margin: 0; font-size: 24px; font-weight: 700; color: #ffffff; line-height: 1.3;">
                 Welcome to Elec-Mate
               </h1>
-              <p style="margin: 12px 0 0; font-size: 15px; color: #a3a3a3; line-height: 1.5;">
+              <p style="margin: 12px 0 0; font-size: 15px; color: #ffffff; line-height: 1.5;">
                 One quick step to get started
               </p>
             </td>
@@ -188,8 +188,8 @@ function generateConfirmationEmailHTML(firstName: string, confirmLink: string): 
                     <p style="margin: 0 0 16px; font-size: 16px; color: #ffffff; line-height: 1.5;">
                       ${greeting}
                     </p>
-                    <p style="margin: 0 0 28px; font-size: 15px; color: #d4d4d4; line-height: 1.6;">
-                      Thanks for signing up! Please confirm your email to activate your account and start your <strong style="color: #22c55e;">7-day free trial</strong>.
+                    <p style="margin: 0 0 28px; font-size: 15px; color: #ffffff; line-height: 1.6;">
+                      Thanks for signing up! Please confirm your email address to activate your account.
                     </p>
 
                     <!-- CTA Button -->
@@ -199,11 +199,11 @@ function generateConfirmationEmailHTML(firstName: string, confirmLink: string): 
                           <!--[if mso]>
                           <v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="${confirmLink}" style="height:56px;v-text-anchor:middle;width:100%;" arcsize="21%" fillcolor="#fbbf24">
                             <w:anchorlock/>
-                            <center style="color:#000000;font-family:Arial,sans-serif;font-size:16px;font-weight:bold;">Confirm Email Address</center>
+                            <center style="color:#0a0a0a;font-family:Arial,sans-serif;font-size:16px;font-weight:bold;">Confirm Email Address</center>
                           </v:roundrect>
                           <![endif]-->
                           <!--[if !mso]><!-->
-                          <a href="${confirmLink}" style="display: block; padding: 18px 32px; background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%); color: #000000; font-size: 16px; font-weight: 700; text-decoration: none; border-radius: 12px; text-align: center;">
+                          <a href="${confirmLink}" style="display: block; padding: 18px 32px; background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%); color: #0a0a0a; font-size: 16px; font-weight: 700; text-decoration: none; border-radius: 12px; text-align: center;">
                             Confirm Email Address
                           </a>
                           <!--<![endif]-->
@@ -219,24 +219,24 @@ function generateConfirmationEmailHTML(firstName: string, confirmLink: string): 
           <!-- What's included -->
           <tr>
             <td style="padding: 0 32px 24px;" class="mobile-padding">
-              <p style="margin: 0 0 16px; font-size: 12px; font-weight: 600; color: #737373; text-transform: uppercase; letter-spacing: 1px;">
-                What's included in your trial
+              <p style="margin: 0 0 16px; font-size: 12px; font-weight: 600; color: #ffffff; text-transform: uppercase; letter-spacing: 1px;">
+                What's included
               </p>
 
-              <!-- Feature 1 -->
-              <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="margin-bottom: 12px;">
+              <!-- Feature 1: Certificates -->
+              <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="margin-bottom: 10px;">
                 <tr>
-                  <td style="padding: 16px; background-color: #1a1a1a; border-radius: 12px; border: 1px solid #262626;">
+                  <td style="padding: 14px 16px; background-color: #1a1a1a; border-radius: 12px; border: 1px solid #262626;">
                     <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
                       <tr>
                         <td width="48" valign="middle">
                           <div style="width: 40px; height: 40px; background-color: rgba(34, 197, 94, 0.15); border-radius: 10px; text-align: center; line-height: 40px;">
-                            <span style="color: #22c55e; font-size: 18px;">✓</span>
+                            <span style="color: #22c55e; font-size: 18px;">&#10003;</span>
                           </div>
                         </td>
                         <td style="padding-left: 14px;" valign="middle">
-                          <p style="margin: 0; font-size: 15px; font-weight: 600; color: #ffffff;">All AI Tools Unlocked</p>
-                          <p style="margin: 4px 0 0; font-size: 13px; color: #a3a3a3;">Calculators, agents & assistants</p>
+                          <p style="margin: 0; font-size: 15px; font-weight: 600; color: #ffffff;">Certificates & Testing</p>
+                          <p style="margin: 4px 0 0; font-size: 13px; color: #ffffff;">EICR, EIC, minor works, PAT testing, fire alarm & more</p>
                         </td>
                       </tr>
                     </table>
@@ -244,20 +244,20 @@ function generateConfirmationEmailHTML(firstName: string, confirmLink: string): 
                 </tr>
               </table>
 
-              <!-- Feature 2 -->
-              <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="margin-bottom: 12px;">
+              <!-- Feature 2: AI Tools -->
+              <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="margin-bottom: 10px;">
                 <tr>
-                  <td style="padding: 16px; background-color: #1a1a1a; border-radius: 12px; border: 1px solid #262626;">
+                  <td style="padding: 14px 16px; background-color: #1a1a1a; border-radius: 12px; border: 1px solid #262626;">
                     <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
                       <tr>
                         <td width="48" valign="middle">
                           <div style="width: 40px; height: 40px; background-color: rgba(59, 130, 246, 0.15); border-radius: 10px; text-align: center; line-height: 40px;">
-                            <span style="color: #3b82f6; font-size: 18px;">📘</span>
+                            <span style="color: #3b82f6; font-size: 18px;">&#129302;</span>
                           </div>
                         </td>
                         <td style="padding-left: 14px;" valign="middle">
-                          <p style="margin: 0; font-size: 15px; font-weight: 600; color: #ffffff;">BS7671 AI Assistant</p>
-                          <p style="margin: 4px 0 0; font-size: 13px; color: #a3a3a3;">Instant regulation answers</p>
+                          <p style="margin: 0; font-size: 15px; font-weight: 600; color: #ffffff;">AI-Powered Tools</p>
+                          <p style="margin: 4px 0 0; font-size: 13px; color: #ffffff;">8 specialist agents, board scanner, circuit designer & cost engineer</p>
                         </td>
                       </tr>
                     </table>
@@ -265,20 +265,20 @@ function generateConfirmationEmailHTML(firstName: string, confirmLink: string): 
                 </tr>
               </table>
 
-              <!-- Feature 3 -->
+              <!-- Feature 3: Study Centre -->
               <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
                 <tr>
-                  <td style="padding: 16px; background-color: #1a1a1a; border-radius: 12px; border: 1px solid #262626;">
+                  <td style="padding: 14px 16px; background-color: #1a1a1a; border-radius: 12px; border: 1px solid #262626;">
                     <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
                       <tr>
                         <td width="48" valign="middle">
                           <div style="width: 40px; height: 40px; background-color: rgba(251, 191, 36, 0.15); border-radius: 10px; text-align: center; line-height: 40px;">
-                            <span style="color: #fbbf24; font-size: 18px;">💳</span>
+                            <span style="color: #fbbf24; font-size: 18px;">&#128218;</span>
                           </div>
                         </td>
                         <td style="padding-left: 14px;" valign="middle">
-                          <p style="margin: 0; font-size: 15px; font-weight: 600; color: #ffffff;">No Card Required</p>
-                          <p style="margin: 4px 0 0; font-size: 13px; color: #a3a3a3;">7 days completely free</p>
+                          <p style="margin: 0; font-size: 15px; font-weight: 600; color: #ffffff;">Study Centre</p>
+                          <p style="margin: 4px 0 0; font-size: 13px; color: #ffffff;">2,000+ questions, AM2 prep, BS 7671 guides & mock exams</p>
                         </td>
                       </tr>
                     </table>
@@ -294,7 +294,7 @@ function generateConfirmationEmailHTML(firstName: string, confirmLink: string): 
               <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #1a1a1a; border-radius: 12px; border: 1px solid #262626;">
                 <tr>
                   <td align="center" style="padding: 16px;">
-                    <p style="margin: 0; font-size: 14px; color: #d4d4d4; line-height: 1.5;">
+                    <p style="margin: 0; font-size: 14px; color: #ffffff; line-height: 1.5;">
                       This link expires in <strong style="color: #fbbf24;">24 hours</strong>
                     </p>
                   </td>
@@ -306,7 +306,7 @@ function generateConfirmationEmailHTML(firstName: string, confirmLink: string): 
           <!-- Alternative link -->
           <tr>
             <td style="padding: 0 32px 32px;" class="mobile-padding">
-              <p style="margin: 0 0 8px; font-size: 13px; color: #737373;">
+              <p style="margin: 0 0 8px; font-size: 13px; color: #ffffff;">
                 Button not working? Copy this link:
               </p>
               <p style="margin: 0; font-size: 12px; color: #fbbf24; word-break: break-all; line-height: 1.5;">
@@ -318,20 +318,17 @@ function generateConfirmationEmailHTML(firstName: string, confirmLink: string): 
           <!-- Footer -->
           <tr>
             <td style="padding: 24px 32px; background-color: #0a0a0a; border-top: 1px solid #1a1a1a;" class="mobile-padding">
-              <p style="margin: 0 0 8px; font-size: 13px; color: #737373;">
-                Questions? Contact us at
+              <p style="margin: 0 0 4px; font-size: 13px; color: #ffffff;">
+                Questions? Reply to this email — we're here to help.
               </p>
-              <a href="mailto:founder@elec-mate.com" style="font-size: 14px; color: #fbbf24; font-weight: 500;">
-                founder@elec-mate.com
-              </a>
             </td>
           </tr>
 
           <!-- Copyright -->
           <tr>
-            <td align="center" style="padding: 20px 32px; background-color: #000000;">
-              <p style="margin: 0; font-size: 12px; color: #525252;">
-                © ${year} Elec-Mate · Made in the UK
+            <td align="center" style="padding: 16px 32px 24px; background-color: #0a0a0a;">
+              <p style="margin: 0; font-size: 12px; color: #ffffff;">
+                &copy; ${year} Elec-Mate &middot; Made in the UK
               </p>
             </td>
           </tr>

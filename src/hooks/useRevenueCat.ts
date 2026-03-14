@@ -9,12 +9,12 @@ const RC_ANDROID_API_KEY = import.meta.env.VITE_REVENUECAT_ANDROID_KEY || '';
 
 // Multi-tier entitlement IDs — must match RevenueCat dashboard entitlement names
 // Priority order: highest tier first (used to resolve the "best" entitlement)
-const ENTITLEMENT_IDS = ['business_ai', 'electrician', 'apprentice'] as const;
+const ENTITLEMENT_IDS = ['mate', 'electrician', 'apprentice'] as const;
 export type RevenueCatTier = (typeof ENTITLEMENT_IDS)[number] | null;
 
 // Map entitlement IDs to human-readable tier names (must match profiles.subscription_tier values)
 const TIER_DISPLAY_NAMES: Record<string, string> = {
-  business_ai: 'Business AI',
+  mate: 'Mate',
   electrician: 'Electrician Pro',
   apprentice: 'Apprentice',
 };
@@ -221,7 +221,7 @@ export function useRevenueCat(userId?: string) {
       // RevenueCat package identifiers should match plan IDs
       // e.g. '$rc_monthly' for monthly, '$rc_annual' for yearly, or custom IDs
       // Try exact match first, then look for partial match on plan tier
-      const tierKey = planId.replace(/-(?:monthly|yearly)$/, ''); // 'business-ai' → 'business-ai'
+      const tierKey = planId.replace(/-(?:monthly|yearly)$/, ''); // 'mate' → 'mate'
       return (
         state.availablePackages.find((pkg) => pkg.identifier === planId) ||
         state.availablePackages.find((pkg) =>

@@ -28,7 +28,19 @@ serve(async (req) => {
     const body = await req.json();
     const { priceId, mode, planId, offerCode, referralCode } = body;
 
-    logger.info('Request body received', { priceId, mode, planId, offerCode, referralCode });
+    // Plans that should NOT get a 7-day free trial (charge immediately)
+    const NO_TRIAL_PLANS = ['business-ai', 'employer'];
+    const planBase = planId ? planId.replace(/-(monthly|yearly|annual)$/, '') : '';
+    const isNoTrialPlan = NO_TRIAL_PLANS.includes(planBase);
+
+    logger.info('Request body received', {
+      priceId,
+      mode,
+      planId,
+      offerCode,
+      referralCode,
+      isNoTrialPlan,
+    });
 
     if (!priceId || !mode || !planId) {
       throw new ValidationError('Missing required parameters: priceId, mode, or planId');
@@ -246,7 +258,7 @@ serve(async (req) => {
       ],
       mode: mode,
       payment_method_collection: 'always',
-      success_url: `${origin}/payment-success?plan=${planId}&trial=true`,
+      success_url: `${origin}/payment-success?plan=${planId}&trial=${isNoTrialPlan ? 'false' : 'true'}`,
       cancel_url: `${origin}/checkout-trial`,
       client_reference_id: user.id,
       metadata: {
@@ -258,11 +270,11 @@ serve(async (req) => {
       billing_address_collection: 'auto',
       // If we have a specific discount to apply, use that; otherwise allow manual promo codes
       ...(discounts ? { discounts } : { allow_promotion_codes: true }),
-      // Add 7-day free trial for subscription mode
+      // Add 7-day free trial for subscription mode (skip for Business AI / Employer)
       ...(mode === 'subscription'
         ? {
             subscription_data: {
-              trial_period_days: 7,
+              ...(isNoTrialPlan ? {} : { trial_period_days: 7 }),
               metadata: {
                 userId: user.id,
                 planId: planId,

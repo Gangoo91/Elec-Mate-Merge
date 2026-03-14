@@ -1,7 +1,6 @@
 import { useState, useMemo, useEffect } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import AdminSearchInput from '@/components/admin/AdminSearchInput';
@@ -28,6 +27,27 @@ import {
   Inbox,
 } from 'lucide-react';
 import { format, formatDistanceToNow } from 'date-fns';
+import { motion } from 'framer-motion';
+import { AnimatedCounter } from '@/components/dashboard/AnimatedCounter';
+
+const sectionVariants = {
+  hidden: { opacity: 0, y: 12 },
+  visible: (i: number) => ({
+    opacity: 1,
+    y: 0,
+    transition: { delay: i * 0.06, duration: 0.35, ease: 'easeOut' },
+  }),
+};
+
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: { opacity: 1, transition: { staggerChildren: 0.04 } },
+};
+
+const listItemVariants = {
+  hidden: { opacity: 0, x: -8 },
+  visible: { opacity: 1, x: 0, transition: { duration: 0.2, ease: 'easeOut' } },
+};
 
 // Static status styles - extracted to module scope for performance
 const STATUS_BADGE_STYLES: Record<string, string> = {
@@ -182,73 +202,82 @@ export default function AdminEmailLogs() {
     >
       <div className="space-y-4 pb-20">
         {/* Header */}
-        <div className="flex items-center justify-between">
-          <div>
-            <h2 className="text-lg font-semibold">Email Logs</h2>
-            <p className="text-xs text-muted-foreground">{emails?.length || 0} emails tracked</p>
+        <motion.section variants={sectionVariants} initial="hidden" animate="visible" custom={0}>
+          <div className="flex items-center justify-between">
+            <div>
+              <h2 className="text-2xl font-bold !text-white">Email Logs</h2>
+              <p className="text-xs !text-white">{emails?.length || 0} emails tracked</p>
+            </div>
+            <Button
+              variant="outline"
+              size="icon"
+              className="h-11 w-11 touch-manipulation"
+              onClick={() => refetch()}
+              disabled={isFetching}
+            >
+              <RefreshCw className={`h-4 w-4 ${isFetching ? 'animate-spin' : ''}`} />
+            </Button>
           </div>
-          <Button
-            variant="outline"
-            size="icon"
-            className="h-11 w-11 touch-manipulation"
-            onClick={() => refetch()}
-            disabled={isFetching}
-          >
-            <RefreshCw className={`h-4 w-4 ${isFetching ? 'animate-spin' : ''}`} />
-          </Button>
-        </div>
+        </motion.section>
 
-        {/* Stats Cards */}
-        <div className="grid grid-cols-4 gap-2">
-          <Card className="bg-gradient-to-br from-blue-500/10 to-blue-600/5 border-blue-500/20">
-            <CardContent className="pt-3 pb-3">
-              <div className="flex items-center gap-2">
-                <Inbox className="h-4 w-4 text-blue-400" />
-                <div>
-                  <p className="text-lg font-bold">{stats?.total || 0}</p>
-                  <p className="text-xs text-muted-foreground">Total</p>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-          <Card className="bg-gradient-to-br from-green-500/10 to-green-600/5 border-green-500/20">
-            <CardContent className="pt-3 pb-3">
-              <div className="flex items-center gap-2">
-                <Send className="h-4 w-4 text-green-400" />
-                <div>
-                  <p className="text-lg font-bold">{stats?.sent || 0}</p>
-                  <p className="text-xs text-muted-foreground">Sent</p>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-          <Card className="bg-gradient-to-br from-red-500/10 to-red-600/5 border-red-500/20">
-            <CardContent className="pt-3 pb-3">
-              <div className="flex items-center gap-2">
-                <AlertCircle className="h-4 w-4 text-red-400" />
-                <div>
-                  <p className="text-lg font-bold">{stats?.failed || 0}</p>
-                  <p className="text-xs text-muted-foreground">Failed</p>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-          <Card className="bg-gradient-to-br from-yellow-500/10 to-yellow-600/5 border-yellow-500/20">
-            <CardContent className="pt-3 pb-3">
-              <div className="flex items-center gap-2">
-                <Check className="h-4 w-4 text-yellow-400" />
-                <div>
-                  <p className="text-lg font-bold">{(stats?.deliveryRate || 0).toFixed(0)}%</p>
-                  <p className="text-xs text-muted-foreground">Rate</p>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-        </div>
+        {/* Stats */}
+        <motion.section variants={sectionVariants} initial="hidden" animate="visible" custom={1}>
+          <motion.div
+            variants={containerVariants}
+            initial="hidden"
+            animate="visible"
+            className="grid grid-cols-2 sm:grid-cols-4 gap-2"
+          >
+            <motion.div
+              variants={listItemVariants}
+              whileTap={{ scale: 0.97 }}
+              className="bg-white/5 rounded-xl p-3 text-center touch-manipulation"
+            >
+              <Inbox className="h-5 w-5 text-blue-400 mx-auto mb-1" />
+              <p className="text-2xl sm:text-xl font-bold text-blue-400">
+                <AnimatedCounter value={stats?.total || 0} />
+              </p>
+              <p className="text-xs text-white">Total</p>
+            </motion.div>
+            <motion.div
+              variants={listItemVariants}
+              whileTap={{ scale: 0.97 }}
+              className="bg-white/5 rounded-xl p-3 text-center touch-manipulation"
+            >
+              <Send className="h-5 w-5 text-green-400 mx-auto mb-1" />
+              <p className="text-2xl sm:text-xl font-bold text-green-400">
+                <AnimatedCounter value={stats?.sent || 0} />
+              </p>
+              <p className="text-xs text-white">Sent</p>
+            </motion.div>
+            <motion.div
+              variants={listItemVariants}
+              whileTap={{ scale: 0.97 }}
+              className="bg-white/5 rounded-xl p-3 text-center touch-manipulation"
+            >
+              <AlertCircle className="h-5 w-5 text-red-400 mx-auto mb-1" />
+              <p className="text-2xl sm:text-xl font-bold text-red-400">
+                <AnimatedCounter value={stats?.failed || 0} />
+              </p>
+              <p className="text-xs text-white">Failed</p>
+            </motion.div>
+            <motion.div
+              variants={listItemVariants}
+              whileTap={{ scale: 0.97 }}
+              className="bg-white/5 rounded-xl p-3 text-center touch-manipulation"
+            >
+              <Check className="h-5 w-5 text-yellow-400 mx-auto mb-1" />
+              <p className="text-2xl sm:text-xl font-bold text-yellow-400">
+                {(stats?.deliveryRate || 0).toFixed(0)}%
+              </p>
+              <p className="text-xs text-white">Rate</p>
+            </motion.div>
+          </motion.div>
+        </motion.section>
 
         {/* Filters */}
-        <Card>
-          <CardContent className="pt-4 pb-4">
+        <motion.section variants={sectionVariants} initial="hidden" animate="visible" custom={2}>
+          <div className="glass-premium rounded-2xl overflow-hidden p-4">
             <div className="flex gap-3">
               <AdminSearchInput
                 value={search}
@@ -257,7 +286,7 @@ export default function AdminEmailLogs() {
                 className="flex-1"
               />
               <Select value={statusFilter} onValueChange={setStatusFilter}>
-                <SelectTrigger className="w-[120px] h-12 touch-manipulation">
+                <SelectTrigger className="w-[120px] h-11 touch-manipulation">
                   <SelectValue placeholder="Status" />
                 </SelectTrigger>
                 <SelectContent>
@@ -270,41 +299,41 @@ export default function AdminEmailLogs() {
                 </SelectContent>
               </Select>
             </div>
-          </CardContent>
-        </Card>
+          </div>
+        </motion.section>
 
         {/* Email List */}
         {isLoading ? (
-          <div className="space-y-2">
+          <div className="glass-premium rounded-2xl overflow-hidden p-4 space-y-2">
             {[...Array(10)].map((_, i) => (
-              <Card key={i} className="animate-pulse">
-                <CardContent className="pt-4 pb-4">
-                  <div className="h-14 bg-muted rounded" />
-                </CardContent>
-              </Card>
+              <div key={i} className="h-14 bg-white/[0.06] animate-pulse rounded-lg" />
             ))}
           </div>
         ) : emails?.length === 0 ? (
-          <Card>
-            <CardContent className="pt-6">
-              <AdminEmptyState
-                icon={Mail}
-                title="No emails logged"
-                description="Email activity will appear here."
-              />
-            </CardContent>
-          </Card>
+          <div className="glass-premium rounded-2xl overflow-hidden p-6">
+            <AdminEmptyState
+              icon={Mail}
+              title="No emails logged"
+              description="Email activity will appear here."
+            />
+          </div>
         ) : (
           <>
-            <div className="space-y-1">
-              {paginatedEmails.map((email) => (
-                <Card
-                  key={email.id}
-                  className="touch-manipulation active:scale-[0.99] transition-transform cursor-pointer"
-                  onClick={() => setSelectedEmail(email)}
-                >
-                  <CardContent className="pt-3 pb-3">
-                    <div className="flex items-center justify-between gap-3">
+            <motion.section
+              variants={sectionVariants}
+              initial="hidden"
+              animate="visible"
+              custom={3}
+            >
+              <div className="glass-premium rounded-2xl overflow-hidden">
+                <motion.div variants={containerVariants} initial="hidden" animate="visible">
+                  {paginatedEmails.map((email, i) => (
+                    <motion.button
+                      key={email.id}
+                      variants={listItemVariants}
+                      className={`w-full text-left p-3 touch-manipulation active:scale-[0.99] active:bg-white/5 transition-all cursor-pointer flex items-center justify-between gap-3 ${i > 0 ? 'border-t border-white/[0.04]' : ''}`}
+                      onClick={() => setSelectedEmail(email)}
+                    >
                       <div className="flex items-center gap-3 min-w-0 flex-1">
                         <div
                           className={`w-9 h-9 rounded-lg flex items-center justify-center shrink-0 ${getStatusBgColor(email.status)}`}
@@ -312,8 +341,10 @@ export default function AdminEmailLogs() {
                           {getStatusIcon(email.status)}
                         </div>
                         <div className="min-w-0 flex-1">
-                          <p className="text-sm font-medium truncate">{email.subject}</p>
-                          <div className="flex items-center gap-2 text-xs text-muted-foreground mt-0.5">
+                          <p className="text-sm font-medium truncate !text-white">
+                            {email.subject}
+                          </p>
+                          <div className="flex items-center gap-2 text-xs !text-white mt-0.5">
                             <span className="truncate">{email.to_email}</span>
                             <span>·</span>
                             <span>
@@ -324,13 +355,13 @@ export default function AdminEmailLogs() {
                       </div>
                       <div className="flex items-center gap-2 shrink-0">
                         {getStatusBadge(email.status)}
-                        <ChevronRight className="h-4 w-4 text-muted-foreground" />
+                        <ChevronRight className="h-4 w-4 !text-white" />
                       </div>
-                    </div>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
+                    </motion.button>
+                  ))}
+                </motion.div>
+              </div>
+            </motion.section>
 
             {/* Pagination */}
             {totalPages > 1 && (
@@ -355,9 +386,9 @@ export default function AdminEmailLogs() {
           <SheetContent side="bottom" className="h-[80vh] rounded-t-2xl p-0">
             <div className="flex flex-col h-full">
               <div className="flex justify-center pt-3 pb-2">
-                <div className="w-10 h-1 rounded-full bg-muted-foreground/30" />
+                <div className="w-12 h-1.5 bg-white/20 rounded-full" />
               </div>
-              <SheetHeader className="px-4 pb-4 border-b border-border">
+              <SheetHeader className="px-4 pb-4 border-b border-white/[0.06]">
                 <SheetTitle className="flex items-center gap-2 text-left">
                   {selectedEmail && getStatusIcon(selectedEmail.status)}
                   <span className="truncate">{selectedEmail?.subject}</span>
@@ -365,93 +396,77 @@ export default function AdminEmailLogs() {
               </SheetHeader>
 
               <div className="flex-1 overflow-y-auto p-4 space-y-4">
-                <Card>
-                  <CardHeader className="pb-2">
-                    <CardTitle className="text-sm">Email Details</CardTitle>
-                  </CardHeader>
-                  <CardContent className="space-y-2">
+                <div className="glass-premium rounded-2xl overflow-hidden p-4 space-y-2">
+                  <h4 className="text-sm font-semibold !text-white mb-2">Email Details</h4>
+                  <div className="flex justify-between">
+                    <span className="text-sm !text-white">To</span>
+                    <span className="text-sm">{selectedEmail?.to_email}</span>
+                  </div>
+                  {selectedEmail?.from_email && (
                     <div className="flex justify-between">
-                      <span className="text-sm text-muted-foreground">To</span>
-                      <span className="text-sm">{selectedEmail?.to_email}</span>
+                      <span className="text-sm !text-white">From</span>
+                      <span className="text-sm">{selectedEmail.from_email}</span>
                     </div>
-                    {selectedEmail?.from_email && (
-                      <div className="flex justify-between">
-                        <span className="text-sm text-muted-foreground">From</span>
-                        <span className="text-sm">{selectedEmail.from_email}</span>
-                      </div>
-                    )}
+                  )}
+                  <div className="flex justify-between">
+                    <span className="text-sm !text-white">Status</span>
+                    {selectedEmail && getStatusBadge(selectedEmail.status)}
+                  </div>
+                  {selectedEmail?.template_name && (
                     <div className="flex justify-between">
-                      <span className="text-sm text-muted-foreground">Status</span>
-                      {selectedEmail && getStatusBadge(selectedEmail.status)}
+                      <span className="text-sm !text-white">Template</span>
+                      <Badge variant="outline">{selectedEmail.template_name}</Badge>
                     </div>
-                    {selectedEmail?.template_name && (
-                      <div className="flex justify-between">
-                        <span className="text-sm text-muted-foreground">Template</span>
-                        <Badge variant="outline">{selectedEmail.template_name}</Badge>
-                      </div>
-                    )}
-                    {selectedEmail?.provider && (
-                      <div className="flex justify-between">
-                        <span className="text-sm text-muted-foreground">Provider</span>
-                        <span className="text-sm">{selectedEmail.provider}</span>
-                      </div>
-                    )}
+                  )}
+                  {selectedEmail?.provider && (
                     <div className="flex justify-between">
-                      <span className="text-sm text-muted-foreground">Created</span>
+                      <span className="text-sm !text-white">Provider</span>
+                      <span className="text-sm">{selectedEmail.provider}</span>
+                    </div>
+                  )}
+                  <div className="flex justify-between">
+                    <span className="text-sm !text-white">Created</span>
+                    <span className="text-sm">
+                      {selectedEmail?.created_at &&
+                        format(new Date(selectedEmail.created_at), 'dd MMM yyyy HH:mm')}
+                    </span>
+                  </div>
+                  {selectedEmail?.sent_at && (
+                    <div className="flex justify-between">
+                      <span className="text-sm !text-white">Sent</span>
                       <span className="text-sm">
-                        {selectedEmail?.created_at &&
-                          format(new Date(selectedEmail.created_at), 'dd MMM yyyy HH:mm')}
+                        {format(new Date(selectedEmail.sent_at), 'dd MMM yyyy HH:mm')}
                       </span>
                     </div>
-                    {selectedEmail?.sent_at && (
-                      <div className="flex justify-between">
-                        <span className="text-sm text-muted-foreground">Sent</span>
-                        <span className="text-sm">
-                          {format(new Date(selectedEmail.sent_at), 'dd MMM yyyy HH:mm')}
-                        </span>
-                      </div>
-                    )}
-                  </CardContent>
-                </Card>
+                  )}
+                </div>
 
                 {selectedEmail?.error_message && (
-                  <Card className="border-red-500/30">
-                    <CardHeader className="pb-2">
-                      <CardTitle className="text-sm text-red-400 flex items-center gap-2">
-                        <AlertCircle className="h-4 w-4" />
-                        Error
-                      </CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                      <p className="text-sm text-red-300">{selectedEmail.error_message}</p>
-                    </CardContent>
-                  </Card>
+                  <div className="glass-premium rounded-2xl overflow-hidden border-red-500/30 p-4">
+                    <h4 className="text-sm font-semibold text-red-400 flex items-center gap-2 mb-2">
+                      <AlertCircle className="h-4 w-4" />
+                      Error
+                    </h4>
+                    <p className="text-sm text-red-300">{selectedEmail.error_message}</p>
+                  </div>
                 )}
 
                 {selectedEmail?.provider_message_id && (
-                  <Card>
-                    <CardHeader className="pb-2">
-                      <CardTitle className="text-sm">Provider Info</CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                      <p className="text-xs font-mono text-muted-foreground break-all">
-                        Message ID: {selectedEmail.provider_message_id}
-                      </p>
-                    </CardContent>
-                  </Card>
+                  <div className="glass-premium rounded-2xl overflow-hidden p-4">
+                    <h4 className="text-sm font-semibold !text-white mb-2">Provider Info</h4>
+                    <p className="text-xs font-mono !text-white break-all">
+                      Message ID: {selectedEmail.provider_message_id}
+                    </p>
+                  </div>
                 )}
 
                 {selectedEmail?.metadata && Object.keys(selectedEmail.metadata).length > 0 && (
-                  <Card>
-                    <CardHeader className="pb-2">
-                      <CardTitle className="text-sm">Metadata</CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                      <pre className="text-xs bg-muted p-3 rounded-lg overflow-x-auto">
-                        {JSON.stringify(selectedEmail.metadata, null, 2)}
-                      </pre>
-                    </CardContent>
-                  </Card>
+                  <div className="glass-premium rounded-2xl overflow-hidden p-4">
+                    <h4 className="text-sm font-semibold !text-white mb-2">Metadata</h4>
+                    <pre className="text-xs bg-white/[0.05] p-3 rounded-lg overflow-x-auto">
+                      {JSON.stringify(selectedEmail.metadata, null, 2)}
+                    </pre>
+                  </div>
                 )}
               </div>
             </div>

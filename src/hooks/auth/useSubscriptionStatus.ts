@@ -6,12 +6,12 @@ import { supabase } from '@/integrations/supabase/client';
 import { capturePaymentError, captureEdgeFunctionError, addBreadcrumb } from '@/lib/sentry';
 
 // Multi-tier entitlement IDs — must match RevenueCat dashboard (highest priority first)
-const RC_ENTITLEMENT_IDS = ['business_ai', 'electrician', 'apprentice'] as const;
+const RC_ENTITLEMENT_IDS = ['mate', 'electrician', 'apprentice'] as const;
 const RC_LEGACY_ENTITLEMENT_ID = 'Elec-Mate Pro';
 
 // Map entitlement ID → profiles.subscription_tier value
 const RC_TIER_MAP: Record<string, string> = {
-  business_ai: 'Business AI',
+  mate: 'Mate',
   electrician: 'Electrician Pro',
   apprentice: 'Apprentice',
 };

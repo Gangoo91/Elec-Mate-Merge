@@ -44,6 +44,93 @@ const BUSINESS_AI_TIERS = new Set([
   'Employer', // Founders get AI too
 ]);
 
+// Tier-specific feature lists for welcome email
+const TIER_FEATURES: Record<
+  string,
+  { icon: string; iconColor: string; title: string; subtitle: string }[]
+> = {
+  apprentice: [
+    {
+      icon: '&#128218;',
+      iconColor: '#3b82f6',
+      title: '2,000+ Practice Questions',
+      subtitle: 'AM2 prep, mock exams, flashcards & progress tracking',
+    },
+    {
+      icon: '&#128161;',
+      iconColor: '#22c55e',
+      title: 'Full Study Centre',
+      subtitle: 'Level 2 & 3 courses, BS 7671 18th Edition guides',
+    },
+    {
+      icon: '&#9889;',
+      iconColor: '#fbbf24',
+      title: '50+ Electrical Calculators',
+      subtitle: 'Cable sizing, Zs, voltage drop, conduit fill & more',
+    },
+  ],
+  electrician: [
+    {
+      icon: '&#128203;',
+      iconColor: '#22c55e',
+      title: 'Unlimited Certificates',
+      subtitle: 'EICR, EIC, minor works, PAT, fire alarm, solar PV & EV',
+    },
+    {
+      icon: '&#129302;',
+      iconColor: '#3b82f6',
+      title: '8 AI Specialist Agents',
+      subtitle: 'Cost engineer, circuit designer, installer, RAMS & more',
+    },
+    {
+      icon: '&#128176;',
+      iconColor: '#fbbf24',
+      title: 'Quoting & Invoicing',
+      subtitle: 'Create quotes, raise invoices, send & track from your phone',
+    },
+  ],
+  business_ai: [
+    {
+      icon: '&#128172;',
+      iconColor: '#22c55e',
+      title: 'Mate on WhatsApp',
+      subtitle: 'Quote jobs, raise invoices, look up BS 7671 — all via chat',
+    },
+    {
+      icon: '&#9728;',
+      iconColor: '#fbbf24',
+      title: 'Morning Briefings',
+      subtitle: 'Daily schedule, weather, outstanding quotes & overdue invoices',
+    },
+    {
+      icon: '&#128640;',
+      iconColor: '#3b82f6',
+      title: 'Automated Admin',
+      subtitle: 'Invoice chasing, email lead monitoring, certificate delivery',
+    },
+  ],
+  employer: [
+    {
+      icon: '&#128101;',
+      iconColor: '#a855f7',
+      title: 'Team Management',
+      subtitle: 'GPS tracking, job packs, assignments & timesheets',
+    },
+    {
+      icon: '&#128172;',
+      iconColor: '#22c55e',
+      title: 'Mate AI for Your Team',
+      subtitle: 'WhatsApp AI assistant for you and your engineers',
+    },
+    {
+      icon: '&#128200;',
+      iconColor: '#fbbf24',
+      title: 'Business Intelligence',
+      subtitle: 'Finance hub, safety hub, reporting & talent pool',
+    },
+  ],
+};
+
 /**
  * Send welcome email to new subscriber
  */
@@ -51,7 +138,8 @@ async function sendWelcomeEmail(
   email: string,
   name: string,
   tierName: string,
-  isYearly: boolean
+  isYearly: boolean,
+  tier: string
 ): Promise<void> {
   const resendApiKey = Deno.env.get('RESEND_API_KEY');
 
@@ -63,107 +151,198 @@ async function sendWelcomeEmail(
   const resend = new Resend(resendApiKey);
 
   const billingPeriod = isYearly ? 'year' : 'month';
+  const tierBase = tier.replace(/_yearly$/, '');
+  const features = TIER_FEATURES[tierBase] || TIER_FEATURES['electrician'];
+  const logoUrl = 'https://elec-mate.com/logo.jpg';
+  const year = new Date().getFullYear();
+
+  const featureCardsHtml = features
+    .map(
+      (f) => `
+                <!-- Feature card -->
+                <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="margin-bottom: 10px;">
+                  <tr>
+                    <td style="padding: 14px 16px; background-color: #1a1a1a; border-radius: 12px; border: 1px solid #262626;">
+                      <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                        <tr>
+                          <td width="48" valign="middle">
+                            <div style="width: 40px; height: 40px; background-color: rgba(${f.iconColor === '#22c55e' ? '34,197,94' : f.iconColor === '#3b82f6' ? '59,130,246' : f.iconColor === '#fbbf24' ? '251,191,36' : '168,85,247'}, 0.15); border-radius: 10px; text-align: center; line-height: 40px;">
+                              <span style="color: ${f.iconColor}; font-size: 18px;">${f.icon}</span>
+                            </div>
+                          </td>
+                          <td style="padding-left: 14px;" valign="middle">
+                            <p style="margin: 0; font-size: 15px; font-weight: 600; color: #ffffff;">${f.title}</p>
+                            <p style="margin: 4px 0 0; font-size: 13px; color: #ffffff;">${f.subtitle}</p>
+                          </td>
+                        </tr>
+                      </table>
+                    </td>
+                  </tr>
+                </table>`
+    )
+    .join('\n');
 
   const emailHtml = `
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:v="urn:schemas-microsoft-com:vml">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Welcome to ElecMate</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="color-scheme" content="dark">
+  <meta name="supported-color-schemes" content="dark">
+  <title>Welcome to Elec-Mate</title>
+  <!--[if mso]>
+  <noscript>
+    <xml>
+      <o:OfficeDocumentSettings>
+        <o:PixelsPerInch>96</o:PixelsPerInch>
+      </o:OfficeDocumentSettings>
+    </xml>
+  </noscript>
+  <style>
+    table {border-collapse: collapse;}
+    td, th, div, p, a, h1, h2, h3, h4, h5, h6 {font-family: Arial, sans-serif;}
+  </style>
+  <![endif]-->
+  <style>
+    :root { color-scheme: dark; supported-color-schemes: dark; }
+    body { margin: 0; padding: 0; width: 100%; background-color: #0a0a0a; }
+    @media screen and (max-width: 480px) {
+      .mobile-padding { padding-left: 20px !important; padding-right: 20px !important; }
+    }
+  </style>
 </head>
-<body style="margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; background-color: #f8f9fa;">
-  <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #f8f9fa;">
-    <tr>
-      <td style="padding: 20px 10px;">
-        <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="max-width: 600px; margin: 0 auto; background-color: #ffffff; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); border-radius: 12px; overflow: hidden;">
+<body style="margin: 0; padding: 0; background-color: #0a0a0a; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">
 
-          <!-- Header -->
+  <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #0a0a0a;">
+    <tr>
+      <td align="center" style="padding: 40px 16px;">
+
+        <!-- Email container -->
+        <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="max-width: 480px; background-color: #111111; border-radius: 20px; overflow: hidden; border: 1px solid #262626;">
+
+          <!-- Logo & Header -->
           <tr>
-            <td style="background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%); padding: 32px 24px; text-align: center;">
-              <h1 style="margin: 0; color: #FFD700; font-size: 28px; font-weight: 700;">⚡ Welcome to ElecMate!</h1>
+            <td align="center" style="padding: 40px 32px 24px;" class="mobile-padding">
+              <img src="${logoUrl}" alt="Elec-Mate" width="72" height="72" style="display: block; border-radius: 14px; margin-bottom: 20px;">
+              <h1 style="margin: 0; font-size: 24px; font-weight: 700; color: #ffffff; line-height: 1.3;">
+                Welcome to Elec-Mate
+              </h1>
             </td>
           </tr>
 
-          <!-- Content -->
+          <!-- Greeting -->
           <tr>
-            <td style="padding: 32px 24px;">
-              <p style="margin: 0 0 16px; font-size: 16px; line-height: 1.6; color: #374151;">
-                Hi <strong style="color: #1f2937;">${name}</strong>,
+            <td style="padding: 0 32px 24px;" class="mobile-padding">
+              <p style="margin: 0 0 12px; font-size: 16px; color: #ffffff; line-height: 1.5;">
+                Hi ${name},
               </p>
-              <p style="margin: 0 0 24px; font-size: 16px; line-height: 1.6; color: #374151;">
-                Thank you for subscribing to ElecMate! Your <strong>${tierName}</strong> subscription is now active.
+              <p style="margin: 0; font-size: 15px; color: #ffffff; line-height: 1.6;">
+                Your <strong style="color: #fbbf24;">${tierName}</strong> subscription is now active.
               </p>
+            </td>
+          </tr>
 
-              <!-- Subscription Card -->
-              <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background: linear-gradient(135deg, #fef9c3 0%, #fde047 100%); border-radius: 12px; border: 2px solid #eab308;">
+          <!-- Subscription card -->
+          <tr>
+            <td style="padding: 0 32px 24px;" class="mobile-padding">
+              <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #1a1a1a; border-radius: 14px; border: 1px solid #262626;">
                 <tr>
-                  <td style="padding: 24px;">
+                  <td style="padding: 20px;">
                     <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
                       <tr>
-                        <td style="padding: 8px 0; font-size: 14px; color: #713f12;">Subscription:</td>
-                        <td style="text-align: right; font-size: 16px; color: #713f12; font-weight: 700;">${tierName}</td>
+                        <td style="padding: 6px 0; font-size: 14px; color: #ffffff;">Subscription</td>
+                        <td style="text-align: right; font-size: 15px; color: #fbbf24; font-weight: 700;">${tierName}</td>
                       </tr>
                       <tr>
-                        <td style="padding: 8px 0; font-size: 14px; color: #713f12;">Billing:</td>
-                        <td style="text-align: right; font-size: 14px; color: #713f12; font-weight: 700;">Every ${billingPeriod}</td>
+                        <td style="padding: 6px 0; font-size: 14px; color: #ffffff;">Billing</td>
+                        <td style="text-align: right; font-size: 14px; color: #ffffff; font-weight: 600;">Every ${billingPeriod}</td>
                       </tr>
                       <tr>
-                        <td style="padding: 8px 0; font-size: 14px; color: #713f12;">Status:</td>
-                        <td style="text-align: right; font-size: 14px; color: #166534; font-weight: 700;">✓ Active</td>
+                        <td style="padding: 6px 0; font-size: 14px; color: #ffffff;">Status</td>
+                        <td style="text-align: right; font-size: 14px; color: #22c55e; font-weight: 700;">&#10003; Active</td>
                       </tr>
                     </table>
                   </td>
                 </tr>
               </table>
+            </td>
+          </tr>
 
-              <p style="margin: 24px 0 16px; font-size: 16px; line-height: 1.6; color: #374151;">
-                You now have full access to:
+          <!-- Feature section header -->
+          <tr>
+            <td style="padding: 0 32px 16px;" class="mobile-padding">
+              <p style="margin: 0; font-size: 12px; font-weight: 600; color: #ffffff; text-transform: uppercase; letter-spacing: 1px;">
+                Here's what you've unlocked
               </p>
-              <ul style="margin: 0 0 24px; padding-left: 20px; color: #374151;">
-                <li style="margin-bottom: 8px;">EICR & EIC certificate generation</li>
-                <li style="margin-bottom: 8px;">AI-powered tools & calculators</li>
-                <li style="margin-bottom: 8px;">Quote & invoice management</li>
-                <li style="margin-bottom: 8px;">Study centre materials</li>
-                <li style="margin-bottom: 0;">And much more!</li>
-              </ul>
+            </td>
+          </tr>
 
+          <!-- Feature cards -->
+          <tr>
+            <td style="padding: 0 32px 24px;" class="mobile-padding">
+              ${featureCardsHtml}
+            </td>
+          </tr>
+
+          <!-- CTA Button -->
+          <tr>
+            <td style="padding: 0 32px 32px;" class="mobile-padding">
               <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
                 <tr>
-                  <td style="text-align: center; padding: 16px 0;">
-                    <a href="https://www.elec-mate.com" style="display: inline-block; background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%); color: #1a1a1a; font-weight: 700; text-decoration: none; padding: 14px 32px; border-radius: 8px; font-size: 16px;">Open ElecMate</a>
+                  <td align="center">
+                    <!--[if mso]>
+                    <v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="https://www.elec-mate.com" style="height:56px;v-text-anchor:middle;width:100%;" arcsize="21%" fillcolor="#fbbf24">
+                      <w:anchorlock/>
+                      <center style="color:#0a0a0a;font-family:Arial,sans-serif;font-size:16px;font-weight:bold;">Open Elec-Mate</center>
+                    </v:roundrect>
+                    <![endif]-->
+                    <!--[if !mso]><!-->
+                    <a href="https://www.elec-mate.com" style="display: block; padding: 18px 32px; background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%); color: #0a0a0a; font-size: 16px; font-weight: 700; text-decoration: none; border-radius: 12px; text-align: center;">
+                      Open Elec-Mate
+                    </a>
+                    <!--<![endif]-->
                   </td>
                 </tr>
               </table>
-
-              <p style="margin: 16px 0 0; font-size: 14px; line-height: 1.6; color: #6b7280;">
-                If you have any questions, just reply to this email - we're here to help!
-              </p>
             </td>
           </tr>
 
           <!-- Footer -->
           <tr>
-            <td style="background: linear-gradient(135deg, #1a1a1a 0%, #0f0f0f 100%); padding: 28px 24px; text-align: center;">
-              <p style="margin: 0 0 8px; font-size: 16px; font-weight: 700; color: #FFD700;">⚡ ElecMate</p>
-              <p style="margin: 0; font-size: 13px; color: #9ca3af;">Professional electrical contracting tools</p>
+            <td style="padding: 24px 32px; background-color: #0a0a0a; border-top: 1px solid #1a1a1a;" class="mobile-padding">
+              <p style="margin: 0 0 4px; font-size: 13px; color: #ffffff;">
+                Questions? Reply to this email — we're here to help.
+              </p>
+            </td>
+          </tr>
+
+          <!-- Copyright -->
+          <tr>
+            <td align="center" style="padding: 16px 32px 24px; background-color: #0a0a0a;">
+              <p style="margin: 0; font-size: 12px; color: #ffffff;">
+                &copy; ${year} Elec-Mate &middot; Made in the UK
+              </p>
             </td>
           </tr>
 
         </table>
+
       </td>
     </tr>
   </table>
+
 </body>
 </html>
   `;
 
   try {
     const { data, error } = await resend.emails.send({
-      from: 'ElecMate <founder@elec-mate.com>',
+      from: 'Elec-Mate <founder@elec-mate.com>',
       reply_to: 'support@elec-mate.com',
       to: [email],
-      subject: `Welcome to ElecMate - Your ${tierName} subscription is active! ⚡`,
+      subject: `Welcome to Elec-Mate — Your ${tierName} subscription is active`,
       html: emailHtml,
     });
 
@@ -778,7 +957,7 @@ serve(async (req) => {
               const isYearly = tier.includes('yearly');
               const userName = customer.name || customer.email.split('@')[0];
 
-              await sendWelcomeEmail(customer.email, userName, tierName, isYearly);
+              await sendWelcomeEmail(customer.email, userName, tierName, isYearly, tier);
 
               // Also create in-app notification
               await supabase.from('notifications').insert({

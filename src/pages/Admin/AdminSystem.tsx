@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
@@ -22,7 +21,28 @@ import {
   ChevronRight,
 } from 'lucide-react';
 import { formatDistanceToNow } from 'date-fns';
+import { motion } from 'framer-motion';
+import { AnimatedCounter } from '@/components/dashboard/AnimatedCounter';
 import PullToRefresh from '@/components/admin/PullToRefresh';
+
+const sectionVariants = {
+  hidden: { opacity: 0, y: 12 },
+  visible: (i: number) => ({
+    opacity: 1,
+    y: 0,
+    transition: { delay: i * 0.06, duration: 0.35, ease: 'easeOut' },
+  }),
+};
+
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: { opacity: 1, transition: { staggerChildren: 0.04 } },
+};
+
+const listItemVariants = {
+  hidden: { opacity: 0, x: -8 },
+  visible: { opacity: 1, x: 0, transition: { duration: 0.2, ease: 'easeOut' } },
+};
 
 interface HealthCheck {
   name: string;
@@ -267,28 +287,28 @@ export default function AdminSystem() {
       ? 'error'
       : 'warning';
 
+  const statusAccentColor =
+    overallStatus === 'healthy'
+      ? 'from-green-500 to-emerald-400'
+      : overallStatus === 'error'
+        ? 'from-red-500 to-rose-400'
+        : 'from-amber-500 to-orange-400';
+
   return (
     <PullToRefresh
       onRefresh={async () => {
         await refetch();
       }}
     >
-      <div className="space-y-6 pb-20">
-        {/* Overall Status */}
-        <Card
-          className={`${
-            overallStatus === 'healthy'
-              ? 'bg-gradient-to-br from-green-500/10 to-green-600/5 border-green-500/20'
-              : overallStatus === 'error'
-                ? 'bg-gradient-to-br from-red-500/10 to-red-600/5 border-red-500/20'
-                : 'bg-gradient-to-br from-amber-500/10 to-amber-600/5 border-amber-500/20'
-          }`}
-        >
-          <CardContent className="pt-6 pb-6">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-4">
+      <div className="space-y-4 pb-20">
+        {/* Overall Status — compact bar */}
+        <motion.section variants={sectionVariants} initial="hidden" animate="visible" custom={0}>
+          <div className="glass-premium rounded-2xl overflow-hidden">
+            <div className={`h-1 bg-gradient-to-r ${statusAccentColor}`} />
+            <div className="p-4 flex items-center justify-between">
+              <div className="flex items-center gap-3">
                 <div
-                  className={`w-14 h-14 rounded-2xl flex items-center justify-center ${
+                  className={`w-10 h-10 rounded-xl flex items-center justify-center ${
                     overallStatus === 'healthy'
                       ? 'bg-green-500/20'
                       : overallStatus === 'error'
@@ -297,22 +317,22 @@ export default function AdminSystem() {
                   }`}
                 >
                   {overallStatus === 'healthy' ? (
-                    <CheckCircle className="h-7 w-7 text-green-400" />
+                    <CheckCircle className="h-5 w-5 text-green-400" />
                   ) : overallStatus === 'error' ? (
-                    <XCircle className="h-7 w-7 text-red-400" />
+                    <XCircle className="h-5 w-5 text-red-400" />
                   ) : (
-                    <AlertTriangle className="h-7 w-7 text-amber-400" />
+                    <AlertTriangle className="h-5 w-5 text-amber-400" />
                   )}
                 </div>
                 <div>
-                  <h2 className="text-lg font-semibold">
+                  <h2 className="text-base font-semibold !text-white">
                     {overallStatus === 'healthy'
                       ? 'All Systems Operational'
                       : overallStatus === 'error'
                         ? 'System Issues Detected'
                         : 'Performance Warnings'}
                   </h2>
-                  <p className="text-sm text-muted-foreground">
+                  <p className="text-xs !text-white">
                     {healthChecks?.length || 0} services monitored
                   </p>
                 </div>
@@ -327,110 +347,116 @@ export default function AdminSystem() {
                 <RefreshCw className={`h-4 w-4 ${isFetching ? 'animate-spin' : ''}`} />
               </Button>
             </div>
-          </CardContent>
-        </Card>
+          </div>
+        </motion.section>
 
         {/* Database Stats */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-          <Card className="bg-card/50">
-            <CardContent className="pt-4 pb-4">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-xl font-bold">{dbStats?.profiles || 0}</p>
-                  <p className="text-xs text-muted-foreground">Profiles</p>
-                </div>
-                <Users className="h-5 w-5 text-blue-400" />
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card className="bg-card/50">
-            <CardContent className="pt-4 pb-4">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-xl font-bold">{dbStats?.messages || 0}</p>
-                  <p className="text-xs text-muted-foreground">Messages</p>
-                </div>
-                <Zap className="h-5 w-5 text-yellow-400" />
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card className="bg-card/50">
-            <CardContent className="pt-4 pb-4">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-xl font-bold">{dbStats?.offers || 0}</p>
-                  <p className="text-xs text-muted-foreground">Offers</p>
-                </div>
-                <Server className="h-5 w-5 text-green-400" />
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card className="bg-card/50">
-            <CardContent className="pt-4 pb-4">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-xl font-bold">{dbStats?.presence || 0}</p>
-                  <p className="text-xs text-muted-foreground">Presence</p>
-                </div>
-                <Activity className="h-5 w-5 text-amber-400" />
-              </div>
-            </CardContent>
-          </Card>
-        </div>
+        <motion.section variants={sectionVariants} initial="hidden" animate="visible" custom={1}>
+          <motion.div
+            variants={containerVariants}
+            initial="hidden"
+            animate="visible"
+            className="grid grid-cols-2 sm:grid-cols-4 gap-2"
+          >
+            <motion.div
+              variants={listItemVariants}
+              whileTap={{ scale: 0.97 }}
+              className="bg-white/5 rounded-xl p-3 text-center touch-manipulation"
+            >
+              <Users className="h-5 w-5 text-blue-400 mx-auto mb-1" />
+              <p className="text-2xl sm:text-xl font-bold text-blue-400">
+                <AnimatedCounter value={dbStats?.profiles || 0} />
+              </p>
+              <p className="text-xs text-white">Profiles</p>
+            </motion.div>
+            <motion.div
+              variants={listItemVariants}
+              whileTap={{ scale: 0.97 }}
+              className="bg-white/5 rounded-xl p-3 text-center touch-manipulation"
+            >
+              <Zap className="h-5 w-5 text-yellow-400 mx-auto mb-1" />
+              <p className="text-2xl sm:text-xl font-bold text-yellow-400">
+                <AnimatedCounter value={dbStats?.messages || 0} />
+              </p>
+              <p className="text-xs text-white">Messages</p>
+            </motion.div>
+            <motion.div
+              variants={listItemVariants}
+              whileTap={{ scale: 0.97 }}
+              className="bg-white/5 rounded-xl p-3 text-center touch-manipulation"
+            >
+              <Server className="h-5 w-5 text-green-400 mx-auto mb-1" />
+              <p className="text-2xl sm:text-xl font-bold text-green-400">
+                <AnimatedCounter value={dbStats?.offers || 0} />
+              </p>
+              <p className="text-xs text-white">Offers</p>
+            </motion.div>
+            <motion.div
+              variants={listItemVariants}
+              whileTap={{ scale: 0.97 }}
+              className="bg-white/5 rounded-xl p-3 text-center touch-manipulation"
+            >
+              <Activity className="h-5 w-5 text-amber-400 mx-auto mb-1" />
+              <p className="text-2xl sm:text-xl font-bold text-amber-400">
+                <AnimatedCounter value={dbStats?.presence || 0} />
+              </p>
+              <p className="text-xs text-white">Presence</p>
+            </motion.div>
+          </motion.div>
+        </motion.section>
 
         {/* Health Checks List */}
-        <Card>
-          <CardHeader className="pb-3">
-            <CardTitle className="text-sm flex items-center gap-2">
-              <Activity className="h-4 w-4 text-blue-400" />
-              Service Health Checks
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="p-0">
+        <motion.section variants={sectionVariants} initial="hidden" animate="visible" custom={2}>
+          <div className="glass-premium rounded-2xl overflow-hidden">
+            <div className="h-1 bg-gradient-to-r from-purple-500 to-violet-400" />
+            <div className="p-4 pb-2">
+              <h3 className="text-sm font-semibold !text-white flex items-center gap-2">
+                <Activity className="h-4 w-4 text-blue-400" />
+                Service Health Checks
+              </h3>
+            </div>
             {isLoading ? (
               <div className="p-4 space-y-2">
                 {[...Array(5)].map((_, i) => (
-                  <div key={i} className="h-16 bg-muted animate-pulse rounded-lg" />
+                  <div key={i} className="h-16 bg-white/[0.06] animate-pulse rounded-lg" />
                 ))}
               </div>
             ) : (
-              <div className="divide-y divide-border">
+              <motion.div variants={containerVariants} initial="hidden" animate="visible">
                 {healthChecks?.map((check, i) => (
-                  <div
+                  <motion.div
                     key={i}
-                    className="flex items-center justify-between p-4 touch-manipulation active:bg-muted/50 cursor-pointer transition-all"
+                    variants={listItemVariants}
+                    className={`flex items-center justify-between p-4 touch-manipulation active:bg-white/5 cursor-pointer transition-all ${i > 0 ? 'border-t border-white/[0.04]' : ''}`}
                     onClick={() => setSelectedCheck(check)}
                   >
                     <div className="flex items-center gap-3">
                       <div
-                        className={`w-10 h-10 rounded-xl flex items-center justify-center ${
+                        className={`w-10 h-10 rounded-xl bg-white/[0.06] flex items-center justify-center ${
                           check.status === 'healthy'
-                            ? 'bg-green-500/10 text-green-400'
+                            ? 'text-green-400'
                             : check.status === 'error'
-                              ? 'bg-red-500/10 text-red-400'
-                              : 'bg-amber-500/10 text-amber-400'
+                              ? 'text-red-400'
+                              : 'text-amber-400'
                         }`}
                       >
                         {getCheckIcon(check.name)}
                       </div>
                       <div>
-                        <p className="font-medium text-sm">{check.name}</p>
-                        <p className="text-xs text-muted-foreground">{check.message}</p>
+                        <p className="font-medium text-sm !text-white">{check.name}</p>
+                        <p className="text-xs !text-white">{check.message}</p>
                       </div>
                     </div>
                     <div className="flex items-center gap-2">
                       {getStatusIcon(check.status)}
-                      <ChevronRight className="h-4 w-4 text-muted-foreground" />
+                      <ChevronRight className="h-4 w-4 !text-white" />
                     </div>
-                  </div>
+                  </motion.div>
                 ))}
-              </div>
+              </motion.div>
             )}
-          </CardContent>
-        </Card>
+          </div>
+        </motion.section>
 
         {/* Check Detail Sheet */}
         <Sheet open={!!selectedCheck} onOpenChange={() => setSelectedCheck(null)}>
@@ -438,10 +464,10 @@ export default function AdminSystem() {
             <div className="flex flex-col h-full">
               {/* Drag Handle */}
               <div className="flex justify-center pt-3 pb-2">
-                <div className="w-10 h-1 rounded-full bg-muted-foreground/30" />
+                <div className="w-12 h-1.5 bg-white/20 rounded-full" />
               </div>
 
-              <SheetHeader className="px-4 pb-4 border-b border-border">
+              <SheetHeader className="px-4 pb-4 border-b border-white/[0.06]">
                 <SheetTitle className="flex items-center gap-3">
                   <div
                     className={`w-12 h-12 rounded-xl flex items-center justify-center ${
@@ -464,49 +490,37 @@ export default function AdminSystem() {
               </SheetHeader>
 
               <div className="flex-1 overflow-y-auto p-4 space-y-4">
-                <Card>
-                  <CardHeader className="pb-2">
-                    <CardTitle className="text-sm">Status Message</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <p className="text-sm">{selectedCheck?.message}</p>
-                  </CardContent>
-                </Card>
+                <div className="glass-premium rounded-2xl overflow-hidden p-4">
+                  <h4 className="text-sm font-semibold !text-white mb-2">Status Message</h4>
+                  <p className="text-sm !text-white">{selectedCheck?.message}</p>
+                </div>
 
                 {selectedCheck?.details && Object.keys(selectedCheck.details).length > 0 && (
-                  <Card>
-                    <CardHeader className="pb-2">
-                      <CardTitle className="text-sm">Details</CardTitle>
-                    </CardHeader>
-                    <CardContent className="space-y-2">
-                      {Object.entries(selectedCheck.details).map(([key, value]) => (
-                        <div key={key} className="flex justify-between">
-                          <span className="text-sm text-muted-foreground capitalize">
-                            {key.replace(/([A-Z])/g, ' $1').trim()}
-                          </span>
-                          <span className="text-sm font-mono">
-                            {typeof value === 'object' ? JSON.stringify(value) : String(value)}
-                          </span>
-                        </div>
-                      ))}
-                    </CardContent>
-                  </Card>
+                  <div className="glass-premium rounded-2xl overflow-hidden p-4 space-y-2">
+                    <h4 className="text-sm font-semibold !text-white mb-2">Details</h4>
+                    {Object.entries(selectedCheck.details).map(([key, value]) => (
+                      <div key={key} className="flex justify-between">
+                        <span className="text-sm !text-white capitalize">
+                          {key.replace(/([A-Z])/g, ' $1').trim()}
+                        </span>
+                        <span className="text-sm font-mono">
+                          {typeof value === 'object' ? JSON.stringify(value) : String(value)}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
                 )}
 
-                <Card>
-                  <CardHeader className="pb-2">
-                    <CardTitle className="text-sm flex items-center gap-2">
-                      <Clock className="h-4 w-4" />
-                      Last Checked
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <p className="text-sm">
-                      {selectedCheck?.lastChecked &&
-                        formatDistanceToNow(selectedCheck.lastChecked, { addSuffix: true })}
-                    </p>
-                  </CardContent>
-                </Card>
+                <div className="glass-premium rounded-2xl overflow-hidden p-4">
+                  <h4 className="text-sm font-semibold !text-white flex items-center gap-2 mb-2">
+                    <Clock className="h-4 w-4" />
+                    Last Checked
+                  </h4>
+                  <p className="text-sm !text-white">
+                    {selectedCheck?.lastChecked &&
+                      formatDistanceToNow(selectedCheck.lastChecked, { addSuffix: true })}
+                  </p>
+                </div>
               </div>
             </div>
           </SheetContent>
