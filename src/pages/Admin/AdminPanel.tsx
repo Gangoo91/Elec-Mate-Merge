@@ -186,7 +186,7 @@ export default function AdminPanel() {
       <OfflineBanner />
 
       {/* Sticky Header — matches NativePageWrapper pattern */}
-      <header className="sticky top-0 z-40 bg-background border-b border-white/[0.06] safe-top">
+      <header className="sticky top-0 z-40 bg-background border-b border-white/[0.06]">
         <div className="px-4">
           {/* Title Row */}
           <div className="flex items-center h-14 gap-3">
