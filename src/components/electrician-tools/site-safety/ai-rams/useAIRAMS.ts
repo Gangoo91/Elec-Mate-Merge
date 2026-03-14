@@ -520,7 +520,7 @@ export function useAIRAMS(): UseAIRAMSReturn {
 
   // Phase 2: Aggressive Timeout with Real Cancellation
   const AGENT_TIMEOUT_MS = 120000; // 120 seconds - matches edge function timeout
-  const MAX_RETRIES = 2;
+  const MAX_RETRIES = 1; // Reduced from 2 — fail faster, installer can be skipped gracefully
 
   const callAgentWithRetry = async (
     functionName: string,
@@ -1130,6 +1130,14 @@ export function useAIRAMS(): UseAIRAMSReturn {
 
       const installerProgressInterval = startProgressPolling('installer', 55, 90, 30000);
 
+      // Warn user if installer is taking a long time (75s into a 120s timeout)
+      const slowWarningTimer = setTimeout(() => {
+        toast({
+          title: 'Still generating…',
+          description: 'The method statement is taking longer than usual. Please wait a moment.',
+        });
+      }, 75000);
+
       const { data: installerData, error: installerError } = await callAgentWithRetry(
         'installer-v3',
         {
@@ -1143,6 +1151,7 @@ export function useAIRAMS(): UseAIRAMSReturn {
         }
       );
 
+      clearTimeout(slowWarningTimer);
       clearInterval(installerProgressInterval);
       setOverallProgress(95);
 
