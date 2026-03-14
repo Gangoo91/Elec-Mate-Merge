@@ -1,5 +1,5 @@
-import { useState, useMemo, useCallback } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { useState, useMemo, useCallback, useEffect } from 'react';
+import { motion } from 'framer-motion';
 import {
   ArrowLeft,
   Search,
@@ -8,24 +8,16 @@ import {
   Loader2,
   Check,
   X,
-  Shield,
-  FlaskConical,
-  ClipboardCheck,
-  BookOpen,
   AlertTriangle,
-  Eye,
-  CalendarDays,
-  Zap,
-  Flame,
-  Wrench,
   Users,
   FolderOpen,
-  ChevronRight,
   CheckCircle,
-  Clock,
   FileCheck,
+  Upload,
+  Sparkles,
+  FileUp,
+  Edit3,
 } from 'lucide-react';
-import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
@@ -38,6 +30,10 @@ import { useSafetyPDFExport } from '@/hooks/useSafetyPDFExport';
 import { supabase } from '@/integrations/supabase/client';
 import { useQueryClient } from '@tanstack/react-query';
 import { toast } from '@/hooks/use-toast';
+import { RAMSAmendDialog } from './ai-rams/RAMSAmendDialog';
+import { RAMSQuickEditDialog } from './ai-rams/RAMSQuickEditDialog';
+import { UserRAMSUpload } from './UserRAMSUpload';
+import { cn } from '@/lib/utils';
 
 interface DocumentHubProps {
   onBack: () => void;
@@ -51,25 +47,25 @@ const TYPE_CONFIG: Record<
     colour: 'text-amber-400',
     bg: 'bg-amber-500/10',
     border: 'border-amber-500/20',
-    icon: Shield,
+    icon: FileText,
   },
   COSHH: {
     colour: 'text-green-400',
     bg: 'bg-green-500/10',
     border: 'border-green-500/20',
-    icon: FlaskConical,
+    icon: FileText,
   },
   Inspection: {
     colour: 'text-indigo-400',
     bg: 'bg-indigo-500/10',
     border: 'border-indigo-500/20',
-    icon: ClipboardCheck,
+    icon: FileText,
   },
   Accident: {
     colour: 'text-red-400',
     bg: 'bg-red-500/10',
     border: 'border-red-500/20',
-    icon: BookOpen,
+    icon: FileText,
   },
   'Near Miss': {
     colour: 'text-rose-400',
@@ -81,31 +77,31 @@ const TYPE_CONFIG: Record<
     colour: 'text-lime-400',
     bg: 'bg-lime-500/10',
     border: 'border-lime-500/20',
-    icon: Eye,
+    icon: FileText,
   },
   'Site Diary': {
     colour: 'text-violet-400',
     bg: 'bg-violet-500/10',
     border: 'border-violet-500/20',
-    icon: CalendarDays,
+    icon: FileText,
   },
   Isolation: {
     colour: 'text-orange-400',
     bg: 'bg-orange-500/10',
     border: 'border-orange-500/20',
-    icon: Zap,
+    icon: FileText,
   },
   'Fire Watch': {
     colour: 'text-orange-300',
     bg: 'bg-orange-400/10',
     border: 'border-orange-400/20',
-    icon: Flame,
+    icon: FileText,
   },
   Equipment: {
     colour: 'text-cyan-400',
     bg: 'bg-cyan-500/10',
     border: 'border-cyan-500/20',
-    icon: Wrench,
+    icon: FileText,
   },
   RAMS: {
     colour: 'text-amber-300',
@@ -140,66 +136,29 @@ const STATUS_STYLES: Record<string, { bg: string; text: string; label: string }>
   re_energised: { bg: 'bg-emerald-500/15', text: 'text-emerald-400', label: 'Re-energised' },
 };
 
-// Table mapping for status updates
+// Table mapping for status updates — only tables that exist
 const TABLE_MAP: Partial<Record<DocumentType, string>> = {
-  Permit: 'permits_to_work',
-  COSHH: 'coshh_assessments',
-  Inspection: 'inspection_checklists',
-  Accident: 'accident_records',
   'Near Miss': 'near_miss_reports',
-  Observation: 'safety_observations',
-  'Site Diary': 'electrician_site_diary',
-  Isolation: 'safe_isolation_records',
-  'Fire Watch': 'fire_watch_records',
-  Equipment: 'safety_equipment',
   RAMS: 'rams_documents',
   Briefing: 'team_briefings',
 };
 
 // Approval transitions per document type
-const STATUS_TRANSITIONS: Partial<Record<DocumentType, { from: string; to: string; label: string }[]>> = {
-  Permit: [
-    { from: 'active', to: 'closed', label: 'Close Permit' },
-  ],
-  COSHH: [
-    { from: 'draft', to: 'reviewed', label: 'Mark Reviewed' },
-  ],
-  Inspection: [
-    { from: 'draft', to: 'reviewed', label: 'Mark Reviewed' },
-  ],
+const STATUS_TRANSITIONS: Partial<
+  Record<DocumentType, { from: string; to: string; label: string }[]>
+> = {
   'Near Miss': [
     { from: 'open', to: 'in_progress', label: 'Mark In Progress' },
     { from: 'in_progress', to: 'closed', label: 'Close' },
     { from: 'open', to: 'closed', label: 'Close' },
   ],
-  Observation: [
-    { from: 'open', to: 'in_progress', label: 'Mark In Progress' },
-    { from: 'in_progress', to: 'closed', label: 'Close' },
-    { from: 'open', to: 'closed', label: 'Close' },
-  ],
-  RAMS: [
-    { from: 'draft', to: 'approved', label: 'Approve' },
-  ],
-  Accident: [
-    { from: 'recorded', to: 'closed', label: 'Close Record' },
-  ],
+  RAMS: [{ from: 'draft', to: 'approved', label: 'Approve' }],
 };
 
-const ALL_TYPES: (DocumentType | 'All')[] = [
-  'All',
-  'RAMS',
-  'Permit',
-  'Briefing',
-  'COSHH',
-  'Inspection',
-  'Isolation',
-  'Accident',
-  'Near Miss',
-  'Observation',
-  'Site Diary',
-  'Fire Watch',
-  'Equipment',
-];
+// Only types with existing tables
+const ALL_TYPES: (DocumentType | 'All')[] = ['All', 'RAMS', 'Near Miss', 'Briefing'];
+
+type RAMSSourceFilter = 'all' | 'ai-generated' | 'user-uploaded';
 
 function formatRelativeDate(dateStr: string): string {
   const date = new Date(dateStr);
@@ -225,6 +184,41 @@ export function DocumentHub({ onBack }: DocumentHubProps) {
   const [activeFilter, setActiveFilter] = useState<DocumentType | 'All'>('All');
   const [approvalDoc, setApprovalDoc] = useState<SafetyDocument | null>(null);
   const [isUpdating, setIsUpdating] = useState(false);
+
+  // RAMS-specific state
+  const [ramsSourceFilter, setRamsSourceFilter] = useState<RAMSSourceFilter>('all');
+  const [uploadSheetOpen, setUploadSheetOpen] = useState(false);
+  const [amendDialogOpen, setAmendDialogOpen] = useState(false);
+  const [quickEditDialogOpen, setQuickEditDialogOpen] = useState(false);
+  const [selectedDocumentId, setSelectedDocumentId] = useState<string | null>(null);
+
+  // Fetch RAMS source data for source tabs
+  const [ramsSourceData, setRamsSourceData] = useState<Record<string, string>>({});
+  const [ramsSourceLoaded, setRamsSourceLoaded] = useState(false);
+
+  // Load RAMS source data when RAMS filter is active
+  useEffect(() => {
+    if (activeFilter !== 'RAMS' || ramsSourceLoaded) return;
+    const load = async () => {
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+      if (!user) return;
+      const { data } = await supabase
+        .from('rams_documents')
+        .select('id, source')
+        .eq('user_id', user.id);
+      if (data) {
+        const sourceMap: Record<string, string> = {};
+        for (const row of data) {
+          sourceMap[row.id] = row.source || 'ai-generated';
+        }
+        setRamsSourceData(sourceMap);
+        setRamsSourceLoaded(true);
+      }
+    };
+    load();
+  }, [activeFilter, ramsSourceLoaded]);
 
   const handleStatusUpdate = useCallback(
     async (doc: SafetyDocument, newStatus: string) => {
@@ -262,11 +256,34 @@ export function DocumentHub({ onBack }: DocumentHubProps) {
     return transitions.filter((t) => t.from === doc.status);
   }, []);
 
+  // RAMS source counts
+  const ramsDocuments = useMemo(() => documents.filter((d) => d.type === 'RAMS'), [documents]);
+  const aiGeneratedCount = useMemo(
+    () =>
+      ramsDocuments.filter((d) => {
+        const source = ramsSourceData[d.id] || 'ai-generated';
+        return source === 'ai-generated';
+      }).length,
+    [ramsDocuments, ramsSourceData]
+  );
+  const uploadedCount = useMemo(
+    () => ramsDocuments.filter((d) => ramsSourceData[d.id] === 'user-uploaded').length,
+    [ramsDocuments, ramsSourceData]
+  );
+
   const filtered = useMemo(() => {
     let result = documents;
 
     if (activeFilter !== 'All') {
       result = result.filter((d) => d.type === activeFilter);
+    }
+
+    // RAMS source filter
+    if (activeFilter === 'RAMS' && ramsSourceFilter !== 'all') {
+      result = result.filter((d) => {
+        const source = ramsSourceData[d.id] || 'ai-generated';
+        return source === ramsSourceFilter;
+      });
     }
 
     if (searchTerm.trim()) {
@@ -280,13 +297,15 @@ export function DocumentHub({ onBack }: DocumentHubProps) {
     }
 
     return result;
-  }, [documents, activeFilter, searchTerm]);
+  }, [documents, activeFilter, searchTerm, ramsSourceFilter, ramsSourceData]);
 
   const handleExport = (doc: SafetyDocument) => {
     if (doc.hasPDF && doc.pdfType) {
       exportPDF(doc.pdfType as Parameters<typeof exportPDF>[0], doc.sourceId);
     }
   };
+
+  const isRamsFilterActive = activeFilter === 'RAMS';
 
   return (
     <div className="flex flex-col h-full bg-background">
@@ -304,15 +323,29 @@ export function DocumentHub({ onBack }: DocumentHubProps) {
 
         {/* Title + search */}
         <div className="px-4 pb-3 space-y-3">
-          <div className="flex items-center gap-3">
-            <div className="p-2.5 rounded-xl bg-amber-500/10 border border-amber-500/20">
-              <FolderOpen className="h-5 w-5 text-amber-400" />
-            </div>
-            <div>
-              <h1 className="text-lg font-bold text-white">Documents</h1>
-              <p className="text-xs text-white">
-                {documents.length} document{documents.length !== 1 ? 's' : ''} across all modules
-              </p>
+          <div className="relative overflow-hidden glass-premium rounded-xl p-4">
+            <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-elec-yellow via-amber-400 to-elec-yellow" />
+            <div className="absolute top-0 right-0 w-32 h-32 bg-elec-yellow/[0.04] rounded-full blur-3xl -translate-y-1/2 translate-x-1/4 pointer-events-none" />
+            <div className="relative flex items-center gap-3.5">
+              <div className="p-2.5 rounded-xl bg-elec-yellow/10 border border-elec-yellow/20">
+                <FolderOpen className="h-6 w-6 text-elec-yellow" />
+              </div>
+              <div className="flex-1 min-w-0">
+                <h1 className="text-lg font-bold text-white">Documents</h1>
+                <p className="text-xs text-white mt-0.5">
+                  {documents.length} document{documents.length !== 1 ? 's' : ''} across all modules
+                </p>
+              </div>
+              {/* Upload RAMS button — visible when RAMS filter active */}
+              {isRamsFilterActive && (
+                <button
+                  onClick={() => setUploadSheetOpen(true)}
+                  className="flex items-center gap-1.5 px-3 py-2 rounded-xl bg-elec-yellow/10 border border-elec-yellow/20 text-elec-yellow text-xs font-semibold touch-manipulation active:scale-[0.97] transition-all"
+                >
+                  <Upload className="h-3.5 w-3.5" />
+                  Upload
+                </button>
+              )}
             </div>
           </div>
 
@@ -343,7 +376,10 @@ export function DocumentHub({ onBack }: DocumentHubProps) {
               return (
                 <button
                   key={type}
-                  onClick={() => setActiveFilter(type)}
+                  onClick={() => {
+                    setActiveFilter(type);
+                    if (type !== 'RAMS') setRamsSourceFilter('all');
+                  }}
                   className={`flex-shrink-0 px-3 py-1.5 rounded-full text-xs font-semibold transition-all touch-manipulation active:scale-[0.97] ${
                     isActive
                       ? 'bg-elec-yellow text-black'
@@ -356,6 +392,49 @@ export function DocumentHub({ onBack }: DocumentHubProps) {
             })}
           </div>
         </div>
+
+        {/* RAMS source tabs — only when RAMS filter active */}
+        {isRamsFilterActive && (
+          <div className="px-4 pb-3 overflow-x-auto scrollbar-hide">
+            <div className="flex gap-2">
+              <button
+                onClick={() => setRamsSourceFilter('all')}
+                className={cn(
+                  'flex-shrink-0 px-3 py-1.5 rounded-full text-xs font-semibold transition-all touch-manipulation active:scale-[0.97]',
+                  ramsSourceFilter === 'all'
+                    ? 'bg-white/20 text-white'
+                    : 'bg-white/[0.06] text-white border border-white/10'
+                )}
+              >
+                All ({ramsDocuments.length})
+              </button>
+              <button
+                onClick={() => setRamsSourceFilter('ai-generated')}
+                className={cn(
+                  'flex-shrink-0 px-3 py-1.5 rounded-full text-xs font-semibold transition-all touch-manipulation active:scale-[0.97] flex items-center gap-1',
+                  ramsSourceFilter === 'ai-generated'
+                    ? 'bg-white/20 text-white'
+                    : 'bg-white/[0.06] text-white border border-white/10'
+                )}
+              >
+                <Sparkles className="h-3 w-3" />
+                AI ({aiGeneratedCount})
+              </button>
+              <button
+                onClick={() => setRamsSourceFilter('user-uploaded')}
+                className={cn(
+                  'flex-shrink-0 px-3 py-1.5 rounded-full text-xs font-semibold transition-all touch-manipulation active:scale-[0.97] flex items-center gap-1',
+                  ramsSourceFilter === 'user-uploaded'
+                    ? 'bg-white/20 text-white'
+                    : 'bg-white/[0.06] text-white border border-white/10'
+                )}
+              >
+                <FileUp className="h-3 w-3" />
+                Uploaded ({uploadedCount})
+              </button>
+            </div>
+          </div>
+        )}
       </div>
 
       {/* Content */}
@@ -382,11 +461,12 @@ export function DocumentHub({ onBack }: DocumentHubProps) {
             </p>
           </div>
         ) : (
-          <div className="space-y-2">
+          <div className="space-y-2.5">
             {filtered.map((doc, index) => {
               const config = TYPE_CONFIG[doc.type];
               const Icon = config.icon;
               const isThisExporting = isExporting && exportingId === doc.sourceId;
+              const isRAMS = doc.type === 'RAMS';
 
               return (
                 <motion.div
@@ -397,42 +477,53 @@ export function DocumentHub({ onBack }: DocumentHubProps) {
                     delay: Math.min(index * 0.02, 0.3),
                     duration: 0.15,
                   }}
-                  className="rounded-xl bg-white/[0.03] border border-white/[0.08] p-3.5 active:bg-white/[0.06] transition-colors touch-manipulation"
+                  className="glass-premium rounded-xl active:bg-white/[0.02] transition-colors touch-manipulation overflow-hidden"
                 >
-                  <div className="flex items-center gap-3">
-                    {/* Type icon */}
-                    <div
-                      className={`flex-shrink-0 w-11 h-11 rounded-xl ${config.bg} flex items-center justify-center`}
-                    >
-                      <Icon className={`h-5 w-5 ${config.colour}`} />
+                  {/* Coloured top accent */}
+                  <div className={`h-[2px] ${config.bg.replace('/10', '/40')}`} />
+
+                  <div className="p-4 space-y-3">
+                    {/* Top row: icon + title */}
+                    <div className="flex items-start gap-3">
+                      <div
+                        className={`flex-shrink-0 w-10 h-10 rounded-lg ${config.bg} flex items-center justify-center`}
+                      >
+                        <Icon className={`h-5 w-5 ${config.colour}`} />
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <h3 className="text-[15px] font-semibold text-white leading-snug line-clamp-2">{doc.title}</h3>
+                      </div>
                     </div>
 
-                    {/* Content */}
-                    <div className="flex-1 min-w-0">
-                      <h3 className="text-sm font-semibold text-white truncate">{doc.title}</h3>
-                      <div className="flex items-center gap-2 mt-1">
-                        <span className={`text-[11px] font-medium ${config.colour}`}>
-                          {doc.type}
+                    {/* Middle: badges */}
+                    <div className="flex items-center gap-1.5 flex-wrap">
+                      <span className={`inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-bold ${config.bg} ${config.colour}`}>
+                        {doc.type}
+                      </span>
+                      {(() => {
+                        const statusStyle = STATUS_STYLES[doc.status] || {
+                          bg: 'bg-white/10',
+                          text: 'text-white',
+                          label: doc.status,
+                        };
+                        return (
+                          <span className={`inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium ${statusStyle.bg} ${statusStyle.text}`}>
+                            {statusStyle.label}
+                          </span>
+                        );
+                      })()}
+                      {doc.hasSignature && (
+                        <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-medium bg-emerald-500/15 text-emerald-400">
+                          <Check className="h-3 w-3" />
+                          Signed
                         </span>
-                        <span className="w-1 h-1 rounded-full bg-white/20 flex-shrink-0" />
-                        {(() => {
-                          const statusStyle = STATUS_STYLES[doc.status] || {
-                            bg: 'bg-white/10',
-                            text: 'text-white',
-                            label: doc.status,
-                          };
-                          return (
-                            <span className={`text-[11px] font-medium ${statusStyle.text}`}>
-                              {statusStyle.label}
-                            </span>
-                          );
-                        })()}
-                        {doc.hasSignature && (
-                          <Check className="h-3 w-3 text-emerald-400 flex-shrink-0" />
-                        )}
-                      </div>
-                      <div className="flex items-center gap-2 mt-0.5">
-                        <span className="text-[11px] text-white">
+                      )}
+                    </div>
+
+                    {/* Bottom row: metadata left, actions right */}
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-2 min-w-0">
+                        <span className="text-[11px] text-white flex-shrink-0">
                           {formatRelativeDate(doc.updatedAt)}
                         </span>
                         {doc.siteAddress && (
@@ -444,37 +535,49 @@ export function DocumentHub({ onBack }: DocumentHubProps) {
                           </>
                         )}
                       </div>
-                    </div>
 
-                    {/* Actions */}
-                    <div className="flex items-center gap-1.5 flex-shrink-0">
-                      {getAvailableTransitions(doc).length > 0 && (
-                        <button
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            setApprovalDoc(doc);
-                          }}
-                          className="w-10 h-10 rounded-xl bg-emerald-500/10 flex items-center justify-center touch-manipulation active:scale-[0.95] transition-all"
-                        >
-                          <FileCheck className="h-4 w-4 text-emerald-400" />
-                        </button>
-                      )}
-                      {doc.hasPDF && (
-                        <button
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            handleExport(doc);
-                          }}
-                          disabled={isThisExporting}
-                          className="w-10 h-10 rounded-xl bg-white/[0.04] flex items-center justify-center touch-manipulation active:scale-[0.95] active:bg-white/[0.08] transition-all disabled:opacity-50"
-                        >
-                          {isThisExporting ? (
-                            <Loader2 className="h-4 w-4 text-white animate-spin" />
-                          ) : (
-                            <Download className="h-4 w-4 text-white" />
-                          )}
-                        </button>
-                      )}
+                      {/* Actions */}
+                      <div className="flex items-center gap-1.5 flex-shrink-0 ml-2">
+                        {isRAMS && (
+                          <button
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              setSelectedDocumentId(doc.sourceId);
+                              setAmendDialogOpen(true);
+                            }}
+                            className="w-9 h-9 rounded-lg bg-blue-500/10 flex items-center justify-center touch-manipulation active:scale-[0.95] transition-all"
+                          >
+                            <Edit3 className="h-4 w-4 text-blue-400" />
+                          </button>
+                        )}
+                        {getAvailableTransitions(doc).length > 0 && (
+                          <button
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              setApprovalDoc(doc);
+                            }}
+                            className="w-9 h-9 rounded-lg bg-emerald-500/10 flex items-center justify-center touch-manipulation active:scale-[0.95] transition-all"
+                          >
+                            <FileCheck className="h-4 w-4 text-emerald-400" />
+                          </button>
+                        )}
+                        {doc.hasPDF && (
+                          <button
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              handleExport(doc);
+                            }}
+                            disabled={isThisExporting}
+                            className="w-9 h-9 rounded-lg bg-white/[0.06] flex items-center justify-center touch-manipulation active:scale-[0.95] active:bg-white/[0.10] transition-all disabled:opacity-50"
+                          >
+                            {isThisExporting ? (
+                              <Loader2 className="h-4 w-4 text-white animate-spin" />
+                            ) : (
+                              <Download className="h-4 w-4 text-white" />
+                            )}
+                          </button>
+                        )}
+                      </div>
                     </div>
                   </div>
                 </motion.div>
@@ -483,6 +586,7 @@ export function DocumentHub({ onBack }: DocumentHubProps) {
           </div>
         )}
       </div>
+
       {/* Approval bottom sheet */}
       <Sheet open={!!approvalDoc} onOpenChange={() => setApprovalDoc(null)}>
         <SheetContent side="bottom" className="rounded-t-2xl bg-background border-white/10">
@@ -517,6 +621,44 @@ export function DocumentHub({ onBack }: DocumentHubProps) {
           )}
         </SheetContent>
       </Sheet>
+
+      {/* RAMS Upload Sheet */}
+      <UserRAMSUpload
+        open={uploadSheetOpen}
+        onOpenChange={setUploadSheetOpen}
+        onUploadComplete={() => {
+          queryClient.invalidateQueries({ queryKey: ['all-safety-documents'] });
+          setRamsSourceLoaded(false);
+        }}
+      />
+
+      {/* RAMS Amend Dialogs */}
+      {selectedDocumentId && (
+        <>
+          <RAMSAmendDialog
+            documentId={selectedDocumentId}
+            isOpen={amendDialogOpen}
+            onClose={() => {
+              setAmendDialogOpen(false);
+              setSelectedDocumentId(null);
+            }}
+            onQuickEdit={() => {
+              setAmendDialogOpen(false);
+              setQuickEditDialogOpen(true);
+            }}
+          />
+
+          <RAMSQuickEditDialog
+            documentId={selectedDocumentId}
+            isOpen={quickEditDialogOpen}
+            onClose={() => {
+              setQuickEditDialogOpen(false);
+              setSelectedDocumentId(null);
+              queryClient.invalidateQueries({ queryKey: ['all-safety-documents'] });
+            }}
+          />
+        </>
+      )}
     </div>
   );
 }

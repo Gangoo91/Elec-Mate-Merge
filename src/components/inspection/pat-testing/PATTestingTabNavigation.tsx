@@ -3,7 +3,10 @@ import { Button } from '@/components/ui/button';
 import { ChevronLeft, ChevronRight, CheckCircle2, PoundSterling } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useIsMobile } from '@/hooks/use-mobile';
-import { WhatsAppShareButton } from '@/components/ui/WhatsAppShareButton';
+import {
+  WhatsAppShareButton,
+} from '@/components/ui/WhatsAppShareButton';
+import type { ShareableDocumentType } from '@/hooks/useWhatsAppShare';
 
 interface PATTestingTabNavigationProps {
   currentTab: string;
@@ -95,7 +98,7 @@ const PATTestingTabNavigation: React.FC<PATTestingTabNavigationProps> = ({
             <div className="flex items-center gap-2">
               {whatsApp && (
                 <WhatsAppShareButton
-                  type={whatsApp.type as any}
+                  type={whatsApp.type as ShareableDocumentType}
                   id={whatsApp.id}
                   recipientPhone={whatsApp.recipientPhone}
                   recipientName={whatsApp.recipientName}

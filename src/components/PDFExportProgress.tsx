@@ -2,12 +2,7 @@ import React, { useState, useEffect } from 'react';
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogFooter,
 } from '@/components/ui/dialog';
-import { Progress } from '@/components/ui/progress';
 import { Button } from '@/components/ui/button';
 import { CheckCircle, FileText, Loader2, Mail } from 'lucide-react';
 
@@ -77,48 +72,67 @@ const PDFExportProgress = ({
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="sm:max-w-md">
-        <DialogHeader>
-          <DialogTitle className="flex items-center gap-2">
-            {getIcon()}
-            Exporting {exportType === 'complete'
-              ? `Complete ${certificateType}`
-              : 'Observations'}{' '}
-            to PDF
-          </DialogTitle>
-          <DialogDescription>{getStatusText()}</DialogDescription>
-        </DialogHeader>
-
-        <div className="space-y-4">
-          <Progress value={displayProgress} className="w-full" />
-
-          <div className="text-center">
-            <p className="text-sm text-muted-foreground">{displayProgress}% Complete</p>
+      <DialogContent className="sm:max-w-sm bg-[#1a1f2e] border border-white/10 rounded-2xl p-0 overflow-hidden">
+        <div className="flex flex-col items-center px-6 pt-8 pb-6 space-y-5">
+          {/* Icon */}
+          <div className={`w-14 h-14 rounded-full flex items-center justify-center ${
+            status === 'complete' ? 'bg-green-500/15' : status === 'error' ? 'bg-red-500/15' : 'bg-yellow-500/15'
+          }`}>
+            {status === 'complete' ? (
+              <CheckCircle className="h-7 w-7 text-green-400" />
+            ) : status === 'error' ? (
+              <FileText className="h-7 w-7 text-red-400" />
+            ) : (
+              <Loader2 className="h-7 w-7 text-yellow-400 animate-spin" />
+            )}
           </div>
 
-          {status === 'complete' && (
-            <div className="text-center text-sm text-green-600">
-              Your PDF has been downloaded successfully!
+          {/* Title */}
+          <div className="text-center space-y-1">
+            <h3 className="text-base font-semibold text-white">
+              {status === 'complete' ? 'PDF Ready' : status === 'error' ? 'Export Failed' : `Exporting ${certificateType}`}
+            </h3>
+            <p className="text-sm text-white">{getStatusText()}</p>
+          </div>
+
+          {/* Progress bar */}
+          {status !== 'complete' && status !== 'error' && (
+            <div className="w-full space-y-2">
+              <div className="w-full h-2 bg-white/10 rounded-full overflow-hidden">
+                <div
+                  className="h-full bg-gradient-to-r from-yellow-500 to-amber-400 rounded-full transition-all duration-300 ease-out"
+                  style={{ width: `${displayProgress}%` }}
+                />
+              </div>
+              <p className="text-xs text-white text-center">{displayProgress}%</p>
             </div>
           )}
 
           {status === 'error' && (
-            <div className="text-center text-sm text-red-600">
+            <p className="text-sm text-red-400 text-center">
               Please try again or contact support if the problem persists.
-            </div>
+            </p>
           )}
         </div>
 
+        {/* Action buttons */}
         {status === 'complete' && onEmailClick && formData && (
-          <DialogFooter className="sm:justify-between">
-            <Button variant="outline" onClick={onClose}>
+          <div className="border-t border-white/10 px-6 py-4 flex gap-3">
+            <Button
+              variant="outline"
+              onClick={onClose}
+              className="flex-1 h-11 touch-manipulation rounded-xl border-white/20 text-white hover:bg-white/5"
+            >
               Close
             </Button>
-            <Button onClick={onEmailClick} className="bg-elec-blue hover:bg-elec-blue/90">
+            <Button
+              onClick={onEmailClick}
+              className="flex-1 h-11 touch-manipulation rounded-xl bg-yellow-500 hover:bg-yellow-400 text-black font-medium"
+            >
               <Mail className="h-4 w-4 mr-2" />
-              Email to Client
+              Email Client
             </Button>
-          </DialogFooter>
+          </div>
         )}
       </DialogContent>
     </Dialog>

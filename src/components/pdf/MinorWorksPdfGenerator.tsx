@@ -89,7 +89,11 @@ const MinorWorksPdfGenerator: React.FC<MinorWorksPdfGeneratorProps> = ({
   }, []);
 
   // --- Validation checks (matching EIC pattern) ---
-  const hasClientAndDetails = !!(formData.clientName && formData.propertyAddress && formData.workDate);
+  const hasClientAndDetails = !!(
+    formData.clientName &&
+    formData.propertyAddress &&
+    formData.workDate
+  );
   const hasCircuitDetails = !!(formData.distributionBoard && formData.circuitDesignation);
   const hasTestResults = !!(
     (formData.continuityR1R2 || formData.r2Continuity) &&

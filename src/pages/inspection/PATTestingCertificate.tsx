@@ -153,9 +153,12 @@ export default function PATTestingCertificate() {
       companyPhone: companyProfile.company_phone || '',
       companyEmail: companyProfile.company_email || '',
       companyAccentColor: companyProfile.primary_color || '#3b82f6',
+      companyTagline: (companyProfile as Record<string, unknown>).company_tagline as string || '',
+      companyWebsite: (companyProfile as Record<string, unknown>).company_website as string || '',
       registrationSchemeLogo:
         companyProfile.scheme_logo_data_url || companyProfile.registration_scheme_logo || '',
       registrationScheme: companyProfile.registration_scheme || '',
+      registrationNumber: companyProfile.registration_number || '',
     };
   }, [companyProfile]);
 
@@ -173,35 +176,42 @@ export default function PATTestingCertificate() {
           const localDraft = draftStorage.loadDraft(REPORT_TYPE, id);
           const report = await reportCloud.getReportByReportId(id, user.id);
 
+          let loadedData: typeof formData | null = null;
+
           if (localDraft && report) {
             // Compare timestamps — use whichever is newer
             const isLocalNewer = draftStorage.isLocalDraftNewer(REPORT_TYPE, id, report.updated_at);
 
             if (isLocalNewer) {
               console.log('[PAT] Loading from local draft (newer than cloud)');
-              setFormData({ ...getDefaultPATTestingFormData(), ...localDraft.data });
+              loadedData = { ...getDefaultPATTestingFormData(), ...localDraft.data };
             } else {
               console.log('[PAT] Loading from cloud (newer than local)');
-              setFormData({ ...getDefaultPATTestingFormData(), ...report.data });
+              loadedData = { ...getDefaultPATTestingFormData(), ...report.data };
             }
           } else if (report && report.data) {
             console.log('[PAT] Loading from cloud');
-            setFormData({ ...getDefaultPATTestingFormData(), ...report.data });
+            loadedData = { ...getDefaultPATTestingFormData(), ...report.data };
           } else if (localDraft) {
             console.log('[PAT] Loading from local draft (no cloud data)');
-            setFormData({ ...getDefaultPATTestingFormData(), ...localDraft.data });
+            loadedData = { ...getDefaultPATTestingFormData(), ...localDraft.data };
           }
 
-          // Set the initial sync baseline
-          lastSavedDataRef.current = JSON.stringify(formData);
+          if (loadedData) {
+            setFormData(loadedData);
+            // Set baseline from actual loaded data — NOT the stale formData closure
+            lastSavedDataRef.current = JSON.stringify(loadedData);
+          }
         } catch (error) {
           console.error('Failed to load report:', error);
 
           // Try local draft as fallback
-          const localDraft = draftStorage.loadDraft(REPORT_TYPE, id);
-          if (localDraft) {
+          const fallbackDraft = draftStorage.loadDraft(REPORT_TYPE, id);
+          if (fallbackDraft) {
             console.log('[PAT] Loading from local draft (cloud failed)');
-            setFormData({ ...getDefaultPATTestingFormData(), ...localDraft.data });
+            const fallbackData = { ...getDefaultPATTestingFormData(), ...fallbackDraft.data };
+            setFormData(fallbackData);
+            lastSavedDataRef.current = JSON.stringify(fallbackData);
           } else {
             toast.error('Failed to load certificate');
           }
@@ -420,7 +430,9 @@ export default function PATTestingCertificate() {
         companyAddress: branding?.companyAddress,
         companyPhone: branding?.companyPhone,
         companyEmail: branding?.companyEmail,
+        companyTagline: branding?.companyTagline,
         companyAccentColor: branding?.companyAccentColor,
+        companyWebsite: branding?.companyWebsite,
         registrationScheme: branding?.registrationScheme,
         registrationNumber: branding?.registrationNumber,
         registrationSchemeLogo: branding?.registrationSchemeLogo,

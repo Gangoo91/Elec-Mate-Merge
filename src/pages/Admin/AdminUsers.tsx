@@ -61,7 +61,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from '@/components/ui/alert-dialog';
-import { formatDistanceToNow, format } from 'date-fns';
+import { formatDistanceToNow, format, differenceInDays } from 'date-fns';
 import { toast } from '@/hooks/use-toast';
 import { getInitials, ROLE_COLORS } from '@/utils/adminUtils';
 import MessageUserSheet from '@/components/admin/MessageUserSheet';
@@ -69,6 +69,8 @@ import SwipeableAdminRow from '@/components/admin/SwipeableAdminRow';
 import { useAdminUsersBase } from '@/hooks/useAdminUsersBase';
 import { useHaptic } from '@/hooks/useHaptic';
 import PullToRefresh from '@/components/admin/PullToRefresh';
+import { motion } from 'framer-motion';
+import { AnimatedCounter } from '@/components/dashboard/AnimatedCounter';
 
 interface UserProfile {
   id: string;
@@ -110,6 +112,14 @@ const roleColors: Record<string, { bg: string; text: string; border: string }> =
   ])
 );
 
+const roleBorderColors: Record<string, string> = {
+  apprentice: 'border-l-purple-500',
+  electrician: 'border-l-yellow-500',
+  employer: 'border-l-blue-500',
+  college: 'border-l-green-500',
+  visitor: 'border-l-gray-500',
+};
+
 const roleFilters = [
   { value: 'all', label: 'All', icon: Users },
   { value: 'electrician', label: 'Sparks', icon: Zap },
@@ -123,6 +133,41 @@ const quickFilters = [
   { value: 'online', label: 'Online Now' },
   { value: 'recent', label: 'New This Week' },
 ];
+
+/* ── Animation variants matching AdminDashboard ── */
+const sectionVariants = {
+  hidden: { opacity: 0, y: 12 },
+  visible: (i: number) => ({
+    opacity: 1,
+    y: 0,
+    transition: { delay: i * 0.06, duration: 0.35, ease: 'easeOut' },
+  }),
+};
+
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: { staggerChildren: 0.04, delayChildren: 0 },
+  },
+};
+
+const listItemVariants = {
+  hidden: { opacity: 0, x: -8 },
+  visible: { opacity: 1, x: 0, transition: { duration: 0.2, ease: 'easeOut' } },
+};
+
+/** Compact relative time: "2h ago", "3d ago", "just now" */
+function relativeTime(dateStr: string | undefined | null): string {
+  if (!dateStr) return 'never';
+  const ms = Date.now() - new Date(dateStr).getTime();
+  if (ms < 60_000) return 'just now';
+  if (ms < 3_600_000) return `${Math.floor(ms / 60_000)}m ago`;
+  if (ms < 86_400_000) return `${Math.floor(ms / 3_600_000)}h ago`;
+  const days = Math.floor(ms / 86_400_000);
+  if (days < 30) return `${days}d ago`;
+  return `${Math.floor(days / 30)}mo ago`;
+}
 
 export default function AdminUsers() {
   const { profile } = useAuth();
@@ -655,20 +700,31 @@ export default function AdminUsers() {
       }}
     >
       <div className="space-y-4 pb-20">
-        {/* Hero Stats Card - Premium Purple/Violet Gradient */}
-        <Card className="relative overflow-hidden border-0 bg-gradient-to-br from-amber-600 via-yellow-600 to-orange-700">
-          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-white/10 via-transparent to-transparent" />
-          <div className="absolute top-0 right-0 w-32 h-32 bg-white/5 rounded-full blur-2xl -translate-y-1/2 translate-x-1/2" />
-          <div className="absolute bottom-0 left-0 w-24 h-24 bg-orange-400/10 rounded-full blur-xl translate-y-1/2 -translate-x-1/2" />
-          <CardContent className="relative pt-6 pb-6">
+        {/* ── Hero Stats Card ── */}
+        <motion.section
+          variants={sectionVariants}
+          initial="hidden"
+          animate="visible"
+          custom={0}
+          className="relative overflow-hidden glass-premium rounded-2xl"
+        >
+          {/* 2px gradient accent line */}
+          <div className="h-[2px] bg-gradient-to-r from-amber-500 via-yellow-400 to-orange-500" />
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-amber-500/10 via-transparent to-transparent pointer-events-none" />
+          <div className="absolute top-0 right-0 w-32 h-32 bg-amber-400/5 rounded-full blur-2xl -translate-y-1/2 translate-x-1/2 pointer-events-none" />
+
+          <div className="relative pt-6 pb-6 px-5">
             <div className="flex items-center justify-between mb-5">
               <div className="flex items-center gap-4">
-                <div className="w-14 h-14 rounded-2xl bg-white/15 backdrop-blur-sm flex items-center justify-center shadow-lg shadow-yellow-900/20">
+                <div className="w-14 h-14 rounded-2xl bg-white/10 backdrop-blur-sm flex items-center justify-center shadow-lg">
                   <Users className="h-7 w-7 text-white" />
                 </div>
                 <div>
-                  <p className="text-yellow-200 text-sm font-medium">Total Users</p>
-                  <p className="text-5xl font-bold text-white tracking-tight">{stats.total}</p>
+                  <p className="text-white text-sm font-medium">Total Users</p>
+                  <AnimatedCounter
+                    value={stats.total}
+                    className="text-5xl font-bold text-white tracking-tight"
+                  />
                 </div>
               </div>
               <div className="flex items-center gap-2">
@@ -695,55 +751,73 @@ export default function AdminUsers() {
 
             {/* Mini Stats Row */}
             <div className="grid grid-cols-4 gap-2">
-              <div className="bg-white/10 backdrop-blur-sm rounded-xl p-2.5 text-center border border-white/10">
+              <div className="bg-white/[0.06] backdrop-blur-sm rounded-xl p-2.5 text-center border border-white/10">
                 <div className="flex items-center justify-center gap-1 mb-0.5">
                   <div className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
-                  <span className="text-lg font-bold text-white">{stats.online}</span>
+                  <AnimatedCounter
+                    value={stats.online}
+                    className="text-lg font-bold text-white"
+                  />
                 </div>
-                <p className="text-[11px] text-yellow-200 uppercase tracking-wide font-medium">
+                <p className="text-[11px] text-white uppercase tracking-wide font-medium">
                   Online
                 </p>
               </div>
-              <div className="bg-white/10 backdrop-blur-sm rounded-xl p-2.5 text-center border border-white/10">
+              <div className="bg-white/[0.06] backdrop-blur-sm rounded-xl p-2.5 text-center border border-white/10">
                 <div className="flex items-center justify-center gap-1 mb-0.5">
                   <Sparkles className="h-3.5 w-3.5 text-amber-300" />
-                  <span className="text-lg font-bold text-white">{stats.subscribed}</span>
+                  <AnimatedCounter
+                    value={stats.subscribed}
+                    className="text-lg font-bold text-white"
+                  />
                 </div>
-                <p className="text-[11px] text-yellow-200 uppercase tracking-wide font-medium">
+                <p className="text-[11px] text-white uppercase tracking-wide font-medium">
                   Paid
                 </p>
               </div>
-              <div className="bg-white/10 backdrop-blur-sm rounded-xl p-2.5 text-center border border-white/10">
+              <div className="bg-white/[0.06] backdrop-blur-sm rounded-xl p-2.5 text-center border border-white/10">
                 <div className="flex items-center justify-center gap-1 mb-0.5">
                   <TrendingUp className="h-3.5 w-3.5 text-emerald-300" />
-                  <span className="text-lg font-bold text-white">{stats.thisWeek}</span>
+                  <AnimatedCounter
+                    value={stats.thisWeek}
+                    className="text-lg font-bold text-white"
+                  />
                 </div>
-                <p className="text-[11px] text-yellow-200 uppercase tracking-wide font-medium">
+                <p className="text-[11px] text-white uppercase tracking-wide font-medium">
                   New
                 </p>
               </div>
-              <div className="bg-white/10 backdrop-blur-sm rounded-xl p-2.5 text-center border border-white/10">
+              <div className="bg-white/[0.06] backdrop-blur-sm rounded-xl p-2.5 text-center border border-white/10">
                 <div className="flex items-center justify-center gap-1 mb-0.5">
                   <IdCard className="h-3.5 w-3.5 text-cyan-300" />
-                  <span className="text-lg font-bold text-white">{stats.elecIds}</span>
+                  <AnimatedCounter
+                    value={stats.elecIds}
+                    className="text-lg font-bold text-white"
+                  />
                 </div>
-                <p className="text-[11px] text-yellow-200 uppercase tracking-wide font-medium">
+                <p className="text-[11px] text-white uppercase tracking-wide font-medium">
                   IDs
                 </p>
               </div>
             </div>
-          </CardContent>
-        </Card>
+          </div>
+        </motion.section>
 
-        {/* Search & Filter Bar */}
-        <div className="flex gap-3">
+        {/* ── Search & Filter Bar ── */}
+        <motion.div
+          variants={sectionVariants}
+          initial="hidden"
+          animate="visible"
+          custom={1}
+          className="flex gap-3"
+        >
           <div className="relative flex-1">
-            <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground/60" />
+            <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-white" />
             <Input
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               placeholder="Search by name or email..."
-              className="h-13 pl-12 pr-4 text-base rounded-2xl bg-card/80 border-border/30 focus:border-yellow-500 focus:ring-yellow-500/20 focus:ring-2 touch-manipulation placeholder:text-muted-foreground/50"
+              className="h-13 pl-12 pr-4 text-base rounded-2xl bg-card/80 border-border/30 focus:border-yellow-500 focus:ring-yellow-500/20 focus:ring-2 touch-manipulation placeholder:text-white/40"
             />
             {search && (
               <Button
@@ -773,10 +847,16 @@ export default function AdminUsers() {
               </span>
             )}
           </Button>
-        </div>
+        </motion.div>
 
-        {/* Quick Filters - Always visible */}
-        <div className="flex gap-2 overflow-x-auto pb-1 scrollbar-hide -mx-1 px-1">
+        {/* ── Quick Filters ── */}
+        <motion.div
+          variants={sectionVariants}
+          initial="hidden"
+          animate="visible"
+          custom={2}
+          className="flex gap-2 overflow-x-auto pb-1 scrollbar-hide -mx-1 px-1"
+        >
           {quickFilters.map((filter) => (
             <Button
               key={filter.value}
@@ -800,22 +880,30 @@ export default function AdminUsers() {
               {filter.label}
               {filter.value === 'online' && stats.online > 0 && (
                 <span
-                  className={`ml-1.5 text-xs ${quickFilter === filter.value ? 'text-yellow-100' : 'text-muted-foreground'}`}
+                  className={`ml-1.5 text-xs ${quickFilter === filter.value ? 'text-yellow-100' : 'text-white'}`}
                 >
                   ({stats.online})
                 </span>
               )}
             </Button>
           ))}
-        </div>
+        </motion.div>
 
-        {/* Role Filters - Collapsible */}
+        {/* ── Role Filters — Collapsible ── */}
         {showFilters && (
-          <Card className="border-yellow-500/20 bg-gradient-to-r from-yellow-500/5 to-orange-500/5 backdrop-blur-sm">
-            <CardContent className="p-4">
+          <motion.div
+            variants={sectionVariants}
+            initial="hidden"
+            animate="visible"
+            custom={0}
+            className="glass-premium rounded-2xl overflow-hidden"
+          >
+            {/* 2px accent line */}
+            <div className="h-[2px] bg-gradient-to-r from-yellow-500/60 via-amber-400/40 to-transparent" />
+            <div className="p-4">
               <div className="flex items-center gap-2 mb-3">
                 <User className="h-4 w-4 text-yellow-400" />
-                <span className="text-sm font-semibold text-foreground">Filter by Role</span>
+                <span className="text-sm font-semibold text-white">Filter by Role</span>
               </div>
               <div className="flex gap-2 flex-wrap">
                 {roleFilters.map((filter) => {
@@ -854,14 +942,19 @@ export default function AdminUsers() {
                   Clear all filters
                 </Button>
               )}
-            </CardContent>
-          </Card>
+            </div>
+          </motion.div>
         )}
 
-        {/* Bulk Action Bar */}
+        {/* ── Bulk Action Bar ── */}
         {selectedIds.size > 0 && (
-          <Card className="sticky top-0 z-10 border-yellow-500/30 bg-gradient-to-r from-yellow-500/10 to-orange-500/10 backdrop-blur-md shadow-lg">
-            <CardContent className="py-3 px-4">
+          <motion.div
+            initial={{ opacity: 0, y: -8 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="sticky top-0 z-10 glass-premium rounded-2xl overflow-hidden shadow-lg"
+          >
+            <div className="h-[2px] bg-gradient-to-r from-yellow-500 via-amber-400 to-orange-500" />
+            <div className="py-3 px-4">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
                   <Checkbox
@@ -900,20 +993,26 @@ export default function AdminUsers() {
                   <Button
                     size="sm"
                     variant="ghost"
-                    className="h-10 w-10 touch-manipulation rounded-xl text-muted-foreground hover:bg-white/10"
+                    className="h-10 w-10 touch-manipulation rounded-xl text-white hover:bg-white/10"
                     onClick={() => setSelectedIds(new Set())}
                   >
                     <X className="h-5 w-5" />
                   </Button>
                 </div>
               </div>
-            </CardContent>
-          </Card>
+            </div>
+          </motion.div>
         )}
 
-        {/* Results Count */}
-        <div className="flex items-center justify-between px-1">
-          <p className="text-sm text-muted-foreground font-medium">
+        {/* ── Results Count ── */}
+        <motion.div
+          variants={sectionVariants}
+          initial="hidden"
+          animate="visible"
+          custom={3}
+          className="flex items-center justify-between px-1"
+        >
+          <p className="text-sm text-white font-medium">
             {users?.length === allUsersCount
               ? `${users?.length || 0} users`
               : `${users?.length || 0} of ${allUsersCount} users`}
@@ -926,133 +1025,200 @@ export default function AdminUsers() {
               {isAllSelected ? 'Deselect all' : 'Select all'}
             </button>
           )}
-        </div>
+        </motion.div>
 
-        {/* User Cards */}
+        {/* ── User Cards ── */}
         {isLoading ? (
-          <div className="space-y-2">
+          <div className="space-y-3">
             {[...Array(5)].map((_, i) => (
-              <Card key={i} className="animate-pulse border-border/50">
-                <CardContent className="py-4">
-                  <div className="flex items-center gap-4">
-                    <div className="w-14 h-14 rounded-2xl bg-muted" />
+              <div key={i} className="glass-premium rounded-2xl animate-pulse overflow-hidden">
+                <div className="h-[2px] bg-white/5" />
+                <div className="p-4 space-y-3">
+                  <div className="flex items-center gap-3">
+                    <div className="w-11 h-11 rounded-xl bg-white/[0.06]" />
+                    <div className="w-12 h-12 rounded-2xl bg-white/[0.06]" />
                     <div className="flex-1 space-y-2">
-                      <div className="h-4 bg-muted rounded w-32" />
-                      <div className="h-3 bg-muted rounded w-48" />
+                      <div className="h-4 bg-white/[0.06] rounded w-32" />
+                      <div className="h-3 bg-white/[0.06] rounded w-48" />
                     </div>
                   </div>
-                </CardContent>
-              </Card>
+                  <div className="flex gap-2">
+                    <div className="h-6 bg-white/[0.06] rounded-full w-20" />
+                    <div className="h-6 bg-white/[0.06] rounded-full w-24" />
+                  </div>
+                  <div className="h-3 bg-white/[0.06] rounded w-40" />
+                </div>
+              </div>
             ))}
           </div>
         ) : users?.length === 0 ? (
-          <Card className="border-border/50">
-            <CardContent className="py-12">
+          <div className="glass-premium rounded-2xl overflow-hidden">
+            <div className="py-12 px-4">
               <AdminEmptyState
                 icon={Users}
                 title="No users found"
                 description="Try adjusting your search or filters."
               />
-            </CardContent>
-          </Card>
+            </div>
+          </div>
         ) : (
           <>
-            <div className="space-y-3">
-              {paginatedUsers.map((user) => (
-                <SwipeableAdminRow
-                  key={user.id}
-                  actions={[
-                    {
-                      icon: <MessageSquare className="h-4 w-4" />,
-                      label: 'Message',
-                      colour: 'bg-blue-500',
-                      onClick: () => {
-                        setMessageUser({
-                          id: user.id,
-                          full_name: user.full_name || undefined,
-                          email: user.email || undefined,
-                          role: user.role || undefined,
-                        });
-                      },
-                    },
-                    {
-                      icon: <Gift className="h-4 w-4" />,
-                      label: 'Grant',
-                      colour: 'bg-green-500',
-                      onClick: () => {
-                        openGrantSheet(user);
-                      },
-                    },
-                  ]}
-                  className="rounded-2xl"
-                >
-                  <div
-                    className={`group relative bg-gradient-to-r from-card to-card/80 rounded-2xl border transition-all duration-200 touch-manipulation cursor-pointer active:scale-[0.98] ${
-                      selectedIds.has(user.id)
-                        ? 'border-yellow-500/50 bg-yellow-500/5 shadow-lg shadow-yellow-500/10'
-                        : 'border-border/40 hover:border-yellow-500/30 hover:shadow-md'
-                    }`}
-                    onClick={() => handleUserClick(user)}
-                  >
-                    <div className="p-4">
-                      <div className="flex items-center gap-4">
-                        {/* Selection Checkbox */}
-                        <div
-                          className="shrink-0 min-h-[44px] min-w-[44px] flex items-center justify-center touch-manipulation"
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            toggleSelection(user.id);
-                          }}
-                        >
-                          <Checkbox
-                            checked={selectedIds.has(user.id)}
-                            className="h-5 w-5 rounded-md border-2 border-muted-foreground/20 data-[state=checked]:bg-yellow-500 data-[state=checked]:border-yellow-500"
-                          />
-                        </div>
+            <motion.div
+              variants={containerVariants}
+              initial="hidden"
+              animate="visible"
+              className="space-y-3"
+            >
+              {paginatedUsers.map((user) => {
+                const roleKey = user.role?.toLowerCase() || 'visitor';
+                const borderColor = roleBorderColors[roleKey] || roleBorderColors.visitor;
+                const joinedDays = user.created_at
+                  ? differenceInDays(new Date(), new Date(user.created_at))
+                  : null;
 
-                        {/* Avatar */}
-                        <div className="relative shrink-0">
-                          <Avatar className="h-14 w-14 rounded-2xl border-2 border-white/10 shadow-lg">
-                            <AvatarImage src={user.avatar_url || undefined} />
-                            <AvatarFallback
-                              className={`rounded-2xl text-base font-bold ${getRoleStyle(user.role).bg} ${getRoleStyle(user.role).text}`}
+                return (
+                  <motion.div key={user.id} variants={listItemVariants}>
+                    <SwipeableAdminRow
+                      actions={[
+                        {
+                          icon: <MessageSquare className="h-4 w-4" />,
+                          label: 'Message',
+                          colour: 'bg-blue-500',
+                          onClick: () => {
+                            setMessageUser({
+                              id: user.id,
+                              full_name: user.full_name || undefined,
+                              email: user.email || undefined,
+                              role: user.role || undefined,
+                            });
+                          },
+                        },
+                        {
+                          icon: <Gift className="h-4 w-4" />,
+                          label: 'Grant',
+                          colour: 'bg-green-500',
+                          onClick: () => {
+                            openGrantSheet(user);
+                          },
+                        },
+                      ]}
+                      className="rounded-2xl"
+                    >
+                      <div
+                        className={`group relative glass-premium rounded-2xl overflow-hidden border-l-2 ${borderColor} transition-all duration-200 touch-manipulation cursor-pointer active:scale-[0.98] ${
+                          selectedIds.has(user.id)
+                            ? 'ring-1 ring-yellow-500/50 bg-yellow-500/5 shadow-lg shadow-yellow-500/10'
+                            : 'hover:bg-white/5 hover:shadow-md'
+                        }`}
+                        onClick={() => handleUserClick(user)}
+                      >
+                        <div className="p-4 space-y-2.5">
+                          {/* Row 1 — Identity */}
+                          <div className="flex items-center gap-3">
+                            {/* Checkbox */}
+                            <div
+                              className="shrink-0 min-h-[44px] min-w-[44px] flex items-center justify-center touch-manipulation"
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                toggleSelection(user.id);
+                              }}
                             >
-                              {getInitials(user.full_name)}
-                            </AvatarFallback>
-                          </Avatar>
-                          {user.isOnline && (
-                            <div className="absolute -bottom-0.5 -right-0.5 w-4.5 h-4.5 bg-green-500 rounded-full border-[3px] border-card shadow-lg shadow-green-500/50">
-                              <div className="absolute inset-0 bg-green-400 rounded-full animate-ping opacity-75" />
+                              <Checkbox
+                                checked={selectedIds.has(user.id)}
+                                className="h-5 w-5 rounded-md border-2 border-white/20 data-[state=checked]:bg-yellow-500 data-[state=checked]:border-yellow-500"
+                              />
                             </div>
-                          )}
-                        </div>
 
-                        {/* User Info */}
-                        <div className="flex-1 min-w-0">
-                          <div className="flex items-center gap-2 mb-0.5">
-                            <p className="font-bold text-[15px] truncate text-foreground">
-                              {user.full_name || 'No name'}
-                            </p>
-                            {user.subscribed && (
-                              <div className="shrink-0 w-5 h-5 rounded-full bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center shadow-sm">
-                                <Sparkles className="h-3 w-3 text-white" />
-                              </div>
-                            )}
-                            {user.admin_role && (
-                              <div className="shrink-0 w-5 h-5 rounded-full bg-gradient-to-br from-red-400 to-rose-600 flex items-center justify-center shadow-sm">
-                                <Shield className="h-3 w-3 text-white" />
-                              </div>
-                            )}
+                            {/* Avatar with online dot */}
+                            <div className="relative shrink-0">
+                              <Avatar className="h-12 w-12 rounded-2xl border-2 border-white/10 shadow-lg">
+                                <AvatarImage src={user.avatar_url || undefined} />
+                                <AvatarFallback
+                                  className={`rounded-2xl text-sm font-bold ${getRoleStyle(user.role).bg} ${getRoleStyle(user.role).text}`}
+                                >
+                                  {getInitials(user.full_name)}
+                                </AvatarFallback>
+                              </Avatar>
+                              {user.isOnline && (
+                                <div className="absolute -bottom-0.5 -right-0.5 w-4 h-4 bg-green-500 rounded-full border-[3px] border-card shadow-lg shadow-green-500/50">
+                                  <div className="absolute inset-0 bg-green-400 rounded-full animate-ping opacity-75" />
+                                </div>
+                              )}
+                            </div>
+
+                            {/* Name + icons */}
+                            <div className="flex-1 min-w-0 flex items-center gap-2">
+                              <p className="font-bold text-[15px] truncate text-white">
+                                {user.full_name || 'No name'}
+                              </p>
+                              {user.subscribed && (
+                                <div className="shrink-0 w-5 h-5 rounded-full bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center shadow-sm">
+                                  <Sparkles className="h-3 w-3 text-white" />
+                                </div>
+                              )}
+                              {user.admin_role && (
+                                <div className="shrink-0 w-5 h-5 rounded-full bg-gradient-to-br from-red-400 to-rose-600 flex items-center justify-center shadow-sm">
+                                  <Shield className="h-3 w-3 text-white" />
+                                </div>
+                              )}
+                            </div>
+
+                            {/* Joined X d ago */}
+                            <span className="shrink-0 text-[11px] text-white/70 font-medium whitespace-nowrap">
+                              {joinedDays !== null
+                                ? joinedDays === 0
+                                  ? 'today'
+                                  : `${joinedDays}d ago`
+                                : ''}
+                            </span>
                           </div>
-                          <p className="text-sm text-muted-foreground truncate mb-2">
-                            {user.email || `@${user.username}`}
-                          </p>
-                          <div className="flex items-center gap-2 flex-wrap">
+
+                          {/* Row 2 — Email + online status */}
+                          <div className="flex items-center justify-between pl-[76px]">
+                            <p className="text-[13px] text-white break-all leading-tight flex-1 mr-3">
+                              {user.email || `@${user.username}`}
+                            </p>
+                            {/* Online status pill */}
+                            <span
+                              className={`shrink-0 text-[11px] font-semibold px-2 py-0.5 rounded-full ${
+                                user.isOnline
+                                  ? 'bg-green-500/15 text-green-400'
+                                  : 'bg-white/[0.06] text-white/70'
+                              }`}
+                            >
+                              {user.isOnline ? 'Online' : relativeTime(user.last_seen)}
+                            </span>
+                          </div>
+
+                          {/* Row 3 — Badges */}
+                          <div className="flex items-center gap-2 flex-wrap pl-[76px]">
+                            {/* Role badge */}
                             <Badge
                               className={`text-[11px] px-2.5 py-0.5 h-6 font-semibold rounded-full ${getRoleStyle(user.role).bg} ${getRoleStyle(user.role).text} border-0 shadow-sm`}
                             >
+                              <Zap className="h-3 w-3 mr-1" />
                               {user.role || 'visitor'}
                             </Badge>
+
+                            {/* Subscription badge */}
+                            {user.subscribed && user.stripe_customer_id ? (
+                              <Badge className="text-[11px] px-2.5 py-0.5 h-6 font-semibold rounded-full bg-amber-500/15 text-amber-400 border-0 shadow-sm">
+                                <CreditCard className="h-3 w-3 mr-1" />
+                                Pro{user.subscription_tier ? ` \u00b7 ${user.subscription_tier}` : ''}
+                              </Badge>
+                            ) : user.free_access_granted ? (
+                              <Badge className="text-[11px] px-2.5 py-0.5 h-6 font-semibold rounded-full bg-emerald-500/15 text-emerald-400 border-0 shadow-sm">
+                                <Gift className="h-3 w-3 mr-1" />
+                                Free Access
+                              </Badge>
+                            ) : user.subscribed ? (
+                              <Badge className="text-[11px] px-2.5 py-0.5 h-6 font-semibold rounded-full bg-amber-500/15 text-amber-400 border-0 shadow-sm">
+                                <Sparkles className="h-3 w-3 mr-1" />
+                                {user.subscription_tier || 'Subscribed'}
+                              </Badge>
+                            ) : null}
+
+                            {/* Elec-ID badge */}
                             {user.elec_id_profile && (
                               <Badge
                                 className={`text-[11px] px-2.5 py-0.5 h-6 font-semibold rounded-full border-0 shadow-sm ${
@@ -1063,21 +1229,48 @@ export default function AdminUsers() {
                               >
                                 <IdCard className="h-3 w-3 mr-1" />
                                 {user.elec_id_profile.is_verified ? 'Verified' : 'Pending'}
+                                {user.elec_id_profile.ecs_card_type
+                                  ? ` \u00b7 ${user.elec_id_profile.ecs_card_type}`
+                                  : ''}
                               </Badge>
                             )}
                           </div>
-                        </div>
 
-                        {/* Chevron with hover effect */}
-                        <div className="shrink-0 w-10 h-10 rounded-xl bg-muted/50 group-hover:bg-yellow-500/10 flex items-center justify-center transition-colors">
-                          <ChevronRight className="h-5 w-5 text-muted-foreground group-hover:text-yellow-400 transition-colors" />
+                          {/* Row 4 — Metadata footer */}
+                          <div className="flex items-center gap-3 pl-[76px] text-[11px] text-white/60 font-medium">
+                            {user.last_seen && (
+                              <span className="flex items-center gap-1">
+                                <Clock className="h-3 w-3" />
+                                {relativeTime(user.last_seen)}
+                              </span>
+                            )}
+                            <span className="flex items-center gap-1">
+                              {user.onboarding_completed ? (
+                                <>
+                                  <UserCheck className="h-3 w-3 text-green-400" />
+                                  <span className="text-green-400">Onboarded</span>
+                                </>
+                              ) : (
+                                <>
+                                  <XCircle className="h-3 w-3 text-white/40" />
+                                  <span>Not onboarded</span>
+                                </>
+                              )}
+                            </span>
+                            {user.stripe_customer_id && (
+                              <span className="flex items-center gap-1 text-amber-400">
+                                <CreditCard className="h-3 w-3" />
+                                Stripe
+                              </span>
+                            )}
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  </div>
-                </SwipeableAdminRow>
-              ))}
-            </div>
+                    </SwipeableAdminRow>
+                  </motion.div>
+                );
+              })}
+            </motion.div>
 
             {/* Pagination */}
             {totalPages > 1 && (
@@ -1097,7 +1290,7 @@ export default function AdminUsers() {
           </>
         )}
 
-        {/* User Detail Sheet */}
+        {/* ── User Detail Sheet ── */}
         <Sheet open={!!selectedUser} onOpenChange={() => setSelectedUser(null)}>
           <SheetContent
             side="bottom"
@@ -1106,7 +1299,7 @@ export default function AdminUsers() {
             <div className="flex flex-col h-full bg-background">
               {/* Drag Handle */}
               <div className="flex justify-center pt-3 pb-2">
-                <div className="w-12 h-1.5 rounded-full bg-muted-foreground/20" />
+                <div className="w-12 h-1.5 rounded-full bg-white/20" />
               </div>
 
               {/* User Header */}
@@ -1130,7 +1323,7 @@ export default function AdminUsers() {
                       {selectedUser?.full_name || 'No name'}
                     </h2>
                     {selectedUser?.email && (
-                      <p className="text-sm text-muted-foreground flex items-center gap-1.5 truncate">
+                      <p className="text-sm text-white flex items-center gap-1.5 truncate">
                         <Mail className="h-3.5 w-3.5 shrink-0" />
                         <span className="truncate">{selectedUser.email}</span>
                         {selectedUser.email_confirmed && (
@@ -1170,13 +1363,13 @@ export default function AdminUsers() {
                   >
                     <CardContent className="py-4 text-center">
                       <div
-                        className={`w-3 h-3 rounded-full mx-auto mb-2 ${selectedUser?.isOnline ? 'bg-green-500 animate-pulse' : 'bg-muted-foreground/30'}`}
+                        className={`w-3 h-3 rounded-full mx-auto mb-2 ${selectedUser?.isOnline ? 'bg-green-500 animate-pulse' : 'bg-white/30'}`}
                       />
-                      <p className="text-sm font-semibold">
+                      <p className="text-sm font-semibold text-white">
                         {selectedUser?.isOnline ? 'Online' : 'Offline'}
                       </p>
                       {selectedUser?.last_seen && (
-                        <p className="text-xs text-muted-foreground mt-0.5">
+                        <p className="text-xs text-white mt-0.5">
                           {formatDistanceToNow(new Date(selectedUser.last_seen), {
                             addSuffix: true,
                           })}
@@ -1189,13 +1382,13 @@ export default function AdminUsers() {
                   >
                     <CardContent className="py-4 text-center">
                       <Sparkles
-                        className={`h-5 w-5 mx-auto mb-2 ${selectedUser?.subscribed ? 'text-amber-400' : 'text-muted-foreground/30'}`}
+                        className={`h-5 w-5 mx-auto mb-2 ${selectedUser?.subscribed ? 'text-amber-400' : 'text-white/30'}`}
                       />
-                      <p className="text-sm font-semibold">
+                      <p className="text-sm font-semibold text-white">
                         {selectedUser?.subscribed ? 'Subscribed' : 'Free'}
                       </p>
                       {selectedUser?.subscription_tier && (
-                        <p className="text-xs text-muted-foreground mt-0.5 capitalize">
+                        <p className="text-xs text-white mt-0.5 capitalize">
                           {selectedUser.subscription_tier}
                         </p>
                       )}
@@ -1213,23 +1406,23 @@ export default function AdminUsers() {
                   </CardHeader>
                   <CardContent className="space-y-3">
                     <div className="flex justify-between items-center">
-                      <span className="text-sm text-muted-foreground">User ID</span>
-                      <span className="text-xs font-mono text-muted-foreground">
+                      <span className="text-sm text-white">User ID</span>
+                      <span className="text-xs font-mono text-white">
                         {selectedUser?.id.slice(0, 8)}...
                       </span>
                     </div>
                     <div className="flex justify-between items-center">
-                      <span className="text-sm text-muted-foreground">Joined</span>
-                      <span className="text-sm font-medium">
+                      <span className="text-sm text-white">Joined</span>
+                      <span className="text-sm font-medium text-white">
                         {selectedUser?.created_at &&
                           format(new Date(selectedUser.created_at), 'dd MMM yyyy')}
                       </span>
                     </div>
                     <div className="flex justify-between items-center">
-                      <span className="text-sm text-muted-foreground">Onboarding</span>
+                      <span className="text-sm text-white">Onboarding</span>
                       <Badge
                         variant="secondary"
-                        className={`text-xs border-0 ${selectedUser?.onboarding_completed ? 'bg-green-500/10 text-green-400' : 'bg-muted text-muted-foreground'}`}
+                        className={`text-xs border-0 ${selectedUser?.onboarding_completed ? 'bg-green-500/10 text-green-400' : 'bg-muted text-white'}`}
                       >
                         {selectedUser?.onboarding_completed ? 'Complete' : 'Incomplete'}
                       </Badge>
@@ -1263,15 +1456,15 @@ export default function AdminUsers() {
                     <CardContent className="space-y-2">
                       {selectedUser.elec_id_profile.elec_id_number && (
                         <div className="flex justify-between items-center">
-                          <span className="text-sm text-muted-foreground">Elec-ID Number</span>
-                          <span className="text-sm font-mono font-medium">
+                          <span className="text-sm text-white">Elec-ID Number</span>
+                          <span className="text-sm font-mono font-medium text-white">
                             {selectedUser.elec_id_profile.elec_id_number}
                           </span>
                         </div>
                       )}
                       {selectedUser.elec_id_profile.ecs_card_type && (
                         <div className="flex justify-between items-center">
-                          <span className="text-sm text-muted-foreground">ECS Card</span>
+                          <span className="text-sm text-white">ECS Card</span>
                           <Badge variant="secondary" className="text-xs border-0">
                             {selectedUser.elec_id_profile.ecs_card_type}
                           </Badge>
@@ -1338,7 +1531,7 @@ export default function AdminUsers() {
                     Grant Free Access
                   </Button>
                 ) : (
-                  <p className="w-full text-center text-sm text-muted-foreground py-3">
+                  <p className="w-full text-center text-sm text-white py-3">
                     Subscription managed via Stripe
                   </p>
                 )}
@@ -1455,14 +1648,14 @@ export default function AdminUsers() {
             <div className="flex flex-col bg-background">
               {/* Drag Handle */}
               <div className="flex justify-center pt-3 pb-2">
-                <div className="w-12 h-1.5 rounded-full bg-muted-foreground/20" />
+                <div className="w-12 h-1.5 rounded-full bg-white/20" />
               </div>
 
               <div className="px-6 pb-6 pt-2 space-y-5">
                 {/* Header */}
                 <div>
                   <h3 className="text-lg font-bold text-foreground">Grant Free Access</h3>
-                  <p className="text-sm text-muted-foreground mt-0.5">
+                  <p className="text-sm text-white mt-0.5">
                     {grantSheetUser?.full_name || 'User'} · {grantSheetUser?.role || 'visitor'}
                   </p>
                 </div>

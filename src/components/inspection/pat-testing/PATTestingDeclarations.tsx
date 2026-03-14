@@ -83,7 +83,8 @@ const PATTestingDeclarations: React.FC<PATTestingDeclarationsProps> = ({ formDat
       onUpdate('totalPassed', totalPassed);
       onUpdate('totalFailed', totalFailed);
     }
-  }, [totalTested, totalPassed, totalFailed]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [totalTested, totalPassed, totalFailed, onUpdate]);
 
   return (
     <div className="space-y-6">

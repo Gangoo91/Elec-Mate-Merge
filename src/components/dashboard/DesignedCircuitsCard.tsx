@@ -276,7 +276,7 @@ export const DesignedCircuitsCard = ({ onNavigate }: DesignedCircuitsCardProps) 
 
       {/* Delete Dialog */}
       <AlertDialog open={!!deleteId} onOpenChange={() => setDeleteId(null)}>
-        <AlertDialogContent className="bg-[#1a1a1e] border-white/10">
+        <AlertDialogContent className="bg-[hsl(240_5.9%_12%)] border-white/10">
           <AlertDialogHeader>
             <AlertDialogTitle className="text-white">Delete Design?</AlertDialogTitle>
             <AlertDialogDescription className="text-white">

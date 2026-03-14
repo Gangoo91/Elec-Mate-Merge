@@ -1,8 +1,8 @@
 /**
  * PremiumHubGrid
  *
- * Enhanced hub cards with gradient accent lines, real stats per hub,
- * glass morphism styling, and premium micro-interactions.
+ * Hub cards with solid surfaces, bento layout (primary hub 2-col on mobile),
+ * gradient accent lines, real stats per hub, and spring micro-interactions.
  */
 
 import { useNavigate } from 'react-router-dom';
@@ -17,6 +17,8 @@ import {
   Award,
   Users,
   School,
+  BookOpen,
+  Heart,
   LucideIcon,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
@@ -35,6 +37,7 @@ interface HubConfig {
   iconBg: string;
   roles: string[]; // Which user roles can see this hub
   allowedEmails?: string[]; // Only show to specific email addresses
+  isPrimary?: boolean; // Gets 2-col span on mobile
   getStat: (data: ReturnType<typeof useDashboardData>) => {
     label: string;
     value: string;
@@ -71,6 +74,7 @@ const hubsConfig: HubConfig[] = [
     iconColor: 'text-elec-yellow',
     iconBg: 'bg-elec-yellow/10 border border-elec-yellow/20',
     roles: ['electrician', 'apprentice', 'employer', 'admin'],
+    isPrimary: true,
     getStat: (data) =>
       data.business.activeQuotes > 0
         ? {
@@ -87,6 +91,26 @@ const hubsConfig: HubConfig[] = [
           : null,
   },
   {
+    id: 'study-centre',
+    title: 'Study Centre',
+    subtitle: 'Learn',
+    description: 'Courses, revision, and CPD for every stage of your career.',
+    icon: BookOpen,
+    path: '/study-centre',
+    accentGradient: 'from-purple-500 via-violet-400 to-indigo-400',
+    iconColor: 'text-purple-400',
+    iconBg: 'bg-purple-500/10 border border-purple-500/20',
+    roles: ['apprentice', 'electrician', 'employer', 'admin', 'college'],
+    getStat: (data) =>
+      data.learning.currentStreak > 0
+        ? {
+            label: 'Study streak',
+            value: `${data.learning.currentStreak} days`,
+            icon: Clock,
+          }
+        : null,
+  },
+  {
     id: 'college',
     title: 'College Hub',
     subtitle: 'Tutor',
@@ -96,13 +120,25 @@ const hubsConfig: HubConfig[] = [
     accentGradient: 'from-emerald-500 via-teal-400 to-cyan-400',
     iconColor: 'text-emerald-400',
     iconBg: 'bg-emerald-500/10 border border-emerald-500/20',
-    roles: ['electrician', 'employer', 'admin', 'college'],
-    allowedEmails: ['founder@elec-mate.com', 'andrewgangoo91@gmail.com'],
+    roles: ['admin', 'college'],
     getStat: () => ({
       label: 'Dashboard',
       value: 'Active',
       icon: School,
     }),
+  },
+  {
+    id: 'wellbeing',
+    title: 'Wellbeing Hub',
+    subtitle: 'Wellbeing',
+    description: 'Mental health support, stress tools, and wellbeing resources.',
+    icon: Heart,
+    path: '/mental-health',
+    accentGradient: 'from-pink-500 via-rose-400 to-red-400',
+    iconColor: 'text-pink-400',
+    iconBg: 'bg-pink-500/10 border border-pink-500/20',
+    roles: ['apprentice', 'electrician', 'employer', 'admin', 'college'],
+    getStat: () => null,
   },
 ];
 
@@ -111,7 +147,7 @@ const containerVariants = {
   visible: {
     opacity: 1,
     transition: {
-      staggerChildren: 0.02,
+      staggerChildren: 0.06,
       delayChildren: 0,
     },
   },
@@ -123,8 +159,9 @@ const cardVariants = {
     opacity: 1,
     y: 0,
     transition: {
-      duration: 0.2,
-      ease: 'easeOut',
+      type: 'spring',
+      stiffness: 300,
+      damping: 24,
     },
   },
 };
@@ -132,9 +169,11 @@ const cardVariants = {
 function PremiumHubCard({
   hub,
   data,
+  isPrimary,
 }: {
   hub: HubConfig;
   data: ReturnType<typeof useDashboardData>;
+  isPrimary?: boolean;
 }) {
   const navigate = useNavigate();
   const Icon = hub.icon;
@@ -143,18 +182,20 @@ function PremiumHubCard({
   return (
     <motion.div
       variants={cardVariants}
-      whileHover={{ y: -4, scale: 1.02 }}
+      whileHover={{ y: -2 }}
       whileTap={{ scale: 0.98 }}
       onClick={() => navigate(hub.path)}
       className={cn(
         // Base
         'group relative cursor-pointer',
-        // Glass morphism
-        'glass-premium rounded-2xl',
+        // Solid surface
+        'card-surface-interactive',
         // Touch optimization
         'touch-manipulation',
         // Overflow for gradient line
-        'overflow-hidden'
+        'overflow-hidden',
+        // Bento: primary hub spans 2 cols on mobile
+        isPrimary && 'col-span-2 sm:col-span-1'
       )}
     >
       {/* Gradient accent line at top */}
@@ -163,21 +204,8 @@ function PremiumHubCard({
           'absolute inset-x-0 top-0 h-[2px]',
           'bg-gradient-to-r',
           hub.accentGradient,
-          'opacity-60 group-hover:opacity-100',
+          'opacity-40 group-hover:opacity-100',
           'transition-opacity duration-200'
-        )}
-      />
-
-      {/* Decorative gradient blob */}
-      <div
-        className={cn(
-          'absolute -top-16 -right-16 w-32 h-32',
-          'bg-gradient-to-br',
-          hub.accentGradient,
-          'opacity-[0.03] blur-3xl',
-          'group-hover:opacity-[0.08]',
-          'transition-opacity duration-300',
-          'pointer-events-none'
         )}
       />
 
@@ -247,7 +275,7 @@ function PremiumHubCard({
           <span
             className={cn(
               'text-xs sm:text-sm font-medium',
-              'text-elec-yellow group-hover:text-elec-yellow',
+              'text-elec-yellow',
               'transition-colors'
             )}
           >
@@ -298,20 +326,12 @@ export function PremiumHubGrid() {
     return hub.roles.includes(userRole);
   });
 
-  // Determine grid columns based on number of hubs
-  const gridCols =
-    filteredHubs.length === 1
-      ? 'grid-cols-1'
-      : filteredHubs.length === 2
-        ? 'grid-cols-1 sm:grid-cols-2'
-        : 'grid-cols-1 sm:grid-cols-3';
-
   // Show loading skeleton while profile loads
   if (isLoading) {
     return (
-      <div className={cn('grid gap-3 sm:gap-4', 'grid-cols-1 sm:grid-cols-3')}>
-        {[1, 2, 3].map((i) => (
-          <div key={i} className="glass-premium rounded-2xl h-[180px] animate-pulse" />
+      <div className={cn('grid gap-3 sm:gap-4', 'grid-cols-2 sm:grid-cols-2 lg:grid-cols-4')}>
+        {[1, 2, 3, 4].map((i) => (
+          <div key={i} className="card-surface rounded-2xl h-[180px] animate-pulse" />
         ))}
       </div>
     );
@@ -322,16 +342,28 @@ export function PremiumHubGrid() {
   }
 
   return (
-    <motion.div
-      variants={containerVariants}
-      initial="hidden"
-      animate="visible"
-      className={cn('grid gap-3 sm:gap-4', gridCols)}
-    >
-      {filteredHubs.map((hub) => (
-        <PremiumHubCard key={hub.id} hub={hub} data={dashboardData} />
-      ))}
-    </motion.div>
+    <div>
+      {/* Section header */}
+      <h2 className="text-xs font-medium text-white uppercase tracking-wider mb-3 px-0.5">
+        Your Hubs
+      </h2>
+
+      <motion.div
+        variants={containerVariants}
+        initial="hidden"
+        animate="visible"
+        className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4"
+      >
+        {filteredHubs.map((hub) => (
+          <PremiumHubCard
+            key={hub.id}
+            hub={hub}
+            data={dashboardData}
+            isPrimary={hub.isPrimary}
+          />
+        ))}
+      </motion.div>
+    </div>
   );
 }
 

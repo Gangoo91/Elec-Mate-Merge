@@ -14,7 +14,6 @@ import { PremiumHero } from '@/components/dashboard/PremiumHero';
 import { LiveStatsBar } from '@/components/dashboard/LiveStatsBar';
 import { PremiumHubGrid } from '@/components/dashboard/PremiumHubGrid';
 import { SmartActions } from '@/components/dashboard/SmartActions';
-import { SecondaryQuickAccess } from '@/components/dashboard/SecondaryQuickAccess';
 import TrialBanner from '@/components/dashboard/TrialBanner';
 import ReferralBanner from '@/components/referrals/ReferralBanner';
 import WelcomeModal from '@/components/onboarding/WelcomeModal';
@@ -23,14 +22,15 @@ import { useAuth } from '@/contexts/AuthContext';
 import useSEO from '@/hooks/useSEO';
 
 const sectionVariants = {
-  hidden: { opacity: 0, y: 20 },
+  hidden: { opacity: 0, y: 16 },
   visible: (delay: number) => ({
     opacity: 1,
     y: 0,
     transition: {
-      duration: 0.4,
-      ease: 'easeOut',
-      delay: delay * 0.1,
+      type: 'spring',
+      stiffness: 300,
+      damping: 24,
+      delay: delay * 0.08,
     },
   }),
 };
@@ -88,9 +88,6 @@ const Dashboard = () => {
 
         {/* Premium Hub Cards */}
         <motion.section variants={sectionVariants} initial="hidden" animate="visible" custom={3}>
-          <h2 className="text-xs sm:text-sm font-medium text-white uppercase tracking-wider mb-3 px-0.5">
-            Your Hubs
-          </h2>
           <PremiumHubGrid />
         </motion.section>
 
@@ -102,11 +99,6 @@ const Dashboard = () => {
         {/* Designed Circuits from Circuit Designer */}
         <motion.section variants={sectionVariants} initial="hidden" animate="visible" custom={5}>
           <DesignedCircuitsCard />
-        </motion.section>
-
-        {/* Secondary Quick Access */}
-        <motion.section variants={sectionVariants} initial="hidden" animate="visible" custom={6}>
-          <SecondaryQuickAccess />
         </motion.section>
 
         {/* Footer spacing for mobile nav */}

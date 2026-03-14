@@ -1059,7 +1059,7 @@ const ProjectDetailPage = () => {
                   <button
                     key={r.id}
                     type="button"
-                    onClick={() => navigate('/electrician/site-safety?tab=saved-rams')}
+                    onClick={() => navigate('/electrician/site-safety?tab=documents')}
                     className="w-full flex items-center justify-between p-3 rounded-xl bg-white/[0.04] border border-white/[0.08] touch-manipulation active:bg-white/[0.08] transition-colors"
                   >
                     <div className="min-w-0 text-left">

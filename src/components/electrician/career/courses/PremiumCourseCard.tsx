@@ -23,16 +23,54 @@ interface PremiumCourseCardProps {
 }
 
 // Category visual config — gradients, accent colours, and hero icons
-const categoryConfig: Record<string, { gradient: string; accent: string; accentBg: string; Icon: React.ElementType }> = {
-  'Essential Updates': { gradient: 'from-amber-500/25 via-orange-500/15 to-transparent', accent: 'text-amber-400', accentBg: 'bg-amber-500/20', Icon: Zap },
-  'Emerging Technologies': { gradient: 'from-emerald-500/25 via-green-500/15 to-transparent', accent: 'text-emerald-400', accentBg: 'bg-emerald-500/20', Icon: Cpu },
-  'Safety & Compliance': { gradient: 'from-sky-500/25 via-blue-500/15 to-transparent', accent: 'text-sky-400', accentBg: 'bg-sky-500/20', Icon: Shield },
-  'Specialised Systems': { gradient: 'from-violet-500/25 via-purple-500/15 to-transparent', accent: 'text-violet-400', accentBg: 'bg-violet-500/20', Icon: Settings },
-  'Professional Development': { gradient: 'from-orange-500/25 via-amber-500/15 to-transparent', accent: 'text-orange-400', accentBg: 'bg-orange-500/20', Icon: Briefcase },
-  'Business Skills': { gradient: 'from-cyan-500/25 via-teal-500/15 to-transparent', accent: 'text-cyan-400', accentBg: 'bg-cyan-500/20', Icon: BarChart3 },
+const categoryConfig: Record<
+  string,
+  { gradient: string; accent: string; accentBg: string; Icon: React.ElementType }
+> = {
+  'Essential Updates': {
+    gradient: 'from-amber-500/25 via-orange-500/15 to-transparent',
+    accent: 'text-amber-400',
+    accentBg: 'bg-amber-500/20',
+    Icon: Zap,
+  },
+  'Emerging Technologies': {
+    gradient: 'from-emerald-500/25 via-green-500/15 to-transparent',
+    accent: 'text-emerald-400',
+    accentBg: 'bg-emerald-500/20',
+    Icon: Cpu,
+  },
+  'Safety & Compliance': {
+    gradient: 'from-sky-500/25 via-blue-500/15 to-transparent',
+    accent: 'text-sky-400',
+    accentBg: 'bg-sky-500/20',
+    Icon: Shield,
+  },
+  'Specialised Systems': {
+    gradient: 'from-violet-500/25 via-purple-500/15 to-transparent',
+    accent: 'text-violet-400',
+    accentBg: 'bg-violet-500/20',
+    Icon: Settings,
+  },
+  'Professional Development': {
+    gradient: 'from-orange-500/25 via-amber-500/15 to-transparent',
+    accent: 'text-orange-400',
+    accentBg: 'bg-orange-500/20',
+    Icon: Briefcase,
+  },
+  'Business Skills': {
+    gradient: 'from-cyan-500/25 via-teal-500/15 to-transparent',
+    accent: 'text-cyan-400',
+    accentBg: 'bg-cyan-500/20',
+    Icon: BarChart3,
+  },
 };
 
-const defaultConfig = { gradient: 'from-blue-500/25 via-indigo-500/15 to-transparent', accent: 'text-blue-400', accentBg: 'bg-blue-500/20', Icon: GraduationCap };
+const defaultConfig = {
+  gradient: 'from-blue-500/25 via-indigo-500/15 to-transparent',
+  accent: 'text-blue-400',
+  accentBg: 'bg-blue-500/20',
+  Icon: GraduationCap,
+};
 
 const demandConfig: Record<string, { color: string; bg: string; label: string }> = {
   High: { color: 'text-emerald-400', bg: 'bg-emerald-500/15', label: 'In Demand' },
@@ -61,7 +99,10 @@ const PremiumCourseCard = ({ course, onClick, index = 0 }: PremiumCourseCardProp
       {/* Visual header — gradient with large category icon */}
       <div className={cn('relative h-24 bg-gradient-to-br overflow-hidden', config.gradient)}>
         {/* Large background icon */}
-        <HeroIcon className="absolute -right-3 -bottom-3 h-20 w-20 text-white/[0.06]" strokeWidth={1} />
+        <HeroIcon
+          className="absolute -right-3 -bottom-3 h-20 w-20 text-white/[0.06]"
+          strokeWidth={1}
+        />
         {/* Category badge */}
         <div className="absolute top-3 left-3">
           <span className={cn('text-[10px] font-bold uppercase tracking-widest', config.accent)}>
@@ -75,7 +116,13 @@ const PremiumCourseCard = ({ course, onClick, index = 0 }: PremiumCourseCardProp
         </div>
         {/* Demand badge */}
         <div className="absolute bottom-3 left-3">
-          <span className={cn('text-[10px] font-semibold rounded-full px-2 py-0.5', demand.color, demand.bg)}>
+          <span
+            className={cn(
+              'text-[10px] font-semibold rounded-full px-2 py-0.5',
+              demand.color,
+              demand.bg
+            )}
+          >
             {demand.label}
           </span>
         </div>

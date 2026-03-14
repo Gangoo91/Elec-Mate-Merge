@@ -91,6 +91,45 @@ async function waitForPDFGeneration(
   throw new Error('PDF generation timed out');
 }
 
+/** Repair code value → human-readable label */
+const REPAIR_CODE_LABELS: Record<string, string> = {
+  RP: 'Replaced 13A plug',
+  RF3: 'Changed fuse to 3A',
+  RF5: 'Changed fuse to 5A',
+  RF13: 'Changed fuse to 13A',
+  RC: 'Replaced/trimmed cable',
+  RS: 'Replaced trailing socket',
+  RE: 'Repaired enclosure',
+  RO: 'Other repair (see notes)',
+  SCRAP: 'Scrapped — beyond repair',
+  RFS: 'Removed from service',
+};
+
+/** Build failure reasons string from individual test results (raw camelCase appliance) */
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const getFailureReasons = (app: any): string => {
+  const reasons: string[] = [];
+  if (app.visualInspection?.flexCondition === 'fail') reasons.push('Flex/cable damaged');
+  if (app.visualInspection?.plugCondition === 'fail') reasons.push('Plug damaged');
+  if (app.visualInspection?.enclosureCondition === 'fail') reasons.push('Enclosure damaged');
+  if (app.visualInspection?.switchesControls === 'fail') reasons.push('Switches/controls faulty');
+  if (app.visualInspection?.suitableForEnvironment === 'fail')
+    reasons.push('Not suitable for environment');
+  if (app.electricalTests?.earthContinuity?.result === 'fail')
+    reasons.push(
+      `Earth continuity failed (${app.electricalTests.earthContinuity.reading || '?'} \u03A9)`
+    );
+  if (app.electricalTests?.insulationResistance?.result === 'fail')
+    reasons.push(
+      `Insulation resistance failed (${app.electricalTests.insulationResistance.reading || '?'} M\u03A9)`
+    );
+  if (app.electricalTests?.loadTest?.result === 'fail') reasons.push('Load test failed');
+  if (app.electricalTests?.leakageCurrent?.result === 'fail') reasons.push('Leakage current failed');
+  if (app.electricalTests?.polarity === 'fail') reasons.push('Polarity incorrect');
+  if (app.electricalTests?.functionalCheck === 'fail') reasons.push('Functional check failed');
+  return reasons.join(', ');
+};
+
 /**
  * Server-side formatter for raw (camelCase) form data.
  * Used when the email flow sends report.data directly without client-side formatting.
@@ -105,8 +144,10 @@ function formatRawFormData(raw: any): any {
     return '';
   };
 
+  const rawAppliances = raw.appliances || [];
+
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const appliances = (raw.appliances || []).map((app: any, index: number) => ({
+  const appliances = rawAppliances.map((app: any) => ({
     asset_number: app.assetNumber || '',
     description: app.description || '',
     make: app.make || '',
@@ -155,25 +196,42 @@ function formatRawFormData(raw: any): any {
   const totalFailed = appliances.filter((a: any) => a.overall_result === 'fail').length;
   const passRate = totalTested > 0 ? Math.round((totalPassed / totalTested) * 100) : 0;
 
-  const failedAppliances = appliances
+  // Build failed appliances from RAW data (camelCase) so we can extract failure reasons + photos
+  const failedAppliances = rawAppliances
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    .filter((a: any) => a.overall_result === 'fail')
+    .filter((a: any) => a.overallResult === 'fail')
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     .map((a: any) => ({
-      asset_number: a.asset_number,
-      description: a.description,
-      make: a.make,
-      model: a.model,
-      serial_number: a.serial_number,
-      location: a.location,
-      repair_code: a.repair_code || '',
-      repair_code_label: '',
-      failure_reasons: '',
+      asset_number: a.assetNumber || '',
+      description: a.description || '',
+      make: a.make || '',
+      model: a.model || '',
+      serial_number: a.serialNumber || '',
+      location: a.location || '',
+      repair_code: a.repairCode || '',
+      repair_code_label: REPAIR_CODE_LABELS[a.repairCode] || '',
+      failure_reasons: getFailureReasons(a),
       notes: a.notes || '',
-      visual_notes: a.visual_notes || '',
-      photos: [],
-      has_photos: false,
+      visual_notes: a.visualInspection?.notes || '',
+      photos: a.photos || [],
+      has_photos: (a.photos || []).length > 0,
     }));
+
+  // Build photo list grouped by appliance
+  const appliancePhotos: { asset_number: string; description: string; result: string; photos: string[] }[] = [];
+  let hasPhotos = false;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  for (const app of rawAppliances) {
+    if (app.photos && app.photos.length > 0) {
+      hasPhotos = true;
+      appliancePhotos.push({
+        asset_number: app.assetNumber || '',
+        description: app.description || 'Appliance',
+        result: app.overallResult || '',
+        photos: app.photos,
+      });
+    }
+  }
 
   return {
     metadata: {
@@ -223,15 +281,15 @@ function formatRawFormData(raw: any): any {
         date: raw.testerDate || '',
       },
     },
-    has_photos: false,
-    appliance_photos: [],
+    has_photos: hasPhotos,
+    appliance_photos: appliancePhotos,
     company_logo: '',
     company_name: raw.testerCompany || '',
     company_address: '',
     company_phone: '',
     company_email: '',
     company_tagline: '',
-    company_accent_color: '#22c55e',
+    company_accent_color: '#3b82f6',
     registration_scheme: '',
     registration_number: '',
     registration_scheme_logo: '',

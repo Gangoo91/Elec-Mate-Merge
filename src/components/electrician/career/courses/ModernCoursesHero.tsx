@@ -27,12 +27,54 @@ interface ModernCoursesHeroProps {
 }
 
 const QUICK_CATEGORIES = [
-  { id: '18th-edition', label: '18th Edition', icon: Zap, color: 'text-amber-400', activeBg: 'bg-amber-500/20', activeBorder: 'border-amber-500/40' },
-  { id: 'inspection-testing', label: 'Testing', icon: Shield, color: 'text-sky-400', activeBg: 'bg-sky-500/20', activeBorder: 'border-sky-500/40' },
-  { id: 'ev-charging', label: 'EV', icon: Battery, color: 'text-emerald-400', activeBg: 'bg-emerald-500/20', activeBorder: 'border-emerald-500/40' },
-  { id: 'fire-alarm', label: 'Fire Alarm', icon: Flame, color: 'text-orange-400', activeBg: 'bg-orange-500/20', activeBorder: 'border-orange-500/40' },
-  { id: 'pat-testing', label: 'PAT', icon: Wrench, color: 'text-violet-400', activeBg: 'bg-violet-500/20', activeBorder: 'border-violet-500/40' },
-  { id: 'level-3', label: 'Level 3', icon: GraduationCap, color: 'text-cyan-400', activeBg: 'bg-cyan-500/20', activeBorder: 'border-cyan-500/40' },
+  {
+    id: '18th-edition',
+    label: '18th Edition',
+    icon: Zap,
+    color: 'text-amber-400',
+    activeBg: 'bg-amber-500/20',
+    activeBorder: 'border-amber-500/40',
+  },
+  {
+    id: 'inspection-testing',
+    label: 'Testing',
+    icon: Shield,
+    color: 'text-sky-400',
+    activeBg: 'bg-sky-500/20',
+    activeBorder: 'border-sky-500/40',
+  },
+  {
+    id: 'ev-charging',
+    label: 'EV',
+    icon: Battery,
+    color: 'text-emerald-400',
+    activeBg: 'bg-emerald-500/20',
+    activeBorder: 'border-emerald-500/40',
+  },
+  {
+    id: 'fire-alarm',
+    label: 'Fire Alarm',
+    icon: Flame,
+    color: 'text-orange-400',
+    activeBg: 'bg-orange-500/20',
+    activeBorder: 'border-orange-500/40',
+  },
+  {
+    id: 'pat-testing',
+    label: 'PAT',
+    icon: Wrench,
+    color: 'text-violet-400',
+    activeBg: 'bg-violet-500/20',
+    activeBorder: 'border-violet-500/40',
+  },
+  {
+    id: 'level-3',
+    label: 'Level 3',
+    icon: GraduationCap,
+    color: 'text-cyan-400',
+    activeBg: 'bg-cyan-500/20',
+    activeBorder: 'border-cyan-500/40',
+  },
 ];
 
 const ModernCoursesHero = ({

@@ -13,11 +13,8 @@ import {
   Lock,
   FlaskConical,
   ClipboardCheck,
-  BookOpen,
   ChevronRight,
-  FolderOpen,
 } from 'lucide-react';
-import type { RecentDocument } from '@/hooks/useSafetyDashboardStats';
 import { GettingStartedCard } from './GettingStartedCard';
 
 interface DashboardStats {
@@ -42,8 +39,6 @@ interface SafetyDashboardProps {
   stats: DashboardStats;
   isLoading?: boolean;
   onCardTap?: (section: string) => void;
-  recentDocuments?: RecentDocument[];
-  isLoadingDocuments?: boolean;
   overrideScore?: number;
 }
 
@@ -177,67 +172,10 @@ function ScoreRing({
   );
 }
 
-const DOC_CONFIG: Record<
-  string,
-  { icon: React.ElementType; colour: string; gradient: string; navTarget: string }
-> = {
-  rams: {
-    icon: FileText,
-    colour: 'text-orange-400',
-    gradient: 'from-orange-500/20 to-red-500/20',
-    navTarget: 'saved-rams',
-  },
-  permit: {
-    icon: Lock,
-    colour: 'text-amber-400',
-    gradient: 'from-amber-500/20 to-amber-600/20',
-    navTarget: 'permit-to-work',
-  },
-  inspection: {
-    icon: ClipboardCheck,
-    colour: 'text-indigo-400',
-    gradient: 'from-indigo-500/20 to-indigo-600/20',
-    navTarget: 'inspection-checklists',
-  },
-  coshh: {
-    icon: FlaskConical,
-    colour: 'text-green-400',
-    gradient: 'from-green-500/20 to-emerald-500/20',
-    navTarget: 'coshh',
-  },
-  accident: {
-    icon: BookOpen,
-    colour: 'text-red-400',
-    gradient: 'from-red-500/20 to-rose-500/20',
-    navTarget: 'accident-book',
-  },
-  briefing: {
-    icon: Users,
-    colour: 'text-purple-400',
-    gradient: 'from-purple-500/20 to-purple-600/20',
-    navTarget: 'team-briefing',
-  },
-};
-
-function formatRelativeDate(dateStr: string): string {
-  const date = new Date(dateStr);
-  const now = new Date();
-  const diffMs = now.getTime() - date.getTime();
-  const diffDays = Math.floor(diffMs / 86400000);
-
-  if (diffDays === 0) return 'Today';
-  if (diffDays === 1) return 'Yesterday';
-  if (diffDays < 7) return `${diffDays}d ago`;
-  if (diffDays < 30) return `${Math.floor(diffDays / 7)}w ago`;
-  return date.toLocaleDateString('en-GB', { day: 'numeric', month: 'short' });
-}
-
 export function SafetyDashboard({
   stats,
   isLoading,
   onCardTap,
-  recentDocuments,
-  isLoadingDocuments,
   overrideScore,
 }: SafetyDashboardProps) {
   const safetyInfo = useMemo(() => {
@@ -330,7 +268,7 @@ export function SafetyDashboard({
       iconColour: 'text-orange-400',
       bg: 'bg-gradient-to-br from-orange-500/10 to-red-500/10',
       border: 'border-orange-500/15',
-      section: 'saved-rams',
+      section: 'documents',
     },
     {
       label: 'Days Safe',
@@ -504,71 +442,6 @@ export function SafetyDashboard({
         })}
       </motion.div>
 
-      {/* Recent Documents */}
-      {!isLoadingDocuments && recentDocuments && recentDocuments.length > 0 && (
-        <motion.div variants={itemVariants} className="space-y-2">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <FolderOpen className="h-4 w-4 text-white" />
-              <h3 className="text-sm font-bold text-white">Recent Documents</h3>
-            </div>
-            <button
-              onClick={() => onCardTap?.('saved-rams')}
-              className="text-[11px] text-elec-yellow font-medium flex items-center gap-0.5 touch-manipulation h-8 px-2 -mr-2 rounded-lg active:opacity-70"
-            >
-              View all
-              <ChevronRight className="h-3 w-3" />
-            </button>
-          </div>
-
-          <div className="space-y-1.5">
-            {recentDocuments.map((doc) => {
-              const config = DOC_CONFIG[doc.type] || DOC_CONFIG.rams;
-              const DocIcon = config.icon;
-              return (
-                <motion.button
-                  key={`${doc.type}-${doc.id}`}
-                  variants={itemVariants}
-                  whileTap={{ scale: 0.98 }}
-                  onClick={() => onCardTap?.(config.navTarget)}
-                  className="w-full flex items-center gap-3 p-2.5 rounded-xl border border-white/[0.06] bg-white/[0.02] active:bg-white/[0.05] transition-colors touch-manipulation"
-                >
-                  <div
-                    className={`w-9 h-9 rounded-lg flex items-center justify-center bg-gradient-to-br ${config.gradient} flex-shrink-0`}
-                  >
-                    <DocIcon className={`h-4 w-4 ${config.colour}`} />
-                  </div>
-                  <div className="flex-1 min-w-0 text-left">
-                    <p className="text-[13px] font-semibold text-white truncate">{doc.title}</p>
-                    <div className="flex items-center gap-1.5 mt-0.5">
-                      <span className="text-[10px] text-white capitalize">{doc.type}</span>
-                      {doc.status && (
-                        <>
-                          <span className="text-white">·</span>
-                          <span className="text-[10px] text-white capitalize">{doc.status}</span>
-                        </>
-                      )}
-                    </div>
-                  </div>
-                  <span className="text-[10px] text-white flex-shrink-0">
-                    {formatRelativeDate(doc.date)}
-                  </span>
-                </motion.button>
-              );
-            })}
-          </div>
-        </motion.div>
-      )}
-
-      {/* Loading documents skeleton */}
-      {isLoadingDocuments && (
-        <div className="space-y-2">
-          <div className="h-4 w-32 bg-white/[0.05] rounded animate-pulse" />
-          {[1, 2, 3].map((i) => (
-            <div key={i} className="h-14 rounded-xl bg-white/[0.03] animate-pulse" />
-          ))}
-        </div>
-      )}
     </motion.div>
   );
 }

@@ -104,14 +104,14 @@ export function StatCard({
       className={cn(
         // Base styling
         'relative h-full',
-        // Simple flat background
-        'bg-white/5 rounded-xl',
+        // Solid surface background
+        'card-surface',
         // Padding
         'p-3 sm:p-4',
         // Fixed height for consistency
         'min-h-[80px] sm:min-h-[100px]',
         // Cursor for clickable
-        isClickable && 'cursor-pointer active:bg-white/10',
+        isClickable && 'cursor-pointer active:bg-white/[0.06]',
         // Touch optimization
         'touch-manipulation transition-colors duration-150',
         className
@@ -122,7 +122,9 @@ export function StatCard({
         {/* Icon + Label row */}
         <div className="flex items-center gap-1.5 mb-1">
           <Icon className={cn('h-4 w-4', styles.iconColor)} />
-          <p className="text-[11px] sm:text-xs text-white truncate">{label}</p>
+          <p className="text-[11px] sm:text-xs text-white truncate">
+            {label}
+          </p>
         </div>
 
         {/* Value - prominent, left-aligned */}
@@ -132,7 +134,7 @@ export function StatCard({
           suffix={suffix}
           decimals={decimals}
           formatAsCurrency={formatAsCurrency}
-          className={cn('text-xl sm:text-2xl font-bold tracking-tight', styles.accentColor)}
+          className={cn('text-xl sm:text-2xl font-bold tracking-tight tabular-nums', styles.accentColor)}
         />
 
         {/* Subtitle */}

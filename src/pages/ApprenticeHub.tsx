@@ -1,18 +1,17 @@
 /**
  * ApprenticeHub
  *
- * Premium apprentice command center with glass morphism styling,
+ * Premium apprentice command centre with glass morphism styling,
  * real-time stats, and best-in-class mobile experience.
- * Yellow/gold theme throughout.
+ * Yellow/gold theme throughout. Matches ElectricalHub layout.
  */
 
-import React, { useRef, useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import useSEO, { SEOSchemas } from '@/hooks/useSEO';
 import {
   GraduationCap,
-  Clock,
   Heart,
   Calculator,
   BookOpen,
@@ -20,7 +19,6 @@ import {
   WrenchIcon,
   ClipboardCheck,
   Sparkles,
-  ArrowRight,
   ArrowLeft,
   Flame,
   Target,
@@ -37,7 +35,6 @@ import { useApprenticeData } from '@/hooks/useApprenticeData';
 import { AnimatedCounter } from '@/components/dashboard/AnimatedCounter';
 import { ElecIdBanner } from '@/components/elec-id/ElecIdBanner';
 import { LearningVideosSection } from '@/components/apprentice/learning-videos/LearningVideosSection';
-import { DiaryDashboardWidget } from '@/components/apprentice/site-diary/DiaryDashboardWidget';
 import { useVideoInsights } from '@/hooks/apprentice-stats/useVideoInsights';
 import { useSiteDiaryEntries } from '@/hooks/site-diary/useSiteDiaryEntries';
 import { VideosWatchedDetailSheet } from '@/components/apprentice/stats-detail/VideosWatchedDetailSheet';
@@ -45,74 +42,72 @@ import { DiaryEntriesDetailSheet } from '@/components/apprentice/stats-detail/Di
 import { StudyStreakDetailSheet } from '@/components/apprentice/stats-detail/StudyStreakDetailSheet';
 import { ProgressDetailSheet } from '@/components/apprentice/stats-detail/ProgressDetailSheet';
 
-// Animation variants - Smooth, fast entrance
+// Animation variants — match ElectricalHub
 const containerVariants = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
-    transition: { staggerChildren: 0.02, delayChildren: 0 },
+    transition: { staggerChildren: 0.04, delayChildren: 0 },
   },
 };
 
 const itemVariants = {
-  hidden: { opacity: 0, y: 8 },
+  hidden: { opacity: 0, y: 12 },
   visible: {
     opacity: 1,
     y: 0,
-    transition: { duration: 0.2, ease: 'easeOut' },
+    transition: { type: 'spring', stiffness: 300, damping: 24 },
   },
 };
 
-// Premium Hero Component - Centered layout matching main dashboard
+// ─── Hero ────────────────────────────────────────────────────────
+// Left-aligned, compact. Glass card with yellow glow. Matches ElectricalHub.
+
 function ApprenticeHero() {
-  const { user, stats, isLoading } = useApprenticeData();
+  const { user, stats } = useApprenticeData();
 
   const getGreeting = () => {
     const hour = new Date().getHours();
-    if (hour < 12) return 'Good morning';
-    if (hour < 18) return 'Good afternoon';
-    return 'Good evening';
+    if (hour < 12) return 'Good morning,';
+    if (hour < 18) return 'Good afternoon,';
+    return 'Good evening,';
   };
 
   return (
     <div className="relative overflow-hidden glass-premium rounded-2xl glow-yellow">
-      {/* Gradient accent line */}
       <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-elec-yellow via-amber-400 to-elec-yellow" />
-
-      {/* Decorative blob */}
       <div className="absolute top-0 right-0 w-40 sm:w-56 h-40 sm:h-56 bg-elec-yellow/[0.04] rounded-full blur-3xl -translate-y-1/2 translate-x-1/4 pointer-events-none" />
 
-      {/* Content - centered layout */}
       <div className="relative z-10 p-5 sm:p-6">
-        <div className="flex flex-col items-center text-center">
-          {/* Icon */}
-          <div className="w-20 h-20 rounded-full bg-elec-yellow/10 border-2 border-elec-yellow/20 flex items-center justify-center mb-3">
-            <GraduationCap className="h-10 w-10 text-elec-yellow" />
+        <div className="flex items-center gap-4">
+          <div className="flex-shrink-0 p-3 rounded-xl bg-elec-yellow/10 border border-elec-yellow/20">
+            <GraduationCap className="h-7 w-7 text-elec-yellow" />
           </div>
 
-          {/* Greeting and Name */}
-          <p className="text-sm text-white mb-0.5">{getGreeting()}</p>
-          <h1 className="text-2xl sm:text-3xl font-bold text-white">{user.firstName}</h1>
-
-          {/* Status badges - horizontal row */}
-          <div className="flex items-center gap-2 mt-3">
-            {user.apprenticeYear && (
-              <Badge
-                variant="outline"
-                className="bg-elec-yellow/10 border-elec-yellow/30 text-elec-yellow text-[11px]"
-              >
-                Year {user.apprenticeYear}
-              </Badge>
-            )}
-            {stats.learning.currentStreak > 0 && (
-              <Badge
-                variant="outline"
-                className="bg-orange-500/10 border-orange-500/30 text-orange-400 text-[11px]"
-              >
-                <Flame className="w-3 h-3 mr-1" />
-                {stats.learning.currentStreak} day streak
-              </Badge>
-            )}
+          <div className="flex-1 min-w-0">
+            <p className="text-sm text-white mb-0.5">{getGreeting()}</p>
+            <div className="flex items-center gap-2">
+              <h1 className="text-xl sm:text-2xl font-bold text-elec-yellow tracking-tight">
+                {user.firstName}
+              </h1>
+              {user.apprenticeYear && (
+                <Badge
+                  variant="outline"
+                  className="bg-elec-yellow/10 border-elec-yellow/30 text-elec-yellow text-[11px]"
+                >
+                  Year {user.apprenticeYear}
+                </Badge>
+              )}
+              {stats.learning.currentStreak > 0 && (
+                <Badge
+                  variant="outline"
+                  className="bg-orange-500/10 border-orange-500/30 text-orange-400 text-[11px]"
+                >
+                  <Flame className="w-3 h-3 mr-1" />
+                  {stats.learning.currentStreak}d
+                </Badge>
+              )}
+            </div>
           </div>
         </div>
       </div>
@@ -120,7 +115,9 @@ function ApprenticeHero() {
   );
 }
 
-// Stats Bar Component - 4 tappable stat cards with detail sheets
+// ─── Stats Bar ──────────────────────────────────────────────────
+// Left-aligned values matching ElectricalHub stat cards.
+
 function ApprenticeStatsBar() {
   const { stats, isLoading } = useApprenticeData();
   const { watchedCount, totalVideos } = useVideoInsights();
@@ -136,7 +133,7 @@ function ApprenticeStatsBar() {
       value: stats.learning.currentStreak,
       suffix: ' days',
       icon: Flame,
-      variant: 'orange' as const,
+      accentColor: 'text-orange-400',
       onTap: () => setStreakSheetOpen(true),
     },
     {
@@ -144,7 +141,7 @@ function ApprenticeStatsBar() {
       value: stats.progress.overallPercent,
       suffix: '%',
       icon: Target,
-      variant: 'green' as const,
+      accentColor: 'text-green-400',
       onTap: () => setProgressSheetOpen(true),
     },
     {
@@ -152,7 +149,7 @@ function ApprenticeStatsBar() {
       value: watchedCount,
       suffix: `/${totalVideos}`,
       icon: Video,
-      variant: 'purple' as const,
+      accentColor: 'text-purple-400',
       onTap: () => setVideosSheetOpen(true),
     },
     {
@@ -160,26 +157,17 @@ function ApprenticeStatsBar() {
       value: entries.length,
       suffix: '',
       icon: BookMarked,
-      variant: 'yellow' as const,
+      accentColor: 'text-elec-yellow',
       onTap: () => setDiarySheetOpen(true),
     },
   ];
 
-  const variantClasses = {
-    yellow: { bg: 'bg-elec-yellow/10', text: 'text-elec-yellow' },
-    orange: { bg: 'bg-orange-500/10', text: 'text-orange-400' },
-    purple: { bg: 'bg-purple-500/10', text: 'text-purple-400' },
-    green: { bg: 'bg-green-500/10', text: 'text-green-400' },
-  };
-
   if (isLoading) {
     return (
-      <div className="px-4 sm:px-0">
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-          {[...Array(4)].map((_, i) => (
-            <div key={i} className="h-[90px] rounded-xl glass-premium animate-pulse" />
-          ))}
-        </div>
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+        {[...Array(4)].map((_, i) => (
+          <div key={i} className="h-[85px] rounded-xl bg-white/[0.04] animate-pulse" />
+        ))}
       </div>
     );
   }
@@ -190,33 +178,42 @@ function ApprenticeStatsBar() {
         variants={containerVariants}
         initial="hidden"
         animate="visible"
-        className="grid grid-cols-2 sm:grid-cols-4 gap-3 px-4 sm:px-0"
+        className="grid grid-cols-2 sm:grid-cols-4 gap-3"
       >
         {statItems.map((stat) => {
-          const colors = variantClasses[stat.variant];
+          const Icon = stat.icon;
           return (
             <motion.button
               key={stat.label}
               variants={itemVariants}
               whileTap={{ scale: 0.96 }}
+              transition={{ type: 'spring', stiffness: 400, damping: 25 }}
               onClick={stat.onTap}
-              className="touch-manipulation cursor-pointer w-full"
+              className="touch-manipulation cursor-pointer group w-full"
+              aria-label={`View ${stat.label}`}
             >
-              <div className="glass-premium rounded-xl p-4 h-[100px] hover:bg-white/[0.04] active:bg-white/[0.02] transition-all">
-                <div className="flex flex-col items-center justify-center h-full text-center">
-                  <div className={cn('p-2 rounded-lg mb-2', colors.bg)}>
-                    <stat.icon className={cn('h-5 w-5', colors.text)} />
+              <div
+                className={cn(
+                  'rounded-xl p-3 sm:p-4',
+                  'bg-white/[0.04] border border-white/[0.06]',
+                  'group-active:bg-white/[0.06]',
+                  'transition-colors duration-150'
+                )}
+              >
+                <div className="flex flex-col items-start text-left">
+                  <div className="flex items-center gap-1.5 mb-1.5">
+                    <Icon className={cn('h-3.5 w-3.5', stat.accentColor)} />
+                    <p className="text-[11px] sm:text-xs text-white">{stat.label}</p>
                   </div>
-                  <div className="flex items-baseline justify-center">
+                  <div className="flex items-baseline">
                     <AnimatedCounter
                       value={stat.value}
-                      className={cn('text-xl font-bold', colors.text)}
+                      className={cn('text-xl sm:text-2xl font-bold tracking-tight', stat.accentColor)}
                     />
                     {stat.suffix && (
                       <span className="text-xs text-white ml-0.5">{stat.suffix}</span>
                     )}
                   </div>
-                  <p className="text-[11px] text-white mt-0.5">{stat.label}</p>
                 </div>
               </div>
             </motion.button>
@@ -237,112 +234,122 @@ function ApprenticeStatsBar() {
   );
 }
 
-// Card Component — unified centred style for all cards
-interface ToolCardProps {
+// ─── Primary Tool Card ──────────────────────────────────────────
+// Centred icon, title, description. Matches ElectricalHub PrimaryToolCard.
+
+interface PrimaryToolCardProps {
   title: string;
   description: string;
-  icon: typeof Clock;
+  icon: typeof BookOpen;
   link: string;
-  featured?: boolean;
   badges?: string[];
-  comingSoon?: boolean;
+  accent?: 'yellow' | 'purple' | 'cyan';
 }
 
-function ToolCard({
+function PrimaryToolCard({
   title,
   description,
   icon: Icon,
   link,
-  featured,
   badges,
-  comingSoon,
-}: ToolCardProps) {
-  const cardContent = (
-    <motion.div
-      whileHover={comingSoon ? {} : { y: -2, scale: 1.02 }}
-      whileTap={comingSoon ? {} : { scale: 0.98 }}
-      className={cn(
-        'relative overflow-hidden glass-premium rounded-xl h-full min-h-[120px] sm:min-h-[130px]',
-        featured && !comingSoon && 'bg-gradient-to-br from-elec-yellow/[0.08] to-transparent',
-        comingSoon && 'opacity-60 cursor-not-allowed'
-      )}
-    >
-      {featured && !comingSoon && (
-        <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-elec-yellow via-amber-400 to-elec-yellow" />
-      )}
-      {comingSoon && (
-        <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-amber-500 via-orange-500 to-amber-500" />
-      )}
-
-      <div className="relative z-10 p-4 flex flex-col items-center justify-center text-center h-full">
-        <div
-          className={cn(
-            'p-2 rounded-lg mb-2 transition-colors',
-            comingSoon
-              ? 'bg-white/10'
-              : featured
-                ? 'bg-elec-yellow/20 group-hover:bg-elec-yellow/30 group-active:bg-elec-yellow/35 ring-1 ring-elec-yellow/30'
-                : 'bg-elec-yellow/10 group-hover:bg-elec-yellow/20 group-active:bg-elec-yellow/25'
-          )}
-        >
-          <Icon className={cn('h-6 w-6', comingSoon ? 'text-white' : 'text-elec-yellow')} />
-        </div>
-
-        <h3
-          className={cn(
-            'text-sm sm:text-base font-semibold mb-1 transition-colors',
-            comingSoon
-              ? 'text-white'
-              : 'text-white group-hover:text-elec-yellow group-active:text-elec-yellow'
-          )}
-        >
-          {title}
-        </h3>
-
-        <p
-          className={cn(
-            'text-xs line-clamp-2 hidden sm:block',
-            comingSoon ? 'text-white' : 'text-white'
-          )}
-        >
-          {description}
-        </p>
-
-        {badges && !comingSoon && (
-          <div className="flex flex-wrap justify-center gap-1.5 mt-2">
-            {badges.map((badge, i) => (
-              <Badge
-                key={i}
-                variant="outline"
-                className="text-[10px] bg-elec-yellow/10 border-elec-yellow/30 text-elec-yellow"
-              >
-                {badge}
-              </Badge>
-            ))}
-          </div>
-        )}
-
-        {comingSoon && (
-          <Badge className="bg-amber-500/20 text-amber-400 border-amber-500/30 text-[10px] mt-1.5">
-            Coming Soon
-          </Badge>
-        )}
-      </div>
-    </motion.div>
-  );
-
-  if (comingSoon) {
-    return <div className="block touch-manipulation">{cardContent}</div>;
-  }
+  accent = 'yellow',
+}: PrimaryToolCardProps) {
+  const iconBg =
+    accent === 'purple'
+      ? 'bg-purple-500/10'
+      : accent === 'cyan'
+        ? 'bg-cyan-500/10'
+        : 'bg-elec-yellow/10';
+  const iconColor =
+    accent === 'purple'
+      ? 'text-purple-400'
+      : accent === 'cyan'
+        ? 'text-cyan-400'
+        : 'text-elec-yellow';
+  const activeBg =
+    accent === 'purple'
+      ? 'group-active:bg-purple-500/20'
+      : accent === 'cyan'
+        ? 'group-active:bg-cyan-500/20'
+        : 'group-active:bg-elec-yellow/20';
 
   return (
-    <Link to={link} className="block group touch-manipulation">
-      {cardContent}
+    <Link to={link} className="block group touch-manipulation active:opacity-90">
+      <motion.div
+        whileTap={{ scale: 0.96 }}
+        transition={{ type: 'spring', stiffness: 400, damping: 25 }}
+        className="glass-premium rounded-xl h-full min-h-[110px] active:bg-white/[0.02]"
+      >
+        <div className="p-4 flex flex-col items-center justify-center text-center h-full">
+          <div
+            className={cn('p-2.5 rounded-xl mb-2.5 transition-colors', iconBg, activeBg)}
+          >
+            <Icon className={cn('h-6 w-6', iconColor)} />
+          </div>
+          <h3 className="text-sm font-semibold text-white mb-0.5 group-active:text-elec-yellow transition-colors">
+            {title}
+          </h3>
+          <p className="text-xs text-white leading-relaxed line-clamp-2">{description}</p>
+          {badges && (
+            <div className="flex flex-wrap justify-center gap-1.5 mt-2">
+              {badges.map((badge, i) => (
+                <Badge
+                  key={i}
+                  variant="outline"
+                  className={cn(
+                    'text-[10px]',
+                    accent === 'purple'
+                      ? 'bg-purple-500/10 border-purple-500/30 text-purple-400'
+                      : accent === 'cyan'
+                        ? 'bg-cyan-500/10 border-cyan-500/30 text-cyan-400'
+                        : 'bg-elec-yellow/10 border-elec-yellow/30 text-elec-yellow'
+                  )}
+                >
+                  {badge}
+                </Badge>
+              ))}
+            </div>
+          )}
+        </div>
+      </motion.div>
     </Link>
   );
 }
 
-// Section Header
+// ─── Compact Tool Card ──────────────────────────────────────────
+// Smaller card for secondary tools. Matches ElectricalHub CompactToolCard.
+
+interface CompactToolCardProps {
+  title: string;
+  description: string;
+  icon: typeof BookOpen;
+  link: string;
+}
+
+function CompactToolCard({ title, description, icon: Icon, link }: CompactToolCardProps) {
+  return (
+    <Link to={link} className="block group touch-manipulation active:opacity-90">
+      <motion.div
+        whileTap={{ scale: 0.96 }}
+        transition={{ type: 'spring', stiffness: 400, damping: 25 }}
+        className="glass-premium rounded-xl h-full min-h-[110px] active:bg-white/[0.02]"
+      >
+        <div className="p-4 flex flex-col items-center justify-center text-center h-full">
+          <div className="p-2 rounded-lg bg-elec-yellow/10 mb-2 group-active:bg-elec-yellow/20 transition-colors">
+            <Icon className="h-5 w-5 text-elec-yellow" />
+          </div>
+          <h3 className="text-sm font-semibold text-white mb-0.5 group-active:text-elec-yellow transition-colors">
+            {title}
+          </h3>
+          <p className="text-xs text-white line-clamp-2 hidden sm:block">{description}</p>
+        </div>
+      </motion.div>
+    </Link>
+  );
+}
+
+// ─── Section Header ─────────────────────────────────────────────
+
 function SectionHeader({ title }: { title: string }) {
   return (
     <div className="flex items-center gap-2 px-1">
@@ -352,28 +359,9 @@ function SectionHeader({ title }: { title: string }) {
   );
 }
 
-// Core Learning resources (featured, own section)
-const coreLearningResources: ToolCardProps[] = [
-  {
-    title: 'Study Centre',
-    description: 'Level 2 & 3 courses, practice questions, and exam prep',
-    icon: BookOpen,
-    link: '/study-centre/apprentice',
-    featured: true,
-    badges: ['2,000+ Questions', 'AM2 Prep'],
-  },
-  {
-    title: 'Inspection & Testing',
-    description: 'Master I&T with comprehensive guides, quizzes, and BS 7671 regulations',
-    icon: ClipboardCheck,
-    link: '/apprentice/inspection-testing-hub',
-    featured: true,
-    badges: ['8 Topics', 'Interactive', 'Exam Ready'],
-  },
-];
+// ─── Tool Definitions ───────────────────────────────────────────
 
-// Tools & Resources (compact grid)
-const toolsAndResources: ToolCardProps[] = [
+const toolsAndResources: CompactToolCardProps[] = [
   {
     title: 'AI Study Assistant',
     description: 'Instant help with theory and exams',
@@ -418,8 +406,9 @@ const toolsAndResources: ToolCardProps[] = [
   },
 ];
 
+// ─── Main Page ──────────────────────────────────────────────────
+
 const ApprenticeHub = () => {
-  // SEO for apprentice hub - high priority for Google ranking
   useSEO({
     title: 'Apprentice Hub | Level 2 & 3 Electrical Training',
     description:
@@ -437,153 +426,114 @@ const ApprenticeHub = () => {
   });
 
   return (
-    <div className="bg-[hsl(240,5.9%,10%)]">
-      <div className="mx-auto max-w-6xl py-4 md:py-6 lg:py-8">
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          animate="visible"
-          className="space-y-6 sm:space-y-8"
-        >
-          {/* Back Button - Larger touch target */}
-          <motion.div variants={itemVariants} className="px-4 sm:px-0">
-            <Link to="/dashboard">
-              <Button
-                variant="ghost"
-                className="text-white hover:text-white hover:bg-white/[0.05] active:bg-white/[0.08] active:scale-[0.98] -ml-2 h-11 touch-manipulation transition-all"
-              >
-                <ArrowLeft className="mr-2 h-5 w-5" />
-                Back to Dashboard
-              </Button>
-            </Link>
-          </motion.div>
-
-          {/* Hero */}
-          <motion.section variants={itemVariants} className="px-4 sm:px-0">
-            <ApprenticeHero />
-          </motion.section>
-
-          {/* Stats Bar - Now visible on mobile as carousel */}
-          <motion.section variants={itemVariants} className="sm:px-0">
-            <ApprenticeStatsBar />
-          </motion.section>
-
-          {/* Core Learning — top priority for apprentices */}
-          <motion.section variants={itemVariants} className="space-y-4 px-4 sm:px-0">
-            <SectionHeader title="Core Learning" />
-            <div className="grid grid-cols-2 gap-3 touch-grid">
-              {coreLearningResources.map((resource) => (
-                <ToolCard key={resource.link} {...resource} />
-              ))}
-            </div>
-          </motion.section>
-
-          {/* My Portfolio — single featured card */}
-          <motion.section variants={itemVariants} className="space-y-4 px-4 sm:px-0">
-            <SectionHeader title="My Portfolio" />
-            <ToolCard
-              title="My Portfolio"
-              description="Track evidence, assessment criteria, OJT hours, and build your apprenticeship portfolio"
-              icon={FileText}
-              link="/apprentice/hub"
-              featured
-              badges={['Evidence', 'AC Mapping', 'OJT Hours']}
-            />
-          </motion.section>
-
-          {/* Elec-ID Banner */}
-          <motion.section variants={itemVariants} className="px-4 sm:px-0">
-            <ElecIdBanner variant="apprentice" />
-          </motion.section>
-
-          {/* EPA Readiness */}
-          <motion.section variants={itemVariants} className="space-y-4 px-4 sm:px-0">
-            <SectionHeader title="EPA Readiness" />
-            <Link to="/apprentice/epa-simulator" className="block group touch-manipulation">
-              <motion.div
-                whileHover={{ y: -2, scale: 1.01 }}
-                whileTap={{ scale: 0.98 }}
-                className="relative overflow-hidden glass-premium rounded-2xl"
-              >
-                <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-purple-500 via-purple-400 to-purple-500" />
-                <div className="absolute -top-16 -right-16 w-32 h-32 bg-purple-500/[0.08] blur-3xl rounded-full pointer-events-none" />
-
-                <div className="relative z-10 p-5 sm:p-6 text-center">
-                  <div className="inline-flex p-3 rounded-2xl bg-purple-500/10 mb-4 group-hover:bg-purple-500/20 group-active:bg-purple-500/25 transition-colors">
-                    <Award className="h-8 w-8 text-purple-400" />
-                  </div>
-
-                  <h3 className="text-lg sm:text-xl font-semibold text-white mb-2">
-                    EPA Simulator
-                  </h3>
-                  <p className="text-sm text-white max-w-md mx-auto mb-4">
-                    Practise mock Professional Discussions and Knowledge Tests with AI-powered
-                    scoring and real EPA grade descriptors
-                  </p>
-
-                  <div className="inline-flex items-center gap-2 text-purple-400 font-medium text-sm group-hover:gap-3 group-active:gap-3 transition-all">
-                    <span>Start Practising</span>
-                    <ArrowRight className="h-4 w-4 group-hover:translate-x-1 group-active:translate-x-1 transition-transform" />
-                  </div>
-                </div>
-              </motion.div>
-            </Link>
-          </motion.section>
-
-          {/* AM2 Readiness */}
-          <motion.section variants={itemVariants} className="space-y-4 px-4 sm:px-0">
-            <SectionHeader title="AM2 Readiness" />
-            <Link to="/apprentice/am2-simulator" className="block group touch-manipulation">
-              <motion.div
-                whileHover={{ y: -2, scale: 1.01 }}
-                whileTap={{ scale: 0.98 }}
-                className="relative overflow-hidden glass-premium rounded-2xl"
-              >
-                <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-cyan-500 via-cyan-400 to-cyan-500" />
-                <div className="absolute -top-16 -right-16 w-32 h-32 bg-cyan-500/[0.08] blur-3xl rounded-full pointer-events-none" />
-
-                <div className="relative z-10 p-5 sm:p-6 text-center">
-                  <div className="inline-flex p-3 rounded-2xl bg-cyan-500/10 mb-4 group-hover:bg-cyan-500/20 group-active:bg-cyan-500/25 transition-colors">
-                    <ShieldAlert className="h-8 w-8 text-cyan-400" />
-                  </div>
-
-                  <h3 className="text-lg sm:text-xl font-semibold text-white mb-2">
-                    AM2 Simulator
-                  </h3>
-                  <p className="text-sm text-white max-w-md mx-auto mb-4">
-                    Interactive safe isolation, fault finding, and testing simulations — identify
-                    practical gaps before you book
-                  </p>
-
-                  <div className="inline-flex items-center gap-2 text-cyan-400 font-medium text-sm group-hover:gap-3 group-active:gap-3 transition-all">
-                    <span>Start Practising</span>
-                    <ArrowRight className="h-4 w-4 group-hover:translate-x-1 group-active:translate-x-1 transition-transform" />
-                  </div>
-                </div>
-              </motion.div>
-            </Link>
-          </motion.section>
-
-          {/* Learning Videos */}
-          <motion.section variants={itemVariants} className="space-y-4 px-4 sm:px-0">
-            <SectionHeader title="Learning Videos" />
-            <LearningVideosSection />
-          </motion.section>
-
-          {/* Tools & Resources — merged grid */}
-          <motion.section variants={itemVariants} className="space-y-4 px-4 sm:px-0">
-            <SectionHeader title="Tools & Resources" />
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-3 touch-grid">
-              {toolsAndResources.map((resource) => (
-                <ToolCard key={resource.link} {...resource} />
-              ))}
-            </div>
-          </motion.section>
-
-          {/* Footer spacing for mobile nav */}
-          <div className="h-6 sm:h-8" />
+    <div className="mx-auto max-w-6xl">
+      <motion.div
+        variants={containerVariants}
+        initial="hidden"
+        animate="visible"
+        className="space-y-5 sm:space-y-6"
+      >
+        {/* Back Button */}
+        <motion.div variants={itemVariants} className="px-4 sm:px-0">
+          <Link to="/dashboard">
+            <Button
+              variant="ghost"
+              className="text-white hover:text-white hover:bg-white/[0.05] active:bg-white/[0.08] active:scale-[0.98] -ml-2 h-11 touch-manipulation transition-all"
+            >
+              <ArrowLeft className="mr-2 h-5 w-5" />
+              Back to Dashboard
+            </Button>
+          </Link>
         </motion.div>
-      </div>
+
+        {/* Hero — compact, left-aligned */}
+        <motion.section variants={itemVariants} className="px-4 sm:px-0">
+          <ApprenticeHero />
+        </motion.section>
+
+        {/* Stats Bar — left-aligned values */}
+        <motion.section variants={itemVariants} className="px-4 sm:px-0">
+          <ApprenticeStatsBar />
+        </motion.section>
+
+        {/* Core Learning — 2 featured cards */}
+        <motion.section variants={itemVariants} className="space-y-4 px-4 sm:px-0">
+          <SectionHeader title="Core Learning" />
+          <div className="grid grid-cols-2 gap-3">
+            <PrimaryToolCard
+              title="Study Centre"
+              description="Level 2 & 3 courses, practice questions, and exam prep"
+              icon={BookOpen}
+              link="/study-centre/apprentice"
+              badges={['2,000+ Questions', 'AM2 Prep']}
+            />
+            <PrimaryToolCard
+              title="Inspection & Testing"
+              description="Master I&T with comprehensive guides, quizzes, and BS 7671 regulations"
+              icon={ClipboardCheck}
+              link="/apprentice/inspection-testing-hub"
+              badges={['8 Topics', 'Exam Ready']}
+            />
+          </div>
+        </motion.section>
+
+        {/* My Portfolio — single featured card */}
+        <motion.section variants={itemVariants} className="space-y-4 px-4 sm:px-0">
+          <SectionHeader title="My Portfolio" />
+          <PrimaryToolCard
+            title="My Portfolio"
+            description="Track evidence, assessment criteria, OJT hours, and build your apprenticeship portfolio"
+            icon={FileText}
+            link="/apprentice/hub"
+            badges={['Evidence', 'AC Mapping', 'OJT Hours']}
+          />
+        </motion.section>
+
+        {/* Exam Prep — EPA + AM2 merged into 2-card grid */}
+        <motion.section variants={itemVariants} className="space-y-4 px-4 sm:px-0">
+          <SectionHeader title="Exam Prep" />
+          <div className="grid grid-cols-2 gap-3">
+            <PrimaryToolCard
+              title="EPA Simulator"
+              description="Mock Professional Discussions and Knowledge Tests with AI scoring"
+              icon={Award}
+              link="/apprentice/epa-simulator"
+              accent="purple"
+            />
+            <PrimaryToolCard
+              title="AM2 Simulator"
+              description="Safe isolation, fault finding, and testing simulations"
+              icon={ShieldAlert}
+              link="/apprentice/am2-simulator"
+              accent="cyan"
+            />
+          </div>
+        </motion.section>
+
+        {/* Elec-ID Banner */}
+        <motion.section variants={itemVariants} className="px-4 sm:px-0">
+          <ElecIdBanner variant="apprentice" />
+        </motion.section>
+
+        {/* Learning Videos */}
+        <motion.section variants={itemVariants} className="space-y-4 px-4 sm:px-0">
+          <SectionHeader title="Learning Videos" />
+          <LearningVideosSection />
+        </motion.section>
+
+        {/* Tools & Resources — compact grid */}
+        <motion.section variants={itemVariants} className="space-y-4 px-4 sm:px-0">
+          <SectionHeader title="Tools & Resources" />
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+            {toolsAndResources.map((tool) => (
+              <CompactToolCard key={tool.link} {...tool} />
+            ))}
+          </div>
+        </motion.section>
+
+        {/* Footer spacing for mobile nav */}
+        <div className="h-6 sm:h-8" />
+      </motion.div>
     </div>
   );
 };

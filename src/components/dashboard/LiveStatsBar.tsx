@@ -105,7 +105,7 @@ const containerVariants = {
   visible: {
     opacity: 1,
     transition: {
-      staggerChildren: 0.02,
+      staggerChildren: 0.06,
       delayChildren: 0,
     },
   },
@@ -117,8 +117,9 @@ const itemVariants = {
     opacity: 1,
     y: 0,
     transition: {
-      duration: 0.2,
-      ease: 'easeOut',
+      type: 'spring',
+      stiffness: 300,
+      damping: 24,
     },
   },
 };
@@ -169,7 +170,7 @@ export function LiveStatsBar() {
       variants={containerVariants}
       initial="hidden"
       animate="visible"
-      className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3"
+      className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2.5"
     >
       {filteredStats.map((config) => {
         const Icon = getIcon(config);

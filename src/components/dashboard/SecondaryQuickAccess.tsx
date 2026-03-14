@@ -30,8 +30,8 @@ function QuickAccessItem({ title, icon, path, badge, color = 'elec-yellow', onCl
       className={cn(
         'group flex items-center gap-3 w-full',
         'p-3 sm:p-3.5 rounded-xl',
-        'bg-white/[0.03] border border-white/[0.06]',
-        'hover:bg-white/[0.06] hover:border-white/[0.12]',
+        'bg-[#141414] border border-white/[0.06]',
+        'hover:bg-[#1C1C1C] hover:border-white/[0.12]',
         'active:scale-[0.97] active:opacity-90',
         'transition-all duration-200',
         'touch-manipulation min-h-[44px]',
@@ -66,7 +66,7 @@ function QuickAccessItem({ title, icon, path, badge, color = 'elec-yellow', onCl
           {badge}
         </span>
       ) : (
-        <ChevronRight className="h-3.5 w-3.5 text-white opacity-0 group-hover:opacity-40 transition-opacity flex-shrink-0" />
+        <ChevronRight className="h-3.5 w-3.5 text-white opacity-0 group-hover:opacity-100 transition-opacity flex-shrink-0" />
       )}
     </button>
   );
@@ -128,7 +128,7 @@ export function SecondaryQuickAccess() {
       <h3 className="text-xs font-medium text-white uppercase tracking-wider mb-3 px-0.5">
         Quick Access
       </h3>
-      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2 sm:gap-2.5">
+      <div className="grid grid-cols-1 sm:grid-cols-3 md:grid-cols-4 gap-2 sm:gap-2.5">
         {items.map((item) => (
           <QuickAccessItem key={item.path + item.title} {...item} />
         ))}

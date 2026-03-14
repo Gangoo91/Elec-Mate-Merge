@@ -40,11 +40,11 @@ interface CombinedRAMSOptions {
   documentReference?: string;
 }
 
-export async function generateCombinedRAMSPDF(
+async function buildCombinedRAMSDoc(
   ramsData: RAMSData,
   methodData: MethodStatementData,
   options: CombinedRAMSOptions = {}
-): Promise<void> {
+): Promise<jsPDF> {
   const doc = new jsPDF('p', 'mm', 'a4');
   const pageWidth = doc.internal.pageSize.getWidth();
   const pageHeight = doc.internal.pageSize.getHeight();
@@ -183,6 +183,7 @@ export async function generateCombinedRAMSPDF(
     margin: { left: margin, right: margin },
   });
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   yPos = (doc as any).lastAutoTable.finalY + 15;
   checkPageBreak(40);
 
@@ -253,6 +254,7 @@ export async function generateCombinedRAMSPDF(
         3: { cellWidth: 18, halign: 'center' },
         4: { cellWidth: 'auto' },
       },
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       didParseCell: (data: any) => {
         if (data.column.index === 3 && data.section === 'body') {
           if (data.cell.text[0] === 'Yes') {
@@ -268,6 +270,7 @@ export async function generateCombinedRAMSPDF(
       margin: { left: margin, right: margin },
     });
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     yPos = (doc as any).lastAutoTable.finalY + 10;
     checkPageBreak(40);
   } else if (ramsData.requiredPPE && ramsData.requiredPPE.length > 0) {
@@ -395,6 +398,7 @@ export async function generateCombinedRAMSPDF(
     margin: { left: margin, right: margin },
   });
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   yPos = (doc as any).lastAutoTable.finalY + 15;
   checkPageBreak(40);
 
@@ -457,7 +461,15 @@ export async function generateCombinedRAMSPDF(
     doc.text(`Page ${i} of ${pageCount}`, pageWidth - margin, pageHeight - 10, { align: 'right' });
   }
 
-  // Download the PDF
+  return doc;
+}
+
+export async function generateCombinedRAMSPDF(
+  ramsData: RAMSData,
+  methodData: MethodStatementData,
+  options: CombinedRAMSOptions = {}
+): Promise<void> {
+  const doc = await buildCombinedRAMSDoc(ramsData, methodData, options);
   doc.save(
     `Combined_RAMS_${safeText(ramsData.projectName || 'Document')}_${new Date().toISOString().split('T')[0]}.pdf`
   );
@@ -471,9 +483,6 @@ export async function generateCombinedRAMSPDFBlob(
   methodData: MethodStatementData,
   options: CombinedRAMSOptions = {}
 ): Promise<Blob> {
-  // Reuse the same PDF generation logic but return blob
-  const doc = new jsPDF('p', 'mm', 'a4');
-
-  // Return blob output
+  const doc = await buildCombinedRAMSDoc(ramsData, methodData, options);
   return doc.output('blob');
 }

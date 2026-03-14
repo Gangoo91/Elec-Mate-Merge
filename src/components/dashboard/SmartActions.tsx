@@ -62,7 +62,7 @@ const containerVariants = {
   visible: {
     opacity: 1,
     transition: {
-      staggerChildren: 0.02,
+      staggerChildren: 0.06,
       delayChildren: 0,
     },
   },
@@ -74,8 +74,9 @@ const itemVariants = {
     opacity: 1,
     y: 0,
     transition: {
-      duration: 0.2,
-      ease: 'easeOut',
+      type: 'spring',
+      stiffness: 300,
+      damping: 24,
     },
   },
   exit: {
@@ -93,15 +94,15 @@ const ActionCard = forwardRef<HTMLDivElement, { action: DashboardActionItem }>(
 
     return (
       <motion.button
-        ref={ref as any}
+        ref={ref as React.Ref<HTMLButtonElement>}
         variants={itemVariants}
         onClick={() => navigate(action.path)}
         className={cn(
           'w-full flex items-center gap-3 p-4 min-h-[56px]',
-          'bg-white/5 border-l-4 rounded-lg',
+          'card-surface border-l-4 rounded-lg',
           styles.borderColor,
           'text-left touch-manipulation',
-          'active:bg-white/10 transition-colors'
+          'active:bg-white/[0.06] transition-colors'
         )}
       >
         {/* Icon */}
@@ -123,7 +124,7 @@ ActionCard.displayName = 'ActionCard';
 
 function EmptyState() {
   return (
-    <div className="flex items-center gap-3 p-4 bg-white/5 rounded-xl">
+    <div className="flex items-center gap-3 p-4 card-surface rounded-xl">
       <CheckCircle2 className="h-5 w-5 text-green-400 flex-shrink-0" />
       <div className="min-w-0">
         <p className="text-sm font-medium text-white">All caught up!</p>
@@ -157,7 +158,7 @@ export function SmartActions() {
     return (
       <div className="space-y-3">
         {[...Array(2)].map((_, i) => (
-          <div key={i} className="h-20 rounded-xl glass-premium animate-pulse" />
+          <div key={i} className="h-20 rounded-xl card-surface animate-pulse" />
         ))}
       </div>
     );

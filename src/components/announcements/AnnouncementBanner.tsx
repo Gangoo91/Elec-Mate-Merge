@@ -21,24 +21,28 @@ interface Announcement {
 
 const typeStyles = {
   info: {
-    bg: 'bg-blue-500/10 border-blue-500/30',
+    bg: 'bg-blue-500/10 border-blue-500/20',
     icon: Info,
     iconColor: 'text-blue-400',
+    accent: 'bg-blue-400',
   },
   warning: {
-    bg: 'bg-amber-500/10 border-amber-500/30',
+    bg: 'bg-amber-500/10 border-amber-500/20',
     icon: AlertTriangle,
     iconColor: 'text-amber-400',
+    accent: 'bg-amber-400',
   },
   success: {
-    bg: 'bg-green-500/10 border-green-500/30',
+    bg: 'bg-green-500/10 border-green-500/20',
     icon: CheckCircle,
     iconColor: 'text-green-400',
+    accent: 'bg-green-400',
   },
   error: {
-    bg: 'bg-red-500/10 border-red-500/30',
+    bg: 'bg-red-500/10 border-red-500/20',
     icon: Megaphone,
     iconColor: 'text-red-400',
+    accent: 'bg-red-400',
   },
 };
 
@@ -186,23 +190,26 @@ export default function AnnouncementBanner() {
               animate={{ opacity: 1, height: 'auto', y: 0 }}
               exit={{ opacity: 0, height: 0, y: -20 }}
               transition={{ duration: 0.3 }}
-              className={cn('rounded-xl border p-4 touch-manipulation', style.bg)}
+              className={cn('rounded-xl border overflow-hidden touch-manipulation', style.bg)}
             >
-              <div className="flex items-start gap-3">
+              {/* Accent line */}
+              <div className={cn('h-[2px]', style.accent)} />
+
+              <div className="p-4 flex items-start gap-3">
                 <div className={cn('mt-0.5 shrink-0', style.iconColor)}>
                   <Icon className="h-5 w-5" />
                 </div>
                 <div className="flex-1 min-w-0">
-                  <h4 className="font-semibold text-sm text-foreground">{announcement.title}</h4>
-                  <p className="text-sm text-muted-foreground mt-1">{announcement.message}</p>
+                  <h4 className="font-semibold text-sm !text-white">{announcement.title}</h4>
+                  <p className="text-sm !text-white mt-1 leading-relaxed">{announcement.message}</p>
                 </div>
                 {announcement.is_dismissible && (
                   <button
                     onClick={() => dismissMutation.mutate(announcement.id)}
-                    className="shrink-0 p-1.5 rounded-lg hover:bg-white/10 touch-manipulation active:scale-95 transition-transform"
+                    className="shrink-0 h-8 w-8 flex items-center justify-center rounded-lg hover:bg-white/10 touch-manipulation active:scale-95 transition-transform"
                     aria-label="Dismiss"
                   >
-                    <X className="h-4 w-4 text-muted-foreground" />
+                    <X className="h-4 w-4 !text-white" />
                   </button>
                 )}
               </div>

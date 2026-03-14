@@ -101,7 +101,7 @@ function validateField(field: string, value: any): ValidationError[] {
       break;
 
     case 'certificateNumber':
-      if (!/^MW-\d{4}-[A-Z0-9]{6}$/i.test(value)) {
+      if (!/^MW-\d{4}-[A-Z0-9]{4,6}$/i.test(value)) {
         errors.push({
           field,
           message: 'Certificate number should follow format MW-YYYY-XXXXXX',
@@ -316,7 +316,11 @@ export function validateMinorWorksFormData(formData: any): ValidationResult {
   }
 
   // TT system without RCD — mandatory per Reg 411.5.2
-  if (formData.earthingArrangement === 'TT' && !formData.protectionRcd && !formData.protectionRcbo) {
+  if (
+    formData.earthingArrangement === 'TT' &&
+    !formData.protectionRcd &&
+    !formData.protectionRcbo
+  ) {
     allErrors.push({
       field: 'protectionRcd',
       message: 'TT earthing requires RCD protection — Reg 411.5.2',

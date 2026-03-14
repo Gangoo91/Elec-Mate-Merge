@@ -127,9 +127,7 @@ const ModernCoursesDetailsModal = ({
       title: 'About This Course',
       show: !!course.description,
       defaultOpen: true,
-      content: (
-        <p className="text-sm text-white leading-relaxed">{course.description}</p>
-      ),
+      content: <p className="text-sm text-white leading-relaxed">{course.description}</p>,
     },
     {
       id: 'accreditation',
@@ -140,7 +138,10 @@ const ModernCoursesDetailsModal = ({
       content: (
         <div className="flex flex-wrap gap-2">
           {course.accreditation?.map((a, i) => (
-            <div key={i} className="flex items-center gap-1.5 bg-gradient-to-r from-yellow-500/15 to-amber-500/10 border border-yellow-500/25 rounded-lg px-3 py-2">
+            <div
+              key={i}
+              className="flex items-center gap-1.5 bg-gradient-to-r from-yellow-500/15 to-amber-500/10 border border-yellow-500/25 rounded-lg px-3 py-2"
+            >
               <Award className="h-3.5 w-3.5 text-elec-yellow shrink-0" />
               <span className="text-sm text-white font-medium">{a}</span>
             </div>
@@ -210,7 +211,10 @@ const ModernCoursesDetailsModal = ({
       content: (
         <div className="flex flex-wrap gap-2">
           {course.locations?.map((l, i) => (
-            <div key={i} className="flex items-center gap-1.5 bg-white/5 border border-white/10 rounded-lg px-3 py-1.5">
+            <div
+              key={i}
+              className="flex items-center gap-1.5 bg-white/5 border border-white/10 rounded-lg px-3 py-1.5"
+            >
               <MapPin className="h-3 w-3 text-red-400 shrink-0" />
               <span className="text-xs text-white font-medium">{l}</span>
             </div>
@@ -227,7 +231,10 @@ const ModernCoursesDetailsModal = ({
       content: (
         <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
           {course.nextDates?.slice(0, 6).map((d, i) => (
-            <div key={i} className="bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-center">
+            <div
+              key={i}
+              className="bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-center"
+            >
               <span className="text-xs text-white font-medium">{d}</span>
             </div>
           ))}
@@ -244,7 +251,10 @@ const ModernCoursesDetailsModal = ({
       content: (
         <div className="space-y-2.5">
           {contactPhone && (
-            <a href={`tel:${contactPhone}`} className="flex items-center gap-3 bg-white/5 border border-white/10 rounded-xl p-3 touch-manipulation active:bg-white/10">
+            <a
+              href={`tel:${contactPhone}`}
+              className="flex items-center gap-3 bg-white/5 border border-white/10 rounded-xl p-3 touch-manipulation active:bg-white/10"
+            >
               <div className="h-8 w-8 rounded-full bg-green-500/15 flex items-center justify-center shrink-0">
                 <Phone className="h-4 w-4 text-green-400" />
               </div>
@@ -255,7 +265,10 @@ const ModernCoursesDetailsModal = ({
             </a>
           )}
           {contactEmail && (
-            <a href={`mailto:${contactEmail}`} className="flex items-center gap-3 bg-white/5 border border-white/10 rounded-xl p-3 touch-manipulation active:bg-white/10">
+            <a
+              href={`mailto:${contactEmail}`}
+              className="flex items-center gap-3 bg-white/5 border border-white/10 rounded-xl p-3 touch-manipulation active:bg-white/10"
+            >
               <div className="h-8 w-8 rounded-full bg-blue-500/15 flex items-center justify-center shrink-0">
                 <Mail className="h-4 w-4 text-blue-400" />
               </div>
@@ -307,14 +320,14 @@ const ModernCoursesDetailsModal = ({
                     </Badge>
                     <div className="flex items-center gap-1">
                       <Star className="h-4 w-4 text-elec-yellow fill-elec-yellow" />
-                      <span className="text-sm font-bold text-white">{course.rating.toFixed(1)}</span>
+                      <span className="text-sm font-bold text-white">
+                        {course.rating.toFixed(1)}
+                      </span>
                     </div>
                   </div>
 
                   {/* Title */}
-                  <h2 className="text-xl font-bold text-white leading-tight">
-                    {course.title}
-                  </h2>
+                  <h2 className="text-xl font-bold text-white leading-tight">{course.title}</h2>
 
                   {/* Provider */}
                   <div className="flex items-center gap-2">
@@ -330,7 +343,10 @@ const ModernCoursesDetailsModal = ({
                       <div className="h-6 w-6 rounded-full bg-red-500/20 flex items-center justify-center">
                         <MapPin className="h-3.5 w-3.5 text-red-400" />
                       </div>
-                      <span className="text-sm text-white">{course.locations?.[0]}{venuePostcode ? ` (${venuePostcode})` : ''}</span>
+                      <span className="text-sm text-white">
+                        {course.locations?.[0]}
+                        {venuePostcode ? ` (${venuePostcode})` : ''}
+                      </span>
                     </div>
                   )}
 
@@ -370,17 +386,12 @@ const ModernCoursesDetailsModal = ({
                 {stats.map((stat) => {
                   const c = colorMap[stat.color];
                   return (
-                    <div
-                      key={stat.label}
-                      className={cn(
-                        'rounded-xl p-3 border',
-                        c.bg,
-                        c.border
-                      )}
-                    >
+                    <div key={stat.label} className={cn('rounded-xl p-3 border', c.bg, c.border)}>
                       <div className="flex items-center gap-2 mb-1">
                         <stat.icon className={cn('h-4 w-4', c.icon)} />
-                        <span className="text-[10px] font-medium text-white uppercase tracking-wider">{stat.label}</span>
+                        <span className="text-[10px] font-medium text-white uppercase tracking-wider">
+                          {stat.label}
+                        </span>
                       </div>
                       <p className="text-sm font-bold text-white">{stat.value}</p>
                     </div>
@@ -389,14 +400,26 @@ const ModernCoursesDetailsModal = ({
               </div>
 
               {/* === DEMAND BANNER === */}
-              <div className={cn('rounded-xl p-3.5 bg-gradient-to-r border border-white/[0.06]', demandStyle.gradient)}>
+              <div
+                className={cn(
+                  'rounded-xl p-3.5 bg-gradient-to-r border border-white/[0.06]',
+                  demandStyle.gradient
+                )}
+              >
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2.5">
-                    <div className={cn('h-8 w-8 rounded-full flex items-center justify-center', demandStyle.bg)}>
+                    <div
+                      className={cn(
+                        'h-8 w-8 rounded-full flex items-center justify-center',
+                        demandStyle.bg
+                      )}
+                    >
                       <Flame className={cn('h-4 w-4', demandStyle.color)} />
                     </div>
                     <div>
-                      <p className={cn('text-sm font-bold', demandStyle.color)}>{demandStyle.label}</p>
+                      <p className={cn('text-sm font-bold', demandStyle.color)}>
+                        {demandStyle.label}
+                      </p>
                       <p className="text-xs text-white">{demandStyle.desc}</p>
                     </div>
                   </div>
@@ -425,9 +448,7 @@ const ModernCoursesDetailsModal = ({
                         </div>
                         <ChevronRight className="h-4 w-4 text-white transition-transform group-open:rotate-90" />
                       </summary>
-                      <div className="px-4 pb-4">
-                        {section.content}
-                      </div>
+                      <div className="px-4 pb-4">{section.content}</div>
                     </details>
                   ))}
               </div>

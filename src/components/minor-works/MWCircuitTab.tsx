@@ -455,47 +455,72 @@ const MWCircuitTab: React.FC<MWCircuitTabProps> = ({ formData, onUpdate, isMobil
               {/* RCD Details */}
               {(formData.protectionRcd || formData.protectionRcbo) && (
                 <div className="rounded-xl border border-white/10 bg-blue-500/5 border-l-2 border-l-blue-500 overflow-hidden">
-                  <div className="px-4 py-2.5 bg-blue-500/10 border-b border-white/5">
+                  <div className="px-3 py-2 bg-blue-500/10 border-b border-white/5">
                     <span className="text-sm font-medium text-blue-400">RCD Details</span>
                   </div>
-                  <div className="p-4 space-y-4">
-                    <div className="space-y-1.5">
-                      <label className="text-xs uppercase tracking-wide text-white pl-0.5">
-                        BS (EN) Standard
-                      </label>
-                      <Select
-                        value={formData.rcdBsEn || ''}
-                        onValueChange={(v) => onUpdate('rcdBsEn', v === '__clear__' ? '' : v)}
-                      >
-                        <SelectTrigger className="">
-                          <SelectValue placeholder="Select standard" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="__clear__">
-                            <span className="text-white">Clear selection</span>
-                          </SelectItem>
-                          <SelectItem value="BS EN 61008">
-                            <div className="flex flex-col">
-                              <span>BS EN 61008</span>
-                              <span className="text-xs text-white">
-                                RCDs without overcurrent protection
-                              </span>
-                            </div>
-                          </SelectItem>
-                          <SelectItem value="BS EN 61009">
-                            <div className="flex flex-col">
-                              <span>BS EN 61009</span>
-                              <span className="text-xs text-white">RCBOs</span>
-                            </div>
-                          </SelectItem>
-                          <SelectItem value="BS EN 62423">
-                            <div className="flex flex-col">
-                              <span>BS EN 62423</span>
-                              <span className="text-xs text-white">Type F and Type B RCDs</span>
-                            </div>
-                          </SelectItem>
-                        </SelectContent>
-                      </Select>
+                  <div className="p-3 space-y-3">
+                    <div className="grid grid-cols-2 gap-3">
+                      <div className="space-y-1.5">
+                        <label className="text-xs uppercase tracking-wide text-white pl-0.5">
+                          BS (EN) Standard
+                        </label>
+                        <Select
+                          value={formData.rcdBsEn || ''}
+                          onValueChange={(v) => onUpdate('rcdBsEn', v === '__clear__' ? '' : v)}
+                        >
+                          <SelectTrigger className="h-11 touch-manipulation bg-white/5 border-white/20 rounded-xl">
+                            <SelectValue placeholder="Select standard" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="__clear__">
+                              <span className="text-white">Clear selection</span>
+                            </SelectItem>
+                            <SelectItem value="BS EN 61008">
+                              <div className="flex flex-col">
+                                <span>BS EN 61008</span>
+                                <span className="text-xs text-white">
+                                  RCDs without overcurrent protection
+                                </span>
+                              </div>
+                            </SelectItem>
+                            <SelectItem value="BS EN 61009">
+                              <div className="flex flex-col">
+                                <span>BS EN 61009</span>
+                                <span className="text-xs text-white">RCBOs</span>
+                              </div>
+                            </SelectItem>
+                            <SelectItem value="BS EN 62423">
+                              <div className="flex flex-col">
+                                <span>BS EN 62423</span>
+                                <span className="text-xs text-white">Type F and Type B RCDs</span>
+                              </div>
+                            </SelectItem>
+                          </SelectContent>
+                        </Select>
+                      </div>
+                      <div className="space-y-1.5">
+                        <label className="text-xs uppercase tracking-wide text-white pl-0.5">
+                          IΔn (mA)
+                        </label>
+                        <Select
+                          value={formData.rcdIdn || ''}
+                          onValueChange={(v) => onUpdate('rcdIdn', v === '__clear__' ? '' : v)}
+                        >
+                          <SelectTrigger className="h-11 touch-manipulation bg-white/5 border-white/20 rounded-xl">
+                            <SelectValue placeholder="Select rating" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="__clear__">
+                              <span className="text-white">Clear selection</span>
+                            </SelectItem>
+                            {RCD_RATINGS.map((opt) => (
+                              <SelectItem key={opt.value} value={opt.value}>
+                                {opt.label}
+                              </SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
+                      </div>
                     </div>
                     <div className="grid grid-cols-2 gap-3">
                       <div className="space-y-1.5">
@@ -506,7 +531,7 @@ const MWCircuitTab: React.FC<MWCircuitTabProps> = ({ formData, onUpdate, isMobil
                           value={formData.rcdType || ''}
                           onValueChange={(v) => onUpdate('rcdType', v === '__clear__' ? '' : v)}
                         >
-                          <SelectTrigger className="">
+                          <SelectTrigger className="h-11 touch-manipulation bg-white/5 border-white/20 rounded-xl">
                             <SelectValue placeholder="Select" />
                           </SelectTrigger>
                           <SelectContent>
@@ -530,32 +555,9 @@ const MWCircuitTab: React.FC<MWCircuitTabProps> = ({ formData, onUpdate, isMobil
                           value={formData.rcdRatingAmps || ''}
                           onChange={(e) => onUpdate('rcdRatingAmps', e.target.value)}
                           placeholder="63"
-                          className="h-12 text-base touch-manipulation bg-white/5 border-white/10 rounded-xl focus:border-blue-500/50"
+                          className="h-11 text-base touch-manipulation bg-white/5 border-white/20 rounded-xl focus:border-blue-500/50"
                         />
                       </div>
-                    </div>
-                    <div className="space-y-1.5">
-                      <label className="text-xs uppercase tracking-wide text-white pl-0.5">
-                        IΔn (mA)
-                      </label>
-                      <Select
-                        value={formData.rcdIdn || ''}
-                        onValueChange={(v) => onUpdate('rcdIdn', v === '__clear__' ? '' : v)}
-                      >
-                        <SelectTrigger className="">
-                          <SelectValue placeholder="Select rating" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="__clear__">
-                            <span className="text-white">Clear selection</span>
-                          </SelectItem>
-                          {RCD_RATINGS.map((opt) => (
-                            <SelectItem key={opt.value} value={opt.value}>
-                              {opt.label}
-                            </SelectItem>
-                          ))}
-                        </SelectContent>
-                      </Select>
                     </div>
                   </div>
                 </div>
@@ -564,47 +566,49 @@ const MWCircuitTab: React.FC<MWCircuitTabProps> = ({ formData, onUpdate, isMobil
               {/* AFDD Details */}
               {formData.protectionAfdd && (
                 <div className="rounded-xl border border-white/10 bg-purple-500/5 border-l-2 border-l-purple-500 overflow-hidden">
-                  <div className="px-4 py-2.5 bg-purple-500/10 border-b border-white/5">
+                  <div className="px-3 py-2 bg-purple-500/10 border-b border-white/5">
                     <span className="text-sm font-medium text-purple-400">AFDD Details</span>
                   </div>
-                  <div className="p-4 space-y-4">
-                    <div className="space-y-1.5">
-                      <label className="text-xs uppercase tracking-wide text-white pl-0.5">
-                        BS (EN) Standard
-                      </label>
-                      <Select
-                        value={formData.afddBsEn || ''}
-                        onValueChange={(v) => onUpdate('afddBsEn', v === '__clear__' ? '' : v)}
-                      >
-                        <SelectTrigger className="">
-                          <SelectValue placeholder="Select standard" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="__clear__">
-                            <span className="text-white">Clear selection</span>
-                          </SelectItem>
-                          <SelectItem value="BS EN 62606">
-                            <div className="flex flex-col">
-                              <span>BS EN 62606</span>
-                              <span className="text-xs text-white">
-                                Arc Fault Detection Devices
-                              </span>
-                            </div>
-                          </SelectItem>
-                        </SelectContent>
-                      </Select>
-                    </div>
-                    <div className="space-y-1.5">
-                      <label className="text-xs uppercase tracking-wide text-white pl-0.5">
-                        Rating (A)
-                      </label>
-                      <Input
-                        type="number"
-                        value={formData.afddRating || ''}
-                        onChange={(e) => onUpdate('afddRating', e.target.value)}
-                        placeholder="16"
-                        className="h-12 text-base touch-manipulation bg-white/5 border-white/10 rounded-xl focus:border-purple-500/50"
-                      />
+                  <div className="p-3">
+                    <div className="grid grid-cols-2 gap-3">
+                      <div className="space-y-1.5">
+                        <label className="text-xs uppercase tracking-wide text-white pl-0.5">
+                          BS (EN) Standard
+                        </label>
+                        <Select
+                          value={formData.afddBsEn || ''}
+                          onValueChange={(v) => onUpdate('afddBsEn', v === '__clear__' ? '' : v)}
+                        >
+                          <SelectTrigger className="h-11 touch-manipulation bg-white/5 border-white/20 rounded-xl">
+                            <SelectValue placeholder="Select standard" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="__clear__">
+                              <span className="text-white">Clear selection</span>
+                            </SelectItem>
+                            <SelectItem value="BS EN 62606">
+                              <div className="flex flex-col">
+                                <span>BS EN 62606</span>
+                                <span className="text-xs text-white">
+                                  Arc Fault Detection Devices
+                                </span>
+                              </div>
+                            </SelectItem>
+                          </SelectContent>
+                        </Select>
+                      </div>
+                      <div className="space-y-1.5">
+                        <label className="text-xs uppercase tracking-wide text-white pl-0.5">
+                          Rating (A)
+                        </label>
+                        <Input
+                          type="number"
+                          value={formData.afddRating || ''}
+                          onChange={(e) => onUpdate('afddRating', e.target.value)}
+                          placeholder="16"
+                          className="h-11 text-base touch-manipulation bg-white/5 border-white/20 rounded-xl focus:border-purple-500/50"
+                        />
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -613,83 +617,85 @@ const MWCircuitTab: React.FC<MWCircuitTabProps> = ({ formData, onUpdate, isMobil
               {/* SPD Details */}
               {formData.protectionSpd && (
                 <div className="rounded-xl border border-white/10 bg-green-500/5 border-l-2 border-l-green-500 overflow-hidden">
-                  <div className="px-4 py-2.5 bg-green-500/10 border-b border-white/5">
+                  <div className="px-3 py-2 bg-green-500/10 border-b border-white/5">
                     <span className="text-sm font-medium text-green-400">SPD Details</span>
                   </div>
-                  <div className="p-4 space-y-4">
-                    <div className="space-y-1.5">
-                      <label className="text-xs uppercase tracking-wide text-white pl-0.5">
-                        BS (EN) Standard
-                      </label>
-                      <Select
-                        value={formData.spdBsEn || ''}
-                        onValueChange={(v) => onUpdate('spdBsEn', v === '__clear__' ? '' : v)}
-                      >
-                        <SelectTrigger className="">
-                          <SelectValue placeholder="Select standard" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="__clear__">
-                            <span className="text-white">Clear selection</span>
-                          </SelectItem>
-                          <SelectItem value="BS EN 61643-11">
-                            <div className="flex flex-col">
-                              <span>BS EN 61643-11</span>
-                              <span className="text-xs text-white">Surge Protective Devices</span>
-                            </div>
-                          </SelectItem>
-                        </SelectContent>
-                      </Select>
-                    </div>
-                    <div className="space-y-1.5">
-                      <label className="text-xs uppercase tracking-wide text-white pl-0.5">
-                        Type
-                      </label>
-                      <Select
-                        value={formData.spdType || ''}
-                        onValueChange={(v) => onUpdate('spdType', v === '__clear__' ? '' : v)}
-                      >
-                        <SelectTrigger className="">
-                          <SelectValue placeholder="Select type" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="__clear__">
-                            <span className="text-white">Clear selection</span>
-                          </SelectItem>
-                          <SelectItem value="1">
-                            <div className="flex flex-col">
-                              <span>Type 1</span>
-                              <span className="text-xs text-white">Lightning current arrestor</span>
-                            </div>
-                          </SelectItem>
-                          <SelectItem value="2">
-                            <div className="flex flex-col">
-                              <span>Type 2</span>
-                              <span className="text-xs text-white">
-                                Overvoltage limiting device
-                              </span>
-                            </div>
-                          </SelectItem>
-                          <SelectItem value="3">
-                            <div className="flex flex-col">
-                              <span>Type 3</span>
-                              <span className="text-xs text-white">Equipment protection</span>
-                            </div>
-                          </SelectItem>
-                          <SelectItem value="1+2">
-                            <div className="flex flex-col">
-                              <span>Type 1+2</span>
-                              <span className="text-xs text-white">Combined Type 1 and 2</span>
-                            </div>
-                          </SelectItem>
-                          <SelectItem value="2+3">
-                            <div className="flex flex-col">
-                              <span>Type 2+3</span>
-                              <span className="text-xs text-white">Combined Type 2 and 3</span>
-                            </div>
-                          </SelectItem>
-                        </SelectContent>
-                      </Select>
+                  <div className="p-3">
+                    <div className="grid grid-cols-2 gap-3">
+                      <div className="space-y-1.5">
+                        <label className="text-xs uppercase tracking-wide text-white pl-0.5">
+                          BS (EN) Standard
+                        </label>
+                        <Select
+                          value={formData.spdBsEn || ''}
+                          onValueChange={(v) => onUpdate('spdBsEn', v === '__clear__' ? '' : v)}
+                        >
+                          <SelectTrigger className="h-11 touch-manipulation bg-white/5 border-white/20 rounded-xl">
+                            <SelectValue placeholder="Select standard" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="__clear__">
+                              <span className="text-white">Clear selection</span>
+                            </SelectItem>
+                            <SelectItem value="BS EN 61643-11">
+                              <div className="flex flex-col">
+                                <span>BS EN 61643-11</span>
+                                <span className="text-xs text-white">Surge Protective Devices</span>
+                              </div>
+                            </SelectItem>
+                          </SelectContent>
+                        </Select>
+                      </div>
+                      <div className="space-y-1.5">
+                        <label className="text-xs uppercase tracking-wide text-white pl-0.5">
+                          Type
+                        </label>
+                        <Select
+                          value={formData.spdType || ''}
+                          onValueChange={(v) => onUpdate('spdType', v === '__clear__' ? '' : v)}
+                        >
+                          <SelectTrigger className="h-11 touch-manipulation bg-white/5 border-white/20 rounded-xl">
+                            <SelectValue placeholder="Select type" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="__clear__">
+                              <span className="text-white">Clear selection</span>
+                            </SelectItem>
+                            <SelectItem value="1">
+                              <div className="flex flex-col">
+                                <span>Type 1</span>
+                                <span className="text-xs text-white">Lightning current arrestor</span>
+                              </div>
+                            </SelectItem>
+                            <SelectItem value="2">
+                              <div className="flex flex-col">
+                                <span>Type 2</span>
+                                <span className="text-xs text-white">
+                                  Overvoltage limiting device
+                                </span>
+                              </div>
+                            </SelectItem>
+                            <SelectItem value="3">
+                              <div className="flex flex-col">
+                                <span>Type 3</span>
+                                <span className="text-xs text-white">Equipment protection</span>
+                              </div>
+                            </SelectItem>
+                            <SelectItem value="1+2">
+                              <div className="flex flex-col">
+                                <span>Type 1+2</span>
+                                <span className="text-xs text-white">Combined Type 1 and 2</span>
+                              </div>
+                            </SelectItem>
+                            <SelectItem value="2+3">
+                              <div className="flex flex-col">
+                                <span>Type 2+3</span>
+                                <span className="text-xs text-white">Combined Type 2 and 3</span>
+                              </div>
+                            </SelectItem>
+                          </SelectContent>
+                        </Select>
+                      </div>
                     </div>
                   </div>
                 </div>

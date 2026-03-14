@@ -78,7 +78,9 @@ const ElectricianCareerCourses = () => {
     radiusMiles: locationQuery ? 100 : undefined,
     format: filters.format,
     level: filters.level,
-    sortBy: locationQuery ? 'distance' : (filters.sortBy as 'rating' | 'price' | 'title' | 'distance'),
+    sortBy: locationQuery
+      ? 'distance'
+      : (filters.sortBy as 'rating' | 'price' | 'title' | 'distance'),
   });
 
   // Transform courses

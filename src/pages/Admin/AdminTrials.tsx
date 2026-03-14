@@ -2,7 +2,6 @@ import { useState, useMemo, useEffect } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { useSearchParams } from 'react-router-dom';
 import { supabase } from '@/integrations/supabase/client';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
@@ -22,7 +21,6 @@ import {
   TrendingUp,
   Calendar,
   Mail,
-  ChevronRight,
   Zap,
   GraduationCap,
   Briefcase,
@@ -49,20 +47,24 @@ import {
 import {
   format,
   formatDistanceToNow,
-  isToday,
-  isTomorrow,
   parseISO,
   startOfDay,
   addDays,
   formatDistance,
 } from 'date-fns';
 import { CheckCheck, Info } from 'lucide-react';
+import { motion } from 'framer-motion';
+import { AnimatedCounter } from '@/components/dashboard/AnimatedCounter';
 import AdminSearchInput from '@/components/admin/AdminSearchInput';
 import AdminEmptyState from '@/components/admin/AdminEmptyState';
 import { useAdminUsersBase } from '@/hooks/useAdminUsersBase';
 import { useHaptic } from '@/hooks/useHaptic';
 import PullToRefresh from '@/components/admin/PullToRefresh';
 import { toast } from 'sonner';
+
+// ---------------------------------------------------------------------------
+// Types
+// ---------------------------------------------------------------------------
 
 interface TrialUser {
   id: string;
@@ -75,23 +77,19 @@ interface TrialUser {
   trial_ends: string;
   trial_status: 'active' | 'ending_today' | 'ending_tomorrow' | 'expired' | 'subscribed';
   days_remaining: number;
-  // Engagement data
   email?: string | null;
-  last_sign_in_at?: string | null; // From auth - when they actually logged in
+  last_sign_in_at?: string | null;
   points?: number;
   streak?: number;
-  last_active_date?: string | null; // Combined: user_activity or last_sign_in
+  last_active_date?: string | null;
   study_sessions?: number;
   quotes_count?: number;
   eic_count?: number;
   engagement_score?: number;
-  // Time to first value
   first_action_at?: string;
   first_action_type?: string;
-  time_to_first_value?: number; // minutes from signup to first action
-  // Hidden from list
+  time_to_first_value?: number;
   hidden?: boolean;
-  // Real activity tracking from user_events
   login_count?: number;
   page_view_count?: number;
   feature_use_count?: number;
@@ -200,13 +198,6 @@ interface UserEventRow {
   created_at: string;
 }
 
-// Max days to show expired trials (filter out older ones) - set to 365 to show all
-const MAX_EXPIRED_DAYS = 365;
-
-// Founder cutoff date - exclude early adopters/founders for accurate conversion stats
-// 61 founders subscribed before this date during beta/launch period
-const FOUNDER_CUTOFF_DATE = new Date('2026-01-26T00:00:00Z');
-
 interface TrialStats {
   total_trials: number;
   ending_today: number;
@@ -220,12 +211,66 @@ interface TrialStats {
   cold_leads: number;
 }
 
-// Static role styles
+// ---------------------------------------------------------------------------
+// Constants
+// ---------------------------------------------------------------------------
+
+const MAX_EXPIRED_DAYS = 365;
+const FOUNDER_CUTOFF_DATE = new Date('2026-01-26T00:00:00Z');
+const ENGAGEMENT_HOT = 15;
+const ENGAGEMENT_WARM = 5;
+
+// Animation variants (same as AdminDashboard / AdminUsers)
+const sectionVariants = {
+  hidden: { opacity: 0, y: 12 },
+  visible: (i: number) => ({
+    opacity: 1,
+    y: 0,
+    transition: { delay: i * 0.06, duration: 0.35, ease: 'easeOut' },
+  }),
+};
+
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: { staggerChildren: 0.04, delayChildren: 0 },
+  },
+};
+
+const listItemVariants = {
+  hidden: { opacity: 0, x: -8 },
+  visible: { opacity: 1, x: 0, transition: { duration: 0.2, ease: 'easeOut' } },
+};
+
+// Engagement border colour map
+const ENGAGEMENT_BORDER: Record<string, string> = {
+  hot: 'border-l-red-500',
+  warm: 'border-l-amber-500',
+  cold: 'border-l-blue-500',
+};
+
+/** Compact relative time: "2h ago", "3d ago", "just now" */
+function relativeTime(dateStr: string | undefined | null): string {
+  if (!dateStr) return 'never';
+  const ms = Date.now() - new Date(dateStr).getTime();
+  if (ms < 60_000) return 'just now';
+  if (ms < 3_600_000) return `${Math.floor(ms / 60_000)}m ago`;
+  if (ms < 86_400_000) return `${Math.floor(ms / 3_600_000)}h ago`;
+  const days = Math.floor(ms / 86_400_000);
+  if (days < 30) return `${days}d ago`;
+  return `${Math.floor(days / 30)}mo ago`;
+}
+
+// ---------------------------------------------------------------------------
+// Static helpers
+// ---------------------------------------------------------------------------
+
 const ROLE_BADGE_COLORS: Record<string, string> = {
   apprentice: 'bg-yellow-500/20 text-yellow-400 border-yellow-500/30',
   electrician: 'bg-yellow-500/20 text-yellow-400 border-yellow-500/30',
   employer: 'bg-blue-500/20 text-blue-400 border-blue-500/30',
-  default: 'bg-gray-500/20 text-gray-400',
+  default: 'bg-gray-500/20 text-white',
 };
 
 const STATUS_COLORS: Record<string, { bg: string; text: string; border: string }> = {
@@ -235,7 +280,7 @@ const STATUS_COLORS: Record<string, { bg: string; text: string; border: string }
     text: 'text-orange-400',
     border: 'border-orange-500/30',
   },
-  expired: { bg: 'bg-gray-500/20', text: 'text-gray-400', border: 'border-gray-500/30' },
+  expired: { bg: 'bg-gray-500/20', text: 'text-white', border: 'border-gray-500/30' },
   active: { bg: 'bg-green-500/20', text: 'text-green-400', border: 'border-green-500/30' },
   subscribed: {
     bg: 'bg-emerald-500/20',
@@ -256,7 +301,7 @@ const getRoleIcon = (role: string | null) => {
     case 'employer':
       return <Briefcase className="h-4 w-4 text-blue-400" />;
     default:
-      return <Users className="h-4 w-4 text-gray-400" />;
+      return <Users className="h-4 w-4 text-white" />;
   }
 };
 
@@ -298,7 +343,6 @@ const getStatusBadge = (status: string, daysRemaining: number) => {
   );
 };
 
-// Activity type icon and colors
 const getActivityIcon = (type: ActivityItem['action_type']) => {
   switch (type) {
     case 'quote':
@@ -324,11 +368,10 @@ const getActivityIcon = (type: ActivityItem['action_type']) => {
     case 'feature':
       return { icon: Zap, color: 'text-pink-400', bg: 'bg-pink-500/20' };
     default:
-      return { icon: Activity, color: 'text-gray-400', bg: 'bg-gray-500/20' };
+      return { icon: Activity, color: 'text-white', bg: 'bg-gray-500/20' };
   }
 };
 
-// Format seconds into human readable time
 const formatTimeSpent = (seconds: number): string => {
   if (seconds < 60) return `${seconds}s`;
   if (seconds < 3600) return `${Math.round(seconds / 60)}m`;
@@ -337,11 +380,6 @@ const formatTimeSpent = (seconds: number): string => {
   return mins > 0 ? `${hours}h ${mins}m` : `${hours}h`;
 };
 
-// Engagement thresholds - lowered to be more realistic
-const ENGAGEMENT_HOT = 15;
-const ENGAGEMENT_WARM = 5;
-
-// Engagement level badge - Hot, Warm, Cold based on activity score
 const getEngagementBadge = (score: number = 0) => {
   if (score >= ENGAGEMENT_HOT) {
     return (
@@ -367,6 +405,24 @@ const getEngagementBadge = (score: number = 0) => {
   }
 };
 
+function getEngagementLevel(score: number = 0): 'hot' | 'warm' | 'cold' {
+  if (score >= ENGAGEMENT_HOT) return 'hot';
+  if (score >= ENGAGEMENT_WARM) return 'warm';
+  return 'cold';
+}
+
+function getStatusText(user: TrialUser): string {
+  if (user.trial_status === 'subscribed') return 'Subscribed';
+  if (user.trial_status === 'expired') return 'Expired';
+  if (user.days_remaining === 0) return 'Ends today';
+  if (user.days_remaining === 1) return '1d left';
+  return `${user.days_remaining}d left`;
+}
+
+// ---------------------------------------------------------------------------
+// Component
+// ---------------------------------------------------------------------------
+
 export default function AdminTrials() {
   const [searchParams, setSearchParams] = useSearchParams();
   const [search, setSearch] = useState('');
@@ -376,7 +432,6 @@ export default function AdminTrials() {
     searchParams.get('engagement') || 'all'
   );
   const [selectedUser, setSelectedUser] = useState<TrialUser | null>(null);
-  const [showScoreInfo, setShowScoreInfo] = useState(false);
   const queryClient = useQueryClient();
   const haptic = useHaptic();
 
@@ -395,10 +450,12 @@ export default function AdminTrials() {
     return saved ? new Set(JSON.parse(saved)) : new Set();
   });
 
-  // Shared cached edge function call — reused across AdminUsers/AdminTrials
+  // Shared cached edge function call
   const { data: baseUsers, isLoading: baseLoading, refetch: refetchBase } = useAdminUsersBase();
 
-  // Fetch trial users with computed status and engagement data
+  // -------------------------------------------------------------------------
+  // Enrichment query (unchanged)
+  // -------------------------------------------------------------------------
   const {
     data: trialUsers,
     isLoading: enrichmentLoading,
@@ -409,16 +466,11 @@ export default function AdminTrials() {
       const users = baseUsers || [];
       const userIds = users.map((u: BaseUser) => u.id);
 
-      // Create auth data map for last_sign_in
       const authDataMap = new Map<string, { last_sign_in: string | null; email: string | null }>();
       users.forEach((u: BaseUser) => {
-        authDataMap.set(u.id, {
-          last_sign_in: u.last_sign_in,
-          email: u.email,
-        });
+        authDataMap.set(u.id, { last_sign_in: u.last_sign_in, email: u.email });
       });
 
-      // Fetch all enrichment data in parallel, filtered by user IDs
       const [
         { data: activityData },
         { data: quotesData },
@@ -477,23 +529,15 @@ export default function AdminTrials() {
         });
       });
 
-      // Calculate trial status and engagement client-side
       const today = startOfDay(new Date());
       const maxExpiredDate = addDays(today, -MAX_EXPIRED_DAYS);
 
       return users
         .filter((user: BaseUser) => {
           const createdAt = parseISO(user.created_at);
-
-          // Filter out founders (signed up before cutoff date)
-          if (createdAt < FOUNDER_CUTOFF_DATE) {
-            return false;
-          }
-
-          // Filter out users whose trial expired more than MAX_EXPIRED_DAYS ago
+          if (createdAt < FOUNDER_CUTOFF_DATE) return false;
           const trialEnds = addDays(createdAt, 7);
           const trialEndsDate = startOfDay(trialEnds);
-          // Keep if subscribed, or trial hasn't expired, or expired within MAX_EXPIRED_DAYS
           return user.subscribed || trialEndsDate >= maxExpiredDate;
         })
         .map((user: BaseUser) => {
@@ -515,7 +559,6 @@ export default function AdminTrials() {
             trialStatus = 'ending_tomorrow';
           }
 
-          // Get activity data from map
           const activity = activityMap.get(user.id) || {
             points: 0,
             streak: 0,
@@ -529,18 +572,10 @@ export default function AdminTrials() {
           const eicCount = eicCountMap.get(user.id) || 0;
           const studySessions = studyCountMap.get(user.id) || 0;
 
-          // Calculate engagement score with REAL activity data
-          // Time spent in app now counts! Each minute = 0.5 points (capped at 30)
           const timeSpentMinutes = Math.floor((eventSummary?.total_seconds_tracked || 0) / 60);
           const timeBonus = Math.min(30, Math.floor(timeSpentMinutes * 0.5));
-
-          // Page views count - each unique page = 1 point (capped at 20)
           const pageViewBonus = Math.min(20, eventSummary?.unique_pages_visited || 0);
-
-          // Login count - each login = 2 points (capped at 10)
           const loginBonus = Math.min(10, (eventSummary?.login_count || 0) * 2);
-
-          // Feature usage - each feature = 3 points
           const featureBonus = (eventSummary?.feature_use_count || 0) * 3;
 
           const engagementScore =
@@ -575,7 +610,6 @@ export default function AdminTrials() {
             quotes_count: quotesCount,
             eic_count: eicCount,
             engagement_score: engagementScore,
-            // New activity tracking data
             login_count: eventSummary?.login_count || 0,
             page_view_count: eventSummary?.page_view_count || 0,
             feature_use_count: eventSummary?.feature_use_count || 0,
@@ -596,7 +630,9 @@ export default function AdminTrials() {
     await refetchEnrichment();
   };
 
-  // Fetch today's email sends to show which users have been emailed
+  // -------------------------------------------------------------------------
+  // Today's email sends (unchanged)
+  // -------------------------------------------------------------------------
   const { data: todayEmailSends } = useQuery({
     queryKey: ['admin-email-sends-today'],
     queryFn: async () => {
@@ -620,7 +656,9 @@ export default function AdminTrials() {
 
   const emailedTodayUserIds = todayEmailSends || new Set<string>();
 
-  // Calculate stats
+  // -------------------------------------------------------------------------
+  // Stats memo (unchanged)
+  // -------------------------------------------------------------------------
   const stats = useMemo<TrialStats>(() => {
     if (!trialUsers) {
       return {
@@ -640,7 +678,6 @@ export default function AdminTrials() {
     const nonSubscribed = trialUsers.filter((u) => !u.subscribed);
     const subscribed = trialUsers.filter((u) => u.subscribed);
 
-    // Calculate engagement levels for non-expired, non-subscribed
     const activeTrials = nonSubscribed.filter((u) => u.trial_status !== 'expired');
     const hotLeads = activeTrials.filter((u) => (u.engagement_score || 0) >= ENGAGEMENT_HOT).length;
     const warmLeads = activeTrials.filter(
@@ -666,27 +703,25 @@ export default function AdminTrials() {
     };
   }, [trialUsers]);
 
-  // Group users by signup day
+  // -------------------------------------------------------------------------
+  // groupedByDay memo (kept for filtering, rendered flat)
+  // -------------------------------------------------------------------------
   const groupedByDay = useMemo(() => {
     if (!trialUsers) return {};
 
-    // Filter based on status - if "subscribed" show converted users, otherwise show non-subscribed
     let filtered =
       statusFilter === 'subscribed'
         ? trialUsers.filter((u) => u.subscribed && !hiddenUserIds.has(u.id))
         : trialUsers.filter((u) => !u.subscribed && !hiddenUserIds.has(u.id));
 
-    // Apply status filter (only for non-subscribed statuses)
     if (statusFilter !== 'all' && statusFilter !== 'subscribed') {
       filtered = filtered.filter((u) => u.trial_status === statusFilter);
     }
 
-    // Apply role filter
     if (roleFilter !== 'all') {
       filtered = filtered.filter((u) => u.role === roleFilter);
     }
 
-    // Apply engagement filter
     if (engagementFilter !== 'all') {
       filtered = filtered.filter((u) => {
         const score = u.engagement_score || 0;
@@ -697,7 +732,6 @@ export default function AdminTrials() {
       });
     }
 
-    // Apply search
     if (search) {
       const searchLower = search.toLowerCase();
       filtered = filtered.filter(
@@ -707,18 +741,13 @@ export default function AdminTrials() {
       );
     }
 
-    // Group by trial_ends date (expiring soonest first)
     const groups: Record<string, TrialUser[]> = {};
     filtered.forEach((user) => {
       const date = user.trial_ends;
-      if (!groups[date]) {
-        groups[date] = [];
-      }
+      if (!groups[date]) groups[date] = [];
       groups[date].push(user);
     });
 
-    // Sort by trial end date ascending (expiring soonest first)
-    // Within each group, sort by engagement score descending (hottest first)
     const sortedEntries = Object.entries(groups)
       .sort(([a], [b]) => a.localeCompare(b))
       .map(([date, users]) => [
@@ -729,7 +758,15 @@ export default function AdminTrials() {
     return Object.fromEntries(sortedEntries);
   }, [trialUsers, statusFilter, roleFilter, engagementFilter, search, hiddenUserIds]);
 
-  // Fetch detailed activity for selected user
+  // Flat list derived from groupedByDay
+  const flatUsers = useMemo(
+    () => Object.values(groupedByDay).flat() as TrialUser[],
+    [groupedByDay]
+  );
+
+  // -------------------------------------------------------------------------
+  // Detail sheet: user activity query (unchanged)
+  // -------------------------------------------------------------------------
   const { data: userActivityData, isLoading: activityLoading } = useQuery({
     queryKey: ['admin-user-activity', selectedUser?.id],
     queryFn: async () => {
@@ -737,29 +774,24 @@ export default function AdminTrials() {
 
       const activities: ActivityItem[] = [];
 
-      // Fetch user_activity data (points, streak, etc.)
-      // Use maybeSingle() instead of single() to handle missing rows gracefully
       const { data: userActivityRecord } = await supabase
         .from('user_activity')
         .select('*')
         .eq('user_id', selectedUser.id)
         .maybeSingle();
 
-      // Get real activity data from user_events
       const { data: eventSummary } = await supabase
         .from('user_activity_summary')
         .select('*')
         .eq('user_id', selectedUser.id)
         .maybeSingle();
 
-      // Calculate bonuses from real activity
       const timeSpentMinutes = Math.floor((eventSummary?.total_seconds_tracked || 0) / 60);
       const timeBonus = Math.min(30, Math.floor(timeSpentMinutes * 0.5));
       const pageViewBonus = Math.min(20, eventSummary?.unique_pages_visited || 0);
       const loginBonus = Math.min(10, (eventSummary?.login_count || 0) * 2);
       const featureBonus = (eventSummary?.feature_use_count || 0) * 3;
 
-      // Calculate score breakdown
       const scoreBreakdown = {
         points: userActivityRecord?.points || 0,
         streak: userActivityRecord?.streak || 0,
@@ -770,7 +802,6 @@ export default function AdminTrials() {
         quotesBonus: 0,
         eics: 0,
         eicsBonus: 0,
-        // New real activity metrics
         loginCount: eventSummary?.login_count || 0,
         loginBonus,
         pageViews: eventSummary?.unique_pages_visited || 0,
@@ -785,7 +816,6 @@ export default function AdminTrials() {
         total: 0,
       };
 
-      // If user has points, add as activity
       if (userActivityRecord?.points && userActivityRecord.points > 0) {
         activities.push({
           id: `points-${selectedUser.id}`,
@@ -801,7 +831,6 @@ export default function AdminTrials() {
         });
       }
 
-      // If user has streak, add as activity
       if (userActivityRecord?.streak && userActivityRecord.streak > 0) {
         activities.push({
           id: `streak-${selectedUser.id}`,
@@ -812,7 +841,6 @@ export default function AdminTrials() {
         });
       }
 
-      // Fetch quotes
       const { data: quotes } = await supabase
         .from('quotes')
         .select('id, quote_number, total, status, created_at')
@@ -827,12 +855,11 @@ export default function AdminTrials() {
           id: `quote-${q.id}`,
           action_type: 'quote',
           action_detail: `Created ${q.status === 'approved' ? 'invoice' : 'quote'} #${q.quote_number}`,
-          extra_info: `£${parseFloat(q.total).toFixed(2)}`,
+          extra_info: `\u00A3${parseFloat(q.total).toFixed(2)}`,
           created_at: q.created_at,
         });
       });
 
-      // Fetch EIC schedules
       const { data: eics } = await supabase
         .from('eic_schedules')
         .select('id, installation_address, status, created_at')
@@ -852,7 +879,6 @@ export default function AdminTrials() {
         });
       });
 
-      // Fetch study sessions
       const { data: sessions } = await supabase
         .from('study_sessions')
         .select('id, course_slug, activity, resource_type, duration, created_at')
@@ -872,7 +898,6 @@ export default function AdminTrials() {
         });
       });
 
-      // Fetch time tracking
       const { data: timeTracks } = await supabase
         .from('time_tracking_sessions')
         .select('id, activity_type, duration, course_slug, created_at')
@@ -889,7 +914,6 @@ export default function AdminTrials() {
         });
       });
 
-      // Fetch real user_events (page views, logins, feature use)
       const { data: userEvents } = await supabase
         .from('user_events')
         .select('id, event_type, event_name, page_path, created_at')
@@ -911,7 +935,7 @@ export default function AdminTrials() {
           activities.push({
             id: `event-${e.id}`,
             action_type: 'page_view',
-            action_detail: `Visited page`,
+            action_detail: 'Visited page',
             extra_info: e.page_path,
             created_at: e.created_at,
           });
@@ -934,7 +958,6 @@ export default function AdminTrials() {
         }
       });
 
-      // Calculate total score
       scoreBreakdown.total =
         scoreBreakdown.points +
         scoreBreakdown.streakBonus +
@@ -946,12 +969,10 @@ export default function AdminTrials() {
         scoreBreakdown.loginBonus +
         scoreBreakdown.featureBonus;
 
-      // Sort all activities by date (newest first for display)
       const sortedActivities = activities.sort(
         (a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
       );
 
-      // Find first action (oldest) - exclude points/streak synthetic entries
       const realActivities = activities.filter(
         (a) => !['points', 'streak'].includes(a.action_type)
       );
@@ -972,7 +993,6 @@ export default function AdminTrials() {
   const firstAction = userActivityData?.firstAction;
   const scoreBreakdown = userActivityData?.scoreBreakdown;
 
-  // Calculate time to first value
   const timeToFirstValue = useMemo(() => {
     if (!selectedUser?.created_at || !firstAction?.created_at) return null;
 
@@ -991,7 +1011,9 @@ export default function AdminTrials() {
     }
   }, [selectedUser?.created_at, firstAction?.created_at]);
 
-  // Hide user mutation (local only - no database needed)
+  // -------------------------------------------------------------------------
+  // Mutations (unchanged)
+  // -------------------------------------------------------------------------
   const hideUserMutation = useMutation({
     mutationFn: async (userId: string) => {
       const newHidden = new Set(hiddenUserIds).add(userId);
@@ -1006,14 +1028,12 @@ export default function AdminTrials() {
     },
   });
 
-  // Unhide all users
   const unhideAllUsers = () => {
     localStorage.removeItem('admin-hidden-trial-users');
     setHiddenUserIds(new Set());
     toast.success('All hidden users restored');
   };
 
-  // Send reminder email mutation
   const sendReminderMutation = useMutation({
     mutationFn: async ({ userId, type }: { userId: string; type: 'reminder' | 'offer' }) => {
       const { data, error } = await supabase.functions.invoke('send-trial-reminder', {
@@ -1033,7 +1053,6 @@ export default function AdminTrials() {
     },
   });
 
-  // Bulk email mutation - sends in batches of 5 with 10s delay between batches
   const bulkEmailMutation = useMutation({
     mutationFn: async ({ userIds, type }: { userIds: string[]; type: 'reminder' | 'offer' }) => {
       const { data, error } = await supabase.functions.invoke('send-trial-reminder-bulk', {
@@ -1042,7 +1061,7 @@ export default function AdminTrials() {
       if (error) throw error;
       return data;
     },
-    onSuccess: (data, variables) => {
+    onSuccess: (data) => {
       haptic.success();
       const sent = data?.sent || 0;
       const skipped = data?.skipped || 0;
@@ -1060,7 +1079,6 @@ export default function AdminTrials() {
   });
 
   const exportCSV = () => {
-    // Flatten groupedByDay into a single array
     const allFiltered = Object.values(groupedByDay).flat();
     if (allFiltered.length === 0) return;
 
@@ -1100,481 +1118,335 @@ export default function AdminTrials() {
     URL.revokeObjectURL(url);
   };
 
-  const getDayLabel = (dateStr: string) => {
-    const date = parseISO(dateStr);
-    const today = startOfDay(new Date());
-    const dateDay = startOfDay(date);
-    const diffDays = Math.round((dateDay.getTime() - today.getTime()) / (1000 * 60 * 60 * 24));
+  // -------------------------------------------------------------------------
+  // Bulk email bar helpers
+  // -------------------------------------------------------------------------
+  const notEmailedCount = useMemo(
+    () => flatUsers.filter((u) => !emailedTodayUserIds.has(u.id)).length,
+    [flatUsers, emailedTodayUserIds]
+  );
 
-    if (diffDays < 0) {
-      return `Expired ${Math.abs(diffDays)} day${Math.abs(diffDays) !== 1 ? 's' : ''} ago`;
-    } else if (diffDays === 0) {
-      return '⚠️ Expires TODAY';
-    } else if (diffDays === 1) {
-      return '⏰ Expires TOMORROW';
-    } else if (diffDays <= 7) {
-      return `Expires in ${diffDays} days (${format(date, 'EEE d MMM')})`;
-    } else {
-      return `Expires ${format(date, 'EEE d MMM')}`;
-    }
-  };
-
+  // =========================================================================
+  // RENDER
+  // =========================================================================
   return (
     <PullToRefresh
       onRefresh={async () => {
         await refetch();
       }}
     >
-      <div className="space-y-4 sm:space-y-6 pb-20">
-        {/* Stats Overview */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-2 sm:gap-3">
-          <Card
-            className={`bg-gradient-to-br from-red-500/10 to-red-600/5 border-red-500/20 cursor-pointer touch-manipulation active:scale-[0.98] transition-transform ${statusFilter === 'ending_today' ? 'ring-2 ring-yellow-500' : ''}`}
-            onClick={() =>
-              setStatusFilter(statusFilter === 'ending_today' ? 'all' : 'ending_today')
-            }
-          >
-            <CardContent className="p-3 sm:pt-4 sm:pb-4">
-              <div className="flex items-center justify-between">
+      <div className="space-y-3 sm:space-y-4 pb-20">
+        {/* ================================================================
+            1. HERO STATS — Single Glass Card
+        ================================================================ */}
+        <motion.section
+          variants={sectionVariants}
+          initial="hidden"
+          animate="visible"
+          custom={0}
+          className="relative overflow-hidden glass-premium rounded-2xl"
+        >
+          {/* 2px gradient accent */}
+          <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-amber-500 via-orange-400 to-amber-500 opacity-60" />
+          <div className="absolute -top-16 -right-16 w-32 h-32 bg-gradient-to-br from-amber-500 via-orange-400 to-amber-500 opacity-[0.03] blur-3xl pointer-events-none" />
+
+          <div className="relative z-10 p-4 sm:p-5">
+            {/* Header row */}
+            <div className="flex items-center justify-between mb-4">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-amber-500/20 to-orange-500/20 flex items-center justify-center">
+                  <TrendingUp className="h-5 w-5 text-amber-400" />
+                </div>
                 <div>
-                  <p className="text-xl sm:text-2xl font-bold">
-                    {stats.ending_today.toLocaleString()}
+                  <h2 className="text-base font-semibold text-white">Trials & Retention</h2>
+                  <p className="text-2xl font-bold text-white">
+                    <AnimatedCounter value={(stats.total_trials || 0) + (stats.converted || 0)} />
+                    <span className="text-sm font-normal text-white ml-1.5">total</span>
                   </p>
-                  <p className="text-xs text-muted-foreground">Ending Today</p>
                 </div>
-                <AlertTriangle className="h-5 w-5 sm:h-6 sm:w-6 text-red-400" />
               </div>
-            </CardContent>
-          </Card>
-
-          <Card
-            className={`bg-gradient-to-br from-orange-500/10 to-orange-600/5 border-orange-500/20 cursor-pointer touch-manipulation active:scale-[0.98] transition-transform ${statusFilter === 'ending_tomorrow' ? 'ring-2 ring-orange-500' : ''}`}
-            onClick={() =>
-              setStatusFilter(statusFilter === 'ending_tomorrow' ? 'all' : 'ending_tomorrow')
-            }
-          >
-            <CardContent className="p-3 sm:pt-4 sm:pb-4">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-xl sm:text-2xl font-bold">
-                    {stats.ending_tomorrow.toLocaleString()}
-                  </p>
-                  <p className="text-xs text-muted-foreground">Tomorrow</p>
-                </div>
-                <Clock className="h-5 w-5 sm:h-6 sm:w-6 text-orange-400" />
+              <div className="flex gap-1.5">
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={exportCSV}
+                  className="h-11 w-11 p-0 touch-manipulation text-white"
+                  title="Export CSV"
+                >
+                  <Download className="h-4 w-4" />
+                </Button>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => refetch()}
+                  className="h-11 w-11 p-0 touch-manipulation text-white"
+                >
+                  <RefreshCw className="h-4 w-4" />
+                </Button>
               </div>
-            </CardContent>
-          </Card>
+            </div>
 
-          <Card
-            className={`bg-gradient-to-br from-green-500/10 to-green-600/5 border-green-500/20 cursor-pointer touch-manipulation active:scale-[0.98] transition-transform ${statusFilter === 'active' ? 'ring-2 ring-green-500' : ''}`}
-            onClick={() => setStatusFilter(statusFilter === 'active' ? 'all' : 'active')}
-          >
-            <CardContent className="p-3 sm:pt-4 sm:pb-4">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-xl sm:text-2xl font-bold">{stats.active.toLocaleString()}</p>
-                  <p className="text-xs text-muted-foreground">Active</p>
-                </div>
-                <Timer className="h-5 w-5 sm:h-6 sm:w-6 text-green-400" />
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card className="bg-gradient-to-br from-emerald-500/10 to-emerald-600/5 border-emerald-500/20">
-            <CardContent className="p-3 sm:pt-4 sm:pb-4">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-xl sm:text-2xl font-bold">{stats.conversion_rate}%</p>
-                  <p className="text-xs text-muted-foreground">Conversion</p>
-                </div>
-                <TrendingUp className="h-5 w-5 sm:h-6 sm:w-6 text-emerald-400" />
-              </div>
-            </CardContent>
-          </Card>
-        </div>
-
-        {/* Secondary Stats */}
-        <div className="grid grid-cols-3 gap-1.5 sm:gap-3">
-          <Card
-            className={`cursor-pointer touch-manipulation active:scale-[0.98] transition-transform ${statusFilter === 'subscribed' ? 'ring-2 ring-emerald-500' : ''}`}
-            onClick={() => setStatusFilter(statusFilter === 'subscribed' ? 'all' : 'subscribed')}
-          >
-            <CardContent className="p-2.5 sm:pt-4 sm:pb-4 text-center">
-              <p className="text-base sm:text-lg font-bold">{stats.converted.toLocaleString()}</p>
-              <p className="text-xs text-muted-foreground flex items-center justify-center gap-1">
-                <Crown className="h-3 w-3 text-emerald-400" />
-                Converted
-              </p>
-            </CardContent>
-          </Card>
-          <Card
-            className={`cursor-pointer touch-manipulation active:scale-[0.98] transition-transform ${statusFilter === 'expired' ? 'ring-2 ring-yellow-500' : ''}`}
-            onClick={() => setStatusFilter(statusFilter === 'expired' ? 'all' : 'expired')}
-          >
-            <CardContent className="p-2.5 sm:pt-4 sm:pb-4 text-center">
-              <p className="text-base sm:text-lg font-bold">{stats.expired.toLocaleString()}</p>
-              <p className="text-xs text-muted-foreground flex items-center justify-center gap-1">
-                <XCircle className="h-3 w-3 text-gray-400" />
-                Expired
-              </p>
-            </CardContent>
-          </Card>
-          <Card
-            className={`cursor-pointer touch-manipulation active:scale-[0.98] transition-transform ${statusFilter === 'all' && engagementFilter === 'all' ? 'ring-2 ring-yellow-500' : ''}`}
-            onClick={() => {
-              setStatusFilter('all');
-              setEngagementFilter('all');
-            }}
-          >
-            <CardContent className="p-2.5 sm:pt-4 sm:pb-4 text-center">
-              <p className="text-base sm:text-lg font-bold">
-                {stats.total_trials.toLocaleString()}
-              </p>
-              <p className="text-xs text-muted-foreground flex items-center justify-center gap-1">
-                <Users className="h-3 w-3 text-blue-400" />
-                Total
-              </p>
-            </CardContent>
-          </Card>
-        </div>
-
-        {/* Engagement Breakdown */}
-        <Card>
-          <CardHeader className="pb-2">
-            <CardTitle className="text-sm flex items-center gap-2">
-              <Activity className="h-4 w-4 text-orange-400" />
-              Engagement Levels (Active Trials)
+            {/* Mini stat grid */}
+            <div className="grid grid-cols-4 gap-2">
+              {/* Active */}
               <button
-                onClick={() => setShowScoreInfo(!showScoreInfo)}
-                className="touch-manipulation p-1"
+                className={`text-center p-2.5 rounded-xl bg-white/[0.04] touch-manipulation active:scale-[0.97] transition-transform ${statusFilter === 'active' ? 'ring-2 ring-amber-400' : ''}`}
+                onClick={() => setStatusFilter(statusFilter === 'active' ? 'all' : 'active')}
               >
-                <Info className="h-4 w-4 text-muted-foreground hover:text-yellow-400" />
-              </button>
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-              <div
-                className={`text-center p-3 rounded-xl bg-red-500/10 border border-red-500/20 touch-manipulation active:scale-[0.98] cursor-pointer transition-all ${engagementFilter === 'hot' ? 'ring-2 ring-yellow-500' : ''}`}
-                onClick={() => setEngagementFilter(engagementFilter === 'hot' ? 'all' : 'hot')}
-              >
-                <Flame className="h-5 w-5 text-red-400 mx-auto mb-1" />
-                <p className="text-lg font-bold">{stats.hot_leads}</p>
-                <p className="text-xs text-muted-foreground">Hot</p>
-                <p className="text-xs text-red-400/70">{ENGAGEMENT_HOT}+ score</p>
-              </div>
-              <div
-                className={`text-center p-3 rounded-xl bg-amber-500/10 border border-amber-500/20 touch-manipulation active:scale-[0.98] cursor-pointer transition-all ${engagementFilter === 'warm' ? 'ring-2 ring-amber-500' : ''}`}
-                onClick={() => setEngagementFilter(engagementFilter === 'warm' ? 'all' : 'warm')}
-              >
-                <Activity className="h-5 w-5 text-amber-400 mx-auto mb-1" />
-                <p className="text-lg font-bold">{stats.warm_leads}</p>
-                <p className="text-xs text-muted-foreground">Warm</p>
-                <p className="text-xs text-amber-400/70">
-                  {ENGAGEMENT_WARM}-{ENGAGEMENT_HOT - 1} score
-                </p>
-              </div>
-              <div
-                className={`text-center p-3 rounded-xl bg-blue-500/10 border border-blue-500/20 touch-manipulation active:scale-[0.98] cursor-pointer transition-all ${engagementFilter === 'cold' ? 'ring-2 ring-yellow-500' : ''}`}
-                onClick={() => setEngagementFilter(engagementFilter === 'cold' ? 'all' : 'cold')}
-              >
-                <Snowflake className="h-5 w-5 text-blue-400 mx-auto mb-1" />
-                <p className="text-lg font-bold">{stats.cold_leads}</p>
-                <p className="text-xs text-muted-foreground">Cold</p>
-                <p className="text-xs text-blue-400/70">&lt;{ENGAGEMENT_WARM} score</p>
-              </div>
-            </div>
-            {showScoreInfo && (
-              <Card className="mt-2 border-yellow-500/20 bg-yellow-500/5">
-                <CardContent className="pt-4 pb-4 space-y-3 text-sm">
-                  <h4 className="font-semibold text-yellow-400">How Engagement Score Works</h4>
-                  <div className="space-y-2">
-                    <div className="flex items-center gap-2">
-                      <div className="w-2 h-2 rounded-full bg-red-500" />
-                      <span>
-                        <strong>Hot (15+):</strong> Highly engaged — logins, page views, feature
-                        usage, study activity
-                      </span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <div className="w-2 h-2 rounded-full bg-yellow-500" />
-                      <span>
-                        <strong>Warm (5-14):</strong> Moderate engagement — occasional usage
-                      </span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <div className="w-2 h-2 rounded-full bg-blue-500" />
-                      <span>
-                        <strong>Cold (&lt;5):</strong> Low engagement — at risk of churning
-                      </span>
-                    </div>
-                  </div>
-                  <div className="pt-2 border-t border-yellow-500/20">
-                    <p className="text-xs text-muted-foreground">
-                      <strong>Recommended actions:</strong>
-                    </p>
-                    <ul className="text-xs text-muted-foreground mt-1 space-y-1 list-disc list-inside">
-                      <li>
-                        <strong>Hot:</strong> Send conversion offer, highlight premium features
-                      </li>
-                      <li>
-                        <strong>Warm:</strong> Send engagement nudge, offer extended trial
-                      </li>
-                      <li>
-                        <strong>Cold:</strong> Send re-engagement email, personal outreach
-                      </li>
-                    </ul>
-                  </div>
-                </CardContent>
-              </Card>
-            )}
-          </CardContent>
-        </Card>
-
-        {/* Filters */}
-        <Card>
-          <CardContent className="pt-4 pb-4 px-3 sm:px-6">
-            <div className="flex flex-col gap-3">
-              {/* Search + Action buttons */}
-              <div className="flex items-center gap-2">
-                <AdminSearchInput
-                  value={search}
-                  onChange={setSearch}
-                  placeholder="Search..."
-                  className="flex-1"
-                />
-                <div className="flex gap-1.5 shrink-0">
-                  {hiddenUserIds.size > 0 && (
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      onClick={unhideAllUsers}
-                      className="h-11 px-2.5 touch-manipulation text-muted-foreground"
-                    >
-                      <Eye className="h-4 w-4" />
-                      <span className="ml-1">{hiddenUserIds.size}</span>
-                    </Button>
+                <div className="flex items-center justify-center gap-1 mb-0.5">
+                  {stats.ending_today > 0 && (
+                    <span className="w-2 h-2 rounded-full bg-red-500 animate-pulse" />
                   )}
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={exportCSV}
-                    className="h-11 px-2.5 touch-manipulation"
-                    title="Export CSV"
-                  >
-                    <Download className="h-4 w-4" />
-                  </Button>
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={() => refetch()}
-                    className="h-11 px-2.5 touch-manipulation"
-                  >
-                    <RefreshCw className="h-4 w-4" />
-                  </Button>
+                  <p className="text-lg font-bold text-white">
+                    <AnimatedCounter value={stats.active} />
+                  </p>
+                </div>
+                <p className="text-xs text-white">Active</p>
+              </button>
+
+              {/* Converted */}
+              <button
+                className={`text-center p-2.5 rounded-xl bg-white/[0.04] touch-manipulation active:scale-[0.97] transition-transform ${statusFilter === 'subscribed' ? 'ring-2 ring-amber-400' : ''}`}
+                onClick={() =>
+                  setStatusFilter(statusFilter === 'subscribed' ? 'all' : 'subscribed')
+                }
+              >
+                <p className="text-lg font-bold text-white mb-0.5">
+                  <AnimatedCounter value={stats.converted} />
+                </p>
+                <p className="text-xs text-white">Converted</p>
+              </button>
+
+              {/* Expired */}
+              <button
+                className={`text-center p-2.5 rounded-xl bg-white/[0.04] touch-manipulation active:scale-[0.97] transition-transform ${statusFilter === 'expired' ? 'ring-2 ring-amber-400' : ''}`}
+                onClick={() => setStatusFilter(statusFilter === 'expired' ? 'all' : 'expired')}
+              >
+                <p className="text-lg font-bold text-white mb-0.5">
+                  <AnimatedCounter value={stats.expired} />
+                </p>
+                <p className="text-xs text-white">Expired</p>
+              </button>
+
+              {/* CVR */}
+              <button
+                className={`text-center p-2.5 rounded-xl bg-white/[0.04] touch-manipulation active:scale-[0.97] transition-transform ${statusFilter === 'all' && engagementFilter === 'all' ? 'ring-2 ring-amber-400' : ''}`}
+                onClick={() => {
+                  setStatusFilter('all');
+                  setEngagementFilter('all');
+                }}
+              >
+                <p className="text-lg font-bold text-white mb-0.5">{stats.conversion_rate}%</p>
+                <p className="text-xs text-white">CVR</p>
+              </button>
+            </div>
+          </div>
+        </motion.section>
+
+        {/* ================================================================
+            2. SEARCH + FILTERS
+        ================================================================ */}
+        <motion.div
+          variants={sectionVariants}
+          initial="hidden"
+          animate="visible"
+          custom={1}
+          className="space-y-2"
+        >
+          {/* Search + action buttons */}
+          <div className="flex items-center gap-2">
+            <AdminSearchInput
+              value={search}
+              onChange={setSearch}
+              placeholder="Search users..."
+              className="flex-1"
+            />
+            {hiddenUserIds.size > 0 && (
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={unhideAllUsers}
+                className="h-11 px-2.5 touch-manipulation text-white border-white/20"
+              >
+                <Eye className="h-4 w-4" />
+                <span className="ml-1">{hiddenUserIds.size}</span>
+              </Button>
+            )}
+          </div>
+          {/* Filter dropdowns */}
+          <div className="grid grid-cols-3 gap-2">
+            <Select value={statusFilter} onValueChange={setStatusFilter}>
+              <SelectTrigger className="h-11 touch-manipulation text-xs sm:text-sm">
+                <SelectValue placeholder="Status" />
+              </SelectTrigger>
+              <SelectContent className="z-[100]">
+                <SelectItem value="all" className="h-11">All Status</SelectItem>
+                <SelectItem value="ending_today" className="h-11">Ending Today</SelectItem>
+                <SelectItem value="ending_tomorrow" className="h-11">Ending Tomorrow</SelectItem>
+                <SelectItem value="active" className="h-11">Active</SelectItem>
+                <SelectItem value="expired" className="h-11">Expired</SelectItem>
+                <SelectItem value="subscribed" className="h-11">Subscribed</SelectItem>
+              </SelectContent>
+            </Select>
+            <Select value={engagementFilter} onValueChange={setEngagementFilter}>
+              <SelectTrigger className="h-11 touch-manipulation text-xs sm:text-sm">
+                <SelectValue placeholder="Lead" />
+              </SelectTrigger>
+              <SelectContent className="z-[100]">
+                <SelectItem value="all" className="h-11">All Leads</SelectItem>
+                <SelectItem value="hot" className="h-11">Hot ({stats.hot_leads})</SelectItem>
+                <SelectItem value="warm" className="h-11">Warm ({stats.warm_leads})</SelectItem>
+                <SelectItem value="cold" className="h-11">Cold ({stats.cold_leads})</SelectItem>
+              </SelectContent>
+            </Select>
+            <Select value={roleFilter} onValueChange={setRoleFilter}>
+              <SelectTrigger className="h-11 touch-manipulation text-xs sm:text-sm">
+                <SelectValue placeholder="Role" />
+              </SelectTrigger>
+              <SelectContent className="z-[100]">
+                <SelectItem value="all" className="h-11">All Roles</SelectItem>
+                <SelectItem value="apprentice" className="h-11">Apprentice</SelectItem>
+                <SelectItem value="electrician" className="h-11">Electrician</SelectItem>
+                <SelectItem value="employer" className="h-11">Employer</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+        </motion.div>
+
+        {/* ================================================================
+            4. BULK EMAIL BAR
+        ================================================================ */}
+        {flatUsers.length > 0 && (
+          <motion.div
+            initial={{ opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="glass-premium rounded-2xl overflow-hidden relative sticky top-0 z-20"
+          >
+            <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-amber-500 via-orange-400 to-amber-500 opacity-60" />
+            <div className="relative z-10 px-4 py-3 flex items-center justify-between">
+              <p className="text-sm text-white">
+                <span className="font-semibold">{flatUsers.length}</span> users shown
+                {notEmailedCount > 0 && (
+                  <>
+                    {' '}
+                    &middot;{' '}
+                    <span className="font-semibold text-amber-400">{notEmailedCount}</span> not
+                    emailed
+                  </>
+                )}
+              </p>
+              <Button
+                variant="outline"
+                size="sm"
+                className="h-11 px-3 touch-manipulation gap-1.5 text-white border-white/20"
+                onClick={() => {
+                  const userIds = flatUsers
+                    .filter((u) => !emailedTodayUserIds.has(u.id))
+                    .map((u) => u.id);
+                  if (userIds.length === 0) {
+                    toast.info('All shown users have already been emailed today');
+                    return;
+                  }
+                  bulkEmailMutation.mutate({ userIds, type: 'reminder' });
+                }}
+                disabled={bulkEmailMutation.isPending || notEmailedCount === 0}
+              >
+                <MailPlus className="h-4 w-4" />
+                Email All
+              </Button>
+            </div>
+          </motion.div>
+        )}
+
+        {/* ================================================================
+            5. USER LIST — Flat (no day grouping)
+        ================================================================ */}
+        {isLoading ? (
+          <div className="space-y-3">
+            {[...Array(4)].map((_, i) => (
+              <div key={i} className="glass-premium rounded-2xl overflow-hidden relative">
+                <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-amber-500 via-orange-400 to-amber-500 opacity-60" />
+                <div className="relative z-10 p-4">
+                  <div className="h-16 bg-white/[0.04] rounded-lg animate-pulse" />
                 </div>
               </div>
-              {/* Filter dropdowns - grid on mobile for even spacing */}
-              <div className="grid grid-cols-3 gap-2">
-                <Select value={statusFilter} onValueChange={setStatusFilter}>
-                  <SelectTrigger className="h-11 touch-manipulation text-xs sm:text-sm">
-                    <SelectValue placeholder="Status" />
-                  </SelectTrigger>
-                  <SelectContent className="z-[100]">
-                    <SelectItem value="all" className="h-11">
-                      All Status
-                    </SelectItem>
-                    <SelectItem value="ending_today" className="h-11">
-                      Ending Today
-                    </SelectItem>
-                    <SelectItem value="ending_tomorrow" className="h-11">
-                      Ending Tomorrow
-                    </SelectItem>
-                    <SelectItem value="active" className="h-11">
-                      Active
-                    </SelectItem>
-                    <SelectItem value="expired" className="h-11">
-                      Expired
-                    </SelectItem>
-                  </SelectContent>
-                </Select>
-                <Select value={engagementFilter} onValueChange={setEngagementFilter}>
-                  <SelectTrigger className="h-11 touch-manipulation text-xs sm:text-sm">
-                    <SelectValue placeholder="Lead" />
-                  </SelectTrigger>
-                  <SelectContent className="z-[100]">
-                    <SelectItem value="all" className="h-11">
-                      All Leads
-                    </SelectItem>
-                    <SelectItem value="hot" className="h-11">
-                      🔥 Hot
-                    </SelectItem>
-                    <SelectItem value="warm" className="h-11">
-                      🌡️ Warm
-                    </SelectItem>
-                    <SelectItem value="cold" className="h-11">
-                      ❄️ Cold
-                    </SelectItem>
-                  </SelectContent>
-                </Select>
-                <Select value={roleFilter} onValueChange={setRoleFilter}>
-                  <SelectTrigger className="h-11 touch-manipulation text-xs sm:text-sm">
-                    <SelectValue placeholder="Role" />
-                  </SelectTrigger>
-                  <SelectContent className="z-[100]">
-                    <SelectItem value="all" className="h-11">
-                      All Roles
-                    </SelectItem>
-                    <SelectItem value="apprentice" className="h-11">
-                      Apprentice
-                    </SelectItem>
-                    <SelectItem value="electrician" className="h-11">
-                      Electrician
-                    </SelectItem>
-                    <SelectItem value="employer" className="h-11">
-                      Employer
-                    </SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-
-        {/* Trial Users by Day */}
-        {isLoading ? (
-          <div className="space-y-4">
-            {[...Array(3)].map((_, i) => (
-              <Card key={i} className="animate-pulse">
-                <CardContent className="pt-4 pb-4">
-                  <div className="h-20 bg-muted rounded" />
-                </CardContent>
-              </Card>
             ))}
           </div>
-        ) : Object.keys(groupedByDay).length === 0 ? (
-          <Card>
-            <CardContent className="pt-6">
+        ) : flatUsers.length === 0 ? (
+          <div className="glass-premium rounded-2xl overflow-hidden relative">
+            <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-amber-500 via-orange-400 to-amber-500 opacity-60" />
+            <div className="relative z-10 p-6">
               <AdminEmptyState
                 icon={Users}
                 title="No trial users found"
                 description="Trial users matching your filters will appear here."
               />
-            </CardContent>
-          </Card>
+            </div>
+          </div>
         ) : (
-          <div className="space-y-4">
-            {Object.entries(groupedByDay).map(([date, users]) => {
-              const dateObj = parseISO(date);
-              const today = startOfDay(new Date());
-              const diffDays = Math.round(
-                (startOfDay(dateObj).getTime() - today.getTime()) / (1000 * 60 * 60 * 24)
-              );
-              const isUrgent = diffDays <= 1; // Today or tomorrow
+          <motion.div
+            variants={containerVariants}
+            initial="hidden"
+            animate="visible"
+            className="space-y-1.5"
+          >
+            {flatUsers.map((user) => {
+              const level = getEngagementLevel(user.engagement_score);
+              const borderClass = ENGAGEMENT_BORDER[level];
 
               return (
-                <Card key={date} className={isUrgent ? 'border-red-500/30' : ''}>
-                  <CardHeader className="pb-2 px-3 sm:px-6">
-                    <CardTitle className="text-sm">
-                      {/* Mobile: Stack vertically, Desktop: Side by side */}
-                      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
-                        <span className="flex items-center gap-2">
-                          <Calendar
-                            className={`h-4 w-4 shrink-0 ${isUrgent ? 'text-red-400' : 'text-yellow-400'}`}
-                          />
-                          <span className="text-xs sm:text-sm">{getDayLabel(date)}</span>
-                        </span>
-                        <div className="flex items-center gap-2 ml-6 sm:ml-0">
-                          {(() => {
-                            const notYetEmailed = users.filter(
-                              (u) => !emailedTodayUserIds.has(u.id)
-                            );
-                            const alreadyEmailed = users.length - notYetEmailed.length;
-
-                            return (
-                              <Button
-                                variant="ghost"
-                                size="sm"
-                                className="h-11 px-2 gap-1 text-xs text-muted-foreground hover:text-foreground touch-manipulation"
-                                onClick={(e) => {
-                                  e.stopPropagation();
-                                  const userIds = notYetEmailed.map((u) => u.id);
-                                  if (userIds.length === 0) {
-                                    toast.info(
-                                      'All users in this group have already been emailed today'
-                                    );
-                                    return;
-                                  }
-                                  bulkEmailMutation.mutate({ userIds, type: 'reminder' });
-                                }}
-                                disabled={bulkEmailMutation.isPending || notYetEmailed.length === 0}
-                              >
-                                <MailPlus className="h-3.5 w-3.5" />
-                                {notYetEmailed.length === 0
-                                  ? 'All Sent'
-                                  : alreadyEmailed > 0
-                                    ? `Email ${notYetEmailed.length}/${users.length}`
-                                    : 'Email All'}
-                              </Button>
-                            );
-                          })()}
-                          <Badge variant="outline" className="text-xs">
-                            {users.length} {users.length === 1 ? 'user' : 'users'}
-                          </Badge>
-                        </div>
+                <motion.div
+                  key={user.id}
+                  variants={listItemVariants}
+                  className={`glass-premium rounded-2xl overflow-hidden relative border-l-4 ${borderClass} touch-manipulation active:scale-[0.97] transition-transform cursor-pointer`}
+                  onClick={() => setSelectedUser(user)}
+                >
+                  <div className="px-3 py-3 sm:px-4">
+                    <div className="flex items-center gap-3">
+                      {/* Role icon */}
+                      <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-yellow-500/20 to-amber-500/20 flex items-center justify-center shrink-0">
+                        {getRoleIcon(user.role)}
                       </div>
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent className="pt-0 px-3 sm:px-6">
-                    <div className="space-y-2">
-                      {users.map((user) => (
-                        <div
-                          key={user.id}
-                          className="p-3 rounded-xl bg-muted/50 touch-manipulation active:scale-[0.99] transition-transform cursor-pointer"
-                          onClick={() => setSelectedUser(user)}
-                        >
-                          {/* Top row: Icon, Name, Chevron */}
-                          <div className="flex items-center gap-3">
-                            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-yellow-500/20 to-amber-500/20 flex items-center justify-center shrink-0">
-                              {getRoleIcon(user.role)}
-                            </div>
-                            <div className="min-w-0 flex-1">
-                              <p className="font-medium text-sm">{user.full_name || 'Unknown'}</p>
-                              <p className="text-xs text-muted-foreground truncate">
-                                @{user.username}
-                              </p>
-                            </div>
-                            <ChevronRight className="h-4 w-4 text-muted-foreground shrink-0" />
-                          </div>
-                          {/* Bottom row: Badges - on their own line for mobile */}
-                          <div className="flex items-center gap-1.5 mt-2 ml-[52px] flex-wrap">
-                            {emailedTodayUserIds.has(user.id) && (
-                              <Badge className="bg-emerald-500/20 text-emerald-400 border-emerald-500/30 text-xs px-1.5 py-0.5 h-5 flex items-center gap-0.5">
-                                <CheckCheck className="h-3 w-3" />
-                                Sent
-                              </Badge>
-                            )}
-                            {getEngagementBadge(user.engagement_score)}
-                            {getStatusBadge(user.trial_status, user.days_remaining)}
-                          </div>
+
+                      {/* Name + meta */}
+                      <div className="min-w-0 flex-1">
+                        <div className="flex items-center gap-2">
+                          <p className="font-medium text-sm text-white truncate">
+                            {user.full_name || 'Unknown'}
+                          </p>
+                          {emailedTodayUserIds.has(user.id) && (
+                            <CheckCheck className="h-3.5 w-3.5 text-emerald-400 shrink-0" />
+                          )}
                         </div>
-                      ))}
+                        <p className="text-xs text-white truncate">
+                          {getStatusText(user)} &middot; {relativeTime(user.last_active_date)}
+                        </p>
+                      </div>
+
+                      {/* Score */}
+                      <div className="text-right shrink-0">
+                        <p className="text-lg font-bold text-white leading-none">
+                          {user.engagement_score || 0}
+                        </p>
+                        <p className="text-[10px] text-white uppercase tracking-wide">score</p>
+                      </div>
                     </div>
-                  </CardContent>
-                </Card>
+                  </div>
+                </motion.div>
               );
             })}
-          </div>
+          </motion.div>
         )}
 
-        {/* User Detail Sheet */}
+        {/* ================================================================
+            6. USER DETAIL SHEET
+        ================================================================ */}
         <Sheet open={!!selectedUser} onOpenChange={() => setSelectedUser(null)}>
           <SheetContent side="bottom" className="h-[80vh] rounded-t-2xl p-0">
             <div className="flex flex-col h-full">
               {/* Drag Handle */}
               <div className="flex justify-center pt-3 pb-2">
-                <div className="w-10 h-1 rounded-full bg-muted-foreground/30" />
+                <div className="w-10 h-1 rounded-full bg-white/20" />
               </div>
 
               <SheetHeader className="px-4 pb-4 border-b border-border">
@@ -1584,82 +1456,87 @@ export default function AdminTrials() {
                   </div>
                   <div>
                     <p className="text-left">{selectedUser?.full_name}</p>
-                    <p className="text-sm font-normal text-muted-foreground">
-                      @{selectedUser?.username}
-                    </p>
+                    <p className="text-sm font-normal text-white">@{selectedUser?.username}</p>
                   </div>
                 </SheetTitle>
               </SheetHeader>
 
               <div className="flex-1 overflow-y-auto p-4 space-y-4">
-                {/* Time to First Value - Key Metric */}
+                {/* Time to First Value */}
                 {firstAction && (
-                  <Card className="bg-gradient-to-br from-green-500/10 to-emerald-500/5 border-green-500/20">
-                    <CardContent className="pt-4 pb-4">
+                  <div className="glass-premium rounded-2xl overflow-hidden relative">
+                    <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-green-500 via-emerald-400 to-green-500 opacity-60" />
+                    <div className="relative z-10 p-4">
                       <div className="flex items-center gap-4">
                         <div className="w-12 h-12 rounded-xl bg-green-500/20 flex items-center justify-center">
                           <Rocket className="h-6 w-6 text-green-400" />
                         </div>
                         <div className="flex-1">
                           <p className="text-xs text-green-400 font-medium">Time to First Value</p>
-                          <p className="text-xl font-bold">{timeToFirstValue}</p>
-                          <p className="text-xs text-muted-foreground mt-0.5">
+                          <p className="text-xl font-bold text-white">{timeToFirstValue}</p>
+                          <p className="text-xs text-white mt-0.5">
                             First action: {firstAction.action_detail}
                           </p>
                         </div>
                         <div className="text-right">
                           <Target className="h-5 w-5 text-green-400 mb-1" />
-                          <p className="text-xs text-muted-foreground">
+                          <p className="text-xs text-white">
                             {format(parseISO(firstAction.created_at), 'dd MMM HH:mm')}
                           </p>
                         </div>
                       </div>
-                    </CardContent>
-                  </Card>
+                    </div>
+                  </div>
                 )}
 
-                {/* Activity Summary Card - Show time spent, pages visited, etc. */}
+                {/* Activity Summary */}
                 {scoreBreakdown &&
                   (scoreBreakdown.timeSpentMinutes > 0 ||
                     scoreBreakdown.pageViews > 0 ||
                     scoreBreakdown.loginCount > 0) && (
-                    <Card className="bg-gradient-to-br from-teal-500/10 to-cyan-500/5 border-teal-500/20">
-                      <CardContent className="pt-4 pb-4">
+                    <div className="glass-premium rounded-2xl overflow-hidden relative">
+                      <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-teal-500 via-cyan-400 to-teal-500 opacity-60" />
+                      <div className="relative z-10 p-4">
                         <div className="grid grid-cols-3 gap-3 text-center">
                           <div>
                             <Timer className="h-5 w-5 text-teal-400 mx-auto mb-1" />
-                            <p className="text-lg font-bold">
+                            <p className="text-lg font-bold text-white">
                               {formatTimeSpent(scoreBreakdown.totalSecondsTracked || 0)}
                             </p>
-                            <p className="text-xs text-muted-foreground">Time in App</p>
+                            <p className="text-xs text-white">Time in App</p>
                           </div>
                           <div>
                             <Eye className="h-5 w-5 text-sky-400 mx-auto mb-1" />
-                            <p className="text-lg font-bold">{scoreBreakdown.pageViews || 0}</p>
-                            <p className="text-xs text-muted-foreground">Pages Visited</p>
+                            <p className="text-lg font-bold text-white">
+                              {scoreBreakdown.pageViews || 0}
+                            </p>
+                            <p className="text-xs text-white">Pages Visited</p>
                           </div>
                           <div>
                             <LogIn className="h-5 w-5 text-cyan-400 mx-auto mb-1" />
-                            <p className="text-lg font-bold">{scoreBreakdown.loginCount || 0}</p>
-                            <p className="text-xs text-muted-foreground">Logins</p>
+                            <p className="text-lg font-bold text-white">
+                              {scoreBreakdown.loginCount || 0}
+                            </p>
+                            <p className="text-xs text-white">Logins</p>
                           </div>
                         </div>
                         {scoreBreakdown.activeDays > 0 && (
-                          <p className="text-xs text-center text-muted-foreground mt-2">
+                          <p className="text-xs text-center text-white mt-2">
                             Active on {scoreBreakdown.activeDays} day
                             {scoreBreakdown.activeDays !== 1 ? 's' : ''} in the last 30 days
                           </p>
                         )}
-                      </CardContent>
-                    </Card>
+                      </div>
+                    </div>
                   )}
 
-                {/* No Activity Warning - but show login info if available */}
+                {/* No Activity Warning */}
                 {!activityLoading && !firstAction && !scoreBreakdown?.loginCount && (
-                  <Card
-                    className={`bg-gradient-to-br ${selectedUser?.last_sign_in_at ? 'from-amber-500/10 to-orange-500/5 border-amber-500/20' : 'from-blue-500/10 to-cyan-500/5 border-blue-500/20'}`}
-                  >
-                    <CardContent className="pt-4 pb-4">
+                  <div className="glass-premium rounded-2xl overflow-hidden relative">
+                    <div
+                      className={`absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r ${selectedUser?.last_sign_in_at ? 'from-amber-500 via-orange-400 to-amber-500' : 'from-blue-500 via-cyan-400 to-blue-500'} opacity-60`}
+                    />
+                    <div className="relative z-10 p-4">
                       <div className="flex items-center gap-4">
                         <div
                           className={`w-12 h-12 rounded-xl ${selectedUser?.last_sign_in_at ? 'bg-amber-500/20' : 'bg-blue-500/20'} flex items-center justify-center`}
@@ -1676,23 +1553,23 @@ export default function AdminTrials() {
                               <p className="text-xs text-amber-400 font-medium">
                                 Logged In But No Tracked Activity
                               </p>
-                              <p className="text-sm font-semibold">
+                              <p className="text-sm font-semibold text-white">
                                 Last login:{' '}
                                 {formatDistanceToNow(parseISO(selectedUser.last_sign_in_at), {
                                   addSuffix: true,
                                 })}
                               </p>
-                              <p className="text-xs text-muted-foreground mt-0.5">
+                              <p className="text-xs text-white mt-0.5">
                                 Activity tracking started recently - older sessions not captured
                               </p>
                             </>
                           ) : (
                             <>
                               <p className="text-xs text-blue-400 font-medium">Never Logged In</p>
-                              <p className="text-sm font-semibold">
+                              <p className="text-sm font-semibold text-white">
                                 User hasn't returned since signup
                               </p>
-                              <p className="text-xs text-muted-foreground mt-0.5">
+                              <p className="text-xs text-white mt-0.5">
                                 Signed up{' '}
                                 {selectedUser?.created_at &&
                                   formatDistanceToNow(parseISO(selectedUser.created_at), {
@@ -1703,155 +1580,154 @@ export default function AdminTrials() {
                           )}
                         </div>
                       </div>
-                    </CardContent>
-                  </Card>
+                    </div>
+                  </div>
                 )}
 
                 {/* Trial Status */}
-                <Card>
-                  <CardHeader className="pb-2">
-                    <CardTitle className="text-sm flex items-center gap-2">
+                <div className="glass-premium rounded-2xl overflow-hidden relative">
+                  <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-yellow-500 via-amber-400 to-yellow-500 opacity-60" />
+                  <div className="relative z-10 p-4 space-y-3">
+                    <h3 className="text-sm font-semibold text-white flex items-center gap-2">
                       <Timer className="h-4 w-4 text-yellow-400" />
                       Trial Status
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent className="space-y-3">
+                    </h3>
                     <div className="flex justify-between items-center min-h-[44px]">
-                      <span className="text-sm text-muted-foreground">Status</span>
+                      <span className="text-sm text-white">Status</span>
                       {selectedUser &&
                         getStatusBadge(selectedUser.trial_status, selectedUser.days_remaining)}
                     </div>
                     <div className="flex justify-between items-center min-h-[44px]">
-                      <span className="text-sm text-muted-foreground">Signed Up</span>
-                      <span className="text-sm">
+                      <span className="text-sm text-white">Signed Up</span>
+                      <span className="text-sm text-white">
                         {selectedUser?.created_at &&
                           format(parseISO(selectedUser.created_at), 'dd MMM yyyy HH:mm')}
                       </span>
                     </div>
                     <div className="flex justify-between items-center min-h-[44px]">
-                      <span className="text-sm text-muted-foreground">Trial Ends</span>
-                      <span className="text-sm">
+                      <span className="text-sm text-white">Trial Ends</span>
+                      <span className="text-sm text-white">
                         {selectedUser?.trial_ends &&
                           format(parseISO(selectedUser.trial_ends), 'dd MMM yyyy')}
                       </span>
                     </div>
                     <div className="flex justify-between items-center min-h-[44px]">
-                      <span className="text-sm text-muted-foreground">Role</span>
+                      <span className="text-sm text-white">Role</span>
                       <Badge className={getRoleBadgeColor(selectedUser?.role || null)}>
                         <span className="capitalize">{selectedUser?.role || 'Visitor'}</span>
                       </Badge>
                     </div>
-                  </CardContent>
-                </Card>
+                  </div>
+                </div>
 
-                {/* Engagement / Activity */}
-                <Card>
-                  <CardHeader className="pb-2">
-                    <CardTitle className="text-sm flex items-center justify-between">
-                      <span className="flex items-center gap-2">
+                {/* Engagement Score Breakdown */}
+                <div className="glass-premium rounded-2xl overflow-hidden relative">
+                  <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-orange-500 via-amber-400 to-orange-500 opacity-60" />
+                  <div className="relative z-10 p-4 space-y-3">
+                    <div className="flex items-center justify-between">
+                      <h3 className="text-sm font-semibold text-white flex items-center gap-2">
                         <Activity className="h-4 w-4 text-orange-400" />
                         Engagement Score Breakdown
-                      </span>
+                      </h3>
                       {selectedUser && getEngagementBadge(selectedUser.engagement_score)}
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent className="space-y-3">
-                    {/* Score Breakdown Table */}
+                    </div>
+
                     <div className="space-y-2 text-sm">
-                      {/* Time in App - Most Important */}
                       <div className="flex justify-between items-center py-1.5 border-b border-border/30">
-                        <span className="text-muted-foreground flex items-center gap-2">
+                        <span className="text-white flex items-center gap-2">
                           <Timer className="h-3.5 w-3.5 text-teal-400" />
-                          Time in App ({scoreBreakdown?.timeSpentMinutes || 0}m × 0.5, max 30)
+                          Time in App ({scoreBreakdown?.timeSpentMinutes || 0}m x 0.5, max 30)
                         </span>
                         <span
-                          className={`font-medium ${(scoreBreakdown?.timeBonus || 0) > 0 ? 'text-teal-400' : 'text-muted-foreground'}`}
+                          className={`font-medium ${(scoreBreakdown?.timeBonus || 0) > 0 ? 'text-teal-400' : 'text-white'}`}
                         >
                           +{scoreBreakdown?.timeBonus || 0}
                         </span>
                       </div>
                       <div className="flex justify-between items-center py-1.5 border-b border-border/30">
-                        <span className="text-muted-foreground flex items-center gap-2">
+                        <span className="text-white flex items-center gap-2">
                           <Eye className="h-3.5 w-3.5 text-sky-400" />
                           Pages Visited ({scoreBreakdown?.pageViews || 0} unique, max 20)
                         </span>
                         <span
-                          className={`font-medium ${(scoreBreakdown?.pageViewBonus || 0) > 0 ? 'text-sky-400' : 'text-muted-foreground'}`}
+                          className={`font-medium ${(scoreBreakdown?.pageViewBonus || 0) > 0 ? 'text-sky-400' : 'text-white'}`}
                         >
                           +{scoreBreakdown?.pageViewBonus || 0}
                         </span>
                       </div>
                       <div className="flex justify-between items-center py-1.5 border-b border-border/30">
-                        <span className="text-muted-foreground flex items-center gap-2">
+                        <span className="text-white flex items-center gap-2">
                           <LogIn className="h-3.5 w-3.5 text-cyan-400" />
-                          Logins ({scoreBreakdown?.loginCount || 0} × 2, max 10)
+                          Logins ({scoreBreakdown?.loginCount || 0} x 2, max 10)
                         </span>
                         <span
-                          className={`font-medium ${(scoreBreakdown?.loginBonus || 0) > 0 ? 'text-cyan-400' : 'text-muted-foreground'}`}
+                          className={`font-medium ${(scoreBreakdown?.loginBonus || 0) > 0 ? 'text-cyan-400' : 'text-white'}`}
                         >
                           +{scoreBreakdown?.loginBonus || 0}
                         </span>
                       </div>
                       <div className="flex justify-between items-center py-1.5 border-b border-border/30">
-                        <span className="text-muted-foreground flex items-center gap-2">
+                        <span className="text-white flex items-center gap-2">
                           <Zap className="h-3.5 w-3.5 text-pink-400" />
-                          Features Used ({scoreBreakdown?.featureUseCount || 0} × 3)
+                          Features Used ({scoreBreakdown?.featureUseCount || 0} x 3)
                         </span>
                         <span
-                          className={`font-medium ${(scoreBreakdown?.featureBonus || 0) > 0 ? 'text-pink-400' : 'text-muted-foreground'}`}
+                          className={`font-medium ${(scoreBreakdown?.featureBonus || 0) > 0 ? 'text-pink-400' : 'text-white'}`}
                         >
                           +{scoreBreakdown?.featureBonus || 0}
                         </span>
                       </div>
                       <div className="flex justify-between items-center py-1.5 border-b border-border/30">
-                        <span className="text-muted-foreground flex items-center gap-2">
+                        <span className="text-white flex items-center gap-2">
                           <Star className="h-3.5 w-3.5 text-amber-400" />
                           Base Points
                         </span>
-                        <span className="font-medium">{scoreBreakdown?.points || 0}</span>
+                        <span className="font-medium text-white">
+                          {scoreBreakdown?.points || 0}
+                        </span>
                       </div>
                       <div className="flex justify-between items-center py-1.5 border-b border-border/30">
-                        <span className="text-muted-foreground flex items-center gap-2">
+                        <span className="text-white flex items-center gap-2">
                           <Flame className="h-3.5 w-3.5 text-orange-400" />
-                          Streak ({scoreBreakdown?.streak || 0} days × 5)
+                          Streak ({scoreBreakdown?.streak || 0} days x 5)
                         </span>
                         <span className="font-medium text-orange-400">
                           +{scoreBreakdown?.streakBonus || 0}
                         </span>
                       </div>
                       <div className="flex justify-between items-center py-1.5 border-b border-border/30">
-                        <span className="text-muted-foreground flex items-center gap-2">
+                        <span className="text-white flex items-center gap-2">
                           <BookOpen className="h-3.5 w-3.5 text-yellow-400" />
-                          Study Sessions ({scoreBreakdown?.studySessions || 0} × 3)
+                          Study Sessions ({scoreBreakdown?.studySessions || 0} x 3)
                         </span>
                         <span className="font-medium text-yellow-400">
                           +{scoreBreakdown?.studyBonus || 0}
                         </span>
                       </div>
                       <div className="flex justify-between items-center py-1.5 border-b border-border/30">
-                        <span className="text-muted-foreground flex items-center gap-2">
+                        <span className="text-white flex items-center gap-2">
                           <Receipt className="h-3.5 w-3.5 text-green-400" />
-                          Quotes ({scoreBreakdown?.quotes || 0} × 8)
+                          Quotes ({scoreBreakdown?.quotes || 0} x 8)
                         </span>
                         <span className="font-medium text-green-400">
                           +{scoreBreakdown?.quotesBonus || 0}
                         </span>
                       </div>
                       <div className="flex justify-between items-center py-1.5 border-b border-border/30">
-                        <span className="text-muted-foreground flex items-center gap-2">
+                        <span className="text-white flex items-center gap-2">
                           <ClipboardCheck className="h-3.5 w-3.5 text-yellow-400" />
-                          Certificates ({scoreBreakdown?.eics || 0} × 10)
+                          Certificates ({scoreBreakdown?.eics || 0} x 10)
                         </span>
                         <span className="font-medium text-yellow-400">
                           +{scoreBreakdown?.eicsBonus || 0}
                         </span>
                       </div>
-                      <div className="flex justify-between items-center py-2 bg-muted/50 rounded-lg px-2 mt-2">
-                        <span className="font-semibold flex items-center gap-2">
+                      <div className="flex justify-between items-center py-2 bg-white/[0.04] rounded-lg px-2 mt-2">
+                        <span className="font-semibold text-white flex items-center gap-2">
                           <Target className="h-4 w-4 text-white" />
                           Total Score
                         </span>
-                        <span className="text-lg font-bold">
+                        <span className="text-lg font-bold text-white">
                           {scoreBreakdown?.total || selectedUser?.engagement_score || 0}
                         </span>
                       </div>
@@ -1860,11 +1736,11 @@ export default function AdminTrials() {
                     {/* Last Active / Last Login */}
                     <div className="pt-2 border-t border-border/50 space-y-2">
                       <div className="flex justify-between items-center">
-                        <span className="text-sm text-muted-foreground flex items-center gap-1.5">
+                        <span className="text-sm text-white flex items-center gap-1.5">
                           <LogIn className="h-3.5 w-3.5" />
                           Last Login
                         </span>
-                        <span className="text-sm">
+                        <span className="text-sm text-white">
                           {selectedUser?.last_sign_in_at
                             ? formatDistanceToNow(parseISO(selectedUser.last_sign_in_at), {
                                 addSuffix: true,
@@ -1874,28 +1750,27 @@ export default function AdminTrials() {
                       </div>
                       {selectedUser?.email && (
                         <div className="flex justify-between items-center">
-                          <span className="text-sm text-muted-foreground flex items-center gap-1.5">
+                          <span className="text-sm text-white flex items-center gap-1.5">
                             <Mail className="h-3.5 w-3.5" />
                             Email
                           </span>
-                          <span className="text-xs text-muted-foreground truncate max-w-[180px]">
+                          <span className="text-xs text-white truncate max-w-[180px]">
                             {selectedUser.email}
                           </span>
                         </div>
                       )}
                     </div>
-                  </CardContent>
-                </Card>
+                  </div>
+                </div>
 
                 {/* Actions */}
-                <Card>
-                  <CardHeader className="pb-2">
-                    <CardTitle className="text-sm flex items-center gap-2">
+                <div className="glass-premium rounded-2xl overflow-hidden relative">
+                  <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-blue-500 via-cyan-400 to-blue-500 opacity-60" />
+                  <div className="relative z-10 p-4 space-y-3">
+                    <h3 className="text-sm font-semibold text-white flex items-center gap-2">
                       <Send className="h-4 w-4 text-blue-400" />
                       Actions
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent className="space-y-3">
+                    </h3>
                     {selectedUser && emailedTodayUserIds.has(selectedUser.id) ? (
                       <Button
                         className="w-full gap-2 h-12 touch-manipulation bg-emerald-500/20 text-emerald-400 border-emerald-500/30"
@@ -1935,45 +1810,52 @@ export default function AdminTrials() {
                       <XCircle className="h-4 w-4" />
                       Remove from List
                     </Button>
-                  </CardContent>
-                </Card>
+                  </div>
+                </div>
 
                 {/* Activity Timeline */}
-                <Card>
-                  <CardHeader className="pb-2">
-                    <CardTitle className="text-sm flex items-center justify-between">
-                      <span className="flex items-center gap-2">
+                <div className="glass-premium rounded-2xl overflow-hidden relative">
+                  <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-cyan-500 via-teal-400 to-cyan-500 opacity-60" />
+                  <div className="relative z-10 p-4 space-y-3">
+                    <div className="flex items-center justify-between">
+                      <h3 className="text-sm font-semibold text-white flex items-center gap-2">
                         <FileText className="h-4 w-4 text-cyan-400" />
                         Activity Timeline
-                      </span>
-                      <Badge variant="outline" className="text-xs">
+                      </h3>
+                      <Badge variant="outline" className="text-xs text-white border-white/20">
                         {userActivity?.length || 0} actions
                       </Badge>
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent>
+                    </div>
+
                     {activityLoading ? (
                       <div className="space-y-2">
                         {[1, 2, 3].map((i) => (
-                          <div key={i} className="h-12 bg-muted/50 rounded-lg animate-pulse" />
+                          <div
+                            key={i}
+                            className="h-12 bg-white/[0.04] rounded-lg animate-pulse"
+                          />
                         ))}
                       </div>
                     ) : !userActivity || userActivity.length === 0 ? (
                       <div className="text-center py-6">
                         <Snowflake className="h-8 w-8 text-blue-400 mx-auto mb-2 opacity-50" />
-                        <p className="text-sm text-muted-foreground">No activity recorded yet</p>
-                        <p className="text-xs text-muted-foreground mt-1">
+                        <p className="text-sm text-white">No activity recorded yet</p>
+                        <p className="text-xs text-white mt-1">
                           User hasn't used any features
                         </p>
                       </div>
                     ) : (
                       <div className="space-y-2 max-h-[300px] overflow-y-auto">
                         {userActivity.map((activity) => {
-                          const { icon: Icon, color, bg } = getActivityIcon(activity.action_type);
+                          const {
+                            icon: Icon,
+                            color,
+                            bg,
+                          } = getActivityIcon(activity.action_type);
                           return (
                             <div
                               key={activity.id}
-                              className="flex items-start gap-3 p-2 rounded-lg bg-muted/30 hover:bg-muted/50 transition-colors"
+                              className="flex items-start gap-3 p-2 rounded-lg bg-white/[0.04] transition-colors"
                             >
                               <div
                                 className={`w-8 h-8 rounded-lg ${bg} flex items-center justify-center shrink-0 mt-0.5`}
@@ -1981,15 +1863,15 @@ export default function AdminTrials() {
                                 <Icon className={`h-4 w-4 ${color}`} />
                               </div>
                               <div className="flex-1 min-w-0">
-                                <p className="text-sm font-medium truncate">
+                                <p className="text-sm font-medium text-white truncate">
                                   {activity.action_detail}
                                 </p>
                                 {activity.extra_info && (
-                                  <p className="text-xs text-muted-foreground truncate">
+                                  <p className="text-xs text-white truncate">
                                     {activity.extra_info}
                                   </p>
                                 )}
-                                <p className="text-xs text-muted-foreground/70 mt-0.5">
+                                <p className="text-xs text-white mt-0.5">
                                   {formatDistance(parseISO(activity.created_at), new Date(), {
                                     addSuffix: true,
                                   })}
@@ -2000,33 +1882,32 @@ export default function AdminTrials() {
                         })}
                       </div>
                     )}
-                  </CardContent>
-                </Card>
+                  </div>
+                </div>
 
-                {/* Quick Info */}
-                <Card>
-                  <CardHeader className="pb-2">
-                    <CardTitle className="text-sm flex items-center gap-2">
+                {/* Account Info */}
+                <div className="glass-premium rounded-2xl overflow-hidden relative">
+                  <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-yellow-500 via-amber-400 to-yellow-500 opacity-60" />
+                  <div className="relative z-10 p-4 space-y-3">
+                    <h3 className="text-sm font-semibold text-white flex items-center gap-2">
                       <Users className="h-4 w-4 text-yellow-400" />
                       Account Info
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent className="space-y-3">
+                    </h3>
                     <div className="flex justify-between items-center">
-                      <span className="text-sm text-muted-foreground">User ID</span>
-                      <span className="text-xs font-mono text-muted-foreground truncate max-w-[180px]">
+                      <span className="text-sm text-white">User ID</span>
+                      <span className="text-xs font-mono text-white truncate max-w-[180px]">
                         {selectedUser?.id}
                       </span>
                     </div>
                     <div className="flex justify-between items-center">
-                      <span className="text-sm text-muted-foreground">Time on Platform</span>
-                      <span className="text-sm">
+                      <span className="text-sm text-white">Time on Platform</span>
+                      <span className="text-sm text-white">
                         {selectedUser?.created_at &&
                           formatDistanceToNow(parseISO(selectedUser.created_at))}
                       </span>
                     </div>
-                  </CardContent>
-                </Card>
+                  </div>
+                </div>
               </div>
             </div>
           </SheetContent>

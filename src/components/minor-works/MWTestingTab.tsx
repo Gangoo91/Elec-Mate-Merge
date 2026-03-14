@@ -342,61 +342,74 @@ const MWTestingTab: React.FC<MWTestingTabProps> = ({ formData, onUpdate, isMobil
 
               {/* Ring Circuit Continuity - shown only for ring circuits */}
               {formData.circuitType === 'ring' && (
-                <div className="rounded-xl border border-white/10 bg-orange-500/5 border-l-2 border-l-orange-500 overflow-hidden">
-                  <div className="px-4 py-2.5 bg-orange-500/10 border-b border-white/5">
-                    <span className="text-sm font-medium text-orange-400">
-                      Ring Circuit Continuity
-                    </span>
+                <div className="space-y-4">
+                  <h4 className="text-sm font-semibold text-cyan-400 flex items-center gap-2">
+                    <div className="w-1.5 h-1.5 rounded-full bg-cyan-400"></div>
+                    Ring Circuit Continuity
+                  </h4>
+
+                  {/* End-to-End */}
+                  <div className="space-y-3">
+                    <p className="text-xs uppercase tracking-wide text-white pl-0.5">End-to-End</p>
+                    <div className="grid grid-cols-3 gap-3">
+                      {[
+                        { label: 'r\u2081 (L)', field: 'ringR1', placeholder: '0.52' },
+                        { label: 'r\u2099 (N)', field: 'ringRn', placeholder: '0.52' },
+                        { label: 'r\u2082 (CPC)', field: 'ringR2', placeholder: '0.87' },
+                      ].map(({ label, field, placeholder }) => (
+                        <div key={field} className="space-y-1.5">
+                          <label className="text-xs text-white pl-0.5">{label}</label>
+                          <div className="relative">
+                            <Input
+                              value={formData[field] || ''}
+                              onChange={(e) => onUpdate(field, e.target.value)}
+                              placeholder={placeholder}
+                              className="h-11 text-base touch-manipulation bg-white/5 border-white/20 rounded-xl focus:border-cyan-500/50 focus:ring-cyan-500/20 pr-8"
+                            />
+                            <span className="absolute right-3 top-1/2 -translate-y-1/2 text-white text-sm">Ω</span>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
                   </div>
-                  <div className="p-4 space-y-4">
-                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                      <div className="space-y-1.5">
-                        <label className="text-xs uppercase tracking-wide text-white pl-0.5">
-                          (r1) Line-Line
-                        </label>
-                        <div className="relative">
-                          <Input
-                            value={formData.ringR1 || ''}
-                            onChange={(e) => onUpdate('ringR1', e.target.value)}
-                            placeholder="e.g., 0.52"
-                            className="h-12 text-base bg-white/5 border-white/10 rounded-xl focus:border-orange-500/50 focus:ring-orange-500/20 pr-10"
-                          />
-                          <span className="absolute right-3 top-1/2 -translate-y-1/2 text-white text-sm">
-                            Ω
-                          </span>
+
+                  {/* Cross-Connect */}
+                  <div className="space-y-3">
+                    <p className="text-xs uppercase tracking-wide text-white pl-0.5">Cross-Connect</p>
+                    <div className="grid grid-cols-3 gap-3">
+                      {[
+                        { label: 'r\u2081 (L)', field: 'ringR1Cross', placeholder: '0.26' },
+                        { label: 'r\u2099 (N)', field: 'ringRnCross', placeholder: '0.26' },
+                        { label: 'r\u2082 (CPC)', field: 'ringR2Cross', placeholder: '0.43' },
+                      ].map(({ label, field, placeholder }) => (
+                        <div key={field} className="space-y-1.5">
+                          <label className="text-xs text-white pl-0.5">{label}</label>
+                          <div className="relative">
+                            <Input
+                              value={formData[field] || ''}
+                              onChange={(e) => onUpdate(field, e.target.value)}
+                              placeholder={placeholder}
+                              className="h-11 text-base touch-manipulation bg-white/5 border-white/20 rounded-xl focus:border-cyan-500/50 focus:ring-cyan-500/20 pr-8"
+                            />
+                            <span className="absolute right-3 top-1/2 -translate-y-1/2 text-white text-sm">Ω</span>
+                          </div>
                         </div>
-                      </div>
-                      <div className="space-y-1.5">
-                        <label className="text-xs uppercase tracking-wide text-white pl-0.5">
-                          (rn) Neutral-Neutral
-                        </label>
-                        <div className="relative">
-                          <Input
-                            value={formData.ringRn || ''}
-                            onChange={(e) => onUpdate('ringRn', e.target.value)}
-                            placeholder="e.g., 0.52"
-                            className="h-12 text-base bg-white/5 border-white/10 rounded-xl focus:border-orange-500/50 focus:ring-orange-500/20 pr-10"
-                          />
-                          <span className="absolute right-3 top-1/2 -translate-y-1/2 text-white text-sm">
-                            Ω
-                          </span>
-                        </div>
-                      </div>
-                      <div className="space-y-1.5">
-                        <label className="text-xs uppercase tracking-wide text-white pl-0.5">
-                          (r2) CPC-CPC
-                        </label>
-                        <div className="relative">
-                          <Input
-                            value={formData.ringR2 || ''}
-                            onChange={(e) => onUpdate('ringR2', e.target.value)}
-                            placeholder="e.g., 0.87"
-                            className="h-12 text-base bg-white/5 border-white/10 rounded-xl focus:border-orange-500/50 focus:ring-orange-500/20 pr-10"
-                          />
-                          <span className="absolute right-3 top-1/2 -translate-y-1/2 text-white text-sm">
-                            Ω
-                          </span>
-                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Ring Final R₁+R₂ */}
+                  <div className="bg-cyan-500/5 rounded-xl p-3">
+                    <div className="space-y-1.5">
+                      <label className="text-xs uppercase tracking-wide text-white pl-0.5">R₁+R₂ (Ring Final)</label>
+                      <div className="relative">
+                        <Input
+                          value={formData.ringFinalContinuity || ''}
+                          onChange={(e) => onUpdate('ringFinalContinuity', e.target.value)}
+                          placeholder="0.69"
+                          className="h-11 text-base touch-manipulation bg-white/5 border-white/20 rounded-xl focus:border-cyan-500/50 focus:ring-cyan-500/20 pr-8"
+                        />
+                        <span className="absolute right-3 top-1/2 -translate-y-1/2 text-white text-sm">Ω</span>
                       </div>
                     </div>
                   </div>
@@ -542,13 +555,15 @@ const MWTestingTab: React.FC<MWTestingTabProps> = ({ formData, onUpdate, isMobil
                   ) : (
                     <CheckCircle className="h-4 w-4 text-green-400" />
                   )}
-                  <AlertDescription className={
-                    zsValidation === false
-                      ? 'text-red-200'
-                      : zsMargin && zsMargin.percent < 20
-                        ? 'text-amber-200'
-                        : 'text-green-200'
-                  }>
+                  <AlertDescription
+                    className={
+                      zsValidation === false
+                        ? 'text-red-200'
+                        : zsMargin && zsMargin.percent < 20
+                          ? 'text-amber-200'
+                          : 'text-green-200'
+                    }
+                  >
                     {zsValidation === false
                       ? `Zs ${formData.earthFaultLoopImpedance}Ω exceeds max ${formData.maxPermittedZs}Ω — disconnection time not met (Reg 411.4.5)`
                       : zsMargin
@@ -569,25 +584,35 @@ const MWTestingTab: React.FC<MWTestingTabProps> = ({ formData, onUpdate, isMobil
                     placeholder="e.g., 2.5"
                     className={cn(
                       'h-11 text-base touch-manipulation',
-                      pfcKaCheck?.pass === true && 'border-green-500/50 focus:border-green-500 focus:ring-green-500',
-                      pfcKaCheck?.pass === false && 'border-red-500/50 focus:border-red-500 focus:ring-red-500',
-                      pfcKaCheck === null && 'border-white/30 focus:border-elec-yellow focus:ring-elec-yellow'
+                      pfcKaCheck?.pass === true &&
+                        'border-green-500/50 focus:border-green-500 focus:ring-green-500',
+                      pfcKaCheck?.pass === false &&
+                        'border-red-500/50 focus:border-red-500 focus:ring-red-500',
+                      pfcKaCheck === null &&
+                        'border-white/30 focus:border-elec-yellow focus:ring-elec-yellow'
                     )}
                   />
                   {pfcKaCheck?.pass === true && (
                     <div className="flex items-center gap-1 text-xs text-green-400">
                       <CheckCircle className="h-3 w-3" />
-                      <span>Ipf {pfcKaCheck.pfc}kA ≤ {pfcKaCheck.ka}kA breaking capacity</span>
+                      <span>
+                        Ipf {pfcKaCheck.pfc}kA ≤ {pfcKaCheck.ka}kA breaking capacity
+                      </span>
                     </div>
                   )}
                   {pfcKaCheck?.pass === false && (
                     <div className="flex items-center gap-1 text-xs text-red-400">
                       <AlertCircle className="h-3 w-3" />
-                      <span>Ipf {pfcKaCheck.pfc}kA exceeds {pfcKaCheck.ka}kA — device cannot safely interrupt fault (Reg 434.5.1)</span>
+                      <span>
+                        Ipf {pfcKaCheck.pfc}kA exceeds {pfcKaCheck.ka}kA — device cannot safely
+                        interrupt fault (Reg 434.5.1)
+                      </span>
                     </div>
                   )}
                   {!formData.protectiveDeviceKaRating && formData.prospectiveFaultCurrent && (
-                    <p className="text-xs text-amber-400">Set breaking capacity (kA) on Circuit tab to verify</p>
+                    <p className="text-xs text-amber-400">
+                      Set breaking capacity (kA) on Circuit tab to verify
+                    </p>
                   )}
                 </div>
                 <div className="space-y-2">
@@ -639,16 +664,21 @@ const MWTestingTab: React.FC<MWTestingTabProps> = ({ formData, onUpdate, isMobil
                           className={cn(
                             'h-11 text-base touch-manipulation pr-10',
                             !formData.earthElectrodeResistance && 'border-red-500/50',
-                            raIdnCheck === true && 'border-green-500/50 focus:border-green-500 focus:ring-green-500',
-                            raIdnCheck === false && 'border-red-500/50 focus:border-red-500 focus:ring-red-500',
-                            raIdnCheck === null && 'border-white/30 focus:border-elec-yellow focus:ring-elec-yellow'
+                            raIdnCheck === true &&
+                              'border-green-500/50 focus:border-green-500 focus:ring-green-500',
+                            raIdnCheck === false &&
+                              'border-red-500/50 focus:border-red-500 focus:ring-red-500',
+                            raIdnCheck === null &&
+                              'border-white/30 focus:border-elec-yellow focus:ring-elec-yellow'
                           )}
                         />
                         <span className="absolute right-3 top-1/2 -translate-y-1/2 text-white text-sm">
                           Ω
                         </span>
                       </div>
-                      <p className="text-xs text-white">Required for TT earthing systems (Reg 411.5.3)</p>
+                      <p className="text-xs text-white">
+                        Required for TT earthing systems (Reg 411.5.3)
+                      </p>
                     </div>
                   </div>
 
@@ -675,14 +705,16 @@ const MWTestingTab: React.FC<MWTestingTabProps> = ({ formData, onUpdate, isMobil
                     </Alert>
                   )}
 
-                  {formData.earthingArrangement === 'TT' && !formData.rcdIdn && formData.earthElectrodeResistance && (
-                    <Alert className="border border-amber-500/30 bg-amber-500/10">
-                      <AlertCircle className="h-4 w-4 text-amber-400" />
-                      <AlertDescription className="text-amber-200">
-                        Set RCD IΔn on Circuit tab to verify RA × IΔn ≤ 50V compliance
-                      </AlertDescription>
-                    </Alert>
-                  )}
+                  {formData.earthingArrangement === 'TT' &&
+                    !formData.rcdIdn &&
+                    formData.earthElectrodeResistance && (
+                      <Alert className="border border-amber-500/30 bg-amber-500/10">
+                        <AlertCircle className="h-4 w-4 text-amber-400" />
+                        <AlertDescription className="text-amber-200">
+                          Set RCD IΔn on Circuit tab to verify RA × IΔn ≤ 50V compliance
+                        </AlertDescription>
+                      </Alert>
+                    )}
                 </div>
               )}
 

@@ -1,13 +1,6 @@
 import React from 'react';
 import { Button } from '@/components/ui/button';
-import {
-  ArrowLeft,
-  Save,
-  Plus,
-  Wrench,
-  Loader2,
-  MoreHorizontal,
-} from 'lucide-react';
+import { ArrowLeft, Save, Plus, Wrench, Loader2, MoreHorizontal } from 'lucide-react';
 import {
   DropdownMenu,
   DropdownMenuContent,

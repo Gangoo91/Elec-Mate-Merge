@@ -52,10 +52,14 @@ const MWDetailsTab: React.FC<MWDetailsTabProps> = ({ formData, onUpdate, isMobil
   // Dynamic Zdb placeholder based on earthing arrangement
   const zdbPlaceholder = useMemo(() => {
     switch (formData.earthingArrangement) {
-      case 'TN-C-S': return '0.20-0.35 typical for PME';
-      case 'TN-S': return '0.35-0.80 typical for TN-S';
-      case 'TT': return 'Varies with electrode';
-      default: return 'e.g., 0.35';
+      case 'TN-C-S':
+        return '0.20-0.35 typical for PME';
+      case 'TN-S':
+        return '0.35-0.80 typical for TN-S';
+      case 'TT':
+        return 'Varies with electrode';
+      default:
+        return 'e.g., 0.35';
     }
   }, [formData.earthingArrangement]);
 
@@ -311,15 +315,22 @@ const MWDetailsTab: React.FC<MWDetailsTabProps> = ({ formData, onUpdate, isMobil
                   <label className="text-xs uppercase tracking-wide text-white pl-0.5">
                     Description of Work *
                   </label>
-                  {formData.workType && !formData.workDescription && WORK_DESCRIPTION_TEMPLATES[formData.workType as string] && (
-                    <button
-                      type="button"
-                      onClick={() => onUpdate('workDescription', WORK_DESCRIPTION_TEMPLATES[formData.workType as string])}
-                      className="text-xs px-2.5 py-1 rounded-full bg-blue-500/10 border border-blue-500/30 text-blue-400 touch-manipulation active:scale-95 transition-transform"
-                    >
-                      Use template
-                    </button>
-                  )}
+                  {formData.workType &&
+                    !formData.workDescription &&
+                    WORK_DESCRIPTION_TEMPLATES[formData.workType as string] && (
+                      <button
+                        type="button"
+                        onClick={() =>
+                          onUpdate(
+                            'workDescription',
+                            WORK_DESCRIPTION_TEMPLATES[formData.workType as string]
+                          )
+                        }
+                        className="text-xs px-2.5 py-1 rounded-full bg-blue-500/10 border border-blue-500/30 text-blue-400 touch-manipulation active:scale-95 transition-transform"
+                      >
+                        Use template
+                      </button>
+                    )}
                 </div>
                 <Textarea
                   value={formData.workDescription || ''}
@@ -598,20 +609,32 @@ const MWDetailsTab: React.FC<MWDetailsTabProps> = ({ formData, onUpdate, isMobil
                 <div className="flex flex-wrap gap-3">
                   {['Water', 'Gas', 'Oil', 'Structural', 'Other'].map((item) => {
                     const fieldName = `bonding${item}`;
+                    const sizeField = `bonding${item}Size`;
+                    const isChecked = formData[fieldName] || false;
                     return (
-                      <div
-                        key={item}
-                        className="flex items-center gap-2 p-3 min-h-[48px] rounded-xl bg-white/5 border border-white/10"
-                      >
-                        <Checkbox
-                          id={fieldName}
-                          checked={formData[fieldName] || false}
-                          onCheckedChange={(c) => onUpdate(fieldName, c)}
-                          className="h-5 w-5 border-white/40 data-[state=checked]:bg-green-500 data-[state=checked]:border-green-500 touch-manipulation"
-                        />
-                        <Label htmlFor={fieldName} className="text-sm font-medium cursor-pointer">
-                          {item}
-                        </Label>
+                      <div key={item} className="space-y-2">
+                        <div className="flex items-center gap-2 p-3 min-h-[48px] rounded-xl bg-white/5 border border-white/10">
+                          <Checkbox
+                            id={fieldName}
+                            checked={isChecked}
+                            onCheckedChange={(c) => onUpdate(fieldName, c)}
+                            className="h-5 w-5 border-white/40 data-[state=checked]:bg-green-500 data-[state=checked]:border-green-500 touch-manipulation"
+                          />
+                          <Label htmlFor={fieldName} className="text-sm font-medium cursor-pointer flex-1">
+                            {item}
+                          </Label>
+                        </div>
+                        {isChecked && item !== 'Other' && (
+                          <div className="relative pl-7">
+                            <Input
+                              value={formData[sizeField] || ''}
+                              onChange={(e) => onUpdate(sizeField, e.target.value)}
+                              placeholder={formData.mainBondingConductorSize || '10'}
+                              className="h-11 text-base touch-manipulation bg-white/5 border-white/20 rounded-xl focus:border-amber-500/50 focus:ring-amber-500/20 pr-12"
+                            />
+                            <span className="absolute right-3 top-1/2 -translate-y-1/2 text-white text-sm">mm²</span>
+                          </div>
+                        )}
                       </div>
                     );
                   })}

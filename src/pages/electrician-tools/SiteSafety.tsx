@@ -9,7 +9,6 @@ import {
   Users,
   Wrench,
   Phone,
-  ArrowRight,
   ArrowLeft,
   FolderOpen,
   Loader2,
@@ -22,11 +21,12 @@ import {
   Eye,
   CalendarDays,
   Flame,
-  ArrowUpDown,
   Bell,
   FolderArchive,
   ChevronDown,
+  ChevronRight,
   BarChart3,
+  Sparkles,
 } from 'lucide-react';
 import { RAMSProvider } from '@/components/electrician-tools/site-safety/rams/RAMSContext';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -83,11 +83,6 @@ const EmergencyProcedures = lazy(
 const AIRAMSGenerator = lazy(() =>
   import('@/components/electrician-tools/site-safety/ai-rams/AIRAMSGenerator').then((m) => ({
     default: m.AIRAMSGenerator,
-  }))
-);
-const SavedRAMSLibrary = lazy(() =>
-  import('@/components/electrician-tools/site-safety/SavedRAMSLibrary').then((m) => ({
-    default: m.SavedRAMSLibrary,
   }))
 );
 const DocumentHub = lazy(() =>
@@ -191,7 +186,6 @@ const ToolLoader = SectionSkeleton;
 const toolColors: Record<string, string> = {
   'ai-rams': 'from-orange-400 to-red-500',
   documents: 'from-amber-400 to-yellow-500',
-  'saved-rams': 'from-amber-400 to-yellow-500',
   'hazard-database': 'from-blue-400 to-blue-500',
   'photo-docs': 'from-emerald-400 to-green-500',
   'team-briefing': 'from-purple-400 to-purple-500',
@@ -221,7 +215,7 @@ const SiteSafety = () => {
 
   // Data for dashboard
   const { stats: dashboardStats, isLoading: dashboardLoading } = useSafetyDashboardStats();
-  const { data: recentDocuments, isLoading: isLoadingDocuments } = useRecentDocuments();
+  const { data: recentDocuments } = useRecentDocuments();
   const { data: streakData } = useSafetyStreak();
   const { data: trendsData } = useSafetyTrends();
   const { overdueItems: equipmentOverdue, dueSoonItems: equipmentDueSoon } = useSafetyEquipment();
@@ -233,8 +227,8 @@ const SiteSafety = () => {
     const tab = searchParams.get('tab');
     if (tab === 'briefings') {
       setActiveView('team-briefing');
-    } else if (tab === 'saved-rams') {
-      setActiveView('saved-rams');
+    } else if (tab === 'saved-rams' || tab === 'documents') {
+      setActiveView('documents');
     }
   }, [searchParams]);
 
@@ -416,32 +410,6 @@ const SiteSafety = () => {
     switch (activeView) {
       case 'ai-rams':
         return <AIRAMSGenerator onBack={() => setActiveView(null)} />;
-      case 'saved-rams':
-        return (
-          <div className="space-y-4">
-            {/* Header */}
-            <div className="sticky top-0 z-50 bg-background/95 backdrop-blur-sm border-b border-white/10">
-              <div className="px-4 py-2">
-                <button
-                  onClick={() => setActiveView(null)}
-                  className="flex items-center gap-2 text-white active:opacity-70 active:scale-[0.98] transition-all touch-manipulation h-11 -ml-2 px-2 rounded-lg"
-                >
-                  <ArrowLeft className="h-5 w-5" />
-                  <span className="text-sm font-medium">Site Safety</span>
-                </button>
-              </div>
-            </div>
-            <div className="px-4 space-y-6">
-              <div>
-                <h2 className="text-2xl font-bold text-white mb-2">Saved RAMS Documents</h2>
-                <p className="text-white">
-                  View and download your previously generated RAMS documentation
-                </p>
-              </div>
-              <SavedRAMSLibrary />
-            </div>
-          </div>
-        );
       case 'integrated-rams':
         return <IntegratedRAMSGenerator />;
       case 'rams':
@@ -497,7 +465,6 @@ const SiteSafety = () => {
       activeView === 'equipment' ||
       activeView === 'photo-docs' ||
       activeView === 'ai-rams' ||
-      activeView === 'saved-rams' ||
       activeView === 'permit-to-work' ||
       activeView === 'coshh' ||
       activeView === 'inspection-checklists' ||
@@ -596,210 +563,139 @@ const SiteSafety = () => {
             </div>
           </motion.section>
 
-          {/* Essential Tools Section */}
+          {/* Hero Cards — RAMS Generator + Documents Hub */}
+          <motion.section variants={itemVariants}>
+            <div className="grid grid-cols-2 gap-3">
+              <motion.button
+                variants={itemVariants}
+                whileTap={{ scale: 0.96 }}
+                onClick={() => setActiveView('ai-rams')}
+                className="text-left rounded-xl overflow-hidden touch-manipulation focus:outline-none focus-visible:ring-2 focus-visible:ring-elec-yellow/50"
+              >
+                <div className="relative glass-premium rounded-xl h-[120px] p-4 flex flex-col justify-between active:bg-white/[0.02] transition-colors">
+                  <div className="absolute top-0 right-0 w-24 h-24 bg-elec-yellow/[0.04] rounded-full blur-2xl -translate-y-1/3 translate-x-1/4 pointer-events-none" />
+                  <div className="relative p-2.5 rounded-xl bg-elec-yellow/10 w-fit">
+                    <Sparkles className="h-5 w-5 text-elec-yellow" />
+                  </div>
+                  <div className="relative">
+                    <h3 className="text-sm font-semibold text-white">RAMS Generator</h3>
+                    <p className="text-[11px] text-white mt-0.5">AI-powered risk assessments</p>
+                  </div>
+                </div>
+              </motion.button>
+
+              <motion.button
+                variants={itemVariants}
+                whileTap={{ scale: 0.96 }}
+                onClick={() => setActiveView('documents')}
+                className="text-left rounded-xl overflow-hidden touch-manipulation focus:outline-none focus-visible:ring-2 focus-visible:ring-elec-yellow/50"
+              >
+                <div className="relative glass-premium rounded-xl h-[120px] p-4 flex flex-col justify-between active:bg-white/[0.02] transition-colors">
+                  <div className="absolute top-0 right-0 w-24 h-24 bg-purple-500/[0.04] rounded-full blur-2xl -translate-y-1/3 translate-x-1/4 pointer-events-none" />
+                  <div className="relative p-2.5 rounded-xl bg-purple-500/10 w-fit">
+                    <FolderOpen className="h-5 w-5 text-purple-400" />
+                  </div>
+                  <div className="relative">
+                    <h3 className="text-sm font-semibold text-white">Documents Hub</h3>
+                    <p className="text-[11px] text-white mt-0.5">All safety documents</p>
+                  </div>
+                </div>
+              </motion.button>
+            </div>
+          </motion.section>
+
+          {/* Recent Documents Strip */}
+          {recentDocuments && recentDocuments.length > 0 && (
+            <motion.section variants={itemVariants} className="space-y-2">
+              <div className="flex items-center justify-between">
+                <h2 className="text-sm font-bold text-white">Recent Documents</h2>
+                <button
+                  onClick={() => setActiveView('documents')}
+                  className="text-[11px] text-elec-yellow font-medium flex items-center gap-0.5 touch-manipulation h-8 px-2 -mr-2 rounded-lg active:opacity-70"
+                >
+                  View all
+                  <ChevronRight className="h-3 w-3" />
+                </button>
+              </div>
+
+              <div className="grid grid-cols-2 gap-2.5">
+                {recentDocuments.slice(0, 2).map((doc) => (
+                  <motion.button
+                    key={`${doc.type}-${doc.id}`}
+                    variants={itemVariants}
+                    whileTap={{ scale: 0.97 }}
+                    onClick={() => setActiveView('documents')}
+                    className="text-left p-3 rounded-xl glass-premium active:bg-white/[0.02] transition-colors touch-manipulation"
+                  >
+                    <Badge
+                      variant="secondary"
+                      className="bg-elec-yellow/15 text-elec-yellow border-elec-yellow/20 text-[9px] font-bold uppercase mb-2"
+                    >
+                      {doc.type}
+                    </Badge>
+                    <p className="text-[13px] font-semibold text-white truncate">{doc.title}</p>
+                    <p className="text-[10px] text-white mt-1">
+                      {(() => {
+                        const d = new Date(doc.date);
+                        const now = new Date();
+                        const diff = Math.floor((now.getTime() - d.getTime()) / 86400000);
+                        if (diff === 0) return 'Today';
+                        if (diff === 1) return 'Yesterday';
+                        if (diff < 7) return `${diff}d ago`;
+                        return d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short' });
+                      })()}
+                    </p>
+                  </motion.button>
+                ))}
+              </div>
+            </motion.section>
+          )}
+
+          {/* Compact Tool Grid */}
           <motion.section variants={itemVariants} className="space-y-3">
             <div className="flex items-center gap-2.5">
               <div className="h-1.5 w-1.5 rounded-full bg-elec-yellow" />
-              <h2 className="text-base font-bold text-white">Essential Tools</h2>
-              <Badge
-                variant="secondary"
-                className="bg-elec-yellow/20 text-elec-yellow border-elec-yellow/30 text-xs"
-              >
-                2 Active
+              <h2 className="text-base font-bold text-white">All Tools</h2>
+              <Badge variant="secondary" className="bg-elec-yellow/15 text-elec-yellow border-elec-yellow/20 text-xs">
+                {[...primaryTools.filter(t => t.id !== 'ai-rams' && t.id !== 'documents'), ...complianceTools, ...safetyTools, ...additionalTools].length}
               </Badge>
             </div>
 
-            <motion.div variants={containerVariants} className="space-y-2">
-              {primaryTools.map((tool) => {
+            <motion.div variants={containerVariants} className="grid grid-cols-2 gap-2">
+              {[
+                ...primaryTools.filter(t => t.id !== 'ai-rams' && t.id !== 'documents'),
+                ...complianceTools,
+                ...safetyTools,
+                ...additionalTools,
+              ].map((tool) => {
                 const IconComponent = tool.icon;
                 const gradient = toolColors[tool.id] || 'from-gray-400 to-gray-500';
+                const badgeCount = 'badgeCount' in tool ? (tool as { badgeCount: number }).badgeCount : 0;
+                const badgeUrgent = 'badgeUrgent' in tool ? (tool as { badgeUrgent: boolean }).badgeUrgent : false;
 
                 return (
                   <motion.button
                     key={tool.id}
                     variants={itemVariants}
-                    whileTap={{ scale: 0.98 }}
+                    whileTap={{ scale: 0.96 }}
                     onClick={() => setActiveView(tool.id)}
-                    className="w-full text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-elec-yellow/50 rounded-2xl touch-manipulation"
+                    className="h-14 flex items-center gap-2.5 px-3 rounded-xl glass-premium active:bg-white/[0.02] transition-colors touch-manipulation text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-elec-yellow/50"
                   >
-                    <div className="relative overflow-hidden bg-white/[0.03] border border-white/[0.08] rounded-2xl group active:bg-white/[0.06] transition-colors">
-                      <div className="p-4">
-                        <div className="flex items-center gap-3">
-                          {/* Icon with gradient background */}
-                          <div
-                            className={`flex-shrink-0 w-12 h-12 rounded-xl flex items-center justify-center bg-gradient-to-br ${gradient}`}
-                          >
-                            <IconComponent className="h-6 w-6 text-white" />
-                          </div>
-
-                          <div className="flex-1 min-w-0">
-                            <div className="flex items-center gap-2">
-                              <h3 className="text-[15px] font-bold text-white">{tool.title}</h3>
-                              {tool.badge && (
-                                <Badge
-                                  variant="secondary"
-                                  className="bg-elec-yellow/20 text-elec-yellow border-elec-yellow/30 text-[10px]"
-                                >
-                                  {tool.badge}
-                                </Badge>
-                              )}
-                            </div>
-                            <p className="text-[13px] text-white line-clamp-1">
-                              {tool.description}
-                            </p>
-                          </div>
-
-                          {/* Arrow indicator */}
-                          <div className="flex-shrink-0 w-10 h-10 rounded-full bg-white/[0.08] flex items-center justify-center group-active:bg-white/[0.12] transition-colors">
-                            <ArrowRight className="h-4 w-4 text-white" />
-                          </div>
-                        </div>
+                    <div className="relative flex-shrink-0">
+                      <div className={`w-8 h-8 rounded-lg flex items-center justify-center bg-gradient-to-br ${gradient}`}>
+                        <IconComponent className="h-4 w-4 text-white" />
                       </div>
+                      {badgeCount > 0 && (
+                        <span
+                          className={`absolute -top-1 -right-1 min-w-[16px] h-4 px-0.5 rounded-full flex items-center justify-center text-[9px] font-bold ${
+                            badgeUrgent ? 'bg-red-500 text-white' : 'bg-elec-yellow text-black'
+                          }`}
+                        >
+                          {badgeCount}
+                        </span>
+                      )}
                     </div>
-                  </motion.button>
-                );
-              })}
-            </motion.div>
-          </motion.section>
-
-          {/* Compliance Tools Section (NEW) */}
-          <motion.section variants={itemVariants} className="space-y-3">
-            <div className="flex items-center gap-2.5">
-              <div className="h-1.5 w-1.5 rounded-full bg-green-400" />
-              <h2 className="text-base font-bold text-white">Compliance Tools</h2>
-              <Badge
-                variant="secondary"
-                className="bg-green-500/20 text-green-400 border-green-500/30 text-xs"
-              >
-                {complianceTools.length} Tools
-              </Badge>
-            </div>
-
-            <motion.div variants={containerVariants} className="space-y-2">
-              {complianceTools.map((tool) => {
-                const IconComponent = tool.icon;
-                const gradient = toolColors[tool.id] || 'from-gray-400 to-gray-500';
-
-                return (
-                  <motion.button
-                    key={tool.id}
-                    variants={itemVariants}
-                    whileTap={{ scale: 0.98 }}
-                    onClick={() => setActiveView(tool.id)}
-                    className="w-full text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-green-500/50 rounded-2xl touch-manipulation"
-                  >
-                    <div className="relative overflow-hidden bg-white/[0.03] border border-white/[0.08] rounded-2xl group active:bg-white/[0.06] transition-colors">
-                      <div className="p-4">
-                        <div className="flex items-center gap-3">
-                          {/* Icon with badge */}
-                          <div className="relative flex-shrink-0">
-                            <div
-                              className={`w-12 h-12 rounded-xl flex items-center justify-center bg-gradient-to-br ${gradient}`}
-                            >
-                              <IconComponent className="h-6 w-6 text-white" />
-                            </div>
-                            {tool.badgeCount > 0 && (
-                              <span
-                                className={`absolute -top-1.5 -right-1.5 min-w-[20px] h-5 px-1 rounded-full flex items-center justify-center text-[10px] font-bold ${
-                                  tool.badgeUrgent
-                                    ? 'bg-red-500 text-white'
-                                    : 'bg-elec-yellow text-black'
-                                }`}
-                              >
-                                {tool.badgeCount}
-                              </span>
-                            )}
-                          </div>
-
-                          <div className="flex-1 min-w-0">
-                            <div className="flex items-center gap-2">
-                              <h3 className="text-[15px] font-bold text-white">{tool.title}</h3>
-                              {tool.badge && (
-                                <Badge
-                                  variant="secondary"
-                                  className="bg-green-500/20 text-green-400 border-green-500/30 text-[10px]"
-                                >
-                                  {tool.badge}
-                                </Badge>
-                              )}
-                            </div>
-                            <p className="text-[13px] text-white line-clamp-1">
-                              {tool.description}
-                            </p>
-                          </div>
-
-                          <div className="flex-shrink-0 w-10 h-10 rounded-full bg-white/[0.08] flex items-center justify-center group-active:bg-white/[0.12] transition-colors">
-                            <ArrowRight className="h-4 w-4 text-white" />
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </motion.button>
-                );
-              })}
-            </motion.div>
-          </motion.section>
-
-          {/* Safety Tools Section */}
-          <motion.section variants={itemVariants} className="space-y-3">
-            <div className="flex items-center gap-2.5">
-              <div className="h-1.5 w-1.5 rounded-full bg-orange-400" />
-              <h2 className="text-base font-bold text-white">Safety Tools</h2>
-              <Badge variant="secondary" className="bg-white/10 text-white border-white/10 text-xs">
-                {safetyTools.length} Tools
-              </Badge>
-            </div>
-
-            <motion.div variants={containerVariants} className="space-y-2">
-              {safetyTools.map((tool) => {
-                const IconComponent = tool.icon;
-                const gradient = toolColors[tool.id] || 'from-gray-400 to-gray-500';
-
-                return (
-                  <motion.button
-                    key={tool.id}
-                    variants={itemVariants}
-                    whileTap={{ scale: 0.98 }}
-                    onClick={() => setActiveView(tool.id)}
-                    className="w-full text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-orange-500/50 rounded-2xl touch-manipulation"
-                  >
-                    <div className="relative overflow-hidden bg-white/[0.03] border border-white/[0.08] rounded-2xl group active:bg-white/[0.06] transition-colors">
-                      <div className="p-4">
-                        <div className="flex items-center gap-3">
-                          {/* Icon with gradient background + badge */}
-                          <div className="relative flex-shrink-0">
-                            <div
-                              className={`w-12 h-12 rounded-xl flex items-center justify-center bg-gradient-to-br ${gradient}`}
-                            >
-                              <IconComponent className="h-6 w-6 text-white" />
-                            </div>
-                            {tool.badgeCount > 0 && (
-                              <span
-                                className={`absolute -top-1.5 -right-1.5 min-w-[20px] h-5 px-1 rounded-full flex items-center justify-center text-[10px] font-bold ${
-                                  tool.badgeUrgent
-                                    ? 'bg-red-500 text-white'
-                                    : 'bg-elec-yellow text-black'
-                                }`}
-                              >
-                                {tool.badgeCount}
-                              </span>
-                            )}
-                          </div>
-
-                          <div className="flex-1 min-w-0">
-                            <h3 className="text-[15px] font-bold text-white">{tool.title}</h3>
-                            <p className="text-[13px] text-white line-clamp-1">
-                              {tool.description}
-                            </p>
-                          </div>
-
-                          {/* Arrow indicator */}
-                          <div className="flex-shrink-0 w-10 h-10 rounded-full bg-white/[0.08] flex items-center justify-center group-active:bg-white/[0.12] transition-colors">
-                            <ArrowRight className="h-4 w-4 text-white" />
-                          </div>
-                        </div>
-                      </div>
-                    </div>
+                    <span className="text-[13px] font-semibold text-white truncate">{tool.title}</span>
                   </motion.button>
                 );
               })}
@@ -889,8 +785,6 @@ const SiteSafety = () => {
                     stats={dashboardStats}
                     isLoading={dashboardLoading}
                     onCardTap={(section) => setActiveView(section)}
-                    recentDocuments={recentDocuments}
-                    isLoadingDocuments={isLoadingDocuments}
                     overrideScore={
                       trendsData?.scoreBreakdown
                         ? trendsData.scoreBreakdown.reduce((sum, b) => sum + b.score, 0)

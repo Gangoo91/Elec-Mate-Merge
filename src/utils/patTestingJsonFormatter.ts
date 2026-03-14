@@ -119,6 +119,7 @@ export const formatPATTestingJson = (
     companyEmail?: string;
     companyTagline?: string;
     companyAccentColor?: string;
+    companyWebsite?: string;
     registrationScheme?: string;
     registrationNumber?: string;
     registrationSchemeLogo?: string;
@@ -249,7 +250,8 @@ export const formatPATTestingJson = (
     company_phone: branding?.companyPhone || '',
     company_email: branding?.companyEmail || '',
     company_tagline: branding?.companyTagline || '',
-    company_accent_color: branding?.companyAccentColor || '#22c55e',
+    company_accent_color: branding?.companyAccentColor || '#3b82f6',
+    company_website: branding?.companyWebsite || '',
     registration_scheme: branding?.registrationScheme || '',
     registration_number: branding?.registrationNumber || '',
     registration_scheme_logo: branding?.registrationSchemeLogo || '',

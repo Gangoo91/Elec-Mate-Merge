@@ -2,7 +2,7 @@
  * AnimatedCounter
  *
  * Smooth number animation with spring physics for natural feel.
- * Supports locale formatting and currency prefixes.
+ * Supports locale formatting, currency prefixes, and tabular-nums.
  */
 
 import { useEffect, useRef, useState } from 'react';
@@ -71,7 +71,7 @@ export function AnimatedCounter({
   };
 
   return (
-    <span className={className}>
+    <span className={`tabular-nums tracking-tight ${className}`}>
       {prefix}
       {formatNumber(displayValue)}
       {suffix}
@@ -99,7 +99,7 @@ export function SimpleCounter({
       key={value}
       initial={{ opacity: 0, y: -10 }}
       animate={{ opacity: 1, y: 0 }}
-      className={className}
+      className={`tabular-nums tracking-tight ${className}`}
     >
       {prefix}
       {value.toLocaleString('en-GB')}

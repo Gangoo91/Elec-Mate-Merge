@@ -1,12 +1,9 @@
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import {
   PoundSterling,
-  TrendingUp,
-  Users,
   RefreshCw,
   Calendar,
   ArrowUp,
@@ -17,13 +14,24 @@ import {
   Building2,
   AlertTriangle,
   CheckCircle2,
-  XCircle,
-  Clock,
 } from 'lucide-react';
 import { format, subDays, startOfDay } from 'date-fns';
 import { useState, useCallback } from 'react';
 import { cn } from '@/lib/utils';
+import { motion } from 'framer-motion';
+import { AnimatedCounter } from '@/components/dashboard/AnimatedCounter';
 import PullToRefresh from '@/components/admin/PullToRefresh';
+
+/* ── animation variants ─────────────────────────────────────── */
+
+const sectionVariants = {
+  hidden: { opacity: 0, y: 12 },
+  visible: (i: number) => ({
+    opacity: 1,
+    y: 0,
+    transition: { delay: i * 0.06, duration: 0.35, ease: 'easeOut' },
+  }),
+};
 
 // Stripe stats type
 interface StripeStats {
@@ -144,15 +152,45 @@ export default function AdminRevenue() {
     employer: { color: 'purple', icon: Building2, price: '£29.99' },
   };
 
+  /* ── Loading skeleton ──────────────────────────────────────── */
+
   if (stripeLoading) {
     return (
-      <div className="space-y-4 animate-pulse">
-        <div className="h-12 bg-muted rounded-lg w-48" />
-        <div className="h-40 bg-muted rounded-2xl" />
+      <div className="space-y-3 animate-pulse">
+        {/* Hero skeleton */}
+        <div className="glass-premium rounded-2xl overflow-hidden">
+          <div className="h-1 bg-gradient-to-r from-emerald-500 to-green-400" />
+          <div className="p-5 space-y-4">
+            <div className="flex items-center justify-between">
+              <div className="h-4 w-40 bg-white/[0.06] rounded" />
+              <div className="h-6 w-14 bg-white/[0.06] rounded-full" />
+            </div>
+            <div className="h-10 w-48 bg-white/[0.06] rounded" />
+            <div className="grid grid-cols-3 gap-2">
+              {[...Array(3)].map((_, i) => (
+                <div key={i} className="h-16 bg-white/[0.06] rounded-xl" />
+              ))}
+            </div>
+          </div>
+        </div>
+        {/* Tier skeleton */}
         <div className="grid grid-cols-2 gap-3">
           {[...Array(4)].map((_, i) => (
-            <div key={i} className="h-32 bg-muted rounded-xl" />
+            <div key={i} className="glass-premium rounded-2xl overflow-hidden">
+              <div className="h-1 bg-white/[0.06]" />
+              <div className="p-4 space-y-3">
+                <div className="h-4 w-20 bg-white/[0.06] rounded" />
+                <div className="h-8 w-12 bg-white/[0.06] rounded" />
+              </div>
+            </div>
           ))}
+        </div>
+        {/* Chart skeleton */}
+        <div className="glass-premium rounded-2xl overflow-hidden">
+          <div className="h-1 bg-gradient-to-r from-blue-500 to-cyan-400" />
+          <div className="p-5">
+            <div className="h-32 bg-white/[0.06] rounded-xl" />
+          </div>
         </div>
       </div>
     );
@@ -175,42 +213,16 @@ export default function AdminRevenue() {
         await handleRefresh();
       }}
     >
-      <div className="space-y-4 pb-20">
-        {/* Header */}
-        <div className="flex items-center justify-between">
-          <div>
-            <h1 className="text-xl font-bold flex items-center gap-2">
-              Revenue
-              {stripeStats && (
-                <Badge className="bg-emerald-500/20 text-emerald-400 border-emerald-500/30 text-xs gap-1">
-                  <div className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-                  LIVE
-                </Badge>
-              )}
-            </h1>
-            <p className="text-xs text-white">
-              {stripeStats
-                ? `From Stripe • ${new Date(stripeStats.generatedAt).toLocaleTimeString()}`
-                : 'Loading live data...'}
-            </p>
-          </div>
-          <Button
-            variant="outline"
-            size="icon"
-            className="h-11 w-11 touch-manipulation"
-            onClick={handleRefresh}
-            disabled={stripeFetching || isRefreshing}
-          >
-            <RefreshCw
-              className={cn('h-4 w-4', (stripeFetching || isRefreshing) && 'animate-spin')}
-            />
-          </Button>
-        </div>
-
+      <div className="space-y-3 pb-20">
         {/* Data Health Alert */}
         {hasDiscrepancies && (
-          <Card className="border-orange-500/30 bg-orange-500/5">
-            <CardContent className="p-3 flex items-center gap-3">
+          <motion.div
+            className="glass-premium rounded-2xl overflow-hidden"
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+          >
+            <div className="h-0.5 bg-gradient-to-r from-orange-500 to-amber-400" />
+            <div className="p-3 flex items-center gap-3">
               <AlertTriangle className="h-5 w-5 text-orange-400 shrink-0" />
               <div className="flex-1 min-w-0">
                 <p className="text-sm font-medium text-orange-400">Data Sync Required</p>
@@ -226,170 +238,254 @@ export default function AdminRevenue() {
               >
                 Sync
               </Button>
-            </CardContent>
-          </Card>
+            </div>
+          </motion.div>
         )}
 
         {/* Empty State */}
         {totalSubs === 0 && !stripeLoading && (
-          <Card className="border-border/50">
-            <CardContent className="py-12 text-center">
+          <motion.div
+            className="glass-premium rounded-2xl overflow-hidden"
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+          >
+            <div className="h-0.5 bg-gradient-to-r from-emerald-500 to-green-400" />
+            <div className="py-12 text-center px-4">
               <div className="w-16 h-16 rounded-2xl bg-emerald-500/10 flex items-center justify-center mx-auto mb-4">
-                <PoundSterling className="h-8 w-8 text-emerald-400/50" />
+                <PoundSterling className="h-8 w-8 text-emerald-400" />
               </div>
-              <h3 className="text-lg font-semibold mb-1">No active subscriptions</h3>
+              <h3 className="text-lg font-semibold text-white mb-1">No active subscriptions</h3>
               <p className="text-sm text-white">
                 Subscription data from Stripe will appear here once users subscribe.
               </p>
-            </CardContent>
-          </Card>
+            </div>
+          </motion.div>
         )}
 
         {/* Hero MRR Card */}
-        <Card className="bg-gradient-to-br from-emerald-500/20 via-emerald-600/10 to-green-700/5 border-emerald-500/30 overflow-hidden">
-          <CardContent className="pt-5 pb-5 relative">
-            {/* Background pattern */}
-            <div className="absolute inset-0 opacity-5">
-              <div className="absolute top-0 right-0 w-40 h-40 bg-emerald-400 rounded-full blur-3xl" />
-              <div className="absolute bottom-0 left-0 w-32 h-32 bg-green-400 rounded-full blur-3xl" />
-            </div>
-
-            <div className="relative">
-              <div className="flex items-start justify-between mb-4">
+        <motion.section
+          className="glass-premium rounded-2xl overflow-hidden"
+          variants={sectionVariants}
+          initial="hidden"
+          animate="visible"
+          custom={0}
+        >
+          <div className="h-0.5 bg-gradient-to-r from-emerald-500 to-green-400" />
+          <div className="p-5">
+            {/* Header row */}
+            <div className="flex items-center justify-between mb-4">
+              <div className="flex items-center gap-2.5">
+                <div className="w-10 h-10 rounded-xl bg-emerald-500/15 flex items-center justify-center">
+                  <PoundSterling className="h-5 w-5 text-emerald-400" />
+                </div>
                 <div>
-                  <p className="text-xs text-emerald-300 uppercase tracking-wider font-medium mb-1">
-                    Monthly Recurring Revenue
+                  <p className="text-sm font-medium text-white">Monthly Recurring Revenue</p>
+                  <p className="text-xs text-white">
+                    {stripeStats
+                      ? `From Stripe \u2022 ${new Date(stripeStats.generatedAt).toLocaleTimeString()}`
+                      : 'Loading live data...'}
                   </p>
-                  <p className="text-4xl font-bold text-emerald-400">
-                    £
-                    {mrr.toLocaleString('en-GB', {
-                      minimumFractionDigits: 2,
-                      maximumFractionDigits: 2,
-                    })}
-                  </p>
-                </div>
-                <div className="w-14 h-14 rounded-2xl bg-emerald-500/20 flex items-center justify-center">
-                  <PoundSterling className="h-7 w-7 text-emerald-400" />
                 </div>
               </div>
-
-              {/* Quick stats row */}
-              <div className="grid grid-cols-3 gap-2 mt-4">
-                <div className="bg-black/20 rounded-xl p-3 text-center">
-                  <p className="text-lg font-bold text-white">{totalSubs}</p>
-                  <p className="text-xs text-emerald-300 uppercase">Active Subs</p>
-                </div>
-                <div className="bg-black/20 rounded-xl p-3 text-center">
-                  <p className="text-lg font-bold text-white">
-                    £{arr.toLocaleString('en-GB', { maximumFractionDigits: 0 })}
-                  </p>
-                  <p className="text-xs text-emerald-300 uppercase">ARR</p>
-                </div>
-                <div className="bg-black/20 rounded-xl p-3 text-center">
-                  <p className="text-lg font-bold text-white">£{arpu.toFixed(2)}</p>
-                  <p className="text-xs text-emerald-300 uppercase">ARPU</p>
-                </div>
+              <div className="flex items-center gap-2">
+                {stripeStats && (
+                  <Badge className="bg-emerald-500/20 text-emerald-400 border-emerald-500/30 text-xs gap-1">
+                    <div className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                    LIVE
+                  </Badge>
+                )}
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="h-9 w-9 touch-manipulation"
+                  onClick={handleRefresh}
+                  disabled={stripeFetching || isRefreshing}
+                >
+                  <RefreshCw
+                    className={cn(
+                      'h-4 w-4 text-white',
+                      (stripeFetching || isRefreshing) && 'animate-spin'
+                    )}
+                  />
+                </Button>
               </div>
             </div>
-          </CardContent>
-        </Card>
 
-        {/* Tier Breakdown - Large Touch Targets */}
-        <div className="grid grid-cols-2 gap-3">
+            {/* Big MRR number */}
+            <AnimatedCounter
+              value={mrr}
+              prefix="£"
+              decimals={2}
+              className="text-4xl font-bold text-emerald-400"
+            />
+
+            {/* Sub-stat boxes */}
+            <div className="grid grid-cols-3 gap-2 mt-4">
+              <div className="bg-white/[0.04] rounded-xl p-3 text-center">
+                <AnimatedCounter
+                  value={totalSubs}
+                  className="text-lg font-bold text-white"
+                />
+                <p className="text-xs text-white uppercase mt-0.5">Active Subs</p>
+              </div>
+              <div className="bg-white/[0.04] rounded-xl p-3 text-center">
+                <AnimatedCounter
+                  value={arr}
+                  prefix="£"
+                  decimals={0}
+                  formatAsCurrency
+                  className="text-lg font-bold text-white"
+                />
+                <p className="text-xs text-white uppercase mt-0.5">ARR</p>
+              </div>
+              <div className="bg-white/[0.04] rounded-xl p-3 text-center">
+                <p className="text-lg font-bold text-white">£{arpu.toFixed(2)}</p>
+                <p className="text-xs text-white uppercase mt-0.5">ARPU</p>
+              </div>
+            </div>
+          </div>
+        </motion.section>
+
+        {/* Tier Breakdown */}
+        <motion.div
+          className="grid grid-cols-2 gap-3"
+          variants={sectionVariants}
+          initial="hidden"
+          animate="visible"
+          custom={1}
+        >
           {(['founder', 'apprentice', 'electrician', 'employer'] as const).map((tier) => {
             const config = tierConfig[tier];
             const Icon = config.icon;
             const count = stripeStats?.stripe.tierCounts?.[tier] || 0;
             const revenue = count * parseFloat(config.price.replace('£', ''));
 
-            const colorClasses = {
-              yellow: 'from-yellow-500/20 to-amber-600/10 border-yellow-500/40 text-yellow-400',
-              cyan: 'from-cyan-500/20 to-cyan-600/10 border-cyan-500/40 text-cyan-400',
-              blue: 'from-blue-500/20 to-blue-600/10 border-blue-500/40 text-blue-400',
-              purple: 'from-yellow-500/20 to-yellow-600/10 border-yellow-500/40 text-yellow-400',
+            const borderColors = {
+              yellow: 'border-l-yellow-500',
+              cyan: 'border-l-cyan-500',
+              blue: 'border-l-blue-500',
+              purple: 'border-l-purple-500',
+            };
+
+            const textColors = {
+              yellow: 'text-yellow-400',
+              cyan: 'text-cyan-400',
+              blue: 'text-blue-400',
+              purple: 'text-purple-400',
+            };
+
+            const bgColors = {
+              yellow: 'bg-yellow-500/15',
+              cyan: 'bg-cyan-500/15',
+              blue: 'bg-blue-500/15',
+              purple: 'bg-purple-500/15',
             };
 
             return (
-              <Card
+              <div
                 key={tier}
                 className={cn(
-                  'bg-gradient-to-br border touch-manipulation active:scale-[0.98] transition-transform',
-                  colorClasses[config.color as keyof typeof colorClasses]
+                  'glass-premium rounded-2xl border-l-4 overflow-hidden touch-manipulation active:scale-[0.98] transition-transform',
+                  borderColors[config.color as keyof typeof borderColors]
                 )}
               >
-                <CardContent className="p-4">
+                <div className="p-4">
                   <div className="flex items-center justify-between mb-3">
-                    <Icon className="h-6 w-6" />
-                    <Badge variant="outline" className="text-xs border-current/30">
-                      {config.price}/mo
+                    <div className="flex items-center gap-2">
+                      <div
+                        className={cn(
+                          'w-8 h-8 rounded-lg flex items-center justify-center',
+                          bgColors[config.color as keyof typeof bgColors]
+                        )}
+                      >
+                        <Icon
+                          className={cn(
+                            'h-4 w-4',
+                            textColors[config.color as keyof typeof textColors]
+                          )}
+                        />
+                      </div>
+                      <span className="text-xs text-white capitalize font-medium">{tier}</span>
+                    </div>
+                    <Badge
+                      variant="outline"
+                      className={cn(
+                        'text-xs border-white/10',
+                        textColors[config.color as keyof typeof textColors]
+                      )}
+                    >
+                      {config.price}
                     </Badge>
                   </div>
-                  <p className="text-3xl font-bold">{count}</p>
-                  <p className="text-xs text-white capitalize mt-1">{tier}s</p>
-                  <p className="text-xs mt-2">£{revenue.toFixed(2)}/mo</p>
-                </CardContent>
-              </Card>
+                  <p
+                    className={cn(
+                      'text-3xl font-bold',
+                      textColors[config.color as keyof typeof textColors]
+                    )}
+                  >
+                    {count}
+                  </p>
+                  <p className="text-xs text-white mt-1">
+                    £{revenue.toFixed(2)}/mo
+                  </p>
+                </div>
+              </div>
             );
           })}
-        </div>
+        </motion.div>
 
-        {/* 14-Day Performance */}
-        <Card>
-          <CardHeader className="pb-3">
-            <CardTitle className="text-sm flex items-center gap-2">
-              <Calendar className="h-4 w-4 text-blue-400" />
-              Last 14 Days
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="grid grid-cols-3 gap-3">
-              <div className="bg-gradient-to-br from-green-500/15 to-green-600/5 rounded-xl p-4 text-center border border-green-500/20">
-                <div className="flex items-center justify-center gap-1 mb-1">
-                  <ArrowUp className="h-4 w-4 text-green-400" />
-                  <p className="text-2xl font-bold text-green-400">+{subsLast14Days}</p>
-                </div>
-                <p className="text-xs text-white">New Subs</p>
+        {/* 14-Day Performance + Chart — Combined Glass Card */}
+        <motion.div
+          className="glass-premium rounded-2xl overflow-hidden"
+          variants={sectionVariants}
+          initial="hidden"
+          animate="visible"
+          custom={2}
+        >
+          <div className="h-0.5 bg-gradient-to-r from-blue-500 to-cyan-400" />
+          <div className="p-5">
+            {/* Header */}
+            <div className="flex items-center justify-between mb-4">
+              <div className="flex items-center gap-2">
+                <Calendar className="h-4 w-4 text-blue-400" />
+                <span className="text-sm font-medium text-white">Last 14 Days</span>
               </div>
-              <div className="bg-gradient-to-br from-red-500/15 to-red-600/5 rounded-xl p-4 text-center border border-red-500/20">
-                <div className="flex items-center justify-center gap-1 mb-1">
-                  <ArrowDown className="h-4 w-4 text-red-400" />
-                  <p className="text-2xl font-bold text-red-400">{churned}</p>
-                </div>
-                <p className="text-xs text-white">Cancelled</p>
+              <span className="text-sm font-semibold text-emerald-400">
+                +£{totalLast14Days.toFixed(0)} new MRR
+              </span>
+            </div>
+
+            {/* Compact stat row */}
+            <div className="flex items-center gap-4 mb-5">
+              <div className="flex items-center gap-1.5">
+                <ArrowUp className="h-3.5 w-3.5 text-green-400" />
+                <span className="text-sm font-semibold text-green-400">+{subsLast14Days}</span>
+                <span className="text-xs text-white">new</span>
               </div>
-              <div className="bg-gradient-to-br from-amber-500/15 to-amber-600/5 rounded-xl p-4 text-center border border-amber-500/20">
-                <p className="text-2xl font-bold text-amber-400">{churnRate.toFixed(1)}%</p>
-                <p className="text-xs text-white">Churn Rate</p>
+              <div className="flex items-center gap-1.5">
+                <ArrowDown className="h-3.5 w-3.5 text-red-400" />
+                <span className="text-sm font-semibold text-red-400">{churned}</span>
+                <span className="text-xs text-white">cancelled</span>
+              </div>
+              <div className="flex items-center gap-1.5">
+                <span className="text-sm font-semibold text-amber-400">
+                  {churnRate.toFixed(1)}%
+                </span>
+                <span className="text-xs text-white">churn</span>
               </div>
             </div>
-          </CardContent>
-        </Card>
 
-        {/* Revenue Chart - 14 Day Bar Chart */}
-        <Card>
-          <CardHeader className="pb-2">
-            <div className="flex items-center justify-between">
-              <CardTitle className="text-sm flex items-center gap-2">
-                <TrendingUp className="h-4 w-4 text-emerald-400" />
-                Daily Revenue
-              </CardTitle>
-              <Badge variant="outline" className="text-xs">
-                14 days • £{totalLast14Days.toFixed(0)}
-              </Badge>
-            </div>
-          </CardHeader>
-          <CardContent className="pt-0">
-            <div className="flex items-end justify-between gap-1 h-32">
+            {/* Bar chart */}
+            <div className="flex items-end justify-between gap-1 h-24">
               {dailyRevenue.map((day, i) => (
                 <div key={i} className="flex-1 flex flex-col items-center gap-1">
-                  {/* Bar */}
-                  <div className="w-full flex flex-col items-center justify-end h-24">
+                  <div className="w-full flex flex-col items-center justify-end h-20">
                     <div
                       className={cn(
                         'w-full rounded-t-lg transition-all duration-300',
                         day.amount > 0
                           ? 'bg-gradient-to-t from-emerald-500 to-emerald-400'
-                          : 'bg-muted/30'
+                          : 'bg-white/[0.06]'
                       )}
                       style={{
                         height: `${Math.max((day.amount / maxDailyRevenue) * 100, day.amount > 0 ? 8 : 2)}%`,
@@ -397,14 +493,13 @@ export default function AdminRevenue() {
                       }}
                     />
                   </div>
-                  {/* Day label */}
                   <span className="text-xs text-white">{day.date}</span>
                 </div>
               ))}
             </div>
 
             {/* Summary row */}
-            <div className="flex items-center justify-between mt-4 pt-3 border-t border-border/50">
+            <div className="flex items-center justify-between mt-4 pt-3 border-t border-white/[0.06]">
               <div className="flex items-center gap-2">
                 <div className="w-2 h-2 rounded-full bg-emerald-400" />
                 <span className="text-xs text-white">New MRR</span>
@@ -413,83 +508,76 @@ export default function AdminRevenue() {
                 +£{totalLast14Days.toFixed(2)}
               </span>
             </div>
-          </CardContent>
-        </Card>
+          </div>
+        </motion.div>
 
-        {/* Data Source Comparison */}
-        <Card>
-          <CardHeader className="pb-2">
-            <CardTitle className="text-sm flex items-center gap-2">
-              <Clock className="h-4 w-4 text-blue-400" />
-              Data Sources
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-3">
-            {/* Stripe */}
-            <div className="flex items-center gap-3 p-3 rounded-xl bg-emerald-500/5 border border-emerald-500/20">
-              <div className="w-10 h-10 rounded-xl bg-emerald-500/20 flex items-center justify-center">
-                <CheckCircle2 className="h-5 w-5 text-emerald-400" />
-              </div>
-              <div className="flex-1">
-                <p className="text-sm font-medium">Stripe</p>
-                <p className="text-xs text-white">Live payment data</p>
-              </div>
-              <div className="text-right">
-                <p className="text-lg font-bold text-emerald-400">
-                  {stripeStats?.stripe.activeSubscriptions || 0}
-                </p>
-                <p className="text-xs text-white">active</p>
-              </div>
+        {/* Data Sync — Compact Glass Row */}
+        <motion.div
+          className={cn(
+            'glass-premium rounded-2xl overflow-hidden',
+            hasDiscrepancies && 'ring-1 ring-orange-500/30'
+          )}
+          variants={sectionVariants}
+          initial="hidden"
+          animate="visible"
+          custom={3}
+        >
+          <div className="px-4 py-3 flex items-center">
+            {/* Stripe side */}
+            <div className="flex items-center gap-2 flex-1">
+              <div className="w-2 h-2 rounded-full bg-emerald-400" />
+              <span className="text-xs font-medium text-white">Stripe:</span>
+              <span className="text-sm font-semibold text-emerald-400">
+                {stripeStats?.stripe.activeSubscriptions || 0}
+              </span>
+              <span className="text-xs text-white">active</span>
             </div>
 
-            {/* Supabase */}
-            <div
-              className={cn(
-                'flex items-center gap-3 p-3 rounded-xl border',
-                hasDiscrepancies
-                  ? 'bg-orange-500/5 border-orange-500/20'
-                  : 'bg-blue-500/5 border-blue-500/20'
-              )}
-            >
+            {/* Divider */}
+            <div className="w-px h-5 bg-white/10 mx-3" />
+
+            {/* DB side */}
+            <div className="flex items-center gap-2 flex-1">
               <div
                 className={cn(
-                  'w-10 h-10 rounded-xl flex items-center justify-center',
-                  hasDiscrepancies ? 'bg-orange-500/20' : 'bg-blue-500/20'
+                  'w-2 h-2 rounded-full',
+                  hasDiscrepancies ? 'bg-orange-400' : 'bg-blue-400'
+                )}
+              />
+              <span className="text-xs font-medium text-white">DB:</span>
+              <span
+                className={cn(
+                  'text-sm font-semibold',
+                  hasDiscrepancies ? 'text-orange-400' : 'text-blue-400'
                 )}
               >
-                {hasDiscrepancies ? (
-                  <AlertTriangle className="h-5 w-5 text-orange-400" />
-                ) : (
-                  <CheckCircle2 className="h-5 w-5 text-blue-400" />
-                )}
-              </div>
-              <div className="flex-1">
-                <p className="text-sm font-medium">Database</p>
-                <p className="text-xs text-white">{hasDiscrepancies ? 'Needs sync' : 'In sync'}</p>
-              </div>
-              <div className="text-right">
-                <p
-                  className={cn(
-                    'text-lg font-bold',
-                    hasDiscrepancies ? 'text-orange-400' : 'text-blue-400'
-                  )}
-                >
-                  {stripeStats?.supabase.subscribedUsers || 0}
-                </p>
-                <p className="text-xs text-white">synced</p>
-              </div>
+                {stripeStats?.supabase.subscribedUsers || 0}
+              </span>
+              <span className="text-xs text-white">synced</span>
             </div>
-          </CardContent>
-        </Card>
+
+            {/* Status icon */}
+            {hasDiscrepancies ? (
+              <AlertTriangle className="h-4 w-4 text-orange-400 ml-2" />
+            ) : (
+              <CheckCircle2 className="h-4 w-4 text-emerald-400 ml-2" />
+            )}
+          </div>
+        </motion.div>
 
         {/* Price Breakdown */}
         {stripeStats?.stripe.subscriptionsByPrice &&
           Object.keys(stripeStats.stripe.subscriptionsByPrice).length > 0 && (
-            <Card>
-              <CardHeader className="pb-2">
-                <CardTitle className="text-sm">Active Prices</CardTitle>
-              </CardHeader>
-              <CardContent>
+            <motion.div
+              className="glass-premium rounded-2xl overflow-hidden"
+              variants={sectionVariants}
+              initial="hidden"
+              animate="visible"
+              custom={4}
+            >
+              <div className="h-0.5 bg-gradient-to-r from-emerald-500 to-green-400" />
+              <div className="p-5">
+                <p className="text-sm font-medium text-white mb-3">Active Prices</p>
                 <div className="space-y-2">
                   {Object.entries(stripeStats.stripe.subscriptionsByPrice)
                     .sort((a, b) => b[1] - a[1])
@@ -500,9 +588,9 @@ export default function AdminRevenue() {
                           <div className="flex-1">
                             <div className="flex justify-between text-sm mb-1">
                               <span className="text-white">{price}</span>
-                              <span className="font-medium">{count}</span>
+                              <span className="font-medium text-white">{count}</span>
                             </div>
-                            <div className="h-2 bg-muted rounded-full overflow-hidden">
+                            <div className="h-2 bg-white/[0.06] rounded-full overflow-hidden">
                               <div
                                 className="h-full bg-gradient-to-r from-emerald-500 to-green-400 rounded-full transition-all"
                                 style={{ width: `${percentage}%` }}
@@ -513,8 +601,8 @@ export default function AdminRevenue() {
                       );
                     })}
                 </div>
-              </CardContent>
-            </Card>
+              </div>
+            </motion.div>
           )}
       </div>
     </PullToRefresh>

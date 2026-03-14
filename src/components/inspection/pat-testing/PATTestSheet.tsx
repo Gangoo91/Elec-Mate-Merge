@@ -450,9 +450,9 @@ const PATTestSheet: React.FC<PATTestSheetProps> = ({
                         <button
                           type="button"
                           onClick={() => removePhoto(i)}
-                          className="absolute top-0.5 right-0.5 h-5 w-5 bg-black/70 rounded-full flex items-center justify-center touch-manipulation"
+                          className="absolute -top-1 -right-1 h-7 w-7 bg-black/80 rounded-full flex items-center justify-center touch-manipulation active:scale-90 transition-transform border border-white/20"
                         >
-                          <X className="h-3 w-3 text-white" />
+                          <X className="h-3.5 w-3.5 text-white" />
                         </button>
                       </div>
                     ))}
@@ -665,6 +665,15 @@ const PATTestSheet: React.FC<PATTestSheetProps> = ({
                       <ResultButtonGroup
                         result={appliance.visualInspection.suitableForEnvironment}
                         onChange={(v) => updateVisual('suitableForEnvironment', v)}
+                      />
+                    </div>
+                    {/* Visual Inspection Notes */}
+                    <div className="p-3">
+                      <Textarea
+                        placeholder="Visual inspection notes (optional)"
+                        value={appliance.visualInspection.notes || ''}
+                        onChange={(e) => updateVisual('notes', e.target.value)}
+                        className="touch-manipulation text-sm min-h-[60px] bg-transparent border-white/[0.08]"
                       />
                     </div>
                   </div>
@@ -925,23 +934,23 @@ const PATTestSheet: React.FC<PATTestSheetProps> = ({
                   </div>
                 </div>
 
-                {/* Action Links */}
-                <div className="flex items-center gap-3 px-1">
+                {/* Action Buttons */}
+                <div className="flex items-center gap-2">
                   <button
                     type="button"
                     onClick={handleCopyData}
-                    className="flex items-center gap-1.5 text-sm text-blue-400 font-medium touch-manipulation"
+                    className="flex items-center gap-1.5 h-11 px-3 text-sm text-blue-400 font-medium rounded-lg bg-blue-500/10 border border-blue-500/20 touch-manipulation active:scale-[0.97] transition-transform"
                   >
-                    <Copy className="h-3.5 w-3.5" />
-                    Copy Test Data
+                    <Copy className="h-4 w-4" />
+                    Copy
                   </button>
                   {copiedData && (
                     <button
                       type="button"
                       onClick={handlePasteData}
-                      className="flex items-center gap-1.5 text-sm text-green-400 font-medium touch-manipulation"
+                      className="flex items-center gap-1.5 h-11 px-3 text-sm text-green-400 font-medium rounded-lg bg-green-500/10 border border-green-500/20 touch-manipulation active:scale-[0.97] transition-transform"
                     >
-                      <ClipboardPaste className="h-3.5 w-3.5" />
+                      <ClipboardPaste className="h-4 w-4" />
                       Paste
                     </button>
                   )}
@@ -949,9 +958,9 @@ const PATTestSheet: React.FC<PATTestSheetProps> = ({
                   <button
                     type="button"
                     onClick={handleReset}
-                    className="flex items-center gap-1.5 text-sm text-red-400 font-medium touch-manipulation"
+                    className="flex items-center gap-1.5 h-11 px-3 text-sm text-red-400 font-medium rounded-lg bg-red-500/10 border border-red-500/20 touch-manipulation active:scale-[0.97] transition-transform"
                   >
-                    <RotateCcw className="h-3.5 w-3.5" />
+                    <RotateCcw className="h-4 w-4" />
                     Reset
                   </button>
                 </div>
@@ -959,7 +968,7 @@ const PATTestSheet: React.FC<PATTestSheetProps> = ({
             </div>
 
             {/* Sticky Footer Navigation */}
-            <div className="absolute bottom-0 left-0 right-0 bg-[#242428] border-t border-white/[0.08] p-3 pb-6 flex items-center justify-between gap-3">
+            <div className="absolute bottom-0 left-0 right-0 bg-[#242428] border-t border-white/[0.08] p-3 pb-[max(1.5rem,env(safe-area-inset-bottom))] flex items-center justify-between gap-3">
               <Button
                 variant="outline"
                 onClick={() => onNavigate('prev')}

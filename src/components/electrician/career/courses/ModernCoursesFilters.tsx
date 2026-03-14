@@ -94,7 +94,9 @@ const ModernCoursesFilters = ({
               {activeFiltersCount}
             </span>
           )}
-          <ChevronDown className={cn('h-3 w-3 transition-transform', showAdvanced && 'rotate-180')} />
+          <ChevronDown
+            className={cn('h-3 w-3 transition-transform', showAdvanced && 'rotate-180')}
+          />
         </button>
 
         {/* Sort pill */}
@@ -169,40 +171,68 @@ const ModernCoursesFilters = ({
                   <SelectValue placeholder="Level" />
                 </SelectTrigger>
                 <SelectContent className="bg-[#1a1a1c] border-white/10">
-                  <SelectItem value="all" className="text-white hover:bg-white/10 text-sm">All Levels</SelectItem>
+                  <SelectItem value="all" className="text-white hover:bg-white/10 text-sm">
+                    All Levels
+                  </SelectItem>
                   {levels.map((level) => (
-                    <SelectItem key={level} value={level} className="text-white hover:bg-white/10 text-sm">{level}</SelectItem>
+                    <SelectItem
+                      key={level}
+                      value={level}
+                      className="text-white hover:bg-white/10 text-sm"
+                    >
+                      {level}
+                    </SelectItem>
                   ))}
                 </SelectContent>
               </Select>
 
               <Select
                 value={filters.format || 'all'}
-                onValueChange={(value) => handleFilterChange('format', value === 'all' ? '' : value)}
+                onValueChange={(value) =>
+                  handleFilterChange('format', value === 'all' ? '' : value)
+                }
               >
                 <SelectTrigger className="h-11 bg-white/[0.06] border-white/[0.08] text-white text-xs touch-manipulation rounded-lg">
                   <SelectValue placeholder="Format" />
                 </SelectTrigger>
                 <SelectContent className="bg-[#1a1a1c] border-white/10">
-                  <SelectItem value="all" className="text-white hover:bg-white/10 text-sm">All Formats</SelectItem>
+                  <SelectItem value="all" className="text-white hover:bg-white/10 text-sm">
+                    All Formats
+                  </SelectItem>
                   {formats.map((format) => (
-                    <SelectItem key={format} value={format} className="text-white hover:bg-white/10 text-sm">{format}</SelectItem>
+                    <SelectItem
+                      key={format}
+                      value={format}
+                      className="text-white hover:bg-white/10 text-sm"
+                    >
+                      {format}
+                    </SelectItem>
                   ))}
                 </SelectContent>
               </Select>
 
               <Select
                 value={filters.location || 'all'}
-                onValueChange={(value) => handleFilterChange('location', value === 'all' ? '' : value)}
+                onValueChange={(value) =>
+                  handleFilterChange('location', value === 'all' ? '' : value)
+                }
               >
                 <SelectTrigger className="h-11 bg-white/[0.06] border-white/[0.08] text-white text-xs touch-manipulation rounded-lg">
                   <SelectValue placeholder="Demand" />
                 </SelectTrigger>
                 <SelectContent className="bg-[#1a1a1c] border-white/10">
-                  <SelectItem value="all" className="text-white hover:bg-white/10 text-sm">All Demand</SelectItem>
-                  <SelectItem value="High" className="text-white hover:bg-white/10 text-sm">High Demand</SelectItem>
-                  <SelectItem value="Medium" className="text-white hover:bg-white/10 text-sm">Medium</SelectItem>
-                  <SelectItem value="Low" className="text-white hover:bg-white/10 text-sm">Low</SelectItem>
+                  <SelectItem value="all" className="text-white hover:bg-white/10 text-sm">
+                    All Demand
+                  </SelectItem>
+                  <SelectItem value="High" className="text-white hover:bg-white/10 text-sm">
+                    High Demand
+                  </SelectItem>
+                  <SelectItem value="Medium" className="text-white hover:bg-white/10 text-sm">
+                    Medium
+                  </SelectItem>
+                  <SelectItem value="Low" className="text-white hover:bg-white/10 text-sm">
+                    Low
+                  </SelectItem>
                 </SelectContent>
               </Select>
             </div>

@@ -18,8 +18,8 @@ export const DashboardContainer: React.FC<DashboardContainerProps> = ({ children
   return (
     <div
       className={cn(
-        // Background matches sidebar exactly: hsl(240, 5.9%, 10%)
-        'bg-[hsl(240,5.9%,10%)]',
+        // Transparent — inherits Layout's bg-elec-dark (240 5.9% 8%)
+        '',
         className
       )}
     >
