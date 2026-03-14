@@ -981,13 +981,14 @@ const ProjectDetailPage = () => {
                     key={cert.id}
                     type="button"
                     onClick={() =>
+                      cert.report_type &&
                       navigate(`/electrician/inspection-testing/${cert.report_type}/${cert.id}`)
                     }
                     className="w-full flex items-center justify-between p-3 rounded-xl bg-white/[0.04] border border-white/[0.08] touch-manipulation active:bg-white/[0.08] transition-colors"
                   >
                     <div className="min-w-0 text-left">
                       <p className="text-sm font-medium text-white">
-                        {cert.report_type.toUpperCase().replace(/-/g, ' ')}
+                        {cert.report_type?.toUpperCase().replace(/-/g, ' ') || 'Certificate'}
                       </p>
                       {cert.client_name && (
                         <p className="text-[11px] text-white">{cert.client_name}</p>
