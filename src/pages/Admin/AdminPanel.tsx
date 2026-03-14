@@ -181,12 +181,12 @@ export default function AdminPanel() {
   };
 
   return (
-    <div className="bg-background min-h-screen">
+    <div className="bg-background min-h-screen -mt-3 sm:-mt-4 md:-mt-6">
       {/* Offline Banner */}
       <OfflineBanner />
 
       {/* Back Button */}
-      <div className="px-4 pt-4 safe-top">
+      <div className="px-4 pt-4">
         <Button
           variant="ghost"
           className="text-white hover:text-white hover:bg-white/[0.05] active:bg-white/[0.08] active:scale-[0.98] -ml-2 h-11 touch-manipulation transition-all"
