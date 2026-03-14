@@ -28,6 +28,7 @@ export const RAMSAmendDialog: React.FC<RAMSAmendDialogProps> = ({
   onQuickEdit,
 }) => {
   const [isLoading, setIsLoading] = useState(true);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [documentData, setDocumentData] = useState<any>(null);
   const navigate = useNavigate();
 
@@ -35,6 +36,7 @@ export const RAMSAmendDialog: React.FC<RAMSAmendDialogProps> = ({
     if (isOpen && documentId) {
       loadDocument();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isOpen, documentId]);
 
   const loadDocument = async () => {
@@ -129,92 +131,98 @@ export const RAMSAmendDialog: React.FC<RAMSAmendDialogProps> = ({
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="w-[88vw] sm:w-auto sm:max-w-[480px] max-h-[85dvh] sm:max-h-[90dvh] overflow-y-auto overflow-x-hidden rounded-md">
-        <DialogHeader>
-          <DialogTitle className="flex items-center gap-2 text-sm sm:text-xl">
-            <Edit3 className="h-4 w-4 sm:h-5 sm:w-5 text-elec-yellow" />
-            Amend RAMS Document
-          </DialogTitle>
-          <DialogDescription className="hidden sm:block text-sm text-white">
-            Choose how you'd like to update this document
-          </DialogDescription>
-        </DialogHeader>
+      <DialogContent className="w-[92vw] sm:w-auto sm:max-w-[480px] max-h-[85dvh] sm:max-h-[90dvh] overflow-y-auto overflow-x-hidden rounded-2xl border-white/[0.08] bg-[hsl(240,5.9%,12%)] p-0">
+        <div className="p-5 sm:p-6 space-y-5">
+          <DialogHeader className="space-y-1">
+            <DialogTitle className="flex items-center gap-2.5 text-base sm:text-lg">
+              <div className="p-2 rounded-lg bg-elec-yellow/10">
+                <Edit3 className="h-4 w-4 text-elec-yellow" />
+              </div>
+              Amend RAMS
+            </DialogTitle>
+            <DialogDescription className="text-sm text-white">
+              Choose how to update this document
+            </DialogDescription>
+          </DialogHeader>
 
-        {isLoading ? (
-          <div className="flex items-center justify-center py-12">
-            <Loader2 className="h-8 w-8 animate-spin text-elec-yellow" />
-          </div>
-        ) : documentData ? (
-          <div className="space-y-3 sm:space-y-6 py-2 sm:py-4">
-            {/* Document Info */}
-            <div className="space-y-2 sm:space-y-3.5 p-2 sm:p-5 rounded-lg bg-elec-grey/80 border border-elec-yellow/30">
-              <div className="flex items-start gap-2 sm:gap-2.5">
-                <User className="h-4 w-4 sm:h-5 sm:w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
-                <div className="min-w-0 flex-1">
-                  <p className="text-xs sm:text-sm font-medium text-white">Project</p>
-                  <p className="text-sm sm:text-base font-semibold break-words">
-                    {documentData.project_name}
-                  </p>
+          {isLoading ? (
+            <div className="flex items-center justify-center py-12">
+              <Loader2 className="h-8 w-8 animate-spin text-elec-yellow" />
+            </div>
+          ) : documentData ? (
+            <div className="space-y-4">
+              {/* Document Info */}
+              <div className="rounded-xl bg-white/[0.04] border border-white/[0.06] divide-y divide-white/[0.06]">
+                <div className="flex items-center gap-3 p-3.5">
+                  <div className="w-9 h-9 rounded-lg bg-elec-yellow/10 flex items-center justify-center flex-shrink-0">
+                    <User className="h-4 w-4 text-elec-yellow" />
+                  </div>
+                  <div className="min-w-0 flex-1">
+                    <p className="text-[11px] text-white mb-0.5">Project</p>
+                    <p className="text-sm font-semibold text-white break-words leading-tight">
+                      {documentData.project_name}
+                    </p>
+                  </div>
+                </div>
+                <div className="flex items-center gap-3 p-3.5">
+                  <div className="w-9 h-9 rounded-lg bg-blue-500/10 flex items-center justify-center flex-shrink-0">
+                    <MapPin className="h-4 w-4 text-blue-400" />
+                  </div>
+                  <div className="min-w-0 flex-1">
+                    <p className="text-[11px] text-white mb-0.5">Location</p>
+                    <p className="text-sm text-white break-words leading-tight">
+                      {documentData.location}
+                    </p>
+                  </div>
+                </div>
+                <div className="flex items-center gap-3 p-3.5">
+                  <div className="w-9 h-9 rounded-lg bg-purple-500/10 flex items-center justify-center flex-shrink-0">
+                    <Calendar className="h-4 w-4 text-purple-400" />
+                  </div>
+                  <div className="min-w-0 flex-1">
+                    <p className="text-[11px] text-white mb-0.5">Created</p>
+                    <p className="text-sm text-white">
+                      {new Date(documentData.created_at).toLocaleDateString('en-GB', {
+                        day: 'numeric',
+                        month: 'long',
+                        year: 'numeric',
+                      })}
+                    </p>
+                  </div>
                 </div>
               </div>
-              <div className="flex items-start gap-2 sm:gap-2.5">
-                <MapPin className="h-4 w-4 sm:h-5 sm:w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
-                <div className="min-w-0 flex-1">
-                  <p className="text-xs sm:text-sm font-medium text-white">Location</p>
-                  <p className="text-sm sm:text-base break-words">{documentData.location}</p>
-                </div>
-              </div>
-              <div className="flex items-start gap-2 sm:gap-2.5">
-                <Calendar className="h-4 w-4 sm:h-5 sm:w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
-                <div className="min-w-0 flex-1">
-                  <p className="text-xs sm:text-sm font-medium text-white">Created</p>
-                  <p className="text-sm sm:text-base">
-                    {new Date(documentData.created_at).toLocaleDateString('en-GB')}
-                  </p>
-                </div>
+
+              {/* Actions */}
+              <div className="space-y-2.5">
+                <button
+                  onClick={handleQuickEdit}
+                  className="w-full h-14 px-4 flex items-center gap-3 rounded-xl bg-elec-yellow text-black font-semibold touch-manipulation active:opacity-90 active:scale-[0.98] transition-all"
+                >
+                  <Edit3 className="h-5 w-5 flex-shrink-0" />
+                  <div className="text-left">
+                    <p className="text-sm font-bold">Quick Edit</p>
+                    <p className="text-[11px] font-medium text-black/60">
+                      Edit risks and steps directly
+                    </p>
+                  </div>
+                </button>
+
+                <button
+                  onClick={handleRegenerateWithAI}
+                  className="w-full h-14 px-4 flex items-center gap-3 rounded-xl bg-white/[0.04] border border-white/[0.08] text-white font-semibold touch-manipulation active:bg-white/[0.06] active:scale-[0.98] transition-all"
+                >
+                  <Sparkles className="h-5 w-5 text-elec-yellow flex-shrink-0" />
+                  <div className="text-left">
+                    <p className="text-sm font-bold">Regenerate with AI</p>
+                    <p className="text-[11px] font-medium text-white">
+                      Rebuild from scratch with new info
+                    </p>
+                  </div>
+                </button>
               </div>
             </div>
-
-            {/* Edit Options */}
-            <div className="space-y-2 sm:space-y-3">
-              <Button
-                onClick={handleQuickEdit}
-                className="w-full min-h-[44px] sm:min-h-[60px] py-2.5 sm:py-4 px-3 sm:px-5 flex items-center justify-between gap-2 bg-gradient-to-r from-elec-yellow to-yellow-400 hover:from-elec-yellow/90 hover:to-yellow-400/90 text-elec-dark shadow-lg"
-              >
-                <div className="flex items-center gap-2">
-                  <Edit3 className="h-4 w-4 sm:h-5 sm:w-5" />
-                  <span className="text-sm sm:text-lg font-bold">Quick Edit</span>
-                </div>
-                <span className="hidden sm:block text-xs sm:text-sm font-medium text-elec-dark/90">
-                  Edit risks and steps directly - fast updates
-                </span>
-              </Button>
-
-              <Button
-                onClick={handleRegenerateWithAI}
-                variant="outline"
-                className="w-full min-h-[44px] sm:min-h-[60px] py-2.5 sm:py-4 px-3 sm:px-5 flex items-center justify-between gap-2 border-2 border-elec-yellow/50 hover:border-elec-yellow hover:bg-elec-yellow/10"
-              >
-                <div className="flex items-center gap-2">
-                  <Sparkles className="h-4 w-4 sm:h-5 sm:w-5 text-elec-yellow" />
-                  <span className="text-sm sm:text-lg font-bold">Regenerate with AI</span>
-                </div>
-                <span className="hidden sm:block text-xs sm:text-sm font-medium text-white">
-                  Use AI to rebuild from scratch with new information
-                </span>
-              </Button>
-            </div>
-
-            {/* Cancel Button */}
-            <Button
-              onClick={onClose}
-              variant="ghost"
-              className="w-full min-h-[40px] sm:min-h-[44px] text-sm sm:text-base border border-transparent hover:border-elec-yellow/30"
-            >
-              Cancel
-            </Button>
-          </div>
-        ) : null}
+          ) : null}
+        </div>
       </DialogContent>
     </Dialog>
   );

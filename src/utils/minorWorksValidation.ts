@@ -50,6 +50,7 @@ const NUMERIC_FIELDS = [
 ];
 
 // Validate individual field
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 function validateField(field: string, value: any): ValidationError[] {
   const errors: ValidationError[] = [];
 
@@ -111,7 +112,7 @@ function validateField(field: string, value: any): ValidationError[] {
 
     case 'workDate':
     case 'dateOfCompletion':
-    case 'signatureDate':
+    case 'signatureDate': {
       const dateValue = new Date(value);
       if (isNaN(dateValue.getTime())) {
         errors.push({
@@ -121,8 +122,9 @@ function validateField(field: string, value: any): ValidationError[] {
         });
       }
       break;
+    }
 
-    case 'supplyVoltage':
+    case 'supplyVoltage': {
       const voltage = parseFloat(value.toString().replace('V', ''));
       if (voltage < 100 || voltage > 1000) {
         errors.push({
@@ -132,8 +134,9 @@ function validateField(field: string, value: any): ValidationError[] {
         });
       }
       break;
+    }
 
-    case 'frequency':
+    case 'frequency': {
       const freq = parseFloat(value.toString().replace('Hz', ''));
       if (freq !== 50 && freq !== 60) {
         errors.push({
@@ -143,12 +146,14 @@ function validateField(field: string, value: any): ValidationError[] {
         });
       }
       break;
+    }
   }
 
   return errors;
 }
 
 // Validate entire form data
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function validateMinorWorksFormData(formData: any): ValidationResult {
   const allErrors: ValidationError[] = [];
   const allWarnings: ValidationError[] = [];
@@ -279,6 +284,46 @@ export function validateMinorWorksFormData(formData: any): ValidationResult {
     });
   }
 
+  // PFC vs kA breaking capacity check (Reg 434.5.1)
+  if (formData.prospectiveFaultCurrent && formData.protectiveDeviceKaRating) {
+    const pfc = parseFloat(formData.prospectiveFaultCurrent);
+    const ka = parseFloat(formData.protectiveDeviceKaRating);
+
+    if (!isNaN(pfc) && !isNaN(ka) && pfc > ka) {
+      allErrors.push({
+        field: 'prospectiveFaultCurrent',
+        message: `Prospective fault current (${pfc}kA) exceeds device breaking capacity (${ka}kA). Protective device cannot safely interrupt fault — Reg 434.5.1`,
+        severity: 'error',
+      });
+    }
+  }
+
+  // RA × IΔn ≤ 50V for TT systems (Reg 411.5.3)
+  if (formData.earthingArrangement === 'TT' && formData.earthElectrodeResistance) {
+    const ra = parseFloat(formData.earthElectrodeResistance);
+    const idn = parseFloat(formData.rcdIdn || '30');
+
+    if (!isNaN(ra) && !isNaN(idn)) {
+      const touchVoltage = ra * (idn / 1000);
+      if (touchVoltage > 50) {
+        allErrors.push({
+          field: 'earthElectrodeResistance',
+          message: `RA (${ra}Ω) × IΔn (${idn}mA) = ${touchVoltage.toFixed(1)}V exceeds 50V touch voltage limit — Reg 411.5.3`,
+          severity: 'error',
+        });
+      }
+    }
+  }
+
+  // TT system without RCD — mandatory per Reg 411.5.2
+  if (formData.earthingArrangement === 'TT' && !formData.protectionRcd && !formData.protectionRcbo) {
+    allErrors.push({
+      field: 'protectionRcd',
+      message: 'TT earthing requires RCD protection — Reg 411.5.2',
+      severity: 'error',
+    });
+  }
+
   // Insulation resistance validation (Reg 643.3)
   const insulationFields = [
     'insulationLiveNeutral',
@@ -287,11 +332,14 @@ export function validateMinorWorksFormData(formData: any): ValidationResult {
   ];
   insulationFields.forEach((field) => {
     if (formData[field]) {
-      const value = parseFloat(formData[field]);
+      const strVal = formData[field].toString().trim();
+      // Infinite readings (>999, ∞, infinity) are always valid
+      if (/^>\s*\d+/.test(strVal) || strVal === '∞' || strVal.toLowerCase() === 'infinity') return;
+      const value = parseFloat(strVal);
       if (!isNaN(value) && value < 1.0) {
         allErrors.push({
           field,
-          message: `${field.replace(/([A-Z])/g, ' $1').toLowerCase()} (${value}MΩ) is below 1.0MΩ minimum requirement`,
+          message: `${field.replace(/([A-Z])/g, ' $1').toLowerCase()} (${value}MΩ) is below 1.0MΩ minimum requirement — Reg 643.3`,
           severity: 'error',
         });
       }
@@ -306,6 +354,7 @@ export function validateMinorWorksFormData(formData: any): ValidationResult {
 }
 
 // Format field values for better PDF presentation
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function formatFieldForPdf(field: string, value: any): any {
   if (value === null || value === undefined) return '';
 
@@ -324,12 +373,13 @@ export function formatFieldForPdf(field: string, value: any): any {
     case 'workDate':
     case 'dateOfCompletion':
     case 'nextInspectionDue':
-    case 'signatureDate':
+    case 'signatureDate': {
       const date = new Date(value);
       if (!isNaN(date.getTime())) {
         return date.toLocaleDateString('en-GB');
       }
       return value.toString();
+    }
 
     case 'postcode':
       return value.toString().toUpperCase();

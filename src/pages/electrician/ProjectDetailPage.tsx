@@ -167,6 +167,9 @@ const ProjectDetailPage = () => {
     loadCustomers();
   }, []);
 
+  // Project photos
+  const { photos: projectPhotos, fetchDocuments } = useProjectDocuments(id || '');
+
   // Fetch project photos on mount
   useEffect(() => {
     if (id) fetchDocuments();
@@ -206,7 +209,6 @@ const ProjectDetailPage = () => {
   const [linkType, setLinkType] = useState<LinkType | null>(null);
   const [editProjectOpen, setEditProjectOpen] = useState(false);
   const [photoSheetOpen, setPhotoSheetOpen] = useState(false);
-  const { photos: projectPhotos, fetchDocuments } = useProjectDocuments(id || '');
 
   // Edit project form state
   const [editTitle, setEditTitle] = useState('');
@@ -1057,7 +1059,7 @@ const ProjectDetailPage = () => {
                   <button
                     key={r.id}
                     type="button"
-                    onClick={() => navigate('/electrician/health-safety')}
+                    onClick={() => navigate('/electrician/site-safety?tab=saved-rams')}
                     className="w-full flex items-center justify-between p-3 rounded-xl bg-white/[0.04] border border-white/[0.08] touch-manipulation active:bg-white/[0.08] transition-colors"
                   >
                     <div className="min-w-0 text-left">

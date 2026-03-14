@@ -1,6 +1,7 @@
-import { motion, AnimatePresence } from 'framer-motion';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
+import { Sheet, SheetContent, SheetClose, SheetTitle } from '@/components/ui/sheet';
+import { VisuallyHidden } from '@radix-ui/react-visually-hidden';
 import type { EnhancedCareerCourse } from '@/components/apprentice/career/courses/enhancedCoursesData';
 import {
   Star,
@@ -14,15 +15,19 @@ import {
   GraduationCap,
   Building,
   Share2,
-  ArrowLeft,
+  X,
   PoundSterling,
+  Phone,
+  Mail,
   BookOpen,
   MessageSquare,
   Flame,
   Monitor,
   AlertTriangle,
   Info,
+  ChevronRight,
 } from 'lucide-react';
+import { cn } from '@/lib/utils';
 
 interface ModernCoursesDetailsModalProps {
   course: EnhancedCareerCourse | null;
@@ -31,58 +36,31 @@ interface ModernCoursesDetailsModalProps {
   onEnquire?: (course: EnhancedCareerCourse) => void;
 }
 
-const categoryColors: Record<string, { bg: string; text: string }> = {
-  'Essential Updates': { bg: 'bg-red-500', text: 'text-white' },
-  'Emerging Technologies': { bg: 'bg-green-500', text: 'text-white' },
-  'Safety & Compliance': { bg: 'bg-blue-500', text: 'text-white' },
-  'Specialised Systems': { bg: 'bg-purple-500', text: 'text-white' },
-  'Professional Development': { bg: 'bg-orange-500', text: 'text-white' },
-  'Business Skills': { bg: 'bg-cyan-500', text: 'text-white' },
-};
-
-const demandConfig: Record<string, { color: string; bg: string; border: string; label: string }> = {
+const demandConfig: Record<
+  string,
+  { color: string; bg: string; gradient: string; label: string; desc: string }
+> = {
   High: {
     color: 'text-red-400',
-    bg: 'bg-red-500/10',
-    border: 'border-l-red-500',
+    bg: 'bg-red-500/15',
+    gradient: 'from-red-500/20 to-orange-500/10',
     label: 'High Demand',
+    desc: 'Employers actively recruiting',
   },
   Medium: {
     color: 'text-amber-400',
-    bg: 'bg-amber-500/10',
-    border: 'border-l-amber-500',
+    bg: 'bg-amber-500/15',
+    gradient: 'from-amber-500/20 to-yellow-500/10',
     label: 'Moderate Demand',
+    desc: 'Steady employer demand',
   },
   Low: {
     color: 'text-green-400',
-    bg: 'bg-green-500/10',
-    border: 'border-l-green-500',
-    label: 'Available',
+    bg: 'bg-green-500/15',
+    gradient: 'from-green-500/20 to-emerald-500/10',
+    label: 'Specialist',
+    desc: 'Niche opportunities',
   },
-};
-
-const getCourseImage = (course: EnhancedCareerCourse) => {
-  if (course.image_url) return course.image_url;
-
-  const categoryImages: Record<string, string> = {
-    'Essential Updates':
-      'https://images.unsplash.com/photo-1621905251189-08b45d6a269e?w=800&h=400&fit=crop',
-    'Emerging Technologies':
-      'https://images.unsplash.com/photo-1593941707882-a5bba14938c7?w=800&h=400&fit=crop',
-    'Safety & Compliance':
-      'https://images.unsplash.com/photo-1581092160562-40aa08e78837?w=800&h=400&fit=crop',
-    'Specialised Systems':
-      'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&h=400&fit=crop',
-    'Professional Development':
-      'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=800&h=400&fit=crop',
-    'Business Skills':
-      'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=800&h=400&fit=crop',
-  };
-
-  return (
-    categoryImages[course.category] ||
-    'https://images.unsplash.com/photo-1621905251189-08b45d6a269e?w=800&h=400&fit=crop'
-  );
 };
 
 const ModernCoursesDetailsModal = ({
@@ -93,15 +71,22 @@ const ModernCoursesDetailsModal = ({
 }: ModernCoursesDetailsModalProps) => {
   if (!course) return null;
 
-  const categoryStyle = categoryColors[course.category] || {
-    bg: 'bg-blue-500',
-    text: 'text-white',
-  };
   const demandStyle = demandConfig[course.industryDemand] || demandConfig.Medium;
 
+  // Extra fields passed through from TrainingCourse
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const contactPhone = (course as any).contact_phone as string | undefined;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const contactEmail = (course as any).contact_email as string | undefined;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const bookingUrl = (course as any).booking_url as string | undefined;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const venuePostcode = (course as any).venue_postcode as string | undefined;
+  const courseUrl = course.external_url || bookingUrl;
+
   const handleExternalLink = () => {
-    if (course.external_url) {
-      window.open(course.external_url, '_blank', 'noopener,noreferrer');
+    if (courseUrl) {
+      window.open(courseUrl, '_blank', 'noopener,noreferrer');
     }
   };
 
@@ -114,330 +99,343 @@ const ModernCoursesDetailsModal = ({
           url: course.external_url || window.location.href,
         });
       } catch {
-        // User cancelled or error
+        // cancelled
       }
     }
   };
 
-  return (
-    <AnimatePresence>
-      {open && (
-        <>
-          {/* Backdrop */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            onClick={() => onOpenChange(false)}
-            className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm"
-          />
+  const stats = [
+    { icon: Clock, label: 'Duration', value: course.duration, color: 'blue' },
+    { icon: GraduationCap, label: 'Level', value: course.level, color: 'purple' },
+    { icon: Monitor, label: 'Format', value: course.format || 'In-Person', color: 'green' },
+    { icon: PoundSterling, label: 'Price', value: course.price, color: 'yellow' },
+  ];
 
-          {/* Modal - Full screen on mobile, centered on desktop */}
-          <motion.div
-            initial={{ opacity: 0, y: '100%' }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: '100%' }}
-            transition={{ type: 'spring', damping: 25, stiffness: 300 }}
-            className="fixed inset-0 z-50 sm:inset-4 sm:m-auto sm:max-w-3xl sm:max-h-[90vh] bg-elec-gray sm:rounded-2xl overflow-hidden flex flex-col"
-          >
-            {/* Sticky Header */}
-            <div className="sticky top-0 z-10 flex items-center justify-between p-4 bg-elec-gray/95 backdrop-blur-lg border-b border-white/10">
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={() => onOpenChange(false)}
-                className="text-white hover:text-white hover:bg-white/10 gap-1 touch-manipulation active:scale-[0.98]"
-              >
-                <ArrowLeft className="h-4 w-4" />
-                <span className="sm:hidden">Back</span>
-                <span className="hidden sm:inline">Close</span>
-              </Button>
+  const colorMap: Record<string, { icon: string; bg: string; border: string }> = {
+    blue: { icon: 'text-blue-400', bg: 'bg-blue-500/10', border: 'border-blue-500/20' },
+    purple: { icon: 'text-purple-400', bg: 'bg-purple-500/10', border: 'border-purple-500/20' },
+    green: { icon: 'text-green-400', bg: 'bg-green-500/10', border: 'border-green-500/20' },
+    yellow: { icon: 'text-elec-yellow', bg: 'bg-yellow-500/10', border: 'border-yellow-500/20' },
+  };
 
-              <Button
-                variant="ghost"
-                size="icon"
-                onClick={handleShare}
-                className="text-white hover:text-white hover:bg-white/10"
-              >
-                <Share2 className="h-4 w-4" />
-              </Button>
+  // Collapsible sections data
+  const sections = [
+    {
+      id: 'description',
+      icon: BookOpen,
+      iconColor: 'text-blue-400',
+      title: 'About This Course',
+      show: !!course.description,
+      defaultOpen: true,
+      content: (
+        <p className="text-sm text-white leading-relaxed">{course.description}</p>
+      ),
+    },
+    {
+      id: 'accreditation',
+      icon: Award,
+      iconColor: 'text-elec-yellow',
+      title: 'Accreditation',
+      show: !!(course.accreditation && course.accreditation.length > 0),
+      content: (
+        <div className="flex flex-wrap gap-2">
+          {course.accreditation?.map((a, i) => (
+            <div key={i} className="flex items-center gap-1.5 bg-gradient-to-r from-yellow-500/15 to-amber-500/10 border border-yellow-500/25 rounded-lg px-3 py-2">
+              <Award className="h-3.5 w-3.5 text-elec-yellow shrink-0" />
+              <span className="text-sm text-white font-medium">{a}</span>
             </div>
-
-            {/* Scrollable Content */}
-            <div className="flex-1 overflow-y-auto pb-28">
-              {/* Hero Image with rating badge */}
-              <div className="relative h-48 sm:h-56">
-                <img
-                  src={getCourseImage(course)}
-                  alt={course.title}
-                  className="w-full h-full object-cover"
-                  onError={(e) => {
-                    (e.target as HTMLImageElement).src =
-                      'https://images.unsplash.com/photo-1621905251189-08b45d6a269e?w=800&h=400&fit=crop';
-                  }}
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-elec-gray via-elec-gray/50 to-transparent" />
-
-                {/* Category Badge on Image */}
-                <div className="absolute bottom-4 left-4">
-                  <Badge
-                    className={`${categoryStyle.bg} ${categoryStyle.text} border-0 text-xs font-semibold`}
-                  >
-                    {course.category}
-                  </Badge>
-                </div>
-
-                {/* Gold Rating Badge — top-right */}
-                <div className="absolute top-4 right-4">
-                  <div className="flex items-center gap-1.5 bg-black/60 backdrop-blur-sm rounded-full px-3 py-1.5">
-                    <Star className="h-4 w-4 text-elec-yellow fill-elec-yellow" />
-                    <span className="text-sm font-bold text-white">{course.rating.toFixed(1)}</span>
-                  </div>
-                </div>
+          ))}
+        </div>
+      ),
+    },
+    {
+      id: 'content',
+      icon: CheckCircle,
+      iconColor: 'text-green-400',
+      title: `Course Content${course.courseOutline?.length ? ` (${course.courseOutline.length})` : ''}`,
+      show: !!(course.courseOutline && course.courseOutline.length > 0),
+      content: (
+        <div className="space-y-1.5">
+          {course.courseOutline?.map((item, i) => (
+            <div key={i} className="flex items-start gap-2.5 py-1.5">
+              <div className="w-5 h-5 rounded-full bg-green-500/20 flex items-center justify-center shrink-0 mt-0.5">
+                <span className="text-[10px] font-bold text-green-400">{i + 1}</span>
               </div>
+              <span className="text-sm text-white">{item}</span>
+            </div>
+          ))}
+        </div>
+      ),
+    },
+    {
+      id: 'prerequisites',
+      icon: Info,
+      iconColor: 'text-purple-400',
+      title: 'Prerequisites',
+      show: !!(course.prerequisites && course.prerequisites.length > 0),
+      content: (
+        <div className="space-y-2">
+          {course.prerequisites?.map((p, i) => (
+            <div key={i} className="flex items-start gap-2.5">
+              <AlertTriangle className="h-3.5 w-3.5 text-purple-400 mt-0.5 shrink-0" />
+              <span className="text-sm text-white">{p}</span>
+            </div>
+          ))}
+        </div>
+      ),
+    },
+    {
+      id: 'outcomes',
+      icon: TrendingUp,
+      iconColor: 'text-green-400',
+      title: 'Career Outcomes',
+      show: !!(course.careerOutcomes && course.careerOutcomes.length > 0),
+      content: (
+        <div className="space-y-2">
+          {course.careerOutcomes?.map((o, i) => (
+            <div key={i} className="flex items-start gap-2.5">
+              <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 shrink-0" />
+              <span className="text-sm text-white">{o}</span>
+            </div>
+          ))}
+        </div>
+      ),
+    },
+    {
+      id: 'locations',
+      icon: MapPin,
+      iconColor: 'text-red-400',
+      title: `Locations${course.locations?.length ? ` (${course.locations.length})` : ''}`,
+      show: !!(course.locations && course.locations.length > 0),
+      content: (
+        <div className="flex flex-wrap gap-2">
+          {course.locations?.map((l, i) => (
+            <div key={i} className="flex items-center gap-1.5 bg-white/5 border border-white/10 rounded-lg px-3 py-1.5">
+              <MapPin className="h-3 w-3 text-red-400 shrink-0" />
+              <span className="text-xs text-white font-medium">{l}</span>
+            </div>
+          ))}
+        </div>
+      ),
+    },
+    {
+      id: 'dates',
+      icon: Calendar,
+      iconColor: 'text-orange-400',
+      title: 'Upcoming Dates',
+      show: !!(course.nextDates && course.nextDates.length > 0),
+      content: (
+        <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
+          {course.nextDates?.slice(0, 6).map((d, i) => (
+            <div key={i} className="bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-center">
+              <span className="text-xs text-white font-medium">{d}</span>
+            </div>
+          ))}
+        </div>
+      ),
+    },
+    {
+      id: 'contact',
+      icon: Building,
+      iconColor: 'text-blue-400',
+      title: 'Contact Provider',
+      show: !!(contactPhone || contactEmail),
+      defaultOpen: true,
+      content: (
+        <div className="space-y-2.5">
+          {contactPhone && (
+            <a href={`tel:${contactPhone}`} className="flex items-center gap-3 bg-white/5 border border-white/10 rounded-xl p-3 touch-manipulation active:bg-white/10">
+              <div className="h-8 w-8 rounded-full bg-green-500/15 flex items-center justify-center shrink-0">
+                <Phone className="h-4 w-4 text-green-400" />
+              </div>
+              <div>
+                <p className="text-xs text-white font-medium">Phone</p>
+                <p className="text-sm text-white font-semibold">{contactPhone}</p>
+              </div>
+            </a>
+          )}
+          {contactEmail && (
+            <a href={`mailto:${contactEmail}`} className="flex items-center gap-3 bg-white/5 border border-white/10 rounded-xl p-3 touch-manipulation active:bg-white/10">
+              <div className="h-8 w-8 rounded-full bg-blue-500/15 flex items-center justify-center shrink-0">
+                <Mail className="h-4 w-4 text-blue-400" />
+              </div>
+              <div>
+                <p className="text-xs text-white font-medium">Email</p>
+                <p className="text-sm text-white font-semibold">{contactEmail}</p>
+              </div>
+            </a>
+          )}
+        </div>
+      ),
+    },
+  ];
 
-              {/* Content */}
-              <div className="p-4 sm:p-6 space-y-5 -mt-4">
-                {/* Title & Provider */}
-                <div>
-                  <h2 className="text-xl sm:text-2xl font-bold text-white leading-tight mb-2">
+  return (
+    <Sheet open={open} onOpenChange={onOpenChange}>
+      <SheetContent
+        side="bottom"
+        className="h-[92vh] p-0 rounded-t-2xl overflow-hidden bg-[#111113] [&>button:last-child]:hidden"
+      >
+        <VisuallyHidden>
+          <SheetTitle>Course Details</SheetTitle>
+        </VisuallyHidden>
+
+        <div className="flex flex-col h-full">
+          {/* Fixed header */}
+          <div className="flex-shrink-0 flex items-center justify-between px-4 py-3 border-b border-white/[0.06]">
+            <SheetClose className="h-8 w-8 flex items-center justify-center rounded-full bg-white/10 touch-manipulation active:scale-95">
+              <X className="h-4 w-4 text-white" />
+            </SheetClose>
+            <button
+              onClick={handleShare}
+              className="h-8 w-8 flex items-center justify-center rounded-full bg-white/10 touch-manipulation active:scale-95"
+            >
+              <Share2 className="h-4 w-4 text-white" />
+            </button>
+          </div>
+
+          {/* Scrollable content */}
+          <div className="flex-1 overflow-y-auto">
+            <div className="p-4 space-y-4">
+              {/* === HERO CARD — gradient background with key info === */}
+              <div className="rounded-2xl overflow-hidden bg-gradient-to-br from-blue-600/20 via-purple-600/10 to-transparent border border-white/[0.08]">
+                <div className="p-4 space-y-3">
+                  {/* Category + Rating */}
+                  <div className="flex items-center justify-between">
+                    <Badge className="bg-white/15 text-white border-0 text-[11px] font-semibold backdrop-blur-sm">
+                      {course.category}
+                    </Badge>
+                    <div className="flex items-center gap-1">
+                      <Star className="h-4 w-4 text-elec-yellow fill-elec-yellow" />
+                      <span className="text-sm font-bold text-white">{course.rating.toFixed(1)}</span>
+                    </div>
+                  </div>
+
+                  {/* Title */}
+                  <h2 className="text-xl font-bold text-white leading-tight">
                     {course.title}
                   </h2>
-                  <div className="flex items-center gap-2 text-blue-400">
-                    <Building className="h-4 w-4" />
-                    <span className="font-medium">{course.provider}</span>
-                  </div>
-                </div>
 
-                {/* Quick Stats Grid — 2x2 */}
-                <div className="grid grid-cols-2 gap-2.5">
-                  <div className="bg-white/5 border border-white/10 rounded-xl p-3 text-center">
-                    <Clock className="h-4 w-4 text-blue-400 mx-auto mb-1.5" />
-                    <p className="text-[10px] text-white uppercase tracking-wider">Duration</p>
-                    <p className="text-sm font-semibold text-white mt-0.5">{course.duration}</p>
-                  </div>
-                  <div className="bg-white/5 border border-white/10 rounded-xl p-3 text-center">
-                    <GraduationCap className="h-4 w-4 text-purple-400 mx-auto mb-1.5" />
-                    <p className="text-[10px] text-white uppercase tracking-wider">Level</p>
-                    <p className="text-sm font-semibold text-white mt-0.5">{course.level}</p>
-                  </div>
-                  <div className="bg-white/5 border border-white/10 rounded-xl p-3 text-center">
-                    <Monitor className="h-4 w-4 text-green-400 mx-auto mb-1.5" />
-                    <p className="text-[10px] text-white uppercase tracking-wider">Format</p>
-                    <p className="text-sm font-semibold text-white mt-0.5">
-                      {course.format || 'In-Person'}
-                    </p>
-                  </div>
-                  <div className="bg-white/5 border border-white/10 rounded-xl p-3 text-center">
-                    <PoundSterling className="h-4 w-4 text-elec-yellow mx-auto mb-1.5" />
-                    <p className="text-[10px] text-white uppercase tracking-wider">Price</p>
-                    <p className="text-sm font-semibold text-white mt-0.5">{course.price}</p>
-                  </div>
-                </div>
-
-                {/* Industry Demand Card — full-width, coloured left border */}
-                <div
-                  className={`${demandStyle.bg} border-l-4 ${demandStyle.border} rounded-lg p-4`}
-                >
-                  <div className="flex items-center gap-3">
-                    <Flame className={`h-5 w-5 ${demandStyle.color} flex-shrink-0`} />
-                    <div>
-                      <p className={`text-sm font-semibold ${demandStyle.color}`}>
-                        {demandStyle.label}
-                      </p>
-                      <p className="text-xs text-white mt-0.5">
-                        {course.industryDemand === 'High'
-                          ? 'This qualification is in strong demand across the UK electrical industry'
-                          : course.industryDemand === 'Medium'
-                            ? 'Steady demand for this qualification across UK employers'
-                            : 'Niche qualification with targeted opportunities'}
-                      </p>
+                  {/* Provider */}
+                  <div className="flex items-center gap-2">
+                    <div className="h-6 w-6 rounded-full bg-blue-500/20 flex items-center justify-center">
+                      <Building className="h-3.5 w-3.5 text-blue-400" />
                     </div>
+                    <span className="text-sm font-medium text-blue-400">{course.provider}</span>
                   </div>
-                </div>
 
-                {/* Salary Impact Card — enhanced with gradient */}
-                {course.salaryImpact && (
-                  <div className="bg-gradient-to-br from-blue-500/15 to-purple-500/15 border border-blue-500/25 rounded-xl p-4">
-                    <div className="flex items-center gap-2.5 mb-2">
-                      <div className="w-8 h-8 rounded-full bg-blue-500/20 flex items-center justify-center">
-                        <TrendingUp className="h-4 w-4 text-blue-400" />
+                  {/* Location */}
+                  {(course.locations?.[0] || venuePostcode) && (
+                    <div className="flex items-center gap-2">
+                      <div className="h-6 w-6 rounded-full bg-red-500/20 flex items-center justify-center">
+                        <MapPin className="h-3.5 w-3.5 text-red-400" />
                       </div>
-                      <h4 className="text-sm font-bold text-white">Salary Impact</h4>
+                      <span className="text-sm text-white">{course.locations?.[0]}{venuePostcode ? ` (${venuePostcode})` : ''}</span>
                     </div>
-                    <p className="text-blue-300 font-semibold text-base">{course.salaryImpact}</p>
-                  </div>
-                )}
-
-                {/* Accreditation Badges — enhanced with Award icon */}
-                {course.accreditation && course.accreditation.length > 0 && (
-                  <div>
-                    <h3 className="text-sm font-semibold text-white mb-3 flex items-center gap-2">
-                      <Award className="h-4 w-4 text-elec-yellow" />
-                      Accreditation
-                    </h3>
-                    <div className="flex flex-wrap gap-2">
-                      {course.accreditation.map((accred, index) => (
-                        <div
-                          key={index}
-                          className="flex items-center gap-1.5 bg-blue-500/15 border border-blue-500/25 rounded-lg px-3 py-2"
-                        >
-                          <Award className="h-3.5 w-3.5 text-blue-400 flex-shrink-0" />
-                          <span className="text-sm text-blue-300 font-medium">{accred}</span>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                )}
-
-                {/* Description */}
-                <div>
-                  <h3 className="text-sm font-semibold text-white mb-2 flex items-center gap-2">
-                    <BookOpen className="h-4 w-4 text-blue-400" />
-                    Description
-                  </h3>
-                  <p className="text-white leading-relaxed text-sm">{course.description}</p>
-                </div>
-
-                {/* Course Content — numbered list in subtle cards */}
-                {course.courseOutline && course.courseOutline.length > 0 && (
-                  <div>
-                    <h3 className="text-sm font-semibold text-white mb-3 flex items-center gap-2">
-                      <CheckCircle className="h-4 w-4 text-green-400" />
-                      Course Content
-                    </h3>
-                    <div className="space-y-2">
-                      {course.courseOutline.map((item, index) => (
-                        <div
-                          key={index}
-                          className="flex items-start gap-3 bg-white/5 border border-white/8 rounded-lg p-3"
-                        >
-                          <span className="flex-shrink-0 w-6 h-6 rounded-full bg-green-500/20 text-green-400 text-xs font-bold flex items-center justify-center">
-                            {index + 1}
-                          </span>
-                          <span className="text-sm text-white pt-0.5">{item}</span>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                )}
-
-                {/* Prerequisites — info card with purple accent */}
-                {course.prerequisites && course.prerequisites.length > 0 && (
-                  <div className="bg-purple-500/10 border border-purple-500/20 rounded-xl p-4">
-                    <h3 className="text-sm font-semibold text-white mb-3 flex items-center gap-2">
-                      <Info className="h-4 w-4 text-purple-400" />
-                      Prerequisites
-                    </h3>
-                    <div className="space-y-2">
-                      {course.prerequisites.map((prereq, index) => (
-                        <div key={index} className="flex items-start gap-2.5 text-white">
-                          <AlertTriangle className="h-3.5 w-3.5 text-purple-400 mt-0.5 flex-shrink-0" />
-                          <span className="text-sm">{prereq}</span>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                )}
-
-                {/* Career Outcomes — green check icons */}
-                {course.careerOutcomes && course.careerOutcomes.length > 0 && (
-                  <div>
-                    <h3 className="text-sm font-semibold text-white mb-3 flex items-center gap-2">
-                      <Award className="h-4 w-4 text-elec-yellow" />
-                      Career Outcomes
-                    </h3>
-                    <div className="space-y-2.5">
-                      {course.careerOutcomes.map((outcome, index) => (
-                        <div key={index} className="flex items-start gap-2.5">
-                          <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
-                          <span className="text-sm text-white">{outcome}</span>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                )}
-
-                {/* Locations */}
-                {course.locations && course.locations.length > 0 && (
-                  <div>
-                    <h3 className="text-sm font-semibold text-white mb-3 flex items-center gap-2">
-                      <MapPin className="h-4 w-4 text-red-400" />
-                      Locations
-                    </h3>
-                    <div className="flex flex-wrap gap-2">
-                      {course.locations.map((location, index) => (
-                        <Badge
-                          key={index}
-                          variant="outline"
-                          className="border-white/20 text-white text-xs py-1.5 px-3"
-                        >
-                          {location}
-                        </Badge>
-                      ))}
-                    </div>
-                  </div>
-                )}
-
-                {/* Next Dates */}
-                {course.nextDates && course.nextDates.length > 0 && (
-                  <div>
-                    <h3 className="text-sm font-semibold text-white mb-3 flex items-center gap-2">
-                      <Calendar className="h-4 w-4 text-orange-400" />
-                      Upcoming Dates
-                    </h3>
-                    <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
-                      {course.nextDates.slice(0, 6).map((date, index) => (
-                        <Badge
-                          key={index}
-                          variant="outline"
-                          className="justify-center border-white/20 text-white py-2 text-xs"
-                        >
-                          {date}
-                        </Badge>
-                      ))}
-                    </div>
-                  </div>
-                )}
-              </div>
-            </div>
-
-            {/* Fixed Bottom CTA — enhanced */}
-            <div className="absolute bottom-0 inset-x-0 p-4 bg-elec-gray/95 backdrop-blur-lg border-t border-white/10 safe-area-inset-bottom">
-              <div className="flex items-center gap-3">
-                <div className="flex-shrink-0">
-                  <div className="text-[10px] text-white mb-0.5">Price</div>
-                  <div className="text-lg font-bold text-white flex items-center gap-0.5">
-                    <PoundSterling className="h-4 w-4" />
-                    {course.price.replace(/[£$]/g, '')}
-                  </div>
-                </div>
-                <div className="flex-1 flex gap-2">
-                  {onEnquire && (
-                    <Button
-                      onClick={() => onEnquire(course)}
-                      variant="outline"
-                      className="flex-1 h-12 bg-white/5 border-white/20 text-white hover:text-white hover:bg-white/10 font-medium gap-2 touch-manipulation"
-                    >
-                      <MessageSquare className="h-4 w-4" />
-                      <span>Enquire</span>
-                    </Button>
                   )}
-                  <Button
-                    onClick={handleExternalLink}
-                    disabled={!course.external_url}
-                    className="flex-1 h-12 bg-elec-yellow text-black hover:bg-elec-yellow/90 font-semibold gap-2 touch-manipulation"
-                  >
-                    <span>Visit</span>
-                    <ExternalLink className="h-4 w-4" />
-                  </Button>
+
+                  {/* Price highlight */}
+                  <div className="flex items-baseline gap-2">
+                    <span className="text-2xl font-bold text-white">{course.price}</span>
+                    {course.duration && (
+                      <span className="text-sm text-white">/ {course.duration}</span>
+                    )}
+                  </div>
                 </div>
               </div>
+
+              {/* === CTA BUTTONS === */}
+              <div className="flex gap-3">
+                <Button
+                  onClick={handleExternalLink}
+                  disabled={!courseUrl}
+                  className="flex-1 h-13 bg-gradient-to-r from-elec-yellow to-amber-400 text-black hover:from-elec-yellow/90 hover:to-amber-400/90 font-bold text-sm gap-2 touch-manipulation rounded-xl shadow-lg shadow-yellow-500/20"
+                >
+                  Visit Course
+                  <ExternalLink className="h-4 w-4" />
+                </Button>
+                {onEnquire && (
+                  <Button
+                    onClick={() => onEnquire(course)}
+                    variant="outline"
+                    className="h-13 px-5 bg-white/5 border-white/15 text-white hover:text-white hover:bg-white/10 font-semibold gap-2 touch-manipulation rounded-xl"
+                  >
+                    <MessageSquare className="h-4 w-4" />
+                  </Button>
+                )}
+              </div>
+
+              {/* === STATS GRID — 2x2 coloured cards === */}
+              <div className="grid grid-cols-2 gap-2.5">
+                {stats.map((stat) => {
+                  const c = colorMap[stat.color];
+                  return (
+                    <div
+                      key={stat.label}
+                      className={cn(
+                        'rounded-xl p-3 border',
+                        c.bg,
+                        c.border
+                      )}
+                    >
+                      <div className="flex items-center gap-2 mb-1">
+                        <stat.icon className={cn('h-4 w-4', c.icon)} />
+                        <span className="text-[10px] font-medium text-white uppercase tracking-wider">{stat.label}</span>
+                      </div>
+                      <p className="text-sm font-bold text-white">{stat.value}</p>
+                    </div>
+                  );
+                })}
+              </div>
+
+              {/* === DEMAND BANNER === */}
+              <div className={cn('rounded-xl p-3.5 bg-gradient-to-r border border-white/[0.06]', demandStyle.gradient)}>
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-2.5">
+                    <div className={cn('h-8 w-8 rounded-full flex items-center justify-center', demandStyle.bg)}>
+                      <Flame className={cn('h-4 w-4', demandStyle.color)} />
+                    </div>
+                    <div>
+                      <p className={cn('text-sm font-bold', demandStyle.color)}>{demandStyle.label}</p>
+                      <p className="text-xs text-white">{demandStyle.desc}</p>
+                    </div>
+                  </div>
+                  {course.salaryImpact && (
+                    <div className="text-right">
+                      <div className="flex items-center gap-1 justify-end">
+                        <TrendingUp className="h-3.5 w-3.5 text-green-400" />
+                        <span className="text-xs font-bold text-green-400">Salary</span>
+                      </div>
+                      <p className="text-xs text-white font-semibold">{course.salaryImpact}</p>
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              {/* === DETAIL SECTIONS — collapsible accordion === */}
+              <div className="rounded-xl border border-white/[0.06] overflow-hidden divide-y divide-white/[0.06]">
+                {sections
+                  .filter((s) => s.show)
+                  .map((section) => (
+                    <details key={section.id} className="group" open={section.defaultOpen}>
+                      <summary className="flex items-center justify-between px-4 py-3.5 cursor-pointer touch-manipulation list-none [&::-webkit-details-marker]:hidden select-none active:bg-white/5">
+                        <div className="flex items-center gap-2.5">
+                          <section.icon className={cn('h-4 w-4', section.iconColor)} />
+                          <span className="text-sm font-semibold text-white">{section.title}</span>
+                        </div>
+                        <ChevronRight className="h-4 w-4 text-white transition-transform group-open:rotate-90" />
+                      </summary>
+                      <div className="px-4 pb-4">
+                        {section.content}
+                      </div>
+                    </details>
+                  ))}
+              </div>
             </div>
-          </motion.div>
-        </>
-      )}
-    </AnimatePresence>
+          </div>
+        </div>
+      </SheetContent>
+    </Sheet>
   );
 };
 

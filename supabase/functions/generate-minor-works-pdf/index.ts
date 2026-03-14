@@ -184,6 +184,7 @@ function transformFormDataForTemplate(formData: any): any {
     // Certificate metadata
     certificate_number: formData.certificateNumber || '',
     generated_at: today,
+    bs7671_amendment_date: 'A3:2024',
     work_date: formatDate(formData.workDate),
     date_of_completion: formatDate(formData.dateOfCompletion),
     next_inspection_due: formatDate(formData.nextInspectionDue),
@@ -343,7 +344,7 @@ function transformFormDataForTemplate(formData: any): any {
       phase_rotation: formData.phaseRotation || '',
       spd_visual: formData.spdVisualInspection || '',
       spd_indicator: formData.spdIndicatorStatus || '',
-      spd_test_button: formData.spdTestButton || false,
+      spd_ok: formData.spdTestButton || false,
       temperature: formData.testTemperature || '',
     },
 

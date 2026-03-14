@@ -233,6 +233,8 @@ const SiteSafety = () => {
     const tab = searchParams.get('tab');
     if (tab === 'briefings') {
       setActiveView('team-briefing');
+    } else if (tab === 'saved-rams') {
+      setActiveView('saved-rams');
     }
   }, [searchParams]);
 

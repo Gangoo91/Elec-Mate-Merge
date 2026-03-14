@@ -14,6 +14,7 @@ interface EICRTabNavigationProps {
   isCurrentTabComplete: boolean;
   currentTabHasRequiredFields: boolean;
   onToggleComplete: () => void;
+  lastTabLabel?: string;
 }
 
 const EICRTabNavigation = ({
@@ -28,6 +29,7 @@ const EICRTabNavigation = ({
   isCurrentTabComplete,
   currentTabHasRequiredFields,
   onToggleComplete,
+  lastTabLabel = 'Complete EICR',
 }: EICRTabNavigationProps) => {
   const isLastTab = currentTabIndex === totalTabs - 1;
 
@@ -99,7 +101,7 @@ const EICRTabNavigation = ({
           disabled={!canNavigateNext}
           className="h-11 w-full sm:w-auto px-6 gap-2 text-base bg-elec-yellow text-black hover:bg-elec-yellow/90 font-semibold shadow-lg shadow-elec-yellow/20 touch-manipulation"
         >
-          <span className="font-medium">{isLastTab ? 'Complete EICR' : 'Next Section'}</span>
+          <span className="font-medium">{isLastTab ? lastTabLabel : 'Next Section'}</span>
           <ArrowRight className="h-4 w-4" />
         </Button>
       </div>

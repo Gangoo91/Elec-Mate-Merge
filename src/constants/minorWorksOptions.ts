@@ -670,6 +670,12 @@ export interface SmartDefault {
     protectionRcd?: boolean;
     rcdIdn?: string;
     rcdType?: string;
+    overcurrentDeviceBsEn?: string;
+    protectiveDeviceKaRating?: string;
+    numberOfConductors?: string;
+    circuitDescription?: string;
+    circuitType?: string;
+    rcdBsEn?: string;
   };
 }
 
@@ -687,6 +693,11 @@ export const SMART_DEFAULTS: SmartDefault[] = [
       cableType: 'twin-earth',
       installationMethod: 'ceiling-void',
       referenceMethod: 'C',
+      overcurrentDeviceBsEn: 'BS EN 60898',
+      protectiveDeviceKaRating: '6',
+      numberOfConductors: '3',
+      circuitDescription: 'Lighting circuit',
+      circuitType: 'radial',
     },
   },
   {
@@ -705,6 +716,12 @@ export const SMART_DEFAULTS: SmartDefault[] = [
       protectionRcbo: true,
       rcdIdn: '30',
       rcdType: 'A',
+      overcurrentDeviceBsEn: 'BS EN 61009',
+      protectiveDeviceKaRating: '6',
+      numberOfConductors: '3',
+      circuitDescription: 'Ring final circuit',
+      circuitType: 'ring',
+      rcdBsEn: 'BS EN 61009',
     },
   },
   {
@@ -720,6 +737,11 @@ export const SMART_DEFAULTS: SmartDefault[] = [
       cableType: 'twin-earth',
       installationMethod: 'under-plaster',
       referenceMethod: 'A',
+      overcurrentDeviceBsEn: 'BS EN 60898',
+      protectiveDeviceKaRating: '6',
+      numberOfConductors: '3',
+      circuitDescription: 'Cooker circuit',
+      circuitType: 'radial',
     },
   },
   {
@@ -738,6 +760,12 @@ export const SMART_DEFAULTS: SmartDefault[] = [
       protectionRcbo: true,
       rcdIdn: '30',
       rcdType: 'A',
+      overcurrentDeviceBsEn: 'BS EN 61009',
+      protectiveDeviceKaRating: '6',
+      numberOfConductors: '3',
+      circuitDescription: 'Electric shower circuit',
+      circuitType: 'radial',
+      rcdBsEn: 'BS EN 61009',
     },
   },
   {
@@ -756,6 +784,12 @@ export const SMART_DEFAULTS: SmartDefault[] = [
       protectionRcbo: true,
       rcdIdn: '30',
       rcdType: 'A',
+      overcurrentDeviceBsEn: 'BS EN 61009',
+      protectiveDeviceKaRating: '6',
+      numberOfConductors: '3',
+      circuitDescription: 'EV charger circuit',
+      circuitType: 'radial',
+      rcdBsEn: 'BS EN 61009',
     },
   },
 ];

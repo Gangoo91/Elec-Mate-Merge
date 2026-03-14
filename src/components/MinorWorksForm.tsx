@@ -22,7 +22,7 @@ import { useQueryClient } from '@tanstack/react-query';
 import { useSmartDefaults } from '@/hooks/useSmartDefaults';
 import { useFormValidation } from '@/hooks/useFormValidation';
 import { useMinorWorksTabs } from '@/hooks/useMinorWorksTabs';
-import { applyMinorWorksDevFill, clearMinorWorksForm } from '@/utils/minorWorksDevFill';
+// minorWorksDevFill.ts kept for future use — UI access removed
 import { CertificatePhotoProvider } from '@/contexts/CertificatePhotoContext';
 import { getZsLimitFromDeviceString } from '@/data/zsLimits';
 
@@ -316,6 +316,11 @@ const MinorWorksForm = ({
     // 3. Haven't already applied defaults
     if (!initialReportId && !smartFormLoading && !hasAppliedSmartDefaults) {
       applySmartDefaults(formData, handleUpdate);
+
+      // Apply remembered earthing arrangement from previous certificates
+      if (hasDefaults && defaults.earthingArrangement && !formData.earthingArrangement) {
+        handleUpdate('earthingArrangement', defaults.earthingArrangement);
+      }
     }
   }, [initialReportId, smartFormLoading, hasAppliedSmartDefaults]);
 
@@ -356,6 +361,29 @@ const MinorWorksForm = ({
       handleUpdate('phaseRotation', '');
     }
   }, [formData.supplyPhases]);
+
+  // Auto-fill RCD rating on Testing tab from Circuit tab's IΔn
+  useEffect(() => {
+    if (formData.rcdIdn && !formData.rcdRating) {
+      handleUpdate('rcdRating', formData.rcdIdn);
+    }
+  }, [formData.rcdIdn]);
+
+  // Auto-fill dateOfCompletion from workDate
+  useEffect(() => {
+    if (formData.workDate && !formData.dateOfCompletion) {
+      handleUpdate('dateOfCompletion', formData.workDate);
+    }
+  }, [formData.workDate]);
+
+  // Auto-fill nextInspectionDue = workDate + 1 year
+  useEffect(() => {
+    if (formData.workDate && !formData.nextInspectionDue) {
+      const d = new Date(formData.workDate);
+      d.setFullYear(d.getFullYear() + 1);
+      handleUpdate('nextInspectionDue', d.toISOString().split('T')[0]);
+    }
+  }, [formData.workDate]);
 
   // ALWAYS save to localStorage before unload - never lose data
   // Also attempt cloud sync and warn user if data hasn't synced
@@ -626,6 +654,9 @@ const MinorWorksForm = ({
   const handleSaveDraft = async () => {
     await autoSaveManualSave();
 
+    // Persist earthing arrangement and other smart defaults for future certificates
+    saveDefaults(formData);
+
     // CRITICAL: Always save to localStorage backup BEFORE cloud sync
     // This ensures data is never lost even if cloud fails
     const reportIdForBackup = currentReportId || formData.certificateNumber;
@@ -667,23 +698,6 @@ const MinorWorksForm = ({
 
   const handleStartNew = () => {
     setShowStartNewDialog(true);
-  };
-
-  // Dev fill handlers (only available in development)
-  const handleDevFill = () => {
-    applyMinorWorksDevFill(handleUpdate);
-    toast({
-      title: 'Dev Fill Applied',
-      description: 'Test data has been filled in all fields.',
-    });
-  };
-
-  const handleClearForm = () => {
-    clearMinorWorksForm(handleUpdate);
-    toast({
-      title: 'Form Cleared',
-      description: 'All fields have been reset.',
-    });
   };
 
   const confirmStartNew = async () => {
@@ -933,6 +947,7 @@ const MinorWorksForm = ({
     isCurrentTabComplete: isTabComplete(currentTab),
     currentTabHasRequiredFields: hasRequiredFields(currentTab),
     onToggleComplete: () => toggleTabComplete(currentTab, handleUpdate),
+    lastTabLabel: 'Complete',
   };
 
   // Build SmartTabs configuration
@@ -978,41 +993,16 @@ const MinorWorksForm = ({
         <>
           <MWDeclarationTab formData={formData} onUpdate={handleUpdate} isMobile={isMobile} />
 
-          {/* PDF Generation in Declaration tab - Edge-to-edge on mobile */}
-          <div className="-mx-4 sm:mx-0 mt-6">
-            <div className="bg-gradient-to-b from-green-500/10 to-green-500/5 border-t border-b sm:border sm:rounded-xl border-green-500/20 p-4 sm:p-6">
-              <div className="px-0 sm:px-0">
-                <div className="flex items-center gap-3 mb-4">
-                  <div className="p-2.5 rounded-xl bg-green-500/20">
-                    <svg
-                      className="h-5 w-5 text-green-400"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
-                      />
-                    </svg>
-                  </div>
-                  <div>
-                    <h3 className="text-base font-semibold text-white">Generate Certificate</h3>
-                    <p className="text-xs text-white">Create your official Minor Works PDF</p>
-                  </div>
-                </div>
-
-                <MinorWorksPdfGenerator
-                  formData={formData}
-                  isFormValid={true}
-                  reportId={currentReportId || formData.certificateNumber}
-                  userId={userId || undefined}
-                  onSuccess={handlePdfSuccess}
-                />
-              </div>
-            </div>
+          {/* Certificate Actions — matches EIC pattern */}
+          <div className="mt-6">
+            <MinorWorksPdfGenerator
+              formData={formData}
+              isFormValid={true}
+              reportId={currentReportId || formData.certificateNumber}
+              userId={userId || undefined}
+              onSuccess={handlePdfSuccess}
+              onSaveDraft={handleSaveDraft}
+            />
           </div>
 
           <EICRTabNavigation {...navProps} />
@@ -1044,8 +1034,6 @@ const MinorWorksForm = ({
           hasUnsavedChanges={hasUnsavedChanges}
           onManualSave={handleSaveDraft}
           onStartNew={handleStartNew}
-          onDevFill={handleDevFill}
-          onClearForm={handleClearForm}
           formData={formData}
           syncState={syncState}
           isOnline={isOnline}

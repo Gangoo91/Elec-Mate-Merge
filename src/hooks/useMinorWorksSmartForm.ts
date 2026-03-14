@@ -176,8 +176,11 @@ export function useMinorWorksSmartForm() {
       companyPhone: companyProfile.company_phone || '',
       companyEmail: companyProfile.company_email || '',
       companyAccentColor: companyProfile.primary_color || '#f59e0b',
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       companyWebsite: (companyProfile as any).company_website || '',
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       companyTagline: (companyProfile as any).company_tagline || '',
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       registrationSchemeLogo: (companyProfile as any).scheme_logo_data_url || '',
     };
   }, [companyProfile]);
@@ -186,6 +189,7 @@ export function useMinorWorksSmartForm() {
   // Auto-Apply Defaults on Form Mount
   // ---------------------------------------------------------------------------
   const getInitialFormDefaults = useCallback(() => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const defaults: Record<string, any> = {};
 
     // Auto-fill contractor details
@@ -221,8 +225,17 @@ export function useMinorWorksSmartForm() {
       defaults.signatureDate = electrician.signatureDate;
     }
 
-    // Set today's date for certificate
-    defaults.certificateDate = new Date().toISOString().split('T')[0];
+    // Set today's date for certificate and work
+    const today = new Date().toISOString().split('T')[0];
+    defaults.certificateDate = today;
+    defaults.workDate = today;
+
+    // Standard domestic defaults (99% case)
+    defaults.polarity = 'correct';
+    defaults.functionalTesting = 'pass';
+    defaults.earthingConductorPresent = true;
+    defaults.bondingWater = true;
+    defaults.bondingGas = true;
 
     return defaults;
   }, [loadContractorDetails, loadTestEquipment, loadElectricianDetails]);
@@ -231,6 +244,7 @@ export function useMinorWorksSmartForm() {
   // Apply Defaults to Form
   // ---------------------------------------------------------------------------
   const applySmartDefaults = useCallback(
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     (currentFormData: Record<string, any>, onUpdate: (field: string, value: any) => void) => {
       const defaults = getInitialFormDefaults();
 

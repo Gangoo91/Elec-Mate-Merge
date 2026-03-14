@@ -53,8 +53,8 @@ const QuickFillIrPanel: React.FC<QuickFillIrPanelProps> = ({
           </span>
           <FieldTooltip
             content="Use this to quickly apply insulation resistance test values to all circuits. Insulation resistance tests verify the integrity of cable insulation between live conductors and earth."
-            regulation="Reg 612.3"
-            example="For most domestic installations, use 500V test voltage with readings >200MΩ for Live-Earth and Live-Neutral."
+            regulation="643.3"
+            example="For most domestic installations, use 500V test voltage. Minimum acceptable reading is 1.0MΩ — readings >200MΩ are typical for new wiring."
           />
         </div>
         {isExpanded ? (

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import SectionHeader from '@/components/ui/section-header';
 import { Input } from '@/components/ui/input';
@@ -39,6 +39,25 @@ const MWDetailsTab: React.FC<MWDetailsTabProps> = ({ formData, onUpdate, isMobil
   const toggleSection = (section: keyof typeof openSections) => {
     setOpenSections((prev) => ({ ...prev, [section]: !prev[section] }));
   };
+
+  // Work description templates based on work type
+  const WORK_DESCRIPTION_TEMPLATES: Record<string, string> = {
+    addition: 'Addition of socket outlet/lighting point to existing circuit',
+    alteration: 'Alteration to existing circuit including repositioning of accessories',
+    replacement: 'Like-for-like replacement of consumer unit/distribution board',
+    new: 'Installation of new radial/ring circuit for',
+    repair: 'Fault finding and repair of circuit',
+  };
+
+  // Dynamic Zdb placeholder based on earthing arrangement
+  const zdbPlaceholder = useMemo(() => {
+    switch (formData.earthingArrangement) {
+      case 'TN-C-S': return '0.20-0.35 typical for PME';
+      case 'TN-S': return '0.35-0.80 typical for TN-S';
+      case 'TT': return 'Varies with electrode';
+      default: return 'e.g., 0.35';
+    }
+  }, [formData.earthingArrangement]);
 
   const handleSelectCustomer = (customer: Customer | null) => {
     if (customer) {
@@ -125,9 +144,20 @@ const MWDetailsTab: React.FC<MWDetailsTabProps> = ({ formData, onUpdate, isMobil
               </div>
 
               <div className="space-y-1.5">
-                <label className="text-xs uppercase tracking-wide text-white pl-0.5">
-                  Person Ordering Work
-                </label>
+                <div className="flex items-center gap-2">
+                  <label className="text-xs uppercase tracking-wide text-white pl-0.5">
+                    Person Ordering Work
+                  </label>
+                  {formData.clientName && !formData.personOrderingWork && (
+                    <button
+                      type="button"
+                      onClick={() => onUpdate('personOrderingWork', formData.clientName as string)}
+                      className="text-xs px-2.5 py-1 rounded-full bg-blue-500/10 border border-blue-500/30 text-blue-400 touch-manipulation active:scale-95 transition-transform"
+                    >
+                      Same as client
+                    </button>
+                  )}
+                </div>
                 <Input
                   value={formData.personOrderingWork || ''}
                   onChange={(e) => onUpdate('personOrderingWork', e.target.value)}
@@ -277,9 +307,20 @@ const MWDetailsTab: React.FC<MWDetailsTabProps> = ({ formData, onUpdate, isMobil
               </div>
 
               <div className="space-y-1.5">
-                <label className="text-xs uppercase tracking-wide text-white pl-0.5">
-                  Description of Work *
-                </label>
+                <div className="flex items-center gap-2">
+                  <label className="text-xs uppercase tracking-wide text-white pl-0.5">
+                    Description of Work *
+                  </label>
+                  {formData.workType && !formData.workDescription && WORK_DESCRIPTION_TEMPLATES[formData.workType as string] && (
+                    <button
+                      type="button"
+                      onClick={() => onUpdate('workDescription', WORK_DESCRIPTION_TEMPLATES[formData.workType as string])}
+                      className="text-xs px-2.5 py-1 rounded-full bg-blue-500/10 border border-blue-500/30 text-blue-400 touch-manipulation active:scale-95 transition-transform"
+                    >
+                      Use template
+                    </button>
+                  )}
+                </div>
                 <Textarea
                   value={formData.workDescription || ''}
                   onChange={(e) => onUpdate('workDescription', e.target.value)}
@@ -293,9 +334,20 @@ const MWDetailsTab: React.FC<MWDetailsTabProps> = ({ formData, onUpdate, isMobil
               </div>
 
               <div className="space-y-1.5">
-                <label className="text-xs uppercase tracking-wide text-white pl-0.5">
-                  Departures from BS 7671 (Reg 120.3, 133.1.3, 133.5)
-                </label>
+                <div className="flex items-center gap-2">
+                  <label className="text-xs uppercase tracking-wide text-white pl-0.5">
+                    Departures from BS 7671 (Reg 120.3, 133.1.3, 133.5)
+                  </label>
+                  {!formData.departuresFromBS7671 && (
+                    <button
+                      type="button"
+                      onClick={() => onUpdate('departuresFromBS7671', 'None')}
+                      className="text-xs px-2.5 py-1 rounded-full bg-green-500/10 border border-green-500/30 text-green-400 touch-manipulation active:scale-95 transition-transform"
+                    >
+                      None
+                    </button>
+                  )}
+                </div>
                 <Textarea
                   value={formData.departuresFromBS7671 || ''}
                   onChange={(e) => onUpdate('departuresFromBS7671', e.target.value)}
@@ -306,9 +358,20 @@ const MWDetailsTab: React.FC<MWDetailsTabProps> = ({ formData, onUpdate, isMobil
               </div>
 
               <div className="space-y-1.5">
-                <label className="text-xs uppercase tracking-wide text-white pl-0.5">
-                  Permitted Exceptions (Reg 411.3.3)
-                </label>
+                <div className="flex items-center gap-2">
+                  <label className="text-xs uppercase tracking-wide text-white pl-0.5">
+                    Permitted Exceptions (Reg 411.3.3)
+                  </label>
+                  {!formData.permittedExceptions && (
+                    <button
+                      type="button"
+                      onClick={() => onUpdate('permittedExceptions', 'None')}
+                      className="text-xs px-2.5 py-1 rounded-full bg-green-500/10 border border-green-500/30 text-green-400 touch-manipulation active:scale-95 transition-transform"
+                    >
+                      None
+                    </button>
+                  )}
+                </div>
                 <Textarea
                   value={formData.permittedExceptions || ''}
                   onChange={(e) => onUpdate('permittedExceptions', e.target.value)}
@@ -372,7 +435,7 @@ const MWDetailsTab: React.FC<MWDetailsTabProps> = ({ formData, onUpdate, isMobil
                     </label>
                     <FieldTooltip
                       content="The type of earthing system determines how protective and neutral conductors are arranged between the supply and installation."
-                      regulation="411.4"
+                      regulation="312.2"
                       example="Most UK domestic supplies are TN-C-S (PME). TT systems require an earth electrode."
                     />
                   </div>
@@ -423,9 +486,9 @@ const MWDetailsTab: React.FC<MWDetailsTabProps> = ({ formData, onUpdate, isMobil
                       Zdb - Earth fault loop at DB (Ω)
                     </label>
                     <FieldTooltip
-                      content="External earth fault loop impedance measured at the distribution board. This value is used to verify circuit disconnection times."
-                      regulation="411.4.5"
-                      example="Typical values: TN-C-S: 0.20-0.35Ω, TN-S: 0.35-0.80Ω, TT: varies with electrode"
+                      content="Earth fault loop impedance measured at the distribution board (Ze + internal cable impedance). Used to verify that protective devices can disconnect within the required time."
+                      regulation="643.7.3"
+                      example="Typical Zdb: TN-C-S: 0.25-0.45Ω, TN-S: 0.40-0.90Ω, TT: depends on electrode resistance"
                     />
                   </div>
                   <Input
@@ -433,7 +496,7 @@ const MWDetailsTab: React.FC<MWDetailsTabProps> = ({ formData, onUpdate, isMobil
                     step="0.01"
                     value={formData.zdb || ''}
                     onChange={(e) => onUpdate('zdb', e.target.value)}
-                    placeholder="e.g., 0.35"
+                    placeholder={zdbPlaceholder}
                     className="h-12 text-base bg-white/5 border-white/10 rounded-xl focus:border-amber-500/50 focus:ring-amber-500/20"
                   />
                 </div>

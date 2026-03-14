@@ -183,17 +183,58 @@ const MWTestingTab: React.FC<MWTestingTabProps> = ({ formData, onUpdate, isMobil
     if (!formData.earthFaultLoopImpedance || !formData.maxPermittedZs) return null;
     const measured = parseFloat(formData.earthFaultLoopImpedance);
     const max = parseFloat(formData.maxPermittedZs);
+    if (isNaN(measured) || isNaN(max)) return null;
     return measured <= max;
   };
 
   const zsValidation = isZsValid();
 
-  // Check insulation resistance values
+  // Zs margin calculation (percentage headroom)
+  const zsMargin = useMemo(() => {
+    if (!formData.earthFaultLoopImpedance || !formData.maxPermittedZs) return null;
+    const measured = parseFloat(formData.earthFaultLoopImpedance);
+    const max = parseFloat(formData.maxPermittedZs);
+    if (isNaN(measured) || isNaN(max) || max === 0) return null;
+    const margin = max - measured;
+    const percent = (margin / max) * 100;
+    return { margin: Math.round(margin * 100) / 100, percent: Math.round(percent) };
+  }, [formData.earthFaultLoopImpedance, formData.maxPermittedZs]);
+
+  // PFC vs kA breaking capacity check (Reg 434.5.1)
+  const pfcKaCheck = useMemo(() => {
+    if (!formData.prospectiveFaultCurrent || !formData.protectiveDeviceKaRating) return null;
+    const pfc = parseFloat(formData.prospectiveFaultCurrent);
+    const ka = parseFloat(formData.protectiveDeviceKaRating);
+    if (isNaN(pfc) || isNaN(ka)) return null;
+    return { pass: pfc <= ka, pfc, ka };
+  }, [formData.prospectiveFaultCurrent, formData.protectiveDeviceKaRating]);
+
+  // RA × IΔn ≤ 50V check for TT systems (Reg 411.5.3)
+  const raIdnResult = useMemo(() => {
+    if (formData.earthingArrangement !== 'TT') return null;
+    if (!formData.earthElectrodeResistance) return null;
+    const ra = parseFloat(formData.earthElectrodeResistance);
+    if (isNaN(ra)) return null;
+    const idn = parseFloat(formData.rcdIdn || '30'); // Default 30mA if not set
+    if (isNaN(idn)) return null;
+    const touchVoltage = ra * (idn / 1000); // IΔn in mA → A
+    return { pass: touchVoltage <= 50, touchVoltage: Math.round(touchVoltage * 100) / 100 };
+  }, [formData.earthingArrangement, formData.earthElectrodeResistance, formData.rcdIdn]);
+
+  const raIdnCheck = raIdnResult?.pass ?? null;
+  const raIdnValue = raIdnResult?.touchVoltage ?? 0;
+
+  // Check insulation resistance values — handles infinite readings (>999, ∞)
   const checkInsulationValue = (value: string) => {
     if (!value) return null;
-    const num = parseFloat(value);
+    const trimmed = value.trim();
+    // Infinite readings are always a pass (meter exceeded range)
+    if (/^>\s*\d+/.test(trimmed) || trimmed === '∞' || trimmed.toLowerCase() === 'infinity') {
+      return true;
+    }
+    const num = parseFloat(trimmed);
     if (isNaN(num)) return null;
-    return num >= 1; // Minimum 1 MΩ per BS 7671
+    return num >= 1; // Minimum 1 MΩ per BS 7671 Reg 643.3
   };
 
   return (
@@ -487,33 +528,67 @@ const MWTestingTab: React.FC<MWTestingTabProps> = ({ formData, onUpdate, isMobil
                 <Alert
                   className={cn(
                     'border',
-                    zsValidation
-                      ? 'border-green-500/30 bg-green-500/10'
-                      : 'border-red-500/30 bg-red-500/10'
+                    zsValidation === false
+                      ? 'border-red-500/30 bg-red-500/10'
+                      : zsMargin && zsMargin.percent < 20
+                        ? 'border-amber-500/30 bg-amber-500/10'
+                        : 'border-green-500/30 bg-green-500/10'
                   )}
                 >
-                  {zsValidation ? (
-                    <CheckCircle className="h-4 w-4 text-green-400" />
-                  ) : (
+                  {zsValidation === false ? (
                     <AlertCircle className="h-4 w-4 text-red-400" />
+                  ) : zsMargin && zsMargin.percent < 20 ? (
+                    <AlertCircle className="h-4 w-4 text-amber-400" />
+                  ) : (
+                    <CheckCircle className="h-4 w-4 text-green-400" />
                   )}
-                  <AlertDescription className={zsValidation ? 'text-green-200' : 'text-red-200'}>
-                    {zsValidation
-                      ? 'Zs is within acceptable limits'
-                      : 'Zs exceeds maximum permitted value - check circuit protection'}
+                  <AlertDescription className={
+                    zsValidation === false
+                      ? 'text-red-200'
+                      : zsMargin && zsMargin.percent < 20
+                        ? 'text-amber-200'
+                        : 'text-green-200'
+                  }>
+                    {zsValidation === false
+                      ? `Zs ${formData.earthFaultLoopImpedance}Ω exceeds max ${formData.maxPermittedZs}Ω — disconnection time not met (Reg 411.4.5)`
+                      : zsMargin
+                        ? zsMargin.percent < 20
+                          ? `Zs ${formData.earthFaultLoopImpedance}Ω vs max ${formData.maxPermittedZs}Ω — only ${zsMargin.percent}% margin. Consider temperature rise at operating conditions`
+                          : `Zs ${formData.earthFaultLoopImpedance}Ω vs max ${formData.maxPermittedZs}Ω — ${zsMargin.percent}% margin`
+                        : 'Zs is within acceptable limits'}
                   </AlertDescription>
                 </Alert>
               )}
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="space-y-2">
-                  <Label className="text-sm">Prospective Fault Current (kA)</Label>
+                  <Label className="text-sm">Prospective Fault Current (kA) *</Label>
                   <Input
                     value={formData.prospectiveFaultCurrent || ''}
                     onChange={(e) => onUpdate('prospectiveFaultCurrent', e.target.value)}
                     placeholder="e.g., 2.5"
-                    className="h-11 text-base touch-manipulation border-white/30 focus:border-elec-yellow focus:ring-elec-yellow"
+                    className={cn(
+                      'h-11 text-base touch-manipulation',
+                      pfcKaCheck?.pass === true && 'border-green-500/50 focus:border-green-500 focus:ring-green-500',
+                      pfcKaCheck?.pass === false && 'border-red-500/50 focus:border-red-500 focus:ring-red-500',
+                      pfcKaCheck === null && 'border-white/30 focus:border-elec-yellow focus:ring-elec-yellow'
+                    )}
                   />
+                  {pfcKaCheck?.pass === true && (
+                    <div className="flex items-center gap-1 text-xs text-green-400">
+                      <CheckCircle className="h-3 w-3" />
+                      <span>Ipf {pfcKaCheck.pfc}kA ≤ {pfcKaCheck.ka}kA breaking capacity</span>
+                    </div>
+                  )}
+                  {pfcKaCheck?.pass === false && (
+                    <div className="flex items-center gap-1 text-xs text-red-400">
+                      <AlertCircle className="h-3 w-3" />
+                      <span>Ipf {pfcKaCheck.pfc}kA exceeds {pfcKaCheck.ka}kA — device cannot safely interrupt fault (Reg 434.5.1)</span>
+                    </div>
+                  )}
+                  {!formData.protectiveDeviceKaRating && formData.prospectiveFaultCurrent && (
+                    <p className="text-xs text-amber-400">Set breaking capacity (kA) on Circuit tab to verify</p>
+                  )}
                 </div>
                 <div className="space-y-2">
                   <Label className="text-sm">Functional Testing</Label>
@@ -550,24 +625,64 @@ const MWTestingTab: React.FC<MWTestingTabProps> = ({ formData, onUpdate, isMobil
                 </div>
               </div>
 
-              {/* Earth Electrode Resistance - only for TT earthing systems */}
-              {formData.earthingArrangement === 'tt' && (
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <div className="space-y-2">
-                    <Label className="text-sm">Earth Electrode Resistance (Ω)</Label>
-                    <div className="relative">
-                      <Input
-                        value={formData.earthElectrodeResistance || ''}
-                        onChange={(e) => onUpdate('earthElectrodeResistance', e.target.value)}
-                        placeholder="e.g., 12"
-                        className="h-11 text-base touch-manipulation border-white/30 focus:border-elec-yellow focus:ring-elec-yellow pr-10"
-                      />
-                      <span className="absolute right-3 top-1/2 -translate-y-1/2 text-white text-sm">
-                        Ω
-                      </span>
+              {/* Earth Electrode Resistance - only for TT earthing systems (Reg 411.5.3) */}
+              {formData.earthingArrangement === 'TT' && (
+                <div className="space-y-4">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div className="space-y-2">
+                      <Label className="text-sm">Earth Electrode Resistance RA (Ω) *</Label>
+                      <div className="relative">
+                        <Input
+                          value={formData.earthElectrodeResistance || ''}
+                          onChange={(e) => onUpdate('earthElectrodeResistance', e.target.value)}
+                          placeholder="e.g., 12"
+                          className={cn(
+                            'h-11 text-base touch-manipulation pr-10',
+                            !formData.earthElectrodeResistance && 'border-red-500/50',
+                            raIdnCheck === true && 'border-green-500/50 focus:border-green-500 focus:ring-green-500',
+                            raIdnCheck === false && 'border-red-500/50 focus:border-red-500 focus:ring-red-500',
+                            raIdnCheck === null && 'border-white/30 focus:border-elec-yellow focus:ring-elec-yellow'
+                          )}
+                        />
+                        <span className="absolute right-3 top-1/2 -translate-y-1/2 text-white text-sm">
+                          Ω
+                        </span>
+                      </div>
+                      <p className="text-xs text-white">Required for TT earthing systems (Reg 411.5.3)</p>
                     </div>
-                    <p className="text-xs text-white">Required for TT earthing systems</p>
                   </div>
+
+                  {/* RA × IΔn ≤ 50V compliance check */}
+                  {raIdnCheck !== null && (
+                    <Alert
+                      className={cn(
+                        'border',
+                        raIdnCheck
+                          ? 'border-green-500/30 bg-green-500/10'
+                          : 'border-red-500/30 bg-red-500/10'
+                      )}
+                    >
+                      {raIdnCheck ? (
+                        <CheckCircle className="h-4 w-4 text-green-400" />
+                      ) : (
+                        <AlertCircle className="h-4 w-4 text-red-400" />
+                      )}
+                      <AlertDescription className={raIdnCheck ? 'text-green-200' : 'text-red-200'}>
+                        {raIdnCheck
+                          ? `RA × IΔn = ${raIdnValue}V ≤ 50V — touch voltage safe (Reg 411.5.3)`
+                          : `RA × IΔn = ${raIdnValue}V exceeds 50V limit — earth electrode resistance too high for ${formData.rcdIdn || '30'}mA RCD (Reg 411.5.3)`}
+                      </AlertDescription>
+                    </Alert>
+                  )}
+
+                  {formData.earthingArrangement === 'TT' && !formData.rcdIdn && formData.earthElectrodeResistance && (
+                    <Alert className="border border-amber-500/30 bg-amber-500/10">
+                      <AlertCircle className="h-4 w-4 text-amber-400" />
+                      <AlertDescription className="text-amber-200">
+                        Set RCD IΔn on Circuit tab to verify RA × IΔn ≤ 50V compliance
+                      </AlertDescription>
+                    </Alert>
+                  )}
                 </div>
               )}
 

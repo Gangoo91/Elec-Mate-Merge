@@ -60,7 +60,7 @@ const QuickFillRcdPanel: React.FC<QuickFillRcdPanelProps> = ({
           <span className="font-semibold text-sm text-foreground">Quick Fill RCD Details</span>
           <FieldTooltip
             content="Use this to quickly apply RCD details to all circuits when one or two RCDs protect multiple circuits. This saves time by filling all rows at once."
-            regulation="Reg 314.1"
+            regulation="531.2"
             example="If all circuits are protected by a 30mA Type A RCD, select the values and click 'Apply to All Circuits'"
           />
         </div>

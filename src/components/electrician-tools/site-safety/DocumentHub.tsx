@@ -187,18 +187,18 @@ const STATUS_TRANSITIONS: Partial<Record<DocumentType, { from: string; to: strin
 
 const ALL_TYPES: (DocumentType | 'All')[] = [
   'All',
+  'RAMS',
   'Permit',
+  'Briefing',
   'COSHH',
   'Inspection',
+  'Isolation',
   'Accident',
   'Near Miss',
   'Observation',
   'Site Diary',
-  'Isolation',
   'Fire Watch',
   'Equipment',
-  'RAMS',
-  'Briefing',
 ];
 
 function formatRelativeDate(dateStr: string): string {
@@ -397,24 +397,24 @@ export function DocumentHub({ onBack }: DocumentHubProps) {
                     delay: Math.min(index * 0.02, 0.3),
                     duration: 0.15,
                   }}
-                  className="rounded-2xl bg-white/[0.03] border border-white/[0.08] p-4 active:bg-white/[0.06] transition-colors touch-manipulation"
+                  className="rounded-xl bg-white/[0.03] border border-white/[0.08] p-3.5 active:bg-white/[0.06] transition-colors touch-manipulation"
                 >
-                  <div className="flex items-start gap-3">
+                  <div className="flex items-center gap-3">
                     {/* Type icon */}
                     <div
-                      className={`flex-shrink-0 w-10 h-10 rounded-xl ${config.bg} ${config.border} border flex items-center justify-center`}
+                      className={`flex-shrink-0 w-11 h-11 rounded-xl ${config.bg} flex items-center justify-center`}
                     >
-                      <Icon className={`h-4 w-4 ${config.colour}`} />
+                      <Icon className={`h-5 w-5 ${config.colour}`} />
                     </div>
 
                     {/* Content */}
                     <div className="flex-1 min-w-0">
-                      <div className="flex items-center gap-2 mb-0.5 flex-wrap">
-                        <Badge
-                          className={`${config.bg} ${config.colour} ${config.border} border text-[9px] px-1.5 py-0`}
-                        >
+                      <h3 className="text-sm font-semibold text-white truncate">{doc.title}</h3>
+                      <div className="flex items-center gap-2 mt-1">
+                        <span className={`text-[11px] font-medium ${config.colour}`}>
                           {doc.type}
-                        </Badge>
+                        </span>
+                        <span className="w-1 h-1 rounded-full bg-white/20 flex-shrink-0" />
                         {(() => {
                           const statusStyle = STATUS_STYLES[doc.status] || {
                             bg: 'bg-white/10',
@@ -422,46 +422,43 @@ export function DocumentHub({ onBack }: DocumentHubProps) {
                             label: doc.status,
                           };
                           return (
-                            <Badge
-                              className={`${statusStyle.bg} ${statusStyle.text} text-[9px] px-1.5 py-0 border-0`}
-                            >
+                            <span className={`text-[11px] font-medium ${statusStyle.text}`}>
                               {statusStyle.label}
-                            </Badge>
+                            </span>
                           );
                         })()}
                         {doc.hasSignature && (
                           <Check className="h-3 w-3 text-emerald-400 flex-shrink-0" />
                         )}
                       </div>
-                      <h3 className="text-sm font-semibold text-white truncate">{doc.title}</h3>
-                      <div className="flex items-center gap-3 mt-1">
+                      <div className="flex items-center gap-2 mt-0.5">
                         <span className="text-[11px] text-white">
                           {formatRelativeDate(doc.updatedAt)}
                         </span>
                         {doc.siteAddress && (
-                          <span className="text-[11px] text-white truncate max-w-[140px]">
-                            {doc.siteAddress}
-                          </span>
+                          <>
+                            <span className="w-1 h-1 rounded-full bg-white/20 flex-shrink-0" />
+                            <span className="text-[11px] text-white truncate">
+                              {doc.siteAddress}
+                            </span>
+                          </>
                         )}
                       </div>
                     </div>
 
-                    {/* Action buttons */}
-                    <div className="flex flex-col gap-1.5 flex-shrink-0">
-                      {/* Approval button */}
+                    {/* Actions */}
+                    <div className="flex items-center gap-1.5 flex-shrink-0">
                       {getAvailableTransitions(doc).length > 0 && (
                         <button
                           onClick={(e) => {
                             e.stopPropagation();
                             setApprovalDoc(doc);
                           }}
-                          className="w-10 h-10 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center touch-manipulation active:scale-[0.95] transition-all"
+                          className="w-10 h-10 rounded-xl bg-emerald-500/10 flex items-center justify-center touch-manipulation active:scale-[0.95] transition-all"
                         >
                           <FileCheck className="h-4 w-4 text-emerald-400" />
                         </button>
                       )}
-
-                      {/* Export button */}
                       {doc.hasPDF && (
                         <button
                           onClick={(e) => {
@@ -469,7 +466,7 @@ export function DocumentHub({ onBack }: DocumentHubProps) {
                             handleExport(doc);
                           }}
                           disabled={isThisExporting}
-                          className="w-10 h-10 rounded-xl bg-white/[0.06] border border-white/10 flex items-center justify-center touch-manipulation active:scale-[0.95] active:bg-white/[0.1] transition-all disabled:opacity-50"
+                          className="w-10 h-10 rounded-xl bg-white/[0.04] flex items-center justify-center touch-manipulation active:scale-[0.95] active:bg-white/[0.08] transition-all disabled:opacity-50"
                         >
                           {isThisExporting ? (
                             <Loader2 className="h-4 w-4 text-white animate-spin" />

@@ -12,6 +12,7 @@ interface ValidationResult {
   warnings: ValidationError[];
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const useFormValidation = (formData: any) => {
   const [validation, setValidation] = useState<ValidationResult>({
     isValid: true,
@@ -21,6 +22,7 @@ export const useFormValidation = (formData: any) => {
 
   useEffect(() => {
     validateForm();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [formData]);
 
   const validateForm = () => {
@@ -91,6 +93,54 @@ export const useFormValidation = (formData: any) => {
         });
       }
     }
+
+    // PFC vs kA breaking capacity (Reg 434.5.1)
+    if (formData.prospectiveFaultCurrent && formData.protectiveDeviceKaRating) {
+      const pfc = parseFloat(formData.prospectiveFaultCurrent);
+      const ka = parseFloat(formData.protectiveDeviceKaRating);
+
+      if (!isNaN(pfc) && !isNaN(ka) && pfc > ka) {
+        errors.push({
+          field: 'prospectiveFaultCurrent',
+          message: `Ipf (${pfc}kA) exceeds device breaking capacity (${ka}kA) — Reg 434.5.1`,
+          severity: 'error',
+        });
+      }
+    }
+
+    // RA × IΔn ≤ 50V for TT systems (Reg 411.5.3)
+    if (formData.earthingArrangement === 'TT' && formData.earthElectrodeResistance) {
+      const ra = parseFloat(formData.earthElectrodeResistance);
+      const idn = parseFloat(formData.rcdIdn || '30');
+
+      if (!isNaN(ra) && !isNaN(idn)) {
+        const touchVoltage = ra * (idn / 1000);
+        if (touchVoltage > 50) {
+          errors.push({
+            field: 'earthElectrodeResistance',
+            message: `RA × IΔn = ${touchVoltage.toFixed(1)}V exceeds 50V limit — Reg 411.5.3`,
+            severity: 'error',
+          });
+        }
+      }
+    }
+
+    // Insulation resistance on all conductors (Reg 643.3)
+    ['insulationLiveEarth', 'insulationNeutralEarth'].forEach((field) => {
+      if (formData[field]) {
+        const val = formData[field].toString().trim();
+        // Skip infinite readings (always pass)
+        if (/^>\s*\d+/.test(val) || val === '∞' || val.toLowerCase() === 'infinity') return;
+        const insulation = parseFloat(val);
+        if (!isNaN(insulation) && insulation < 1.0) {
+          errors.push({
+            field,
+            message: `Insulation resistance ${insulation}MΩ below 1.0MΩ minimum — Reg 643.3`,
+            severity: 'error',
+          });
+        }
+      }
+    });
 
     // Warnings for unusual values
     if (formData.continuityR1R2) {

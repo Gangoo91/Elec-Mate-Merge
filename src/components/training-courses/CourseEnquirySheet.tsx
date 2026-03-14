@@ -10,7 +10,7 @@ import {
   ExternalLink,
   MapPin,
   Clock,
-  PoundSterlingSterling,
+  PoundSterling,
   Star,
   Send,
   CheckCircle2,
@@ -93,11 +93,17 @@ const CourseEnquirySheet = ({ course, open, onOpenChange }: CourseEnquirySheetPr
   if (!course) return null;
 
   // Extract additional fields from the transformed course
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const contactPhone = (course as any).contact_phone;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const contactEmail = (course as any).contact_email;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const bookingUrl = (course as any).booking_url;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const venuePostcode = (course as any).venue_postcode;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const nextDates = (course as any).next_dates;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const distance = (course as any)._distance;
 
   return (

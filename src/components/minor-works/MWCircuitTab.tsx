@@ -186,12 +186,23 @@ const MWCircuitTab: React.FC<MWCircuitTabProps> = ({ formData, onUpdate, isMobil
     }
   };
 
+  // Auto-fill RCD defaults when protection type is toggled on
+  const handleProtectionToggle = (field: string, checked: boolean) => {
+    onUpdate(field, checked);
+
+    if (checked && (field === 'protectionRcbo' || field === 'protectionRcd')) {
+      if (!formData.rcdType) onUpdate('rcdType', 'A');
+      if (!formData.rcdIdn) onUpdate('rcdIdn', '30');
+      if (!formData.rcdBsEn) {
+        onUpdate('rcdBsEn', field === 'protectionRcbo' ? 'BS EN 61009' : 'BS EN 61008');
+      }
+    }
+  };
+
   return (
     <div className="space-y-4 sm:space-y-6">
       {/* Smart Defaults Quick Fill */}
-      <div className="p-4 bg-gradient-to-r from-purple-500/10 to-blue-500/10 border border-purple-500/20 rounded-xl">
-        <MWSmartDefaults onApply={handleSmartDefaultApply} />
-      </div>
+      <MWSmartDefaults onApply={handleSmartDefaultApply} />
 
       {/* Circuit Details */}
       <div className={sectionCardClass}>
@@ -426,7 +437,11 @@ const MWCircuitTab: React.FC<MWCircuitTabProps> = ({ formData, onUpdate, isMobil
                       <Checkbox
                         id={item.id}
                         checked={formData[item.id] || false}
-                        onCheckedChange={(c) => onUpdate(item.id, c)}
+                        onCheckedChange={(c) =>
+                          item.id === 'protectionRcd' || item.id === 'protectionRcbo'
+                            ? handleProtectionToggle(item.id, !!c)
+                            : onUpdate(item.id, c)
+                        }
                         className="h-5 w-5 border-white/40 data-[state=checked]:bg-red-500 data-[state=checked]:border-red-500 touch-manipulation"
                       />
                       <Label htmlFor={item.id} className="text-sm cursor-pointer">

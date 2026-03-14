@@ -185,46 +185,39 @@ export default function AdminPanel() {
       {/* Offline Banner */}
       <OfflineBanner />
 
-      {/* Back Button */}
-      <div className="px-4 pt-4">
-        <Button
-          variant="ghost"
-          className="text-white hover:text-white hover:bg-white/[0.05] active:bg-white/[0.08] active:scale-[0.98] -ml-2 h-11 touch-manipulation transition-all"
-          onClick={() => navigate('/dashboard')}
-        >
-          <ArrowLeft className="mr-2 h-5 w-5" />
-          Back to Dashboard
-        </Button>
-      </div>
+      {/* Sticky Header — matches NativePageWrapper pattern */}
+      <header className="sticky top-0 z-40 bg-background border-b border-white/[0.06] safe-top">
+        <div className="px-4">
+          {/* Title Row */}
+          <div className="flex items-center h-14 gap-3">
+            <button
+              onClick={() => navigate('/dashboard')}
+              className="flex items-center justify-center -ml-2 h-11 w-11 rounded-xl hover:bg-white/5 active:scale-95 transition-all touch-manipulation"
+            >
+              <ArrowLeft className="h-5 w-5 text-muted-foreground" />
+            </button>
 
-      {/* Admin Header */}
-      <div className="border-b border-border bg-card/50 backdrop-blur-xl sticky top-0 z-40">
-        <div className="px-4 py-3">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-red-500 to-orange-500 flex items-center justify-center">
-                <Shield className="h-5 w-5 text-white" />
-              </div>
-              <div>
-                <h1 className="text-lg font-bold text-foreground">Admin Panel</h1>
-                <div className="flex items-center gap-1.5">
-                  {isSuperAdmin ? (
-                    <ShieldCheck className="h-3.5 w-3.5 text-red-400" />
-                  ) : (
-                    <Shield className="h-3.5 w-3.5 text-orange-400" />
-                  )}
-                  <span className="text-xs text-muted-foreground">
-                    {isSuperAdmin ? 'Super Admin' : 'Admin'}
-                  </span>
-                </div>
+            <div className="p-1.5 rounded-lg bg-red-500/10">
+              <Shield className="h-4 w-4 text-red-400" />
+            </div>
+
+            <div className="flex-1 min-w-0">
+              <span className="text-base font-semibold text-foreground">Admin Panel</span>
+              <div className="flex items-center gap-1.5">
+                {isSuperAdmin ? (
+                  <ShieldCheck className="h-3 w-3 text-red-400" />
+                ) : (
+                  <Shield className="h-3 w-3 text-orange-400" />
+                )}
+                <span className="text-xs text-muted-foreground">
+                  {isSuperAdmin ? 'Super Admin' : 'Admin'}
+                </span>
               </div>
             </div>
           </div>
-        </div>
 
-        {/* Primary Navigation */}
-        <div className="px-4 pb-2">
-          <div className="flex gap-2 overflow-x-auto scrollbar-hide pb-1">
+          {/* Primary Navigation */}
+          <div className="flex gap-2 overflow-x-auto scrollbar-hide pb-2">
             {primaryNavItems.map(renderNavItem)}
 
             {/* More Button */}
@@ -253,7 +246,7 @@ export default function AdminPanel() {
 
         {/* Secondary Navigation - Expandable */}
         {showMore && (
-          <div className="px-4 pb-2 border-t border-border/50 pt-2">
+          <div className="px-4 pb-2 border-t border-white/[0.06] pt-2">
             <div className="flex gap-2 overflow-x-auto scrollbar-hide pb-1">
               {secondaryNavItems.map(renderNavItem)}
             </div>
@@ -262,13 +255,13 @@ export default function AdminPanel() {
 
         {/* Tools Navigation - Expandable */}
         {showTools && (
-          <div className="px-4 pb-2 border-t border-border/50 pt-2">
+          <div className="px-4 pb-2 border-t border-white/[0.06] pt-2">
             <div className="flex gap-2 overflow-x-auto scrollbar-hide pb-1">
               {adminToolItems.map(renderNavItem)}
             </div>
           </div>
         )}
-      </div>
+      </header>
 
       {/* Admin Content — swipeable between primary pages */}
       <div className="p-4 pb-20 safe-bottom" {...swipeHandlers}>

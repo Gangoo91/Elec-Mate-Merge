@@ -36,6 +36,7 @@ const transformToEnhanced = (course: TrainingCourse): EnhancedCareerCourse => ({
   employerSupport: true,
   visitLink: course.external_url,
   // Additional fields for display
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   _distance: (course as any)._distance,
   venue_postcode: course.venue_postcode,
   contact_phone: course.contact_phone,
@@ -74,9 +75,10 @@ const ElectricianCareerCourses = () => {
     searchQuery: searchQuery || filters.searchTerm,
     category: selectedCategory || filters.category,
     postcode: locationQuery,
+    radiusMiles: locationQuery ? 100 : undefined,
     format: filters.format,
     level: filters.level,
-    sortBy: filters.sortBy as 'rating' | 'price' | 'title' | 'distance',
+    sortBy: locationQuery ? 'distance' : (filters.sortBy as 'rating' | 'price' | 'title' | 'distance'),
   });
 
   // Transform courses

@@ -6,8 +6,6 @@ import {
   Plus,
   Wrench,
   Loader2,
-  FlaskConical,
-  Trash2,
   MoreHorizontal,
 } from 'lucide-react';
 import {
@@ -15,7 +13,6 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-  DropdownMenuSeparator,
 } from '@/components/ui/dropdown-menu';
 import { SyncStatusIndicator } from '@/components/ui/sync-status-indicator';
 import { SyncStatus } from '@/hooks/useCloudSync';
@@ -27,8 +24,6 @@ interface MWFormHeaderProps {
   hasUnsavedChanges?: boolean;
   onManualSave?: () => void;
   onStartNew?: () => void;
-  onDevFill?: () => void;
-  onClearForm?: () => void;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   formData?: any;
   syncState?: { status: SyncStatus; lastSyncTime?: number; errorMessage?: string };
@@ -44,14 +39,11 @@ const MWFormHeader: React.FC<MWFormHeaderProps> = ({
   hasUnsavedChanges = false,
   onManualSave,
   onStartNew,
-  onDevFill,
-  onClearForm,
   formData,
   syncState,
   isOnline = true,
   isAuthenticated = false,
 }) => {
-  const isDev = import.meta.env.DEV;
   const haptics = useHaptics();
 
   const handleBack = () => {
@@ -111,8 +103,8 @@ const MWFormHeader: React.FC<MWFormHeaderProps> = ({
             {isSaving ? <Loader2 className="h-5 w-5 animate-spin" /> : <Save className="h-5 w-5" />}
           </Button>
 
-          {/* More options menu (Dev tools, New Certificate) */}
-          {(onStartNew || isDev) && (
+          {/* More options menu */}
+          {onStartNew && (
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button
@@ -124,45 +116,16 @@ const MWFormHeader: React.FC<MWFormHeaderProps> = ({
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end" className="w-48 bg-card border-border/50">
-                {onStartNew && (
-                  <DropdownMenuItem
-                    onClick={() => {
-                      haptics.tap();
-                      onStartNew();
-                    }}
-                    className="gap-2"
-                  >
-                    <Plus className="h-4 w-4" />
-                    New Certificate
-                  </DropdownMenuItem>
-                )}
-                {isDev && onDevFill && (
-                  <>
-                    <DropdownMenuSeparator />
-                    <DropdownMenuItem
-                      onClick={() => {
-                        haptics.tap();
-                        onDevFill();
-                      }}
-                      className="gap-2 text-purple-400"
-                    >
-                      <FlaskConical className="h-4 w-4" />
-                      Dev Fill (Test Data)
-                    </DropdownMenuItem>
-                    {onClearForm && (
-                      <DropdownMenuItem
-                        onClick={() => {
-                          haptics.tap();
-                          onClearForm();
-                        }}
-                        className="gap-2 text-orange-400"
-                      >
-                        <Trash2 className="h-4 w-4" />
-                        Clear Form
-                      </DropdownMenuItem>
-                    )}
-                  </>
-                )}
+                <DropdownMenuItem
+                  onClick={() => {
+                    haptics.tap();
+                    onStartNew();
+                  }}
+                  className="gap-2"
+                >
+                  <Plus className="h-4 w-4" />
+                  New Certificate
+                </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
           )}
@@ -239,21 +202,6 @@ const MWFormHeader: React.FC<MWFormHeaderProps> = ({
                 )}
                 Save
               </Button>
-              {isDev && onDevFill && (
-                <Button
-                  size="sm"
-                  onClick={() => {
-                    haptics.tap();
-                    onDevFill();
-                  }}
-                  className="h-10 gap-2 border-purple-500/50 hover:bg-purple-500/20 text-purple-400"
-                  variant="outline"
-                  title="Fill with test data (dev only)"
-                >
-                  <FlaskConical className="h-4 w-4" />
-                  Dev Fill
-                </Button>
-              )}
             </div>
           </div>
         </div>

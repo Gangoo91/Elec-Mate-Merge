@@ -32,30 +32,26 @@ const ModernCoursesGrid = ({
   // Loading State — horizontal skeletons on mobile, vertical on desktop
   if (isLoading) {
     return (
-      <div className="flex flex-col -mx-4 sm:mx-0 sm:grid sm:grid-cols-2 lg:grid-cols-3 sm:gap-4">
+      <div className="flex flex-col gap-3 sm:grid sm:grid-cols-2 lg:grid-cols-3 sm:gap-4">
         {Array.from({ length: 6 }).map((_, idx) => (
           <div
             key={idx}
-            className="border-b border-white/10 sm:border sm:rounded-xl bg-elec-gray/50 overflow-hidden animate-pulse"
+            className="rounded-xl border border-white/[0.08] bg-[#111113] overflow-hidden animate-pulse"
           >
-            {/* Mobile: horizontal skeleton */}
-            <div className="flex gap-3 p-3 sm:hidden">
-              <div className="w-20 h-20 rounded-lg bg-white/5 flex-shrink-0" />
-              <div className="flex-1 space-y-2">
-                <div className="h-4 bg-white/10 rounded w-3/4" />
-                <div className="h-3 bg-white/10 rounded w-1/2" />
-                <div className="h-3 bg-white/10 rounded w-2/3" />
-                <div className="h-3 bg-white/10 rounded w-1/4" />
+            {/* Visual header skeleton */}
+            <div className="h-24 bg-white/[0.04]" />
+            {/* Card body skeleton */}
+            <div className="p-4 space-y-3">
+              <div className="h-4 bg-white/[0.06] rounded w-4/5" />
+              <div className="h-3 bg-white/[0.06] rounded w-1/2" />
+              <div className="flex gap-1.5">
+                <div className="h-7 bg-white/[0.04] rounded-lg w-16" />
+                <div className="h-7 bg-white/[0.04] rounded-lg w-16" />
+                <div className="h-7 bg-white/[0.04] rounded-lg w-20" />
               </div>
-            </div>
-            {/* Desktop: vertical skeleton */}
-            <div className="hidden sm:block">
-              <div className="h-32 bg-white/5" />
-              <div className="p-4 space-y-3">
-                <div className="h-3 bg-white/10 rounded w-1/4" />
-                <div className="h-4 bg-white/10 rounded w-3/4" />
-                <div className="h-3 bg-white/10 rounded w-1/2" />
-                <div className="h-8 bg-white/5 rounded mt-3" />
+              <div className="flex items-center justify-between pt-2 border-t border-white/[0.06]">
+                <div className="h-5 bg-white/[0.06] rounded w-16" />
+                <div className="h-7 bg-elec-yellow/10 rounded-full w-16" />
               </div>
             </div>
           </div>
@@ -97,7 +93,7 @@ const ModernCoursesGrid = ({
       variants={containerVariants}
       initial="hidden"
       animate="visible"
-      className="flex flex-col -mx-4 sm:mx-0 sm:grid sm:grid-cols-2 lg:grid-cols-3 sm:gap-4"
+      className="flex flex-col gap-3 sm:grid sm:grid-cols-2 lg:grid-cols-3 sm:gap-4"
     >
       {filteredCourses.map((course, index) => (
         <PremiumCourseCard
