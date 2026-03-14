@@ -899,6 +899,7 @@ export function useQuoteInvoiceVoice(options: UseQuoteInvoiceVoiceOptions = {}) 
             .eq('invoice_raised', true)
             .neq('invoice_status', 'paid')
             .lt('invoice_due_date', today)
+            .is('deleted_at', null)
             .order('invoice_due_date', { ascending: true })
             .limit(10);
 
