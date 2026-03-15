@@ -89,8 +89,9 @@ export function useAllSafetyDocuments() {
           createdAt: r.created_at,
           updatedAt: r.updated_at || r.created_at,
           siteAddress: r.location,
-          hasPDF: false,
+          hasPDF: true, // RAMS documents are always PDF-generatable
           hasSignature: false,
+          pdfType: 'safety-document' as const,
           sourceId: r.id,
         });
       }

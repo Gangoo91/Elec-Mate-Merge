@@ -316,10 +316,10 @@ function SectionHeader({ title }: { title: string }) {
 
 const secondaryTools: ToolCardProps[] = [
   {
-    title: 'Build Partners',
-    description: 'AI design & costing specialists',
-    icon: Sparkles,
-    link: '/electrician/agent-selector',
+    title: 'AI Tools',
+    description: 'Smart analysis & design',
+    icon: Brain,
+    link: '/electrician-tools/ai-tooling',
   },
   {
     title: 'Industry Updates',
@@ -456,11 +456,10 @@ const ElectricalHub = () => {
                 badge={isAgentActive}
               />
               <PrimaryToolCard
-                title="AI Tools"
-                description="Smart analysis & design"
-                icon={Brain}
-                link="/electrician-tools/ai-tooling"
-                accent="purple"
+                title="Build Partners"
+                description="AI design & costing"
+                icon={Sparkles}
+                link="/electrician/agent-selector"
               />
             </div>
           </motion.section>
