@@ -30,7 +30,7 @@ import {
 const BusinessElectricians = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const activeSection = searchParams.get('section') || 'recruitment';
-  const setActiveSection = (section: string) => setSearchParams({ section }, { replace: false });
+  const setActiveSection = (section: string) => setSearchParams({ section }, { replace: true });
 
   const sections = [
     { id: 'recruitment', label: 'Recruitment', icon: Users },

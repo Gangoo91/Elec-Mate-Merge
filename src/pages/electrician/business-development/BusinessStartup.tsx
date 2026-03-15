@@ -31,7 +31,7 @@ import {
 const BusinessStartup = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const activeSection = searchParams.get('section') || 'planning';
-  const setActiveSection = (section: string) => setSearchParams({ section }, { replace: false });
+  const setActiveSection = (section: string) => setSearchParams({ section }, { replace: true });
 
   const sections = [
     { id: 'planning', label: 'Business Planning', icon: TrendingUp },

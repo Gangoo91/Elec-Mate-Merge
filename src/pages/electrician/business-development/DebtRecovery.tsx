@@ -36,7 +36,7 @@ import {
 const DebtRecovery = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const activeSection = searchParams.get('section') || 'prevention';
-  const setActiveSection = (section: string) => setSearchParams({ section }, { replace: false });
+  const setActiveSection = (section: string) => setSearchParams({ section }, { replace: true });
 
   const sections = [
     { id: 'prevention', label: 'Prevention', icon: Shield },
