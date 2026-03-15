@@ -64,7 +64,7 @@ export const InvoiceWizard = ({
   const [lastSaved, setLastSaved] = useState<Date | undefined>();
   const [isSaving, setIsSaving] = useState(false);
   const [showRecoveryBanner, setShowRecoveryBanner] = useState(false);
-  const [recoveredDraft, setRecoveredDraft] = useState<any>(null);
+  const [recoveredDraft, setRecoveredDraft] = useState<Record<string, unknown> | null>(null);
 
   // Check for recoverable draft on mount (only for new invoices, not quote conversions)
   useEffect(() => {
@@ -75,12 +75,13 @@ export const InvoiceWizard = ({
         setShowRecoveryBanner(true);
       }
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // Get default settings from company profile
   const defaultLabourRate = companyProfile?.hourly_rate || 50;
-  const defaultOverhead = companyProfile?.overhead_percentage ?? 15;
-  const defaultProfitMargin = companyProfile?.profit_margin ?? 20;
+  const defaultOverhead = companyProfile?.overhead_percentage ?? 0;
+  const defaultProfitMargin = companyProfile?.profit_margin ?? 0;
   const defaultPaymentTerms = companyProfile?.payment_terms || '30 days';
 
   // Merge certificate data into existing invoice for proper initialization
@@ -164,8 +165,11 @@ export const InvoiceWizard = ({
       if (recoveredDraft.client) invoiceBuilder.updateClientDetails(recoveredDraft.client);
       if (recoveredDraft.jobDetails) invoiceBuilder.updateJobDetails(recoveredDraft.jobDetails);
       if (recoveredDraft.additional_invoice_items) {
-        recoveredDraft.additional_invoice_items.forEach((item: any) =>
-          invoiceBuilder.addInvoiceItem(item)
+        (recoveredDraft.additional_invoice_items as Record<string, unknown>[]).forEach(
+          (item: Record<string, unknown>) =>
+            invoiceBuilder.addInvoiceItem(
+              item as Parameters<typeof invoiceBuilder.addInvoiceItem>[0]
+            )
         );
       }
       if (recoveredDraft.settings) invoiceBuilder.updateInvoiceSettings(recoveredDraft.settings);
@@ -225,10 +229,11 @@ export const InvoiceWizard = ({
       case 0:
         // Always require client name and email for thank-you emails to work
         return !!(invoiceBuilder.invoice.client?.name && invoiceBuilder.invoice.client?.email);
-      case 1:
+      case 1: {
         const items = invoiceBuilder.invoice.items || [];
         const additionalItems = invoiceBuilder.invoice.additional_invoice_items || [];
         return items.length > 0 || additionalItems.length > 0;
+      }
       case 2:
         return true; // Review step - always can proceed
       default:
