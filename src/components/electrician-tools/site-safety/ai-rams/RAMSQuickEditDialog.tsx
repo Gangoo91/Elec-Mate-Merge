@@ -34,6 +34,7 @@ export const RAMSQuickEditDialog: React.FC<RAMSQuickEditDialogProps> = ({
   const loadDocument = async () => {
     setIsLoading(true);
     try {
+      // Load the RAMS document
       const { data, error } = await supabase
         .from('rams_documents')
         .select('*')
@@ -41,6 +42,10 @@ export const RAMSQuickEditDialog: React.FC<RAMSQuickEditDialogProps> = ({
         .single();
 
       if (error) throw error;
+
+      // Extract emergency contacts from ai_generation_metadata if present
+      const meta = (data.ai_generation_metadata as any) || {};
+      const contacts = meta.emergencyContacts || {};
 
       const loadedRamsData: RAMSData = {
         projectName: data.project_name,
@@ -51,14 +56,46 @@ export const RAMSQuickEditDialog: React.FC<RAMSQuickEditDialogProps> = ({
         risks: (data.risks as any[]) || [],
         contractor: data.contractor || '',
         supervisor: data.supervisor || '',
+        requiredPPE: (data.required_ppe as string[]) || [],
+        ppeDetails: (data.ppe_details as any[]) || [],
+        // Emergency contacts (stored in ai_generation_metadata)
+        siteManagerName: contacts.siteManagerName || '',
+        siteManagerPhone: contacts.siteManagerPhone || '',
+        firstAiderName: contacts.firstAiderName || '',
+        firstAiderPhone: contacts.firstAiderPhone || '',
+        safetyOfficerName: contacts.safetyOfficerName || '',
+        safetyOfficerPhone: contacts.safetyOfficerPhone || '',
+        assemblyPoint: contacts.assemblyPoint || '',
       };
 
+      // Also load the linked method statement (steps, tools, materials etc.)
+      const { data: methodRow } = await supabase
+        .from('method_statements')
+        .select('*')
+        .eq('rams_document_id', documentId)
+        .maybeSingle();
+
       const loadedMethodData: Partial<MethodStatementData> = {
-        jobTitle: data.project_name,
-        location: data.location,
-        contractor: data.contractor || '',
-        supervisor: data.supervisor || '',
-        steps: [],
+        jobTitle: methodRow?.job_title || data.project_name,
+        location: methodRow?.location || data.location,
+        contractor: methodRow?.contractor || data.contractor || '',
+        supervisor: methodRow?.supervisor || data.supervisor || '',
+        workType: methodRow?.work_type || 'Electrical Installation',
+        duration: methodRow?.duration || undefined,
+        teamSize: methodRow?.team_size || undefined,
+        description: methodRow?.description || undefined,
+        overallRiskLevel: (methodRow?.overall_risk_level as any) || 'medium',
+        reviewDate: methodRow?.review_date || undefined,
+        approvedBy: methodRow?.approved_by || undefined,
+        steps: (methodRow?.steps as any[]) || [],
+        toolsRequired: (methodRow?.tools_required as string[]) || [],
+        materialsRequired: (methodRow?.materials_required as string[]) || [],
+        practicalTips: (methodRow?.practical_tips as string[]) || [],
+        commonMistakes: (methodRow?.common_mistakes as string[]) || [],
+        totalEstimatedTime: methodRow?.total_estimated_time || undefined,
+        difficultyLevel: (methodRow?.difficulty_level as any) || undefined,
+        complianceRegulations: (methodRow?.compliance_regulations as string[]) || [],
+        complianceWarnings: (methodRow?.compliance_warnings as string[]) || [],
       };
 
       setRamsData(loadedRamsData);
