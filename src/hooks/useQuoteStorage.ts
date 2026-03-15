@@ -552,6 +552,11 @@ export const useQuoteStorage = () => {
       if (acceptanceStatus !== undefined) {
         updateData.acceptance_status = acceptanceStatus;
         updateData.accepted_at = new Date().toISOString();
+        // When a quote is accepted, always promote its status to 'approved'
+        // so it leaves the Drafts tab and appears under Approved.
+        if (acceptanceStatus === 'accepted') {
+          updateData.status = 'approved';
+        }
       }
 
       const { error } = await supabase.from('quotes').update(updateData).eq('id', quoteId);
@@ -562,12 +567,13 @@ export const useQuoteStorage = () => {
       }
 
       // Update local state
+      const effectiveStatus = acceptanceStatus === 'accepted' ? 'approved' : status;
       setSavedQuotes((prev) =>
         prev.map((quote) =>
           quote.id === quoteId
             ? {
                 ...quote,
-                status,
+                status: effectiveStatus,
                 tags: tags || quote.tags,
                 acceptance_status: acceptanceStatus || quote.acceptance_status,
                 accepted_at: acceptanceStatus ? new Date() : quote.accepted_at,
