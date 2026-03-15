@@ -1,4 +1,6 @@
 import { useState } from 'react';
+import { Capacitor } from '@capacitor/core';
+import { Share } from '@capacitor/share';
 import { motion, AnimatePresence } from 'framer-motion';
 import { QRCodeSVG } from 'qrcode.react';
 import {
@@ -114,10 +116,17 @@ export function BriefingShareSheet({ briefingId, briefingName, onClose }: Briefi
     const url = await generateLink();
     if (!url) return;
 
-    const message = encodeURIComponent(
-      `Please sign this team briefing: "${briefingName}"\n\n${url}`
-    );
-    window.open(`https://wa.me/?text=${message}`, '_blank');
+    const text = `Please sign this team briefing: "${briefingName}"\n\n${url}`;
+
+    if (Capacitor.isNativePlatform()) {
+      try {
+        await Share.share({ title: `Sign Briefing: ${briefingName}`, text });
+      } catch {
+        // User cancelled
+      }
+    } else {
+      window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, '_blank');
+    }
   };
 
   const handleEmailSend = async () => {

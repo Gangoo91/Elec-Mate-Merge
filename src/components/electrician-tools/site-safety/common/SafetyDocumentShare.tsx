@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Capacitor } from '@capacitor/core';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   Download,
@@ -62,26 +63,42 @@ export function SafetyDocumentShare({
   const [copied, setCopied] = useState(false);
 
   const handleDownloadPDF = async () => {
-    await exportPDF(pdfType as any, recordId, extraData);
+    await exportPDF(pdfType as any, recordId, extraData, documentTitle);
   };
 
-  const handleWhatsApp = () => {
-    const message = encodeURIComponent(
-      `Safety Document: "${documentTitle}" — generated via Elec-Mate`
-    );
-    window.open(`https://wa.me/?text=${message}`, '_blank');
+  const handleWhatsApp = async () => {
+    if (Capacitor.isNativePlatform()) {
+      // On native: generate PDF then open the iOS/Android share sheet —
+      // user can tap WhatsApp (or any other app) from there.
+      await exportPDF(pdfType as any, recordId, extraData, documentTitle);
+    } else {
+      // Web fallback: wa.me pre-filled text (can't attach files via web)
+      const message = encodeURIComponent(
+        `Safety Document: "${documentTitle}" — generated via Elec-Mate`
+      );
+      window.open(`https://wa.me/?text=${message}`, '_blank');
+    }
   };
 
-  const handleEmail = () => {
-    const subject = encodeURIComponent(`Safety Document: ${documentTitle}`);
-    const body = encodeURIComponent(
-      `Hi,\n\nPlease find the attached safety document: "${documentTitle}"\n\nGenerated via Elec-Mate.`
-    );
-    window.open(`mailto:?subject=${subject}&body=${body}`, '_self');
+  const handleEmail = async () => {
+    if (Capacitor.isNativePlatform()) {
+      // On native: generate PDF then open the share sheet — user taps Mail.
+      await exportPDF(pdfType as any, recordId, extraData, documentTitle);
+    } else {
+      // Web fallback: mailto with attachment instructions
+      const subject = encodeURIComponent(`Safety Document: ${documentTitle}`);
+      const body = encodeURIComponent(
+        `Hi,\n\nPlease find the attached safety document: "${documentTitle}"\n\nGenerated via Elec-Mate.`
+      );
+      window.open(`mailto:?subject=${subject}&body=${body}`, '_self');
+    }
   };
 
   const handleNativeShare = async () => {
-    if (navigator.share) {
+    if (Capacitor.isNativePlatform()) {
+      // On native: generate PDF then open the share sheet.
+      await exportPDF(pdfType as any, recordId, extraData, documentTitle);
+    } else if (navigator.share) {
       try {
         await navigator.share({
           title: documentTitle,
