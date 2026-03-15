@@ -32,6 +32,7 @@ import { useDashboardData } from '@/hooks/useDashboardData';
 import { AnimatedCounter } from '@/components/dashboard/AnimatedCounter';
 import { useAuth } from '@/contexts/AuthContext';
 import { ElecIdBanner } from '@/components/elec-id/ElecIdBanner';
+import { ElecAiBanner } from '@/components/elec-ai/ElecAiBanner';
 import { SetupWizard } from '@/components/onboarding/SetupWizard';
 import { SetupIncompleteBanner } from '@/components/onboarding/SetupIncompleteBanner';
 import { LatestJobsWidget } from '@/components/job-vacancies/LatestJobsWidget';
@@ -476,6 +477,11 @@ const ElectricalHub = () => {
 
           <motion.section variants={itemVariants} className="px-4 sm:px-0">
             <SetupIncompleteBanner />
+          </motion.section>
+
+          {/* Elec-AI Chat Assistant */}
+          <motion.section variants={itemVariants} className="px-4 sm:px-0">
+            <ElecAiBanner />
           </motion.section>
 
           {/* Secondary Tools */}
