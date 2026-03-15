@@ -49,7 +49,7 @@ import EVChargingFormTabs from '@/components/inspection/ev-charging/EVChargingFo
 import { useEVChargingTabs } from '@/hooks/useEVChargingTabs';
 import { getDefaultEVChargingFormData } from '@/types/ev-charging';
 import { useEVChargingSmartForm } from '@/hooks/inspection/useEVChargingSmartForm';
-import { openOrDownloadPdf } from '@/utils/pdf-download';
+import CertificateGenerationDialog from '@/components/inspection/CertificateGenerationDialog';
 
 // Constants
 const REPORT_TYPE = 'ev-charging';
@@ -68,6 +68,10 @@ export default function EVChargingCertificate() {
   const [formData, setFormData] = useState<any>(getDefaultEVChargingFormData());
   const [isSaving, setIsSaving] = useState(false);
   const [isGenerating, setIsGenerating] = useState(false);
+  const [showGenerationDialog, setShowGenerationDialog] = useState(false);
+  const [generatedPdfUrl, setGeneratedPdfUrl] = useState<string | null>(null);
+  const [pdfFilename, setPdfFilename] = useState('EVCharging-Certificate.pdf');
+  const [generationError, setGenerationError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(!isNew);
   const [savedReportId, setSavedReportId] = useState<string | null>(
     id !== 'new' ? id || null : null
@@ -411,6 +415,9 @@ export default function EVChargingCertificate() {
   // Generate certificate PDF
   const handleGenerateCertificate = async () => {
     setIsGenerating(true);
+    setGeneratedPdfUrl(null);
+    setGenerationError(null);
+    setShowGenerationDialog(true);
     try {
       // Save first
       await handleSaveDraft();
@@ -510,7 +517,8 @@ export default function EVChargingCertificate() {
         formData.installationDate || new Date()
       );
 
-      await openOrDownloadPdf(functionData.pdfUrl, filename);
+      setGeneratedPdfUrl(functionData.pdfUrl);
+      setPdfFilename(filename);
 
       // Save pdf_url to reports table and create Part P notification
       if (savedReportId) {
@@ -532,9 +540,11 @@ export default function EVChargingCertificate() {
         }
       }
 
-      toast.success('Certificate generated and downloaded');
+      toast.success('Certificate generated successfully');
     } catch (error) {
-      toast.error(error instanceof Error ? error.message : 'Failed to generate certificate');
+      const msg = error instanceof Error ? error.message : 'Failed to generate certificate';
+      setGenerationError(msg);
+      toast.error(msg);
     } finally {
       setIsGenerating(false);
     }
@@ -775,6 +785,15 @@ export default function EVChargingCertificate() {
           reportId={savedReportId}
         />
       </main>
+      <CertificateGenerationDialog
+        open={showGenerationDialog}
+        onOpenChange={setShowGenerationDialog}
+        isGenerating={isGenerating}
+        pdfUrl={generatedPdfUrl}
+        pdfFilename={pdfFilename}
+        errorMessage={generationError}
+        documentLabel="Certificate"
+      />
     </div>
   );
 }

@@ -42,7 +42,7 @@ import { useCompanyProfile } from '@/hooks/useCompanyProfile';
 import { formatPATTestingJson } from '@/utils/patTestingJsonFormatter';
 import { useCertificateEmail } from '@/hooks/useCertificateEmail';
 import { EmailCertificateDialog } from '@/components/certificate-completion/EmailCertificateDialog';
-import { openOrDownloadPdf } from '@/utils/pdf-download';
+import CertificateGenerationDialog from '@/components/inspection/CertificateGenerationDialog';
 
 // ─── Constants ───────────────────────────────────────────────────────────────
 const REPORT_TYPE = 'pat-testing';
@@ -60,7 +60,10 @@ export default function PATTestingCertificate() {
   const [formData, setFormData] = useState<any>(getDefaultPATTestingFormData());
   const [isSaving, setIsSaving] = useState(false);
   const [isGenerating, setIsGenerating] = useState(false);
-  const [generatedPdfUrl, setGeneratedPdfUrl] = useState<string | undefined>();
+  const [showGenerationDialog, setShowGenerationDialog] = useState(false);
+  const [generatedPdfUrl, setGeneratedPdfUrl] = useState<string | null>(null);
+  const [pdfFilename, setPdfFilename] = useState('PAT-Certificate.pdf');
+  const [generationError, setGenerationError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(!isNew);
   const [savedReportId, setSavedReportId] = useState<string | null>(
     id !== 'new' ? id || null : null
@@ -418,6 +421,9 @@ export default function PATTestingCertificate() {
   // ─── Generate certificate PDF ───────────────────────────────────────────
   const handleGenerateCertificate = async () => {
     setIsGenerating(true);
+    setGeneratedPdfUrl(null);
+    setGenerationError(null);
+    setShowGenerationDialog(true);
     try {
       await handleSaveDraft();
 
@@ -479,11 +485,13 @@ export default function PATTestingCertificate() {
       );
 
       setGeneratedPdfUrl(functionData.pdfUrl);
-      await openOrDownloadPdf(functionData.pdfUrl, filename);
+      setPdfFilename(filename);
 
-      toast.success('Certificate generated and downloaded');
+      toast.success('Certificate generated successfully');
     } catch (error) {
-      toast.error(error instanceof Error ? error.message : 'Failed to generate certificate');
+      const msg = error instanceof Error ? error.message : 'Failed to generate certificate';
+      setGenerationError(msg);
+      toast.error(msg);
     } finally {
       setIsGenerating(false);
     }
@@ -693,6 +701,16 @@ export default function PATTestingCertificate() {
         companyName={companyProfile?.company_name}
         onSend={handleSendEmail}
         isLoading={isEmailSending}
+      />
+
+      <CertificateGenerationDialog
+        open={showGenerationDialog}
+        onOpenChange={setShowGenerationDialog}
+        isGenerating={isGenerating}
+        pdfUrl={generatedPdfUrl}
+        pdfFilename={pdfFilename}
+        errorMessage={generationError}
+        documentLabel="Certificate"
       />
     </div>
   );

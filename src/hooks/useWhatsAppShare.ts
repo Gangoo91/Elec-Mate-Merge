@@ -7,6 +7,7 @@
 import { useState } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
+import { openExternalUrl } from '@/utils/open-external-url';
 
 export type ShareableDocumentType =
   | 'quote'
@@ -117,7 +118,7 @@ export function useWhatsAppShare() {
           MESSAGE_TEMPLATES.eicr(options, linkData.publicUrl));
 
       const whatsAppUrl = buildWhatsAppUrl(options.recipientPhone, message);
-      window.open(whatsAppUrl, '_blank');
+      await openExternalUrl(whatsAppUrl);
 
       toast({
         title: 'Opening WhatsApp',

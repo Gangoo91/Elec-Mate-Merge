@@ -34,9 +34,10 @@ import { cn } from '@/lib/utils';
 import { VoiceHeaderButton } from '@/components/electrician/VoiceHeaderButton';
 import { QuoteInvoiceAnalytics } from '@/components/electrician/analytics';
 import StripeConnectBanner from '@/components/electrician/StripeConnectBanner';
-import { openOrDownloadPdf } from '@/utils/pdf-download';
+import CertificateGenerationDialog from '@/components/inspection/CertificateGenerationDialog';
 import { createQuickTaskBatch } from '@/utils/createQuickTask';
 import { ClipboardCheck } from 'lucide-react';
+import { openExternalUrl } from '@/utils/open-external-url';
 
 const InvoicesPage = () => {
   const { invoices, isLoading, fetchInvoices, deleteInvoice, lastUpdated } = useInvoiceStorage();
@@ -51,6 +52,10 @@ const InvoicesPage = () => {
   const [viewMode, setViewMode] = useState<'card' | 'table'>('card');
   const [markingPaidId, setMarkingPaidId] = useState<string | null>(null);
   const [downloadingPdfId, setDownloadingPdfId] = useState<string | null>(null);
+  const [showGenerationDialog, setShowGenerationDialog] = useState(false);
+  const [generatedPdfUrl, setGeneratedPdfUrl] = useState<string | null>(null);
+  const [pdfFilename, setPdfFilename] = useState('Invoice.pdf');
+  const [generationError, setGenerationError] = useState<string | null>(null);
   const [deletingInvoiceId, setDeletingInvoiceId] = useState<string | null>(null);
   const [sharingWhatsAppId, setSharingWhatsAppId] = useState<string | null>(null);
   const [sharingEmailId, setSharingEmailId] = useState<string | null>(null);
@@ -107,6 +112,9 @@ const InvoicesPage = () => {
   const handleDownloadPDF = async (invoice: Quote) => {
     try {
       setDownloadingPdfId(invoice.id);
+      setGeneratedPdfUrl(null);
+      setGenerationError(null);
+      setShowGenerationDialog(true);
 
       const pdfIsCurrent =
         invoice.pdf_url &&
@@ -114,10 +122,8 @@ const InvoicesPage = () => {
         new Date(invoice.pdf_generated_at) >= new Date(invoice.updatedAt);
 
       if (pdfIsCurrent) {
-        await openOrDownloadPdf(
-          invoice.pdf_url,
-          `Invoice-${invoice.invoice_number || invoice.id}.pdf`
-        );
+        setGeneratedPdfUrl(invoice.pdf_url);
+        setPdfFilename(`Invoice-${invoice.invoice_number || invoice.id}.pdf`);
         setDownloadingPdfId(null);
         return;
       }
@@ -180,15 +186,17 @@ const InvoicesPage = () => {
           .eq('id', invoice.id);
       }
 
-      await openOrDownloadPdf(pdfUrl, `Invoice-${invoice.invoice_number || invoice.id}.pdf`);
+      setGeneratedPdfUrl(pdfUrl);
+      setPdfFilename(`Invoice-${invoice.invoice_number || invoice.id}.pdf`);
       toast({
-        title: 'PDF downloaded',
+        title: 'PDF ready',
         description: `Invoice ${invoice.invoice_number} downloaded successfully`,
         variant: 'success',
         duration: 3000,
       });
     } catch (error) {
       console.error('Error generating invoice PDF:', error);
+      setGenerationError(error instanceof Error ? error.message : 'Failed to generate invoice PDF');
       toast({
         title: 'Error',
         description: 'Failed to generate invoice PDF. Please try again.',
@@ -266,7 +274,7 @@ const InvoicesPage = () => {
 
       const message = `Hello ${clientData?.name || 'there'},\n\nHere is your invoice:\n\n📄 Invoice #${invoice.invoice_number}\n💷 Amount: ${formatCurrency(invoice.total)}\n\n📥 Download Invoice:\n${linkData.publicUrl}\n\nThank you for your business!`;
 
-      window.open(`https://wa.me/?text=${encodeURIComponent(message)}`, '_blank');
+      await openExternalUrl(`https://wa.me/?text=${encodeURIComponent(message)}`);
       toast({ title: 'Opening WhatsApp', description: 'Invoice ready to share via WhatsApp' });
     } catch (error) {
       console.error('Error sharing via WhatsApp:', error);
@@ -842,6 +850,16 @@ const InvoicesPage = () => {
           )}
         </section>
       </main>
+
+      <CertificateGenerationDialog
+        open={showGenerationDialog}
+        onOpenChange={setShowGenerationDialog}
+        isGenerating={!!downloadingPdfId}
+        pdfUrl={generatedPdfUrl}
+        pdfFilename={pdfFilename}
+        errorMessage={generationError}
+        documentLabel="Invoice"
+      />
     </div>
   );
 };

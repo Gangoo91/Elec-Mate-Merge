@@ -55,7 +55,7 @@ import SolarPVFormTabs from '@/components/inspection/solar-pv/SolarPVFormTabs';
 import { useSolarPVTabs, SolarPVTabValue } from '@/hooks/useSolarPVTabs';
 import { getDefaultSolarPVFormData, SolarPVFormData } from '@/types/solar-pv';
 import { useCompanyProfile } from '@/hooks/useCompanyProfile';
-import { openOrDownloadPdf } from '@/utils/pdf-download';
+import CertificateGenerationDialog from '@/components/inspection/CertificateGenerationDialog';
 
 // Constants
 const REPORT_TYPE = 'solar-pv';
@@ -74,7 +74,10 @@ export default function SolarPVCertificate() {
   const [formData, setFormData] = useState<SolarPVFormData>(getDefaultSolarPVFormData());
   const [isSaving, setIsSaving] = useState(false);
   const [isGenerating, setIsGenerating] = useState(false);
-  const [generatedPdfUrl, setGeneratedPdfUrl] = useState<string | undefined>();
+  const [showGenerationDialog, setShowGenerationDialog] = useState(false);
+  const [generatedPdfUrl, setGeneratedPdfUrl] = useState<string | null>(null);
+  const [pdfFilename, setPdfFilename] = useState('SolarPV-Certificate.pdf');
+  const [generationError, setGenerationError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(!isNew);
   const [savedReportId, setSavedReportId] = useState<string | null>(
     id !== 'new' ? id || null : null
@@ -447,6 +450,9 @@ export default function SolarPVCertificate() {
   // Generate certificate PDF
   const handleGenerateCertificate = async () => {
     setIsGenerating(true);
+    setGeneratedPdfUrl(null);
+    setGenerationError(null);
+    setShowGenerationDialog(true);
     try {
       await handleSaveDraft();
 
@@ -533,7 +539,7 @@ export default function SolarPVCertificate() {
       );
 
       setGeneratedPdfUrl(functionData.pdfUrl);
-      await openOrDownloadPdf(functionData.pdfUrl, filename);
+      setPdfFilename(filename);
 
       // Save pdf_url to reports table and create Part P notification
       if (savedReportId) {
@@ -555,9 +561,11 @@ export default function SolarPVCertificate() {
         }
       }
 
-      toast.success('Certificate generated and downloaded');
+      toast.success('Certificate generated successfully');
     } catch (error) {
-      toast.error(error instanceof Error ? error.message : 'Failed to generate certificate');
+      const msg = error instanceof Error ? error.message : 'Failed to generate certificate';
+      setGenerationError(msg);
+      toast.error(msg);
     } finally {
       setIsGenerating(false);
     }
@@ -765,6 +773,15 @@ export default function SolarPVCertificate() {
           canGenerateCertificate={!isGenerating}
         />
       </main>
+      <CertificateGenerationDialog
+        open={showGenerationDialog}
+        onOpenChange={setShowGenerationDialog}
+        isGenerating={isGenerating}
+        pdfUrl={generatedPdfUrl}
+        pdfFilename={pdfFilename}
+        errorMessage={generationError}
+        documentLabel="Certificate"
+      />
     </div>
   );
 }

@@ -32,6 +32,7 @@ import { Input } from '@/components/ui/input';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { useHaptics } from '@/hooks/useHaptics';
 import { cn } from '@/lib/utils';
+import { openExternalUrl } from '@/utils/open-external-url';
 
 interface EICCertificateActionsProps {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -515,7 +516,7 @@ const EICCertificateActions: React.FC<EICCertificateActionsProps> = ({
                   whatsappUrl = `https://wa.me/?text=${encodeURIComponent(text)}`;
                 }
 
-                window.open(whatsappUrl, '_blank');
+                await openExternalUrl(whatsappUrl);
               } catch (err) {
                 console.error('[EIC WhatsApp] Error:', err);
                 toast({

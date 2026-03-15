@@ -30,7 +30,7 @@ import {
 } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { toast } from '@/hooks/use-toast';
-import { openOrDownloadPdf } from '@/utils/pdf-download';
+import CertificateGenerationDialog from '@/components/inspection/CertificateGenerationDialog';
 import { Helmet } from 'react-helmet';
 import { QuoteSendDropdown } from '@/components/electrician/quote-builder/QuoteSendDropdown';
 import { useCompanyProfile } from '@/hooks/useCompanyProfile';
@@ -56,6 +56,10 @@ const QuoteViewPage = () => {
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
   const [isDownloading, setIsDownloading] = useState(false);
+  const [showGenerationDialog, setShowGenerationDialog] = useState(false);
+  const [generatedPdfUrl, setGeneratedPdfUrl] = useState<string | null>(null);
+  const [pdfFilename, setPdfFilename] = useState('Quote.pdf');
+  const [generationError, setGenerationError] = useState<string | null>(null);
   const [isConverting, setIsConverting] = useState(false);
   const [isSendingReminder, setIsSendingReminder] = useState(false);
   const [isReverting, setIsReverting] = useState(false);
@@ -176,6 +180,9 @@ const QuoteViewPage = () => {
     if (!quote) return;
 
     setIsDownloading(true);
+    setGeneratedPdfUrl(null);
+    setGenerationError(null);
+    setShowGenerationDialog(true);
     try {
       const effectiveCompanyProfile = companyProfile || {
         id: 'default',
@@ -228,13 +235,15 @@ const QuoteViewPage = () => {
           })
           .eq('id', quote.id);
 
-        await openOrDownloadPdf(downloadUrl, `Quote-${quote.quoteNumber || quote.id}.pdf`);
+        setGeneratedPdfUrl(downloadUrl);
+        setPdfFilename(`Quote-${quote.quoteNumber || quote.id}.pdf`);
         toast({ title: 'PDF ready', variant: 'success' });
       } else {
         throw new Error('Failed to generate PDF');
       }
     } catch (error: any) {
       console.error('PDF generation error:', error);
+      setGenerationError(error?.message || 'PDF generation failed');
       toast({
         title: 'PDF generation failed',
         description: error.message || 'Please try again',
@@ -1094,6 +1103,16 @@ const QuoteViewPage = () => {
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
+
+      <CertificateGenerationDialog
+        open={showGenerationDialog}
+        onOpenChange={setShowGenerationDialog}
+        isGenerating={isDownloading}
+        pdfUrl={generatedPdfUrl}
+        pdfFilename={pdfFilename}
+        errorMessage={generationError}
+        documentLabel="Quote"
+      />
     </motion.div>
   );
 };

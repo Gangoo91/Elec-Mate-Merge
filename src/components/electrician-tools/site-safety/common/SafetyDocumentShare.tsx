@@ -16,6 +16,7 @@ import {
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
+import { openExternalUrl } from '@/utils/open-external-url';
 import { useSafetyPDFExport } from '@/hooks/useSafetyPDFExport';
 
 type PDFType =
@@ -76,7 +77,7 @@ export function SafetyDocumentShare({
       const message = encodeURIComponent(
         `Safety Document: "${documentTitle}" — generated via Elec-Mate`
       );
-      window.open(`https://wa.me/?text=${message}`, '_blank');
+      await openExternalUrl(`https://wa.me/?text=${message}`);
     }
   };
 

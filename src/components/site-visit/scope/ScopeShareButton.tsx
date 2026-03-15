@@ -3,6 +3,7 @@ import { Send, Copy, Check, Loader2, Mail, MessageSquare } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { useToast } from '@/hooks/use-toast';
+import { openExternalUrl } from '@/utils/open-external-url';
 import { supabase } from '@/integrations/supabase/client';
 import { useSiteVisitStorage } from '@/hooks/useSiteVisitStorage';
 import { useCompanyProfile } from '@/hooks/useCompanyProfile';
@@ -106,12 +107,12 @@ export const ScopeShareButton = ({ visit, assumptions }: ScopeShareButtonProps) 
     toast({ title: 'Link copied to clipboard' });
   };
 
-  const handleWhatsApp = () => {
+  const handleWhatsApp = async () => {
     if (!shareUrl) return;
     const text = encodeURIComponent(
       `Hi ${visit.customerName || ''},\n\nPlease review and sign the scope of works for your property:\n${shareUrl}`
     );
-    window.open(`https://wa.me/?text=${text}`, '_blank');
+    await openExternalUrl(`https://wa.me/?text=${text}`);
   };
 
   const handleEmail = async () => {

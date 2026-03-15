@@ -54,7 +54,7 @@ import {
 } from '@/types/emergency-lighting';
 import { useEmergencyLightingSmartForm } from '@/hooks/inspection/useEmergencyLightingSmartForm';
 import { formatEmergencyLightingJson } from '@/utils/emergencyLightingJsonFormatter';
-import { openOrDownloadPdf } from '@/utils/pdf-download';
+import CertificateGenerationDialog from '@/components/inspection/CertificateGenerationDialog';
 
 // Constants
 const REPORT_TYPE = 'emergency-lighting';
@@ -75,6 +75,10 @@ export default function EmergencyLightingCertificate() {
   );
   const [isSaving, setIsSaving] = useState(false);
   const [isGenerating, setIsGenerating] = useState(false);
+  const [showGenerationDialog, setShowGenerationDialog] = useState(false);
+  const [generatedPdfUrl, setGeneratedPdfUrl] = useState<string | null>(null);
+  const [pdfFilename, setPdfFilename] = useState('EmergencyLighting-Certificate.pdf');
+  const [generationError, setGenerationError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(!isNew);
   const [savedReportId, setSavedReportId] = useState<string | null>(
     id !== 'new' ? id || null : null
@@ -421,6 +425,9 @@ export default function EmergencyLightingCertificate() {
   // Generate certificate PDF
   const handleGenerateCertificate = async () => {
     setIsGenerating(true);
+    setGeneratedPdfUrl(null);
+    setGenerationError(null);
+    setShowGenerationDialog(true);
     try {
       // Save first
       await handleSaveDraft();
@@ -518,11 +525,14 @@ export default function EmergencyLightingCertificate() {
         dataWithCertNumber.testDate || new Date()
       );
 
-      await openOrDownloadPdf(functionData.pdfUrl, filename);
+      setGeneratedPdfUrl(functionData.pdfUrl);
+      setPdfFilename(filename);
 
-      toast.success('Certificate generated and downloaded');
+      toast.success('Certificate generated successfully');
     } catch (error) {
-      toast.error(error instanceof Error ? error.message : 'Failed to generate certificate');
+      const msg = error instanceof Error ? error.message : 'Failed to generate certificate';
+      setGenerationError(msg);
+      toast.error(msg);
     } finally {
       setIsGenerating(false);
     }
@@ -711,6 +721,16 @@ export default function EmergencyLightingCertificate() {
           canGenerateCertificate={!isGenerating}
         />
       </main>
+
+      <CertificateGenerationDialog
+        open={showGenerationDialog}
+        onOpenChange={setShowGenerationDialog}
+        isGenerating={isGenerating}
+        pdfUrl={generatedPdfUrl}
+        pdfFilename={pdfFilename}
+        errorMessage={generationError}
+        documentLabel="Certificate"
+      />
     </div>
   );
 }

@@ -22,6 +22,7 @@ import {
   MessageCircle,
 } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
+import { openExternalUrl } from '@/utils/open-external-url';
 import type { SupervisorVerification } from '@/hooks/portfolio/useSupervisorVerification';
 
 interface TimeEntryVerificationQRSheetProps {
@@ -119,11 +120,11 @@ export function TimeEntryVerificationQRSheet({
     window.open(`mailto:?subject=${subject}&body=${body}`, '_self');
   };
 
-  const handleWhatsApp = () => {
+  const handleWhatsApp = async () => {
     const text = encodeURIComponent(
       `Hi! Could you please verify my training hours? It only takes 15 seconds, no account needed:\n\n${verificationUrl}`
     );
-    window.open(`https://wa.me/?text=${text}`, '_blank');
+    await openExternalUrl(`https://wa.me/?text=${text}`);
   };
 
   const snapshot = verification?.evidence_snapshot as

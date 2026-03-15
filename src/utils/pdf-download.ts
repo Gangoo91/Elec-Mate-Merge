@@ -23,6 +23,9 @@ const isStandalone = (): boolean =>
   window.matchMedia('(display-mode: standalone)').matches;
 
 export async function openOrDownloadPdf(url: string, filename = 'document.pdf'): Promise<void> {
+  // Sanitise filename — strip characters unsafe for iOS/Android filesystems
+  const safeFilename = filename.replace(/[/\\:*?"<>|]/g, '-');
+
   // ── Capacitor native (iOS / Android) ────────────────────────────────────
   // WKWebView blocks <a download> and window.open(). Fetch the PDF,
   // save to the device cache, then open the native share sheet so the
@@ -42,13 +45,14 @@ export async function openOrDownloadPdf(url: string, filename = 'document.pdf'):
     });
 
     const saved = await Filesystem.writeFile({
-      path: filename,
+      path: safeFilename,
       data: base64Data,
       directory: Directory.Cache,
+      recursive: true,
     });
 
     await Share.share({
-      title: filename,
+      title: safeFilename,
       files: [saved.uri],
       dialogTitle: 'Save or share your PDF',
     });
@@ -67,7 +71,7 @@ export async function openOrDownloadPdf(url: string, filename = 'document.pdf'):
 
     const a = document.createElement('a');
     a.href = blobUrl;
-    a.download = filename;
+    a.download = safeFilename;
     document.body.appendChild(a);
     a.click();
 

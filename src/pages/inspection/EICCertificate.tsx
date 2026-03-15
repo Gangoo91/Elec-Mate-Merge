@@ -39,7 +39,7 @@ import EICFormTabs from '@/components/inspection/eic/EICFormTabs';
 import { useEICTabs, EICTabValue } from '@/hooks/useEICTabs';
 import { useEICObservations, EICObservation } from '@/hooks/useEICObservations';
 import { useCompanyProfile } from '@/hooks/useCompanyProfile';
-import { openOrDownloadPdf } from '@/utils/pdf-download';
+import CertificateGenerationDialog from '@/components/inspection/CertificateGenerationDialog';
 
 // Default empty form data
 const getDefaultFormData = () => ({
@@ -93,6 +93,10 @@ export default function EICCertificate() {
   const [formData, setFormData] = useState<any>(getDefaultFormData());
   const [isSaving, setIsSaving] = useState(false);
   const [isGenerating, setIsGenerating] = useState(false);
+  const [showGenerationDialog, setShowGenerationDialog] = useState(false);
+  const [generatedPdfUrl, setGeneratedPdfUrl] = useState<string | null>(null);
+  const [pdfFilename, setPdfFilename] = useState('EIC-Certificate.pdf');
+  const [generationError, setGenerationError] = useState<string | null>(null);
   const [hasLoadedDesign, setHasLoadedDesign] = useState(false);
   const [savedReportId, setSavedReportId] = useState<string | null>(
     id !== 'new' ? id || null : null
@@ -266,6 +270,9 @@ export default function EICCertificate() {
   // Generate certificate PDF
   const handleGenerateCertificate = async () => {
     setIsGenerating(true);
+    setGeneratedPdfUrl(null);
+    setGenerationError(null);
+    setShowGenerationDialog(true);
     try {
       // First save the current data
       await handleSaveDraft();
@@ -353,16 +360,19 @@ export default function EICCertificate() {
         formData.installationDate || new Date()
       );
 
-      await openOrDownloadPdf(functionData.pdfUrl, filename);
+      setGeneratedPdfUrl(functionData.pdfUrl);
+      setPdfFilename(filename);
 
-      toast.success('Certificate generated and downloaded');
+      toast.success('Certificate generated successfully');
 
       // Mark design as completed if from Circuit Designer
       if (designId) {
         updateDesignStatus.mutate({ id: designId, status: 'completed' });
       }
     } catch (error) {
-      toast.error(error instanceof Error ? error.message : 'Failed to generate certificate');
+      const msg = error instanceof Error ? error.message : 'Failed to generate certificate';
+      setGenerationError(msg);
+      toast.error(msg);
     } finally {
       setIsGenerating(false);
     }
@@ -607,6 +617,16 @@ export default function EICCertificate() {
           canGenerateCertificate={!isGenerating}
         />
       </main>
+
+      <CertificateGenerationDialog
+        open={showGenerationDialog}
+        onOpenChange={setShowGenerationDialog}
+        isGenerating={isGenerating}
+        pdfUrl={generatedPdfUrl}
+        pdfFilename={pdfFilename}
+        errorMessage={generationError}
+        documentLabel="Certificate"
+      />
     </div>
   );
 }

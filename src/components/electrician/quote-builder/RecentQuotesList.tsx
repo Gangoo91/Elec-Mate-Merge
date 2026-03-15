@@ -15,7 +15,8 @@ import QuoteTableView from '@/components/electrician/quote-builder/QuoteTableVie
 import QuoteCardView from '@/components/electrician/quote-builder/QuoteCardView';
 import { format } from 'date-fns';
 import { generateSequentialInvoiceNumber } from '@/utils/invoice-number-generator';
-import { openOrDownloadPdf } from '@/utils/pdf-download';
+import CertificateGenerationDialog from '@/components/inspection/CertificateGenerationDialog';
+import { openExternalUrl } from '@/utils/open-external-url';
 
 interface RecentQuotesListProps {
   quotes: Quote[];
@@ -44,6 +45,10 @@ const RecentQuotesList: React.FC<RecentQuotesListProps> = ({
   const { companyProfile } = useCompanyProfile();
   const { saveInvoice } = useInvoiceStorage();
   const [loadingAction, setLoadingAction] = useState<string>('');
+  const [showGenerationDialog, setShowGenerationDialog] = useState(false);
+  const [generatedPdfUrl, setGeneratedPdfUrl] = useState<string | null>(null);
+  const [pdfFilename, setPdfFilename] = useState('Quote.pdf');
+  const [generationError, setGenerationError] = useState<string | null>(null);
   const [selectedQuote, setSelectedQuote] = useState<Quote | null>(null);
   const [confirmAction, setConfirmAction] = useState<'accept' | 'reject' | null>(null);
   const [showConfirmDialog, setShowConfirmDialog] = useState(false);
@@ -77,6 +82,9 @@ const RecentQuotesList: React.FC<RecentQuotesListProps> = ({
 
   const handleRegeneratePDF = async (quote: Quote) => {
     setLoadingAction(`pdf-${quote.id}`);
+    setGeneratedPdfUrl(null);
+    setGenerationError(null);
+    setShowGenerationDialog(true);
     try {
       // Create a default company profile if none exists
       const effectiveCompanyProfile = companyProfile || {
@@ -152,12 +160,12 @@ const RecentQuotesList: React.FC<RecentQuotesListProps> = ({
           })
           .eq('id', quote.id);
 
-        // Open / download the PDF (native-aware)
-        await openOrDownloadPdf(downloadUrl, `Quote-${quote.quoteNumber}.pdf`);
+        setGeneratedPdfUrl(downloadUrl);
+        setPdfFilename(`Quote-${quote.quoteNumber}.pdf`);
 
         toast({
           title: 'PDF Generated',
-          description: `Quote ${quote.quoteNumber} has been downloaded successfully.`,
+          description: `Quote ${quote.quoteNumber} is ready to download.`,
           variant: 'success',
         });
       } else {
@@ -165,6 +173,7 @@ const RecentQuotesList: React.FC<RecentQuotesListProps> = ({
       }
     } catch (error) {
       console.error('PDF generation error:', error);
+      setGenerationError(error instanceof Error ? error.message : 'Failed to generate PDF');
       toast({
         title: 'Error',
         description: 'Failed to generate PDF. Please try again.',
@@ -414,15 +423,7 @@ ${companyName}`;
         whatsappUrl = `https://wa.me/?text=${encodeURIComponent(message)}`;
       }
 
-      const whatsappWindow = window.open(whatsappUrl, '_blank');
-
-      if (
-        !whatsappWindow ||
-        whatsappWindow.closed ||
-        typeof whatsappWindow.closed === 'undefined'
-      ) {
-        window.location.href = whatsappUrl;
-      }
+      await openExternalUrl(whatsappUrl);
 
       toast({
         title: 'Opening WhatsApp',
@@ -835,6 +836,16 @@ ${companyName}`;
         onNoChanges={handleNoChanges}
         onHasChanges={handleHasChanges}
         loading={loadingAction.startsWith('invoice-')}
+      />
+
+      <CertificateGenerationDialog
+        open={showGenerationDialog}
+        onOpenChange={setShowGenerationDialog}
+        isGenerating={loadingAction.startsWith('pdf-')}
+        pdfUrl={generatedPdfUrl}
+        pdfFilename={pdfFilename}
+        errorMessage={generationError}
+        documentLabel="Quote"
       />
     </div>
   );

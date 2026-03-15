@@ -25,7 +25,7 @@ import { supabase } from '@/integrations/supabase/client';
 import { Quote } from '@/types/quote';
 import { format, isPast, differenceInDays } from 'date-fns';
 import { toast } from '@/hooks/use-toast';
-import { openOrDownloadPdf } from '@/utils/pdf-download';
+import CertificateGenerationDialog from '@/components/inspection/CertificateGenerationDialog';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -45,6 +45,10 @@ const InvoiceViewPage = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [isMarkingPaid, setIsMarkingPaid] = useState(false);
   const [isDownloading, setIsDownloading] = useState(false);
+  const [showGenerationDialog, setShowGenerationDialog] = useState(false);
+  const [generatedPdfUrl, setGeneratedPdfUrl] = useState<string | null>(null);
+  const [pdfFilename, setPdfFilename] = useState('Invoice.pdf');
+  const [generationError, setGenerationError] = useState<string | null>(null);
   const [showMarkPaidDialog, setShowMarkPaidDialog] = useState(false);
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
@@ -154,6 +158,9 @@ const InvoiceViewPage = () => {
   const handleDownloadPDF = async () => {
     if (!invoice) return;
     setIsDownloading(true);
+    setGeneratedPdfUrl(null);
+    setGenerationError(null);
+    setShowGenerationDialog(true);
 
     try {
       const pdfIsCurrent =
@@ -162,10 +169,8 @@ const InvoiceViewPage = () => {
         new Date(invoice.pdf_generated_at) >= new Date(invoice.updatedAt);
 
       if (pdfIsCurrent) {
-        await openOrDownloadPdf(
-          invoice.pdf_url,
-          `Invoice-${invoice.invoice_number || invoice.id}.pdf`
-        );
+        setGeneratedPdfUrl(invoice.pdf_url);
+        setPdfFilename(`Invoice-${invoice.invoice_number || invoice.id}.pdf`);
         setIsDownloading(false);
         return;
       }
@@ -213,9 +218,11 @@ const InvoiceViewPage = () => {
           .eq('id', invoice.id);
       }
 
-      await openOrDownloadPdf(pdfUrl, `Invoice-${invoice.invoice_number || invoice.id}.pdf`);
+      setGeneratedPdfUrl(pdfUrl);
+      setPdfFilename(`Invoice-${invoice.invoice_number || invoice.id}.pdf`);
     } catch (error) {
       console.error('Error generating invoice PDF:', error);
+      setGenerationError(error instanceof Error ? error.message : 'Failed to generate invoice PDF');
       toast({
         title: 'Error',
         description: 'Failed to generate invoice PDF.',
@@ -746,6 +753,16 @@ const InvoiceViewPage = () => {
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
+
+      <CertificateGenerationDialog
+        open={showGenerationDialog}
+        onOpenChange={setShowGenerationDialog}
+        isGenerating={isDownloading}
+        pdfUrl={generatedPdfUrl}
+        pdfFilename={pdfFilename}
+        errorMessage={generationError}
+        documentLabel="Invoice"
+      />
     </div>
   );
 };

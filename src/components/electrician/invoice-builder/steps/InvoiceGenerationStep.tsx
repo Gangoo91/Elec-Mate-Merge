@@ -7,7 +7,7 @@ import { FileText, Download } from 'lucide-react';
 import { useCompanyProfile } from '@/hooks/useCompanyProfile';
 import { toast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
-import { openOrDownloadPdf } from '@/utils/pdf-download';
+import CertificateGenerationDialog from '@/components/inspection/CertificateGenerationDialog';
 
 interface InvoiceGenerationStepProps {
   invoice: Partial<Invoice>;
@@ -24,6 +24,10 @@ export const InvoiceGenerationStep = ({
 }: InvoiceGenerationStepProps) => {
   const { companyProfile } = useCompanyProfile();
   const [isPreviewing, setIsPreviewing] = useState(false);
+  const [showGenerationDialog, setShowGenerationDialog] = useState(false);
+  const [generatedPdfUrl, setGeneratedPdfUrl] = useState<string | null>(null);
+  const [pdfFilename, setPdfFilename] = useState('Invoice.pdf');
+  const [generationError, setGenerationError] = useState<string | null>(null);
 
   // Poll PDF Monkey status via edge function until downloadUrl is ready (max ~90s)
   const pollPdfDownloadUrl = async (
@@ -54,6 +58,9 @@ export const InvoiceGenerationStep = ({
 
   const handlePreviewPDF = async () => {
     setIsPreviewing(true);
+    setGeneratedPdfUrl(null);
+    setGenerationError(null);
+    setShowGenerationDialog(true);
     try {
       const success = await onSave();
       if (!success) {
@@ -123,7 +130,8 @@ export const InvoiceGenerationStep = ({
       }
 
       // Open the fresh PDF URL directly (S3 signed URLs expire, so don't store them)
-      await openOrDownloadPdf(pdfUrl, `Invoice-${invoice.invoice_number || 'draft'}.pdf`);
+      setGeneratedPdfUrl(pdfUrl);
+      setPdfFilename(`Invoice-${invoice.invoice_number || 'draft'}.pdf`);
 
       toast({
         title: 'PDF ready',
@@ -132,6 +140,7 @@ export const InvoiceGenerationStep = ({
       });
     } catch (error) {
       console.error('Preview PDF error:', error);
+      setGenerationError(error instanceof Error ? error.message : 'PDF generation failed');
       toast({
         title: 'PDF generation failed',
         description: error instanceof Error ? error.message : 'Please try again',
@@ -276,6 +285,16 @@ export const InvoiceGenerationStep = ({
           {isGenerating ? 'Generating...' : 'Save Invoice'}
         </Button>
       </div>
+
+      <CertificateGenerationDialog
+        open={showGenerationDialog}
+        onOpenChange={setShowGenerationDialog}
+        isGenerating={isPreviewing}
+        pdfUrl={generatedPdfUrl}
+        pdfFilename={pdfFilename}
+        errorMessage={generationError}
+        documentLabel="Invoice"
+      />
     </div>
   );
 };

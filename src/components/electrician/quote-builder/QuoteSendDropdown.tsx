@@ -13,6 +13,7 @@ import { toast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
 import { format } from 'date-fns';
 import { cn } from '@/lib/utils';
+import { openExternalUrl } from '@/utils/open-external-url';
 
 interface QuoteSendDropdownProps {
   quote: Quote;
@@ -418,25 +419,7 @@ ${companyName}`;
       );
 
       // Step 7: Open WhatsApp (NOT the PDF directly)
-      try {
-        const whatsappWindow = window.open(whatsappUrl, '_blank');
-
-        if (
-          !whatsappWindow ||
-          whatsappWindow.closed ||
-          typeof whatsappWindow.closed === 'undefined'
-        ) {
-          // Popup was blocked
-          console.warn('⚠️ Popup blocked, trying location.href...');
-          window.location.href = whatsappUrl;
-        } else {
-          console.log('✅ WhatsApp opened successfully');
-        }
-      } catch (openError) {
-        console.error('❌ Error opening WhatsApp:', openError);
-        // Fallback to location.href
-        window.location.href = whatsappUrl;
-      }
+      await openExternalUrl(whatsappUrl);
 
       toast({
         title: 'Opening WhatsApp',

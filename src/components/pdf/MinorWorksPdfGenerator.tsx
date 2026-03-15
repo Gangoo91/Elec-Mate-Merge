@@ -32,11 +32,12 @@ import { useNavigate } from 'react-router-dom';
 import { createInvoiceFromCertificate } from '@/utils/certificateToQuote';
 import { useMinorWorksSmartForm } from '@/hooks/useMinorWorksSmartForm';
 import { generatePdfFilename } from '@/utils/pdfFilenameGenerator';
-import { openOrDownloadPdf } from '@/utils/pdf-download';
+import CertificateGenerationDialog from '@/components/inspection/CertificateGenerationDialog';
 import PDFExportProgress from '@/components/PDFExportProgress';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { useHaptics } from '@/hooks/useHaptics';
 import { cn } from '@/lib/utils';
+import { openExternalUrl } from '@/utils/open-external-url';
 
 interface MinorWorksPdfGeneratorProps {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -61,6 +62,11 @@ const MinorWorksPdfGenerator: React.FC<MinorWorksPdfGeneratorProps> = ({
   const [exportStatus, setExportStatus] = useState<
     'preparing' | 'generating' | 'complete' | 'error'
   >('preparing');
+
+  const [showGenerationDialog, setShowGenerationDialog] = useState(false);
+  const [generatedPdfUrl, setGeneratedPdfUrl] = useState<string | null>(null);
+  const [pdfFilenameForDialog, setPdfFilenameForDialog] = useState('MinorWorks-Certificate.pdf');
+  const [generationError, setGenerationError] = useState<string | null>(null);
 
   // Email state
   const [showEmailDialog, setShowEmailDialog] = useState(false);
@@ -217,6 +223,9 @@ const MinorWorksPdfGenerator: React.FC<MinorWorksPdfGeneratorProps> = ({
     setIsExporting(true);
     setExportStatus('preparing');
     setExportProgress(0);
+    setGeneratedPdfUrl(null);
+    setGenerationError(null);
+    setShowGenerationDialog(true);
 
     try {
       setExportProgress(10);
@@ -377,19 +386,8 @@ const MinorWorksPdfGenerator: React.FC<MinorWorksPdfGeneratorProps> = ({
         formData.workDate || new Date()
       );
 
-      const cacheBustUrl = `${permanentUrl}?t=${Date.now()}`;
-      const response = await fetch(cacheBustUrl, { cache: 'no-store' });
-      const blob = await response.blob();
-      const blobUrl = URL.createObjectURL(blob);
-
-      const link = document.createElement('a');
-      link.href = blobUrl;
-      link.download = filename;
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-
-      setTimeout(() => URL.revokeObjectURL(blobUrl), 100);
+      setGeneratedPdfUrl(permanentUrl);
+      setPdfFilenameForDialog(filename);
 
       setExportProgress(100);
       setExportStatus('complete');
@@ -408,6 +406,8 @@ const MinorWorksPdfGenerator: React.FC<MinorWorksPdfGeneratorProps> = ({
       queryClient.invalidateQueries({ queryKey: ['my-reports'] });
     } catch (error) {
       console.error('PDF generation error:', error);
+      const msg = error instanceof Error ? error.message : 'Export failed';
+      setGenerationError(msg);
       setExportStatus('error');
       toast({
         title: 'Export Failed',
@@ -552,7 +552,7 @@ const MinorWorksPdfGenerator: React.FC<MinorWorksPdfGeneratorProps> = ({
         whatsappUrl = `https://wa.me/?text=${encodeURIComponent(text)}`;
       }
 
-      window.open(whatsappUrl, '_blank');
+      await openExternalUrl(whatsappUrl);
     } catch (err) {
       console.error('[MW WhatsApp] Error:', err);
       toast({
@@ -803,6 +803,16 @@ const MinorWorksPdfGenerator: React.FC<MinorWorksPdfGeneratorProps> = ({
           </div>
         </DialogContent>
       </Dialog>
+
+      <CertificateGenerationDialog
+        open={showGenerationDialog}
+        onOpenChange={setShowGenerationDialog}
+        isGenerating={isExporting}
+        pdfUrl={generatedPdfUrl}
+        pdfFilename={pdfFilenameForDialog}
+        errorMessage={generationError}
+        documentLabel="Certificate"
+      />
     </>
   );
 };

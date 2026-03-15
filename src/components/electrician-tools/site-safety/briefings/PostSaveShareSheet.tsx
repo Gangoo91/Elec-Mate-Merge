@@ -22,6 +22,7 @@ import { Button } from '@/components/ui/button';
 import { IOSInput } from '@/components/ui/ios-input';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
+import { openExternalUrl } from '@/utils/open-external-url';
 
 interface PostSaveShareSheetProps {
   briefingId: string;
@@ -136,7 +137,7 @@ export function PostSaveShareSheet({
         // User cancelled
       }
     } else {
-      window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, '_blank');
+      await openExternalUrl(`https://wa.me/?text=${encodeURIComponent(text)}`);
     }
   };
 

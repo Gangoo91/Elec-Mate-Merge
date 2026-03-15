@@ -18,7 +18,7 @@ import { useToast } from '@/hooks/use-toast';
 import { useCompanyProfile } from '@/hooks/useCompanyProfile';
 import { supabase } from '@/integrations/supabase/client';
 import { cn } from '@/lib/utils';
-import { openOrDownloadPdf } from '@/utils/pdf-download';
+import CertificateGenerationDialog from '@/components/inspection/CertificateGenerationDialog';
 
 interface QuoteReviewStepProps {
   quote: Partial<Quote>;
@@ -28,9 +28,16 @@ export const QuoteReviewStep = ({ quote }: QuoteReviewStepProps) => {
   const { toast } = useToast();
   const { companyProfile } = useCompanyProfile();
   const [isDownloading, setIsDownloading] = useState(false);
+  const [showGenerationDialog, setShowGenerationDialog] = useState(false);
+  const [generatedPdfUrl, setGeneratedPdfUrl] = useState<string | null>(null);
+  const [pdfFilename, setPdfFilename] = useState('Quote.pdf');
+  const [generationError, setGenerationError] = useState<string | null>(null);
 
   const handleDownloadPDF = async () => {
     setIsDownloading(true);
+    setGeneratedPdfUrl(null);
+    setGenerationError(null);
+    setShowGenerationDialog(true);
     try {
       const effectiveCompanyProfile = companyProfile || {
         id: 'default',
@@ -101,7 +108,8 @@ export const QuoteReviewStep = ({ quote }: QuoteReviewStepProps) => {
           })
           .eq('id', quote.id);
 
-        await openOrDownloadPdf(downloadUrl, 'Quote.pdf');
+        setGeneratedPdfUrl(downloadUrl);
+        setPdfFilename('Quote.pdf');
         toast({ title: 'PDF ready', variant: 'success' });
       } else if (documentId) {
         toast({ title: 'PDF in progress', description: 'Check back in a moment' });
@@ -110,6 +118,7 @@ export const QuoteReviewStep = ({ quote }: QuoteReviewStepProps) => {
       }
     } catch (error: any) {
       console.error('PDF generation error:', error);
+      setGenerationError(error?.message || 'PDF generation failed');
       toast({
         title: 'PDF generation failed',
         description: error.message || 'Please try again',
@@ -289,6 +298,15 @@ export const QuoteReviewStep = ({ quote }: QuoteReviewStepProps) => {
           })}
         </div>
       </div>
+      <CertificateGenerationDialog
+        open={showGenerationDialog}
+        onOpenChange={setShowGenerationDialog}
+        isGenerating={isDownloading}
+        pdfUrl={generatedPdfUrl}
+        pdfFilename={pdfFilename}
+        errorMessage={generationError}
+        documentLabel="Quote"
+      />
     </div>
   );
 };

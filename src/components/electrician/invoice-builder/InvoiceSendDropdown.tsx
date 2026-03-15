@@ -25,6 +25,7 @@ import { supabase } from '@/integrations/supabase/client';
 import { format } from 'date-fns';
 import { useAccountingIntegrations } from '@/hooks/useAccountingIntegrations';
 import { ACCOUNTING_PROVIDERS } from '@/types/accounting';
+import { openExternalUrl } from '@/utils/open-external-url';
 
 interface InvoiceSendDropdownProps {
   invoice: Quote;
@@ -398,7 +399,7 @@ ${companyName}`;
         whatsappUrl = `https://wa.me/?text=${encodeURIComponent(message)}`;
       }
 
-      window.open(whatsappUrl, '_blank');
+      await openExternalUrl(whatsappUrl);
 
       toast({
         title: 'Sent via WhatsApp',
