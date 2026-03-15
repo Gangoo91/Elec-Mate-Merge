@@ -30,6 +30,8 @@ import { cn } from '@/lib/utils';
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
 import { useAccountingIntegrations } from '@/hooks/useAccountingIntegrations';
 import { ACCOUNTING_PROVIDERS } from '@/types/accounting';
+import { supabase } from '@/integrations/supabase/client';
+import { toast } from 'sonner';
 
 interface InvoiceCardViewProps {
   invoices: Quote[];
@@ -503,6 +505,38 @@ const InvoiceCardView: React.FC<InvoiceCardViewProps> = ({
                     <p className="text-[12px] text-white">Save to device</p>
                   </div>
                 </button>
+
+                {/* Mark as Sent - Only for draft invoices */}
+                {actionsSheetInvoice.invoice_status === 'draft' && (
+                  <button
+                    onClick={async () => {
+                      const id = actionsSheetInvoice.id;
+                      setActionsSheetInvoice(null);
+                      const { error } = await supabase
+                        .from('quotes')
+                        .update({
+                          invoice_status: 'sent',
+                          invoice_sent_at: new Date().toISOString(),
+                        })
+                        .eq('id', id);
+                      if (error) {
+                        toast.error('Could not update invoice status');
+                      } else {
+                        toast.success('Invoice marked as sent');
+                        onSendSuccess();
+                      }
+                    }}
+                    className="w-full flex items-center gap-4 p-4 rounded-2xl bg-white/[0.03] hover:bg-white/[0.06] touch-manipulation active:scale-[0.98] transition-all"
+                  >
+                    <div className="w-11 h-11 rounded-xl bg-blue-500/15 flex items-center justify-center">
+                      <Send className="h-5 w-5 text-blue-400" />
+                    </div>
+                    <div className="flex-1 text-left">
+                      <p className="text-[15px] font-semibold text-white">Mark as Sent</p>
+                      <p className="text-[12px] text-white">Already sent this manually?</p>
+                    </div>
+                  </button>
+                )}
 
                 {/* Sync to Accounting - Only for paid invoices */}
                 {actionsSheetInvoice.invoice_status === 'paid' &&

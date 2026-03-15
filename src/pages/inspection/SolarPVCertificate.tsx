@@ -74,6 +74,7 @@ export default function SolarPVCertificate() {
   const [formData, setFormData] = useState<SolarPVFormData>(getDefaultSolarPVFormData());
   const [isSaving, setIsSaving] = useState(false);
   const [isGenerating, setIsGenerating] = useState(false);
+  const [generatedPdfUrl, setGeneratedPdfUrl] = useState<string | undefined>();
   const [isLoading, setIsLoading] = useState(!isNew);
   const [savedReportId, setSavedReportId] = useState<string | null>(
     id !== 'new' ? id || null : null
@@ -531,6 +532,7 @@ export default function SolarPVCertificate() {
         formData.commissioningDate || new Date()
       );
 
+      setGeneratedPdfUrl(functionData.pdfUrl);
       await openOrDownloadPdf(functionData.pdfUrl, filename);
 
       // Save pdf_url to reports table and create Part P notification
@@ -587,6 +589,7 @@ export default function SolarPVCertificate() {
       certificateType: 'Solar PV',
       certificateReference: formData.certificateNumber || '',
       reportId: savedReportId || undefined,
+      pdfUrl: generatedPdfUrl || formData.pdfUrl || formData.pdf_url || undefined,
     });
     navigate(url);
   };
