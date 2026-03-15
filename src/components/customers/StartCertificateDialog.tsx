@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Sheet, SheetContent } from '@/components/ui/sheet';
+import { Sheet, SheetContent, SheetTitle } from '@/components/ui/sheet';
 import { MobileSelectPicker } from '@/components/ui/mobile-select-picker';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -257,7 +257,6 @@ export const StartCertificateDialog = ({
   ];
   const isStandalone = STANDALONE_CERT_TYPES.includes(selectedType);
   const isAIAgent = AI_AGENT_TYPES.includes(selectedType);
-  const isCertificate = !['quote', 'invoice', 'site-visit', 'rams', ...AI_AGENT_TYPES].includes(selectedType);
 
   const defaultProperty = properties.find((p) => p.isPrimary) || properties[0];
 
@@ -393,6 +392,22 @@ export const StartCertificateDialog = ({
 
   const selectedAction = actionTypes.find((a) => a.value === selectedType);
 
+  // Derive a solid button colour from the selected action's colour class
+  const startButtonClass = (() => {
+    if (!selectedAction) return 'bg-white text-black hover:bg-white/90';
+    const c = selectedAction.color;
+    if (c.includes('emerald')) return 'bg-emerald-500 hover:bg-emerald-400 text-black';
+    if (c.includes('orange')) return 'bg-orange-500 hover:bg-orange-400 text-black';
+    if (c.includes('yellow')) return 'bg-yellow-400 hover:bg-yellow-300 text-black';
+    if (c.includes('green')) return 'bg-green-500 hover:bg-green-400 text-black';
+    if (c.includes('blue')) return 'bg-blue-500 hover:bg-blue-400 text-white';
+    if (c.includes('purple')) return 'bg-purple-500 hover:bg-purple-400 text-white';
+    if (c.includes('cyan')) return 'bg-cyan-500 hover:bg-cyan-400 text-black';
+    if (c.includes('red')) return 'bg-red-500 hover:bg-red-400 text-white';
+    if (c.includes('amber')) return 'bg-amber-500 hover:bg-amber-400 text-black';
+    return 'bg-white text-black hover:bg-white/90';
+  })();
+
   const jobActions = actionTypes.filter((a) => a.group === 'job');
   const businessActions = actionTypes.filter((a) => a.group === 'business');
   const aiActions = actionTypes.filter((a) => a.group === 'ai');
@@ -402,8 +417,11 @@ export const StartCertificateDialog = ({
     <Sheet open={open} onOpenChange={onOpenChange}>
       <SheetContent
         side="bottom"
-        className="h-[92vh] rounded-t-3xl bg-[#0f0f0f] border-white/[0.08] p-0 flex flex-col overflow-hidden"
+        className="h-[92vh] md:max-h-[90vh] rounded-t-3xl bg-[#0f0f0f] border-white/[0.08] p-0 flex flex-col overflow-hidden [&>button:first-of-type]:hidden"
       >
+        {/* Accessibility title (visually hidden) */}
+        <SheetTitle className="sr-only">New Job for {customer.name}</SheetTitle>
+
         {/* Drag handle */}
         <div className="w-10 h-1 bg-white/20 rounded-full mx-auto mt-3 mb-1 flex-shrink-0" />
 
@@ -605,15 +623,8 @@ export const StartCertificateDialog = ({
               onClick={handleStart}
               className={cn(
                 'w-full h-12 rounded-2xl font-bold text-base touch-manipulation',
-                selectedAction?.selectedBg
-                  ? ''
-                  : 'bg-white text-black hover:bg-white/90'
+                startButtonClass
               )}
-              style={
-                selectedAction
-                  ? { background: 'rgba(255,255,255,0.1)', border: '1px solid rgba(255,255,255,0.15)', color: 'white' }
-                  : {}
-              }
             >
               {getStartLabel()}
               <ArrowRight className="h-4 w-4 ml-2" />
