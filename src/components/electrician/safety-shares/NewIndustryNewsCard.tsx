@@ -1,22 +1,10 @@
 import { useState, useMemo, useCallback, useEffect, useRef } from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Skeleton } from '@/components/ui/skeleton';
-import {
-  Newspaper,
-  AlertTriangle,
-  RefreshCw,
-  Search,
-  X,
-  ArrowLeft,
-  Sparkles,
-  Zap,
-  ChevronDown,
-} from 'lucide-react';
+import { Newspaper, AlertTriangle, RefreshCw, Search, X, Zap } from 'lucide-react';
 import { useIndustryNews } from '@/hooks/useIndustryNews';
 import { useToast } from '@/hooks/use-toast';
-import { useNavigate } from 'react-router-dom';
 import { isValidUrl } from '@/utils/urlUtils';
 import NewsGrid from './NewsGrid';
 import NewsPagination from './NewsPagination';
@@ -44,7 +32,6 @@ const itemVariants = {
 
 const NewIndustryNewsCard = () => {
   const { toast } = useToast();
-  const navigate = useNavigate();
   const {
     data: articles = [],
     isLoading,
@@ -186,122 +173,82 @@ const NewIndustryNewsCard = () => {
         className="space-y-6"
       >
         {/* ═══════════════════════════════════════════════════════════════
-            HEADER - Premium, cohesive design
+            HEADER - Stats, search, filters
         ═══════════════════════════════════════════════════════════════ */}
-        <motion.header variants={itemVariants} className="relative">
-          {/* Background glow */}
-          <div className="absolute -top-20 left-1/2 -translate-x-1/2 w-[400px] h-[200px] bg-elec-yellow/[0.03] rounded-full blur-3xl pointer-events-none" />
-
-          <div className="relative space-y-4">
-            {/* Top row: Back + Actions */}
-            <div className="flex items-center justify-between">
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={() => navigate(-1)}
-                className="text-white hover:text-white hover:bg-white/5 -ml-2 gap-1.5"
-              >
-                <ArrowLeft className="h-4 w-4" />
-                <span className="text-sm">Back</span>
-              </Button>
-
-              {/* Desktop refresh - subtle */}
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={handleRefresh}
-                disabled={isRefreshing}
-                className="hidden sm:flex text-white hover:text-elec-yellow hover:bg-elec-yellow/5 gap-2"
-              >
-                <RefreshCw className={`h-4 w-4 ${isRefreshing ? 'animate-spin' : ''}`} />
-                <span className="text-sm">{isRefreshing ? 'Updating...' : 'Refresh'}</span>
-              </Button>
+        <motion.div variants={itemVariants} className="space-y-4">
+          {/* Stats row */}
+          <div className="flex items-center gap-2">
+            <div className="flex items-center gap-1.5 text-elec-yellow">
+              <Zap className="h-4 w-4" />
+              <span className="text-xs font-medium tracking-wide uppercase">Live Feed</span>
             </div>
-
-            {/* Title section */}
-            <div className="space-y-1">
-              <div className="flex items-center gap-2">
-                <div className="flex items-center gap-1.5 text-elec-yellow">
-                  <Zap className="h-4 w-4" />
-                  <span className="text-xs font-medium tracking-wide uppercase">Live Feed</span>
-                </div>
-                {articles.length > 0 && (
-                  <span className="text-xs text-white">• {articles.length} articles</span>
-                )}
-              </div>
-
-              <h1 className="text-2xl sm:text-3xl font-bold text-white tracking-tight">
-                Industry Updates
-              </h1>
-
-              <p className="text-sm text-white">
-                Electrical Times • Professional Electrician • ECN
-              </p>
-            </div>
-
-            {/* Search bar - elegant, integrated */}
-            <div className="relative">
-              <div className="relative group">
-                {!searchTerm && (
-                  <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-white group-focus-within:text-elec-yellow transition-colors pointer-events-none" />
-                )}
-                <Input
-                  type="text"
-                  placeholder="Search articles..."
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                  className={cn(
-                    'w-full h-12 pr-4 bg-input border-white/[0.08] rounded-xl text-white placeholder:text-muted-foreground focus:border-elec-yellow/30 focus:ring-1 focus:ring-elec-yellow/20 transition-all',
-                    !searchTerm && 'pl-11'
-                  )}
-                />
-                {searchTerm && (
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    onClick={() => setSearchTerm('')}
-                    className="absolute right-2 top-1/2 -translate-y-1/2 h-8 w-8 p-0 text-white hover:text-white hover:bg-white/10 rounded-lg"
-                  >
-                    <X className="h-4 w-4" />
-                  </Button>
-                )}
-              </div>
-
-              {/* Search results indicator */}
-              <AnimatePresence>
-                {searchTerm && (
-                  <motion.div
-                    initial={{ opacity: 0, y: -8 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -8 }}
-                    className="absolute -bottom-7 left-0 text-xs text-white"
-                  >
-                    {filteredArticles.length} result{filteredArticles.length !== 1 ? 's' : ''} for "
-                    {searchTerm}"
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </div>
-
-            {/* Category filter pills */}
-            <div className="flex gap-2 overflow-x-auto pb-2 -mx-1 px-1 scrollbar-hide">
-              {categories.map((cat) => (
-                <button
-                  key={cat}
-                  onClick={() => setSelectedCategory(cat)}
-                  className={cn(
-                    'px-3 py-1.5 rounded-full text-xs whitespace-nowrap transition-all touch-manipulation',
-                    selectedCategory === cat
-                      ? 'bg-elec-yellow text-black font-medium'
-                      : 'bg-white/10 text-white hover:bg-white/15'
-                  )}
-                >
-                  {cat}
-                </button>
-              ))}
-            </div>
+            {articles.length > 0 && (
+              <span className="text-xs text-white">&bull; {articles.length} articles</span>
+            )}
           </div>
-        </motion.header>
+
+          {/* Search bar */}
+          <div className="relative">
+            <div className="relative group">
+              {!searchTerm && (
+                <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-white group-focus-within:text-elec-yellow transition-colors pointer-events-none" />
+              )}
+              <Input
+                type="text"
+                placeholder="Search articles..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className={cn(
+                  'w-full h-12 pr-4 bg-input border-white/[0.08] rounded-xl text-white placeholder:text-white focus:border-elec-yellow/30 focus:ring-1 focus:ring-elec-yellow/20 transition-all',
+                  !searchTerm && 'pl-11'
+                )}
+              />
+              {searchTerm && (
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => setSearchTerm('')}
+                  className="absolute right-2 top-1/2 -translate-y-1/2 h-8 w-8 p-0 text-white hover:text-white hover:bg-white/10 rounded-lg"
+                >
+                  <X className="h-4 w-4" />
+                </Button>
+              )}
+            </div>
+
+            {/* Search results indicator */}
+            <AnimatePresence>
+              {searchTerm && (
+                <motion.div
+                  initial={{ opacity: 0, y: -8 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -8 }}
+                  className="absolute -bottom-7 left-0 text-xs text-white"
+                >
+                  {filteredArticles.length} result{filteredArticles.length !== 1 ? 's' : ''} for "
+                  {searchTerm}"
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
+
+          {/* Category filter pills */}
+          <div className="flex gap-2 overflow-x-auto pb-2 -mx-1 px-1 scrollbar-hide">
+            {categories.map((cat) => (
+              <button
+                key={cat}
+                onClick={() => setSelectedCategory(cat)}
+                className={cn(
+                  'px-3 py-1.5 rounded-full text-xs whitespace-nowrap transition-all touch-manipulation',
+                  selectedCategory === cat
+                    ? 'bg-elec-yellow text-black font-medium'
+                    : 'bg-white/10 text-white hover:bg-white/15'
+                )}
+              >
+                {cat}
+              </button>
+            ))}
+          </div>
+        </motion.div>
 
         {/* Spacer for search results text */}
         {searchTerm && <div className="h-2" />}

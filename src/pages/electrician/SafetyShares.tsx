@@ -27,7 +27,6 @@ const SafetyShares = () => {
       description: 'Latest regulatory updates and compliance information from industry bodies',
       icon: <Newspaper className="h-12 w-12 text-elec-yellow opacity-80" />,
       link: '/electrician/safety-shares/news',
-      enhancedLink: '/electrician/safety-shares/news-enhanced',
     },
     {
       id: 4,

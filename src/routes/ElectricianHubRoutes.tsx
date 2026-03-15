@@ -14,9 +14,6 @@ const SafetyAlertsEnhanced = lazy(
   () => import('@/pages/electrician/safety-shares/SafetyAlertsEnhanced')
 );
 const IndustryNews = lazy(() => import('@/pages/electrician/safety-shares/IndustryNews'));
-const IndustryNewsEnhanced = lazy(
-  () => import('@/pages/electrician/safety-shares/IndustryNewsEnhanced')
-);
 const SafetyResources = lazy(() => import('@/pages/electrician/safety-shares/SafetyResources'));
 const SafetyResourcesEnhanced = lazy(
   () => import('@/pages/electrician/safety-shares/SafetyResourcesEnhanced')
@@ -328,14 +325,6 @@ const ElectricianHubRoutes = () => (
       element={
         <LazyRoute>
           <IndustryNews />
-        </LazyRoute>
-      }
-    />
-    <Route
-      path="safety-shares/news-enhanced"
-      element={
-        <LazyRoute>
-          <IndustryNewsEnhanced />
         </LazyRoute>
       }
     />
