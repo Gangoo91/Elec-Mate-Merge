@@ -32,7 +32,7 @@ import {
 const BusinessTemplates = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const activeSection = searchParams.get('section') || 'quotes-invoices';
-  const setActiveSection = (section: string) => setSearchParams({ section }, { replace: false });
+  const setActiveSection = (section: string) => setSearchParams({ section }, { replace: true });
 
   const sections = [
     { id: 'quotes-invoices', label: 'Quotes', icon: Receipt },

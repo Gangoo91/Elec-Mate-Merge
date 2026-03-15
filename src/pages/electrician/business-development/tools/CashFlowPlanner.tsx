@@ -51,7 +51,7 @@ const CashFlowPlanner = () => {
 
   const [searchParams, setSearchParams] = useSearchParams();
   const activeTab = (searchParams.get('tab') as CashFlowTabId) || 'setup';
-  const setActiveTab = (tab: CashFlowTabId) => setSearchParams({ tab }, { replace: false });
+  const setActiveTab = (tab: CashFlowTabId) => setSearchParams({ tab }, { replace: true });
   const [showTemplates, setShowTemplates] = useState(state.incomeStreams.length === 0);
   const [addSheetOpen, setAddSheetOpen] = useState(false);
   const [addSheetType, setAddSheetType] = useState<'income' | 'expense'>('income');

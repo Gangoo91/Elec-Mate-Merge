@@ -40,7 +40,7 @@ import {
 const TaxFinances = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const activeSection = searchParams.get('section') || 'structure';
-  const setActiveSection = (section: string) => setSearchParams({ section }, { replace: false });
+  const setActiveSection = (section: string) => setSearchParams({ section }, { replace: true });
 
   const sections = [
     { id: 'structure', label: 'Structure', icon: FileText },
