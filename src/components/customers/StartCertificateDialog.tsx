@@ -1,17 +1,12 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-} from '@/components/ui/dialog';
+import { Sheet, SheetContent } from '@/components/ui/sheet';
 import { MobileSelectPicker } from '@/components/ui/mobile-select-picker';
 import { Button } from '@/components/ui/button';
-import { Label } from '@/components/ui/label';
+import { Input } from '@/components/ui/input';
 import { Customer } from '@/hooks/inspection/useCustomers';
 import { useCustomerProperties } from '@/hooks/inspection/useCustomerProperties';
+import { useSparkProjects } from '@/hooks/useSparkProjects';
 import {
   FileText,
   ClipboardCheck,
@@ -29,6 +24,10 @@ import {
   Cpu,
   CheckCircle2,
   Settings,
+  FolderKanban,
+  ChevronRight,
+  Sparkles,
+  Loader2,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
@@ -56,12 +55,24 @@ type ActionType =
   | 'commissioning'
   | 'maintenance';
 
-// Certificate types that use the new standalone routes (/inspection-testing/<type>/new)
 const STANDALONE_CERT_TYPES: ActionType[] = [
   'fire-alarm',
   'emergency-lighting',
   'ev-charging',
   'solar-pv',
+];
+
+const PROJECT_TYPES = [
+  'Rewire',
+  'EICR',
+  'New Build',
+  'Consumer Unit',
+  'Maintenance',
+  'EV Charging',
+  'Fire Alarm',
+  'Lighting',
+  'Commercial',
+  'Other',
 ];
 
 const actionTypes: {
@@ -70,14 +81,16 @@ const actionTypes: {
   description: string;
   icon: React.ElementType;
   color: string;
+  selectedBg: string;
   group: 'certificate' | 'business' | 'job' | 'ai';
 }[] = [
   {
     value: 'site-visit',
     label: 'Site Visit',
-    description: 'Pre-site survey and scope of works',
+    description: 'Pre-site survey & scope',
     icon: ClipboardList,
-    color: 'bg-emerald-500/20 text-emerald-400 border-emerald-500/30',
+    color: 'text-emerald-400',
+    selectedBg: 'bg-emerald-500/20 border-emerald-500/40',
     group: 'job',
   },
   {
@@ -85,47 +98,53 @@ const actionTypes: {
     label: 'RAMS',
     description: 'Risk assessment & method statement',
     icon: Shield,
-    color: 'bg-orange-500/20 text-orange-400 border-orange-500/30',
+    color: 'text-orange-400',
+    selectedBg: 'bg-orange-500/20 border-orange-500/40',
     group: 'job',
   },
   {
     value: 'quote',
     label: 'New Quote',
-    description: 'Create a quote for this customer',
+    description: 'Create a quote',
     icon: FileText,
-    color: 'bg-elec-yellow/20 text-elec-yellow border-elec-yellow/30',
+    color: 'text-yellow-400',
+    selectedBg: 'bg-yellow-500/20 border-yellow-500/40',
     group: 'business',
   },
   {
     value: 'invoice',
     label: 'New Invoice',
-    description: 'Create an invoice for this customer',
+    description: 'Create an invoice',
     icon: PoundSterling,
-    color: 'bg-green-500/20 text-green-400 border-green-500/30',
+    color: 'text-green-400',
+    selectedBg: 'bg-green-500/20 border-green-500/40',
     group: 'business',
   },
   {
     value: 'cost-engineer',
     label: 'Cost Engineer',
-    description: 'AI-powered cost analysis',
+    description: 'AI cost analysis',
     icon: PoundSterling,
-    color: 'bg-emerald-500/20 text-emerald-400 border-emerald-500/30',
+    color: 'text-emerald-400',
+    selectedBg: 'bg-emerald-500/20 border-emerald-500/40',
     group: 'ai',
   },
   {
     value: 'circuit-designer',
     label: 'Circuit Designer',
-    description: 'AI circuit design to BS 7671',
+    description: 'AI circuit design',
     icon: Cpu,
-    color: 'bg-blue-500/20 text-blue-400 border-blue-500/30',
+    color: 'text-blue-400',
+    selectedBg: 'bg-blue-500/20 border-blue-500/40',
     group: 'ai',
   },
   {
     value: 'installation-specialist',
     label: 'Installation',
-    description: 'AI method statement generation',
+    description: 'AI method statement',
     icon: Wrench,
-    color: 'bg-purple-500/20 text-purple-400 border-purple-500/30',
+    color: 'text-purple-400',
+    selectedBg: 'bg-purple-500/20 border-purple-500/40',
     group: 'ai',
   },
   {
@@ -133,7 +152,8 @@ const actionTypes: {
     label: 'Commissioning',
     description: 'AI testing & commissioning',
     icon: CheckCircle2,
-    color: 'bg-cyan-500/20 text-cyan-400 border-cyan-500/30',
+    color: 'text-cyan-400',
+    selectedBg: 'bg-cyan-500/20 border-cyan-500/40',
     group: 'ai',
   },
   {
@@ -141,7 +161,8 @@ const actionTypes: {
     label: 'Maintenance',
     description: 'AI maintenance instructions',
     icon: Settings,
-    color: 'bg-amber-500/20 text-amber-400 border-amber-500/30',
+    color: 'text-amber-400',
+    selectedBg: 'bg-amber-500/20 border-amber-500/40',
     group: 'ai',
   },
   {
@@ -149,7 +170,8 @@ const actionTypes: {
     label: 'EICR',
     description: 'Electrical Installation Condition Report',
     icon: ClipboardCheck,
-    color: 'bg-blue-500/20 text-blue-400 border-blue-500/30',
+    color: 'text-blue-400',
+    selectedBg: 'bg-blue-500/20 border-blue-500/40',
     group: 'certificate',
   },
   {
@@ -157,7 +179,8 @@ const actionTypes: {
     label: 'EIC',
     description: 'Electrical Installation Certificate',
     icon: Receipt,
-    color: 'bg-cyan-500/20 text-cyan-400 border-cyan-500/30',
+    color: 'text-cyan-400',
+    selectedBg: 'bg-cyan-500/20 border-cyan-500/40',
     group: 'certificate',
   },
   {
@@ -165,7 +188,8 @@ const actionTypes: {
     label: 'Minor Works',
     description: 'Minor Electrical Installation Works Certificate',
     icon: Wrench,
-    color: 'bg-purple-500/20 text-purple-400 border-purple-500/30',
+    color: 'text-purple-400',
+    selectedBg: 'bg-purple-500/20 border-purple-500/40',
     group: 'certificate',
   },
   {
@@ -173,7 +197,8 @@ const actionTypes: {
     label: 'Fire Alarm',
     description: 'BS 5839 Fire Detection & Alarm',
     icon: Flame,
-    color: 'bg-red-500/20 text-red-400 border-red-500/30',
+    color: 'text-red-400',
+    selectedBg: 'bg-red-500/20 border-red-500/40',
     group: 'certificate',
   },
   {
@@ -181,7 +206,8 @@ const actionTypes: {
     label: 'Emergency Lighting',
     description: 'BS 5266 Emergency Lighting',
     icon: Lightbulb,
-    color: 'bg-amber-500/20 text-amber-400 border-amber-500/30',
+    color: 'text-amber-400',
+    selectedBg: 'bg-amber-500/20 border-amber-500/40',
     group: 'certificate',
   },
   {
@@ -189,7 +215,8 @@ const actionTypes: {
     label: 'EV Charging',
     description: 'IET Code of Practice EV Charging',
     icon: Zap,
-    color: 'bg-emerald-500/20 text-emerald-400 border-emerald-500/30',
+    color: 'text-emerald-400',
+    selectedBg: 'bg-emerald-500/20 border-emerald-500/40',
     group: 'certificate',
   },
   {
@@ -197,7 +224,8 @@ const actionTypes: {
     label: 'Solar PV',
     description: 'MCS Compliant Solar PV Installation',
     icon: Sun,
-    color: 'bg-orange-500/20 text-orange-400 border-orange-500/30',
+    color: 'text-orange-400',
+    selectedBg: 'bg-orange-500/20 border-orange-500/40',
     group: 'certificate',
   },
 ];
@@ -209,8 +237,16 @@ export const StartCertificateDialog = ({
 }: StartCertificateDialogProps) => {
   const navigate = useNavigate();
   const { properties } = useCustomerProperties(customer.id);
+  const { createProject } = useSparkProjects();
+
   const [selectedType, setSelectedType] = useState<ActionType>('site-visit');
   const [selectedPropertyId, setSelectedPropertyId] = useState<string>('');
+
+  // New Project state
+  const [projectExpanded, setProjectExpanded] = useState(false);
+  const [projectTitle, setProjectTitle] = useState(`${customer.name} — Job`);
+  const [projectType, setProjectType] = useState<string>('');
+  const [creatingProject, setCreatingProject] = useState(false);
 
   const AI_AGENT_TYPES: ActionType[] = [
     'cost-engineer',
@@ -219,16 +255,39 @@ export const StartCertificateDialog = ({
     'commissioning',
     'maintenance',
   ];
-  const isCertificate = !['quote', 'invoice', 'site-visit', 'rams', ...AI_AGENT_TYPES].includes(
-    selectedType
-  );
   const isStandalone = STANDALONE_CERT_TYPES.includes(selectedType);
   const isAIAgent = AI_AGENT_TYPES.includes(selectedType);
+  const isCertificate = !['quote', 'invoice', 'site-visit', 'rams', ...AI_AGENT_TYPES].includes(selectedType);
 
-  const handleStart = () => {
-    const address = selectedPropertyId
+  const defaultProperty = properties.find((p) => p.isPrimary) || properties[0];
+
+  const getAddress = () =>
+    selectedPropertyId
       ? properties.find((p) => p.id === selectedPropertyId)?.address || customer.address
       : customer.address;
+
+  const handleCreateProject = async () => {
+    if (!projectTitle.trim()) return;
+    setCreatingProject(true);
+    try {
+      const projectId = await createProject({
+        title: projectTitle.trim(),
+        projectType: projectType || undefined,
+        customerId: customer.id,
+        customerName: customer.name,
+        location: customer.address || undefined,
+      });
+      onOpenChange(false);
+      navigate(`/electrician/projects/${projectId}`);
+    } catch (e) {
+      console.error(e);
+    } finally {
+      setCreatingProject(false);
+    }
+  };
+
+  const handleStart = () => {
+    const address = getAddress();
 
     if (selectedType === 'site-visit') {
       navigate('/electrician/site-visits', {
@@ -263,10 +322,9 @@ export const StartCertificateDialog = ({
         commissioning: 'commissioning',
         maintenance: 'maintenance',
       };
-      const section = agentSectionMap[selectedType] || selectedType;
       navigate(`/electrician/design-consultation`, {
         state: {
-          section,
+          section: agentSectionMap[selectedType],
           prefillCustomerId: customer.id,
           prefillClientName: customer.name,
           prefillAddress: address,
@@ -277,7 +335,6 @@ export const StartCertificateDialog = ({
     }
 
     if (selectedType === 'quote' || selectedType === 'invoice') {
-      // Use sessionStorage pattern for pre-filling customer data
       const sessionId = `customer-${selectedType}-${Date.now()}`;
       sessionStorage.setItem(
         sessionId,
@@ -292,15 +349,16 @@ export const StartCertificateDialog = ({
           },
         })
       );
-
       const builderPath =
         selectedType === 'quote'
           ? '/electrician/quote-builder/create'
           : '/electrician/invoice-builder/create';
-
       navigate(`${builderPath}?certificateSessionId=${sessionId}`);
-    } else if (isStandalone) {
-      // Standalone cert types use /inspection-testing/<type>/new
+      onOpenChange(false);
+      return;
+    }
+
+    if (isStandalone) {
       navigate(`/electrician/inspection-testing/${selectedType}/new`, {
         state: {
           customerId: customer.id,
@@ -310,7 +368,6 @@ export const StartCertificateDialog = ({
         },
       });
     } else {
-      // Legacy cert types (EICR/EIC/Minor Works) use query param
       navigate(`/electrician/inspection-testing?section=${selectedType}`, {
         state: {
           section: selectedType,
@@ -324,7 +381,17 @@ export const StartCertificateDialog = ({
     onOpenChange(false);
   };
 
-  const defaultProperty = properties.find((p) => p.isPrimary) || properties[0];
+  const getStartLabel = () => {
+    switch (selectedType) {
+      case 'site-visit': return 'Start Site Visit';
+      case 'rams': return 'Create RAMS';
+      case 'quote': return 'Create Quote';
+      case 'invoice': return 'Create Invoice';
+      default: return isAIAgent ? 'Open AI Agent' : 'Start Certificate';
+    }
+  };
+
+  const selectedAction = actionTypes.find((a) => a.value === selectedType);
 
   const jobActions = actionTypes.filter((a) => a.group === 'job');
   const businessActions = actionTypes.filter((a) => a.group === 'business');
@@ -332,220 +399,282 @@ export const StartCertificateDialog = ({
   const certificateActions = actionTypes.filter((a) => a.group === 'certificate');
 
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="w-[calc(100%-2rem)] max-w-[500px] max-h-[90vh] overflow-y-auto bg-card border-border p-4 sm:p-6">
-        <DialogHeader>
-          <DialogTitle className="text-lg sm:text-xl text-foreground">
-            Begin Job for {customer.name}
-          </DialogTitle>
-          <DialogDescription className="text-sm text-neutral-400">
-            Start a site visit, quote, certificate or safety docs
-          </DialogDescription>
-        </DialogHeader>
+    <Sheet open={open} onOpenChange={onOpenChange}>
+      <SheetContent
+        side="bottom"
+        className="h-[92vh] rounded-t-3xl bg-[#0f0f0f] border-white/[0.08] p-0 flex flex-col overflow-hidden"
+      >
+        {/* Drag handle */}
+        <div className="w-10 h-1 bg-white/20 rounded-full mx-auto mt-3 mb-1 flex-shrink-0" />
 
-        <div className="space-y-4 mt-3">
-          {/* Job Actions */}
+        {/* Header */}
+        <div className="px-5 pt-2 pb-4 flex-shrink-0">
+          <h2 className="text-xl font-bold text-white">New Job for {customer.name}</h2>
+          <p className="text-sm text-white/60 mt-0.5">Start a project or jump straight into a quick action</p>
+        </div>
+
+        {/* Scrollable content */}
+        <div className="flex-1 overflow-y-auto px-4 pb-8 space-y-6">
+
+          {/* ── NEW PROJECT HERO ── */}
+          <div className="rounded-2xl border border-emerald-500/30 bg-gradient-to-br from-[#0d2010] to-[#071508] overflow-hidden">
+            <button
+              type="button"
+              onClick={() => setProjectExpanded((v) => !v)}
+              className="w-full flex items-center gap-4 p-4 touch-manipulation text-left"
+            >
+              <div className="w-12 h-12 rounded-xl bg-emerald-500/20 flex items-center justify-center flex-shrink-0">
+                <FolderKanban className="h-6 w-6 text-emerald-400" />
+              </div>
+              <div className="flex-1 min-w-0">
+                <p className="font-semibold text-white text-base">New Project</p>
+                <p className="text-sm text-white/60 mt-0.5">Track all tasks, certs, quotes &amp; docs in one place</p>
+              </div>
+              <ChevronRight
+                className={cn(
+                  'h-5 w-5 text-white/40 flex-shrink-0 transition-transform duration-200',
+                  projectExpanded && 'rotate-90'
+                )}
+              />
+            </button>
+
+            {/* Inline expanded form */}
+            {projectExpanded && (
+              <div className="px-4 pb-4 space-y-3 border-t border-white/[0.06] pt-4">
+                {/* Title input */}
+                <div>
+                  <p className="text-xs font-semibold text-white/50 uppercase tracking-widest mb-2">Project Name</p>
+                  <Input
+                    value={projectTitle}
+                    onChange={(e) => setProjectTitle(e.target.value)}
+                    placeholder="e.g. Full Rewire — Smith House"
+                    className="bg-white/[0.06] border-white/[0.1] text-white placeholder:text-white/30 rounded-xl h-11 text-sm"
+                  />
+                </div>
+
+                {/* Job type pills */}
+                <div>
+                  <p className="text-xs font-semibold text-white/50 uppercase tracking-widest mb-2">Job Type</p>
+                  <div className="flex flex-wrap gap-2">
+                    {PROJECT_TYPES.map((type) => (
+                      <button
+                        key={type}
+                        type="button"
+                        onClick={() => setProjectType(projectType === type ? '' : type)}
+                        className={cn(
+                          'px-3 py-1.5 rounded-lg text-sm font-medium border transition-all touch-manipulation',
+                          projectType === type
+                            ? 'bg-emerald-500/25 border-emerald-500/50 text-emerald-300'
+                            : 'bg-white/[0.05] border-white/[0.08] text-white/70 hover:bg-white/[0.09]'
+                        )}
+                      >
+                        {type}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Create button */}
+                <Button
+                  onClick={handleCreateProject}
+                  disabled={creatingProject || !projectTitle.trim()}
+                  className="w-full h-12 bg-emerald-500 hover:bg-emerald-400 text-black font-bold rounded-xl mt-1 text-base"
+                >
+                  {creatingProject ? (
+                    <>
+                      <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                      Creating…
+                    </>
+                  ) : (
+                    <>
+                      <FolderKanban className="h-4 w-4 mr-2" />
+                      Create Project
+                    </>
+                  )}
+                </Button>
+              </div>
+            )}
+          </div>
+
+          {/* ── DIVIDER ── */}
+          <div className="flex items-center gap-3">
+            <div className="flex-1 h-px bg-white/[0.07]" />
+            <span className="text-xs text-white/40 font-medium uppercase tracking-widest">Or quick action</span>
+            <div className="flex-1 h-px bg-white/[0.07]" />
+          </div>
+
+          {/* ── JOBS ── */}
           <div className="space-y-2">
-            <Label className="text-xs text-muted-foreground uppercase tracking-wider">Jobs</Label>
+            <p className="text-xs font-semibold text-white/50 uppercase tracking-widest">Jobs</p>
             <div className="grid grid-cols-2 gap-2">
               {jobActions.map((type) => (
-                <button
+                <ActionCard
                   key={type.value}
-                  type="button"
-                  onClick={() => setSelectedType(type.value)}
-                  className={cn(
-                    'flex items-center gap-2.5 p-3 rounded-xl border transition-all touch-manipulation text-left',
-                    selectedType === type.value
-                      ? type.color
-                      : 'bg-background border-border hover:border-border/80'
-                  )}
-                >
-                  <div
-                    className={cn(
-                      'w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0',
-                      selectedType === type.value ? 'bg-white/10' : 'bg-muted'
-                    )}
-                  >
-                    <type.icon className="h-4 w-4" />
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <p className="font-medium text-sm">{type.label}</p>
-                  </div>
-                </button>
+                  action={type}
+                  selected={selectedType === type.value}
+                  onSelect={() => setSelectedType(type.value)}
+                />
               ))}
             </div>
           </div>
 
-          {/* Business Actions */}
+          {/* ── CERTIFICATES ── */}
           <div className="space-y-2">
-            <Label className="text-xs text-muted-foreground uppercase tracking-wider">
-              Business
-            </Label>
+            <p className="text-xs font-semibold text-white/50 uppercase tracking-widest">Certificates</p>
+            <div className="space-y-2">
+              {certificateActions.map((type) => (
+                <ActionCard
+                  key={type.value}
+                  action={type}
+                  selected={selectedType === type.value}
+                  onSelect={() => setSelectedType(type.value)}
+                  fullWidth
+                />
+              ))}
+            </div>
+          </div>
+
+          {/* ── BUSINESS ── */}
+          <div className="space-y-2">
+            <p className="text-xs font-semibold text-white/50 uppercase tracking-widest">Business</p>
             <div className="grid grid-cols-2 gap-2">
               {businessActions.map((type) => (
-                <button
+                <ActionCard
                   key={type.value}
-                  type="button"
-                  onClick={() => setSelectedType(type.value)}
-                  className={cn(
-                    'flex items-center gap-2.5 p-3 rounded-xl border transition-all touch-manipulation text-left',
-                    selectedType === type.value
-                      ? type.color
-                      : 'bg-background border-border hover:border-border/80'
-                  )}
-                >
-                  <div
-                    className={cn(
-                      'w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0',
-                      selectedType === type.value ? 'bg-white/10' : 'bg-muted'
-                    )}
-                  >
-                    <type.icon className="h-4 w-4" />
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <p className="font-medium text-sm">{type.label}</p>
-                  </div>
-                </button>
+                  action={type}
+                  selected={selectedType === type.value}
+                  onSelect={() => setSelectedType(type.value)}
+                />
               ))}
             </div>
           </div>
 
-          {/* AI Agents */}
+          {/* ── AI AGENTS ── */}
           <div className="space-y-2">
-            <Label className="text-xs text-muted-foreground uppercase tracking-wider">
-              AI Agents
-            </Label>
+            <div className="flex items-center gap-2">
+              <p className="text-xs font-semibold text-white/50 uppercase tracking-widest">AI Agents</p>
+              <Sparkles className="h-3 w-3 text-white/30" />
+            </div>
             <div className="grid grid-cols-2 gap-2">
               {aiActions.map((type) => (
-                <button
+                <ActionCard
                   key={type.value}
-                  type="button"
-                  onClick={() => setSelectedType(type.value)}
-                  className={cn(
-                    'flex items-center gap-2.5 p-3 rounded-xl border transition-all touch-manipulation text-left',
-                    selectedType === type.value
-                      ? type.color
-                      : 'bg-background border-border hover:border-border/80'
-                  )}
-                >
-                  <div
-                    className={cn(
-                      'w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0',
-                      selectedType === type.value ? 'bg-white/10' : 'bg-muted'
-                    )}
-                  >
-                    <type.icon className="h-4 w-4" />
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <p className="font-medium text-sm">{type.label}</p>
-                  </div>
-                </button>
+                  action={type}
+                  selected={selectedType === type.value}
+                  onSelect={() => setSelectedType(type.value)}
+                />
               ))}
             </div>
           </div>
 
-          {/* Certificate Actions */}
-          <div className="space-y-2">
-            <Label className="text-xs text-muted-foreground uppercase tracking-wider">
-              Certificates
-            </Label>
-            <div className="space-y-1.5">
-              {certificateActions.map((type) => (
-                <button
-                  key={type.value}
-                  type="button"
-                  onClick={() => setSelectedType(type.value)}
-                  className={cn(
-                    'w-full flex items-center gap-3 p-3 rounded-xl border transition-all touch-manipulation text-left',
-                    selectedType === type.value
-                      ? type.color
-                      : 'bg-background border-border hover:border-border/80'
-                  )}
-                >
-                  <div
-                    className={cn(
-                      'w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0',
-                      selectedType === type.value ? 'bg-white/10' : 'bg-muted'
-                    )}
-                  >
-                    <type.icon className="h-4 w-4" />
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <p className="font-medium text-sm">{type.label}</p>
-                    <p className="text-xs text-muted-foreground">{type.description}</p>
-                  </div>
-                  {selectedType === type.value && (
-                    <div className="w-2 h-2 rounded-full bg-current flex-shrink-0" />
-                  )}
-                </button>
-              ))}
-            </div>
-          </div>
-
-          {/* Property Selection (for certificates & quotes/invoices with properties) */}
+          {/* ── PROPERTY (if available) ── */}
           {properties.length > 0 && (
             <div className="space-y-2">
-              <Label className="text-foreground flex items-center gap-2 text-sm">
-                <MapPin className="h-3.5 w-3.5" />
-                Property
-              </Label>
-              <MobileSelectPicker
-                value={selectedPropertyId || defaultProperty?.id || ''}
-                onValueChange={setSelectedPropertyId}
-                options={properties.map((property) => ({
-                  value: property.id,
-                  label: property.address + (property.isPrimary ? ' (Primary)' : ''),
-                }))}
-                placeholder="Select property"
-                title="Select Property"
-                triggerClassName="h-11 bg-background border-border"
-              />
+              <p className="text-xs font-semibold text-white/50 uppercase tracking-widest flex items-center gap-1.5">
+                <MapPin className="h-3 w-3" /> Property
+              </p>
+              <div className="bg-white/[0.05] border border-white/[0.08] rounded-xl overflow-hidden">
+                <MobileSelectPicker
+                  value={selectedPropertyId || defaultProperty?.id || ''}
+                  onValueChange={setSelectedPropertyId}
+                  options={properties.map((p) => ({
+                    value: p.id,
+                    label: p.address + (p.isPrimary ? ' (Primary)' : ''),
+                  }))}
+                  placeholder="Select property"
+                  title="Select Property"
+                  triggerClassName="h-11 bg-transparent border-0 text-white"
+                />
+              </div>
             </div>
           )}
 
-          {/* Customer default address (if no properties) */}
+          {/* ── NO PROPERTIES fallback address ── */}
           {properties.length === 0 && customer.address && (
-            <div className="p-3 rounded-xl bg-muted/50 border border-border">
-              <Label className="text-xs text-muted-foreground flex items-center gap-2 mb-1">
-                <MapPin className="h-3 w-3" />
-                Address
-              </Label>
-              <p className="text-sm whitespace-pre-wrap">{customer.address}</p>
+            <div className="p-3 rounded-xl bg-white/[0.04] border border-white/[0.07]">
+              <p className="text-xs text-white/50 flex items-center gap-1.5 mb-1">
+                <MapPin className="h-3 w-3" /> Address
+              </p>
+              <p className="text-sm text-white whitespace-pre-wrap">{customer.address}</p>
             </div>
           )}
 
-          {/* Actions */}
-          <div className="flex flex-col-reverse sm:flex-row justify-end gap-2 sm:gap-3 pt-1">
+          {/* ── START BUTTON (inline, no sticky) ── */}
+          <div className="space-y-2 pt-1">
             <Button
-              type="button"
+              onClick={handleStart}
+              className={cn(
+                'w-full h-12 rounded-2xl font-bold text-base touch-manipulation',
+                selectedAction?.selectedBg
+                  ? ''
+                  : 'bg-white text-black hover:bg-white/90'
+              )}
+              style={
+                selectedAction
+                  ? { background: 'rgba(255,255,255,0.1)', border: '1px solid rgba(255,255,255,0.15)', color: 'white' }
+                  : {}
+              }
+            >
+              {getStartLabel()}
+              <ArrowRight className="h-4 w-4 ml-2" />
+            </Button>
+            <Button
               variant="ghost"
               onClick={() => onOpenChange(false)}
-              className="w-full sm:w-auto h-11 touch-manipulation"
+              className="w-full h-11 text-white/50 hover:text-white hover:bg-white/[0.05] rounded-2xl"
             >
               Cancel
             </Button>
-            <Button
-              type="button"
-              variant="accent"
-              onClick={handleStart}
-              className="w-full sm:w-auto h-11 touch-manipulation"
-            >
-              {selectedType === 'site-visit'
-                ? 'Start Site Visit'
-                : selectedType === 'rams'
-                  ? 'Create RAMS'
-                  : selectedType === 'quote'
-                    ? 'Create Quote'
-                    : selectedType === 'invoice'
-                      ? 'Create Invoice'
-                      : isAIAgent
-                        ? 'Open AI Agent'
-                        : 'Start Certificate'}
-              <ArrowRight className="h-4 w-4 ml-2" />
-            </Button>
           </div>
         </div>
-      </DialogContent>
-    </Dialog>
+      </SheetContent>
+    </Sheet>
+  );
+};
+
+/* ── ActionCard sub-component ── */
+interface ActionCardProps {
+  action: (typeof actionTypes)[number];
+  selected: boolean;
+  onSelect: () => void;
+  fullWidth?: boolean;
+}
+
+const ActionCard = ({ action, selected, onSelect, fullWidth }: ActionCardProps) => {
+  const Icon = action.icon;
+  return (
+    <button
+      type="button"
+      onClick={onSelect}
+      className={cn(
+        'flex items-center gap-3 p-3.5 rounded-2xl border transition-all touch-manipulation text-left',
+        fullWidth ? 'w-full' : '',
+        selected
+          ? action.selectedBg
+          : 'bg-white/[0.05] border-white/[0.07] hover:bg-white/[0.09]'
+      )}
+    >
+      <div
+        className={cn(
+          'w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0',
+          selected ? 'bg-white/10' : 'bg-white/[0.07]'
+        )}
+      >
+        <Icon className={cn('h-4 w-4', selected ? action.color : 'text-white/60')} />
+      </div>
+      <div className="flex-1 min-w-0">
+        <p className={cn('font-medium text-sm', selected ? 'text-white' : 'text-white/80')}>
+          {action.label}
+        </p>
+        {fullWidth && (
+          <p className={cn('text-xs mt-0.5', selected ? 'text-white/70' : 'text-white/45')}>
+            {action.description}
+          </p>
+        )}
+      </div>
+      {selected && fullWidth && (
+        <div className={cn('w-2 h-2 rounded-full flex-shrink-0', action.color.replace('text-', 'bg-'))} />
+      )}
+    </button>
   );
 };
