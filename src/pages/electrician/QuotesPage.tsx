@@ -507,6 +507,7 @@ const QuotesPage = () => {
                     onEdit={() => navigate(`/electrician/quote-builder/${quote.id}`)}
                     onView={() => navigate(`/electrician/quotes/view/${quote.id}`)}
                     onAccept={() => handleAcceptQuote(quote.id, quote.status)}
+                    onMarkAsSent={() => updateQuoteStatus(quote.id, 'sent')}
                     delay={idx * 0.05}
                   />
                 ))}

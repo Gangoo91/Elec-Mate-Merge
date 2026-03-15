@@ -28,6 +28,7 @@ interface SwipeableQuoteCardProps {
   onEdit: () => void;
   onView: () => void;
   onAccept?: () => void;
+  onMarkAsSent?: () => void;
   delay?: number;
 }
 
@@ -37,6 +38,7 @@ export function SwipeableQuoteCard({
   onEdit,
   onView,
   onAccept,
+  onMarkAsSent,
   delay = 0,
 }: SwipeableQuoteCardProps) {
   const { isMobile, touchSupport } = useMobileEnhanced();
@@ -302,8 +304,8 @@ export function SwipeableQuoteCard({
           </div>
         </div>
 
-        {/* Action Buttons - 2 columns */}
-        <div className="grid grid-cols-2 gap-2 px-4 pb-4">
+        {/* Action Buttons */}
+        <div className={`grid gap-2 px-4 pb-4 ${onMarkAsSent && (quote.status === 'draft' || quote.status === 'pending') ? 'grid-cols-3' : 'grid-cols-2'}`}>
           <Button
             variant="outline"
             size="sm"
@@ -328,6 +330,20 @@ export function SwipeableQuoteCard({
             <Edit className="h-4 w-4 mr-2" />
             Edit
           </Button>
+          {onMarkAsSent && (quote.status === 'draft' || quote.status === 'pending') && (
+            <Button
+              variant="outline"
+              size="sm"
+              className="w-full border-blue-500/30 text-blue-400 hover:bg-blue-500/10"
+              onClick={(e) => {
+                e.stopPropagation();
+                onMarkAsSent();
+              }}
+            >
+              <Send className="h-4 w-4 mr-2" />
+              Sent
+            </Button>
+          )}
         </div>
       </motion.div>
     </motion.div>

@@ -76,6 +76,7 @@ export default function FireAlarmCertificate() {
   const [formData, setFormData] = useState<Record<string, any>>(getDefaultFireAlarmFormData());
   const [isSaving, setIsSaving] = useState(false);
   const [isGenerating, setIsGenerating] = useState(false);
+  const [generatedPdfUrl, setGeneratedPdfUrl] = useState<string | undefined>();
   const [isLoading, setIsLoading] = useState(!isNew);
   const [savedReportId, setSavedReportId] = useState<string | null>(
     id !== 'new' ? id || null : null
@@ -488,6 +489,7 @@ export default function FireAlarmCertificate() {
         formData.commissioningDate || new Date()
       );
 
+      setGeneratedPdfUrl(functionData.pdfUrl);
       await openOrDownloadPdf(functionData.pdfUrl, filename);
 
       toast.success('Certificate generated and downloaded');
@@ -524,6 +526,7 @@ export default function FireAlarmCertificate() {
       certificateType: 'Fire Alarm',
       certificateReference: formData.certificateNumber || '',
       reportId: savedReportId || undefined,
+      pdfUrl: generatedPdfUrl || formData.pdfUrl || formData.pdf_url || undefined,
     });
     navigate(url);
   };

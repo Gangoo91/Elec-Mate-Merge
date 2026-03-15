@@ -60,6 +60,7 @@ export default function PATTestingCertificate() {
   const [formData, setFormData] = useState<any>(getDefaultPATTestingFormData());
   const [isSaving, setIsSaving] = useState(false);
   const [isGenerating, setIsGenerating] = useState(false);
+  const [generatedPdfUrl, setGeneratedPdfUrl] = useState<string | undefined>();
   const [isLoading, setIsLoading] = useState(!isNew);
   const [savedReportId, setSavedReportId] = useState<string | null>(
     id !== 'new' ? id || null : null
@@ -477,6 +478,7 @@ export default function PATTestingCertificate() {
         formData.testDate || new Date()
       );
 
+      setGeneratedPdfUrl(functionData.pdfUrl);
       await openOrDownloadPdf(functionData.pdfUrl, filename);
 
       toast.success('Certificate generated and downloaded');
@@ -530,6 +532,7 @@ export default function PATTestingCertificate() {
       certificateType: 'PAT Testing',
       certificateReference: formData.certificateNumber || '',
       reportId: savedReportId || undefined,
+      pdfUrl: generatedPdfUrl || formData.pdfUrl || formData.pdf_url || undefined,
     });
     navigate(url);
   };
