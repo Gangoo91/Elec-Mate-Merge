@@ -58,6 +58,52 @@ export async function updateRAMSDocument(
       return { success: false, error: updateError.message };
     }
 
+    // Also persist method statement steps if provided
+    if (methodData?.steps && methodData.steps.length > 0) {
+      const methodPayload = {
+        user_id: user.id,
+        rams_document_id: documentId,
+        job_title: methodData.jobTitle || ramsData.projectName,
+        location: methodData.location || ramsData.location,
+        contractor: methodData.contractor || ramsData.contractor || '',
+        supervisor: methodData.supervisor || ramsData.supervisor || '',
+        work_type: methodData.workType || 'Electrical Installation',
+        duration: methodData.duration || null,
+        team_size: methodData.teamSize || null,
+        description: methodData.description || null,
+        overall_risk_level: methodData.overallRiskLevel || 'medium',
+        review_date: methodData.reviewDate || null,
+        approved_by: methodData.approvedBy || null,
+        steps: methodData.steps as unknown as any,
+        tools_required: methodData.toolsRequired || [],
+        materials_required: methodData.materialsRequired || [],
+        practical_tips: methodData.practicalTips || [],
+        common_mistakes: methodData.commonMistakes || [],
+        total_estimated_time: methodData.totalEstimatedTime || null,
+        difficulty_level: methodData.difficultyLevel || null,
+        compliance_regulations: methodData.complianceRegulations || [],
+        compliance_warnings: methodData.complianceWarnings || [],
+        status: 'draft' as const,
+        updated_at: new Date().toISOString(),
+      };
+
+      // Check if a method statement row already exists for this RAMS document
+      const { data: existing } = await supabase
+        .from('method_statements')
+        .select('id')
+        .eq('rams_document_id', documentId)
+        .maybeSingle();
+
+      if (existing) {
+        await supabase
+          .from('method_statements')
+          .update(methodPayload)
+          .eq('id', existing.id);
+      } else {
+        await supabase.from('method_statements').insert([methodPayload]);
+      }
+    }
+
     return { success: true };
   } catch (error) {
     console.error('Error updating RAMS document:', error);

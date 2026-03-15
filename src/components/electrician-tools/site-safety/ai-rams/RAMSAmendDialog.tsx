@@ -63,10 +63,13 @@ export const RAMSAmendDialog: React.FC<RAMSAmendDialogProps> = ({
     }
   };
 
-  const handleQuickEdit = () => {
+  const handleQuickEdit = async () => {
     if (!documentData) return;
 
-    // Parse RAMS data from document
+    // Extract emergency contacts from ai_generation_metadata if present
+    const meta = (documentData.ai_generation_metadata as any) || {};
+    const contacts = meta.emergencyContacts || {};
+
     const ramsData: RAMSData = {
       projectName: documentData.project_name,
       location: documentData.location,
@@ -76,21 +79,39 @@ export const RAMSAmendDialog: React.FC<RAMSAmendDialogProps> = ({
       risks: documentData.risks || [],
       contractor: documentData.contractor || '',
       supervisor: documentData.supervisor || '',
-      siteManagerName: documentData.site_manager_name || '',
-      siteManagerPhone: documentData.site_manager_phone || '',
-      firstAiderName: documentData.first_aider_name || '',
-      firstAiderPhone: documentData.first_aider_phone || '',
-      safetyOfficerName: documentData.safety_officer_name || '',
-      safetyOfficerPhone: documentData.safety_officer_phone || '',
-      assemblyPoint: documentData.assembly_point || '',
+      requiredPPE: documentData.required_ppe || [],
+      ppeDetails: documentData.ppe_details || [],
+      siteManagerName: contacts.siteManagerName || documentData.site_manager_name || '',
+      siteManagerPhone: contacts.siteManagerPhone || documentData.site_manager_phone || '',
+      firstAiderName: contacts.firstAiderName || documentData.first_aider_name || '',
+      firstAiderPhone: contacts.firstAiderPhone || documentData.first_aider_phone || '',
+      safetyOfficerName: contacts.safetyOfficerName || documentData.safety_officer_name || '',
+      safetyOfficerPhone: contacts.safetyOfficerPhone || documentData.safety_officer_phone || '',
+      assemblyPoint: contacts.assemblyPoint || documentData.assembly_point || '',
     };
 
+    // Also load method statement steps for this document
+    const { data: methodRow } = await supabase
+      .from('method_statements')
+      .select('*')
+      .eq('rams_document_id', documentData.id)
+      .maybeSingle();
+
     const methodData: Partial<MethodStatementData> = {
-      jobTitle: documentData.project_name,
-      location: documentData.location,
-      contractor: documentData.contractor || '',
-      supervisor: documentData.supervisor || '',
-      steps: [],
+      jobTitle: methodRow?.job_title || documentData.project_name,
+      location: methodRow?.location || documentData.location,
+      contractor: methodRow?.contractor || documentData.contractor || '',
+      supervisor: methodRow?.supervisor || documentData.supervisor || '',
+      workType: methodRow?.work_type || 'Electrical Installation',
+      duration: methodRow?.duration || undefined,
+      teamSize: methodRow?.team_size || undefined,
+      description: methodRow?.description || undefined,
+      overallRiskLevel: (methodRow?.overall_risk_level as any) || 'medium',
+      steps: (methodRow?.steps as any[]) || [],
+      toolsRequired: (methodRow?.tools_required as string[]) || [],
+      materialsRequired: (methodRow?.materials_required as string[]) || [],
+      practicalTips: (methodRow?.practical_tips as string[]) || [],
+      commonMistakes: (methodRow?.common_mistakes as string[]) || [],
     };
 
     if (onQuickEdit) {
