@@ -4,7 +4,8 @@
  * Three environments:
  *  1. Capacitor native (iOS/Android — TestFlight/App Store)
  *     → <a download> is unsupported in WKWebView; window.open() is blocked.
- *       Use @capacitor/browser Browser.open() to open the URL in Safari.
+ *       Fetch as blob → base64 → Filesystem.writeFile → Share.share()
+ *       to present the native share sheet (save to Files, AirDrop, etc.).
  *  2. Web PWA / standalone mode
  *     → window.open() opens a new tab, kicking the user out of the PWA.
  *       Fetch as blob and trigger <a download> instead.
@@ -13,22 +14,43 @@
  */
 
 import { Capacitor } from '@capacitor/core';
-import { Browser } from '@capacitor/browser';
+import { Filesystem, Directory } from '@capacitor/filesystem';
+import { Share } from '@capacitor/share';
 
 const isStandalone = (): boolean =>
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+   
   (navigator as unknown as Record<string, boolean>).standalone === true ||
   window.matchMedia('(display-mode: standalone)').matches;
 
 export async function openOrDownloadPdf(url: string, filename = 'document.pdf'): Promise<void> {
   // ── Capacitor native (iOS / Android) ────────────────────────────────────
-  // WKWebView blocks <a download> and window.open(). Open the PDF URL in
-  // the in-app browser (Safari on iOS) via the Capacitor Browser plugin.
+  // WKWebView blocks <a download> and window.open(). Fetch the PDF,
+  // save to the device cache, then open the native share sheet so the
+  // user can save to Files, AirDrop, email, WhatsApp, etc.
   if (Capacitor.isNativePlatform()) {
-    await Browser.open({
-      url,
-      presentationStyle: 'popover',
-      toolbarColor: '#0a0a0a',
+    const response = await fetch(url);
+    if (!response.ok) throw new Error(`Failed to fetch PDF: ${response.status}`);
+    const blob = await response.blob();
+    const base64Data = await new Promise<string>((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => {
+        const result = reader.result as string;
+        resolve(result.includes(',') ? result.split(',')[1] : result);
+      };
+      reader.onerror = reject;
+      reader.readAsDataURL(blob);
+    });
+
+    const saved = await Filesystem.writeFile({
+      path: filename,
+      data: base64Data,
+      directory: Directory.Cache,
+    });
+
+    await Share.share({
+      title: filename,
+      files: [saved.uri],
+      dialogTitle: 'Save or share your PDF',
     });
     return;
   }
