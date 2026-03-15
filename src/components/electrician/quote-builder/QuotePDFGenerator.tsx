@@ -465,11 +465,21 @@ export const generateQuotePDF = (quote: Partial<Quote>, companyProfile?: Company
   doc.setFontSize(9);
   doc.setFont('helvetica', 'normal');
   doc.setTextColor(100, 100, 100);
-  doc.text(
-    'This quote is valid for 30 days. All work complies with BS 7671:2018 (18th Edition) and Part P regulations.',
-    margin,
-    footerBarY
-  );
+  // Calculate actual validity period from quote dates
+  const validityText = (() => {
+    if (quote.expiryDate) {
+      const expiry = new Date(quote.expiryDate);
+      const created = quote.createdAt ? new Date(quote.createdAt) : new Date();
+      const days = Math.round((expiry.getTime() - created.getTime()) / (1000 * 60 * 60 * 24));
+      const expiryStr = expiry.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
+      return days > 0
+        ? `This quote is valid for ${days} days (until ${expiryStr}). All work complies with BS 7671:2018 (18th Edition) and Part P regulations.`
+        : `This quote is valid until ${expiryStr}. All work complies with BS 7671:2018 (18th Edition) and Part P regulations.`;
+    }
+    return 'This quote is valid for 30 days. All work complies with BS 7671:2018 (18th Edition) and Part P regulations.';
+  })();
+
+  doc.text(validityText, margin, footerBarY, { maxWidth: pageWidth - margin * 2 });
 
   // Save the PDF
   doc.save(`Quote-${quote.quoteNumber}.pdf`);
