@@ -29,6 +29,8 @@ import {
   Layers,
   ChevronUp,
   Receipt,
+  Pencil,
+  Check,
 } from 'lucide-react';
 import { QuoteItem, JobTemplate } from '@/types/quote';
 import { JobTemplates } from '../JobTemplates';
@@ -82,6 +84,10 @@ export const EnhancedQuoteItemsStep = ({
   const { bundles, bundleTotal } = usePriceBookBundles();
   const [showBundles, setShowBundles] = useState(false);
   const [expandedBundle, setExpandedBundle] = useState<string | null>(null);
+
+  // Inline item description editing
+  const [editingItemId, setEditingItemId] = useState<string | null>(null);
+  const [editingDescription, setEditingDescription] = useState('');
 
   // Rate card
   const { items: rateCardItems } = usePriceList();
@@ -934,9 +940,34 @@ export const EnhancedQuoteItemsStep = ({
                               : 'bg-gray-500'
                       )}
                     />
-                    <p className="flex-1 min-w-0 font-medium text-[14px] text-white leading-tight line-clamp-2">
-                      {item.description}
-                    </p>
+                    {editingItemId === item.id ? (
+                      <input
+                        type="text"
+                        autoFocus
+                        value={editingDescription}
+                        onChange={(e) => setEditingDescription(e.target.value)}
+                        onBlur={() => {
+                          if (editingDescription.trim()) {
+                            onUpdate(item.id, { description: editingDescription.trim() });
+                          }
+                          setEditingItemId(null);
+                        }}
+                        onKeyDown={(e) => {
+                          if (e.key === 'Enter') {
+                            if (editingDescription.trim()) {
+                              onUpdate(item.id, { description: editingDescription.trim() });
+                            }
+                            setEditingItemId(null);
+                          }
+                          if (e.key === 'Escape') setEditingItemId(null);
+                        }}
+                        className="flex-1 min-w-0 bg-[#1a1a1e] border border-elec-yellow/40 rounded-lg px-2 py-1 text-[14px] text-white focus:outline-none focus:border-elec-yellow"
+                      />
+                    ) : (
+                      <p className="flex-1 min-w-0 font-medium text-[14px] text-white leading-tight line-clamp-2">
+                        {item.description}
+                      </p>
+                    )}
                     <p className="text-[15px] font-bold text-elec-yellow shrink-0 ml-2">
                       £{item.totalPrice.toFixed(2)}
                     </p>
@@ -983,6 +1014,31 @@ export const EnhancedQuoteItemsStep = ({
 
                     {/* Action buttons - always visible */}
                     <div className="flex items-center gap-1.5 ml-2">
+                      <button
+                        type="button"
+                        onClick={() => {
+                          if (editingItemId === item.id) {
+                            if (editingDescription.trim()) {
+                              onUpdate(item.id, { description: editingDescription.trim() });
+                            }
+                            setEditingItemId(null);
+                          } else {
+                            setEditingDescription(item.description);
+                            setEditingItemId(item.id);
+                          }
+                        }}
+                        className={cn(
+                          'w-9 h-9 rounded-lg flex items-center justify-center touch-manipulation active:scale-95 transition-transform',
+                          editingItemId === item.id
+                            ? 'bg-elec-yellow/20 active:bg-elec-yellow/30'
+                            : 'bg-white/[0.05] active:bg-white/[0.1]'
+                        )}
+                        aria-label={editingItemId === item.id ? 'Confirm edit' : 'Edit description'}
+                      >
+                        {editingItemId === item.id
+                          ? <Check className="h-4 w-4 text-elec-yellow" />
+                          : <Pencil className="h-4 w-4 text-white" />}
+                      </button>
                       <button
                         type="button"
                         onClick={() => duplicateItem(item)}

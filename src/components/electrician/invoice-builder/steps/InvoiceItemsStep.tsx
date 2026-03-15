@@ -15,6 +15,7 @@ import {
   ChevronDown,
   ChevronUp,
   Check,
+  Pencil,
   User,
   HardHat,
   Hammer,
@@ -205,6 +206,8 @@ export const InvoiceItemsStep = ({
 
   const [materialSearch, setMaterialSearch] = useState('');
   const [priceAdjustment, setPriceAdjustment] = useState(0);
+  const [editingItemId, setEditingItemId] = useState<string | null>(null);
+  const [editingDescription, setEditingDescription] = useState('');
 
   const calculateAdjustedPrice = (basePrice: number) => {
     return basePrice * (1 + priceAdjustment / 100);
@@ -473,13 +476,51 @@ export const InvoiceItemsStep = ({
                   className="rounded-xl bg-white/[0.03] border border-white/[0.06] p-3"
                 >
                   <div className="flex items-center justify-between mb-2">
-                    <p className="text-[13px] font-medium text-white truncate flex-1 mr-2">
-                      {item.description}
-                    </p>
+                    {editingItemId === item.id ? (
+                      <input
+                        type="text"
+                        autoFocus
+                        value={editingDescription}
+                        onChange={(e) => setEditingDescription(e.target.value)}
+                        onBlur={() => {
+                          if (editingDescription.trim()) onUpdateItem(item.id, { description: editingDescription.trim() });
+                          setEditingItemId(null);
+                        }}
+                        onKeyDown={(e) => {
+                          if (e.key === 'Enter') {
+                            if (editingDescription.trim()) onUpdateItem(item.id, { description: editingDescription.trim() });
+                            setEditingItemId(null);
+                          }
+                          if (e.key === 'Escape') setEditingItemId(null);
+                        }}
+                        className="flex-1 mr-2 bg-[#1a1a1e] border border-elec-yellow/40 rounded-lg px-2 py-1 text-[13px] text-white focus:outline-none focus:border-elec-yellow"
+                      />
+                    ) : (
+                      <p className="text-[13px] font-medium text-white truncate flex-1 mr-2">
+                        {item.description}
+                      </p>
+                    )}
                     <div className="flex items-center gap-1 ml-2">
                       <p className="text-[13px] font-bold text-elec-yellow mr-1">
                         {formatCurrency((item.quantity || 0) * (item.unitPrice || 0))}
                       </p>
+                      <button
+                        onClick={() => {
+                          if (editingItemId === item.id) {
+                            if (editingDescription.trim()) onUpdateItem(item.id, { description: editingDescription.trim() });
+                            setEditingItemId(null);
+                          } else {
+                            setEditingDescription(item.description);
+                            setEditingItemId(item.id);
+                          }
+                        }}
+                        className={`w-7 h-7 rounded-lg flex items-center justify-center touch-manipulation active:scale-95 ${editingItemId === item.id ? 'bg-elec-yellow/20' : 'bg-white/[0.05]'}`}
+                        aria-label={editingItemId === item.id ? 'Confirm edit' : 'Edit description'}
+                      >
+                        {editingItemId === item.id
+                          ? <Check className="h-3.5 w-3.5 text-elec-yellow" />
+                          : <Pencil className="h-3.5 w-3.5 text-white" />}
+                      </button>
                       <button
                         onClick={() => onRemoveItem(item.id)}
                         className="w-7 h-7 rounded-lg bg-red-500/10 flex items-center justify-center touch-manipulation active:scale-95"
