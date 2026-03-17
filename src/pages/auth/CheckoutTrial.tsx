@@ -203,7 +203,7 @@ const CheckoutTrial = () => {
       ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-zinc-900 via-black to-black flex flex-col overflow-auto">
+    <div className="min-h-screen bg-gradient-to-b from-zinc-900 via-black to-black flex flex-col overflow-auto pt-[env(safe-area-inset-top,0px)] pb-[env(safe-area-inset-bottom,0px)]">
       {/* Animated background glow */}
       <div className="fixed inset-0 pointer-events-none">
         <motion.div
