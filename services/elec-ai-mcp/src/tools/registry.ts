@@ -242,8 +242,8 @@ function registerQuotingTools(server: McpServer, user: UserContext): void {
   );
 
   server.tool(
-    'generate_quote',
-    'ALWAYS use this when the user asks to create a quote (not an invoice). Each line item MUST have a price — if the user has not provided prices, ask them before calling this tool. Creates a QTE- prefixed quote record. NEVER use create_invoice for quotes.',
+    'create_quote',
+    'Create a quote with manual line items — exactly like the app. Each line item MUST have a price — if the user has not provided prices, ask them before calling this tool. Creates a QTE- prefixed quote record. NEVER use create_invoice for quotes.',
     {
       client_data: z
         .object({
@@ -292,7 +292,7 @@ function registerQuotingTools(server: McpServer, user: UserContext): void {
       vat_rate: z.number().optional().describe('VAT rate percentage (default 20)'),
       notes: z.string().optional().describe('Quote notes'),
     },
-    callTool('generate_quote', user)
+    callTool('create_quote', user)
   );
 
   server.tool(
@@ -336,12 +336,12 @@ function registerQuotingTools(server: McpServer, user: UserContext): void {
   );
 
   server.tool(
-    'generate_quote_pdf',
+    'create_quote_pdf',
     'Generate a branded PDF of a quote. Returns downloadUrl. To send as WhatsApp document, include MEDIA:<downloadUrl> on its own line.',
     {
       quote_id: z.string().describe('Quote UUID'),
     },
-    callTool('generate_quote_pdf', user)
+    callTool('create_quote_pdf', user)
   );
 
   server.tool(
@@ -794,7 +794,7 @@ function registerInvoicingTools(server: McpServer, user: UserContext): void {
 
   server.tool(
     'create_invoice',
-    'Create a draft INVOICE (INV- prefix) with line items. Use ONLY when the user explicitly asks for an invoice — NOT for quotes. For quotes always use generate_quote instead.',
+    'Create a draft INVOICE (INV- prefix) with line items. Use ONLY when the user explicitly asks for an invoice — NOT for quotes. For quotes always use create_quote instead.',
     {
       client_id: z.string().optional().describe('Customer UUID (if exists in customers table)'),
       client_data: z

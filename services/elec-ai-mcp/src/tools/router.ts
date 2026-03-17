@@ -48,9 +48,9 @@ const handlers: Record<string, ToolHandler> = {
 
   // Quoting
   read_quotes: quoting.readQuotes,
-  generate_quote: quoting.generateQuote,
+  create_quote: quoting.generateQuote,
   update_quote: quoting.updateQuote,
-  generate_quote_pdf: quoting.generateQuotePdf,
+  create_quote_pdf: quoting.generateQuotePdf,
   send_quote: quoting.sendQuote,
   set_quote_auto_followup: quoting.setQuoteAutoFollowup,
   track_quote_email: quoting.trackQuoteEmail,

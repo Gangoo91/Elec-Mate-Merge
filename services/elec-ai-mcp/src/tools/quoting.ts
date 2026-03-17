@@ -1,5 +1,5 @@
 /**
- * Quoting tools — read_quotes, generate_quote, generate_quote_pdf, send_quote,
+ * Quoting tools — read_quotes, create_quote, create_quote_pdf, send_quote,
  *                 set_quote_auto_followup, track_quote_email
  *
  * SECURITY.md §6 — Quote safeguards:
@@ -84,7 +84,7 @@ export async function generateQuote(args: Record<string, unknown>, user: UserCon
           : undefined;
     if (price === undefined || price < 0) {
       throw new Error(
-        `Item "${item.description}" is missing a price. Each line item must include a unitPrice (e.g. unitPrice: 75). Ask the user for the price before calling generate_quote.`
+        `Item "${item.description}" is missing a price. Each line item must include a unitPrice (e.g. unitPrice: 75). Ask the user for the price before calling create_quote.`
       );
     }
     const category = typeof item.category === 'string' ? item.category : 'materials';
@@ -168,7 +168,7 @@ export async function generateQuote(args: Record<string, unknown>, user: UserCon
     vat: data.vat_amount,
     status: data.status,
     items_count: items.length,
-    message: `Quote ${data.quote_number} created for £${data.total}. Use generate_quote_pdf to create the PDF.`,
+    message: `Quote ${data.quote_number} created for £${data.total}. Use create_quote_pdf to create the PDF.`,
   };
 }
 
