@@ -1,4 +1,6 @@
 import React, { useState, useRef, useCallback, useEffect } from 'react';
+import { Capacitor } from '@capacitor/core';
+import { Camera as CapCamera, CameraResultType, CameraSource } from '@capacitor/camera';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import {
@@ -55,6 +57,8 @@ const DOCUMENT_GUIDES = {
     aspectRatio: '4 / 3',
   },
 };
+
+const isNative = Capacitor.isNativePlatform();
 
 const DocumentCamera = ({
   open,
@@ -226,8 +230,37 @@ const DocumentCamera = ({
   // Track if this is the initial mount for facingMode effect
   const isInitialMount = useRef(true);
 
-  // Start camera when dialog opens
+  // Native: fire Capacitor Camera immediately when dialog opens — skip getUserMedia UI entirely
   useEffect(() => {
+    if (!open || !isNative) return;
+
+    CapCamera.getPhoto({
+      resultType: CameraResultType.Base64,
+      source: CameraSource.Camera,
+      quality: 90,
+      correctOrientation: true,
+    })
+      .then(async (photo) => {
+        const dataUrl = `data:image/jpeg;base64,${photo.base64String}`;
+        const res = await fetch(dataUrl);
+        const blob = await res.blob();
+        const file = new File([blob], `document-${Date.now()}.jpg`, { type: 'image/jpeg' });
+        onCapture(dataUrl, file);
+        onOpenChange(false);
+      })
+      .catch((err) => {
+        // User cancelled — not an error worth logging
+        const msg = err?.message || '';
+        if (!msg.includes('cancelled') && !msg.includes('User cancelled')) {
+          console.warn('[DocumentCamera] Native capture failed:', err);
+        }
+        onOpenChange(false);
+      });
+  }, [open]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  // Web only: start camera when dialog opens
+  useEffect(() => {
+    if (isNative) return; // handled above
     if (open) {
       startCamera();
     } else {

@@ -1,4 +1,5 @@
 import { Capacitor } from '@capacitor/core';
+import { Preferences } from '@capacitor/preferences';
 import { InAppReview } from '@capacitor-community/in-app-review';
 
 const STORAGE_KEY = 'elec_mate_app_review';
@@ -11,21 +12,49 @@ interface ReviewState {
   totalPrompts: number;
 }
 
-function getState(): ReviewState {
+const DEFAULT_STATE: ReviewState = {
+  positiveActionCount: 0,
+  lastPromptedAt: null,
+  totalPrompts: 0,
+};
+
+/**
+ * Load review state.
+ * Uses @capacitor/preferences on native (persists across WKWebView resets),
+ * falls back to localStorage on web.
+ */
+async function getState(): Promise<ReviewState> {
   try {
-    const raw = localStorage.getItem(STORAGE_KEY);
+    let raw: string | null = null;
+
+    if (Capacitor.isNativePlatform()) {
+      const { value } = await Preferences.get({ key: STORAGE_KEY });
+      raw = value;
+    } else {
+      raw = localStorage.getItem(STORAGE_KEY);
+    }
+
     if (raw) return JSON.parse(raw);
   } catch {
-    // ignore
+    // ignore parse/storage errors
   }
-  return { positiveActionCount: 0, lastPromptedAt: null, totalPrompts: 0 };
+  return { ...DEFAULT_STATE };
 }
 
-function saveState(state: ReviewState) {
+/**
+ * Persist review state.
+ * Uses @capacitor/preferences on native, localStorage on web.
+ */
+async function saveState(state: ReviewState): Promise<void> {
   try {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+    const json = JSON.stringify(state);
+    if (Capacitor.isNativePlatform()) {
+      await Preferences.set({ key: STORAGE_KEY, value: json });
+    } else {
+      localStorage.setItem(STORAGE_KEY, json);
+    }
   } catch {
-    // ignore
+    // ignore storage errors
   }
 }
 
@@ -52,12 +81,15 @@ function shouldPrompt(state: ReviewState): boolean {
  * The prompt only fires on native platforms, after enough positive actions,
  * and respects a 30-day cooldown. Apple's OS ultimately decides whether
  * to show the dialog (max 3 times per year).
+ *
+ * State is stored in @capacitor/preferences on native so it persists
+ * across WKWebView cache clears (unlike localStorage).
  */
 export function useAppReview() {
   const recordPositiveAction = async () => {
     if (!Capacitor.isNativePlatform()) return;
 
-    const state = getState();
+    const state = await getState();
     state.positiveActionCount += 1;
 
     if (shouldPrompt(state)) {
@@ -71,7 +103,7 @@ export function useAppReview() {
       }
     }
 
-    saveState(state);
+    await saveState(state);
   };
 
   return { recordPositiveAction };

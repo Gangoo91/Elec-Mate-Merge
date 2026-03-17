@@ -1,4 +1,6 @@
 import React, { useState, useRef } from 'react';
+import { Capacitor } from '@capacitor/core';
+import { Camera as CapCamera, CameraResultType, CameraSource } from '@capacitor/camera';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -118,46 +120,49 @@ const EvidenceManager = ({ entryId, evidenceFiles, onEvidenceUpdate }: EvidenceM
   };
 
   const handleCameraCapture = async () => {
+    setUploading(true);
     try {
-      // Request camera access
-      const stream = await navigator.mediaDevices.getUserMedia({
-        video: { facingMode: 'environment' }, // Use rear camera on mobile
-      });
-
-      // Create video element for preview
-      const video = document.createElement('video');
-      video.srcObject = stream;
-      video.play();
-
-      // This would typically open a camera interface
-      // For now, we'll simulate the capture
-      alert(
-        'Camera interface would open here. In a real implementation, this would capture photos with metadata including GPS location.'
-      );
-
-      // Clean up stream
-      stream.getTracks().forEach((track) => track.stop());
-    } catch (error) {
-      console.error('Camera access failed:', error);
-      alert('Camera access not available. Please use file upload instead.');
+      if (Capacitor.isNativePlatform()) {
+        // Native: use Capacitor Camera plugin — proper permission handling on iOS/Android
+        const photo = await CapCamera.getPhoto({
+          resultType: CameraResultType.Base64,
+          source: CameraSource.Camera,
+          quality: 85,
+          correctOrientation: true,
+        });
+        const dataUrl = `data:image/jpeg;base64,${photo.base64String}`;
+        const res = await fetch(dataUrl);
+        const blob = await res.blob();
+        const file = new File([blob], `cpd-evidence-${Date.now()}.jpg`, { type: 'image/jpeg' });
+        await uploadEvidence(entryId, file, 'photo-evidence');
+        onEvidenceUpdate?.();
+      } else {
+        // Web: open file picker with camera capture hint
+        if (fileInputRef.current) {
+          fileInputRef.current.setAttribute('capture', 'environment');
+          fileInputRef.current.setAttribute('accept', 'image/*');
+          fileInputRef.current.click();
+          fileInputRef.current.removeAttribute('capture');
+        }
+      }
+    } catch (err: any) {
+      const msg = err?.message || '';
+      if (!msg.includes('cancelled') && !msg.includes('User cancelled')) {
+        console.warn('[EvidenceManager] Camera capture failed:', err);
+        // Fall back to file picker
+        fileInputRef.current?.click();
+      }
+    } finally {
+      setUploading(false);
     }
   };
 
-  const handleVoiceNote = async () => {
-    try {
-      // Request microphone access
-      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-
-      // This would typically start recording
-      alert(
-        'Voice recording interface would start here. In a real implementation, this would record voice notes and convert them to text.'
-      );
-
-      // Clean up stream
-      stream.getTracks().forEach((track) => track.stop());
-    } catch (error) {
-      console.error('Microphone access failed:', error);
-      alert('Microphone access not available.');
+  const handleVoiceNote = () => {
+    // Open file picker for audio files — full voice recording is a future feature
+    if (fileInputRef.current) {
+      fileInputRef.current.setAttribute('accept', 'audio/*');
+      fileInputRef.current.click();
+      fileInputRef.current.removeAttribute('accept');
     }
   };
 

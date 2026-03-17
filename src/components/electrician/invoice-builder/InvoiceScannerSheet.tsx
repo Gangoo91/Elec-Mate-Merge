@@ -4,6 +4,8 @@
  */
 
 import React, { useState, useRef, useCallback, useEffect } from 'react';
+import { Capacitor } from '@capacitor/core';
+import { Camera as CapCamera, CameraResultType, CameraSource } from '@capacitor/camera';
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
 import { Button } from '@/components/ui/button';
 import {
@@ -121,6 +123,32 @@ export function InvoiceScannerSheet({
     setIsStreaming(false);
     setTorchOn(false);
   }, []);
+
+  // Camera button handler — uses Capacitor Camera on native, getUserMedia stream on web
+  const handleCameraPress = useCallback(async () => {
+    if (Capacitor.isNativePlatform()) {
+      setError(null);
+      try {
+        const photo = await CapCamera.getPhoto({
+          resultType: CameraResultType.Base64,
+          source: CameraSource.Camera,
+          quality: 90,
+          correctOrientation: true,
+        });
+        const dataUrl = `data:image/jpeg;base64,${photo.base64String}`;
+        setCapturedImage(dataUrl);
+        setMode('preview');
+      } catch (err: any) {
+        const msg = err?.message || '';
+        if (!msg.includes('cancelled') && !msg.includes('User cancelled')) {
+          setError('Could not access camera. Please try again.');
+          console.warn('[InvoiceScanner] Native capture failed:', err);
+        }
+      }
+    } else {
+      startCamera();
+    }
+  }, [startCamera]);
 
   // Toggle torch
   const toggleTorch = useCallback(async () => {
@@ -296,7 +324,7 @@ export function InvoiceScannerSheet({
               {/* Action Buttons */}
               <div className="grid grid-cols-1 gap-3">
                 <button
-                  onClick={startCamera}
+                  onClick={handleCameraPress}
                   className="flex items-center gap-4 p-5 rounded-xl bg-white/[0.03] border border-white/[0.06] touch-manipulation active:scale-[0.98] transition-transform"
                 >
                   <div className="w-14 h-14 rounded-xl bg-elec-yellow flex items-center justify-center flex-shrink-0">
