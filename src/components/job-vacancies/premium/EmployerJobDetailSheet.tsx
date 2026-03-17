@@ -4,6 +4,7 @@
  */
 
 import { useState, useRef } from 'react';
+import { shareContent } from '@/utils/share';
 import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
 import { Drawer } from 'vaul';
 import { Badge } from '@/components/ui/badge';
@@ -190,17 +191,11 @@ const EmployerJobDetailSheet = ({
   };
 
   const handleShare = async () => {
-    if (navigator.share) {
-      try {
-        await navigator.share({
-          title: job.title,
-          text: `Check out this job: ${job.title} at ${job.company}`,
-          url: window.location.href,
-        });
-      } catch (err) {
-        // User cancelled
-      }
-    }
+    await shareContent({
+      title: job.title,
+      text: `Check out this job: ${job.title} at ${job.company}`,
+      url: window.location.href,
+    });
   };
 
   return (

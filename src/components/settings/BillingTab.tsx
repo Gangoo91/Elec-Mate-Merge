@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { useAuth } from '@/contexts/AuthContext';
 import { useNavigate } from 'react-router-dom';
+import { openExternalUrl } from '@/utils/open-external-url';
 import { motion } from 'framer-motion';
 import {
   CreditCard,
@@ -41,9 +42,10 @@ const itemVariants = {
   },
 };
 
-const STRIPE_BILLING_PORTAL_URL =
-  import.meta.env.VITE_STRIPE_BILLING_PORTAL_URL ||
-  'https://billing.stripe.com/p/login/test_8wM6pY7xJ4j2bks000';
+const STRIPE_BILLING_PORTAL_URL = import.meta.env.VITE_STRIPE_BILLING_PORTAL_URL;
+if (!STRIPE_BILLING_PORTAL_URL && import.meta.env.PROD) {
+  console.error('[BillingTab] VITE_STRIPE_BILLING_PORTAL_URL is not set — billing portal will not work in production. Set this env var in Vercel.');
+}
 
 const BillingTab = () => {
   const { isSubscribed, subscriptionTier, user, profile } = useAuth();
@@ -241,9 +243,12 @@ const BillingTab = () => {
             {isNative ? (
               /* On iOS/Android — subscriptions managed through Apple/Google */
               <button
-                onClick={() =>
-                  window.open('https://apps.apple.com/account/subscriptions', '_system')
-                }
+                onClick={() => {
+                  const url = Capacitor.getPlatform() === 'android'
+                    ? 'https://play.google.com/store/account/subscriptions'
+                    : 'https://apps.apple.com/account/subscriptions';
+                  openExternalUrl(url);
+                }}
                 className="w-full flex items-center justify-between gap-4 p-4 rounded-xl bg-white/[0.03] hover:bg-white/[0.06] transition-all text-left touch-manipulation active:scale-[0.99]"
               >
                 <div className="flex items-center gap-3">
@@ -265,7 +270,8 @@ const BillingTab = () => {
               /* On web — Stripe billing portal */
               <>
                 <button
-                  onClick={() => window.open(STRIPE_BILLING_PORTAL_URL, '_blank')}
+                  onClick={() => STRIPE_BILLING_PORTAL_URL && openExternalUrl(STRIPE_BILLING_PORTAL_URL)}
+                  disabled={!STRIPE_BILLING_PORTAL_URL}
                   className="w-full flex items-center justify-between gap-4 p-4 rounded-xl bg-white/[0.03] hover:bg-white/[0.06] transition-all text-left touch-manipulation active:scale-[0.99]"
                 >
                   <div className="flex items-center gap-3">
@@ -281,7 +287,8 @@ const BillingTab = () => {
                 </button>
 
                 <button
-                  onClick={() => window.open(STRIPE_BILLING_PORTAL_URL, '_blank')}
+                  onClick={() => STRIPE_BILLING_PORTAL_URL && openExternalUrl(STRIPE_BILLING_PORTAL_URL)}
+                  disabled={!STRIPE_BILLING_PORTAL_URL}
                   className="w-full flex items-center justify-between gap-4 p-4 rounded-xl bg-white/[0.03] hover:bg-white/[0.06] transition-all text-left touch-manipulation active:scale-[0.99]"
                 >
                   <div className="flex items-center gap-3">

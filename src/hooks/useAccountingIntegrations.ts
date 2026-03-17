@@ -6,6 +6,7 @@
 import { useState, useCallback, useEffect } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
+import { openExternalUrl } from '@/utils/open-external-url';
 import {
   AccountingIntegration,
   AccountingProvider,
@@ -106,8 +107,8 @@ export const useAccountingIntegrations = (): UseAccountingIntegrationsReturn => 
 
       const { authUrl } = response.data;
       if (authUrl) {
-        // Redirect to provider OAuth page
-        window.location.href = authUrl;
+        // Open OAuth page via Capacitor Browser on native, window.open on web
+        await openExternalUrl(authUrl);
       } else {
         toast.error('Could not start connection flow');
       }

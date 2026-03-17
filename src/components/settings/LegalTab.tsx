@@ -1,4 +1,5 @@
 import React from 'react';
+import { openExternalUrl } from '@/utils/open-external-url';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { motion } from 'framer-motion';
@@ -149,7 +150,7 @@ const LegalTab = () => {
             return (
               <button
                 key={index}
-                onClick={() => window.open(doc.url, '_blank')}
+                onClick={() => openExternalUrl(doc.url)}
                 className="w-full flex items-center justify-between gap-4 p-4 rounded-lg bg-white/5 border border-white/10 hover:bg-white/10 transition-colors text-left group touch-manipulation active:bg-white/[0.08]"
               >
                 <div className="flex items-center gap-3 min-w-0">

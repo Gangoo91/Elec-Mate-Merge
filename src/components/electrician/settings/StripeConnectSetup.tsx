@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
+import { openExternalUrl } from '@/utils/open-external-url';
 import { motion } from 'framer-motion';
 import {
   CreditCard,
@@ -126,8 +127,8 @@ const StripeConnectSetup: React.FC = () => {
 
       const { url } = response.data || {};
       if (url) {
-        // Redirect to Stripe OAuth - user logs into their existing account
-        window.location.href = url;
+        // Open Stripe OAuth in system browser (Capacitor Browser on native)
+        await openExternalUrl(url);
       } else {
         toast.error('Could not start Stripe connection');
       }
@@ -173,12 +174,12 @@ const StripeConnectSetup: React.FC = () => {
 
       if (url) {
         if (type === 'dashboard') {
-          // Dashboard opens in new tab
+          // Dashboard opens in system browser (Capacitor Browser on native)
           toast.success('Opening Stripe Dashboard');
-          window.open(url, '_blank');
+          await openExternalUrl(url);
         } else {
-          // Redirect to Stripe onboarding - will return to same page with ?stripe=success
-          window.location.href = url;
+          // Stripe onboarding — open in system browser on native, redirect on web
+          await openExternalUrl(url);
         }
       } else {
         toast.error('Could not start Stripe setup', {

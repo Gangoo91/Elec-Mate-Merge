@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { openExternalUrl } from '@/utils/open-external-url';
 import {
   CreditCard,
   Landmark,
@@ -110,7 +111,7 @@ const PaymentBankingCard: React.FC<PaymentBankingCardProps> = ({
 
       if (response.error) throw response.error;
       if (response.data?.url) {
-        window.location.href = response.data.url;
+        await openExternalUrl(response.data.url);
       }
     } catch (error: unknown) {
       console.error('Error connecting Stripe:', error);
@@ -132,7 +133,7 @@ const PaymentBankingCard: React.FC<PaymentBankingCardProps> = ({
       });
 
       if (response.data?.url) {
-        window.open(response.data.url, '_blank');
+        await openExternalUrl(response.data.url);
       }
     } catch (error) {
       console.error('Error opening Stripe dashboard:', error);

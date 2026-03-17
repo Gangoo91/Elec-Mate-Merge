@@ -1,4 +1,5 @@
 import { useEffect, useCallback, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Capacitor } from '@capacitor/core';
 import { StatusBar, Style } from '@capacitor/status-bar';
 import { SplashScreen } from '@capacitor/splash-screen';
@@ -14,6 +15,9 @@ import { toast } from 'sonner';
  */
 export function useNativeApp() {
   const isNative = Capacitor.isNativePlatform();
+  const navigate = useNavigate();
+  const navigateRef = useRef(navigate);
+  navigateRef.current = navigate;
 
   // Initialize native features on mount
   useEffect(() => {
@@ -74,11 +78,19 @@ export function useNativeApp() {
           }
         });
 
-        // Handle deep links
+        // Handle deep links — extract the path from elecmate:// or https://elec-mate.com/
         App.addListener('appUrlOpen', ({ url }) => {
-          console.log('Deep link opened:', url);
-          // Handle your deep links here
-          // e.g., quote acceptance links, password reset, etc.
+          console.log('[DeepLink] Opened:', url);
+          try {
+            const parsed = new URL(url);
+            // Support both https://elec-mate.com/path and elecmate://path
+            const path = parsed.pathname + parsed.search + parsed.hash;
+            if (path && path !== '/') {
+              navigateRef.current(path);
+            }
+          } catch (err) {
+            console.warn('[DeepLink] Could not parse URL:', url, err);
+          }
         });
 
         console.log('Native app initialized');
@@ -109,6 +121,9 @@ export function useNativeApp() {
 export function useNativePushNotifications() {
   const isNative = Capacitor.isNativePlatform();
   const registered = useRef(false);
+  const navigate = useNavigate();
+  const navigateRef = useRef(navigate);
+  navigateRef.current = navigate;
 
   const savePushToken = useCallback(async (token: string, userId: string) => {
     try {
@@ -131,33 +146,28 @@ export function useNativePushNotifications() {
   }, []);
 
   const navigateFromNotification = useCallback((data: Record<string, string>) => {
+    const nav = navigateRef.current;
     const role = data?.role || '';
     if (data?.action === 'open_tasks' || data?.type === 'task') {
-      window.location.href = '/electrician/tasks';
+      nav('/electrician/tasks');
     } else if (data?.type === 'study') {
-      window.location.href = '/electrician/study-centre';
+      nav('/electrician/study-centre');
     } else if (data?.type === 'mental_health') {
-      window.location.href = '/electrician/mental-health';
+      nav('/electrician/mental-health');
     } else if (data?.type === 'assessment') {
-      window.location.href = '/electrician/study-centre/apprentice';
+      nav('/electrician/study-centre/apprentice');
     } else if (data?.type === 'briefing') {
-      window.location.href = '/dashboard';
+      nav('/dashboard');
     } else if (data?.type === 'certificate') {
-      window.location.href = '/electrician/inspection-testing';
+      nav('/electrician/inspection-testing');
     } else if (data?.type === 'peer' && data?.conversationId) {
-      window.location.href = `/electrician/mental-health?tab=mates&conversation=${data.conversationId}`;
+      nav(`/electrician/mental-health?tab=mates&conversation=${data.conversationId}`);
     } else if (data?.conversationId) {
-      window.location.href = `/electrician/messages?conversation=${data.conversationId}`;
+      nav(`/electrician/messages?conversation=${data.conversationId}`);
     } else if (data?.quoteId) {
-      window.location.href =
-        role === 'employer'
-          ? '/employer?section=quotes'
-          : `/electrician/quotes/view/${data.quoteId}`;
+      nav(role === 'employer' ? '/employer?section=quotes' : `/electrician/quotes/view/${data.quoteId}`);
     } else if (data?.invoiceId) {
-      window.location.href =
-        role === 'employer'
-          ? '/employer?section=quotes'
-          : `/electrician/invoices/${data.invoiceId}/view`;
+      nav(role === 'employer' ? '/employer?section=quotes' : `/electrician/invoices/${data.invoiceId}/view`);
     }
   }, []);
 

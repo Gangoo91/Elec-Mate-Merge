@@ -405,7 +405,7 @@ const InvoiceCardView: React.FC<InvoiceCardViewProps> = ({
                       <button
                         onClick={(e) => {
                           e.stopPropagation();
-                          window.location.href = '/settings?tab=business';
+                          navigate('/settings?tab=business');
                         }}
                         className="flex items-center justify-center gap-2 h-10 px-4 rounded-xl bg-purple-500/15 hover:bg-purple-500/25 text-[13px] font-medium text-purple-400 touch-manipulation transition-all active:scale-[0.96]"
                       >

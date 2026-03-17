@@ -58,10 +58,12 @@ export type PortalType = keyof typeof PORTAL_LINKS;
 // Helper to get portal by type
 export const getPortalLink = (type: PortalType) => PORTAL_LINKS[type];
 
-// Open portal in new tab
+// Open portal in system browser (Capacitor Browser on native, new tab on web)
 export const openPortal = (type: PortalType) => {
   const portal = PORTAL_LINKS[type];
   if (portal?.url) {
-    window.open(portal.url, '_blank', 'noopener,noreferrer');
+    import('@/utils/open-external-url').then(({ openExternalUrl }) => {
+      openExternalUrl(portal.url);
+    });
   }
 };
