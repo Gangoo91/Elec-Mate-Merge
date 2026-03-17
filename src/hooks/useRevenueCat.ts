@@ -34,6 +34,7 @@ interface RevenueCatState {
 export function useRevenueCat(userId?: string) {
   const isNative = Capacitor.isNativePlatform();
   const initRef = useRef(false);
+  const attachedUserIdRef = useRef<string | undefined>(undefined);
   const haptic = useHaptic();
 
   const [state, setState] = useState<RevenueCatState>({
@@ -60,6 +61,7 @@ export function useRevenueCat(userId?: string) {
           ...(userId ? { appUserID: userId } : {}),
         });
 
+        if (userId) attachedUserIdRef.current = userId;
         initRef.current = true;
         setState((prev) => ({ ...prev, isInitialised: true }));
 
@@ -76,6 +78,28 @@ export function useRevenueCat(userId?: string) {
     };
 
     init();
+  }, [isNative, userId]);
+
+  // If RC was initialised anonymously and userId arrives later, attach the real user
+  // so purchases are attributed correctly and the webhook receives the Supabase user ID
+  useEffect(() => {
+    if (!isNative || !initRef.current || !userId) return;
+    if (attachedUserIdRef.current === userId) return; // already attached
+
+    const attach = async () => {
+      try {
+        await Purchases.logIn({ appUserID: userId });
+        attachedUserIdRef.current = userId;
+        console.log('[RevenueCat] Attached userId after anonymous init:', userId);
+        // Refresh entitlements and offerings for the now-identified user
+        await checkEntitlements();
+        await loadOfferings();
+      } catch (err) {
+        console.warn('[RevenueCat] logIn failed (non-fatal):', err);
+      }
+    };
+
+    attach();
   }, [isNative, userId]);
 
   // Resolve the highest-priority active entitlement from customerInfo
