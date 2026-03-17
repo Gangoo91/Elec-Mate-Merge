@@ -81,9 +81,11 @@ export async function generateQuote(args: Record<string, unknown>, user: UserCon
         ? item.unitPrice
         : typeof item.unit_price === 'number'
           ? item.unit_price
-          : -1;
-    if (price < 0) {
-      throw new Error('Item unitPrice (or unit_price) must be zero or positive');
+          : undefined;
+    if (price === undefined || price < 0) {
+      throw new Error(
+        `Item "${item.description}" is missing a price. Each line item must include a unitPrice (e.g. unitPrice: 75). Ask the user for the price before calling generate_quote.`
+      );
     }
     const category = typeof item.category === 'string' ? item.category : 'materials';
     const qty = item.quantity;
@@ -250,7 +252,9 @@ export async function updateQuote(args: Record<string, unknown>, user: UserConte
             ? item.unit_price
             : undefined;
       if (resolvedPrice === undefined || resolvedPrice < 0) {
-        throw new Error('Item unitPrice (or unit_price) must be zero or positive');
+        throw new Error(
+          `Item "${item.description}" is missing a price. Each item must include unitPrice (e.g. unitPrice: 75).`
+        );
       }
       const category = typeof item.category === 'string' ? item.category : 'materials';
       const qty = item.quantity;

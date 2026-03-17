@@ -438,8 +438,8 @@ export default function PriceBook() {
             size="sm"
             className="h-11 touch-manipulation bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold px-3 flex-shrink-0"
           >
-            <Plus className="h-4 w-4 sm:mr-1.5" />
-            <span className="hidden sm:inline">Add</span>
+            <Plus className="h-4 w-4 mr-1.5" />
+            Add
           </Button>
         </div>
 
