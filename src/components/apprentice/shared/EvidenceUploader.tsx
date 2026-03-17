@@ -1,4 +1,6 @@
 import { useState, useRef, useCallback } from 'react';
+import { Capacitor } from '@capacitor/core';
+import { Camera as CapCamera, CameraResultType, CameraSource } from '@capacitor/camera';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
@@ -220,18 +222,42 @@ export const EvidenceUploader = ({
   };
 
   const handleCameraCapture = async () => {
-    try {
-      const stream = await navigator.mediaDevices.getUserMedia({ video: true });
-      // In a real implementation, you'd show a camera preview
-      // For now, we'll just open the file picker with capture attribute
-      stream.getTracks().forEach((track) => track.stop());
-      if (fileInputRef.current) {
-        fileInputRef.current.setAttribute('capture', 'environment');
-        fileInputRef.current.click();
-        fileInputRef.current.removeAttribute('capture');
+    if (Capacitor.isNativePlatform()) {
+      // Native: use Capacitor Camera plugin (gets permission properly on iOS/Android)
+      try {
+        const photo = await CapCamera.getPhoto({
+          resultType: CameraResultType.Base64,
+          source: CameraSource.Camera,
+          quality: 85,
+          correctOrientation: true,
+        });
+        const dataUrl = `data:image/jpeg;base64,${photo.base64String}`;
+        const res = await fetch(dataUrl);
+        const blob = await res.blob();
+        const file = new File([blob], `evidence-${Date.now()}.jpg`, { type: 'image/jpeg' });
+        await uploadFile(file);
+      } catch (err: any) {
+        const msg = err?.message || '';
+        if (!msg.includes('cancelled') && !msg.includes('User cancelled')) {
+          console.warn('[EvidenceUploader] Camera capture failed:', err);
+          fileInputRef.current?.click();
+        }
       }
+      return;
+    }
+
+    // Web: open file picker with camera capture hint
+    try {
+      // Quick check — if camera is available, add capture hint
+      await navigator.mediaDevices.getUserMedia({ video: true }).then((stream) => {
+        stream.getTracks().forEach((t) => t.stop());
+        if (fileInputRef.current) {
+          fileInputRef.current.setAttribute('capture', 'environment');
+          fileInputRef.current.click();
+          fileInputRef.current.removeAttribute('capture');
+        }
+      });
     } catch {
-      // Camera not available, just open file picker
       fileInputRef.current?.click();
     }
   };
