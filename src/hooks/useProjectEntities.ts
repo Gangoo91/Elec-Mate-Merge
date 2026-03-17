@@ -474,6 +474,27 @@ export function useProjectEntities(projectId: string | undefined) {
     }
   }
 
+  async function deleteProject() {
+    if (!projectId) return false;
+    try {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const { error } = await (s() as any)
+        .from('spark_projects')
+        .delete()
+        .eq('id', projectId);
+      if (error) throw error;
+      toast({ title: 'Project deleted', description: 'Project has been permanently removed.' });
+      return true;
+    } catch {
+      toast({
+        title: 'Failed',
+        description: 'Could not delete project.',
+        variant: 'destructive',
+      });
+      return false;
+    }
+  }
+
   return {
     project,
     tasks,
@@ -513,6 +534,7 @@ export function useProjectEntities(projectId: string | undefined) {
     fetchUnlinkedCircuitDesigns,
     fetchUnlinkedCostEstimates,
     completeProject,
+    deleteProject,
     refresh,
   };
 }

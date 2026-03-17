@@ -35,6 +35,16 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from '@/components/ui/alert-dialog';
 import { Sheet, SheetContent, SheetTitle } from '@/components/ui/sheet';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { useSparkTasks } from '@/hooks/useSparkTasks';
@@ -141,6 +151,7 @@ const ProjectDetailPage = () => {
     fetchUnlinkedCircuitDesigns,
     fetchUnlinkedCostEstimates,
     completeProject,
+    deleteProject,
     refresh,
   } = useProjectEntities(id);
 
@@ -217,6 +228,7 @@ const ProjectDetailPage = () => {
   const [photoSheetOpen, setPhotoSheetOpen] = useState(false);
   const [docSheetOpen, setDocSheetOpen] = useState(false);
   const [confirmDeleteDoc, setConfirmDeleteDoc] = useState<string | null>(null);
+  const [confirmDeleteProject, setConfirmDeleteProject] = useState(false);
 
   // Edit project form state
   const [editTitle, setEditTitle] = useState('');
@@ -456,8 +468,41 @@ const ProjectDetailPage = () => {
                     Mark Complete
                   </DropdownMenuItem>
                 )}
+                <DropdownMenuItem
+                  onClick={() => setConfirmDeleteProject(true)}
+                  className="text-red-400 focus:bg-red-500/10 focus:text-red-400"
+                >
+                  <Trash2 className="h-4 w-4 mr-2" />
+                  Delete Project
+                </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
+
+            {/* Delete project confirmation */}
+            <AlertDialog open={confirmDeleteProject} onOpenChange={setConfirmDeleteProject}>
+              <AlertDialogContent className="bg-elec-gray border-white/10">
+                <AlertDialogHeader>
+                  <AlertDialogTitle className="text-white">Delete Project?</AlertDialogTitle>
+                  <AlertDialogDescription className="text-white/70">
+                    This will permanently delete "{project.title}". Tasks, time entries and linked records will be removed. This cannot be undone.
+                  </AlertDialogDescription>
+                </AlertDialogHeader>
+                <AlertDialogFooter>
+                  <AlertDialogCancel className="border-white/20 text-white hover:bg-white/10 hover:text-white">
+                    Cancel
+                  </AlertDialogCancel>
+                  <AlertDialogAction
+                    className="bg-red-500 hover:bg-red-600 text-white"
+                    onClick={async () => {
+                      const ok = await deleteProject();
+                      if (ok) navigate('/electrician/projects');
+                    }}
+                  >
+                    Delete
+                  </AlertDialogAction>
+                </AlertDialogFooter>
+              </AlertDialogContent>
+            </AlertDialog>
           </div>
         </div>
       </div>
