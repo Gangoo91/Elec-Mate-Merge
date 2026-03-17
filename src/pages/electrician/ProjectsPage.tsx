@@ -10,11 +10,29 @@ import {
   Calendar,
   Users,
   CheckCircle2,
+  MoreVertical,
+  Trash2,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { PullToRefresh } from '@/components/ui/pull-to-refresh';
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from '@/components/ui/alert-dialog';
 import {
   useSparkProjects,
   type ProjectView,
@@ -78,7 +96,8 @@ const ProjectsPage = () => {
   const navigate = useNavigate();
   const [view, setView] = useState<ProjectView>('active');
   const [showCreate, setShowCreate] = useState(false);
-  const { projects, counts, isLoading, createProject, refreshProjects } = useSparkProjects(view);
+  const { projects, counts, isLoading, createProject, completeProject, deleteProject, refreshProjects } = useSparkProjects(view);
+  const [deleteTarget, setDeleteTarget] = useState<{ id: string; title: string } | null>(null);
 
   // Customers for the create form
   const [customers, setCustomers] = useState<SimpleCustomer[]>([]);
@@ -272,20 +291,20 @@ const ProjectsPage = () => {
             >
               <AnimatePresence mode="popLayout">
                 {projects.map((project) => (
-                  <motion.button
+                  <motion.div
                     key={project.id}
                     variants={itemVariants}
                     layout
                     exit={{ opacity: 0, scale: 0.95 }}
                     onClick={() => navigate(`/electrician/projects/${project.id}`)}
-                    className="w-full text-left rounded-2xl bg-white/[0.04] border border-white/[0.08] active:bg-white/[0.08] transition-colors touch-manipulation overflow-hidden"
+                    className="w-full text-left rounded-2xl bg-white/[0.04] border border-white/[0.08] active:bg-white/[0.08] transition-colors touch-manipulation overflow-hidden cursor-pointer"
                   >
                     {/* Priority accent bar */}
                     <div className={cn('h-1 w-full', PRIORITY_COLOURS[project.priority])} />
 
                     <div className="p-4 space-y-3">
-                      {/* Title — full width, no truncation on 2 lines */}
-                      <div className="flex items-start justify-between gap-3">
+                      {/* Title row with actions menu */}
+                      <div className="flex items-start justify-between gap-2">
                         <div className="flex-1 min-w-0">
                           <h3 className="text-[15px] font-bold text-white leading-snug line-clamp-2">
                             {project.title}
@@ -310,11 +329,47 @@ const ProjectsPage = () => {
                             </p>
                           )}
                         </div>
-                        {project.estimatedValue ? (
-                          <span className="text-base font-bold text-emerald-400 flex-shrink-0 tabular-nums">
-                            {formatCurrency(project.estimatedValue)}
-                          </span>
-                        ) : null}
+                        <div className="flex items-center gap-1 flex-shrink-0">
+                          {project.estimatedValue ? (
+                            <span className="text-base font-bold text-emerald-400 tabular-nums">
+                              {formatCurrency(project.estimatedValue)}
+                            </span>
+                          ) : null}
+                          <DropdownMenu>
+                            <DropdownMenuTrigger asChild>
+                              <Button
+                                variant="ghost"
+                                size="icon"
+                                className="h-8 w-8 text-white/50 hover:text-white hover:bg-white/10 rounded-lg flex-shrink-0"
+                                onClick={(e) => e.stopPropagation()}
+                              >
+                                <MoreVertical className="h-4 w-4" />
+                              </Button>
+                            </DropdownMenuTrigger>
+                            <DropdownMenuContent
+                              align="end"
+                              className="bg-elec-gray border-white/10"
+                              onClick={(e) => e.stopPropagation()}
+                            >
+                              {project.status !== 'completed' && (
+                                <DropdownMenuItem
+                                  className="text-white focus:bg-white/10 focus:text-white"
+                                  onClick={() => completeProject(project.id)}
+                                >
+                                  <CheckCircle2 className="h-4 w-4 mr-2 text-emerald-400" />
+                                  Mark Complete
+                                </DropdownMenuItem>
+                              )}
+                              <DropdownMenuItem
+                                className="text-red-400 focus:bg-red-500/10 focus:text-red-400"
+                                onClick={() => setDeleteTarget({ id: project.id, title: project.title })}
+                              >
+                                <Trash2 className="h-4 w-4 mr-2" />
+                                Delete
+                              </DropdownMenuItem>
+                            </DropdownMenuContent>
+                          </DropdownMenu>
+                        </div>
                       </div>
 
                       {/* Badges row */}
@@ -362,13 +417,39 @@ const ProjectsPage = () => {
                         </div>
                       </div>
                     </div>
-                  </motion.button>
+                  </motion.div>
                 ))}
               </AnimatePresence>
             </motion.div>
           )}
         </div>
       </PullToRefresh>
+
+      {/* Delete confirmation dialog */}
+      <AlertDialog open={!!deleteTarget} onOpenChange={(open) => !open && setDeleteTarget(null)}>
+        <AlertDialogContent className="bg-elec-gray border-white/10">
+          <AlertDialogHeader>
+            <AlertDialogTitle className="text-white">Delete Project?</AlertDialogTitle>
+            <AlertDialogDescription className="text-white/70">
+              This will permanently delete "{deleteTarget?.title}". This cannot be undone.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel className="border-white/20 text-white hover:bg-white/10 hover:text-white">
+              Cancel
+            </AlertDialogCancel>
+            <AlertDialogAction
+              className="bg-red-500 hover:bg-red-600 text-white"
+              onClick={async () => {
+                if (deleteTarget) await deleteProject(deleteTarget.id);
+                setDeleteTarget(null);
+              }}
+            >
+              Delete
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
 
       {/* Create Project Sheet */}
       <Sheet open={showCreate} onOpenChange={setShowCreate}>

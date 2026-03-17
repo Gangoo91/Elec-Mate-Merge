@@ -325,6 +325,27 @@ export const useSparkProjects = (view: ProjectView = 'active') => {
     await updateProject(id, { status: 'completed' });
   };
 
+  const deleteProject = async (id: string): Promise<boolean> => {
+    try {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const { error } = await (supabase as any)
+        .from('spark_projects')
+        .delete()
+        .eq('id', id);
+      if (error) throw error;
+      toast({ title: 'Project deleted', description: 'Project permanently removed.' });
+      await loadProjects();
+      return true;
+    } catch (err: unknown) {
+      toast({
+        title: 'Delete failed',
+        description: err instanceof Error ? err.message : 'Could not delete project.',
+        variant: 'destructive',
+      });
+      return false;
+    }
+  };
+
   return {
     projects,
     counts,
@@ -332,6 +353,7 @@ export const useSparkProjects = (view: ProjectView = 'active') => {
     createProject,
     updateProject,
     completeProject,
+    deleteProject,
     refreshProjects: loadProjects,
   };
 };
