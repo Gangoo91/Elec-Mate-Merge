@@ -1,6 +1,7 @@
 import { useState, useRef, useCallback, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Plus, Mic, MicOff, PenLine, Zap, Send } from 'lucide-react';
+import { Capacitor } from '@capacitor/core';
 import { cn } from '@/lib/utils';
 
 interface TaskQuickAddProps {
@@ -36,7 +37,14 @@ export function TaskQuickAdd({ onQuickSave, onExpandForm, onShowTemplates }: Tas
   const inputRef = useRef<HTMLInputElement>(null);
 
   // Check Speech API support
+  // Web Speech Recognition is not supported in Capacitor's WKWebView on iOS —
+  // the constructor may exist but the API is non-functional. Hide the mic button
+  // entirely on native to avoid showing a feature that silently does nothing.
   useEffect(() => {
+    if (Capacitor.isNativePlatform()) {
+      setSpeechSupported(false);
+      return;
+    }
     const SpeechRecognitionCtor =
       (window as unknown as Record<string, unknown>).SpeechRecognition ||
       (window as unknown as Record<string, unknown>).webkitSpeechRecognition;

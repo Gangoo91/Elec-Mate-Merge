@@ -1,6 +1,13 @@
 import { useEffect, useState } from 'react';
 import posthog from 'posthog-js';
+import { Capacitor } from '@capacitor/core';
 import { useAuth } from '@/contexts/AuthContext';
+
+// Session recording and autocapture are disabled on native (iOS/Android).
+// Apple's App Store guidelines treat passive screen recording as a privacy concern,
+// and PostHog's own docs recommend disabling it for native app submissions.
+// Manual posthog.capture() calls are unaffected — this only disables passive capture.
+const isNativePlatform = Capacitor.isNativePlatform();
 
 // PostHog configuration
 const POSTHOG_KEY = import.meta.env.VITE_POSTHOG_KEY;
@@ -50,11 +57,15 @@ export function initPostHog() {
     person_profiles: 'identified_only',
     capture_pageview: true,
     capture_pageleave: true,
-    autocapture: true,
-    session_recording: {
-      maskAllInputs: true,
-      maskTextSelector: '[data-ph-mask]',
-    },
+    // Passive autocapture and session recording are web-only.
+    // On native, we rely on explicit posthog.capture() calls only.
+    autocapture: !isNativePlatform,
+    session_recording: isNativePlatform
+      ? false
+      : {
+          maskAllInputs: true,
+          maskTextSelector: '[data-ph-mask]',
+        },
     // Respect Do Not Track browser setting
     respect_dnt: true,
     // Disable persistence until we confirm consent
