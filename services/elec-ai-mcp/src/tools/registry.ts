@@ -243,7 +243,7 @@ function registerQuotingTools(server: McpServer, user: UserContext): void {
 
   server.tool(
     'generate_quote',
-    'ALWAYS use this when the user asks to create a quote (not an invoice). Accepts manual line items with exact prices provided by the user, OR agent-estimated pricing. Creates a QTE- prefixed quote record. NEVER use create_invoice for quotes.',
+    'ALWAYS use this when the user asks to create a quote (not an invoice). Each line item MUST have a price — if the user has not provided prices, ask them before calling this tool. Creates a QTE- prefixed quote record. NEVER use create_invoice for quotes.',
     {
       client_data: z
         .object({
@@ -270,21 +270,23 @@ function registerQuotingTools(server: McpServer, user: UserContext): void {
               .enum(['labour', 'materials', 'equipment'])
               .optional()
               .describe('Item category (defaults to materials)'),
-            quantity: z.number().describe('Quantity'),
+            quantity: z.number().positive().describe('Quantity — must be greater than zero'),
             unitPrice: z
               .number()
-              .optional()
-              .describe('Price per unit in GBP (use this or unit_price)'),
+              .nonnegative()
+              .describe('Price per unit in GBP — REQUIRED. Use this or unit_price.'),
             unit_price: z
               .number()
+              .nonnegative()
               .optional()
-              .describe('Price per unit in GBP (alias for unitPrice)'),
+              .describe('Price per unit in GBP (alias for unitPrice — use either, not both)'),
             unit: z.string().optional().describe('Unit type: each, metre, hours, etc.'),
             notes: z.string().optional().describe('Optional notes'),
           })
         )
+        .min(1, 'At least one line item is required')
         .describe(
-          'Line items — use the exact prices the user provides. Accepts both unitPrice and unit_price.'
+          'Line items — every item MUST include a unitPrice greater than or equal to zero. If the user has not specified prices, ask them first.'
         ),
       vat_registered: z.boolean().optional().describe('Whether to apply VAT (default false)'),
       vat_rate: z.number().optional().describe('VAT rate percentage (default 20)'),

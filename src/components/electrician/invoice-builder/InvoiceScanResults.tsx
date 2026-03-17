@@ -7,7 +7,7 @@ import React, { useState } from 'react';
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Check, X, CheckCircle2, Circle, Sparkles, Store, BookOpen } from 'lucide-react';
+import { Check, X, CheckCircle2, Circle, Sparkles, Store, BookOpen, AlertTriangle } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { ScanResult, ScannedInvoiceItem, MaterialMatch } from '@/types/invoice-scanner';
 import { useMaterialsLists } from '@/hooks/useMaterialsLists';
@@ -74,6 +74,7 @@ export function InvoiceScanResults({
   };
 
   const selectedCount = result.items.filter((i) => i.selected).length;
+  const hasPriceWarning = result.items.some((i) => i.selected && i.unitPrice === 0);
   const totalItems = result.items.length;
 
   const formatCurrency = (amount: number) =>
@@ -192,14 +193,21 @@ export function InvoiceScanResults({
                           inputMode="decimal"
                           step="0.01"
                           min="0"
+                          placeholder="0.00"
                           value={item.unitPrice === 0 ? '' : item.unitPrice.toFixed(2)}
+                          onMouseDown={(e) => e.stopPropagation()}
                           onClick={(e) => e.stopPropagation()}
                           onChange={(e) => {
                             e.stopPropagation();
                             const price = parseFloat(e.target.value) || 0;
                             onUpdateItem(item.id, { unitPrice: price });
                           }}
-                          className="h-9 w-20 text-[14px] pl-6 bg-white/[0.05] border-white/[0.08] rounded-lg"
+                          className={cn(
+                            'h-9 w-20 text-[14px] pl-6 bg-white/[0.05] rounded-lg',
+                            item.unitPrice === 0
+                              ? 'border-red-500/50 focus:border-red-400'
+                              : 'border-white/[0.08]'
+                          )}
                         />
                       </div>
                     </div>
@@ -222,6 +230,16 @@ export function InvoiceScanResults({
               </span>
             </div>
 
+            {/* Price warning */}
+            {hasPriceWarning && (
+              <div className="flex items-center gap-2 mb-3 px-1">
+                <AlertTriangle className="h-4 w-4 text-amber-400 flex-shrink-0" />
+                <p className="text-[12px] text-amber-400">
+                  Some items have no price — enter a price or deselect them to continue
+                </p>
+              </div>
+            )}
+
             {/* Actions */}
             <div className="flex gap-3">
               <Button
@@ -232,9 +250,9 @@ export function InvoiceScanResults({
                 Cancel
               </Button>
               <Button
-                className="flex-1 h-12 bg-elec-yellow text-black font-semibold hover:bg-elec-yellow/90 rounded-xl"
+                className="flex-1 h-12 bg-elec-yellow text-black font-semibold hover:bg-elec-yellow/90 rounded-xl disabled:opacity-50"
                 onClick={onConfirm}
-                disabled={selectedCount === 0}
+                disabled={selectedCount === 0 || hasPriceWarning}
               >
                 <Check className="h-5 w-5 mr-2" />
                 Add {selectedCount} Items
