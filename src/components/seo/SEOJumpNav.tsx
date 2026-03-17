@@ -20,7 +20,7 @@ export function SEOJumpNav({ items }: SEOJumpNavProps) {
   }, []);
 
   return (
-    <div className="sticky top-16 z-30 bg-[#0a0a0a]/95 backdrop-blur-sm border-b border-white/5">
+    <div className="sticky top-[calc(4rem+env(safe-area-inset-top,0px))] z-30 bg-[#0a0a0a]/95 backdrop-blur-sm border-b border-white/5">
       <div className="max-w-6xl mx-auto px-5 sm:px-6 lg:px-8">
         <nav className="flex gap-1 overflow-x-auto scrollbar-hide py-3 -mx-1">
           {items.map((item) => (
