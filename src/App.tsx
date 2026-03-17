@@ -62,11 +62,13 @@ function App() {
                     <CookieConsent />
                   </>
                 )}
-                {/* Vercel analytics load after app is interactive */}
-                <Suspense fallback={null}>
-                  <SpeedInsights />
-                  <Analytics />
-                </Suspense>
+                {/* Vercel analytics — web only (not designed for Capacitor native) */}
+                {!Capacitor.isNativePlatform() && (
+                  <Suspense fallback={null}>
+                    <SpeedInsights />
+                    <Analytics />
+                  </Suspense>
+                )}
               </NativeAppInit>
             </NotificationProvider>
           </ThemeProvider>
