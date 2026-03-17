@@ -4,6 +4,8 @@
  */
 
 import { useState, useRef } from 'react';
+import { shareContent } from '@/utils/share';
+import { openExternalUrl } from '@/utils/open-external-url';
 import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
 import { Drawer } from 'vaul';
 import { Badge } from '@/components/ui/badge';
@@ -196,24 +198,17 @@ const JobDetailSheet = ({
     if (onApply) {
       onApply(job);
     } else if (job.url) {
-      window.open(job.url, '_blank', 'noopener,noreferrer');
+      openExternalUrl(job.url);
     }
   };
 
   const handleShare = async () => {
-    if (navigator.share) {
-      try {
-        await navigator.share({
-          title: job.title,
-          text: `Check out this job: ${job.title} at ${job.company}`,
-          url: job.url || window.location.href,
-        });
-      } catch (err) {
-        // User cancelled or error
-      }
-    } else if (job.url) {
-      navigator.clipboard.writeText(job.url);
-    }
+    await shareContent({
+      title: job.title,
+      text: `Check out this job: ${job.title} at ${job.company}`,
+      url: job.url || window.location.href,
+      onFallback: () => { if (job.url) navigator.clipboard.writeText(job.url); },
+    });
   };
 
   return (

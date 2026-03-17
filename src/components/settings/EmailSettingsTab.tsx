@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { openExternalUrl } from '@/utils/open-external-url';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
@@ -104,17 +105,9 @@ export const EmailSettingsTab = () => {
 
       if (error) throw error;
 
-      // Open OAuth in new tab
+      // Open OAuth in system browser (Capacitor Browser on native, new tab on web)
       if (data?.authUrl) {
-        const popup = window.open(data.authUrl, '_blank', 'noopener,noreferrer');
-        if (!popup) {
-          // Popup blocked, try top-level redirect
-          if (window.top) {
-            window.top.location.href = data.authUrl;
-          } else {
-            window.location.href = data.authUrl;
-          }
-        }
+        await openExternalUrl(data.authUrl);
       }
       setLoading(false);
     } catch (error: any) {

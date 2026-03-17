@@ -1,6 +1,7 @@
 import { useState, useCallback, useEffect } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
+import { openExternalUrl } from '@/utils/open-external-url';
 import type { GoogleCalendarStatus } from '@/types/calendar';
 
 const SUPABASE_URL = 'https://jtwygbeceundfgnkirof.supabase.co';
@@ -95,7 +96,7 @@ export function useGoogleCalendarSync() {
       }
 
       const { authUrl } = await response.json();
-      window.open(authUrl, '_blank', 'width=600,height=700');
+      await openExternalUrl(authUrl);
     } catch (error: unknown) {
       console.error('Failed to connect Google Calendar:', error);
       toast({

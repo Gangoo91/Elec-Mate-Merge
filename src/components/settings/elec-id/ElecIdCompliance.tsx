@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
+import { openExternalUrl } from '@/utils/open-external-url';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Skeleton } from '@/components/ui/skeleton';
@@ -131,14 +132,14 @@ const ElecIdCompliance = ({ onNavigateToTab }: ElecIdComplianceProps = {}) => {
   const [recommendations, setRecommendations] = useState<AllRecommendations | null>(null);
   const [smartSteps, setSmartSteps] = useState<SmartNextStep[]>([]);
 
-  // Helper to navigate to course - internal routes use React Router, external use window.open
+  // Helper to navigate to course - internal routes use React Router, external use openExternalUrl
   const navigateToCourse = useCallback(
-    (searchQuery: string) => {
+    async (searchQuery: string) => {
       const url = getCourseSearchUrl(searchQuery);
       if (isInternalUrl(url)) {
         navigate(url);
       } else {
-        window.open(url, '_blank');
+        await openExternalUrl(url);
       }
     },
     [navigate]
@@ -330,7 +331,7 @@ const ElecIdCompliance = ({ onNavigateToTab }: ElecIdComplianceProps = {}) => {
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: index * 0.05 }}
-        onClick={() => item.renewalUrl && window.open(item.renewalUrl, '_blank')}
+        onClick={() => item.renewalUrl && openExternalUrl(item.renewalUrl)}
         className={cn(
           'w-full p-4 rounded-2xl border text-left transition-all touch-manipulation',
           status.bg,
@@ -430,7 +431,7 @@ const ElecIdCompliance = ({ onNavigateToTab }: ElecIdComplianceProps = {}) => {
       navigateToCourse(step.searchQuery);
     } else if (step.navigateTo) {
       if (step.navigateTo.startsWith('http')) {
-        window.open(step.navigateTo, '_blank');
+        openExternalUrl(step.navigateTo);
       } else if (step.navigateTo.startsWith('/')) {
         navigate(step.navigateTo);
       } else if (onNavigateToTab) {

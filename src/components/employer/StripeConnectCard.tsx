@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { openExternalUrl } from '@/utils/open-external-url';
 import {
   CreditCard,
   CheckCircle2,
@@ -83,8 +84,8 @@ export function StripeConnectCard() {
         companySettings.company_email || null
       );
 
-      // Redirect to Stripe onboarding
-      window.location.href = result.onboardingUrl;
+      // Open Stripe onboarding in system browser
+      await openExternalUrl(result.onboardingUrl);
     } catch (error: any) {
       console.error('Error creating Stripe account:', error);
       toast({
@@ -100,7 +101,7 @@ export function StripeConnectCard() {
     setActionLoading(true);
     try {
       const result = await getStripeOnboardingLink('onboarding');
-      window.location.href = result.url;
+      await openExternalUrl(result.url);
     } catch (error: any) {
       console.error('Error getting onboarding link:', error);
       toast({
@@ -116,7 +117,7 @@ export function StripeConnectCard() {
     setActionLoading(true);
     try {
       const result = await getStripeOnboardingLink('dashboard');
-      window.open(result.url, '_blank');
+      await openExternalUrl(result.url);
     } catch (error: any) {
       console.error('Error getting dashboard link:', error);
       toast({

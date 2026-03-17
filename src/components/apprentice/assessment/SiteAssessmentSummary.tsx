@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { shareContent } from '@/utils/share';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -43,30 +44,25 @@ const SiteAssessmentSummary = ({ progress }: SiteAssessmentSummaryProps) => {
     }));
     const text = progress.exportAsText(totalCount, categories);
 
-    if (navigator.share) {
-      try {
-        await navigator.share({
-          title: 'Site Assessment Report',
-          text,
-        });
-      } catch {
-        // User cancelled share
-      }
-    } else {
-      try {
-        await navigator.clipboard.writeText(text);
-        toast({
-          title: 'Copied to clipboard',
-          description: 'Assessment report copied. You can paste it anywhere.',
-        });
-      } catch {
-        toast({
-          title: 'Could not copy',
-          description: 'Please use the download button instead.',
-          variant: 'destructive',
-        });
-      }
-    }
+    await shareContent({
+      title: 'Site Assessment Report',
+      text,
+      onFallback: async () => {
+        try {
+          await navigator.clipboard.writeText(text);
+          toast({
+            title: 'Copied to clipboard',
+            description: 'Assessment report copied. You can paste it anywhere.',
+          });
+        } catch {
+          toast({
+            title: 'Could not copy',
+            description: 'Please use the download button instead.',
+            variant: 'destructive',
+          });
+        }
+      },
+    });
   };
 
   const handleClear = () => {

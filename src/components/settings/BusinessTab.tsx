@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { openExternalUrl } from '@/utils/open-external-url';
 import { useForm } from 'react-hook-form';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -803,7 +804,7 @@ const BusinessTab = () => {
 
       if (response.error) throw response.error;
       if (response.data?.url) {
-        window.location.href = response.data.url;
+        await openExternalUrl(response.data.url);
       }
     } catch (error: any) {
       console.error('Error connecting Stripe:', error);
@@ -825,7 +826,7 @@ const BusinessTab = () => {
       });
 
       if (response.data?.url) {
-        window.open(response.data.url, '_blank');
+        await openExternalUrl(response.data.url);
       }
     } catch (error) {
       console.error('Error opening Stripe dashboard:', error);

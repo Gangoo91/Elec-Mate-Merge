@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Quote } from '@/types/quote';
 import { Button } from '@/components/ui/button';
 import {
@@ -44,6 +45,7 @@ export const InvoiceSendDropdown = ({
   refreshKey = 0,
   compact = false,
 }: InvoiceSendDropdownProps) => {
+  const navigate = useNavigate();
   const [isSendingEmail, setIsSendingEmail] = useState(false);
   const [isSharingWhatsApp, setIsSharingWhatsApp] = useState(false);
   const [isConnectingStripe, setIsConnectingStripe] = useState(false);
@@ -238,7 +240,7 @@ export const InvoiceSendDropdown = ({
                 size="sm"
                 variant="outline"
                 className="border-indigo-500/30 hover:bg-indigo-500/10"
-                onClick={() => (window.location.href = '/settings?tab=billing')}
+                onClick={() => navigate('/settings?tab=billing')}
               >
                 <CreditCard className="h-4 w-4 mr-1" />
                 Set up
@@ -451,7 +453,7 @@ ${companyName}`;
       const { url } = response.data || {};
       if (url) {
         // Redirect to Stripe OAuth - user logs into their existing account
-        window.location.href = url;
+        await openExternalUrl(url);
       } else {
         sonnerToast.error('Could not start Stripe connection');
       }
@@ -498,11 +500,9 @@ ${companyName}`;
       if (url) {
         if (type === 'dashboard') {
           sonnerToast.success('Opening Stripe Dashboard');
-          window.open(url, '_blank');
-        } else {
-          // Redirect to Stripe onboarding - will return to same page with ?stripe=success
-          window.location.href = url;
         }
+        // Use openExternalUrl so Stripe Connect works on native (WKWebView) and web
+        await openExternalUrl(url);
       } else {
         sonnerToast.error('Could not start Stripe setup', {
           description: 'Please try again or contact support.',
@@ -534,9 +534,9 @@ ${companyName}`;
     }
   };
 
-  // Connect accounting (redirect to settings business tab)
+  // Connect accounting (navigate to settings business tab without hard reload)
   const handleConnectAccounting = () => {
-    window.location.href = '/settings?tab=business';
+    navigate('/settings?tab=business');
   };
 
   const isLoading =

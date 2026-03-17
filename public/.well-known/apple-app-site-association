@@ -1,0 +1,23 @@
+{
+  "applinks": {
+    "apps": [],
+    "details": [
+      {
+        "appID": "27P4GFWXMM.com.elecmate.app",
+        "paths": [
+          "/electrician/*",
+          "/employer/*",
+          "/apprentice/*",
+          "/auth/*",
+          "/dashboard*",
+          "/study-centre/*",
+          "/jobs/*",
+          "/marketplace/*"
+        ]
+      }
+    ]
+  },
+  "webcredentials": {
+    "apps": ["27P4GFWXMM.com.elecmate.app"]
+  }
+}

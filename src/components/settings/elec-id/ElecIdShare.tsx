@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
+import { shareContent } from '@/utils/share';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Checkbox } from '@/components/ui/checkbox';
@@ -308,19 +309,12 @@ const ElecIdShare = () => {
   };
 
   const handleShareQr = async () => {
-    if (navigator.share) {
-      try {
-        await navigator.share({
-          title: `ELEC-iD: ${elecIdNumber}`,
-          text: 'Verify my electrical credentials',
-          url: shareUrl,
-        });
-      } catch (error) {
-        handleCopyLink(shareUrl);
-      }
-    } else {
-      handleCopyLink(shareUrl);
-    }
+    await shareContent({
+      title: `ELEC-iD: ${elecIdNumber}`,
+      text: 'Verify my electrical credentials',
+      url: shareUrl,
+      onFallback: () => handleCopyLink(shareUrl),
+    });
   };
 
   const handleDeleteLink = async () => {

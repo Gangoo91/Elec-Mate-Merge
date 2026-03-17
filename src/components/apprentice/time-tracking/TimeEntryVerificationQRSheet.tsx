@@ -6,6 +6,7 @@
  */
 
 import { useState } from 'react';
+import { shareContent } from '@/utils/share';
 import { QRCodeSVG } from 'qrcode.react';
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
 import { Button } from '@/components/ui/button';
@@ -95,19 +96,12 @@ export function TimeEntryVerificationQRSheet({
   };
 
   const handleShare = async () => {
-    if (navigator.share) {
-      try {
-        await navigator.share({
-          title: 'Verify My Training Hours — Elec-Mate',
-          text: `Please verify my training hours: ${activityTitle || 'Training Session'}`,
-          url: verificationUrl,
-        });
-      } catch {
-        /* user cancelled */
-      }
-    } else {
-      handleCopyLink();
-    }
+    await shareContent({
+      title: 'Verify My Training Hours — Elec-Mate',
+      text: `Please verify my training hours: ${activityTitle || 'Training Session'}`,
+      url: verificationUrl,
+      onFallback: handleCopyLink,
+    });
   };
 
   const handleEmail = () => {

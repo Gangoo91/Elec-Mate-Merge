@@ -4,5 +4,10 @@
 <dict>
 	<key>com.apple.developer.in-app-purchases</key>
 	<true/>
+	<key>com.apple.developer.associated-domains</key>
+	<array>
+		<string>applinks:elec-mate.com</string>
+		<string>webcredentials:elec-mate.com</string>
+	</array>
 </dict>
 </plist>

@@ -3,6 +3,7 @@ import { supabase } from '@/integrations/supabase/client';
 import { CreditCard, X, ArrowRight, Loader2 } from 'lucide-react';
 import { toast } from 'sonner';
 import { cn } from '@/lib/utils';
+import { openExternalUrl } from '@/utils/open-external-url';
 
 interface StripeConnectBannerProps {
   className?: string;
@@ -104,7 +105,7 @@ const StripeConnectBanner: React.FC<StripeConnectBannerProps> = ({ className, re
 
       const { url } = response.data || {};
       if (url) {
-        window.location.href = url;
+        await openExternalUrl(url);
       }
     } catch (error: any) {
       console.error('Error connecting Stripe OAuth:', error);
@@ -141,10 +142,8 @@ const StripeConnectBanner: React.FC<StripeConnectBannerProps> = ({ className, re
       if (url) {
         if (type === 'dashboard') {
           toast.success('Opening Stripe Dashboard');
-          window.open(url, '_blank');
-        } else {
-          window.location.href = url;
         }
+        await openExternalUrl(url);
       }
     } catch (error: any) {
       console.error('Error connecting Stripe:', error);
