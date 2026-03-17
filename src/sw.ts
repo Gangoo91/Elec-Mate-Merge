@@ -412,6 +412,9 @@ self.addEventListener('sync', ((event: SyncEvent) => {
   if (event.tag === 'send-message') {
     event.waitUntil(sendQueuedMessages());
   }
+  if (event.tag === 'sync-reports') {
+    event.waitUntil(syncQueuedReports());
+  }
 }) as EventListener);
 
 async function sendQueuedMessages(): Promise<void> {
@@ -441,6 +444,59 @@ async function sendQueuedMessages(): Promise<void> {
   } catch (error) {
     console.error('[SW] Error processing message queue:', error);
   }
+}
+
+// ─── Sync Queued Reports (Background Sync for certificates) ──
+
+async function syncQueuedReports(): Promise<void> {
+  try {
+    const db = await openSyncDB();
+    const tx = db.transaction('queue', 'readonly');
+    const store = tx.objectStore('queue');
+    const operations = (await idbRequest(store.getAll())) as {
+      id: string;
+      type: string;
+      reportType: string;
+      reportId: string | null;
+      data: Record<string, unknown>;
+      userId: string;
+      [key: string]: unknown;
+    }[];
+
+    for (const operation of operations) {
+      try {
+        // Notify any open client to process this — the client has auth tokens
+        const clients = await self.clients.matchAll({ type: 'window' });
+        if (clients.length > 0) {
+          clients[0].postMessage({
+            type: 'PROCESS_SYNC_QUEUE',
+            operationId: operation.id,
+          });
+        }
+      } catch (error) {
+        console.error('[SW] Failed to process queued report sync:', error);
+      }
+    }
+  } catch (error) {
+    console.error('[SW] Error processing report sync queue:', error);
+  }
+}
+
+function openSyncDB(): Promise<IDBDatabase> {
+  return new Promise((resolve, reject) => {
+    const request = indexedDB.open('elec-mate-sync', 1);
+    request.onerror = () => reject(request.error);
+    request.onsuccess = () => resolve(request.result);
+    request.onupgradeneeded = () => {
+      const db = request.result;
+      if (!db.objectStoreNames.contains('queue')) {
+        const store = db.createObjectStore('queue', { keyPath: 'id' });
+        store.createIndex('timestamp', 'timestamp', { unique: false });
+        store.createIndex('reportType', 'reportType', { unique: false });
+        store.createIndex('userId', 'userId', { unique: false });
+      }
+    };
+  });
 }
 
 // ─── IndexedDB Helpers ───────────────────────────────────────────

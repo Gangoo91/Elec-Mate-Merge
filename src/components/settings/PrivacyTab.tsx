@@ -7,6 +7,7 @@ import { motion } from 'framer-motion';
 import { supabase } from '@/integrations/supabase/client';
 import { Link, useNavigate } from 'react-router-dom';
 import { useHaptic } from '@/hooks/useHaptic';
+import { clearCredentials, setBiometricEnabled } from '@/utils/biometricAuth';
 import {
   AlertDialog,
   AlertDialogContent,
@@ -158,7 +159,9 @@ const PrivacyTab = () => {
     haptic.heavy(); // deliberate, weighty feedback for a destructive action
     setIsDeleting(true);
     try {
-      const { data: { session } } = await supabase.auth.getSession();
+      const {
+        data: { session },
+      } = await supabase.auth.getSession();
       if (!session) throw new Error('Not authenticated');
 
       const { error } = await supabase.functions.invoke('delete-own-account', {
@@ -166,6 +169,10 @@ const PrivacyTab = () => {
       });
 
       if (error) throw error;
+
+      // Clear biometric credentials before signing out
+      await clearCredentials();
+      await setBiometricEnabled(false);
 
       // Sign out and redirect to landing page
       await supabase.auth.signOut();
@@ -337,9 +344,12 @@ const PrivacyTab = () => {
             </Button>
 
             {/* Delete Account Confirmation Dialog */}
-            <AlertDialog open={showDeleteDialog} onOpenChange={(open) => {
-              if (!isDeleting) setShowDeleteDialog(open);
-            }}>
+            <AlertDialog
+              open={showDeleteDialog}
+              onOpenChange={(open) => {
+                if (!isDeleting) setShowDeleteDialog(open);
+              }}
+            >
               <AlertDialogContent className="max-w-[90vw] sm:max-w-md bg-card/95 backdrop-blur-xl border-white/10 rounded-2xl">
                 <AlertDialogHeader>
                   <AlertDialogTitle className="flex items-center gap-2 text-red-400">
@@ -351,7 +361,13 @@ const PrivacyTab = () => {
                       This will permanently delete your account and all associated data including:
                     </span>
                     <ul className="text-sm space-y-1 list-none">
-                      {['Certificates & inspection reports', 'Quotes & invoices', 'Elec-ID profile', 'Site safety documents', 'Study progress & notes'].map((item) => (
+                      {[
+                        'Certificates & inspection reports',
+                        'Quotes & invoices',
+                        'Elec-ID profile',
+                        'Site safety documents',
+                        'Study progress & notes',
+                      ].map((item) => (
                         <li key={item} className="flex items-center gap-2">
                           <span className="w-1.5 h-1.5 rounded-full bg-red-400/60 flex-shrink-0" />
                           {item}
@@ -362,7 +378,8 @@ const PrivacyTab = () => {
                       This action cannot be undone.
                     </span>
                     <span className="block text-sm">
-                      Type <span className="font-mono font-bold text-red-400">DELETE</span> to confirm:
+                      Type <span className="font-mono font-bold text-red-400">DELETE</span> to
+                      confirm:
                     </span>
                     <Input
                       value={deleteConfirmText}

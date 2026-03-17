@@ -421,9 +421,11 @@ const SignUp = () => {
             animate={{ scale: 1, opacity: 1 }}
             transition={{ delay: 0.1, duration: 0.3 }}
           >
-            <div className="w-10 h-10 rounded-xl bg-elec-yellow flex items-center justify-center shadow-lg shadow-elec-yellow/30">
-              <Zap className="h-5 w-5 text-black" />
-            </div>
+            <img
+              src="/logo.jpg"
+              alt="Elec-Mate"
+              className="w-10 h-10 rounded-xl object-cover shadow-lg shadow-elec-yellow/30"
+            />
           </motion.div>
 
           <div className="w-16" />

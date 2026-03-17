@@ -1,5 +1,4 @@
-import { serve } from 'https://deno.land/std@0.168.0/http/server.ts';
-import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+import { serve, createClient } from '../_shared/deps.ts';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -18,40 +17,49 @@ const corsHeaders = {
  */
 
 // Tiers that include Business AI agent access (must match stripe-subscription-webhook)
-const MATE_TIERS = new Set(['mate', 'mate_yearly', 'employer', 'employer_yearly', 'Employer']);
+const BUSINESS_AI_TIERS = new Set([
+  'business_ai',
+  'business_ai_yearly',
+  'employer',
+  'employer_yearly',
+]);
 
-// Map RevenueCat resolved tier names → internal tier IDs for MATE_TIERS lookup
-const TIER_NAME_TO_ID: Record<string, string> = {
-  Mate: 'mate',
-  Employer: 'employer',
-};
-
-// Map RevenueCat product IDs → subscription tier names
-// Product IDs are set in App Store Connect / Google Play Console
+// Map RevenueCat product IDs → internal tier IDs (matches stripe-subscription-webhook naming)
 const PRODUCT_TIER_MAP: Record<string, string> = {
   // iOS products (match App Store Connect product IDs)
-  elecmate_apprentice_monthly: 'Apprentice',
-  elecmate_electrician_monthly: 'Electrician Pro',
-  elecmate_mate_monthly: 'Mate',
+  elecmate_apprentice_monthly: 'apprentice',
+  elecmate_apprentice_yearly: 'apprentice_yearly',
+  elecmate_electrician_monthly: 'electrician',
+  elecmate_electrician_yearly: 'electrician_yearly',
+  elecmate_mate_monthly: 'business_ai',
+  elecmate_mate_yearly: 'business_ai_yearly',
+  elecmate_employer_monthly: 'employer',
+  elecmate_employer_yearly: 'employer_yearly',
   // Android products (Google Play format: subscriptionId:basePlanId)
-  'apprentice:monthly': 'Apprentice',
-  'electrician:monthly': 'Electrician Pro',
-  'mate:monthly': 'Mate',
+  'apprentice:monthly': 'apprentice',
+  'apprentice:yearly': 'apprentice_yearly',
+  'electrician:monthly': 'electrician',
+  'electrician:yearly': 'electrician_yearly',
+  'mate:monthly': 'business_ai',
+  'mate:yearly': 'business_ai_yearly',
+  'employer:monthly': 'employer',
+  'employer:yearly': 'employer_yearly',
 };
 
-function resolveTierFromProduct(productId: string | null, store: string | null): string {
+function resolveTierFromProduct(productId: string | null, _store: string | null): string {
   if (productId && PRODUCT_TIER_MAP[productId]) {
     return PRODUCT_TIER_MAP[productId];
   }
   // Fallback: pattern matching on product ID
   if (productId) {
     const id = productId.toLowerCase();
-    if (id.includes('mate')) return 'Mate';
-    if (id.includes('electrician')) return 'Electrician Pro';
-    if (id.includes('apprentice')) return 'Apprentice';
+    if (id.includes('mate')) return 'business_ai';
+    if (id.includes('employer')) return 'employer';
+    if (id.includes('electrician')) return 'electrician';
+    if (id.includes('apprentice')) return 'apprentice';
   }
-  // Last resort: generic tier by store (legacy single-product users)
-  return store === 'APP_STORE' ? 'Electrician Pro' : 'Electrician Pro';
+  // Last resort
+  return 'electrician';
 }
 serve(async (req) => {
   if (req.method === 'OPTIONS') {
@@ -121,8 +129,7 @@ serve(async (req) => {
 
     if (subscribed !== null) {
       // Resolve whether this tier includes Business AI
-      const tierId = subscriptionTier ? TIER_NAME_TO_ID[subscriptionTier] : null;
-      const isBusinessAiTier = tierId ? MATE_TIERS.has(tierId) : false;
+      const isBusinessAiTier = subscriptionTier ? BUSINESS_AI_TIERS.has(subscriptionTier) : false;
 
       const updateData: Record<string, unknown> = {
         subscribed,
@@ -183,6 +190,25 @@ serve(async (req) => {
           description: `Business AI agent deactivated via RevenueCat ${type} event. JWT revoked.`,
           outcome: 'success',
         });
+
+        // Best-effort VPS notification to remove OpenClaw binding
+        const vpsApiKey = Deno.env.get('VPS_API_KEY');
+        if (vpsApiKey) {
+          try {
+            const vpsRes = await fetch('https://agent.elec-mate.com/api/deprovision-agent', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json', 'X-API-Key': vpsApiKey },
+              body: JSON.stringify({ user_id: app_user_id }),
+            });
+            if (vpsRes.ok) {
+              console.log(`VPS agent deprovisioned for ${app_user_id}`);
+            } else {
+              console.warn(`VPS deprovision returned ${vpsRes.status} (non-fatal)`);
+            }
+          } catch (vpsErr) {
+            console.warn('VPS deprovision call failed (non-fatal)', vpsErr);
+          }
+        }
 
         console.log(`Agent deprovisioned — status set to deactivated, JWT revoked`);
       }

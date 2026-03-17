@@ -51,7 +51,7 @@ export function SEOSocialShare({ url, title }: SEOSocialShareProps) {
       <span className="text-xs font-medium text-white uppercase tracking-wider mr-1">Share</span>
       <button
         onClick={copyLink}
-        className="inline-flex items-center justify-center w-9 h-9 rounded-lg bg-white/5 border border-white/10 hover:border-yellow-500/30 hover:bg-yellow-500/10 text-white hover:text-yellow-400 transition-all touch-manipulation"
+        className="inline-flex items-center justify-center w-11 h-11 rounded-lg bg-white/5 border border-white/10 hover:border-yellow-500/30 hover:bg-yellow-500/10 text-white hover:text-yellow-400 transition-all touch-manipulation"
         aria-label="Copy link"
       >
         {copied ? <Check className="w-4 h-4" /> : <Link2 className="w-4 h-4" />}
@@ -62,7 +62,7 @@ export function SEOSocialShare({ url, title }: SEOSocialShareProps) {
           href={share.href}
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex items-center justify-center w-9 h-9 rounded-lg bg-white/5 border border-white/10 hover:border-yellow-500/30 hover:bg-yellow-500/10 text-white hover:text-yellow-400 transition-all touch-manipulation"
+          className="inline-flex items-center justify-center w-11 h-11 rounded-lg bg-white/5 border border-white/10 hover:border-yellow-500/30 hover:bg-yellow-500/10 text-white hover:text-yellow-400 transition-all touch-manipulation"
           aria-label={`Share on ${share.label}`}
         >
           {share.icon ? (

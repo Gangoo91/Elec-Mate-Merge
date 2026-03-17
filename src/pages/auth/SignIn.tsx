@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useNavigate, Link, useSearchParams } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
 import { Button } from '@/components/ui/button';
@@ -14,10 +14,13 @@ import {
   Sparkles,
   Eye,
   EyeOff,
+  Fingerprint,
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { cn } from '@/lib/utils';
 import { addBreadcrumb } from '@/lib/sentry';
+import { useBiometricAuth } from '@/hooks/useBiometricAuth';
+import BiometricPromptSheet from '@/components/auth/BiometricPromptSheet';
 
 const SignIn = () => {
   const [searchParams] = useSearchParams();
@@ -29,9 +32,15 @@ const SignIn = () => {
   const [showSuccess, setShowSuccess] = useState(false);
   const [isEmailValid, setIsEmailValid] = useState(false);
   const [focusedField, setFocusedField] = useState<string | null>(null);
+  const [showBiometricPrompt, setShowBiometricPrompt] = useState(false);
+  const [isBiometricLoggingIn, setIsBiometricLoggingIn] = useState(false);
+
+  // Store credentials temporarily so we can save them if user accepts biometric prompt
+  const pendingCredentials = useRef<{ email: string; password: string } | null>(null);
 
   const { signIn } = useAuth();
   const navigate = useNavigate();
+  const biometric = useBiometricAuth();
 
   // Pre-fill email from URL param (used by founder signup flow)
   useEffect(() => {
@@ -65,15 +74,73 @@ const SignIn = () => {
       if (error) {
         setError(error.message);
       } else {
-        setShowSuccess(true);
-        setTimeout(() => {
-          navigate('/dashboard');
-        }, 800);
+        // If biometric available but not yet enabled, offer to enable it
+        if (biometric.isAvailable && !biometric.isEnabled && !biometric.isChecking) {
+          pendingCredentials.current = { email, password };
+          setShowBiometricPrompt(true);
+        } else {
+          setShowSuccess(true);
+          setTimeout(() => {
+            navigate('/dashboard');
+          }, 800);
+        }
       }
     } catch (err: unknown) {
       setError(err instanceof Error ? err.message : 'An error occurred during sign in');
     } finally {
       setIsSubmitting(false);
+    }
+  };
+
+  // Handle biometric prompt — user accepted
+  const handleBiometricEnable = async () => {
+    if (pendingCredentials.current) {
+      await biometric.enableBiometric(
+        pendingCredentials.current.email,
+        pendingCredentials.current.password
+      );
+    }
+    setShowBiometricPrompt(false);
+    pendingCredentials.current = null;
+    setShowSuccess(true);
+    setTimeout(() => navigate('/dashboard'), 800);
+  };
+
+  // Handle biometric prompt — user skipped
+  const handleBiometricSkip = () => {
+    setShowBiometricPrompt(false);
+    pendingCredentials.current = null;
+    setShowSuccess(true);
+    setTimeout(() => navigate('/dashboard'), 800);
+  };
+
+  // Handle biometric quick-login (the Face ID / fingerprint button)
+  const handleBiometricLogin = async () => {
+    setError(null);
+    setIsBiometricLoggingIn(true);
+    addBreadcrumb('Biometric login attempt', 'auth');
+
+    try {
+      const credentials = await biometric.authenticateWithBiometric();
+      if (!credentials) {
+        // User cancelled — do nothing
+        setIsBiometricLoggingIn(false);
+        return;
+      }
+
+      const { error } = await signIn(credentials.email, credentials.password);
+      if (error) {
+        // Stored password may be outdated — disable biometric and show error
+        await biometric.disableBiometric();
+        setError('Saved credentials are no longer valid. Please sign in with your password.');
+      } else {
+        setShowSuccess(true);
+        setTimeout(() => navigate('/dashboard'), 800);
+      }
+    } catch {
+      setError('Biometric sign-in failed. Please use your password.');
+    } finally {
+      setIsBiometricLoggingIn(false);
     }
   };
 
@@ -112,9 +179,11 @@ const SignIn = () => {
             animate={{ scale: 1, opacity: 1 }}
             transition={{ delay: 0.1, type: 'spring', stiffness: 400 }}
           >
-            <div className="w-10 h-10 rounded-xl bg-elec-yellow flex items-center justify-center shadow-lg shadow-elec-yellow/30">
-              <Zap className="h-5 w-5 text-black" />
-            </div>
+            <img
+              src="/logo.jpg"
+              alt="Elec-Mate"
+              className="w-10 h-10 rounded-xl object-cover shadow-lg shadow-elec-yellow/30"
+            />
           </motion.div>
 
           <div className="w-16" />
@@ -200,6 +269,43 @@ const SignIn = () => {
             )}
           </AnimatePresence>
 
+          {/* Biometric quick-login button */}
+          {biometric.isAvailable && biometric.isEnabled && (
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay: 0.25 }}
+              className="mb-5"
+            >
+              <Button
+                type="button"
+                onClick={handleBiometricLogin}
+                disabled={isBiometricLoggingIn || isSubmitting}
+                className="w-full h-14 rounded-2xl text-[16px] font-semibold bg-white/5 border-2 border-white/10 text-white hover:bg-white/10 transition-all duration-200 touch-manipulation"
+              >
+                {isBiometricLoggingIn ? (
+                  <span className="flex items-center gap-2">
+                    <Loader2 className="h-5 w-5 animate-spin" />
+                    Verifying...
+                  </span>
+                ) : (
+                  <span className="flex items-center gap-2">
+                    <Fingerprint className="h-5 w-5 text-elec-yellow" />
+                    Sign in with {biometric.biometricType}
+                  </span>
+                )}
+              </Button>
+
+              <div className="flex items-center gap-4 my-5">
+                <div className="flex-1 h-px bg-white/10" />
+                <span className="text-[12px] text-white uppercase tracking-wider">
+                  or use password
+                </span>
+                <div className="flex-1 h-px bg-white/10" />
+              </div>
+            </motion.div>
+          )}
+
           {/* Form */}
           <motion.form
             onSubmit={handleSubmit}
@@ -207,13 +313,10 @@ const SignIn = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3 }}
             className="space-y-5"
-            autoComplete="off"
           >
             {/* Email field */}
             <div className="space-y-2">
-              <label className="block text-[13px] font-medium text-white ml-1">
-                Email address
-              </label>
+              <label className="block text-[13px] font-medium text-white ml-1">Email address</label>
               <div className="relative">
                 <div
                   className={cn(
@@ -230,9 +333,8 @@ const SignIn = () => {
                   onFocus={() => setFocusedField('email')}
                   onBlur={() => setFocusedField(null)}
                   placeholder="you@example.com"
-                  autoComplete="off"
-                  name="login-email"
-                  data-form-type="other"
+                  autoComplete="username"
+                  name="email"
                   className={cn(
                     'w-full h-14 pl-12 pr-12 rounded-2xl',
                     'bg-input border-2 text-white placeholder:text-muted-foreground [color-scheme:dark]',
@@ -273,20 +375,18 @@ const SignIn = () => {
                   <Lock className="h-5 w-5" />
                 </div>
                 <input
-                  type="text"
+                  type={showPassword ? 'text' : 'password'}
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   onFocus={() => setFocusedField('password')}
                   onBlur={() => setFocusedField(null)}
                   placeholder="Enter your password"
-                  autoComplete="off"
-                  name="login-password"
-                  data-form-type="other"
+                  autoComplete="current-password"
+                  name="password"
                   className={cn(
                     'w-full h-14 pl-12 pr-12 rounded-2xl',
                     'bg-input border-2 text-white placeholder:text-muted-foreground [color-scheme:dark]',
                     'text-[16px] outline-none transition-all duration-200',
-                    !showPassword && 'pw-masked',
                     focusedField === 'password'
                       ? 'border-elec-yellow/50 shadow-[0_0_0_4px_rgba(255,209,0,0.1)]'
                       : 'border-white/20 hover:border-white/30'
@@ -406,6 +506,14 @@ const SignIn = () => {
           </div>
         </div>
       </motion.footer>
+
+      {/* Biometric opt-in prompt (shown after first successful login on native) */}
+      <BiometricPromptSheet
+        open={showBiometricPrompt}
+        biometricType={biometric.biometricType}
+        onEnable={handleBiometricEnable}
+        onSkip={handleBiometricSkip}
+      />
     </div>
   );
 };

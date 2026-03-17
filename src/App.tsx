@@ -10,6 +10,7 @@ import { QueryClientProvider } from '@tanstack/react-query';
 import { queryClient } from '@/lib/queryClient';
 import ScrollToTop from '@/components/ScrollToTop';
 import { PWAUpdatePrompt } from '@/components/PWAUpdatePrompt';
+import { OfflineIndicator } from '@/components/OfflineIndicator';
 import { CookieConsent } from '@/components/CookieConsent';
 import { useNativeApp, useNativePushNotifications } from '@/hooks/useNativeApp';
 import { ActivityTracker } from '@/components/ActivityTracker';
@@ -54,6 +55,7 @@ function App() {
                 </Suspense>
                 <TrainingActivityMonitor />
                 <AppRouter />
+                <OfflineIndicator />
                 <SonnerToaster />
                 {/* Web-only components — not needed in native app */}
                 {!Capacitor.isNativePlatform() && (

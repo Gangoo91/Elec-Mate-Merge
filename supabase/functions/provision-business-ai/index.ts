@@ -113,6 +113,14 @@ serve(async (req) => {
       console.log(`Agent ${user.id} is active but JWT missing/expired — re-provisioning JWT`);
     }
 
+    // Pre-check VPS_API_KEY before doing any work — fail fast
+    const vpsApiKey = Deno.env.get('VPS_API_KEY');
+    if (!vpsApiKey) {
+      throw new Error(
+        'Agent activation failed — VPS configuration missing. Please contact support.'
+      );
+    }
+
     // Generate custom JWT using shared signer
     const jwtSecret = Deno.env.get('JWT_SECRET') ?? Deno.env.get('SUPABASE_JWT_SECRET');
     if (!jwtSecret) {
@@ -189,16 +197,6 @@ serve(async (req) => {
     console.log(`Agent provisioned for user ${user.id}, JWT expires ${expiresAtDate}`);
 
     // Notify VPS to create OpenClaw agent workspace + binding
-    const vpsApiKey = Deno.env.get('VPS_API_KEY');
-    if (!vpsApiKey) {
-      // Roll back — can't provision without VPS key
-      await supabase.from('profiles').update({ agent_status: 'provisioning' }).eq('id', user.id);
-      console.error('VPS_API_KEY not set — cannot provision agent on VPS');
-      throw new Error(
-        'Agent activation failed — VPS configuration missing. Please contact support.'
-      );
-    }
-
     let vpsProvisioned = false;
     try {
       const vpsRes = await fetch('https://agent.elec-mate.com/api/provision-agent', {

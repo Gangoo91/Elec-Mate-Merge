@@ -8,6 +8,7 @@ import {
   trackMilestone,
   addBreadcrumb,
 } from '@/lib/sentry';
+import { clearCredentials, setBiometricEnabled } from '@/utils/biometricAuth';
 
 export function useAuthentication() {
   const { toast } = useToast();
@@ -117,18 +118,15 @@ export function useAuthentication() {
       });
 
       return { error: null, user: data?.user };
-    } catch (error: any) {
-      // Track unexpected login errors (not auth failures, which are expected)
-      captureError(error instanceof Error ? error : new Error(error.message || 'Login error'), {
-        context: 'signIn',
-        email,
-      });
+    } catch (error: unknown) {
+      const err = error instanceof Error ? error : new Error(String(error));
+      captureError(err, { context: 'signIn', email });
       toast({
         title: 'Login Error',
-        description: error.message || 'An unexpected error occurred',
+        description: err.message || 'An unexpected error occurred',
         variant: 'destructive',
       });
-      return { error };
+      return { error: err };
     }
   };
 
@@ -175,19 +173,16 @@ export function useAuthentication() {
       });
 
       return { error: null, user: data?.user };
-    } catch (error: any) {
-      logger.api('auth/signUp', requestId).error(error, { email });
-      // Track unexpected signup errors
-      captureError(error instanceof Error ? error : new Error(error.message || 'Signup error'), {
-        context: 'signUp',
-        email,
-      });
+    } catch (error: unknown) {
+      const err = error instanceof Error ? error : new Error(String(error));
+      logger.api('auth/signUp', requestId).error(err, { email });
+      captureError(err, { context: 'signUp', email });
       toast({
         title: 'Signup Error',
-        description: getFriendlyErrorMessage(error.message || 'An unexpected error occurred'),
+        description: getFriendlyErrorMessage(err.message || 'An unexpected error occurred'),
         variant: 'destructive',
       });
-      return { error };
+      return { error: err };
     }
   };
 
@@ -264,9 +259,10 @@ export function useAuthentication() {
       });
 
       return { error: null };
-    } catch (error: any) {
+    } catch (error: unknown) {
       // Even on error, show success message to prevent enumeration
-      logger.warn('Password reset exception (non-fatal)', { error: error.message });
+      const err = error instanceof Error ? error : new Error(String(error));
+      logger.warn('Password reset exception (non-fatal)', { error: err.message });
       toast({
         title: 'Check Your Email',
         description: "If an account exists, we've sent you a password reset link.",
@@ -296,24 +292,28 @@ export function useAuthentication() {
       }
 
       logger.api('auth/updatePassword', requestId).success();
+
+      // Stored biometric credentials are now outdated — clear them
+      // User will be prompted to re-enable on next sign-in
+      await clearCredentials();
+      await setBiometricEnabled(false);
+
       toast({
         title: 'Password Updated',
         description: 'Your password has been successfully changed.',
       });
 
       return { error: null };
-    } catch (error: any) {
-      logger.api('auth/updatePassword', requestId).error(error);
-      captureError(
-        error instanceof Error ? error : new Error(error.message || 'Password update error'),
-        { context: 'updatePassword' }
-      );
+    } catch (error: unknown) {
+      const err = error instanceof Error ? error : new Error(String(error));
+      logger.api('auth/updatePassword', requestId).error(err);
+      captureError(err, { context: 'updatePassword' });
       toast({
         title: 'Update Error',
-        description: error.message || 'An unexpected error occurred',
+        description: err.message || 'An unexpected error occurred',
         variant: 'destructive',
       });
-      return { error };
+      return { error: err };
     }
   };
 
@@ -350,13 +350,14 @@ export function useAuthentication() {
       });
 
       return { error: null };
-    } catch (error: any) {
+    } catch (error: unknown) {
+      const err = error instanceof Error ? error : new Error(String(error));
       toast({
         title: 'Error',
-        description: error.message || 'An unexpected error occurred',
+        description: err.message || 'An unexpected error occurred',
         variant: 'destructive',
       });
-      return { error };
+      return { error: err };
     }
   };
 
@@ -388,9 +389,10 @@ export function useAuthentication() {
 
       logger.api('profiles/update', requestId).success({ userId });
       return { error: null };
-    } catch (error: any) {
-      logger.api('profiles/update', requestId).error(error, { userId });
-      return { error };
+    } catch (error: unknown) {
+      const err = error instanceof Error ? error : new Error(String(error));
+      logger.api('profiles/update', requestId).error(err, { userId });
+      return { error: err };
     }
   };
 

@@ -6,12 +6,14 @@ const DB_NAME = 'elec-mate-sync';
 const DB_VERSION = 1;
 const STORE_NAME = 'queue';
 
+import { ReportType } from './reportCloud';
+
 export interface SyncOperation {
   id: string;
   type: 'create' | 'update';
-  reportType: 'eicr' | 'eic' | 'minor-works';
+  reportType: ReportType;
   reportId: string | null;
-  data: any;
+  data: Record<string, unknown>;
   timestamp: number;
   retryCount: number;
   lastRetry: number | null;

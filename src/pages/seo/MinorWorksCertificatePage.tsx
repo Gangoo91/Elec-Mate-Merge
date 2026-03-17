@@ -239,9 +239,10 @@ export default function MinorWorksCertificatePage() {
             <p>
               Common examples of minor works include adding a socket outlet to an existing ring
               final circuit, extending a lighting circuit to include an additional light point,
-              replacing a consumer unit where no new circuits are added, installing a fused
-              connection unit (FCU) to supply a fixed appliance from an existing circuit, and
-              repositioning an existing accessory. Each of these involves work on an existing
+              replacing a consumer unit where no new circuits are added (though some scheme
+              providers require a full EIC for this — check with your registration body), installing
+              a fused connection unit (FCU) to supply a fixed appliance from an existing circuit,
+              and repositioning an existing accessory. Each of these involves work on an existing
               circuit without creating a new one, which is the defining characteristic of minor
               works.
             </p>
@@ -253,12 +254,11 @@ export default function MinorWorksCertificatePage() {
               existing circuit) rather than its importance or complexity.
             </p>
             <p>
-              It is worth noting that Regulation 620.3 of BS 7671 states that where the minor work
-              is limited to replacing accessories such as socket outlets, light switches, or ceiling
-              roses in the same location with the same type, no Minor Works certificate is required
-              — provided the circuit protective conductor is verified as continuous and the polarity
-              is confirmed. This is a like-for-like replacement and is not classified as minor
-              works.
+              It is worth noting that a like-for-like replacement of an accessory — such as swapping
+              a socket outlet, light switch, or ceiling rose for an identical one in the same
+              location — is not classified as minor works and does not require a Minor Works
+              certificate. However, you should still verify that the circuit protective conductor is
+              continuous and confirm correct polarity before re-energising the circuit.
             </p>
           </div>
         </div>

@@ -85,7 +85,7 @@ const faqData = [
   {
     question: 'How does the conduit and trunking fill calculator work?',
     answer:
-      'The conduit fill calculator uses the cable factor method from the IET On-Site Guide (OSG) tables. Each cable size has a factor representing its cross-sectional area including insulation. You select the conduit size (which has a maximum capacity factor), enter the number and type of cables, and the calculator checks the total cable factor does not exceed the conduit capacity. For example, a 20mm round conduit has a factor of 460, and 2.5mm twin and earth cables each have a factor of 43. The trunking fill calculator works similarly but uses the percentage fill method — BS 7671 limits trunking fill to 45% of the internal cross-sectional area. Elec-Mate covers all standard conduit sizes from 16mm to 50mm and trunking from 50x50mm to 300x100mm.',
+      'The conduit fill calculator uses the cable factor method from the IET On-Site Guide (OSG) tables. Each cable size has a factor representing its cross-sectional area including insulation. You select the conduit size (which has a maximum capacity factor), enter the number and type of cables, and the calculator checks the total cable factor does not exceed the conduit capacity. For example, a 20mm round conduit has a factor of 460, and 2.5mm twin and earth cables each have a factor of 43. The trunking fill calculator works similarly but uses the percentage fill method — IET guidance limits trunking fill to 45% of the internal cross-sectional area. Elec-Mate covers all standard conduit sizes from 16mm to 50mm and trunking from 50x50mm to 300x100mm.',
   },
   {
     question: 'Are the calculators compliant with the latest BS 7671 amendments?',
@@ -143,7 +143,7 @@ const features = [
     icon: Cable,
     title: 'Conduit & Trunking Fill',
     description:
-      'Cable factor method for round and oval conduit from 16mm to 50mm. Percentage fill for all standard trunking sizes per BS 7671.',
+      'Cable factor method for round and oval conduit from 16mm to 50mm. Percentage fill for all standard trunking sizes per IET guidance.',
   },
   {
     icon: Gauge,
@@ -290,19 +290,20 @@ export default function ElectricalTestingCalculatorsPage() {
               route. These values are measured at ambient temperature during testing, but conductors
               get hot under fault conditions. That is why BS 7671 requires you to apply a correction
               factor to account for conductor resistance at the maximum permitted operating
-              temperature. The rule of thumb is to multiply your measured Zs by a factor of 0.8 to
-              get the maximum permissible measured value, although the precise factor depends on
-              conductor type and installation conditions.
+              temperature. The rule of thumb is to multiply the tabulated maximum Zs from BS 7671 by
+              0.8 to obtain the maximum permissible value for your on-site measurement at ambient
+              temperature, although the precise factor depends on conductor type and installation
+              conditions.
             </p>
             <p>
               If your measured Zs exceeds the maximum value stated in BS 7671 Tables 41.2 (for a TN
               system with a 0.4-second disconnection time), 41.3 (for 5-second disconnection), or
-              41.4 (for a TT system where an RCD is the protective device), the circuit fails. A
-              failed Zs test typically means the CPC has a poor connection somewhere, the circuit is
-              too long for the cable size, or the external earth fault loop impedance is unusually
-              high. Our Zs calculator lets you enter Ze and R1+R2, automatically applies the
-              temperature correction, and instantly tells you whether the circuit passes or fails
-              for every common protective device type and rating.
+              41.4 (for circuits where an RCD provides fault protection, including all TT systems),
+              the circuit fails. A failed Zs test typically means the CPC has a poor connection
+              somewhere, the circuit is too long for the cable size, or the external earth fault
+              loop impedance is unusually high. Our Zs calculator lets you enter Ze and R1+R2,
+              automatically applies the temperature correction, and instantly tells you whether the
+              circuit passes or fails for every common protective device type and rating.
             </p>
           </div>
         </div>
@@ -398,8 +399,8 @@ export default function ElectricalTestingCalculatorsPage() {
               insulation damage, and potentially fires. The IET On-Site Guide provides cable factors
               for every standard cable type and size, and conduit capacity factors for every
               standard conduit size. The rule is simple: the sum of all cable factors must not
-              exceed the conduit factor. For trunking, BS 7671 limits the cable fill to 45% of the
-              internal cross-sectional area.
+              exceed the conduit factor. For trunking, IET guidance limits the cable fill to 45% of
+              the internal cross-sectional area.
             </p>
             <p>
               Our conduit fill calculator supports all standard round conduit sizes from 16mm
@@ -458,7 +459,7 @@ export default function ElectricalTestingCalculatorsPage() {
               Cable sizing brings together several of these calculations. You start with the design
               current, apply the correction factors for ambient temperature (Ca from Table 4B1),
               grouping (Cg from Table 4C1), thermal insulation (Ci from Table 52.2), and the type of
-              protective device (Cc). The required current carrying capacity is the design current
+              protective device (Cf). The required current carrying capacity is the design current
               divided by the product of all these factors. You then select a cable from the
               appropriate table in Appendix 4 whose tabulated current rating meets or exceeds this
               value. Finally, you verify that the cable also satisfies the adiabatic equation for
@@ -474,7 +475,7 @@ export default function ElectricalTestingCalculatorsPage() {
       <section className="py-16 px-5 border-t border-white/5">
         <div className="max-w-4xl mx-auto">
           <h2 className="text-2xl sm:text-3xl font-bold text-white text-center mb-8">
-            Complete Calculator List
+            Featured Calculators
           </h2>
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
             {calculatorList.map((name) => (

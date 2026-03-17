@@ -2,6 +2,12 @@ import { useState, useEffect, useCallback, useRef } from 'react';
 import { Session, User } from '@supabase/supabase-js';
 import { supabase } from '@/integrations/supabase/client';
 import { ProfileType } from './types';
+import {
+  isBiometricEnabled,
+  authenticateAndGetCredentials,
+  setBiometricEnabled,
+  clearCredentials,
+} from '@/utils/biometricAuth';
 
 // Track Elec-ID generation attempts to avoid duplicate calls
 const elecIdGenerationAttempted = new Set<string>();
@@ -134,12 +140,40 @@ export function useAuthSession() {
 
         if (!mounted) return;
 
-        setSession(currentSession);
-        setUser(currentSession?.user ?? null);
-
         if (currentSession?.user) {
-          // Fetch profile but don't block loading state
+          setSession(currentSession);
+          setUser(currentSession.user);
           fetchProfile(currentSession.user.id);
+        } else {
+          // No valid session — try biometric auto-login if enabled
+          const biometricOn = await isBiometricEnabled();
+          if (biometricOn) {
+            const credentials = await authenticateAndGetCredentials();
+            if (credentials && mounted) {
+              const { data, error } = await supabase.auth.signInWithPassword({
+                email: credentials.email,
+                password: credentials.password,
+              });
+
+              if (!mounted) return;
+
+              if (error) {
+                // Stored password no longer valid — disable biometric silently
+                await clearCredentials();
+                await setBiometricEnabled(false);
+                console.warn('[AUTH] Biometric auto-login failed, credentials cleared');
+              } else if (data.session) {
+                setSession(data.session);
+                setUser(data.session.user);
+                fetchProfile(data.session.user.id);
+                return; // Skip the null fallthrough
+              }
+            }
+          }
+
+          // Fall through — no session, show sign-in page
+          setSession(null);
+          setUser(null);
         }
       } catch (error) {
         console.error('Error getting session:', error);

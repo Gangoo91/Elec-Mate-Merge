@@ -31,9 +31,9 @@ const faqs = [
       'The AM2 (Achievement Measurement 2) is a practical assessment run by the JIB and NET (National Electrotechnical Training) that tests your ability to carry out electrical installation work safely and competently. It is a two-day assessment covering single-phase installation, three-phase installation, fault diagnosis, safe isolation, and inspection and testing. Elec-Mate provides AM2 preparation resources including simulated scenarios, step-by-step procedure guides, common fault patterns, and timed practice sessions that mirror the real assessment format.',
   },
   {
-    question: 'What is the 20% Off-the-Job Training requirement?',
+    question: 'What is the Off-the-Job Training requirement?',
     answer:
-      "Under the apprenticeship funding rules in England, at least 20% of an apprentice's paid working hours must be spent on off-the-job training (OJT). This includes college attendance, online learning, study time, workshops, and any training that develops knowledge, skills, and behaviours required by the apprenticeship standard but is not part of normal day-to-day duties. Elec-Mate includes a built-in OJT hours tracker that logs your learning time automatically, generates reports for your employer and training provider, and ensures you meet the 20% minimum.",
+      'Under the apprenticeship funding rules in England, every full-time apprentice must spend a minimum of 6 hours per week on off-the-job training (OJT). This includes college attendance, online learning, study time, workshops, and any training that develops knowledge, skills, and behaviours required by the apprenticeship standard but is not part of normal day-to-day duties. Elec-Mate includes a built-in OJT hours tracker that logs your learning time automatically, generates reports for your employer and training provider, and ensures you meet the minimum requirement.',
   },
   {
     question: 'How does the EPA (End Point Assessment) work for electrical apprentices?',
@@ -76,7 +76,7 @@ const features = [
     icon: Clock,
     title: 'OJT Hours Management',
     description:
-      'Automatic off-the-job training hours tracking. Logs study time, generates weekly and monthly reports, calculates your 20% target, and alerts if you are falling behind.',
+      'Automatic off-the-job training hours tracking. Logs study time, generates weekly and monthly reports, calculates your 6 hours per week target, and alerts if you are falling behind.',
   },
   {
     icon: BarChart3,
@@ -399,12 +399,12 @@ export default function ApprenticeTrainingPage() {
       <section className="py-12 sm:py-16 px-5">
         <div className="max-w-4xl mx-auto">
           <h2 className="text-2xl sm:text-3xl font-bold text-white mb-6">
-            Off-the-Job Training Hours: Meeting the 20% Requirement
+            Off-the-Job Training Hours: Meeting the Minimum Requirement
           </h2>
           <div className="space-y-4 text-white leading-relaxed">
             <p>
               Under the apprenticeship funding rules set by the Education and Skills Funding Agency
-              (ESFA), every apprentice must spend a minimum of 20% of their paid working hours on
+              (ESFA), every full-time apprentice must spend a minimum of 6 hours per week on
               off-the-job training (OJT). This is a mandatory requirement, and failure to meet it
               can result in funding being withdrawn from your employer and training provider.
             </p>
@@ -420,10 +420,10 @@ export default function ApprenticeTrainingPage() {
               becomes a problem at progress reviews. Elec-Mate's OJT hours management feature solves
               this by automatically logging your study time on the platform, allowing you to
               manually add hours from college attendance or other training activities, calculating
-              your running total against the 20% target based on your contracted hours, generating
-              formatted reports for your employer and training provider, and sending alerts when you
-              are at risk of falling below the minimum. This means no more scrambling to fill in a
-              paper logbook before your quarterly review.
+              your running total against the 6 hours per week target, generating formatted reports
+              for your employer and training provider, and sending alerts when you are at risk of
+              falling below the minimum. This means no more scrambling to fill in a paper logbook
+              before your quarterly review.
             </p>
           </div>
         </div>

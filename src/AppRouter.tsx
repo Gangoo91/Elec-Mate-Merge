@@ -106,6 +106,7 @@ const TermsOfService = lazy(() => import('@/pages/legal/TermsOfService'));
 const CookiePolicy = lazy(() => import('@/pages/legal/CookiePolicy'));
 const AcceptableUse = lazy(() => import('@/pages/legal/AcceptableUse'));
 const DataProcessingAgreement = lazy(() => import('@/pages/legal/DataProcessingAgreement'));
+const Support = lazy(() => import('@/pages/legal/Support'));
 const RegulationSearchPage = lazy(() => import('@/pages/tools/RegulationSearchPage'));
 const QuizPage = lazy(() => import('@/pages/QuizPage'));
 
@@ -381,6 +382,14 @@ const AppRouter = () => {
           element={
             <LazyRoute>
               <DataProcessingAgreement />
+            </LazyRoute>
+          }
+        />
+        <Route
+          path="/support"
+          element={
+            <LazyRoute>
+              <Support />
             </LazyRoute>
           }
         />

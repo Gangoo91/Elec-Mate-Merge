@@ -152,6 +152,18 @@ const features = [
       'RAMS, risk assessments, method statements, COSHH assessments, and permit-to-work documents. Site-specific and ready for submission.',
   },
   {
+    icon: Sparkles,
+    title: 'Commissioning Specialist',
+    description:
+      'Step-by-step commissioning procedures for any installation type. Generates checklists, test sequences, and handover documentation to BS 7671.',
+  },
+  {
+    icon: MessageSquare,
+    title: 'Fault Finder',
+    description:
+      'Systematic fault diagnosis from symptoms. Describe the problem and the AI walks you through a logical diagnostic sequence with test procedures and expected readings.',
+  },
+  {
     icon: BookOpen,
     title: 'BS 7671 Knowledge Base',
     description:
@@ -277,11 +289,12 @@ export default function AIElectricianToolsPage() {
               The designer also handles the newer requirements of BS 7671. For EV charger circuits,
               it specifies Type A RCD protection (or Type B where required by the charger
               manufacturer), applies the correct cable sizing for continuous load (the charger draws
-              rated current for hours at a time, so a 0.94 continuous load factor applies for 32A
-              devices), and ensures the cable route from the consumer unit to the garage accounts
-              for any derating due to thermal insulation in walls or lofts. For electric shower
-              circuits, it checks whether the incoming supply can handle the additional load and
-              recommends a main switch upgrade or supply application if necessary.
+              its full rated current for extended periods, so the cable must be rated for 100% of
+              the load current without derating), and ensures the cable route from the consumer unit
+              to the garage accounts for any derating due to thermal insulation in walls or lofts.
+              For electric shower circuits, it checks whether the incoming supply can handle the
+              additional load and recommends a main switch upgrade or supply application if
+              necessary.
             </p>
             <p>
               What makes this tool genuinely useful on the job is that it explains its reasoning. If
@@ -413,8 +426,8 @@ export default function AIElectricianToolsPage() {
             <p>
               For commercial and industrial clients, the Maintenance Agent generates a complete
               maintenance programme covering periodic inspection and testing, thermographic surveys,
-              RCD testing (the six-monthly functional test by pressing the test button, plus the
-              full instrument test at the periodic inspection interval), emergency lighting testing
+              RCD testing (the quarterly functional test by pressing the test button, plus the full
+              instrument test at the periodic inspection interval), emergency lighting testing
               (monthly short-duration and annual three-hour discharge tests per BS 5266), and fire
               alarm testing (weekly call point tests and six-monthly full system tests per BS 5839).
               The agent produces a calendar of all required maintenance activities, sends reminders

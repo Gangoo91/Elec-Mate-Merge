@@ -19,6 +19,7 @@ import {
   ChevronRight,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { stripePriceData } from '@/data/stripePrices';
 
 /* ── animation ── */
 const fade = {
@@ -132,6 +133,11 @@ const included = [
   'Everything in the Electrician plan',
 ];
 
+/* ── price from single source of truth ── */
+const mateMonthly = stripePriceData.monthly.find((p) => p.id === 'business-ai-monthly');
+const MATE_PRICE = mateMonthly?.price ?? '£29.99';
+const MATE_PERIOD = mateMonthly?.period ?? '/month';
+
 /* ── component ── */
 export function BusinessAISalesView() {
   const navigate = useNavigate();
@@ -144,7 +150,8 @@ export function BusinessAISalesView() {
     >
       <span className="flex items-center gap-2">
         <Zap className="h-5 w-5" />
-        Subscribe — £29.99/mo
+        Subscribe — {MATE_PRICE}
+        {MATE_PERIOD}
         <ChevronRight className="h-4 w-4" />
       </span>
     </Button>
@@ -543,8 +550,8 @@ export function BusinessAISalesView() {
                   <span className="text-xs font-bold text-amber-400">Business AI</span>
                 </div>
                 <div className="flex items-baseline gap-1">
-                  <span className="text-5xl font-extrabold text-white">£29.99</span>
-                  <span className="text-sm text-white font-medium">/mo</span>
+                  <span className="text-5xl font-extrabold text-white">{MATE_PRICE}</span>
+                  <span className="text-sm text-white font-medium">{MATE_PERIOD}</span>
                 </div>
                 <p className="text-sm text-white">Includes everything in the Electrician plan</p>
               </div>

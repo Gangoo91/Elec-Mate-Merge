@@ -1,6 +1,7 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link, Navigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
+import { supabase } from '@/integrations/supabase/client';
 import {
   Menu,
   X,
@@ -34,6 +35,19 @@ const LandingPage = () => {
   const [isNavOpen, setIsNavOpen] = useState(false);
   const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(null);
   const prefersReducedMotion = useReducedMotion();
+  const [userCount, setUserCount] = useState('550+');
+
+  useEffect(() => {
+    supabase
+      .from('profiles')
+      .select('*', { count: 'exact', head: true })
+      .then(({ count }) => {
+        if (count && count > 0) {
+          const rounded = Math.floor(count / 10) * 10;
+          setUserCount(`${rounded}+`);
+        }
+      });
+  }, []);
 
   // Redirect first-time visitors to walkthrough (before they've signed in)
   // Skip redirect for search engine bots so Google can index the landing page
@@ -429,7 +443,7 @@ const LandingPage = () => {
                   <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-400" />
                 </span>
                 <p className="text-white font-semibold text-sm">
-                  <span className="text-emerald-400">550+</span> UK electricians and growing
+                  <span className="text-emerald-400">{userCount}</span> UK electricians and growing
                 </p>
               </div>
             </motion.div>
@@ -1066,7 +1080,7 @@ const LandingPage = () => {
             <Zap className="w-12 h-12 text-yellow-400 mx-auto mb-4" />
             <h2 className="text-2xl sm:text-3xl font-bold mb-3">Ready to work smarter?</h2>
             <p className="text-white mb-6 max-w-md mx-auto">
-              Join 550+ UK electricians saving hours every week.
+              Join {userCount} UK electricians saving hours every week.
             </p>
             <Link to="/auth/signup">
               <Button className="h-14 px-10 text-base font-semibold bg-yellow-500 hover:bg-yellow-400 active:scale-[0.97] text-black touch-manipulation transition-transform">

@@ -7,6 +7,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
+import { Sheet, SheetContent } from '@/components/ui/sheet';
+import { Button } from '@/components/ui/button';
 import { useNotifications } from '@/components/notifications/NotificationProvider';
 import {
   usePushNotifications,
@@ -16,7 +18,10 @@ import {
 import { useAuth } from '@/contexts/AuthContext';
 import { supabase } from '@/integrations/supabase/client';
 import { motion } from 'framer-motion';
-import { Loader2 } from 'lucide-react';
+import { Loader2, Lock, Eye, EyeOff } from 'lucide-react';
+import { useBiometricAuth } from '@/hooks/useBiometricAuth';
+import { toast } from 'sonner';
+import { cn } from '@/lib/utils';
 
 // Certificate types for default selection
 const CERTIFICATE_TYPES = [
@@ -116,6 +121,56 @@ const PreferencesTab = () => {
 
   // AI preferences
   const [aiSuggestionsEnabled, setAiSuggestionsEnabled] = useState(true);
+
+  // Biometric auth
+  const biometric = useBiometricAuth();
+  const [showPasswordSheet, setShowPasswordSheet] = useState(false);
+  const [biometricPassword, setBiometricPassword] = useState('');
+  const [showBioPassword, setShowBioPassword] = useState(false);
+  const [biometricVerifying, setBiometricVerifying] = useState(false);
+  const [biometricError, setBiometricError] = useState<string | null>(null);
+
+  const handleBiometricToggle = async (enabled: boolean) => {
+    if (!enabled) {
+      await biometric.disableBiometric();
+      toast.success(`${biometric.biometricType} login disabled`);
+    } else {
+      // Need to verify password before storing credentials
+      setBiometricPassword('');
+      setBiometricError(null);
+      setShowPasswordSheet(true);
+    }
+  };
+
+  const handleBiometricPasswordSubmit = async () => {
+    if (!biometricPassword || !user?.email) return;
+    setBiometricVerifying(true);
+    setBiometricError(null);
+
+    try {
+      // Verify the password by signing in (session already exists, this just validates)
+      const { error } = await supabase.auth.signInWithPassword({
+        email: user.email,
+        password: biometricPassword,
+      });
+
+      if (error) {
+        setBiometricError('Incorrect password. Please try again.');
+        setBiometricVerifying(false);
+        return;
+      }
+
+      // Password valid — store credentials and enable biometric
+      await biometric.enableBiometric(user.email, biometricPassword);
+      setShowPasswordSheet(false);
+      setBiometricPassword('');
+      toast.success(`${biometric.biometricType} login enabled`);
+    } catch {
+      setBiometricError('Something went wrong. Please try again.');
+    } finally {
+      setBiometricVerifying(false);
+    }
+  };
 
   // Derived
   const categoryKeys = Object.keys(notifPrefs) as NotificationCategory[];
@@ -416,6 +471,83 @@ const PreferencesTab = () => {
           onCheckedChange={setAiSuggestionsEnabled}
         />
       </motion.div>
+
+      {/* ─── SECURITY (native only, biometric available) ─── */}
+      {biometric.isAvailable && (
+        <motion.div variants={itemVariants}>
+          <SectionLabel>Security</SectionLabel>
+          <ToggleRow
+            icon="🔒"
+            iconBg="bg-blue-500/15"
+            label={`${biometric.biometricType} Login`}
+            checked={biometric.isEnabled}
+            onCheckedChange={handleBiometricToggle}
+            disabled={biometric.isChecking}
+          />
+        </motion.div>
+      )}
+
+      {/* Password verification sheet for enabling biometric */}
+      <Sheet open={showPasswordSheet} onOpenChange={(v) => !v && setShowPasswordSheet(false)}>
+        <SheetContent side="bottom" className="rounded-t-2xl p-0 border-t border-white/10">
+          <div className="flex flex-col px-6 pt-8 pb-10 gap-5">
+            <div className="text-center space-y-2">
+              <h2 className="text-xl font-bold text-white">Confirm your password</h2>
+              <p className="text-[15px] text-white leading-relaxed">
+                Enter your password to enable {biometric.biometricType} login.
+              </p>
+            </div>
+
+            {biometricError && (
+              <div className="p-3 rounded-xl bg-red-500/10 border border-red-500/20">
+                <p className="text-[14px] text-red-400 text-center">{biometricError}</p>
+              </div>
+            )}
+
+            <div className="relative">
+              <div className="absolute left-4 top-1/2 -translate-y-1/2 text-white">
+                <Lock className="h-5 w-5" />
+              </div>
+              <input
+                type={showBioPassword ? 'text' : 'password'}
+                value={biometricPassword}
+                onChange={(e) => setBiometricPassword(e.target.value)}
+                placeholder="Enter your password"
+                autoComplete="current-password"
+                onKeyDown={(e) => e.key === 'Enter' && handleBiometricPasswordSubmit()}
+                className={cn(
+                  'w-full h-14 pl-12 pr-12 rounded-2xl',
+                  'bg-input border-2 text-white placeholder:text-muted-foreground [color-scheme:dark]',
+                  'text-[16px] outline-none transition-all duration-200',
+                  'border-white/20 focus:border-elec-yellow/50 focus:shadow-[0_0_0_4px_rgba(255,209,0,0.1)]'
+                )}
+              />
+              <button
+                type="button"
+                onClick={() => setShowBioPassword(!showBioPassword)}
+                className="absolute right-2 top-1/2 -translate-y-1/2 text-white h-11 w-11 flex items-center justify-center touch-manipulation rounded-xl"
+              >
+                {showBioPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
+              </button>
+            </div>
+
+            <Button
+              onClick={handleBiometricPasswordSubmit}
+              disabled={biometricVerifying || !biometricPassword}
+              className="w-full h-13 rounded-2xl text-[16px] font-semibold bg-elec-yellow hover:bg-elec-yellow/90 text-black touch-manipulation disabled:opacity-50"
+            >
+              {biometricVerifying ? (
+                <span className="flex items-center gap-2">
+                  <Loader2 className="h-5 w-5 animate-spin" />
+                  Verifying...
+                </span>
+              ) : (
+                `Enable ${biometric.biometricType}`
+              )}
+            </Button>
+          </div>
+        </SheetContent>
+      </Sheet>
     </motion.div>
   );
 };

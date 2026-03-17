@@ -25,6 +25,8 @@ import {
   AlertCircle,
   CheckCircle,
   Users,
+  X,
+  MessageCircle,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
@@ -340,7 +342,11 @@ const secondaryTools: ToolCardProps[] = [
 
 const ElectricalHub = () => {
   const [showSetupWizard, setShowSetupWizard] = useState(false);
-  const { isAgentActive } = useBusinessAIProfile();
+  const { isAgentActive, businessAiEnabled } = useBusinessAIProfile();
+  const [mateSetupDismissed, setMateSetupDismissed] = useState(
+    () => localStorage.getItem('mate_setup_banner_dismissed') === 'true'
+  );
+  const showMateSetupBanner = businessAiEnabled && !isAgentActive && !mateSetupDismissed;
 
   useSEO({
     title: 'Electrician Tools & Certificates | BS 7671 Compliant',
@@ -419,6 +425,45 @@ const ElectricalHub = () => {
           <motion.section variants={itemVariants} className="px-4 sm:px-0">
             <ElectricalHero />
           </motion.section>
+
+          {/* Mate setup prompt — shown when subscribed but not activated */}
+          {showMateSetupBanner && (
+            <motion.section variants={itemVariants} className="px-4 sm:px-0">
+              <div className="relative rounded-xl bg-amber-500/[0.08] border border-amber-500/20 p-4">
+                <button
+                  onClick={() => {
+                    localStorage.setItem('mate_setup_banner_dismissed', 'true');
+                    setMateSetupDismissed(true);
+                  }}
+                  className="absolute top-2 right-2 rounded-lg hover:bg-white/[0.05] touch-manipulation h-11 w-11 flex items-center justify-center"
+                  aria-label="Dismiss"
+                >
+                  <X className="h-4 w-4 text-white" />
+                </button>
+                <div className="flex items-start gap-3 pr-8">
+                  <div className="p-2 rounded-lg bg-amber-500/10 shrink-0">
+                    <MessageCircle className="h-5 w-5 text-amber-400" />
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <h3 className="text-sm font-semibold text-white mb-1">
+                      Your AI agent is ready to set up
+                    </h3>
+                    <p className="text-xs text-white mb-3">
+                      Complete 2 quick steps to activate Mate on WhatsApp
+                    </p>
+                    <Link to="/electrician/business-ai">
+                      <Button
+                        size="sm"
+                        className="h-9 touch-manipulation bg-gradient-to-r from-amber-500 to-yellow-500 hover:from-amber-600 hover:to-yellow-600 text-black font-semibold rounded-lg text-xs"
+                      >
+                        Set Up Now
+                      </Button>
+                    </Link>
+                  </div>
+                </div>
+              </div>
+            </motion.section>
+          )}
 
           {/* Primary Tools — 2-col grid, tools visible in first screenful */}
           <motion.section variants={itemVariants} className="space-y-4 px-4 sm:px-0">

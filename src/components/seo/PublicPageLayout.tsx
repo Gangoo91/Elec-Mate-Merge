@@ -10,8 +10,12 @@ import {
   FileCheck,
   Brain,
   Wrench,
+  Menu,
+  X,
 } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
+import { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 
 interface PublicPageLayoutProps {
   children: React.ReactNode;
@@ -208,6 +212,13 @@ const organizationWebsiteSchema = {
 
 export function PublicPageLayout({ children }: PublicPageLayoutProps) {
   const { user } = useAuth();
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const location = useLocation();
+
+  // Close mobile menu on route change
+  useEffect(() => {
+    setMobileMenuOpen(false);
+  }, [location.pathname]);
 
   return (
     <div className="bg-[#0a0a0a] text-white min-h-screen">
@@ -260,7 +271,7 @@ export function PublicPageLayout({ children }: PublicPageLayoutProps) {
               <Button
                 asChild
                 size="sm"
-                className="h-10 px-5 bg-yellow-500 hover:bg-yellow-400 text-black font-semibold rounded-xl touch-manipulation"
+                className="h-11 px-5 bg-yellow-500 hover:bg-yellow-400 text-black font-semibold rounded-xl touch-manipulation"
               >
                 <Link to="/dashboard">Dashboard</Link>
               </Button>
@@ -275,14 +286,65 @@ export function PublicPageLayout({ children }: PublicPageLayoutProps) {
                 <Button
                   asChild
                   size="sm"
-                  className="h-10 px-5 bg-yellow-500 hover:bg-yellow-400 text-black font-semibold rounded-xl shadow-lg shadow-yellow-500/20 touch-manipulation"
+                  className="hidden sm:inline-flex h-11 px-5 bg-yellow-500 hover:bg-yellow-400 text-black font-semibold rounded-xl shadow-lg shadow-yellow-500/20 touch-manipulation"
                 >
                   <Link to="/auth/signup">Start Free Trial</Link>
                 </Button>
               </>
             )}
+
+            {/* Mobile hamburger */}
+            <button
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              className="md:hidden inline-flex items-center justify-center w-11 h-11 rounded-xl bg-white/5 border border-white/10 text-white touch-manipulation"
+              aria-label={mobileMenuOpen ? 'Close menu' : 'Open menu'}
+            >
+              {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+            </button>
           </div>
         </div>
+
+        {/* Mobile menu drawer */}
+        {mobileMenuOpen && (
+          <div className="md:hidden relative bg-[#0a0a0a] border-t border-white/10 max-h-[calc(100vh-4rem)] overflow-y-auto">
+            <div className="px-5 py-4 space-y-4">
+              {navSections.map((section) => (
+                <div key={section.label}>
+                  <div className="text-xs font-semibold text-yellow-400 uppercase tracking-wider mb-2">
+                    {section.label}
+                  </div>
+                  <div className="space-y-1">
+                    {section.links.map((link) => (
+                      <Link
+                        key={link.to}
+                        to={link.to}
+                        className="block px-3 py-3 text-sm text-white hover:text-yellow-400 hover:bg-white/5 rounded-lg transition-colors touch-manipulation min-h-[44px] flex items-center"
+                      >
+                        {link.label}
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+              ))}
+              {!user && (
+                <div className="pt-2 space-y-2">
+                  <Link
+                    to="/auth/signup"
+                    className="block w-full h-11 bg-yellow-500 hover:bg-yellow-400 text-black font-semibold rounded-xl text-center leading-[2.75rem] touch-manipulation"
+                  >
+                    Start Free Trial
+                  </Link>
+                  <Link
+                    to="/auth/signin"
+                    className="block w-full h-11 border border-white/20 text-white font-medium rounded-xl text-center leading-[2.75rem] touch-manipulation"
+                  >
+                    Sign in
+                  </Link>
+                </div>
+              )}
+            </div>
+          </div>
+        )}
       </nav>
 
       {/* Content */}
@@ -328,7 +390,7 @@ export function PublicPageLayout({ children }: PublicPageLayoutProps) {
                   <li key={link.to}>
                     <Link
                       to={link.to}
-                      className="text-sm text-white hover:text-yellow-400 transition-colors touch-manipulation"
+                      className="text-sm text-white hover:text-yellow-400 transition-colors touch-manipulation inline-block py-1"
                     >
                       {link.label}
                     </Link>
@@ -348,7 +410,7 @@ export function PublicPageLayout({ children }: PublicPageLayoutProps) {
                   <li key={link.to}>
                     <Link
                       to={link.to}
-                      className="text-sm text-white hover:text-yellow-400 transition-colors touch-manipulation"
+                      className="text-sm text-white hover:text-yellow-400 transition-colors touch-manipulation inline-block py-1"
                     >
                       {link.label}
                     </Link>
@@ -368,7 +430,7 @@ export function PublicPageLayout({ children }: PublicPageLayoutProps) {
                   <li key={link.to}>
                     <Link
                       to={link.to}
-                      className="text-sm text-white hover:text-yellow-400 transition-colors touch-manipulation"
+                      className="text-sm text-white hover:text-yellow-400 transition-colors touch-manipulation inline-block py-1"
                     >
                       {link.label}
                     </Link>
@@ -388,7 +450,7 @@ export function PublicPageLayout({ children }: PublicPageLayoutProps) {
                   <li key={link.to}>
                     <Link
                       to={link.to}
-                      className="text-sm text-white hover:text-yellow-400 transition-colors touch-manipulation"
+                      className="text-sm text-white hover:text-yellow-400 transition-colors touch-manipulation inline-block py-1"
                     >
                       {link.label}
                     </Link>
@@ -426,7 +488,7 @@ export function PublicPageLayout({ children }: PublicPageLayoutProps) {
                         href={social.href}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex items-center justify-center w-9 h-9 rounded-lg bg-white/5 border border-white/10 hover:border-yellow-500/30 hover:bg-yellow-500/10 text-white hover:text-yellow-400 transition-all touch-manipulation"
+                        className="inline-flex items-center justify-center w-11 h-11 rounded-lg bg-white/5 border border-white/10 hover:border-yellow-500/30 hover:bg-yellow-500/10 text-white hover:text-yellow-400 transition-all touch-manipulation"
                         aria-label={social.label}
                       >
                         {social.icon}
@@ -440,7 +502,7 @@ export function PublicPageLayout({ children }: PublicPageLayoutProps) {
                   <li>
                     <Link
                       to="/privacy"
-                      className="text-sm text-white hover:text-yellow-400 transition-colors touch-manipulation"
+                      className="text-sm text-white hover:text-yellow-400 transition-colors touch-manipulation inline-block py-1"
                     >
                       Privacy Policy
                     </Link>
@@ -448,7 +510,7 @@ export function PublicPageLayout({ children }: PublicPageLayoutProps) {
                   <li>
                     <Link
                       to="/terms"
-                      className="text-sm text-white hover:text-yellow-400 transition-colors touch-manipulation"
+                      className="text-sm text-white hover:text-yellow-400 transition-colors touch-manipulation inline-block py-1"
                     >
                       Terms of Service
                     </Link>
@@ -456,7 +518,7 @@ export function PublicPageLayout({ children }: PublicPageLayoutProps) {
                   <li>
                     <Link
                       to="/cookies"
-                      className="text-sm text-white hover:text-yellow-400 transition-colors touch-manipulation"
+                      className="text-sm text-white hover:text-yellow-400 transition-colors touch-manipulation inline-block py-1"
                     >
                       Cookie Policy
                     </Link>
@@ -464,7 +526,7 @@ export function PublicPageLayout({ children }: PublicPageLayoutProps) {
                   <li>
                     <Link
                       to="/acceptable-use"
-                      className="text-sm text-white hover:text-yellow-400 transition-colors touch-manipulation"
+                      className="text-sm text-white hover:text-yellow-400 transition-colors touch-manipulation inline-block py-1"
                     >
                       Acceptable Use
                     </Link>
@@ -472,7 +534,7 @@ export function PublicPageLayout({ children }: PublicPageLayoutProps) {
                   <li>
                     <Link
                       to="/dpa"
-                      className="text-sm text-white hover:text-yellow-400 transition-colors touch-manipulation"
+                      className="text-sm text-white hover:text-yellow-400 transition-colors touch-manipulation inline-block py-1"
                     >
                       Data Processing
                     </Link>

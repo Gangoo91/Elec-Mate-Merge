@@ -175,10 +175,12 @@ const PaymentSuccess = () => {
     [user?.id, roleFromPlan, fetchProfile]
   );
 
+  const isBusinessAIPlan = planId.startsWith('business-ai') || planId.startsWith('employer');
+
   const handleGoToDashboard = useCallback(() => {
     if (autoNavRef.current) clearTimeout(autoNavRef.current);
-    navigate('/dashboard');
-  }, [navigate]);
+    navigate(isBusinessAIPlan ? '/electrician/business-ai' : '/dashboard');
+  }, [navigate, isBusinessAIPlan]);
 
   // Poll fetchProfile until subscription is confirmed, then auto-navigate
   useEffect(() => {
@@ -203,7 +205,7 @@ const PaymentSuccess = () => {
 
           // Auto-navigate after 2s so user sees the success screen
           autoNavRef.current = setTimeout(() => {
-            navigate('/dashboard');
+            navigate(isBusinessAIPlan ? '/electrician/business-ai' : '/dashboard');
           }, 2000);
           return;
         }
@@ -237,7 +239,7 @@ const PaymentSuccess = () => {
       if (pollRef.current) clearInterval(pollRef.current);
       if (autoNavRef.current) clearTimeout(autoNavRef.current);
     };
-  }, [user?.id, fetchProfile, navigate, ensureRole]);
+  }, [user?.id, fetchProfile, navigate, ensureRole, isBusinessAIPlan]);
 
   // If profile already shows subscribed (e.g. fast webhook), mark ready immediately
   useEffect(() => {
@@ -300,13 +302,19 @@ const PaymentSuccess = () => {
               {isTrial ? 'Your 7-day free trial has started!' : `Welcome to ${plan.name}!`}
             </h1>
             <p className="text-white text-[15px] sm:text-base">
-              {isTrial ? (
+              {isTrial && isBusinessAIPlan ? (
+                <>
+                  You won&apos;t be charged until{' '}
+                  <span className="text-white font-medium">{trialEndDate}</span>. Let&apos;s set up
+                  your AI agent.
+                </>
+              ) : isTrial ? (
                 <>
                   You won&apos;t be charged until{' '}
                   <span className="text-white font-medium">{trialEndDate}</span>
                 </>
-              ) : planId.startsWith('business-ai') || planId.startsWith('employer') ? (
-                <>Your plan is live. We&apos;ll set up your WhatsApp AI agent shortly.</>
+              ) : isBusinessAIPlan ? (
+                <>Your plan is live. Let&apos;s set up your WhatsApp AI agent.</>
               ) : (
                 <>
                   Your <span className="text-white font-medium">{plan.name}</span> subscription is
@@ -391,11 +399,11 @@ const PaymentSuccess = () => {
               {!isReady ? (
                 <>
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                  Preparing Dashboard...
+                  {isBusinessAIPlan ? 'Preparing Setup...' : 'Preparing Dashboard...'}
                 </>
               ) : (
                 <>
-                  Go to Dashboard
+                  {isBusinessAIPlan ? 'Set Up Mate' : 'Go to Dashboard'}
                   <ArrowRight className="ml-2 h-4 w-4" />
                 </>
               )}

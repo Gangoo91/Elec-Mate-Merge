@@ -40,6 +40,8 @@ export async function readInvoices(args: Record<string, unknown>, user: UserCont
       'id, client_data, total, vat_amount, invoice_number, status, invoice_date, due_date, paid_at, notes, quote_id, created_at'
     );
 
+  query = query.is('deleted_at', null);
+
   if (args.status) {
     query = query.eq('status', args.status);
   }
@@ -644,6 +646,7 @@ export async function getOverdueInvoices(args: Record<string, unknown>, user: Us
     .select('id, client_data, total, due_date, invoice_number')
     .eq('status', 'sent')
     .lte('due_date', cutoffDate.toISOString())
+    .is('deleted_at', null)
     .order('due_date', { ascending: true });
 
   if (error) throw new Error(`Failed to get overdue invoices: ${error.message}`);

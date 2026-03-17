@@ -41,7 +41,6 @@ const BUSINESS_AI_TIERS = new Set([
   'business_ai_yearly',
   'employer',
   'employer_yearly',
-  'Employer', // Founders get AI too
 ]);
 
 // Tier-specific feature lists for welcome email
@@ -511,7 +510,7 @@ const PRICE_TO_TIER: Record<string, string> = {
   price_1SlyB82RKw5t5RAmN447YJUW: 'employer_yearly', // £299.99/year (current — will become £499.99)
 
   // Founders Offer - £3.99/month (gets Employer access - full access to all areas)
-  price_1SPK8c2RKw5t5RAmRGJxXfjc: 'Employer', // £3.99/month founders offer (employer access)
+  price_1SPK8c2RKw5t5RAmRGJxXfjc: 'employer', // £3.99/month founders offer (employer access)
 
   // Electrician Win-Back - £7.99/month, £79.99/year (20% discount win-back offer)
   price_1SvggR2RKw5t5RAmDN29FBzx: 'electrician', // £7.99/month win-back offer
@@ -571,14 +570,17 @@ serve(async (req) => {
         event = stripe.webhooks.constructEvent(body, signature, webhookSecret);
         logger.info('Webhook signature verified');
       } catch (err: unknown) {
-        logger.warn('Webhook signature verification failed, processing anyway', {
+        logger.error('Webhook signature verification failed', {
           error: (err as Error).message,
         });
-        event = JSON.parse(body);
+        return new Response(JSON.stringify({ error: 'Invalid signature' }), {
+          status: 400,
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+        });
       }
     } else {
       event = JSON.parse(body);
-      logger.warn('Processing webhook without signature verification');
+      logger.warn('Processing webhook without signature verification (no secret configured)');
     }
 
     logger.info('Webhook event received', { eventType: event.type, eventId: event.id });
@@ -1062,6 +1064,31 @@ serve(async (req) => {
               .update({ revoked_at: new Date().toISOString() })
               .eq('user_id', userId)
               .is('revoked_at', null);
+
+            // Best-effort VPS notification to remove OpenClaw binding
+            const vpsApiKey = Deno.env.get('VPS_API_KEY');
+            if (vpsApiKey) {
+              try {
+                const vpsRes = await fetch('https://agent.elec-mate.com/api/deprovision-agent', {
+                  method: 'POST',
+                  headers: { 'Content-Type': 'application/json', 'X-API-Key': vpsApiKey },
+                  body: JSON.stringify({ user_id: userId }),
+                });
+                if (vpsRes.ok) {
+                  logger.info('VPS agent deprovisioned', { userId });
+                } else {
+                  logger.warn('VPS deprovision returned non-OK (non-fatal)', {
+                    userId,
+                    status: vpsRes.status,
+                  });
+                }
+              } catch (vpsErr) {
+                logger.warn('VPS deprovision call failed (non-fatal)', {
+                  userId,
+                  error: (vpsErr as Error)?.message,
+                });
+              }
+            }
 
             logger.info('Agent deprovisioned — status set to deactivated, JWT revoked', { userId });
           }

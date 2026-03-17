@@ -1,11 +1,14 @@
 // Local Draft Storage - Best-in-Class
 // Saves form data to localStorage for instant access and crash recovery
 
+import { safeSetJSON, safeGetJSON, safeRemove } from '@/lib/localStorage';
+
 const DRAFT_PREFIX = 'elec-mate-draft-';
-const MAX_DRAFTS_PER_TYPE = 5;
+const MAX_DRAFTS_PER_TYPE = 15;
+const DRAFT_EXPIRY_DAYS = 30;
 
 interface DraftData {
-  data: any;
+  data: Record<string, unknown>;
   lastModified: number;
   reportId: string | null;
   version: number;
@@ -34,11 +37,15 @@ const getDraftKey = (reportType: string, reportId?: string | null): string => {
  */
 const getDraftKeys = (reportType: string): string[] => {
   const keys: string[] = [];
-  for (let i = 0; i < localStorage.length; i++) {
-    const key = localStorage.key(i);
-    if (key?.startsWith(`${DRAFT_PREFIX}${reportType}`)) {
-      keys.push(key);
+  try {
+    for (let i = 0; i < localStorage.length; i++) {
+      const key = localStorage.key(i);
+      if (key?.startsWith(`${DRAFT_PREFIX}${reportType}`)) {
+        keys.push(key);
+      }
     }
+  } catch {
+    // localStorage not available (private browsing)
   }
   return keys;
 };
@@ -46,44 +53,56 @@ const getDraftKeys = (reportType: string): string[] => {
 export const draftStorage = {
   /**
    * Save current form state to local storage
-   * Called every 10 seconds during editing
+   * Called every 2 seconds (debounced) during editing
+   * Returns true if the save succeeded, false on quota/error
    */
-  saveDraft: (reportType: string, reportId: string | null, data: any): void => {
+  saveDraft: (
+    reportType: string,
+    reportId: string | null,
+    data: Record<string, unknown>
+  ): boolean => {
     try {
       const key = getDraftKey(reportType, reportId);
-      const existing = localStorage.getItem(key);
-      const existingData: DraftData | null = existing ? JSON.parse(existing) : null;
+      const existingData = safeGetJSON<DraftData | null>(key, null);
+
+      // Clean up BEFORE saving to free space first
+      const keys = getDraftKeys(reportType);
+      const expiryMs = DRAFT_EXPIRY_DAYS * 24 * 60 * 60 * 1000;
+      const now = Date.now();
+
+      // Purge expired drafts and trim to MAX_DRAFTS_PER_TYPE
+      const sorted = keys
+        .map((k) => {
+          const d = safeGetJSON<{ lastModified?: number }>(k, {});
+          return { key: k, lastModified: d.lastModified || 0 };
+        })
+        .sort((a, b) => a.lastModified - b.lastModified);
+
+      // Remove expired drafts
+      sorted.forEach(({ key: k, lastModified }) => {
+        if (now - lastModified > expiryMs) {
+          safeRemove(k);
+        }
+      });
+
+      // Remove oldest if still over limit (accounting for the one we're about to save)
+      const remaining = sorted.filter(({ lastModified }) => now - lastModified <= expiryMs);
+      if (remaining.length >= MAX_DRAFTS_PER_TYPE) {
+        const toRemove = remaining.slice(0, remaining.length - MAX_DRAFTS_PER_TYPE + 1);
+        toRemove.forEach(({ key: k }) => safeRemove(k));
+      }
 
       const draft: DraftData = {
         data,
-        lastModified: Date.now(),
+        lastModified: now,
         reportId,
         version: (existingData?.version || 0) + 1,
       };
 
-      localStorage.setItem(key, JSON.stringify(draft));
-
-      // Clean up old drafts if we have too many
-      const keys = getDraftKeys(reportType);
-      if (keys.length > MAX_DRAFTS_PER_TYPE) {
-        // Sort by last modified, oldest first
-        const sorted = keys
-          .map((k) => {
-            try {
-              const d = JSON.parse(localStorage.getItem(k) || '{}');
-              return { key: k, lastModified: d.lastModified || 0 };
-            } catch {
-              return { key: k, lastModified: 0 };
-            }
-          })
-          .sort((a, b) => a.lastModified - b.lastModified);
-
-        // Remove oldest drafts
-        const toRemove = sorted.slice(0, sorted.length - MAX_DRAFTS_PER_TYPE);
-        toRemove.forEach(({ key: k }) => localStorage.removeItem(k));
-      }
+      return safeSetJSON(key, draft);
     } catch (error) {
       console.error('[DraftStorage] Failed to save draft:', error);
+      return false;
     }
   },
 
@@ -94,13 +113,12 @@ export const draftStorage = {
   loadDraft: (
     reportType: string,
     reportId?: string | null
-  ): { data: any; lastModified: Date } | null => {
+  ): { data: Record<string, unknown>; lastModified: Date } | null => {
     try {
       const key = getDraftKey(reportType, reportId);
-      const stored = localStorage.getItem(key);
+      const draft = safeGetJSON<DraftData | null>(key, null);
 
-      if (stored) {
-        const draft: DraftData = JSON.parse(stored);
+      if (draft) {
         return {
           data: draft.data,
           lastModified: new Date(draft.lastModified),
@@ -124,10 +142,8 @@ export const draftStorage = {
   hasRecoverableDraft: (reportType: string): boolean => {
     try {
       const key = getDraftKey(reportType, null);
-      const stored = localStorage.getItem(key);
-      if (!stored) return false;
-
-      const draft: DraftData = JSON.parse(stored);
+      const draft = safeGetJSON<DraftData | null>(key, null);
+      if (!draft) return false;
 
       // Check if draft has meaningful data
       const hasData =
@@ -137,8 +153,8 @@ export const draftStorage = {
         (draft.data?.circuits && draft.data.circuits.length > 0) ||
         (draft.data?.scheduleOfTests && draft.data.scheduleOfTests.length > 0);
 
-      // Check if draft is recent (within 7 days)
-      const isRecent = Date.now() - draft.lastModified < 7 * 24 * 60 * 60 * 1000;
+      // Check if draft is recent (within DRAFT_EXPIRY_DAYS)
+      const isRecent = Date.now() - draft.lastModified < DRAFT_EXPIRY_DAYS * 24 * 60 * 60 * 1000;
 
       return hasData && isRecent;
     } catch (error) {
@@ -152,12 +168,12 @@ export const draftStorage = {
   clearDraft: (reportType: string, reportId?: string | null): void => {
     try {
       const key = getDraftKey(reportType, reportId);
-      localStorage.removeItem(key);
+      safeRemove(key);
 
       // Also clear the "new" draft if we just synced a new report
       if (reportId) {
         const newKey = getDraftKey(reportType, null);
-        localStorage.removeItem(newKey);
+        safeRemove(newKey);
       }
     } catch (error) {
       console.error('[DraftStorage] Failed to clear draft:', error);
@@ -171,10 +187,8 @@ export const draftStorage = {
   getDraftPreview: (reportType: string): DraftPreview | null => {
     try {
       const key = getDraftKey(reportType, null);
-      const stored = localStorage.getItem(key);
-      if (!stored) return null;
-
-      const draft: DraftData = JSON.parse(stored);
+      const draft = safeGetJSON<DraftData | null>(key, null);
+      if (!draft) return null;
 
       return {
         clientName: draft.data?.clientName,
@@ -195,7 +209,7 @@ export const draftStorage = {
   clearAllDrafts: (reportType: string): void => {
     try {
       const keys = getDraftKeys(reportType);
-      keys.forEach((key) => localStorage.removeItem(key));
+      keys.forEach((key) => safeRemove(key));
     } catch (error) {
       console.error('[DraftStorage] Failed to clear all drafts:', error);
     }
@@ -207,24 +221,28 @@ export const draftStorage = {
   getAllDrafts: (): { reportType: string; reportId: string | null; lastModified: Date }[] => {
     const drafts: { reportType: string; reportId: string | null; lastModified: Date }[] = [];
 
-    for (let i = 0; i < localStorage.length; i++) {
-      const key = localStorage.key(i);
-      if (key?.startsWith(DRAFT_PREFIX)) {
-        try {
-          const data = JSON.parse(localStorage.getItem(key) || '{}');
-          const parts = key.replace(DRAFT_PREFIX, '').split('-');
-          const reportType = parts[0];
-          const reportId = parts.slice(1).join('-') || null;
+    try {
+      for (let i = 0; i < localStorage.length; i++) {
+        const key = localStorage.key(i);
+        if (key?.startsWith(DRAFT_PREFIX)) {
+          try {
+            const data = safeGetJSON<{ lastModified?: number }>(key, {});
+            const parts = key.replace(DRAFT_PREFIX, '').split('-');
+            const reportType = parts[0];
+            const reportId = parts.slice(1).join('-') || null;
 
-          drafts.push({
-            reportType,
-            reportId: reportId === 'new' ? null : reportId,
-            lastModified: new Date(data.lastModified || 0),
-          });
-        } catch {
-          // Skip invalid entries
+            drafts.push({
+              reportType,
+              reportId: reportId === 'new' ? null : reportId,
+              lastModified: new Date(data.lastModified || 0),
+            });
+          } catch {
+            // Skip invalid entries
+          }
         }
       }
+    } catch {
+      // localStorage not available
     }
 
     return drafts.sort((a, b) => b.lastModified.getTime() - a.lastModified.getTime());
@@ -241,14 +259,15 @@ export const draftStorage = {
   ): boolean => {
     try {
       const key = getDraftKey(reportType, reportId);
-      const stored = localStorage.getItem(key);
-      if (!stored) return false;
+      const draft = safeGetJSON<DraftData | null>(key, null);
+      if (!draft) return false;
 
-      const draft: DraftData = JSON.parse(stored);
       const localTime = draft.lastModified || 0;
       const cloudTime = cloudUpdatedAt ? new Date(cloudUpdatedAt).getTime() : 0;
 
-      return localTime > cloudTime;
+      // Require 10s+ gap to prefer local over cloud (clock-skew tolerance)
+      const CLOCK_SKEW_BUFFER_MS = 10_000;
+      return localTime > cloudTime + CLOCK_SKEW_BUFFER_MS;
     } catch (error) {
       console.error('[DraftStorage] Failed to compare timestamps:', error);
       return false;
@@ -261,10 +280,9 @@ export const draftStorage = {
   getDraftTimestamp: (reportType: string, reportId: string | null): number | null => {
     try {
       const key = getDraftKey(reportType, reportId);
-      const stored = localStorage.getItem(key);
-      if (!stored) return null;
+      const draft = safeGetJSON<DraftData | null>(key, null);
+      if (!draft) return null;
 
-      const draft: DraftData = JSON.parse(stored);
       return draft.lastModified || null;
     } catch (error) {
       return null;

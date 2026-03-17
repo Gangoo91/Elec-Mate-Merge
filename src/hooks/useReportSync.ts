@@ -6,7 +6,7 @@ import { useState, useEffect, useLayoutEffect, useCallback, useRef, useMemo } fr
 import debounce from 'lodash/debounce';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
-import { reportCloud, VersionConflict } from '@/utils/reportCloud';
+import { reportCloud, VersionConflict, ReportType } from '@/utils/reportCloud';
 import { draftStorage } from '@/utils/draftStorage';
 import { syncQueue, SyncOperation } from '@/utils/syncQueue';
 
@@ -25,7 +25,7 @@ export interface SyncStatus {
 
 interface UseReportSyncOptions {
   reportId: string | null;
-  reportType: 'eicr' | 'eic' | 'minor-works';
+  reportType: ReportType;
   formData: any;
   enabled?: boolean;
   customerId?: string;
@@ -66,6 +66,44 @@ interface UseReportSyncReturn {
   // Conflict resolution
   activeConflict: VersionConflict | null;
   resolveConflict: (useServerVersion: boolean) => void;
+}
+
+// === HELPERS ===
+
+/** Return a network-aware debounce delay for cloud sync (ms). */
+function getCloudSyncDebounce(): number {
+  try {
+    const conn = (navigator as any).connection;
+    if (conn?.effectiveType === '2g' || conn?.effectiveType === 'slow-2g') return 12000;
+    if (conn?.effectiveType === '3g') return 8000;
+  } catch {
+    /* Network Information API not supported */
+  }
+  return 3000;
+}
+
+/** Type-aware minimum data check for cloud sync. Local saves have NO gate — save everything. */
+function hasMinimumDataForCloud(reportType: string, data: any): boolean {
+  if (!data) return false;
+  if (data.clientName || data.installationAddress || data.propertyAddress) return true;
+  switch (reportType) {
+    case 'pat-testing':
+      return !!(data.siteAddress || data.appliances?.length > 0);
+    case 'emergency-lighting':
+      return !!(data.premisesAddress || data.luminaires?.length > 0);
+    case 'fire-alarm':
+      return !!(data.premisesAddress || data.systemType);
+    case 'ev-charging':
+      return !!(data.chargerMake || data.chargePointLocation);
+    case 'solar-pv':
+      return !!(data.clientAddress || data.systemDesign);
+    default:
+      // EICR, EIC, minor-works — circuits/schedule count
+      return !!(
+        (data.circuits && data.circuits.length > 0) ||
+        (data.scheduleOfTests && data.scheduleOfTests.length > 0)
+      );
+  }
 }
 
 // === HOOK ===
@@ -111,6 +149,7 @@ export const useReportSync = ({
   const expectedVersionRef = useRef<number>(1);
   const localDataRef = useRef<any>(null);
   const consecutiveFailuresRef = useRef<number>(0);
+  const quotaWarningShownRef = useRef<number>(0);
 
   // CRITICAL: Ref to always have the latest formData for syncNowImmediate
   // This solves React closure issues where callbacks capture stale state
@@ -185,6 +224,105 @@ export const useReportSync = ({
     };
   }, [userId]);
 
+  // === VISIBILITYCHANGE HANDLER (all platforms — iOS Safari, Chrome, Android) ===
+  // Fires when user switches tabs, goes to home screen, or locks phone.
+  // SYNCHRONOUS localStorage write guaranteed to complete before iOS kills the page.
+  useEffect(() => {
+    if (!enabled) return;
+
+    const handleVisibilityChange = () => {
+      if (document.visibilityState === 'hidden') {
+        const currentData = latestFormDataRef.current;
+        if (currentData) {
+          const saved = draftStorage.saveDraft(reportType, currentReportIdRef.current, currentData);
+          if (saved) {
+            lastFormDataRef.current = JSON.stringify(currentData);
+            console.log('[ReportSync] Emergency save on visibilitychange hidden');
+          } else {
+            console.warn('[ReportSync] Emergency save failed (visibilitychange) — storage full');
+          }
+        }
+      }
+    };
+
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+    return () => document.removeEventListener('visibilitychange', handleVisibilityChange);
+  }, [reportType, enabled]);
+
+  // === CAPACITOR appStateChange HANDLER (iOS/Android native bulletproofing) ===
+  // Fires BEFORE iOS kills the process (applicationDidEnterBackground).
+  // More reliable than visibilitychange in native app context. Having both is belt-and-suspenders.
+  useEffect(() => {
+    if (!enabled) return;
+    let cleanup: (() => void) | null = null;
+    let isMounted = true;
+
+    const setup = async () => {
+      try {
+        const { Capacitor } = await import('@capacitor/core');
+        if (!Capacitor.isNativePlatform() || !isMounted) return;
+
+        const { App } = await import('@capacitor/app');
+        if (!isMounted) return;
+
+        const listener = await App.addListener('appStateChange', ({ isActive }) => {
+          if (!isActive) {
+            // Going to background — emergency localStorage save (synchronous)
+            const currentData = latestFormDataRef.current;
+            if (currentData) {
+              const saved = draftStorage.saveDraft(
+                reportType,
+                currentReportIdRef.current,
+                currentData
+              );
+              if (saved) {
+                lastFormDataRef.current = JSON.stringify(currentData);
+                console.log('[ReportSync] Emergency save on Capacitor background');
+              } else {
+                console.warn('[ReportSync] Emergency save failed (Capacitor) — storage full');
+              }
+            }
+          } else {
+            // Returning to foreground — process retry queue
+            if (userId) {
+              setTimeout(() => processQueue(), 500);
+            }
+          }
+        });
+
+        if (!isMounted) {
+          // Component unmounted during setup — clean up immediately
+          listener.remove();
+          return;
+        }
+        cleanup = () => listener.remove();
+      } catch {
+        // Not on native — no-op
+      }
+    };
+    setup();
+    return () => {
+      isMounted = false;
+      cleanup?.();
+    };
+  }, [reportType, enabled, userId]);
+
+  // === BEFOREUNLOAD HANDLER (desktop + Chrome — silent save, no confirmation dialog) ===
+  useEffect(() => {
+    if (!enabled) return;
+    const handleBeforeUnload = () => {
+      const currentData = latestFormDataRef.current;
+      if (currentData) {
+        const saved = draftStorage.saveDraft(reportType, currentReportIdRef.current, currentData);
+        if (!saved) {
+          console.warn('[ReportSync] Emergency save failed (beforeunload) — storage full');
+        }
+      }
+    };
+    window.addEventListener('beforeunload', handleBeforeUnload);
+    return () => window.removeEventListener('beforeunload', handleBeforeUnload);
+  }, [reportType, enabled]);
+
   // === CHECK FOR RECOVERABLE DRAFT ON MOUNT ===
   useEffect(() => {
     if (!reportId && enabled) {
@@ -204,73 +342,104 @@ export const useReportSync = ({
     }
   }, [reportType, reportId, enabled]);
 
-  // === AUTO-SAVE TO LOCAL (every 10 seconds) ===
+  // === DEBOUNCED LOCAL SAVE (2s after last change — replaces 10s interval) ===
+  // Saves to localStorage 2s after the user stops typing. No hasData gate for local
+  // saves — if any data changed, save it. This covers circuit-first entry where
+  // clientName is still empty.
+  const debouncedLocalSave = useMemo(
+    () =>
+      debounce(() => {
+        const currentData = JSON.stringify(latestFormDataRef.current);
+        if (currentData !== lastFormDataRef.current) {
+          const saved = draftStorage.saveDraft(
+            reportType,
+            currentReportIdRef.current,
+            latestFormDataRef.current
+          );
+          if (saved) {
+            lastFormDataRef.current = currentData;
+            setStatus((prev) => ({
+              ...prev,
+              local: 'saved',
+              lastLocalSave: new Date(),
+              cloud: prev.cloud === 'synced' ? 'unsaved' : prev.cloud,
+            }));
+          } else if (Date.now() - quotaWarningShownRef.current > 60_000) {
+            quotaWarningShownRef.current = Date.now();
+            toast({
+              title: 'Storage full',
+              description: 'Your device storage is full. Saving to cloud instead.',
+              variant: 'destructive',
+            });
+          }
+        }
+      }, 2000),
+    [reportType, toast]
+  );
+
   useEffect(() => {
     if (!enabled) return;
+    debouncedLocalSave();
+    return () => debouncedLocalSave.cancel();
+  }, [formData, enabled, debouncedLocalSave]);
 
-    const interval = setInterval(() => {
-      // Check if form data has changed
-      const currentData = JSON.stringify(formData);
-      if (currentData !== lastFormDataRef.current) {
-        // Has meaningful data to save?
-        const hasData =
-          formData.clientName ||
-          formData.installationAddress ||
-          formData.propertyAddress ||
-          (formData.circuits && formData.circuits.length > 0) ||
-          (formData.scheduleOfTests && formData.scheduleOfTests.length > 0);
-
-        if (hasData) {
-          draftStorage.saveDraft(reportType, currentReportIdRef.current, formData);
-          lastFormDataRef.current = currentData;
-          setStatus((prev) => ({
-            ...prev,
-            local: 'saved',
-            lastLocalSave: new Date(),
-            // Mark cloud as 'unsaved' when local data changes (if it was synced)
-            cloud: prev.cloud === 'synced' ? 'unsaved' : prev.cloud,
-          }));
+  // === FLUSH ON UNMOUNT (catches SPA navigation via React Router) ===
+  // SPA navigation unmounts the component but does NOT fire visibilitychange or beforeunload.
+  // Without this, the pending 2s debounced save gets cancelled and up to 2s of changes are lost.
+  // Uses refs (stable across renders) so there's no stale closure issue with [] deps.
+  useEffect(() => {
+    return () => {
+      debouncedLocalSave.cancel();
+      debouncedCloudSync.cancel();
+      const currentData = latestFormDataRef.current;
+      if (currentData) {
+        const saved = draftStorage.saveDraft(reportType, currentReportIdRef.current, currentData);
+        if (saved) {
+          console.log('[ReportSync] Final save on unmount');
+        } else {
+          console.warn('[ReportSync] Final save failed (unmount) — storage full');
         }
       }
-    }, 10000); // Every 10 seconds
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
-    return () => clearInterval(interval);
-  }, [formData, reportType, enabled]);
-
-  // === DEBOUNCED CLOUD SYNC (5 seconds after last change) ===
-  // This is the primary sync mechanism - syncs within 5 seconds of stopping edits
-  // Increased from 2s to 5s to reduce sync request frequency by ~60%
+  // === DEBOUNCED CLOUD SYNC (3 seconds after last change) ===
+  // Primary sync mechanism — 3s feels instant to users, 5s felt delayed
   // Uses isAutoSync=true to keep 'auto-draft' status until user manually saves
   const debouncedCloudSync = useMemo(
     () =>
       debounce(async () => {
-        const hasData =
-          formData.clientName || formData.installationAddress || formData.propertyAddress;
-
-        if (isOnline && isAuthenticated && userId && hasData && !isSyncingRef.current) {
+        const currentData = latestFormDataRef.current;
+        if (
+          isOnline &&
+          isAuthenticated &&
+          userId &&
+          hasMinimumDataForCloud(reportType, currentData) &&
+          !isSyncingRef.current
+        ) {
           console.log('[ReportSync] Debounced cloud sync triggered (auto-draft)');
           await syncToCloud(false, false, true); // isAutoSync = true
         }
-      }, 5000),
-    [isOnline, isAuthenticated, userId]
+      }, getCloudSyncDebounce()),
+    [isOnline, isAuthenticated, userId, reportType]
   );
 
   // Trigger debounced sync on every formData change
   useEffect(() => {
     if (!enabled) return;
 
-    const hasData = formData.clientName || formData.installationAddress || formData.propertyAddress;
-
-    if (hasData && isOnline && isAuthenticated && userId) {
+    if (hasMinimumDataForCloud(reportType, formData) && isOnline && isAuthenticated && userId) {
       // Mark cloud as unsaved immediately when data changes
-      if (status.cloud === 'synced') {
-        setStatus((prev) => ({ ...prev, cloud: 'unsaved' }));
-      }
+      // Uses functional callback to read prev.cloud instead of status.cloud in the closure,
+      // so we can remove status.cloud from deps and break the infinite re-trigger loop
+      setStatus((prev) => (prev.cloud === 'synced' ? { ...prev, cloud: 'unsaved' } : prev));
       debouncedCloudSync();
     }
 
     return () => debouncedCloudSync.cancel();
-  }, [formData, enabled, debouncedCloudSync, isOnline, isAuthenticated, userId, status.cloud]);
+     
+  }, [formData, enabled, debouncedCloudSync, isOnline, isAuthenticated, userId, reportType]);
 
   // === AUTO-SYNC TO CLOUD (every 30 seconds as backup) ===
   // Backup mechanism - catches anything missed by debounced sync
@@ -386,6 +555,25 @@ export const useReportSync = ({
     }
   }, [isOnline, userId, updateQueueCount, processQueue]);
 
+  // === SERVICE WORKER MESSAGE LISTENER (Background Sync → client) ===
+  // When the SW completes a Background Sync and sends PROCESS_SYNC_QUEUE,
+  // this listener triggers queue processing in the main thread.
+  useEffect(() => {
+    if (!enabled || !userId) return;
+
+    const handleSWMessage = (event: MessageEvent) => {
+      if (event.data?.type === 'PROCESS_SYNC_QUEUE') {
+        console.log('[ReportSync] SW Background Sync completed — processing queue');
+        processQueue();
+      }
+    };
+
+    navigator.serviceWorker?.addEventListener('message', handleSWMessage);
+    return () => {
+      navigator.serviceWorker?.removeEventListener('message', handleSWMessage);
+    };
+  }, [enabled, userId, processQueue]);
+
   // === SYNC TO CLOUD ===
   // isAutoSync: true for debounced/interval syncs (keeps 'auto-draft' status), false for manual saves (promotes to proper status)
   const syncToCloud = useCallback(
@@ -414,13 +602,8 @@ export const useReportSync = ({
       // otherwise use the ref to get the absolute latest form data
       const currentFormData = dataOverride || latestFormDataRef.current;
 
-      // Check minimum data
-      const hasData =
-        currentFormData.clientName ||
-        currentFormData.installationAddress ||
-        currentFormData.propertyAddress;
-
-      if (!hasData) {
+      // Check minimum data (type-aware)
+      if (!hasMinimumDataForCloud(reportType, currentFormData)) {
         if (showToast) {
           toast({
             title: 'Cannot save yet',
@@ -566,6 +749,19 @@ export const useReportSync = ({
               userId,
             });
             await updateQueueCount();
+
+            // Register for Background Sync (Chrome/Android — no-op on iOS/WKWebView)
+            try {
+              const reg = await navigator.serviceWorker?.ready;
+              if (reg?.sync) {
+                await (reg.sync as any).register('sync-reports');
+              }
+            } catch (e) {
+              console.warn(
+                '[ReportSync] Background Sync not available — online event will handle retry',
+                e
+              );
+            }
           } catch (queueError) {
             console.error('[ReportSync] Failed to queue:', queueError);
           }
@@ -607,8 +803,16 @@ export const useReportSync = ({
   const saveNow = useCallback(async (): Promise<{ success: boolean; reportId: string | null }> => {
     // Always save locally first - use ref for latest data
     const currentFormData = latestFormDataRef.current;
-    draftStorage.saveDraft(reportType, currentReportIdRef.current, currentFormData);
-    setStatus((prev) => ({ ...prev, local: 'saved', lastLocalSave: new Date() }));
+    const localSaved = draftStorage.saveDraft(
+      reportType,
+      currentReportIdRef.current,
+      currentFormData
+    );
+    if (localSaved) {
+      setStatus((prev) => ({ ...prev, local: 'saved', lastLocalSave: new Date() }));
+    } else {
+      console.warn('[ReportSync] Local save failed in saveNow — storage full');
+    }
 
     // Then sync to cloud
     return await syncToCloud(true);
@@ -618,17 +822,21 @@ export const useReportSync = ({
   const saveInitialDraft = useCallback(() => {
     // Save draft immediately to local storage (appears in recent certs/drafts)
     const currentFormData = latestFormDataRef.current;
-    draftStorage.saveDraft(reportType, currentReportIdRef.current, {
+    const saved = draftStorage.saveDraft(reportType, currentReportIdRef.current, {
       ...currentFormData,
       _draftCreatedAt: new Date().toISOString(),
     });
-    lastFormDataRef.current = JSON.stringify(currentFormData);
-    setStatus((prev) => ({
-      ...prev,
-      local: 'saved',
-      lastLocalSave: new Date(),
-    }));
-    console.log('[ReportSync] Initial draft saved for', reportType);
+    if (saved) {
+      lastFormDataRef.current = JSON.stringify(currentFormData);
+      setStatus((prev) => ({
+        ...prev,
+        local: 'saved',
+        lastLocalSave: new Date(),
+      }));
+      console.log('[ReportSync] Initial draft saved for', reportType);
+    } else {
+      console.warn('[ReportSync] Initial draft save failed — storage full');
+    }
   }, [reportType]);
 
   // === LOAD REPORT ===
@@ -702,8 +910,16 @@ export const useReportSync = ({
   }> => {
     // Save locally first - use ref for latest data
     const currentFormData = latestFormDataRef.current;
-    draftStorage.saveDraft(reportType, currentReportIdRef.current, currentFormData);
-    setStatus((prev) => ({ ...prev, local: 'saved', lastLocalSave: new Date() }));
+    const localSaved = draftStorage.saveDraft(
+      reportType,
+      currentReportIdRef.current,
+      currentFormData
+    );
+    if (localSaved) {
+      setStatus((prev) => ({ ...prev, local: 'saved', lastLocalSave: new Date() }));
+    } else {
+      console.warn('[ReportSync] Local save failed in forceSave — storage full');
+    }
 
     // Force sync to cloud, overwriting any conflicts
     return await syncToCloud(true, true);
@@ -805,18 +1021,18 @@ export const useReportSync = ({
   // Uses isAutoSync=true - tab changes are automatic syncs, not manual saves
   const onTabChange = useCallback(() => {
     // Cancel debounce and sync immediately when user changes tabs
-    // Use ref for latest data
     const currentFormData = latestFormDataRef.current;
-    const hasData =
-      currentFormData?.clientName ||
-      currentFormData?.installationAddress ||
-      currentFormData?.propertyAddress;
 
-    if (hasData && isOnline && isAuthenticated && userId) {
+    if (
+      hasMinimumDataForCloud(reportType, currentFormData) &&
+      isOnline &&
+      isAuthenticated &&
+      userId
+    ) {
       debouncedCloudSync.cancel();
       syncToCloud(false, false, true); // isAutoSync = true
     }
-  }, [isOnline, isAuthenticated, userId, debouncedCloudSync, syncToCloud]);
+  }, [reportType, isOnline, isAuthenticated, userId, debouncedCloudSync, syncToCloud]);
 
   // === RETURN ===
   return {

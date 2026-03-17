@@ -4,28 +4,26 @@
  * Portable Appliance Test Register/Log
  *
  * Features:
- * - 3-tier auto-save: localStorage 10s → cloud 30s → beforeunload emergency
+ * - 8-layer auto-save: 2s debounced localStorage → 3s cloud → visibilitychange → Capacitor → beforeunload → SW Background Sync → 30s backup
  * - Email certificate via Resend
  * - PDF generation via PDF Monkey
  */
 
-import { useState, useEffect, useRef, useCallback } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
 import { Skeleton } from '@/components/ui/skeleton';
 import {
-  ArrowLeft,
-  Plug,
-  Save,
-  Download,
-  Loader2,
-  Mail,
-  Cloud,
-  CloudOff,
-  CheckCircle2,
-  AlertCircle,
-} from 'lucide-react';
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from '@/components/ui/alert-dialog';
+import { ArrowLeft, Plug, Save, Download, Loader2, Mail } from 'lucide-react';
 import { toast } from 'sonner';
 import { reportCloud } from '@/utils/reportCloud';
 import { draftStorage } from '@/utils/draftStorage';
@@ -43,11 +41,12 @@ import { formatPATTestingJson } from '@/utils/patTestingJsonFormatter';
 import { useCertificateEmail } from '@/hooks/useCertificateEmail';
 import { EmailCertificateDialog } from '@/components/certificate-completion/EmailCertificateDialog';
 import CertificateGenerationDialog from '@/components/inspection/CertificateGenerationDialog';
+import { useReportSync } from '@/hooks/useReportSync';
+import { SyncStatusBadge } from '@/components/inspection/SyncStatusBadge';
+import { ConflictResolutionDialog } from '@/components/inspection/ConflictResolutionDialog';
 
 // ─── Constants ───────────────────────────────────────────────────────────────
-const REPORT_TYPE = 'pat-testing';
-const AUTO_SAVE_INTERVAL = 10000; // 10 seconds to localStorage
-const CLOUD_SYNC_DEBOUNCE = 30000; // 30 seconds to cloud
+const REPORT_TYPE = 'pat-testing' as const;
 
 export default function PATTestingCertificate() {
   const { id } = useParams<{ id: string }>();
@@ -68,22 +67,72 @@ export default function PATTestingCertificate() {
   const [savedReportId, setSavedReportId] = useState<string | null>(
     id !== 'new' ? id || null : null
   );
-  const [syncStatus, setSyncStatus] = useState<
-    'idle' | 'pending' | 'syncing' | 'synced' | 'error' | 'offline'
-  >('idle');
-  const [isOnline, setIsOnline] = useState(navigator.onLine);
-  const [userId, setUserId] = useState<string | null>(null);
   const [showEmailDialog, setShowEmailDialog] = useState(false);
 
   // Per-appliance test sheet state
   const [activeApplianceId, setActiveApplianceId] = useState<string | null>(null);
   const [copiedApplianceData, setCopiedApplianceData] = useState<Partial<Appliance> | null>(null);
 
-  // ─── Refs ────────────────────────────────────────────────────────────────
-  const autoSaveTimerRef = useRef<NodeJS.Timeout | null>(null);
-  const cloudSyncTimerRef = useRef<NodeJS.Timeout | null>(null);
-  const lastSavedDataRef = useRef<string>('');
-  const hasUnsavedChangesRef = useRef(false);
+  // ─── Report sync (replaces all custom sync code) ──────────────────────
+  const {
+    status: syncStatus,
+    saveNow,
+    syncNowImmediate,
+    hasRecoverableDraft,
+    recoverDraft,
+    discardDraft,
+    onTabChange: syncOnTabChange,
+    activeConflict,
+    resolveConflict,
+  } = useReportSync({
+    reportId: savedReportId,
+    reportType: REPORT_TYPE,
+    formData,
+    enabled: !isLoading,
+    onReportCreated: (newId) => {
+      setSavedReportId(newId);
+      window.history.replaceState(null, '', `/electrician/inspection-testing/pat-testing/${newId}`);
+    },
+  });
+
+  // ─── Draft recovery state ────────────────────────────────────────────
+  const [showRecoveryDialog, setShowRecoveryDialog] = useState(false);
+  const [recoveryDraft, setRecoveryDraft] = useState<{
+    data: Record<string, unknown>;
+    lastModified: Date;
+  } | null>(null);
+
+  // Check for recoverable draft on mount
+  useEffect(() => {
+    if (isNew && hasRecoverableDraft) {
+      const draft = draftStorage.loadDraft(REPORT_TYPE, null);
+      if (draft) {
+        setRecoveryDraft(draft as { data: Record<string, unknown>; lastModified: Date });
+        setShowRecoveryDialog(true);
+      }
+    }
+  }, [isNew, hasRecoverableDraft]);
+
+  const handleRecoverDraft = () => {
+    if (recoveryDraft) {
+      setFormData({ ...getDefaultPATTestingFormData(), ...recoveryDraft.data });
+      toast.success('Draft recovered');
+    } else {
+      const recovered = recoverDraft();
+      if (recovered) {
+        setFormData({ ...getDefaultPATTestingFormData(), ...recovered });
+        toast.success('Draft recovered');
+      }
+    }
+    setShowRecoveryDialog(false);
+    setRecoveryDraft(null);
+  };
+
+  const handleDiscardDraft = () => {
+    discardDraft();
+    setShowRecoveryDialog(false);
+    setRecoveryDraft(null);
+  };
 
   // Hooks for tabs
   const tabProps = usePATTestingTabs(formData);
@@ -110,38 +159,6 @@ export default function PATTestingCertificate() {
     companyName: companyProfile?.company_name,
   });
 
-  // ─── Online/Offline tracking ────────────────────────────────────────────
-  useEffect(() => {
-    const handleOnline = () => {
-      setIsOnline(true);
-      if (hasUnsavedChangesRef.current) {
-        setSyncStatus('pending');
-      }
-    };
-    const handleOffline = () => {
-      setIsOnline(false);
-      setSyncStatus('offline');
-    };
-
-    window.addEventListener('online', handleOnline);
-    window.addEventListener('offline', handleOffline);
-    return () => {
-      window.removeEventListener('online', handleOnline);
-      window.removeEventListener('offline', handleOffline);
-    };
-  }, []);
-
-  // ─── Auth setup ──────────────────────────────────────────────────────────
-  useEffect(() => {
-    const getUser = async () => {
-      const {
-        data: { user },
-      } = await supabase.auth.getUser();
-      if (user) setUserId(user.id);
-    };
-    getUser();
-  }, []);
-
   // ─── Load company branding for PDF ──────────────────────────────────────
   const loadCompanyBranding = useCallback(() => {
     if (!companyProfile) return null;
@@ -157,8 +174,8 @@ export default function PATTestingCertificate() {
       companyPhone: companyProfile.company_phone || '',
       companyEmail: companyProfile.company_email || '',
       companyAccentColor: companyProfile.primary_color || '#3b82f6',
-      companyTagline: (companyProfile as Record<string, unknown>).company_tagline as string || '',
-      companyWebsite: (companyProfile as Record<string, unknown>).company_website as string || '',
+      companyTagline: ((companyProfile as Record<string, unknown>).company_tagline as string) || '',
+      companyWebsite: ((companyProfile as Record<string, unknown>).company_website as string) || '',
       registrationSchemeLogo:
         companyProfile.scheme_logo_data_url || companyProfile.registration_scheme_logo || '',
       registrationScheme: companyProfile.registration_scheme || '',
@@ -183,7 +200,6 @@ export default function PATTestingCertificate() {
           let loadedData: typeof formData | null = null;
 
           if (localDraft && report) {
-            // Compare timestamps — use whichever is newer
             const isLocalNewer = draftStorage.isLocalDraftNewer(REPORT_TYPE, id, report.updated_at);
 
             if (isLocalNewer) {
@@ -203,19 +219,14 @@ export default function PATTestingCertificate() {
 
           if (loadedData) {
             setFormData(loadedData);
-            // Set baseline from actual loaded data — NOT the stale formData closure
-            lastSavedDataRef.current = JSON.stringify(loadedData);
           }
         } catch (error) {
           console.error('Failed to load report:', error);
 
-          // Try local draft as fallback
           const fallbackDraft = draftStorage.loadDraft(REPORT_TYPE, id);
           if (fallbackDraft) {
             console.log('[PAT] Loading from local draft (cloud failed)');
-            const fallbackData = { ...getDefaultPATTestingFormData(), ...fallbackDraft.data };
-            setFormData(fallbackData);
-            lastSavedDataRef.current = JSON.stringify(fallbackData);
+            setFormData({ ...getDefaultPATTestingFormData(), ...fallbackDraft.data });
           } else {
             toast.error('Failed to load certificate');
           }
@@ -228,132 +239,6 @@ export default function PATTestingCertificate() {
     loadReport();
   }, [id, isNew]);
 
-  // ─── Save to localStorage (fast, synchronous) ──────────────────────────
-  const saveToLocalStorage = useCallback(() => {
-    const reportId = savedReportId || null;
-    draftStorage.saveDraft(REPORT_TYPE, reportId, formData);
-    console.log('[PAT] Saved to localStorage');
-  }, [formData, savedReportId]);
-
-  // ─── Sync to cloud (debounced, async) ───────────────────────────────────
-  const syncToCloud = useCallback(async () => {
-    if (!userId || !isOnline) {
-      setSyncStatus(isOnline ? 'pending' : 'offline');
-      return;
-    }
-
-    const currentData = JSON.stringify(formData);
-    if (currentData === lastSavedDataRef.current) {
-      return; // No changes to sync
-    }
-
-    setSyncStatus('syncing');
-    try {
-      const dataToSave = {
-        ...formData,
-        status: 'auto-draft',
-        client_name: formData.clientName,
-        installation_address: formData.siteAddress,
-      };
-
-      if (savedReportId) {
-        const result = await reportCloud.updateReport(
-          savedReportId,
-          userId,
-          dataToSave,
-          undefined,
-          true // isAutoSync
-        );
-        if (result.success) {
-          lastSavedDataRef.current = currentData;
-          hasUnsavedChangesRef.current = false;
-          setSyncStatus('synced');
-          console.log('[PAT] Auto-synced to cloud');
-        } else {
-          setSyncStatus('error');
-        }
-      } else {
-        const result = await reportCloud.createReport(
-          userId,
-          'pat-testing',
-          dataToSave,
-          undefined,
-          true // isAutoSync
-        );
-        if (result.success && result.reportId) {
-          setSavedReportId(result.reportId);
-          lastSavedDataRef.current = currentData;
-          hasUnsavedChangesRef.current = false;
-          setSyncStatus('synced');
-          window.history.replaceState(
-            null,
-            '',
-            `/electrician/inspection-testing/pat-testing/${result.reportId}`
-          );
-          console.log('[PAT] Auto-created in cloud:', result.reportId);
-        } else {
-          setSyncStatus('error');
-        }
-      }
-    } catch (error) {
-      console.error('[PAT] Cloud sync failed:', error);
-      setSyncStatus('error');
-    }
-  }, [formData, savedReportId, userId, isOnline]);
-
-  // ─── Auto-save effect (localStorage every 10s) ─────────────────────────
-  useEffect(() => {
-    autoSaveTimerRef.current = setInterval(() => {
-      if (hasUnsavedChangesRef.current) {
-        saveToLocalStorage();
-      }
-    }, AUTO_SAVE_INTERVAL);
-
-    return () => {
-      if (autoSaveTimerRef.current) {
-        clearInterval(autoSaveTimerRef.current);
-      }
-    };
-  }, [saveToLocalStorage]);
-
-  // ─── Cloud sync effect (30s debounce after last change) ─────────────────
-  useEffect(() => {
-    if (cloudSyncTimerRef.current) {
-      clearTimeout(cloudSyncTimerRef.current);
-    }
-
-    if (hasUnsavedChangesRef.current && isOnline) {
-      cloudSyncTimerRef.current = setTimeout(() => {
-        syncToCloud();
-      }, CLOUD_SYNC_DEBOUNCE);
-    }
-
-    return () => {
-      if (cloudSyncTimerRef.current) {
-        clearTimeout(cloudSyncTimerRef.current);
-      }
-    };
-  }, [formData, syncToCloud, isOnline]);
-
-  // ─── Emergency save on page unload ──────────────────────────────────────
-  useEffect(() => {
-    const handleBeforeUnload = (e: BeforeUnloadEvent) => {
-      if (formData && (formData.clientName || formData.siteAddress)) {
-        draftStorage.saveDraft(REPORT_TYPE, savedReportId, formData);
-        console.log('[PAT] Emergency save on beforeunload');
-      }
-
-      if (hasUnsavedChangesRef.current && syncStatus !== 'synced') {
-        e.preventDefault();
-        e.returnValue = 'You have unsaved changes. Are you sure?';
-        return e.returnValue;
-      }
-    };
-
-    window.addEventListener('beforeunload', handleBeforeUnload);
-    return () => window.removeEventListener('beforeunload', handleBeforeUnload);
-  }, [formData, savedReportId, syncStatus]);
-
   // ─── Update form field ──────────────────────────────────────────────────
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleUpdate = useCallback((field: string, value: any) => {
@@ -362,54 +247,17 @@ export default function PATTestingCertificate() {
       ...prev,
       [field]: value,
     }));
-    hasUnsavedChangesRef.current = true;
-    setSyncStatus('pending');
   }, []);
 
   // ─── Manual save draft ──────────────────────────────────────────────────
   const handleSaveDraft = async () => {
     setIsSaving(true);
     try {
-      if (!userId) {
-        toast.error('Please sign in to save');
-        return;
-      }
-
-      const dataToSave = {
-        ...formData,
-        status: 'draft',
-        client_name: formData.clientName,
-        installation_address: formData.siteAddress,
-      };
-
-      if (savedReportId) {
-        const result = await reportCloud.updateReport(savedReportId, userId, dataToSave);
-        if (result.success) {
-          lastSavedDataRef.current = JSON.stringify(formData);
-          hasUnsavedChangesRef.current = false;
-          setSyncStatus('synced');
-          draftStorage.clearDraft(REPORT_TYPE, savedReportId);
-          toast.success('Draft saved');
-        } else {
-          throw new Error(result.error?.message || 'Failed to save');
-        }
+      const result = await saveNow();
+      if (result.success) {
+        toast.success('Draft saved');
       } else {
-        const result = await reportCloud.createReport(userId, 'pat-testing', dataToSave);
-        if (result.success && result.reportId) {
-          setSavedReportId(result.reportId);
-          lastSavedDataRef.current = JSON.stringify(formData);
-          hasUnsavedChangesRef.current = false;
-          setSyncStatus('synced');
-          draftStorage.clearDraft(REPORT_TYPE, null);
-          toast.success('Draft saved');
-          window.history.replaceState(
-            null,
-            '',
-            `/electrician/inspection-testing/pat-testing/${result.reportId}`
-          );
-        } else {
-          throw new Error(result.error?.message || 'Failed to create report');
-        }
+        toast.error('Failed to save draft');
       }
     } catch (error) {
       toast.error(error instanceof Error ? error.message : 'Failed to save draft');
@@ -425,7 +273,8 @@ export default function PATTestingCertificate() {
     setGenerationError(null);
     setShowGenerationDialog(true);
     try {
-      await handleSaveDraft();
+      // Sync latest data to cloud before PDF generation
+      await syncNowImmediate();
 
       // Get company branding
       const branding = hasSavedCompanyBranding ? loadCompanyBranding() : null;
@@ -453,7 +302,7 @@ export default function PATTestingCertificate() {
           .eq('report_id', savedReportId);
       }
 
-      // Debug log — helps diagnose empty PDF issues
+      // Debug log
       console.log('[PAT] PDF payload keys:', Object.keys(pdfData));
       console.log('[PAT] Client details:', pdfData.client_details);
       console.log('[PAT] Appliances count:', pdfData.appliances?.length);
@@ -500,8 +349,7 @@ export default function PATTestingCertificate() {
   // ─── Email handler ──────────────────────────────────────────────────────
   const handleSendEmail = async (email: string, cc?: string[], message?: string) => {
     try {
-      // Ensure report is saved before emailing
-      await handleSaveDraft();
+      await syncNowImmediate();
 
       await sendCertificateEmail({
         recipientEmail: email,
@@ -545,17 +393,6 @@ export default function PATTestingCertificate() {
     navigate(url);
   };
 
-  // ─── Sync status indicator ──────────────────────────────────────────────
-  const SyncIndicator = () => {
-    if (syncStatus === 'synced') return <CheckCircle2 className="h-3.5 w-3.5 text-green-400" />;
-    if (syncStatus === 'syncing')
-      return <Cloud className="h-3.5 w-3.5 text-blue-400 animate-pulse" />;
-    if (syncStatus === 'error') return <AlertCircle className="h-3.5 w-3.5 text-red-400" />;
-    if (syncStatus === 'offline') return <CloudOff className="h-3.5 w-3.5 text-white" />;
-    if (syncStatus === 'pending') return <Cloud className="h-3.5 w-3.5 text-white" />;
-    return null;
-  };
-
   // ─── Loading state ──────────────────────────────────────────────────────
   if (isLoading) {
     return (
@@ -570,6 +407,32 @@ export default function PATTestingCertificate() {
 
   return (
     <div className="bg-background min-h-screen">
+      {/* Draft Recovery Dialog */}
+      <AlertDialog open={showRecoveryDialog} onOpenChange={setShowRecoveryDialog}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Recover Unsaved Work?</AlertDialogTitle>
+            <AlertDialogDescription>
+              We found an unsaved PAT Testing certificate from{' '}
+              {recoveryDraft?.lastModified.toLocaleString()}.
+              {recoveryDraft?.data?.clientName && (
+                <span className="block mt-2 font-medium">
+                  Client: {recoveryDraft.data.clientName}
+                </span>
+              )}
+              {recoveryDraft?.data?.siteAddress && (
+                <span className="block mt-1 text-sm">Site: {recoveryDraft.data.siteAddress}</span>
+              )}
+              Would you like to recover this work?
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel onClick={handleDiscardDraft}>Start Fresh</AlertDialogCancel>
+            <AlertDialogAction onClick={handleRecoverDraft}>Recover Draft</AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+
       {/* Mobile-First Header */}
       <div className="bg-[#242428] border-b border-blue-500/20 sticky top-0 z-10">
         <div className="px-4 py-3">
@@ -586,12 +449,7 @@ export default function PATTestingCertificate() {
             </Button>
 
             <div className="flex items-center gap-2">
-              <div className="flex items-center gap-1.5">
-                <SyncIndicator />
-                <Badge className="bg-blue-500/20 text-blue-400 border-0 text-[10px] px-2 py-0.5 font-semibold">
-                  {syncStatus === 'synced' ? 'Saved' : 'Draft'}
-                </Badge>
-              </div>
+              <SyncStatusBadge status={syncStatus} />
 
               <Button
                 variant="ghost"
@@ -652,7 +510,10 @@ export default function PATTestingCertificate() {
       <main className="py-4 pb-4 sm:px-4 sm:pb-8">
         <PATTestingFormTabs
           currentTab={tabProps.currentTab}
-          onTabChange={tabProps.setCurrentTab}
+          onTabChange={(tab) => {
+            tabProps.setCurrentTab(tab);
+            syncOnTabChange();
+          }}
           canAccessTab={tabProps.canAccessTab}
           formData={formData}
           onUpdate={handleUpdate}
@@ -712,6 +573,8 @@ export default function PATTestingCertificate() {
         errorMessage={generationError}
         documentLabel="Certificate"
       />
+
+      <ConflictResolutionDialog conflict={activeConflict} onResolve={resolveConflict} />
     </div>
   );
 }

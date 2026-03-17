@@ -8,7 +8,8 @@ export type ReportType =
   | 'ev-charging'
   | 'fire-alarm'
   | 'emergency-lighting'
-  | 'pat-testing';
+  | 'pat-testing'
+  | 'solar-pv';
 
 export interface CloudReport {
   id: string;
@@ -21,7 +22,7 @@ export interface CloudReport {
   inspection_date?: string;
   status: 'auto-draft' | 'draft' | 'in-progress' | 'completed';
   updated_at: string;
-  data: any;
+  data: Record<string, unknown>;
   pdf_url?: string;
   pdf_generated_at?: string;
   version?: number;
@@ -32,7 +33,7 @@ export interface VersionConflict {
   hasConflict: boolean;
   localVersion: number;
   serverVersion: number;
-  serverData?: any;
+  serverData?: Record<string, unknown>;
   serverUpdatedAt?: string;
 }
 
@@ -113,10 +114,10 @@ export const reportCloud = {
   createReport: async (
     userId: string,
     reportType: ReportType,
-    data: any,
+    data: Record<string, unknown>,
     customerId?: string,
     isAutoSync: boolean = false
-  ): Promise<{ success: boolean; reportId?: string; error?: any }> => {
+  ): Promise<{ success: boolean; reportId?: string; error?: unknown }> => {
     try {
       // Calculate status based on form data - handles all report types
       const calculateStatus = (): 'auto-draft' | 'draft' | 'in-progress' | 'completed' => {
@@ -227,10 +228,10 @@ export const reportCloud = {
   updateReport: async (
     reportId: string,
     userId: string,
-    data: any,
+    data: Record<string, unknown>,
     customerId?: string,
     isAutoSync: boolean = false
-  ): Promise<{ success: boolean; error?: any }> => {
+  ): Promise<{ success: boolean; error?: unknown }> => {
     try {
       // Determine report type from reportId prefix
       const reportType = reportId.toLowerCase().startsWith('minor-works')
@@ -278,7 +279,7 @@ export const reportCloud = {
         isAutoSync,
       });
 
-      const updateData: any = {
+      const updateData: Record<string, unknown> = {
         status,
         client_name: data.clientName || null,
         installation_address: data.installationAddress || data.propertyAddress || null,
@@ -312,7 +313,10 @@ export const reportCloud = {
   /**
    * Get full report data by report ID
    */
-  getReportData: async (reportId: string, userId: string): Promise<any | null> => {
+  getReportData: async (
+    reportId: string,
+    userId: string
+  ): Promise<Record<string, unknown> | null> => {
     try {
       const { data: report, error } = await supabase
         .from('reports')
@@ -338,7 +342,7 @@ export const reportCloud = {
     reportId: string,
     userId: string
   ): Promise<{
-    data: any;
+    data: Record<string, unknown>;
     databaseId: string;
     updatedAt?: string;
     lastSyncedAt?: string;
@@ -373,7 +377,7 @@ export const reportCloud = {
   softDeleteReport: async (
     reportId: string,
     userId: string
-  ): Promise<{ success: boolean; error?: any }> => {
+  ): Promise<{ success: boolean; error?: unknown }> => {
     try {
       // Call the secure RPC function that bypasses RLS "returning" issues
       const { data, error } = await supabase.rpc('soft_delete_report', {
@@ -544,11 +548,11 @@ export const reportCloud = {
   updateReportWithVersionCheck: async (
     reportId: string,
     userId: string,
-    data: any,
+    data: Record<string, unknown>,
     expectedVersion: number,
     customerId?: string,
     isAutoSync: boolean = false
-  ): Promise<{ success: boolean; conflict?: VersionConflict; error?: any }> => {
+  ): Promise<{ success: boolean; conflict?: VersionConflict; error?: unknown }> => {
     try {
       // First check for conflicts
       const conflict = await reportCloud.checkVersionConflict(reportId, userId, expectedVersion);
@@ -577,7 +581,7 @@ export const reportCloud = {
       };
 
       // No conflict, proceed with update
-      const updateData: any = {
+      const updateData: Record<string, unknown> = {
         status: calculateStatus(),
         client_name: data.clientName || null,
         installation_address: data.installationAddress || data.propertyAddress || null,

@@ -4,17 +4,14 @@
  * For installation, commissioning, and periodic testing
  *
  * Features:
- * - Smart auto-fill from Business Settings
- * - Auto-save to localStorage (crash recovery)
- * - Auto-sync to cloud (never lose data)
- * - Emergency save on beforeunload
+ * - 8-layer auto-save via useReportSync
  * - Draft recovery dialog
+ * - PDF generation with email & quote/invoice creation
  */
 
-import { useState, useEffect, useCallback, useRef } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
 import { Skeleton } from '@/components/ui/skeleton';
 import {
   AlertDialog,
@@ -26,20 +23,8 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from '@/components/ui/alert-dialog';
-import {
-  ArrowLeft,
-  Bell,
-  Save,
-  Download,
-  Loader2,
-  Cloud,
-  CloudOff,
-  CheckCircle2,
-  AlertCircle,
-  Mail,
-} from 'lucide-react';
+import { ArrowLeft, Bell, Save, Download, Loader2, Mail } from 'lucide-react';
 import { toast } from 'sonner';
-import { cn } from '@/lib/utils';
 import { reportCloud } from '@/utils/reportCloud';
 import { draftStorage } from '@/utils/draftStorage';
 import {
@@ -53,17 +38,17 @@ import { EmailCertificateDialog } from '@/components/certificate-completion/Emai
 import { useCompanyProfile } from '@/hooks/useCompanyProfile';
 
 import FireAlarmFormTabs from '@/components/inspection/fire-alarm/FireAlarmFormTabs';
-import { useFireAlarmTabs, FireAlarmTabValue } from '@/hooks/useFireAlarmTabs';
+import { useFireAlarmTabs } from '@/hooks/useFireAlarmTabs';
 import { getDefaultFireAlarmFormData } from '@/types/fire-alarm';
 import { useFireAlarmSmartForm } from '@/hooks/inspection/useFireAlarmSmartForm';
 import CertificateGenerationDialog from '@/components/inspection/CertificateGenerationDialog';
+import { useReportSync } from '@/hooks/useReportSync';
+import { SyncStatusBadge } from '@/components/inspection/SyncStatusBadge';
+import { ConflictResolutionDialog } from '@/components/inspection/ConflictResolutionDialog';
 
-// Constants
-const REPORT_TYPE = 'fire-alarm';
-const AUTO_SAVE_INTERVAL = 10000; // 10 seconds
-const CLOUD_SYNC_DEBOUNCE = 30000; // 30 seconds
+const REPORT_TYPE = 'fire-alarm' as const;
 
-type SyncStatus = 'synced' | 'syncing' | 'pending' | 'offline' | 'error';
+/* eslint-disable @typescript-eslint/no-explicit-any */
 
 export default function FireAlarmCertificate() {
   const { id } = useParams<{ id: string }>();
@@ -72,7 +57,6 @@ export default function FireAlarmCertificate() {
   const isNew = id === 'new' || !id;
 
   // State
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [formData, setFormData] = useState<Record<string, any>>(getDefaultFireAlarmFormData());
   const [isSaving, setIsSaving] = useState(false);
   const [isGenerating, setIsGenerating] = useState(false);
@@ -84,22 +68,33 @@ export default function FireAlarmCertificate() {
   const [savedReportId, setSavedReportId] = useState<string | null>(
     id !== 'new' ? id || null : null
   );
-  const [syncStatus, setSyncStatus] = useState<SyncStatus>('synced');
-  const [isOnline, setIsOnline] = useState(navigator.onLine);
   const [showRecoveryDialog, setShowRecoveryDialog] = useState(false);
   const [recoveryDraft, setRecoveryDraft] = useState<{
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     data: Record<string, any>;
     lastModified: Date;
   } | null>(null);
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const [user, setUser] = useState<Record<string, any> | null>(null);
 
-  // Refs for auto-save
-  const autoSaveTimerRef = useRef<NodeJS.Timeout | null>(null);
-  const cloudSyncTimerRef = useRef<NodeJS.Timeout | null>(null);
-  const lastSavedDataRef = useRef<string>('');
-  const hasUnsavedChangesRef = useRef(false);
+  // ─── Report sync (replaces all custom sync code) ──────────────────────
+  const {
+    status: syncStatus,
+    saveNow,
+    syncNowImmediate,
+    hasRecoverableDraft,
+    recoverDraft,
+    discardDraft,
+    onTabChange: syncOnTabChange,
+    activeConflict,
+    resolveConflict,
+  } = useReportSync({
+    reportId: savedReportId,
+    reportType: REPORT_TYPE,
+    formData,
+    enabled: !isLoading,
+    onReportCreated: (newId) => {
+      setSavedReportId(newId);
+      window.history.replaceState(null, '', `/electrician/inspection-testing/fire-alarm/${newId}`);
+    },
+  });
 
   // Hooks for tabs
   const tabProps = useFireAlarmTabs(formData);
@@ -125,34 +120,16 @@ export default function FireAlarmCertificate() {
     companyName: companyProfile?.company_name,
   });
 
-  // Get current user
-  useEffect(() => {
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      setUser(session?.user ?? null);
-    });
-
-    const {
-      data: { subscription },
-    } = supabase.auth.onAuthStateChange((_event, session) => {
-      setUser(session?.user ?? null);
-    });
-
-    return () => subscription.unsubscribe();
-  }, []);
-
   // Check for recoverable draft on mount
   useEffect(() => {
-    if (isNew) {
-      const hasRecoverable = draftStorage.hasRecoverableDraft(REPORT_TYPE);
-      if (hasRecoverable) {
-        const draft = draftStorage.loadDraft(REPORT_TYPE, null);
-        if (draft) {
-          setRecoveryDraft(draft);
-          setShowRecoveryDialog(true);
-        }
+    if (isNew && hasRecoverableDraft) {
+      const draft = draftStorage.loadDraft(REPORT_TYPE, null);
+      if (draft) {
+        setRecoveryDraft(draft);
+        setShowRecoveryDialog(true);
       }
     }
-  }, [isNew]);
+  }, [isNew, hasRecoverableDraft]);
 
   // Load existing report or local draft
   useEffect(() => {
@@ -177,7 +154,6 @@ export default function FireAlarmCertificate() {
             } else {
               setFormData({ ...getDefaultFireAlarmFormData(), ...report });
             }
-            lastSavedDataRef.current = JSON.stringify(report);
           } else if (localDraft) {
             setFormData({ ...getDefaultFireAlarmFormData(), ...localDraft.data });
             toast.info('Loaded from local storage');
@@ -202,155 +178,12 @@ export default function FireAlarmCertificate() {
     loadReport();
   }, [id, isNew]);
 
-  // Save to localStorage (fast, synchronous)
-  const saveToLocalStorage = useCallback(() => {
-    const reportId = savedReportId || null;
-    draftStorage.saveDraft(REPORT_TYPE, reportId, formData);
-    console.log('[FireAlarm] Saved to localStorage');
-  }, [formData, savedReportId]);
-
-  // Sync to cloud (debounced)
-  const syncToCloud = useCallback(async () => {
-    if (!user || !isOnline) {
-      setSyncStatus(isOnline ? 'pending' : 'offline');
-      return;
-    }
-
-    const currentData = JSON.stringify(formData);
-    if (currentData === lastSavedDataRef.current) {
-      return;
-    }
-
-    setSyncStatus('syncing');
-
-    try {
-      const dataToSave = {
-        ...formData,
-        client_name: formData.clientName,
-        installation_address: formData.premisesAddress,
-      };
-
-      if (savedReportId) {
-        const result = await reportCloud.updateReport(savedReportId, user.id, dataToSave);
-        if (result.success) {
-          lastSavedDataRef.current = currentData;
-          hasUnsavedChangesRef.current = false;
-          setSyncStatus('synced');
-          draftStorage.clearDraft(REPORT_TYPE, savedReportId);
-        } else {
-          throw new Error(result.error?.message || 'Sync failed');
-        }
-      } else {
-        const result = await reportCloud.createReport(user.id, 'fire-alarm', dataToSave);
-        if (result.success && result.reportId) {
-          setSavedReportId(result.reportId);
-          lastSavedDataRef.current = currentData;
-          hasUnsavedChangesRef.current = false;
-          setSyncStatus('synced');
-          window.history.replaceState(
-            null,
-            '',
-            `/electrician/inspection-testing/fire-alarm/${result.reportId}`
-          );
-          draftStorage.clearDraft(REPORT_TYPE, null);
-        } else {
-          throw new Error(result.error?.message || 'Failed to create');
-        }
-      }
-    } catch (error) {
-      console.error('[FireAlarm] Cloud sync failed:', error);
-      setSyncStatus('error');
-    }
-  }, [formData, savedReportId, user, isOnline]);
-
-  // Track online/offline status
-  useEffect(() => {
-    const handleOnline = () => {
-      setIsOnline(true);
-      if (hasUnsavedChangesRef.current) {
-        syncToCloud();
-      }
-    };
-    const handleOffline = () => {
-      setIsOnline(false);
-      setSyncStatus('offline');
-    };
-
-    window.addEventListener('online', handleOnline);
-    window.addEventListener('offline', handleOffline);
-
-    return () => {
-      window.removeEventListener('online', handleOnline);
-      window.removeEventListener('offline', handleOffline);
-    };
-  }, [syncToCloud]);
-
-  // Auto-save effect - runs every 10 seconds
-  useEffect(() => {
-    autoSaveTimerRef.current = setInterval(() => {
-      if (hasUnsavedChangesRef.current) {
-        saveToLocalStorage();
-      }
-    }, AUTO_SAVE_INTERVAL);
-
-    return () => {
-      if (autoSaveTimerRef.current) {
-        clearInterval(autoSaveTimerRef.current);
-      }
-    };
-  }, [saveToLocalStorage]);
-
-  // Cloud sync effect - runs 30 seconds after last change
-  useEffect(() => {
-    if (cloudSyncTimerRef.current) {
-      clearTimeout(cloudSyncTimerRef.current);
-    }
-
-    if (hasUnsavedChangesRef.current && isOnline) {
-      cloudSyncTimerRef.current = setTimeout(() => {
-        syncToCloud();
-      }, CLOUD_SYNC_DEBOUNCE);
-    }
-
-    return () => {
-      if (cloudSyncTimerRef.current) {
-        clearTimeout(cloudSyncTimerRef.current);
-      }
-    };
-  }, [formData, syncToCloud, isOnline]);
-
-  // CRITICAL: Save before page unload
-  useEffect(() => {
-    const handleBeforeUnload = (e: BeforeUnloadEvent) => {
-      if (formData && (formData.clientName || formData.premisesAddress)) {
-        draftStorage.saveDraft(REPORT_TYPE, savedReportId, formData);
-        console.log('[FireAlarm] Emergency save on beforeunload');
-      }
-
-      if (hasUnsavedChangesRef.current && syncStatus !== 'synced') {
-        e.preventDefault();
-        e.returnValue = 'You have unsaved changes. Are you sure you want to leave?';
-        return e.returnValue;
-      }
-    };
-
-    window.addEventListener('beforeunload', handleBeforeUnload);
-
-    return () => {
-      window.removeEventListener('beforeunload', handleBeforeUnload);
-    };
-  }, [formData, savedReportId, syncStatus]);
-
   // Update form field
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleUpdate = useCallback((field: string, value: any) => {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     setFormData((prev: any) => ({
       ...prev,
       [field]: value,
     }));
-    hasUnsavedChangesRef.current = true;
-    setSyncStatus('pending');
   }, []);
 
   // Handle draft recovery
@@ -358,13 +191,19 @@ export default function FireAlarmCertificate() {
     if (recoveryDraft) {
       setFormData({ ...getDefaultFireAlarmFormData(), ...recoveryDraft.data });
       toast.success('Draft recovered');
+    } else {
+      const recovered = recoverDraft();
+      if (recovered) {
+        setFormData({ ...getDefaultFireAlarmFormData(), ...recovered });
+        toast.success('Draft recovered');
+      }
     }
     setShowRecoveryDialog(false);
     setRecoveryDraft(null);
   };
 
   const handleDiscardDraft = () => {
-    draftStorage.clearDraft(REPORT_TYPE, null);
+    discardDraft();
     setShowRecoveryDialog(false);
     setRecoveryDraft(null);
   };
@@ -373,54 +212,15 @@ export default function FireAlarmCertificate() {
   const handleSaveDraft = async () => {
     setIsSaving(true);
     try {
-      saveToLocalStorage();
-
-      if (!user) {
-        toast.error('Please sign in to save to cloud');
-        setIsSaving(false);
-        return;
-      }
-
-      const dataToSave = {
-        ...formData,
-        status: 'draft',
-        client_name: formData.clientName,
-        installation_address: formData.premisesAddress,
-      };
-
-      if (savedReportId) {
-        const result = await reportCloud.updateReport(savedReportId, user.id, dataToSave);
-        if (result.success) {
-          lastSavedDataRef.current = JSON.stringify(formData);
-          hasUnsavedChangesRef.current = false;
-          setSyncStatus('synced');
-          draftStorage.clearDraft(REPORT_TYPE, savedReportId);
-          toast.success('Saved to cloud');
-        } else {
-          throw new Error(result.error?.message || 'Failed to save');
-        }
+      const result = await saveNow();
+      if (result.success) {
+        toast.success('Saved to cloud');
       } else {
-        const result = await reportCloud.createReport(user.id, 'fire-alarm', dataToSave);
-        if (result.success && result.reportId) {
-          setSavedReportId(result.reportId);
-          lastSavedDataRef.current = JSON.stringify(formData);
-          hasUnsavedChangesRef.current = false;
-          setSyncStatus('synced');
-          draftStorage.clearDraft(REPORT_TYPE, null);
-          toast.success('Saved to cloud');
-          window.history.replaceState(
-            null,
-            '',
-            `/electrician/inspection-testing/fire-alarm/${result.reportId}`
-          );
-        } else {
-          throw new Error(result.error?.message || 'Failed to create report');
-        }
+        toast.error('Cloud save failed - saved locally');
       }
     } catch (error) {
       console.error('[FireAlarm] Save failed:', error);
       toast.error('Cloud save failed - saved locally');
-      setSyncStatus('error');
     } finally {
       setIsSaving(false);
     }
@@ -433,7 +233,7 @@ export default function FireAlarmCertificate() {
     setGenerationError(null);
     setShowGenerationDialog(true);
     try {
-      await handleSaveDraft();
+      await syncNowImmediate();
 
       let dataWithCertNumber = {
         ...formData,
@@ -542,7 +342,7 @@ export default function FireAlarmCertificate() {
   // Email handler
   const handleSendEmail = async (email: string, cc?: string[], message?: string) => {
     try {
-      await handleSaveDraft();
+      await syncNowImmediate();
       await sendCertificateEmail({
         recipientEmail: email,
         cc,
@@ -551,49 +351,6 @@ export default function FireAlarmCertificate() {
     } catch (error) {
       toast.error(error instanceof Error ? error.message : 'Failed to send email');
       throw error;
-    }
-  };
-
-  // Render sync status indicator
-  const renderSyncStatus = () => {
-    switch (syncStatus) {
-      case 'synced':
-        return (
-          <Badge className="bg-green-500/20 text-green-400 border-0 text-[10px] px-2 py-0.5 font-semibold gap-1">
-            <CheckCircle2 className="h-3 w-3" />
-            Saved
-          </Badge>
-        );
-      case 'syncing':
-        return (
-          <Badge className="bg-blue-500/20 text-blue-400 border-0 text-[10px] px-2 py-0.5 font-semibold gap-1">
-            <Loader2 className="h-3 w-3 animate-spin" />
-            Syncing
-          </Badge>
-        );
-      case 'pending':
-        return (
-          <Badge className="bg-yellow-500/20 text-yellow-400 border-0 text-[10px] px-2 py-0.5 font-semibold gap-1">
-            <Cloud className="h-3 w-3" />
-            Unsaved
-          </Badge>
-        );
-      case 'offline':
-        return (
-          <Badge className="bg-orange-500/20 text-orange-400 border-0 text-[10px] px-2 py-0.5 font-semibold gap-1">
-            <CloudOff className="h-3 w-3" />
-            Offline
-          </Badge>
-        );
-      case 'error':
-        return (
-          <Badge className="bg-red-500/20 text-red-400 border-0 text-[10px] px-2 py-0.5 font-semibold gap-1">
-            <AlertCircle className="h-3 w-3" />
-            Error
-          </Badge>
-        );
-      default:
-        return null;
     }
   };
 
@@ -649,7 +406,7 @@ export default function FireAlarmCertificate() {
             </Button>
 
             <div className="flex items-center gap-2">
-              {renderSyncStatus()}
+              <SyncStatusBadge status={syncStatus} />
 
               <Button
                 variant="ghost"
@@ -713,7 +470,10 @@ export default function FireAlarmCertificate() {
       <main className="py-4 pb-4 sm:px-4 sm:pb-8">
         <FireAlarmFormTabs
           currentTab={tabProps.currentTab}
-          onTabChange={tabProps.setCurrentTab}
+          onTabChange={(tab) => {
+            tabProps.setCurrentTab(tab);
+            syncOnTabChange();
+          }}
           canAccessTab={tabProps.canAccessTab}
           formData={formData}
           onUpdate={handleUpdate}
@@ -770,6 +530,8 @@ export default function FireAlarmCertificate() {
         errorMessage={generationError}
         documentLabel="Certificate"
       />
+
+      <ConflictResolutionDialog conflict={activeConflict} onResolve={resolveConflict} />
     </div>
   );
 }

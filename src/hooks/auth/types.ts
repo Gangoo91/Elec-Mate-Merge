@@ -22,7 +22,7 @@ export type ProfileType = {
 
   // Business AI fields
   business_ai_enabled?: boolean;
-  agent_status?: 'active' | 'provisioning' | 'paused' | null;
+  agent_status?: 'active' | 'provisioning' | 'paused' | 'deactivated' | null;
   agent_provisioned_at?: string | null;
   agent_whatsapp_number?: string | null;
   agent_phone_verified?: boolean;

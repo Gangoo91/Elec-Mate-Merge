@@ -1,22 +1,16 @@
 /**
  * EmergencyLightingCertificate.tsx
  * Emergency Lighting Certificate (BS 5266)
- * For installation, commissioning, and periodic testing
  *
  * Features:
- * - Smart auto-fill from Business Settings
- * - Luminaire database with 30+ UK models
- * - BS 5266 / EN 1838 compliance validation
- * - Real-time lux and test result validation
- * - Auto-calculate next test dates (monthly/annual)
- * - Auto-save to localStorage (crash recovery)
- * - Auto-sync to cloud (never lose data)
+ * - 8-layer auto-save via useReportSync
+ * - Draft recovery dialog
+ * - PDF generation via PDF Monkey
  */
 
-import { useState, useEffect, useCallback, useRef } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
 import { Skeleton } from '@/components/ui/skeleton';
 import {
   AlertDialog,
@@ -28,23 +22,11 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from '@/components/ui/alert-dialog';
-import {
-  ArrowLeft,
-  Lightbulb,
-  Save,
-  Download,
-  Loader2,
-  Cloud,
-  CloudOff,
-  CheckCircle2,
-  AlertCircle,
-} from 'lucide-react';
+import { ArrowLeft, Lightbulb, Save, Download, Loader2 } from 'lucide-react';
 import { toast } from 'sonner';
 import { reportCloud } from '@/utils/reportCloud';
-
 import { draftStorage } from '@/utils/draftStorage';
 import { supabase } from '@/integrations/supabase/client';
-import type { User } from '@supabase/supabase-js';
 
 import EmergencyLightingFormTabs from '@/components/inspection/emergency-lighting/EmergencyLightingFormTabs';
 import { useEmergencyLightingTabs } from '@/hooks/useEmergencyLightingTabs';
@@ -55,13 +37,11 @@ import {
 import { useEmergencyLightingSmartForm } from '@/hooks/inspection/useEmergencyLightingSmartForm';
 import { formatEmergencyLightingJson } from '@/utils/emergencyLightingJsonFormatter';
 import CertificateGenerationDialog from '@/components/inspection/CertificateGenerationDialog';
+import { useReportSync } from '@/hooks/useReportSync';
+import { SyncStatusBadge } from '@/components/inspection/SyncStatusBadge';
+import { ConflictResolutionDialog } from '@/components/inspection/ConflictResolutionDialog';
 
-// Constants
-const REPORT_TYPE = 'emergency-lighting';
-const AUTO_SAVE_INTERVAL = 10000; // 10 seconds
-const CLOUD_SYNC_DEBOUNCE = 30000; // 30 seconds
-
-type SyncStatus = 'synced' | 'syncing' | 'pending' | 'offline' | 'error';
+const REPORT_TYPE = 'emergency-lighting' as const;
 
 export default function EmergencyLightingCertificate() {
   const { id } = useParams<{ id: string }>();
@@ -83,20 +63,37 @@ export default function EmergencyLightingCertificate() {
   const [savedReportId, setSavedReportId] = useState<string | null>(
     id !== 'new' ? id || null : null
   );
-  const [syncStatus, setSyncStatus] = useState<SyncStatus>('synced');
-  const [isOnline, setIsOnline] = useState(navigator.onLine);
   const [showRecoveryDialog, setShowRecoveryDialog] = useState(false);
   const [recoveryDraft, setRecoveryDraft] = useState<{
     data: EmergencyLightingFormData;
     lastModified: Date;
   } | null>(null);
-  const [user, setUser] = useState<User | null>(null);
 
-  // Refs for auto-save
-  const autoSaveTimerRef = useRef<NodeJS.Timeout | null>(null);
-  const cloudSyncTimerRef = useRef<NodeJS.Timeout | null>(null);
-  const lastSavedDataRef = useRef<string>('');
-  const hasUnsavedChangesRef = useRef(false);
+  // ─── Report sync (replaces all custom sync code) ──────────────────────
+  const {
+    status: syncStatus,
+    saveNow,
+    syncNowImmediate,
+    hasRecoverableDraft,
+    recoverDraft,
+    discardDraft,
+    onTabChange: syncOnTabChange,
+    activeConflict,
+    resolveConflict,
+  } = useReportSync({
+    reportId: savedReportId,
+    reportType: REPORT_TYPE,
+    formData,
+    enabled: !isLoading,
+    onReportCreated: (newId) => {
+      setSavedReportId(newId);
+      window.history.replaceState(
+        null,
+        '',
+        `/electrician/inspection-testing/emergency-lighting/${newId}`
+      );
+    },
+  });
 
   // Smart form hook for company branding and auto-fill
   const { loadCompanyBranding, hasSavedCompanyBranding } = useEmergencyLightingSmartForm();
@@ -104,34 +101,17 @@ export default function EmergencyLightingCertificate() {
   // Hooks for tabs
   const tabProps = useEmergencyLightingTabs(formData);
 
-  // Get current user
-  useEffect(() => {
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      setUser(session?.user ?? null);
-    });
-
-    const {
-      data: { subscription },
-    } = supabase.auth.onAuthStateChange((_event, session) => {
-      setUser(session?.user ?? null);
-    });
-
-    return () => subscription.unsubscribe();
-  }, []);
-
   // Check for recoverable draft on mount
   useEffect(() => {
-    if (isNew) {
-      const hasRecoverable = draftStorage.hasRecoverableDraft(REPORT_TYPE);
-      if (hasRecoverable) {
-        const draft = draftStorage.loadDraft(REPORT_TYPE, null);
-        if (draft) {
-          setRecoveryDraft(draft);
-          setShowRecoveryDialog(true);
-        }
+    if (isNew && hasRecoverableDraft) {
+      // Load preview for the recovery dialog
+      const draft = draftStorage.loadDraft(REPORT_TYPE, null);
+      if (draft) {
+        setRecoveryDraft(draft as { data: EmergencyLightingFormData; lastModified: Date });
+        setShowRecoveryDialog(true);
       }
     }
-  }, [isNew]);
+  }, [isNew, hasRecoverableDraft]);
 
   // Load existing report or local draft
   useEffect(() => {
@@ -146,27 +126,22 @@ export default function EmergencyLightingCertificate() {
             return;
           }
 
-          // Check if local draft is newer than cloud
           const localDraft = draftStorage.loadDraft(REPORT_TYPE, id);
           const report = await reportCloud.getReportData(id, authUser.id);
 
           if (report) {
-            // Check if we have a newer local version
             if (localDraft && draftStorage.isLocalDraftNewer(REPORT_TYPE, id, report.updated_at)) {
               setFormData({ ...getDefaultEmergencyLightingFormData(), ...localDraft.data });
               toast.info('Loaded local changes (newer than cloud)');
             } else {
               setFormData({ ...getDefaultEmergencyLightingFormData(), ...report });
             }
-            lastSavedDataRef.current = JSON.stringify(report);
           } else if (localDraft) {
-            // No cloud data but have local draft
             setFormData({ ...getDefaultEmergencyLightingFormData(), ...localDraft.data });
             toast.info('Loaded from local storage');
           }
         } catch (error) {
           console.error('[EmergencyLighting] Failed to load report:', error);
-          // Try to load from local storage as fallback
           const localDraft = draftStorage.loadDraft(REPORT_TYPE, id);
           if (localDraft) {
             setFormData({ ...getDefaultEmergencyLightingFormData(), ...localDraft.data });
@@ -185,156 +160,6 @@ export default function EmergencyLightingCertificate() {
     loadReport();
   }, [id, isNew]);
 
-  // Save to localStorage (fast, synchronous)
-  const saveToLocalStorage = useCallback(() => {
-    const reportId = savedReportId || null;
-    draftStorage.saveDraft(REPORT_TYPE, reportId, formData);
-    console.log('[EmergencyLighting] Saved to localStorage');
-  }, [formData, savedReportId]);
-
-  // Sync to cloud (debounced)
-  const syncToCloud = useCallback(async () => {
-    if (!user || !isOnline) {
-      setSyncStatus(isOnline ? 'pending' : 'offline');
-      return;
-    }
-
-    const currentData = JSON.stringify(formData);
-    if (currentData === lastSavedDataRef.current) {
-      return; // No changes to sync
-    }
-
-    setSyncStatus('syncing');
-
-    try {
-      const dataToSave = {
-        ...formData,
-        client_name: formData.clientName,
-        installation_address: formData.premisesAddress,
-      };
-
-      if (savedReportId) {
-        const result = await reportCloud.updateReport(savedReportId, user.id, dataToSave);
-        if (result.success) {
-          lastSavedDataRef.current = currentData;
-          hasUnsavedChangesRef.current = false;
-          setSyncStatus('synced');
-          // Clear local draft after successful sync
-          draftStorage.clearDraft(REPORT_TYPE, savedReportId);
-        } else {
-          throw new Error(result.error?.message || 'Sync failed');
-        }
-      } else {
-        // Create new report
-        const result = await reportCloud.createReport(user.id, 'emergency-lighting', dataToSave);
-        if (result.success && result.reportId) {
-          setSavedReportId(result.reportId);
-          lastSavedDataRef.current = currentData;
-          hasUnsavedChangesRef.current = false;
-          setSyncStatus('synced');
-          // Update URL without navigation
-          window.history.replaceState(
-            null,
-            '',
-            `/electrician/inspection-testing/emergency-lighting/${result.reportId}`
-          );
-          // Clear the "new" draft
-          draftStorage.clearDraft(REPORT_TYPE, null);
-        } else {
-          throw new Error(result.error?.message || 'Failed to create');
-        }
-      }
-    } catch (error) {
-      console.error('[EmergencyLighting] Cloud sync failed:', error);
-      setSyncStatus('error');
-      // Data is still safe in localStorage
-    }
-  }, [formData, savedReportId, user, isOnline]);
-
-  // Track online/offline status
-  useEffect(() => {
-    const handleOnline = () => {
-      setIsOnline(true);
-      // Trigger cloud sync when back online
-      if (hasUnsavedChangesRef.current) {
-        syncToCloud();
-      }
-    };
-    const handleOffline = () => {
-      setIsOnline(false);
-      setSyncStatus('offline');
-    };
-
-    window.addEventListener('online', handleOnline);
-    window.addEventListener('offline', handleOffline);
-
-    return () => {
-      window.removeEventListener('online', handleOnline);
-      window.removeEventListener('offline', handleOffline);
-    };
-  }, [syncToCloud]);
-
-  // Auto-save effect - runs every 10 seconds
-  useEffect(() => {
-    autoSaveTimerRef.current = setInterval(() => {
-      if (hasUnsavedChangesRef.current) {
-        saveToLocalStorage();
-      }
-    }, AUTO_SAVE_INTERVAL);
-
-    return () => {
-      if (autoSaveTimerRef.current) {
-        clearInterval(autoSaveTimerRef.current);
-      }
-    };
-  }, [saveToLocalStorage]);
-
-  // Cloud sync effect - runs 30 seconds after last change
-  useEffect(() => {
-    if (cloudSyncTimerRef.current) {
-      clearTimeout(cloudSyncTimerRef.current);
-    }
-
-    if (hasUnsavedChangesRef.current && isOnline) {
-      cloudSyncTimerRef.current = setTimeout(() => {
-        syncToCloud();
-      }, CLOUD_SYNC_DEBOUNCE);
-    }
-
-    return () => {
-      if (cloudSyncTimerRef.current) {
-        clearTimeout(cloudSyncTimerRef.current);
-      }
-    };
-  }, [formData, syncToCloud, isOnline]);
-
-  // CRITICAL: Save before page unload
-  useEffect(() => {
-    const handleBeforeUnload = (e: BeforeUnloadEvent) => {
-      // Always save to localStorage immediately
-      if (
-        formData &&
-        (formData.clientName || formData.premisesAddress || (formData.luminaires || []).length > 0)
-      ) {
-        draftStorage.saveDraft(REPORT_TYPE, savedReportId, formData);
-        console.log('[EmergencyLighting] Emergency save on beforeunload');
-      }
-
-      // Warn user if there are unsynced changes
-      if (hasUnsavedChangesRef.current && syncStatus !== 'synced') {
-        e.preventDefault();
-        e.returnValue = 'You have unsaved changes. Are you sure you want to leave?';
-        return e.returnValue;
-      }
-    };
-
-    window.addEventListener('beforeunload', handleBeforeUnload);
-
-    return () => {
-      window.removeEventListener('beforeunload', handleBeforeUnload);
-    };
-  }, [formData, savedReportId, syncStatus]);
-
   // Update form field
   const handleUpdate = useCallback(
     (field: string, value: EmergencyLightingFormData[keyof EmergencyLightingFormData]) => {
@@ -342,8 +167,6 @@ export default function EmergencyLightingCertificate() {
         ...prev,
         [field]: value,
       }));
-      hasUnsavedChangesRef.current = true;
-      setSyncStatus('pending');
     },
     []
   );
@@ -353,70 +176,36 @@ export default function EmergencyLightingCertificate() {
     if (recoveryDraft) {
       setFormData({ ...getDefaultEmergencyLightingFormData(), ...recoveryDraft.data });
       toast.success('Draft recovered');
+    } else {
+      const recovered = recoverDraft();
+      if (recovered) {
+        setFormData({ ...getDefaultEmergencyLightingFormData(), ...recovered });
+        toast.success('Draft recovered');
+      }
     }
     setShowRecoveryDialog(false);
     setRecoveryDraft(null);
   };
 
   const handleDiscardDraft = () => {
-    draftStorage.clearDraft(REPORT_TYPE, null);
+    discardDraft();
     setShowRecoveryDialog(false);
     setRecoveryDraft(null);
   };
 
-  // Manual save draft (explicit user action)
+  // Manual save draft
   const handleSaveDraft = async () => {
     setIsSaving(true);
     try {
-      // Always save to localStorage first
-      saveToLocalStorage();
-
-      if (!user) {
-        toast.error('Please sign in to save to cloud');
-        setIsSaving(false);
-        return;
-      }
-
-      const dataToSave = {
-        ...formData,
-        status: 'draft',
-        client_name: formData.clientName,
-        installation_address: formData.premisesAddress,
-      };
-
-      if (savedReportId) {
-        const result = await reportCloud.updateReport(savedReportId, user.id, dataToSave);
-        if (result.success) {
-          lastSavedDataRef.current = JSON.stringify(formData);
-          hasUnsavedChangesRef.current = false;
-          setSyncStatus('synced');
-          draftStorage.clearDraft(REPORT_TYPE, savedReportId);
-          toast.success('Saved to cloud');
-        } else {
-          throw new Error(result.error?.message || 'Failed to save');
-        }
+      const result = await saveNow();
+      if (result.success) {
+        toast.success('Saved to cloud');
       } else {
-        const result = await reportCloud.createReport(user.id, 'emergency-lighting', dataToSave);
-        if (result.success && result.reportId) {
-          setSavedReportId(result.reportId);
-          lastSavedDataRef.current = JSON.stringify(formData);
-          hasUnsavedChangesRef.current = false;
-          setSyncStatus('synced');
-          draftStorage.clearDraft(REPORT_TYPE, null);
-          toast.success('Saved to cloud');
-          window.history.replaceState(
-            null,
-            '',
-            `/electrician/inspection-testing/emergency-lighting/${result.reportId}`
-          );
-        } else {
-          throw new Error(result.error?.message || 'Failed to create report');
-        }
+        toast.error('Cloud save failed - saved locally');
       }
     } catch (error) {
       console.error('[EmergencyLighting] Save failed:', error);
       toast.error('Cloud save failed - saved locally');
-      setSyncStatus('error');
     } finally {
       setIsSaving(false);
     }
@@ -429,8 +218,8 @@ export default function EmergencyLightingCertificate() {
     setGenerationError(null);
     setShowGenerationDialog(true);
     try {
-      // Save first
-      await handleSaveDraft();
+      // Sync latest data to cloud before PDF generation
+      await syncNowImmediate();
 
       // Generate certificate number if not set
       let dataWithCertNumber = {
@@ -489,7 +278,7 @@ export default function EmergencyLightingCertificate() {
         }
       }
 
-      // Use the JSON formatter to prepare PDF data with all proper formatting
+      // Use the JSON formatter to prepare PDF data
       const pdfData = formatEmergencyLightingJson(dataWithCertNumber);
 
       // Save formatted payload for email/reports page reuse
@@ -516,7 +305,6 @@ export default function EmergencyLightingCertificate() {
         throw new Error(functionData?.error || 'No PDF URL returned');
       }
 
-      // Download the PDF
       const { generatePdfFilename } = await import('@/utils/pdfFilenameGenerator');
       const filename = generatePdfFilename(
         'EmergencyLighting',
@@ -535,49 +323,6 @@ export default function EmergencyLightingCertificate() {
       toast.error(msg);
     } finally {
       setIsGenerating(false);
-    }
-  };
-
-  // Render sync status indicator
-  const renderSyncStatus = () => {
-    switch (syncStatus) {
-      case 'synced':
-        return (
-          <Badge className="bg-green-500/20 text-green-400 border-0 text-[10px] px-2 py-0.5 font-semibold gap-1">
-            <CheckCircle2 className="h-3 w-3" />
-            Saved
-          </Badge>
-        );
-      case 'syncing':
-        return (
-          <Badge className="bg-blue-500/20 text-blue-400 border-0 text-[10px] px-2 py-0.5 font-semibold gap-1">
-            <Loader2 className="h-3 w-3 animate-spin" />
-            Syncing
-          </Badge>
-        );
-      case 'pending':
-        return (
-          <Badge className="bg-yellow-500/20 text-yellow-400 border-0 text-[10px] px-2 py-0.5 font-semibold gap-1">
-            <Cloud className="h-3 w-3" />
-            Unsaved
-          </Badge>
-        );
-      case 'offline':
-        return (
-          <Badge className="bg-orange-500/20 text-orange-400 border-0 text-[10px] px-2 py-0.5 font-semibold gap-1">
-            <CloudOff className="h-3 w-3" />
-            Offline
-          </Badge>
-        );
-      case 'error':
-        return (
-          <Badge className="bg-red-500/20 text-red-400 border-0 text-[10px] px-2 py-0.5 font-semibold gap-1">
-            <AlertCircle className="h-3 w-3" />
-            Error
-          </Badge>
-        );
-      default:
-        return null;
     }
   };
 
@@ -638,7 +383,7 @@ export default function EmergencyLightingCertificate() {
             </Button>
 
             <div className="flex items-center gap-2">
-              {renderSyncStatus()}
+              <SyncStatusBadge status={syncStatus} />
 
               <Button
                 variant="ghost"
@@ -686,11 +431,14 @@ export default function EmergencyLightingCertificate() {
         </div>
       </div>
 
-      {/* Main Content - Edge-to-edge on mobile, padded on desktop */}
+      {/* Main Content */}
       <main className="py-4 pb-4 sm:px-6 lg:px-8 sm:pb-8">
         <EmergencyLightingFormTabs
           currentTab={tabProps.currentTab}
-          onTabChange={tabProps.setCurrentTab}
+          onTabChange={(tab) => {
+            tabProps.setCurrentTab(tab);
+            syncOnTabChange();
+          }}
           canAccessTab={tabProps.canAccessTab}
           formData={formData}
           onUpdate={handleUpdate}
@@ -731,6 +479,8 @@ export default function EmergencyLightingCertificate() {
         errorMessage={generationError}
         documentLabel="Certificate"
       />
+
+      <ConflictResolutionDialog conflict={activeConflict} onResolve={resolveConflict} />
     </div>
   );
 }

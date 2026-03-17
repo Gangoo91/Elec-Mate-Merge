@@ -143,10 +143,10 @@ serve(async (req) => {
       price_1T6DUx2RKw5t5RAmpb177NJV: 'business_ai',
       price_1T6DUy2RKw5t5RAmo9HgAukW: 'business_ai_yearly',
       // Employer
-      price_1SlyAT2RKw5t5RAmUmTRGimH: 'Employer',
+      price_1SlyAT2RKw5t5RAmUmTRGimH: 'employer',
       price_1SlyB82RKw5t5RAmN447YJUW: 'employer_yearly',
       // Founders
-      price_1SPK8c2RKw5t5RAmRGJxXfjc: 'Employer',
+      price_1SPK8c2RKw5t5RAmRGJxXfjc: 'employer',
       // Electrician Win-Back (20% discount offer)
       price_1SvggR2RKw5t5RAmDN29FBzx: 'electrician',
       price_1SvggR2RKw5t5RAmsrerSmdG: 'electrician_yearly',
@@ -163,7 +163,6 @@ serve(async (req) => {
       'business_ai_yearly',
       'employer',
       'employer_yearly',
-      'Employer',
     ]);
 
     // Fetch Stripe customers with retry and timeout
@@ -241,13 +240,16 @@ serve(async (req) => {
       subscriptionTier = PRICE_TO_TIER[priceId] || 'electrician';
       logger.info('Determined subscription tier', { priceId, subscriptionTier });
 
-      // Update profile in database
+      // Update profile in database — persist tier + business_ai_enabled as recovery mechanism
+      const businessAiFlag = BUSINESS_AI_TIERS.has(subscriptionTier);
       try {
         const { error: updateError } = await withTimeout(
           supabaseClient
             .from('profiles')
             .update({
               subscribed: true,
+              subscription_tier: subscriptionTier,
+              business_ai_enabled: businessAiFlag,
               updated_at: new Date().toISOString(),
             })
             .eq('id', user.id),
@@ -271,6 +273,7 @@ serve(async (req) => {
             .from('profiles')
             .update({
               subscribed: false,
+              business_ai_enabled: false,
               updated_at: new Date().toISOString(),
             })
             .eq('id', user.id),
@@ -286,7 +289,8 @@ serve(async (req) => {
       }
     }
 
-    const businessAiEnabled = subscriptionTier ? BUSINESS_AI_TIERS.has(subscriptionTier) : false;
+    const businessAiEnabled =
+      hasActiveSub && subscriptionTier ? BUSINESS_AI_TIERS.has(subscriptionTier) : false;
 
     logger.info('Updated database with subscription info', {
       subscribed: hasActiveSub,

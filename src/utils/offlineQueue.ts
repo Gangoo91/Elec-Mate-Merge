@@ -4,12 +4,14 @@
 
 import { syncQueue, SyncOperation } from './syncQueue';
 
+import { ReportType } from './reportCloud';
+
 export interface QueueOperation {
   id: string;
   type: 'create' | 'update' | 'delete';
   reportId: string | null;
-  reportType: 'eicr' | 'eic' | 'minor-works';
-  data: any;
+  reportType: ReportType;
+  data: Record<string, unknown>;
   timestamp: number;
   retryCount: number;
 }

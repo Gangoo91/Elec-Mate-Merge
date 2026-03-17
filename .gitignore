@@ -32,6 +32,10 @@ nul
 # Apple keys
 *.p8
 
+# Android release keystore
+*.keystore
+*.jks
+
 # Playwright auth state
 e2e/.auth/
 __pycache__/

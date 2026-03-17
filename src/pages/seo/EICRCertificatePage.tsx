@@ -614,9 +614,10 @@ export default function EICRCertificatePage() {
             </div>
             <p className="text-white text-sm leading-relaxed">
               The installation does not comply with the current edition of BS 7671 but is not
-              immediately dangerous. Improvement is recommended. Examples include lack of
-              supplementary bonding where no longer required by current regulations, or older wiring
-              colours that have not been re-identified.
+              immediately dangerous. Improvement is recommended. Examples include older wiring
+              colours that have not been re-identified at the consumer unit, absence of surge
+              protection (SPD) where now recommended, or socket circuits without RCD protection that
+              pre-date the current requirement.
             </p>
           </div>
           <div className="rounded-2xl bg-purple-500/10 border border-purple-500/20 p-5">

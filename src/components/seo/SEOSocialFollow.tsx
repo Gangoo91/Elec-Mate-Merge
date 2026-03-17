@@ -60,7 +60,7 @@ export function SEOSocialFollow({ className = '' }: SEOSocialFollowProps) {
           href={social.href}
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex items-center justify-center w-9 h-9 rounded-lg bg-white/5 border border-white/10 hover:border-yellow-500/30 hover:bg-yellow-500/10 text-white hover:text-yellow-400 transition-all touch-manipulation"
+          className="inline-flex items-center justify-center w-11 h-11 rounded-lg bg-white/5 border border-white/10 hover:border-yellow-500/30 hover:bg-yellow-500/10 text-white hover:text-yellow-400 transition-all touch-manipulation"
           aria-label={`Follow Elec-Mate on ${social.label}`}
         >
           {social.icon}

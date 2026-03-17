@@ -10,6 +10,7 @@ import {
   ClipboardCheck,
   BookOpen,
   MessageSquare,
+  MessageCircle,
   Users,
   Zap,
   CheckCircle2,
@@ -29,6 +30,8 @@ import { useAgentActivity, AgentAction } from '@/hooks/useAgentActivity';
 import { useDashboardData } from '@/hooks/useDashboardData';
 import { useSparkTasks } from '@/hooks/useSparkTasks';
 import { formatDistanceToNow, parseISO, isAfter, subDays } from 'date-fns';
+import { openExternalUrl } from '@/utils/open-external-url';
+import { MATE_PHONE_DISPLAY, MATE_WHATSAPP_LINK } from '@/constants/mate';
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -254,26 +257,36 @@ export function BusinessAIDashboardView() {
                 </div>
               </div>
 
-              {/* WhatsApp number + Message button */}
-              <div className="flex items-center gap-3 p-3 rounded-xl bg-white/[0.04] border border-white/[0.06]">
-                <div className="p-2 rounded-lg bg-green-500/10 shrink-0">
-                  <Phone className="h-4 w-4 text-green-400" />
-                </div>
-                <div className="flex-1 min-w-0">
-                  <div className="text-xs text-white">WhatsApp Connected</div>
-                  <div className="text-sm font-mono font-semibold text-white">
-                    {whatsappNumber ? maskPhone(whatsappNumber) : 'Not connected'}
+              {/* Message Mate — primary CTA */}
+              <div className="space-y-2">
+                <div className="flex items-center gap-3 p-3 rounded-xl bg-green-500/[0.08] border border-green-500/20">
+                  <div className="p-2 rounded-lg bg-green-500/10 shrink-0">
+                    <MessageCircle className="h-4 w-4 text-green-400" />
                   </div>
+                  <div className="flex-1 min-w-0">
+                    <div className="text-xs text-white font-medium">Message Mate</div>
+                    <div className="text-sm font-mono font-semibold text-white">
+                      {MATE_PHONE_DISPLAY}
+                    </div>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => openExternalUrl(MATE_WHATSAPP_LINK)}
+                    className="flex items-center gap-1.5 px-3 py-2 rounded-lg bg-green-600 text-white text-xs font-semibold touch-manipulation h-9 shrink-0"
+                  >
+                    WhatsApp
+                    <ExternalLink style={{ height: 12, width: 12 }} />
+                  </button>
                 </div>
-                <a
-                  href={whatsAppLink(whatsappNumber)}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-1.5 px-3 py-2 rounded-lg bg-green-600 text-white text-xs font-semibold touch-manipulation h-9 shrink-0"
-                >
-                  Message
-                  <ExternalLink style={{ height: 12, width: 12 }} />
-                </a>
+
+                {/* User's connected number — secondary */}
+                <div className="flex items-center gap-3 px-3 py-2 rounded-xl bg-white/[0.03] border border-white/[0.05]">
+                  <Phone className="h-3.5 w-3.5 text-green-400 shrink-0" />
+                  <span className="text-xs text-white">Your number:</span>
+                  <span className="text-xs font-mono text-white">
+                    {whatsappNumber ? maskPhone(whatsappNumber) : 'Not connected'}
+                  </span>
+                </div>
               </div>
             </div>
           </div>
@@ -404,15 +417,14 @@ export function BusinessAIDashboardView() {
               <div className="py-8 text-center space-y-3">
                 <Zap className="h-8 w-8 text-amber-400/20 mx-auto" />
                 <p className="text-sm text-white">No activity yet — Mate's ready when you are</p>
-                <a
-                  href={whatsAppLink(whatsappNumber)}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                <button
+                  type="button"
+                  onClick={() => openExternalUrl(MATE_WHATSAPP_LINK)}
                   className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-green-600 text-white text-xs font-semibold touch-manipulation h-9"
                 >
                   Send your first message
                   <ExternalLink style={{ height: 12, width: 12 }} />
-                </a>
+                </button>
               </div>
             ) : (
               actions.map((action) => <ActivityCard key={action.id} action={action} />)

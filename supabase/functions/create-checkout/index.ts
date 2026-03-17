@@ -244,9 +244,7 @@ serve(async (req) => {
     }
 
     // Create checkout options based on mode
-    const origin =
-      req.headers.get('origin') ||
-      'https://f214c814-3a85-4c4a-8139-3d81ec8b7efb.lovableproject.com';
+    const origin = req.headers.get('origin') || 'https://elec-mate.com';
 
     const checkoutOptions: Record<string, unknown> = {
       customer: customerId,
