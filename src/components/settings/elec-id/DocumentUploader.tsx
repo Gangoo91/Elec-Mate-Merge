@@ -556,6 +556,12 @@ const DocumentUploader = ({ onNavigate }: DocumentUploaderProps) => {
           console.log('[Elec-ID] Background verification complete:', { verifyResult, verifyError });
           if (verifyError) {
             console.error('[Elec-ID] Background verification error:', verifyError);
+            // Clear spinner immediately — don't leave user waiting for the 90s timeout
+            setPendingVerifications((prev) => {
+              const next = new Set(prev);
+              next.delete(docRecord.id);
+              return next;
+            });
             toast({
               title: 'Verification Issue',
               description:
@@ -568,6 +574,12 @@ const DocumentUploader = ({ onNavigate }: DocumentUploaderProps) => {
         })
         .catch((err) => {
           console.error('[Elec-ID] Background verification failed:', err);
+          // Clear spinner immediately on hard failure
+          setPendingVerifications((prev) => {
+            const next = new Set(prev);
+            next.delete(docRecord.id);
+            return next;
+          });
           toast({
             title: 'Verification Issue',
             description:
