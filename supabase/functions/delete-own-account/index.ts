@@ -50,10 +50,10 @@ serve(async (req: Request): Promise<Response> => {
 
     console.log(`🗑️ GDPR account deletion requested for user ${userId}`);
 
-    // --- Get profile for Stripe subscription ID and name ---
+    // --- Get profile for Stripe customer ID and name ---
     const { data: profile } = await supabaseAdmin
       .from('profiles')
-      .select('full_name, stripe_customer_id, stripe_subscription_id')
+      .select('full_name, stripe_customer_id')
       .eq('id', userId)
       .single();
 
@@ -65,15 +65,27 @@ serve(async (req: Request): Promise<Response> => {
       year: 'numeric',
     });
 
-    // --- Cancel Stripe subscription if exists (non-blocking) ---
-    if (profile?.stripe_subscription_id) {
+    // --- Cancel active Stripe subscriptions via customer ID (non-blocking) ---
+    if (profile?.stripe_customer_id) {
       const stripeKey = Deno.env.get('STRIPE_SECRET_KEY');
       if (stripeKey) {
-        fetch(`https://api.stripe.com/v1/subscriptions/${profile.stripe_subscription_id}/cancel`, {
-          method: 'DELETE',
-          headers: { Authorization: `Bearer ${stripeKey}` },
-        })
-          .then((r) => console.log(`Stripe subscription cancelled: ${r.status}`))
+        fetch(
+          `https://api.stripe.com/v1/subscriptions?customer=${profile.stripe_customer_id}&status=active&limit=5`,
+          { headers: { Authorization: `Bearer ${stripeKey}` } }
+        )
+          .then((r) => r.json())
+          .then((data: { data?: { id: string }[] }) => {
+            const subs = data?.data ?? [];
+            return Promise.all(
+              subs.map((sub) =>
+                fetch(`https://api.stripe.com/v1/subscriptions/${sub.id}/cancel`, {
+                  method: 'DELETE',
+                  headers: { Authorization: `Bearer ${stripeKey}` },
+                })
+              )
+            );
+          })
+          .then(() => console.log('Stripe subscriptions cancelled'))
           .catch((err: unknown) => console.warn('Stripe cancel failed (non-critical):', err));
       }
     }
