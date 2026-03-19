@@ -227,7 +227,7 @@ export function PublicPageLayout({ children }: PublicPageLayoutProps) {
       </Helmet>
 
       {/* Nav */}
-      <nav className="fixed top-0 left-0 right-0 z-50">
+      <nav className="fixed top-0 left-0 right-0 z-50 pt-[env(safe-area-inset-top,0px)]">
         <div className="absolute inset-0 bg-gradient-to-b from-black via-black/95 to-black/80 backdrop-blur-xl" />
         <div className="absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-yellow-500/30 to-transparent" />
 
@@ -348,7 +348,7 @@ export function PublicPageLayout({ children }: PublicPageLayoutProps) {
       </nav>
 
       {/* Content */}
-      <main className="pt-16">{children}</main>
+      <main className="pt-[calc(4rem+env(safe-area-inset-top,0px))]">{children}</main>
 
       {/* Pre-footer stats bar */}
       <section className="border-t border-white/5">
