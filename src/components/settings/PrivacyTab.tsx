@@ -101,8 +101,8 @@ const PrivacyTab = () => {
           .eq('user_id', userId)
           .eq('key', 'cookie_preferences')
           .single();
-        if (data?.value) {
-          try { setCookiePrefs(JSON.parse(data.value as string)); return; } catch { /* fall through */ }
+        if (data?.value && typeof data.value === 'object') {
+          setCookiePrefs(data.value as CookiePreferences); return;
         }
       }
       const saved = localStorage.getItem(COOKIE_PREFERENCES_KEY);
@@ -137,7 +137,7 @@ const PrivacyTab = () => {
       if (userId) {
         try {
           await supabase.from('user_settings').upsert(
-            { user_id: userId, key: 'cookie_preferences', value: JSON.stringify(newPrefs) },
+            { user_id: userId, key: 'cookie_preferences', value: newPrefs },
             { onConflict: 'user_id,key' }
           );
         } catch {
@@ -495,8 +495,7 @@ const PrivacyTab = () => {
 
             {/* Analytics */}
             <div
-              className="flex items-center gap-3 p-3.5 rounded-lg bg-white/5 border border-white/10 cursor-pointer touch-manipulation active:bg-white/[0.08]"
-              onClick={() => handleCookieToggle('analytics')}
+              className="flex items-center gap-3 p-3.5 rounded-lg bg-white/5 border border-white/10"
             >
               <div className={`w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0 ${cookiePrefs.analytics ? 'bg-cyan-500/10' : 'bg-white/5'}`}>
                 <BarChart3 className={`h-4 w-4 ${cookiePrefs.analytics ? 'text-cyan-400' : 'text-white/40'}`} />
