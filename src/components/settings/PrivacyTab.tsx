@@ -31,7 +31,6 @@ import {
   Download,
   Cookie,
   BarChart3,
-  AlertTriangle,
   Loader2,
   FileText,
   ExternalLink,
@@ -134,12 +133,16 @@ const PrivacyTab = () => {
       setCookiePrefs(newPrefs);
       localStorage.setItem(COOKIE_PREFERENCES_KEY, JSON.stringify(newPrefs));
       window.dispatchEvent(new CustomEvent('cookieConsentUpdated', { detail: newPrefs }));
-      // Persist to Supabase for cross-device consistency
+      // Persist to Supabase for cross-device consistency (silently falls back to localStorage if unavailable)
       if (userId) {
-        await supabase.from('user_settings').upsert(
-          { user_id: userId, key: 'cookie_preferences', value: JSON.stringify(newPrefs) },
-          { onConflict: 'user_id,key' }
-        );
+        try {
+          await supabase.from('user_settings').upsert(
+            { user_id: userId, key: 'cookie_preferences', value: JSON.stringify(newPrefs) },
+            { onConflict: 'user_id,key' }
+          );
+        } catch {
+          // localStorage already saved above — Supabase sync is best-effort
+        }
       }
       addNotification({
         title: 'Cookie Preferences Updated',
