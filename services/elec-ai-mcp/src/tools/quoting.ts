@@ -45,12 +45,33 @@ export async function readQuotes(args: Record<string, unknown>, user: UserContex
 export async function generateQuote(args: Record<string, unknown>, user: UserContext) {
   const supabase = user.supabase;
 
-  // Validate items
+  // Normalise items — accept array OR flat fields from agents that pass them wrong
   if (!Array.isArray(args.items) || args.items.length === 0) {
-    throw new Error('At least one item is required');
+    // Try to build a single item from flat fields the agent might pass
+    const desc =
+      args.description ?? args.itemDescription ?? args.item_description ?? args.line_item;
+    const qty = args.quantity ?? args.itemQuantity ?? args.item_quantity ?? args.qty;
+    const price =
+      args.unitPrice ?? args.unit_price ?? args.itemUnitPrice ?? args.item_unit_price ?? args.price;
+
+    if (typeof desc === 'string' && desc.trim().length > 0) {
+      args.items = [
+        {
+          description: desc,
+          quantity: typeof qty === 'number' && qty > 0 ? qty : 1,
+          unitPrice: typeof price === 'number' ? price : 0,
+          category: typeof args.category === 'string' ? args.category : 'materials',
+        },
+      ];
+    } else {
+      throw new Error(
+        'items array is required. Example: items: [{ description: "Consumer unit upgrade", quantity: 1, unitPrice: 450 }]'
+      );
+    }
   }
 
   // Validate and normalise each item
+  const itemsArray = args.items as Array<unknown>;
   const items: Array<{
     id: string;
     description: string;
@@ -62,7 +83,7 @@ export async function generateQuote(args: Record<string, unknown>, user: UserCon
     notes: string;
   }> = [];
 
-  for (const raw of args.items) {
+  for (const raw of itemsArray) {
     if (typeof raw !== 'object' || raw === null) {
       throw new Error(
         'Each item must be an object with description, category, quantity, unitPrice'

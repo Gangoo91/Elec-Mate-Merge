@@ -22,6 +22,11 @@ const TIER_DISPLAY_NAMES: Record<string, string> = {
 // Legacy entitlement from single-tier era — still checked for backwards compatibility
 const LEGACY_ENTITLEMENT_ID = 'Elec-Mate Pro';
 
+// Aliases for plan IDs that don't match RevenueCat package naming
+const TIER_ALIASES: Record<string, string> = {
+  'business-ai': 'mate',
+};
+
 interface RevenueCatState {
   isInitialised: boolean;
   isProEntitled: boolean;
@@ -245,11 +250,12 @@ export function useRevenueCat(userId?: string) {
       // RevenueCat package identifiers should match plan IDs
       // e.g. '$rc_monthly' for monthly, '$rc_annual' for yearly, or custom IDs
       // Try exact match first, then look for partial match on plan tier
-      const tierKey = planId.replace(/-(?:monthly|yearly)$/, ''); // 'mate' → 'mate'
+      const tierKey = planId.replace(/-(?:monthly|yearly)$/, '');
+      const resolvedKey = TIER_ALIASES[tierKey] || tierKey;
       return (
         state.availablePackages.find((pkg) => pkg.identifier === planId) ||
         state.availablePackages.find((pkg) =>
-          pkg.identifier.toLowerCase().includes(tierKey.replace(/-/g, '_'))
+          pkg.identifier.toLowerCase().includes(resolvedKey.replace(/-/g, '_'))
         )
       );
     },
