@@ -68,9 +68,9 @@ export function useRevenueCat(userId?: string) {
 
         if (userId) attachedUserIdRef.current = userId;
         initRef.current = true;
-        setState((prev) => ({ ...prev, isInitialised: true }));
 
-        // Fetch initial entitlements & offerings
+        // Fetch initial entitlements & offerings BEFORE marking initialised
+        // so consumers know packages are ready (or failed) when isInitialised flips
         await checkEntitlements();
         await loadOfferings();
       } catch (err) {
@@ -79,6 +79,9 @@ export function useRevenueCat(userId?: string) {
           ...prev,
           error: err instanceof Error ? err.message : String(err),
         }));
+      } finally {
+        // Always mark initialised so the UI can show retry / error states
+        setState((prev) => ({ ...prev, isInitialised: true }));
       }
     };
 
@@ -96,11 +99,18 @@ export function useRevenueCat(userId?: string) {
         await Purchases.logIn({ appUserID: userId });
         attachedUserIdRef.current = userId;
         console.log('[RevenueCat] Attached userId after anonymous init:', userId);
-        // Refresh entitlements and offerings for the now-identified user
+      } catch (err) {
+        console.warn('[RevenueCat] logIn failed:', err);
+        // Continue anyway — anonymous purchases still work, just won't be attributed
+      }
+
+      // Always refresh entitlements and offerings after attach attempt
+      // (even if logIn failed, offerings may now be available)
+      try {
         await checkEntitlements();
         await loadOfferings();
       } catch (err) {
-        console.warn('[RevenueCat] logIn failed (non-fatal):', err);
+        console.warn('[RevenueCat] Post-attach refresh failed:', err);
       }
     };
 
@@ -155,14 +165,35 @@ export function useRevenueCat(userId?: string) {
       const { offerings } = await Purchases.getOfferings();
       const current = offerings?.current;
 
-      if (current?.availablePackages) {
+      if (current?.availablePackages && current.availablePackages.length > 0) {
         setState((prev) => ({
           ...prev,
           availablePackages: current.availablePackages,
+          error: null, // clear any previous offerings error
+        }));
+      } else {
+        console.warn(
+          '[RevenueCat] No current offering or packages returned — check RevenueCat dashboard + App Store Connect'
+        );
+        setState((prev) => ({
+          ...prev,
+          error:
+            prev.availablePackages.length > 0
+              ? null // keep existing packages if we had them
+              : 'No subscription plans available. This is usually temporary — please try again.',
         }));
       }
     } catch (err) {
       console.error('RevenueCat offerings error:', err);
+      setState((prev) => ({
+        ...prev,
+        error:
+          prev.availablePackages.length > 0
+            ? null // keep existing packages, don't show error
+            : err instanceof Error
+              ? err.message
+              : 'Failed to load subscription plans. Please try again.',
+      }));
     }
   }, [isNative]);
 

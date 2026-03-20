@@ -333,7 +333,7 @@ const SignIn = () => {
                   onFocus={() => setFocusedField('email')}
                   onBlur={() => setFocusedField(null)}
                   placeholder="you@example.com"
-                  autoComplete="username"
+                  autoComplete="email"
                   name="email"
                   className={cn(
                     'w-full h-14 pl-12 pr-12 rounded-2xl',

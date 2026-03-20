@@ -4,7 +4,17 @@ import { useAuth } from '@/contexts/AuthContext';
 import { supabase } from '@/integrations/supabase/client';
 import { Button } from '@/components/ui/button';
 import { motion } from 'framer-motion';
-import { Loader2, CreditCard, Shield, Zap, Check, LogOut, ArrowRight, RefreshCw, Mail } from 'lucide-react';
+import {
+  Loader2,
+  CreditCard,
+  Shield,
+  Zap,
+  Check,
+  LogOut,
+  ArrowRight,
+  RefreshCw,
+  Mail,
+} from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Capacitor } from '@capacitor/core';
 import { useRevenueCat } from '@/hooks/useRevenueCat';
@@ -43,7 +53,11 @@ const CheckoutTrial = () => {
 
   // Whether native payment options are ready
   const packagesReady = isInitialised && availablePackages.length > 0;
-  const packagesLoading = isNative && (!isInitialised || (isInitialised && !availablePackages.length && retryCount < MAX_PACKAGE_RETRIES));
+  // Stay in loading state while: not yet initialised, OR initialised but no packages and still retrying
+  const packagesLoading =
+    isNative &&
+    !packagesReady &&
+    (!isInitialised || retryCount < MAX_PACKAGE_RETRIES || isRetrying);
 
   // Backfill role to profile if missing (handles race condition from signup)
   useEffect(() => {
@@ -58,23 +72,36 @@ const CheckoutTrial = () => {
     }
   }, [user?.id, profile, role]);
 
-  // Auto-retry loading packages on native if they don't arrive within 3s
+  // Auto-retry loading packages on native if they don't arrive after init
   useEffect(() => {
     if (!isNative || packagesReady || !isInitialised) return;
     if (retryCount >= MAX_PACKAGE_RETRIES) return;
 
+    // First retry fires quickly (1.5s), subsequent retries back off (3s each)
+    const delay = retryCount === 0 ? 1500 : 3000;
+
     retryTimerRef.current = setTimeout(async () => {
-      console.log(`[CheckoutTrial] Auto-retrying loadOfferings (attempt ${retryCount + 1})`);
+      console.log(
+        `[CheckoutTrial] Auto-retrying loadOfferings (attempt ${retryCount + 1}/${MAX_PACKAGE_RETRIES})`
+      );
       setIsRetrying(true);
       await loadOfferings();
       setRetryCount((c) => c + 1);
       setIsRetrying(false);
-    }, 3000);
+    }, delay);
 
     return () => {
       if (retryTimerRef.current) clearTimeout(retryTimerRef.current);
     };
   }, [isNative, packagesReady, isInitialised, retryCount, loadOfferings]);
+
+  // Reset retry count when packages finally arrive (e.g. after logIn attach)
+  useEffect(() => {
+    if (packagesReady && retryCount > 0) {
+      setRetryCount(0);
+      setError(null);
+    }
+  }, [packagesReady]);
 
   const handleManualRetry = useCallback(async () => {
     setError(null);
@@ -122,8 +149,18 @@ const CheckoutTrial = () => {
   // Native IAP purchase handler — uses role-matched package, not just availablePackages[0]
   const startNativePurchase = useCallback(async () => {
     if (!packagesReady) {
-      setError('Payment options are still loading. Please wait a moment and try again.');
-      return;
+      // Trigger a manual retry rather than just showing an error
+      setIsRetrying(true);
+      await loadOfferings();
+      setIsRetrying(false);
+
+      // Check again after the retry
+      if (!availablePackages.length) {
+        setError(
+          'Subscription plans are taking longer than usual to load. Please check your internet connection and try again.'
+        );
+        return;
+      }
     }
 
     setError(null);
@@ -131,7 +168,9 @@ const CheckoutTrial = () => {
     // Pick the package matching the user's plan (electrician vs apprentice)
     const pkg = getPackageForPlan(priceInfo.planId) ?? availablePackages[0];
     if (!pkg) {
-      setError('Could not find your subscription plan. Please contact support.');
+      setError(
+        'Could not find your subscription plan. Please try again or contact support@elec-mate.com.'
+      );
       return;
     }
 
@@ -140,13 +179,26 @@ const CheckoutTrial = () => {
       // Navigate with actual plan ID so payment-success shows correct tier
       navigate(`/payment-success?plan=${priceInfo.planId}&trial=true`);
     }
-  }, [packagesReady, getPackageForPlan, priceInfo.planId, availablePackages, purchasePackage, navigate]);
+  }, [
+    packagesReady,
+    getPackageForPlan,
+    priceInfo.planId,
+    availablePackages,
+    purchasePackage,
+    navigate,
+  ]);
 
   // Auth / subscription guard
   useEffect(() => {
-    if (!user) { navigate('/auth/signin'); return; }
+    if (!user) {
+      navigate('/auth/signin');
+      return;
+    }
     if (!profile) return;
-    if (profile?.subscribed || profile?.free_access_granted) { navigate('/dashboard'); return; }
+    if (profile?.subscribed || profile?.free_access_granted) {
+      navigate('/dashboard');
+      return;
+    }
 
     if (!hasAttempted) {
       setHasAttempted(true);
@@ -166,14 +218,20 @@ const CheckoutTrial = () => {
   };
 
   const trialEndDate = new Date(Date.now() + 7 * 86400000).toLocaleDateString('en-GB', {
-    day: 'numeric', month: 'long', year: 'numeric',
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric',
   });
 
   // Web: show full-screen loading while auto-redirecting to Stripe
   if (isRedirecting && !error) {
     return (
       <div className="min-h-screen bg-gradient-to-b from-zinc-900 via-black to-black flex flex-col items-center justify-center p-6">
-        <motion.div initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} className="text-center">
+        <motion.div
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          className="text-center"
+        >
           <div className="w-16 h-16 rounded-2xl bg-elec-yellow/20 flex items-center justify-center mx-auto mb-5">
             <Loader2 className="h-8 w-8 text-elec-yellow animate-spin" />
           </div>
@@ -185,8 +243,10 @@ const CheckoutTrial = () => {
   }
 
   // Derive CTA state for native
-  const persistentError = isNative && !packagesReady && retryCount >= MAX_PACKAGE_RETRIES && !isRetrying;
-  const ctaLoading = isRedirecting || isPurchasing || (isNative && packagesLoading && !error) || isRetrying;
+  const persistentError =
+    isNative && !packagesReady && retryCount >= MAX_PACKAGE_RETRIES && !isRetrying;
+  const ctaLoading =
+    isRedirecting || isPurchasing || (isNative && packagesLoading && !error) || isRetrying;
 
   const benefits = isNative
     ? [
@@ -331,7 +391,11 @@ const CheckoutTrial = () => {
             {ctaLoading ? (
               <>
                 <Loader2 className="mr-2 h-5 w-5 animate-spin" />
-                {isPurchasing ? 'Processing...' : isRedirecting ? 'Redirecting...' : 'Loading plans...'}
+                {isPurchasing
+                  ? 'Processing...'
+                  : isRedirecting
+                    ? 'Redirecting...'
+                    : 'Loading plans...'}
               </>
             ) : error ? (
               <>
@@ -348,16 +412,16 @@ const CheckoutTrial = () => {
 
           {/* Loading hint while packages fetch */}
           {isNative && packagesLoading && !error && (
-            <p className="text-center text-[11px] text-white/50 mt-2">
-              Loading payment options...
-            </p>
+            <p className="text-center text-[11px] text-white/50 mt-2">Loading payment options...</p>
           )}
 
           {/* Trust signals */}
           <div className="flex items-center justify-center gap-4 mt-4 text-[11px] text-white">
             <span className="flex items-center gap-1.5">
               <Shield className="h-3.5 w-3.5 text-green-500/60" />
-              {isNative ? `Secured by ${Capacitor.getPlatform() === 'ios' ? 'Apple' : 'Google'}` : 'Secured by Stripe'}
+              {isNative
+                ? `Secured by ${Capacitor.getPlatform() === 'ios' ? 'Apple' : 'Google'}`
+                : 'Secured by Stripe'}
             </span>
             <span className="w-1 h-1 rounded-full bg-white/20" />
             <span>Cancel anytime</span>
