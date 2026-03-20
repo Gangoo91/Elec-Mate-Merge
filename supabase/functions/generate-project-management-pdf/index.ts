@@ -1,6 +1,6 @@
 import { corsHeaders } from '../_shared/cors.ts';
 
-const PDF_MONKEY_API_KEY = Deno.env.get('PDF_MONKEY_API_KEY');
+const PDFMONKEY_API_KEY = Deno.env.get('PDFMONKEY_API_KEY');
 const TEMPLATE_ID = '575204BB-6BC8-4CC0-AA7C-242F707AE04F';
 
 Deno.serve(async (req) => {
@@ -24,7 +24,7 @@ Deno.serve(async (req) => {
     const generateResponse = await fetch('https://api.pdfmonkey.io/api/v1/documents', {
       method: 'POST',
       headers: {
-        Authorization: `Bearer ${PDF_MONKEY_API_KEY}`,
+        Authorization: `Bearer ${PDFMONKEY_API_KEY}`,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
@@ -60,7 +60,7 @@ Deno.serve(async (req) => {
         `https://api.pdfmonkey.io/api/v1/documents/${documentId}`,
         {
           headers: {
-            Authorization: `Bearer ${PDF_MONKEY_API_KEY}`,
+            Authorization: `Bearer ${PDFMONKEY_API_KEY}`,
           },
         }
       );

@@ -8,7 +8,7 @@ const corsHeaders = {
     'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
 };
 
-const PDF_MONKEY_API_KEY = Deno.env.get('PDF_MONKEY_API_KEY');
+const PDFMONKEY_API_KEY = Deno.env.get('PDFMONKEY_API_KEY');
 const CIRCUIT_DESIGN_TEMPLATE_ID = 'DF1DE972-30B4-45F9-83C0-4CEB4DE90E70';
 
 serve(async (req) => {
@@ -19,13 +19,13 @@ serve(async (req) => {
   try {
     console.log('[CIRCUIT-PDF] Request started');
 
-    if (!PDF_MONKEY_API_KEY) {
-      console.error('[CIRCUIT-PDF] PDF_MONKEY_API_KEY not configured');
+    if (!PDFMONKEY_API_KEY) {
+      console.error('[CIRCUIT-PDF] PDFMONKEY_API_KEY not configured');
       return new Response(
         JSON.stringify({
           success: false,
           useFallback: true,
-          error: 'PDF_MONKEY_API_KEY not configured',
+          error: 'PDFMONKEY_API_KEY not configured',
         }),
         {
           status: 200,
@@ -290,7 +290,7 @@ serve(async (req) => {
     const pdfMonkeyResponse = await fetch('https://api.pdfmonkey.io/api/v1/documents', {
       method: 'POST',
       headers: {
-        Authorization: `Bearer ${PDF_MONKEY_API_KEY}`,
+        Authorization: `Bearer ${PDFMONKEY_API_KEY}`,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
@@ -344,7 +344,7 @@ serve(async (req) => {
       const statusResponse = await fetch(
         `https://api.pdfmonkey.io/api/v1/documents/${documentId}`,
         {
-          headers: { Authorization: `Bearer ${PDF_MONKEY_API_KEY}` },
+          headers: { Authorization: `Bearer ${PDFMONKEY_API_KEY}` },
         }
       );
 

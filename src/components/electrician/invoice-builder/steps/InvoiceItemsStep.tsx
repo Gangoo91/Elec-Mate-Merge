@@ -1091,25 +1091,51 @@ export const InvoiceItemsStep = ({
           <SheetHeader className="p-4 border-b border-white/[0.06]">
             <SheetTitle className="text-white text-left">Select Hours</SheetTitle>
           </SheetHeader>
-          <div className="grid grid-cols-3 gap-2 p-4">
-            {hourOptions.map((h) => {
-              const isSelected = newItem.hours === h;
-              return (
-                <button
-                  key={h}
-                  onClick={() => handleHoursChange(h)}
-                  className={cn(
-                    'p-4 rounded-xl border transition-all touch-manipulation active:scale-[0.98]',
-                    isSelected
-                      ? 'bg-elec-yellow text-black border-elec-yellow font-bold'
-                      : 'bg-white/[0.03] border-white/[0.06] text-white'
-                  )}
-                >
-                  <p className="text-[18px] font-semibold">{h}</p>
-                  <p className="text-[11px] opacity-70">{h === 1 ? 'hour' : 'hours'}</p>
-                </button>
-              );
-            })}
+          <div className="p-4 space-y-3">
+            {/* Custom hours input */}
+            <div className="flex items-center gap-3">
+              <label className="text-[12px] text-white uppercase tracking-wide whitespace-nowrap">Custom</label>
+              <input
+                type="text"
+                inputMode="decimal"
+                placeholder="e.g. 2.5"
+                style={darkInputStyle}
+                className="flex-1 h-11 px-3 rounded-xl bg-[#1a1a1e] border border-white/[0.06] text-[15px] text-white placeholder:text-white focus:outline-none focus:border-elec-yellow caret-elec-yellow"
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter') {
+                    const val = parseFloat((e.target as HTMLInputElement).value);
+                    if (!isNaN(val) && val > 0) handleHoursChange(val);
+                  }
+                }}
+                onBlur={(e) => {
+                  const val = parseFloat(e.target.value);
+                  if (!isNaN(val) && val > 0) handleHoursChange(val);
+                }}
+              />
+              <span className="text-[12px] text-white">hrs</span>
+            </div>
+
+            {/* Preset hour buttons */}
+            <div className="grid grid-cols-3 gap-2">
+              {hourOptions.map((h) => {
+                const isSelected = newItem.hours === h;
+                return (
+                  <button
+                    key={h}
+                    onClick={() => handleHoursChange(h)}
+                    className={cn(
+                      'p-4 rounded-xl border transition-all touch-manipulation active:scale-[0.98]',
+                      isSelected
+                        ? 'bg-elec-yellow text-black border-elec-yellow font-bold'
+                        : 'bg-white/[0.03] border-white/[0.06] text-white'
+                    )}
+                  >
+                    <p className="text-[18px] font-semibold">{h}</p>
+                    <p className="text-[11px] opacity-70">{h === 1 ? 'hour' : 'hours'}</p>
+                  </button>
+                );
+              })}
+            </div>
           </div>
         </SheetContent>
       </Sheet>

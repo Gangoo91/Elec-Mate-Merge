@@ -54,23 +54,29 @@ export const EnhancedValidatedInput: React.FC<EnhancedValidatedInputProps> = ({
     setShowValidation(true);
   };
 
+  const getValidationMessage = (): string | undefined => {
+    if (!validation) return undefined;
+    if ('message' in validation && typeof validation.message === 'string') return validation.message;
+    return undefined;
+  };
+
   const getValidationIcon = () => {
     if (!showValidation || !validation) return null;
-    if (!('type' in validation)) return null;
+    if (!('level' in validation)) return null;
 
-    const validationType = validation.type;
-    switch (validationType) {
-      case 'success':
+    const message = getValidationMessage();
+    switch (validation.level) {
+      case 'pass':
         return (
-          <CircleCheck className="h-3.5 w-3.5 text-success absolute right-2 top-1/2 -translate-y-1/2 pointer-events-none" />
+          <CircleCheck className="h-3.5 w-3.5 text-success absolute right-2 top-1/2 -translate-y-1/2 pointer-events-none" title={message} />
         );
       case 'warning':
         return (
-          <AlertTriangle className="h-3.5 w-3.5 text-warning absolute right-2 top-1/2 -translate-y-1/2 pointer-events-none" />
+          <AlertTriangle className="h-3.5 w-3.5 text-warning absolute right-2 top-1/2 -translate-y-1/2 pointer-events-none" title={message} />
         );
-      case 'error':
+      case 'fail':
         return (
-          <CircleX className="h-3.5 w-3.5 text-destructive absolute right-2 top-1/2 -translate-y-1/2 pointer-events-none" />
+          <CircleX className="h-3.5 w-3.5 text-destructive absolute right-2 top-1/2 -translate-y-1/2 pointer-events-none" title={message} />
         );
       default:
         return null;
@@ -79,15 +85,14 @@ export const EnhancedValidatedInput: React.FC<EnhancedValidatedInputProps> = ({
 
   const getValidationBorder = () => {
     if (!showValidation || !validation) return '';
-    if (!('type' in validation)) return '';
+    if (!('level' in validation)) return '';
 
-    const validationType = validation.type;
-    switch (validationType) {
-      case 'success':
+    switch (validation.level) {
+      case 'pass':
         return 'border-success focus-visible:ring-success';
       case 'warning':
         return 'border-warning focus-visible:ring-warning';
-      case 'error':
+      case 'fail':
         return 'border-destructive focus-visible:ring-destructive';
       default:
         return '';

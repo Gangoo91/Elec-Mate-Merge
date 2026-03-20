@@ -780,13 +780,116 @@ function generateEarlyAccessOfferHTML(email: string): string {
 </body></html>`;
 }
 
+function generateEarlyAccessV6HTML(): string {
+  return `<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><meta name="color-scheme" content="dark"><!--[if mso]><style>body,table,td{font-family:Arial,sans-serif!important}</style><![endif]--></head>
+<body style="margin:0;padding:0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;background:#0f172a">
+<table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background:#0f172a"><tr><td style="padding:24px 12px">
+<table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="max-width:500px;margin:0 auto;background:linear-gradient(180deg,#1e293b,#0f172a);border-radius:24px;overflow:hidden;border:1px solid rgba(251,191,36,0.2)">
+
+<!-- Opening -->
+<tr><td style="padding:32px 24px 20px">
+<p style="margin:0 0 16px;font-size:17px;color:#fff;line-height:1.6">Hey,</p>
+<p style="margin:0 0 14px;font-size:16px;color:#fff;line-height:1.7">You signed up to hear about Elec-Mate a while back. I haven't forgotten &mdash; and I wanted to give you first look at what it's turned into.</p>
+<p style="margin:0 0 14px;font-size:16px;color:#fff;line-height:1.7">When you signed up, Elec-Mate was an idea. Now it's a full platform with 8 certificate types, AI tools, business management, a study centre, and a materials marketplace. All in one app.</p>
+<p style="margin:0;font-size:16px;color:#fff;line-height:1.7">And because you were early, you're getting the best price it'll ever be.</p>
+</td></tr>
+
+<!-- Stats Strip — 4 gold boxes -->
+<tr><td style="padding:0 20px 16px">
+<table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%"><tr>
+<td width="25%" style="padding:0 3px 0 0"><div style="background:linear-gradient(135deg,#fbbf24,#f59e0b);border-radius:12px;padding:14px 6px;text-align:center">
+<p style="margin:0;font-size:24px;font-weight:800;color:#0f172a;line-height:1">122</p>
+<p style="margin:4px 0 0;font-size:9px;font-weight:800;color:#0f172a;text-transform:uppercase;letter-spacing:0.5px">AI Tools</p>
+</div></td>
+<td width="25%" style="padding:0 2px"><div style="background:linear-gradient(135deg,#fbbf24,#f59e0b);border-radius:12px;padding:14px 6px;text-align:center">
+<p style="margin:0;font-size:24px;font-weight:800;color:#0f172a;line-height:1">8</p>
+<p style="margin:4px 0 0;font-size:9px;font-weight:800;color:#0f172a;text-transform:uppercase;letter-spacing:0.5px">Cert Types</p>
+</div></td>
+<td width="25%" style="padding:0 2px"><div style="background:linear-gradient(135deg,#fbbf24,#f59e0b);border-radius:12px;padding:14px 6px;text-align:center">
+<p style="margin:0;font-size:24px;font-weight:800;color:#0f172a;line-height:1">15</p>
+<p style="margin:4px 0 0;font-size:9px;font-weight:800;color:#0f172a;text-transform:uppercase;letter-spacing:0.5px">AI Agents</p>
+</div></td>
+<td width="25%" style="padding:0 0 0 3px"><div style="background:linear-gradient(135deg,#fbbf24,#f59e0b);border-radius:12px;padding:14px 6px;text-align:center">
+<p style="margin:0;font-size:24px;font-weight:800;color:#0f172a;line-height:1">64+</p>
+<p style="margin:4px 0 0;font-size:9px;font-weight:800;color:#0f172a;text-transform:uppercase;letter-spacing:0.5px">Calculators</p>
+</div></td>
+</tr></table>
+</td></tr>
+
+<!-- Why £7.99 is a no-brainer (gold card) -->
+<tr><td style="padding:0 20px 16px"><div style="background:linear-gradient(135deg,rgba(251,191,36,0.12),rgba(251,191,36,0.03));border:1px solid rgba(251,191,36,0.3);border-radius:14px;padding:20px">
+<p style="margin:0 0 14px;font-size:15px;color:#fbbf24;font-weight:700;text-transform:uppercase;letter-spacing:0.5px">Why &pound;7.99 is a no-brainer</p>
+<p style="margin:0 0 10px;font-size:14px;color:#fff;line-height:1.6">Right now, most electricians are paying for:</p>
+<p style="margin:0 0 5px;font-size:14px;color:#fff;line-height:1.6">&#x2022; Cert software &mdash; &pound;25/mo</p>
+<p style="margin:0 0 5px;font-size:14px;color:#fff;line-height:1.6">&#x2022; Business/invoicing tools &mdash; &pound;20-40/mo</p>
+<p style="margin:0 0 5px;font-size:14px;color:#fff;line-height:1.6">&#x2022; RAMS &amp; method statements &mdash; &pound;15-20/mo</p>
+<p style="margin:0 0 5px;font-size:14px;color:#fff;line-height:1.6">&#x2022; Study materials &amp; revision &mdash; &pound;10-15/mo</p>
+<p style="margin:0 0 12px;font-size:14px;color:#fff;line-height:1.6">&#x2022; Job management &mdash; &pound;15-30/mo</p>
+<p style="margin:0 0 14px;font-size:16px;color:#fff;font-weight:700;line-height:1.6">That's &pound;85-130 a month. Exposed.</p>
+<p style="margin:0 0 14px;font-size:18px;color:#fbbf24;font-weight:800;line-height:1.5">Elec-Mate does ALL of that. For &pound;7.99. A month.</p>
+<p style="margin:0 0 5px;font-size:14px;color:#fff;line-height:1.6">8 certificate types. Quotes and invoices. RAMS generator. Expense tracking. 64+ electrical calculators. Study centre with 780 flash cards and AM2 simulators. Job management. Customer database. Booking portal.</p>
+<p style="margin:12px 0 0;font-size:14px;color:#fff;line-height:1.6">And we're adding more every week. Job vacancies are in. Materials marketplace with deals of the day from <strong style="color:#fff">Screwfix, Toolstation, CEF, Edmundson, Wickes, and B&amp;Q</strong> &mdash; the deals alone would save you more than the &pound;7.99 subscription.</p>
+</div></td></tr>
+
+<!-- What you get on day one -->
+<tr><td style="padding:0 20px 16px"><div style="background:rgba(30,41,59,0.8);border:1px solid rgba(255,255,255,0.1);border-radius:14px;padding:20px">
+<p style="margin:0 0 14px;font-size:15px;color:#fff;font-weight:700;text-transform:uppercase;letter-spacing:0.5px">What you get on day one</p>
+<p style="margin:0 0 5px;font-size:14px;color:#fff;line-height:1.6">&#x2713; <strong style="color:#fff">8 full certificate types</strong> (EIC, EICR, Minor Works, Fire Alarm, Solar PV, EV Charging, Emergency Lighting, PAT)</p>
+<p style="margin:0 0 5px;font-size:14px;color:#fff;line-height:1.6">&#x2713; Every cert: fill in on your phone, photo capture, PDF export, email to client. Done before you're back in the van.</p>
+<p style="margin:0 0 5px;font-size:14px;color:#fff;line-height:1.6">&#x2713; <strong style="color:#fff">AI tools that actually work</strong> &mdash; circuit design, cost engineering, fault diagnosis, photo analysis, wiring instructions</p>
+<p style="margin:0 0 5px;font-size:14px;color:#fff;line-height:1.6">&#x2713; Full business suite &mdash; quotes, invoices, expenses, job management</p>
+<p style="margin:0 0 5px;font-size:14px;color:#fff;line-height:1.6">&#x2713; Study centre &mdash; 18th Edition, I&amp;T, EV, solar, fire alarm courses</p>
+<p style="margin:0 0 5px;font-size:14px;color:#fff;line-height:1.6">&#x2713; Materials marketplace with live pricing from 6 suppliers</p>
+<p style="margin:0 0 5px;font-size:14px;color:#fff;line-height:1.6">&#x2713; Job vacancies board</p>
+<p style="margin:0;font-size:14px;color:#fff;line-height:1.6">&#x2713; 64+ electrical calculators, 14 business calculators</p>
+</div></td></tr>
+
+<!-- Pricing CTA (gold) -->
+<tr><td style="padding:0 20px 16px"><div style="background:linear-gradient(135deg,rgba(251,191,36,0.15),rgba(251,191,36,0.05));border:2px solid rgba(251,191,36,0.4);border-radius:16px;padding:24px 18px;text-align:center">
+<p style="margin:0 0 6px;font-size:15px;color:#fff;font-weight:700;letter-spacing:0.3px;text-transform:uppercase">&pound;7.99/mo &mdash; locked in forever.</p>
+<p style="margin:0;font-size:52px;font-weight:800;color:#fbbf24;line-height:1">&pound;${EA_OFFER_CONFIG.monthlyPrice.toFixed(2)}<span style="font-size:18px;font-weight:600;color:#fff">/mo</span></p>
+<p style="margin:8px 0 4px;font-size:14px;color:#fff;line-height:1.5">The App Store price will be <strong style="color:#fff">&pound;14.99/mo</strong> when we launch there.</p>
+<p style="margin:0 0 4px;font-size:14px;color:#fff;line-height:1.5">The standard web price is going to &pound;9.99/mo.</p>
+<p style="margin:0 0 18px;font-size:14px;color:#fff;line-height:1.5">You're getting &pound;7.99 because you signed up early, and this is my way of saying thank you for believing in it before it was even built.</p>
+<a href="${EA_OFFER_CONFIG.monthlyPaymentLink}" style="display:block;padding:16px;background:linear-gradient(135deg,#fbbf24,#f59e0b);color:#0f172a;text-decoration:none;font-size:16px;font-weight:700;border-radius:12px;text-align:center;margin-bottom:10px">Lock in &pound;${EA_OFFER_CONFIG.monthlyPrice.toFixed(2)}/mo forever &#x2192;</a>
+<a href="${EA_OFFER_CONFIG.yearlyPaymentLink}" style="display:block;padding:14px;background:rgba(251,191,36,0.15);border:2px solid rgba(251,191,36,0.5);color:#fbbf24;text-decoration:none;font-size:15px;font-weight:600;border-radius:12px;text-align:center">Or go yearly: &pound;${EA_OFFER_CONFIG.yearlyPrice.toFixed(2)} (&pound;${(EA_OFFER_CONFIG.yearlyPrice / 12).toFixed(2)}/mo)</a>
+</div></td></tr>
+
+<!-- Want to try before you buy? (blue) -->
+<tr><td style="padding:0 20px 12px"><div style="background:rgba(59,130,246,0.08);border:1px solid rgba(59,130,246,0.25);border-radius:12px;padding:16px;text-align:center">
+<p style="margin:0 0 8px;font-size:14px;color:#fff;line-height:1.6">Reply to this email and I'll set you up with a free trial. No card needed. Have a look around, see what's there.</p>
+<p style="margin:0;font-size:14px;color:#fff;line-height:1.6"><strong style="color:#60a5fa">founder@elec-mate.com</strong> &mdash; comes straight to me. Not a chatbot. Not a support team. Just me, Andrew.</p>
+</div></td></tr>
+
+<!-- Early access pricing won't last -->
+<tr><td style="padding:0 20px 16px"><div style="background:linear-gradient(135deg,rgba(251,191,36,0.06),rgba(251,191,36,0.02));border:1px solid rgba(251,191,36,0.15);border-radius:14px;padding:18px">
+<p style="margin:0 0 8px;font-size:14px;color:#fff;line-height:1.6">Once we launch on the App Store, the price is &pound;14.99/mo. Early access pricing is for people who were here first. When it's gone, it's gone. Prices only go one way from here.</p>
+</div></td></tr>
+
+<!-- Sign-off -->
+<tr><td style="padding:0 20px 16px"><div style="background:linear-gradient(135deg,rgba(251,191,36,0.08),rgba(251,191,36,0.02));border:1px solid rgba(251,191,36,0.15);border-radius:14px;padding:18px">
+<p style="margin:0 0 4px;font-size:15px;color:#fff">Cheers,</p>
+<p style="margin:0 0 2px;font-size:17px;color:#fbbf24;font-weight:700">Andrew</p>
+<p style="margin:0;font-size:13px;color:#fff">Founder &middot; Elec-Mate</p>
+<p style="margin:6px 0 0;font-size:12px;color:#fff">Built in Cumbria. Built for the trade.</p>
+</div></td></tr>
+
+<!-- Footer -->
+<tr><td style="padding:16px 24px;text-align:center;border-top:1px solid rgba(255,255,255,0.08)">
+<p style="margin:0;font-size:12px;color:#fff">&copy; ${new Date().getFullYear()} Elec-Mate &middot; Built for UK Electricians &#x1F1EC;&#x1F1E7; &#x26A1;</p>
+</td></tr>
+
+</table></td></tr></table>
+</body></html>`;
+}
+
 Deno.serve(async (req) => {
   if (req.method === 'OPTIONS') {
     return new Response('ok', { headers: corsHeaders });
   }
 
   try {
-    const { action, emails, inviteId, token, testEmail, segment, manualEmail, recipientName } =
+    const { action, emails, inviteId, token, testEmail, segment, manualEmail, recipientName, email_version } =
       await req.json();
 
     // Actions that don't require any auth (for unauthenticated users)
@@ -2496,23 +2599,27 @@ Deno.serve(async (req) => {
         // Send a test offer email to a specific address
         if (!testEmail) throw new Error('testEmail is required');
 
-        const eaTestHtml = generateEarlyAccessOfferHTML(testEmail);
+        const eaTestHtml = email_version === 'v6' ? generateEarlyAccessV6HTML() : generateEarlyAccessOfferHTML(testEmail);
+        const eaTestSubject = email_version === 'v6'
+          ? "[TEST] You signed up early. Here's what that gets you."
+          : '[TEST] One-off offer — £7.99/month, locked forever';
+        const eaTestVersion = email_version === 'v6' ? 'v6' : 'v1';
         const { data: eaTestData, error: eaTestErr } = await resend.emails.send({
           from: 'Elec-Mate <founder@elec-mate.com>',
           replyTo: 'founder@elec-mate.com',
           to: [testEmail.trim().toLowerCase()],
-          subject: '[TEST] One-off offer — £7.99/month, locked forever',
+          subject: eaTestSubject,
           html: eaTestHtml,
           tags: [
             { name: 'campaign', value: 'early_access_offer' },
-            { name: 'version', value: 'v1' },
+            { name: 'version', value: eaTestVersion },
             { name: 'type', value: 'test' },
           ],
         });
 
         if (eaTestErr) throw new Error(`Failed to send: ${eaTestErr.message}`);
 
-        console.log(`EA offer test email sent to ${testEmail} by admin ${user.id}`);
+        console.log(`EA offer test email (${eaTestVersion}) sent to ${testEmail} by admin ${user.id}`);
         result = { success: true, email: testEmail, resendId: eaTestData?.id };
         break;
       }
@@ -2557,17 +2664,21 @@ Deno.serve(async (req) => {
         for (let i = 0; i < eaBatch.length; i++) {
           const invite = eaBatch[i];
           try {
-            const emailHtml = generateEarlyAccessOfferHTML(invite.email);
+            const emailHtml = email_version === 'v6' ? generateEarlyAccessV6HTML() : generateEarlyAccessOfferHTML(invite.email);
+            const eaCampSubject = email_version === 'v6'
+              ? "You signed up early. Here's what that gets you."
+              : 'One-off offer — £7.99/month, locked forever';
+            const eaCampVersion = email_version === 'v6' ? 'v6' : 'v1';
 
             const { data: emailData, error: emailError } = await resend.emails.send({
               from: 'Elec-Mate <founder@elec-mate.com>',
               replyTo: 'founder@elec-mate.com',
               to: [invite.email.trim().toLowerCase()],
-              subject: 'One-off offer — £7.99/month, locked forever',
+              subject: eaCampSubject,
               html: emailHtml,
               tags: [
                 { name: 'campaign', value: 'early_access_offer' },
-                { name: 'version', value: 'v1' },
+                { name: 'version', value: eaCampVersion },
               ],
             });
 

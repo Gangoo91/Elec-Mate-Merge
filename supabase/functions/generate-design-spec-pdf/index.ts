@@ -7,10 +7,10 @@ serve(async (req) => {
 
   try {
     const { designData, installationDesign, planData, companyDetails, userId } = await req.json();
-    const pdfMonkeyApiKey = Deno.env.get('PDF_MONKEY_API_KEY');
+    const pdfMonkeyApiKey = Deno.env.get('PDFMONKEY_API_KEY');
 
     if (!pdfMonkeyApiKey) {
-      throw new Error('PDF_MONKEY_API_KEY not configured');
+      throw new Error('PDFMONKEY_API_KEY not configured');
     }
 
     console.log('🎨 Starting PDF generation with PDF Monkey template...');

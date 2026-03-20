@@ -302,6 +302,7 @@ export default function AdminEarlyAccess() {
   };
 
   // ── £7.99 Offer Campaign ─────────────────────────────────────────
+  const [offerVersion, setOfferVersion] = useState<'v5' | 'v6'>('v6');
   const [offerTestEmail, setOfferTestEmail] = useState('');
   const [showOfferTest, setShowOfferTest] = useState(false);
   const [confirmOfferSend, setConfirmOfferSend] = useState(false);
@@ -336,7 +337,7 @@ export default function AdminEarlyAccess() {
   const sendOfferTestMutation = useMutation({
     mutationFn: async (email: string) => {
       const { data, error } = await supabase.functions.invoke('send-early-access-invite', {
-        body: { action: 'send_ea_offer_test', testEmail: email },
+        body: { action: 'send_ea_offer_test', testEmail: email, email_version: offerVersion },
       });
       if (error) throw error;
       if (data?.error) throw new Error(data.error);
@@ -383,7 +384,7 @@ export default function AdminEarlyAccess() {
             Authorization: `Bearer ${session?.access_token}`,
             apikey: SUPABASE_PUBLISHABLE_KEY,
           },
-          body: JSON.stringify({ action: 'send_ea_offer_campaign' }),
+          body: JSON.stringify({ action: 'send_ea_offer_campaign', email_version: offerVersion }),
         });
 
         const data = await resp.json();
@@ -629,6 +630,30 @@ export default function AdminEarlyAccess() {
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-3">
+            {/* Version selector */}
+            <div className="flex items-center gap-1.5">
+              <span className="text-xs text-white font-semibold mr-1">Template:</span>
+              <Button
+                variant={offerVersion === 'v6' ? 'default' : 'outline'}
+                size="sm"
+                onClick={() => setOfferVersion('v6')}
+                className={`h-8 touch-manipulation text-xs relative ${offerVersion === 'v6' ? 'bg-indigo-500 text-white hover:bg-indigo-600' : ''}`}
+              >
+                v6 No Brainer
+                <Badge className="absolute -top-1.5 -right-1.5 bg-green-500 text-[9px] px-1 py-0 h-4 text-white border-0">
+                  NEW
+                </Badge>
+              </Button>
+              <Button
+                variant={offerVersion === 'v5' ? 'default' : 'outline'}
+                size="sm"
+                onClick={() => setOfferVersion('v5')}
+                className={`h-8 touch-manipulation text-xs ${offerVersion === 'v5' ? 'bg-red-500 text-white hover:bg-red-600' : ''}`}
+              >
+                v5 Original
+              </Button>
+            </div>
+
             {/* Pricing preview */}
             <div className="grid grid-cols-2 gap-2">
               <div className="p-2 rounded-xl bg-amber-500/10 border border-amber-500/20 text-center">
@@ -647,7 +672,7 @@ export default function AdminEarlyAccess() {
             <div className="p-3 rounded-xl bg-muted/50 border border-border/50 space-y-1.5">
               <p className="text-xs text-white font-semibold">Email Preview</p>
               <p className="text-xs text-amber-400 font-medium">
-                Subject: One-off offer — £7.99/month, locked forever
+                Subject: {offerVersion === 'v6' ? "You signed up early. Here's what that gets you." : 'One-off offer — £7.99/month, locked forever'}
               </p>
               <p className="text-xs text-white">
                 From: Elec-Mate &lt;offers@elec-mate.com&gt; · Reply-To: founder@elec-mate.com

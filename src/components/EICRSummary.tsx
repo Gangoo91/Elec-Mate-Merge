@@ -1459,10 +1459,19 @@ const EICRSummary = ({ formData: propFormData, onUpdate: propOnUpdate }: EICRSum
               haptics.tap();
               handleGenerateCertificate();
             }}
-            disabled={!isFormComplete()}
+            disabled={!isFormComplete() || isGenerating}
           >
-            <FileDown className="h-5 w-5" />
-            Generate PDF Certificate
+            {isGenerating ? (
+              <>
+                <Loader2 className="h-5 w-5 animate-spin" />
+                Generating...
+              </>
+            ) : (
+              <>
+                <FileDown className="h-5 w-5" />
+                Generate PDF Certificate
+              </>
+            )}
           </Button>
 
           <div className="grid grid-cols-2 gap-3">

@@ -47,6 +47,10 @@ const BoardSetupCard: React.FC<BoardSetupCardProps> = ({
   const isCustomMake = board.make ? !BOARD_MANUFACTURERS.includes(board.make as any) || board.make === 'Other' : false;
   const [showCustomMake, setShowCustomMake] = useState(isCustomMake);
 
+  // Track whether user has selected "Other" for free-text location entry
+  const isCustomLocation = board.location ? !BOARD_LOCATIONS.includes(board.location as any) && board.location !== 'Other' : false;
+  const [showCustomLocation, setShowCustomLocation] = useState(isCustomLocation);
+
   const handleMakeChange = (value: string) => {
     if (value === 'Other') {
       setShowCustomMake(true);
@@ -54,6 +58,16 @@ const BoardSetupCard: React.FC<BoardSetupCardProps> = ({
     } else {
       setShowCustomMake(false);
       onUpdate('make', value);
+    }
+  };
+
+  const handleLocationChange = (value: string) => {
+    if (value === 'Other') {
+      setShowCustomLocation(true);
+      onUpdate('location', '');
+    } else {
+      setShowCustomLocation(false);
+      onUpdate('location', value);
     }
   };
 
@@ -116,21 +130,40 @@ const BoardSetupCard: React.FC<BoardSetupCardProps> = ({
               <MapPin className="h-3 w-3" />
               Location
             </Label>
-            <Select
-              value={board.location || ''}
-              onValueChange={(value) => onUpdate('location', value)}
-            >
-              <SelectTrigger className="h-11 touch-manipulation bg-white/5 border-white/10 text-white focus:border-elec-yellow/50">
-                <SelectValue placeholder="Select..." />
-              </SelectTrigger>
-              <SelectContent className="bg-card border-white/10">
-                {BOARD_LOCATIONS.map((loc) => (
-                  <SelectItem key={loc} value={loc} className="text-white">
-                    {loc}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
+            {showCustomLocation ? (
+              <div className="flex gap-2">
+                <Input
+                  value={board.location || ''}
+                  onChange={(e) => onUpdate('location', e.target.value)}
+                  placeholder="Type location..."
+                  className="h-11 touch-manipulation bg-white/5 border-white/10 text-white flex-1"
+                  autoFocus
+                />
+                <button
+                  type="button"
+                  onClick={() => { setShowCustomLocation(false); onUpdate('location', ''); }}
+                  className="h-11 px-3 text-xs text-white/50 hover:text-white bg-white/5 border border-white/10 rounded-md"
+                >
+                  Back
+                </button>
+              </div>
+            ) : (
+              <Select
+                value={board.location && BOARD_LOCATIONS.includes(board.location as any) ? board.location : ''}
+                onValueChange={handleLocationChange}
+              >
+                <SelectTrigger className="h-11 touch-manipulation bg-white/5 border-white/10 text-white focus:border-elec-yellow/50">
+                  <SelectValue placeholder="Select..." />
+                </SelectTrigger>
+                <SelectContent className="bg-card border-white/10">
+                  {BOARD_LOCATIONS.map((loc) => (
+                    <SelectItem key={loc} value={loc} className="text-white">
+                      {loc}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            )}
           </div>
 
           {/* Manufacturer */}

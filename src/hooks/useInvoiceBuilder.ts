@@ -388,6 +388,10 @@ export const useInvoiceBuilder = (sourceQuote?: Quote, existingInvoice?: Partial
         ...prev,
         client,
         jobDetails,
+        // Sync work completion date from form to invoice-level field (used by PDF)
+        ...(jobDetails.workStartDate && {
+          work_completion_date: new Date(jobDetails.workStartDate),
+        }),
       }));
     },
     []

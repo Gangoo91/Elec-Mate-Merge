@@ -31,14 +31,19 @@ interface CouponsResponse {
 
 function formatDiscount(type: string, value: number): string {
   switch (type) {
-    case 'percentage':
-      return `${value}% off`;
+    case 'percentage': {
+      // Handle decimal-stored percentages (e.g. 0.90 → 90, 0.15 → 15)
+      const pct = value > 0 && value < 1 ? Math.round(value * 100) : value;
+      return `${pct}% off`;
+    }
     case 'fixed':
       return `£${value.toFixed(2)} off`;
     case 'free_delivery':
       return 'Free delivery';
-    default:
-      return `${value}% off`;
+    default: {
+      const defaultPct = value > 0 && value < 1 ? Math.round(value * 100) : value;
+      return `${defaultPct}% off`;
+    }
   }
 }
 

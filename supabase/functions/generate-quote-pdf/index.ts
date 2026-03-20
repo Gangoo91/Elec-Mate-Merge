@@ -14,7 +14,7 @@ serve(async (req) => {
 
   try {
     const { quoteData, userId } = await req.json();
-    const pdfMonkeyApiKey = Deno.env.get('PDF_MONKEY_API_KEY');
+    const pdfMonkeyApiKey = Deno.env.get('PDFMONKEY_API_KEY');
 
     console.log('Generating quote PDF');
 

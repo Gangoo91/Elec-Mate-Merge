@@ -1,6 +1,6 @@
 import { serve, corsHeaders } from '../_shared/deps.ts';
 
-const PDF_MONKEY_API_KEY = Deno.env.get('PDF_MONKEY_API_KEY');
+const PDFMONKEY_API_KEY = Deno.env.get('PDFMONKEY_API_KEY');
 const MAINTENANCE_METHOD_TEMPLATE_ID = '5B71875B-D774-448A-8DB6-841975B0564C';
 
 /**
@@ -30,7 +30,7 @@ serve(async (req) => {
     console.log('[MAINTENANCE-PDF] Request started');
 
     // Verify PDF Monkey API key is configured
-    if (!PDF_MONKEY_API_KEY) {
+    if (!PDFMONKEY_API_KEY) {
       console.error('[MAINTENANCE-PDF] API key not configured');
       return new Response(JSON.stringify({ error: 'PDF Monkey API key not configured' }), {
         status: 500,
@@ -90,7 +90,7 @@ serve(async (req) => {
     const createResponse = await fetch('https://api.pdfmonkey.io/api/v1/documents', {
       method: 'POST',
       headers: {
-        Authorization: `Bearer ${PDF_MONKEY_API_KEY}`,
+        Authorization: `Bearer ${PDFMONKEY_API_KEY}`,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
@@ -133,7 +133,7 @@ serve(async (req) => {
       const statusResponse = await fetch(
         `https://api.pdfmonkey.io/api/v1/documents/${documentId}`,
         {
-          headers: { Authorization: `Bearer ${PDF_MONKEY_API_KEY}` },
+          headers: { Authorization: `Bearer ${PDFMONKEY_API_KEY}` },
         }
       );
 

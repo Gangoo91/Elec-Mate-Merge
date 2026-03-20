@@ -98,7 +98,7 @@ serve(async (req) => {
 
   try {
     const { ramsData, methodData } = await req.json();
-    const pdfMonkeyApiKey = Deno.env.get('PDF_MONKEY_API_KEY');
+    const pdfMonkeyApiKey = Deno.env.get('PDFMONKEY_API_KEY');
 
     console.log('Combined RAMS PDF Generation Started');
     console.log('Template ID:', COMBINED_RAMS_TEMPLATE_ID);
@@ -117,7 +117,7 @@ serve(async (req) => {
     });
 
     if (!pdfMonkeyApiKey) {
-      console.warn('PDF_MONKEY_API_KEY not configured');
+      console.warn('PDFMONKEY_API_KEY not configured');
       return new Response(
         JSON.stringify({
           success: false,

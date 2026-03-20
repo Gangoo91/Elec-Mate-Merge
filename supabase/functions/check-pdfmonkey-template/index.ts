@@ -13,7 +13,7 @@ serve(async (req) => {
 
   try {
     const { templateId } = await req.json();
-    const pdfMonkeyApiKey = Deno.env.get('PDF_MONKEY_API_KEY');
+    const pdfMonkeyApiKey = Deno.env.get('PDFMONKEY_API_KEY');
 
     console.log('🔍 Checking PDF Monkey template:', templateId);
 
@@ -21,7 +21,7 @@ serve(async (req) => {
       return new Response(
         JSON.stringify({
           success: false,
-          error: 'PDF_MONKEY_API_KEY not configured',
+          error: 'PDFMONKEY_API_KEY not configured',
         }),
         {
           headers: { ...corsHeaders, 'Content-Type': 'application/json' },

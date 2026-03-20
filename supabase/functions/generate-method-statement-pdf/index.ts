@@ -100,12 +100,12 @@ serve(async (req) => {
 
     console.log('✅ Method data received. Keys:', Object.keys(methodData));
 
-    const pdfMonkeyApiKey = Deno.env.get('PDF_MONKEY_API_KEY');
+    const pdfMonkeyApiKey = Deno.env.get('PDFMONKEY_API_KEY');
 
     console.log('Generating Method Statement PDF with template:', METHOD_STATEMENT_TEMPLATE_ID);
 
     if (!pdfMonkeyApiKey) {
-      console.log('PDF_MONKEY_API_KEY not configured, using fallback');
+      console.log('PDFMONKEY_API_KEY not configured, using fallback');
       return new Response(
         JSON.stringify({
           success: false,

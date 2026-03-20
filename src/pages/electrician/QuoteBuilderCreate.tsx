@@ -1,12 +1,13 @@
 import { useNavigate, useLocation } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import { motion } from 'framer-motion';
-import { CheckCircle, ArrowLeft, FileText, ClipboardCheck, Package } from 'lucide-react';
+import { CheckCircle, ArrowLeft, FileText, ClipboardCheck, Package, FolderOpen } from 'lucide-react';
 import { QuoteWizard } from '@/components/electrician/quote-builder/QuoteWizard';
 import { useQuoteStorage } from '@/hooks/useQuoteStorage';
 import { useState, useEffect } from 'react';
 import { VoiceFormProvider } from '@/contexts/VoiceFormContext';
 import { Button } from '@/components/ui/button';
+import { supabase } from '@/integrations/supabase/client';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -72,6 +73,10 @@ const QuoteBuilderCreate = () => {
   const [materialsContext, setMaterialsContext] = useState<MaterialsContext | null>(null);
   const [showExitDialog, setShowExitDialog] = useState(false);
   const [isLoadingContext, setIsLoadingContext] = useState(true);
+  const [projectContext, setProjectContext] = useState<{
+    client?: { name: string; email?: string; phone?: string; address: string; postcode: string };
+    jobDetails?: { title: string; description: string; location: string };
+  } | null>(null);
 
   // Read projectId from URL — when coming from a project page
   const projectId = new URLSearchParams(location.search).get('projectId') || undefined;
@@ -118,6 +123,45 @@ const QuoteBuilderCreate = () => {
         setMaterialsContext(parsed.materialsData);
         sessionStorage.removeItem(materialsSessionId);
       }
+    }
+
+    // If projectId is present and no other context was loaded, fetch project details
+    if (projectId && !costSessionId && !certificateSessionId && !siteVisitSessionId && !materialsSessionId) {
+      (async () => {
+        try {
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          const { data: project } = await (supabase as any)
+            .from('spark_projects')
+            .select('title, description, location, customer_id, customers(name, email, phone, address)')
+            .eq('id', projectId)
+            .single();
+
+          if (project) {
+            const customer = project.customers;
+            setProjectContext({
+              ...(customer && {
+                client: {
+                  name: customer.name || '',
+                  email: customer.email || '',
+                  phone: customer.phone || '',
+                  address: customer.address || '',
+                  postcode: '',
+                },
+              }),
+              jobDetails: {
+                title: project.title || '',
+                description: project.description || '',
+                location: project.location || '',
+              },
+            });
+          }
+        } catch (err) {
+          console.warn('[QuoteBuilderCreate] Failed to fetch project details:', err);
+        } finally {
+          setIsLoadingContext(false);
+        }
+      })();
+      return; // defer setIsLoadingContext to the async block
     }
 
     // Mark context loading as complete
@@ -256,6 +300,25 @@ const QuoteBuilderCreate = () => {
           </motion.div>
         )}
 
+        {/* Project Data Banner */}
+        {projectContext?.client && (
+          <motion.div
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="mx-4 mt-4 flex items-center gap-3 p-3.5 rounded-2xl bg-purple-500/10 border border-purple-500/20"
+          >
+            <div className="w-10 h-10 rounded-xl bg-purple-500 flex items-center justify-center flex-shrink-0">
+              <FolderOpen className="h-5 w-5 text-white" />
+            </div>
+            <div className="flex-1 min-w-0">
+              <p className="text-[15px] font-medium text-purple-400">Imported from Project</p>
+              <p className="text-[13px] text-white">
+                Client &amp; job details pre-filled
+              </p>
+            </div>
+          </motion.div>
+        )}
+
         {/* Materials Import Banner */}
         {materialsContext && (
           <motion.div
@@ -287,7 +350,11 @@ const QuoteBuilderCreate = () => {
           ) : (
             <QuoteWizard
               onQuoteGenerated={handleQuoteGenerated}
-              initialQuote={projectId ? { project_id: projectId } : undefined}
+              initialQuote={projectId ? {
+                project_id: projectId,
+                ...(projectContext?.client && { client: projectContext.client }),
+                ...(projectContext?.jobDetails && { jobDetails: projectContext.jobDetails }),
+              } : undefined}
               initialCostData={costContext}
               initialCertificateData={certificateContext}
               initialSiteVisitData={siteVisitContext}
