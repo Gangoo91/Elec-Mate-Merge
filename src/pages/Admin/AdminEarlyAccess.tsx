@@ -23,6 +23,7 @@ import AdminSearchInput from '@/components/admin/AdminSearchInput';
 import PullToRefresh from '@/components/admin/PullToRefresh';
 import {
   RefreshCw,
+  RotateCcw,
   Send,
   Users,
   CheckCircle,
@@ -313,6 +314,8 @@ export default function AdminEarlyAccess() {
     () => (window as any).__eaOfferBatchProgress || { sent: 0, remaining: 0 }
   );
   const offerStopRef = useRef(false);
+  const [confirmResetOffer, setConfirmResetOffer] = useState(false);
+  const [resettingOffer, setResettingOffer] = useState(false);
 
   // Fetch offer status
   const { data: offerStatus, refetch: refetchOffer } = useQuery<{
@@ -353,6 +356,29 @@ export default function AdminEarlyAccess() {
       haptic.error();
       toast.error(`Failed: ${error.message}`);
     },
+  });
+
+  // Reset offer campaign — clears offer_sent_at so campaign can be re-sent
+  const resetOfferMutation = useMutation({
+    mutationFn: async () => {
+      const { data, error } = await supabase.functions.invoke('send-early-access-invite', {
+        body: { action: 'reset_ea_offer_campaign' },
+      });
+      if (error) throw error;
+      if (data?.error) throw new Error(data.error);
+      return data;
+    },
+    onSuccess: (data) => {
+      haptic.success();
+      toast.success(`Campaign reset — ${data.remaining} recipients ready to send`);
+      setConfirmResetOffer(false);
+      queryClient.invalidateQueries({ queryKey: ['admin-ea-offer-status'] });
+    },
+    onError: (error) => {
+      haptic.error();
+      toast.error(`Reset failed: ${error.message}`);
+    },
+    onSettled: () => setResettingOffer(false),
   });
 
   // Offer batch sender — same window pattern as conversion campaign
@@ -672,7 +698,10 @@ export default function AdminEarlyAccess() {
             <div className="p-3 rounded-xl bg-muted/50 border border-border/50 space-y-1.5">
               <p className="text-xs text-white font-semibold">Email Preview</p>
               <p className="text-xs text-amber-400 font-medium">
-                Subject: {offerVersion === 'v6' ? "You signed up early. Here's what that gets you." : 'One-off offer — £7.99/month, locked forever'}
+                Subject:{' '}
+                {offerVersion === 'v6'
+                  ? "You signed up early. Here's what that gets you."
+                  : 'One-off offer — £7.99/month, locked forever'}
               </p>
               <p className="text-xs text-white">
                 From: Elec-Mate &lt;offers@elec-mate.com&gt; · Reply-To: founder@elec-mate.com
@@ -763,6 +792,29 @@ export default function AdminEarlyAccess() {
                 </p>
               </div>
             )}
+
+            {/* Reset campaign — clears sent flags so campaign can be re-sent (e.g. new email version) */}
+            {!offerBatchSending && (
+              <div className="pt-2 border-t border-border/40">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => setConfirmResetOffer(true)}
+                  disabled={resettingOffer}
+                  className="w-full h-10 touch-manipulation text-xs text-red-400 border-red-500/30 hover:bg-red-500/10 gap-2"
+                >
+                  {resettingOffer ? (
+                    <Loader2 className="h-3.5 w-3.5 animate-spin" />
+                  ) : (
+                    <RotateCcw className="h-3.5 w-3.5" />
+                  )}
+                  Reset Campaign
+                </Button>
+                <p className="text-[10px] text-white/50 text-center mt-1">
+                  Clears sent history so this campaign can be re-sent (e.g. new email version)
+                </p>
+              </div>
+            )}
           </CardContent>
         </Card>
 
@@ -791,6 +843,53 @@ export default function AdminEarlyAccess() {
               >
                 <Send className="h-4 w-4 mr-2" />
                 Start Sending
+              </AlertDialogAction>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
+
+        {/* Reset Offer Campaign Dialog */}
+        <AlertDialog open={confirmResetOffer} onOpenChange={setConfirmResetOffer}>
+          <AlertDialogContent className="max-w-[calc(100vw-2rem)] sm:max-w-lg rounded-2xl p-5 sm:p-6">
+            <AlertDialogHeader className="space-y-3">
+              <AlertDialogTitle className="text-base sm:text-lg leading-tight">
+                Reset the £7.99 offer campaign?
+              </AlertDialogTitle>
+              <AlertDialogDescription className="text-sm leading-relaxed space-y-2">
+                <span className="block">
+                  This clears the sent history for all{' '}
+                  <strong>{(offerStatus?.sent || 0).toLocaleString()}</strong> records so the
+                  campaign can be re-sent — for example, to deliver the new v6 email to everyone.
+                </span>
+                <span className="block">
+                  Anyone who has already created an account will still be automatically excluded
+                  when you next send. Bounced emails are never touched.
+                </span>
+                <span className="block font-semibold text-amber-400">This cannot be undone.</span>
+              </AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter className="flex-col-reverse sm:flex-row gap-2 sm:gap-2 pt-2">
+              <AlertDialogCancel
+                className="h-12 sm:h-11 touch-manipulation text-base sm:text-sm w-full sm:w-auto mt-0"
+                disabled={resettingOffer}
+              >
+                Cancel
+              </AlertDialogCancel>
+              <AlertDialogAction
+                onClick={() => {
+                  setResettingOffer(true);
+                  setConfirmResetOffer(false);
+                  resetOfferMutation.mutate();
+                }}
+                disabled={resettingOffer}
+                className="h-12 sm:h-11 touch-manipulation text-base sm:text-sm bg-red-500 hover:bg-red-600 text-white font-semibold w-full sm:w-auto"
+              >
+                {resettingOffer ? (
+                  <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                ) : (
+                  <RotateCcw className="h-4 w-4 mr-2" />
+                )}
+                Yes, Reset Campaign
               </AlertDialogAction>
             </AlertDialogFooter>
           </AlertDialogContent>
