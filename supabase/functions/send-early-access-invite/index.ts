@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import 'jsr:@supabase/functions-js/edge-runtime.d.ts';
 import { createClient } from 'jsr:@supabase/supabase-js@2';
 import { Resend } from 'npm:resend@2.0.0';
@@ -889,8 +890,17 @@ Deno.serve(async (req) => {
   }
 
   try {
-    const { action, emails, inviteId, token, testEmail, segment, manualEmail, recipientName, email_version } =
-      await req.json();
+    const {
+      action,
+      emails,
+      inviteId,
+      token,
+      testEmail,
+      segment,
+      manualEmail,
+      recipientName,
+      email_version,
+    } = await req.json();
 
     // Actions that don't require any auth (for unauthenticated users)
     // send_test_launch_email included for quick testing from CLI
@@ -2599,10 +2609,14 @@ Deno.serve(async (req) => {
         // Send a test offer email to a specific address
         if (!testEmail) throw new Error('testEmail is required');
 
-        const eaTestHtml = email_version === 'v6' ? generateEarlyAccessV6HTML() : generateEarlyAccessOfferHTML(testEmail);
-        const eaTestSubject = email_version === 'v6'
-          ? "[TEST] You signed up early. Here's what that gets you."
-          : '[TEST] One-off offer — £7.99/month, locked forever';
+        const eaTestHtml =
+          email_version === 'v6'
+            ? generateEarlyAccessV6HTML()
+            : generateEarlyAccessOfferHTML(testEmail);
+        const eaTestSubject =
+          email_version === 'v6'
+            ? "[TEST] You signed up early. Here's what that gets you."
+            : '[TEST] One-off offer — £7.99/month, locked forever';
         const eaTestVersion = email_version === 'v6' ? 'v6' : 'v1';
         const { data: eaTestData, error: eaTestErr } = await resend.emails.send({
           from: 'Elec-Mate <founder@elec-mate.com>',
@@ -2619,7 +2633,9 @@ Deno.serve(async (req) => {
 
         if (eaTestErr) throw new Error(`Failed to send: ${eaTestErr.message}`);
 
-        console.log(`EA offer test email (${eaTestVersion}) sent to ${testEmail} by admin ${user.id}`);
+        console.log(
+          `EA offer test email (${eaTestVersion}) sent to ${testEmail} by admin ${user.id}`
+        );
         result = { success: true, email: testEmail, resendId: eaTestData?.id };
         break;
       }
@@ -2664,10 +2680,14 @@ Deno.serve(async (req) => {
         for (let i = 0; i < eaBatch.length; i++) {
           const invite = eaBatch[i];
           try {
-            const emailHtml = email_version === 'v6' ? generateEarlyAccessV6HTML() : generateEarlyAccessOfferHTML(invite.email);
-            const eaCampSubject = email_version === 'v6'
-              ? "You signed up early. Here's what that gets you."
-              : 'One-off offer — £7.99/month, locked forever';
+            const emailHtml =
+              email_version === 'v6'
+                ? generateEarlyAccessV6HTML()
+                : generateEarlyAccessOfferHTML(invite.email);
+            const eaCampSubject =
+              email_version === 'v6'
+                ? "You signed up early. Here's what that gets you."
+                : 'One-off offer — £7.99/month, locked forever';
             const eaCampVersion = email_version === 'v6' ? 'v6' : 'v1';
 
             const { data: emailData, error: emailError } = await resend.emails.send({
@@ -2730,6 +2750,47 @@ Deno.serve(async (req) => {
           message: eaComplete
             ? `All done! Sent ${eaSentCount} emails.`
             : `Sent ${eaSentCount}. ~${eaRemainingCount} remaining.`,
+        };
+        break;
+      }
+
+      case 'reset_ea_offer_campaign': {
+        // Clears offer_sent_at + offer_email_id so the campaign can be re-sent.
+        // Bounced rows are left untouched — they can never receive email again.
+        // Signed-up users are excluded at send-time regardless, so resetting their
+        // rows is harmless — they will just be skipped again on the next send.
+        const { error: resetErr } = await supabaseAdmin
+          .from('early_access_invites')
+          .update({ offer_sent_at: null, offer_email_id: null })
+          .not('offer_sent_at', 'is', null); // only touch rows that have actually been sent
+
+        if (resetErr) throw resetErr;
+
+        // Re-compute how many are now eligible so the UI can update immediately
+        const { data: postResetAuthData } = await supabaseAdmin.auth.admin.listUsers({
+          perPage: 1000,
+        });
+        const postResetSignedUp = new Set(
+          postResetAuthData?.users
+            ?.map((u: any) => u.email?.toLowerCase().trim())
+            .filter(Boolean) || []
+        );
+        const { data: postResetRows } = await supabaseAdmin
+          .from('early_access_invites')
+          .select('email, bounced_at')
+          .is('bounced_at', null);
+
+        const nowEligible = (postResetRows || []).filter(
+          (r: any) => !postResetSignedUp.has(r.email.toLowerCase().trim())
+        ).length;
+
+        console.log(
+          `EA offer campaign reset by admin ${user.id}. ${nowEligible} records now eligible.`
+        );
+        result = {
+          success: true,
+          remaining: nowEligible,
+          message: `Campaign reset — ${nowEligible} eligible recipients ready to send`,
         };
         break;
       }
