@@ -88,6 +88,7 @@ const TimeTrackerPage = () => {
     updateLabel,
     updateNotes,
     deleteSession,
+    markInvoiced,
     isLoading,
   } = useTimeTracker();
   const { invoices, saveInvoice } = useInvoiceStorage();
@@ -277,6 +278,12 @@ const TimeTrackerPage = () => {
     try {
       const success = await saveInvoice(newInvoice);
       if (success) {
+        // Mark time session as invoiced
+        try {
+          await markInvoiced(sess.id, invoiceId);
+        } catch {
+          /* non-blocking */
+        }
         setInvoiceSheetOpen(false);
         setPageState('success');
         setTimeout(() => {
@@ -287,19 +294,61 @@ const TimeTrackerPage = () => {
     } catch {
       toast({ title: 'Failed to create invoice', variant: 'destructive' });
     }
-  }, [stoppedSession, hourlyRate, saveInvoice, navigate]);
+  }, [stoppedSession, hourlyRate, saveInvoice, markInvoiced, navigate]);
 
   const handleAddToExisting = useCallback(
-    async (invoiceQuote: { id: string }) => {
+    async (existingInvoice: (typeof invoices)[0]) => {
       if (!stoppedSession) return;
-      toast({
-        title: 'Coming soon',
-        description: 'Adding to existing invoices will be available in a future update.',
-        duration: 3000,
-      });
-      setInvoiceSheetOpen(false);
+      const sess = stoppedSession;
+      const rate = sess.hourly_rate ?? hourlyRate;
+      const hours = Math.round(((sess.duration_seconds ?? 0) / 3600) * 100) / 100;
+      const lineTotal = Math.round(hours * rate * 100) / 100;
+      const labourDescription = `Electrical labour${sess.label ? ` \u2014 ${sess.label}` : ''}`;
+
+      const newItem = {
+        id: uuidv4(),
+        description: labourDescription,
+        quantity: hours,
+        unit: 'hrs',
+        unitPrice: rate,
+        totalPrice: lineTotal,
+        category: 'labour' as const,
+      };
+
+      const updatedItems = [...(existingInvoice.items || []), newItem];
+      const newSubtotal = updatedItems.reduce((sum, item) => sum + item.totalPrice, 0);
+      const vatRate = existingInvoice.settings?.vatRegistered
+        ? (existingInvoice.settings?.vatRate ?? 20) / 100
+        : 0;
+      const newVat = Math.round(newSubtotal * vatRate * 100) / 100;
+      const newTotal = Math.round((newSubtotal + newVat) * 100) / 100;
+
+      try {
+        const success = await saveInvoice({
+          ...existingInvoice,
+          items: updatedItems,
+          subtotal: newSubtotal,
+          vatAmount: newVat,
+          total: newTotal,
+        });
+        if (success) {
+          try {
+            await markInvoiced(sess.id, existingInvoice.id);
+          } catch {
+            /* non-blocking */
+          }
+          setInvoiceSheetOpen(false);
+          setPageState('success');
+          setTimeout(() => {
+            setStoppedSession(null);
+            navigate('/electrician/invoices');
+          }, 1500);
+        }
+      } catch {
+        toast({ title: 'Failed to add to invoice', variant: 'destructive' });
+      }
     },
-    [stoppedSession]
+    [stoppedSession, hourlyRate, invoices, saveInvoice, markInvoiced, navigate]
   );
 
   // Draft invoices for the sheet
@@ -579,7 +628,7 @@ const TimeTrackerPage = () => {
                     <p className="text-white/60 mt-0.5">
                       Set your hourly rate in{' '}
                       <button
-                        onClick={() => navigate('/electrician/business-admin')}
+                        onClick={() => navigate('/settings')}
                         className="text-amber-400 underline touch-manipulation"
                       >
                         Business Settings
@@ -617,7 +666,7 @@ const TimeTrackerPage = () => {
                 Your hourly rate: {formatCurrency(hourlyRate)}/hr
                 {' \u00B7 '}
                 <button
-                  onClick={() => navigate('/electrician/business-admin')}
+                  onClick={() => navigate('/settings')}
                   className="text-amber-400/70 hover:text-amber-400 underline touch-manipulation"
                 >
                   Edit in Settings
