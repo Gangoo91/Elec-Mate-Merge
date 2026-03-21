@@ -112,9 +112,7 @@ const TimeTrackerPage = () => {
   // Detail sheet
   const [detailSession, setDetailSession] = useState<TimeSession | null>(null);
 
-  // Invoice from detail — client name dialog
-  const [detailInvoiceDialogOpen, setDetailInvoiceDialogOpen] = useState(false);
-  const [detailClientName, setDetailClientName] = useState('');
+  // Invoice from detail — "add to existing" sheet
   const [detailAddToOpen, setDetailAddToOpen] = useState(false);
   const [isCreatingFromDetail, setIsCreatingFromDetail] = useState(false);
 
@@ -366,87 +364,47 @@ const TimeTrackerPage = () => {
         toast({ title: 'Failed to add to invoice', variant: 'destructive' });
       }
     },
-    [stoppedSession, hourlyRate, invoices, saveInvoice, markInvoiced, navigate]
+    [stoppedSession, hourlyRate, saveInvoice, markInvoiced, navigate]
   );
 
-  // ── Create invoice directly from the detail sheet (any past session) ──
-  const handleNewInvoiceFromDetail = useCallback(async () => {
+  // ── Open invoice wizard with time session pre-loaded as a labour line ──
+  const handleOpenInvoiceWizard = useCallback(() => {
     if (!detailSession) return;
     const sess = detailSession;
-    const clientName = detailClientName.trim();
     const rate = sess.hourly_rate ?? hourlyRate;
     const hours = Math.round(((sess.duration_seconds ?? 0) / 3600) * 100) / 100;
     const total = Math.round(hours * rate * 100) / 100;
     const labourDescription = `Electrical labour${sess.label ? ` — ${sess.label}` : ''}`;
 
-    const invoiceId = uuidv4();
-    const invoiceDate = new Date();
-    const dueDate = new Date();
-    dueDate.setDate(dueDate.getDate() + 30);
-
-    const newInvoice = {
-      id: invoiceId,
-      invoice_raised: true,
-      invoice_number: undefined,
-      invoice_date: invoiceDate,
-      invoice_due_date: dueDate,
-      invoice_status: 'draft' as const,
-      additional_invoice_items: [],
-      work_completion_date: new Date(sess.ended_at ?? new Date()),
-      items: [
-        {
-          id: uuidv4(),
-          description: labourDescription,
-          quantity: hours,
-          unit: 'hrs',
-          unitPrice: rate,
-          totalPrice: total,
-          category: 'labour' as const,
+    const sessionId = `time-invoice-${Date.now()}`;
+    sessionStorage.setItem(
+      sessionId,
+      JSON.stringify({
+        certificateData: {
+          client: { name: '', email: '', phone: '', address: '', postcode: '' },
+          jobDetails: { title: sess.label || 'Callout', description: '', location: '' },
+          items: [
+            {
+              id: uuidv4(),
+              description: labourDescription,
+              quantity: hours,
+              unit: 'hrs',
+              unitPrice: rate,
+              totalPrice: total,
+              category: 'labour',
+            },
+          ],
         },
-      ],
-      client: { name: clientName, email: '', phone: '', address: '', postcode: '' },
-      jobDetails: { title: sess.label || clientName || 'Callout', description: '' },
-      settings: {
-        labourRate: rate,
-        overheadPercentage: 0,
-        profitMargin: 0,
-        vatRate: 20,
-        vatRegistered: false,
-        paymentTerms: '30 days',
-        dueDate,
-      },
-      subtotal: total,
-      overhead: 0,
-      profit: 0,
-      vatAmount: 0,
-      total,
-    };
-
-    setIsCreatingFromDetail(true);
-    try {
-      const success = await saveInvoice(newInvoice);
-      if (success) {
-        try {
-          await markInvoiced(sess.id, invoiceId);
-        } catch {
-          /* non-blocking */
-        }
-        setDetailInvoiceDialogOpen(false);
-        setDetailSession(null);
-        setDetailClientName('');
-        toast({
-          title: '✅ Invoice created',
-          description: 'Draft saved — tap to edit.',
-          duration: 3000,
-        });
-        navigate('/electrician/invoices');
-      }
-    } catch {
-      toast({ title: 'Failed to create invoice', variant: 'destructive' });
-    } finally {
-      setIsCreatingFromDetail(false);
-    }
-  }, [detailSession, detailClientName, hourlyRate, saveInvoice, markInvoiced, navigate]);
+      })
+    );
+    // Mark session as invoiced after wizard completes (wizard navigates to /invoices)
+    // Store session id in sessionStorage so InvoiceBuilderCreate can call markInvoiced
+    sessionStorage.setItem(`time-session-ref-${sessionId}`, sess.id);
+    setDetailSession(null);
+    navigate(
+      `/electrician/invoice-builder/create?certificateSessionId=${sessionId}&timeSessionId=${sess.id}`
+    );
+  }, [detailSession, hourlyRate, navigate]);
 
   const handleAddToExistingFromDetail = useCallback(
     async (existingInvoice: (typeof invoices)[0]) => {
@@ -505,7 +463,7 @@ const TimeTrackerPage = () => {
         setIsCreatingFromDetail(false);
       }
     },
-    [detailSession, hourlyRate, invoices, saveInvoice, markInvoiced, navigate]
+    [detailSession, hourlyRate, saveInvoice, markInvoiced, navigate]
   );
 
   // Draft invoices for the sheet
@@ -1034,12 +992,9 @@ const TimeTrackerPage = () => {
 
                 {!detailSession.invoice_id && (
                   <div className="space-y-2">
-                    {/* Primary CTA — Create Invoice */}
+                    {/* Primary CTA — Create Invoice → opens full invoice wizard */}
                     <Button
-                      onClick={() => {
-                        setDetailClientName('');
-                        setDetailInvoiceDialogOpen(true);
-                      }}
+                      onClick={handleOpenInvoiceWizard}
                       className="w-full h-12 bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold rounded-xl touch-manipulation"
                     >
                       <FileText className="h-4 w-4 mr-2" />
@@ -1082,47 +1037,6 @@ const TimeTrackerPage = () => {
           )}
         </SheetContent>
       </Sheet>
-
-      {/* ═══ CLIENT NAME DIALOG (for creating invoice from detail) ═══ */}
-      <AlertDialog open={detailInvoiceDialogOpen} onOpenChange={setDetailInvoiceDialogOpen}>
-        <AlertDialogContent className="bg-[#111113] border border-white/[0.08]">
-          <AlertDialogHeader>
-            <AlertDialogTitle className="text-white">Create Invoice</AlertDialogTitle>
-            <AlertDialogDescription className="text-white/60">
-              Who's this job for? (optional — you can fill this in later)
-            </AlertDialogDescription>
-          </AlertDialogHeader>
-          <Input
-            placeholder="Client name"
-            value={detailClientName}
-            onChange={(e) => setDetailClientName(e.target.value)}
-            onKeyDown={(e) => {
-              if (e.key === 'Enter' && !isCreatingFromDetail) {
-                handleNewInvoiceFromDetail();
-              }
-            }}
-            className="bg-white/[0.04] border-white/[0.12] text-white placeholder:text-white/40 h-11"
-            autoFocus
-          />
-          <AlertDialogFooter>
-            <AlertDialogCancel className="text-white border-white/[0.12] hover:bg-white/[0.08] hover:text-white touch-manipulation">
-              Cancel
-            </AlertDialogCancel>
-            <AlertDialogAction
-              onClick={handleNewInvoiceFromDetail}
-              disabled={isCreatingFromDetail}
-              className="bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold touch-manipulation disabled:opacity-60"
-            >
-              {isCreatingFromDetail ? (
-                <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-              ) : (
-                <FileText className="h-4 w-4 mr-2" />
-              )}
-              Create Invoice
-            </AlertDialogAction>
-          </AlertDialogFooter>
-        </AlertDialogContent>
-      </AlertDialog>
 
       {/* ═══ ADD TO EXISTING SHEET (from detail) ═══ */}
       <Sheet open={detailAddToOpen} onOpenChange={setDetailAddToOpen}>

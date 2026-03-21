@@ -26,7 +26,7 @@ const steps = [
 interface InvoiceWizardProps {
   sourceQuote?: Quote;
   existingInvoice?: Partial<Invoice>;
-  onInvoiceGenerated?: () => void;
+  onInvoiceGenerated?: (invoiceId: string) => void;
   initialCertificateData?: {
     client: {
       name: string;
@@ -40,6 +40,16 @@ interface InvoiceWizardProps {
       description: string;
       location: string;
     };
+    /** Pre-filled line items (e.g. labour from Time Tracker) */
+    items?: Array<{
+      id: string;
+      description: string;
+      quantity: number;
+      unit: string;
+      unitPrice: number;
+      totalPrice: number;
+      category: string;
+    }>;
     linkedCertificate?: {
       reportId: string;
       certificateType: string;
@@ -91,7 +101,7 @@ export const InvoiceWizard = ({
           client: initialCertificateData.client,
           jobDetails: initialCertificateData.jobDetails,
           // Include settings from company profile so useInvoiceBuilder can calculate totals
-          items: [],
+          items: initialCertificateData.items ?? [],
           additional_invoice_items: [],
           settings: {
             labourRate: defaultLabourRate,
@@ -212,7 +222,7 @@ export const InvoiceWizard = ({
       draftStorage.clearDraft('invoice', null); // Also clear the "new" draft
 
       if (onInvoiceGenerated) {
-        onInvoiceGenerated();
+        onInvoiceGenerated(invoiceBuilder.invoice.id || '');
       } else {
         navigate('/electrician/invoices');
       }

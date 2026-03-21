@@ -124,7 +124,7 @@ export default function InvoiceQuoteBuilder() {
     fetchQuote();
   }, [quoteId, navigate]);
 
-  const handleQuoteGenerated = () => {
+  const handleQuoteGenerated = (_invoiceId: string) => {
     if (quote?.invoice_raised && quoteId) {
       toast({
         title: 'Invoice updated',
