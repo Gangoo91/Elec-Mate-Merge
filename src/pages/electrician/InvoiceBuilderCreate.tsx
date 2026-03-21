@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useNavigate, useLocation } from 'react-router-dom';
-import { supabase } from '@/lib/supabase';
+import { supabase } from '@/integrations/supabase/client';
 import { Helmet } from 'react-helmet';
 import { CheckCircle, X, ClipboardCheck } from 'lucide-react';
 import { InvoiceWizard } from '@/components/electrician/invoice-builder/InvoiceWizard';
