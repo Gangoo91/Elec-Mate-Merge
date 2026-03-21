@@ -18,6 +18,8 @@ import {
   X,
   StickyNote,
   Loader2,
+  FolderOpen,
+  ChevronDown,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -42,6 +44,7 @@ import {
   type TimeSession,
 } from '@/hooks/useTimeTracker';
 import { useInvoiceStorage } from '@/hooks/useInvoiceStorage';
+import { useSparkProjects } from '@/hooks/useSparkProjects';
 import { v4 as uuidv4 } from 'uuid';
 
 // ─── State machine ───────────────────────────────────────────
@@ -94,6 +97,7 @@ const TimeTrackerPage = () => {
     isStarting,
   } = useTimeTracker();
   const { invoices, saveInvoice } = useInvoiceStorage();
+  const { projects } = useSparkProjects('active');
 
   // Page state
   const [pageState, setPageState] = useState<PageState>('idle');
@@ -112,8 +116,10 @@ const TimeTrackerPage = () => {
   // Detail sheet
   const [detailSession, setDetailSession] = useState<TimeSession | null>(null);
 
-  // Invoice from detail — "add to existing" sheet
+  // Invoice from detail — "add to existing" sheet + project picker
   const [detailAddToOpen, setDetailAddToOpen] = useState(false);
+  const [detailProjectId, setDetailProjectId] = useState<string | null>(null);
+  const [projectPickerOpen, setProjectPickerOpen] = useState(false);
   const [isCreatingFromDetail, setIsCreatingFromDetail] = useState(false);
 
   // Discard confirm
@@ -401,10 +407,12 @@ const TimeTrackerPage = () => {
     // Store session id in sessionStorage so InvoiceBuilderCreate can call markInvoiced
     sessionStorage.setItem(`time-session-ref-${sessionId}`, sess.id);
     setDetailSession(null);
+    setDetailProjectId(null);
+    const projectParam = detailProjectId ? `&projectId=${detailProjectId}` : '';
     navigate(
-      `/electrician/invoice-builder/create?certificateSessionId=${sessionId}&timeSessionId=${sess.id}`
+      `/electrician/invoice-builder/create?certificateSessionId=${sessionId}&timeSessionId=${sess.id}${projectParam}`
     );
-  }, [detailSession, hourlyRate, navigate]);
+  }, [detailSession, hourlyRate, detailProjectId, navigate]);
 
   const handleAddToExistingFromDetail = useCallback(
     async (existingInvoice: (typeof invoices)[0]) => {
@@ -921,7 +929,15 @@ const TimeTrackerPage = () => {
       </Sheet>
 
       {/* ═══ SESSION DETAIL SHEET ═══ */}
-      <Sheet open={!!detailSession} onOpenChange={(open) => !open && setDetailSession(null)}>
+      <Sheet
+        open={!!detailSession}
+        onOpenChange={(open) => {
+          if (!open) {
+            setDetailSession(null);
+            setDetailProjectId(null);
+          }
+        }}
+      >
         <SheetContent
           side="bottom"
           className="rounded-t-2xl border-t border-white/[0.08] bg-[#111113] p-0"
@@ -992,6 +1008,30 @@ const TimeTrackerPage = () => {
 
                 {!detailSession.invoice_id && (
                   <div className="space-y-2">
+                    {/* Optional project tag */}
+                    <button
+                      onClick={() => setProjectPickerOpen(true)}
+                      className="w-full flex items-center gap-2.5 px-3 py-2.5 rounded-xl border border-white/[0.08] bg-white/[0.03] touch-manipulation active:bg-white/[0.06] transition-colors"
+                    >
+                      <FolderOpen className="h-4 w-4 text-white/50 flex-shrink-0" />
+                      <span className="flex-1 text-left text-sm text-white/70">
+                        {detailProjectId
+                          ? (projects.find((p) => p.id === detailProjectId)?.title ?? 'Project')
+                          : 'Tag to a project (optional)'}
+                      </span>
+                      {detailProjectId ? (
+                        <X
+                          className="h-3.5 w-3.5 text-white/40"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setDetailProjectId(null);
+                          }}
+                        />
+                      ) : (
+                        <ChevronDown className="h-3.5 w-3.5 text-white/30" />
+                      )}
+                    </button>
+
                     {/* Primary CTA — Create Invoice → opens full invoice wizard */}
                     <Button
                       onClick={handleOpenInvoiceWizard}
@@ -1071,6 +1111,51 @@ const TimeTrackerPage = () => {
                 )}
               </button>
             ))}
+          </div>
+        </SheetContent>
+      </Sheet>
+
+      {/* ═══ PROJECT PICKER SHEET ═══ */}
+      <Sheet open={projectPickerOpen} onOpenChange={setProjectPickerOpen}>
+        <SheetContent
+          side="bottom"
+          className="rounded-t-2xl border-t border-white/[0.08] bg-[#111113] p-0"
+        >
+          <SheetHeader className="px-6 pt-6 pb-2">
+            <SheetTitle className="text-white text-lg font-bold">Tag to Project</SheetTitle>
+          </SheetHeader>
+          <div className="px-6 pb-8 space-y-2 max-h-80 overflow-y-auto">
+            {projects.length === 0 ? (
+              <p className="text-white/50 text-sm text-center py-6">No active projects found</p>
+            ) : (
+              projects.map((proj) => (
+                <button
+                  key={proj.id}
+                  onClick={() => {
+                    setDetailProjectId(proj.id);
+                    setProjectPickerOpen(false);
+                  }}
+                  className={`w-full rounded-xl border p-4 flex items-center gap-3 transition-colors touch-manipulation text-left ${
+                    detailProjectId === proj.id
+                      ? 'border-elec-yellow/50 bg-elec-yellow/[0.06]'
+                      : 'border-white/[0.08] bg-white/[0.04] active:bg-white/[0.08]'
+                  }`}
+                >
+                  <div className="w-9 h-9 rounded-lg bg-white/[0.08] flex items-center justify-center flex-shrink-0">
+                    <FolderOpen className="h-4 w-4 text-white/60" />
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <p className="text-white font-medium text-sm truncate">{proj.title}</p>
+                    {proj.customerName && (
+                      <p className="text-white/50 text-xs truncate">{proj.customerName}</p>
+                    )}
+                  </div>
+                  {detailProjectId === proj.id && (
+                    <CheckCircle2 className="h-4 w-4 text-elec-yellow flex-shrink-0" />
+                  )}
+                </button>
+              ))
+            )}
           </div>
         </SheetContent>
       </Sheet>
