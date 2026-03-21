@@ -59,4 +59,7 @@
 
     <!-- Biometric authentication — Face ID / Touch ID / Fingerprint login -->
     <uses-permission android:name="android.permission.USE_BIOMETRIC" />
+
+    <!-- Google Play Billing — required for RevenueCat in-app purchases / subscriptions -->
+    <uses-permission android:name="com.android.vending.BILLING" />
 </manifest>

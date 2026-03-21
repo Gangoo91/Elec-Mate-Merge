@@ -1,14 +1,22 @@
 apply plugin: 'com.android.application'
 
+// Load signing credentials from local.properties (gitignored) or environment variables
+// Never hardcode credentials in build.gradle — this file is committed to the repo
+def localProperties = new Properties()
+def localPropertiesFile = rootProject.file('local.properties')
+if (localPropertiesFile.exists()) {
+    localPropertiesFile.withInputStream { localProperties.load(it) }
+}
+
 android {
     namespace = "com.elecmate.app"
     compileSdk = rootProject.ext.compileSdkVersion
     signingConfigs {
         release {
-            storeFile file('../elecmate-release.keystore')
-            storePassword 'ElecMate2026!'
-            keyAlias 'elecmate'
-            keyPassword 'ElecMate2026!'
+            storeFile file(localProperties['KEYSTORE_PATH'] ?: System.getenv('KEYSTORE_PATH') ?: '../elecmate-release.keystore')
+            storePassword localProperties['KEYSTORE_PASSWORD'] ?: System.getenv('KEYSTORE_PASSWORD') ?: ''
+            keyAlias localProperties['KEY_ALIAS'] ?: System.getenv('KEY_ALIAS') ?: 'elecmate'
+            keyPassword localProperties['KEY_PASSWORD'] ?: System.getenv('KEY_PASSWORD') ?: ''
         }
     }
     defaultConfig {
