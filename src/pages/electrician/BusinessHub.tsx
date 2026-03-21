@@ -23,6 +23,7 @@ import {
   FolderKanban,
   AlertTriangle,
   Share2,
+  Timer,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { BusinessCard, BusinessKPIStrip } from '@/components/business-hub';
@@ -34,6 +35,7 @@ import { useBusinessHubData } from '@/hooks/useBusinessHubData';
 import { useSparkTaskOverdueCount } from '@/hooks/useSparkTaskOverdueCount';
 import { useSparkProjects } from '@/hooks/useSparkProjects';
 import { useSnags } from '@/hooks/useSnags';
+import { useTimeTracker, formatDuration } from '@/hooks/useTimeTracker';
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -68,6 +70,11 @@ const BusinessHub = () => {
   const overdueCount = useSparkTaskOverdueCount();
   const { counts: projectCounts } = useSparkProjects('active');
   const { counts: snagCounts } = useSnags();
+  const { activeSession, elapsedSeconds } = useTimeTracker();
+
+  const timeTrackerSubtitle = activeSession
+    ? `\u23F1 Running \u00B7 ${formatDuration(elapsedSeconds)}`
+    : 'Log hours';
 
   const handleShareBookingLink = async () => {
     const {
@@ -171,6 +178,15 @@ const BusinessHub = () => {
               gradient="from-blue-500 to-indigo-500"
               variant="hero"
               liveSubtitle={todayFormatted}
+            />
+            <BusinessCard
+              title="Time Tracker"
+              description="Log your hours on site"
+              icon={Timer}
+              href="/electrician/time-tracker"
+              gradient="from-amber-500 to-orange-500"
+              variant="hero"
+              liveSubtitle={timeTrackerSubtitle}
             />
           </div>
         </motion.section>
