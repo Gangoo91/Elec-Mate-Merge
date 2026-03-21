@@ -1,0 +1,12 @@
+## Android local.properties — COPY THIS FILE TO local.properties AND FILL IN VALUES
+## local.properties is gitignored and should NEVER be committed
+
+# Android SDK path (set automatically by Android Studio — update to your path)
+sdk.dir=/Users/YOUR_USERNAME/Library/Android/sdk
+
+# Release keystore credentials (ELE-437)
+# The keystore file: android/elecmate-release.keystore (gitignored, keep it safe)
+KEYSTORE_PATH=../elecmate-release.keystore
+KEYSTORE_PASSWORD=
+KEY_ALIAS=elecmate
+KEY_PASSWORD=

@@ -1,3 +1,7 @@
+# Firebase config — contains project ID and API key, must not be committed
+# Add to CI as a secret file: android/app/google-services.json
+app/google-services.json
+
 # Using Android gitignore template: https://github.com/github/gitignore/blob/HEAD/Android.gitignore
 
 # Built application files
