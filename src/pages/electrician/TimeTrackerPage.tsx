@@ -112,6 +112,12 @@ const TimeTrackerPage = () => {
   // Detail sheet
   const [detailSession, setDetailSession] = useState<TimeSession | null>(null);
 
+  // Invoice from detail — client name dialog
+  const [detailInvoiceDialogOpen, setDetailInvoiceDialogOpen] = useState(false);
+  const [detailClientName, setDetailClientName] = useState('');
+  const [detailAddToOpen, setDetailAddToOpen] = useState(false);
+  const [isCreatingFromDetail, setIsCreatingFromDetail] = useState(false);
+
   // Discard confirm
   const [discardOpen, setDiscardOpen] = useState(false);
 
@@ -361,6 +367,145 @@ const TimeTrackerPage = () => {
       }
     },
     [stoppedSession, hourlyRate, invoices, saveInvoice, markInvoiced, navigate]
+  );
+
+  // ── Create invoice directly from the detail sheet (any past session) ──
+  const handleNewInvoiceFromDetail = useCallback(async () => {
+    if (!detailSession) return;
+    const sess = detailSession;
+    const clientName = detailClientName.trim();
+    const rate = sess.hourly_rate ?? hourlyRate;
+    const hours = Math.round(((sess.duration_seconds ?? 0) / 3600) * 100) / 100;
+    const total = Math.round(hours * rate * 100) / 100;
+    const labourDescription = `Electrical labour${sess.label ? ` — ${sess.label}` : ''}`;
+
+    const invoiceId = uuidv4();
+    const invoiceDate = new Date();
+    const dueDate = new Date();
+    dueDate.setDate(dueDate.getDate() + 30);
+
+    const newInvoice = {
+      id: invoiceId,
+      invoice_raised: true,
+      invoice_number: undefined,
+      invoice_date: invoiceDate,
+      invoice_due_date: dueDate,
+      invoice_status: 'draft' as const,
+      additional_invoice_items: [],
+      work_completion_date: new Date(sess.ended_at ?? new Date()),
+      items: [
+        {
+          id: uuidv4(),
+          description: labourDescription,
+          quantity: hours,
+          unit: 'hrs',
+          unitPrice: rate,
+          totalPrice: total,
+          category: 'labour' as const,
+        },
+      ],
+      client: { name: clientName, email: '', phone: '', address: '', postcode: '' },
+      jobDetails: { title: sess.label || clientName || 'Callout', description: '' },
+      settings: {
+        labourRate: rate,
+        overheadPercentage: 0,
+        profitMargin: 0,
+        vatRate: 20,
+        vatRegistered: false,
+        paymentTerms: '30 days',
+        dueDate,
+      },
+      subtotal: total,
+      overhead: 0,
+      profit: 0,
+      vatAmount: 0,
+      total,
+    };
+
+    setIsCreatingFromDetail(true);
+    try {
+      const success = await saveInvoice(newInvoice);
+      if (success) {
+        try {
+          await markInvoiced(sess.id, invoiceId);
+        } catch {
+          /* non-blocking */
+        }
+        setDetailInvoiceDialogOpen(false);
+        setDetailSession(null);
+        setDetailClientName('');
+        toast({
+          title: '✅ Invoice created',
+          description: 'Draft saved — tap to edit.',
+          duration: 3000,
+        });
+        navigate('/electrician/invoices');
+      }
+    } catch {
+      toast({ title: 'Failed to create invoice', variant: 'destructive' });
+    } finally {
+      setIsCreatingFromDetail(false);
+    }
+  }, [detailSession, detailClientName, hourlyRate, saveInvoice, markInvoiced, navigate]);
+
+  const handleAddToExistingFromDetail = useCallback(
+    async (existingInvoice: (typeof invoices)[0]) => {
+      if (!detailSession) return;
+      const sess = detailSession;
+      const rate = sess.hourly_rate ?? hourlyRate;
+      const hours = Math.round(((sess.duration_seconds ?? 0) / 3600) * 100) / 100;
+      const lineTotal = Math.round(hours * rate * 100) / 100;
+      const labourDescription = `Electrical labour${sess.label ? ` — ${sess.label}` : ''}`;
+
+      const newItem = {
+        id: uuidv4(),
+        description: labourDescription,
+        quantity: hours,
+        unit: 'hrs',
+        unitPrice: rate,
+        totalPrice: lineTotal,
+        category: 'labour' as const,
+      };
+
+      const updatedItems = [...(existingInvoice.items || []), newItem];
+      const newSubtotal = updatedItems.reduce((sum, item) => sum + item.totalPrice, 0);
+      const vatRate = existingInvoice.settings?.vatRegistered
+        ? (existingInvoice.settings?.vatRate ?? 20) / 100
+        : 0;
+      const newVat = Math.round(newSubtotal * vatRate * 100) / 100;
+      const newTotal = Math.round((newSubtotal + newVat) * 100) / 100;
+
+      setIsCreatingFromDetail(true);
+      try {
+        const success = await saveInvoice({
+          ...existingInvoice,
+          items: updatedItems,
+          subtotal: newSubtotal,
+          vatAmount: newVat,
+          total: newTotal,
+        });
+        if (success) {
+          try {
+            await markInvoiced(sess.id, existingInvoice.id);
+          } catch {
+            /* non-blocking */
+          }
+          setDetailAddToOpen(false);
+          setDetailSession(null);
+          toast({
+            title: '✅ Added to invoice',
+            description: 'Labour line item added.',
+            duration: 3000,
+          });
+          navigate('/electrician/invoices');
+        }
+      } catch {
+        toast({ title: 'Failed to add to invoice', variant: 'destructive' });
+      } finally {
+        setIsCreatingFromDetail(false);
+      }
+    },
+    [detailSession, hourlyRate, invoices, saveInvoice, markInvoiced, navigate]
   );
 
   // Draft invoices for the sheet
@@ -888,26 +1033,131 @@ const TimeTrackerPage = () => {
                 </div>
 
                 {!detailSession.invoice_id && (
-                  <Button
-                    variant="outline"
-                    onClick={async () => {
-                      try {
-                        await deleteSession(detailSession.id);
-                        setDetailSession(null);
-                        toast({ title: 'Session deleted', variant: 'success', duration: 2000 });
-                      } catch {
-                        toast({ title: 'Cannot delete', variant: 'destructive' });
-                      }
-                    }}
-                    className="w-full h-11 text-red-400 border-red-400/30 hover:bg-red-500/10 hover:text-red-300 rounded-xl touch-manipulation"
-                  >
-                    <Trash2 className="h-4 w-4 mr-2" />
-                    Delete Session
-                  </Button>
+                  <div className="space-y-2">
+                    {/* Primary CTA — Create Invoice */}
+                    <Button
+                      onClick={() => {
+                        setDetailClientName('');
+                        setDetailInvoiceDialogOpen(true);
+                      }}
+                      className="w-full h-12 bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold rounded-xl touch-manipulation"
+                    >
+                      <FileText className="h-4 w-4 mr-2" />
+                      Create Invoice
+                    </Button>
+
+                    {/* Secondary — Add to existing draft */}
+                    {draftInvoices.length > 0 && (
+                      <Button
+                        variant="outline"
+                        onClick={() => setDetailAddToOpen(true)}
+                        className="w-full h-11 text-white border-white/[0.12] hover:bg-white/[0.06] hover:text-white rounded-xl touch-manipulation"
+                      >
+                        <Plus className="h-4 w-4 mr-2" />
+                        Add to Existing Invoice
+                      </Button>
+                    )}
+
+                    {/* Delete */}
+                    <Button
+                      variant="outline"
+                      onClick={async () => {
+                        try {
+                          await deleteSession(detailSession.id);
+                          setDetailSession(null);
+                          toast({ title: 'Session deleted', variant: 'success', duration: 2000 });
+                        } catch {
+                          toast({ title: 'Cannot delete', variant: 'destructive' });
+                        }
+                      }}
+                      className="w-full h-11 text-red-400 border-red-400/30 hover:bg-red-500/10 hover:text-red-300 rounded-xl touch-manipulation"
+                    >
+                      <Trash2 className="h-4 w-4 mr-2" />
+                      Delete Session
+                    </Button>
+                  </div>
                 )}
               </div>
             </>
           )}
+        </SheetContent>
+      </Sheet>
+
+      {/* ═══ CLIENT NAME DIALOG (for creating invoice from detail) ═══ */}
+      <AlertDialog open={detailInvoiceDialogOpen} onOpenChange={setDetailInvoiceDialogOpen}>
+        <AlertDialogContent className="bg-[#111113] border border-white/[0.08]">
+          <AlertDialogHeader>
+            <AlertDialogTitle className="text-white">Create Invoice</AlertDialogTitle>
+            <AlertDialogDescription className="text-white/60">
+              Who's this job for? (optional — you can fill this in later)
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <Input
+            placeholder="Client name"
+            value={detailClientName}
+            onChange={(e) => setDetailClientName(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' && !isCreatingFromDetail) {
+                handleNewInvoiceFromDetail();
+              }
+            }}
+            className="bg-white/[0.04] border-white/[0.12] text-white placeholder:text-white/40 h-11"
+            autoFocus
+          />
+          <AlertDialogFooter>
+            <AlertDialogCancel className="text-white border-white/[0.12] hover:bg-white/[0.08] hover:text-white touch-manipulation">
+              Cancel
+            </AlertDialogCancel>
+            <AlertDialogAction
+              onClick={handleNewInvoiceFromDetail}
+              disabled={isCreatingFromDetail}
+              className="bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold touch-manipulation disabled:opacity-60"
+            >
+              {isCreatingFromDetail ? (
+                <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+              ) : (
+                <FileText className="h-4 w-4 mr-2" />
+              )}
+              Create Invoice
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+
+      {/* ═══ ADD TO EXISTING SHEET (from detail) ═══ */}
+      <Sheet open={detailAddToOpen} onOpenChange={setDetailAddToOpen}>
+        <SheetContent
+          side="bottom"
+          className="rounded-t-2xl border-t border-white/[0.08] bg-[#111113] p-0"
+        >
+          <SheetHeader className="px-6 pt-6 pb-2">
+            <SheetTitle className="text-white text-lg font-bold">Add to Invoice</SheetTitle>
+          </SheetHeader>
+          <div className="px-6 pb-8 space-y-2 max-h-72 overflow-y-auto">
+            {draftInvoices.map((inv) => (
+              <button
+                key={inv.id}
+                className="w-full rounded-xl border border-white/[0.08] bg-white/[0.04] p-4 flex items-center gap-3 active:bg-white/[0.08] transition-colors touch-manipulation text-left"
+                onClick={() => handleAddToExistingFromDetail(inv)}
+                disabled={isCreatingFromDetail}
+              >
+                <div className="w-10 h-10 rounded-lg bg-white/[0.08] flex items-center justify-center flex-shrink-0">
+                  <FileText className="h-5 w-5 text-white/60" />
+                </div>
+                <div className="flex-1 min-w-0">
+                  <p className="text-white font-medium text-sm truncate">
+                    {inv.client?.name || inv.jobDetails?.title || 'Draft invoice'}
+                  </p>
+                  <p className="text-white/50 text-xs">
+                    {inv.invoice_number || 'No number'} · £{(inv.total ?? 0).toFixed(2)}
+                  </p>
+                </div>
+                {isCreatingFromDetail && (
+                  <Loader2 className="h-4 w-4 text-white/40 animate-spin flex-shrink-0" />
+                )}
+              </button>
+            ))}
+          </div>
         </SheetContent>
       </Sheet>
 
