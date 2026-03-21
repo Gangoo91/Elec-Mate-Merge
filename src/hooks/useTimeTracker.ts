@@ -291,6 +291,7 @@ export const useTimeTracker = () => {
     markInvoiced,
     deleteSession,
     isLoading: isLoadingActive || isLoadingSessions,
+    isStarting: startMutation.isPending,
     error: activeError || sessionsError,
   };
 };

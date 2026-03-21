@@ -46,7 +46,7 @@ const BusinessCard = ({
         'relative overflow-hidden rounded-xl',
         'active:scale-[0.98] transition-all',
         isHero
-          ? 'border border-white/[0.12] p-5 min-h-[120px] flex flex-col items-center justify-center text-center'
+          ? 'bg-white/[0.04] border border-white/[0.10] p-5 min-h-[120px] flex flex-col items-center justify-center text-center'
           : 'bg-white/[0.03] border border-white/[0.08] flex flex-col items-center justify-center text-center p-4 min-h-[100px]',
         isHero && 'active:brightness-110',
         !isHero && 'active:bg-white/[0.06]',

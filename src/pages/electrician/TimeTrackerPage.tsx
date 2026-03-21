@@ -17,6 +17,7 @@ import {
   Trash2,
   X,
   StickyNote,
+  Loader2,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -90,6 +91,7 @@ const TimeTrackerPage = () => {
     deleteSession,
     markInvoiced,
     isLoading,
+    isStarting,
   } = useTimeTracker();
   const { invoices, saveInvoice } = useInvoiceStorage();
 
@@ -153,13 +155,23 @@ const TimeTrackerPage = () => {
     try {
       await startSession(jobLabel || undefined);
       setJobLabel('');
-      setPageState('running');
+      // pageState transitions to 'running' via useEffect once activeSession query updates
     } catch {
-      toast({
-        title: 'Failed to start session',
-        description: 'Please try again.',
-        variant: 'destructive',
-      });
+      // Session may have been created despite a network error response.
+      // The useEffect will detect it from the query — only show error if we stay on idle.
+      // Small delay lets the invalidateQueries refetch complete before we decide.
+      setTimeout(() => {
+        setPageState((prev) => {
+          if (prev !== 'running') {
+            toast({
+              title: 'Failed to start session',
+              description: 'Check your connection and try again.',
+              variant: 'destructive',
+            });
+          }
+          return prev;
+        });
+      }, 1500);
     }
   }, [startSession, jobLabel]);
 
@@ -356,7 +368,7 @@ const TimeTrackerPage = () => {
 
   // ─── Render ──────────────────────────────────────────────
   return (
-    <div className="-mt-3 sm:-mt-4 md:-mt-6 bg-[#0f172a] min-h-screen pb-24">
+    <div className="-mt-3 sm:-mt-4 md:-mt-6 bg-background min-h-screen pb-24">
       {/* Header */}
       <div className="px-4 py-3">
         <div className="flex items-center gap-3">
@@ -412,7 +424,7 @@ const TimeTrackerPage = () => {
               exit={{ opacity: 0, y: -20 }}
               transition={{ duration: 0.3 }}
             >
-              <div className="rounded-2xl border border-white/10 bg-[#1e293b] overflow-hidden">
+              <div className="rounded-2xl border border-white/[0.08] bg-white/[0.04] overflow-hidden">
                 <div className="p-6 sm:p-8 flex flex-col items-center">
                   {/* Elapsed time */}
                   <div className="relative">
@@ -433,7 +445,7 @@ const TimeTrackerPage = () => {
                           value={editLabelValue}
                           onChange={(e) => setEditLabelValue(e.target.value)}
                           placeholder="Job description"
-                          className="h-11 text-base touch-manipulation border-white/30 focus:border-yellow-500 focus:ring-yellow-500 bg-white/5 text-white"
+                          className="h-11 text-base touch-manipulation border-white/[0.12] focus:border-elec-yellow focus:ring-elec-yellow bg-white/[0.04] text-white"
                           autoFocus
                           onKeyDown={(e) => {
                             if (e.key === 'Enter') handleSaveLabel();
@@ -473,7 +485,7 @@ const TimeTrackerPage = () => {
                           value={notesValue}
                           onChange={(e) => setNotesValue(e.target.value)}
                           placeholder="Add notes..."
-                          className="touch-manipulation text-base min-h-[80px] focus:ring-2 focus:ring-amber-500/20 border-white/30 focus:border-yellow-500 bg-white/5 text-white"
+                          className="touch-manipulation text-base min-h-[80px] focus:ring-2 focus:ring-elec-yellow/20 border-white/[0.12] focus:border-elec-yellow bg-white/[0.04] text-white"
                           autoFocus
                         />
                         <div className="flex gap-2 justify-end">
@@ -543,7 +555,7 @@ const TimeTrackerPage = () => {
               className="space-y-4"
             >
               {/* Duration + rate */}
-              <div className="rounded-2xl border border-white/10 bg-[#1e293b] p-6 text-center">
+              <div className="rounded-2xl border border-white/[0.08] bg-white/[0.04] p-6 text-center">
                 <p className="text-2xl font-bold text-white">
                   {formatDurationLong(stoppedSession.duration_seconds ?? 0)}
                 </p>
@@ -569,13 +581,13 @@ const TimeTrackerPage = () => {
 
               {/* Label + notes */}
               {stoppedSession.label && (
-                <div className="rounded-xl border border-white/10 bg-[#1e293b] px-4 py-3">
+                <div className="rounded-xl border border-white/[0.08] bg-white/[0.04] px-4 py-3">
                   <p className="text-xs text-white/50 uppercase tracking-wider mb-1">Job</p>
                   <p className="text-white">{stoppedSession.label}</p>
                 </div>
               )}
               {stoppedSession.notes && (
-                <div className="rounded-xl border border-white/10 bg-[#1e293b] px-4 py-3">
+                <div className="rounded-xl border border-white/[0.08] bg-white/[0.04] px-4 py-3">
                   <p className="text-xs text-white/50 uppercase tracking-wider mb-1">Notes</p>
                   <p className="text-white/80 text-sm">{stoppedSession.notes}</p>
                 </div>
@@ -595,7 +607,7 @@ const TimeTrackerPage = () => {
               <Button
                 variant="outline"
                 onClick={handleSaveWithoutInvoicing}
-                className="w-full h-12 text-white border-white/20 hover:bg-white/5 hover:text-white rounded-xl touch-manipulation"
+                className="w-full h-12 text-white border-white/[0.12] hover:bg-white/[0.06] hover:text-white rounded-xl touch-manipulation"
               >
                 Save without invoicing
               </Button>
@@ -644,20 +656,25 @@ const TimeTrackerPage = () => {
                 value={jobLabel}
                 onChange={(e) => setJobLabel(e.target.value)}
                 placeholder="What's the job? (optional)"
-                className="h-12 text-base touch-manipulation border-white/20 focus:border-yellow-500 focus:ring-yellow-500 bg-[#1e293b] text-white placeholder:text-white/40 rounded-xl"
+                className="h-12 text-base touch-manipulation border-white/[0.12] focus:border-elec-yellow focus:ring-elec-yellow bg-white/[0.04] text-white placeholder:text-white/40 rounded-xl"
                 onKeyDown={(e) => {
                   if (e.key === 'Enter') handleStart();
                 }}
               />
 
               {/* START button */}
-              <motion.div whileTap={{ scale: 0.97 }}>
+              <motion.div whileTap={{ scale: isStarting ? 1 : 0.97 }}>
                 <Button
                   onClick={handleStart}
-                  className="w-full h-16 text-xl font-bold bg-gradient-to-r from-emerald-500 to-green-500 hover:from-emerald-600 hover:to-green-600 text-white border-0 rounded-xl touch-manipulation shadow-lg shadow-emerald-500/20"
+                  disabled={isStarting}
+                  className="w-full h-16 text-xl font-bold bg-gradient-to-r from-emerald-500 to-green-500 hover:from-emerald-600 hover:to-green-600 text-white border-0 rounded-xl touch-manipulation shadow-lg shadow-emerald-500/20 disabled:opacity-70"
                 >
-                  <Play className="h-6 w-6 mr-2 fill-white" />
-                  Start
+                  {isStarting ? (
+                    <Loader2 className="h-6 w-6 mr-2 animate-spin" />
+                  ) : (
+                    <Play className="h-6 w-6 mr-2 fill-white" />
+                  )}
+                  {isStarting ? 'Starting…' : 'Start'}
                 </Button>
               </motion.div>
 
@@ -689,7 +706,7 @@ const TimeTrackerPage = () => {
             </h2>
 
             {sessions.length === 0 ? (
-              <div className="rounded-2xl border border-white/10 bg-[#1e293b] p-8 text-center">
+              <div className="rounded-2xl border border-white/[0.08] bg-white/[0.04] p-8 text-center">
                 <Clock className="h-10 w-10 text-white/20 mx-auto mb-3" />
                 <p className="text-white/50 text-sm">
                   No sessions yet — tap Start when you arrive on site
@@ -708,7 +725,7 @@ const TimeTrackerPage = () => {
                     <button
                       key={session.id}
                       onClick={() => setDetailSession(session)}
-                      className="w-full rounded-xl border border-white/10 bg-[#1e293b] p-4 flex items-center gap-3 active:bg-white/[0.06] transition-colors touch-manipulation text-left"
+                      className="w-full rounded-xl border border-white/[0.08] bg-white/[0.04] p-4 flex items-center gap-3 active:bg-white/[0.07] transition-colors touch-manipulation text-left"
                     >
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center gap-2 mb-0.5">
@@ -749,7 +766,7 @@ const TimeTrackerPage = () => {
       <Sheet open={invoiceSheetOpen} onOpenChange={setInvoiceSheetOpen}>
         <SheetContent
           side="bottom"
-          className="rounded-t-2xl border-t border-white/10 bg-[#1e293b] p-0"
+          className="rounded-t-2xl border-t border-white/[0.08] bg-[#111113] p-0"
         >
           <SheetHeader className="px-6 pt-6 pb-2">
             <SheetTitle className="text-white text-lg font-bold">Add to Invoice</SheetTitle>
@@ -757,7 +774,7 @@ const TimeTrackerPage = () => {
           <div className="px-6 pb-8 space-y-3">
             <button
               onClick={handleNewInvoice}
-              className="w-full rounded-xl border border-white/10 bg-white/5 p-4 flex items-center gap-3 active:bg-white/10 transition-colors touch-manipulation"
+              className="w-full rounded-xl border border-white/[0.08] bg-white/[0.04] p-4 flex items-center gap-3 active:bg-white/[0.08] transition-colors touch-manipulation"
             >
               <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-amber-500 to-orange-500 flex items-center justify-center flex-shrink-0">
                 <Plus className="h-5 w-5 text-white" />
@@ -778,9 +795,9 @@ const TimeTrackerPage = () => {
                   <button
                     key={inv.id}
                     onClick={() => handleAddToExisting(inv)}
-                    className="w-full rounded-xl border border-white/10 bg-white/5 p-4 flex items-center gap-3 active:bg-white/10 transition-colors touch-manipulation"
+                    className="w-full rounded-xl border border-white/[0.08] bg-white/[0.04] p-4 flex items-center gap-3 active:bg-white/[0.08] transition-colors touch-manipulation"
                   >
-                    <div className="w-10 h-10 rounded-lg bg-white/10 flex items-center justify-center flex-shrink-0">
+                    <div className="w-10 h-10 rounded-lg bg-white/[0.08] flex items-center justify-center flex-shrink-0">
                       <FileText className="h-5 w-5 text-white/60" />
                     </div>
                     <div className="text-left flex-1 min-w-0">
@@ -804,7 +821,7 @@ const TimeTrackerPage = () => {
       <Sheet open={!!detailSession} onOpenChange={(open) => !open && setDetailSession(null)}>
         <SheetContent
           side="bottom"
-          className="rounded-t-2xl border-t border-white/10 bg-[#1e293b] p-0"
+          className="rounded-t-2xl border-t border-white/[0.08] bg-[#111113] p-0"
         >
           {detailSession && (
             <>
@@ -815,13 +832,13 @@ const TimeTrackerPage = () => {
               </SheetHeader>
               <div className="px-6 pb-8 space-y-4">
                 <div className="grid grid-cols-2 gap-3">
-                  <div className="rounded-xl bg-white/5 p-3">
+                  <div className="rounded-xl bg-white/[0.04] p-3">
                     <p className="text-xs text-white/50 mb-1">Duration</p>
                     <p className="text-white font-mono font-bold">
                       {formatDuration(detailSession.duration_seconds ?? 0)}
                     </p>
                   </div>
-                  <div className="rounded-xl bg-white/5 p-3">
+                  <div className="rounded-xl bg-white/[0.04] p-3">
                     <p className="text-xs text-white/50 mb-1">Value</p>
                     <p className="text-amber-400 font-mono font-bold">
                       {formatCurrency(
@@ -832,7 +849,7 @@ const TimeTrackerPage = () => {
                       )}
                     </p>
                   </div>
-                  <div className="rounded-xl bg-white/5 p-3">
+                  <div className="rounded-xl bg-white/[0.04] p-3">
                     <p className="text-xs text-white/50 mb-1">Started</p>
                     <p className="text-white text-sm">
                       {new Date(detailSession.started_at).toLocaleString('en-GB', {
@@ -843,7 +860,7 @@ const TimeTrackerPage = () => {
                       })}
                     </p>
                   </div>
-                  <div className="rounded-xl bg-white/5 p-3">
+                  <div className="rounded-xl bg-white/[0.04] p-3">
                     <p className="text-xs text-white/50 mb-1">Rate</p>
                     <p className="text-white text-sm">
                       {formatCurrency(detailSession.hourly_rate ?? hourlyRate)}/hr
@@ -852,7 +869,7 @@ const TimeTrackerPage = () => {
                 </div>
 
                 {detailSession.notes && (
-                  <div className="rounded-xl bg-white/5 p-3">
+                  <div className="rounded-xl bg-white/[0.04] p-3">
                     <p className="text-xs text-white/50 mb-1">Notes</p>
                     <p className="text-white/80 text-sm">{detailSession.notes}</p>
                   </div>
@@ -896,7 +913,7 @@ const TimeTrackerPage = () => {
 
       {/* ═══ DISCARD CONFIRM ═══ */}
       <AlertDialog open={discardOpen} onOpenChange={setDiscardOpen}>
-        <AlertDialogContent className="bg-[#1e293b] border border-white/10">
+        <AlertDialogContent className="bg-[#111113] border border-white/[0.08]">
           <AlertDialogHeader>
             <AlertDialogTitle className="text-white">Discard session?</AlertDialogTitle>
             <AlertDialogDescription className="text-white/60">
@@ -904,7 +921,7 @@ const TimeTrackerPage = () => {
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel className="text-white border-white/20 hover:bg-white/10 hover:text-white touch-manipulation">
+            <AlertDialogCancel className="text-white border-white/[0.12] hover:bg-white/[0.08] hover:text-white touch-manipulation">
               Keep
             </AlertDialogCancel>
             <AlertDialogAction
