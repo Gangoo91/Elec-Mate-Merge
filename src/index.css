@@ -9,7 +9,7 @@ input:-webkit-autofill,
 textarea:-webkit-autofill,
 select:-webkit-autofill {
   -webkit-text-fill-color: #fafafa !important;
-  -webkit-box-shadow: 0 0 0 1000px hsl(240 5.9% 15%) inset !important;
+  -webkit-box-shadow: 0 0 0 1000px hsl(0 0% 15%) inset !important;
   transition: background-color 5000s ease-in-out 0s;
 }
 
@@ -129,42 +129,42 @@ input::-webkit-caps-lock-indicator {
     --sidebar-background: 0 0% 98%;
     --sidebar-foreground: 240 5.3% 26.1%;
     --sidebar-primary: 47 100% 50%;
-    --sidebar-primary-foreground: 240 5.9% 10%;
+    --sidebar-primary-foreground: 0 0% 4%;
     --sidebar-accent: 240 4.8% 95.9%;
-    --sidebar-accent-foreground: 240 5.9% 10%;
+    --sidebar-accent-foreground: 0 0% 4%;
     --sidebar-border: 220 13% 91%;
-    --sidebar-ring: 240 5.9% 10%;
+    --sidebar-ring: 47 100% 50%;
   }
 
   .dark {
-    /* UNIFIED COLOR SYSTEM - All greys use hue 240 to match sidebar */
-    --background: 240 5.9% 10%;
+    /* BACKGROUND - True near-black, no blue hue */
+    --background: 0 0% 4%;
     --foreground: 0 0% 98%;
 
     /* CARDS - Slightly lighter than background for depth */
-    --card: 240 5.9% 12%;
+    --card: 0 0% 7%;
     --card-foreground: 0 0% 98%;
 
-    --popover: 240 5.9% 12%;
+    --popover: 0 0% 7%;
     --popover-foreground: 0 0% 98%;
 
     --primary: 47 100% 50%;
-    --primary-foreground: 240 5.9% 10%;
+    --primary-foreground: 0 0% 4%;
 
-    --secondary: 240 5.9% 16%;
+    --secondary: 0 0% 12%;
     --secondary-foreground: 0 0% 98%;
 
-    --muted: 240 5.9% 16%;
+    --muted: 0 0% 12%;
     --muted-foreground: 240 5% 65%;
 
-    --accent: 240 5.9% 18%;
+    --accent: 0 0% 14%;
     --accent-foreground: 0 0% 98%;
 
     --destructive: 0 62.8% 50%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 240 5.9% 22%;
-    --input: 240 5.9% 15%;
+    --border: 0 0% 18%;
+    --input: 0 0% 11%;
     --ring: 47 100% 50%;
 
     /* Additional semantic colors */
@@ -175,13 +175,13 @@ input::-webkit-caps-lock-indicator {
     --info: 199 89% 48%;
     --info-foreground: 0 0% 100%;
 
-    /* Electrical theme colors - UNIFIED with sidebar hue 240 */
-    --elec-dark: 240 5.9% 8%;
+    /* Electrical theme colors */
+    --elec-dark: 0 0% 3%;
     --elec-light: 0 0% 98%;
-    --elec-gray: 240 5.9% 18%;
+    --elec-gray: 0 0% 14%;
     --elec-yellow: 47 100% 50%;
-    --elec-card: 240 5.9% 14%;
-    --elec-grey: 240 5.9% 10%;
+    --elec-card: 0 0% 9%;
+    --elec-grey: 0 0% 4%;
 
     /* Muted text colors for comfortable reading */
     --text-muted: 210 30% 85%;
@@ -209,13 +209,13 @@ input::-webkit-caps-lock-indicator {
     --eicr-fi-border: 47 60% 48%;
     --eicr-fi-text: 47 50% 82%;
 
-    --sidebar-background: 240 5.9% 10%;
-    --sidebar-foreground: 240 4.8% 95.9%;
+    --sidebar-background: 0 0% 4%;
+    --sidebar-foreground: 0 0% 95%;
     --sidebar-primary: 47 100% 50%;
-    --sidebar-primary-foreground: 240 5.9% 10%;
-    --sidebar-accent: 240 3.7% 15.9%;
-    --sidebar-accent-foreground: 240 4.8% 95.9%;
-    --sidebar-border: 240 3.7% 15.9%;
+    --sidebar-primary-foreground: 0 0% 4%;
+    --sidebar-accent: 0 0% 12%;
+    --sidebar-accent-foreground: 0 0% 95%;
+    --sidebar-border: 0 0% 12%;
     --sidebar-ring: 47 100% 50%;
   }
 }
@@ -417,7 +417,7 @@ input::-webkit-caps-lock-indicator {
 
   /* Solid raised surface — the default card treatment */
   .card-surface {
-    background: hsl(240 5.9% 12%);
+    background: hsl(0 0% 12%);
     border: 1px solid rgba(255, 255, 255, 0.06);
     border-radius: 16px;
   }
@@ -434,13 +434,13 @@ input::-webkit-caps-lock-indicator {
 
   /* Interactive solid surface with hover transition */
   .card-surface-interactive {
-    background: hsl(240 5.9% 12%);
+    background: hsl(0 0% 12%);
     border: 1px solid rgba(255, 255, 255, 0.06);
     border-radius: 16px;
     transition: all 200ms cubic-bezier(0.4, 0, 0.2, 1);
   }
   .card-surface-interactive:hover {
-    background: hsl(240 5.9% 14%);
+    background: hsl(0 0% 14%);
     border-color: rgba(255, 255, 255, 0.14);
   }
 
@@ -1826,8 +1826,8 @@ input::-webkit-caps-lock-indicator {
     background: linear-gradient(
       135deg,
       hsl(47 100% 50% / 0.08) 0%,
-      hsl(240 5.9% 14% / 0.95) 30%,
-      hsl(240 5.9% 12%) 100%
+      hsl(0 0% 14% / 0.95) 30%,
+      hsl(0 0% 12%) 100%
     );
     border: 1px solid hsl(47 100% 50% / 0.25);
   }
@@ -1930,7 +1930,7 @@ input::-webkit-caps-lock-indicator {
   /* Premium section card */
   .eicr-section-card {
     @apply relative overflow-hidden rounded-2xl;
-    background: linear-gradient(135deg, hsl(240 5.9% 14% / 0.85) 0%, hsl(240 5.9% 12% / 0.98) 100%);
+    background: linear-gradient(135deg, hsl(0 0% 14% / 0.85) 0%, hsl(0 0% 12% / 0.98) 100%);
     border: 1px solid hsl(47 100% 50% / 0.12);
   }
 
@@ -2081,7 +2081,7 @@ input::-webkit-caps-lock-indicator {
   /* Inspection item card with outcome border */
   .eicr-inspection-item {
     @apply rounded-xl transition-all duration-200;
-    background: linear-gradient(135deg, hsl(240 5.9% 14% / 0.6) 0%, hsl(240 5.9% 12% / 0.8) 100%);
+    background: linear-gradient(135deg, hsl(0 0% 14% / 0.6) 0%, hsl(0 0% 12% / 0.8) 100%);
     border: 1px solid hsl(var(--border) / 0.5);
   }
 
@@ -2198,7 +2198,7 @@ input::-webkit-caps-lock-indicator {
   .eicr-inspection-item-native {
     @apply rounded-2xl transition-all duration-200;
     @apply active:scale-[0.995] touch-manipulation;
-    background: linear-gradient(135deg, hsl(240 5.9% 14% / 0.7) 0%, hsl(240 5.9% 12% / 0.85) 100%);
+    background: linear-gradient(135deg, hsl(0 0% 14% / 0.7) 0%, hsl(0 0% 12% / 0.85) 100%);
     border: 1px solid hsl(var(--border) / 0.4);
   }
 
@@ -2216,7 +2216,7 @@ input::-webkit-caps-lock-indicator {
   /* Observation card */
   .eicr-observation-card {
     @apply relative rounded-2xl overflow-hidden p-5;
-    background: linear-gradient(135deg, hsl(240 5.9% 14% / 0.85) 0%, hsl(240 5.9% 12% / 0.98) 100%);
+    background: linear-gradient(135deg, hsl(0 0% 14% / 0.85) 0%, hsl(0 0% 12% / 0.98) 100%);
     border: 1px solid hsl(47 100% 50% / 0.12);
   }
 
@@ -2298,7 +2298,7 @@ input::-webkit-caps-lock-indicator {
   /* Testing Page Hero Section */
   .testing-hero {
     @apply relative overflow-hidden rounded-2xl;
-    background: hsl(240 5.9% 12%);
+    background: hsl(0 0% 12%);
     border: 1px solid hsl(var(--border) / 0.5);
   }
 
@@ -2430,14 +2430,14 @@ input::-webkit-caps-lock-indicator {
   /* Desktop Table Container */
   .sot-table-wrapper {
     @apply rounded-xl overflow-hidden;
-    background: linear-gradient(180deg, hsl(240 5.9% 12%) 0%, hsl(240 5.9% 10%) 100%);
+    background: linear-gradient(180deg, hsl(0 0% 12%) 0%, hsl(0 0% 10%) 100%);
     border: 1px solid hsl(var(--border) / 0.3);
   }
 
   /* Table Header - Group Row */
   .sot-header-group {
     @apply sticky top-0 z-30;
-    background: hsl(240 5.9% 15%);
+    background: hsl(0 0% 15%);
     border-bottom: 2px solid hsl(48 100% 50% / 0.3);
   }
 
@@ -2454,7 +2454,7 @@ input::-webkit-caps-lock-indicator {
   /* Table Header - Column Labels Row */
   .sot-header-labels {
     @apply sticky top-[33px] z-30;
-    background: hsl(240 5.9% 12%);
+    background: hsl(0 0% 12%);
     border-bottom: 1px solid hsl(var(--border) / 0.5);
   }
 
@@ -2500,7 +2500,7 @@ input::-webkit-caps-lock-indicator {
   /* Sticky circuit number column */
   .sot-sticky-col {
     @apply sticky left-0 z-20;
-    background: hsl(240 5.9% 13%);
+    background: hsl(0 0% 13%);
     border-right: 1px solid hsl(0 0% 0% / 0.2); /* Simple border instead of box-shadow for performance */
   }
 
@@ -2515,7 +2515,7 @@ input::-webkit-caps-lock-indicator {
   }
 
   .sot-row:nth-child(even) {
-    background: hsl(240 5.9% 11%);
+    background: hsl(0 0% 11%);
   }
 
   .sot-row:nth-child(even):hover {
@@ -2567,7 +2567,7 @@ input::-webkit-caps-lock-indicator {
 
   .sot-mobile-header {
     @apply sticky top-0 z-40;
-    background: linear-gradient(180deg, hsl(240 5.9% 16%) 0%, hsl(240 5.9% 13%) 100%);
+    background: linear-gradient(180deg, hsl(0 0% 16%) 0%, hsl(0 0% 13%) 100%);
     border-bottom: 2px solid hsl(48 100% 50% / 0.2);
   }
 
@@ -2580,7 +2580,7 @@ input::-webkit-caps-lock-indicator {
   /* Mobile circuit column sticky */
   .sot-mobile-sticky {
     @apply sticky left-0 z-30;
-    background: hsl(240 5.9% 14%);
+    background: hsl(0 0% 14%);
     box-shadow: 4px 0 12px -4px hsl(0 0% 0% / 0.4);
   }
 
@@ -2589,7 +2589,7 @@ input::-webkit-caps-lock-indicator {
   }
 
   .sot-mobile-row:nth-child(even) {
-    background: hsl(240 5.9% 10%);
+    background: hsl(0 0% 10%);
   }
 
   .sot-mobile-cell {
@@ -2729,7 +2729,7 @@ input::-webkit-caps-lock-indicator {
 
   .regulation-card {
     @apply rounded-2xl overflow-hidden;
-    background: linear-gradient(135deg, hsl(240 5.9% 12%) 0%, hsl(240 5.9% 8%) 100%);
+    background: linear-gradient(135deg, hsl(0 0% 12%) 0%, hsl(0 0% 8%) 100%);
     border: 1px solid hsl(var(--border) / 0.3);
   }
 
@@ -2906,17 +2906,26 @@ input[type='datetime-local']::-webkit-datetime-edit {
 /* Type-specific left border + left glow */
 [data-sonner-toast][data-type='error'] {
   border-left-color: #ef4444 !important;
-  box-shadow: 0 0 0 1px rgba(239,68,68,0.05), -6px 0 24px rgba(239,68,68,0.14), 0 20px 60px rgba(0,0,0,0.65) !important;
+  box-shadow:
+    0 0 0 1px rgba(239, 68, 68, 0.05),
+    -6px 0 24px rgba(239, 68, 68, 0.14),
+    0 20px 60px rgba(0, 0, 0, 0.65) !important;
 }
 [data-sonner-toast][data-type='warning'] {
   border-left-color: #f59e0b !important;
-  box-shadow: 0 0 0 1px rgba(245,158,11,0.05), -6px 0 24px rgba(245,158,11,0.14), 0 20px 60px rgba(0,0,0,0.65) !important;
+  box-shadow:
+    0 0 0 1px rgba(245, 158, 11, 0.05),
+    -6px 0 24px rgba(245, 158, 11, 0.14),
+    0 20px 60px rgba(0, 0, 0, 0.65) !important;
 }
 [data-sonner-toast][data-type='info'] {
   border-left-color: #3b82f6 !important;
-  box-shadow: 0 0 0 1px rgba(59,130,246,0.05), -6px 0 24px rgba(59,130,246,0.14), 0 20px 60px rgba(0,0,0,0.65) !important;
+  box-shadow:
+    0 0 0 1px rgba(59, 130, 246, 0.05),
+    -6px 0 24px rgba(59, 130, 246, 0.14),
+    0 20px 60px rgba(0, 0, 0, 0.65) !important;
 }
 [data-sonner-toast][data-type='success'],
 [data-sonner-toast]:not([data-type]) {
-  border-left-color: #FFC800 !important;
+  border-left-color: #ffc800 !important;
 }
