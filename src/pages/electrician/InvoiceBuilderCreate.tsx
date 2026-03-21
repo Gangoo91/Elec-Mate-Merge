@@ -1,4 +1,6 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useNavigate, useLocation } from 'react-router-dom';
+import { supabase } from '@/integrations/supabase/client';
 import { Helmet } from 'react-helmet';
 import { CheckCircle, X, ClipboardCheck } from 'lucide-react';
 import { InvoiceWizard } from '@/components/electrician/invoice-builder/InvoiceWizard';
@@ -25,8 +27,9 @@ const InvoiceBuilderCreate = () => {
   const [showExitDialog, setShowExitDialog] = useState(false);
   const [isLoadingContext, setIsLoadingContext] = useState(true);
 
-  // Read projectId from URL — when coming from a project page
+  // Read projectId and timeSessionId from URL
   const projectId = new URLSearchParams(location.search).get('projectId') || undefined;
+  const timeSessionId = new URLSearchParams(location.search).get('timeSessionId') || undefined;
 
   // Load quote data or certificate data from sessionStorage
   useEffect(() => {
@@ -56,8 +59,15 @@ const InvoiceBuilderCreate = () => {
     setIsLoadingContext(false);
   }, [location]);
 
-  const handleInvoiceGenerated = () => {
+  const handleInvoiceGenerated = async (invoiceId: string) => {
     fetchInvoices();
+    // If launched from Time Tracker, mark the session as invoiced
+    if (timeSessionId && invoiceId) {
+      await supabase
+        .from('time_sessions')
+        .update({ invoice_id: invoiceId })
+        .eq('id', timeSessionId);
+    }
     if (projectId) {
       navigate(`/electrician/projects/${projectId}`);
     } else {
