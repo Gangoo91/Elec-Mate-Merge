@@ -143,6 +143,7 @@ const WorkerToolsHub = lazy(() => import('@/pages/electrician/WorkerToolsHub'));
 const CalendarPage = lazy(() => import('@/pages/electrician/CalendarPage'));
 const SnaggingPage = lazy(() => import('@/pages/electrician/SnaggingPage'));
 const BusinessAIPage = lazy(() => import('@/components/business-ai/BusinessAIPage'));
+const TimeTrackerPage = lazy(() => import('@/pages/electrician/TimeTrackerPage'));
 
 const ElectricianHubRoutes = () => (
   <Routes>
@@ -400,6 +401,16 @@ const ElectricianHubRoutes = () => (
       element={
         <LazyRoute>
           <TasksPage />
+        </LazyRoute>
+      }
+    />
+
+    {/* Time Tracker */}
+    <Route
+      path="time-tracker"
+      element={
+        <LazyRoute>
+          <TimeTrackerPage />
         </LazyRoute>
       }
     />
