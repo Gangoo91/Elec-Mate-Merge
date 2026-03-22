@@ -20,7 +20,7 @@ import {
   MessageCircle,
 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-import { format, isPast } from 'date-fns';
+import { format, isPast, addHours, differenceInDays } from 'date-fns';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -91,9 +91,12 @@ const InvoiceCardList = ({
 
   const getStatusBadge = (invoice: Quote) => {
     const status = invoice.invoice_status;
-    const isOverdue = invoice.invoice_due_date && isPast(new Date(invoice.invoice_due_date));
+    const isOverdue =
+      invoice.invoice_due_date &&
+      isPast(addHours(new Date(invoice.invoice_due_date), 24)) &&
+      status !== 'paid';
 
-    if (isOverdue || status === 'overdue') {
+    if (isOverdue || (status === 'overdue' && status !== 'paid')) {
       return (
         <Badge
           variant="destructive"
@@ -122,6 +125,22 @@ const InvoiceCardList = ({
     }
 
     if (status === 'paid') {
+      if (invoice.invoice_paid_at && invoice.invoice_due_date) {
+        const daysLate = differenceInDays(
+          new Date(invoice.invoice_paid_at),
+          new Date(invoice.invoice_due_date)
+        );
+        if (daysLate > 0) {
+          return (
+            <Badge
+              variant="secondary"
+              className="bg-amber-50 text-amber-700 border-amber-200 dark:bg-amber-950 dark:text-amber-300 dark:border-amber-800"
+            >
+              Paid {daysLate}d late
+            </Badge>
+          );
+        }
+      }
       return null;
     }
 
@@ -129,10 +148,13 @@ const InvoiceCardList = ({
   };
 
   const getActionButton = (invoice: Quote) => {
-    const isOverdue = invoice.invoice_due_date && isPast(new Date(invoice.invoice_due_date));
+    const isOverdue =
+      invoice.invoice_due_date &&
+      isPast(addHours(new Date(invoice.invoice_due_date), 24)) &&
+      invoice.invoice_status !== 'paid';
     const status = invoice.invoice_status;
 
-    if (isOverdue || status === 'overdue') {
+    if (isOverdue || (status === 'overdue' && status !== 'paid')) {
       return {
         text: 'Send Reminder',
         icon: <Bell className="h-4 w-4" />,
@@ -209,7 +231,7 @@ const InvoiceCardList = ({
                     variant="ghost"
                     size="icon"
                     onClick={() => onInvoiceAction(invoice)}
-                    className="h-7 w-7 sm:h-8 sm:w-8 text-muted-foreground hover:text-foreground flex-shrink-0"
+                    className="h-11 w-11 text-white hover:text-foreground flex-shrink-0"
                     aria-label="View invoice"
                   >
                     <Eye className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
@@ -222,7 +244,7 @@ const InvoiceCardList = ({
                           variant="ghost"
                           size="icon"
                           onClick={() => onInvoiceAction(invoice)}
-                          className="h-7 w-7 sm:h-8 sm:w-8 text-muted-foreground hover:text-foreground flex-shrink-0"
+                          className="h-11 w-11 text-white hover:text-foreground flex-shrink-0"
                           aria-label="Edit invoice"
                         >
                           <Edit className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
@@ -242,12 +264,12 @@ const InvoiceCardList = ({
                 <div className="flex items-center gap-1.5 sm:gap-2 flex-1 min-w-0">
                   <div className="w-10 h-10 flex items-center justify-center flex-shrink-0 p-0">
                     <FileText
-                      className="h-10 w-10 sm:h-14 sm:w-14 text-muted-foreground/40"
+                      className="h-10 w-10 sm:h-14 sm:w-14 text-white"
                       strokeWidth={1.5}
                     />
                   </div>
                   <div className="min-w-0 flex-1 text-left">
-                    <div className="text-xs sm:text-sm text-muted-foreground mb-0.5 text-left">
+                    <div className="text-xs sm:text-sm text-white mb-0.5 text-left">
                       Client
                     </div>
                     <div className="text-sm sm:text-base text-foreground font-medium truncate text-left">
@@ -260,7 +282,7 @@ const InvoiceCardList = ({
                 <div className="text-right space-y-2 flex-shrink-0">
                   {invoice.invoice_date && (
                     <div>
-                      <div className="text-xs text-muted-foreground mb-0.5">Issued</div>
+                      <div className="text-xs text-white mb-0.5">Issued</div>
                       <div className="text-xs sm:text-sm text-foreground font-medium">
                         {format(new Date(invoice.invoice_date), 'dd MMM yyyy')}
                       </div>
@@ -268,7 +290,7 @@ const InvoiceCardList = ({
                   )}
                   {invoice.invoice_due_date && (
                     <div>
-                      <div className="text-xs text-muted-foreground mb-0.5">Due Date</div>
+                      <div className="text-xs text-white mb-0.5">Due Date</div>
                       <div className="text-xs sm:text-sm text-foreground font-semibold">
                         {format(new Date(invoice.invoice_due_date), 'dd MMM yyyy')}
                       </div>
@@ -279,7 +301,7 @@ const InvoiceCardList = ({
 
               {/* Total Amount - Centered */}
               <div className="text-center mb-3 -mt-3">
-                <div className="text-xs sm:text-sm text-muted-foreground mb-1 font-normal">
+                <div className="text-xs sm:text-sm text-white mb-1 font-normal">
                   Total Amount
                 </div>
                 <div className="text-2xl sm:text-3xl font-bold text-primary">

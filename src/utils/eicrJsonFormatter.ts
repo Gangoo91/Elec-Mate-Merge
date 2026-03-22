@@ -6,6 +6,7 @@
 
 import { supabase } from '@/integrations/supabase/client';
 import { MAIN_BOARD_ID } from '@/types/distributionBoard';
+import type { EICRPayload } from '@/types/eicr-payload';
 
 const toSnakeCase = (str: string): string =>
   str.replace(/[A-Z]/g, (letter) => `_${letter.toLowerCase()}`);
@@ -25,7 +26,7 @@ const convertToSnakeCase = (obj: any): any => {
   return obj == null ? '' : obj;
 };
 
-export const formatEICRJson = async (formData: any, reportId: string) => {
+export const formatEICRJson = async (formData: any, reportId: string): Promise<EICRPayload> => {
   // CRITICAL DEBUG: Log exactly what's coming in
   console.log('[formatEICRJson] ===== INPUT DATA DEBUG =====');
   console.log(

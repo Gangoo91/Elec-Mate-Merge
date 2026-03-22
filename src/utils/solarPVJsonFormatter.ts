@@ -16,8 +16,9 @@ import {
   Defect,
   CertificatePhoto,
 } from '@/types/solar-pv';
+import type { SolarPVPayloadType } from '@/types/solar-pv-payload';
 
-export const formatSolarPVJson = (formData: Partial<SolarPVFormData>) => {
+export const formatSolarPVJson = (formData: Partial<SolarPVFormData>): SolarPVPayloadType => {
   const get = (key: string, defaultValue: any = ''): string => {
     const value = (formData as any)[key] ?? defaultValue;
     if (value === null || value === undefined) return '';
@@ -689,5 +690,6 @@ export const formatSolarPVJson = (formData: Partial<SolarPVFormData>) => {
     company_accent_color: get('accentColor') || get('companyAccentColor') || '#f59e0b',
     registration_scheme_logo: get('registrationSchemeLogo'),
     registration_scheme: get('registrationScheme'),
+    registration_number: get('registrationNumber'),
   };
 };

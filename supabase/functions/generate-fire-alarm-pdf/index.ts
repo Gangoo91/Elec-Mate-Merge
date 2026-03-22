@@ -1,5 +1,6 @@
 import 'jsr:@supabase/functions-js/edge-runtime.d.ts';
 import { captureException } from '../_shared/sentry.ts';
+import { fireAlarmPayloadSchema } from '../_shared/fire-alarm-payload-schema.ts';
 
 const PDFMONKEY_API_KEY = Deno.env.get('PDFMONKEY_API_KEY');
 const TEMPLATE_ID = '9ED166BD-FB05-4489-868F-673902FF2DBF';
@@ -109,6 +110,18 @@ Deno.serve(async (req: Request) => {
 
     console.log('[generate-fire-alarm-pdf] Creating PDF document');
     console.log('[generate-fire-alarm-pdf] Form data keys:', Object.keys(formData));
+
+    // Validate payload against schema (soft-fail: log but don't block)
+    const validation = fireAlarmPayloadSchema.safeParse(formData);
+    if (!validation.success) {
+      console.error('[generate-fire-alarm-pdf] Schema validation failed:',
+        JSON.stringify(validation.error.issues.slice(0, 10)));
+      await captureException(new Error('Fire Alarm payload schema drift detected'), {
+        functionName: 'generate-fire-alarm-pdf',
+        extra: { issues: validation.error.issues.slice(0, 20) },
+        tags: { schema_drift: 'true' },
+      });
+    }
 
     // Log key sections for debugging
     console.log(

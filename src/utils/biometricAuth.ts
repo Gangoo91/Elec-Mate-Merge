@@ -10,7 +10,7 @@
 
 import { Capacitor } from '@capacitor/core';
 import { Preferences } from '@capacitor/preferences';
-import { NativeBiometric, BiometryType } from 'capacitor-native-biometric';
+import { NativeBiometric, BiometryType } from '@capgo/capacitor-native-biometric';
 
 const BIOMETRIC_PREF_KEY = 'elecmate_biometric_enabled';
 const CREDENTIAL_SERVER = 'com.elecmate.app';

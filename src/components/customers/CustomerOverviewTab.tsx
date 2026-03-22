@@ -19,6 +19,8 @@ import {
   Briefcase,
 } from 'lucide-react';
 import { CustomerQuotesCard } from './CustomerQuotesCard';
+import { CustomerInvoicesCard } from './CustomerInvoicesCard';
+import { CustomerPaymentStatsCard } from './CustomerPaymentStatsCard';
 import { CustomerSiteVisitsCard } from './CustomerSiteVisitsCard';
 import { CustomerRAMSCard } from './CustomerRAMSCard';
 import { CustomerDesignConsultationCard } from './CustomerDesignConsultationCard';
@@ -155,6 +157,9 @@ export const CustomerOverviewTab = ({
         </Card>
       </div>
 
+      {/* Payment Reliability */}
+      <CustomerPaymentStatsCard customerId={customer.id} />
+
       {/* Notes */}
       {customer.notes && (
         <Card>
@@ -182,6 +187,9 @@ export const CustomerOverviewTab = ({
 
       {/* Quotes */}
       <CustomerQuotesCard customerId={customer.id} customerName={customer.name} />
+
+      {/* Invoices */}
+      <CustomerInvoicesCard customerId={customer.id} customerName={customer.name} />
 
       {/* Site Visits */}
       <CustomerSiteVisitsCard customerId={customer.id} />

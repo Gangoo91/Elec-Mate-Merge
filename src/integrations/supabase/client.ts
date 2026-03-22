@@ -15,6 +15,12 @@ export const supabase = createClient<Database>(SUPABASE_URL, SUPABASE_PUBLISHABL
     storage: authStorage,
     persistSession: true,
     autoRefreshToken: true,
+    // ELE-398: Prevent URL-based session detection on native — no auth tokens
+    // arrive via URL hash on Capacitor. Without this, GoTrue checks the URL first,
+    // finds nothing, and may interfere with storage-based session restoration.
+    detectSessionInUrl: false,
+    // PKCE flow is recommended for native apps (more secure, no implicit tokens)
+    flowType: 'pkce',
   },
   global: {
     fetch: (url, options = {}) => {

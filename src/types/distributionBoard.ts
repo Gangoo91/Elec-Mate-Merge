@@ -80,6 +80,12 @@ export interface DistributionBoard {
   incomingDeviceType?: string; // Type of incoming protective device (MCB, MCCB, etc.)
   incomingDeviceRating?: string; // Rating (A) of incoming protective device
 
+  // Main switch details (per-board, for EICR schedule)
+  mainSwitchBsEn?: string; // BS EN standard of main switch
+  mainSwitchType?: string; // Type of main switch (e.g. isolator, RCCB, RCD)
+  mainSwitchRating?: string; // Rating (A) of main switch
+  mainSwitchPoles?: string; // Number of poles (e.g. SP, DP, TP, TPN)
+
   // Timestamps
   createdAt?: Date;
   updatedAt?: Date;

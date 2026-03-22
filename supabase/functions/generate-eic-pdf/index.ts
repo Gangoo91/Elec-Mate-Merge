@@ -1,5 +1,6 @@
 import 'jsr:@supabase/functions-js/edge-runtime.d.ts';
 import { captureException } from '../_shared/sentry.ts';
+import { validateEICPayload } from '../_shared/eic-payload-schema.ts';
 
 const PDFMONKEY_API_KEY = Deno.env.get('PDFMONKEY_API_KEY');
 const TEMPLATE_ID = 'B39538E9-8FF1-4882-BC13-70B1C0D30947';
@@ -164,17 +165,22 @@ Deno.serve(async (req: Request) => {
       });
     }
 
-    // Full payload for debugging (careful - can be large)
-    console.log('[generate-eic-pdf] FULL PAYLOAD:', JSON.stringify(formData, null, 2));
-
-    // Debug nested objects specifically (these are the ones having issues)
-    console.log('[generate-eic-pdf] NESTED OBJECTS:');
-    console.log('  earthing_bonding:', JSON.stringify(formData.earthing_bonding, null, 2));
-    console.log('  designer:', JSON.stringify(formData.designer, null, 2));
-    console.log(
-      '  main_protective_device:',
-      JSON.stringify(formData.main_protective_device, null, 2)
-    );
+    // Validate payload against schema (soft-fail: log but don't block)
+    const validation = validateEICPayload(formData);
+    if (!validation.success) {
+      const issuesSample = validation.error.issues.slice(0, 10);
+      console.error(
+        '[generate-eic-pdf] Schema validation failed:',
+        JSON.stringify(issuesSample)
+      );
+      await captureException(new Error('EIC payload schema drift detected'), {
+        functionName: 'generate-eic-pdf',
+        extra: { issues: validation.error.issues.slice(0, 20) },
+        tags: { schema_drift: 'true' },
+      });
+    } else {
+      console.log('[generate-eic-pdf] Schema validation passed');
+    }
 
     // Create the document
     const document = await createPDFMonkeyDocument(formData, templateId);

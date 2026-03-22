@@ -84,7 +84,6 @@ export const InvoiceSendDropdown = ({
         });
 
         if (error) {
-          console.error('Error checking Stripe status:', error);
           // Fallback to database read
           const { data: profile } = await supabase
             .from('company_profiles')
@@ -110,8 +109,7 @@ export const InvoiceSendDropdown = ({
         } else {
           setStripeStatus('not_connected');
         }
-      } catch (error) {
-        console.error('Error checking Stripe status:', error);
+      } catch {
         setStripeStatus('not_connected');
       }
     };
@@ -177,9 +175,7 @@ export const InvoiceSendDropdown = ({
         session = refreshData.session;
       }
 
-      // Send via Resend - use fetch directly to get full error details
-      console.log('📧 Calling send-invoice-resend with invoiceId:', invoice.id);
-
+      // Send via Resend
       const response = await fetch(
         `${import.meta.env.VITE_SUPABASE_URL || 'https://jtwygbeceundfgnkirof.supabase.co'}/functions/v1/send-invoice-resend`,
         {
@@ -193,21 +189,16 @@ export const InvoiceSendDropdown = ({
       );
 
       const data = await response.json();
-      console.log('📧 Response status:', response.status);
-      console.log('📧 Response data:', data);
 
       if (!response.ok) {
-        console.error('📧 Function error:', data);
         throw new Error(data.error || data.message || `Server error: ${response.status}`);
       }
 
       if (data?.error) {
-        console.error('📧 Function returned error in data:', data);
         throw new Error(data.error + (data.hint ? ` (${data.hint})` : ''));
       }
 
       if (!data?.success) {
-        console.error('📧 Function did not return success:', data);
         throw new Error(data?.message || 'Unknown error sending invoice');
       }
 
@@ -262,8 +253,6 @@ export const InvoiceSendDropdown = ({
 
       onSuccess?.();
     } catch (error: any) {
-      console.error('Error sending invoice:', error);
-
       toast({
         title: 'Error sending invoice',
         description: error.message || 'Failed to send invoice. Please try again.',
@@ -304,9 +293,7 @@ export const InvoiceSendDropdown = ({
         .eq('user_id', user.id)
         .single();
 
-      if (companyError) {
-        console.error('Company profile error:', companyError);
-      }
+      // Company profile may not exist — non-blocking
 
       // Step 2: Generate fresh PDF with latest data (silently)
       const {
@@ -339,7 +326,6 @@ export const InvoiceSendDropdown = ({
       }
 
       if (pdfError || !pdfUrl) {
-        console.error('PDF Monkey error:', pdfError);
         throw new Error('Failed to generate professional PDF');
       }
 
@@ -411,7 +397,6 @@ ${companyName}`;
 
       onSuccess?.();
     } catch (error: any) {
-      console.error('Error sharing via WhatsApp:', error);
       toast({
         title: 'Error',
         description: error.message || 'Failed to prepare invoice for WhatsApp',
@@ -458,7 +443,6 @@ ${companyName}`;
         sonnerToast.error('Could not start Stripe connection');
       }
     } catch (error: any) {
-      console.error('Error connecting Stripe OAuth:', error);
       sonnerToast.error(error?.message || 'Failed to connect Stripe');
     } finally {
       setIsConnectingStripe(false);
@@ -509,7 +493,6 @@ ${companyName}`;
         });
       }
     } catch (error: any) {
-      console.error('Error connecting Stripe:', error);
       const errorMessage =
         error?.message ||
         error?.error ||

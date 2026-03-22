@@ -65,7 +65,7 @@ const ForgotPassword = () => {
           {/* Header text */}
           <div className="text-center mb-6">
             <h1 className="text-2xl sm:text-3xl font-bold mb-2 text-white">Reset password</h1>
-            <p className="text-gray-400 text-sm sm:text-base">
+            <p className="text-white text-sm sm:text-base">
               {isSuccess
                 ? 'Check your email for the reset link'
                 : "Enter your email and we'll send you a reset link"}
@@ -81,10 +81,10 @@ const ForgotPassword = () => {
                     <CheckCircle2 className="h-8 w-8 text-green-500" />
                   </div>
                   <h3 className="text-lg font-semibold text-white mb-2">Check your inbox</h3>
-                  <p className="text-gray-400 text-sm mb-6">
+                  <p className="text-white text-sm mb-6">
                     We've sent a password reset link to <span className="text-white">{email}</span>
                   </p>
-                  <p className="text-gray-500 text-xs mb-4">
+                  <p className="text-white text-xs mb-4">
                     Didn't receive the email? Check your spam folder or try again.
                   </p>
                   <Button
@@ -108,7 +108,7 @@ const ForgotPassword = () => {
 
                   <form onSubmit={handleSubmit} className="space-y-4">
                     <div className="space-y-2">
-                      <Label htmlFor="email" className="text-sm font-medium text-gray-300">
+                      <Label htmlFor="email" className="text-sm font-medium text-white">
                         Email address
                       </Label>
                       <div className="relative group">
@@ -150,7 +150,7 @@ const ForgotPassword = () => {
           <div className="mt-6 text-center animate-fade-in" style={{ animationDelay: '100ms' }}>
             <Link
               to="/auth/signin"
-              className="inline-flex items-center gap-2 text-sm text-gray-400 hover:text-yellow-400 transition-colors duration-200"
+              className="inline-flex items-center gap-2 text-sm text-white hover:text-yellow-400 transition-colors duration-200"
             >
               <ArrowLeft className="h-4 w-4" />
               Back to sign in
@@ -162,7 +162,7 @@ const ForgotPassword = () => {
       {/* Footer */}
       <footer className="relative px-4 pb-6">
         <div className="max-w-sm mx-auto">
-          <div className="flex items-center justify-center gap-4 text-xs text-gray-500">
+          <div className="flex items-center justify-center gap-4 text-xs text-white">
             <span className="flex items-center gap-1.5 transition-colors hover:text-gray-400">
               <CheckCircle2 className="h-3.5 w-3.5 text-green-500" />
               Secure reset

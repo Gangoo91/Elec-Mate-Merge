@@ -264,6 +264,87 @@ function generateApprenticeEmailHTML(user: EligibleUser): string {
 </body></html>`;
 }
 
+// V3 "Card Deets" email — direct, empathetic, addresses card fear head-on
+function generateV3EmailHTML(user: EligibleUser): string {
+  const firstName = user.full_name?.split(' ')[0] || 'mate';
+
+  return `<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><meta name="color-scheme" content="dark"><!--[if mso]><style>body,table,td{font-family:Arial,sans-serif!important}</style><![endif]--></head>
+<body style="margin:0;padding:0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;background:#0f172a">
+<table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background:#0f172a"><tr><td style="padding:24px 12px">
+<table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="max-width:500px;margin:0 auto;background:linear-gradient(180deg,#1e293b,#0f172a);border-radius:24px;overflow:hidden;border:1px solid rgba(251,191,36,0.2)">
+
+<!-- Opening — empathy first -->
+<tr><td style="padding:32px 24px 20px">
+<p style="margin:0 0 16px;font-size:17px;color:#fff;line-height:1.6">Hey ${firstName},</p>
+<p style="margin:0 0 14px;font-size:16px;color:#fff;line-height:1.7">I know &mdash; you've had a few emails from me already. But I checked the numbers this morning and something properly bugged me.</p>
+<p style="margin:0 0 14px;font-size:16px;color:#fff;line-height:1.7"><strong style="color:#fbbf24">91 electricians</strong> signed up to Elec-Mate, got to the card details, and walked away.</p>
+<p style="margin:0 0 14px;font-size:16px;color:#fff;line-height:1.7">You were one of them. And honestly? I get it.</p>
+<p style="margin:0;font-size:16px;color:#fff;line-height:1.7">Nobody wants to hand over card details for something they've never used. It feels like a trap. &ldquo;Free trial&rdquo; that quietly starts billing you on day 8. We've all been stung.</p>
+</td></tr>
+
+<!-- Card reassurance — the core message -->
+<tr><td style="padding:0 20px 16px">
+<div style="background:linear-gradient(135deg,rgba(34,197,94,0.12),rgba(34,197,94,0.03));border:2px solid rgba(34,197,94,0.35);border-radius:14px;padding:20px">
+<p style="margin:0 0 12px;font-size:16px;color:#22c55e;font-weight:700;text-align:center">Here's exactly what happens when you enter your card:</p>
+<p style="margin:0 0 6px;font-size:14px;color:#fff;line-height:1.7">&#x2713; You get <strong style="color:#fff">7 full days</strong> of the complete app. Every feature. No limits.</p>
+<p style="margin:0 0 6px;font-size:14px;color:#fff;line-height:1.7">&#x2713; Your card <strong style="color:#22c55e">will not be charged</strong> during those 7 days. Not a penny.</p>
+<p style="margin:0 0 6px;font-size:14px;color:#fff;line-height:1.7">&#x2713; You'll get a reminder <strong style="color:#fff">before</strong> the trial ends.</p>
+<p style="margin:0 0 14px;font-size:14px;color:#fff;line-height:1.7">&#x2713; Cancel in <strong style="color:#fff">2 taps</strong> from the app. No phone calls. No &ldquo;retention team.&rdquo; No guilt trip.</p>
+<p style="margin:0 0 10px;font-size:15px;color:#fff;font-weight:700">Why do we even ask for a card?</p>
+<p style="margin:0;font-size:14px;color:#fff;line-height:1.6">Stops fake signups and bots clogging the system. The card just proves you're a real spark. It doesn't get touched.</p>
+</div>
+</td></tr>
+
+<!-- Divider -->
+<tr><td style="padding:0 40px 16px"><div style="border-top:1px solid rgba(255,255,255,0.1)"></div></td></tr>
+
+<!-- What you're missing — practical, grounded -->
+<tr><td style="padding:0 20px 16px">
+<div style="background:linear-gradient(135deg,rgba(251,191,36,0.08),rgba(251,191,36,0.02));border:1px solid rgba(251,191,36,0.25);border-radius:14px;padding:20px">
+<p style="margin:0 0 14px;font-size:15px;color:#fbbf24;font-weight:700;text-transform:uppercase;letter-spacing:0.5px">What you're actually missing right now</p>
+<p style="margin:0 0 10px;font-size:14px;color:#fff;line-height:1.7">While you've been thinking about it, sparks on Elec-Mate are:</p>
+<p style="margin:0 0 6px;font-size:14px;color:#fff;line-height:1.6">&#x2022; Filling out <strong style="color:#fff">EICRs, minor works, test sheets &amp; fire alarm certs</strong> &mdash; on their phone, on site, done in minutes</p>
+<p style="margin:0 0 6px;font-size:14px;color:#fff;line-height:1.6">&#x2022; Completing <strong style="color:#fff">RAMS</strong> &mdash; risk assessments sorted without the paperwork headache</p>
+<p style="margin:0 0 6px;font-size:14px;color:#fff;line-height:1.6">&#x2022; Sending <strong style="color:#fff">professional quotes &amp; invoices</strong> straight to clients &mdash; no laptop needed</p>
+<p style="margin:0 0 6px;font-size:14px;color:#fff;line-height:1.6">&#x2022; Managing their <strong style="color:#fff">full job book</strong> &mdash; tasks, scheduling, clients, all in one place</p>
+<p style="margin:0 0 6px;font-size:14px;color:#fff;line-height:1.6">&#x2022; Tracking <strong style="color:#fff">costs, profit &amp; analytics</strong> &mdash; actually knowing what they're earning per job</p>
+<p style="margin:0 0 14px;font-size:14px;color:#fff;line-height:1.6">&#x2022; <strong style="color:#fff">Brushing up on regs &amp; knowledge</strong> &mdash; BS 7671 reference, guidance notes, all at your fingertips</p>
+<p style="margin:0;font-size:15px;color:#fff;font-weight:700;line-height:1.6">All for <strong style="color:#fbbf24">&pound;9.99/month.</strong> That's nothing for what this app replaces &mdash; no more juggling Certsure, spreadsheets, separate invoicing apps, and bits of paper.</p>
+</div>
+</td></tr>
+
+<!-- One favour + CTA -->
+<tr><td style="padding:0 20px 16px">
+<div style="background:linear-gradient(135deg,rgba(34,197,94,0.15),rgba(34,197,94,0.05));border:2px solid rgba(34,197,94,0.4);border-radius:16px;padding:24px 18px;text-align:center">
+<p style="margin:0 0 10px;font-size:16px;color:#fff;font-weight:700;line-height:1.5">One favour: just try it for one day.</p>
+<p style="margin:0 0 18px;font-size:14px;color:#fff;line-height:1.6">Not even the full 7. One real job. If it's not for you, cancel and I'll never email you again.</p>
+<a href="https://elec-mate.com" style="display:block;padding:18px;background:linear-gradient(135deg,#22c55e,#16a34a);color:#fff;text-decoration:none;font-size:17px;font-weight:700;border-radius:14px;text-align:center;box-shadow:0 8px 24px rgba(34,197,94,0.35)">Start Your Free Trial &mdash; No Charge for 7 Days &rarr;</a>
+<p style="margin:10px 0 0;font-size:13px;color:#fff;text-align:center">Your card won't be touched. Cancel any time.</p>
+</div>
+</td></tr>
+
+<!-- Sign-off -->
+<tr><td style="padding:0 20px 16px"><div style="background:linear-gradient(135deg,rgba(251,191,36,0.08),rgba(251,191,36,0.02));border:1px solid rgba(251,191,36,0.15);border-radius:14px;padding:18px">
+<p style="margin:0 0 12px;font-size:14px;color:#fff;line-height:1.6">Got questions? Reply here or text me on WhatsApp: <strong style="color:#fff">07507 241303</strong>. I'm Andrew, I built this thing, and I'll answer you personally.</p>
+<p style="margin:0 0 4px;font-size:15px;color:#fff">Cheers,</p>
+<p style="margin:0 0 2px;font-size:17px;color:#fbbf24;font-weight:700">Andrew</p>
+<p style="margin:0;font-size:13px;color:#fff">Founder &middot; Elec-Mate</p>
+</div></td></tr>
+
+<!-- P.S. — urgency -->
+<tr><td style="padding:0 20px 16px">
+<p style="margin:0;font-size:13px;color:#fff;line-height:1.6;font-style:italic">P.S. &mdash; This is genuinely the last email you'll get from me about this. After today, you're off the list. No hard feelings either way.</p>
+</td></tr>
+
+<!-- Footer -->
+<tr><td style="padding:16px 24px;text-align:center;border-top:1px solid rgba(255,255,255,0.08)">
+<p style="margin:0;font-size:12px;color:#fff">&copy; ${new Date().getFullYear()} Elec-Mate &middot; Built for UK Sparks &#x1F1EC;&#x1F1E7; &#x26A1;</p>
+</td></tr>
+
+</table></td></tr></table>
+</body></html>`;
+}
+
 // V2 "Come Back" email — V5-style, targets ALL abandoned signups (no 10-day window)
 function generateV2EmailHTML(user: EligibleUser): string {
   const firstName = user.full_name?.split(' ')[0] || 'mate';
@@ -1099,6 +1180,243 @@ Deno.serve(async (req) => {
           message: v2Complete
             ? `All done! Sent ${v2SentCount} emails.`
             : `Sent ${v2SentCount}. ~${v2RemainingCount} remaining.`,
+        };
+        break;
+      }
+
+      // ── V3 Campaign — "Card Deets" reset, fresh email to all 91 ──
+
+      case 'get_v3_stats': {
+        // Same abandoned checkout cohort: has stripe_customer_id, not subscribed, not free access
+        const { data: v3Profiles, error: v3StatsErr } = await supabaseAdmin
+          .from('profiles')
+          .select('id, incomplete_signup_v3_sent_at, subscribed, free_access_granted')
+          .or('role.eq.electrician,role.eq.apprentice')
+          .not('stripe_customer_id', 'is', null);
+        if (v3StatsErr) throw v3StatsErr;
+
+        const v3Abandoned = (v3Profiles || []).filter((p: any) => {
+          if (p.subscribed === true) return false;
+          if (p.free_access_granted === true) return false;
+          return true;
+        });
+
+        const v3Eligible = v3Abandoned.filter((p: any) => !p.incomplete_signup_v3_sent_at);
+        const v3Sent = v3Abandoned.filter((p: any) => p.incomplete_signup_v3_sent_at);
+        const v3Conversions = v3Sent.filter((p: any) => p.subscribed);
+
+        result = {
+          totalEligible: v3Eligible.length,
+          sent: v3Sent.length,
+          totalAbandoned: v3Abandoned.length,
+          conversions: v3Conversions.length,
+          conversionRate:
+            v3Sent.length > 0 ? ((v3Conversions.length / v3Sent.length) * 100).toFixed(1) : '0',
+        };
+        break;
+      }
+
+      case 'get_v3_eligible': {
+        // Get full list of eligible users for the V3 campaign
+        const { data: v3AllProfiles, error: v3AllErr } = await supabaseAdmin
+          .from('profiles')
+          .select('id, full_name, username, role, created_at, subscribed, free_access_granted')
+          .or('role.eq.electrician,role.eq.apprentice')
+          .not('stripe_customer_id', 'is', null)
+          .is('incomplete_signup_v3_sent_at', null)
+          .order('created_at', { ascending: false });
+        if (v3AllErr) throw v3AllErr;
+
+        const v3Filtered = (v3AllProfiles || []).filter(
+          (p: any) => !p.subscribed && !p.free_access_granted
+        );
+
+        // Get emails
+        const { data: v3AuthData } = await supabaseAdmin.rpc('get_auth_user_emails');
+        const v3EmailMap = new Map<string, string>();
+        (v3AuthData || []).forEach((u: any) => {
+          if (u.email) v3EmailMap.set(u.id, u.email);
+        });
+
+        const v3WithEmails = v3Filtered
+          .map((p: any) => ({ ...p, email: v3EmailMap.get(p.id) || null }))
+          .filter((p: any) => p.email);
+
+        result = { users: v3WithEmails };
+        break;
+      }
+
+      case 'get_v3_sent': {
+        // Get users already sent the V3 email
+        const { data: v3SentProfiles, error: v3SentErr } = await supabaseAdmin
+          .from('profiles')
+          .select('id, full_name, username, role, created_at, incomplete_signup_v3_sent_at, subscribed')
+          .not('incomplete_signup_v3_sent_at', 'is', null)
+          .not('stripe_customer_id', 'is', null)
+          .order('incomplete_signup_v3_sent_at', { ascending: false })
+          .limit(200);
+        if (v3SentErr) throw v3SentErr;
+
+        result = { users: v3SentProfiles || [] };
+        break;
+      }
+
+      case 'send_v3_test': {
+        if (!testEmail) throw new Error('testEmail is required');
+
+        const v3TestUser: EligibleUser = {
+          id: 'test',
+          full_name: recipientName || 'Test User',
+          username: 'test',
+          email: testEmail,
+          role: 'electrician',
+          created_at: new Date().toISOString(),
+        };
+
+        const v3TestHtml = generateV3EmailHTML(v3TestUser);
+        const { data: v3TestData, error: v3TestErr } = await resend.emails.send({
+          from: 'Andrew at Elec-Mate <founder@elec-mate.com>',
+          replyTo: 'founder@elec-mate.com',
+          to: [testEmail.trim().toLowerCase()],
+          subject: "[TEST] You got to the card bit and thought 'nah' \u2014 fair enough",
+          html: v3TestHtml,
+          tags: [
+            { name: 'campaign', value: 'incomplete_signup_v3' },
+            { name: 'type', value: 'test' },
+          ],
+        });
+
+        if (v3TestErr) throw new Error(`Failed to send: ${v3TestErr.message}`);
+
+        console.log(`V3 test email sent to ${testEmail} by admin ${user.id}`);
+        result = { success: true, email: testEmail, resendId: v3TestData?.id };
+        break;
+      }
+
+      case 'send_v3_campaign': {
+        // Batch send V3 emails
+        const V3_BATCH_SIZE = 10;
+
+        const { data: v3CampProfiles, error: v3CampErr } = await supabaseAdmin
+          .from('profiles')
+          .select('id, full_name, username, role, created_at, subscribed, free_access_granted')
+          .or('role.eq.electrician,role.eq.apprentice')
+          .not('stripe_customer_id', 'is', null)
+          .is('incomplete_signup_v3_sent_at', null)
+          .order('created_at', { ascending: true });
+        if (v3CampErr) throw v3CampErr;
+
+        const v3CampFiltered = (v3CampProfiles || []).filter(
+          (p: any) => !p.subscribed && !p.free_access_granted
+        );
+
+        // Get emails
+        const { data: v3CampAuth } = await supabaseAdmin.rpc('get_auth_user_emails');
+        const v3CampEmailMap = new Map<string, string>();
+        (v3CampAuth || []).forEach((u: any) => {
+          if (u.email) v3CampEmailMap.set(u.id, u.email);
+        });
+
+        const v3CampWithEmails = v3CampFiltered
+          .map((p: any) => ({ ...p, email: v3CampEmailMap.get(p.id) || null }))
+          .filter((p: any) => p.email);
+
+        const v3Batch = v3CampWithEmails.slice(0, V3_BATCH_SIZE);
+
+        if (v3Batch.length === 0) {
+          result = { sent: 0, remaining: 0, complete: true, message: 'All V3 emails sent!' };
+          break;
+        }
+
+        let v3SentCount = 0;
+        const v3Errors: string[] = [];
+
+        for (let i = 0; i < v3Batch.length; i++) {
+          const profile = v3Batch[i];
+          try {
+            const emailUser: EligibleUser = {
+              id: profile.id,
+              full_name: profile.full_name,
+              username: profile.username,
+              email: profile.email,
+              role: profile.role,
+              created_at: profile.created_at,
+            };
+
+            const emailHtml = generateV3EmailHTML(emailUser);
+
+            const { data: emailData, error: emailError } = await resend.emails.send({
+              from: 'Andrew at Elec-Mate <founder@elec-mate.com>',
+              replyTo: 'founder@elec-mate.com',
+              to: [profile.email.trim().toLowerCase()],
+              subject: "You got to the card bit and thought 'nah' \u2014 fair enough",
+              html: emailHtml,
+              tags: [
+                { name: 'campaign', value: 'incomplete_signup_v3' },
+                { name: 'role', value: profile.role || 'electrician' },
+                { name: 'user_id', value: profile.id },
+              ],
+            });
+
+            if (emailError) {
+              v3Errors.push(`${profile.email}: ${emailError.message}`);
+              continue;
+            }
+
+            // Mark as sent
+            await supabaseAdmin
+              .from('profiles')
+              .update({ incomplete_signup_v3_sent_at: new Date().toISOString() })
+              .eq('id', profile.id);
+
+            // Log to email_logs
+            await supabaseAdmin.from('email_logs').insert({
+              to_email: profile.email,
+              subject: "You got to the card bit and thought 'nah' \u2014 fair enough",
+              template: 'incomplete_signup_v3',
+              status: 'sent',
+              metadata: {
+                resend_id: emailData?.id,
+                user_id: profile.id,
+                role: profile.role,
+              },
+            });
+
+            v3SentCount++;
+
+            if (i < v3Batch.length - 1) {
+              await sleep(SEND_DELAY_MS);
+            }
+          } catch (err: any) {
+            v3Errors.push(`${profile.email}: ${err.message}`);
+          }
+        }
+
+        // Count remaining
+        const { data: v3RemProfiles } = await supabaseAdmin
+          .from('profiles')
+          .select('id, subscribed, free_access_granted')
+          .or('role.eq.electrician,role.eq.apprentice')
+          .not('stripe_customer_id', 'is', null)
+          .is('incomplete_signup_v3_sent_at', null);
+
+        const v3RemCount = (v3RemProfiles || []).filter(
+          (p: any) => !p.subscribed && !p.free_access_granted
+        ).length;
+        const v3Complete = v3RemCount === 0;
+
+        console.log(
+          `V3 campaign: Sent ${v3SentCount}/${v3Batch.length} by admin ${user.id}. ~${v3RemCount} remaining.`
+        );
+
+        result = {
+          sent: v3SentCount,
+          remaining: v3RemCount,
+          complete: v3Complete,
+          errors: v3Errors.length > 0 ? v3Errors : undefined,
+          message: v3Complete
+            ? `All done! Sent ${v3SentCount} emails.`
+            : `Sent ${v3SentCount}. ~${v3RemCount} remaining.`,
         };
         break;
       }

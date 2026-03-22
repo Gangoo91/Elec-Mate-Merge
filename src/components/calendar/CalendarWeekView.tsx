@@ -149,7 +149,7 @@ const CalendarWeekView = ({
                   <div
                     className={cn(
                       'flex items-start justify-end pr-1.5 -mt-[6px] text-[10px] font-bold tabular-nums',
-                      isWorkingHour ? 'text-white' : 'text-white/25'
+                      isWorkingHour ? 'text-white' : 'text-white opacity-50'
                     )}
                     style={{ height: HOUR_HEIGHT }}
                   >

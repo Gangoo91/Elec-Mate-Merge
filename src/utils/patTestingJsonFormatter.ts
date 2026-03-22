@@ -8,6 +8,7 @@
  */
 
 import { PATTestingFormData, Appliance, PAT_REPAIR_CODES } from '@/types/pat-testing';
+import type { PATTestingPayloadType } from '@/types/pat-testing-payload';
 
 /** Compact result code: 'P' = pass, 'F' = fail, '' = not tested */
 const resultCode = (val: string): string => {
@@ -124,7 +125,7 @@ export const formatPATTestingJson = (
     registrationNumber?: string;
     registrationSchemeLogo?: string;
   }
-) => {
+): PATTestingPayloadType => {
   const appliances = formData.appliances || [];
 
   // Calculate summary stats

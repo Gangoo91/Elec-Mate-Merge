@@ -1,5 +1,6 @@
 import { serve } from 'https://deno.land/std@0.168.0/http/server.ts';
 import { captureException } from '../_shared/sentry.ts';
+import { minorWorksSchema, type MinorWorksPayload } from '../_shared/minor-works-schema.ts';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -7,7 +8,7 @@ const corsHeaders = {
     'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
 };
 
-const PDF_MONKEY_API_KEY = Deno.env.get('PDF_MONKEY_API_KEY');
+const PDFMONKEY_API_KEY = Deno.env.get('PDFMONKEY_API_KEY');
 const DEFAULT_MINOR_WORKS_TEMPLATE_ID = 'E57A0DC9-5D3C-4BF4-9A96-18D27579A742';
 
 serve(async (req) => {
@@ -20,7 +21,7 @@ serve(async (req) => {
     console.log('[MINOR-WORKS-PDF] Request started');
 
     // Verify PDF Monkey API key is configured
-    if (!PDF_MONKEY_API_KEY) {
+    if (!PDFMONKEY_API_KEY) {
       console.error('[MINOR-WORKS-PDF] API key not configured');
       return new Response(JSON.stringify({ error: 'PDF Monkey API key not configured' }), {
         status: 500,
@@ -47,15 +48,32 @@ serve(async (req) => {
     console.log('[MINOR-WORKS-PDF] Using template ID:', TEMPLATE_ID);
 
     // Transform app form data to PDF template format
-    const payload = transformFormDataForTemplate(formData);
+    const payload: MinorWorksPayload = transformFormDataForTemplate(formData);
     console.log('[MINOR-WORKS-PDF] Transformed payload keys:', Object.keys(payload));
+
+    // Validate payload against schema (soft-fail: log but don't block)
+    const schemaValidation = minorWorksSchema.safeParse(payload);
+    if (!schemaValidation.success) {
+      const issuesSample = schemaValidation.error.issues.slice(0, 10);
+      console.error(
+        '[MINOR-WORKS-PDF] Schema validation failed:',
+        JSON.stringify(issuesSample)
+      );
+      await captureException(new Error('Minor Works payload schema drift detected'), {
+        functionName: 'generate-minor-works-pdf',
+        extra: { issues: schemaValidation.error.issues.slice(0, 20) },
+        tags: { schema_drift: 'true' },
+      });
+    } else {
+      console.log('[MINOR-WORKS-PDF] Schema validation passed');
+    }
 
     // Call PDF Monkey API
     console.log('[MINOR-WORKS-PDF] Calling PDF Monkey API');
     const pdfMonkeyResponse = await fetch('https://api.pdfmonkey.io/api/v1/documents', {
       method: 'POST',
       headers: {
-        Authorization: `Bearer ${PDF_MONKEY_API_KEY}`,
+        Authorization: `Bearer ${PDFMONKEY_API_KEY}`,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
@@ -99,7 +117,7 @@ serve(async (req) => {
         `https://api.pdfmonkey.io/api/v1/documents/${documentId}`,
         {
           headers: {
-            Authorization: `Bearer ${PDF_MONKEY_API_KEY}`,
+            Authorization: `Bearer ${PDFMONKEY_API_KEY}`,
           },
         }
       );
@@ -177,7 +195,7 @@ serve(async (req) => {
  * Transform app form data (camelCase) to PDF template format (nested objects)
  */
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-function transformFormDataForTemplate(formData: any): any {
+function transformFormDataForTemplate(formData: any): MinorWorksPayload {
   const today = new Date().toLocaleDateString('en-GB');
 
   return {

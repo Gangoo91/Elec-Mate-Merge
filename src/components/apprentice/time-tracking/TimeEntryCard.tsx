@@ -59,7 +59,7 @@ const TimeEntryCard = ({ entry }: TimeEntryCardProps) => {
     } else {
       return {
         label: 'Manual',
-        color: 'bg-slate-500/20 text-slate-400 hover:bg-slate-500/30 hover:text-slate-400',
+        color: 'bg-slate-500/20 text-white hover:bg-slate-500/30 hover:text-white',
       };
     }
   };

@@ -305,18 +305,41 @@ export default function EVChargingCertificate() {
 
       // Save pdf_url and create Part P notification
       if (savedReportId) {
+        const {
+          data: { user },
+        } = await supabase.auth.getUser();
+
+        // ELE-413: Save PDF to permanent Supabase Storage (PDFMonkey URLs expire in 7 days)
+        let permanentPdfUrl = functionData.pdfUrl;
+        if (user) {
+          try {
+            const { saveCertificatePdf } = await import('@/utils/certificate-pdf-storage');
+            const { permanentUrl, storagePath } = await saveCertificatePdf(
+              functionData.pdfUrl,
+              user.id,
+              savedReportId,
+              formData.certificateNumber
+            );
+            permanentPdfUrl = permanentUrl;
+
+            await supabase
+              .from('reports')
+              .update({ storage_path: storagePath })
+              .eq('report_id', savedReportId);
+          } catch (storageErr) {
+            console.warn('[EVCharging] Permanent PDF storage failed, using temp URL:', storageErr);
+          }
+        }
+
         await supabase
           .from('reports')
           .update({
-            pdf_url: functionData.pdfUrl,
+            pdf_url: permanentPdfUrl,
             pdf_generated_at: new Date().toISOString(),
             status: 'completed',
           })
           .eq('report_id', savedReportId);
 
-        const {
-          data: { user },
-        } = await supabase.auth.getUser();
         if (user) {
           await createNotificationFromCertificate(savedReportId, 'ev-charging', formData, user.id);
         }

@@ -97,7 +97,7 @@ const EICRTabContent = ({
   };
 
   const containerClasses =
-    tabValue === 'testing' ? 'w-full max-w-none space-y-6' : 'md:max-w-6xl mx-auto space-y-6';
+    'md:max-w-6xl mx-auto space-y-6' + (tabValue === 'testing' ? ' overflow-x-auto' : '');
 
   return (
     <div className={containerClasses}>

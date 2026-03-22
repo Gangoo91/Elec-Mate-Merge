@@ -187,6 +187,8 @@ export const bs7671InspectionSections: InspectionSection[] = [
         number: '4.9',
         item: 'Correct identification of circuit details and protective devices',
         clause: '514.8.1; 514.9.1',
+        description:
+          'Reg 514.9.1 requires a durable chart or schedule at or near each distribution board showing: circuit number, type and rating of each protective device, circuit designation, and the points served or areas covered. Labels must be legible and kept up to date with any changes.',
       },
       {
         id: 'item_4_10',

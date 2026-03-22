@@ -4,8 +4,9 @@
  */
 
 import { FireAlarmFormData, FireAlarmZone, InterfaceEquipment, AspiratingUnit, TestEquipmentItem } from '@/types/fire-alarm';
+import type { FireAlarmPayloadType } from '@/types/fire-alarm-payload';
 
-export const formatFireAlarmJson = (formData: Partial<FireAlarmFormData>) => {
+export const formatFireAlarmJson = (formData: Partial<FireAlarmFormData>): FireAlarmPayloadType => {
   const data = formData as Record<string, unknown>;
 
   const get = (key: string, defaultValue: string = ''): string => {
@@ -881,6 +882,12 @@ export const formatFireAlarmJson = (formData: Partial<FireAlarmFormData>) => {
     // ============================================
     related_standards: formData.relatedStandards || [],
     has_related_standards: (formData.relatedStandards || []).length > 0,
+
+    // ============================================
+    // PHOTOS (for PDF page 3)
+    // ============================================
+    photos: [] as { url: string; caption: string }[],
+    has_photos: false,
 
     // ============================================
     // COMPANY BRANDING (from profile)

@@ -39,6 +39,9 @@ import { useHaptics } from '@/hooks/useHaptics';
 import { cn } from '@/lib/utils';
 import { openExternalUrl } from '@/utils/open-external-url';
 
+// Feature flag: set to true to use Gotenberg (v2), false to revert to PDF Monkey (v1)
+const USE_GOTENBERG_PDF = false;
+
 interface MinorWorksPdfGeneratorProps {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   formData: any;
@@ -312,13 +315,16 @@ const MinorWorksPdfGenerator: React.FC<MinorWorksPdfGeneratorProps> = ({
           .eq('report_id', savedReportId);
       }
 
+      const functionName = USE_GOTENBERG_PDF
+        ? 'generate-minor-works-pdf-v2'
+        : 'generate-minor-works-pdf';
+
       const { data: functionData, error: functionError } = await supabase.functions.invoke(
-        'generate-minor-works-pdf',
+        functionName,
         {
-          body: {
-            formData: formattedFormData,
-            templateId: savedTemplateId,
-          },
+          body: USE_GOTENBERG_PDF
+            ? { formData: formattedFormData }
+            : { formData: formattedFormData, templateId: savedTemplateId },
         }
       );
 
@@ -339,17 +345,24 @@ const MinorWorksPdfGenerator: React.FC<MinorWorksPdfGeneratorProps> = ({
       let permanentUrl = functionData.pdfUrl;
       let storagePath: string | null = null;
 
-      try {
-        const storageResult = await saveCertificatePdf(
-          functionData.pdfUrl,
-          user.id,
-          savedReportId || '',
-          formData.certificateNumber
-        );
-        permanentUrl = storageResult.permanentUrl;
-        storagePath = storageResult.storagePath;
-      } catch (storageError) {
-        console.error('[MinorWorks PDF] Failed to save PDF permanently:', storageError);
+      if (USE_GOTENBERG_PDF) {
+        // v2 already uploaded to Storage — URL is permanent
+        permanentUrl = functionData.pdfUrl;
+        storagePath = functionData.storagePath || null;
+      } else {
+        // Legacy v1: download from PDF Monkey temp URL and re-upload
+        try {
+          const storageResult = await saveCertificatePdf(
+            functionData.pdfUrl,
+            user.id,
+            savedReportId || '',
+            formData.certificateNumber
+          );
+          permanentUrl = storageResult.permanentUrl;
+          storagePath = storageResult.storagePath;
+        } catch (storageError) {
+          console.error('[MinorWorks PDF] Failed to save PDF permanently:', storageError);
+        }
       }
 
       setExportProgress(85);

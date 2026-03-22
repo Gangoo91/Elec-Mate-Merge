@@ -92,7 +92,6 @@ const CalendarSettingsSheet = ({
       setFeedUrl(data.feedUrl);
       setSyncStep('ready');
     } catch (error) {
-      console.error('Failed to get feed URL:', error);
       toast({ title: 'Failed to generate link', variant: 'destructive' });
       setSyncStep('idle');
     }
@@ -128,7 +127,7 @@ const CalendarSettingsSheet = ({
             <section className="space-y-3">
               <div>
                 <h3 className="text-sm font-bold text-white">Sync to Your Phone</h3>
-                <p className="text-xs text-white/50 mt-0.5">
+                <p className="text-xs text-white mt-0.5">
                   See your Elec-Mate events in your phone's calendar app
                 </p>
               </div>
@@ -235,14 +234,14 @@ const CalendarSettingsSheet = ({
             <section className="space-y-3">
               <div>
                 <h3 className="text-sm font-bold text-white">Google Calendar</h3>
-                <p className="text-xs text-white/50 mt-0.5">Two-way sync — changes go both ways</p>
+                <p className="text-xs text-white mt-0.5">Two-way sync — changes go both ways</p>
               </div>
 
               <div className="rounded-2xl bg-white/[0.03] border border-white/[0.06] overflow-hidden">
                 {syncLoading ? (
                   <div className="p-4 flex items-center gap-2">
-                    <Loader2 className="h-4 w-4 animate-spin text-white/50" />
-                    <span className="text-sm text-white/50">Checking...</span>
+                    <Loader2 className="h-4 w-4 animate-spin text-white" />
+                    <span className="text-sm text-white">Checking...</span>
                   </div>
                 ) : googleStatus.connected ? (
                   <div className="divide-y divide-white/[0.06]">
@@ -251,13 +250,13 @@ const CalendarSettingsSheet = ({
                       <div className="flex-1 min-w-0">
                         <p className="text-sm font-semibold text-white">Connected</p>
                         {googleStatus.email && (
-                          <p className="text-xs text-white/50 truncate">{googleStatus.email}</p>
+                          <p className="text-xs text-white truncate">{googleStatus.email}</p>
                         )}
                       </div>
                     </div>
                     {googleStatus.lastSyncAt && (
                       <div className="px-4 py-2">
-                        <p className="text-xs text-white/40">
+                        <p className="text-xs text-white">
                           Last synced {new Date(googleStatus.lastSyncAt).toLocaleString('en-GB')}
                         </p>
                       </div>
@@ -413,12 +412,12 @@ function InstructionRow({ title, steps }: { title: string; steps: string }) {
       <div className="flex items-center justify-between h-11 px-3">
         <span className="text-sm font-semibold text-white">{title}</span>
         <ChevronRight
-          className={cn('h-4 w-4 text-white/30 transition-transform', expanded && 'rotate-90')}
+          className={cn('h-4 w-4 text-white transition-transform', expanded && 'rotate-90')}
         />
       </div>
       {expanded && (
         <div className="px-3 pb-3">
-          <p className="text-xs text-white/70 leading-relaxed">{steps}</p>
+          <p className="text-xs text-white leading-relaxed">{steps}</p>
         </div>
       )}
     </button>

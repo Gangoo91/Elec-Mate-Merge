@@ -9,8 +9,9 @@ import {
   LuxReading,
   CertificatePhoto,
 } from '@/types/emergency-lighting';
+import type { EmergencyLightingPayloadType } from '@/types/emergency-lighting-payload';
 
-export const formatEmergencyLightingJson = (formData: Partial<EmergencyLightingFormData>) => {
+export const formatEmergencyLightingJson = (formData: Partial<EmergencyLightingFormData>): EmergencyLightingPayloadType => {
   const get = (key: keyof EmergencyLightingFormData, defaultValue: string = ''): string => {
     const value = formData[key] ?? defaultValue;
     if (value === null || value === undefined) return '';
@@ -434,6 +435,7 @@ export const formatEmergencyLightingJson = (formData: Partial<EmergencyLightingF
       email: get('companyEmail'),
       website: get('companyWebsite'),
       logo: get('companyLogo'),
+      tagline: get('companyTagline'),
       accent_color: get('accentColor') || get('companyAccentColor') || '#f59e0b',
       registration_scheme_logo: get('registrationSchemeLogo'),
       registration_scheme: get('registrationScheme'),
@@ -497,6 +499,7 @@ export const formatEmergencyLightingJson = (formData: Partial<EmergencyLightingF
     company_email: get('companyEmail'),
     company_website: get('companyWebsite'),
     company_logo: get('companyLogo'),
+    company_tagline: get('companyTagline'),
     company_accent_color: get('accentColor') || get('companyAccentColor') || '#f59e0b',
     registration_scheme_logo: get('registrationSchemeLogo'),
     registration_scheme: get('registrationScheme'),

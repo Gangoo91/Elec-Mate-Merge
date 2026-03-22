@@ -20,16 +20,10 @@ const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
   const isCheckoutPage = location.pathname === '/checkout-trial';
   const isPaymentPage = location.pathname === '/payment-success';
 
-  // If subscription_end is past and no Stripe customer, treat as expired
-  const isExpiredWithoutStripe =
-    profile?.subscribed &&
-    !profile?.stripe_customer_id &&
-    profile?.subscription_end &&
-    new Date(profile.subscription_end) < new Date();
-
-  // Check profile directly as fallback - this prevents flash during refresh
+  // Check profile directly as fallback - this prevents flash during refresh.
+  // Trust `subscribed` — it is set by Stripe/RevenueCat webhooks (ELE-432).
   const hasProfileAccess =
-    (profile?.subscribed && !isExpiredWithoutStripe) || profile?.free_access_granted;
+    profile?.subscribed || profile?.free_access_granted;
 
   // User can access if they have an active subscription (including Stripe trialing)
   const canAccess =

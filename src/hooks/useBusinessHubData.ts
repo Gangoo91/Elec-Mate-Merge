@@ -9,6 +9,7 @@ export interface BusinessHubData {
   outstanding: number;
   overdueAmount: number;
   overdueCount: number;
+  latePaymentCount: number;
   winRate: number;
   quotes: Quote[];
   invoices: Quote[];
@@ -62,13 +63,13 @@ export function useBusinessHubData(): BusinessHubData {
     );
     const outstanding = outstandingInvoices.reduce((sum, inv) => sum + (inv.total || 0), 0);
 
-    // Overdue — explicitly overdue OR due date has passed and not paid
+    // Overdue — explicitly overdue OR due date has passed (+24h grace) and not paid
     const overdueInvoices = invoices.filter((inv) => {
       if (inv.invoice_status === 'paid') return false;
       if (inv.invoice_status === 'overdue') return true;
       if (
         inv.invoice_due_date &&
-        new Date(inv.invoice_due_date) < now &&
+        new Date(inv.invoice_due_date).getTime() + 24 * 60 * 60 * 1000 < now.getTime() &&
         inv.invoice_status === 'sent'
       )
         return true;
@@ -82,7 +83,13 @@ export function useBusinessHubData(): BusinessHubData {
       .filter((inv) => inv.invoice_status === 'paid')
       .reduce((sum, inv) => sum + (inv.total || 0), 0);
 
-    return { paidThisMonth, outstanding, overdueAmount, overdueCount, revenue };
+    // Late payments — invoices paid after due date
+    const latePaymentCount = invoices.filter((inv) => {
+      if (inv.invoice_status !== 'paid' || !inv.invoice_paid_at || !inv.invoice_due_date) return false;
+      return new Date(inv.invoice_paid_at) > new Date(inv.invoice_due_date);
+    }).length;
+
+    return { paidThisMonth, outstanding, overdueAmount, overdueCount, latePaymentCount, revenue };
   }, [invoices]);
 
   // Win rate: (accepted / total decided) * 100
@@ -116,6 +123,7 @@ export function useBusinessHubData(): BusinessHubData {
     outstanding: kpis.outstanding,
     overdueAmount: kpis.overdueAmount,
     overdueCount: kpis.overdueCount,
+    latePaymentCount: kpis.latePaymentCount,
     winRate,
     quotes: savedQuotes,
     invoices,

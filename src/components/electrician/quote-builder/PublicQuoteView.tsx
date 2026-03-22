@@ -68,7 +68,6 @@ const PublicQuoteView = () => {
       );
 
       if (quoteError) {
-        console.error('Quote fetch error:', quoteError);
         throw new Error('Quote not found or expired');
       }
 
@@ -76,7 +75,6 @@ const PublicQuoteView = () => {
       const quoteData = Array.isArray(quoteResults) ? quoteResults[0] : quoteResults;
 
       if (!quoteData) {
-        console.error('Quote not found for token:', token);
         throw new Error('Quote not found or expired');
       }
 
@@ -119,8 +117,7 @@ const PublicQuoteView = () => {
       setClientEmail(convertedQuote.client?.email || '');
 
       // Note: View tracking removed - anonymous users don't have write access to quote_views
-    } catch (error) {
-      console.error('Error loading quote:', error);
+    } catch {
       toast({
         title: 'Error',
         description: 'Quote not found or has expired',
@@ -155,7 +152,6 @@ const PublicQuoteView = () => {
       });
 
       if (updateError) {
-        console.error('Update error:', updateError);
         throw updateError;
       }
 
@@ -175,7 +171,7 @@ const PublicQuoteView = () => {
               total: quote.total,
             },
           })
-          .catch((err) => console.warn('Could not send confirmation email:', err));
+          .catch(() => {});
       }
 
       toast({
@@ -186,8 +182,7 @@ const PublicQuoteView = () => {
       });
 
       loadQuote();
-    } catch (error) {
-      console.error('Error accepting quote:', error);
+    } catch {
       toast({
         title: 'Error',
         description: 'Failed to accept quote. Please try again.',
@@ -226,8 +221,7 @@ const PublicQuoteView = () => {
       });
 
       loadQuote();
-    } catch (error) {
-      console.error('Error rejecting quote:', error);
+    } catch {
       toast({
         title: 'Error',
         description: 'Failed to decline quote. Please try again.',

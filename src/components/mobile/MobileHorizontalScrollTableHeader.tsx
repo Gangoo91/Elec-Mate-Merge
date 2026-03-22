@@ -16,6 +16,7 @@ interface MobileHorizontalScrollTableHeaderProps {
   onFillAllInsulationLiveNeutral?: (value: string) => void;
   onFillAllInsulationLiveEarth?: (value: string) => void;
   onFillAllPolarity?: (value: string) => void;
+  onFillAllFunctional?: () => void;
 }
 
 export const MobileHorizontalScrollTableHeader: React.FC<
@@ -31,6 +32,7 @@ export const MobileHorizontalScrollTableHeader: React.FC<
   onFillAllInsulationLiveNeutral,
   onFillAllInsulationLiveEarth,
   onFillAllPolarity,
+  onFillAllFunctional,
 }) => {
   const headerCell =
     'font-semibold text-xs p-0.5 text-center whitespace-nowrap border-r border-border bg-elec-gray text-foreground';
@@ -66,8 +68,8 @@ export const MobileHorizontalScrollTableHeader: React.FC<
             <span>BS</span>
             {onFillAllRcdBsStandard && (
               <Select onValueChange={onFillAllRcdBsStandard}>
-                <SelectTrigger className="h-4 w-4 p-0 border-0 bg-transparent shadow-none [&>svg]:hidden">
-                  <CheckCircle className="h-3 w-3 text-green-600" />
+                <SelectTrigger className="h-6 w-6 p-0 border-0 bg-transparent shadow-none [&>svg]:hidden touch-manipulation rounded-full active:bg-white/10">
+                  <span><CheckCircle className="h-4 w-4 text-amber-400" /></span>
                 </SelectTrigger>
                 <SelectContent>
                   {rcdBsStandardOptions.map((o) => (
@@ -85,8 +87,8 @@ export const MobileHorizontalScrollTableHeader: React.FC<
             <span>Ty</span>
             {onFillAllRcdType && (
               <Select onValueChange={onFillAllRcdType}>
-                <SelectTrigger className="h-4 w-4 p-0 border-0 bg-transparent shadow-none [&>svg]:hidden">
-                  <CheckCircle className="h-3 w-3 text-green-600" />
+                <SelectTrigger className="h-6 w-6 p-0 border-0 bg-transparent shadow-none [&>svg]:hidden touch-manipulation rounded-full active:bg-white/10">
+                  <span><CheckCircle className="h-4 w-4 text-amber-400" /></span>
                 </SelectTrigger>
                 <SelectContent>
                   {rcdTypeOptions.map((o) => (
@@ -104,8 +106,8 @@ export const MobileHorizontalScrollTableHeader: React.FC<
             <span>mA</span>
             {onFillAllRcdRating && (
               <Select onValueChange={onFillAllRcdRating}>
-                <SelectTrigger className="h-4 w-4 p-0 border-0 bg-transparent shadow-none [&>svg]:hidden">
-                  <CheckCircle className="h-3 w-3 text-green-600" />
+                <SelectTrigger className="h-6 w-6 p-0 border-0 bg-transparent shadow-none [&>svg]:hidden touch-manipulation rounded-full active:bg-white/10">
+                  <span><CheckCircle className="h-4 w-4 text-amber-400" /></span>
                 </SelectTrigger>
                 <SelectContent>
                   {['10', '30', '100', '300', '500'].map((v) => (
@@ -123,8 +125,8 @@ export const MobileHorizontalScrollTableHeader: React.FC<
             <span>A</span>
             {onFillAllRcdRatingA && (
               <Select onValueChange={onFillAllRcdRatingA}>
-                <SelectTrigger className="h-4 w-4 p-0 border-0 bg-transparent shadow-none [&>svg]:hidden">
-                  <CheckCircle className="h-3 w-3 text-green-600" />
+                <SelectTrigger className="h-6 w-6 p-0 border-0 bg-transparent shadow-none [&>svg]:hidden touch-manipulation rounded-full active:bg-white/10">
+                  <span><CheckCircle className="h-4 w-4 text-amber-400" /></span>
                 </SelectTrigger>
                 <SelectContent>
                   {['40', '63', '80', '100'].map((v) => (
@@ -151,8 +153,8 @@ export const MobileHorizontalScrollTableHeader: React.FC<
             <span>V</span>
             {onFillAllInsulationVoltage && (
               <Select onValueChange={onFillAllInsulationVoltage}>
-                <SelectTrigger className="h-6 w-6 p-0 border-0 bg-transparent shadow-none [&>svg]:hidden touch-manipulation">
-                  <CheckCircle className="h-4 w-4 text-green-600" />
+                <SelectTrigger className="h-6 w-6 p-0 border-0 bg-transparent shadow-none [&>svg]:hidden touch-manipulation rounded-full active:bg-white/10">
+                  <span><CheckCircle className="h-4 w-4 text-amber-400" /></span>
                 </SelectTrigger>
                 <SelectContent className="min-w-[140px]">
                   <SelectItem value="250V" className="py-3 text-base touch-manipulation">
@@ -174,8 +176,8 @@ export const MobileHorizontalScrollTableHeader: React.FC<
             <span>L-N</span>
             {onFillAllInsulationLiveNeutral && (
               <Select onValueChange={onFillAllInsulationLiveNeutral}>
-                <SelectTrigger className="h-6 w-6 p-0 border-0 bg-transparent shadow-none [&>svg]:hidden touch-manipulation">
-                  <CheckCircle className="h-4 w-4 text-green-600" />
+                <SelectTrigger className="h-6 w-6 p-0 border-0 bg-transparent shadow-none [&>svg]:hidden touch-manipulation rounded-full active:bg-white/10">
+                  <span><CheckCircle className="h-4 w-4 text-amber-400" /></span>
                 </SelectTrigger>
                 <SelectContent className="min-w-[140px]">
                   <SelectItem value=">200" className="py-3 text-base touch-manipulation">
@@ -200,8 +202,8 @@ export const MobileHorizontalScrollTableHeader: React.FC<
             <span>L-E</span>
             {onFillAllInsulationLiveEarth && (
               <Select onValueChange={onFillAllInsulationLiveEarth}>
-                <SelectTrigger className="h-6 w-6 p-0 border-0 bg-transparent shadow-none [&>svg]:hidden touch-manipulation">
-                  <CheckCircle className="h-4 w-4 text-green-600" />
+                <SelectTrigger className="h-6 w-6 p-0 border-0 bg-transparent shadow-none [&>svg]:hidden touch-manipulation rounded-full active:bg-white/10">
+                  <span><CheckCircle className="h-4 w-4 text-amber-400" /></span>
                 </SelectTrigger>
                 <SelectContent className="min-w-[140px]">
                   <SelectItem value=">200" className="py-3 text-base touch-manipulation">
@@ -228,8 +230,8 @@ export const MobileHorizontalScrollTableHeader: React.FC<
             <span>Pol</span>
             {onFillAllPolarity && (
               <Select onValueChange={onFillAllPolarity}>
-                <SelectTrigger className="h-6 w-6 p-0 border-0 bg-transparent shadow-none [&>svg]:hidden touch-manipulation">
-                  <CheckCircle className="h-4 w-4 text-green-600" />
+                <SelectTrigger className="h-6 w-6 p-0 border-0 bg-transparent shadow-none [&>svg]:hidden touch-manipulation rounded-full active:bg-white/10">
+                  <span><CheckCircle className="h-4 w-4 text-amber-400" /></span>
                 </SelectTrigger>
                 <SelectContent className="min-w-[160px]">
                   <SelectItem value="Correct" className="py-3 text-base touch-manipulation">
@@ -256,10 +258,10 @@ export const MobileHorizontalScrollTableHeader: React.FC<
             {onFillAllRcdTestButton && (
               <button
                 onClick={onFillAllRcdTestButton}
-                className="h-4 w-4 p-0 hover:bg-green-500/20 text-green-600"
+                className="h-6 w-6 p-0 flex items-center justify-center rounded-full touch-manipulation active:bg-white/10 text-amber-400"
                 title="Fill all with Pass"
               >
-                <CheckCircle className="h-3 w-3" />
+                <CheckCircle className="h-4 w-4" />
               </button>
             )}
           </div>
@@ -272,17 +274,30 @@ export const MobileHorizontalScrollTableHeader: React.FC<
             {onFillAllAfdd && (
               <button
                 onClick={onFillAllAfdd}
-                className="h-4 w-4 p-0 hover:bg-green-500/20 text-green-600"
+                className="h-6 w-6 p-0 flex items-center justify-center rounded-full touch-manipulation active:bg-white/10 text-amber-400"
                 title="Fill all with Pass"
               >
-                <CheckCircle className="h-3 w-3" />
+                <CheckCircle className="h-4 w-4" />
               </button>
             )}
           </div>
         </TableHead>
 
         {/* Functional Group */}
-        <TableHead className={`${headerCell} w-[66px] min-w-[66px] max-w-[66px]`}>Fn</TableHead>
+        <TableHead className={`${headerCell} w-[66px] min-w-[66px] max-w-[66px]`}>
+          <div className="flex items-center justify-center gap-0">
+            <span>Fn</span>
+            {onFillAllFunctional && (
+              <button
+                onClick={onFillAllFunctional}
+                className="h-6 w-6 p-0 flex items-center justify-center rounded-full touch-manipulation active:bg-white/10 text-amber-400"
+                title="Fill all with Satisfactory"
+              >
+                <CheckCircle className="h-4 w-4" />
+              </button>
+            )}
+          </div>
+        </TableHead>
         <TableHead className={`${headerCell} w-[132px] min-w-[132px] max-w-[132px]`}>
           Notes
         </TableHead>

@@ -298,6 +298,43 @@ export default function FireAlarmCertificate() {
       setGeneratedPdfUrl(functionData.pdfUrl);
       setPdfFilename(filename);
 
+      // ELE-413: Save pdf_url to reports table and persist to Supabase Storage
+      if (savedReportId) {
+        const {
+          data: { user },
+        } = await supabase.auth.getUser();
+
+        let permanentPdfUrl = functionData.pdfUrl;
+        if (user) {
+          try {
+            const { saveCertificatePdf } = await import('@/utils/certificate-pdf-storage');
+            const { permanentUrl, storagePath } = await saveCertificatePdf(
+              functionData.pdfUrl,
+              user.id,
+              savedReportId,
+              formData.certificateNumber
+            );
+            permanentPdfUrl = permanentUrl;
+
+            await supabase
+              .from('reports')
+              .update({ storage_path: storagePath })
+              .eq('report_id', savedReportId);
+          } catch (storageErr) {
+            console.warn('[FireAlarm] Permanent PDF storage failed, using temp URL:', storageErr);
+          }
+        }
+
+        await supabase
+          .from('reports')
+          .update({
+            pdf_url: permanentPdfUrl,
+            pdf_generated_at: new Date().toISOString(),
+            status: 'completed',
+          })
+          .eq('report_id', savedReportId);
+      }
+
       toast.success('Certificate generated successfully');
     } catch (error) {
       const msg = error instanceof Error ? error.message : 'Failed to generate certificate';

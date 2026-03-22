@@ -65,11 +65,8 @@ export const QuoteSendDropdown = ({
         data: { session },
       } = await supabase.auth.getSession();
       if (!session) {
-        console.error('[PDF] No active session');
         return { downloadUrl: null, documentId: null };
       }
-
-      console.log('[PDF] Generating fresh PDF for quote:', quoteData.id);
 
       // Call PDF Monkey edge function to generate PDF
       const { data: pdfData, error: pdfError } = await supabase.functions.invoke(
@@ -87,7 +84,6 @@ export const QuoteSendDropdown = ({
       );
 
       if (pdfError) {
-        console.error('[PDF] Generation error:', pdfError);
         return { downloadUrl: null, documentId: null };
       }
 
@@ -96,19 +92,15 @@ export const QuoteSendDropdown = ({
 
       // If no download URL yet, poll for status (PDF is being generated asynchronously)
       if (!downloadUrl && documentId) {
-        console.log('[PDF] Polling for PDF completion...');
         downloadUrl = await pollPdfDownloadUrl(documentId, session.access_token);
       }
 
       if (!downloadUrl) {
-        console.error('[PDF] Failed to get download URL after polling');
         return { downloadUrl: null, documentId };
       }
 
-      console.log('[PDF] Successfully generated PDF:', { documentId, hasUrl: !!downloadUrl });
       return { downloadUrl, documentId };
-    } catch (error) {
-      console.error('[PDF] Exception during generation:', error);
+    } catch {
       return { downloadUrl: null, documentId: null };
     }
   };
@@ -144,13 +136,11 @@ export const QuoteSendDropdown = ({
       });
 
       if (error) {
-        console.error('Error creating public token:', error);
         return null;
       }
 
       return newToken;
-    } catch (error) {
-      console.error('Error in getOrCreatePublicToken:', error);
+    } catch {
       return null;
     }
   };
@@ -187,8 +177,6 @@ export const QuoteSendDropdown = ({
       }
 
       // Send via Resend (generates PDF automatically)
-      console.log('📧 Calling send-quote-resend with quoteId:', quote.id);
-
       const { data, error } = await supabase.functions.invoke('send-quote-resend', {
         body: { quoteId: quote.id },
         headers: {
@@ -196,13 +184,8 @@ export const QuoteSendDropdown = ({
         },
       });
 
-      console.log('📧 Response:', { data, error });
-
       // Handle errors - extract message from various possible locations
       if (error) {
-        console.error('📧 Function invoke error:', error);
-        console.error('📧 Error details:', JSON.stringify(error, null, 2));
-
         let errorMessage = 'Failed to send quote';
 
         if (typeof error === 'string') {
@@ -223,12 +206,10 @@ export const QuoteSendDropdown = ({
 
       // Check if the response data indicates an error
       if (data?.error) {
-        console.error('📧 Function returned error in data:', data);
         throw new Error(data.error + (data.hint ? ` (${data.hint})` : ''));
       }
 
       if (!data?.success) {
-        console.error('📧 Function did not return success:', data);
         throw new Error(data?.message || 'Unknown error sending quote');
       }
 
@@ -246,8 +227,6 @@ export const QuoteSendDropdown = ({
 
       onSuccess?.();
     } catch (error: any) {
-      console.error('Error sending quote:', error);
-
       toast({
         title: 'Error sending quote',
         description: error.message || 'Failed to send quote. Please try again.',
@@ -263,8 +242,6 @@ export const QuoteSendDropdown = ({
   const handleShareWhatsApp = async () => {
     try {
       setIsSharingWhatsApp(true);
-
-      console.log('🔄 Starting WhatsApp share process...');
 
       const {
         data: { user },
@@ -282,11 +259,8 @@ export const QuoteSendDropdown = ({
         .single();
 
       if (fetchError || !freshQuote) {
-        console.error('❌ Failed to fetch quote:', fetchError);
         throw new Error('Failed to fetch latest quote data');
       }
-
-      console.log('✅ Quote data fetched:', freshQuote.quote_number);
 
       const { data: companyData, error: companyError } = await supabase
         .from('company_profiles')
@@ -294,9 +268,7 @@ export const QuoteSendDropdown = ({
         .eq('user_id', user.id)
         .single();
 
-      if (companyError) {
-        console.error('Company profile error:', companyError);
-      }
+      // Company profile may not exist — non-blocking
 
       // Step 2: Check if PDF is current
       const pdfIsCurrent =
@@ -309,8 +281,6 @@ export const QuoteSendDropdown = ({
 
       // Try to refresh URL if not current
       if (!pdfIsCurrent && freshQuote.pdf_document_id) {
-        console.log('[WHATSAPP] Attempting to refresh PDF URL...');
-
         const { data: statusData } = await supabase.functions.invoke('generate-pdf-monkey', {
           body: { mode: 'status', documentId: freshQuote.pdf_document_id },
         });
@@ -327,14 +297,11 @@ export const QuoteSendDropdown = ({
             })
             .eq('id', quote.id);
 
-          console.log('[WHATSAPP] ✅ PDF URL refreshed');
         }
       }
 
       // If still no URL, regenerate PDF
       if (!pdfUrl) {
-        console.log('[WHATSAPP] Generating fresh PDF...');
-
         const result = await generateFreshPDF(freshQuote as any, companyData);
 
         if (!result.downloadUrl) {
@@ -353,8 +320,6 @@ export const QuoteSendDropdown = ({
             pdf_version: (freshQuote.pdf_version || 0) + 1,
           })
           .eq('id', quote.id);
-
-        console.log('[WHATSAPP] ✅ Fresh PDF generated');
       }
 
       const pdfDownloadUrl = pdfUrl;
@@ -413,11 +378,6 @@ ${companyName}`;
         whatsappUrl = `https://wa.me/?text=${encodeURIComponent(message)}`;
       }
 
-      console.log(
-        '📱 Opening WhatsApp with URL (first 100 chars):',
-        whatsappUrl.substring(0, 100) + '...'
-      );
-
       // Step 7: Open WhatsApp (NOT the PDF directly)
       await openExternalUrl(whatsappUrl);
 
@@ -430,7 +390,6 @@ ${companyName}`;
 
       onSuccess?.();
     } catch (error: any) {
-      console.error('❌ Error in WhatsApp share:', error);
       toast({
         title: 'Error',
         description: error.message || 'Failed to prepare quote for WhatsApp',

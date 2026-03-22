@@ -113,7 +113,7 @@ const QuoteTableView: React.FC<QuoteTableViewProps> = ({
                 {/* Client Name */}
                 <TableCell>
                   <div className="flex items-center gap-2">
-                    <User className="h-4 w-4 text-muted-foreground" />
+                    <User className="h-4 w-4 text-white" />
                     <span className="font-medium">{quote.client.name}</span>
                   </div>
                 </TableCell>
@@ -122,12 +122,12 @@ const QuoteTableView: React.FC<QuoteTableViewProps> = ({
                 <TableCell>{getAcceptanceStatusBadge(quote)}</TableCell>
 
                 {/* Date */}
-                <TableCell className="text-sm text-muted-foreground">
+                <TableCell className="text-sm text-white">
                   {format(new Date(quote.createdAt), 'dd MMM yyyy')}
                 </TableCell>
 
                 {/* Items Count */}
-                <TableCell className="text-sm text-muted-foreground">
+                <TableCell className="text-sm text-white">
                   {quote.items.length} item{quote.items.length !== 1 ? 's' : ''}
                 </TableCell>
 

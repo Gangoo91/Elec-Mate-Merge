@@ -501,7 +501,7 @@ const handler = async (req: Request): Promise<Response> => {
 
           <!-- Header -->
           <tr>
-            <td style="background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%); padding: 32px 24px; text-align: center;">
+            <td style="background-color: #1a1a1a; background-image: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%); padding: 32px 24px; text-align: center;">
               ${companyProfile?.logo_url ? `<img src="${companyProfile.logo_url}" alt="${companyName}" style="max-height: 60px; max-width: 200px; margin-bottom: 16px; display: block; margin-left: auto; margin-right: auto;" />` : ''}
               <h1 style="margin: 0; color: #FFD700; font-size: 26px; font-weight: 700;">⚡ ${companyName}</h1>
             </td>
@@ -522,7 +522,7 @@ const handler = async (req: Request): Promise<Response> => {
           <!-- Invoice Card -->
           <tr>
             <td style="padding: 0 24px 24px;">
-              <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%); border-radius: 12px; border: 2px solid #e5e7eb;">
+              <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #f8f9fa; background-image: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%); border-radius: 12px; border: 2px solid #e5e7eb;">
                 <tr>
                   <td style="padding: 24px;">
                     <h2 style="margin: 0 0 16px; font-size: 28px; font-weight: 700; color: #1f2937;">Invoice #${invoiceNumber}</h2>
@@ -543,7 +543,7 @@ const handler = async (req: Request): Promise<Response> => {
               ? `
           <tr>
             <td style="padding: 0 24px 24px;">
-              <a href="${pdfUrl}" target="_blank" style="display: block; background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%); color: #ffffff; text-align: center; text-decoration: none; padding: 16px 24px; border-radius: 10px; font-size: 16px; font-weight: 600; box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);">
+              <a href="${pdfUrl}" target="_blank" style="display: block; background-color: #3b82f6; background-image: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%); color: #ffffff; text-align: center; text-decoration: none; padding: 16px 24px; border-radius: 10px; font-size: 16px; font-weight: 600; box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);">
                 📄 View Invoice PDF
               </a>
               <p style="margin: 12px 0 0; text-align: center; font-size: 13px; color: #6b7280;">
@@ -561,7 +561,7 @@ const handler = async (req: Request): Promise<Response> => {
               ? `
           <tr>
             <td style="padding: 0 24px 24px;">
-              <a href="${stripePaymentUrl}" target="_blank" style="display: block; background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%); color: #ffffff; text-align: center; text-decoration: none; padding: 20px 24px; border-radius: 12px; font-size: 18px; font-weight: 700; box-shadow: 0 6px 16px rgba(99, 102, 241, 0.4);">
+              <a href="${stripePaymentUrl}" target="_blank" style="display: block; background-color: #6366f1; background-image: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%); color: #ffffff; text-align: center; text-decoration: none; padding: 20px 24px; border-radius: 12px; font-size: 18px; font-weight: 700; box-shadow: 0 6px 16px rgba(99, 102, 241, 0.4);">
                 💳 Pay Now - Secure Card Payment
               </a>
               <p style="margin: 12px 0 0; text-align: center; font-size: 13px; color: #6b7280;">
@@ -579,7 +579,7 @@ const handler = async (req: Request): Promise<Response> => {
               ? `
           <tr>
             <td style="padding: 0 24px 24px;">
-              <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%); border-left: 4px solid #f59e0b; border-radius: 8px;">
+              <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #fef3c7; background-image: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%); border-left: 4px solid #f59e0b; border-radius: 8px;">
                 <tr>
                   <td style="padding: 20px;">
                     <h3 style="margin: 0 0 16px; font-size: 16px; font-weight: 700; color: #92400e;">💳 Payment Details (Bank Transfer)</h3>
@@ -665,7 +665,7 @@ const handler = async (req: Request): Promise<Response> => {
           </tr>
 
           <tr>
-            <td style="background: linear-gradient(135deg, #1a1a1a 0%, #0f0f0f 100%); padding: 28px 24px; text-align: center;">
+            <td style="background-color: #1a1a1a; background-image: linear-gradient(135deg, #1a1a1a 0%, #0f0f0f 100%); padding: 28px 24px; text-align: center;">
               <p style="margin: 0 0 8px; font-size: 16px; font-weight: 700; color: #FFD700;">⚡ Powered by ElecMate</p>
               <p style="margin: 0; font-size: 13px; color: #9ca3af;">Professional electrical contracting tools</p>
             </td>

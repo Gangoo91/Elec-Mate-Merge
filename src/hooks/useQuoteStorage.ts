@@ -74,7 +74,6 @@ export const useQuoteStorage = () => {
           data: { user },
         } = await supabase.auth.getUser();
         if (!user) {
-          console.log('No user authenticated');
           setLoading(false);
           return;
         }
@@ -98,7 +97,6 @@ export const useQuoteStorage = () => {
           .order('updated_at', { ascending: false });
 
         if (error) {
-          console.error('Error loading quotes:', error);
           return;
         }
 
@@ -114,9 +112,8 @@ export const useQuoteStorage = () => {
           }) || [];
         setSavedQuotes(quotes);
         setLastUpdated(new Date());
-        console.log('Quotes loaded from Supabase:', quotes.length);
-      } catch (error) {
-        console.error('Error loading quotes:', error);
+      } catch {
+        // Quote loading failed silently
       } finally {
         setLoading(false);
       }
@@ -142,8 +139,6 @@ export const useQuoteStorage = () => {
             filter: `user_id=eq.${user.id}`,
           },
           (payload) => {
-            console.log('New quote/invoice created in real-time:', payload);
-
             const newRecord = payload.new as any;
             const isInvoice = !!newRecord.invoice_number;
             const clientName = newRecord.client_data?.name || 'Client';
@@ -169,8 +164,6 @@ export const useQuoteStorage = () => {
             filter: `user_id=eq.${user.id}`,
           },
           (payload) => {
-            console.log('Quote updated in real-time:', payload);
-
             const updatedQuote = payload.new as any;
 
             // Show toast notification for acceptance/rejection
@@ -212,26 +205,12 @@ export const useQuoteStorage = () => {
   const saveQuote = useCallback(
     async (quote: Quote) => {
       try {
-        console.log('Quote Storage - Starting save process', {
-          quoteId: quote.id,
-          quoteNumber: quote.quoteNumber,
-          status: quote.status,
-          clientName: quote.client?.name,
-          total: quote.total,
-        });
-
         const {
           data: { user },
         } = await supabase.auth.getUser();
         if (!user) {
-          console.error('Quote Storage - User not authenticated');
           return false;
         }
-
-        console.log('Quote Storage - User authenticated', {
-          userId: user.id,
-          userEmail: user.email,
-        });
 
         const quoteData = {
           id: quote.id,
@@ -274,27 +253,14 @@ export const useQuoteStorage = () => {
           project_id: quote.project_id || null,
         };
 
-        console.log('Quote Storage - Prepared data for database', {
-          id: quoteData.id,
-          user_id: quoteData.user_id,
-          quote_number: quoteData.quote_number,
-          status: quoteData.status,
-          total: quoteData.total,
-          acceptance_status: quoteData.acceptance_status,
-        });
-
         let { error } = await supabase.from('quotes').upsert(quoteData, { onConflict: 'id' });
 
         // Handle duplicate quote number error by generating a unique one
         if (error?.message?.includes('unique_quote_number_per_user')) {
-          console.log('Quote Storage - Duplicate quote number detected, generating unique one');
-
           // Generate a unique quote number with timestamp
           const currentYear = new Date().getFullYear();
           const uniqueSuffix = Date.now().toString().slice(-6);
           quoteData.quote_number = `${currentYear}/T${uniqueSuffix}`;
-
-          console.log('Quote Storage - Retrying with new quote number:', quoteData.quote_number);
 
           // Retry with new quote number
           const retryResult = await supabase.from('quotes').upsert(quoteData, { onConflict: 'id' });
@@ -303,13 +269,6 @@ export const useQuoteStorage = () => {
         }
 
         if (error) {
-          console.error('Quote Storage - Database error:', error);
-          console.error('Quote Storage - Error details:', {
-            code: error.code,
-            message: error.message,
-            details: error.details,
-            hint: error.hint,
-          });
           captureApiError(new Error(`Quote save failed: ${error.message}`), 'quotes/save', {
             quoteId: quote.id,
             quoteNumber: quote.quoteNumber,
@@ -317,8 +276,6 @@ export const useQuoteStorage = () => {
           });
           return false;
         }
-
-        console.log('Quote Storage - Database save successful');
 
         // STEP 3: Generate PDF for quote (like invoices)
         try {
@@ -354,8 +311,8 @@ export const useQuoteStorage = () => {
                 .eq('id', quote.id);
             }
           }
-        } catch (pdfError) {
-          console.error('Quote PDF generation error (non-blocking):', pdfError);
+        } catch {
+          // PDF generation error (non-blocking)
         }
 
         // Update local state with potentially updated quote number
@@ -363,18 +320,11 @@ export const useQuoteStorage = () => {
         const updatedQuotes = [savedQuoteData, ...savedQuotes.filter((q) => q.id !== quote.id)];
         setSavedQuotes(updatedQuotes);
 
-        console.log('Quote Storage - Local state updated', {
-          quoteId: quote.id,
-          totalQuotes: updatedQuotes.length,
-          isNewQuote: !savedQuotes.some((q) => q.id === quote.id),
-        });
-
         // Track successful quote creation/update
         trackMilestone('Quote Saved', { quoteId: quote.id, total: quote.total });
 
         return true;
       } catch (error) {
-        console.error('Quote Storage - Unexpected error:', error);
         captureError(error instanceof Error ? error : new Error('Quote save unexpected error'), {
           quoteId: quote.id,
           context: 'saveQuote',
@@ -394,7 +344,6 @@ export const useQuoteStorage = () => {
         const { error } = await supabase.from('quotes').delete().eq('id', quoteId);
 
         if (error) {
-          console.error('Error deleting quote:', error);
           captureApiError(new Error(`Quote delete failed: ${error.message}`), 'quotes/delete', {
             quoteId,
           });
@@ -404,10 +353,8 @@ export const useQuoteStorage = () => {
         // Update local state
         const updatedQuotes = savedQuotes.filter((q) => q.id !== quoteId);
         setSavedQuotes(updatedQuotes);
-        console.log('Quote deleted from Supabase:', quoteId);
         return true;
       } catch (error) {
-        console.error('Error deleting quote:', error);
         captureError(error instanceof Error ? error : new Error('Quote delete error'), { quoteId });
         return false;
       }
@@ -450,7 +397,6 @@ export const useQuoteStorage = () => {
         data: { user },
       } = await supabase.auth.getUser();
       if (!user) {
-        console.log('No user authenticated');
         return;
       }
 
@@ -473,7 +419,6 @@ export const useQuoteStorage = () => {
         .order('updated_at', { ascending: false });
 
       if (error) {
-        console.error('Error refreshing quotes:', error);
         return;
       }
 
@@ -489,9 +434,8 @@ export const useQuoteStorage = () => {
         }) || [];
       setSavedQuotes(quotes);
       setLastUpdated(new Date());
-      console.log('Quotes refreshed:', quotes.length);
-    } catch (error) {
-      console.error('Error refreshing quotes:', error);
+    } catch {
+      // Refresh failed silently
     }
   }, [convertDbRowToQuote]);
 
@@ -539,12 +483,6 @@ export const useQuoteStorage = () => {
             updateData.invoice_due_date = invoiceDueDate.toISOString();
             updateData.invoice_status = 'draft';
 
-            console.log('Auto-creating invoice for completed work:', {
-              quoteId,
-              invoiceNumber,
-              invoiceDate: invoiceDate.toISOString(),
-              invoiceDueDate: invoiceDueDate.toISOString(),
-            });
           }
         }
       }
@@ -562,7 +500,6 @@ export const useQuoteStorage = () => {
       const { error } = await supabase.from('quotes').update(updateData).eq('id', quoteId);
 
       if (error) {
-        console.error('Error updating quote status:', error);
         return false;
       }
 
@@ -588,8 +525,7 @@ export const useQuoteStorage = () => {
       );
 
       return true;
-    } catch (error) {
-      console.error('Error updating quote status:', error);
+    } catch {
       return false;
     }
   };
@@ -604,13 +540,11 @@ export const useQuoteStorage = () => {
       });
 
       if (error) {
-        console.error('Error sending payment reminder:', error);
         return false;
       }
 
       return true;
-    } catch (error) {
-      console.error('Error sending payment reminder:', error);
+    } catch {
       return false;
     }
   };
@@ -625,7 +559,6 @@ export const useQuoteStorage = () => {
         data: { session },
       } = await supabase.auth.getSession();
       if (!session) {
-        console.error('No session found');
         return false;
       }
 
@@ -635,7 +568,6 @@ export const useQuoteStorage = () => {
       });
 
       if (error) {
-        console.error('Error sending quote reminder:', error);
         toast({
           title: 'Failed to send reminder',
           description: error.message || 'Please try again',
@@ -663,8 +595,7 @@ export const useQuoteStorage = () => {
       });
 
       return true;
-    } catch (error) {
-      console.error('Error sending quote reminder:', error);
+    } catch {
       toast({
         title: 'Error',
         description: 'Failed to send reminder',
@@ -686,7 +617,6 @@ export const useQuoteStorage = () => {
         .eq('id', quoteId);
 
       if (error) {
-        console.error('Error toggling auto follow-up:', error);
         return false;
       }
 
@@ -705,8 +635,7 @@ export const useQuoteStorage = () => {
       });
 
       return true;
-    } catch (error) {
-      console.error('Error toggling auto follow-up:', error);
+    } catch {
       return false;
     }
   };

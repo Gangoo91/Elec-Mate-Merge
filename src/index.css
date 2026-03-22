@@ -2546,9 +2546,9 @@ input::-webkit-caps-lock-indicator {
 
   /* Fill All Button in Header */
   .sot-fill-all-btn {
-    @apply h-5 w-5 p-0 rounded-full;
-    @apply bg-transparent hover:bg-elec-yellow/20;
-    @apply text-elec-yellow/60 hover:text-elec-yellow;
+    @apply h-7 w-7 p-0 rounded-full flex items-center justify-center;
+    @apply bg-transparent hover:bg-amber-400/20;
+    @apply text-amber-400 hover:text-amber-300;
     @apply transition-all duration-150 hover:scale-110;
   }
 

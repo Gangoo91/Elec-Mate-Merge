@@ -65,7 +65,11 @@ const LearningHub = ({ onBack }: LearningHubProps) => {
       )}
 
       {/* Content */}
-      <div className="p-4 max-w-6xl mx-auto lg:px-8">{renderCurrentSection()}</div>
+      <div
+        className={`p-4 mx-auto lg:px-8 ${currentSection === 'testing' ? 'max-w-7xl' : 'max-w-6xl'}`}
+      >
+        {renderCurrentSection()}
+      </div>
     </div>
   );
 };

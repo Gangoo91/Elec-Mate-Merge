@@ -98,7 +98,7 @@ const CalendarMonthView = ({
                 onClick={() => onDateSelect(day)}
                 className={cn(
                   'relative flex flex-col items-center justify-start pt-2 pb-1.5 min-h-[60px] touch-manipulation transition-all',
-                  !inMonth && 'opacity-20',
+                  !inMonth && 'opacity-40',
                   isWeekend && inMonth && 'bg-white/[0.015]',
                   !today && !selected && 'active:bg-white/[0.06]'
                 )}

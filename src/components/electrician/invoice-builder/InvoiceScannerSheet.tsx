@@ -99,7 +99,6 @@ export function InvoiceScannerSheet({
     } catch (err: any) {
       if (err.name === 'AbortError') return;
 
-      console.error('Camera error:', err);
       if (err.name === 'NotAllowedError') {
         setError('Camera access denied. Please allow camera permissions in your browser settings.');
       } else if (err.name === 'NotFoundError') {
@@ -142,7 +141,6 @@ export function InvoiceScannerSheet({
         const msg = err?.message || '';
         if (!msg.includes('cancelled') && !msg.includes('User cancelled')) {
           setError('Could not access camera. Please try again.');
-          console.warn('[InvoiceScanner] Native capture failed:', err);
         }
       }
     } else {
@@ -160,8 +158,8 @@ export function InvoiceScannerSheet({
         advanced: [{ torch: !torchOn } as MediaTrackConstraintSet],
       });
       setTorchOn(!torchOn);
-    } catch (err) {
-      console.error('Torch error:', err);
+    } catch {
+      // Torch toggle failed silently
     }
   }, [torchOn, hasTorch]);
 

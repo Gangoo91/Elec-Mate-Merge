@@ -101,7 +101,7 @@ export const MetricCard: React.FC<MetricCardProps> = ({
 
         <p
           className={cn(
-            'text-[10px] sm:text-xs text-muted-foreground font-medium uppercase tracking-wide',
+            'text-[10px] sm:text-xs text-white font-medium uppercase tracking-wide',
             compact && 'text-[9px] sm:text-[10px]'
           )}
         >

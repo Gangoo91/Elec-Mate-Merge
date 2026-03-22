@@ -103,9 +103,9 @@ const CalendarHeader = ({
           type="button"
           onClick={onToday}
           className={cn(
-            'h-9 px-3 text-xs font-bold rounded-lg touch-manipulation transition-colors',
+            'h-11 px-3 text-xs font-bold rounded-lg touch-manipulation transition-colors',
             todayVisible
-              ? 'text-white/40 pointer-events-none'
+              ? 'text-white pointer-events-none'
               : 'text-elec-yellow border border-elec-yellow/30 active:bg-elec-yellow/10'
           )}
         >

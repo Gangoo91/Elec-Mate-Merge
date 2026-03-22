@@ -1,5 +1,6 @@
 import 'jsr:@supabase/functions-js/edge-runtime.d.ts';
 import { captureException } from '../_shared/sentry.ts';
+import { evChargingPayloadSchema } from '../_shared/ev-charging-payload-schema.ts';
 
 const PDFMONKEY_API_KEY = Deno.env.get('PDFMONKEY_API_KEY');
 const TEMPLATE_ID = '5B6C5D0A-6612-4E26-80B5-BF77EFCA407E';
@@ -110,23 +111,17 @@ Deno.serve(async (req: Request) => {
     console.log('[generate-ev-charging-pdf] Creating PDF document');
     console.log('[generate-ev-charging-pdf] Form data keys:', Object.keys(formData));
 
-    // Log key sections for debugging
-    console.log(
-      '[generate-ev-charging-pdf] Client details:',
-      JSON.stringify(formData.client_details, null, 2)
-    );
-    console.log(
-      '[generate-ev-charging-pdf] Charger details:',
-      JSON.stringify(formData.charger_details, null, 2)
-    );
-    console.log(
-      '[generate-ev-charging-pdf] Test results:',
-      JSON.stringify(formData.test_results, null, 2)
-    );
-    console.log(
-      '[generate-ev-charging-pdf] Installer:',
-      JSON.stringify(formData.installer, null, 2)
-    );
+    // Validate payload against schema (soft-fail: log but don't block)
+    const validation = evChargingPayloadSchema.safeParse(formData);
+    if (!validation.success) {
+      console.error('[generate-ev-charging-pdf] Schema validation failed:',
+        JSON.stringify(validation.error.issues.slice(0, 10)));
+      await captureException(new Error('EV Charging payload schema drift detected'), {
+        functionName: 'generate-ev-charging-pdf',
+        extra: { issues: validation.error.issues.slice(0, 20) },
+        tags: { schema_drift: 'true' },
+      });
+    }
 
     // Create the document
     const document = await createPDFMonkeyDocument(formData, templateId);

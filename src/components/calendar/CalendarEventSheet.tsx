@@ -200,7 +200,7 @@ const CalendarEventSheet = ({
               value={title}
               onChange={(e) => setTitle(e.target.value)}
               autoFocus
-              className="w-full h-14 text-lg font-semibold text-white touch-manipulation border-0 border-b border-white/10 bg-transparent px-0 focus:border-white/30 focus:ring-0 focus:outline-none placeholder:text-white/25"
+              className="w-full h-14 text-lg font-semibold text-white touch-manipulation border-0 border-b border-white/10 bg-transparent px-0 focus:border-white/30 focus:ring-0 focus:outline-none placeholder:text-white/50"
             />
 
             {/* Type — horizontal pills */}
@@ -211,10 +211,10 @@ const CalendarEventSheet = ({
                   type="button"
                   onClick={() => setEventType(type)}
                   className={cn(
-                    'flex items-center gap-1.5 h-9 px-3 rounded-full text-xs font-bold whitespace-nowrap touch-manipulation transition-all flex-shrink-0',
+                    'flex items-center gap-1.5 h-11 px-3 rounded-full text-xs font-bold whitespace-nowrap touch-manipulation transition-all flex-shrink-0',
                     eventType === type
                       ? 'text-white ring-1'
-                      : 'text-white/50 bg-white/[0.04] active:bg-white/[0.08]'
+                      : 'text-white bg-white/[0.04] active:bg-white/[0.08]'
                   )}
                   style={
                     eventType === type
@@ -250,13 +250,13 @@ const CalendarEventSheet = ({
                   className="flex items-center w-full h-12 px-4 gap-3 touch-manipulation active:bg-white/[0.04]"
                 >
                   <CalendarDays className="h-4 w-4 text-blue-400 flex-shrink-0" />
-                  <span className="text-sm text-white/50 w-12 flex-shrink-0">Starts</span>
+                  <span className="text-sm text-white w-12 flex-shrink-0">Starts</span>
                   <span className="flex-1 text-sm font-semibold text-white">
                     {format(startDate, 'EEE d MMM yyyy')}
                   </span>
                   <ChevronDown
                     className={cn(
-                      'h-4 w-4 text-white/30 transition-transform',
+                      'h-4 w-4 text-white transition-transform',
                       openPicker === 'startDate' && 'rotate-180'
                     )}
                   />
@@ -288,13 +288,13 @@ const CalendarEventSheet = ({
                     className="flex items-center w-full h-12 px-4 gap-3 touch-manipulation active:bg-white/[0.04]"
                   >
                     <Clock className="h-4 w-4 text-blue-400 flex-shrink-0" />
-                    <span className="text-sm text-white/50 w-12 flex-shrink-0">Time</span>
+                    <span className="text-sm text-white w-12 flex-shrink-0">Time</span>
                     <span className="flex-1 text-sm font-semibold text-elec-yellow tabular-nums">
                       {pad(startHour)}:{pad(startMinute)}
                     </span>
                     <ChevronDown
                       className={cn(
-                        'h-4 w-4 text-white/30 transition-transform',
+                        'h-4 w-4 text-white transition-transform',
                         openPicker === 'startTime' && 'rotate-180'
                       )}
                     />
@@ -318,13 +318,13 @@ const CalendarEventSheet = ({
                   className="flex items-center w-full h-12 px-4 gap-3 touch-manipulation active:bg-white/[0.04]"
                 >
                   <CalendarDays className="h-4 w-4 text-blue-400/50 flex-shrink-0" />
-                  <span className="text-sm text-white/50 w-12 flex-shrink-0">Ends</span>
+                  <span className="text-sm text-white w-12 flex-shrink-0">Ends</span>
                   <span className="flex-1 text-sm font-semibold text-white">
                     {format(endDate, 'EEE d MMM yyyy')}
                   </span>
                   <ChevronDown
                     className={cn(
-                      'h-4 w-4 text-white/30 transition-transform',
+                      'h-4 w-4 text-white transition-transform',
                       openPicker === 'endDate' && 'rotate-180'
                     )}
                   />
@@ -354,13 +354,13 @@ const CalendarEventSheet = ({
                     className="flex items-center w-full h-12 px-4 gap-3 touch-manipulation active:bg-white/[0.04]"
                   >
                     <Clock className="h-4 w-4 text-blue-400/50 flex-shrink-0" />
-                    <span className="text-sm text-white/50 w-12 flex-shrink-0">Time</span>
+                    <span className="text-sm text-white w-12 flex-shrink-0">Time</span>
                     <span className="flex-1 text-sm font-semibold text-elec-yellow tabular-nums">
                       {pad(endHour)}:{pad(endMinute)}
                     </span>
                     <ChevronDown
                       className={cn(
-                        'h-4 w-4 text-white/30 transition-transform',
+                        'h-4 w-4 text-white transition-transform',
                         openPicker === 'endTime' && 'rotate-180'
                       )}
                     />
@@ -384,7 +384,7 @@ const CalendarEventSheet = ({
                 placeholder="Add location"
                 value={location}
                 onChange={(e) => setLocation(e.target.value)}
-                className="flex-1 h-full bg-transparent text-sm text-white touch-manipulation outline-none placeholder:text-white/25"
+                className="flex-1 h-full bg-transparent text-sm text-white touch-manipulation outline-none placeholder:text-white/50"
               />
             </div>
 
@@ -392,7 +392,7 @@ const CalendarEventSheet = ({
             <div className="space-y-2">
               <div className="flex items-center gap-2 px-1">
                 <Bell className="h-3.5 w-3.5 text-amber-400" />
-                <span className="text-xs font-bold text-white/50 uppercase tracking-wider">
+                <span className="text-xs font-bold text-white uppercase tracking-wider">
                   Reminder
                 </span>
               </div>
@@ -403,10 +403,10 @@ const CalendarEventSheet = ({
                     type="button"
                     onClick={() => setReminderMinutes(opt.value)}
                     className={cn(
-                      'flex-1 h-9 text-xs font-bold rounded-lg touch-manipulation transition-all',
+                      'flex-1 h-11 text-xs font-bold rounded-lg touch-manipulation transition-all',
                       reminderMinutes === opt.value
                         ? 'bg-elec-yellow text-black'
-                        : 'bg-white/[0.04] text-white/50 active:bg-white/[0.08]'
+                        : 'bg-white/[0.04] text-white active:bg-white/[0.08]'
                     )}
                   >
                     {opt.label}
@@ -419,7 +419,7 @@ const CalendarEventSheet = ({
             <div className="space-y-2">
               <div className="flex items-center gap-2 px-1">
                 <FileText className="h-3.5 w-3.5 text-cyan-400" />
-                <span className="text-xs font-bold text-white/50 uppercase tracking-wider">
+                <span className="text-xs font-bold text-white uppercase tracking-wider">
                   Description
                 </span>
               </div>
@@ -427,7 +427,7 @@ const CalendarEventSheet = ({
                 placeholder="Add details..."
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
-                className="touch-manipulation text-sm min-h-[72px] bg-white/[0.03] border-white/[0.06] focus:ring-1 focus:ring-elec-yellow/30 focus:border-elec-yellow/30 rounded-xl placeholder:text-white/25"
+                className="touch-manipulation text-sm min-h-[72px] bg-white/[0.03] border-white/[0.06] focus:ring-1 focus:ring-elec-yellow/30 focus:border-elec-yellow/30 rounded-xl placeholder:text-white/50"
               />
             </div>
 
@@ -435,7 +435,7 @@ const CalendarEventSheet = ({
             <div className="space-y-2">
               <div className="flex items-center gap-2 px-1">
                 <StickyNote className="h-3.5 w-3.5 text-purple-400" />
-                <span className="text-xs font-bold text-white/50 uppercase tracking-wider">
+                <span className="text-xs font-bold text-white uppercase tracking-wider">
                   Private notes
                 </span>
               </div>
@@ -443,7 +443,7 @@ const CalendarEventSheet = ({
                 placeholder="Notes for yourself..."
                 value={notes}
                 onChange={(e) => setNotes(e.target.value)}
-                className="touch-manipulation text-sm min-h-[72px] bg-white/[0.03] border-white/[0.06] focus:ring-1 focus:ring-elec-yellow/30 focus:border-elec-yellow/30 rounded-xl placeholder:text-white/25"
+                className="touch-manipulation text-sm min-h-[72px] bg-white/[0.03] border-white/[0.06] focus:ring-1 focus:ring-elec-yellow/30 focus:border-elec-yellow/30 rounded-xl placeholder:text-white/50"
               />
             </div>
           </div>
@@ -486,7 +486,7 @@ function TimePicker({
     <div className="flex justify-center gap-4 px-4 py-3">
       {/* Hours */}
       <div className="flex flex-col items-center gap-1">
-        <span className="text-[10px] font-bold text-white/30 uppercase">Hour</span>
+        <span className="text-[10px] font-bold text-white uppercase">Hour</span>
         <div className="flex flex-wrap gap-1 max-w-[180px] justify-center">
           {HOURS.map((h) => (
             <button
@@ -494,8 +494,8 @@ function TimePicker({
               type="button"
               onClick={() => onHourChange(h)}
               className={cn(
-                'w-10 h-10 rounded-lg text-sm font-bold touch-manipulation transition-all',
-                hour === h ? 'bg-elec-yellow text-black' : 'text-white/60 active:bg-white/[0.08]'
+                'w-11 h-11 rounded-lg text-sm font-bold touch-manipulation transition-all',
+                hour === h ? 'bg-elec-yellow text-black' : 'text-white active:bg-white/[0.08]'
               )}
             >
               {pad(h)}
@@ -506,7 +506,7 @@ function TimePicker({
 
       {/* Minutes */}
       <div className="flex flex-col items-center gap-1">
-        <span className="text-[10px] font-bold text-white/30 uppercase">Min</span>
+        <span className="text-[10px] font-bold text-white uppercase">Min</span>
         <div className="flex flex-col gap-1">
           {[0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55].map((m) => (
             <button
@@ -514,8 +514,8 @@ function TimePicker({
               type="button"
               onClick={() => onMinuteChange(m)}
               className={cn(
-                'w-12 h-10 rounded-lg text-sm font-bold touch-manipulation transition-all',
-                minute === m ? 'bg-elec-yellow text-black' : 'text-white/60 active:bg-white/[0.08]'
+                'w-12 h-11 rounded-lg text-sm font-bold touch-manipulation transition-all',
+                minute === m ? 'bg-elec-yellow text-black' : 'text-white active:bg-white/[0.08]'
               )}
             >
               :{pad(m)}

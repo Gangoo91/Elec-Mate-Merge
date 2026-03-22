@@ -361,7 +361,7 @@ const EnhancedTestResultDesktopTableHeader: React.FC<EnhancedTestResultDesktopTa
                   <Popover open={rcdBsPopoverOpen} onOpenChange={setRcdBsPopoverOpen}>
                     <PopoverTrigger asChild>
                       <button className="sot-fill-all-btn" title="Quick fill all RCD BS Standards">
-                        <CheckCircle className="h-3.5 w-3.5" />
+                        <CheckCircle className="h-5 w-5 text-amber-400" />
                       </button>
                     </PopoverTrigger>
                     <PopoverContent className="w-48 p-3 bg-background border-border" align="start">
@@ -409,7 +409,7 @@ const EnhancedTestResultDesktopTableHeader: React.FC<EnhancedTestResultDesktopTa
                   <Popover open={rcdTypePopoverOpen} onOpenChange={setRcdTypePopoverOpen}>
                     <PopoverTrigger asChild>
                       <button className="sot-fill-all-btn" title="Quick fill all RCD Types">
-                        <CheckCircle className="h-3.5 w-3.5" />
+                        <CheckCircle className="h-5 w-5 text-amber-400" />
                       </button>
                     </PopoverTrigger>
                     <PopoverContent className="w-48 p-3 bg-background border-border" align="start">
@@ -475,7 +475,7 @@ const EnhancedTestResultDesktopTableHeader: React.FC<EnhancedTestResultDesktopTa
                   <Popover open={rcdRatingPopoverOpen} onOpenChange={setRcdRatingPopoverOpen}>
                     <PopoverTrigger asChild>
                       <button className="sot-fill-all-btn" title="Quick fill all RCD IΔn ratings">
-                        <CheckCircle className="h-3.5 w-3.5" />
+                        <CheckCircle className="h-5 w-5 text-amber-400" />
                       </button>
                     </PopoverTrigger>
                     <PopoverContent className="w-48 p-3 bg-background border-border" align="start">
@@ -544,7 +544,7 @@ const EnhancedTestResultDesktopTableHeader: React.FC<EnhancedTestResultDesktopTa
                         className="sot-fill-all-btn"
                         title="Quick fill all RCD current ratings"
                       >
-                        <CheckCircle className="h-3.5 w-3.5" />
+                        <CheckCircle className="h-5 w-5 text-amber-400" />
                       </button>
                     </PopoverTrigger>
                     <PopoverContent className="w-48 p-3 bg-background border-border" align="start">
@@ -688,7 +688,7 @@ const EnhancedTestResultDesktopTableHeader: React.FC<EnhancedTestResultDesktopTa
                   <Popover open={irVoltagePopoverOpen} onOpenChange={setIrVoltagePopoverOpen}>
                     <PopoverTrigger asChild>
                       <button className="sot-fill-all-btn" title="Quick fill all Test Voltages">
-                        <CheckCircle className="h-3.5 w-3.5" />
+                        <CheckCircle className="h-5 w-5 text-amber-400" />
                       </button>
                     </PopoverTrigger>
                     <PopoverContent className="w-48 p-3 bg-background border-border" align="start">
@@ -742,7 +742,7 @@ const EnhancedTestResultDesktopTableHeader: React.FC<EnhancedTestResultDesktopTa
                         className="sot-fill-all-btn"
                         title="Quick fill all Live-Neutral readings"
                       >
-                        <CheckCircle className="h-3.5 w-3.5" />
+                        <CheckCircle className="h-5 w-5 text-amber-400" />
                       </button>
                     </PopoverTrigger>
                     <PopoverContent className="w-48 p-3 bg-background border-border" align="start">
@@ -802,7 +802,7 @@ const EnhancedTestResultDesktopTableHeader: React.FC<EnhancedTestResultDesktopTa
                         className="sot-fill-all-btn"
                         title="Quick fill all Live-Earth readings"
                       >
-                        <CheckCircle className="h-3.5 w-3.5" />
+                        <CheckCircle className="h-5 w-5 text-amber-400" />
                       </button>
                     </PopoverTrigger>
                     <PopoverContent className="w-48 p-3 bg-background border-border" align="start">
@@ -862,7 +862,7 @@ const EnhancedTestResultDesktopTableHeader: React.FC<EnhancedTestResultDesktopTa
                   <Popover open={polarityPopoverOpen} onOpenChange={setPolarityPopoverOpen}>
                     <PopoverTrigger asChild>
                       <button className="sot-fill-all-btn" title="Quick fill all Polarity">
-                        <CheckCircle className="h-3.5 w-3.5" />
+                        <CheckCircle className="h-5 w-5 text-amber-400" />
                       </button>
                     </PopoverTrigger>
                     <PopoverContent className="w-48 p-3 bg-background border-border" align="start">
@@ -924,10 +924,10 @@ const EnhancedTestResultDesktopTableHeader: React.FC<EnhancedTestResultDesktopTa
                 {onFillAllRcdTestButton && (
                   <button
                     onClick={onFillAllRcdTestButton}
-                    className="sot-fill-all-btn text-green-500"
+                    className="sot-fill-all-btn"
                     title="Fill all with Pass"
                   >
-                    <CheckCircle className="h-3.5 w-3.5" />
+                    <CheckCircle className="h-5 w-5 text-amber-400" />
                   </button>
                 )}
               </div>
@@ -943,10 +943,10 @@ const EnhancedTestResultDesktopTableHeader: React.FC<EnhancedTestResultDesktopTa
               {onFillAllAfdd && (
                 <button
                   onClick={onFillAllAfdd}
-                  className="sot-fill-all-btn text-green-500"
+                  className="sot-fill-all-btn"
                   title="Fill all with Pass"
                 >
-                  <CheckCircle className="h-3.5 w-3.5" />
+                  <CheckCircle className="h-5 w-5 text-amber-400" />
                 </button>
               )}
             </div>
@@ -964,10 +964,10 @@ const EnhancedTestResultDesktopTableHeader: React.FC<EnhancedTestResultDesktopTa
               {onFillAllFunctional && (
                 <button
                   onClick={onFillAllFunctional}
-                  className="sot-fill-all-btn text-green-500"
+                  className="sot-fill-all-btn"
                   title="Fill all with Satisfactory"
                 >
-                  <CheckCircle className="h-3.5 w-3.5" />
+                  <CheckCircle className="h-5 w-5 text-amber-400" />
                 </button>
               )}
             </div>

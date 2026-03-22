@@ -563,8 +563,7 @@ export const QuoteWizard = ({
           </div>
         );
       default:
-        console.warn('[QuoteWizard] Unexpected step:', currentStep);
-        return <div className="p-4 text-center text-muted-foreground">Loading...</div>;
+        return <div className="p-4 text-center text-white">Loading...</div>;
     }
   };
 

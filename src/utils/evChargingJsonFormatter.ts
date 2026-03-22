@@ -4,8 +4,9 @@
  */
 
 import { EVChargingFormData } from '@/types/ev-charging';
+import type { EVChargingPayloadType } from '@/types/ev-charging-payload';
 
-export const formatEVChargingJson = (formData: Partial<EVChargingFormData>) => {
+export const formatEVChargingJson = (formData: Partial<EVChargingFormData>): EVChargingPayloadType => {
   const get = (key: string, defaultValue: any = ''): string => {
     const value = (formData as any)[key] ?? defaultValue;
     if (value === null || value === undefined) return '';

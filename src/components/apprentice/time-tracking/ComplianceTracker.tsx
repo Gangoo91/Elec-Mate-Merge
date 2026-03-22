@@ -152,8 +152,7 @@ const ComplianceTracker = () => {
           size="sm"
           className="w-full"
           onClick={() => {
-            // This could open a detailed compliance view or study planning tool
-            console.log('Open compliance details');
+            // TODO: open detailed compliance view
           }}
         >
           <TrendingUp className="h-4 w-4 mr-2" />

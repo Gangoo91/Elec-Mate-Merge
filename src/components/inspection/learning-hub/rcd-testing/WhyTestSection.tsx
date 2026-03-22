@@ -26,10 +26,11 @@ const WhyTestSection = () => (
           <div>
             <p className="font-medium text-foreground">Protection Against Fatal Electric Shock</p>
             <p>
-              RCDs detect earth leakage currents as low as 30mA (or less) and disconnect the supply
-              within 40ms. This is fast enough to prevent cardiac fibrillation in healthy adults, as
-              the human heart can typically withstand currents up to 50mA for short durations
-              without fatal consequences.
+              RCDs detect earth leakage currents as low as 30mA (or less) and must disconnect the
+              supply within 300ms at rated current, and within 40ms at higher fault currents (5×
+              rated). This is fast enough to prevent cardiac fibrillation in healthy adults, as the
+              human heart can typically withstand currents up to 50mA for short durations without
+              fatal consequences.
             </p>
           </div>
         </div>
@@ -125,7 +126,7 @@ const WhyTestSection = () => (
             <div>
               <p className="font-medium text-blue-400">Time/Current Relationship:</p>
               <p>• Higher currents = less time to cause damage</p>
-              <p>• 30mA RCDs trip in ≤40ms at rated current</p>
+              <p>• 30mA RCDs trip in ≤300ms at rated current, ≤40ms at 5×IΔn</p>
               <p>• 100mA+ currents can cause fibrillation in &lt;200ms</p>
               <p>• RCD protection prevents sustained contact</p>
             </div>
@@ -197,16 +198,16 @@ const WhyTestSection = () => (
             <div>
               <p className="font-medium text-foreground">Instantaneous (General Type):</p>
               <p>• No intentional time delay</p>
-              <p>• Trip time ≤40ms at rated current</p>
+              <p>• At 1×IΔn: max 300ms</p>
+              <p>• At 5×IΔn: max 40ms</p>
               <p>• Used for final circuits</p>
-              <p>• Maximum shock protection</p>
             </div>
             <div>
               <p className="font-medium text-foreground">Time Delayed (S-Type):</p>
-              <p>• Intentional delay of 130-500ms</p>
+              <p>• At 1×IΔn: max 500ms</p>
+              <p>• At 5×IΔn: max 150ms</p>
               <p>• Used for discrimination/selectivity</p>
               <p>• Upstream protection devices</p>
-              <p>• Prevents unwanted tripping</p>
             </div>
           </div>
         </div>
@@ -280,7 +281,7 @@ const WhyTestSection = () => (
           <p className="font-medium text-foreground">BS 7671 Requirements for RCD Protection:</p>
           <p className="ml-4">
             • <strong>Regulation 411.3.3:</strong> Additional protection by RCD for socket outlets
-            ≤20A
+            rated up to 32A
           </p>
           <p className="ml-4">
             • <strong>Regulation 411.3.3:</strong> RCD protection for mobile equipment outdoors
@@ -295,7 +296,13 @@ const WhyTestSection = () => (
             • <strong>Section 704:</strong> Construction sites require RCD protection
           </p>
           <p className="ml-4">
-            • <strong>Regulation 531.3.2:</strong> RCD testing requirements and frequencies
+            • <strong>Regulation 612.13:</strong> RCD testing during initial verification
+          </p>
+          <p className="ml-4">
+            • <strong>Regulation 643.7/643.8:</strong> RCD testing during periodic inspection
+          </p>
+          <p className="ml-4">
+            • <strong>GN3 Table 2.17:</strong> Definitive RCD test acceptance criteria
           </p>
         </div>
         <div>
@@ -309,7 +316,8 @@ const WhyTestSection = () => (
             condition reports
           </p>
           <p className="ml-4">
-            • <strong>Routine testing:</strong> Monthly test button operation recommended
+            • <strong>Routine testing:</strong> Test button operation at least every 6 months
+            (Reg 514.12.2), monthly recommended as best practice
           </p>
           <p className="ml-4">
             • <strong>Professional testing:</strong> Annual testing with calibrated instruments

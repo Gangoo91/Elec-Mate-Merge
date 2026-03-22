@@ -41,7 +41,7 @@ export const ConversionFunnel: React.FC<ConversionFunnelProps> = ({
       count: stages.drafts,
       value: values.drafts,
       icon: <FileText className="h-4 w-4" />,
-      color: 'text-slate-400',
+      color: 'text-white',
       bgColor: 'bg-slate-500/20',
     },
     {
@@ -95,7 +95,7 @@ export const ConversionFunnel: React.FC<ConversionFunnelProps> = ({
         <div className="flex items-center justify-between">
           <CardTitle className="text-base font-semibold">Quote Pipeline</CardTitle>
           <div className="flex items-center gap-2 text-sm">
-            <span className="text-muted-foreground">Win Rate:</span>
+            <span className="text-white">Win Rate:</span>
             <span
               className={cn(
                 'font-bold',
@@ -145,7 +145,7 @@ export const ConversionFunnel: React.FC<ConversionFunnelProps> = ({
                       <span className="text-sm font-medium">{stage.label}</span>
                       <div className="flex items-center gap-2">
                         <span className={cn('text-sm font-bold', stage.color)}>{stage.count}</span>
-                        <span className="text-xs text-muted-foreground">
+                        <span className="text-xs text-white">
                           {formatCurrency(stage.value)}
                         </span>
                       </div>
@@ -157,9 +157,9 @@ export const ConversionFunnel: React.FC<ConversionFunnelProps> = ({
                 {index < funnelStages.length - 1 && (
                   <div className="flex items-center gap-3 py-0.5">
                     <div className="w-8 flex justify-center">
-                      <ArrowDown className="h-3 w-3 text-muted-foreground/50" />
+                      <ArrowDown className="h-3 w-3 text-white" />
                     </div>
-                    <span className="text-[10px] text-muted-foreground">
+                    <span className="text-[10px] text-white">
                       {getConversionRate(index, index + 1)}% conversion
                     </span>
                   </div>

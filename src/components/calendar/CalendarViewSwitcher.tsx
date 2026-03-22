@@ -20,10 +20,10 @@ const CalendarViewSwitcher = ({ view, onViewChange }: CalendarViewSwitcherProps)
         type="button"
         onClick={() => onViewChange(v.value)}
         className={cn(
-          'flex-1 h-9 text-xs font-bold rounded-[10px] touch-manipulation transition-all',
+          'flex-1 h-11 text-xs font-bold rounded-[10px] touch-manipulation transition-all',
           view === v.value
             ? 'bg-elec-yellow text-black shadow-sm'
-            : 'text-white/60 active:bg-white/[0.06]'
+            : 'text-white active:bg-white/[0.06]'
         )}
       >
         {v.label}

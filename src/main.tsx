@@ -7,13 +7,12 @@ declare global {
   }
 }
 
+import React from 'react';
 import { createRoot } from 'react-dom/client';
 import { Capacitor } from '@capacitor/core';
-import App from './App.tsx';
 import './index.css';
-import ErrorBoundary from './components/common/ErrorBoundary.tsx';
 
-console.log('[Elec-Mate] All imports loaded');
+console.log('[Elec-Mate] Core imports loaded');
 
 // Defer analytics loading until after app is interactive (saves ~427KB from initial bundle)
 const initAnalyticsDeferred = () => {
@@ -100,21 +99,42 @@ if (!rootElement) {
   throw new Error('Root element not found');
 }
 
-console.log('[Elec-Mate] Rendering app...');
+// ELE-398: On native platforms, prime the Capacitor auth cache BEFORE importing
+// App (which triggers createClient via the supabase/client.ts import chain).
+// This ensures GoTrue's synchronous getItem() during initialisation finds the
+// stored session tokens in the in-memory cache. On web this is a no-op — App
+// is imported immediately.
+const bootstrap = async () => {
+  if (Capacitor.isNativePlatform()) {
+    const { primeAuthCache } = await import('./integrations/supabase/capacitorStorage');
+    await primeAuthCache();
+    console.log('[Elec-Mate] Auth cache primed from Capacitor Preferences');
+  }
 
-createRoot(rootElement).render(
-  <ErrorBoundary>
-    <App />
-  </ErrorBoundary>
-);
+  // Dynamic import so createClient() runs AFTER the cache is primed
+  const [{ default: App }, { default: ErrorBoundary }] = await Promise.all([
+    import('./App.tsx'),
+    import('./components/common/ErrorBoundary.tsx'),
+  ]);
 
-// Hide loading state and error fallback once React has mounted
-const initialLoading = document.getElementById('initial-loading');
-const loadError = document.getElementById('load-error');
-if (initialLoading) initialLoading.style.display = 'none';
-if (loadError) loadError.style.display = 'none';
+  console.log('[Elec-Mate] Rendering app...');
 
-// Initialize analytics after app is rendered and interactive
-initAnalyticsDeferred();
+  createRoot(rootElement).render(
+    <ErrorBoundary>
+      <App />
+    </ErrorBoundary>
+  );
 
-console.log('[Elec-Mate] Render complete');
+  // Hide loading state and error fallback once React has mounted
+  const initialLoading = document.getElementById('initial-loading');
+  const loadError = document.getElementById('load-error');
+  if (initialLoading) initialLoading.style.display = 'none';
+  if (loadError) loadError.style.display = 'none';
+
+  // Initialize analytics after app is rendered and interactive
+  initAnalyticsDeferred();
+
+  console.log('[Elec-Mate] Render complete');
+};
+
+bootstrap();

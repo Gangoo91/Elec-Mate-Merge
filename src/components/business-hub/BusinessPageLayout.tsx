@@ -1,63 +1,19 @@
 import { ReactNode } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ArrowLeft, LucideIcon } from 'lucide-react';
-import { motion } from 'framer-motion';
 import { cn } from '@/lib/utils';
 
 type AccentColor = 'yellow' | 'blue' | 'green' | 'purple' | 'orange' | 'emerald' | 'rose' | 'cyan';
 
-const accentConfig: Record<
-  AccentColor,
-  { gradient: string; iconBg: string; iconBorder: string; iconText: string }
-> = {
-  yellow: {
-    gradient: 'from-yellow-500/8',
-    iconBg: 'bg-yellow-400/10',
-    iconBorder: 'border-yellow-400/20',
-    iconText: 'text-yellow-400',
-  },
-  blue: {
-    gradient: 'from-blue-500/8',
-    iconBg: 'bg-blue-400/10',
-    iconBorder: 'border-blue-400/20',
-    iconText: 'text-blue-400',
-  },
-  green: {
-    gradient: 'from-green-500/8',
-    iconBg: 'bg-green-400/10',
-    iconBorder: 'border-green-400/20',
-    iconText: 'text-green-400',
-  },
-  purple: {
-    gradient: 'from-purple-500/8',
-    iconBg: 'bg-purple-400/10',
-    iconBorder: 'border-purple-400/20',
-    iconText: 'text-purple-400',
-  },
-  orange: {
-    gradient: 'from-orange-500/8',
-    iconBg: 'bg-orange-400/10',
-    iconBorder: 'border-orange-400/20',
-    iconText: 'text-orange-400',
-  },
-  emerald: {
-    gradient: 'from-emerald-500/8',
-    iconBg: 'bg-emerald-400/10',
-    iconBorder: 'border-emerald-400/20',
-    iconText: 'text-emerald-400',
-  },
-  rose: {
-    gradient: 'from-rose-500/8',
-    iconBg: 'bg-rose-400/10',
-    iconBorder: 'border-rose-400/20',
-    iconText: 'text-rose-400',
-  },
-  cyan: {
-    gradient: 'from-cyan-500/8',
-    iconBg: 'bg-cyan-400/10',
-    iconBorder: 'border-cyan-400/20',
-    iconText: 'text-cyan-400',
-  },
+const accentConfig: Record<AccentColor, { iconText: string }> = {
+  yellow: { iconText: 'text-yellow-400' },
+  blue: { iconText: 'text-blue-400' },
+  green: { iconText: 'text-green-400' },
+  purple: { iconText: 'text-purple-400' },
+  orange: { iconText: 'text-orange-400' },
+  emerald: { iconText: 'text-emerald-400' },
+  rose: { iconText: 'text-rose-400' },
+  cyan: { iconText: 'text-cyan-400' },
 };
 
 interface BusinessPageLayoutProps {
@@ -72,7 +28,6 @@ interface BusinessPageLayoutProps {
 
 const BusinessPageLayout = ({
   title,
-  subtitle,
   icon: Icon,
   backUrl,
   accentColor = 'yellow',
@@ -83,51 +38,27 @@ const BusinessPageLayout = ({
   const accent = accentConfig[accentColor];
 
   return (
-    <motion.div
-      className={cn('min-h-screen bg-[#1a1a1a]', className)}
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 0.3 }}
-    >
-      {/* Header */}
-      <header className="sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-xl border-b border-white/10 pt-safe">
-        <div className="px-4 sm:px-6">
-          <div className="flex items-center h-14 sm:h-16">
-            <button
-              type="button"
-              onClick={() => navigate(backUrl)}
-              className="flex items-center justify-center h-11 w-11 rounded-xl text-white hover:bg-white/10 mr-3 touch-manipulation active:scale-[0.98]"
-            >
-              <ArrowLeft className="h-5 w-5" />
-            </button>
-            <div className="flex items-center gap-2 flex-1 min-w-0">
-              <Icon className={cn('h-5 w-5 flex-shrink-0', accent.iconText)} />
-              <h1 className="text-lg sm:text-xl font-bold text-white truncate">{title}</h1>
-            </div>
+    <div className={cn('-mt-3 sm:-mt-4 md:-mt-6 bg-background pb-24 min-h-screen', className)}>
+      {/* Header — scrolls with content */}
+      <div className="bg-background/95 backdrop-blur-sm border-b border-white/10">
+        <div className="px-4 py-3 flex items-center gap-3">
+          <button
+            type="button"
+            onClick={() => navigate(backUrl)}
+            className="h-11 w-11 flex items-center justify-center rounded-xl bg-white/[0.06] touch-manipulation active:bg-white/[0.1] transition-colors flex-shrink-0"
+          >
+            <ArrowLeft className="h-5 w-5 text-white" />
+          </button>
+          <div className="flex items-center gap-2 min-w-0">
+            <Icon className={cn('h-5 w-5 flex-shrink-0', accent.iconText)} />
+            <h1 className="text-lg font-bold text-white truncate">{title}</h1>
           </div>
         </div>
-      </header>
-
-      {/* Hero Section */}
-      <section
-        className={cn('border-b border-white/10 bg-gradient-to-b to-[#1a1a1a]', accent.gradient)}
-      >
-        <div className="px-4 sm:px-6 py-6 sm:py-8">
-          <div className="flex items-center gap-4">
-            <div className={cn('p-3 sm:p-4 rounded-2xl border', accent.iconBg, accent.iconBorder)}>
-              <Icon className={cn('h-8 w-8 sm:h-10 sm:w-10', accent.iconText)} />
-            </div>
-            <div>
-              <h2 className="text-xl sm:text-2xl lg:text-3xl font-bold text-white">{title}</h2>
-              {subtitle && <p className="text-sm sm:text-base text-white mt-1">{subtitle}</p>}
-            </div>
-          </div>
-        </div>
-      </section>
+      </div>
 
       {/* Main Content */}
-      <main className="px-4 sm:px-6 py-6 sm:py-8 space-y-6 pb-safe">{children}</main>
-    </motion.div>
+      <main className="px-4 sm:px-6 py-4 space-y-4">{children}</main>
+    </div>
   );
 };
 

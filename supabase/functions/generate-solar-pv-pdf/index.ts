@@ -1,5 +1,6 @@
 import 'jsr:@supabase/functions-js/edge-runtime.d.ts';
 import { captureException } from '../_shared/sentry.ts';
+import { solarPVPayloadSchema } from '../_shared/solar-pv-payload-schema.ts';
 
 const PDFMONKEY_API_KEY = Deno.env.get('PDFMONKEY_API_KEY');
 // TODO: Create template in PDF Monkey and update this ID
@@ -110,6 +111,18 @@ Deno.serve(async (req: Request) => {
 
     console.log('[generate-solar-pv-pdf] Creating PDF document');
     console.log('[generate-solar-pv-pdf] Form data keys:', Object.keys(formData));
+
+    // Validate payload against schema (soft-fail: log but don't block)
+    const validation = solarPVPayloadSchema.safeParse(formData);
+    if (!validation.success) {
+      console.error('[generate-solar-pv-pdf] Schema validation failed:',
+        JSON.stringify(validation.error.issues.slice(0, 10)));
+      await captureException(new Error('Solar PV payload schema drift detected'), {
+        functionName: 'generate-solar-pv-pdf',
+        extra: { issues: validation.error.issues.slice(0, 20) },
+        tags: { schema_drift: 'true' },
+      });
+    }
 
     // Log key sections for debugging
     console.log('[generate-solar-pv-pdf] Certificate number:', formData.certificate_number);

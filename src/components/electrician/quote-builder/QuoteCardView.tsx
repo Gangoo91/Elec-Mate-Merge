@@ -208,7 +208,7 @@ const QuoteCardView: React.FC<QuoteCardViewProps> = ({
                         </Badge>
                       </div>
                       {quote.acceptance_status === 'accepted' && quote.accepted_by_name && (
-                        <p className="text-[10px] text-muted-foreground">
+                        <p className="text-[10px] text-white">
                           Signed by {quote.accepted_by_name}
                         </p>
                       )}
@@ -226,7 +226,7 @@ const QuoteCardView: React.FC<QuoteCardViewProps> = ({
                       variant="ghost"
                       size="icon"
                       onClick={() => onNavigate(`/electrician/quote-builder/${quote.id}`)}
-                      className="h-8 w-8 text-muted-foreground hover:text-foreground"
+                      className="h-11 w-11 text-white hover:text-foreground"
                     >
                       <Eye className="h-4 w-4" />
                     </Button>
@@ -242,7 +242,7 @@ const QuoteCardView: React.FC<QuoteCardViewProps> = ({
                       </Avatar>
                       <div className="min-w-0">
                         <p className="text-sm font-medium truncate">{quote.client.name}</p>
-                        <p className="text-xs text-muted-foreground">
+                        <p className="text-xs text-white">
                           {format(new Date(quote.createdAt), 'dd MMM')} • {quote.items.length} items
                         </p>
                       </div>

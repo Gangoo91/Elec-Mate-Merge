@@ -133,16 +133,12 @@ export function useSubscriptionStatus(profile: ProfileType | null) {
   // IMPORTANT: Don't reset state when profile is null to prevent flash
   useEffect(() => {
     if (profile) {
-      // If subscribed but no Stripe customer and subscription_end is past, treat as expired
-      const isExpiredWithoutStripe =
-        profile.subscribed &&
-        !profile.stripe_customer_id &&
-        profile.subscription_end &&
-        new Date(profile.subscription_end) < new Date();
-
-      // Check both subscribed AND free_access_granted for beta testers
+      // Trust the profile's `subscribed` field — it is set by Stripe webhook,
+      // RevenueCat webhook, and the check-subscription edge function.
+      // Do NOT second-guess it with a client-side expiry guard — that broke
+      // native IAP subscribers who have no stripe_customer_id (ELE-432).
       const isUserSubscribed =
-        (profile.subscribed && !isExpiredWithoutStripe) || profile.free_access_granted || false;
+        profile.subscribed || profile.free_access_granted || false;
 
       // Skip update if isSubscribed value hasn't actually changed
       // This prevents unnecessary re-renders during scroll events
@@ -468,13 +464,8 @@ export function useSubscriptionStatus(profile: ProfileType | null) {
 
       if (cached) {
         // Derive profile's subscription status for cross-check
-        const isExpiredWithoutStripe =
-          profile.subscribed &&
-          !profile.stripe_customer_id &&
-          profile.subscription_end &&
-          new Date(profile.subscription_end) < new Date();
         const profileSubscribed =
-          (profile.subscribed && !isExpiredWithoutStripe) || profile.free_access_granted || false;
+          profile.subscribed || profile.free_access_granted || false;
 
         // If cache and profile disagree, force a foreground refresh
         if (cached.isSubscribed !== profileSubscribed) {

@@ -115,8 +115,9 @@ const HowToTestSection = () => (
         <div>
           <p className="font-medium text-foreground">Step 4: Rated Current Test (Trip Test)</p>
           <p className="ml-4">• Apply 100% of rated tripping current (30mA for 30mA RCD)</p>
-          <p className="ml-4">• RCD must trip within 300ms for general type RCDs</p>
-          <p className="ml-4">• Record actual trip time displayed on tester</p>
+          <p className="ml-4">• RCD must trip within 300ms for general type, 500ms for S-type</p>
+          <p className="ml-4">• Test at both 0° and 180° phase angles (GN3 Section 2.6.18)</p>
+          <p className="ml-4">• Record the worst-case (longest) trip time from both tests</p>
           <p className="ml-4">• Typical trip times should be 20-40ms for healthy RCDs</p>
           <p className="ml-4">• Reset RCD after test and verify normal operation</p>
         </div>
@@ -202,10 +203,20 @@ const HowToTestSection = () => (
             <p className="font-medium text-green-400 mb-1">
               Test 3 - Five Times Rated Current (×5):
             </p>
-            <p>• RCD must trip within 40ms maximum</p>
+            <p>• General type: must trip within 40ms maximum</p>
+            <p>• S-type: must trip within 150ms maximum</p>
             <p>• 150mA for 30mA RCD</p>
             <p>• Tests fast response to higher currents</p>
             <p>• Critical for shock protection verification</p>
+          </div>
+          <div className="mt-4 bg-blue-500/10 border border-blue-500/20 rounded p-3">
+            <p className="font-medium text-blue-400 mb-1">
+              S-Type (Time Delayed) RCD Acceptance Criteria:
+            </p>
+            <p>• At ½×IΔn: must NOT trip</p>
+            <p>• At 1×IΔn: max 500ms (vs 300ms for general type)</p>
+            <p>• At 5×IΔn: max 150ms (vs 40ms for general type)</p>
+            <p className="text-blue-300 mt-1">Ref: GN3 Table 2.17 — Tests for RCDs</p>
           </div>
         </div>
         <div className="bg-red-500/10 border border-red-500/20 rounded p-3">
@@ -218,7 +229,8 @@ const HowToTestSection = () => (
               • <strong>Trip time {'>'}300ms at rated current:</strong> RCD too slow
             </p>
             <p>
-              • <strong>Trip time {'>'}40ms at 5× rated current:</strong> Inadequate fast response
+              • <strong>Trip time {'>'}40ms at 5× rated current (general) or {'>'}150ms (S-type):</strong>{' '}
+              Inadequate fast response
             </p>
             <p>
               • <strong>Trip at half rated current:</strong> RCD too sensitive
@@ -348,8 +360,12 @@ const HowToTestSection = () => (
           <p className="font-medium text-foreground">Standard test form entries:</p>
           <p className="ml-4">• RCD rating and type (e.g., 30mA Type A)</p>
           <p className="ml-4">• Test button operation: Satisfactory/Unsatisfactory</p>
-          <p className="ml-4">• Trip time at IΔn (rated current): ___ms (max 300ms)</p>
-          <p className="ml-4">• Trip time at 5×IΔn: ___ms (max 40ms)</p>
+          <p className="ml-4">
+            • Trip time at IΔn (rated current): ___ms (max 300ms general, 500ms S-type)
+          </p>
+          <p className="ml-4">
+            • Trip time at 5×IΔn: ___ms (max 40ms general, 150ms S-type)
+          </p>
           <p className="ml-4">• Non-trip at 0.5×IΔn: Pass/Fail</p>
           <p className="ml-4">• Overall assessment: Satisfactory/Unsatisfactory</p>
         </div>

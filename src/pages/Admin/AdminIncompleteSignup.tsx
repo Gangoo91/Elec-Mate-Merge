@@ -1,5 +1,5 @@
 import { useState, useMemo } from 'react';
-import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { supabase, SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY } from '@/integrations/supabase/client';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -25,7 +25,6 @@ import {
   Users,
   CheckCircle,
   Mail,
-  Calendar,
   TrendingUp,
   ChevronRight,
   Loader2,
@@ -34,14 +33,15 @@ import {
   Target,
   CheckCheck,
   TestTube,
-  UserPlus,
   GraduationCap,
   Zap,
-  Gift,
   Square,
+  CreditCard,
+  ShieldCheck,
+  MailWarning,
 } from 'lucide-react';
 import { Input } from '@/components/ui/input';
-import { format, formatDistanceToNow, parseISO } from 'date-fns';
+import { formatDistanceToNow, parseISO, format } from 'date-fns';
 import { toast } from '@/hooks/use-toast';
 import { useHaptic } from '@/hooks/useHaptic';
 
@@ -60,13 +60,14 @@ interface SentUser {
   username: string;
   role: string | null;
   created_at: string;
-  incomplete_signup_sent_at: string;
+  incomplete_signup_v3_sent_at: string;
   subscribed: boolean;
 }
 
-interface IncompleteSignupStats {
+interface V3Stats {
   totalEligible: number;
-  offersSent: number;
+  sent: number;
+  totalAbandoned: number;
   conversions: number;
   conversionRate: string;
 }
@@ -77,48 +78,47 @@ export default function AdminIncompleteSignup() {
   const [search, setSearch] = useState('');
   const [selectedUsers, setSelectedUsers] = useState<Set<string>>(new Set());
   const [selectedUser, setSelectedUser] = useState<EligibleUser | null>(null);
-  const [confirmSendAll, setConfirmSendAll] = useState(false);
-  const [testEmail, setTestEmail] = useState('');
-  const [showTestEmail, setShowTestEmail] = useState(false);
-  const [manualEmail, setManualEmail] = useState('');
   const [activeTab, setActiveTab] = useState<'eligible' | 'sent'>('eligible');
 
-  // Auto-batch state
-  const [batchSending, setBatchSending] = useState(false);
-  const [batchProgress, setBatchProgress] = useState({
-    sent: 0,
-    failed: 0,
-    total: 0,
-    batch: 0,
-    totalBatches: 0,
-  });
+  // Test email
+  const [testEmail, setTestEmail] = useState('');
+  const [showTestEmail, setShowTestEmail] = useState(false);
+  const [testSending, setTestSending] = useState(false);
 
-  // Fetch campaign stats
-  const { data: stats, isLoading: statsLoading } = useQuery<IncompleteSignupStats>({
-    queryKey: ['admin-incomplete-signup-stats'],
+  // Confirm send
+  const [confirmSend, setConfirmSend] = useState(false);
+
+  // Batch state
+  const [batchSending, setBatchSending] = useState(() => !!(window as any).__v3BatchRunning);
+  const [batchProgress, setBatchProgress] = useState(
+    () => (window as any).__v3BatchProgress || { sent: 0, remaining: 0 }
+  );
+
+  // ── Data Queries ──
+
+  const { data: stats, refetch: refetchStats } = useQuery<V3Stats>({
+    queryKey: ['admin-v3-stats'],
     queryFn: async () => {
       const { data, error } = await supabase.functions.invoke('send-incomplete-signup', {
-        body: { action: 'get_stats' },
+        body: { action: 'get_v3_stats' },
       });
       if (error) throw error;
       if (data?.error) throw new Error(data.error);
-      return data as IncompleteSignupStats;
+      return data as V3Stats;
     },
     staleTime: 30 * 1000,
-    refetchInterval: 60 * 1000,
-    retry: false,
+    refetchInterval: 30 * 1000,
   });
 
-  // Fetch eligible users
   const {
     data: eligibleUsers,
     isLoading: usersLoading,
-    refetch,
+    refetch: refetchEligible,
   } = useQuery<EligibleUser[]>({
-    queryKey: ['admin-incomplete-signup-eligible'],
+    queryKey: ['admin-v3-eligible'],
     queryFn: async () => {
       const { data, error } = await supabase.functions.invoke('send-incomplete-signup', {
-        body: { action: 'get_eligible' },
+        body: { action: 'get_v3_eligible' },
       });
       if (error) throw error;
       if (data?.error) throw new Error(data.error);
@@ -127,12 +127,11 @@ export default function AdminIncompleteSignup() {
     staleTime: 30 * 1000,
   });
 
-  // Fetch sent history
   const { data: sentUsers, isLoading: sentLoading } = useQuery<SentUser[]>({
-    queryKey: ['admin-incomplete-signup-sent'],
+    queryKey: ['admin-v3-sent'],
     queryFn: async () => {
       const { data, error } = await supabase.functions.invoke('send-incomplete-signup', {
-        body: { action: 'get_sent_history' },
+        body: { action: 'get_v3_sent' },
       });
       if (error) throw error;
       if (data?.error) throw new Error(data.error);
@@ -141,148 +140,141 @@ export default function AdminIncompleteSignup() {
     staleTime: 30 * 1000,
   });
 
-  // Send single email mutation
-  const sendSingleMutation = useMutation({
-    mutationFn: async (uid: string) => {
+  // ── Actions ──
+
+  const sendTest = async () => {
+    if (!testEmail) return;
+    setTestSending(true);
+    try {
       const { data, error } = await supabase.functions.invoke('send-incomplete-signup', {
-        body: { action: 'send_single', userId: uid },
+        body: { action: 'send_v3_test', testEmail },
       });
       if (error) throw error;
       if (data?.error) throw new Error(data.error);
-      return data;
-    },
-    onSuccess: () => {
-      haptic.success();
-      toast({ title: 'Email sent successfully', variant: 'success' });
-      queryClient.invalidateQueries({ queryKey: ['admin-incomplete-signup-eligible'] });
-      queryClient.invalidateQueries({ queryKey: ['admin-incomplete-signup-stats'] });
-      queryClient.invalidateQueries({ queryKey: ['admin-incomplete-signup-sent'] });
-      setSelectedUser(null);
-      setSelectedUsers((prev) => {
-        const next = new Set(prev);
-        next.delete(selectedUser?.id || '');
-        return next;
-      });
-    },
-    onError: (error) => {
-      haptic.error();
-      toast({ title: `Failed to send: ${error.message}`, variant: 'destructive' });
-    },
-  });
-
-  // Auto-batched bulk send
-  const BATCH_SIZE = 40;
-
-  const sendBatchedEmails = async (ids: string[]) => {
-    const batches: string[][] = [];
-    for (let i = 0; i < ids.length; i += BATCH_SIZE) {
-      batches.push(ids.slice(i, i + BATCH_SIZE));
-    }
-
-    setBatchSending(true);
-    setBatchProgress({
-      sent: 0,
-      failed: 0,
-      total: ids.length,
-      batch: 0,
-      totalBatches: batches.length,
-    });
-
-    let totalSent = 0;
-    let totalFailed = 0;
-
-    for (let i = 0; i < batches.length; i++) {
-      setBatchProgress((prev) => ({ ...prev, batch: i + 1 }));
-
-      try {
-        const { data, error } = await supabase.functions.invoke('send-incomplete-signup', {
-          body: { action: 'send_bulk', userIds: batches[i] },
-        });
-        if (error) throw error;
-        if (data?.error) throw new Error(data.error);
-
-        totalSent += data.sent || 0;
-        totalFailed += data.failed || 0;
-        setBatchProgress((prev) => ({ ...prev, sent: totalSent, failed: totalFailed }));
-      } catch (err: unknown) {
-        totalFailed += batches[i].length;
-        setBatchProgress((prev) => ({ ...prev, failed: totalFailed }));
-      }
-
-      if (i < batches.length - 1) await new Promise((r) => setTimeout(r, 2000));
-    }
-
-    haptic.success();
-    toast({
-      title:
-        totalFailed === 0
-          ? `Sent ${totalSent} of ${ids.length} emails`
-          : `Sent ${totalSent} of ${ids.length} emails (${totalFailed} failed)`,
-      variant: totalFailed === 0 ? 'success' : 'warning',
-    });
-    setBatchSending(false);
-    setBatchProgress({ sent: 0, failed: 0, total: 0, batch: 0, totalBatches: 0 });
-    setSelectedUsers(new Set());
-    setConfirmSendAll(false);
-    queryClient.invalidateQueries({ queryKey: ['admin-incomplete-signup-eligible'] });
-    queryClient.invalidateQueries({ queryKey: ['admin-incomplete-signup-stats'] });
-    queryClient.invalidateQueries({ queryKey: ['admin-incomplete-signup-sent'] });
-  };
-
-  // Send test email mutation
-  const sendTestMutation = useMutation({
-    mutationFn: async (email: string) => {
-      const { data, error } = await supabase.functions.invoke('send-incomplete-signup', {
-        body: { action: 'send_test', testEmail: email },
-      });
-      if (error) throw error;
-      if (data?.error) throw new Error(data.error);
-      return data;
-    },
-    onSuccess: () => {
       haptic.success();
       toast({ title: 'Test email sent! Check your inbox.', variant: 'success' });
       setTestEmail('');
       setShowTestEmail(false);
-    },
-    onError: (error) => {
+    } catch (err: any) {
       haptic.error();
-      toast({ title: `Failed to send test email: ${error.message}`, variant: 'destructive' });
-    },
-  });
+      toast({ title: `Failed: ${err.message}`, variant: 'destructive' });
+    } finally {
+      setTestSending(false);
+    }
+  };
 
-  // Send manual email mutation
-  const sendManualMutation = useMutation({
-    mutationFn: async (email: string) => {
-      const { data, error } = await supabase.functions.invoke('send-incomplete-signup', {
-        body: { action: 'send_manual', manualEmail: email },
+  // Batch sender — window-based pattern (survives re-renders)
+  const startBatchLoop = () => {
+    if ((window as any).__v3BatchRunning) return;
+
+    (window as any).__v3BatchRunning = true;
+    (window as any).__v3BatchStopped = false;
+    (window as any).__v3BatchTotal = 0;
+    (window as any).__v3BatchProgress = { sent: 0, remaining: stats?.totalEligible || 0 };
+
+    setBatchSending(true);
+    setBatchProgress({ sent: 0, remaining: stats?.totalEligible || 0 });
+
+    const sendOneBatch = async () => {
+      if ((window as any).__v3BatchStopped) {
+        toast({
+          title: `Stopped — sent ${(window as any).__v3BatchTotal} emails so far`,
+          variant: 'success',
+        });
+        cleanup();
+        return;
+      }
+
+      try {
+        const session = (await supabase.auth.getSession()).data.session;
+        const resp = await fetch(`${SUPABASE_URL}/functions/v1/send-incomplete-signup`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${session?.access_token}`,
+            apikey: SUPABASE_PUBLISHABLE_KEY,
+          },
+          body: JSON.stringify({ action: 'send_v3_campaign' }),
+        });
+
+        const data = await resp.json();
+        if (!resp.ok || data.error) throw new Error(data.error || `HTTP ${resp.status}`);
+
+        (window as any).__v3BatchTotal += data.sent;
+        const progress = {
+          sent: (window as any).__v3BatchTotal,
+          remaining: data.remaining,
+        };
+        (window as any).__v3BatchProgress = progress;
+        setBatchProgress(progress);
+
+        if (data.complete || data.sent === 0) {
+          toast({
+            title: `All done! Sent ${(window as any).__v3BatchTotal} emails`,
+            variant: 'success',
+          });
+          cleanup();
+          return;
+        }
+
+        toast({
+          title: `Batch of ${data.sent} sent (${(window as any).__v3BatchTotal} total) — next batch in 10s...`,
+        });
+
+        (window as any).__v3BatchTimer = window.setTimeout(sendOneBatch, 10000);
+      } catch (err: any) {
+        toast({
+          title: `Batch error: ${err.message} — retrying in 15s...`,
+          variant: 'destructive',
+        });
+        (window as any).__v3BatchTimer = window.setTimeout(sendOneBatch, 15000);
+      }
+    };
+
+    const cleanup = () => {
+      (window as any).__v3BatchRunning = false;
+      if ((window as any).__v3BatchTimer) {
+        window.clearTimeout((window as any).__v3BatchTimer);
+      }
+      setBatchSending(false);
+      setConfirmSend(false);
+      invalidateAll();
+    };
+
+    sendOneBatch();
+  };
+
+  const stopBatchLoop = () => {
+    (window as any).__v3BatchStopped = true;
+    if ((window as any).__v3BatchTimer) {
+      window.clearTimeout((window as any).__v3BatchTimer);
+      toast({
+        title: `Stopped — sent ${(window as any).__v3BatchTotal || 0} emails so far`,
+        variant: 'success',
       });
-      if (error) throw error;
-      if (data?.error) throw new Error(data.error);
-      return data;
-    },
-    onSuccess: () => {
-      haptic.success();
-      toast({ title: 'Email sent!', variant: 'success' });
-      setManualEmail('');
-      queryClient.invalidateQueries({ queryKey: ['admin-incomplete-signup-stats'] });
-    },
-    onError: (error) => {
-      haptic.error();
-      toast({ title: `Failed to send: ${error.message}`, variant: 'destructive' });
-    },
-  });
+      (window as any).__v3BatchRunning = false;
+      setBatchSending(false);
+      invalidateAll();
+    }
+  };
 
-  // Filter users based on search
+  const invalidateAll = () => {
+    queryClient.invalidateQueries({ queryKey: ['admin-v3-stats'] });
+    queryClient.invalidateQueries({ queryKey: ['admin-v3-eligible'] });
+    queryClient.invalidateQueries({ queryKey: ['admin-v3-sent'] });
+  };
+
+  // ── Helpers ──
+
   const filteredUsers = useMemo(() => {
     if (!eligibleUsers) return [];
     if (!search) return eligibleUsers;
-    const searchLower = search.toLowerCase();
+    const s = search.toLowerCase();
     return eligibleUsers.filter(
       (u) =>
-        u.full_name?.toLowerCase().includes(searchLower) ||
-        u.username?.toLowerCase().includes(searchLower) ||
-        u.email?.toLowerCase().includes(searchLower)
+        u.full_name?.toLowerCase().includes(s) ||
+        u.username?.toLowerCase().includes(s) ||
+        u.email?.toLowerCase().includes(s)
     );
   }, [eligibleUsers, search]);
 
@@ -298,157 +290,6 @@ export default function AdminIncompleteSignup() {
   const toggleSelectAll = () => {
     if (selectedUsers.size === filteredUsers.length) setSelectedUsers(new Set());
     else setSelectedUsers(new Set(filteredUsers.map((u) => u.id)));
-  };
-
-  const handleSendSelected = () => {
-    if (selectedUsers.size === 0) return;
-    sendBatchedEmails(Array.from(selectedUsers));
-  };
-
-  // ── V2 "Come Back" Campaign ─────────────────────────────────────
-  const [v2TestEmail, setV2TestEmail] = useState('');
-  const [showV2Test, setShowV2Test] = useState(false);
-  const [confirmV2Send, setConfirmV2Send] = useState(false);
-  const [v2BatchSending, setV2BatchSending] = useState(() => !!(window as any).__v2BatchRunning);
-  const [v2BatchProgress, setV2BatchProgress] = useState(
-    () => (window as any).__v2BatchProgress || { sent: 0, remaining: 0 }
-  );
-
-  // Fetch V2 stats
-  const { data: v2Stats, refetch: refetchV2 } = useQuery<{
-    totalEligible: number;
-    sent: number;
-    conversions: number;
-    conversionRate: string;
-  }>({
-    queryKey: ['admin-incomplete-signup-v2-stats'],
-    queryFn: async () => {
-      const { data, error } = await supabase.functions.invoke('send-incomplete-signup', {
-        body: { action: 'get_v2_stats' },
-      });
-      if (error) throw error;
-      if (data?.error) throw new Error(data.error);
-      return data;
-    },
-    staleTime: 30 * 1000,
-    refetchInterval: 30 * 1000,
-  });
-
-  // Send V2 test email
-  const sendV2TestMutation = useMutation({
-    mutationFn: async (email: string) => {
-      const { data, error } = await supabase.functions.invoke('send-incomplete-signup', {
-        body: { action: 'send_v2_test', testEmail: email },
-      });
-      if (error) throw error;
-      if (data?.error) throw new Error(data.error);
-      return data;
-    },
-    onSuccess: () => {
-      haptic.success();
-      toast({ title: 'V2 test email sent! Check your inbox.', variant: 'success' });
-      setV2TestEmail('');
-      setShowV2Test(false);
-    },
-    onError: (error) => {
-      haptic.error();
-      toast({ title: `Failed: ${error.message}`, variant: 'destructive' });
-    },
-  });
-
-  // V2 batch sender — window-based pattern
-  const startV2BatchLoop = () => {
-    if ((window as any).__v2BatchRunning) return;
-
-    (window as any).__v2BatchRunning = true;
-    (window as any).__v2BatchStopped = false;
-    (window as any).__v2BatchTotal = 0;
-    (window as any).__v2BatchProgress = { sent: 0, remaining: v2Stats?.totalEligible || 0 };
-
-    setV2BatchSending(true);
-    setV2BatchProgress({ sent: 0, remaining: v2Stats?.totalEligible || 0 });
-
-    const sendOneBatch = async () => {
-      if ((window as any).__v2BatchStopped) {
-        toast({
-          title: `Stopped — sent ${(window as any).__v2BatchTotal} V2 emails so far`,
-          variant: 'success',
-        });
-        v2Cleanup();
-        return;
-      }
-
-      try {
-        const session = (await supabase.auth.getSession()).data.session;
-        const resp = await fetch(`${SUPABASE_URL}/functions/v1/send-incomplete-signup`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${session?.access_token}`,
-            apikey: SUPABASE_PUBLISHABLE_KEY,
-          },
-          body: JSON.stringify({ action: 'send_v2_campaign' }),
-        });
-
-        const data = await resp.json();
-        if (!resp.ok || data.error) throw new Error(data.error || `HTTP ${resp.status}`);
-
-        (window as any).__v2BatchTotal += data.sent;
-        const progress = {
-          sent: (window as any).__v2BatchTotal,
-          remaining: data.remaining,
-        };
-        (window as any).__v2BatchProgress = progress;
-        setV2BatchProgress(progress);
-
-        if (data.complete || data.sent === 0) {
-          toast({
-            title: `All done! Sent ${(window as any).__v2BatchTotal} V2 emails`,
-            variant: 'success',
-          });
-          v2Cleanup();
-          return;
-        }
-
-        toast({
-          title: `Batch of ${data.sent} sent (${(window as any).__v2BatchTotal} total) — next batch in 10s...`,
-        });
-
-        (window as any).__v2BatchTimer = window.setTimeout(sendOneBatch, 10000);
-      } catch (err: any) {
-        toast({
-          title: `Batch error: ${err.message} — retrying in 15s...`,
-          variant: 'destructive',
-        });
-        (window as any).__v2BatchTimer = window.setTimeout(sendOneBatch, 15000);
-      }
-    };
-
-    const v2Cleanup = () => {
-      (window as any).__v2BatchRunning = false;
-      if ((window as any).__v2BatchTimer) {
-        window.clearTimeout((window as any).__v2BatchTimer);
-      }
-      setV2BatchSending(false);
-      setConfirmV2Send(false);
-      queryClient.invalidateQueries({ queryKey: ['admin-incomplete-signup-v2-stats'] });
-    };
-
-    sendOneBatch();
-  };
-
-  const stopV2BatchLoop = () => {
-    (window as any).__v2BatchStopped = true;
-    if ((window as any).__v2BatchTimer) {
-      window.clearTimeout((window as any).__v2BatchTimer);
-      toast({
-        title: `Stopped — sent ${(window as any).__v2BatchTotal || 0} V2 emails so far`,
-        variant: 'success',
-      });
-      (window as any).__v2BatchRunning = false;
-      setV2BatchSending(false);
-      queryClient.invalidateQueries({ queryKey: ['admin-incomplete-signup-v2-stats'] });
-    }
   };
 
   const getRoleBadge = (role: string | null) => {
@@ -471,238 +312,29 @@ export default function AdminIncompleteSignup() {
   return (
     <PullToRefresh
       onRefresh={async () => {
-        await refetch();
+        await Promise.all([refetchStats(), refetchEligible()]);
       }}
     >
       <div className="space-y-4 pb-20">
-        {/* ── V2 "Come Back" Campaign ──────────────────────────────── */}
+        {/* ── Header ── */}
         <div className="flex items-center justify-between">
           <div>
-            <h2 className="text-lg font-semibold flex items-center gap-2">
-              <Gift className="h-5 w-5 text-green-400" />
-              V2 — Come Back Campaign
+            <h2 className="text-xl font-bold flex items-center gap-2.5">
+              <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-red-500/20 to-orange-500/20 flex items-center justify-center">
+                <CreditCard className="h-5 w-5 text-red-400" />
+              </div>
+              Card Abandoners
             </h2>
-            <p className="text-sm text-white">
-              All abandoned signups — "you were put off by the card deets"
+            <p className="text-sm text-white mt-1">
+              {stats?.totalAbandoned || 91} people who bailed at the card screen
             </p>
           </div>
           <Button
             variant="outline"
             size="sm"
-            onClick={() => refetchV2()}
-            className="gap-2 h-11 touch-manipulation"
-          >
-            <RefreshCw className="h-4 w-4" />
-            <span className="hidden sm:inline">Refresh</span>
-          </Button>
-        </div>
-
-        {/* V2 Stats — 3 cards */}
-        <div className="grid grid-cols-3 gap-2">
-          {[
-            {
-              label: 'Eligible',
-              value: v2Stats?.totalEligible || 0,
-              icon: Users,
-              colour: 'text-green-400',
-              bg: 'from-green-500/10 to-emerald-500/5',
-              border: 'border-green-500/20',
-            },
-            {
-              label: 'Sent',
-              value: v2Stats?.sent || 0,
-              icon: Mail,
-              colour: 'text-blue-400',
-              bg: 'from-blue-500/10 to-cyan-500/5',
-              border: 'border-blue-500/20',
-            },
-            {
-              label: 'Converted',
-              value: v2Stats?.conversions || 0,
-              icon: TrendingUp,
-              colour: 'text-amber-400',
-              bg: 'from-amber-500/10 to-yellow-500/5',
-              border: 'border-amber-500/20',
-            },
-          ].map((s) => (
-            <Card key={s.label} className={`bg-gradient-to-br ${s.bg} ${s.border}`}>
-              <CardContent className="p-2.5 sm:p-3 text-center">
-                <s.icon className={`h-4 w-4 ${s.colour} mx-auto mb-1`} />
-                <p className="text-lg sm:text-xl font-bold">
-                  {v2Stats ? s.value.toLocaleString() : '...'}
-                </p>
-                <p className="text-[10px] sm:text-xs text-white">{s.label}</p>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
-
-        {/* V2 Controls */}
-        <Card className="border-green-500/30 bg-gradient-to-br from-green-500/5 to-emerald-500/5">
-          <CardHeader className="pb-2">
-            <CardTitle className="text-sm flex items-center justify-between">
-              <span className="flex items-center gap-2">
-                <Send className="h-4 w-4 text-green-400" />
-                V2 Campaign Controls
-              </span>
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={() => setShowV2Test(!showV2Test)}
-                className="gap-1.5 h-9 touch-manipulation text-green-400 border-green-400/30 hover:bg-green-500/10"
-              >
-                <TestTube className="h-3.5 w-3.5" />
-                Test
-              </Button>
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-3">
-            {/* Email preview */}
-            <div className="p-3 rounded-xl bg-muted/50 border border-border/50 space-y-1.5">
-              <p className="text-xs text-white font-semibold">Email Preview</p>
-              <p className="text-xs text-green-400 font-medium">
-                Subject: Your Elec-Mate account — here's what you're missing
-              </p>
-              <p className="text-xs text-white">
-                From: Andrew at Elec-Mate &lt;founder@elec-mate.com&gt;
-              </p>
-              <p className="text-xs text-white">
-                Opening: "You came to sign up but were put off by the card deets..." · 7-day free
-                trial · Cancel anytime · V5-style feature sections
-              </p>
-            </div>
-
-            {/* Test email */}
-            {showV2Test && (
-              <div className="p-3 rounded-xl bg-green-500/10 border border-green-500/20 space-y-2">
-                <p className="text-xs text-green-400 font-semibold">Send V2 Test Email</p>
-                <div className="flex gap-2">
-                  <Input
-                    type="email"
-                    value={v2TestEmail}
-                    onChange={(e) => setV2TestEmail(e.target.value)}
-                    placeholder="your@email.com"
-                    className="h-11 text-base touch-manipulation flex-1"
-                  />
-                  <Button
-                    onClick={() => v2TestEmail && sendV2TestMutation.mutate(v2TestEmail)}
-                    disabled={!v2TestEmail || sendV2TestMutation.isPending}
-                    className="h-11 px-4 touch-manipulation bg-green-500 hover:bg-green-600"
-                  >
-                    {sendV2TestMutation.isPending ? (
-                      <Loader2 className="h-4 w-4 animate-spin" />
-                    ) : (
-                      <Send className="h-4 w-4" />
-                    )}
-                  </Button>
-                </div>
-              </div>
-            )}
-
-            {/* Batch progress */}
-            {v2BatchSending && (
-              <div className="p-3 rounded-xl bg-green-500/10 border border-green-500/20 space-y-2">
-                <div className="flex items-center justify-between text-sm">
-                  <span className="flex items-center gap-2 text-green-400 font-semibold">
-                    <Loader2 className="h-4 w-4 animate-spin" />
-                    Sending...
-                  </span>
-                  <span className="text-white">
-                    {v2BatchProgress.sent} sent · {v2BatchProgress.remaining} left
-                  </span>
-                </div>
-                <div className="w-full h-3 bg-muted rounded-full overflow-hidden">
-                  <div
-                    className="h-full bg-gradient-to-r from-green-500 to-emerald-500 rounded-full transition-all duration-500"
-                    style={{
-                      width: `${
-                        v2BatchProgress.sent + v2BatchProgress.remaining > 0
-                          ? (v2BatchProgress.sent /
-                              (v2BatchProgress.sent + v2BatchProgress.remaining)) *
-                            100
-                          : 0
-                      }%`,
-                    }}
-                  />
-                </div>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  className="w-full h-9 touch-manipulation text-red-400 border-red-500/30 hover:bg-red-500/10 gap-1.5"
-                  onClick={stopV2BatchLoop}
-                >
-                  <Square className="h-3 w-3 fill-current" />
-                  Stop Sending
-                </Button>
-              </div>
-            )}
-
-            {/* Send all button */}
-            {!v2BatchSending && (v2Stats?.totalEligible || 0) > 0 && (
-              <div className="pt-1">
-                <Button
-                  onClick={() => setConfirmV2Send(true)}
-                  className="w-full h-12 touch-manipulation text-sm font-bold bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 text-white rounded-xl gap-2"
-                >
-                  <Send className="h-4 w-4" />
-                  Send to All Eligible ({v2Stats?.totalEligible || 0})
-                </Button>
-                <p className="text-[10px] text-white text-center mt-1">
-                  Sends in batches of 10 · Excludes subscribed users
-                </p>
-              </div>
-            )}
-          </CardContent>
-        </Card>
-
-        {/* Confirm V2 Send Dialog */}
-        <AlertDialog open={confirmV2Send} onOpenChange={setConfirmV2Send}>
-          <AlertDialogContent className="max-w-[calc(100vw-2rem)] sm:max-w-lg rounded-2xl p-5 sm:p-6">
-            <AlertDialogHeader className="space-y-3">
-              <AlertDialogTitle className="text-base sm:text-lg leading-tight">
-                Send V2 "Come Back" email to {v2Stats?.totalEligible || 0} users?
-              </AlertDialogTitle>
-              <AlertDialogDescription className="text-sm leading-relaxed">
-                This sends the new V2 email to all abandoned signups who haven't received it yet.
-                Subscribed users are excluded. Sends in batches of 10. You can stop at any time.
-              </AlertDialogDescription>
-            </AlertDialogHeader>
-            <AlertDialogFooter className="flex-col-reverse sm:flex-row gap-2 sm:gap-2 pt-2">
-              <AlertDialogCancel className="h-12 sm:h-11 touch-manipulation text-base sm:text-sm w-full sm:w-auto mt-0">
-                Cancel
-              </AlertDialogCancel>
-              <AlertDialogAction
-                onClick={() => {
-                  setConfirmV2Send(false);
-                  window.setTimeout(startV2BatchLoop, 200);
-                }}
-                className="h-12 sm:h-11 touch-manipulation text-base sm:text-sm bg-green-500 hover:bg-green-600 text-white font-semibold w-full sm:w-auto"
-              >
-                <Send className="h-4 w-4 mr-2" />
-                Start Sending
-              </AlertDialogAction>
-            </AlertDialogFooter>
-          </AlertDialogContent>
-        </AlertDialog>
-
-        {/* ── Original V1 Campaign ──────────────────────────────────── */}
-
-        {/* Header */}
-        <div className="flex items-center justify-between">
-          <div>
-            <h2 className="text-lg font-semibold flex items-center gap-2">
-              <UserPlus className="h-5 w-5 text-orange-400" />
-              Abandoned Checkouts
-            </h2>
-            <p className="text-sm text-white">Users who signed up but didn't complete checkout</p>
-          </div>
-          <Button
-            variant="outline"
-            size="sm"
             onClick={() => {
-              refetch();
-              queryClient.invalidateQueries({ queryKey: ['admin-incomplete-signup-stats'] });
-              queryClient.invalidateQueries({ queryKey: ['admin-incomplete-signup-sent'] });
+              invalidateAll();
+              refetchEligible();
             }}
             className="gap-2 h-11 touch-manipulation"
           >
@@ -711,20 +343,28 @@ export default function AdminIncompleteSignup() {
           </Button>
         </div>
 
-        {/* Stats Cards */}
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+        {/* ── Stats Strip ── */}
+        <div className="grid grid-cols-4 gap-2">
           {[
+            {
+              label: 'Total',
+              value: stats?.totalAbandoned || 0,
+              icon: Users,
+              colour: 'text-white',
+              bg: 'from-white/5 to-white/[0.02]',
+              border: 'border-white/10',
+            },
             {
               label: 'Eligible',
               value: stats?.totalEligible || 0,
-              icon: Users,
-              colour: 'text-orange-400',
-              bg: 'from-orange-500/10 to-red-500/5',
-              border: 'border-orange-500/20',
+              icon: Target,
+              colour: 'text-red-400',
+              bg: 'from-red-500/10 to-orange-500/5',
+              border: 'border-red-500/20',
             },
             {
               label: 'Sent',
-              value: stats?.offersSent || 0,
+              value: stats?.sent || 0,
               icon: Mail,
               colour: 'text-blue-400',
               bg: 'from-blue-500/10 to-cyan-500/5',
@@ -733,30 +373,17 @@ export default function AdminIncompleteSignup() {
             {
               label: 'Converted',
               value: stats?.conversions || 0,
-              icon: TrendingUp,
+              icon: CheckCircle,
               colour: 'text-emerald-400',
               bg: 'from-emerald-500/10 to-green-500/5',
               border: 'border-emerald-500/20',
             },
-            {
-              label: 'Conv. Rate',
-              value: `${stats?.conversionRate || 0}%`,
-              icon: CheckCircle,
-              colour: 'text-green-400',
-              bg: 'from-green-500/10 to-emerald-500/5',
-              border: 'border-green-500/20',
-              isString: true,
-            },
           ].map((s) => (
             <Card key={s.label} className={`bg-gradient-to-br ${s.bg} ${s.border}`}>
-              <CardContent className="p-2.5 sm:p-3 text-center">
+              <CardContent className="p-2 sm:p-3 text-center">
                 <s.icon className={`h-4 w-4 ${s.colour} mx-auto mb-1`} />
                 <p className="text-lg sm:text-xl font-bold">
-                  {statsLoading
-                    ? '...'
-                    : typeof s.value === 'string'
-                      ? s.value
-                      : s.value.toLocaleString()}
+                  {stats ? s.value.toLocaleString() : '...'}
                 </p>
                 <p className="text-[10px] sm:text-xs text-white">{s.label}</p>
               </CardContent>
@@ -764,13 +391,13 @@ export default function AdminIncompleteSignup() {
           ))}
         </div>
 
-        {/* Campaign Controls */}
-        <Card className="border-orange-500/30 bg-gradient-to-br from-orange-500/5 to-red-500/5">
+        {/* ── Email Preview Card ── */}
+        <Card className="border-red-500/30 bg-gradient-to-br from-red-500/5 to-orange-500/5">
           <CardHeader className="pb-2">
             <CardTitle className="text-sm flex items-center justify-between">
               <span className="flex items-center gap-2">
-                <Send className="h-4 w-4 text-orange-400" />
-                Campaign Controls
+                <MailWarning className="h-4 w-4 text-red-400" />
+                V3 — "Card Deets" Campaign
               </span>
               <Button
                 variant="outline"
@@ -784,12 +411,33 @@ export default function AdminIncompleteSignup() {
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-3">
-            {/* Test email section */}
+            {/* Email preview */}
+            <div className="p-3 rounded-xl bg-muted/50 border border-border/50 space-y-2">
+              <div className="flex items-center gap-2">
+                <ShieldCheck className="h-4 w-4 text-green-400 shrink-0" />
+                <p className="text-xs text-white font-semibold">New Email — Addresses Card Fear</p>
+              </div>
+              <p className="text-xs text-red-400 font-medium">
+                Subject: You got to the card bit and thought 'nah' — fair enough
+              </p>
+              <p className="text-xs text-white">
+                From: Andrew at Elec-Mate &lt;founder@elec-mate.com&gt;
+              </p>
+              <div className="text-xs text-white space-y-1 pt-1 border-t border-border/30">
+                <p>
+                  Opens with empathy ("91 electricians walked away") then addresses the card fear
+                  head-on — explains WHY the card is needed and exactly what happens.
+                </p>
+                <p>Features: certs, RAMS, quotes, job book, regs — all practical.</p>
+                <p>One CTA: "Start Your Free Trial — No Charge for 7 Days"</p>
+                <p>Ends with P.S. "last email you'll get from me" — urgency.</p>
+              </div>
+            </div>
+
+            {/* Test email */}
             {showTestEmail && (
               <div className="p-3 rounded-xl bg-yellow-500/10 border border-yellow-500/20 space-y-2">
-                <p className="text-xs text-yellow-400 font-semibold">
-                  Send Test Email (Electrician template)
-                </p>
+                <p className="text-xs text-yellow-400 font-semibold">Send V3 Test Email</p>
                 <div className="flex gap-2">
                   <Input
                     type="email"
@@ -799,11 +447,11 @@ export default function AdminIncompleteSignup() {
                     className="h-11 text-base touch-manipulation flex-1"
                   />
                   <Button
-                    onClick={() => testEmail && sendTestMutation.mutate(testEmail)}
-                    disabled={!testEmail || sendTestMutation.isPending}
+                    onClick={sendTest}
+                    disabled={!testEmail || testSending}
                     className="h-11 px-4 touch-manipulation bg-yellow-500 hover:bg-yellow-600"
                   >
-                    {sendTestMutation.isPending ? (
+                    {testSending ? (
                       <Loader2 className="h-4 w-4 animate-spin" />
                     ) : (
                       <Send className="h-4 w-4" />
@@ -813,63 +461,79 @@ export default function AdminIncompleteSignup() {
               </div>
             )}
 
-            {/* Manual email */}
-            <div className="flex items-center gap-2">
-              <Input
-                type="email"
-                value={manualEmail}
-                onChange={(e) => setManualEmail(e.target.value)}
-                placeholder="Send to any email..."
-                className="h-11 text-base touch-manipulation flex-1"
-              />
-              <Button
-                onClick={() => manualEmail && sendManualMutation.mutate(manualEmail)}
-                disabled={!manualEmail || sendManualMutation.isPending}
-                className="h-11 px-4 touch-manipulation bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 text-black shrink-0"
-              >
-                {sendManualMutation.isPending ? (
-                  <Loader2 className="h-4 w-4 animate-spin" />
-                ) : (
-                  <Send className="h-4 w-4" />
-                )}
-              </Button>
-            </div>
-
             {/* Batch progress */}
             {batchSending && (
-              <div className="p-3 rounded-xl bg-orange-500/10 border border-orange-500/20 space-y-2">
+              <div className="p-3 rounded-xl bg-red-500/10 border border-red-500/20 space-y-2">
                 <div className="flex items-center justify-between text-sm">
-                  <span className="flex items-center gap-2 text-orange-400 font-semibold">
+                  <span className="flex items-center gap-2 text-red-400 font-semibold">
                     <Loader2 className="h-4 w-4 animate-spin" />
-                    Sending batch {batchProgress.batch}/{batchProgress.totalBatches}...
+                    Sending...
                   </span>
                   <span className="text-white">
-                    {batchProgress.sent}/{batchProgress.total}
+                    {batchProgress.sent} sent · {batchProgress.remaining} left
                   </span>
                 </div>
                 <div className="w-full h-3 bg-muted rounded-full overflow-hidden">
                   <div
-                    className="h-full bg-gradient-to-r from-orange-500 to-red-500 rounded-full transition-all duration-500"
+                    className="h-full bg-gradient-to-r from-red-500 to-orange-500 rounded-full transition-all duration-500"
                     style={{
-                      width: `${batchProgress.total > 0 ? (batchProgress.sent / batchProgress.total) * 100 : 0}%`,
+                      width: `${
+                        batchProgress.sent + batchProgress.remaining > 0
+                          ? (batchProgress.sent /
+                              (batchProgress.sent + batchProgress.remaining)) *
+                            100
+                          : 0
+                      }%`,
                     }}
                   />
                 </div>
-                {batchProgress.failed > 0 && (
-                  <p className="text-xs text-red-400">{batchProgress.failed} failed</p>
-                )}
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="w-full h-9 touch-manipulation text-red-400 border-red-500/30 hover:bg-red-500/10 gap-1.5"
+                  onClick={stopBatchLoop}
+                >
+                  <Square className="h-3 w-3 fill-current" />
+                  Stop Sending
+                </Button>
+              </div>
+            )}
+
+            {/* Send all button */}
+            {!batchSending && (stats?.totalEligible || 0) > 0 && (
+              <div className="pt-1">
+                <Button
+                  onClick={() => setConfirmSend(true)}
+                  className="w-full h-12 touch-manipulation text-sm font-bold bg-gradient-to-r from-red-500 to-orange-500 hover:from-red-600 hover:to-orange-600 text-white rounded-xl gap-2"
+                >
+                  <Send className="h-4 w-4" />
+                  Send to All Eligible ({stats?.totalEligible || 0})
+                </Button>
+                <p className="text-[10px] text-white text-center mt-1">
+                  Sends in batches of 10 · Excludes subscribed users · Reply-to: founder@elec-mate.com
+                </p>
+              </div>
+            )}
+
+            {!batchSending && (stats?.totalEligible || 0) === 0 && (stats?.sent || 0) > 0 && (
+              <div className="p-3 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-center">
+                <CheckCheck className="h-5 w-5 text-emerald-400 mx-auto mb-1" />
+                <p className="text-sm text-emerald-400 font-semibold">All emails sent!</p>
+                <p className="text-xs text-white mt-1">
+                  {stats?.sent} sent · {stats?.conversions} converted · {stats?.conversionRate}% rate
+                </p>
               </div>
             )}
           </CardContent>
         </Card>
 
-        {/* Tab switcher */}
+        {/* ── Tab Switcher ── */}
         <div className="flex gap-1 p-1 bg-muted/50 rounded-xl border border-border">
           <Button
             variant={activeTab === 'eligible' ? 'default' : 'ghost'}
             size="sm"
             onClick={() => setActiveTab('eligible')}
-            className={`flex-1 h-10 touch-manipulation text-sm gap-1.5 ${activeTab === 'eligible' ? 'bg-orange-500 text-black hover:bg-orange-600' : ''}`}
+            className={`flex-1 h-10 touch-manipulation text-sm gap-1.5 ${activeTab === 'eligible' ? 'bg-red-500 text-white hover:bg-red-600' : ''}`}
           >
             <Target className="h-3.5 w-3.5" />
             Eligible ({filteredUsers.length})
@@ -878,14 +542,14 @@ export default function AdminIncompleteSignup() {
             variant={activeTab === 'sent' ? 'default' : 'ghost'}
             size="sm"
             onClick={() => setActiveTab('sent')}
-            className={`flex-1 h-10 touch-manipulation text-sm gap-1.5 ${activeTab === 'sent' ? 'bg-blue-500 text-black hover:bg-blue-600' : ''}`}
+            className={`flex-1 h-10 touch-manipulation text-sm gap-1.5 ${activeTab === 'sent' ? 'bg-blue-500 text-white hover:bg-blue-600' : ''}`}
           >
             <Mail className="h-3.5 w-3.5" />
             Sent ({sentUsers?.length || 0})
           </Button>
         </div>
 
-        {/* Eligible Users Tab */}
+        {/* ── Eligible Users Tab ── */}
         {activeTab === 'eligible' && (
           <Card>
             <CardContent className="pt-4 pb-4 px-3 sm:px-4">
@@ -905,22 +569,12 @@ export default function AdminIncompleteSignup() {
                         }
                         onCheckedChange={toggleSelectAll}
                         disabled={batchSending}
-                        className="border-white/40 data-[state=checked]:bg-orange-500 data-[state=checked]:border-orange-500"
+                        className="border-white/40 data-[state=checked]:bg-red-500 data-[state=checked]:border-red-500"
                       />
                       <span className="text-sm text-white">
                         {selectedUsers.size > 0 ? `${selectedUsers.size} selected` : 'Select all'}
                       </span>
                     </div>
-                    {selectedUsers.size > 0 && !batchSending && (
-                      <Button
-                        size="sm"
-                        onClick={handleSendSelected}
-                        className="gap-2 h-11 touch-manipulation bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 text-black"
-                      >
-                        <Send className="h-4 w-4" />
-                        Send to {selectedUsers.size}
-                      </Button>
-                    )}
                   </div>
                 )}
 
@@ -937,7 +591,7 @@ export default function AdminIncompleteSignup() {
                     description={
                       search
                         ? 'No users match your search.'
-                        : 'All eligible users have been sent the email.'
+                        : 'All card abandoners have been sent the V3 email.'
                     }
                   />
                 ) : (
@@ -951,7 +605,7 @@ export default function AdminIncompleteSignup() {
                           checked={selectedUsers.has(u.id)}
                           onCheckedChange={() => toggleUserSelection(u.id)}
                           onClick={(e) => e.stopPropagation()}
-                          className="border-white/40 data-[state=checked]:bg-orange-500 data-[state=checked]:border-orange-500"
+                          className="border-white/40 data-[state=checked]:bg-red-500 data-[state=checked]:border-red-500"
                         />
                         <div
                           className="flex-1 min-w-0 cursor-pointer"
@@ -989,7 +643,7 @@ export default function AdminIncompleteSignup() {
           </Card>
         )}
 
-        {/* Sent Tab */}
+        {/* ── Sent Tab ── */}
         {activeTab === 'sent' && (
           <Card>
             <CardContent className="pt-4 pb-4 px-3 sm:px-4">
@@ -1002,8 +656,8 @@ export default function AdminIncompleteSignup() {
               ) : !sentUsers || sentUsers.length === 0 ? (
                 <AdminEmptyState
                   icon={Mail}
-                  title="No emails sent yet"
-                  description="Send abandoned checkout emails to see tracking data here."
+                  title="No V3 emails sent yet"
+                  description="Send the V3 'card deets' email to see tracking data here."
                 />
               ) : (
                 <div className="space-y-1.5">
@@ -1024,7 +678,7 @@ export default function AdminIncompleteSignup() {
                         </div>
                         <p className="text-xs text-white">
                           Sent{' '}
-                          {formatDistanceToNow(parseISO(u.incomplete_signup_sent_at), {
+                          {formatDistanceToNow(parseISO(u.incomplete_signup_v3_sent_at), {
                             addSuffix: true,
                           })}
                         </p>
@@ -1036,7 +690,7 @@ export default function AdminIncompleteSignup() {
                             Converted
                           </Badge>
                         ) : (
-                          <Badge className="bg-gray-500/20 text-white text-[10px] px-1.5 border-0">
+                          <Badge className="bg-white/10 text-white text-[10px] px-1.5 border-0">
                             Pending
                           </Badge>
                         )}
@@ -1049,17 +703,17 @@ export default function AdminIncompleteSignup() {
           </Card>
         )}
 
-        {/* User Detail Sheet */}
+        {/* ── User Detail Sheet ── */}
         <Sheet open={!!selectedUser} onOpenChange={() => setSelectedUser(null)}>
-          <SheetContent side="bottom" className="h-[70vh] rounded-t-2xl p-0">
+          <SheetContent side="bottom" className="h-[60vh] rounded-t-2xl p-0">
             <div className="flex flex-col h-full">
               <div className="flex justify-center pt-3 pb-2">
                 <div className="w-10 h-1 rounded-full bg-muted-foreground/30" />
               </div>
               <SheetHeader className="px-4 pb-4 border-b border-border">
                 <SheetTitle className="flex items-center gap-3">
-                  <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-orange-500/20 to-red-500/20 flex items-center justify-center">
-                    <User className="h-6 w-6 text-orange-400" />
+                  <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-red-500/20 to-orange-500/20 flex items-center justify-center">
+                    <User className="h-6 w-6 text-red-400" />
                   </div>
                   <div>
                     <p className="text-left">{selectedUser?.full_name || 'Unknown'}</p>
@@ -1069,13 +723,7 @@ export default function AdminIncompleteSignup() {
               </SheetHeader>
               <div className="flex-1 overflow-y-auto p-4 space-y-4">
                 <Card>
-                  <CardHeader className="pb-2">
-                    <CardTitle className="text-sm flex items-center gap-2">
-                      <Calendar className="h-4 w-4 text-blue-400" />
-                      Account Information
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent className="space-y-3">
+                  <CardContent className="p-4 space-y-3">
                     <div className="flex justify-between items-center">
                       <span className="text-sm text-white">Signed Up</span>
                       <span className="text-sm">
@@ -1089,48 +737,38 @@ export default function AdminIncompleteSignup() {
                     </div>
                     <div className="flex justify-between items-center">
                       <span className="text-sm text-white">Time Since Signup</span>
-                      <Badge variant="outline" className="text-orange-400">
+                      <Badge variant="outline" className="text-red-400">
                         {selectedUser?.created_at &&
                           formatDistanceToNow(parseISO(selectedUser.created_at), {
                             addSuffix: true,
                           })}
                       </Badge>
                     </div>
+                    <div className="flex justify-between items-center">
+                      <span className="text-sm text-white">Status</span>
+                      <Badge className="bg-red-500/20 text-red-400 border-0">
+                        <CreditCard className="h-3 w-3 mr-1" />
+                        Card Abandoned
+                      </Badge>
+                    </div>
                   </CardContent>
                 </Card>
-
-                <Button
-                  className="w-full h-12 touch-manipulation bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 text-black font-semibold"
-                  onClick={() => selectedUser && sendSingleMutation.mutate(selectedUser.id)}
-                  disabled={sendSingleMutation.isPending}
-                >
-                  {sendSingleMutation.isPending ? (
-                    <>
-                      <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                      Sending...
-                    </>
-                  ) : (
-                    <>
-                      <Mail className="h-4 w-4 mr-2" />
-                      Send Abandoned Checkout Email
-                    </>
-                  )}
-                </Button>
               </div>
             </div>
           </SheetContent>
         </Sheet>
 
-        {/* Confirm Send All Dialog */}
-        <AlertDialog open={confirmSendAll} onOpenChange={setConfirmSendAll}>
+        {/* ── Confirm Send Dialog ── */}
+        <AlertDialog open={confirmSend} onOpenChange={setConfirmSend}>
           <AlertDialogContent className="max-w-[calc(100vw-2rem)] sm:max-w-lg rounded-2xl p-5 sm:p-6">
             <AlertDialogHeader className="space-y-3">
               <AlertDialogTitle className="text-base sm:text-lg leading-tight">
-                Send to all {eligibleUsers?.length || 0} eligible users?
+                Send V3 "Card Deets" email to {stats?.totalEligible || 0} people?
               </AlertDialogTitle>
               <AlertDialogDescription className="text-sm leading-relaxed">
-                Sends the abandoned checkout email in batches of {BATCH_SIZE}. Each person only
-                receives one email. Role-specific templates will be used automatically.
+                This sends the new empathetic "you got to the card bit" email to all abandoned
+                checkout users who haven't received it yet. Sends in batches of 10. You can stop at
+                any time.
               </AlertDialogDescription>
             </AlertDialogHeader>
             <AlertDialogFooter className="flex-col-reverse sm:flex-row gap-2 sm:gap-2 pt-2">
@@ -1139,13 +777,13 @@ export default function AdminIncompleteSignup() {
               </AlertDialogCancel>
               <AlertDialogAction
                 onClick={() => {
-                  setConfirmSendAll(false);
-                  sendBatchedEmails(eligibleUsers?.map((u) => u.id) || []);
+                  setConfirmSend(false);
+                  window.setTimeout(startBatchLoop, 200);
                 }}
-                className="h-12 sm:h-11 touch-manipulation text-base sm:text-sm bg-orange-500 hover:bg-orange-600 text-black font-semibold w-full sm:w-auto"
+                className="h-12 sm:h-11 touch-manipulation text-base sm:text-sm bg-red-500 hover:bg-red-600 text-white font-semibold w-full sm:w-auto"
               >
                 <Send className="h-4 w-4 mr-2" />
-                Send to All ({eligibleUsers?.length || 0})
+                Send to All ({stats?.totalEligible || 0})
               </AlertDialogAction>
             </AlertDialogFooter>
           </AlertDialogContent>

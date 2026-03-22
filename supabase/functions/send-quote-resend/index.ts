@@ -394,7 +394,7 @@ const handler = async (req: Request): Promise<Response> => {
 
           <!-- Header -->
           <tr>
-            <td style="background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%); padding: 32px 24px; text-align: center;">
+            <td style="background-color: #1a1a1a; background-image: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%); padding: 32px 24px; text-align: center;">
               <h1 style="margin: 0; color: #FFD700; font-size: 26px; font-weight: 700;">⚡ ${companyName}</h1>
             </td>
           </tr>
@@ -414,7 +414,7 @@ const handler = async (req: Request): Promise<Response> => {
           <!-- Quote Card -->
           <tr>
             <td style="padding: 0 24px 24px;">
-              <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%); border-radius: 12px; border: 2px solid #e5e7eb;">
+              <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #f8f9fa; background-image: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%); border-radius: 12px; border: 2px solid #e5e7eb;">
                 <tr>
                   <td style="padding: 24px;">
                     <h2 style="margin: 0 0 16px; font-size: 28px; font-weight: 700; color: #1f2937;">Quote #${quoteNumber}</h2>
@@ -432,7 +432,7 @@ const handler = async (req: Request): Promise<Response> => {
           <!-- Total Amount -->
           <tr>
             <td style="padding: 0 24px 24px;">
-              <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%); border-left: 4px solid #FFD700; border-radius: 8px;">
+              <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #fffbeb; background-image: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%); border-left: 4px solid #FFD700; border-radius: 8px;">
                 <tr>
                   <td style="padding: 20px;">
                     <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
@@ -455,7 +455,7 @@ const handler = async (req: Request): Promise<Response> => {
               ? `
           <tr>
             <td style="padding: 0 24px 24px;">
-              <div style="background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%); color: #ffffff; text-align: center; padding: 16px 24px; border-radius: 10px; font-size: 16px; font-weight: 600;">
+              <div style="background-color: #3b82f6; background-image: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%); color: #ffffff; text-align: center; padding: 16px 24px; border-radius: 10px; font-size: 16px; font-weight: 600;">
                 📎 Quote PDF Attached
               </div>
               <p style="margin: 12px 0 0; text-align: center; font-size: 13px; color: #6b7280;">
@@ -476,12 +476,12 @@ const handler = async (req: Request): Promise<Response> => {
               <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
                 <tr>
                   <td style="padding-right: 8px; width: 50%;">
-                    <a href="${acceptUrl}" style="display: block; background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%); color: #ffffff; text-align: center; text-decoration: none; padding: 16px 12px; border-radius: 10px; font-size: 16px; font-weight: 600; box-shadow: 0 4px 12px rgba(34, 197, 94, 0.3);">
+                    <a href="${acceptUrl}" style="display: block; background-color: #22c55e; background-image: linear-gradient(135deg, #22c55e 0%, #16a34a 100%); color: #ffffff; text-align: center; text-decoration: none; padding: 16px 12px; border-radius: 10px; font-size: 16px; font-weight: 600;">
                       ✓ Accept & Sign
                     </a>
                   </td>
                   <td style="padding-left: 8px; width: 50%;">
-                    <a href="${rejectUrl}" style="display: block; background: linear-gradient(135deg, #6b7280 0%, #4b5563 100%); color: #ffffff; text-align: center; text-decoration: none; padding: 16px 12px; border-radius: 10px; font-size: 16px; font-weight: 600;">
+                    <a href="${rejectUrl}" style="display: block; background-color: #6b7280; background-image: linear-gradient(135deg, #6b7280 0%, #4b5563 100%); color: #ffffff; text-align: center; text-decoration: none; padding: 16px 12px; border-radius: 10px; font-size: 16px; font-weight: 600;">
                       ✗ Decline
                     </a>
                   </td>
@@ -526,7 +526,7 @@ const handler = async (req: Request): Promise<Response> => {
           </tr>
 
           <tr>
-            <td style="background: linear-gradient(135deg, #1a1a1a 0%, #0f0f0f 100%); padding: 28px 24px; text-align: center;">
+            <td style="background-color: #1a1a1a; background-image: linear-gradient(135deg, #1a1a1a 0%, #0f0f0f 100%); padding: 28px 24px; text-align: center;">
               <p style="margin: 0 0 8px; font-size: 16px; font-weight: 700; color: #FFD700;">⚡ Powered by ElecMate</p>
               <p style="margin: 0; font-size: 13px; color: #9ca3af;">Professional electrical contracting tools</p>
             </td>

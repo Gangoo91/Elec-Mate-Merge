@@ -177,6 +177,26 @@ serve(async (req) => {
     );
 
     if (customers.data.length === 0) {
+      // ELE-432: If the user has no Stripe customer but their profile shows an
+      // active subscription (set by RevenueCat webhook for native IAP), do NOT
+      // overwrite it. Return the existing profile state instead.
+      if (profileData?.subscribed) {
+        logger.info('No Stripe customer but profile.subscribed=true (likely IAP subscriber), preserving state', {
+          userId: user.id,
+          tier: profileData.subscription_tier,
+        });
+        return new Response(
+          JSON.stringify({
+            subscribed: true,
+            subscription_tier: profileData.subscription_tier,
+          }),
+          {
+            headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+            status: 200,
+          }
+        );
+      }
+
       logger.info('No customer found, updating unsubscribed state');
 
       try {

@@ -10,6 +10,7 @@ interface SentryEventContext {
   requestUrl?: string;
   requestMethod?: string;
   extra?: Record<string, unknown>;
+  tags?: Record<string, string>;
 }
 
 interface SentryEvent {
@@ -145,6 +146,7 @@ export async function captureException(
       tags: {
         'function.name': context.functionName,
         runtime: 'deno',
+        ...(context.tags || {}),
       },
       extra: {
         ...context.extra,
@@ -228,6 +230,7 @@ export async function captureMessage(
       tags: {
         'function.name': context.functionName,
         runtime: 'deno',
+        ...(context.tags || {}),
       },
       extra: context.extra,
     };

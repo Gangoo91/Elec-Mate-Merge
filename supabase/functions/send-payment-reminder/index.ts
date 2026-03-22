@@ -53,9 +53,16 @@ const handler = async (req: Request): Promise<Response> => {
       .single();
 
     if (fetchError || !invoice) {
-      console.error('Error fetching invoice:', fetchError);
       return new Response(JSON.stringify({ error: 'Invoice not found' }), {
         status: 404,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
+    }
+
+    // Guard: never send reminders for paid, cancelled, or deleted invoices
+    if (invoice.invoice_status === 'paid' || invoice.invoice_status === 'cancelled' || invoice.deleted_at) {
+      return new Response(JSON.stringify({ error: 'Invoice is not eligible for reminders', status: invoice.invoice_status }), {
+        status: 400,
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       });
     }

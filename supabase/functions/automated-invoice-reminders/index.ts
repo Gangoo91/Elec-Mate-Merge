@@ -67,7 +67,8 @@ serve(async (req: Request) => {
       .lt('invoice_due_date', today.toISOString())
       // Include if: already formally sent to client OR already flagged as overdue in the system
       // (overdue status means the system/user has already acknowledged it's past due)
-      .or('invoice_sent_at.not.is.null,invoice_status.eq.overdue');
+      .or('invoice_sent_at.not.is.null,invoice_status.eq.overdue')
+      .is('deleted_at', null);
 
     if (queryError) {
       console.error('Error fetching overdue invoices:', queryError);

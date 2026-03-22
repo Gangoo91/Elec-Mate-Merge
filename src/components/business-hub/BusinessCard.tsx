@@ -90,7 +90,7 @@ const BusinessCard = ({
           className={cn(
             'relative mt-0.5 leading-tight line-clamp-1',
             isHero ? 'text-[12px]' : 'text-[12px]',
-            isOverdue ? 'text-red-400 font-semibold' : isHero ? 'text-white/70' : 'text-white'
+            isOverdue ? 'text-red-400 font-semibold' : isHero ? 'text-white' : 'text-white'
           )}
         >
           {subtitle}

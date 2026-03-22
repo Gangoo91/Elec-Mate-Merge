@@ -13,13 +13,37 @@ import {
 import { Customer } from '@/hooks/inspection/useCustomers';
 import { cn } from '@/lib/utils';
 
+import { ReliabilityLevel } from '@/hooks/useCustomerPaymentStats';
+
 interface CustomerListRowProps {
   customer: Customer;
   onEdit: (customer: Customer) => void;
   onDelete: (id: string) => void;
   onStartCertificate: (customer: Customer) => void;
   onQuickNote: (customer: Customer) => void;
+  paymentReliability?: ReliabilityLevel | null;
 }
+
+const reliabilityBadgeConfig: Record<
+  Exclude<ReliabilityLevel, 'none'>,
+  { label: string; dotClass: string; badgeClass: string }
+> = {
+  good: {
+    label: 'Good',
+    dotClass: 'bg-emerald-400',
+    badgeClass: 'bg-emerald-500/15 border-emerald-500/30 text-emerald-400',
+  },
+  fair: {
+    label: 'Fair',
+    dotClass: 'bg-amber-400',
+    badgeClass: 'bg-amber-500/15 border-amber-500/30 text-amber-400',
+  },
+  poor: {
+    label: 'Late',
+    dotClass: 'bg-red-400',
+    badgeClass: 'bg-red-500/15 border-red-500/30 text-red-400',
+  },
+};
 
 // Get gradient based on customer name initial
 const getAvatarGradient = (name: string): string => {
@@ -53,6 +77,7 @@ export const CustomerListRow = ({
   onDelete,
   onStartCertificate,
   onQuickNote,
+  paymentReliability,
 }: CustomerListRowProps) => {
   const navigate = useNavigate();
 
@@ -134,6 +159,16 @@ export const CustomerListRow = ({
             >
               <Home className="w-3 h-3 mr-0.5" />
               {customer.propertyCount}
+            </Badge>
+          )}
+          {paymentReliability && paymentReliability !== 'none' && (
+            <Badge
+              className={`text-[10px] px-1.5 py-0 h-5 flex-shrink-0 border ${reliabilityBadgeConfig[paymentReliability].badgeClass}`}
+            >
+              <span
+                className={`w-1.5 h-1.5 rounded-full mr-1 ${reliabilityBadgeConfig[paymentReliability].dotClass}`}
+              />
+              {reliabilityBadgeConfig[paymentReliability].label}
             </Badge>
           )}
         </div>

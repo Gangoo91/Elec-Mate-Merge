@@ -311,6 +311,54 @@ const BoardSetupCard: React.FC<BoardSetupCardProps> = ({
             />
           </div>
         </div>
+
+        {/* Main Switch Details */}
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+          <div className="space-y-1.5">
+            <Label className="text-xs font-medium text-white/60">Main Switch BS EN</Label>
+            <Input
+              value={board.mainSwitchBsEn || ''}
+              onChange={(e) => onUpdate('mainSwitchBsEn', e.target.value)}
+              placeholder="e.g. 61008"
+              className="h-11 touch-manipulation bg-white/5 border-white/10 text-white placeholder:text-white/30 focus:border-elec-yellow/50"
+            />
+          </div>
+          <div className="space-y-1.5">
+            <Label className="text-xs font-medium text-white/60">Main Switch Type</Label>
+            <Input
+              value={board.mainSwitchType || ''}
+              onChange={(e) => onUpdate('mainSwitchType', e.target.value)}
+              placeholder="e.g. Isolator"
+              className="h-11 touch-manipulation bg-white/5 border-white/10 text-white placeholder:text-white/30 focus:border-elec-yellow/50"
+            />
+          </div>
+          <div className="space-y-1.5">
+            <Label className="text-xs font-medium text-white/60">Rating (A)</Label>
+            <Input
+              value={board.mainSwitchRating || ''}
+              onChange={(e) => onUpdate('mainSwitchRating', e.target.value)}
+              placeholder="e.g. 100"
+              className="h-11 touch-manipulation bg-white/5 border-white/10 text-white placeholder:text-white/30 focus:border-elec-yellow/50"
+            />
+          </div>
+          <div className="space-y-1.5">
+            <Label className="text-xs font-medium text-white/60">Poles</Label>
+            <Select
+              value={board.mainSwitchPoles || ''}
+              onValueChange={(value) => onUpdate('mainSwitchPoles', value)}
+            >
+              <SelectTrigger className="h-11 touch-manipulation bg-white/5 border-white/10 text-white focus:border-elec-yellow/50">
+                <SelectValue placeholder="Select..." />
+              </SelectTrigger>
+              <SelectContent className="bg-card border-white/10">
+                <SelectItem value="SP" className="text-white">SP</SelectItem>
+                <SelectItem value="DP" className="text-white">DP</SelectItem>
+                <SelectItem value="TP" className="text-white">TP</SelectItem>
+                <SelectItem value="TPN" className="text-white">TPN</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+        </div>
       </CardContent>
     </Card>
   );

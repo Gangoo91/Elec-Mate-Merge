@@ -224,6 +224,23 @@ const drawFormRow = (
   return y + 7;
 };
 
+// Draw form row only if value is present (skip empty optional fields from PDF)
+const drawFieldIfPresent = (
+  pdf: jsPDF,
+  label: string,
+  value: any,
+  x: number,
+  y: number,
+  labelWidth: number = 45,
+  valueWidth: number = 60
+): { yPos: number; drawn: boolean } => {
+  const strVal = value != null ? String(value).trim() : '';
+  if (strVal === '' || strVal === 'mm²' || strVal === 'mm2' || strVal === ' mm²' || strVal === ' mm2') {
+    return { yPos: y, drawn: false };
+  }
+  return { yPos: drawFormRow(pdf, label, value, x, y, labelWidth, valueWidth), drawn: true };
+};
+
 // Fetch photos for observations
 const fetchObservationPhotos = async (observationId: string): Promise<string[]> => {
   try {
@@ -523,10 +540,21 @@ export const exportCompleteEICRToPDF = async (
   pdf.setFontSize(18);
   pdf.text('CONDITION REPORT', pageWidth / 2, yPos + 12, { align: 'center' });
 
-  // Yellow accent line
-  pdf.setDrawColor(255, 204, 0);
+  // Company name below title (if available)
+  if (sanitizedFormData.companyName) {
+    pdf.setFontSize(11);
+    pdf.setFont(getFont(), 'normal');
+    pdf.setTextColor(80, 80, 80);
+    pdf.text(sanitizedFormData.companyName, pageWidth / 2, yPos + 18, { align: 'center' });
+    pdf.setTextColor(0, 0, 0);
+  }
+
+  // Accent line (parameterised colour for future branding)
+  const accentColour: [number, number, number] = sanitizedFormData.accentColour || [255, 204, 0];
+  pdf.setDrawColor(...accentColour);
   pdf.setLineWidth(2);
-  pdf.line(margin, yPos + 16, pageWidth - margin, yPos + 16);
+  const accentLineY = sanitizedFormData.companyName ? yPos + 22 : yPos + 16;
+  pdf.line(margin, accentLineY, pageWidth - margin, accentLineY);
 
   // Certificate number box
   pdf.setDrawColor(0, 0, 0);
@@ -539,7 +567,7 @@ export const exportCompleteEICRToPDF = async (
   pdf.setFont(getFont(), 'normal');
   pdf.text(certificateId, pageWidth - 53, yPos + 11);
 
-  yPos += 25;
+  yPos += sanitizedFormData.companyName ? 31 : 25;
 
   // CLIENT DETAILS SECTION
   yPos = drawSectionHeader(pdf, 'CLIENT DETAILS', yPos, pageWidth);
@@ -548,11 +576,15 @@ export const exportCompleteEICRToPDF = async (
   let col2X = pageWidth / 2 + 5;
 
   yPos = drawFormRow(pdf, 'Name:', sanitizedFormData.clientName || '', col1X, yPos, 30, 55);
-  yPos -= 7;
-  yPos = drawFormRow(pdf, 'Email:', sanitizedFormData.clientEmail || '', col2X, yPos, 30, 50);
+  {
+    const emailResult = drawFieldIfPresent(pdf, 'Email:', sanitizedFormData.clientEmail, col2X, yPos - 7, 30, 50);
+    if (emailResult.drawn) yPos = emailResult.yPos;
+  }
 
-  yPos = drawFormRow(pdf, 'Phone:', sanitizedFormData.clientPhone || '', col1X, yPos, 30, 40);
-  yPos += 0;
+  {
+    const phoneResult = drawFieldIfPresent(pdf, 'Phone:', sanitizedFormData.clientPhone, col1X, yPos, 30, 40);
+    if (phoneResult.drawn) yPos = phoneResult.yPos;
+  }
 
   yPos = drawFormRow(pdf, 'Address:', sanitizedFormData.clientAddress || '', col1X, yPos, 30, 55);
   yPos -= 7;
@@ -776,34 +808,38 @@ export const exportCompleteEICRToPDF = async (
 
   yPos += 8;
 
-  // DNO / Supply Authority Details
-  yPos = drawFormRow(pdf, 'DNO:', sanitizedFormData.dnoName || '', col1X, yPos, 20, 50);
-  yPos -= 7;
-  yPos = drawFormRow(pdf, 'MPAN:', sanitizedFormData.mpan || '', col2X, yPos, 25, 55);
+  // DNO / Supply Authority Details (optional fields — skip if empty)
+  {
+    const dnoResult = drawFieldIfPresent(pdf, 'DNO:', sanitizedFormData.dnoName, col1X, yPos, 20, 50);
+    const mpanResult = drawFieldIfPresent(pdf, 'MPAN:', sanitizedFormData.mpan, col2X, dnoResult.drawn ? yPos : yPos, 25, 55);
+    if (dnoResult.drawn || mpanResult.drawn) {
+      if (dnoResult.drawn && mpanResult.drawn) {
+        yPos = Math.max(dnoResult.yPos, mpanResult.yPos);
+      } else if (dnoResult.drawn) {
+        yPos = dnoResult.yPos;
+      } else {
+        yPos = mpanResult.yPos;
+      }
+    }
+  }
 
-  yPos = drawFormRow(
-    pdf,
-    'Cutout Location:',
-    sanitizedFormData.cutoutLocation || '',
-    col1X,
-    yPos,
-    38,
-    45
-  );
-  yPos -= 7;
-  yPos = drawFormRow(
-    pdf,
-    'Service Entry:',
-    sanitizedFormData.serviceEntry || '',
-    col2X,
-    yPos,
-    35,
-    45
-  );
+  {
+    const cutoutResult = drawFieldIfPresent(pdf, 'Cutout Location:', sanitizedFormData.cutoutLocation, col1X, yPos, 38, 45);
+    const serviceResult = drawFieldIfPresent(pdf, 'Service Entry:', sanitizedFormData.serviceEntry, col2X, cutoutResult.drawn ? yPos : yPos, 35, 45);
+    if (cutoutResult.drawn || serviceResult.drawn) {
+      if (cutoutResult.drawn && serviceResult.drawn) {
+        yPos = Math.max(cutoutResult.yPos, serviceResult.yPos);
+      } else if (cutoutResult.drawn) {
+        yPos = cutoutResult.yPos;
+      } else {
+        yPos = serviceResult.yPos;
+      }
+    }
+  }
 
   yPos += 3;
 
-  // Supply details in two columns
+  // Supply details in two columns (required — always show with defaults)
   yPos = drawFormRow(
     pdf,
     'Nominal Voltage U0/U*:',
@@ -825,105 +861,70 @@ export const exportCompleteEICRToPDF = async (
   );
 
   yPos = drawFormRow(pdf, 'Phase:', sanitizedFormData.phases || 'Single', col1X, yPos, 30, 25);
-  yPos -= 7;
-  yPos = drawFormRow(pdf, 'Supply PME:', sanitizedFormData.supplyPME || '', col2X, yPos, 35, 25);
+  {
+    const pmeResult = drawFieldIfPresent(pdf, 'Supply PME:', sanitizedFormData.supplyPME, col2X, yPos - 7, 35, 25);
+    if (pmeResult.drawn) yPos = pmeResult.yPos;
+  }
 
-  yPos = drawFormRow(
-    pdf,
-    'Earth Electrode Type:',
-    sanitizedFormData.earthElectrodeType || '',
-    col1X,
-    yPos,
-    45,
-    40
-  );
+  {
+    const electrodeResult = drawFieldIfPresent(pdf, 'Earth Electrode Type:', sanitizedFormData.earthElectrodeType, col1X, yPos, 45, 40);
+    if (electrodeResult.drawn) yPos = electrodeResult.yPos;
+  }
   yPos += 3;
 
-  // Main Protective Device
-  yPos = drawFormRow(
-    pdf,
-    'Main Protective Device:',
-    sanitizedFormData.mainProtectiveDevice || '',
-    col1X,
-    yPos,
-    48,
-    40
-  );
-  yPos -= 7;
-  yPos = drawFormRow(
-    pdf,
-    'RCD Main Switch:',
-    sanitizedFormData.rcdMainSwitch || '',
-    col2X,
-    yPos,
-    40,
-    25
-  );
-  yPos -= 7;
-  yPos = drawFormRow(
-    pdf,
-    'RCD Rating:',
-    sanitizedFormData.rcdRating || '',
-    col2X + 70,
-    yPos,
-    30,
-    20
-  );
+  // Main Protective Device (optional fields)
+  {
+    const mpdResult = drawFieldIfPresent(pdf, 'Main Protective Device:', sanitizedFormData.mainProtectiveDevice, col1X, yPos, 48, 40);
+    if (mpdResult.drawn) {
+      const rcdSwitchResult = drawFieldIfPresent(pdf, 'RCD Main Switch:', sanitizedFormData.rcdMainSwitch, col2X, yPos, 40, 25);
+      const rcdRatingY = rcdSwitchResult.drawn ? yPos : yPos;
+      const rcdRatingResult = drawFieldIfPresent(pdf, 'RCD Rating:', sanitizedFormData.rcdRating, col2X + 70, rcdRatingY, 30, 20);
+      yPos = Math.max(mpdResult.yPos, rcdSwitchResult.drawn ? rcdSwitchResult.yPos : yPos, rcdRatingResult.drawn ? rcdRatingResult.yPos : yPos);
+    } else {
+      const rcdSwitchResult = drawFieldIfPresent(pdf, 'RCD Main Switch:', sanitizedFormData.rcdMainSwitch, col1X, yPos, 40, 25);
+      if (rcdSwitchResult.drawn) yPos = rcdSwitchResult.yPos;
+      const rcdRatingResult = drawFieldIfPresent(pdf, 'RCD Rating:', sanitizedFormData.rcdRating, col2X, rcdSwitchResult.drawn ? yPos - 7 : yPos, 30, 20);
+      if (rcdRatingResult.drawn) yPos = rcdRatingResult.yPos;
+    }
+  }
 
   yPos += 5;
 
   // MAIN PROTECTIVE BONDING
   yPos = drawSectionHeader(pdf, 'MAIN PROTECTIVE BONDING', yPos, pageWidth);
 
-  yPos = drawFormRow(
-    pdf,
-    'Main Bonding Conductor Size:',
-    `${sanitizedFormData.mainBondingSize || ''} mm${getSymbol('squared')}`,
-    col1X,
-    yPos,
-    55,
-    25
-  );
-  yPos -= 7;
-  yPos = drawFormRow(
-    pdf,
-    'Bonding Compliance:',
-    sanitizedFormData.bondingCompliance || '',
-    col2X,
-    yPos,
-    45,
-    35
-  );
+  {
+    const bondSizeResult = drawFieldIfPresent(pdf, 'Main Bonding Conductor Size:', `${sanitizedFormData.mainBondingSize || ''} mm${getSymbol('squared')}`, col1X, yPos, 55, 25);
+    const bondCompResult = drawFieldIfPresent(pdf, 'Bonding Compliance:', sanitizedFormData.bondingCompliance, col2X, bondSizeResult.drawn ? yPos : yPos, 45, 35);
+    if (bondSizeResult.drawn || bondCompResult.drawn) {
+      if (bondSizeResult.drawn && bondCompResult.drawn) {
+        yPos = Math.max(bondSizeResult.yPos, bondCompResult.yPos);
+      } else if (bondSizeResult.drawn) {
+        yPos = bondSizeResult.yPos;
+      } else {
+        yPos = bondCompResult.yPos;
+      }
+    }
+  }
 
-  yPos = drawFormRow(
-    pdf,
-    'Main Bonding Locations:',
-    sanitizedFormData.mainBondingLocations || '',
-    col1X,
-    yPos,
-    50,
-    pageWidth - margin * 2 - 55
-  );
+  {
+    const locResult = drawFieldIfPresent(pdf, 'Main Bonding Locations:', sanitizedFormData.mainBondingLocations, col1X, yPos, 50, pageWidth - margin * 2 - 55);
+    if (locResult.drawn) yPos = locResult.yPos;
+  }
 
-  yPos = drawFormRow(
-    pdf,
-    'Supplementary Bonding Size:',
-    `${sanitizedFormData.supplementaryBondingSize || ''} mm${getSymbol('squared')}`,
-    col1X,
-    yPos,
-    55,
-    25
-  );
-  yPos -= 7;
-  yPos = drawFormRow(
-    pdf,
-    'Equipotential Bonding:',
-    sanitizedFormData.equipotentialBonding || '',
-    col2X,
-    yPos,
-    50,
-    30
-  );
+  {
+    const suppResult = drawFieldIfPresent(pdf, 'Supplementary Bonding Size:', `${sanitizedFormData.supplementaryBondingSize || ''} mm${getSymbol('squared')}`, col1X, yPos, 55, 25);
+    const equipResult = drawFieldIfPresent(pdf, 'Equipotential Bonding:', sanitizedFormData.equipotentialBonding, col2X, suppResult.drawn ? yPos : yPos, 50, 30);
+    if (suppResult.drawn || equipResult.drawn) {
+      if (suppResult.drawn && equipResult.drawn) {
+        yPos = Math.max(suppResult.yPos, equipResult.yPos);
+      } else if (suppResult.drawn) {
+        yPos = suppResult.yPos;
+      } else {
+        yPos = equipResult.yPos;
+      }
+    }
+  }
 
   yPos += 5;
 
@@ -943,56 +944,26 @@ export const exportCompleteEICRToPDF = async (
     35,
     30
   );
-  yPos -= 7;
-  yPos = drawFormRow(
-    pdf,
-    'Manufacturer:',
-    sanitizedFormData.cuManufacturer || '',
-    col2X + 90,
-    yPos,
-    30,
-    30
-  );
+  {
+    const mfgResult = drawFieldIfPresent(pdf, 'Manufacturer:', sanitizedFormData.cuManufacturer, col2X + 90, yPos - 7, 30, 30);
+    if (mfgResult.drawn) yPos = mfgResult.yPos;
+  }
 
-  yPos = drawFormRow(
-    pdf,
-    'Intake Cable Size:',
-    `${sanitizedFormData.intakeCableSize || ''} mm${getSymbol('squared')}`,
-    col1X,
-    yPos,
-    40,
-    25
-  );
-  yPos -= 7;
-  yPos = drawFormRow(
-    pdf,
-    'Intake Cable Type:',
-    sanitizedFormData.intakeCableType || '',
-    col1X + 70,
-    yPos,
-    40,
-    30
-  );
-  yPos -= 7;
-  yPos = drawFormRow(
-    pdf,
-    'Meter Tails Size:',
-    `${sanitizedFormData.tailsSize || ''} mm${getSymbol('squared')}`,
-    col2X + 50,
-    yPos,
-    40,
-    20
-  );
-  yPos -= 7;
-  yPos = drawFormRow(
-    pdf,
-    'Length(m):',
-    sanitizedFormData.tailsLength || 'N/A',
-    col2X + 115,
-    yPos,
-    25,
-    20
-  );
+  {
+    const cableSizeResult = drawFieldIfPresent(pdf, 'Intake Cable Size:', `${sanitizedFormData.intakeCableSize || ''} mm${getSymbol('squared')}`, col1X, yPos, 40, 25);
+    const cableTypeResult = drawFieldIfPresent(pdf, 'Intake Cable Type:', sanitizedFormData.intakeCableType, col1X + 70, cableSizeResult.drawn ? yPos : yPos, 40, 30);
+    const tailsSizeResult = drawFieldIfPresent(pdf, 'Meter Tails Size:', `${sanitizedFormData.tailsSize || ''} mm${getSymbol('squared')}`, col2X + 50, cableSizeResult.drawn ? yPos : yPos, 40, 20);
+    const tailsLenResult = drawFieldIfPresent(pdf, 'Length(m):', sanitizedFormData.tailsLength, col2X + 115, cableSizeResult.drawn ? yPos : yPos, 25, 20);
+    const maxY = Math.max(
+      cableSizeResult.drawn ? cableSizeResult.yPos : yPos,
+      cableTypeResult.drawn ? cableTypeResult.yPos : yPos,
+      tailsSizeResult.drawn ? tailsSizeResult.yPos : yPos,
+      tailsLenResult.drawn ? tailsLenResult.yPos : yPos
+    );
+    if (cableSizeResult.drawn || cableTypeResult.drawn || tailsSizeResult.drawn || tailsLenResult.drawn) {
+      yPos = maxY;
+    }
+  }
 
   yPos += 5;
 
@@ -1008,10 +979,13 @@ export const exportCompleteEICRToPDF = async (
     35,
     30
   );
-  yPos -= 7;
-  yPos = drawFormRow(pdf, 'Zdb (Ohms):', sanitizedFormData.zdb || '', col1X + 70, yPos, 30, 20);
-  yPos -= 7;
-  yPos = drawFormRow(pdf, 'Ipf (kA):', sanitizedFormData.ipf || '', col2X + 20, yPos, 25, 20);
+  {
+    const zdbResult = drawFieldIfPresent(pdf, 'Zdb (Ohms):', sanitizedFormData.zdb, col1X + 70, yPos - 7, 30, 20);
+    const ipfResult = drawFieldIfPresent(pdf, 'Ipf (kA):', sanitizedFormData.ipf, col2X + 20, zdbResult.drawn ? yPos - 7 : yPos - 7, 25, 20);
+    if (zdbResult.drawn || ipfResult.drawn) {
+      yPos = Math.max(zdbResult.drawn ? zdbResult.yPos : yPos, ipfResult.drawn ? ipfResult.yPos : yPos);
+    }
+  }
 
   // Confirmed checkboxes
   pdf.setFontSize(8);

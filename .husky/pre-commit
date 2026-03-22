@@ -1,1 +1,8 @@
 npx lint-staged
+
+# Run Deno schema tests if any payload schema files were changed
+SCHEMA_FILES=$(git diff --cached --name-only -- 'supabase/functions/_shared/*-schema*.ts' 'supabase/functions/_shared/*-payload-schema*.ts' 2>/dev/null)
+if [ -n "$SCHEMA_FILES" ]; then
+  echo "Schema files changed — running Deno schema tests..."
+  deno test supabase/functions/_shared/*-schema*.test.ts supabase/functions/_shared/*-payload-schema*.test.ts --allow-net
+fi

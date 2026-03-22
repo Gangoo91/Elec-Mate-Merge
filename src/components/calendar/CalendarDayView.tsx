@@ -129,7 +129,7 @@ const CalendarDayView = ({
                   <span
                     className={cn(
                       'text-[11px] font-bold tabular-nums',
-                      isWorkingHour ? 'text-white' : 'text-white/25'
+                      isWorkingHour ? 'text-white' : 'text-white opacity-50'
                     )}
                   >
                     {format(new Date(2000, 0, 1, hour), 'HH:mm')}

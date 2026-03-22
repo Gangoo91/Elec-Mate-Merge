@@ -625,13 +625,11 @@ const RCDTestingGuide = () => {
                   </h4>
                   <ul className="text-sm space-y-1">
                     <li>
-                      • S-type RCDs have intentional time delay (typically 130-500ms at 1×IΔn)
+                      • S-type RCDs have intentional time delay (max 500ms at 1×IΔn)
                     </li>
                     <li>• Used for discrimination in installations with multiple RCDs</li>
-                    <li>• Test at 1×IΔn: Should trip within manufacturer's specified time</li>
-                    <li>
-                      • Test at 5×IΔn: Must still trip within 40ms (no time delay at high currents)
-                    </li>
+                    <li>• Test at 1×IΔn: max 500ms (GN3 Table 2.17)</li>
+                    <li>• Test at 5×IΔn: max 150ms</li>
                     <li>• Check discrimination by testing downstream RCDs first</li>
                   </ul>
                 </div>
@@ -871,7 +869,7 @@ const RCDTestingGuide = () => {
                 <strong>Table 41.5:</strong> Maximum disconnection times for RCDs
               </p>
               <p>
-                <strong>Section 531.3:</strong> RCD selection and application
+                <strong>Regulation 612.13:</strong> RCD testing requirements
               </p>
               <p>
                 <strong>Appendix 6:</strong> Test methods and procedures

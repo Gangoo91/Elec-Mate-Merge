@@ -26,9 +26,9 @@ export const QuotesReadyPanel = ({ quotes, onRaiseInvoice }: QuotesReadyPanelPro
         </CardHeader>
         <CardContent>
           <div className="text-center py-8 space-y-2">
-            <FileText className="h-12 w-12 text-muted-foreground mx-auto opacity-50" />
-            <p className="text-muted-foreground">No quotes ready for invoicing</p>
-            <p className="text-xs text-muted-foreground">
+            <FileText className="h-12 w-12 text-white mx-auto opacity-50" />
+            <p className="text-white">No quotes ready for invoicing</p>
+            <p className="text-xs text-white">
               Quotes with "Work Done" tag will appear here
             </p>
           </div>
@@ -71,12 +71,12 @@ export const QuotesReadyPanel = ({ quotes, onRaiseInvoice }: QuotesReadyPanelPro
 
             {/* Client Info */}
             <div className="flex items-center gap-2 text-sm">
-              <User className="h-4 w-4 text-muted-foreground" />
+              <User className="h-4 w-4 text-white" />
               <span className="font-medium truncate">{quote.client.name}</span>
             </div>
 
             {/* Meta Info */}
-            <div className="flex items-center gap-3 text-xs text-muted-foreground">
+            <div className="flex items-center gap-3 text-xs text-white">
               <div className="flex items-center gap-1.5">
                 <Calendar className="h-3.5 w-3.5" />
                 <span>{format(quote.createdAt, 'dd MMM yyyy')}</span>

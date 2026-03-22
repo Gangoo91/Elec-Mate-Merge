@@ -168,7 +168,6 @@ export const useInvoiceStorage = () => {
       setInvoices(convertedInvoices);
       setLastUpdated(new Date());
     } catch (error) {
-      console.error('Error fetching invoices:', error);
       captureApiError(error instanceof Error ? error : new Error(String(error)), 'invoices/fetch', {
         errorMessage: error instanceof Error ? error.message : String(error),
       });
@@ -214,19 +213,6 @@ export const useInvoiceStorage = () => {
           ? await generateStandaloneInvoiceNumber()
           : await generateSequentialInvoiceNumber();
 
-        console.log(
-          '📝 Generated invoice number:',
-          finalInvoiceNumber,
-          isStandaloneInvoice ? '(standalone)' : '(quote-based)',
-          retryCount > 0 ? `(retry ${retryCount})` : ''
-        );
-      }
-
-      // Warn if client email is missing - thank-you email won't be sent
-      if (!invoice.client?.email?.trim()) {
-        console.warn(
-          '⚠️ Invoice being saved without client email - thank-you email will not be sent'
-        );
       }
 
       // Merge additional invoice items into the main items array
@@ -250,7 +236,6 @@ export const useInvoiceStorage = () => {
 
       if (isNewInvoice) {
         // INSERT new standalone invoice
-        console.log('📝 Creating new standalone invoice');
         const { data: newInvoice, error: insertError } = await supabase
           .from('quotes')
           .insert([
@@ -295,16 +280,11 @@ export const useInvoiceStorage = () => {
           .single();
 
         if (insertError) {
-          console.error('❌ Error inserting standalone invoice:', insertError);
           throw insertError;
         }
         updatedQuote = newInvoice;
       } else {
         // UPDATE existing quote
-        console.log('📝 Updating existing quote to invoice');
-        console.log('📝 Client data being saved:', JSON.stringify(invoice.client, null, 2));
-        console.log('📝 Due date being saved:', invoice.invoice_due_date?.toISOString());
-        console.log('📝 Settings being saved:', JSON.stringify(invoice.settings, null, 2));
         const { data: updated, error: updateError } = await supabase
           .from('quotes')
           .update({
@@ -333,15 +313,9 @@ export const useInvoiceStorage = () => {
           .single();
 
         if (updateError) {
-          console.error('❌ Error updating quote:', updateError);
           throw updateError;
         }
         updatedQuote = updated;
-        console.log(
-          '📝 Updated quote from DB - client_data:',
-          JSON.stringify(updated.client_data, null, 2)
-        );
-        console.log('📝 Updated quote from DB - invoice_due_date:', updated.invoice_due_date);
       }
 
       // 2. Force regenerate PDF with LATEST data on every save (silent background process)
@@ -406,9 +380,7 @@ export const useInvoiceStorage = () => {
             })
             .eq('id', updatedQuote.id);
 
-          if (pdfUpdateError) {
-            console.error('PDF metadata update error:', pdfUpdateError);
-          }
+          // PDF metadata update error is non-blocking
         }
 
         // Show single success toast after everything is done
@@ -418,7 +390,6 @@ export const useInvoiceStorage = () => {
           duration: 3000,
         });
       } catch (pdfError) {
-        console.error('PDF generation error:', pdfError);
         captureEdgeFunctionError(
           pdfError instanceof Error ? pdfError : new Error(String(pdfError)),
           'generate-pdf-monkey',
@@ -439,8 +410,6 @@ export const useInvoiceStorage = () => {
       });
       return true;
     } catch (error: any) {
-      console.error('Error saving invoice:', error);
-
       // Check if it's a duplicate key error (PostgreSQL error code 23505)
       const isDuplicateKeyError =
         error?.code === '23505' ||
@@ -457,10 +426,6 @@ export const useInvoiceStorage = () => {
       }
 
       if (isDuplicateKeyError && retryCount < MAX_RETRIES) {
-        console.warn(
-          `⚠️ Duplicate invoice number detected, retrying... (${retryCount + 1}/${MAX_RETRIES})`
-        );
-
         // Wait before retrying with exponential backoff
         await new Promise((resolve) => setTimeout(resolve, RETRY_DELAY * Math.pow(2, retryCount)));
 
@@ -501,7 +466,6 @@ export const useInvoiceStorage = () => {
 
       return true;
     } catch (error) {
-      console.error('Error marking work complete:', error);
       captureApiError(
         error instanceof Error ? error : new Error(String(error)),
         'invoices/mark-complete',
@@ -536,7 +500,6 @@ export const useInvoiceStorage = () => {
       await fetchInvoices();
       return true;
     } catch (error) {
-      console.error('Error updating invoice status:', error);
       captureApiError(
         error instanceof Error ? error : new Error(String(error)),
         'invoices/update-status',
@@ -585,7 +548,6 @@ export const useInvoiceStorage = () => {
       await fetchInvoices();
       return true;
     } catch (error) {
-      console.error('Error deleting invoice:', error);
       captureApiError(
         error instanceof Error ? error : new Error(String(error)),
         'invoices/delete',

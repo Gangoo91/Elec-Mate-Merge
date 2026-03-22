@@ -152,8 +152,7 @@ const CollapsibleRecentSessions = ({ onAddToPortfolio }: CollapsibleRecentSessio
                       size="sm"
                       className="text-xs"
                       onClick={() => {
-                        // This could navigate to a full sessions history view
-                        console.log('View all sessions');
+                        // TODO: navigate to full sessions history view
                       }}
                     >
                       View All Sessions

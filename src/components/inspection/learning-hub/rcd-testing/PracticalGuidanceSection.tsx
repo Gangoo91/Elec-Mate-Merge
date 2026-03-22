@@ -213,11 +213,11 @@ const PracticalGuidanceSection = () => (
           <div className="bg-card rounded p-3">
             <div className="text-purple-400 font-medium mb-2">EV Charging Points</div>
             <ul className="space-y-1 text-sm">
-              <li>• Type B RCD required for AC charging</li>
-              <li>• DC fault detection capability essential</li>
+              <li>• Type A with 6mA DC detection (or Type B) required</li>
+              <li>• Type B mandatory only where smooth DC fault currents possible</li>
+              <li>• Type A-EV acceptable for Mode 3 AC charging</li>
               <li>• Higher current ratings typical</li>
               <li>• Additional surge protection considerations</li>
-              <li>• Integration with smart charging systems</li>
             </ul>
           </div>
           <div className="bg-card rounded p-3">

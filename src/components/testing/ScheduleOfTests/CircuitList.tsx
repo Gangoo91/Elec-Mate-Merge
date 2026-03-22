@@ -321,12 +321,14 @@ const CircuitEditForm: React.FC<CircuitEditFormProps> = ({
     return editedValues[field] !== undefined ? editedValues[field] : circuit[field] || '';
   };
 
-  // Check if circuit has RCD protection
+  // Check if circuit has RCD protection (match CircuitCard / TestValueGrid pattern)
   const hasRcd = useMemo(() => {
     const rcdType = getValue('rcdType') as string;
     const rcdRating = getValue('rcdRating') as string;
     const rcdBsStandard = getValue('rcdBsStandard') as string;
-    return !!(rcdType || rcdRating || rcdBsStandard);
+    const deviceType = ((getValue('protectiveDeviceType') as string) || '').toUpperCase();
+    const deviceHasRcd = deviceType.includes('RCD') || deviceType.includes('RCBO');
+    return !!(rcdType || rcdRating || rcdBsStandard || deviceHasRcd);
   }, [circuit, editedValues]);
 
   // Define available tabs (RCD tab only if circuit has RCD)

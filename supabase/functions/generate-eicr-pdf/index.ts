@@ -1,5 +1,6 @@
 import 'jsr:@supabase/functions-js/edge-runtime.d.ts';
 import { captureException } from '../_shared/sentry.ts';
+import { validateEICRPayload } from '../_shared/eicr-payload-schema.ts';
 
 const PDFMONKEY_API_KEY = Deno.env.get('PDFMONKEY_API_KEY');
 const TEMPLATE_ID = '178C3DA6-99D0-490C-A031-23AD55A1134C';
@@ -103,6 +104,23 @@ Deno.serve(async (req: Request) => {
 
     if (!formData) {
       throw new Error('No form data provided');
+    }
+
+    // Validate payload against schema (soft-fail: log but don't block)
+    const validation = validateEICRPayload(formData);
+    if (!validation.success) {
+      const issuesSample = validation.error.issues.slice(0, 10);
+      console.error(
+        '[generate-eicr-pdf] Schema validation failed:',
+        JSON.stringify(issuesSample)
+      );
+      await captureException(new Error('EICR payload schema drift detected'), {
+        functionName: 'generate-eicr-pdf',
+        extra: { issues: validation.error.issues.slice(0, 20) },
+        tags: { schema_drift: 'true' },
+      });
+    } else {
+      console.log('[generate-eicr-pdf] Schema validation passed');
     }
 
     console.log('[generate-eicr-pdf] Creating PDF document...');

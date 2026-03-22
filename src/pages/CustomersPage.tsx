@@ -1,8 +1,10 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { PullToRefresh } from '@/components/ui/pull-to-refresh';
 import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useCustomers, Customer, SortField, SortDirection } from '@/hooks/inspection/useCustomers';
+import { supabase } from '@/integrations/supabase/client';
+import { ReliabilityLevel } from '@/hooks/useCustomerPaymentStats';
 import { CustomerListRow } from '@/components/customers/CustomerListRow';
 import { CustomerForm } from '@/components/customers/CustomerForm';
 import { CustomerImportDialog } from '@/components/customers/customers/CustomerImportDialog';
@@ -71,6 +73,51 @@ export default function CustomersPage() {
     exportCustomers,
     refreshCustomers,
   } = useCustomers({ sortField, sortDirection });
+
+  // Fetch invoice data for reliability badges
+  const [invoiceData, setInvoiceData] = useState<
+    { customer_id: string; invoice_status: string | null; invoice_paid_at: string | null; invoice_due_date: string | null }[]
+  >([]);
+
+  useEffect(() => {
+    const fetchInvoiceData = async () => {
+      const { data } = await supabase
+        .from('quotes')
+        .select('customer_id, invoice_status, invoice_paid_at, invoice_due_date')
+        .eq('invoice_raised', true)
+        .not('customer_id', 'is', null);
+      if (data) setInvoiceData(data);
+    };
+    fetchInvoiceData();
+  }, [customers]);
+
+  const reliabilityMap = useMemo(() => {
+    const map = new Map<string, ReliabilityLevel>();
+    // Group invoices by customer
+    const grouped = new Map<string, typeof invoiceData>();
+    for (const inv of invoiceData) {
+      if (!inv.customer_id) continue;
+      const arr = grouped.get(inv.customer_id) || [];
+      arr.push(inv);
+      grouped.set(inv.customer_id, arr);
+    }
+    for (const [custId, invs] of grouped) {
+      const paid = invs.filter((i) => i.invoice_status === 'paid');
+      if (paid.length < 2) {
+        map.set(custId, 'none');
+        continue;
+      }
+      const paidOnTime = paid.filter((i) => {
+        if (!i.invoice_paid_at || !i.invoice_due_date) return true;
+        return new Date(i.invoice_paid_at) <= new Date(i.invoice_due_date);
+      });
+      const rate = (paidOnTime.length / paid.length) * 100;
+      if (rate > 80) map.set(custId, 'good');
+      else if (rate >= 50) map.set(custId, 'fair');
+      else map.set(custId, 'poor');
+    }
+    return map;
+  }, [invoiceData]);
 
   const [searchTerm, setSearchTerm] = useState('');
   const [showSearch, setShowSearch] = useState(false);
@@ -333,6 +380,7 @@ export default function CustomersPage() {
                     onDelete={(id) => setDeleteConfirmId(id)}
                     onStartCertificate={(c) => setCertificateCustomer(c)}
                     onQuickNote={(c) => setQuickNoteCustomer(c)}
+                    paymentReliability={reliabilityMap.get(customer.id) || null}
                   />
                 </motion.div>
               ))}

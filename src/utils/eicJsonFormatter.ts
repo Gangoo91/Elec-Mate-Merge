@@ -9,6 +9,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 import { supabase } from '@/integrations/supabase/client';
+import type { EICPayload } from '@/types/eic-payload';
 
 /* ------------------------------------------------------------------ */
 /*  Observations with photo evidence                                   */
@@ -74,7 +75,7 @@ export async function formatEicJson(
   formData: any,
   companyProfile: any,
   reportId: string
-): Promise<any> {
+): Promise<EICPayload> {
   // --- Flat inspection keys at ROOT level (template uses insp_1 … insp_14) ---
   const flatInspectionKeys: Record<string, string> = {};
   const inspectionItems = formData.inspectionItems || Object.values(formData.inspections || {});
@@ -514,12 +515,14 @@ export async function formatEicJson(
     // Company branding (nested for template sections that use company_details.*)
     company_details: {
       company_name: companyProfile?.company_name || '',
+      company_tagline: companyProfile?.company_tagline || '',
       company_address: companyProfile?.company_address || '',
       company_postcode: companyProfile?.company_postcode || '',
       company_phone: companyProfile?.company_phone || '',
       company_email: companyProfile?.company_email || '',
       company_website: companyProfile?.company_website || '',
       company_logo: companyProfile?.logo_data_url || companyProfile?.logo_url || '',
+      company_accent_color: companyProfile?.accent_color || '',
       registration_scheme: companyProfile?.registration_scheme || '',
       registration_number: companyProfile?.registration_number || '',
     },
