@@ -421,8 +421,8 @@ const AM2Module5Section2 = () => {
               <li className="flex items-start gap-2">
                 <span className="text-amber-400">•</span>
                 <span>
-                  <strong className="text-white">Dead socket with no continuity on line</strong>{' '}
-                  = Open circuit
+                  <strong className="text-white">Dead socket with no continuity on line</strong> =
+                  Open circuit
                 </span>
               </li>
               <li className="flex items-start gap-2">
@@ -452,16 +452,14 @@ const AM2Module5Section2 = () => {
                 <p className="text-ios-footnote text-elec-yellow">(Location)</p>
               </div>
               <div className="bg-white/5 border border-white/10 rounded-lg p-3 text-center">
-                <p className="text-ios-callout font-medium text-white">
-                  How you would rectify it
-                </p>
+                <p className="text-ios-callout font-medium text-white">How you would rectify it</p>
                 <p className="text-ios-footnote text-elec-yellow">(Rectification)</p>
               </div>
             </div>
             <div className="mt-3 bg-white/5 border border-white/10 rounded-lg p-3">
               <p className="text-ios-callout text-white">
-                <strong className="text-white">Example:</strong> "Open CPC between CU and socket
-                2. Rectify by reconnecting CPC at CU terminal."
+                <strong className="text-white">Example:</strong> "Open CPC between CU and socket 2.
+                Rectify by reconnecting CPC at CU terminal."
               </p>
             </div>
           </div>
@@ -512,15 +510,15 @@ const AM2Module5Section2 = () => {
                 <li className="flex items-start gap-2">
                   <span className="text-red-400">•</span>
                   <span>
-                    <strong className="text-white">Work methodically</strong> - don't jump
-                    between circuits or tests
+                    <strong className="text-white">Work methodically</strong> - don't jump between
+                    circuits or tests
                   </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-red-400">•</span>
                   <span>
-                    <strong className="text-white">Be precise</strong> - fault = type + location
-                    + rectification
+                    <strong className="text-white">Be precise</strong> - fault = type + location +
+                    rectification
                   </span>
                 </li>
               </ul>
@@ -640,8 +638,8 @@ const AM2Module5Section2 = () => {
               systematically.
             </p>
             <p className="text-ios-callout text-white mb-2">
-              <strong className="text-white">Process:</strong> Narrowed down to broken CPC
-              between CU and first socket, recorded properly.
+              <strong className="text-white">Process:</strong> Narrowed down to broken CPC between
+              CU and first socket, recorded properly.
             </p>
             <p className="text-ios-callout text-white font-medium">
               <strong className="text-green-400">Result:</strong> Full marks for logical method and
@@ -654,12 +652,12 @@ const AM2Module5Section2 = () => {
               Example 3: Time Management Failure
             </h4>
             <p className="text-ios-callout text-white mb-2">
-              <strong className="text-white">Scenario:</strong> Candidate misread symptoms,
-              tested in wrong order.
+              <strong className="text-white">Scenario:</strong> Candidate misread symptoms, tested
+              in wrong order.
             </p>
             <p className="text-ios-callout text-white mb-2">
-              <strong className="text-white">Problem:</strong> Wasted time on incorrect tests,
-              ran out of time.
+              <strong className="text-white">Problem:</strong> Wasted time on incorrect tests, ran
+              out of time.
             </p>
             <p className="text-ios-callout text-white font-medium">
               <strong className="text-amber-400">Result:</strong> Only 1 fault identified correctly
@@ -668,12 +666,10 @@ const AM2Module5Section2 = () => {
           </div>
 
           <div className="bg-white/5 border border-white/10 rounded-xl p-4">
-            <h4 className="text-ios-headline text-white mb-3">
-              Example 4: Real-World Application
-            </h4>
+            <h4 className="text-ios-headline text-white mb-3">Example 4: Real-World Application</h4>
             <p className="text-ios-callout text-white mb-2">
-              <strong className="text-white">Scenario:</strong> On site, an electrician guessed
-              at a short circuit.
+              <strong className="text-white">Scenario:</strong> On site, an electrician guessed at a
+              short circuit.
             </p>
             <p className="text-ios-callout text-white mb-2">
               <strong className="text-white">Problem:</strong> Replaced multiple accessories and
@@ -704,9 +700,7 @@ const AM2Module5Section2 = () => {
       {/* Summary */}
       <AM2ContentCard title="6. Section Summary" icon={BookOpen} accent>
         <div className="bg-white/5 border border-white/10 rounded-xl p-4 mb-4">
-          <h4 className="text-ios-headline text-white mb-3">
-            The Logical Fault-Finding Process:
-          </h4>
+          <h4 className="text-ios-headline text-white mb-3">The Logical Fault-Finding Process:</h4>
           <ol className="text-ios-callout text-white space-y-1">
             <li className="flex items-start gap-2">
               <span className="text-elec-yellow font-bold">1.</span>
@@ -769,9 +763,9 @@ const AM2Module5Section2 = () => {
 
       {/* Navigation Footer */}
       <AM2NavigationFooter
-        previousHref="../section1"
+        previousHref="/study-centre/apprentice/am2/module5/section1"
         previousLabel="Typical Faults Set"
-        nextHref="../section3"
+        nextHref="/study-centre/apprentice/am2/module5/section3"
         nextLabel="Test Methods & Procedures"
         currentSection={2}
         totalSections={6}

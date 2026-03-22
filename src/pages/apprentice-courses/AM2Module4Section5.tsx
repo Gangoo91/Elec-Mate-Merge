@@ -411,9 +411,7 @@ const AM2Module4Section5 = () => {
               <Target className="h-4 w-4 text-purple-400" />
               Functional Checks:
             </h4>
-            <p className="text-ios-footnote text-white mb-2">
-              Circuits not operating as intended
-            </p>
+            <p className="text-ios-footnote text-white mb-2">Circuits not operating as intended</p>
             <ul className="text-ios-callout text-white space-y-1">
               <li className="flex items-start gap-2">
                 <span className="text-elec-yellow">•</span>
@@ -604,9 +602,7 @@ const AM2Module4Section5 = () => {
               </div>
               <div className="bg-white/5 rounded-lg p-2">
                 <span className="text-ios-callout text-red-400">"Ring fault"</span>
-                <p className="text-ios-footnote text-white mt-1">
-                  No detail about nature of fault
-                </p>
+                <p className="text-ios-footnote text-white mt-1">No detail about nature of fault</p>
               </div>
               <div className="bg-white/5 rounded-lg p-2">
                 <span className="text-ios-callout text-red-400">"RCD broken"</span>
@@ -632,9 +628,7 @@ const AM2Module4Section5 = () => {
                 <span className="text-ios-callout text-emerald-400">
                   "Ring final broken at consumer unit - L conductor"
                 </span>
-                <p className="text-ios-footnote text-white mt-1">
-                  Specific conductor and location
-                </p>
+                <p className="text-ios-footnote text-white mt-1">Specific conductor and location</p>
               </div>
               <div className="bg-white/5 rounded-lg p-2">
                 <span className="text-ios-callout text-emerald-400">
@@ -914,9 +908,9 @@ const AM2Module4Section5 = () => {
 
       {/* Navigation Footer */}
       <AM2NavigationFooter
-        prevHref="../section4"
+        prevHref="/study-centre/apprentice/am2/module4/section4"
         prevLabel="Functional Testing"
-        nextHref="../section6"
+        nextHref="/study-centre/apprentice/am2/module4/section6"
         nextLabel="Time Management"
         currentSection={5}
         totalSections={6}

@@ -254,22 +254,22 @@ const AM2Module7Section4 = () => {
               <li className="flex items-start gap-2">
                 <span className="text-red-400">-</span>
                 <span>
-                  <strong className="text-white">Skipping the re-prove step</strong> after
-                  testing dead
+                  <strong className="text-white">Skipping the re-prove step</strong> after testing
+                  dead
                 </span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-red-400">-</span>
                 <span>
-                  <strong className="text-white">Using wrong tester</strong> (multimeter instead
-                  of two-pole voltage indicator)
+                  <strong className="text-white">Using wrong tester</strong> (multimeter instead of
+                  two-pole voltage indicator)
                 </span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-red-400">-</span>
                 <span>
-                  <strong className="text-white">Not locking off correctly</strong> or forgetting
-                  to secure isolation
+                  <strong className="text-white">Not locking off correctly</strong> or forgetting to
+                  secure isolation
                 </span>
               </li>
               <li className="flex items-start gap-2">
@@ -288,15 +288,15 @@ const AM2Module7Section4 = () => {
               <li className="flex items-start gap-2">
                 <span className="text-red-400">-</span>
                 <span>
-                  <strong className="text-white">Failing to identify all sources</strong> of
-                  supply to the circuit
+                  <strong className="text-white">Failing to identify all sources</strong> of supply
+                  to the circuit
                 </span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-red-400">-</span>
                 <span>
-                  <strong className="text-white">Not proving tester initially</strong> on known
-                  live source
+                  <strong className="text-white">Not proving tester initially</strong> on known live
+                  source
                 </span>
               </li>
               <li className="flex items-start gap-2">
@@ -322,29 +322,29 @@ const AM2Module7Section4 = () => {
               <li className="flex items-start gap-2">
                 <span className="text-yellow-400">-</span>
                 <span>
-                  <strong className="text-white">Overconfidence</strong> - assuming circuit is
-                  dead without proper verification
+                  <strong className="text-white">Overconfidence</strong> - assuming circuit is dead
+                  without proper verification
                 </span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-yellow-400">-</span>
                 <span>
-                  <strong className="text-white">Poor preparation</strong> - not practicing the
-                  full 10-step sequence
+                  <strong className="text-white">Poor preparation</strong> - not practicing the full
+                  10-step sequence
                 </span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-yellow-400">-</span>
                 <span>
-                  <strong className="text-white">Equipment unfamiliarity</strong> - using
-                  unfamiliar test instruments
+                  <strong className="text-white">Equipment unfamiliarity</strong> - using unfamiliar
+                  test instruments
                 </span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-yellow-400">-</span>
                 <span>
-                  <strong className="text-white">Stress response</strong> - forgetting steps
-                  under exam pressure
+                  <strong className="text-white">Stress response</strong> - forgetting steps under
+                  exam pressure
                 </span>
               </li>
             </ul>
@@ -421,15 +421,15 @@ const AM2Module7Section4 = () => {
               <li className="flex items-start gap-2">
                 <span className="text-red-400">-</span>
                 <span>
-                  <strong className="text-white">CPCs unsleeved</strong> or left disconnected -
-                  BS 7671 non-compliance
+                  <strong className="text-white">CPCs unsleeved</strong> or left disconnected - BS
+                  7671 non-compliance
                 </span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-red-400">-</span>
                 <span>
-                  <strong className="text-white">Accessories crooked</strong> or at wrong height
-                  - poor workmanship
+                  <strong className="text-white">Accessories crooked</strong> or at wrong height -
+                  poor workmanship
                 </span>
               </li>
               <li className="flex items-start gap-2">
@@ -442,8 +442,7 @@ const AM2Module7Section4 = () => {
               <li className="flex items-start gap-2">
                 <span className="text-red-400">-</span>
                 <span>
-                  <strong className="text-white">Poor cable management</strong> and untidy work
-                  area
+                  <strong className="text-white">Poor cable management</strong> and untidy work area
                 </span>
               </li>
             </ul>
@@ -517,22 +516,22 @@ const AM2Module7Section4 = () => {
               <li className="flex items-start gap-2">
                 <span className="text-orange-400">-</span>
                 <span>
-                  <strong className="text-white">Not recording results</strong> as they go -
-                  leaving it to memory
+                  <strong className="text-white">Not recording results</strong> as they go - leaving
+                  it to memory
                 </span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-orange-400">-</span>
                 <span>
-                  <strong className="text-white">Writing unrealistic values</strong> ("0 ohms"
-                  Zs, "infinity" IR, "999 MOhms")
+                  <strong className="text-white">Writing unrealistic values</strong> ("0 ohms" Zs,
+                  "infinity" IR, "999 MOhms")
                 </span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-orange-400">-</span>
                 <span>
-                  <strong className="text-white">Incorrect test methods</strong> or wrong
-                  instrument ranges
+                  <strong className="text-white">Incorrect test methods</strong> or wrong instrument
+                  ranges
                 </span>
               </li>
               <li className="flex items-start gap-2">
@@ -616,8 +615,8 @@ const AM2Module7Section4 = () => {
               <li className="flex items-start gap-2">
                 <span className="text-red-400">-</span>
                 <span>
-                  <strong className="text-white">Not writing rectification clearly</strong>{' '}
-                  (e.g., "fix fault" instead of "reconnect CPC at socket and re-test continuity")
+                  <strong className="text-white">Not writing rectification clearly</strong> (e.g.,
+                  "fix fault" instead of "reconnect CPC at socket and re-test continuity")
                 </span>
               </li>
               <li className="flex items-start gap-2">
@@ -637,8 +636,8 @@ const AM2Module7Section4 = () => {
               <li className="flex items-start gap-2">
                 <span className="text-red-400">-</span>
                 <span>
-                  <strong className="text-white">Not following systematic approach</strong> to
-                  fault diagnosis
+                  <strong className="text-white">Not following systematic approach</strong> to fault
+                  diagnosis
                 </span>
               </li>
             </ul>
@@ -655,24 +654,24 @@ const AM2Module7Section4 = () => {
                 </h5>
                 <ul className="text-ios-callout text-white space-y-1 ml-4">
                   <li>
-                    - <strong className="text-white">Gather information:</strong> What symptoms
-                    are reported?
+                    - <strong className="text-white">Gather information:</strong> What symptoms are
+                    reported?
                   </li>
                   <li>
                     - <strong className="text-white">Form hypothesis:</strong> What could cause
                     these symptoms?
                   </li>
                   <li>
-                    - <strong className="text-white">Test hypothesis:</strong> Use appropriate
-                    tests to confirm or eliminate
+                    - <strong className="text-white">Test hypothesis:</strong> Use appropriate tests
+                    to confirm or eliminate
                   </li>
                   <li>
-                    - <strong className="text-white">Locate precisely:</strong> Find exact
-                    location and nature of fault
+                    - <strong className="text-white">Locate precisely:</strong> Find exact location
+                    and nature of fault
                   </li>
                   <li>
-                    - <strong className="text-white">Document findings:</strong> Record test
-                    results and conclusions
+                    - <strong className="text-white">Document findings:</strong> Record test results
+                    and conclusions
                   </li>
                 </ul>
               </div>
@@ -685,9 +684,9 @@ const AM2Module7Section4 = () => {
                     <strong className="text-white">Instead of:</strong> "Fix broken wire"
                   </p>
                   <p className="text-ios-callout text-white">
-                    <strong className="text-white">Write:</strong> "Replace damaged section of
-                    2.5mm T&E cable between positions A and B, making connections using 30A junction
-                    box with maintenance-free connectors"
+                    <strong className="text-white">Write:</strong> "Replace damaged section of 2.5mm
+                    T&E cable between positions A and B, making connections using 30A junction box
+                    with maintenance-free connectors"
                   </p>
                 </div>
               </div>
@@ -739,15 +738,15 @@ const AM2Module7Section4 = () => {
               <li className="flex items-start gap-2">
                 <span className="text-yellow-400">-</span>
                 <span>
-                  <strong className="text-white">Confusing units</strong> (seconds vs
-                  milliseconds, kW vs W, mA vs A)
+                  <strong className="text-white">Confusing units</strong> (seconds vs milliseconds,
+                  kW vs W, mA vs A)
                 </span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-yellow-400">-</span>
                 <span>
-                  <strong className="text-white">Spending too long</strong> on difficult
-                  questions, running out of time
+                  <strong className="text-white">Spending too long</strong> on difficult questions,
+                  running out of time
                 </span>
               </li>
               <li className="flex items-start gap-2">
@@ -1001,7 +1000,7 @@ const AM2Module7Section4 = () => {
 
       {/* Navigation Footer */}
       <AM2NavigationFooter
-        previousHref="../section3"
+        previousHref="/study-centre/apprentice/am2/module7/section3"
         previousLabel="Safety-first Approach"
         nextHref="/study-centre/apprentice/am2/module8"
         nextLabel="Module 8"

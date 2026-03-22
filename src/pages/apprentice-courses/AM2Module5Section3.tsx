@@ -894,8 +894,8 @@ const AM2Module5Section3 = () => {
                     <li className="flex items-start gap-2">
                       <span className="text-elec-yellow">•</span>
                       <span className="text-ios-footnote text-white">
-                        <strong className="text-white">Display problems:</strong> Check LCD
-                        contrast settings and lighting
+                        <strong className="text-white">Display problems:</strong> Check LCD contrast
+                        settings and lighting
                       </span>
                     </li>
                     <li className="flex items-start gap-2">
@@ -915,8 +915,8 @@ const AM2Module5Section3 = () => {
                     <li className="flex items-start gap-2">
                       <span className="text-elec-yellow">•</span>
                       <span className="text-ios-footnote text-white">
-                        <strong className="text-white">Memory errors:</strong> Clear stored data
-                        and restart instrument
+                        <strong className="text-white">Memory errors:</strong> Clear stored data and
+                        restart instrument
                       </span>
                     </li>
                   </ul>
@@ -1121,15 +1121,11 @@ const AM2Module5Section3 = () => {
                     </li>
                     <li className="flex items-start gap-2">
                       <span className="text-elec-yellow">•</span>
-                      <span className="text-ios-footnote text-white">
-                        Accurate record keeping
-                      </span>
+                      <span className="text-ios-footnote text-white">Accurate record keeping</span>
                     </li>
                     <li className="flex items-start gap-2">
                       <span className="text-elec-yellow">•</span>
-                      <span className="text-ios-footnote text-white">
-                        Safety-first mentality
-                      </span>
+                      <span className="text-ios-footnote text-white">Safety-first mentality</span>
                     </li>
                     <li className="flex items-start gap-2">
                       <span className="text-elec-yellow">•</span>
@@ -1256,9 +1252,7 @@ const AM2Module5Section3 = () => {
               <ul className="space-y-1">
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>
-                  <span className="text-ios-footnote text-white">
-                    Swapping settings repeatedly
-                  </span>
+                  <span className="text-ios-footnote text-white">Swapping settings repeatedly</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>
@@ -1440,9 +1434,9 @@ const AM2Module5Section3 = () => {
 
         {/* Navigation */}
         <AM2NavigationFooter
-          previousHref="../section2"
+          previousHref="/study-centre/apprentice/am2/module5/section2"
           previousLabel="Logical Process"
-          nextHref="../section4"
+          nextHref="/study-centre/apprentice/am2/module5/section4"
           nextLabel="Proving Rectification"
           currentSection={3}
           totalSections={6}

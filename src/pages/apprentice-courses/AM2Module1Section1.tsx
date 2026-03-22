@@ -509,18 +509,14 @@ const AM2Module1Section1 = () => {
                 <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                 <div>
                   <span className="text-ios-body text-white font-medium">Self-Employment</span>
-                  <p className="text-ios-callout text-white">
-                    Start your own electrical business
-                  </p>
+                  <p className="text-ios-callout text-white">Start your own electrical business</p>
                 </div>
               </div>
               <div className="flex items-start gap-3">
                 <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                 <div>
                   <span className="text-ios-body text-white font-medium">Management Roles</span>
-                  <p className="text-ios-callout text-white">
-                    Progress to supervisory positions
-                  </p>
+                  <p className="text-ios-callout text-white">Progress to supervisory positions</p>
                 </div>
               </div>
               <div className="flex items-start gap-3">
@@ -657,9 +653,9 @@ const AM2Module1Section1 = () => {
 
       {/* Navigation Footer */}
       <AM2NavigationFooter
-        prevHref=".."
+        prevHref="/study-centre/apprentice/am2/module1"
         prevLabel="Back to Module"
-        nextHref="../section2"
+        nextHref="/study-centre/apprentice/am2/module1/section2"
         nextLabel="Continue to Section 2"
         currentSection={1}
         totalSections={4}

@@ -449,9 +449,7 @@ const AM2Module3Section3 = () => {
                   <li className="flex gap-2">
                     <span className="font-medium text-elec-yellow min-w-[20px]">5.</span>
                     <div>
-                      <strong className="text-white">
-                        Connect first strapper to L1 terminal
-                      </strong>
+                      <strong className="text-white">Connect first strapper to L1 terminal</strong>
                       <p className="text-xs mt-1 text-white">
                         Use brown-sleeved conductor from 3-core cable. This will connect to L1 on
                         Switch 2.
@@ -461,9 +459,7 @@ const AM2Module3Section3 = () => {
                   <li className="flex gap-2">
                     <span className="font-medium text-elec-yellow min-w-[20px]">6.</span>
                     <div>
-                      <strong className="text-white">
-                        Connect second strapper to L2 terminal
-                      </strong>
+                      <strong className="text-white">Connect second strapper to L2 terminal</strong>
                       <p className="text-xs mt-1 text-white">
                         Use black-sleeved conductor from 3-core cable. This will connect to L2 on
                         Switch 2.
@@ -719,9 +715,9 @@ const AM2Module3Section3 = () => {
             <h3 className="font-medium text-white mb-3">How Intermediate Switching Works</h3>
             <div className="space-y-3 text-sm text-white">
               <p>
-                <strong className="text-white">Internal Crossing:</strong> The intermediate
-                switch internally crosses its connections when operated. This allows it to "reverse"
-                the strapper signals between the two-way switches.
+                <strong className="text-white">Internal Crossing:</strong> The intermediate switch
+                internally crosses its connections when operated. This allows it to "reverse" the
+                strapper signals between the two-way switches.
               </p>
               <div className="grid md:grid-cols-2 gap-4">
                 <div>
@@ -925,9 +921,9 @@ const AM2Module3Section3 = () => {
 
       {/* Navigation Footer */}
       <AM2NavigationFooter
-        previousHref="../section2"
+        previousHref="/study-centre/apprentice/am2/module3/section2"
         previousLabel="Power Circuits"
-        nextHref="../section4"
+        nextHref="/study-centre/apprentice/am2/module3/section4"
         nextLabel="Terminations & Connections"
         currentSection={3}
         totalSections={6}

@@ -302,9 +302,7 @@ const AM2Module3Section1 = () => {
       <AM2ContentCard title="Equipment & Documentation Requirements" icon={Wrench}>
         <div className="grid md:grid-cols-2 gap-4 sm:gap-6">
           <div>
-            <h3 className="font-semibold text-base mb-3 text-white">
-              Essential Tools & Equipment
-            </h3>
+            <h3 className="font-semibold text-base mb-3 text-white">Essential Tools & Equipment</h3>
             <ul className="space-y-2 text-xs sm:text-sm text-white">
               <li className="flex items-start gap-2">
                 <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
@@ -524,15 +522,15 @@ const AM2Module3Section1 = () => {
                 <li className="flex items-start gap-2">
                   <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                   <span>
-                    <strong className="text-white">Compliance:</strong> Correct cable types,
-                    correct containment fixings, no breaches of BS 7671
+                    <strong className="text-white">Compliance:</strong> Correct cable types, correct
+                    containment fixings, no breaches of BS 7671
                   </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                   <span>
-                    <strong className="text-white">Safety:</strong> Grommets/bushes used, no
-                    exposed sharp edges, boxes secure
+                    <strong className="text-white">Safety:</strong> Grommets/bushes used, no exposed
+                    sharp edges, boxes secure
                   </span>
                 </li>
               </ul>
@@ -885,9 +883,9 @@ const AM2Module3Section1 = () => {
 
       {/* Navigation Footer */}
       <AM2NavigationFooter
-        previousHref=".."
+        previousHref="/study-centre/apprentice/am2/module3"
         previousLabel="Module 3 Overview"
-        nextHref="../section2"
+        nextHref="/study-centre/apprentice/am2/module3/section2"
         nextLabel="Power Circuits"
         currentSection={1}
         totalSections={6}

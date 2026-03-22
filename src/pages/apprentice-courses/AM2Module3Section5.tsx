@@ -800,9 +800,9 @@ const AM2Module3Section5 = () => {
       </AM2ContentCard>
 
       <AM2NavigationFooter
-        previousHref="../section4"
+        previousHref="/study-centre/apprentice/am2/module3/section4"
         previousLabel="Termination & Connections"
-        nextHref="../section6"
+        nextHref="/study-centre/apprentice/am2/module3/section6"
         nextLabel="Time Management"
         currentSection={5}
         totalSections={6}

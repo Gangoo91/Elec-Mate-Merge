@@ -314,8 +314,8 @@ const AM2Module6Section1 = () => {
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>
                   <span className="text-ios-footnote text-white">
-                    <strong className="text-white">Standard questions:</strong> Take 1-2 minutes
-                    for typical questions
+                    <strong className="text-white">Standard questions:</strong> Take 1-2 minutes for
+                    typical questions
                   </span>
                 </li>
                 <li className="flex items-start gap-2">
@@ -328,8 +328,8 @@ const AM2Module6Section1 = () => {
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>
                   <span className="text-ios-footnote text-white">
-                    <strong className="text-white">Review time:</strong> Reserve 5-10 minutes at
-                    the end for flagged questions
+                    <strong className="text-white">Review time:</strong> Reserve 5-10 minutes at the
+                    end for flagged questions
                   </span>
                 </li>
               </ul>
@@ -410,8 +410,8 @@ const AM2Module6Section1 = () => {
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>
                   <span className="text-ios-footnote text-white">
-                    <strong className="text-white">Strategy:</strong> These should be quick wins
-                    - if you know it, answer immediately. If not, flag and move on
+                    <strong className="text-white">Strategy:</strong> These should be quick wins -
+                    if you know it, answer immediately. If not, flag and move on
                   </span>
                 </li>
               </ul>
@@ -436,9 +436,8 @@ const AM2Module6Section1 = () => {
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>
                   <span className="text-ios-footnote text-white">
-                    <strong className="text-white">Strategy:</strong> Read the scenario
-                    carefully, identify what's happening, then consider what regulations or
-                    procedures apply
+                    <strong className="text-white">Strategy:</strong> Read the scenario carefully,
+                    identify what's happening, then consider what regulations or procedures apply
                   </span>
                 </li>
               </ul>
@@ -463,8 +462,8 @@ const AM2Module6Section1 = () => {
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>
                   <span className="text-ios-footnote text-white">
-                    <strong className="text-white">Strategy:</strong> Learn key regulation
-                    numbers and their purposes rather than trying to memorise everything
+                    <strong className="text-white">Strategy:</strong> Learn key regulation numbers
+                    and their purposes rather than trying to memorise everything
                   </span>
                 </li>
               </ul>
@@ -482,15 +481,15 @@ const AM2Module6Section1 = () => {
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>
                   <span className="text-ios-footnote text-white">
-                    <strong className="text-white">Common topics:</strong> Ohm's law
-                    applications, power calculations, voltage drop, fault current, cable sizing
+                    <strong className="text-white">Common topics:</strong> Ohm's law applications,
+                    power calculations, voltage drop, fault current, cable sizing
                   </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>
                   <span className="text-ios-footnote text-white">
-                    <strong className="text-white">Strategy:</strong> Show your working mentally
-                    and double-check calculations
+                    <strong className="text-white">Strategy:</strong> Show your working mentally and
+                    double-check calculations
                   </span>
                 </li>
               </ul>
@@ -515,8 +514,8 @@ const AM2Module6Section1 = () => {
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>
                   <span className="text-ios-footnote text-white">
-                    <strong className="text-white">Strategy:</strong> Think about best practice
-                    and legal requirements - safety is always the priority
+                    <strong className="text-white">Strategy:</strong> Think about best practice and
+                    legal requirements - safety is always the priority
                   </span>
                 </li>
               </ul>
@@ -583,8 +582,8 @@ const AM2Module6Section1 = () => {
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>
                   <span className="text-ios-footnote text-white">
-                    <strong className="text-white">Listen to the briefing:</strong> Pay attention
-                    to any last-minute instructions
+                    <strong className="text-white">Listen to the briefing:</strong> Pay attention to
+                    any last-minute instructions
                   </span>
                 </li>
                 <li className="flex items-start gap-2">
@@ -597,8 +596,8 @@ const AM2Module6Section1 = () => {
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>
                   <span className="text-ios-footnote text-white">
-                    <strong className="text-white">Mental preparation:</strong> Take a deep
-                    breath and remind yourself you've prepared thoroughly
+                    <strong className="text-white">Mental preparation:</strong> Take a deep breath
+                    and remind yourself you've prepared thoroughly
                   </span>
                 </li>
               </ul>
@@ -612,15 +611,15 @@ const AM2Module6Section1 = () => {
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>
                   <span className="text-ios-footnote text-white">
-                    <strong className="text-white">Read the entire question:</strong> Don't
-                    assume after reading the first few words
+                    <strong className="text-white">Read the entire question:</strong> Don't assume
+                    after reading the first few words
                   </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>
                   <span className="text-ios-footnote text-white">
-                    <strong className="text-white">Identify key words:</strong> Look for
-                    "minimum", "maximum", "not", "except", "best"
+                    <strong className="text-white">Identify key words:</strong> Look for "minimum",
+                    "maximum", "not", "except", "best"
                   </span>
                 </li>
                 <li className="flex items-start gap-2">
@@ -641,8 +640,8 @@ const AM2Module6Section1 = () => {
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>
                   <span className="text-ios-footnote text-white">
-                    <strong className="text-white">Look for extreme values:</strong> Unusually
-                    high or low answers are often incorrect
+                    <strong className="text-white">Look for extreme values:</strong> Unusually high
+                    or low answers are often incorrect
                   </span>
                 </li>
                 <li className="flex items-start gap-2">
@@ -677,22 +676,22 @@ const AM2Module6Section1 = () => {
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>
                   <span className="text-ios-footnote text-white">
-                    <strong className="text-white">Set time checkpoints:</strong> 50% in 25
-                    minutes, 75% in 40 minutes
+                    <strong className="text-white">Set time checkpoints:</strong> 50% in 25 minutes,
+                    75% in 40 minutes
                   </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>
                   <span className="text-ios-footnote text-white">
-                    <strong className="text-white">Don't get stuck:</strong> If more than 3
-                    minutes on a question, flag it and move on
+                    <strong className="text-white">Don't get stuck:</strong> If more than 3 minutes
+                    on a question, flag it and move on
                   </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>
                   <span className="text-ios-footnote text-white">
-                    <strong className="text-white">Save time for review:</strong> Finish with
-                    5-10 minutes for flagged questions
+                    <strong className="text-white">Save time for review:</strong> Finish with 5-10
+                    minutes for flagged questions
                   </span>
                 </li>
               </ul>
@@ -764,9 +763,7 @@ const AM2Module6Section1 = () => {
               <h4 className="text-ios-headline font-semibold text-white mb-2">
                 Q3: What's the pass mark?
               </h4>
-              <p className="text-ios-callout text-white">
-                A: 70% (21 correct answers out of 30).
-              </p>
+              <p className="text-ios-callout text-white">A: 70% (21 correct answers out of 30).</p>
             </div>
 
             <div className="bg-white/5 border border-white/10 rounded-xl p-4">
@@ -807,7 +804,7 @@ const AM2Module6Section1 = () => {
         <AM2NavigationFooter
           previousHref="/study-centre/apprentice/am2/module6"
           previousLabel="Module 6 Overview"
-          nextHref="../section2"
+          nextHref="/study-centre/apprentice/am2/module6/section2"
           nextLabel="Core Topics"
           currentSection={1}
           totalSections={4}

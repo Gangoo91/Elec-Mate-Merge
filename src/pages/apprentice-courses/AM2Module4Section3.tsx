@@ -880,9 +880,9 @@ const AM2Module4Section3 = () => {
 
       {/* Navigation Footer */}
       <AM2NavigationFooter
-        prevHref="../section2"
+        prevHref="/study-centre/apprentice/am2/module4/section2"
         prevLabel="Safe Use of Test Instruments"
-        nextHref="../section4"
+        nextHref="/study-centre/apprentice/am2/module4/section4"
         nextLabel="Functional Testing"
         currentSection={3}
         totalSections={6}

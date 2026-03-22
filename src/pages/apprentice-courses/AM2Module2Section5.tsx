@@ -726,9 +726,9 @@ const AM2Module2Section5 = () => {
       </AM2ContentCard>
 
       <AM2NavigationFooter
-        prevHref="../section4"
+        prevHref="/study-centre/apprentice/am2/module2/section4"
         prevLabel="Section 4: Completing Paperwork Under Pressure"
-        nextHref="../../module3"
+        nextHref="/study-centre/apprentice/am2/module3"
         nextLabel="Module 3: Installation Tasks"
         currentSection={5}
         totalSections={8}

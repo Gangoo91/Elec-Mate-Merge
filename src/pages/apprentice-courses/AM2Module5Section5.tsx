@@ -304,8 +304,7 @@ const AM2Module5Section5 = () => {
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>
                   <span className="text-ios-footnote text-white">
-                    <strong className="text-white">Fault:</strong> Complete break in conductor
-                    path
+                    <strong className="text-white">Fault:</strong> Complete break in conductor path
                   </span>
                 </li>
                 <li className="flex items-start gap-2">
@@ -318,15 +317,15 @@ const AM2Module5Section5 = () => {
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>
                   <span className="text-ios-footnote text-white">
-                    <strong className="text-white">Expected result:</strong> Low resistance
-                    reading (0.05 Ohms per metre or less)
+                    <strong className="text-white">Expected result:</strong> Low resistance reading
+                    (0.05 Ohms per metre or less)
                   </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>
                   <span className="text-ios-footnote text-white">
-                    <strong className="text-white">Tool:</strong> Continuity tester with 200mA
-                    test current
+                    <strong className="text-white">Tool:</strong> Continuity tester with 200mA test
+                    current
                   </span>
                 </li>
               </ul>
@@ -347,8 +346,8 @@ const AM2Module5Section5 = () => {
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>
                   <span className="text-ios-footnote text-white">
-                    <strong className="text-white">Re-test:</strong> Insulation resistance
-                    between conductors
+                    <strong className="text-white">Re-test:</strong> Insulation resistance between
+                    conductors
                   </span>
                 </li>
                 <li className="flex items-start gap-2">
@@ -385,8 +384,7 @@ const AM2Module5Section5 = () => {
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>
                   <span className="text-ios-footnote text-white">
-                    <strong className="text-white">Re-test:</strong> Earth fault loop impedance
-                    (Zs)
+                    <strong className="text-white">Re-test:</strong> Earth fault loop impedance (Zs)
                   </span>
                 </li>
                 <li className="flex items-start gap-2">
@@ -399,8 +397,8 @@ const AM2Module5Section5 = () => {
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>
                   <span className="text-ios-footnote text-white">
-                    <strong className="text-white">Also check:</strong> Continuity at the
-                    connection point
+                    <strong className="text-white">Also check:</strong> Continuity at the connection
+                    point
                   </span>
                 </li>
               </ul>
@@ -862,9 +860,9 @@ const AM2Module5Section5 = () => {
 
         {/* Navigation */}
         <AM2NavigationFooter
-          previousHref="../section4"
+          previousHref="/study-centre/apprentice/am2/module5/section4"
           previousLabel="Fault Rectification"
-          nextHref="../section6"
+          nextHref="/study-centre/apprentice/am2/module5/section6"
           nextLabel="Quick Reference Sheet"
           currentSection={5}
           totalSections={6}

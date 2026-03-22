@@ -313,8 +313,8 @@ const AM2Module3Section4 = () => {
               <li className="flex gap-2">
                 <span className="font-medium text-amber-400 min-w-[20px]">!</span>
                 <div>
-                  <strong className="text-white">Missing or poor labelling</strong> -
-                  Identification requirements
+                  <strong className="text-white">Missing or poor labelling</strong> - Identification
+                  requirements
                   <p className="text-xs mt-1 text-white">
                     Pencil marks, temporary labels, illegible text
                   </p>
@@ -325,9 +325,7 @@ const AM2Module3Section4 = () => {
                 <div>
                   <strong className="text-white">Conductor damage during installation</strong> -
                   Care and skill
-                  <p className="text-xs mt-1 text-white">
-                    Damaged insulation, kinked conductors
-                  </p>
+                  <p className="text-xs mt-1 text-white">Damaged insulation, kinked conductors</p>
                 </div>
               </li>
             </ul>
@@ -360,9 +358,7 @@ const AM2Module3Section4 = () => {
               <li className="flex gap-2">
                 <span className="font-medium text-green-400 min-w-[20px]">Y</span>
                 <div>
-                  <strong className="text-white">
-                    No bare copper visible outside terminals
-                  </strong>
+                  <strong className="text-white">No bare copper visible outside terminals</strong>
                   <p className="text-xs mt-1 text-white">
                     Critical safety requirement - prevents shock and short circuits
                   </p>
@@ -900,9 +896,7 @@ const AM2Module3Section4 = () => {
                   <strong className="text-white">
                     Poor SWA gland installation (24% of failures)
                   </strong>
-                  <p className="text-xs mt-1 text-white">
-                    Armour not properly clamped or earthed
-                  </p>
+                  <p className="text-xs mt-1 text-white">Armour not properly clamped or earthed</p>
                 </div>
               </li>
             </ol>
@@ -916,13 +910,13 @@ const AM2Module3Section4 = () => {
             <ul className="space-y-1 text-sm text-white">
               <li className="flex items-start gap-2">
                 <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
-                <strong className="text-white">Acknowledge immediately</strong> - Don't try to
-                hide mistakes
+                <strong className="text-white">Acknowledge immediately</strong> - Don't try to hide
+                mistakes
               </li>
               <li className="flex items-start gap-2">
                 <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
-                <strong className="text-white">Rectify systematically</strong> - Fix the root
-                cause, not just symptoms
+                <strong className="text-white">Rectify systematically</strong> - Fix the root cause,
+                not just symptoms
               </li>
               <li className="flex items-start gap-2">
                 <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
@@ -931,8 +925,8 @@ const AM2Module3Section4 = () => {
               </li>
               <li className="flex items-start gap-2">
                 <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
-                <strong className="text-white">Document the fix</strong> - Show understanding of
-                the issue
+                <strong className="text-white">Document the fix</strong> - Show understanding of the
+                issue
               </li>
               <li className="flex items-start gap-2">
                 <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
@@ -1006,9 +1000,9 @@ const AM2Module3Section4 = () => {
 
       {/* Navigation Footer */}
       <AM2NavigationFooter
-        previousHref="../section3"
+        previousHref="/study-centre/apprentice/am2/module3/section3"
         previousLabel="Lighting Circuits"
-        nextHref="../section5"
+        nextHref="/study-centre/apprentice/am2/module3/section5"
         nextLabel="Accuracy & Neatness"
         currentSection={4}
         totalSections={6}
