@@ -11,6 +11,9 @@ import {
   Calendar,
   Camera,
   Plus,
+  Pencil,
+  FileText,
+  Flame,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -51,9 +54,21 @@ const FILTERS: { key: FilterKey; label: string }[] = [
 const priorityPills: { value: CreateSnagInput['priority']; label: string; activeClass: string }[] =
   [
     { value: 'low', label: 'Low', activeClass: 'bg-white/20 text-white border-white/30' },
-    { value: 'normal', label: 'Normal', activeClass: 'bg-blue-500/20 text-blue-400 border-blue-500/30' },
-    { value: 'high', label: 'High', activeClass: 'bg-orange-500/20 text-orange-400 border-orange-500/30' },
-    { value: 'urgent', label: 'Urgent', activeClass: 'bg-red-500/20 text-red-400 border-red-500/30' },
+    {
+      value: 'normal',
+      label: 'Normal',
+      activeClass: 'bg-blue-500/20 text-blue-400 border-blue-500/30',
+    },
+    {
+      value: 'high',
+      label: 'High',
+      activeClass: 'bg-orange-500/20 text-orange-400 border-orange-500/30',
+    },
+    {
+      value: 'urgent',
+      label: 'Urgent',
+      activeClass: 'bg-red-500/20 text-red-400 border-red-500/30',
+    },
   ];
 
 const priorityAccent: Record<string, string> = {
@@ -237,7 +252,10 @@ const SnaggingPage = () => {
 
   // Re-group filtered snags by project
   const filteredProjects = (() => {
-    const grouped: Record<string, { projectId: string | null; projectTitle: string; snags: Snag[] }> = {};
+    const grouped: Record<
+      string,
+      { projectId: string | null; projectTitle: string; snags: Snag[] }
+    > = {};
     for (const snag of filteredSnags) {
       const key = snag.projectId || '__unassigned__';
       if (!grouped[key]) {
@@ -310,7 +328,9 @@ const SnaggingPage = () => {
               {f.label}
               <span
                 className={`px-1.5 py-0.5 rounded-full text-[10px] font-bold ${
-                  filter === f.key ? 'bg-orange-500/30 text-orange-300' : 'bg-white/[0.08] text-white'
+                  filter === f.key
+                    ? 'bg-orange-500/30 text-orange-300'
+                    : 'bg-white/[0.08] text-white'
                 }`}
               >
                 {filterCounts[f.key]}
@@ -326,7 +346,9 @@ const SnaggingPage = () => {
           <div className="rounded-xl bg-white/[0.03] border border-orange-500/20 p-3 text-center relative overflow-hidden">
             <div className="absolute top-0 left-0 right-0 h-0.5 bg-orange-500" />
             <div className="text-2xl font-bold text-orange-400">{counts.open}</div>
-            <div className="text-[11px] font-medium text-white uppercase tracking-wide mt-0.5">Open</div>
+            <div className="text-[11px] font-medium text-white uppercase tracking-wide mt-0.5">
+              Open
+            </div>
           </div>
           <div className="rounded-xl bg-white/[0.03] border border-green-500/20 p-3 text-center relative overflow-hidden">
             <div className="absolute top-0 left-0 right-0 h-0.5 bg-green-500" />
@@ -383,7 +405,8 @@ const SnaggingPage = () => {
           const isOpen = openProjects.has(key) || openProjects.has('__all__');
           const openCount = group.snags.filter((s) => s.status !== 'done').length;
           const resolvedCount = group.snags.length - openCount;
-          const progressPct = group.snags.length > 0 ? (resolvedCount / group.snags.length) * 100 : 0;
+          const progressPct =
+            group.snags.length > 0 ? (resolvedCount / group.snags.length) * 100 : 0;
 
           return (
             <Collapsible key={key} open={isOpen} onOpenChange={() => toggleProject(key)}>
@@ -435,29 +458,47 @@ const SnaggingPage = () => {
         })}
       </div>
 
-      {/* Add Snag Drawer */}
-      <Drawer open={drawerOpen} onOpenChange={setDrawerOpen}>
-        <DrawerContent className="max-h-[85vh]">
-          <DrawerHeader>
-            <DrawerTitle className="text-white text-lg">Add Snag</DrawerTitle>
+      {/* Add Snag Drawer — shouldScaleBackground+noBodyStyles prevents vaul scroll-jump on iOS */}
+      <Drawer
+        open={drawerOpen}
+        onOpenChange={setDrawerOpen}
+        shouldScaleBackground={false}
+        noBodyStyles
+      >
+        <DrawerContent className="max-h-[78vh] flex flex-col">
+          {/* Orange accent strip */}
+          <div className="h-1 w-full bg-orange-500 rounded-t-xl flex-shrink-0" />
+
+          <DrawerHeader className="pb-2 flex-shrink-0">
+            <div className="flex items-center gap-2">
+              <div className="w-8 h-8 rounded-lg bg-orange-500/15 flex items-center justify-center">
+                <AlertTriangle className="h-4 w-4 text-orange-400" />
+              </div>
+              <DrawerTitle className="text-white text-lg font-bold">New Snag</DrawerTitle>
+            </div>
           </DrawerHeader>
-          <div className="px-4 space-y-4 overflow-y-auto flex-1">
+
+          {/* Scrollable form body */}
+          <div className="px-4 pb-2 space-y-4 overflow-y-auto flex-1">
             {/* Title */}
             <div className="space-y-1.5">
-              <label className="text-xs font-semibold text-white uppercase tracking-wide">
+              <label className="flex items-center gap-1.5 text-xs font-semibold text-white uppercase tracking-wide">
+                <Pencil className="h-3.5 w-3.5 text-orange-400" />
                 What's the snag? *
               </label>
               <Input
                 value={formTitle}
                 onChange={(e) => setFormTitle(e.target.value)}
                 placeholder="e.g. Damaged socket faceplate in lounge"
-                className="h-11 text-base touch-manipulation border-white/30 focus:border-orange-500 focus:ring-orange-500"
+                autoCapitalize="sentences"
+                className="h-12 text-base touch-manipulation border-white/20 bg-white/[0.04] focus:border-orange-500 focus:ring-1 focus:ring-orange-500/40 rounded-xl placeholder:text-white/30"
               />
             </div>
 
             {/* Priority */}
             <div className="space-y-1.5">
-              <label className="text-xs font-semibold text-white uppercase tracking-wide">
+              <label className="flex items-center gap-1.5 text-xs font-semibold text-white uppercase tracking-wide">
+                <Flame className="h-3.5 w-3.5 text-orange-400" />
                 Priority
               </label>
               <div className="grid grid-cols-4 gap-2">
@@ -465,10 +506,10 @@ const SnaggingPage = () => {
                   <button
                     key={p.value}
                     onClick={() => setFormPriority(p.value)}
-                    className={`h-11 rounded-xl text-xs font-semibold border touch-manipulation transition-colors ${
+                    className={`h-11 rounded-xl text-xs font-bold border touch-manipulation transition-all ${
                       formPriority === p.value
-                        ? p.activeClass
-                        : 'bg-white/[0.04] text-white border-white/10 active:bg-white/[0.08]'
+                        ? `${p.activeClass} scale-[1.03] shadow-lg`
+                        : 'bg-white/[0.04] text-white/60 border-white/10 active:bg-white/[0.08]'
                     }`}
                   >
                     {p.label}
@@ -479,25 +520,28 @@ const SnaggingPage = () => {
 
             {/* Location */}
             <div className="space-y-1.5">
-              <label className="text-xs font-semibold text-white uppercase tracking-wide">
+              <label className="flex items-center gap-1.5 text-xs font-semibold text-white uppercase tracking-wide">
+                <MapPin className="h-3.5 w-3.5 text-orange-400" />
                 Location
               </label>
               <Input
                 value={formLocation}
                 onChange={(e) => setFormLocation(e.target.value)}
                 placeholder="e.g. Kitchen, 1st floor"
-                className="h-11 text-base touch-manipulation border-white/30 focus:border-orange-500 focus:ring-orange-500"
+                autoCapitalize="sentences"
+                className="h-12 text-base touch-manipulation border-white/20 bg-white/[0.04] focus:border-orange-500 focus:ring-1 focus:ring-orange-500/40 rounded-xl placeholder:text-white/30"
               />
             </div>
 
             {/* Project */}
             {projectList.length > 0 && (
               <div className="space-y-1.5">
-                <label className="text-xs font-semibold text-white uppercase tracking-wide">
+                <label className="flex items-center gap-1.5 text-xs font-semibold text-white uppercase tracking-wide">
+                  <FileText className="h-3.5 w-3.5 text-orange-400" />
                   Project
                 </label>
                 <Select value={formProjectId} onValueChange={setFormProjectId}>
-                  <SelectTrigger className="h-11 touch-manipulation bg-elec-gray border-white/30 focus:border-orange-500 focus:ring-orange-500">
+                  <SelectTrigger className="h-12 touch-manipulation bg-white/[0.04] border-white/20 focus:border-orange-500 focus:ring-1 focus:ring-orange-500/40 rounded-xl">
                     <SelectValue placeholder="None (unassigned)" />
                   </SelectTrigger>
                   <SelectContent>
@@ -514,26 +558,38 @@ const SnaggingPage = () => {
 
             {/* Details */}
             <div className="space-y-1.5">
-              <label className="text-xs font-semibold text-white uppercase tracking-wide">
+              <label className="flex items-center gap-1.5 text-xs font-semibold text-white uppercase tracking-wide">
+                <FileText className="h-3.5 w-3.5 text-orange-400" />
                 Details
               </label>
               <Textarea
                 value={formDetails}
                 onChange={(e) => setFormDetails(e.target.value)}
-                placeholder="Any extra details..."
+                placeholder="Any extra details about the snag..."
+                autoCapitalize="sentences"
                 rows={3}
-                className="touch-manipulation text-base min-h-[80px] focus:ring-2 focus:ring-orange-500/20 border-white/30 focus:border-orange-500"
+                className="touch-manipulation text-base min-h-[80px] bg-white/[0.04] border-white/20 focus:border-orange-500 focus:ring-1 focus:ring-orange-500/40 rounded-xl placeholder:text-white/30 resize-none"
               />
             </div>
           </div>
 
-          <DrawerFooter>
+          <DrawerFooter className="pt-3 flex-shrink-0">
             <Button
               onClick={handleSubmit}
               disabled={!formTitle.trim() || submitting}
-              className="w-full h-12 bg-orange-500 hover:bg-orange-600 text-white font-semibold rounded-xl touch-manipulation disabled:opacity-40"
+              className="w-full h-13 bg-orange-500 hover:bg-orange-600 active:bg-orange-700 text-white font-bold text-base rounded-xl touch-manipulation disabled:opacity-40 transition-colors"
             >
-              {submitting ? 'Adding...' : 'Add Snag'}
+              {submitting ? (
+                <span className="flex items-center gap-2">
+                  <span className="animate-spin h-4 w-4 border-2 border-white border-t-transparent rounded-full" />
+                  Adding...
+                </span>
+              ) : (
+                <span className="flex items-center gap-2">
+                  <Plus className="h-5 w-5" />
+                  Add Snag
+                </span>
+              )}
             </Button>
           </DrawerFooter>
         </DrawerContent>
