@@ -341,9 +341,7 @@ const AM2Module7Section2 = () => {
               1
             </div>
             <div className="flex-1">
-              <h5 className="text-ios-headline text-white mb-2">
-                Preparation Builds Confidence
-              </h5>
+              <h5 className="text-ios-headline text-white mb-2">Preparation Builds Confidence</h5>
               <p className="text-ios-callout text-white mb-3">
                 Practise safe isolation daily and run through testing procedures until they feel
                 automatic. The more natural the task feels, the less nerves will interfere.
@@ -846,9 +844,9 @@ const AM2Module7Section2 = () => {
 
       {/* Navigation Footer */}
       <AM2NavigationFooter
-        previousHref="../section1"
+        previousHref="/study-centre/apprentice/am2/module7/section1"
         previousLabel="Knowledge Test Practice"
-        nextHref="../section3"
+        nextHref="/study-centre/apprentice/am2/module7/section3"
         nextLabel="Safety-first Approach"
         currentSection={2}
         totalSections={4}

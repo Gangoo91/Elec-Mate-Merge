@@ -265,9 +265,7 @@ const AM2Module4Section6 = () => {
           </div>
 
           <div className="bg-white/5 border border-white/10 rounded-xl p-4">
-            <h4 className="text-ios-headline text-white mb-3">
-              Benefits of Good Time Management:
-            </h4>
+            <h4 className="text-ios-headline text-white mb-3">Benefits of Good Time Management:</h4>
             <ul className="space-y-2 text-ios-callout text-white">
               <li className="flex items-start gap-2">
                 <span className="text-green-400">•</span>
@@ -496,16 +494,16 @@ const AM2Module4Section6 = () => {
               </h4>
               <ul className="text-ios-callout text-white space-y-1">
                 <li>
-                  <strong className="text-white">Have a plan:</strong> Break tasks into stages
-                  with time targets
+                  <strong className="text-white">Have a plan:</strong> Break tasks into stages with
+                  time targets
                 </li>
                 <li>
-                  <strong className="text-white">Check off sequence:</strong> Use the GN3 order
-                  like a checklist
+                  <strong className="text-white">Check off sequence:</strong> Use the GN3 order like
+                  a checklist
                 </li>
                 <li>
-                  <strong className="text-white">Don't over-engineer:</strong> Professional
-                  standard is enough
+                  <strong className="text-white">Don't over-engineer:</strong> Professional standard
+                  is enough
                 </li>
               </ul>
             </div>
@@ -521,8 +519,8 @@ const AM2Module4Section6 = () => {
                   test, not afterwards
                 </li>
                 <li>
-                  <strong className="text-white">Work cleanly:</strong> Avoid wasted time
-                  untangling leads
+                  <strong className="text-white">Work cleanly:</strong> Avoid wasted time untangling
+                  leads
                 </li>
                 <li>
                   <strong className="text-white">Clear handwriting:</strong> Practice legible
@@ -544,8 +542,8 @@ const AM2Module4Section6 = () => {
                   and unsafe practice
                 </li>
                 <li>
-                  <strong className="text-white">Focus on one circuit:</strong> Complete each
-                  fully before moving on
+                  <strong className="text-white">Focus on one circuit:</strong> Complete each fully
+                  before moving on
                 </li>
                 <li>
                   <strong className="text-white">Commentary:</strong> Talk through actions to
@@ -561,8 +559,7 @@ const AM2Module4Section6 = () => {
               </h4>
               <ul className="text-ios-callout text-white space-y-1">
                 <li>
-                  <strong className="text-white">Organised setup:</strong> Keep tools and leads
-                  tidy
+                  <strong className="text-white">Organised setup:</strong> Keep tools and leads tidy
                 </li>
                 <li>
                   <strong className="text-white">Pre-check equipment:</strong> Verify operation
@@ -628,9 +625,7 @@ const AM2Module4Section6 = () => {
             </div>
 
             <div className="bg-white/5 border border-white/10 rounded-xl p-4">
-              <h4 className="text-ios-headline text-white mb-2">
-                Example 4: Real-world Parallel
-              </h4>
+              <h4 className="text-ios-headline text-white mb-2">Example 4: Real-world Parallel</h4>
               <p className="text-ios-callout text-white mb-2">
                 In real work, a contractor failed a NICEIC audit because test sheets were
                 incomplete. Same issue in AM2 ={' '}
@@ -716,9 +711,7 @@ const AM2Module4Section6 = () => {
         <h3 className="text-ios-headline text-white mb-4">Common Problems and Solutions</h3>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="bg-white/5 border border-white/10 rounded-xl p-4 border-l-4 border-l-red-500">
-            <p className="text-ios-headline text-white mb-2">
-              Problem: Test equipment malfunction
-            </p>
+            <p className="text-ios-headline text-white mb-2">Problem: Test equipment malfunction</p>
             <p className="text-ios-callout text-white">
               Solution: Always have backup instruments and check equipment functionality before
               starting formal testing
@@ -743,9 +736,7 @@ const AM2Module4Section6 = () => {
             </p>
           </div>
           <div className="bg-white/5 border border-white/10 rounded-xl p-4 border-l-4 border-l-green-500">
-            <p className="text-ios-headline text-white mb-2">
-              Problem: Forgetting test sequences
-            </p>
+            <p className="text-ios-headline text-white mb-2">Problem: Forgetting test sequences</p>
             <p className="text-ios-callout text-white">
               Solution: Create a personal checklist and stick rigidly to GN3 testing order
             </p>
@@ -836,9 +827,9 @@ const AM2Module4Section6 = () => {
 
       {/* Navigation Footer */}
       <AM2NavigationFooter
-        previousHref="../section5"
+        previousHref="/study-centre/apprentice/am2/module4/section5"
         previousLabel="Section 5: Non-Compliances"
-        nextHref="../../module5"
+        nextHref="/study-centre/apprentice/am2/module5"
         nextLabel="Module 5: Fault Diagnosis and Rectification"
         currentSection={6}
         totalSections={6}

@@ -652,7 +652,7 @@ const AM2Module7Section1 = () => {
       <AM2NavigationFooter
         previousHref="/study-centre/apprentice/am2/module6/section4"
         previousLabel="Module 6 Section 4"
-        nextHref="../section2"
+        nextHref="/study-centre/apprentice/am2/module7/section2"
         nextLabel="Coping with Nerves"
         currentSection={1}
         totalSections={4}

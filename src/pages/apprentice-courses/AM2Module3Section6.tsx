@@ -827,7 +827,7 @@ const AM2Module3Section6 = () => {
       </AM2ContentCard>
 
       <AM2NavigationFooter
-        previousHref="../section5"
+        previousHref="/study-centre/apprentice/am2/module3/section5"
         previousLabel="Accuracy & Neatness"
         nextHref="/study-centre/apprentice/am2/module4"
         nextLabel="Module 4"

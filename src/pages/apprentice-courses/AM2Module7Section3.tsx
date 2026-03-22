@@ -562,8 +562,8 @@ const AM2Module7Section3 = () => {
                 GS38-compliant, prove on known live source
               </p>
               <p>
-                <strong className="text-white">Say:</strong> "I'm checking my tester before use
-                on this known live source"
+                <strong className="text-white">Say:</strong> "I'm checking my tester before use on
+                this known live source"
               </p>
               <p>
                 <strong className="text-white">Why:</strong> Shows methodical approach and
@@ -580,12 +580,12 @@ const AM2Module7Section3 = () => {
             </h4>
             <div className="text-ios-callout text-white space-y-2">
               <p>
-                <strong className="text-white">Do:</strong> Connect CPCs first with proper
-                sleeving, torque terminals to spec
+                <strong className="text-white">Do:</strong> Connect CPCs first with proper sleeving,
+                torque terminals to spec
               </p>
               <p>
-                <strong className="text-white">Say:</strong> "Connecting the CPC first for
-                safety, using green/yellow sleeving"
+                <strong className="text-white">Say:</strong> "Connecting the CPC first for safety,
+                using green/yellow sleeving"
               </p>
               <p>
                 <strong className="text-white">Why:</strong> Demonstrates understanding of safety
@@ -602,16 +602,16 @@ const AM2Module7Section3 = () => {
             </h4>
             <div className="text-ios-callout text-white space-y-2">
               <p>
-                <strong className="text-white">Do:</strong> Double-check all connections, verify
-                CPC continuity, check polarity
+                <strong className="text-white">Do:</strong> Double-check all connections, verify CPC
+                continuity, check polarity
               </p>
               <p>
-                <strong className="text-white">Say:</strong> "Checking all connections secure
-                before energising, verifying CPC continuity"
+                <strong className="text-white">Say:</strong> "Checking all connections secure before
+                energising, verifying CPC continuity"
               </p>
               <p>
-                <strong className="text-white">Why:</strong> Prevents dangerous situations and
-                shows systematic approach
+                <strong className="text-white">Why:</strong> Prevents dangerous situations and shows
+                systematic approach
               </p>
             </div>
           </div>
@@ -624,8 +624,8 @@ const AM2Module7Section3 = () => {
             </h4>
             <div className="text-ios-callout text-white space-y-2">
               <p>
-                <strong className="text-white">Do:</strong> Stop immediately, isolate if
-                necessary, correct properly
+                <strong className="text-white">Do:</strong> Stop immediately, isolate if necessary,
+                correct properly
               </p>
               <p>
                 <strong className="text-white">Say:</strong> "I need to isolate and correct this
@@ -644,8 +644,8 @@ const AM2Module7Section3 = () => {
             <div className="flex items-start gap-3">
               <CheckCircle className="w-5 h-5 text-green-400 mt-0.5 flex-shrink-0" />
               <p className="text-ios-callout text-white">
-                <strong className="text-white">Practise safe isolation</strong> until it is
-                second nature
+                <strong className="text-white">Practise safe isolation</strong> until it is second
+                nature
               </p>
             </div>
           </div>
@@ -654,8 +654,8 @@ const AM2Module7Section3 = () => {
             <div className="flex items-start gap-3">
               <CheckCircle className="w-5 h-5 text-green-400 mt-0.5 flex-shrink-0" />
               <p className="text-ios-callout text-white">
-                <strong className="text-white">Always sleeve CPCs immediately</strong> - don't
-                leave it until later
+                <strong className="text-white">Always sleeve CPCs immediately</strong> - don't leave
+                it until later
               </p>
             </div>
           </div>
@@ -803,9 +803,7 @@ const AM2Module7Section3 = () => {
               </span>
             </li>
           </ul>
-          <p className="text-ios-callout text-white mt-4 font-bold">
-            Unsafe = fail. Safe = pass.
-          </p>
+          <p className="text-ios-callout text-white mt-4 font-bold">Unsafe = fail. Safe = pass.</p>
         </div>
       </AM2ContentCard>
 
@@ -814,9 +812,9 @@ const AM2Module7Section3 = () => {
 
       {/* Navigation Footer */}
       <AM2NavigationFooter
-        previousHref="../section2"
+        previousHref="/study-centre/apprentice/am2/module7/section2"
         previousLabel="Coping with Nerves"
-        nextHref="../section4"
+        nextHref="/study-centre/apprentice/am2/module7/section4"
         nextLabel="Avoiding Common Mistakes"
         currentSection={3}
         totalSections={4}

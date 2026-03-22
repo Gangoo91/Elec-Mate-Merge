@@ -798,8 +798,8 @@ const AM2Module3Section2 = () => {
               <li className="flex items-start gap-2">
                 <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                 <span>
-                  <strong className="text-white">Installation quality:</strong> Straight runs,
-                  level accessories, neat terminations
+                  <strong className="text-white">Installation quality:</strong> Straight runs, level
+                  accessories, neat terminations
                 </span>
               </li>
               <li className="flex items-start gap-2">
@@ -812,8 +812,8 @@ const AM2Module3Section2 = () => {
               <li className="flex items-start gap-2">
                 <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                 <span>
-                  <strong className="text-white">Protection integrity:</strong> No damage to
-                  cable insulation
+                  <strong className="text-white">Protection integrity:</strong> No damage to cable
+                  insulation
                 </span>
               </li>
             </ul>
@@ -907,8 +907,7 @@ const AM2Module3Section2 = () => {
               <li className="flex items-start gap-2">
                 <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                 <span>
-                  <strong className="text-white">Motors:</strong> Have SWA glanding checklist
-                  ready
+                  <strong className="text-white">Motors:</strong> Have SWA glanding checklist ready
                 </span>
               </li>
             </ul>
@@ -1043,15 +1042,15 @@ const AM2Module3Section2 = () => {
             <li className="flex items-start gap-2">
               <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
               <span>
-                <strong className="text-white">Technical accuracy:</strong> Ring continuity,
-                correct radial wiring, proper cooker cable termination
+                <strong className="text-white">Technical accuracy:</strong> Ring continuity, correct
+                radial wiring, proper cooker cable termination
               </span>
             </li>
             <li className="flex items-start gap-2">
               <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
               <span>
-                <strong className="text-white">Motor circuits:</strong> Overloads set correctly,
-                SWA glanded properly with earth continuity
+                <strong className="text-white">Motor circuits:</strong> Overloads set correctly, SWA
+                glanded properly with earth continuity
               </span>
             </li>
             <li className="flex items-start gap-2">
@@ -1082,9 +1081,9 @@ const AM2Module3Section2 = () => {
 
       {/* Navigation Footer */}
       <AM2NavigationFooter
-        previousHref="../section1"
+        previousHref="/study-centre/apprentice/am2/module3/section1"
         previousLabel="Cable Selection & Containment"
-        nextHref="../section3"
+        nextHref="/study-centre/apprentice/am2/module3/section3"
         nextLabel="Lighting Circuits"
         currentSection={2}
         totalSections={6}

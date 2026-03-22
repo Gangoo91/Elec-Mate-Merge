@@ -718,9 +718,9 @@ const AM2Module6Section3 = () => {
 
       {/* Navigation Footer */}
       <AM2NavigationFooter
-        prevHref="../section2"
+        prevHref="/study-centre/apprentice/am2/module6/section2"
         prevLabel="Core Topics"
-        nextHref="../section4"
+        nextHref="/study-centre/apprentice/am2/module6/section4"
         nextLabel="Exam Techniques"
         currentSection={3}
         totalSections={4}

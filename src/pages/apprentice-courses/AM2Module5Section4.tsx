@@ -519,8 +519,7 @@ const AM2Module5Section4 = () => {
                   <li className="flex items-start gap-2">
                     <span className="text-elec-yellow">•</span>
                     <span className="text-ios-footnote text-white">
-                      <strong className="text-white">Short circuit</strong> → Insulation
-                      resistance
+                      <strong className="text-white">Short circuit</strong> → Insulation resistance
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
@@ -630,15 +629,11 @@ const AM2Module5Section4 = () => {
                   <ul className="space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="text-elec-yellow">•</span>
-                      <span className="text-ios-footnote text-white">
-                        Clear, precise language
-                      </span>
+                      <span className="text-ios-footnote text-white">Clear, precise language</span>
                     </li>
                     <li className="flex items-start gap-2">
                       <span className="text-elec-yellow">•</span>
-                      <span className="text-ios-footnote text-white">
-                        Professional terminology
-                      </span>
+                      <span className="text-ios-footnote text-white">Professional terminology</span>
                     </li>
                     <li className="flex items-start gap-2">
                       <span className="text-elec-yellow">•</span>
@@ -657,9 +652,7 @@ const AM2Module5Section4 = () => {
                   <ul className="space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="text-elec-yellow">•</span>
-                      <span className="text-ios-footnote text-white">
-                        Correct repair methods
-                      </span>
+                      <span className="text-ios-footnote text-white">Correct repair methods</span>
                     </li>
                     <li className="flex items-start gap-2">
                       <span className="text-elec-yellow">•</span>
@@ -703,8 +696,8 @@ const AM2Module5Section4 = () => {
                     Multiple Faults on Same Circuit:
                   </h5>
                   <p className="text-ios-footnote text-white mb-2">
-                    <strong className="text-white">Example:</strong> Ring final with both open
-                    CPC and reversed polarity at socket
+                    <strong className="text-white">Example:</strong> Ring final with both open CPC
+                    and reversed polarity at socket
                   </p>
                   <p className="text-ios-footnote text-white mb-2">
                     <strong className="text-white">Rectification:</strong> "1. Reconnect CPC at
@@ -741,9 +734,9 @@ const AM2Module5Section4 = () => {
                     disconnected affecting multiple circuits
                   </p>
                   <p className="text-ios-footnote text-white">
-                    <strong className="text-white">Rectification:</strong> "Reconnect main
-                    earthing conductor to MET and re-test Zs on all affected circuits to confirm
-                    earth integrity restored."
+                    <strong className="text-white">Rectification:</strong> "Reconnect main earthing
+                    conductor to MET and re-test Zs on all affected circuits to confirm earth
+                    integrity restored."
                   </p>
                 </div>
               </div>
@@ -819,17 +812,16 @@ const AM2Module5Section4 = () => {
                     <li className="flex items-start gap-2">
                       <span className="text-elec-yellow">•</span>
                       <span className="text-ios-footnote text-white">
-                        <strong className="text-white">Damaged cable:</strong> "Replace section
-                        of damaged cable between junction boxes A and B with equivalent 2.5mm T&E
-                        and re-test complete circuit"
+                        <strong className="text-white">Damaged cable:</strong> "Replace section of
+                        damaged cable between junction boxes A and B with equivalent 2.5mm T&E and
+                        re-test complete circuit"
                       </span>
                     </li>
                     <li className="flex items-start gap-2">
                       <span className="text-elec-yellow">•</span>
                       <span className="text-ios-footnote text-white">
-                        <strong className="text-white">Wrong cable type:</strong> "Replace
-                        non-LSF cable in escape route with LSF equivalent and re-test insulation
-                        resistance"
+                        <strong className="text-white">Wrong cable type:</strong> "Replace non-LSF
+                        cable in escape route with LSF equivalent and re-test insulation resistance"
                       </span>
                     </li>
                     <li className="flex items-start gap-2">
@@ -908,8 +900,8 @@ const AM2Module5Section4 = () => {
                     <li className="flex items-start gap-2">
                       <span className="text-elec-yellow">•</span>
                       <span className="text-ios-footnote text-white">
-                        <strong className="text-white">Compliance codes:</strong> C1, C2, C3
-                        codes may change after rectification
+                        <strong className="text-white">Compliance codes:</strong> C1, C2, C3 codes
+                        may change after rectification
                       </span>
                     </li>
                   </ul>
@@ -1086,9 +1078,7 @@ const AM2Module5Section4 = () => {
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="text-elec-yellow">•</span>
-                    <span className="text-ios-footnote text-white">
-                      Missing location details
-                    </span>
+                    <span className="text-ios-footnote text-white">Missing location details</span>
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="text-elec-yellow">•</span>
@@ -1098,9 +1088,7 @@ const AM2Module5Section4 = () => {
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="text-elec-yellow">•</span>
-                    <span className="text-ios-footnote text-white">
-                      Using informal terminology
-                    </span>
+                    <span className="text-ios-footnote text-white">Using informal terminology</span>
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="text-elec-yellow">•</span>
@@ -1265,9 +1253,9 @@ const AM2Module5Section4 = () => {
 
         {/* Navigation */}
         <AM2NavigationFooter
-          previousHref="../section3"
+          previousHref="/study-centre/apprentice/am2/module5/section3"
           previousLabel="Test Equipment"
-          nextHref="../section5"
+          nextHref="/study-centre/apprentice/am2/module5/section5"
           nextLabel="Common Pitfalls"
           currentSection={4}
           totalSections={6}

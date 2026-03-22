@@ -236,9 +236,7 @@ const AM2Module5Section6 = () => {
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>
-                  <span className="text-ios-callout text-white">
-                    Rectification: 10-15 minutes
-                  </span>
+                  <span className="text-ios-callout text-white">Rectification: 10-15 minutes</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>
@@ -315,9 +313,7 @@ const AM2Module5Section6 = () => {
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>
-                  <span className="text-ios-footnote text-white">
-                    Check test equipment works
-                  </span>
+                  <span className="text-ios-footnote text-white">Check test equipment works</span>
                 </li>
               </ul>
             </div>
@@ -336,15 +332,11 @@ const AM2Module5Section6 = () => {
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>
-                  <span className="text-ios-footnote text-white">
-                    Never assume - always verify
-                  </span>
+                  <span className="text-ios-footnote text-white">Never assume - always verify</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>
-                  <span className="text-ios-footnote text-white">
-                    Report any unsafe conditions
-                  </span>
+                  <span className="text-ios-footnote text-white">Report any unsafe conditions</span>
                 </li>
               </ul>
             </div>
@@ -397,7 +389,7 @@ const AM2Module5Section6 = () => {
 
         {/* Navigation */}
         <AM2NavigationFooter
-          previousHref="../section5"
+          previousHref="/study-centre/apprentice/am2/module5/section5"
           previousLabel="Re-testing Procedures"
           nextHref="/study-centre/apprentice/am2/module6"
           nextLabel="Module 6: Documentation"
