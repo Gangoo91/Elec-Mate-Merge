@@ -23,7 +23,8 @@ serve(async (req: Request) => {
       Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? ''
     );
 
-    const today = new Date().toISOString().split('T')[0];
+    // 24h grace period: only mark overdue if due_date is more than 24h ago
+    const yesterday = new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString().split('T')[0];
 
     // Find invoices that are overdue and not yet marked as such.
     // Uses correct column names for the invoices table:
@@ -31,8 +32,9 @@ serve(async (req: Request) => {
     const { data: overdueInvoices, error: queryError } = await supabase
       .from('invoices')
       .select('id, invoice_number, client_data, total, due_date, status, user_id')
-      .lt('due_date', today)
-      .not('status', 'in', '("Paid","paid","Cancelled","cancelled","Overdue","overdue")');
+      .lt('due_date', yesterday)
+      .not('status', 'in', '("Paid","paid","Cancelled","cancelled","Overdue","overdue")')
+      .is('deleted_at', null);
 
     if (queryError) {
       console.error('Error fetching overdue invoices:', queryError);

@@ -14,7 +14,7 @@ import { useActiveJobs } from '@/hooks/useJobs';
 import { useQuery } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { QUERY_PRESETS, QUERY_KEYS } from '@/lib/queryConfig';
-import { differenceInDays, isPast } from 'date-fns';
+import { differenceInDays, isPast, addHours } from 'date-fns';
 
 export interface DashboardUserData {
   name: string;
@@ -179,7 +179,7 @@ export function useDashboardData(): DashboardData {
 
     const overdueInvoices = unpaidInvoices.filter((i) => {
       if (!i.invoice_due_date) return false;
-      return isPast(new Date(i.invoice_due_date));
+      return isPast(addHours(new Date(i.invoice_due_date), 24));
     });
 
     const overdueValue = overdueInvoices.reduce((sum, i) => sum + (i.total || 0), 0);
@@ -220,7 +220,7 @@ export function useDashboardData(): DashboardData {
     const overdueInvoicesList =
       invoices?.filter((i) => {
         if (!i.invoice_due_date || i.invoice_status === 'paid') return false;
-        return isPast(new Date(i.invoice_due_date));
+        return isPast(addHours(new Date(i.invoice_due_date), 24));
       }) || [];
 
     overdueInvoicesList.slice(0, 2).forEach((inv) => {

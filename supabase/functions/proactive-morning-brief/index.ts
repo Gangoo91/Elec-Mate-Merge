@@ -179,13 +179,14 @@ async function gatherBriefData(
       .eq('user_id', userId)
       .eq('status', 'sent')
       .eq('invoice_raised', false),
+    // Overdue invoices (24h grace period)
     supabase
       .from('invoices')
       .select('id, total')
       .eq('user_id', userId)
       .neq('status', 'paid')
       .neq('status', 'draft')
-      .lt('due_date', now.toISOString()),
+      .lt('due_date', new Date(now.getTime() - 24 * 60 * 60 * 1000).toISOString()),
     supabase
       .from('reports')
       .select('id')

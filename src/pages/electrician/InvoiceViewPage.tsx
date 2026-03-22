@@ -23,7 +23,7 @@ import {
 import { useEffect, useState } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { Quote } from '@/types/quote';
-import { format, isPast, differenceInDays } from 'date-fns';
+import { format, isPast, differenceInDays, addHours } from 'date-fns';
 import { toast } from '@/hooks/use-toast';
 import CertificateGenerationDialog from '@/components/inspection/CertificateGenerationDialog';
 import {
@@ -303,7 +303,7 @@ const InvoiceViewPage = () => {
 
     const isOverdue =
       invoice.invoice_due_date &&
-      isPast(new Date(invoice.invoice_due_date)) &&
+      isPast(addHours(new Date(invoice.invoice_due_date), 24)) &&
       invoice.invoice_status !== 'paid';
 
     if (invoice.invoice_status === 'paid') {

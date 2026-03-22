@@ -4,7 +4,7 @@ import { Badge } from '@/components/ui/badge';
 import { FileText, Send, Edit, Eye, Bell, AlertCircle } from 'lucide-react';
 import { Quote } from '@/types/quote';
 import { useNavigate } from 'react-router-dom';
-import { format, isPast } from 'date-fns';
+import { format, isPast, addHours } from 'date-fns';
 
 interface InvoicesDashboardCardProps {
   invoices: Quote[];
@@ -18,8 +18,8 @@ export const InvoicesDashboardCard = ({ invoices }: InvoicesDashboardCardProps) 
 
   // Sort by priority: overdue > sent > draft
   const sortedInvoices = [...activeInvoices].sort((a, b) => {
-    const aOverdue = a.invoice_due_date && isPast(new Date(a.invoice_due_date));
-    const bOverdue = b.invoice_due_date && isPast(new Date(b.invoice_due_date));
+    const aOverdue = a.invoice_due_date && isPast(addHours(new Date(a.invoice_due_date), 24));
+    const bOverdue = b.invoice_due_date && isPast(addHours(new Date(b.invoice_due_date), 24));
 
     if (aOverdue && !bOverdue) return -1;
     if (!aOverdue && bOverdue) return 1;
@@ -40,7 +40,8 @@ export const InvoicesDashboardCard = ({ invoices }: InvoicesDashboardCardProps) 
 
   const getStatusBadge = (invoice: Quote) => {
     const status = invoice.invoice_status;
-    const isOverdue = invoice.invoice_due_date && isPast(new Date(invoice.invoice_due_date));
+    const isOverdue =
+      invoice.invoice_due_date && isPast(addHours(new Date(invoice.invoice_due_date), 24));
 
     if (isOverdue || status === 'overdue') {
       return (
@@ -103,7 +104,8 @@ export const InvoicesDashboardCard = ({ invoices }: InvoicesDashboardCardProps) 
   };
 
   const getActionButton = (invoice: Quote) => {
-    const isOverdue = invoice.invoice_due_date && isPast(new Date(invoice.invoice_due_date));
+    const isOverdue =
+      invoice.invoice_due_date && isPast(addHours(new Date(invoice.invoice_due_date), 24));
     const status = invoice.invoice_status;
 
     if (isOverdue || status === 'overdue') {

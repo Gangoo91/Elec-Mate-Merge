@@ -22,7 +22,7 @@ import {
   PoundSterling,
 } from 'lucide-react';
 import { useInvoiceStorage } from '@/hooks/useInvoiceStorage';
-import { isPast } from 'date-fns';
+import { isPast, addHours } from 'date-fns';
 import { Quote } from '@/types/quote';
 import { useState, useEffect, useMemo, useCallback } from 'react';
 import { toast } from '@/hooks/use-toast';
@@ -346,8 +346,9 @@ const InvoicesPage = () => {
     const draft = invoices.filter((i) => i.invoice_status === 'draft');
     const sent = invoices.filter((i) => i.invoice_status === 'sent');
     const overdue = invoices.filter((i) => {
-      const isOverdue = i.invoice_due_date && isPast(new Date(i.invoice_due_date));
-      return isOverdue || i.invoice_status === 'overdue';
+      if (i.invoice_status === 'paid') return false;
+      if (i.invoice_status === 'overdue') return true;
+      return i.invoice_due_date && isPast(addHours(new Date(i.invoice_due_date), 24));
     });
     const paid = invoices.filter((i) => i.invoice_status === 'paid');
     const monthlyPaid = paid.reduce((sum, inv) => {
@@ -370,8 +371,9 @@ const InvoicesPage = () => {
     setCreatingChaseTasks(true);
     try {
       const overdueInvoices = invoices.filter((i) => {
-        const isOverdue = i.invoice_due_date && isPast(new Date(i.invoice_due_date));
-        return isOverdue || i.invoice_status === 'overdue';
+        if (i.invoice_status === 'paid') return false;
+        if (i.invoice_status === 'overdue') return true;
+        return i.invoice_due_date && isPast(addHours(new Date(i.invoice_due_date), 24));
       });
 
       const tasks = overdueInvoices.map((inv) => ({
@@ -404,8 +406,9 @@ const InvoicesPage = () => {
     if (activeFilter !== 'all') {
       if (activeFilter === 'overdue') {
         filtered = filtered.filter((i) => {
-          const isOverdue = i.invoice_due_date && isPast(new Date(i.invoice_due_date));
-          return isOverdue || i.invoice_status === 'overdue';
+          if (i.invoice_status === 'paid') return false;
+          if (i.invoice_status === 'overdue') return true;
+          return i.invoice_due_date && isPast(addHours(new Date(i.invoice_due_date), 24));
         });
       } else {
         filtered = filtered.filter((i) => i.invoice_status === activeFilter);
@@ -424,8 +427,8 @@ const InvoicesPage = () => {
 
     // Sort by priority: overdue > sent > draft > paid
     return [...filtered].sort((a, b) => {
-      const aOverdue = a.invoice_due_date && isPast(new Date(a.invoice_due_date));
-      const bOverdue = b.invoice_due_date && isPast(new Date(b.invoice_due_date));
+      const aOverdue = a.invoice_due_date && isPast(addHours(new Date(a.invoice_due_date), 24));
+      const bOverdue = b.invoice_due_date && isPast(addHours(new Date(b.invoice_due_date), 24));
       if (aOverdue && !bOverdue) return -1;
       if (!aOverdue && bOverdue) return 1;
       const statusOrder = { overdue: 0, sent: 1, draft: 2, paid: 3 };

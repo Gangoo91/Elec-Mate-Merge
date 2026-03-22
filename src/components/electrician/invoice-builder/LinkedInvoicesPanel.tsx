@@ -3,7 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Receipt, User, Calendar, ArrowRight, FileText, Eye } from 'lucide-react';
-import { format, isPast } from 'date-fns';
+import { format, isPast, addHours } from 'date-fns';
 import { useNavigate } from 'react-router-dom';
 
 interface LinkedInvoicesPanelProps {
@@ -22,7 +22,16 @@ export const LinkedInvoicesPanel = ({ invoices }: LinkedInvoicesPanelProps) => {
 
   const getStatusBadge = (invoice: Quote) => {
     const status = invoice.invoice_status;
-    const isOverdue = invoice.invoice_due_date && isPast(new Date(invoice.invoice_due_date));
+    if (status === 'paid') {
+      return (
+        <Badge variant="success" className="text-xs">
+          Paid
+        </Badge>
+      );
+    }
+
+    const isOverdue =
+      invoice.invoice_due_date && isPast(addHours(new Date(invoice.invoice_due_date), 24));
 
     if (isOverdue || status === 'overdue') {
       return (
@@ -47,14 +56,6 @@ export const LinkedInvoicesPanel = ({ invoices }: LinkedInvoicesPanelProps) => {
       return (
         <Badge variant="outline" className="text-xs">
           Draft
-        </Badge>
-      );
-    }
-
-    if (status === 'paid') {
-      return (
-        <Badge variant="success" className="text-xs">
-          Paid
         </Badge>
       );
     }

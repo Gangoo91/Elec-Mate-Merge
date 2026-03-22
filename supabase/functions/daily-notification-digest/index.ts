@@ -104,14 +104,15 @@ async function buildAlertsForUser(
   const now = new Date();
   const today = now.toISOString();
 
-  // ── Overdue invoices ──────────────────────────────────────────────
+  // ── Overdue invoices (24h grace period) ─────────────────────────────
+  const yesterday = new Date(now.getTime() - 24 * 60 * 60 * 1000).toISOString();
   const { data: overdueInvoices } = await supabase
     .from('invoices')
     .select('id, invoice_number, client_data, total, due_date')
     .eq('user_id', userId)
     .not('status', 'eq', 'paid')
     .not('due_date', 'is', null)
-    .lt('due_date', today)
+    .lt('due_date', yesterday)
     .is('deleted_at', null)
     .limit(10);
 

@@ -26,7 +26,7 @@ import {
 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
-import { format, isPast } from 'date-fns';
+import { format, isPast, addHours, differenceInDays } from 'date-fns';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -103,9 +103,12 @@ const InvoiceTableView = ({
 
   const getStatusBadge = (invoice: Quote) => {
     const status = invoice.invoice_status;
-    const isOverdue = invoice.invoice_due_date && isPast(new Date(invoice.invoice_due_date));
+    const isOverdue =
+      invoice.invoice_due_date &&
+      isPast(addHours(new Date(invoice.invoice_due_date), 24)) &&
+      status !== 'paid';
 
-    if (isOverdue || status === 'overdue') {
+    if (isOverdue || (status === 'overdue' && status !== 'paid')) {
       return (
         <Badge
           variant="destructive"
@@ -142,6 +145,22 @@ const InvoiceTableView = ({
     }
 
     if (status === 'paid') {
+      if (invoice.invoice_paid_at && invoice.invoice_due_date) {
+        const daysLate = differenceInDays(
+          new Date(invoice.invoice_paid_at),
+          new Date(invoice.invoice_due_date)
+        );
+        if (daysLate > 0) {
+          return (
+            <Badge
+              variant="secondary"
+              className="bg-amber-50 text-amber-700 border-amber-200 dark:bg-amber-950 dark:text-amber-300 dark:border-amber-800"
+            >
+              Paid {daysLate}d late
+            </Badge>
+          );
+        }
+      }
       return (
         <Badge
           variant="secondary"
@@ -180,7 +199,9 @@ const InvoiceTableView = ({
             {invoices.map((invoice) => {
               const status = invoice.invoice_status;
               const isOverdue =
-                invoice.invoice_due_date && isPast(new Date(invoice.invoice_due_date));
+                invoice.invoice_status !== 'paid' &&
+                invoice.invoice_due_date &&
+                isPast(addHours(new Date(invoice.invoice_due_date), 24));
 
               return (
                 <TableRow

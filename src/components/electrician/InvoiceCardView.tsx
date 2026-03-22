@@ -21,7 +21,7 @@ import {
   Pencil,
 } from 'lucide-react';
 import { Quote } from '@/types/quote';
-import { format, isPast, differenceInDays } from 'date-fns';
+import { format, isPast, differenceInDays, addHours } from 'date-fns';
 import { InvoiceSendDropdown } from '@/components/electrician/invoice-builder/InvoiceSendDropdown';
 import { PaymentReminderButton } from '@/components/electrician/invoice-builder/PaymentReminderButton';
 import { PartialPaymentDialog } from '@/components/electrician/invoice-builder/PartialPaymentDialog';
@@ -88,17 +88,17 @@ const InvoiceCardView: React.FC<InvoiceCardViewProps> = ({
   };
 
   const getOverdueInfo = (invoice: Quote) => {
-    if (!invoice.invoice_due_date) return null;
+    if (!invoice.invoice_due_date || invoice.invoice_status === 'paid') return null;
     const dueDate = new Date(invoice.invoice_due_date);
     const daysOverdue = differenceInDays(new Date(), dueDate);
-    if (daysOverdue <= 0) return null;
+    if (daysOverdue <= 1) return null; // 24h grace period
     return { daysOverdue };
   };
 
   const getStatusConfig = (invoice: Quote) => {
     const isOverdue =
       invoice.invoice_due_date &&
-      isPast(new Date(invoice.invoice_due_date)) &&
+      isPast(addHours(new Date(invoice.invoice_due_date), 24)) &&
       invoice.invoice_status !== 'paid';
     const status = invoice.invoice_status;
 
@@ -113,11 +113,29 @@ const InvoiceCardView: React.FC<InvoiceCardViewProps> = ({
       };
     }
     if (status === 'paid') {
+      let paidLabel = 'Paid';
+      if (invoice.invoice_paid_at && invoice.invoice_due_date) {
+        const daysLate = differenceInDays(
+          new Date(invoice.invoice_paid_at),
+          new Date(invoice.invoice_due_date)
+        );
+        if (daysLate > 0) {
+          paidLabel = `Paid ${daysLate}d late`;
+          return {
+            bg: 'bg-amber-500/15',
+            border: 'border-amber-500/30',
+            text: 'text-amber-400',
+            label: paidLabel,
+            icon: CheckCircle,
+            dot: 'bg-amber-500',
+          };
+        }
+      }
       return {
         bg: 'bg-emerald-500/15',
         border: 'border-emerald-500/30',
         text: 'text-emerald-400',
-        label: 'Paid',
+        label: paidLabel,
         icon: CheckCircle,
         dot: 'bg-emerald-500',
       };
@@ -149,7 +167,7 @@ const InvoiceCardView: React.FC<InvoiceCardViewProps> = ({
         const StatusIcon = statusConfig.icon;
         const isOverdue =
           invoice.invoice_due_date &&
-          isPast(new Date(invoice.invoice_due_date)) &&
+          isPast(addHours(new Date(invoice.invoice_due_date), 24)) &&
           invoice.invoice_status !== 'paid';
         const overdueInfo = getOverdueInfo(invoice);
         const isPaid = invoice.invoice_status === 'paid';
