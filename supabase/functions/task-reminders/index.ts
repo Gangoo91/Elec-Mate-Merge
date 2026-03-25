@@ -42,11 +42,11 @@ Deno.serve(async (req: Request) => {
     const now = new Date();
     const oneHourFromNow = new Date(now.getTime() + 60 * 60 * 1000);
 
-    // Find open tasks due within the next hour (or already overdue)
+    // Find open/in-progress tasks due within the next hour (or already overdue)
     const { data: tasks, error: tasksError } = await supabase
       .from('spark_tasks')
       .select('id, user_id, title, due_at, priority, snoozed_until')
-      .eq('status', 'open')
+      .in('status', ['open', 'in_progress'])
       .not('due_at', 'is', null)
       .lte('due_at', oneHourFromNow.toISOString());
 
@@ -63,16 +63,40 @@ Deno.serve(async (req: Request) => {
       (t: SparkTask) => !t.snoozed_until || new Date(t.snoozed_until) <= now
     );
 
-    if (activeTasks.length === 0) {
+    // Skip already-overdue tasks if daily digest already ran today (avoid repeats)
+    // Only keep overdue tasks if digest hasn't sent today's overdue_tasks alert
+    const todayStart = new Date(now);
+    todayStart.setHours(0, 0, 0, 0);
+    const userIdsInBatch = [...new Set(activeTasks.map((t: SparkTask) => t.user_id))];
+    const { data: digestsSentToday } = await supabase
+      .from('push_notification_log')
+      .select('user_id')
+      .in('user_id', userIdsInBatch)
+      .eq('type', 'overdue_tasks')
+      .gte('sent_at', todayStart.toISOString());
+    const usersWithDigest = new Set(
+      (digestsSentToday || []).map((d: { user_id: string }) => d.user_id)
+    );
+
+    // For users who already got the daily digest, only remind about tasks due SOON (not already overdue)
+    const filteredActiveTasks = activeTasks.filter((t: SparkTask) => {
+      if (!usersWithDigest.has(t.user_id)) return true; // no digest yet — include everything
+      return new Date(t.due_at) >= now; // digest sent — only include due-soon, not overdue
+    });
+
+    if (filteredActiveTasks.length === 0) {
       return new Response(
-        JSON.stringify({ message: 'All due tasks are snoozed', reminders_sent: 0 }),
+        JSON.stringify({
+          message: 'No tasks need reminders (snoozed or already in digest)',
+          reminders_sent: 0,
+        }),
         { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
       );
     }
 
     // Get task IDs that have already been reminded (in last 4 hours to prevent spam)
     const fourHoursAgo = new Date(now.getTime() - 4 * 60 * 60 * 1000);
-    const taskIds = activeTasks.map((t: SparkTask) => t.id);
+    const taskIds = filteredActiveTasks.map((t: SparkTask) => t.id);
 
     const { data: recentReminders } = await supabase
       .from('spark_task_events')
@@ -84,7 +108,7 @@ Deno.serve(async (req: Request) => {
     const remindedIds = new Set((recentReminders || []).map((r: TaskEvent) => r.task_id));
 
     // Filter to tasks not yet reminded
-    const toRemind = activeTasks.filter((t: SparkTask) => !remindedIds.has(t.id));
+    const toRemind = filteredActiveTasks.filter((t: SparkTask) => !remindedIds.has(t.id));
 
     if (toRemind.length === 0) {
       return new Response(

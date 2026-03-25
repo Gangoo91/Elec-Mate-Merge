@@ -52,8 +52,12 @@ const EnhancedTestResultDesktopTableRow: React.FC<EnhancedTestResultDesktopTable
   const validation = useMemo(() => validateTestResult(result), [result]);
 
   // Get overall compliance status - memoized helper
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const getOverallCompliance = (validation: any): 'error' | 'warning' | 'pass' => {
+    if (!validation) return 'pass';
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const hasErrors = Object.values(validation).some((v: any) => v?.type === 'error');
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const hasWarnings = Object.values(validation).some((v: any) => v?.type === 'warning');
 
     if (hasErrors) return 'error';
@@ -250,17 +254,30 @@ const EnhancedTestResultDesktopTableRow: React.FC<EnhancedTestResultDesktopTable
               <Button
                 variant="ghost"
                 size="sm"
-                onClick={() => onBulkUpdate(result.id, {
-                  circuitDescription: 'Spare',
-                  r1r2: 'N/A', r2: 'N/A',
-                  ringContinuityLive: 'N/A', ringContinuityNeutral: 'N/A',
-                  ringR1: 'N/A', ringRn: 'N/A', ringR2: 'N/A',
-                  insulationTestVoltage: 'N/A', insulationLiveNeutral: 'N/A',
-                  insulationLiveEarth: 'N/A', insulationResistance: 'N/A', insulationNeutralEarth: 'N/A',
-                  polarity: 'N/A', zs: 'N/A',
-                  rcdOneX: 'N/A', rcdFiveX: 'N/A', rcdHalfX: 'N/A',
-                  rcdRating: 'N/A', rcdType: 'N/A',
-                })}
+                onClick={() =>
+                  onBulkUpdate(result.id, {
+                    circuitDescription: 'Spare',
+                    r1r2: 'N/A',
+                    r2: 'N/A',
+                    ringContinuityLive: 'N/A',
+                    ringContinuityNeutral: 'N/A',
+                    ringR1: 'N/A',
+                    ringRn: 'N/A',
+                    ringR2: 'N/A',
+                    insulationTestVoltage: 'N/A',
+                    insulationLiveNeutral: 'N/A',
+                    insulationLiveEarth: 'N/A',
+                    insulationResistance: 'N/A',
+                    insulationNeutralEarth: 'N/A',
+                    polarity: 'N/A',
+                    zs: 'N/A',
+                    rcdOneX: 'N/A',
+                    rcdFiveX: 'N/A',
+                    rcdHalfX: 'N/A',
+                    rcdRating: 'N/A',
+                    rcdType: 'N/A',
+                  })
+                }
                 className="h-7 px-2 text-[11px] text-muted-foreground hover:text-foreground hover:bg-muted/30 rounded-md transition-colors"
                 title="Mark as spare way — sets all results to N/A"
               >

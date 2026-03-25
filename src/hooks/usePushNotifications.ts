@@ -417,3 +417,94 @@ export function useNotificationPreferences() {
     isLoading,
   };
 }
+
+/**
+ * Quiet hours preferences — stored as notification_preferences rows
+ * with category 'quiet_hours' (enabled toggle) and localStorage for times
+ */
+const QUIET_HOURS_KEY = 'elecmate_quiet_hours';
+
+interface QuietHoursPrefs {
+  enabled: boolean;
+  startHour: number; // 0-23
+  endHour: number; // 0-23
+}
+
+const DEFAULT_QUIET_HOURS: QuietHoursPrefs = {
+  enabled: true,
+  startHour: 21, // 9pm
+  endHour: 7, // 7am
+};
+
+export function useQuietHours() {
+  const { user } = useAuth();
+  const [prefs, setPrefs] = useState<QuietHoursPrefs>(() => {
+    try {
+      const stored = localStorage.getItem(QUIET_HOURS_KEY);
+      return stored ? { ...DEFAULT_QUIET_HOURS, ...JSON.parse(stored) } : DEFAULT_QUIET_HOURS;
+    } catch {
+      return DEFAULT_QUIET_HOURS;
+    }
+  });
+  const [isLoading, setIsLoading] = useState(false);
+
+  // Load from Supabase
+  useEffect(() => {
+    if (!user?.id) return;
+    const load = async () => {
+      setIsLoading(true);
+      try {
+        const { data } = await supabase
+          .from('notification_preferences')
+          .select('category, enabled')
+          .eq('user_id', user.id)
+          .eq('category', 'quiet_hours')
+          .single();
+
+        if (data) {
+          setPrefs((prev) => {
+            const updated = { ...prev, enabled: data.enabled };
+            localStorage.setItem(QUIET_HOURS_KEY, JSON.stringify(updated));
+            return updated;
+          });
+        }
+      } catch {
+        // No quiet hours preference yet — use defaults
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    load();
+  }, [user?.id]);
+
+  const updateQuietHours = useCallback(
+    async (updates: Partial<QuietHoursPrefs>) => {
+      setPrefs((prev) => {
+        const updated = { ...prev, ...updates };
+        localStorage.setItem(QUIET_HOURS_KEY, JSON.stringify(updated));
+        return updated;
+      });
+
+      if (!user?.id) return;
+
+      if (updates.enabled !== undefined) {
+        try {
+          await supabase.from('notification_preferences').upsert(
+            {
+              user_id: user.id,
+              category: 'quiet_hours',
+              enabled: updates.enabled,
+              updated_at: new Date().toISOString(),
+            },
+            { onConflict: 'user_id,category' }
+          );
+        } catch (err) {
+          console.error('[QuietHours] Failed to save:', err);
+        }
+      }
+    },
+    [user?.id]
+  );
+
+  return { quietHours: prefs, updateQuietHours, isLoading };
+}

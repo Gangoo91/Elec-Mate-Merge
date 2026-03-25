@@ -2,15 +2,17 @@ import { serve } from 'https://deno.land/std@0.190.0/http/server.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.39.3';
 
 /**
- * daily-notification-digest
+ * daily-notification-digest — "Your Day" morning briefing
  *
- * Runs at 07:30 every morning via Supabase cron.
+ * Runs at 07:00 UTC every morning via Supabase cron (7am GMT / 8am BST).
  * For each user with an active push subscription, checks all alert conditions
- * and fires push notifications for anything that needs attention today.
+ * and sends ONE consolidated "Your Day" push notification.
  *
- * Deduplicates via push_notification_log — each alert fires once per day max.
+ * - Deduplicates via push_notification_log — each alert fires once per day max.
+ * - Users with WhatsApp agent get a shorter push (details via WhatsApp).
+ * - Role-tailored: apprentices get study nudges, electricians get jobs/certs.
  *
- * Cron schedule: "30 7 * * *" (07:30 UTC daily)
+ * Cron schedule: "0 7 * * *" (07:00 UTC daily)
  */
 
 const corsHeaders = {
@@ -53,7 +55,7 @@ async function sendPush(
       Authorization: `Bearer ${serviceKey}`,
       apikey: serviceKey,
     },
-    body: JSON.stringify({ userId, title, body, type, data }),
+    body: JSON.stringify({ userId, title, body, type, data, skipQuietHours: true }),
   });
 }
 
@@ -104,13 +106,13 @@ async function buildAlertsForUser(
   const now = new Date();
   const today = now.toISOString();
 
-  // ── Overdue invoices (24h grace period) ─────────────────────────────
+  // ── Overdue invoices (24h grace period, exclude paid/cancelled) ─────
   const yesterday = new Date(now.getTime() - 24 * 60 * 60 * 1000).toISOString();
   const { data: overdueInvoices } = await supabase
     .from('invoices')
-    .select('id, invoice_number, client_data, total, due_date')
+    .select('id, invoice_number, client_data, total, due_date, status')
     .eq('user_id', userId)
-    .not('status', 'eq', 'paid')
+    .not('status', 'in', '("paid","Paid","cancelled","Cancelled")')
     .not('due_date', 'is', null)
     .lt('due_date', yesterday)
     .is('deleted_at', null)
@@ -123,7 +125,7 @@ async function buildAlertsForUser(
     );
     alerts.push({
       type: 'overdue_invoices',
-      referenceId: `batch-${overdueInvoices.length}`,
+      referenceId: `batch-${new Date().toDateString()}`,
       title: `⚠️ ${overdueInvoices.length} overdue invoice${overdueInvoices.length > 1 ? 's' : ''}`,
       body: `${formatted} outstanding — chase these today`,
       pushType: 'invoice',
@@ -156,12 +158,12 @@ async function buildAlertsForUser(
     });
   }
 
-  // ── Overdue tasks ─────────────────────────────────────────────────
+  // ── Overdue tasks (exclude completed/archived/cancelled) ─────────
   const { data: overdueTasks } = await supabase
     .from('spark_tasks')
     .select('id, title, priority')
     .eq('user_id', userId)
-    .eq('status', 'open')
+    .in('status', ['open', 'in_progress'])
     .not('due_at', 'is', null)
     .lt('due_at', today)
     .limit(10);
@@ -172,7 +174,7 @@ async function buildAlertsForUser(
     ).length;
     alerts.push({
       type: 'overdue_tasks',
-      referenceId: `batch-${overdueTasks.length}`,
+      referenceId: `batch-${new Date().toDateString()}`,
       title: `📋 ${overdueTasks.length} overdue task${overdueTasks.length > 1 ? 's' : ''}`,
       body:
         urgentCount > 0
@@ -302,26 +304,31 @@ async function buildAlertsForUser(
       .eq('user_id', userId)
       .lte('next_review', today);
 
+    const cardCount = count ?? 0;
     alerts.push({
       type: 'flashcards_due',
       referenceId: `batch-${new Date().toDateString()}`,
-      title: `📚 ${count ?? 0} flashcard${(count ?? 0) !== 1 ? 's' : ''} to review`,
-      body: 'Keep your streak alive — quick revision session',
+      title: `📚 ${cardCount} flashcard${cardCount !== 1 ? 's' : ''} ready for review`,
+      body:
+        cardCount <= 5
+          ? 'Quick 2-minute session — keep your streak alive'
+          : `About ${Math.ceil(cardCount * 0.4)} minutes — keep your streak alive`,
       pushType: 'study',
       data: { role },
     });
   }
 
-  // ── Learning streak broken (no study in 2+ days) ───────────────
-  const twoDaysAgo = new Date(now.getTime() - 2 * 86400000).toISOString();
-  const { data: recentStudy } = await supabase
+  // ── Learning streak at risk (no study today) ───────────────────
+  const todayStartStudy = new Date(now);
+  todayStartStudy.setHours(0, 0, 0, 0);
+  const { data: studiedToday } = await supabase
     .from('learning_progress')
     .select('id')
     .eq('user_id', userId)
-    .gte('last_accessed', twoDaysAgo)
+    .gte('last_accessed', todayStartStudy.toISOString())
     .limit(1);
 
-  if (!recentStudy || recentStudy.length === 0) {
+  if (!studiedToday || studiedToday.length === 0) {
     // Only alert if user has any learning progress at all
     const { data: anyStudy } = await supabase
       .from('learning_progress')
@@ -330,11 +337,25 @@ async function buildAlertsForUser(
       .limit(1);
 
     if (anyStudy && anyStudy.length > 0) {
+      // Check how many consecutive days they've studied to show streak count
+      const yesterdayStudy = new Date(now.getTime() - 86400000);
+      yesterdayStudy.setHours(0, 0, 0, 0);
+      const { data: studiedYesterday } = await supabase
+        .from('learning_progress')
+        .select('id')
+        .eq('user_id', userId)
+        .gte('last_accessed', yesterdayStudy.toISOString())
+        .lt('last_accessed', todayStartStudy.toISOString())
+        .limit(1);
+
       alerts.push({
         type: 'streak_broken',
         referenceId: `streak-${new Date().toDateString()}`,
         title: `🔥 Your learning streak needs you`,
-        body: "You haven't studied in 2+ days — jump back in",
+        body:
+          studiedYesterday && studiedYesterday.length > 0
+            ? "You haven't studied today — don't lose your streak!"
+            : "You haven't studied recently — jump back in",
         pushType: 'study',
         data: { role },
       });
@@ -460,7 +481,16 @@ serve(async (req: Request): Promise<Response> => {
   const supabase = createClient(supabaseUrl, serviceKey);
 
   try {
-    console.log('[daily-digest] Starting run:', new Date().toISOString());
+    // Check if this is a study_reminder mode (6pm apprentice cron)
+    let mode = 'morning';
+    try {
+      const body = await req.json();
+      if (body?.mode) mode = body.mode;
+    } catch {
+      // No body or invalid JSON — use default morning mode
+    }
+
+    console.log(`[daily-digest] Starting ${mode} run:`, new Date().toISOString());
 
     // Get all users with active push subscriptions
     const { data: subscriptions, error: subError } = await supabase
@@ -473,47 +503,259 @@ serve(async (req: Request): Promise<Response> => {
     const userIds = [...new Set((subscriptions ?? []).map((s) => s.user_id))];
     console.log(`[daily-digest] Processing ${userIds.length} users`);
 
+    // ── Process queued notifications from quiet hours (morning run only) ──
+    if (mode === 'morning') {
+      for (const userId of userIds) {
+        const { data: queued } = await supabase
+          .from('queued_notifications')
+          .select('*')
+          .eq('user_id', userId)
+          .eq('processed', false)
+          .order('created_at', { ascending: true });
+
+        if (queued && queued.length > 0) {
+          // Send each queued notification
+          for (const q of queued) {
+            await sendPush(supabaseUrl, serviceKey, userId, q.title, q.body, q.type, q.data);
+          }
+          // Mark all as processed
+          const queuedIds = queued.map((q: { id: string }) => q.id);
+          await supabase
+            .from('queued_notifications')
+            .update({ processed: true, processed_at: new Date().toISOString() })
+            .in('id', queuedIds);
+          console.log(
+            `[daily-digest] Delivered ${queued.length} queued notifications for ${userId}`
+          );
+        }
+      }
+    }
+
     let totalSent = 0;
     let totalSkipped = 0;
 
     for (const userId of userIds) {
       try {
-        // Look up user role for role-aware routing
+        // Look up user role + agent status for role-aware routing
         const { data: profile } = await supabase
           .from('profiles')
-          .select('role')
+          .select('role, business_ai_enabled')
           .eq('id', userId)
           .single();
         const role = profile?.role || 'electrician';
+        const hasWhatsAppAgent = profile?.business_ai_enabled === true;
+
+        // ── Study reminder mode (6pm): only send to apprentices ────────
+        if (mode === 'study_reminder') {
+          if (role !== 'apprentice') continue;
+
+          // Check if study_centre category is enabled
+          const { data: studyPref } = await supabase
+            .from('notification_preferences')
+            .select('enabled')
+            .eq('user_id', userId)
+            .eq('category', 'study_centre')
+            .single();
+          if (studyPref && !studyPref.enabled) continue;
+
+          // Check dedup
+          const studyRef = `study-reminder-${new Date().toDateString()}`;
+          const sent = await alreadySent(supabase, userId, 'study_reminder', studyRef);
+          if (sent) continue;
+
+          // Get flashcard count
+          const { count: flashcardCount } = await supabase
+            .from('flashcards')
+            .select('id', { count: 'exact', head: true })
+            .eq('user_id', userId)
+            .lte('next_review', new Date().toISOString());
+
+          // Check if studied today
+          const todayStudyStart = new Date();
+          todayStudyStart.setHours(0, 0, 0, 0);
+          const { data: studiedToday } = await supabase
+            .from('learning_progress')
+            .select('id')
+            .eq('user_id', userId)
+            .gte('last_accessed', todayStudyStart.toISOString())
+            .limit(1);
+
+          let studyBody = '';
+          if (studiedToday && studiedToday.length > 0) {
+            if (!flashcardCount || flashcardCount === 0) continue; // Already studied, no flashcards due
+            studyBody = `${flashcardCount} flashcard${flashcardCount !== 1 ? 's' : ''} ready for a quick review session`;
+          } else {
+            studyBody =
+              flashcardCount && flashcardCount > 0
+                ? `You have ${flashcardCount} flashcard${flashcardCount !== 1 ? 's' : ''} to review — keep your streak going`
+                : 'Time to study — even 10 minutes makes a difference';
+          }
+
+          await sendPush(supabaseUrl, serviceKey, userId, 'Time to study!', studyBody, 'study', {
+            role,
+          });
+          await logPush(supabase, userId, {
+            type: 'study_reminder',
+            referenceId: studyRef,
+            title: 'Time to study!',
+            body: studyBody,
+            pushType: 'study',
+          });
+          totalSent++;
+          continue;
+        }
+
+        // ── End of day mode (5pm): wrap-up summary ───────────────────
+        if (mode === 'end_of_day') {
+          const eodRef = `eod-${new Date().toDateString()}`;
+          const sent = await alreadySent(supabase, userId, 'end_of_day', eodRef);
+          if (sent) continue;
+
+          // Check if daily_briefing category is enabled
+          const { data: briefPref } = await supabase
+            .from('notification_preferences')
+            .select('enabled')
+            .eq('user_id', userId)
+            .eq('category', 'daily_briefing')
+            .single();
+          if (briefPref && !briefPref.enabled) continue;
+
+          const todayEodStart = new Date(now);
+          todayEodStart.setHours(0, 0, 0, 0);
+
+          // Tasks completed today
+          const { count: completedCount } = await supabase
+            .from('spark_tasks')
+            .select('id', { count: 'exact', head: true })
+            .eq('user_id', userId)
+            .in('status', ['completed', 'done'])
+            .gte('updated_at', todayEodStart.toISOString());
+
+          // Tasks still open/overdue
+          const { count: openCount } = await supabase
+            .from('spark_tasks')
+            .select('id', { count: 'exact', head: true })
+            .eq('user_id', userId)
+            .in('status', ['open', 'in_progress'])
+            .not('due_at', 'is', null)
+            .lte('due_at', now.toISOString());
+
+          // Invoices sent today
+          const { count: invoicesSent } = await supabase
+            .from('invoices')
+            .select('id', { count: 'exact', head: true })
+            .eq('user_id', userId)
+            .gte('created_at', todayEodStart.toISOString())
+            .is('deleted_at', null);
+
+          // Tomorrow's schedule
+          const tomorrowStart = new Date(now);
+          tomorrowStart.setDate(tomorrowStart.getDate() + 1);
+          tomorrowStart.setHours(0, 0, 0, 0);
+          const tomorrowEnd = new Date(tomorrowStart);
+          tomorrowEnd.setHours(23, 59, 59, 999);
+
+          const { data: tomorrowJobs } = await supabase
+            .from('calendar_events')
+            .select('id, title, start_at')
+            .eq('user_id', userId)
+            .gte('start_at', tomorrowStart.toISOString())
+            .lte('start_at', tomorrowEnd.toISOString())
+            .order('start_at', { ascending: true })
+            .limit(3);
+
+          // Build end of day message
+          const eodParts: string[] = [];
+          if (completedCount && completedCount > 0) {
+            eodParts.push(
+              `${completedCount} task${completedCount !== 1 ? 's' : ''} completed today`
+            );
+          }
+          if (openCount && openCount > 0) {
+            eodParts.push(`${openCount} still outstanding`);
+          }
+          if (invoicesSent && invoicesSent > 0) {
+            eodParts.push(`${invoicesSent} invoice${invoicesSent !== 1 ? 's' : ''} sent`);
+          }
+          if (tomorrowJobs && tomorrowJobs.length > 0) {
+            const firstTime = new Date(tomorrowJobs[0].start_at).toLocaleTimeString('en-GB', {
+              hour: '2-digit',
+              minute: '2-digit',
+            });
+            eodParts.push(
+              `Tomorrow: ${tomorrowJobs.length} job${tomorrowJobs.length !== 1 ? 's' : ''}, first at ${firstTime}`
+            );
+          } else {
+            eodParts.push('Nothing scheduled tomorrow');
+          }
+
+          if (eodParts.length === 0) {
+            eodParts.push('Quiet day — enjoy your evening');
+          }
+
+          const eodBody = eodParts.join('\n');
+
+          await sendPush(
+            supabaseUrl,
+            serviceKey,
+            userId,
+            'End of day wrap-up',
+            eodBody,
+            'briefing',
+            { role, tag: 'briefing-eod', skipQuietHours: true }
+          );
+          await logPush(supabase, userId, {
+            type: 'end_of_day',
+            referenceId: eodRef,
+            title: 'End of day wrap-up',
+            body: eodBody,
+            pushType: 'briefing',
+          });
+          totalSent++;
+          continue;
+        }
 
         const alerts = await buildAlertsForUser(supabase, userId, role);
 
-        // ── Generate consolidated morning briefing ────────────────────
+        // ── Generate "Your Day" morning briefing ──────────────────────
         if (alerts.length > 0) {
-          const categoryCounts: Record<string, number> = {};
-          for (const a of alerts) {
-            const cat = a.pushType;
-            categoryCounts[cat] = (categoryCounts[cat] || 0) + 1;
-          }
+          // Build a concise summary per category
           const parts: string[] = [];
-          if (categoryCounts.job)
-            parts.push(`${categoryCounts.job} task alert${categoryCounts.job > 1 ? 's' : ''}`);
-          if (categoryCounts.invoice || categoryCounts.quote) {
-            const financeCount = (categoryCounts.invoice || 0) + (categoryCounts.quote || 0);
-            parts.push(`${financeCount} finance alert${financeCount > 1 ? 's' : ''}`);
-          }
-          if (categoryCounts.certificate)
-            parts.push(
-              `${categoryCounts.certificate} cert alert${categoryCounts.certificate > 1 ? 's' : ''}`
-            );
-          if (categoryCounts.study) parts.push('study reminders');
-          if (categoryCounts.mental_health || categoryCounts.peer) parts.push('wellbeing check-in');
-          if (categoryCounts.assessment)
-            parts.push(
-              `${categoryCounts.assessment} assessment alert${categoryCounts.assessment > 1 ? 's' : ''}`
-            );
 
-          const briefingSummary = parts.join(' | ');
+          // Jobs today
+          const jobAlerts = alerts.filter((a) => a.type === 'jobs_today');
+          if (jobAlerts.length > 0) parts.push(jobAlerts[0].body);
+
+          // Tasks
+          const taskAlerts = alerts.filter((a) => a.type === 'overdue_tasks');
+          if (taskAlerts.length > 0) parts.push(taskAlerts[0].title.replace(/^📋 /, ''));
+
+          // Invoices
+          const invoiceAlerts = alerts.filter((a) => a.type === 'overdue_invoices');
+          if (invoiceAlerts.length > 0) parts.push(invoiceAlerts[0].body);
+
+          // Certs
+          const certAlerts = alerts.filter((a) =>
+            ['ecs_card_expiry', 'equipment_calibration', 'eicr_reinspection'].includes(a.type)
+          );
+          if (certAlerts.length > 0)
+            parts.push(`${certAlerts.length} cert alert${certAlerts.length > 1 ? 's' : ''}`);
+
+          // Apprentice study
+          const studyAlerts = alerts.filter((a) =>
+            ['flashcards_due', 'streak_broken', 'assessment_due', 'ojt_hours_behind'].includes(
+              a.type
+            )
+          );
+          if (studyAlerts.length > 0 && role === 'apprentice') {
+            parts.push(`${studyAlerts.length} study reminder${studyAlerts.length > 1 ? 's' : ''}`);
+          }
+
+          // Mood check-in (always last)
+          const moodAlert = alerts.find((a) => a.type === 'mood_checkin');
+          if (moodAlert) parts.push('How are you feeling today?');
+
+          const briefingSummary = parts.join('\n');
 
           alerts.unshift({
             type: 'morning_briefing',
@@ -563,11 +805,15 @@ serve(async (req: Request): Promise<Response> => {
           if (sent) {
             totalSkipped += filteredAlerts.length;
           } else {
-            // Build a detailed body from all individual alerts
-            const detailLines = detailAlerts.map((a) => `${a.title}: ${a.body}`);
-            const consolidatedBody = detailLines.length > 0
-              ? detailLines.join('\n')
-              : briefing.body;
+            // Build body — keep it shorter if user also gets WhatsApp morning brief
+            let consolidatedBody: string;
+            if (hasWhatsAppAgent) {
+              // User gets detailed WhatsApp brief — push is just a summary
+              consolidatedBody = briefing.body + '\nCheck WhatsApp for full details';
+            } else {
+              const detailLines = detailAlerts.map((a) => `${a.title}: ${a.body}`);
+              consolidatedBody = detailLines.length > 0 ? detailLines.join('\n') : briefing.body;
+            }
 
             await sendPush(
               supabaseUrl,

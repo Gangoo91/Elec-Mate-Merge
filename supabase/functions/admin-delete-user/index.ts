@@ -70,7 +70,17 @@ Deno.serve(async (req) => {
       { auth: { autoRefreshToken: false, persistSession: false } }
     );
 
-    // Delete the user from auth (this will cascade to profile due to FK)
+    // Clean up all NO ACTION FK references before deleting auth user
+    const { error: cleanupError } = await supabaseAdmin.rpc('admin_cleanup_user_data', {
+      target_id: userId,
+    });
+
+    if (cleanupError) {
+      console.error('Error cleaning up user data:', cleanupError);
+      throw new Error(`Failed to clean up user data: ${cleanupError.message}`);
+    }
+
+    // Now safe to delete from auth.users — all FK references cleared
     const { error: deleteError } = await supabaseAdmin.auth.admin.deleteUser(userId);
 
     if (deleteError) {

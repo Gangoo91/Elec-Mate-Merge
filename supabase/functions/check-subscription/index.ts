@@ -181,10 +181,13 @@ serve(async (req) => {
       // active subscription (set by RevenueCat webhook for native IAP), do NOT
       // overwrite it. Return the existing profile state instead.
       if (profileData?.subscribed) {
-        logger.info('No Stripe customer but profile.subscribed=true (likely IAP subscriber), preserving state', {
-          userId: user.id,
-          tier: profileData.subscription_tier,
-        });
+        logger.info(
+          'No Stripe customer but profile.subscribed=true (likely IAP subscriber), preserving state',
+          {
+            userId: user.id,
+            tier: profileData.subscription_tier,
+          }
+        );
         return new Response(
           JSON.stringify({
             subscribed: true,
@@ -195,6 +198,83 @@ serve(async (req) => {
             status: 200,
           }
         );
+      }
+
+      // Check orphaned_stripe_subscriptions — a pay link may have created a
+      // Stripe customer with a different email, which the webhook couldn't match.
+      // If we find one matching this user's email, link it now.
+      try {
+        const { data: orphan } = await supabaseClient
+          .from('orphaned_stripe_subscriptions')
+          .select('*')
+          .ilike('customer_email', user.email!)
+          .eq('resolved', false)
+          .limit(1)
+          .maybeSingle();
+
+        if (orphan?.stripe_customer_id) {
+          logger.info('Found orphaned subscription matching user email, reconciling', {
+            userId: user.id,
+            orphanCustomerId: orphan.stripe_customer_id,
+            orphanTier: orphan.tier,
+          });
+
+          const orphanTier = orphan.tier || 'electrician';
+          const businessAiFlag = BUSINESS_AI_TIERS.has(orphanTier);
+
+          // Retrieve the subscription from Stripe to get period end
+          let periodEnd: string | null = null;
+          if (orphan.stripe_subscription_id) {
+            try {
+              const sub = await stripe.subscriptions.retrieve(orphan.stripe_subscription_id);
+              if (sub.current_period_end) {
+                periodEnd = new Date(sub.current_period_end * 1000).toISOString();
+              }
+            } catch {
+              // Non-fatal
+            }
+          }
+
+          await supabaseClient
+            .from('profiles')
+            .update({
+              stripe_customer_id: orphan.stripe_customer_id,
+              subscribed: true,
+              subscription_tier: orphanTier,
+              business_ai_enabled: businessAiFlag,
+              onboarding_completed: true,
+              subscription_start: new Date().toISOString(),
+              ...(periodEnd ? { subscription_end: periodEnd } : {}),
+              updated_at: new Date().toISOString(),
+            })
+            .eq('id', user.id);
+
+          // Mark orphan as resolved
+          await supabaseClient
+            .from('orphaned_stripe_subscriptions')
+            .update({
+              resolved: true,
+              resolved_at: new Date().toISOString(),
+              resolved_user_id: user.id,
+            })
+            .eq('id', orphan.id);
+
+          return new Response(
+            JSON.stringify({
+              subscribed: true,
+              subscription_tier: orphanTier,
+              business_ai_enabled: businessAiFlag,
+            }),
+            {
+              headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+              status: 200,
+            }
+          );
+        }
+      } catch (orphanErr) {
+        logger.warn('Orphan reconciliation check failed (non-fatal)', {
+          error: (orphanErr as Error)?.message,
+        });
       }
 
       logger.info('No customer found, updating unsubscribed state');
@@ -261,6 +341,7 @@ serve(async (req) => {
       logger.info('Determined subscription tier', { priceId, subscriptionTier });
 
       // Update profile in database — persist tier + business_ai_enabled as recovery mechanism
+      // Also backfill stripe_customer_id if missing (fixes pay link disconnect)
       const businessAiFlag = BUSINESS_AI_TIERS.has(subscriptionTier);
       try {
         const { error: updateError } = await withTimeout(
@@ -270,6 +351,8 @@ serve(async (req) => {
               subscribed: true,
               subscription_tier: subscriptionTier,
               business_ai_enabled: businessAiFlag,
+              stripe_customer_id: customerId,
+              onboarding_completed: true,
               updated_at: new Date().toISOString(),
             })
             .eq('id', user.id),

@@ -17,10 +17,16 @@ import {
   Shield,
   Check,
   ChevronLeft,
-  Sparkles,
-  AlertTriangle,
   Eye,
   EyeOff,
+  FileCheck,
+  Calculator,
+  Bot,
+  BarChart3,
+  BookOpen,
+  Brain,
+  Award,
+  ClipboardCheck,
 } from 'lucide-react';
 import { storeConsent } from '@/services/consentService';
 import { supabase } from '@/integrations/supabase/client';
@@ -36,22 +42,72 @@ const PASSWORD_REQUIREMENTS = [
 
 type OnboardingStep = 'account' | 'profile' | 'consent';
 
-// InputField component - MUST be outside SignUp to prevent re-creation on every render
-interface InputFieldProps {
-  label: string;
-  type?: string;
-  value: string;
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  placeholder: string;
-  icon: React.ComponentType<{ className?: string }>;
-  field: string;
-  focusedField: string | null;
-  setFocusedField: (field: string | null) => void;
-  showToggle?: boolean;
-  isVisible?: boolean;
-  onToggle?: () => void;
-  showSuccess?: boolean;
-}
+const STEPS: OnboardingStep[] = ['account', 'profile', 'consent'];
+const STEP_LABELS = ['Account', 'Role', 'Terms'];
+
+const ROLE_OPTIONS = [
+  {
+    value: 'electrician',
+    label: 'Electrician',
+    subtitle: 'Everything you need on and off site',
+    icon: Zap,
+    features: [
+      { icon: FileCheck, text: 'Certs, RAMS & reports' },
+      { icon: Calculator, text: 'Quotes & invoices' },
+      { icon: Bot, text: 'AI-powered tools' },
+      { icon: BookOpen, text: 'Regs & calculators' },
+      { icon: BarChart3, text: 'Job tracking & diary' },
+      { icon: BookOpen, text: 'Study centre' },
+      { icon: ClipboardCheck, text: 'Site safety tools' },
+      { icon: Brain, text: 'Mental health hub' },
+    ],
+  },
+  {
+    value: 'apprentice',
+    label: 'Apprentice',
+    subtitle: 'Your complete training companion',
+    icon: GraduationCap,
+    features: [
+      { icon: BookOpen, text: 'Level 2 & 3 courses' },
+      { icon: Brain, text: 'AI tutor & quizzes' },
+      { icon: Award, text: 'AM2 exam simulator' },
+      { icon: ClipboardCheck, text: 'Portfolio & logbook' },
+      { icon: Calculator, text: 'Regs & calculators' },
+      { icon: FileCheck, text: 'Progress tracking' },
+      { icon: Brain, text: 'Mental health hub' },
+      { icon: Award, text: 'Study centre' },
+    ],
+  },
+];
+
+/* ─── Shared sub-components ─── */
+
+const StepBar = ({ currentIndex }: { currentIndex: number }) => (
+  <div className="mb-8">
+    <div className="flex gap-2">
+      {STEPS.map((s, i) => (
+        <div key={s} className="flex-1">
+          <div className="h-[2px] rounded-full bg-white/[0.10] overflow-hidden">
+            <motion.div
+              className="h-full rounded-full bg-elec-yellow"
+              initial={false}
+              animate={{ width: i < currentIndex ? '100%' : i === currentIndex ? '50%' : '0%' }}
+              transition={{ duration: 0.3, ease: 'easeOut' }}
+            />
+          </div>
+          <span
+            className={cn(
+              'text-[10px] font-medium uppercase tracking-wider block text-center mt-1.5 transition-colors',
+              i <= currentIndex ? 'text-white' : 'text-white'
+            )}
+          >
+            {STEP_LABELS[i]}
+          </span>
+        </div>
+      ))}
+    </div>
+  </div>
+);
 
 const InputField = ({
   label,
@@ -63,22 +119,36 @@ const InputField = ({
   field,
   focusedField,
   setFocusedField,
-  showToggle = false,
-  isVisible = false,
-  onToggle = () => {},
-  showSuccess = false,
-}: InputFieldProps) => (
-  <div className="space-y-2">
-    <label className="block text-[13px] font-medium text-white ml-1">{label}</label>
+  showToggle,
+  isVisible,
+  onToggle,
+  showSuccess,
+}: {
+  label: string;
+  type?: string;
+  value: string;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  placeholder: string;
+  icon: React.ComponentType<{ className?: string }>;
+  field: string;
+  focusedField: string | null;
+  setFocusedField: (f: string | null) => void;
+  showToggle?: boolean;
+  isVisible?: boolean;
+  onToggle?: () => void;
+  showSuccess?: boolean;
+}) => (
+  <div>
+    <label className="block text-[12px] font-medium text-white mb-1.5 ml-0.5 uppercase tracking-wider">
+      {label}
+    </label>
     <div className="relative">
-      <div
+      <Icon
         className={cn(
-          'absolute left-4 top-1/2 -translate-y-1/2 transition-colors duration-200',
+          'absolute left-3.5 top-1/2 -translate-y-1/2 h-[18px] w-[18px] transition-colors duration-150',
           focusedField === field ? 'text-elec-yellow' : 'text-white'
         )}
-      >
-        <Icon className="h-5 w-5" />
-      </div>
+      />
       <input
         type={type === 'password' ? 'text' : type}
         value={value}
@@ -86,40 +156,34 @@ const InputField = ({
         onFocus={() => setFocusedField(field)}
         onBlur={() => setFocusedField(null)}
         placeholder={placeholder}
-        autoComplete={type === 'email' ? 'email' : type === 'password' ? 'new-password' : 'off'}
+        autoComplete={type === 'email' ? 'email' : type === 'password' ? 'new-password' : 'name'}
+        autoCapitalize={type === 'email' || type === 'password' ? 'none' : 'words'}
         className={cn(
-          'w-full h-14 pl-14 pr-12 rounded-2xl',
-          'bg-input border-2 text-white placeholder:text-muted-foreground [color-scheme:dark]',
-          'text-[16px] outline-none transition-all duration-200',
+          'w-full h-12 pl-11 pr-10 rounded-xl text-[15px] text-white placeholder:text-white',
+          'bg-white/[0.10] outline-none transition-all duration-150 [color-scheme:dark]',
           type === 'password' && !isVisible && 'pw-masked',
           focusedField === field
-            ? 'border-elec-yellow/50 shadow-[0_0_0_4px_rgba(255,209,0,0.1)]'
-            : 'border-white/20 hover:border-white/30'
+            ? 'ring-1 ring-elec-yellow/40 bg-white/[0.10]'
+            : 'ring-1 ring-white/20 hover:ring-white/30'
         )}
       />
       {showToggle && (
         <button
           type="button"
           onClick={onToggle}
-          className="absolute right-2 top-1/2 -translate-y-1/2 text-white hover:text-white active:text-white transition-colors h-11 w-11 flex items-center justify-center touch-manipulation rounded-xl"
+          className="absolute right-1.5 top-1/2 -translate-y-1/2 h-9 w-9 flex items-center justify-center rounded-lg text-white hover:text-white transition-colors touch-manipulation"
         >
-          {isVisible ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
+          {isVisible ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
         </button>
       )}
-      {showSuccess && (
-        <motion.div
-          initial={{ scale: 0, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1 }}
-          className="absolute right-4 top-1/2 -translate-y-1/2"
-        >
-          <div className="w-6 h-6 rounded-full bg-green-500/20 flex items-center justify-center">
-            <CheckCircle2 className="h-4 w-4 text-green-400" />
-          </div>
-        </motion.div>
+      {showSuccess && !showToggle && (
+        <CheckCircle2 className="absolute right-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-green-400/70" />
       )}
     </div>
   </div>
 );
+
+/* ─── Main component ─── */
 
 const SignUp = () => {
   const [step, setStep] = useState<OnboardingStep>('account');
@@ -139,6 +203,8 @@ const SignUp = () => {
     marketingOptIn: false,
     dataProcessingAccepted: false,
   });
+  const [userCount, setUserCount] = useState('500+');
+  const [checkingEmail, setCheckingEmail] = useState(false);
 
   const { signUp } = useAuth();
   const navigate = useNavigate();
@@ -146,41 +212,42 @@ const SignUp = () => {
   const [offerCode, setOfferCode] = useState<string | null>(null);
   const [referralCode, setReferralCode] = useState<string | null>(null);
 
-  // Capture offer code from URL
+  const currentStepIndex = STEPS.indexOf(step);
+  const allPasswordRequirementsMet = PASSWORD_REQUIREMENTS.every((r) => r.test(password));
+  const isEmailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  const passwordsMatch = password === confirmPassword && confirmPassword.length > 0;
+  const allRequiredAccepted =
+    consent.termsAccepted && consent.privacyAccepted && consent.dataProcessingAccepted;
+
+  useEffect(() => {
+    supabase
+      .from('profiles')
+      .select('*', { count: 'exact', head: true })
+      .then(({ count }) => {
+        if (count && count > 0) setUserCount(`${Math.floor(count / 10) * 10}+`);
+      });
+  }, []);
+
   useEffect(() => {
     const code = searchParams.get('offer');
     if (code) {
       localStorage.setItem('elec-mate-offer-code', code);
       setOfferCode(code);
-      console.log('Offer code captured:', code);
     }
   }, [searchParams]);
 
-  // Capture referral code from URL
   useEffect(() => {
     const ref = searchParams.get('ref');
     if (ref) {
       localStorage.setItem('elec-mate-referral-code', ref);
       setReferralCode(ref);
-      console.log('Referral code captured:', ref);
     } else {
-      // Check if we already stored one from a previous visit
       const stored = localStorage.getItem('elec-mate-referral-code');
       if (stored) setReferralCode(stored);
     }
   }, [searchParams]);
 
-  // Note: 'employer' role requires a paid subscription and is not available at free signup
-  // Employers must subscribe through the employer pricing page to get access
-  const roleOptions = [
-    { value: 'electrician', label: 'Electrician', icon: Zap },
-    { value: 'apprentice', label: 'Apprentice', icon: GraduationCap },
-  ];
-
-  const allPasswordRequirementsMet = PASSWORD_REQUIREMENTS.every((req) => req.test(password));
-  const isEmailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-  const passwordsMatch = password === confirmPassword && confirmPassword.length > 0;
-  const [checkingEmail, setCheckingEmail] = useState(false);
+  // ─── Handlers (business logic unchanged) ───
 
   const handleAccountSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -196,31 +263,25 @@ const SignUp = () => {
       setError('Passwords do not match');
       return;
     }
-
-    // Check if email already exists
     setCheckingEmail(true);
     setError(null);
     try {
-      const { data: existingUsers, error: checkError } = await supabase
+      const { data: existing, error: checkErr } = await supabase
         .from('profiles')
         .select('id')
         .eq('email', email.toLowerCase().trim())
         .maybeSingle();
-
-      if (checkError && checkError.code !== 'PGRST116') {
-        console.warn('Email check error:', checkError);
-        // Continue anyway - signup will catch duplicates
-      } else if (existingUsers) {
+      if (checkErr && checkErr.code !== 'PGRST116') {
+        /* ignore */
+      } else if (existing) {
         setError('An account with this email already exists. Please sign in instead.');
         setCheckingEmail(false);
         return;
       }
-    } catch (err) {
-      console.warn('Email check failed:', err);
-      // Continue anyway - signup will catch duplicates
+    } catch {
+      /* ignore */
     }
     setCheckingEmail(false);
-
     setError(null);
     addBreadcrumb('Signup step: account completed', 'signup', { email });
     setStep('profile');
@@ -236,14 +297,13 @@ const SignUp = () => {
     setStep('consent');
   };
 
-  // Stripe price IDs mapped by role
   const ROLE_TO_PRICE: Record<string, { planId: string; priceId: string }> = {
     electrician: { planId: 'electrician-monthly', priceId: 'price_1SqJVr2RKw5t5RAmaiTGelLN' },
     apprentice: { planId: 'apprentice-monthly', priceId: 'price_1SmUef2RKw5t5RAmRIMTWTqU' },
   };
 
   const handleFinalSubmit = async () => {
-    if (!consent.termsAccepted || !consent.privacyAccepted || !consent.dataProcessingAccepted) {
+    if (!allRequiredAccepted) {
       setError('Please accept the required terms');
       return;
     }
@@ -252,7 +312,6 @@ const SignUp = () => {
     addBreadcrumb('Signup step: consent completed, submitting', 'signup', {
       marketingOptIn: consent.marketingOptIn,
     });
-
     try {
       const { error, data } = await signUp(email, password, fullName);
       if (error) {
@@ -260,57 +319,45 @@ const SignUp = () => {
         setIsSubmitting(false);
         return;
       }
-
-      // Save role to database with onboarding_completed = false (they haven't paid yet)
       if (data?.user?.id) {
-        // Always save role to localStorage as fallback (belt-and-braces)
         localStorage.setItem('elec-mate-profile-role', profile.role);
-
-        // Retry the profile update to handle trigger timing race condition
         const saveRole = async (retries = 3): Promise<boolean> => {
-          // Build update payload — include referred_by if we have a referral code
-          const updatePayload: Record<string, unknown> = {
+          const payload: Record<string, unknown> = {
             role: profile.role,
             onboarding_completed: false,
             updated_at: new Date().toISOString(),
           };
-
-          // Look up referrer from stored referral code
-          const storedRefCode = localStorage.getItem('elec-mate-referral-code');
-          if (storedRefCode) {
+          const storedRef = localStorage.getItem('elec-mate-referral-code');
+          if (storedRef) {
             try {
               const { data: refData } = await supabase
                 .from('referral_codes')
                 .select('user_id')
-                .eq('code', storedRefCode)
+                .eq('code', storedRef)
                 .eq('is_active', true)
                 .maybeSingle();
-
               if (refData?.user_id) {
-                updatePayload.referred_by = refData.user_id;
-
-                // Create referral row linking referrer → this new user
-                await supabase.from('referrals').insert({
-                  referrer_id: refData.user_id,
-                  referred_id: data.user!.id,
-                  referred_email: email,
-                  referral_code: storedRefCode,
-                  status: 'signed_up',
-                  source: (searchParams.get('src') as string) || 'link',
-                });
+                payload.referred_by = refData.user_id;
+                await supabase
+                  .from('referrals')
+                  .insert({
+                    referrer_id: refData.user_id,
+                    referred_id: data.user!.id,
+                    referred_email: email,
+                    referral_code: storedRef,
+                    status: 'signed_up',
+                    source: (searchParams.get('src') as string) || 'link',
+                  });
               }
-            } catch (refErr) {
-              console.warn('Referral lookup failed (non-critical):', refErr);
+            } catch {
+              /* non-critical */
             }
           }
-
-          const { error: profileError } = await supabase
+          const { error: profileErr } = await supabase
             .from('profiles')
-            .update(updatePayload)
+            .update(payload)
             .eq('id', data.user!.id);
-
-          if (profileError) {
-            console.error('Error saving profile role:', profileError);
+          if (profileErr) {
             if (retries > 0) {
               await new Promise((r) => setTimeout(r, 500));
               return saveRole(retries - 1);
@@ -319,12 +366,9 @@ const SignUp = () => {
           }
           return true;
         };
-
         await saveRole();
       }
-
-      // Store consent (GDPR compliance) - non-blocking
-      const consentResult = await storeConsent({
+      await storeConsent({
         email,
         full_name: fullName,
         terms_accepted: consent.termsAccepted,
@@ -332,39 +376,17 @@ const SignUp = () => {
         data_processing_accepted: consent.dataProcessingAccepted,
         marketing_opt_in: consent.marketingOptIn,
         consent_timestamp: new Date().toISOString(),
-      });
-
-      if (!consentResult.success) {
-        console.warn('Consent DB storage failed (non-critical):', consentResult.error);
-      }
-
-      // Send welcome email (non-blocking)
+      }).catch(() => {});
       supabase.functions
-        .invoke('send-welcome-email', {
-          body: {
-            userId: data?.user?.id,
-            email: email,
-            fullName: fullName,
-          },
-        })
-        .catch((emailErr) => {
-          console.warn('Welcome email failed (non-critical):', emailErr);
-        });
-
-      // Store planId + priceId for checkout page based on role
-      const rolePrice = ROLE_TO_PRICE[profile.role];
-      if (rolePrice) {
-        localStorage.setItem('elec-mate-checkout-planId', rolePrice.planId);
-        localStorage.setItem('elec-mate-checkout-priceId', rolePrice.priceId);
+        .invoke('send-welcome-email', { body: { userId: data?.user?.id, email, fullName } })
+        .catch(() => {});
+      const rp = ROLE_TO_PRICE[profile.role];
+      if (rp) {
+        localStorage.setItem('elec-mate-checkout-planId', rp.planId);
+        localStorage.setItem('elec-mate-checkout-priceId', rp.priceId);
       }
-
-      // Clean up localStorage items used during onboarding
-      // NOTE: Do NOT remove elec-mate-profile-role here — CheckoutTrial needs it as fallback
-      // NOTE: Do NOT remove elec-mate-referral-code here — create-checkout needs it
       localStorage.removeItem('elec-mate-offer-code');
       localStorage.removeItem('elec-mate-onboarding-data');
-
-      // Redirect to checkout trial page to collect card details
       navigate('/checkout-trial');
     } catch (err: unknown) {
       setError(err instanceof Error ? err.message : 'An error occurred');
@@ -379,461 +401,508 @@ const SignUp = () => {
     else if (step === 'consent') setStep('profile');
   };
 
+  // ─── Render ───
+
   return (
-    <div className="min-h-screen bg-gradient-to-b from-zinc-900 via-black to-black flex flex-col overflow-auto">
-      {/* Animated background */}
-      <div className="fixed inset-0 pointer-events-none">
-        <motion.div
-          animate={{ scale: [1, 1.2, 1], opacity: [0.08, 0.12, 0.08] }}
-          transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}
-          className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[600px] rounded-full bg-elec-yellow/20 blur-[150px]"
-        />
-      </div>
-
-      {/* Header */}
-      <motion.header
-        initial={{ opacity: 0, y: -20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.4 }}
-        className="relative w-full px-4 pt-[calc(env(safe-area-inset-top)+16px)] pb-1 z-10"
-      >
-        <div className="flex items-center justify-between max-w-md mx-auto">
-          {step === 'account' ? (
-            <Link
-              to="/"
-              className="flex items-center gap-1 text-white hover:text-white transition-colors p-2 -ml-2 rounded-xl"
-            >
-              <ChevronLeft className="h-5 w-5" />
-              <span className="text-[15px] font-medium">Back</span>
-            </Link>
-          ) : (
-            <button
-              onClick={goBack}
-              className="flex items-center gap-1 text-white hover:text-white transition-colors p-2 -ml-2 rounded-xl"
-            >
-              <ChevronLeft className="h-5 w-5" />
-              <span className="text-[15px] font-medium">Back</span>
-            </button>
-          )}
-
+    <div className="min-h-[100svh] bg-black flex flex-col">
+      <div className="flex-1 flex flex-col px-6 pt-[calc(env(safe-area-inset-top)+12px)] pb-[calc(env(safe-area-inset-bottom)+24px)]">
+        <div className="w-full max-w-[380px] mx-auto flex-1 flex flex-col">
+          {/* Top bar: back + logo */}
           <motion.div
-            initial={{ scale: 0.8, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            transition={{ delay: 0.1, duration: 0.3 }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            className="flex items-center justify-between py-3 mb-2"
           >
-            <img
-              src="/logo.jpg"
-              alt="Elec-Mate"
-              className="w-10 h-10 rounded-xl object-cover shadow-lg shadow-elec-yellow/30"
-            />
+            {step === 'account' ? (
+              <Link
+                to="/"
+                className="flex items-center gap-1 text-white hover:text-white transition-colors p-1 -ml-1 touch-manipulation"
+              >
+                <ChevronLeft className="h-5 w-5" />
+                <span className="text-[13px] font-medium">Back</span>
+              </Link>
+            ) : (
+              <button
+                onClick={goBack}
+                className="flex items-center gap-1 text-white hover:text-white transition-colors p-1 -ml-1 touch-manipulation"
+              >
+                <ChevronLeft className="h-5 w-5" />
+                <span className="text-[13px] font-medium">Back</span>
+              </button>
+            )}
+            <div className="flex items-center gap-2">
+              <img src="/logo.jpg" alt="" className="w-7 h-7 rounded-lg object-cover" />
+              <span className="text-[14px] font-bold tracking-tight">
+                <span className="text-elec-yellow">Elec-</span>
+                <span className="text-white">Mate</span>
+              </span>
+            </div>
+            <div className="w-14" />
           </motion.div>
 
-          <div className="w-16" />
-        </div>
-      </motion.header>
+          {/* Step indicator */}
+          <StepBar currentIndex={currentStepIndex} />
 
-      {/* Main content */}
-      <main className="relative flex-1 flex flex-col justify-start px-5 py-2 z-10">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.1 }}
-          className="w-full max-w-md mx-auto"
-        >
-          <AnimatePresence mode="wait">
-            {/* Step 1: Account */}
-            {step === 'account' && (
-              <motion.div
-                key="account"
-                initial={{ opacity: 0, x: 20 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: -20 }}
-              >
-                {/* Referral Banner */}
-                {referralCode && !offerCode && (
-                  <motion.div
-                    initial={{ opacity: 0, y: -10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    className="mb-4 p-3 rounded-2xl bg-gradient-to-r from-elec-yellow/20 to-amber-500/20 border border-elec-yellow/30"
-                  >
-                    <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 rounded-xl bg-elec-yellow/20 flex items-center justify-center flex-shrink-0">
-                        <Gift className="h-5 w-5 text-elec-yellow" />
-                      </div>
+          {/* Step content */}
+          <div className="flex-1 flex flex-col">
+            <AnimatePresence mode="wait">
+              {/* ─── STEP 1: Account ─── */}
+              {step === 'account' && (
+                <motion.div
+                  key="account"
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: -20 }}
+                  transition={{ duration: 0.2 }}
+                  className="flex-1 flex flex-col"
+                >
+                  {/* Banners */}
+                  {referralCode && !offerCode && (
+                    <div className="mb-4 p-3 rounded-xl bg-elec-yellow/[0.06] border border-elec-yellow/15 flex items-center gap-3">
+                      <Gift className="h-4.5 w-4.5 text-elec-yellow flex-shrink-0" />
                       <div>
-                        <p className="text-sm font-semibold text-elec-yellow">Referred by a Mate</p>
-                        <p className="text-xs text-white">Your first month's on us — free!</p>
+                        <p className="text-[12px] font-semibold text-elec-yellow">
+                          Referred by a Mate
+                        </p>
+                        <p className="text-[11px] text-white">Your first month's on us</p>
                       </div>
                     </div>
-                  </motion.div>
-                )}
-
-                {/* Offer Banner */}
-                {offerCode && (
-                  <motion.div
-                    initial={{ opacity: 0, y: -10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    className="mb-4 p-3 rounded-2xl bg-gradient-to-r from-green-500/20 to-emerald-500/20 border border-green-500/30"
-                  >
-                    <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 rounded-xl bg-green-500/20 flex items-center justify-center flex-shrink-0">
-                        <Gift className="h-5 w-5 text-green-400" />
-                      </div>
-                      <div>
-                        <p className="text-sm font-semibold text-green-400">
-                          Special Offer Applied
-                        </p>
-                        <p className="text-xs text-white">
-                          Your discount will be applied at checkout
-                        </p>
-                      </div>
-                    </div>
-                  </motion.div>
-                )}
-
-                {/* Title */}
-                <div className="text-center mb-4">
-                  <motion.h1 className="text-[26px] font-bold text-white tracking-tight mb-1">
-                    Create Account
-                  </motion.h1>
-                  <p className="text-[14px] text-white">Start your 7-day free trial</p>
-                </div>
-
-                {/* Error */}
-                <AnimatePresence>
-                  {error && (
-                    <motion.div
-                      initial={{ opacity: 0, y: -10 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: -10 }}
-                      className="mb-4 p-4 rounded-2xl bg-elec-yellow/10 border border-elec-yellow/20"
-                    >
-                      <div className="flex gap-3 items-center">
-                        <AlertTriangle className="h-5 w-5 text-elec-yellow flex-shrink-0" />
-                        <p className="text-[14px] text-elec-yellow font-medium">{error}</p>
-                      </div>
-                    </motion.div>
                   )}
-                </AnimatePresence>
+                  {offerCode && (
+                    <div className="mb-4 p-3 rounded-xl bg-green-500/[0.06] border border-green-500/15 flex items-center gap-3">
+                      <Gift className="h-4.5 w-4.5 text-green-400 flex-shrink-0" />
+                      <div>
+                        <p className="text-[12px] font-semibold text-green-400">Offer applied</p>
+                        <p className="text-[11px] text-white">Discount applied at checkout</p>
+                      </div>
+                    </div>
+                  )}
 
-                <form onSubmit={handleAccountSubmit} className="space-y-3">
-                  <InputField
-                    label="Full Name"
-                    value={fullName}
-                    onChange={(e) => setFullName(e.target.value)}
-                    placeholder="John Smith"
-                    icon={User}
-                    field="name"
-                    focusedField={focusedField}
-                    setFocusedField={setFocusedField}
-                  />
+                  <h1 className="text-[22px] font-semibold text-white tracking-tight mb-1">
+                    Create your account
+                  </h1>
+                  <div className="flex items-center gap-2 mb-6">
+                    <p className="text-[13px] text-white">7-day free trial</p>
+                    <span className="text-[11px] text-white">·</span>
+                    <span className="text-[11px] text-white flex items-center gap-1">
+                      <span className="inline-flex h-1.5 w-1.5 rounded-full bg-green-500/50" />
+                      {userCount} members
+                    </span>
+                  </div>
 
-                  <InputField
-                    label="Email address"
-                    type="email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    placeholder="you@example.com"
-                    icon={Mail}
-                    field="email"
-                    focusedField={focusedField}
-                    setFocusedField={setFocusedField}
-                    showSuccess={isEmailValid && email.length > 0}
-                  />
+                  {/* Error */}
+                  <AnimatePresence>
+                    {error && (
+                      <motion.div
+                        initial={{ opacity: 0, height: 0 }}
+                        animate={{ opacity: 1, height: 'auto' }}
+                        exit={{ opacity: 0, height: 0 }}
+                        className="mb-4 overflow-hidden"
+                      >
+                        <p className="text-[13px] text-red-400 bg-red-500/8 border border-red-500/15 rounded-lg px-3.5 py-2.5 text-center">
+                          {error}
+                        </p>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
 
-                  <div>
+                  <form onSubmit={handleAccountSubmit} className="space-y-3.5 flex-1">
                     <InputField
-                      label="Password"
-                      type="password"
-                      value={password}
-                      onChange={(e) => setPassword(e.target.value)}
-                      placeholder="Create password"
-                      icon={Lock}
-                      field="password"
+                      label="Full name"
+                      value={fullName}
+                      onChange={(e) => setFullName(e.target.value)}
+                      placeholder="John Smith"
+                      icon={User}
+                      field="name"
                       focusedField={focusedField}
                       setFocusedField={setFocusedField}
-                      showToggle
-                      isVisible={showPassword}
-                      onToggle={() => setShowPassword(!showPassword)}
                     />
-                    {password && (
-                      <div className="space-y-2 mt-2">
-                        <div className="flex gap-1.5">
+                    <InputField
+                      label="Email"
+                      type="email"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      placeholder="you@example.com"
+                      icon={Mail}
+                      field="email"
+                      focusedField={focusedField}
+                      setFocusedField={setFocusedField}
+                      showSuccess={isEmailValid && email.length > 0}
+                    />
+                    <div>
+                      <InputField
+                        label="Password"
+                        type="password"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        placeholder="Create password"
+                        icon={Lock}
+                        field="password"
+                        focusedField={focusedField}
+                        setFocusedField={setFocusedField}
+                        showToggle
+                        isVisible={showPassword}
+                        onToggle={() => setShowPassword(!showPassword)}
+                      />
+                      {password && (
+                        <div className="flex gap-1.5 mt-2">
                           {PASSWORD_REQUIREMENTS.map((req) => (
                             <div
                               key={req.id}
                               className={cn(
-                                'flex-1 py-1.5 rounded-lg text-center text-[11px] font-medium transition-all',
+                                'flex-1 py-1 rounded text-center text-[10px] font-semibold transition-all duration-150',
                                 req.test(password)
-                                  ? 'bg-green-500/20 text-green-400'
-                                  : 'bg-white/5 text-white'
+                                  ? 'bg-green-500/10 text-green-400/80'
+                                  : 'bg-white/[0.03] text-white'
                               )}
                             >
                               {req.label}
                             </div>
                           ))}
                         </div>
-                        {allPasswordRequirementsMet && (
-                          <p className="text-[11px] text-white text-center">
-                            Avoid common passwords like "Password123"
-                          </p>
+                      )}
+                    </div>
+                    <InputField
+                      label="Confirm password"
+                      type="password"
+                      value={confirmPassword}
+                      onChange={(e) => setConfirmPassword(e.target.value)}
+                      placeholder="Confirm password"
+                      icon={Lock}
+                      field="confirmPassword"
+                      focusedField={focusedField}
+                      setFocusedField={setFocusedField}
+                      showToggle
+                      isVisible={showConfirmPassword}
+                      onToggle={() => setShowConfirmPassword(!showConfirmPassword)}
+                      showSuccess={passwordsMatch}
+                    />
+
+                    <div className="pt-3">
+                      <Button
+                        type="submit"
+                        disabled={checkingEmail}
+                        className="w-full h-12 rounded-xl text-[15px] font-semibold bg-elec-yellow hover:bg-elec-yellow/90 text-black shadow-[0_1px_20px_rgba(250,204,21,0.15)] active:scale-[0.98] disabled:opacity-50 transition-all duration-150"
+                      >
+                        {checkingEmail ? (
+                          <>
+                            <Loader2 className="mr-2 h-4 w-4 animate-spin" /> Checking...
+                          </>
+                        ) : (
+                          <>
+                            Continue <ArrowRight className="ml-1.5 h-4 w-4" />
+                          </>
                         )}
-                      </div>
-                    )}
+                      </Button>
+                    </div>
+                  </form>
+
+                  <p className="text-[11px] text-white text-center mt-5">
+                    Already have an account?{' '}
+                    <Link
+                      to="/auth/signin"
+                      className="text-elec-yellow/70 hover:text-elec-yellow font-medium"
+                    >
+                      Sign in
+                    </Link>
+                  </p>
+                </motion.div>
+              )}
+
+              {/* ─── STEP 2: Role ─── */}
+              {step === 'profile' && (
+                <motion.div
+                  key="profile"
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: -20 }}
+                  transition={{ duration: 0.2 }}
+                  className="flex-1 flex flex-col"
+                >
+                  <div className="text-center mb-6">
+                    <h1 className="text-[22px] font-semibold text-white tracking-tight mb-1">
+                      I am an...
+                    </h1>
+                    <p className="text-[13px] text-white">
+                      Select your role to personalise your experience
+                    </p>
                   </div>
 
-                  <InputField
-                    label="Confirm Password"
-                    type="password"
-                    value={confirmPassword}
-                    onChange={(e) => setConfirmPassword(e.target.value)}
-                    placeholder="Confirm password"
-                    icon={Lock}
-                    field="confirmPassword"
-                    focusedField={focusedField}
-                    setFocusedField={setFocusedField}
-                    showToggle
-                    isVisible={showConfirmPassword}
-                    onToggle={() => setShowConfirmPassword(!showConfirmPassword)}
-                    showSuccess={passwordsMatch}
-                  />
-
-                  <Button
-                    type="submit"
-                    disabled={checkingEmail}
-                    className={cn(
-                      'w-full h-14 rounded-2xl text-[16px] font-semibold',
-                      'bg-elec-yellow hover:bg-elec-yellow/90 text-black',
-                      'shadow-lg shadow-elec-yellow/25 transition-all duration-200',
-                      'disabled:opacity-50'
+                  <AnimatePresence>
+                    {error && (
+                      <motion.div
+                        initial={{ opacity: 0, height: 0 }}
+                        animate={{ opacity: 1, height: 'auto' }}
+                        exit={{ opacity: 0, height: 0 }}
+                        className="mb-4 overflow-hidden"
+                      >
+                        <p className="text-[13px] text-red-400 bg-red-500/8 border border-red-500/15 rounded-lg px-3.5 py-2.5 text-center">
+                          {error}
+                        </p>
+                      </motion.div>
                     )}
-                  >
-                    {checkingEmail ? (
-                      <>
-                        <Loader2 className="mr-2 h-5 w-5 animate-spin" /> Checking...
-                      </>
-                    ) : (
-                      <>
-                        Continue <ArrowRight className="ml-2 h-5 w-5" />
-                      </>
-                    )}
-                  </Button>
-                </form>
+                  </AnimatePresence>
 
-                {/* Divider */}
-                <div className="flex items-center gap-4 my-4">
-                  <div className="flex-1 h-px bg-white/10" />
-                  <span className="text-[12px] text-white uppercase tracking-wider">or</span>
-                  <div className="flex-1 h-px bg-white/10" />
-                </div>
-
-                {/* Sign in link */}
-                <div className="text-center">
-                  <p className="text-[14px] text-white mb-2">Already have an account?</p>
-                  <Link to="/auth/signin">
-                    <Button
-                      variant="outline"
-                      className="w-full h-13 rounded-2xl text-[15px] font-semibold bg-transparent border-2 border-white/10 text-white hover:bg-white/5"
-                    >
-                      Sign In
-                    </Button>
-                  </Link>
-                </div>
-              </motion.div>
-            )}
-
-            {/* Step 2: Role */}
-            {step === 'profile' && (
-              <motion.div
-                key="profile"
-                initial={{ opacity: 0, x: 20 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: -20 }}
-              >
-                <div className="text-center mb-6">
-                  <h1 className="text-[28px] font-bold text-white tracking-tight mb-2">
-                    What's your role?
-                  </h1>
-                  <p className="text-[15px] text-white">We'll personalise your experience</p>
-                </div>
-
-                <AnimatePresence>
-                  {error && (
-                    <motion.div
-                      initial={{ opacity: 0, y: -10 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: -10 }}
-                      className="mb-4 p-4 rounded-2xl bg-elec-yellow/10 border border-elec-yellow/20"
-                    >
-                      <div className="flex gap-3 items-center">
-                        <AlertTriangle className="h-5 w-5 text-elec-yellow" />
-                        <p className="text-[14px] text-elec-yellow font-medium">{error}</p>
-                      </div>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-
-                <div className="space-y-3 mb-6">
-                  {roleOptions.map((option) => (
-                    <button
-                      key={option.value}
-                      type="button"
-                      onClick={() => setProfile({ ...profile, role: option.value })}
-                      className={cn(
-                        'w-full p-4 rounded-2xl border-2 text-left transition-all touch-manipulation',
-                        profile.role === option.value
-                          ? 'border-elec-yellow bg-elec-yellow/10 shadow-[0_0_0_4px_rgba(255,209,0,0.1)]'
-                          : 'border-white/20 bg-white/[0.03] hover:border-white/30'
-                      )}
-                    >
-                      <div className="flex items-center gap-4">
-                        <div
+                  <div className="space-y-4 flex-1">
+                    {ROLE_OPTIONS.map((option, index) => {
+                      const selected = profile.role === option.value;
+                      return (
+                        <motion.button
+                          key={option.value}
+                          type="button"
+                          initial={{ opacity: 0, y: 15 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          transition={{ delay: 0.05 + index * 0.1 }}
+                          onClick={() => setProfile({ ...profile, role: option.value })}
                           className={cn(
-                            'w-12 h-12 rounded-xl flex items-center justify-center',
-                            profile.role === option.value ? 'bg-elec-yellow/20' : 'bg-white/10'
+                            'w-full rounded-2xl text-left transition-all duration-200 touch-manipulation p-5',
+                            selected
+                              ? 'bg-gradient-to-br from-elec-yellow/[0.12] to-amber-500/[0.06] border-2 border-elec-yellow shadow-[0_0_30px_rgba(250,204,21,0.12)]'
+                              : 'bg-white/[0.04] border-2 border-white/15 hover:border-elec-yellow/30 hover:bg-elec-yellow/[0.02]'
                           )}
                         >
-                          <option.icon
+                          {/* Header row */}
+                          <div className="flex items-center gap-4 mb-4">
+                            <div
+                              className={cn(
+                                'w-14 h-14 rounded-2xl flex items-center justify-center flex-shrink-0 transition-all duration-200',
+                                selected
+                                  ? 'bg-elec-yellow/20 ring-2 ring-elec-yellow'
+                                  : 'bg-elec-yellow/[0.08] ring-2 ring-elec-yellow/20'
+                              )}
+                            >
+                              <option.icon className="h-7 w-7 text-elec-yellow" />
+                            </div>
+                            <div className="flex-1 min-w-0">
+                              <span className="font-bold text-white text-[18px] block">
+                                {option.label}
+                              </span>
+                              <span className="text-[12px] text-elec-yellow block mt-0.5">
+                                {option.subtitle}
+                              </span>
+                            </div>
+                            <div
+                              className={cn(
+                                'w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0 transition-all duration-150',
+                                selected ? 'bg-elec-yellow' : 'border-2 border-elec-yellow/30'
+                              )}
+                            >
+                              {selected && <Check className="h-3.5 w-3.5 text-black" />}
+                            </div>
+                          </div>
+
+                          {/* Features grid */}
+                          <div
                             className={cn(
-                              'h-6 w-6',
-                              profile.role === option.value ? 'text-elec-yellow' : 'text-white'
+                              'border-t pt-4',
+                              selected ? 'border-elec-yellow/20' : 'border-white/10'
                             )}
-                          />
-                        </div>
-                        <span className="font-semibold text-white text-[16px]">{option.label}</span>
-                        {profile.role === option.value && (
-                          <Check className="h-5 w-5 text-elec-yellow ml-auto" />
-                        )}
-                      </div>
-                    </button>
-                  ))}
-                </div>
-
-                <Button
-                  onClick={handleProfileSubmit}
-                  disabled={!profile.role}
-                  className="w-full h-14 rounded-2xl text-[16px] font-semibold bg-elec-yellow hover:bg-elec-yellow/90 text-black shadow-lg shadow-elec-yellow/25 disabled:opacity-50"
-                >
-                  Continue <ArrowRight className="ml-2 h-5 w-5" />
-                </Button>
-              </motion.div>
-            )}
-
-            {/* Step 3: Consent */}
-            {step === 'consent' && (
-              <motion.div
-                key="consent"
-                initial={{ opacity: 0, x: 20 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: -20 }}
-              >
-                <div className="text-center mb-6">
-                  <div className="w-14 h-14 rounded-2xl bg-green-500/20 flex items-center justify-center mx-auto mb-4">
-                    <Shield className="h-7 w-7 text-green-400" />
+                          >
+                            <div className="grid grid-cols-2 gap-3">
+                              {option.features.map((f) => (
+                                <div key={f.text} className="flex items-center gap-2.5">
+                                  <div
+                                    className={cn(
+                                      'w-7 h-7 rounded-lg flex items-center justify-center flex-shrink-0',
+                                      selected ? 'bg-elec-yellow/15' : 'bg-elec-yellow/[0.06]'
+                                    )}
+                                  >
+                                    <f.icon className="h-3.5 w-3.5 text-elec-yellow" />
+                                  </div>
+                                  <span className="text-[12px] text-white leading-tight">
+                                    {f.text}
+                                  </span>
+                                </div>
+                              ))}
+                            </div>
+                          </div>
+                        </motion.button>
+                      );
+                    })}
                   </div>
-                  <h1 className="text-[28px] font-bold text-white tracking-tight mb-2">
-                    Almost there!
-                  </h1>
-                  <p className="text-[15px] text-white">Your data, your control</p>
-                </div>
 
-                <AnimatePresence>
-                  {error && (
-                    <motion.div
-                      initial={{ opacity: 0, y: -10 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: -10 }}
-                      className="mb-4 p-4 rounded-2xl bg-elec-yellow/10 border border-elec-yellow/20"
+                  <div className="pt-5">
+                    <Button
+                      onClick={handleProfileSubmit}
+                      disabled={!profile.role}
+                      className="w-full h-12 rounded-xl text-[15px] font-semibold bg-elec-yellow hover:bg-elec-yellow/90 text-black shadow-[0_1px_20px_rgba(250,204,21,0.15)] active:scale-[0.98] disabled:opacity-30 transition-all duration-150"
                     >
-                      <div className="flex gap-3 items-center">
-                        <AlertTriangle className="h-5 w-5 text-elec-yellow" />
-                        <p className="text-[14px] text-elec-yellow font-medium">{error}</p>
-                      </div>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
+                      Continue <ArrowRight className="ml-1.5 h-4 w-4" />
+                    </Button>
 
-                <div className="space-y-2 mb-4">
-                  {[
-                    { key: 'termsAccepted', label: 'Terms of Service', required: true },
-                    { key: 'privacyAccepted', label: 'Privacy Policy', required: true },
-                    { key: 'dataProcessingAccepted', label: 'Data processing', required: true },
-                    { key: 'marketingOptIn', label: 'Updates & offers', required: false },
-                  ].map((item) => (
-                    <button
-                      key={item.key}
-                      type="button"
-                      onClick={() =>
-                        setConsent({
-                          ...consent,
-                          [item.key]: !consent[item.key as keyof typeof consent],
-                        })
-                      }
-                      className={cn(
-                        'w-full p-4 rounded-2xl border-2 text-left transition-all touch-manipulation flex items-center gap-3',
-                        consent[item.key as keyof typeof consent]
-                          ? 'border-green-500/50 bg-green-500/10'
-                          : 'border-white/20 bg-white/[0.03] hover:border-white/30'
-                      )}
-                    >
-                      <Checkbox
-                        checked={consent[item.key as keyof typeof consent]}
-                        className="h-6 w-6 border-2 border-green-500 data-[state=checked]:bg-green-500 data-[state=checked]:text-white"
-                      />
-                      <span className="text-[15px] text-white">{item.label}</span>
-                      {item.required && (
-                        <span className="text-elec-yellow text-[12px] ml-auto">Required</span>
-                      )}
-                    </button>
-                  ))}
-                </div>
+                    {/* Trial note */}
+                    <div className="flex items-center justify-center gap-2 mt-4">
+                      <Shield className="h-3.5 w-3.5 text-elec-yellow" />
+                      <span className="text-[11px] text-white">
+                        7-day free trial · No charge today · Cancel anytime
+                      </span>
+                    </div>
+                  </div>
+                </motion.div>
+              )}
 
-                <Button
-                  onClick={handleFinalSubmit}
-                  disabled={
-                    isSubmitting ||
-                    !consent.termsAccepted ||
-                    !consent.privacyAccepted ||
-                    !consent.dataProcessingAccepted
-                  }
-                  className="w-full h-14 rounded-2xl text-[16px] font-semibold bg-elec-yellow hover:bg-elec-yellow/90 text-black shadow-lg shadow-elec-yellow/25 disabled:opacity-50"
+              {/* ─── STEP 3: Consent ─── */}
+              {step === 'consent' && (
+                <motion.div
+                  key="consent"
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: -20 }}
+                  transition={{ duration: 0.2 }}
+                  className="flex-1 flex flex-col"
                 >
-                  {isSubmitting ? (
-                    <>
-                      <Loader2 className="mr-2 h-5 w-5 animate-spin" /> Creating Account...
-                    </>
-                  ) : (
-                    <>
-                      Create Account <ArrowRight className="ml-2 h-5 w-5" />
-                    </>
-                  )}
-                </Button>
-              </motion.div>
-            )}
-          </AnimatePresence>
-        </motion.div>
-      </main>
+                  {/* Header with icon */}
+                  <div className="text-center mb-6">
+                    <motion.div
+                      initial={{ scale: 0.8 }}
+                      animate={{ scale: 1 }}
+                      transition={{ type: 'spring', stiffness: 400, damping: 15 }}
+                      className="w-14 h-14 rounded-2xl bg-elec-yellow/10 ring-2 ring-elec-yellow/20 flex items-center justify-center mx-auto mb-4"
+                    >
+                      <Shield className="h-7 w-7 text-elec-yellow" />
+                    </motion.div>
+                    <h1 className="text-[22px] font-semibold text-white tracking-tight mb-1">
+                      One last step
+                    </h1>
+                    <p className="text-[13px] text-white">We take your privacy seriously</p>
+                  </div>
 
-      {/* Footer */}
-      <motion.footer
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 0.8 }}
-        className="relative px-6 pb-4 pt-2 z-10"
-      >
-        <div className="max-w-md mx-auto">
-          <div className="flex items-center justify-center gap-4 text-[11px] text-white">
-            <span className="flex items-center gap-1.5">
-              <CheckCircle2 className="h-3.5 w-3.5 text-green-500/70" />
-              Secure
-            </span>
-            <span className="w-1 h-1 rounded-full bg-white/20" />
-            <span>BS7671 Compliant</span>
-            <span className="w-1 h-1 rounded-full bg-white/20" />
-            <span>UK Based</span>
+                  <AnimatePresence>
+                    {error && (
+                      <motion.div
+                        initial={{ opacity: 0, height: 0 }}
+                        animate={{ opacity: 1, height: 'auto' }}
+                        exit={{ opacity: 0, height: 0 }}
+                        className="mb-4 overflow-hidden"
+                      >
+                        <p className="text-[13px] text-red-400 bg-red-500/8 border border-red-500/15 rounded-lg px-3.5 py-2.5 text-center">
+                          {error}
+                        </p>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+
+                  {/* Accept all */}
+                  {!allRequiredAccepted && (
+                    <motion.button
+                      type="button"
+                      initial={{ opacity: 0, y: 5 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      onClick={() =>
+                        setConsent((p) => ({
+                          ...p,
+                          termsAccepted: true,
+                          privacyAccepted: true,
+                          dataProcessingAccepted: true,
+                        }))
+                      }
+                      className="w-full mb-5 py-3 rounded-xl bg-elec-yellow/[0.08] border-2 border-elec-yellow/20 text-[14px] font-semibold text-elec-yellow flex items-center justify-center gap-2 touch-manipulation hover:bg-elec-yellow/[0.12] transition-colors"
+                    >
+                      <Check className="h-4 w-4" /> Accept all required
+                    </motion.button>
+                  )}
+
+                  <div className="space-y-3 flex-1">
+                    {[
+                      {
+                        key: 'termsAccepted',
+                        label: 'Terms of Service',
+                        desc: 'Our rules for using the platform',
+                        req: true,
+                      },
+                      {
+                        key: 'privacyAccepted',
+                        label: 'Privacy Policy',
+                        desc: 'How we protect your information',
+                        req: true,
+                      },
+                      {
+                        key: 'dataProcessingAccepted',
+                        label: 'Data Processing (GDPR)',
+                        desc: 'Required for UK data compliance',
+                        req: true,
+                      },
+                      {
+                        key: 'marketingOptIn',
+                        label: 'Updates & offers',
+                        desc: 'Tips, new features & occasional deals',
+                        req: false,
+                      },
+                    ].map((item, i) => {
+                      const checked = consent[item.key as keyof typeof consent];
+                      return (
+                        <motion.button
+                          key={item.key}
+                          type="button"
+                          initial={{ opacity: 0, y: 8 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          transition={{ delay: 0.03 + i * 0.05 }}
+                          onClick={() => setConsent({ ...consent, [item.key]: !checked })}
+                          className={cn(
+                            'w-full p-4 rounded-xl text-left flex items-center gap-3.5 transition-all duration-200 touch-manipulation border-2',
+                            checked
+                              ? 'bg-green-500/[0.06] border-green-500/25'
+                              : 'bg-white/[0.03] border-white/15 hover:border-elec-yellow/20'
+                          )}
+                        >
+                          <Checkbox
+                            checked={checked}
+                            className="h-5 w-5 rounded border-white/25 data-[state=checked]:bg-green-500 data-[state=checked]:border-green-500 flex-shrink-0"
+                          />
+                          <div className="flex-1 min-w-0">
+                            <span className="text-[14px] text-white font-medium block">
+                              {item.label}
+                            </span>
+                            <span className="text-[11px] text-white block mt-0.5">{item.desc}</span>
+                          </div>
+                          {item.req && (
+                            <span
+                              className={cn(
+                                'text-[10px] font-semibold px-2 py-0.5 rounded-full flex-shrink-0',
+                                checked
+                                  ? 'bg-green-500/15 text-green-400'
+                                  : 'bg-elec-yellow/10 text-elec-yellow'
+                              )}
+                            >
+                              {checked ? '✓' : 'Required'}
+                            </span>
+                          )}
+                        </motion.button>
+                      );
+                    })}
+                  </div>
+
+                  <div className="pt-6">
+                    <Button
+                      onClick={handleFinalSubmit}
+                      disabled={isSubmitting || !allRequiredAccepted}
+                      className="w-full h-12 rounded-xl text-[15px] font-semibold bg-elec-yellow hover:bg-elec-yellow/90 text-black shadow-[0_1px_20px_rgba(250,204,21,0.15)] active:scale-[0.98] disabled:opacity-30 transition-all duration-150"
+                    >
+                      {isSubmitting ? (
+                        <>
+                          <Loader2 className="mr-2 h-4 w-4 animate-spin" /> Creating account...
+                        </>
+                      ) : (
+                        <>
+                          Create account <ArrowRight className="ml-1.5 h-4 w-4" />
+                        </>
+                      )}
+                    </Button>
+
+                    {/* Trial + trust note */}
+                    <div className="flex items-center justify-center gap-2 mt-4">
+                      <Shield className="h-3.5 w-3.5 text-elec-yellow" />
+                      <span className="text-[11px] text-white">
+                        7-day free trial · No charge today · Cancel anytime
+                      </span>
+                    </div>
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
           </div>
         </div>
-      </motion.footer>
+      </div>
     </div>
   );
 };

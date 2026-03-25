@@ -2,176 +2,187 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Card, CardContent } from '@/components/ui/card';
-import { Loader2, Zap, Mail, ArrowLeft, CheckCircle2, AlertTriangle } from 'lucide-react';
+import { Loader2, Mail, ArrowRight, CheckCircle2, ChevronLeft } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { cn } from '@/lib/utils';
 
 const ForgotPassword = () => {
   const [email, setEmail] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [focusedField, setFocusedField] = useState<string | null>(null);
 
   const { resetPassword } = useAuth();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
     if (!email) {
       setError('Please enter your email address');
       return;
     }
-
     setError(null);
     setIsSubmitting(true);
-
     try {
       const { error } = await resetPassword(email);
-
-      if (error) {
-        setError(error.message);
-      } else {
-        setIsSuccess(true);
-      }
-    } catch (err: any) {
-      setError(err.message || 'An error occurred');
+      if (error) setError(error.message);
+      else setIsSuccess(true);
+    } catch (err: unknown) {
+      setError(err instanceof Error ? err.message : 'An error occurred');
     } finally {
       setIsSubmitting(false);
     }
   };
 
   return (
-    <div className="bg-black flex flex-col pt-safe pb-safe">
-      {/* Background gradient */}
-      <div className="fixed inset-0 bg-gradient-to-b from-yellow-500/5 via-transparent to-transparent pointer-events-none" />
-      <div className="fixed top-0 left-1/2 -translate-x-1/2 w-[600px] h-[400px] bg-card rounded-full blur-[120px] opacity-30 pointer-events-none" />
-
-      {/* Header */}
-      <header className="relative w-full px-4 pt-6 pb-4 sm:pt-8">
-        <Link to="/" className="flex items-center justify-center gap-2 group">
-          <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-yellow-400 flex items-center justify-center transition-transform group-hover:scale-105">
-            <Zap className="h-5 w-5 sm:h-6 sm:w-6 text-black" />
-          </div>
-          <span className="text-xl sm:text-2xl font-bold text-white">
-            Elec-<span className="text-yellow-400">Mate</span>
-          </span>
-        </Link>
-      </header>
-
-      {/* Main content */}
-      <main className="relative flex-1 flex flex-col items-center justify-center px-4 pb-8">
-        <div className="w-full max-w-sm animate-fade-in">
-          {/* Header text */}
-          <div className="text-center mb-6">
-            <h1 className="text-2xl sm:text-3xl font-bold mb-2 text-white">Reset password</h1>
-            <p className="text-white text-sm sm:text-base">
-              {isSuccess
-                ? 'Check your email for the reset link'
-                : "Enter your email and we'll send you a reset link"}
-            </p>
-          </div>
-
-          {/* Card */}
-          <Card className="border-white/10 bg-neutral-900 shadow-xl transition-all duration-300 hover:border-yellow-400/20">
-            <CardContent className="pt-6">
-              {isSuccess ? (
-                <div className="text-center py-4 animate-fade-in">
-                  <div className="w-16 h-16 rounded-full bg-green-500/10 flex items-center justify-center mx-auto mb-4">
-                    <CheckCircle2 className="h-8 w-8 text-green-500" />
-                  </div>
-                  <h3 className="text-lg font-semibold text-white mb-2">Check your inbox</h3>
-                  <p className="text-white text-sm mb-6">
-                    We've sent a password reset link to <span className="text-white">{email}</span>
-                  </p>
-                  <p className="text-white text-xs mb-4">
-                    Didn't receive the email? Check your spam folder or try again.
-                  </p>
-                  <Button
-                    variant="outline"
-                    onClick={() => setIsSuccess(false)}
-                    className="w-full h-11 border-white/20 hover:bg-white/5 text-white"
-                  >
-                    Try another email
-                  </Button>
-                </div>
-              ) : (
-                <>
-                  {error && (
-                    <div className="mb-5 p-3 rounded-lg bg-card border border-red-500/30 animate-fade-in">
-                      <div className="flex gap-2">
-                        <AlertTriangle className="h-5 w-5 text-red-400 flex-shrink-0" />
-                        <p className="text-sm text-red-400">{error}</p>
-                      </div>
-                    </div>
-                  )}
-
-                  <form onSubmit={handleSubmit} className="space-y-4">
-                    <div className="space-y-2">
-                      <Label htmlFor="email" className="text-sm font-medium text-white">
-                        Email address
-                      </Label>
-                      <div className="relative group">
-                        <Mail className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-500 transition-colors group-focus-within:text-yellow-400 pointer-events-none" />
-                        <Input
-                          id="email"
-                          type="email"
-                          placeholder="you@example.com"
-                          value={email}
-                          onChange={(e) => setEmail(e.target.value)}
-                          className="pl-11 h-12 text-base bg-black border-white/10 text-white placeholder:text-gray-500 focus:border-yellow-400/50 transition-all duration-200"
-                          autoComplete="email"
-                          required
-                        />
-                      </div>
-                    </div>
-
-                    <Button
-                      type="submit"
-                      className="w-full h-12 text-base font-semibold bg-yellow-400 hover:bg-yellow-300 text-black transition-all duration-200 hover:scale-[1.02]"
-                      disabled={isSubmitting}
-                    >
-                      {isSubmitting ? (
-                        <>
-                          <Loader2 className="mr-2 h-5 w-5 animate-spin" />
-                          Sending...
-                        </>
-                      ) : (
-                        'Send reset link'
-                      )}
-                    </Button>
-                  </form>
-                </>
-              )}
-            </CardContent>
-          </Card>
-
-          {/* Back to sign in */}
-          <div className="mt-6 text-center animate-fade-in" style={{ animationDelay: '100ms' }}>
+    <div className="min-h-[100svh] bg-black flex flex-col">
+      <div className="flex-1 flex flex-col justify-center px-6 py-12 pt-[calc(env(safe-area-inset-top)+48px)] pb-[calc(env(safe-area-inset-bottom)+24px)]">
+        <div className="w-full max-w-[340px] mx-auto">
+          {/* Back link */}
+          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="mb-10">
             <Link
               to="/auth/signin"
-              className="inline-flex items-center gap-2 text-sm text-white hover:text-yellow-400 transition-colors duration-200"
+              className="inline-flex items-center gap-1 text-white hover:text-white transition-colors p-1 -ml-1 touch-manipulation"
             >
-              <ArrowLeft className="h-4 w-4" />
-              Back to sign in
+              <ChevronLeft className="h-5 w-5" />
+              <span className="text-[13px] font-medium">Back to sign in</span>
             </Link>
-          </div>
-        </div>
-      </main>
+          </motion.div>
 
-      {/* Footer */}
-      <footer className="relative px-4 pb-6">
-        <div className="max-w-sm mx-auto">
-          <div className="flex items-center justify-center gap-4 text-xs text-white">
-            <span className="flex items-center gap-1.5 transition-colors hover:text-gray-400">
-              <CheckCircle2 className="h-3.5 w-3.5 text-green-500" />
-              Secure reset
-            </span>
-            <span className="transition-colors hover:text-gray-400">BS7671 compliant</span>
-            <span className="transition-colors hover:text-gray-400">UK based</span>
-          </div>
+          <AnimatePresence mode="wait">
+            {!isSuccess ? (
+              <motion.div
+                key="form"
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                transition={{ duration: 0.2 }}
+              >
+                {/* Icon + heading */}
+                <div className="mb-8">
+                  <div className="w-12 h-12 rounded-xl bg-white/[0.10] ring-1 ring-white/20 flex items-center justify-center mb-5">
+                    <Mail className="h-5 w-5 text-elec-yellow" />
+                  </div>
+                  <h1 className="text-[24px] font-semibold text-white tracking-tight mb-1">
+                    Reset your password
+                  </h1>
+                  <p className="text-[13px] text-white">We'll send a reset link to your email</p>
+                </div>
+
+                {/* Error */}
+                <AnimatePresence>
+                  {error && (
+                    <motion.div
+                      initial={{ opacity: 0, height: 0 }}
+                      animate={{ opacity: 1, height: 'auto' }}
+                      exit={{ opacity: 0, height: 0 }}
+                      className="mb-5 overflow-hidden"
+                    >
+                      <p className="text-[13px] text-red-400 bg-red-500/8 border border-red-500/15 rounded-lg px-3.5 py-2.5 text-center">
+                        {error}
+                      </p>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+
+                {/* Form */}
+                <form onSubmit={handleSubmit} className="space-y-5">
+                  <div>
+                    <label className="block text-[12px] font-medium text-white mb-1.5 ml-0.5 uppercase tracking-wider">
+                      Email
+                    </label>
+                    <div className="relative">
+                      <Mail
+                        className={cn(
+                          'absolute left-3.5 top-1/2 -translate-y-1/2 h-[18px] w-[18px] transition-colors duration-150',
+                          focusedField === 'email' ? 'text-elec-yellow' : 'text-white'
+                        )}
+                      />
+                      <input
+                        type="email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        onFocus={() => setFocusedField('email')}
+                        onBlur={() => setFocusedField(null)}
+                        placeholder="you@example.com"
+                        autoComplete="email"
+                        className={cn(
+                          'w-full h-12 pl-11 pr-4 rounded-xl text-[15px] text-white placeholder:text-white',
+                          'bg-white/[0.10] outline-none transition-all duration-150 [color-scheme:dark]',
+                          focusedField === 'email'
+                            ? 'ring-1 ring-elec-yellow/40 bg-white/[0.10]'
+                            : 'ring-1 ring-white/20 hover:ring-white/30'
+                        )}
+                      />
+                    </div>
+                  </div>
+
+                  <Button
+                    type="submit"
+                    disabled={isSubmitting}
+                    className="w-full h-12 rounded-xl text-[15px] font-semibold bg-elec-yellow hover:bg-elec-yellow/90 text-black shadow-[0_1px_20px_rgba(250,204,21,0.15)] active:scale-[0.98] disabled:opacity-50 transition-all duration-150"
+                  >
+                    {isSubmitting ? (
+                      <>
+                        <Loader2 className="mr-2 h-4 w-4 animate-spin" /> Sending...
+                      </>
+                    ) : (
+                      <>
+                        Send reset link <ArrowRight className="ml-1.5 h-4 w-4" />
+                      </>
+                    )}
+                  </Button>
+                </form>
+              </motion.div>
+            ) : (
+              <motion.div
+                key="success"
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.2 }}
+              >
+                {/* Success state */}
+                <motion.div
+                  initial={{ scale: 0.5 }}
+                  animate={{ scale: 1 }}
+                  transition={{ type: 'spring', stiffness: 300, damping: 20 }}
+                  className="w-14 h-14 rounded-full bg-green-500/10 ring-1 ring-green-500/15 flex items-center justify-center mb-5"
+                >
+                  <CheckCircle2 className="h-7 w-7 text-green-400" />
+                </motion.div>
+
+                <h2 className="text-[22px] font-semibold text-white tracking-tight mb-1">
+                  Check your inbox
+                </h2>
+                <p className="text-[13px] text-white mb-1">We've sent a reset link to</p>
+                <p className="text-[14px] text-white font-medium mb-8">{email}</p>
+
+                <p className="text-[11px] text-white mb-6">
+                  Didn't receive it? Check spam, or try again.
+                </p>
+
+                <div className="space-y-2.5">
+                  <button
+                    onClick={() => {
+                      setIsSuccess(false);
+                      setEmail('');
+                      setError(null);
+                    }}
+                    className="w-full h-12 rounded-xl text-[14px] font-medium bg-white/[0.10] ring-1 ring-white/20 text-white hover:bg-white/[0.10] transition-all duration-150 touch-manipulation"
+                  >
+                    Try another email
+                  </button>
+                  <Link to="/auth/signin" className="block">
+                    <button className="w-full h-12 rounded-xl text-[14px] font-medium text-elec-yellow/70 hover:text-elec-yellow transition-colors touch-manipulation">
+                      Back to sign in
+                    </button>
+                  </Link>
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </div>
-      </footer>
+      </div>
     </div>
   );
 };

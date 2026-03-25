@@ -102,12 +102,17 @@ const PrivacyTab = () => {
           .eq('key', 'cookie_preferences')
           .single();
         if (data?.value && typeof data.value === 'object') {
-          setCookiePrefs(data.value as CookiePreferences); return;
+          setCookiePrefs(data.value as CookiePreferences);
+          return;
         }
       }
       const saved = localStorage.getItem(COOKIE_PREFERENCES_KEY);
       if (saved) {
-        try { setCookiePrefs(JSON.parse(saved)); } catch { /* ignore */ }
+        try {
+          setCookiePrefs(JSON.parse(saved));
+        } catch {
+          /* ignore */
+        }
       }
     };
     loadPrefs();
@@ -123,7 +128,9 @@ const PrivacyTab = () => {
       .in('action', ['gdpr_data_export', 'gdpr_account_deletion_requested'])
       .order('created_at', { ascending: false })
       .limit(5)
-      .then(({ data }) => { if (data) setAuditLog(data as AuditEntry[]); });
+      .then(({ data }) => {
+        if (data) setAuditLog(data as AuditEntry[]);
+      });
   }, [userId]);
 
   const handleCookieToggle = useCallback(
@@ -136,10 +143,12 @@ const PrivacyTab = () => {
       // Persist to Supabase for cross-device consistency (silently falls back to localStorage if unavailable)
       if (userId) {
         try {
-          await supabase.from('user_settings').upsert(
-            { user_id: userId, key: 'cookie_preferences', value: newPrefs },
-            { onConflict: 'user_id,key' }
-          );
+          await supabase
+            .from('user_settings')
+            .upsert(
+              { user_id: userId, key: 'cookie_preferences', value: newPrefs },
+              { onConflict: 'user_id,key' }
+            );
         } catch {
           // localStorage already saved above — Supabase sync is best-effort
         }
@@ -156,7 +165,9 @@ const PrivacyTab = () => {
   const handleDataDownload = async () => {
     setIsExporting(true);
     try {
-      const { data: { session } } = await supabase.auth.getSession();
+      const {
+        data: { session },
+      } = await supabase.auth.getSession();
       if (!session) throw new Error('Not authenticated');
 
       const response = await supabase.functions.invoke('user-data-export', {
@@ -218,7 +229,8 @@ const PrivacyTab = () => {
       console.error('Data export error:', error);
       addNotification({
         title: 'Export Failed',
-        message: error instanceof Error ? error.message : 'Failed to export your data. Please try again.',
+        message:
+          error instanceof Error ? error.message : 'Failed to export your data. Please try again.',
         type: 'error',
       });
     } finally {
@@ -231,7 +243,9 @@ const PrivacyTab = () => {
     haptic.heavy();
     setIsDeleting(true);
     try {
-      const { data: { session } } = await supabase.auth.getSession();
+      const {
+        data: { session },
+      } = await supabase.auth.getSession();
       if (!session) throw new Error('Not authenticated');
 
       const { error } = await supabase.functions.invoke('delete-own-account', {
@@ -242,7 +256,7 @@ const PrivacyTab = () => {
       await clearCredentials();
       await setBiometricEnabled(false);
       await supabase.auth.signOut();
-      navigate('/', { replace: true });
+      window.location.replace('/');
     } catch (err) {
       console.error('Account deletion error:', err);
       haptic.error();
@@ -276,7 +290,11 @@ const PrivacyTab = () => {
       article: 'Art. 16',
       title: 'Right to Rectification',
       description: 'Request correction of inaccurate or incomplete personal data.',
-      action: () => openMailto('Data Correction Request', `User ID: ${userId}\n\nPlease describe the data that needs correcting:\n`),
+      action: () =>
+        openMailto(
+          'Data Correction Request',
+          `User ID: ${userId}\n\nPlease describe the data that needs correcting:\n`
+        ),
       actionLabel: 'Request Correction',
       icon: Edit3,
       colour: 'text-blue-400',
@@ -296,7 +314,11 @@ const PrivacyTab = () => {
       article: 'Art. 18',
       title: 'Right to Restrict Processing',
       description: 'Request that we limit how we use your data while a dispute is resolved.',
-      action: () => openMailto('Request to Restrict Processing', `User ID: ${userId}\n\nPlease describe what processing you wish to restrict:\n`),
+      action: () =>
+        openMailto(
+          'Request to Restrict Processing',
+          `User ID: ${userId}\n\nPlease describe what processing you wish to restrict:\n`
+        ),
       actionLabel: 'Request Restriction',
       icon: Ban,
       colour: 'text-amber-400',
@@ -316,7 +338,11 @@ const PrivacyTab = () => {
       article: 'Art. 21',
       title: 'Right to Object',
       description: 'Object to processing of your data for direct marketing or profiling.',
-      action: () => openMailto('Right to Object', `User ID: ${userId}\n\nI wish to object to the following processing:\n`),
+      action: () =>
+        openMailto(
+          'Right to Object',
+          `User ID: ${userId}\n\nI wish to object to the following processing:\n`
+        ),
       actionLabel: 'Lodge Objection',
       icon: MessageSquareWarning,
       colour: 'text-purple-400',
@@ -325,7 +351,7 @@ const PrivacyTab = () => {
     {
       article: 'Art. 77',
       title: 'Right to Complain',
-      description: 'Lodge a complaint with the Information Commissioner\'s Office (ICO).',
+      description: "Lodge a complaint with the Information Commissioner's Office (ICO).",
       action: () => openExternalUrl('https://ico.org.uk/make-a-complaint/'),
       actionLabel: 'Contact ICO',
       icon: Flag,
@@ -335,10 +361,17 @@ const PrivacyTab = () => {
   ];
 
   return (
-    <motion.div variants={containerVariants} initial="hidden" animate="visible" className="space-y-5">
-
+    <motion.div
+      variants={containerVariants}
+      initial="hidden"
+      animate="visible"
+      className="space-y-5"
+    >
       {/* Header */}
-      <motion.div variants={itemVariants} className="rounded-xl bg-elec-gray/50 border border-white/10 overflow-hidden">
+      <motion.div
+        variants={itemVariants}
+        className="rounded-xl bg-elec-gray/50 border border-white/10 overflow-hidden"
+      >
         <div className="p-4 md:p-5">
           <div className="flex items-center gap-3">
             <div className="w-11 h-11 rounded-xl bg-elec-yellow/10 flex items-center justify-center flex-shrink-0">
@@ -353,13 +386,18 @@ const PrivacyTab = () => {
       </motion.div>
 
       {/* Data Rights — quick actions */}
-      <motion.div variants={itemVariants} className="rounded-xl bg-elec-gray/50 border border-white/10 overflow-hidden">
+      <motion.div
+        variants={itemVariants}
+        className="rounded-xl bg-elec-gray/50 border border-white/10 overflow-hidden"
+      >
         <div className="px-4 md:px-5 py-4 border-b border-white/10">
           <h3 className="text-sm font-semibold text-white flex items-center gap-2">
             <Database className="h-4 w-4 text-elec-yellow" />
             Your Data
           </h3>
-          <p className="text-xs text-white/60 mt-0.5">Under UK GDPR you have full control of your data</p>
+          <p className="text-xs text-white/60 mt-0.5">
+            Under UK GDPR you have full control of your data
+          </p>
         </div>
         <div className="p-4 md:p-5 space-y-3">
           {/* Data Retention notice */}
@@ -368,7 +406,8 @@ const PrivacyTab = () => {
             <div>
               <p className="text-sm font-medium text-white">Data Retention</p>
               <p className="text-xs text-white/60 mt-0.5">
-                We keep your data while your account is active. If you delete your account, all data is permanently removed within 30 days.
+                We keep your data while your account is active. If you delete your account, all data
+                is permanently removed within 30 days.
               </p>
             </div>
           </div>
@@ -381,10 +420,16 @@ const PrivacyTab = () => {
               className="flex items-center gap-3 p-4 rounded-lg bg-white/5 border border-white/10 hover:bg-white/[0.08] active:scale-[0.98] transition-all touch-manipulation disabled:opacity-50 text-left"
             >
               <div className="w-9 h-9 rounded-lg bg-elec-yellow/10 flex items-center justify-center flex-shrink-0">
-                {isExporting ? <Loader2 className="h-4 w-4 text-elec-yellow animate-spin" /> : <Download className="h-4 w-4 text-elec-yellow" />}
+                {isExporting ? (
+                  <Loader2 className="h-4 w-4 text-elec-yellow animate-spin" />
+                ) : (
+                  <Download className="h-4 w-4 text-elec-yellow" />
+                )}
               </div>
               <div>
-                <p className="text-sm font-medium text-white">{isExporting ? 'Exporting...' : 'Download My Data'}</p>
+                <p className="text-sm font-medium text-white">
+                  {isExporting ? 'Exporting...' : 'Download My Data'}
+                </p>
                 <p className="text-xs text-white/60">Art. 15 · Full data export</p>
               </div>
             </button>
@@ -412,7 +457,11 @@ const PrivacyTab = () => {
               <BadgeCheck className="h-4 w-4 text-elec-yellow" />
               View all your GDPR rights (Art. 15–21)
             </span>
-            {showRights ? <ChevronUp className="h-4 w-4 text-white/40" /> : <ChevronDown className="h-4 w-4 text-white/40" />}
+            {showRights ? (
+              <ChevronUp className="h-4 w-4 text-white/40" />
+            ) : (
+              <ChevronDown className="h-4 w-4 text-white/40" />
+            )}
           </button>
 
           <AnimatePresence>
@@ -428,16 +477,25 @@ const PrivacyTab = () => {
                   {gdprRights.map((right) => {
                     const Icon = right.icon;
                     return (
-                      <div key={right.article} className="flex items-center gap-3 p-3.5 rounded-lg bg-white/[0.03] border border-white/10">
-                        <div className={`w-8 h-8 rounded-lg ${right.bg} flex items-center justify-center flex-shrink-0`}>
+                      <div
+                        key={right.article}
+                        className="flex items-center gap-3 p-3.5 rounded-lg bg-white/[0.03] border border-white/10"
+                      >
+                        <div
+                          className={`w-8 h-8 rounded-lg ${right.bg} flex items-center justify-center flex-shrink-0`}
+                        >
                           <Icon className={`h-4 w-4 ${right.colour}`} />
                         </div>
                         <div className="flex-1 min-w-0">
                           <div className="flex items-center gap-2">
-                            <span className="text-[10px] font-mono text-white/40">{right.article}</span>
+                            <span className="text-[10px] font-mono text-white/40">
+                              {right.article}
+                            </span>
                             <p className="text-sm font-medium text-white">{right.title}</p>
                           </div>
-                          <p className="text-xs text-white/60 mt-0.5 leading-relaxed">{right.description}</p>
+                          <p className="text-xs text-white/60 mt-0.5 leading-relaxed">
+                            {right.description}
+                          </p>
                         </div>
                         <button
                           onClick={right.action}
@@ -454,7 +512,10 @@ const PrivacyTab = () => {
                     <Info className="h-4 w-4 text-white/40 flex-shrink-0 mt-0.5" />
                     <p className="text-xs text-white/50 leading-relaxed">
                       To exercise any of these rights, contact{' '}
-                      <button onClick={() => openExternalUrl('mailto:privacy@elec-mate.com')} className="text-elec-yellow">
+                      <button
+                        onClick={() => openExternalUrl('mailto:privacy@elec-mate.com')}
+                        className="text-elec-yellow"
+                      >
                         privacy@elec-mate.com
                       </button>
                       . We will respond within one month as required by law.
@@ -469,13 +530,18 @@ const PrivacyTab = () => {
 
       {/* Cookie Preferences — web only */}
       {!isNative && (
-        <motion.div variants={itemVariants} className="rounded-xl bg-elec-gray/50 border border-white/10 overflow-hidden">
+        <motion.div
+          variants={itemVariants}
+          className="rounded-xl bg-elec-gray/50 border border-white/10 overflow-hidden"
+        >
           <div className="px-4 md:px-5 py-4 border-b border-white/10">
             <h3 className="text-sm font-semibold text-white flex items-center gap-2">
               <Cookie className="h-4 w-4 text-elec-yellow" />
               Cookie Preferences
             </h3>
-            <p className="text-xs text-white/60 mt-0.5">Control how we use cookies in your browser</p>
+            <p className="text-xs text-white/60 mt-0.5">
+              Control how we use cookies in your browser
+            </p>
           </div>
           <div className="p-4 md:p-5 space-y-3">
             {/* Essential */}
@@ -486,7 +552,9 @@ const PrivacyTab = () => {
               <div className="flex-1">
                 <div className="flex items-center gap-2">
                   <p className="text-sm font-medium text-white">Essential Cookies</p>
-                  <span className="text-[10px] px-1.5 py-0.5 rounded bg-elec-yellow/20 text-elec-yellow font-medium">Required</span>
+                  <span className="text-[10px] px-1.5 py-0.5 rounded bg-elec-yellow/20 text-elec-yellow font-medium">
+                    Required
+                  </span>
                 </div>
                 <p className="text-xs text-white/60 mt-0.5">Authentication and security</p>
               </div>
@@ -494,11 +562,13 @@ const PrivacyTab = () => {
             </div>
 
             {/* Analytics */}
-            <div
-              className="flex items-center gap-3 p-3.5 rounded-lg bg-white/5 border border-white/10"
-            >
-              <div className={`w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0 ${cookiePrefs.analytics ? 'bg-cyan-500/10' : 'bg-white/5'}`}>
-                <BarChart3 className={`h-4 w-4 ${cookiePrefs.analytics ? 'text-cyan-400' : 'text-white/40'}`} />
+            <div className="flex items-center gap-3 p-3.5 rounded-lg bg-white/5 border border-white/10">
+              <div
+                className={`w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0 ${cookiePrefs.analytics ? 'bg-cyan-500/10' : 'bg-white/5'}`}
+              >
+                <BarChart3
+                  className={`h-4 w-4 ${cookiePrefs.analytics ? 'text-cyan-400' : 'text-white/40'}`}
+                />
               </div>
               <div className="flex-1">
                 <p className="text-sm font-medium text-white">Analytics Cookies</p>
@@ -511,7 +581,10 @@ const PrivacyTab = () => {
               />
             </div>
 
-            <Link to="/cookies" className="flex items-center gap-2 text-xs text-elec-yellow hover:underline touch-manipulation">
+            <Link
+              to="/cookies"
+              className="flex items-center gap-2 text-xs text-elec-yellow hover:underline touch-manipulation"
+            >
               <FileText className="h-3.5 w-3.5" />
               View Cookie Policy
               <ExternalLink className="h-3 w-3" />
@@ -522,7 +595,10 @@ const PrivacyTab = () => {
 
       {/* Privacy Activity Log */}
       {auditLog.length > 0 && (
-        <motion.div variants={itemVariants} className="rounded-xl bg-elec-gray/50 border border-white/10 overflow-hidden">
+        <motion.div
+          variants={itemVariants}
+          className="rounded-xl bg-elec-gray/50 border border-white/10 overflow-hidden"
+        >
           <div className="px-4 md:px-5 py-4 border-b border-white/10">
             <h3 className="text-sm font-semibold text-white flex items-center gap-2">
               <History className="h-4 w-4 text-elec-yellow" />
@@ -532,13 +608,22 @@ const PrivacyTab = () => {
           </div>
           <div className="p-4 md:p-5 space-y-2">
             {auditLog.map((entry, i) => (
-              <div key={i} className="flex items-center justify-between gap-3 py-2.5 border-b border-white/5 last:border-0">
+              <div
+                key={i}
+                className="flex items-center justify-between gap-3 py-2.5 border-b border-white/5 last:border-0"
+              >
                 <div className="flex items-center gap-2.5">
                   <div className="w-2 h-2 rounded-full bg-elec-yellow/60 flex-shrink-0" />
-                  <span className="text-sm text-white/80">{actionLabels[entry.action] ?? entry.action}</span>
+                  <span className="text-sm text-white/80">
+                    {actionLabels[entry.action] ?? entry.action}
+                  </span>
                 </div>
                 <span className="text-xs text-white/40 whitespace-nowrap">
-                  {new Date(entry.created_at).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })}
+                  {new Date(entry.created_at).toLocaleDateString('en-GB', {
+                    day: 'numeric',
+                    month: 'short',
+                    year: 'numeric',
+                  })}
                 </span>
               </div>
             ))}
@@ -547,7 +632,10 @@ const PrivacyTab = () => {
       )}
 
       {/* Legal Documents */}
-      <motion.div variants={itemVariants} className="rounded-xl bg-elec-gray/50 border border-white/10 overflow-hidden">
+      <motion.div
+        variants={itemVariants}
+        className="rounded-xl bg-elec-gray/50 border border-white/10 overflow-hidden"
+      >
         <div className="px-4 md:px-5 py-4 border-b border-white/10">
           <h3 className="text-sm font-semibold text-white flex items-center gap-2">
             <FileText className="h-4 w-4 text-elec-yellow" />
@@ -559,7 +647,12 @@ const PrivacyTab = () => {
             { to: '/privacy', icon: Shield, colour: 'text-green-400', label: 'Privacy Policy' },
             { to: '/terms', icon: FileText, colour: 'text-blue-400', label: 'Terms of Service' },
             { to: '/cookies', icon: Cookie, colour: 'text-amber-400', label: 'Cookie Policy' },
-            { to: '/dpa', icon: Database, colour: 'text-purple-400', label: 'Data Processing Agreement' },
+            {
+              to: '/dpa',
+              icon: Database,
+              colour: 'text-purple-400',
+              label: 'Data Processing Agreement',
+            },
           ].map(({ to, icon: Icon, colour, label }) => (
             <Link
               key={to}
@@ -587,7 +680,9 @@ const PrivacyTab = () => {
       {/* Delete Account Dialog */}
       <AlertDialog
         open={showDeleteDialog}
-        onOpenChange={(open) => { if (!isDeleting) setShowDeleteDialog(open); }}
+        onOpenChange={(open) => {
+          if (!isDeleting) setShowDeleteDialog(open);
+        }}
       >
         <AlertDialogContent className="max-w-[90vw] sm:max-w-md bg-card/95 backdrop-blur-xl border-white/10 rounded-2xl">
           <AlertDialogHeader>
@@ -600,7 +695,13 @@ const PrivacyTab = () => {
                 This will permanently delete your account and all associated data:
               </span>
               <ul className="text-sm space-y-1 list-none">
-                {['Certificates & inspection reports', 'Quotes & invoices', 'Elec-ID profile', 'Site safety documents', 'Study progress & notes'].map((item) => (
+                {[
+                  'Certificates & inspection reports',
+                  'Quotes & invoices',
+                  'Elec-ID profile',
+                  'Site safety documents',
+                  'Study progress & notes',
+                ].map((item) => (
                   <li key={item} className="flex items-center gap-2">
                     <span className="w-1.5 h-1.5 rounded-full bg-red-400/60 flex-shrink-0" />
                     {item}
@@ -608,7 +709,8 @@ const PrivacyTab = () => {
                 ))}
               </ul>
               <span className="block p-3 rounded-lg bg-amber-500/10 border border-amber-500/20 text-amber-300 text-sm">
-                Your data will be permanently removed within 30 days. You have a grace period to contact privacy@elec-mate.com to cancel.
+                Your data will be permanently removed within 30 days. You have a grace period to
+                contact privacy@elec-mate.com to cancel.
               </span>
               <span className="block text-sm">
                 Type <span className="font-mono font-bold text-red-400">DELETE</span> to confirm:
@@ -636,7 +738,10 @@ const PrivacyTab = () => {
               className="min-h-[44px] rounded-xl bg-red-600 hover:bg-red-700 border-0 disabled:opacity-40 text-white"
             >
               {isDeleting ? (
-                <><Loader2 className="h-4 w-4 mr-2 animate-spin" />Deleting...</>
+                <>
+                  <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                  Deleting...
+                </>
               ) : (
                 'Delete My Account'
               )}

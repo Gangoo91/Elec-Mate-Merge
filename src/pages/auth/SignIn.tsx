@@ -4,14 +4,10 @@ import { useAuth } from '@/contexts/AuthContext';
 import { Button } from '@/components/ui/button';
 import {
   Loader2,
-  AlertTriangle,
-  Zap,
   Mail,
   Lock,
   ArrowRight,
   CheckCircle2,
-  ChevronLeft,
-  Sparkles,
   Eye,
   EyeOff,
   Fingerprint,
@@ -21,6 +17,7 @@ import { cn } from '@/lib/utils';
 import { addBreadcrumb } from '@/lib/sentry';
 import { useBiometricAuth } from '@/hooks/useBiometricAuth';
 import BiometricPromptSheet from '@/components/auth/BiometricPromptSheet';
+import { supabase } from '@/integrations/supabase/client';
 
 const SignIn = () => {
   const [searchParams] = useSearchParams();
@@ -30,60 +27,51 @@ const SignIn = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [showSuccess, setShowSuccess] = useState(false);
-  const [isEmailValid, setIsEmailValid] = useState(false);
   const [focusedField, setFocusedField] = useState<string | null>(null);
   const [showBiometricPrompt, setShowBiometricPrompt] = useState(false);
   const [isBiometricLoggingIn, setIsBiometricLoggingIn] = useState(false);
+  const [userCount, setUserCount] = useState('500+');
 
-  // Store credentials temporarily so we can save them if user accepts biometric prompt
   const pendingCredentials = useRef<{ email: string; password: string } | null>(null);
+  const isEmailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 
   const { signIn } = useAuth();
   const navigate = useNavigate();
   const biometric = useBiometricAuth();
 
-  // Pre-fill email from URL param (used by founder signup flow)
+  useEffect(() => {
+    supabase
+      .from('profiles')
+      .select('*', { count: 'exact', head: true })
+      .then(({ count }) => {
+        if (count && count > 0) setUserCount(`${Math.floor(count / 10) * 10}+`);
+      });
+  }, []);
+
   useEffect(() => {
     const emailParam = searchParams.get('email');
-    if (emailParam && !email) {
-      setEmail(emailParam);
-    }
-  }, [searchParams]);
-
-  // Email validation
-  useEffect(() => {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    setIsEmailValid(emailRegex.test(email));
-  }, [email]);
+    if (emailParam && !email) setEmail(emailParam);
+  }, [searchParams, email]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
     if (!email || !password) {
       setError('Please fill in all fields');
       return;
     }
-
     setError(null);
     setIsSubmitting(true);
     addBreadcrumb('Login attempt', 'auth', { email });
-
     try {
       const { error } = await signIn(email, password);
-
       if (error) {
         setError(error.message);
+      } else if (biometric.isAvailable && !biometric.isEnabled && !biometric.isChecking) {
+        pendingCredentials.current = { email, password };
+        setShowBiometricPrompt(true);
       } else {
-        // If biometric available but not yet enabled, offer to enable it
-        if (biometric.isAvailable && !biometric.isEnabled && !biometric.isChecking) {
-          pendingCredentials.current = { email, password };
-          setShowBiometricPrompt(true);
-        } else {
-          setShowSuccess(true);
-          setTimeout(() => {
-            navigate('/dashboard');
-          }, 800);
-        }
+        setShowSuccess(true);
+        setTimeout(() => navigate('/dashboard'), 800);
       }
     } catch (err: unknown) {
       setError(err instanceof Error ? err.message : 'An error occurred during sign in');
@@ -92,7 +80,6 @@ const SignIn = () => {
     }
   };
 
-  // Handle biometric prompt — user accepted
   const handleBiometricEnable = async () => {
     if (pendingCredentials.current) {
       await biometric.enableBiometric(
@@ -106,7 +93,6 @@ const SignIn = () => {
     setTimeout(() => navigate('/dashboard'), 800);
   };
 
-  // Handle biometric prompt — user skipped
   const handleBiometricSkip = () => {
     setShowBiometricPrompt(false);
     pendingCredentials.current = null;
@@ -114,23 +100,18 @@ const SignIn = () => {
     setTimeout(() => navigate('/dashboard'), 800);
   };
 
-  // Handle biometric quick-login (the Face ID / fingerprint button)
   const handleBiometricLogin = async () => {
     setError(null);
     setIsBiometricLoggingIn(true);
     addBreadcrumb('Biometric login attempt', 'auth');
-
     try {
       const credentials = await biometric.authenticateWithBiometric();
       if (!credentials) {
-        // User cancelled — do nothing
         setIsBiometricLoggingIn(false);
         return;
       }
-
       const { error } = await signIn(credentials.email, credentials.password);
       if (error) {
-        // Stored password may be outdated — disable biometric and show error
         await biometric.disableBiometric();
         setError('Saved credentials are no longer valid. Please sign in with your password.');
       } else {
@@ -145,163 +126,105 @@ const SignIn = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-zinc-900 via-black to-black flex flex-col overflow-hidden">
-      {/* Animated background */}
-      <div className="fixed inset-0 pointer-events-none">
-        <motion.div
-          animate={{
-            scale: [1, 1.2, 1],
-            opacity: [0.08, 0.12, 0.08],
-          }}
-          transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}
-          className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[600px] rounded-full bg-elec-yellow/20 blur-[150px]"
-        />
-      </div>
-
-      {/* Header */}
-      <motion.header
-        initial={{ opacity: 0, y: -20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.4 }}
-        className="relative w-full px-4 pt-[calc(env(safe-area-inset-top)+32px)] pb-1 z-10"
-      >
-        <div className="flex items-center justify-between max-w-md mx-auto">
-          <Link
-            to="/"
-            className="flex items-center gap-1 text-white hover:text-white transition-colors p-2 -ml-2 rounded-xl"
-          >
-            <ChevronLeft className="h-5 w-5" />
-            <span className="text-[15px] font-medium">Back</span>
-          </Link>
-
+    <div className="min-h-[100svh] bg-black flex flex-col">
+      {/* Success overlay */}
+      <AnimatePresence>
+        {showSuccess && (
           <motion.div
-            initial={{ scale: 0.8, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            transition={{ delay: 0.1, type: 'spring', stiffness: 400 }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            className="fixed inset-0 flex items-center justify-center bg-black/95 z-50"
           >
-            <img
-              src="/logo.jpg"
-              alt="Elec-Mate"
-              className="w-10 h-10 rounded-xl object-cover shadow-lg shadow-elec-yellow/30"
-            />
+            <motion.div
+              initial={{ scale: 0.5, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              transition={{ type: 'spring', stiffness: 300, damping: 20 }}
+              className="flex flex-col items-center gap-3"
+            >
+              <div className="w-16 h-16 rounded-full bg-green-500/15 flex items-center justify-center">
+                <CheckCircle2 className="h-8 w-8 text-green-400" />
+              </div>
+              <p className="text-[17px] text-white font-semibold">Welcome back</p>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Content — vertically centred */}
+      <div className="flex-1 flex flex-col justify-center px-6 py-12 pt-[calc(env(safe-area-inset-top)+48px)] pb-[calc(env(safe-area-inset-bottom)+24px)]">
+        <div className="w-full max-w-[340px] mx-auto">
+          {/* Logo + wordmark */}
+          <motion.div
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="flex items-center justify-center gap-3 mb-10"
+          >
+            <img src="/logo.jpg" alt="" className="w-10 h-10 rounded-xl object-cover" />
+            <span className="text-[20px] font-bold tracking-tight">
+              <span className="text-elec-yellow">Elec-</span>
+              <span className="text-white">Mate</span>
+            </span>
           </motion.div>
 
-          <div className="w-16" />
-        </div>
-      </motion.header>
+          {/* Heading */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.05 }}
+            className="mb-8"
+          >
+            <h1 className="text-[24px] font-semibold text-white tracking-tight text-center">
+              Sign in to your account
+            </h1>
+          </motion.div>
 
-      {/* Main content */}
-      <main className="relative flex-1 flex flex-col justify-start sm:justify-center px-5 py-4 sm:py-8 z-10">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.1 }}
-          className="w-full max-w-md mx-auto"
-        >
-          {/* Welcome text */}
-          <div className="text-center mb-6 sm:mb-8">
-            <motion.h1
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2 }}
-              className="text-[28px] font-bold text-white tracking-tight mb-2"
-            >
-              Welcome back
-            </motion.h1>
-            <motion.p
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.3 }}
-              className="text-[15px] text-white"
-            >
-              Sign in to continue to Elec-Mate
-            </motion.p>
-          </div>
-
-          {/* Success overlay */}
-          <AnimatePresence>
-            {showSuccess && (
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                className="fixed inset-0 flex items-center justify-center bg-black/90 backdrop-blur-sm z-50"
-              >
-                <motion.div
-                  initial={{ scale: 0.8, opacity: 0 }}
-                  animate={{ scale: 1, opacity: 1 }}
-                  transition={{ type: 'spring', stiffness: 400, damping: 20 }}
-                  className="flex flex-col items-center gap-4"
-                >
-                  <div className="w-20 h-20 rounded-full bg-green-500/20 flex items-center justify-center">
-                    <motion.div
-                      initial={{ scale: 0 }}
-                      animate={{ scale: 1 }}
-                      transition={{ delay: 0.2, type: 'spring', stiffness: 400 }}
-                    >
-                      <CheckCircle2 className="h-10 w-10 text-green-400" />
-                    </motion.div>
-                  </div>
-                  <p className="text-lg text-white font-semibold">Welcome back!</p>
-                </motion.div>
-              </motion.div>
-            )}
-          </AnimatePresence>
-
-          {/* Error state */}
+          {/* Error */}
           <AnimatePresence>
             {error && (
               <motion.div
-                initial={{ opacity: 0, y: -10, height: 0 }}
-                animate={{ opacity: 1, y: 0, height: 'auto' }}
-                exit={{ opacity: 0, y: -10, height: 0 }}
-                className="mb-6 overflow-hidden"
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: 'auto' }}
+                exit={{ opacity: 0, height: 0 }}
+                className="mb-5 overflow-hidden"
               >
-                <div className="p-4 rounded-2xl bg-amber-500/10 border border-amber-500/20">
-                  <div className="flex gap-3 items-center">
-                    <div className="w-10 h-10 rounded-xl bg-amber-500/20 flex items-center justify-center flex-shrink-0">
-                      <AlertTriangle className="h-5 w-5 text-amber-400" />
-                    </div>
-                    <p className="text-[14px] text-amber-400 font-medium">{error}</p>
-                  </div>
-                </div>
+                <p className="text-[13px] text-red-400 bg-red-500/8 border border-red-500/15 rounded-lg px-3.5 py-2.5 text-center">
+                  {error}
+                </p>
               </motion.div>
             )}
           </AnimatePresence>
 
-          {/* Biometric quick-login button */}
+          {/* Biometric */}
           {biometric.isAvailable && biometric.isEnabled && (
             <motion.div
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: 0.25 }}
-              className="mb-5"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.1 }}
             >
-              <Button
+              <button
                 type="button"
                 onClick={handleBiometricLogin}
                 disabled={isBiometricLoggingIn || isSubmitting}
-                className="w-full h-14 rounded-2xl text-[16px] font-semibold bg-white/5 border-2 border-white/10 text-white hover:bg-white/10 transition-all duration-200 touch-manipulation"
+                className="w-full h-12 rounded-xl text-[14px] font-medium bg-white/[0.05] border border-white/[0.08] text-white hover:bg-white/[0.10] transition-all duration-150 touch-manipulation flex items-center justify-center gap-2 mb-4"
               >
                 {isBiometricLoggingIn ? (
-                  <span className="flex items-center gap-2">
-                    <Loader2 className="h-5 w-5 animate-spin" />
-                    Verifying...
-                  </span>
+                  <>
+                    <Loader2 className="h-4 w-4 animate-spin" /> Verifying...
+                  </>
                 ) : (
-                  <span className="flex items-center gap-2">
-                    <Fingerprint className="h-5 w-5 text-elec-yellow" />
-                    Sign in with {biometric.biometricType}
-                  </span>
+                  <>
+                    <Fingerprint className="h-4.5 w-4.5 text-elec-yellow" /> Sign in with{' '}
+                    {biometric.biometricType}
+                  </>
                 )}
-              </Button>
+              </button>
 
-              <div className="flex items-center gap-4 my-5">
-                <div className="flex-1 h-px bg-white/10" />
-                <span className="text-[12px] text-white uppercase tracking-wider">
-                  or use password
+              <div className="flex items-center gap-3 mb-5">
+                <div className="flex-1 h-px bg-white/[0.10]" />
+                <span className="text-[11px] text-white uppercase tracking-widest font-medium">
+                  or
                 </span>
-                <div className="flex-1 h-px bg-white/10" />
+                <div className="flex-1 h-px bg-white/[0.10]" />
               </div>
             </motion.div>
           )}
@@ -309,23 +232,23 @@ const SignIn = () => {
           {/* Form */}
           <motion.form
             onSubmit={handleSubmit}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.3 }}
-            className="space-y-5"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.1 }}
+            className="space-y-4"
           >
-            {/* Email field */}
-            <div className="space-y-2">
-              <label className="block text-[13px] font-medium text-white ml-1">Email address</label>
+            {/* Email */}
+            <div>
+              <label className="block text-[12px] font-medium text-white mb-1.5 ml-0.5 uppercase tracking-wider">
+                Email
+              </label>
               <div className="relative">
-                <div
+                <Mail
                   className={cn(
-                    'absolute left-4 top-1/2 -translate-y-1/2 transition-colors duration-200',
+                    'absolute left-3.5 top-1/2 -translate-y-1/2 h-[18px] w-[18px] transition-colors duration-150',
                     focusedField === 'email' ? 'text-elec-yellow' : 'text-white'
                   )}
-                >
-                  <Mail className="h-5 w-5" />
-                </div>
+                />
                 <input
                   type="email"
                   value={email}
@@ -334,180 +257,137 @@ const SignIn = () => {
                   onBlur={() => setFocusedField(null)}
                   placeholder="you@example.com"
                   autoComplete="email"
-                  name="email"
                   className={cn(
-                    'w-full h-14 pl-12 pr-12 rounded-2xl',
-                    'bg-input border-2 text-white placeholder:text-muted-foreground [color-scheme:dark]',
-                    'text-[16px] outline-none transition-all duration-200',
+                    'w-full h-12 pl-11 pr-10 rounded-xl text-[15px] text-white placeholder:text-white',
+                    'bg-white/[0.10] outline-none transition-all duration-150 [color-scheme:dark]',
                     focusedField === 'email'
-                      ? 'border-elec-yellow/50 shadow-[0_0_0_4px_rgba(255,209,0,0.1)]'
-                      : 'border-white/20 hover:border-white/30'
+                      ? 'ring-1 ring-elec-yellow/40 bg-white/[0.10]'
+                      : 'ring-1 ring-white/20 hover:ring-white/30'
                   )}
                 />
-                {/* Success indicator */}
-                <AnimatePresence>
-                  {isEmailValid && email.length > 0 && (
-                    <motion.div
-                      initial={{ scale: 0, opacity: 0 }}
-                      animate={{ scale: 1, opacity: 1 }}
-                      exit={{ scale: 0, opacity: 0 }}
-                      className="absolute right-4 top-1/2 -translate-y-1/2"
-                    >
-                      <div className="w-6 h-6 rounded-full bg-green-500/20 flex items-center justify-center">
-                        <CheckCircle2 className="h-4 w-4 text-green-400" />
-                      </div>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
+                {isEmailValid && email.length > 0 && (
+                  <CheckCircle2 className="absolute right-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-green-400/70" />
+                )}
               </div>
             </div>
 
-            {/* Password field */}
-            <div className="space-y-2">
-              <label className="block text-[13px] font-medium text-white ml-1">Password</label>
+            {/* Password */}
+            <div>
+              <div className="flex items-center justify-between mb-1.5 ml-0.5">
+                <label className="block text-[12px] font-medium text-white uppercase tracking-wider">
+                  Password
+                </label>
+                <Link
+                  to="/auth/forgot-password"
+                  className="text-[12px] text-elec-yellow/70 hover:text-elec-yellow font-medium transition-colors touch-manipulation"
+                >
+                  Forgot?
+                </Link>
+              </div>
               <div className="relative">
-                <div
+                <Lock
                   className={cn(
-                    'absolute left-4 top-1/2 -translate-y-1/2 transition-colors duration-200',
+                    'absolute left-3.5 top-1/2 -translate-y-1/2 h-[18px] w-[18px] transition-colors duration-150',
                     focusedField === 'password' ? 'text-elec-yellow' : 'text-white'
                   )}
-                >
-                  <Lock className="h-5 w-5" />
-                </div>
+                />
                 <input
-                  type={showPassword ? 'text' : 'password'}
+                  type="text"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   onFocus={() => setFocusedField('password')}
                   onBlur={() => setFocusedField(null)}
-                  placeholder="Enter your password"
+                  placeholder="Enter password"
                   autoComplete="current-password"
-                  name="password"
                   className={cn(
-                    'w-full h-14 pl-12 pr-12 rounded-2xl',
-                    'bg-input border-2 text-white placeholder:text-muted-foreground [color-scheme:dark]',
-                    'text-[16px] outline-none transition-all duration-200',
+                    'w-full h-12 pl-11 pr-11 rounded-xl text-[15px] text-white placeholder:text-white',
+                    'bg-white/[0.10] outline-none transition-all duration-150 [color-scheme:dark]',
+                    !showPassword && 'pw-masked',
                     focusedField === 'password'
-                      ? 'border-elec-yellow/50 shadow-[0_0_0_4px_rgba(255,209,0,0.1)]'
-                      : 'border-white/20 hover:border-white/30'
+                      ? 'ring-1 ring-elec-yellow/40 bg-white/[0.10]'
+                      : 'ring-1 ring-white/20 hover:ring-white/30'
                   )}
                 />
-                {/* Password toggle */}
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-2 top-1/2 -translate-y-1/2 text-white hover:text-white active:text-white transition-colors h-11 w-11 flex items-center justify-center touch-manipulation rounded-xl"
+                  className="absolute right-1.5 top-1/2 -translate-y-1/2 h-9 w-9 flex items-center justify-center rounded-lg text-white hover:text-white transition-colors touch-manipulation"
                 >
-                  {showPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
+                  {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
                 </button>
               </div>
             </div>
 
-            {/* Forgot password */}
-            <div className="flex justify-end">
-              <Link
-                to="/auth/forgot-password"
-                className="text-sm text-elec-yellow font-medium hover:text-elec-yellow/80 active:text-elec-yellow/70 transition-colors py-2 px-3 -mr-2 rounded-xl touch-manipulation min-h-[44px] flex items-center"
-              >
-                Forgot password?
-              </Link>
-            </div>
-
-            {/* Sign in button */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.5 }}
-            >
+            {/* CTA */}
+            <div className="pt-2">
               <Button
                 type="submit"
                 disabled={isSubmitting || showSuccess}
                 className={cn(
-                  'w-full h-14 rounded-2xl text-[16px] font-semibold',
+                  'w-full h-12 rounded-xl text-[15px] font-semibold',
                   'bg-elec-yellow hover:bg-elec-yellow/90 text-black',
-                  'shadow-lg shadow-elec-yellow/25 transition-all duration-200',
-                  'disabled:opacity-50 disabled:cursor-not-allowed'
+                  'shadow-[0_1px_20px_rgba(250,204,21,0.15)] transition-all duration-150',
+                  'active:scale-[0.98] disabled:opacity-50'
                 )}
               >
                 {isSubmitting ? (
-                  <span className="flex items-center gap-2">
-                    <Loader2 className="h-5 w-5 animate-spin" />
-                    Signing in...
-                  </span>
+                  <>
+                    <Loader2 className="mr-2 h-4 w-4 animate-spin" /> Signing in...
+                  </>
                 ) : (
-                  <span className="flex items-center gap-2">
-                    Sign In
-                    <ArrowRight className="h-5 w-5" />
-                  </span>
+                  <>
+                    Sign in <ArrowRight className="ml-1.5 h-4 w-4" />
+                  </>
                 )}
               </Button>
-            </motion.div>
+            </div>
           </motion.form>
 
-          {/* Divider */}
+          {/* Separator */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ delay: 0.6 }}
-            className="flex items-center gap-4 my-5 sm:my-8"
+            transition={{ delay: 0.3 }}
+            className="mt-8 mb-6"
           >
-            <div className="flex-1 h-px bg-white/10" />
-            <span className="text-[12px] text-white uppercase tracking-wider">or</span>
-            <div className="flex-1 h-px bg-white/10" />
+            <div className="flex items-center gap-3">
+              <div className="flex-1 h-px bg-white/[0.10]" />
+              <span className="text-[11px] text-white uppercase tracking-widest font-medium">
+                new here?
+              </span>
+              <div className="flex-1 h-px bg-white/[0.10]" />
+            </div>
           </motion.div>
 
-          {/* Sign up prompt */}
+          {/* Sign up link */}
           <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.7 }}
-            className="text-center"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.35 }}
           >
-            <p className="text-[14px] text-white mb-4">Don't have an account?</p>
             <Link to="/auth/signup" className="block">
-              <Button
-                variant="outline"
-                className={cn(
-                  'w-full h-13 rounded-2xl text-[15px] font-semibold',
-                  'bg-transparent border-2 border-white/10 text-white',
-                  'hover:bg-white/5 hover:border-white/20 transition-all duration-200'
-                )}
-              >
-                <span className="flex items-center gap-2">
-                  Create Account
-                  <span className="flex items-center gap-1 px-2.5 py-1 text-[11px] bg-elec-yellow/20 text-elec-yellow rounded-full font-semibold">
-                    <Sparkles className="h-3 w-3" />
-                    Free Trial
-                  </span>
+              <button className="w-full h-12 rounded-xl text-[14px] font-medium bg-transparent border border-white/[0.08] text-white hover:bg-white/[0.10] transition-all duration-150 touch-manipulation flex items-center justify-center gap-2">
+                Create an account
+                <span className="text-[10px] font-semibold text-elec-yellow bg-elec-yellow/10 px-2 py-0.5 rounded-full">
+                  7 days free
                 </span>
-              </Button>
+              </button>
             </Link>
           </motion.div>
-        </motion.div>
-      </main>
 
-      {/* Footer */}
-      <motion.footer
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 0.8 }}
-        className="relative px-6 pb-6 z-10"
-      >
-        <div className="max-w-md mx-auto">
-          <div className="flex items-center justify-center gap-4 text-[11px] text-white">
-            <span className="flex items-center gap-1.5">
-              <CheckCircle2 className="h-3.5 w-3.5 text-green-500/70" />
-              Secure Login
-            </span>
-            <span className="w-1 h-1 rounded-full bg-white/20" />
-            <span>BS7671 Compliant</span>
-            <span className="w-1 h-1 rounded-full bg-white/20" />
-            <span>UK Based</span>
-          </div>
+          {/* Social proof — subtle */}
+          <motion.p
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.5 }}
+            className="text-[11px] text-white text-center mt-6 flex items-center justify-center gap-1.5"
+          >
+            <span className="inline-flex h-1.5 w-1.5 rounded-full bg-green-500/50" />
+            {userCount} electricians use Elec-Mate
+          </motion.p>
         </div>
-      </motion.footer>
+      </div>
 
-      {/* Biometric opt-in prompt (shown after first successful login on native) */}
       <BiometricPromptSheet
         open={showBiometricPrompt}
         biometricType={biometric.biometricType}

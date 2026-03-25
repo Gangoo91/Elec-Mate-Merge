@@ -1,4 +1,4 @@
-import { ReactNode } from 'react';
+import { ReactNode, useRef, useEffect } from 'react';
 import { Navigate, useLocation } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
 import { Loader2 } from 'lucide-react';
@@ -11,6 +11,13 @@ interface ProtectedRouteProps {
 const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
   const { user, profile, isLoading, isSubscribed, hasCompletedInitialCheck } = useAuth();
   const location = useLocation();
+  const isMounted = useRef(true);
+  useEffect(
+    () => () => {
+      isMounted.current = false;
+    },
+    []
+  );
 
   // Development mode - full access during development only
   const isDevelopment = import.meta.env.DEV === true;
@@ -22,8 +29,7 @@ const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
 
   // Check profile directly as fallback - this prevents flash during refresh.
   // Trust `subscribed` — it is set by Stripe/RevenueCat webhooks (ELE-432).
-  const hasProfileAccess =
-    profile?.subscribed || profile?.free_access_granted;
+  const hasProfileAccess = profile?.subscribed || profile?.free_access_granted;
 
   // User can access if they have an active subscription (including Stripe trialing)
   const canAccess =
@@ -34,8 +40,9 @@ const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
     isCheckoutPage ||
     isPaymentPage;
 
-  // Redirect to sign in if not logged in
+  // Redirect to sign in if not logged in (skip during exit animations to prevent frozen UI)
   if (!isLoading && !user) {
+    if (!isMounted.current) return null;
     return <Navigate to="/auth/signin" state={{ from: location }} replace />;
   }
 

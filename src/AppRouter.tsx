@@ -244,7 +244,7 @@ const AppRouter = () => {
   const location = useLocation();
 
   return (
-    <AnimatePresence mode="wait">
+    <AnimatePresence mode="sync">
       <Routes location={location} key={location.pathname}>
         {/* Walkthrough (first launch only) */}
         <Route

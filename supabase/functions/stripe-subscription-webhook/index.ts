@@ -631,8 +631,9 @@ serve(async (req) => {
           page: 1,
           perPage: 1000,
         });
+        const customerEmailLower = customer.email.toLowerCase();
         const authUser = usersData?.users?.find(
-          (u: { email?: string }) => u.email === customer.email
+          (u: { email?: string }) => u.email?.toLowerCase() === customerEmailLower
         );
 
         if (authUser?.id) {
@@ -731,6 +732,38 @@ serve(async (req) => {
             customerId,
             subscriptionId: subscription.id,
           });
+
+          // Store orphaned subscription for reconciliation
+          try {
+            const stripeCustomer = await stripe.customers.retrieve(customerId);
+            const orphanEmail =
+              !stripeCustomer.deleted && 'email' in stripeCustomer ? stripeCustomer.email : null;
+            const orphanName =
+              !stripeCustomer.deleted && 'name' in stripeCustomer ? stripeCustomer.name : null;
+            const orphanPriceId = subscription.items.data[0]?.price?.id || null;
+            await supabase.from('orphaned_stripe_subscriptions').upsert(
+              {
+                stripe_customer_id: customerId,
+                stripe_subscription_id: subscription.id,
+                customer_email: orphanEmail,
+                customer_name: orphanName,
+                price_id: orphanPriceId,
+                tier: orphanPriceId ? PRICE_TO_TIER[orphanPriceId] || 'unknown' : null,
+                event_type: event.type,
+                detected_at: new Date().toISOString(),
+              },
+              { onConflict: 'stripe_customer_id' }
+            );
+            logger.info('Stored orphaned subscription for manual review', {
+              customerId,
+              email: orphanEmail,
+            });
+          } catch (orphanErr) {
+            logger.warn('Failed to store orphaned subscription (non-fatal)', {
+              error: (orphanErr as Error)?.message,
+            });
+          }
+
           break;
         }
 
@@ -1308,6 +1341,143 @@ serve(async (req) => {
               error: (emailErr as Error)?.message,
             });
           }
+        }
+
+        break;
+      }
+
+      case 'checkout.session.completed': {
+        // Pay links and external checkouts fire this event.
+        // Use it to link Stripe customers to Supabase users BEFORE the subscription event fires.
+        const session = event.data.object as Stripe.Checkout.Session;
+
+        // Only handle subscription checkouts
+        if (session.mode !== 'subscription' || !session.customer || !session.subscription) {
+          logger.debug('Non-subscription checkout session, skipping', { sessionId: session.id });
+          break;
+        }
+
+        const sessionCustomerId = session.customer as string;
+        const sessionSubId = session.subscription as string;
+
+        logger.info('Checkout session completed (subscription)', {
+          sessionId: session.id,
+          customerId: sessionCustomerId,
+          subscriptionId: sessionSubId,
+        });
+
+        // Check if we already have this customer linked
+        const { data: existingProfile } = await supabase
+          .from('profiles')
+          .select('id')
+          .eq('stripe_customer_id', sessionCustomerId)
+          .maybeSingle();
+
+        if (existingProfile) {
+          logger.info('Customer already linked to profile, skipping checkout handler', {
+            customerId: sessionCustomerId,
+            userId: existingProfile.id,
+          });
+          break;
+        }
+
+        // Try to find the user by: client_reference_id > customer_email > customer_details.email
+        let linkedUserId: string | null = null;
+
+        // Priority 1: client_reference_id (if pay link was generated with userId)
+        if (session.client_reference_id) {
+          const { data: refProfile } = await supabase
+            .from('profiles')
+            .select('id')
+            .eq('id', session.client_reference_id)
+            .maybeSingle();
+          if (refProfile) {
+            linkedUserId = refProfile.id;
+            logger.info('Linked via client_reference_id', { userId: linkedUserId });
+          }
+        }
+
+        // Priority 2: customer_email or customer_details.email (case-insensitive)
+        if (!linkedUserId) {
+          const checkoutEmail = (
+            session.customer_email ||
+            session.customer_details?.email ||
+            null
+          )?.toLowerCase();
+
+          if (checkoutEmail) {
+            const { data: usersData } = await supabase.auth.admin.listUsers({
+              page: 1,
+              perPage: 1000,
+            });
+            const authUser = usersData?.users?.find(
+              (u: { email?: string }) => u.email?.toLowerCase() === checkoutEmail
+            );
+
+            if (authUser) {
+              linkedUserId = authUser.id;
+              logger.info('Linked via checkout email', {
+                userId: linkedUserId,
+                email: checkoutEmail,
+              });
+            }
+          }
+        }
+
+        if (linkedUserId) {
+          // Retrieve the subscription to get tier info
+          const sub = await stripe.subscriptions.retrieve(sessionSubId);
+          const priceId = sub.items.data[0]?.price?.id;
+          const tier = priceId ? PRICE_TO_TIER[priceId] || 'electrician' : 'electrician';
+          const periodEnd = sub.current_period_end ? new Date(sub.current_period_end * 1000) : null;
+
+          await updateSubscriptionStatus(
+            linkedUserId,
+            true,
+            sessionCustomerId,
+            tier,
+            periodEnd,
+            true
+          );
+
+          logger.info('Subscription activated via checkout.session.completed', {
+            userId: linkedUserId,
+            customerId: sessionCustomerId,
+            tier,
+          });
+
+          // Clear any orphaned record for this customer
+          await supabase
+            .from('orphaned_stripe_subscriptions')
+            .delete()
+            .eq('stripe_customer_id', sessionCustomerId);
+        } else {
+          // Store as orphaned for manual review
+          const stripeCustomer = await stripe.customers.retrieve(sessionCustomerId);
+          const orphanEmail =
+            !stripeCustomer.deleted && 'email' in stripeCustomer ? stripeCustomer.email : null;
+          const orphanName =
+            !stripeCustomer.deleted && 'name' in stripeCustomer ? stripeCustomer.name : null;
+          const sub = await stripe.subscriptions.retrieve(sessionSubId);
+          const orphanPriceId = sub.items.data[0]?.price?.id || null;
+
+          await supabase.from('orphaned_stripe_subscriptions').upsert(
+            {
+              stripe_customer_id: sessionCustomerId,
+              stripe_subscription_id: sessionSubId,
+              customer_email: orphanEmail,
+              customer_name: orphanName,
+              price_id: orphanPriceId,
+              tier: orphanPriceId ? PRICE_TO_TIER[orphanPriceId] || 'unknown' : null,
+              event_type: 'checkout.session.completed',
+              detected_at: new Date().toISOString(),
+            },
+            { onConflict: 'stripe_customer_id' }
+          );
+          logger.warn('Checkout session completed but no matching user found', {
+            customerId: sessionCustomerId,
+            email: orphanEmail,
+          });
         }
 
         break;

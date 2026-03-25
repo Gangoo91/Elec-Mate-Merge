@@ -22,8 +22,15 @@ interface PushPayload {
     | 'invoice'
     | 'application'
     | 'vacancy'
-    | 'certificate';
+    | 'certificate'
+    | 'task'
+    | 'study'
+    | 'mental_health'
+    | 'assessment'
+    | 'briefing'
+    | 'default';
   data?: Record<string, unknown>;
+  skipQuietHours?: boolean; // bypass quiet hours (e.g. for morning digest itself)
 }
 
 // ===== Base64 URL Helpers =====
@@ -284,10 +291,114 @@ async function sendWebPush(
 
   if (!response.ok) {
     const text = await response.text();
-    const error: any = new Error(`Push failed: ${response.status} ${text}`);
+    const error = new Error(`Push failed: ${response.status} ${text}`) as Error & {
+      statusCode: number;
+    };
     error.statusCode = response.status;
     throw error;
   }
+}
+
+// ===== Send via FCM (for native iOS/Android tokens) =====
+async function sendFcmPush(
+  token: string,
+  title: string,
+  body: string,
+  type: string,
+  data?: Record<string, unknown>
+): Promise<void> {
+  const fcmServerKey = Deno.env.get('FCM_SERVER_KEY');
+  if (!fcmServerKey) {
+    throw new Error('FCM_SERVER_KEY not configured');
+  }
+
+  const response = await fetch('https://fcm.googleapis.com/fcm/send', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `key=${fcmServerKey}`,
+    },
+    body: JSON.stringify({
+      to: token,
+      notification: {
+        title,
+        body,
+        sound: 'default',
+        badge: 1,
+      },
+      data: {
+        type,
+        ...Object.fromEntries(Object.entries(data || {}).map(([k, v]) => [k, String(v)])),
+      },
+      priority: 'high',
+    }),
+  });
+
+  if (!response.ok) {
+    const text = await response.text();
+    const error = new Error(`FCM push failed: ${response.status} ${text}`) as Error & {
+      statusCode: number;
+    };
+    error.statusCode = response.status;
+    throw error;
+  }
+
+  const result = await response.json();
+  if (result.failure > 0) {
+    const err = result.results?.[0]?.error;
+    if (err === 'NotRegistered' || err === 'InvalidRegistration') {
+      const error = new Error(`FCM token invalid: ${err}`) as Error & { statusCode: number };
+      error.statusCode = 410;
+      throw error;
+    }
+  }
+}
+
+// ===== Check if currently in user's quiet hours =====
+async function isInQuietHours(
+  supabase: ReturnType<typeof createClient>,
+  userId: string
+): Promise<boolean> {
+  // Check user preferences for quiet hours
+  const { data: prefs } = await supabase
+    .from('notification_preferences')
+    .select('category, enabled')
+    .eq('user_id', userId)
+    .in('category', ['quiet_hours_start', 'quiet_hours_end']);
+
+  // Defaults: 21:00 - 07:00
+  const startHour = 21;
+  const endHour = 7;
+
+  for (const pref of prefs || []) {
+    if (pref.category === 'quiet_hours_start' && !pref.enabled) {
+      // quiet hours disabled entirely
+      return false;
+    }
+    // We store hours as the category value, enabled=true means active
+    // Using the existing table structure: category stores the setting name
+  }
+
+  // Check if quiet_hours_enabled preference exists and is disabled
+  const { data: quietEnabled } = await supabase
+    .from('notification_preferences')
+    .select('enabled')
+    .eq('user_id', userId)
+    .eq('category', 'quiet_hours')
+    .single();
+
+  if (quietEnabled && !quietEnabled.enabled) {
+    return false; // User disabled quiet hours
+  }
+
+  const now = new Date();
+  const currentHour = now.getUTCHours(); // UTC — UK is close enough for MVP
+
+  // Quiet hours span midnight (e.g. 21:00 - 07:00)
+  if (startHour > endHour) {
+    return currentHour >= startHour || currentHour < endHour;
+  }
+  return currentHour >= startHour && currentHour < endHour;
 }
 
 // ===== Main Handler =====
@@ -303,15 +414,35 @@ serve(async (req: Request) => {
     );
 
     const payload: PushPayload = await req.json();
-    const { userId, title, body, type, data } = payload;
+    const { userId, title, body, type, data, skipQuietHours } = payload;
 
-    console.log('[Push v23] Received request for userId:', userId);
+    console.log('[Push v24] Received request for userId:', userId);
 
     if (!userId) {
       return new Response(JSON.stringify({ error: 'userId is required' }), {
         status: 400,
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       });
+    }
+
+    // ── Quiet hours check ──────────────────────────────────────────
+    if (!skipQuietHours) {
+      const quietHours = await isInQuietHours(supabase, userId);
+      if (quietHours) {
+        // Queue notification for delivery after quiet hours end
+        await supabase.from('queued_notifications').insert({
+          user_id: userId,
+          title,
+          body,
+          type,
+          data: data || {},
+        });
+        console.log('[Push v24] Queued (quiet hours) for:', userId);
+        return new Response(
+          JSON.stringify({ success: true, queued: true, reason: 'quiet_hours' }),
+          { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+        );
+      }
     }
 
     // Get subscriptions
@@ -321,7 +452,7 @@ serve(async (req: Request) => {
       .eq('user_id', userId)
       .eq('is_active', true);
 
-    console.log('[Push v23] Found subscriptions:', subscriptions?.length || 0);
+    console.log('[Push v24] Found subscriptions:', subscriptions?.length || 0);
 
     if (subError) {
       return new Response(
@@ -357,7 +488,7 @@ serve(async (req: Request) => {
       });
     }
 
-    console.log('[Push v23] VAPID public key starts with:', vapidPublicKey.substring(0, 10));
+    console.log('[Push v24] VAPID public key starts with:', vapidPublicKey.substring(0, 10));
 
     const notificationPayload = JSON.stringify({
       title,
@@ -374,28 +505,39 @@ serve(async (req: Request) => {
 
     for (const subscription of subscriptions) {
       try {
-        console.log('[Push v23] Sending to:', subscription.id);
+        const isNativeToken = subscription.endpoint?.startsWith('native:');
 
-        await sendWebPush(
-          subscription.endpoint,
-          subscription.keys.p256dh,
-          subscription.keys.auth,
-          notificationPayload,
-          vapidPublicKey,
-          vapidPrivateKey
-        );
+        if (isNativeToken) {
+          // Native iOS/Android — send via FCM
+          const token =
+            subscription.keys?.token || subscription.endpoint.replace(/^native:(ios|android):/, '');
+          console.log('[Push v24] Sending FCM to:', subscription.id, subscription.device_type);
+          await sendFcmPush(token, title, body, type, data);
+        } else {
+          // Web Push — existing VAPID flow
+          console.log('[Push v24] Sending Web Push to:', subscription.id);
+          await sendWebPush(
+            subscription.endpoint,
+            subscription.keys.p256dh,
+            subscription.keys.auth,
+            notificationPayload,
+            vapidPublicKey,
+            vapidPrivateKey
+          );
+        }
 
         sentCount++;
-        console.log('[Push v23] Success:', subscription.id);
-      } catch (err: any) {
-        console.error('[Push v23] Error:', subscription.id, err.message);
+        console.log('[Push v24] Success:', subscription.id);
+      } catch (err: unknown) {
+        const pushErr = err as Error & { statusCode?: number };
+        console.error('[Push v24] Error:', subscription.id, pushErr.message);
         errors.push({
           subscriptionId: subscription.id,
-          error: err.message,
-          statusCode: err.statusCode,
+          error: pushErr.message,
+          statusCode: pushErr.statusCode,
         });
 
-        if (err.statusCode === 410 || err.statusCode === 404) {
+        if (pushErr.statusCode === 410 || pushErr.statusCode === 404) {
           await supabase
             .from('push_subscriptions')
             .update({ is_active: false })
@@ -404,7 +546,7 @@ serve(async (req: Request) => {
       }
     }
 
-    console.log('[Push v23] Complete. Sent:', sentCount, 'Errors:', errors.length);
+    console.log('[Push v24] Complete. Sent:', sentCount, 'Errors:', errors.length);
 
     return new Response(
       JSON.stringify({
@@ -416,11 +558,14 @@ serve(async (req: Request) => {
       }),
       { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
-  } catch (error: any) {
-    console.error('[Push v23] Error:', error);
-    return new Response(JSON.stringify({ error: error.message }), {
-      status: 500,
-      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-    });
+  } catch (error: unknown) {
+    console.error('[Push v24] Error:', error);
+    return new Response(
+      JSON.stringify({ error: error instanceof Error ? error.message : 'Unknown error' }),
+      {
+        status: 500,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      }
+    );
   }
 });

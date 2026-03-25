@@ -47,7 +47,7 @@ const UserProfileDropdown = () => {
 
   const handleSignOut = async () => {
     await signOut();
-    navigate('/');
+    window.location.replace('/');
   };
 
   if (!user) {

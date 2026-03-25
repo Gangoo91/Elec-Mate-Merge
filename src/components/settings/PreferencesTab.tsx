@@ -13,6 +13,7 @@ import { useNotifications } from '@/components/notifications/NotificationProvide
 import {
   usePushNotifications,
   useNotificationPreferences,
+  useQuietHours,
   type NotificationCategory,
 } from '@/hooks/usePushNotifications';
 import { useAuth } from '@/contexts/AuthContext';
@@ -113,6 +114,7 @@ const PreferencesTab = () => {
     updatePreference,
     isLoading: isPrefsLoading,
   } = useNotificationPreferences();
+  const { quietHours, updateQuietHours } = useQuietHours();
   const [allMuted, setAllMuted] = useState(false);
 
   // Certificate preferences
@@ -427,6 +429,71 @@ const PreferencesTab = () => {
             disabled={allMuted || isPrefsLoading}
           />
         </div>
+      </motion.div>
+
+      {/* ─── QUIET HOURS ─── */}
+      <motion.div variants={itemVariants}>
+        <SectionLabel>Quiet Hours</SectionLabel>
+        <ToggleRow
+          icon="🌙"
+          iconBg="bg-indigo-500/15"
+          label="Quiet Hours"
+          checked={quietHours.enabled}
+          onCheckedChange={(v) => updateQuietHours({ enabled: v })}
+        />
+        {quietHours.enabled && (
+          <>
+            <Divider />
+            <div className="flex items-center min-h-[48px] px-4 touch-manipulation">
+              <div className="w-8 h-8 rounded-lg bg-indigo-500/15 flex items-center justify-center flex-shrink-0 text-base">
+                🕘
+              </div>
+              <span className="text-[15px] font-medium text-white ml-3 flex-1">Start</span>
+              <Select
+                value={String(quietHours.startHour)}
+                onValueChange={(v) => updateQuietHours({ startHour: parseInt(v) })}
+              >
+                <SelectTrigger className="w-auto min-w-[80px] h-9 border-0 bg-white/[0.06] text-white text-[14px] focus:ring-0">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  {[20, 21, 22, 23].map((h) => (
+                    <SelectItem key={h} value={String(h)}>
+                      {`${h}:00`}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+            <Divider />
+            <div className="flex items-center min-h-[48px] px-4 touch-manipulation">
+              <div className="w-8 h-8 rounded-lg bg-indigo-500/15 flex items-center justify-center flex-shrink-0 text-base">
+                🕖
+              </div>
+              <span className="text-[15px] font-medium text-white ml-3 flex-1">End</span>
+              <Select
+                value={String(quietHours.endHour)}
+                onValueChange={(v) => updateQuietHours({ endHour: parseInt(v) })}
+              >
+                <SelectTrigger className="w-auto min-w-[80px] h-9 border-0 bg-white/[0.06] text-white text-[14px] focus:ring-0">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  {[6, 7, 8, 9].map((h) => (
+                    <SelectItem key={h} value={String(h)}>
+                      {`${h}:00`}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+            <div className="px-4 pb-2">
+              <p className="text-[12px] text-white/50 ml-11">
+                Notifications will be held and delivered with your morning briefing
+              </p>
+            </div>
+          </>
+        )}
       </motion.div>
 
       {/* ─── CERTIFICATES ─── */}

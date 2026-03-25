@@ -137,11 +137,7 @@ const SettingsPage = () => {
 
   const handleSignOut = async () => {
     await signOut();
-    addNotification({
-      title: 'Signed Out',
-      message: 'You have been successfully signed out.',
-      type: 'info',
-    });
+    window.location.replace('/');
   };
 
   const handleMobileTabSelect = (tabId: string) => {

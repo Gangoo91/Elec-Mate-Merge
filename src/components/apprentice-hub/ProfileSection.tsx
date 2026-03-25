@@ -144,7 +144,7 @@ export function ProfileSection() {
   // Handle sign out
   const handleSignOut = async () => {
     await signOut();
-    navigate('/');
+    window.location.replace('/');
   };
 
   // Handle export to PDF
@@ -200,6 +200,7 @@ export function ProfileSection() {
       doc.text('Portfolio Evidence', 14, 98);
 
       if (portfolioEntries.length > 0) {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const tableData = portfolioEntries.map((entry: any) => [
           entry.title?.slice(0, 40) || 'Untitled',
           (typeof entry.category === 'object' ? entry.category?.name : entry.category) || 'N/A',
@@ -208,6 +209,7 @@ export function ProfileSection() {
           entry.skills?.slice(0, 3).join(', ') || 'None',
         ]);
 
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         (doc as any).autoTable({
           startY: 104,
           head: [['Title', 'Category', 'Status', 'Date', 'KSBs']],
@@ -604,6 +606,7 @@ export function ProfileSection() {
               {/* Expiry Selection */}
               <div className="space-y-2">
                 <label className="text-xs text-white">Link expires after</label>
+                {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
                 <Select value={shareExpiry} onValueChange={(v) => setShareExpiry(v as any)}>
                   <SelectTrigger className="h-11">
                     <SelectValue />
@@ -657,11 +660,13 @@ export function ProfileSection() {
                           <span className="text-border">•</span>
                           <Eye className="h-3 w-3" />
                           <span>{share.view_count} views</span>
+                          {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
                           {(share as any).last_viewed_at && (
                             <>
                               <span className="text-border">•</span>
                               <span>
                                 Last viewed{' '}
+                                {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
                                 {formatDistanceToNow(new Date((share as any).last_viewed_at), {
                                   addSuffix: true,
                                 })}
@@ -727,9 +732,7 @@ export function ProfileSection() {
                   <MessageSquare className="h-8 w-8 text-white" />
                 </div>
                 <p className="text-sm font-medium text-foreground">No messages yet</p>
-                <p className="text-xs text-white mt-1">
-                  Comments from your tutor will appear here
-                </p>
+                <p className="text-xs text-white mt-1">Comments from your tutor will appear here</p>
               </div>
             ) : (
               <div className="space-y-3 px-4">
@@ -738,7 +741,9 @@ export function ProfileSection() {
                     key={comment.id}
                     className={cn(
                       'p-3 rounded-xl border border-border bg-muted/30',
-                      comment.requiresAction && !comment.isResolved && 'border-l-2 border-l-orange-500'
+                      comment.requiresAction &&
+                        !comment.isResolved &&
+                        'border-l-2 border-l-orange-500'
                     )}
                   >
                     <div className="flex items-center justify-between mb-1.5">
@@ -760,17 +765,13 @@ export function ProfileSection() {
                               ? 'Assessor'
                               : comment.authorRole}
                         </Badge>
-                        <span className="text-xs text-white font-medium">
-                          {comment.authorName}
-                        </span>
+                        <span className="text-xs text-white font-medium">{comment.authorName}</span>
                       </div>
                       <div className="flex items-center gap-2">
                         {comment.requiresAction && !comment.isResolved && (
                           <div className="w-2 h-2 rounded-full bg-orange-500" />
                         )}
-                        {comment.isResolved && (
-                          <Check className="h-3.5 w-3.5 text-green-500" />
-                        )}
+                        {comment.isResolved && <Check className="h-3.5 w-3.5 text-green-500" />}
                         <span className="text-xs text-white">
                           {formatDistanceToNow(new Date(comment.createdAt), { addSuffix: true })}
                         </span>

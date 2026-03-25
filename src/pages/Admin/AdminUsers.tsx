@@ -606,7 +606,13 @@ export default function AdminUsers() {
       const { data, error } = await supabase.functions.invoke('admin-delete-user', {
         body: { userId },
       });
-      if (error) throw error;
+      if (error) {
+        const errObj = error as Record<string, unknown> | undefined;
+        const ctx = errObj?.context as Record<string, unknown> | undefined;
+        const realMessage =
+          (ctx?.error as string) || (errObj?.message as string) || 'Delete failed';
+        throw new Error(realMessage);
+      }
       if (data?.error) throw new Error(data.error);
 
       await supabase.from('admin_audit_logs').insert({
@@ -754,14 +760,9 @@ export default function AdminUsers() {
               <div className="bg-white/[0.06] backdrop-blur-sm rounded-xl p-2.5 text-center border border-white/10">
                 <div className="flex items-center justify-center gap-1 mb-0.5">
                   <div className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
-                  <AnimatedCounter
-                    value={stats.online}
-                    className="text-lg font-bold text-white"
-                  />
+                  <AnimatedCounter value={stats.online} className="text-lg font-bold text-white" />
                 </div>
-                <p className="text-[11px] text-white uppercase tracking-wide font-medium">
-                  Online
-                </p>
+                <p className="text-[11px] text-white uppercase tracking-wide font-medium">Online</p>
               </div>
               <div className="bg-white/[0.06] backdrop-blur-sm rounded-xl p-2.5 text-center border border-white/10">
                 <div className="flex items-center justify-center gap-1 mb-0.5">
@@ -771,9 +772,7 @@ export default function AdminUsers() {
                     className="text-lg font-bold text-white"
                   />
                 </div>
-                <p className="text-[11px] text-white uppercase tracking-wide font-medium">
-                  Paid
-                </p>
+                <p className="text-[11px] text-white uppercase tracking-wide font-medium">Paid</p>
               </div>
               <div className="bg-white/[0.06] backdrop-blur-sm rounded-xl p-2.5 text-center border border-white/10">
                 <div className="flex items-center justify-center gap-1 mb-0.5">
@@ -783,21 +782,14 @@ export default function AdminUsers() {
                     className="text-lg font-bold text-white"
                   />
                 </div>
-                <p className="text-[11px] text-white uppercase tracking-wide font-medium">
-                  New
-                </p>
+                <p className="text-[11px] text-white uppercase tracking-wide font-medium">New</p>
               </div>
               <div className="bg-white/[0.06] backdrop-blur-sm rounded-xl p-2.5 text-center border border-white/10">
                 <div className="flex items-center justify-center gap-1 mb-0.5">
                   <IdCard className="h-3.5 w-3.5 text-cyan-300" />
-                  <AnimatedCounter
-                    value={stats.elecIds}
-                    className="text-lg font-bold text-white"
-                  />
+                  <AnimatedCounter value={stats.elecIds} className="text-lg font-bold text-white" />
                 </div>
-                <p className="text-[11px] text-white uppercase tracking-wide font-medium">
-                  IDs
-                </p>
+                <p className="text-[11px] text-white uppercase tracking-wide font-medium">IDs</p>
               </div>
             </div>
           </div>
@@ -1204,7 +1196,8 @@ export default function AdminUsers() {
                             {user.subscribed && user.stripe_customer_id ? (
                               <Badge className="text-[11px] px-2.5 py-0.5 h-6 font-semibold rounded-full bg-amber-500/15 text-amber-400 border-0 shadow-sm">
                                 <CreditCard className="h-3 w-3 mr-1" />
-                                Pro{user.subscription_tier ? ` \u00b7 ${user.subscription_tier}` : ''}
+                                Pro
+                                {user.subscription_tier ? ` \u00b7 ${user.subscription_tier}` : ''}
                               </Badge>
                             ) : user.free_access_granted ? (
                               <Badge className="text-[11px] px-2.5 py-0.5 h-6 font-semibold rounded-full bg-emerald-500/15 text-emerald-400 border-0 shadow-sm">

@@ -119,7 +119,10 @@ const TrialExpiredPaywall = () => {
             <Button
               variant="outline"
               className="w-full h-11 border-white/10 hover:bg-white/5 text-white hover:text-white transition-all"
-              onClick={() => signOut()}
+              onClick={async () => {
+                await signOut();
+                window.location.replace('/');
+              }}
             >
               Sign Out
             </Button>
