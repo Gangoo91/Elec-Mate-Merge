@@ -119,11 +119,13 @@ const TestValueGrid: React.FC<TestValueGridProps> = ({ circuit, onUpdate }) => {
   };
 
   // Check if circuit has RCD (show extra tile)
+  const deviceUpper = (circuit.protectiveDeviceType || '').toUpperCase();
   const hasRcd =
-    circuit.protectiveDeviceType === 'RCBO' ||
-    circuit.protectiveDeviceType === 'RCD' ||
-    circuit.bsStandard?.includes('RCBO') ||
-    circuit.bsStandard?.includes('RCD');
+    deviceUpper.includes('RCBO') ||
+    deviceUpper.includes('RCD') ||
+    !!circuit.rcdType ||
+    !!circuit.rcdRating ||
+    !!circuit.rcdBsStandard;
 
   const tilesToShow = hasRcd ? [...TEST_TILES, EXTRA_TILES[0]] : TEST_TILES;
 

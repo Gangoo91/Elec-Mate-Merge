@@ -71,11 +71,12 @@ const CircuitCardInner = ({
     const hasR1R2 = circuit.r1r2;
 
     // RCD checks
+    const deviceUpper = (circuit.protectiveDeviceType || '').toUpperCase();
     const hasRcd = !!(
       circuit.rcdRating ||
       circuit.rcdOneX ||
-      circuit.protectiveDeviceType?.includes('RCD') ||
-      circuit.protectiveDeviceType?.includes('RCBO')
+      deviceUpper.includes('RCD') ||
+      deviceUpper.includes('RCBO')
     );
     const rcdOk = circuit.rcdOneX ? parseFloat(circuit.rcdOneX) < 300 : null;
 

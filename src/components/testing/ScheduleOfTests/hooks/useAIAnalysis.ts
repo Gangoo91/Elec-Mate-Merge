@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState, useCallback } from 'react';
 import { toast } from 'sonner';
 import { TestResult } from '@/types/testResult';
@@ -311,6 +312,10 @@ export function useAIAnalysis({ testResults, setTestResults, onSave }: UseAIAnal
               normalisedCircuit.protectiveDeviceType
             ),
             rcdRating: requiresRCD ? '30mA' : '',
+            rcdType: isRCBOOrRCD ? 'A' : '',
+            rcdBsStandard: isRCBOOrRCD ? 'RCBO (BS EN 61009)' : '',
+            rcdRatingA: requiresRCD ? '30' : '',
+            phaseType: normalisedCircuit.phase || '1P',
             functionalTesting: 'Satisfactory',
             notes: '',
             autoFilled: true,
@@ -392,9 +397,10 @@ export function useAIAnalysis({ testResults, setTestResults, onSave }: UseAIAnal
           notes: '',
           autoFilled: true,
           typeOfWiring: '',
-          rcdBsStandard: '',
-          rcdType: '',
-          rcdRatingA: '',
+          rcdBsStandard: isRCBOOrRCD ? 'RCBO (BS EN 61009)' : '',
+          rcdType: isRCBOOrRCD ? 'A' : '',
+          rcdRatingA: requiresRCD ? '30' : '',
+          phaseType: circuit.phase || '1P',
         };
         updatedResults.push(newResult);
       });
