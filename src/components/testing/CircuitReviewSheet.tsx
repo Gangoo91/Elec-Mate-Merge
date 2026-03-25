@@ -1,8 +1,9 @@
 /**
- * CircuitReviewSheet - Bottom sheet for reviewing detected circuits
+ * CircuitReviewSheet - AI detection results review
  *
- * Shows photo thumbnail in header, prominent reverse order button,
- * and circuit list with confidence indicators.
+ * Full redesign: compact header, scrollable circuit list, responsive grid
+ * on wider screens. Reverse order kept as inline toggle. Contribution
+ * prompt collapsed into footer area. Scroll bug fixed with min-h-0.
  */
 
 import React, { useState, useMemo } from 'react';
@@ -18,8 +19,10 @@ import {
   CheckCircle2,
   ArrowUpDown,
   Check,
-  Bot,
   Sparkles,
+  X,
+  Zap,
+  RotateCcw,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { CircuitReviewCard } from './CircuitReviewCard';
@@ -50,9 +53,7 @@ interface CircuitReviewSheetProps {
     mainSwitch?: string;
     totalWays?: number;
   };
-  /** URL of captured photo to display as thumbnail */
   photoUrl?: string | null;
-  /** Base64 of photo for contribution (optional) */
   photoBase64?: string | null;
   onConfirm: (circuits: DetectedCircuit[]) => void;
   onRescan: () => void;
@@ -75,13 +76,11 @@ export const CircuitReviewSheet: React.FC<CircuitReviewSheetProps> = ({
   const [showPhotoPreview, setShowPhotoPreview] = useState(false);
   const [showContributeModal, setShowContributeModal] = useState(false);
 
-  // Update circuits when prop changes
   React.useEffect(() => {
     setCircuits(initialCircuits);
     setOriginalCircuits(initialCircuits);
   }, [initialCircuits]);
 
-  // Count confidence levels
   const { highCount, mediumCount, lowCount, allHighConfidence } = useMemo(() => {
     const high = circuits.filter((c) => c.confidence === 'high').length;
     const medium = circuits.filter((c) => c.confidence === 'medium').length;
@@ -94,9 +93,8 @@ export const CircuitReviewSheet: React.FC<CircuitReviewSheetProps> = ({
     };
   }, [circuits]);
 
-  // Track if user made corrections (valuable for training)
   const correctionsCount = useMemo(() => {
-    return circuits.filter((c, i) => {
+    return circuits.filter((c) => {
       const original = originalCircuits.find((o) => o.id === c.id);
       if (!original) return false;
       return (
@@ -108,40 +106,32 @@ export const CircuitReviewSheet: React.FC<CircuitReviewSheetProps> = ({
     }).length;
   }, [circuits, originalCircuits]);
 
-  // Handle circuit edit
   const handleEditCircuit = (circuit: DetectedCircuit) => {
     setEditingCircuit(circuit);
   };
 
-  // Handle circuit update from edit modal
   const handleUpdateCircuit = (updated: DetectedCircuit) => {
     setCircuits((prev) => prev.map((c) => (c.id === updated.id ? updated : c)));
     setEditingCircuit(null);
   };
 
-  // Handle reverse order
   const handleReverseOrder = () => {
     setCircuits((prev) => {
       const reversed = [...prev].reverse();
-      // Update position numbers
       return reversed.map((c, i) => ({ ...c, position: i + 1 }));
     });
     setIsReversed(!isReversed);
   };
 
-  // Handle remove circuit
   const handleRemoveCircuit = (id: string) => {
     setCircuits((prev) => {
       const filtered = prev.filter((c) => c.id !== id);
-      // Renumber positions
       return filtered.map((c, i) => ({ ...c, position: i + 1 }));
     });
   };
 
-  // Handle add all - show contribution prompt after confirming
   const handleAddAll = () => {
     onConfirm(circuits);
-    // Show contribution modal if we have a photo
     if (photoUrl) {
       setShowContributeModal(true);
     }
@@ -150,168 +140,182 @@ export const CircuitReviewSheet: React.FC<CircuitReviewSheetProps> = ({
   return (
     <>
       <Sheet open={open} onOpenChange={onOpenChange}>
-        <SheetContent side="bottom" className="h-[85vh] rounded-t-2xl p-0 flex flex-col">
-          {/* Header with photo thumbnail, count, and status */}
-          <SheetHeader className="px-4 py-4 border-b flex-shrink-0">
-            <div className="flex items-start gap-3">
-              {/* Photo Thumbnail */}
-              {photoUrl && (
-                <button
-                  onClick={() => setShowPhotoPreview(true)}
-                  className="flex-shrink-0 w-20 h-20 rounded-lg overflow-hidden border border-border/50 bg-muted/20 touch-manipulation hover:ring-2 hover:ring-elec-yellow/50 transition-all"
-                >
-                  <img src={photoUrl} alt="Scanned board" className="w-full h-full object-cover" />
-                </button>
-              )}
-
-              {/* Title and info */}
-              <div className="flex-1 min-w-0">
-                <div className="flex items-center justify-between gap-2">
-                  <SheetTitle className="text-lg">{circuits.length} Circuits Found</SheetTitle>
-                  <Badge
-                    variant={allHighConfidence ? 'default' : 'secondary'}
-                    className={cn(
-                      'gap-1 flex-shrink-0',
-                      allHighConfidence
-                        ? 'bg-green-500/10 text-green-500 border-green-500/30'
-                        : 'bg-orange-500/10 text-orange-500 border-orange-500/30'
-                    )}
-                  >
-                    {allHighConfidence ? (
-                      <>
-                        <CheckCircle2 className="h-3 w-3" />
-                        All verified
-                      </>
-                    ) : (
-                      <>
-                        <AlertTriangle className="h-3 w-3" />
-                        {lowCount + mediumCount} need review
-                      </>
-                    )}
-                  </Badge>
+        <SheetContent
+          side="bottom"
+          className="h-[90vh] sm:h-[85vh] rounded-t-2xl p-0 flex flex-col overflow-hidden"
+        >
+          {/* ── Header ── */}
+          <SheetHeader className="flex-shrink-0 border-b border-white/[0.06] bg-background">
+            {/* Top bar: title + close */}
+            <div className="flex items-center justify-between px-4 pt-4 pb-2 sm:px-6">
+              <div className="flex items-center gap-3 min-w-0">
+                <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-elec-yellow/20 to-amber-500/20 flex items-center justify-center flex-shrink-0">
+                  <Zap className="h-4.5 w-4.5 text-elec-yellow" />
                 </div>
-                <p className="text-sm text-muted-foreground mt-1">
-                  {board.make || 'Unknown'} board • {board.mainSwitch || 'Unknown'} main switch
-                </p>
+                <div className="min-w-0">
+                  <SheetTitle className="text-base sm:text-lg font-semibold text-white">
+                    AI Detection Results
+                  </SheetTitle>
+                  <p className="text-xs sm:text-sm text-white/50 truncate">
+                    {board.make || 'Unknown'} {board.model ? `${board.model} ` : ''}
+                    {'\u00b7'} {board.mainSwitch || 'Unknown'}
+                  </p>
+                </div>
               </div>
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={() => onOpenChange(false)}
+                className="h-10 w-10 rounded-xl touch-manipulation text-white/40 hover:text-white hover:bg-white/10 flex-shrink-0"
+              >
+                <X className="h-5 w-5" />
+              </Button>
             </div>
 
-            {/* Prominent Reverse Order Button */}
-            <div className="mt-4">
+            {/* Stats bar + reverse toggle */}
+            <div className="flex items-center gap-2 px-4 pb-3 sm:px-6">
+              {/* Circuit count */}
+              <Badge
+                variant="outline"
+                className="text-xs font-semibold px-2.5 py-1 border-white/10 bg-white/[0.04] text-white gap-1.5"
+              >
+                <span className="text-elec-yellow">{circuits.length}</span> circuits
+              </Badge>
+
+              {/* Confidence summary */}
+              {allHighConfidence ? (
+                <Badge
+                  variant="outline"
+                  className="text-xs px-2.5 py-1 gap-1 bg-green-500/10 text-green-400 border-green-500/20"
+                >
+                  <CheckCircle2 className="h-3 w-3" />
+                  All verified
+                </Badge>
+              ) : (
+                <>
+                  {highCount > 0 && (
+                    <Badge
+                      variant="outline"
+                      className="text-xs px-2 py-1 gap-1 bg-green-500/10 text-green-400 border-green-500/20"
+                    >
+                      <div className="w-1.5 h-1.5 rounded-full bg-green-500" />
+                      {highCount}
+                    </Badge>
+                  )}
+                  {mediumCount > 0 && (
+                    <Badge
+                      variant="outline"
+                      className="text-xs px-2 py-1 gap-1 bg-yellow-500/10 text-yellow-400 border-yellow-500/20"
+                    >
+                      <div className="w-1.5 h-1.5 rounded-full bg-yellow-500" />
+                      {mediumCount}
+                    </Badge>
+                  )}
+                  {lowCount > 0 && (
+                    <Badge
+                      variant="outline"
+                      className="text-xs px-2 py-1 gap-1 bg-orange-500/10 text-orange-400 border-orange-500/20"
+                    >
+                      <div className="w-1.5 h-1.5 rounded-full bg-orange-500" />
+                      {lowCount}
+                    </Badge>
+                  )}
+                </>
+              )}
+
+              {/* Spacer */}
+              <div className="flex-1" />
+
+              {/* Reverse order toggle */}
               <Button
-                variant={isReversed ? 'default' : 'outline'}
+                variant="ghost"
+                size="sm"
                 onClick={handleReverseOrder}
                 className={cn(
-                  'w-full h-11 gap-2 touch-manipulation',
-                  isReversed && 'bg-elec-yellow text-black hover:bg-elec-yellow/90'
+                  'h-8 gap-1.5 text-xs font-medium rounded-lg touch-manipulation transition-all',
+                  isReversed
+                    ? 'bg-elec-yellow/15 text-elec-yellow hover:bg-elec-yellow/20'
+                    : 'text-white/50 hover:text-white hover:bg-white/10'
                 )}
               >
                 {isReversed ? (
-                  <>
-                    <Check className="h-4 w-4" />
-                    Order Reversed
-                  </>
+                  <Check className="h-3.5 w-3.5" />
                 ) : (
-                  <>
-                    <ArrowUpDown className="h-4 w-4" />
-                    Reverse Circuit Order
-                  </>
+                  <ArrowUpDown className="h-3.5 w-3.5" />
                 )}
+                <span className="hidden sm:inline">
+                  {isReversed ? 'Reversed' : 'Reverse Order'}
+                </span>
+                <ArrowUpDown className="h-3.5 w-3.5 sm:hidden" />
               </Button>
-              <p className="text-xs text-muted-foreground text-center mt-1.5">
-                {isReversed
-                  ? 'Tap again to reset to original order'
-                  : 'Use if main switch is on the right side of the board'}
-              </p>
             </div>
-
-            {/* Confidence badges */}
-            {(lowCount > 0 || mediumCount > 0) && (
-              <div className="flex gap-2 mt-3 flex-wrap">
-                {lowCount > 0 && (
-                  <Badge
-                    variant="outline"
-                    className="text-xs px-2 py-1 border-orange-500/30 text-orange-500"
-                  >
-                    {lowCount} low confidence
-                  </Badge>
-                )}
-                {mediumCount > 0 && (
-                  <Badge
-                    variant="outline"
-                    className="text-xs px-2 py-1 border-yellow-500/30 text-yellow-500"
-                  >
-                    {mediumCount} medium confidence
-                  </Badge>
-                )}
-              </div>
-            )}
           </SheetHeader>
 
-          {/* Scrollable circuit list */}
-          <ScrollArea className="flex-1 px-4 py-4">
-            <div className="space-y-2">
-              {circuits.map((circuit) => (
-                <CircuitReviewCard
-                  key={circuit.id}
-                  circuit={circuit}
-                  onEdit={() => handleEditCircuit(circuit)}
-                  onRemove={() => handleRemoveCircuit(circuit.id)}
-                />
-              ))}
+          {/* ── Scrollable circuit list ── */}
+          <ScrollArea className="flex-1 min-h-0">
+            <div className="px-4 py-3 sm:px-6 sm:py-4">
+              {/* Responsive: single column on mobile, 2-col on wider screens */}
+              <div className="space-y-2 sm:space-y-2.5 md:grid md:grid-cols-2 md:gap-2.5 md:space-y-0">
+                {circuits.map((circuit) => (
+                  <CircuitReviewCard
+                    key={circuit.id}
+                    circuit={circuit}
+                    onEdit={() => handleEditCircuit(circuit)}
+                    onRemove={() => handleRemoveCircuit(circuit.id)}
+                  />
+                ))}
+              </div>
+
+              {/* Add circuit placeholder */}
+              <button
+                onClick={() => {
+                  // Could open an add circuit modal - for now just a visual cue
+                }}
+                className="mt-2.5 w-full py-3 rounded-xl border border-dashed border-white/10 text-white/30 text-sm font-medium flex items-center justify-center gap-2 hover:border-white/20 hover:text-white/50 hover:bg-white/[0.02] transition-all touch-manipulation"
+              >
+                <Plus className="h-4 w-4" />
+                Add Circuit
+              </button>
             </div>
           </ScrollArea>
 
-          {/* Contribution prompt - show when corrections made or good scan */}
+          {/* ── Contribution prompt (compact, above footer) ── */}
           {photoUrl && (correctionsCount > 0 || allHighConfidence) && (
-            <div className="flex-shrink-0 mx-4 mb-2">
+            <div className="flex-shrink-0 px-4 sm:px-6 pb-2">
               <button
                 onClick={() => setShowContributeModal(true)}
-                className="w-full p-3 rounded-lg bg-gradient-to-r from-elec-yellow/10 to-amber-500/10 border border-elec-yellow/30 flex items-center gap-3 touch-manipulation hover:from-elec-yellow/20 hover:to-amber-500/20 transition-colors"
+                className="w-full px-3 py-2.5 rounded-xl bg-gradient-to-r from-elec-yellow/[0.06] to-amber-500/[0.06] border border-elec-yellow/20 flex items-center gap-3 touch-manipulation hover:from-elec-yellow/10 hover:to-amber-500/10 transition-colors"
               >
-                <div className="w-9 h-9 rounded-full bg-elec-yellow/20 flex items-center justify-center flex-shrink-0">
-                  {correctionsCount > 0 ? (
-                    <Sparkles className="h-4 w-4 text-elec-yellow" />
-                  ) : (
-                    <Bot className="h-4 w-4 text-elec-yellow" />
-                  )}
-                </div>
-                <div className="text-left flex-1 min-w-0">
-                  <p className="text-sm font-medium text-foreground">
-                    {correctionsCount > 0
-                      ? `${correctionsCount} correction${correctionsCount > 1 ? 's' : ''} made`
-                      : 'Great scan!'}
-                  </p>
-                  <p className="text-xs text-muted-foreground">
-                    {correctionsCount > 0
-                      ? 'Share to help improve AI accuracy'
-                      : 'Share this photo to train the AI'}
-                  </p>
-                </div>
-                <Badge className="bg-elec-yellow/20 text-elec-yellow border-elec-yellow/30 flex-shrink-0">
+                <Sparkles className="h-4 w-4 text-elec-yellow flex-shrink-0" />
+                <span className="text-xs sm:text-sm text-white/70 flex-1 text-left">
+                  {correctionsCount > 0
+                    ? `${correctionsCount} correction${correctionsCount > 1 ? 's' : ''} — share to improve AI`
+                    : 'Great scan — share to train AI'}
+                </span>
+                <Badge className="bg-elec-yellow/15 text-elec-yellow border-elec-yellow/25 text-[10px] sm:text-xs flex-shrink-0">
                   Help AI
                 </Badge>
               </button>
             </div>
           )}
 
-          {/* Fixed footer with actions */}
-          <div className="flex-shrink-0 p-4 bg-background border-t safe-area-bottom">
-            <div className="flex gap-3">
+          {/* ── Footer actions ── */}
+          <div className="flex-shrink-0 px-4 py-3 sm:px-6 sm:py-4 bg-background/95 backdrop-blur-sm border-t border-white/[0.06] safe-area-bottom">
+            <div className="flex gap-3 max-w-2xl mx-auto">
               <Button
                 variant="outline"
                 onClick={onRescan}
-                className="flex-1 h-12 touch-manipulation"
+                className="h-12 sm:h-11 px-5 gap-2 touch-manipulation rounded-xl border-white/10 text-white/70 hover:text-white hover:bg-white/10 hover:border-white/20"
               >
-                <Camera className="h-4 w-4 mr-2" />
-                Rescan
+                <RotateCcw className="h-4 w-4" />
+                <span>Rescan</span>
               </Button>
               <Button
                 onClick={handleAddAll}
-                className="flex-1 h-12 bg-elec-yellow text-black hover:bg-elec-yellow/90 touch-manipulation"
+                className="flex-1 h-12 sm:h-11 gap-2 touch-manipulation rounded-xl bg-elec-yellow text-black font-semibold hover:bg-elec-yellow/90 shadow-lg shadow-elec-yellow/20"
               >
-                <Plus className="h-4 w-4 mr-2" />
-                Add All ({circuits.length})
+                <Check className="h-4 w-4" />
+                Apply to Schedule ({circuits.length})
               </Button>
             </div>
           </div>
@@ -340,7 +344,7 @@ export const CircuitReviewSheet: React.FC<CircuitReviewSheetProps> = ({
         </Dialog>
       )}
 
-      {/* Contribution modal - shown after successful scan */}
+      {/* Contribution modal */}
       {photoUrl && (
         <ContributePhotoModal
           open={showContributeModal}

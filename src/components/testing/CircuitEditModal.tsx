@@ -166,9 +166,12 @@ export const CircuitEditModal: React.FC<CircuitEditModalProps> = ({
 
   const [isSaving, setIsSaving] = useState(false);
 
-  const handleChange = useCallback((field: keyof DetectedCircuit, value: any) => {
-    setEditedCircuit((prev) => ({ ...prev, [field]: value }));
-  }, []);
+  const handleChange = useCallback(
+    (field: keyof DetectedCircuit, value: string | number | null) => {
+      setEditedCircuit((prev) => ({ ...prev, [field]: value }));
+    },
+    []
+  );
 
   const handleSave = useCallback(async () => {
     setIsSaving(true);
@@ -185,7 +188,7 @@ export const CircuitEditModal: React.FC<CircuitEditModalProps> = ({
 
   return (
     <Dialog open onOpenChange={onClose}>
-      <DialogContent className="sm:max-w-lg p-0 gap-0 bg-background overflow-hidden">
+      <DialogContent className="sm:max-w-lg max-h-[85vh] p-0 gap-0 bg-background overflow-hidden flex flex-col">
         {/* Header with circuit number */}
         <DialogHeader className="px-4 pt-4 pb-3 border-b border-border/30 bg-muted/20">
           <div className="flex items-center gap-3">
@@ -205,7 +208,7 @@ export const CircuitEditModal: React.FC<CircuitEditModalProps> = ({
           </div>
         </DialogHeader>
 
-        <div className="px-4 py-4 space-y-4 max-h-[60vh] overflow-y-auto">
+        <div className="px-4 py-4 space-y-4 flex-1 min-h-0 overflow-y-auto">
           {/* Circuit Label */}
           <div className="space-y-2">
             <Label htmlFor="label" className="text-sm font-medium">

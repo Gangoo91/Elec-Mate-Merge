@@ -247,7 +247,11 @@ export const SimpleCircuitTable = ({
     setEditedCircuits(populatedCircuits);
   }, [circuits]);
 
-  const updateCircuit = (id: number, field: keyof Circuit, value: any) => {
+  const updateCircuit = (
+    id: number,
+    field: keyof Circuit,
+    value: string | number | boolean | null
+  ) => {
     setEditedCircuits((prev) =>
       prev.map((c) => {
         if (c.id !== id) return c;
@@ -365,7 +369,7 @@ export const SimpleCircuitTable = ({
   const hasData = editedCircuits.length > 0;
 
   return (
-    <div className="flex flex-col h-full max-h-[90vh] bg-background">
+    <div className="flex flex-col h-full max-h-[90vh] bg-background overflow-hidden">
       {/* Header */}
       <div className="flex-shrink-0 px-4 pt-4 pb-3 border-b border-border/30">
         <div className="flex items-start justify-between gap-3">
@@ -429,7 +433,7 @@ export const SimpleCircuitTable = ({
       </div>
 
       {/* Circuit list */}
-      <ScrollArea className="flex-1">
+      <ScrollArea className="flex-1 min-h-0">
         <div className="p-4 space-y-2">
           {hasData ? (
             editedCircuits.map((circuit) => (
@@ -513,7 +517,7 @@ interface CircuitCardProps {
   circuit: Circuit;
   isExpanded: boolean;
   onToggle: () => void;
-  onUpdate: (field: keyof Circuit, value: any) => void;
+  onUpdate: (field: keyof Circuit, value: string | number | boolean | null) => void;
   onDelete: () => void;
   onMove: (direction: 'up' | 'down') => void;
   isFirst: boolean;

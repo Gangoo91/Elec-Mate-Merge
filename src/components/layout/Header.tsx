@@ -137,7 +137,7 @@ const Header = ({ toggleSidebar }: HeaderProps) => {
     <header
       ref={headerRef}
       className={cn(
-        'fixed top-0 left-0 right-0 z-50 md:left-64',
+        'fixed top-0 left-0 right-0 z-50 lg:left-64',
         'backdrop-blur-xl bg-elec-dark/90',
         'border-b transition-all duration-300',
         isScrolled ? 'border-white/10 shadow-2xl shadow-black/40' : 'border-white/[0.06]'
@@ -148,7 +148,7 @@ const Header = ({ toggleSidebar }: HeaderProps) => {
       }}
     >
       {/* Mobile: 48px | Desktop: 64px (matches sidebar logo section h-16) */}
-      <div className="flex items-center justify-between h-12 md:h-16 px-3 sm:px-4">
+      <div className="flex items-center justify-between h-12 lg:h-16 px-3 sm:px-4">
         {/* Left side - Menu toggle and branding */}
         <div className="flex items-center gap-2.5">
           {isMobile && (
@@ -171,7 +171,7 @@ const Header = ({ toggleSidebar }: HeaderProps) => {
           )}
 
           {/* Branding - Logo + gradient wordmark (mobile only — sidebar shows it on desktop) */}
-          <motion.div className="flex items-center gap-2 md:hidden" whileTap={{ scale: 0.97 }}>
+          <motion.div className="flex items-center gap-2 lg:hidden" whileTap={{ scale: 0.97 }}>
             <div className="rounded-lg overflow-hidden h-8 w-8 border border-elec-yellow/20 shadow-md shadow-elec-yellow/5 flex-shrink-0">
               <img src="/logo.jpg" alt="Elec-Mate" className="h-full w-full object-cover" />
             </div>
@@ -184,11 +184,11 @@ const Header = ({ toggleSidebar }: HeaderProps) => {
             <RecordingIndicator className="ml-0.5" />
           </motion.div>
           {/* Desktop: just the recording indicator (branding is in sidebar) */}
-          <RecordingIndicator className="hidden md:block" />
+          <RecordingIndicator className="hidden lg:block" />
         </div>
 
         {/* Center - Live Clock (desktop only) */}
-        <LiveClock className="hidden md:flex" />
+        <LiveClock className="hidden lg:flex" />
 
         {/* Right side - Action buttons + Profile */}
         <div className="flex items-center gap-1">

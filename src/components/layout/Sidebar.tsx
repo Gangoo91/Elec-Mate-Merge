@@ -56,7 +56,7 @@ const Sidebar = ({ open, setOpen }: SidebarProps) => {
       {/* Mobile overlay with enhanced blur */}
       {open && (
         <div
-          className="fixed inset-0 z-40 bg-black/60 md:hidden backdrop-blur-md"
+          className="fixed inset-0 z-40 bg-black/60 lg:hidden backdrop-blur-md"
           onClick={() => setOpen(false)}
         />
       )}
@@ -68,17 +68,17 @@ const Sidebar = ({ open, setOpen }: SidebarProps) => {
           'backdrop-blur-xl bg-elec-dark/90 border-r border-white/10',
           'shadow-2xl shadow-black/50',
           'transition-transform duration-300 ease-in-out',
-          'md:relative md:translate-x-0 md:z-auto',
+          'lg:relative lg:translate-x-0 lg:z-auto',
           open ? 'translate-x-0' : '-translate-x-full',
-          // Hide completely on mobile when closed
-          !open && 'max-md:invisible'
+          // Hide completely on mobile/tablet when closed
+          !open && 'max-lg:invisible'
         )}
         style={{
           paddingTop: 'calc(var(--native-header-offset, 0px) + env(safe-area-inset-top, 0px))',
         }}
       >
         {/* Logo section — hidden on mobile (header already shows branding) */}
-        <div className="hidden md:flex h-16 items-center justify-between px-4 border-b border-white/10">
+        <div className="hidden lg:flex h-16 items-center justify-between px-4 border-b border-white/10">
           <Link to="/" className="flex items-center gap-2 group" onClick={() => setOpen(false)}>
             <div className="rounded-xl overflow-hidden border border-elec-yellow/20 group-hover:border-elec-yellow/40 transition-all duration-200 shadow-lg shadow-elec-yellow/5">
               <img src="/logo.jpg" alt="Elec-Mate" className="h-10 w-10 object-cover" />
@@ -93,7 +93,7 @@ const Sidebar = ({ open, setOpen }: SidebarProps) => {
         </div>
 
         {/* Mobile: premium branded header */}
-        <div className="md:hidden bg-gradient-to-b from-elec-yellow/[0.06] to-transparent">
+        <div className="lg:hidden bg-gradient-to-b from-elec-yellow/[0.06] to-transparent">
           {/* Brand row */}
           <div className="flex items-center justify-between px-4 pt-3 pb-2">
             <div className="flex items-center gap-2">
