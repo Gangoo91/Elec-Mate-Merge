@@ -9,6 +9,7 @@ import { captureError, captureApiError, trackMilestone, addBreadcrumb } from '@/
 
 export const useQuoteStorage = () => {
   const [savedQuotes, setSavedQuotes] = useState<Quote[]>([]);
+  const [invoicedQuotes, setInvoicedQuotes] = useState<Quote[]>([]);
   const [loading, setLoading] = useState(true);
   const [lastUpdated, setLastUpdated] = useState<Date>(new Date());
 
@@ -119,7 +120,33 @@ export const useQuoteStorage = () => {
       }
     };
 
+    // Load quotes that have been converted to invoices (for the Invoiced filter tab)
+    const loadInvoicedQuotes = async () => {
+      try {
+        const {
+          data: { user },
+        } = await supabase.auth.getUser();
+        if (!user) return;
+
+        const { data, error } = await supabase
+          .from('quotes')
+          .select('*')
+          .eq('user_id', user.id)
+          .eq('invoice_raised', true)
+          .is('deleted_at', null)
+          .order('updated_at', { ascending: false });
+
+        if (error || !data) return;
+
+        const converted = data.map((row: any) => convertDbRowToQuote(row));
+        setInvoicedQuotes(converted);
+      } catch {
+        // Invoiced quotes loading failed silently
+      }
+    };
+
     loadQuotes();
+    loadInvoicedQuotes();
 
     // Set up real-time subscription for quote updates AND inserts
     const setupRealtimeSubscription = async () => {
@@ -434,6 +461,23 @@ export const useQuoteStorage = () => {
         }) || [];
       setSavedQuotes(quotes);
       setLastUpdated(new Date());
+
+      // Also refresh invoiced quotes
+      try {
+        const { data: invoicedData } = await supabase
+          .from('quotes')
+          .select('*')
+          .eq('user_id', user.id)
+          .eq('invoice_raised', true)
+          .is('deleted_at', null)
+          .order('updated_at', { ascending: false });
+
+        if (invoicedData) {
+          setInvoicedQuotes(invoicedData.map((row: any) => convertDbRowToQuote(row)));
+        }
+      } catch {
+        // Invoiced quotes refresh failed silently
+      }
     } catch {
       // Refresh failed silently
     }
@@ -642,6 +686,7 @@ export const useQuoteStorage = () => {
 
   return {
     savedQuotes,
+    invoicedQuotes,
     saveQuote,
     deleteQuote,
     updateQuoteStatus,
