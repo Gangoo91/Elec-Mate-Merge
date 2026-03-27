@@ -790,6 +790,28 @@ export const curatedVideos: CuratedVideo[] = [
 
   // ── NVQ Units / Study ─────────────────────────────────────────────
   {
+    id: 'nbyprxLNbmc',
+    title: '2357 and 1605 NVQ — What Criteria',
+    channel: 'Craig Wiltshire',
+    duration: '10:00',
+    category: 'career',
+    tags: ['2357', '1605', 'NVQ', 'criteria', 'City and Guilds', 'Level 3'],
+    level: 'beginner',
+    description:
+      'What criteria you need to meet for City & Guilds 2357 and 1605 NVQ qualifications.',
+  },
+  {
+    id: 'TfeH9uUjz78',
+    title: 'NVQ 3 Electrotechnical Testing Guide — Very Good Revision',
+    channel: 'Craig Wiltshire',
+    duration: '12:00',
+    category: 'testing-inspection',
+    tags: ['NVQ 3', 'testing', 'revision', 'electrotechnical', 'Level 3'],
+    level: 'intermediate',
+    description:
+      'A comprehensive revision guide for NVQ Level 3 electrotechnical testing — highly recommended for exam prep.',
+  },
+  {
     id: '5L-_aO1-Yaw',
     title: 'Unit 312 (2357) or 002 (1605)',
     channel: 'Craig Wiltshire',
