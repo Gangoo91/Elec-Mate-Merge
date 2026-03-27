@@ -35,6 +35,7 @@ import { createUserClient } from './lib/supabase.js';
 import { handleProvisionAgent } from './api/provision-agent.js';
 import { handleDeprovisionAgent } from './api/deprovision-agent.js';
 import { handleHtmlToPdf } from './api/html-to-pdf.js';
+import { handleAppleWalletPass } from './api/apple-wallet-pass.js';
 import { getHandler } from './tools/router.js';
 import { logToolCall } from './middleware/audit-logger.js';
 import { sanitiseError } from './lib/error-sanitiser.js';
@@ -198,6 +199,7 @@ function startHttp(): void {
 
   // ── HTML → PDF proxy (Gotenberg) ──────────────────────────────
   app.post('/api/html-to-pdf', handleHtmlToPdf);
+  app.post('/api/apple-wallet-pass', handleAppleWalletPass);
 
   // ── REST tool-call endpoint (bypasses mcporter) ─────────────────
   app.post('/api/tool-call', async (req, res) => {

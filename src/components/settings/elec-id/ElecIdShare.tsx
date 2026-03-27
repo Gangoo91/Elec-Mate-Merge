@@ -41,6 +41,7 @@ import {
 import { useNotifications } from '@/components/notifications/NotificationProvider';
 import { QRCodeSVG } from 'qrcode.react';
 import ConfirmDeleteDialog from './ConfirmDeleteDialog';
+import ElecIdWallet from './ElecIdWallet';
 
 interface ShareLink {
   id: string;
@@ -529,6 +530,9 @@ const ElecIdShare = () => {
         onConfirm={handleDeleteLink}
         isLoading={isDeletingLink}
       />
+
+      {/* Phone Wallet */}
+      <ElecIdWallet elecIdNumber={elecIdNumber} />
 
       {/* Hero QR Card */}
       <motion.div
