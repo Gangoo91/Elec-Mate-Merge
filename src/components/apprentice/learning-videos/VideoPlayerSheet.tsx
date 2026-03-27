@@ -11,6 +11,7 @@ import { Bookmark, Clock, ExternalLink, ChevronDown } from 'lucide-react';
 import type { CuratedVideo } from '@/data/apprentice/curatedVideos';
 import { categoryLabels } from '@/data/apprentice/curatedVideos';
 import { YouTubePlayer } from './YouTubePlayer';
+import { openExternalUrl } from '@/utils/open-external-url';
 
 interface VideoPlayerSheetProps {
   video: CuratedVideo | null;
@@ -102,15 +103,13 @@ export function VideoPlayerSheet({
                   <Bookmark className={`h-4 w-4 ${isBookmarked ? 'fill-elec-yellow' : ''}`} />
                   <span className="text-sm font-medium">{isBookmarked ? 'Saved' : 'Save'}</span>
                 </button>
-                <a
-                  href={`https://www.youtube.com/watch?v=${video.id}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                <button
+                  onClick={() => openExternalUrl(`https://www.youtube.com/watch?v=${video.id}`)}
                   className="flex-1 flex items-center justify-center gap-2 h-12 rounded-xl bg-white/[0.05] border border-white/[0.08] text-white touch-manipulation active:scale-[0.98] transition-all"
                 >
                   <ExternalLink className="h-4 w-4" />
                   <span className="text-sm font-medium">Open in YouTube</span>
-                </a>
+                </button>
               </div>
 
               {video.description && (

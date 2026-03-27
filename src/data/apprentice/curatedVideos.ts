@@ -393,6 +393,140 @@ export const curatedVideos: CuratedVideo[] = [
       'A comprehensive guide to using multimeters and clamp meters for electrical measurement and testing.',
   },
 
+  // ── Components & Fundamentals (Engineering Mindset) ─────────────────
+  {
+    id: 'DYcLFHgVCn0',
+    title: 'Resistors Explained — How Resistors Work',
+    channel: 'The Engineering Mindset',
+    duration: '9:32',
+    category: 'electrical-theory',
+    tags: ['resistors', 'resistance', 'Ohms', 'components', 'fundamentals'],
+    level: 'beginner',
+    description:
+      'How resistors work, the different types, and how to calculate voltage drop and power dissipation.',
+  },
+  {
+    id: 'NPM3wSb7veU',
+    title: 'Capacitors Explained — What Is a Capacitor?',
+    channel: 'The Engineering Mindset',
+    duration: '11:15',
+    category: 'electrical-theory',
+    tags: ['capacitors', 'capacitance', 'charge', 'farad', 'components'],
+    level: 'beginner',
+    description:
+      'What a capacitor is, how it stores charge, and where capacitors are used in electrical circuits.',
+  },
+  {
+    id: 'W770Z1yvXs8',
+    title: 'Fuse Basics — How Fuses Work',
+    channel: 'The Engineering Mindset',
+    duration: '7:48',
+    category: 'safety',
+    tags: ['fuses', 'overcurrent', 'protection', 'melting element', 'safety'],
+    level: 'beginner',
+    description:
+      'How fuses protect circuits — the melting element principle, fuse ratings, and when to use fuses vs circuit breakers.',
+  },
+  {
+    id: '2jqJZxxX6gQ',
+    title: 'AC and DC Electricity Explained',
+    channel: 'The Engineering Mindset',
+    duration: '8:22',
+    category: 'electrical-theory',
+    tags: ['AC', 'DC', 'alternating current', 'direct current', 'difference'],
+    level: 'beginner',
+    description:
+      'The difference between AC and DC electricity — how they work and where each is used.',
+  },
+  {
+    id: 'FOh0iesTvx0',
+    title: 'Electric Heating Explained',
+    channel: 'The Engineering Mindset',
+    duration: '12:04',
+    category: 'domestic',
+    tags: ['electric heating', 'underfloor heating', 'storage heaters', 'efficiency', 'domestic'],
+    level: 'beginner',
+    description:
+      'How electric heating systems work — from immersion heaters and storage heaters to underfloor heating.',
+  },
+  {
+    id: 'hObLxlXJPPM',
+    title: 'How Lead Acid Batteries Work',
+    channel: 'The Engineering Mindset',
+    duration: '14:50',
+    category: 'electrical-theory',
+    tags: ['lead acid', 'battery', 'electrochemistry', 'charging', 'energy storage'],
+    level: 'intermediate',
+    description:
+      'The electrochemical working principle of lead acid batteries — used in backup power and automotive systems.',
+  },
+  {
+    id: 'qRiMFmHILd8k',
+    title: 'Transformer Calculations — The Basics',
+    channel: 'The Engineering Mindset',
+    duration: '13:27',
+    category: 'electrical-theory',
+    tags: ['transformer', 'turns ratio', 'voltage', 'current', 'calculations'],
+    level: 'intermediate',
+    description:
+      'How to calculate transformer turns ratio, output voltage, and current using the basic transformer equations.',
+  },
+  {
+    id: 'XTuYJ1Nd_vk',
+    title: 'Why Transformers Are Rated in kVA Not kW',
+    channel: 'The Engineering Mindset',
+    duration: '10:44',
+    category: 'electrical-theory',
+    tags: ['transformer', 'kVA', 'kW', 'apparent power', 'power factor'],
+    level: 'intermediate',
+    description:
+      'Why transformer ratings use kVA instead of kW — the relationship between apparent power and power factor.',
+  },
+  {
+    id: 'lWEaGGZv8n8',
+    title: 'How Transformers Increase and Decrease Voltage',
+    channel: 'The Engineering Mindset',
+    duration: '11:33',
+    category: 'electrical-theory',
+    tags: ['transformer', 'step up', 'step down', 'voltage', 'electromagnetic induction'],
+    level: 'intermediate',
+    description:
+      'A focused look at how transformers step voltage up and down using electromagnetic induction.',
+  },
+  {
+    id: '8XI6GVLjPng',
+    title: 'What Is an Inverter? How Inverters Work',
+    channel: 'The Engineering Mindset',
+    duration: '16:02',
+    category: 'solar-ev',
+    tags: ['inverter', 'DC to AC', 'solar', 'UPS', 'IGBT', 'PWM'],
+    level: 'intermediate',
+    description:
+      'How inverters convert DC to AC — the IGBT switching principle and applications in solar PV and UPS systems.',
+  },
+  {
+    id: 'zpyK5Hy8d0c',
+    title: 'NPN and PNP Transistors Explained',
+    channel: 'The Engineering Mindset',
+    duration: '12:18',
+    category: 'electrical-theory',
+    tags: ['transistors', 'NPN', 'PNP', 'semiconductors', 'switching', 'amplifiers'],
+    level: 'intermediate',
+    description:
+      'How NPN and PNP transistors work — the fundamental switching and amplification device in electronics.',
+  },
+  {
+    id: 'uOtdWHMKhnw',
+    title: 'PLC Basics — Programmable Logic Controllers Explained',
+    channel: 'The Engineering Mindset',
+    duration: '18:44',
+    category: 'commercial',
+    tags: ['PLC', 'programmable logic controller', 'industrial', 'automation', 'ladder logic'],
+    level: 'intermediate',
+    description:
+      'How PLCs work — inputs, outputs, ladder logic, and their role in commercial and industrial electrical systems.',
+  },
+
   // ── Career (Engineering Mindset) ────────────────────────────────────
   {
     id: 'DGKTzl9CTXo',
