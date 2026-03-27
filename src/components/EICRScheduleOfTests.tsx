@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions */
 import React, { useState, useEffect, useCallback, useRef, useMemo } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -1404,30 +1405,29 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
     [onUpdate]
   );
 
-  // Auto-save after user stops typing (1 second debounce) with save loop guard
+  // Auto-save after user stops typing (1 second debounce) with save loop guard.
+  // Single effect handles both debounced save AND unmount flush.
+  const testResultsRef = useRef(testResults);
+  testResultsRef.current = testResults;
+
   useEffect(() => {
     if (saveTimeoutRef.current) {
       clearTimeout(saveTimeoutRef.current);
     }
 
     saveTimeoutRef.current = setTimeout(() => {
-      const nextHash = computeResultsHash(testResults);
+      const nextHash = computeResultsHash(testResultsRef.current);
       if (nextHash === lastSavedHashRef.current) return;
-      onUpdate('scheduleOfTests', testResults);
+      onUpdate('scheduleOfTests', testResultsRef.current);
       lastSavedHashRef.current = nextHash;
     }, 1000);
 
     return () => {
       if (saveTimeoutRef.current) {
         clearTimeout(saveTimeoutRef.current);
+        // Flush on unmount using ref (avoids stale closure)
+        onUpdate('scheduleOfTests', testResultsRef.current);
       }
-    };
-  }, [testResults, onUpdate]);
-
-  // Save immediately when component unmounts
-  useEffect(() => {
-    return () => {
-      onUpdate('scheduleOfTests', testResults);
     };
   }, [testResults, onUpdate]);
 
@@ -1516,7 +1516,7 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
 
     // Build updated results in a single pass
     const updatedResults = testResults.map((result) => {
-      let updatedResult = { ...result };
+      const updatedResult = { ...result };
       let hasChanges = false;
 
       fillableFields.forEach((field) => {
@@ -2232,7 +2232,9 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
                         <div className="space-y-1.5">
                           <label className="text-[11px] font-semibold text-foreground uppercase tracking-wider block">
                             Z<sub className="text-[9px]">DB</sub>{' '}
-                            <span className="text-muted-foreground font-normal normal-case">(Ω)</span>
+                            <span className="text-muted-foreground font-normal normal-case">
+                              (Ω)
+                            </span>
                           </label>
                           <div className="relative">
                             <DebouncedInput

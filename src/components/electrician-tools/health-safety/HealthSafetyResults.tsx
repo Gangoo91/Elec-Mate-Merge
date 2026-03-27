@@ -1,4 +1,7 @@
+/* eslint-disable @typescript-eslint/no-require-imports */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState, useRef } from 'react';
+import { saveOrSharePdf } from '@/utils/save-or-share-pdf';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
@@ -182,7 +185,8 @@ export const HealthSafetyResults = ({ data, onStartOver }: HealthSafetyResultsPr
         };
 
         const pdf = generateRiskAssessmentPDF(pdfData);
-        pdf.save(
+        await saveOrSharePdf(
+          pdf,
           `Risk-Assessment-${editableData.projectName || 'Document'}-${new Date().toISOString().split('T')[0]}.pdf`
         );
 

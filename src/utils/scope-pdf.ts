@@ -1,6 +1,7 @@
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
 import { format } from 'date-fns';
+import { saveOrSharePdf } from '@/utils/save-or-share-pdf';
 
 export interface ScopePDFData {
   companyName?: string;
@@ -304,5 +305,5 @@ export async function generateScopePDF(data: ScopePDFData): Promise<jsPDF> {
 export async function downloadScopePDF(data: ScopePDFData): Promise<void> {
   const doc = await generateScopePDF(data);
   const fileName = `Scope_of_Works_${data.referenceId || 'SCOPE'}_${format(new Date(), 'yyyyMMdd')}.pdf`;
-  doc.save(fileName);
+  await saveOrSharePdf(doc, fileName);
 }

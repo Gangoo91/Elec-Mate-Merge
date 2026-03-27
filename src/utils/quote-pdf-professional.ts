@@ -1,8 +1,10 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
 import { Quote } from '@/types/quote';
 import { CompanyProfile } from '@/types/company';
 import { safeText, safeNumber, safeDate } from './rams-pdf-helpers';
+import { saveOrSharePdf } from '@/utils/save-or-share-pdf';
 
 // Extend jsPDF with autoTable
 declare module 'jspdf' {
@@ -16,7 +18,10 @@ interface PDFGenerationOptions {
   companyProfile?: CompanyProfile | null;
 }
 
-export const generateProfessionalQuotePDF = ({ quote, companyProfile }: PDFGenerationOptions) => {
+export const generateProfessionalQuotePDF = async ({
+  quote,
+  companyProfile,
+}: PDFGenerationOptions) => {
   const pdf = new jsPDF('p', 'mm', 'a4');
   const pageWidth = pdf.internal.pageSize.getWidth();
   const pageHeight = pdf.internal.pageSize.getHeight();
@@ -545,7 +550,7 @@ export const generateProfessionalQuotePDF = ({ quote, companyProfile }: PDFGener
 
     // Save the PDF
     const fileName = `Quote_${safeText(quote.quoteNumber)}_${safeDate(quote.createdAt).replace(/\//g, '-')}.pdf`;
-    pdf.save(fileName);
+    await saveOrSharePdf(pdf, fileName);
 
     return true;
   } catch (error) {

@@ -32,7 +32,7 @@ export const SavedResultsCard: React.FC = () => {
         onClick={() => setSheetOpen(true)}
         className="w-full text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-elec-yellow/50 rounded-xl touch-manipulation"
       >
-        <div className="rounded-xl bg-white/[0.04] border border-white/[0.06] active:bg-white/[0.08] transition-colors group">
+        <div className="rounded-xl bg-white/[0.10] border border-white/[0.06] active:bg-white/[0.08] transition-colors group">
           <div className="p-4">
             <div className="flex items-center gap-3">
               {/* Icon */}
@@ -56,7 +56,7 @@ export const SavedResultsCard: React.FC = () => {
               </div>
 
               {/* Arrow indicator */}
-              <div className="flex-shrink-0 w-9 h-9 rounded-full bg-white/[0.04] flex items-center justify-center border border-white/[0.06] group-active:bg-white/[0.08] transition-colors">
+              <div className="flex-shrink-0 w-9 h-9 rounded-full bg-white/[0.10] flex items-center justify-center border border-white/[0.06] group-active:bg-white/[0.08] transition-colors">
                 <ChevronRight className="h-4 w-4 text-white" />
               </div>
             </div>
@@ -67,13 +67,13 @@ export const SavedResultsCard: React.FC = () => {
                 {activeTypes.slice(0, 4).map((type) => (
                   <span
                     key={type}
-                    className="inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-medium bg-white/[0.04] text-white border border-white/5"
+                    className="inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-medium bg-white/[0.10] text-white border border-white/5"
                   >
                     {counts[type]} {SHORT_LABELS[type]}
                   </span>
                 ))}
                 {activeTypes.length > 4 && (
-                  <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-medium bg-white/[0.04] text-white border border-white/5">
+                  <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-medium bg-white/[0.10] text-white border border-white/5">
                     +{activeTypes.length - 4} more
                   </span>
                 )}

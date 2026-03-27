@@ -2507,7 +2507,7 @@ input::-webkit-caps-lock-indicator {
   /* Table Body Rows */
   .sot-row {
     @apply border-b border-white/5;
-    transition: background-color 100ms ease-out;
+    contain: layout style;
   }
 
   .sot-row:hover {

@@ -1,4 +1,5 @@
 import jsPDF from 'jspdf';
+import { saveOrSharePdf } from '@/utils/save-or-share-pdf';
 
 interface AssessmentCriteria {
   id: string;
@@ -111,7 +112,13 @@ export const generateAssessmentReport = (criteria: AssessmentCriteria[], overall
   return pdf;
 };
 
-export const downloadAssessmentReport = (criteria: AssessmentCriteria[], overallScore: number) => {
+export const downloadAssessmentReport = async (
+  criteria: AssessmentCriteria[],
+  overallScore: number
+) => {
   const pdf = generateAssessmentReport(criteria, overallScore);
-  pdf.save(`Portfolio_Assessment_Report_${new Date().toISOString().split('T')[0]}.pdf`);
+  await saveOrSharePdf(
+    pdf,
+    `Portfolio_Assessment_Report_${new Date().toISOString().split('T')[0]}.pdf`
+  );
 };

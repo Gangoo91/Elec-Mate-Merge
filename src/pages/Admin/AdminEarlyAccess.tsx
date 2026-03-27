@@ -303,7 +303,7 @@ export default function AdminEarlyAccess() {
   };
 
   // ── £7.99 Offer Campaign ─────────────────────────────────────────
-  const [offerVersion, setOfferVersion] = useState<'v5' | 'v6'>('v6');
+  const [offerVersion, setOfferVersion] = useState<'v5' | 'v6' | 'v7'>('v7');
   const [offerTestEmail, setOfferTestEmail] = useState('');
   const [showOfferTest, setShowOfferTest] = useState(false);
   const [confirmOfferSend, setConfirmOfferSend] = useState(false);
@@ -582,7 +582,7 @@ export default function AdminEarlyAccess() {
               £7.99 Offer Campaign
             </h2>
             <p className="text-sm text-white">
-              One-off early access offer — £7.99/month locked forever
+              £7.99/month locked forever — only people WITHOUT accounts
             </p>
           </div>
           <Button
@@ -657,18 +657,26 @@ export default function AdminEarlyAccess() {
           </CardHeader>
           <CardContent className="space-y-3">
             {/* Version selector */}
-            <div className="flex items-center gap-1.5">
+            <div className="flex items-center gap-1.5 flex-wrap">
               <span className="text-xs text-white font-semibold mr-1">Template:</span>
+              <Button
+                variant={offerVersion === 'v7' ? 'default' : 'outline'}
+                size="sm"
+                onClick={() => setOfferVersion('v7')}
+                className={`h-8 touch-manipulation text-xs relative ${offerVersion === 'v7' ? 'bg-green-500 text-white hover:bg-green-600' : ''}`}
+              >
+                v7 Stats
+                <Badge className="absolute -top-1.5 -right-1.5 bg-yellow-500 text-[9px] px-1 py-0 h-4 text-black border-0">
+                  NEW
+                </Badge>
+              </Button>
               <Button
                 variant={offerVersion === 'v6' ? 'default' : 'outline'}
                 size="sm"
                 onClick={() => setOfferVersion('v6')}
-                className={`h-8 touch-manipulation text-xs relative ${offerVersion === 'v6' ? 'bg-indigo-500 text-white hover:bg-indigo-600' : ''}`}
+                className={`h-8 touch-manipulation text-xs ${offerVersion === 'v6' ? 'bg-indigo-500 text-white hover:bg-indigo-600' : ''}`}
               >
                 v6 No Brainer
-                <Badge className="absolute -top-1.5 -right-1.5 bg-green-500 text-[9px] px-1 py-0 h-4 text-white border-0">
-                  NEW
-                </Badge>
               </Button>
               <Button
                 variant={offerVersion === 'v5' ? 'default' : 'outline'}
@@ -699,9 +707,11 @@ export default function AdminEarlyAccess() {
               <p className="text-xs text-white font-semibold">Email Preview</p>
               <p className="text-xs text-amber-400 font-medium">
                 Subject:{' '}
-                {offerVersion === 'v6'
-                  ? "You signed up early. Here's what that gets you."
-                  : 'One-off offer — £7.99/month, locked forever'}
+                {offerVersion === 'v7'
+                  ? '7 weeks. No launch. No App Store. Just electricians getting shit done.'
+                  : offerVersion === 'v6'
+                    ? "You signed up early. Here's what that gets you."
+                    : 'One-off offer — £7.99/month, locked forever'}
               </p>
               <p className="text-xs text-white">
                 From: Elec-Mate &lt;offers@elec-mate.com&gt; · Reply-To: founder@elec-mate.com
@@ -904,7 +914,7 @@ export default function AdminEarlyAccess() {
               <Target className="h-5 w-5 text-purple-400" />
               Conversion Campaign
             </h2>
-            <p className="text-sm text-white">Convert early access signups into paying users</p>
+            <p className="text-sm text-white">Only targets leads who haven't created an account</p>
           </div>
           <Button
             variant="outline"

@@ -1,7 +1,9 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
 import { format as formatDate } from 'date-fns';
 import { safeText, safeNumber } from './rams-pdf-helpers';
+import { saveOrSharePdf } from '@/utils/save-or-share-pdf';
 
 // Extend jsPDF with autoTable
 declare module 'jspdf' {
@@ -168,12 +170,12 @@ const processMarkdownText = (
   }
 
   // Code blocks and technical content
-  if (processedText.includes('```') || processedText.match(/^    /)) {
+  if (processedText.includes('```') || processedText.match(/^ {4}/)) {
     isCode = true;
     fontSize = 9;
     fontWeight = 'normal';
     fontStyle = 'normal';
-    processedText = processedText.replace(/```/g, '').replace(/^    /gm, '');
+    processedText = processedText.replace(/```/g, '').replace(/^ {4}/gm, '');
   }
 
   // Enhanced markdown formatting with nested support
@@ -293,7 +295,7 @@ const addEnhancedTable = (
 
   // Parse table data
   const tableData: string[][] = [];
-  let isHeaderRow = true;
+  const isHeaderRow = true;
 
   for (const line of tableLines) {
     const cells = line
@@ -798,7 +800,7 @@ export const generateEnhancedElectricalPDF = async (
       filename || `${safeReportType}-${formatDate(new Date(), 'ddMMyyyy-HHmm')}.pdf`;
 
     // Save the PDF
-    doc.save(finalFilename);
+    await saveOrSharePdf(doc, finalFilename);
     console.log('Enhanced electrical PDF generated successfully with professional formatting');
   } catch (error) {
     console.error('Enhanced PDF generation failed:', error);

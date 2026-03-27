@@ -1,4 +1,4 @@
-// ELE-400, ELE-403, ELE-405, ELE-406, ELE-407, ELE-408
+// ELE-400, ELE-403, ELE-405, ELE-406, ELE-407, ELE-408, ELE-491
 import React, { useState, useEffect, useCallback } from 'react';
 import { Button } from '@/components/ui/button';
 import { Switch } from '@/components/ui/switch';
@@ -6,7 +6,7 @@ import { Input } from '@/components/ui/input';
 import { useNotifications } from '@/components/notifications/NotificationProvider';
 import { motion, AnimatePresence } from 'framer-motion';
 import { supabase } from '@/integrations/supabase/client';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useHaptic } from '@/hooks/useHaptic';
 import { useAuth } from '@/contexts/AuthContext';
 import { clearCredentials, setBiometricEnabled } from '@/utils/biometricAuth';
@@ -36,11 +36,11 @@ import {
   ExternalLink,
   ChevronDown,
   ChevronUp,
+  ChevronRight,
   Edit3,
   Ban,
   MessageSquareWarning,
   Flag,
-  History,
   BadgeCheck,
   Info,
 } from 'lucide-react';
@@ -75,7 +75,6 @@ const actionLabels: Record<string, string> = {
 
 const PrivacyTab = () => {
   const { addNotification } = useNotifications();
-  const navigate = useNavigate();
   const haptic = useHaptic();
   const { user } = useAuth();
   const userId = user?.id ?? '';
@@ -365,317 +364,301 @@ const PrivacyTab = () => {
       variants={containerVariants}
       initial="hidden"
       animate="visible"
-      className="space-y-5"
+      className="bg-background"
     >
-      {/* Header */}
-      <motion.div
+      {/* ── YOUR DATA ── */}
+      <motion.p
         variants={itemVariants}
-        className="rounded-xl bg-elec-gray/50 border border-white/10 overflow-hidden"
+        className="text-xs font-semibold text-white uppercase tracking-widest px-1 mb-2 mt-2"
       >
-        <div className="p-4 md:p-5">
-          <div className="flex items-center gap-3">
-            <div className="w-11 h-11 rounded-xl bg-elec-yellow/10 flex items-center justify-center flex-shrink-0">
-              <Shield className="h-5 w-5 text-elec-yellow" />
-            </div>
-            <div>
-              <h3 className="text-base font-semibold text-white">Privacy & Data</h3>
-              <p className="text-sm text-white/60">Your data, your rights, under UK GDPR</p>
-            </div>
-          </div>
-        </div>
-      </motion.div>
+        Your Data
+      </motion.p>
 
-      {/* Data Rights — quick actions */}
+      {/* Data Retention */}
       <motion.div
         variants={itemVariants}
-        className="rounded-xl bg-elec-gray/50 border border-white/10 overflow-hidden"
+        className="flex items-center gap-4 w-full py-4 border-b border-white/[0.06]"
       >
-        <div className="px-4 md:px-5 py-4 border-b border-white/10">
-          <h3 className="text-sm font-semibold text-white flex items-center gap-2">
-            <Database className="h-4 w-4 text-elec-yellow" />
-            Your Data
-          </h3>
-          <p className="text-xs text-white/60 mt-0.5">
-            Under UK GDPR you have full control of your data
+        <div className="w-9 h-9 rounded-xl bg-blue-500/10 flex items-center justify-center flex-shrink-0">
+          <Clock className="h-4 w-4 text-blue-400" />
+        </div>
+        <div className="flex-1 min-w-0">
+          <p className="text-sm font-medium text-white">Data Retention</p>
+          <p className="text-xs text-white mt-0.5">
+            Kept while active. Deleted within 30 days of account removal.
           </p>
         </div>
-        <div className="p-4 md:p-5 space-y-3">
-          {/* Data Retention notice */}
-          <div className="flex items-start gap-3 p-3.5 rounded-lg bg-blue-500/10 border border-blue-500/20">
-            <Clock className="h-4 w-4 text-blue-400 flex-shrink-0 mt-0.5" />
-            <div>
-              <p className="text-sm font-medium text-white">Data Retention</p>
-              <p className="text-xs text-white/60 mt-0.5">
-                We keep your data while your account is active. If you delete your account, all data
-                is permanently removed within 30 days.
-              </p>
-            </div>
-          </div>
-
-          {/* Primary actions */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-            <button
-              onClick={handleDataDownload}
-              disabled={isExporting}
-              className="flex items-center gap-3 p-4 rounded-lg bg-white/5 border border-white/10 hover:bg-white/[0.08] active:scale-[0.98] transition-all touch-manipulation disabled:opacity-50 text-left"
-            >
-              <div className="w-9 h-9 rounded-lg bg-elec-yellow/10 flex items-center justify-center flex-shrink-0">
-                {isExporting ? (
-                  <Loader2 className="h-4 w-4 text-elec-yellow animate-spin" />
-                ) : (
-                  <Download className="h-4 w-4 text-elec-yellow" />
-                )}
-              </div>
-              <div>
-                <p className="text-sm font-medium text-white">
-                  {isExporting ? 'Exporting...' : 'Download My Data'}
-                </p>
-                <p className="text-xs text-white/60">Art. 15 · Full data export</p>
-              </div>
-            </button>
-
-            <button
-              onClick={() => setShowDeleteDialog(true)}
-              className="flex items-center gap-3 p-4 rounded-lg bg-red-500/5 border border-red-500/20 hover:bg-red-500/10 active:scale-[0.98] transition-all touch-manipulation text-left"
-            >
-              <div className="w-9 h-9 rounded-lg bg-red-500/10 flex items-center justify-center flex-shrink-0">
-                <Trash2 className="h-4 w-4 text-red-400" />
-              </div>
-              <div>
-                <p className="text-sm font-medium text-red-400">Delete Account</p>
-                <p className="text-xs text-white/60">Art. 17 · 30-day grace period</p>
-              </div>
-            </button>
-          </div>
-
-          {/* Expand all GDPR rights */}
-          <button
-            onClick={() => setShowRights(!showRights)}
-            className="w-full flex items-center justify-between p-3 rounded-lg bg-white/[0.03] border border-white/10 hover:bg-white/[0.06] transition-colors touch-manipulation"
-          >
-            <span className="text-sm text-white/70 flex items-center gap-2">
-              <BadgeCheck className="h-4 w-4 text-elec-yellow" />
-              View all your GDPR rights (Art. 15–21)
-            </span>
-            {showRights ? (
-              <ChevronUp className="h-4 w-4 text-white/40" />
-            ) : (
-              <ChevronDown className="h-4 w-4 text-white/40" />
-            )}
-          </button>
-
-          <AnimatePresence>
-            {showRights && (
-              <motion.div
-                initial={{ opacity: 0, height: 0 }}
-                animate={{ opacity: 1, height: 'auto' }}
-                exit={{ opacity: 0, height: 0 }}
-                transition={{ duration: 0.2 }}
-                className="overflow-hidden"
-              >
-                <div className="space-y-2 pt-1">
-                  {gdprRights.map((right) => {
-                    const Icon = right.icon;
-                    return (
-                      <div
-                        key={right.article}
-                        className="flex items-center gap-3 p-3.5 rounded-lg bg-white/[0.03] border border-white/10"
-                      >
-                        <div
-                          className={`w-8 h-8 rounded-lg ${right.bg} flex items-center justify-center flex-shrink-0`}
-                        >
-                          <Icon className={`h-4 w-4 ${right.colour}`} />
-                        </div>
-                        <div className="flex-1 min-w-0">
-                          <div className="flex items-center gap-2">
-                            <span className="text-[10px] font-mono text-white/40">
-                              {right.article}
-                            </span>
-                            <p className="text-sm font-medium text-white">{right.title}</p>
-                          </div>
-                          <p className="text-xs text-white/60 mt-0.5 leading-relaxed">
-                            {right.description}
-                          </p>
-                        </div>
-                        <button
-                          onClick={right.action}
-                          className={`text-xs font-medium ${right.colour} hover:opacity-80 transition-opacity whitespace-nowrap touch-manipulation`}
-                        >
-                          {right.actionLabel} →
-                        </button>
-                      </div>
-                    );
-                  })}
-
-                  {/* ICO complaint info */}
-                  <div className="flex items-start gap-3 p-3.5 rounded-lg bg-white/[0.03] border border-white/10 mt-2">
-                    <Info className="h-4 w-4 text-white/40 flex-shrink-0 mt-0.5" />
-                    <p className="text-xs text-white/50 leading-relaxed">
-                      To exercise any of these rights, contact{' '}
-                      <button
-                        onClick={() => openExternalUrl('mailto:privacy@elec-mate.com')}
-                        className="text-elec-yellow"
-                      >
-                        privacy@elec-mate.com
-                      </button>
-                      . We will respond within one month as required by law.
-                    </p>
-                  </div>
-                </div>
-              </motion.div>
-            )}
-          </AnimatePresence>
-        </div>
       </motion.div>
 
-      {/* Cookie Preferences — web only */}
-      {!isNative && (
-        <motion.div
-          variants={itemVariants}
-          className="rounded-xl bg-elec-gray/50 border border-white/10 overflow-hidden"
+      {/* Download My Data */}
+      <motion.button
+        variants={itemVariants}
+        onClick={handleDataDownload}
+        disabled={isExporting}
+        className="flex items-center gap-4 w-full py-4 border-b border-white/[0.06] touch-manipulation disabled:opacity-50 active:bg-white/[0.03] transition-colors"
+      >
+        <div className="w-9 h-9 rounded-xl bg-elec-yellow/10 flex items-center justify-center flex-shrink-0">
+          {isExporting ? (
+            <Loader2 className="h-4 w-4 text-elec-yellow animate-spin" />
+          ) : (
+            <Download className="h-4 w-4 text-elec-yellow" />
+          )}
+        </div>
+        <div className="flex-1 min-w-0 text-left">
+          <p className="text-sm font-medium text-white">
+            {isExporting ? 'Exporting...' : 'Download My Data'}
+          </p>
+          <p className="text-xs text-white mt-0.5">Full GDPR data export (Art. 15)</p>
+        </div>
+        <ChevronRight className="h-4 w-4 text-white/30 flex-shrink-0" />
+      </motion.button>
+
+      {/* Delete Account */}
+      <motion.button
+        variants={itemVariants}
+        onClick={() => setShowDeleteDialog(true)}
+        className="flex items-center gap-4 w-full py-4 border-b border-white/[0.06] touch-manipulation active:bg-red-500/[0.03] transition-colors"
+      >
+        <div className="w-9 h-9 rounded-xl bg-red-500/10 flex items-center justify-center flex-shrink-0">
+          <Trash2 className="h-4 w-4 text-red-400" />
+        </div>
+        <div className="flex-1 min-w-0 text-left">
+          <p className="text-sm font-medium text-red-400">Delete Account</p>
+          <p className="text-xs text-white mt-0.5">Permanently remove all data (Art. 17)</p>
+        </div>
+        <ChevronRight className="h-4 w-4 text-red-400/40 flex-shrink-0" />
+      </motion.button>
+
+      {/* GDPR Rights — expandable */}
+      <motion.div variants={itemVariants} className="border-b border-white/[0.06]">
+        <button
+          onClick={() => setShowRights(!showRights)}
+          className="flex items-center gap-4 w-full py-4 touch-manipulation active:bg-white/[0.03] transition-colors"
         >
-          <div className="px-4 md:px-5 py-4 border-b border-white/10">
-            <h3 className="text-sm font-semibold text-white flex items-center gap-2">
-              <Cookie className="h-4 w-4 text-elec-yellow" />
-              Cookie Preferences
-            </h3>
-            <p className="text-xs text-white/60 mt-0.5">
-              Control how we use cookies in your browser
+          <div className="w-9 h-9 rounded-xl bg-elec-yellow/10 flex items-center justify-center flex-shrink-0">
+            <BadgeCheck className="h-4 w-4 text-elec-yellow" />
+          </div>
+          <div className="flex-1 min-w-0 text-left">
+            <p className="text-sm font-medium text-white">Your GDPR Rights</p>
+            <p className="text-xs text-white mt-0.5">
+              Art. 15-21 — access, correct, erase, restrict, port, object
             </p>
           </div>
-          <div className="p-4 md:p-5 space-y-3">
-            {/* Essential */}
-            <div className="flex items-center gap-3 p-3.5 rounded-lg bg-white/5 border border-white/10">
-              <div className="w-9 h-9 rounded-lg bg-elec-yellow/10 flex items-center justify-center flex-shrink-0">
-                <Lock className="h-4 w-4 text-elec-yellow" />
-              </div>
-              <div className="flex-1">
-                <div className="flex items-center gap-2">
-                  <p className="text-sm font-medium text-white">Essential Cookies</p>
-                  <span className="text-[10px] px-1.5 py-0.5 rounded bg-elec-yellow/20 text-elec-yellow font-medium">
-                    Required
-                  </span>
-                </div>
-                <p className="text-xs text-white/60 mt-0.5">Authentication and security</p>
-              </div>
-              <CheckCircle className="h-4 w-4 text-elec-yellow flex-shrink-0" />
-            </div>
+          {showRights ? (
+            <ChevronUp className="h-4 w-4 text-white/30 flex-shrink-0" />
+          ) : (
+            <ChevronDown className="h-4 w-4 text-white/30 flex-shrink-0" />
+          )}
+        </button>
 
-            {/* Analytics */}
-            <div className="flex items-center gap-3 p-3.5 rounded-lg bg-white/5 border border-white/10">
-              <div
-                className={`w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0 ${cookiePrefs.analytics ? 'bg-cyan-500/10' : 'bg-white/5'}`}
-              >
-                <BarChart3
-                  className={`h-4 w-4 ${cookiePrefs.analytics ? 'text-cyan-400' : 'text-white/40'}`}
-                />
+        <AnimatePresence>
+          {showRights && (
+            <motion.div
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: 'auto' }}
+              exit={{ opacity: 0, height: 0 }}
+              transition={{ duration: 0.2 }}
+              className="overflow-hidden"
+            >
+              <div className="pb-4 space-y-1">
+                {gdprRights.map((right) => {
+                  const Icon = right.icon;
+                  return (
+                    <button
+                      key={right.article}
+                      onClick={right.action}
+                      className="flex items-center gap-3 w-full py-3 pl-[52px] pr-1 touch-manipulation active:bg-white/[0.03] transition-colors text-left"
+                    >
+                      <div
+                        className={`w-8 h-8 rounded-lg ${right.bg} flex items-center justify-center flex-shrink-0`}
+                      >
+                        <Icon className={`h-3.5 w-3.5 ${right.colour}`} />
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-center gap-2">
+                          <span className="text-[10px] font-mono text-white">{right.article}</span>
+                          <p className="text-sm font-medium text-white">{right.title}</p>
+                        </div>
+                        <p className="text-xs text-white mt-0.5 leading-relaxed">
+                          {right.description}
+                        </p>
+                      </div>
+                      <ChevronRight
+                        className={`h-3.5 w-3.5 ${right.colour} opacity-40 flex-shrink-0`}
+                      />
+                    </button>
+                  );
+                })}
+
+                {/* ICO complaint info */}
+                <div className="flex items-start gap-3 pl-[52px] pr-1 pt-2">
+                  <Info className="h-4 w-4 text-white/30 flex-shrink-0 mt-0.5" />
+                  <p className="text-xs text-white leading-relaxed">
+                    To exercise any right, contact{' '}
+                    <button
+                      onClick={() => openExternalUrl('mailto:privacy@elec-mate.com')}
+                      className="text-elec-yellow touch-manipulation"
+                    >
+                      privacy@elec-mate.com
+                    </button>
+                    . We respond within one month as required by law.
+                  </p>
+                </div>
               </div>
-              <div className="flex-1">
-                <p className="text-sm font-medium text-white">Analytics Cookies</p>
-                <p className="text-xs text-white/60 mt-0.5">Help us improve the platform</p>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </motion.div>
+
+      {/* ── COOKIES (web only) ── */}
+      {!isNative && (
+        <>
+          <motion.p
+            variants={itemVariants}
+            className="text-xs font-semibold text-white uppercase tracking-widest px-1 mb-2 mt-6"
+          >
+            Cookies
+          </motion.p>
+
+          {/* Essential Cookies */}
+          <motion.div
+            variants={itemVariants}
+            className="flex items-center gap-4 w-full py-4 border-b border-white/[0.06]"
+          >
+            <div className="w-9 h-9 rounded-xl bg-elec-yellow/10 flex items-center justify-center flex-shrink-0">
+              <Lock className="h-4 w-4 text-elec-yellow" />
+            </div>
+            <div className="flex-1 min-w-0">
+              <div className="flex items-center gap-2">
+                <p className="text-sm font-medium text-white">Essential Cookies</p>
+                <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-elec-yellow/20 text-elec-yellow font-medium">
+                  Required
+                </span>
               </div>
-              <Switch
-                checked={cookiePrefs.analytics}
-                onCheckedChange={() => handleCookieToggle('analytics')}
-                className="data-[state=checked]:bg-elec-yellow"
+              <p className="text-xs text-white mt-0.5">Authentication and security</p>
+            </div>
+            <CheckCircle className="h-4 w-4 text-elec-yellow flex-shrink-0" />
+          </motion.div>
+
+          {/* Analytics Cookies */}
+          <motion.div
+            variants={itemVariants}
+            className="flex items-center gap-4 w-full py-4 border-b border-white/[0.06]"
+          >
+            <div
+              className={`w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0 ${cookiePrefs.analytics ? 'bg-cyan-500/10' : 'bg-white/5'}`}
+            >
+              <BarChart3
+                className={`h-4 w-4 ${cookiePrefs.analytics ? 'text-cyan-400' : 'text-white'}`}
               />
             </div>
-
-            <Link
-              to="/cookies"
-              className="flex items-center gap-2 text-xs text-elec-yellow hover:underline touch-manipulation"
-            >
-              <FileText className="h-3.5 w-3.5" />
-              View Cookie Policy
-              <ExternalLink className="h-3 w-3" />
-            </Link>
-          </div>
-        </motion.div>
+            <div className="flex-1 min-w-0">
+              <p className="text-sm font-medium text-white">Analytics Cookies</p>
+              <p className="text-xs text-white mt-0.5">Help us improve the platform</p>
+            </div>
+            <Switch
+              checked={cookiePrefs.analytics}
+              onCheckedChange={() => handleCookieToggle('analytics')}
+              className="data-[state=checked]:bg-elec-yellow touch-manipulation"
+            />
+          </motion.div>
+        </>
       )}
+
+      {/* ── LEGAL ── */}
+      <motion.p
+        variants={itemVariants}
+        className="text-xs font-semibold text-white uppercase tracking-widest px-1 mb-2 mt-6"
+      >
+        Legal
+      </motion.p>
+
+      {[
+        {
+          to: '/privacy',
+          icon: Shield,
+          colour: 'text-green-400',
+          bg: 'bg-green-500/10',
+          label: 'Privacy Policy',
+        },
+        {
+          to: '/terms',
+          icon: FileText,
+          colour: 'text-blue-400',
+          bg: 'bg-blue-500/10',
+          label: 'Terms of Service',
+        },
+        {
+          to: '/cookies',
+          icon: Cookie,
+          colour: 'text-amber-400',
+          bg: 'bg-amber-500/10',
+          label: 'Cookie Policy',
+        },
+        {
+          to: '/dpa',
+          icon: Database,
+          colour: 'text-purple-400',
+          bg: 'bg-purple-500/10',
+          label: 'Data Processing Agreement',
+        },
+      ].map(({ to, icon: Icon, colour, bg, label }) => (
+        <motion.div key={to} variants={itemVariants}>
+          <Link
+            to={to}
+            className="flex items-center gap-4 w-full py-4 border-b border-white/[0.06] touch-manipulation active:bg-white/[0.03] transition-colors"
+          >
+            <div
+              className={`w-9 h-9 rounded-xl ${bg} flex items-center justify-center flex-shrink-0`}
+            >
+              <Icon className={`h-4 w-4 ${colour}`} />
+            </div>
+            <span className="text-sm font-medium text-white flex-1">{label}</span>
+            <ExternalLink className="h-3.5 w-3.5 text-white/30 flex-shrink-0" />
+          </Link>
+        </motion.div>
+      ))}
+
+      {/* ICO registration */}
+      <motion.div variants={itemVariants} className="flex items-center gap-2 pt-4 px-1 pb-2">
+        <BadgeCheck className="h-3.5 w-3.5 text-white/30 flex-shrink-0" />
+        <p className="text-xs text-white">
+          Registered with the Information Commissioner's Office &middot; ICO Reg: ZB935897
+        </p>
+      </motion.div>
 
       {/* Privacy Activity Log */}
       {auditLog.length > 0 && (
-        <motion.div
-          variants={itemVariants}
-          className="rounded-xl bg-elec-gray/50 border border-white/10 overflow-hidden"
-        >
-          <div className="px-4 md:px-5 py-4 border-b border-white/10">
-            <h3 className="text-sm font-semibold text-white flex items-center gap-2">
-              <History className="h-4 w-4 text-elec-yellow" />
-              Privacy Activity
-            </h3>
-            <p className="text-xs text-white/60 mt-0.5">Recent data requests on your account</p>
-          </div>
-          <div className="p-4 md:p-5 space-y-2">
-            {auditLog.map((entry, i) => (
-              <div
-                key={i}
-                className="flex items-center justify-between gap-3 py-2.5 border-b border-white/5 last:border-0"
-              >
-                <div className="flex items-center gap-2.5">
-                  <div className="w-2 h-2 rounded-full bg-elec-yellow/60 flex-shrink-0" />
-                  <span className="text-sm text-white/80">
-                    {actionLabels[entry.action] ?? entry.action}
-                  </span>
-                </div>
-                <span className="text-xs text-white/40 whitespace-nowrap">
-                  {new Date(entry.created_at).toLocaleDateString('en-GB', {
-                    day: 'numeric',
-                    month: 'short',
-                    year: 'numeric',
-                  })}
-                </span>
-              </div>
-            ))}
-          </div>
-        </motion.div>
-      )}
-
-      {/* Legal Documents */}
-      <motion.div
-        variants={itemVariants}
-        className="rounded-xl bg-elec-gray/50 border border-white/10 overflow-hidden"
-      >
-        <div className="px-4 md:px-5 py-4 border-b border-white/10">
-          <h3 className="text-sm font-semibold text-white flex items-center gap-2">
-            <FileText className="h-4 w-4 text-elec-yellow" />
-            Legal Documents
-          </h3>
-        </div>
-        <div className="p-4 md:p-5 space-y-2">
-          {[
-            { to: '/privacy', icon: Shield, colour: 'text-green-400', label: 'Privacy Policy' },
-            { to: '/terms', icon: FileText, colour: 'text-blue-400', label: 'Terms of Service' },
-            { to: '/cookies', icon: Cookie, colour: 'text-amber-400', label: 'Cookie Policy' },
-            {
-              to: '/dpa',
-              icon: Database,
-              colour: 'text-purple-400',
-              label: 'Data Processing Agreement',
-            },
-          ].map(({ to, icon: Icon, colour, label }) => (
-            <Link
-              key={to}
-              to={to}
-              className="flex items-center justify-between gap-4 p-3 rounded-lg bg-white/5 border border-white/10 hover:bg-white/[0.08] transition-colors touch-manipulation active:bg-white/[0.06]"
+        <>
+          <motion.p
+            variants={itemVariants}
+            className="text-xs font-semibold text-white uppercase tracking-widest px-1 mb-2 mt-6"
+          >
+            Activity
+          </motion.p>
+          {auditLog.map((entry, i) => (
+            <motion.div
+              key={i}
+              variants={itemVariants}
+              className="flex items-center justify-between gap-4 w-full py-4 border-b border-white/[0.06]"
             >
               <div className="flex items-center gap-3">
-                <Icon className={`h-4 w-4 ${colour}`} />
-                <span className="text-sm font-medium text-white">{label}</span>
+                <div className="w-2 h-2 rounded-full bg-elec-yellow/60 flex-shrink-0" />
+                <span className="text-sm text-white">
+                  {actionLabels[entry.action] ?? entry.action}
+                </span>
               </div>
-              <ExternalLink className="h-3.5 w-3.5 text-white/30" />
-            </Link>
+              <span className="text-xs text-white whitespace-nowrap">
+                {new Date(entry.created_at).toLocaleDateString('en-GB', {
+                  day: 'numeric',
+                  month: 'short',
+                  year: 'numeric',
+                })}
+              </span>
+            </motion.div>
           ))}
-
-          {/* ICO registration */}
-          <div className="flex items-center gap-2 pt-2 px-1">
-            <BadgeCheck className="h-3.5 w-3.5 text-white/30 flex-shrink-0" />
-            <p className="text-xs text-white/40">
-              Registered with the Information Commissioner's Office · ICO Reg: ZB935897
-            </p>
-          </div>
-        </div>
-      </motion.div>
+        </>
+      )}
 
       {/* Delete Account Dialog */}
       <AlertDialog
@@ -690,7 +673,7 @@ const PrivacyTab = () => {
               <Trash2 className="h-5 w-5" />
               Delete Your Account
             </AlertDialogTitle>
-            <AlertDialogDescription className="text-white/60 space-y-3">
+            <AlertDialogDescription className="text-white space-y-3">
               <span className="block">
                 This will permanently delete your account and all associated data:
               </span>
@@ -719,7 +702,7 @@ const PrivacyTab = () => {
                 value={deleteConfirmText}
                 onChange={(e) => setDeleteConfirmText(e.target.value)}
                 placeholder="Type DELETE to confirm"
-                className="font-mono bg-white/5 border-white/10 focus:border-red-500/50 text-white placeholder:text-white/30"
+                className="font-mono bg-white/5 border-white/10 focus:border-red-500/50 text-white placeholder:text-white/30 h-11 touch-manipulation"
                 autoCapitalize="none"
                 autoCorrect="off"
               />
@@ -728,14 +711,14 @@ const PrivacyTab = () => {
           <AlertDialogFooter className="gap-2">
             <AlertDialogCancel
               disabled={isDeleting}
-              className="min-h-[44px] bg-white/[0.02] border-white/10 rounded-xl text-white/70"
+              className="min-h-[44px] bg-white/[0.02] border-white/10 rounded-xl text-white touch-manipulation"
             >
               Cancel
             </AlertDialogCancel>
             <Button
               onClick={handleConfirmDelete}
               disabled={deleteConfirmText !== 'DELETE' || isDeleting}
-              className="min-h-[44px] rounded-xl bg-red-600 hover:bg-red-700 border-0 disabled:opacity-40 text-white"
+              className="min-h-[44px] rounded-xl bg-red-600 hover:bg-red-700 border-0 disabled:opacity-40 text-white touch-manipulation"
             >
               {isDeleting ? (
                 <>

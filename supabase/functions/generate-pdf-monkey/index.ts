@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { serve } from 'https://deno.land/std@0.168.0/http/server.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.7.1';
 
@@ -510,7 +511,7 @@ serve(async (req) => {
           '',
         account_number: bankDetails?.accountNumber || bankDetails?.account_number || '',
         sort_code: bankDetails?.sortCode || bankDetails?.sort_code || '',
-        payment_terms: freshQuote?.settings?.paymentTerms || '7 days',
+        payment_terms: freshQuote?.settings?.paymentTerms || '30 days',
         company_registration: freshCompanyProfile?.company_registration || '',
       };
 
@@ -662,12 +663,13 @@ serve(async (req) => {
       const invDiscountEnabled = settings.discountEnabled || false;
       const invDiscountType = settings.discountType || 'percentage';
       const invDiscountValue = parseFloat(settings.discountValue) || 0;
-      const invDiscountLabel = settings.discountLabel ||
+      const invDiscountLabel =
+        settings.discountLabel ||
         (invDiscountType === 'percentage' ? `Discount (${invDiscountValue}%)` : 'Discount');
       const invDiscountAmount = invDiscountEnabled
-        ? (invDiscountType === 'percentage'
-            ? invoiceSubtotalWithMarkups * (invDiscountValue / 100)
-            : Math.min(invDiscountValue, invoiceSubtotalWithMarkups))
+        ? invDiscountType === 'percentage'
+          ? invoiceSubtotalWithMarkups * (invDiscountValue / 100)
+          : Math.min(invDiscountValue, invoiceSubtotalWithMarkups)
         : 0;
       const invNetAfterDiscount = invoiceSubtotalWithMarkups - invDiscountAmount;
 
@@ -719,7 +721,10 @@ serve(async (req) => {
         credentials: {
           registrationScheme: freshCompanyProfile?.registration_scheme || null,
           registrationNumber: freshCompanyProfile?.registration_number || null,
-          schemeLogo: freshCompanyProfile?.registration_scheme_logo || freshCompanyProfile?.scheme_logo_data_url || null,
+          schemeLogo:
+            freshCompanyProfile?.registration_scheme_logo ||
+            freshCompanyProfile?.scheme_logo_data_url ||
+            null,
         },
         // Invoice-specific terms and settings
         terms: buildInvoiceTermsList(freshCompanyProfile?.invoice_terms || null),
@@ -805,12 +810,13 @@ serve(async (req) => {
       const discountEnabled = quoteSettings.discountEnabled || false;
       const discountType = quoteSettings.discountType || 'percentage';
       const discountValue = parseFloat(quoteSettings.discountValue) || 0;
-      const discountLabel = quoteSettings.discountLabel ||
+      const discountLabel =
+        quoteSettings.discountLabel ||
         (discountType === 'percentage' ? `Discount (${discountValue}%)` : 'Discount');
       const discountAmount = discountEnabled
-        ? (discountType === 'percentage'
-            ? subtotalWithMarkups * (discountValue / 100)
-            : Math.min(discountValue, subtotalWithMarkups))
+        ? discountType === 'percentage'
+          ? subtotalWithMarkups * (discountValue / 100)
+          : Math.min(discountValue, subtotalWithMarkups)
         : 0;
       const netAfterDiscount = subtotalWithMarkups - discountAmount;
 
@@ -957,7 +963,7 @@ serve(async (req) => {
           quoteValidityDays: freshCompanyProfile?.quote_validity_days ?? 30,
           warrantyPeriod: freshCompanyProfile?.warranty_period || '12 months',
           depositPercentage: freshCompanyProfile?.deposit_percentage ?? 30,
-          paymentTerms: freshCompanyProfile?.payment_terms || '7 days',
+          paymentTerms: freshCompanyProfile?.payment_terms || '30 days',
           showMaterialsBreakdown: quoteSettings.showMaterialsBreakdown !== false,
         },
         // Build terms list from stored settings (handles JSON format with selected + custom terms)
@@ -968,7 +974,10 @@ serve(async (req) => {
         credentials: {
           registrationScheme: freshCompanyProfile?.registration_scheme || null,
           registrationNumber: freshCompanyProfile?.registration_number || null,
-          schemeLogo: freshCompanyProfile?.registration_scheme_logo || freshCompanyProfile?.scheme_logo_data_url || null,
+          schemeLogo:
+            freshCompanyProfile?.registration_scheme_logo ||
+            freshCompanyProfile?.scheme_logo_data_url ||
+            null,
           insuranceProvider: freshCompanyProfile?.insurance_provider || null,
           insuranceCoverage: freshCompanyProfile?.insurance_coverage || null,
           qualifications: freshCompanyProfile?.inspector_qualifications || [],

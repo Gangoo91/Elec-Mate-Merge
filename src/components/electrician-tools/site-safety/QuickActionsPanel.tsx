@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from 'react';
 import { Card } from '@/components/ui/card';
 import { MobileButton } from '@/components/ui/mobile-button';
@@ -5,6 +6,7 @@ import { FileDown, Share2, Copy, FileStack } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 import jsPDF from 'jspdf';
+import { saveOrSharePdf } from '@/utils/save-or-share-pdf';
 
 interface QuickActionsPanelProps {
   briefing: any;
@@ -46,7 +48,7 @@ export const QuickActionsPanel = ({ briefing, onRefresh }: QuickActionsPanelProp
         });
       }
 
-      doc.save(`briefing-${briefing.id}.pdf`);
+      await saveOrSharePdf(doc, `briefing-${briefing.id}.pdf`);
 
       toast({
         title: 'PDF Generated',

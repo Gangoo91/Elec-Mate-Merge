@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { Badge } from '@/components/ui/badge';
@@ -193,6 +194,11 @@ export default function AdminDashboard() {
     },
   });
 
+  // Source breakdown now comes from admin-stripe-stats (merged)
+  const subscribersBySource = (stripeStats as any)?.subscribersBySource as
+    | Record<string, number>
+    | undefined;
+
   // Fetch dashboard stats
   const {
     data: stats,
@@ -310,7 +316,7 @@ export default function AdminDashboard() {
     queryKey: ['admin-campaign-stats'],
     queryFn: async () => {
       const { data, error } = await supabase
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+         
         .from('email_tracking_events' as any)
         .select('email_id, event_type')
         .limit(10000);
@@ -405,9 +411,12 @@ export default function AdminDashboard() {
     );
   }
 
-  const mrr = stripeStats?.stripe.mrr || 0;
+  const stripeMrr = stripeStats?.stripe.mrr || 0;
+  const mrr = stripeMrr;
   const arr = mrr * 12;
   const totalSubs = stripeStats?.stripe.activeSubscriptions || 0;
+  const appStoreSubs = subscribersBySource?.app_store || 0;
+  const playStoreSubs = subscribersBySource?.play_store || 0;
 
   // Abandoned checkouts: have stripe_customer_id but never subscribed and no free access
   const abandonedCheckouts =
@@ -494,7 +503,7 @@ export default function AdminDashboard() {
               <div className="grid grid-cols-3 gap-2 sm:gap-3">
                 <div className="bg-white/10 backdrop-blur-sm rounded-xl p-2.5 sm:p-3">
                   <p className="text-xl sm:text-2xl font-bold text-white">
-                    <AnimatedCounter value={totalSubs} />
+                    <AnimatedCounter value={totalSubs + appStoreSubs + playStoreSubs} />
                   </p>
                   <p className="text-white text-xs sm:text-[11px] uppercase">Paying</p>
                 </div>
@@ -517,6 +526,28 @@ export default function AdminDashboard() {
                     </p>
                   </div>
                   <p className="text-white text-xs sm:text-[11px] uppercase">Founders</p>
+                </div>
+              </div>
+
+              {/* Revenue by source */}
+              <div className="grid grid-cols-3 gap-2 sm:gap-3 mt-3">
+                <div className="bg-white/10 backdrop-blur-sm rounded-xl p-2.5 sm:p-3 text-center">
+                  <p className="text-lg sm:text-xl font-bold text-purple-300">
+                    <AnimatedCounter value={totalSubs} />
+                  </p>
+                  <p className="text-white text-[10px] sm:text-[11px] uppercase">Stripe</p>
+                </div>
+                <div className="bg-white/10 backdrop-blur-sm rounded-xl p-2.5 sm:p-3 text-center">
+                  <p className="text-lg sm:text-xl font-bold text-blue-300">
+                    <AnimatedCounter value={appStoreSubs} />
+                  </p>
+                  <p className="text-white text-[10px] sm:text-[11px] uppercase">App Store</p>
+                </div>
+                <div className="bg-white/10 backdrop-blur-sm rounded-xl p-2.5 sm:p-3 text-center">
+                  <p className="text-lg sm:text-xl font-bold text-green-300">
+                    <AnimatedCounter value={playStoreSubs} />
+                  </p>
+                  <p className="text-white text-[10px] sm:text-[11px] uppercase">Play Store</p>
                 </div>
               </div>
             </div>

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState, useMemo } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -6,6 +7,7 @@ import { Download, FileText, Maximize2, Sparkles, Loader2, FileDown } from 'luci
 import { toast } from 'sonner';
 import { supabase } from '@/integrations/supabase/client';
 import jsPDF from 'jspdf';
+import { saveOrSharePdf } from '@/utils/save-or-share-pdf';
 import {
   generateSingleLineDiagram,
   generateConsumerUnitDiagram,
@@ -285,7 +287,8 @@ export const CircuitDrawingsDisplay = ({ messages, projectName }: CircuitDrawing
         pdf.text(`Page ${i} of ${totalPages}`, pageWidth - 15, pageHeight - 10, { align: 'right' });
       }
 
-      pdf.save(
+      await saveOrSharePdf(
+        pdf,
         `${projectNameClean}_Circuit_Diagrams_${new Date().toISOString().split('T')[0]}.pdf`
       );
 

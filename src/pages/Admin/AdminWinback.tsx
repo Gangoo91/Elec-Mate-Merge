@@ -21,6 +21,7 @@ import AdminSearchInput from '@/components/admin/AdminSearchInput';
 import PullToRefresh from '@/components/admin/PullToRefresh';
 import {
   RefreshCw,
+  RotateCcw,
   Send,
   Users,
   CheckCircle,
@@ -128,7 +129,7 @@ export default function AdminWinback() {
   });
   const [confirmResend, setConfirmResend] = useState(false);
   const [resetting, setResetting] = useState(false);
-  const [emailVersion, setEmailVersion] = useState<'v1' | 'v2' | 'v3' | 'v4' | 'v4b' | 'v5' | 'v6'>('v6');
+  const [emailVersion] = useState<'v7'>('v7');
   const [showPreview, setShowPreview] = useState(false);
 
   // Fetch campaign stats
@@ -420,6 +421,28 @@ export default function AdminWinback() {
     onError: (error) => {
       haptic.error();
       toast({ title: `Failed to send: ${error.message}`, variant: 'destructive' });
+    },
+  });
+
+  const resetSentMutation = useMutation({
+    mutationFn: async (userIds: string[]) => {
+      const { data, error } = await supabase.functions.invoke('send-winback-offer', {
+        body: { action: 'reset_sent', userIds },
+      });
+      if (error) throw error;
+      if (data?.error) throw new Error(data.error);
+      return data;
+    },
+    onSuccess: (data) => {
+      haptic.success();
+      toast({ title: `Reset ${data.resetCount} users — ready to re-send`, variant: 'success' });
+      queryClient.invalidateQueries({ queryKey: ['admin-winback-eligible'] });
+      queryClient.invalidateQueries({ queryKey: ['admin-winback-stats'] });
+      queryClient.invalidateQueries({ queryKey: ['admin-winback-sent'] });
+    },
+    onError: (error) => {
+      haptic.error();
+      toast({ title: `Reset failed: ${error.message}`, variant: 'destructive' });
     },
   });
 
@@ -787,121 +810,35 @@ export default function AdminWinback() {
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-3">
-            {/* Version toggle + pricing */}
-            <div className="space-y-2 p-2.5 rounded-xl bg-muted/50 border border-border">
-              <div className="flex items-center justify-between">
-                <span className="text-xs text-white font-semibold">Template:</span>
+            {/* Campaign info */}
+            <div className="p-3 rounded-xl bg-green-500/10 border border-green-500/20">
+              <div className="flex items-center justify-between mb-2">
+                <div className="flex items-center gap-2">
+                  <Badge className="bg-green-500 text-white text-[10px] px-2 border-0">
+                    V7 Stats
+                  </Badge>
+                  <span className="text-xs text-white font-medium">Social proof campaign</span>
+                </div>
                 <Button
                   variant="ghost"
                   size="sm"
                   onClick={() => setShowPreview(true)}
-                  className="h-8 touch-manipulation text-xs gap-1.5 text-purple-400 hover:text-purple-300"
+                  className="h-7 touch-manipulation text-xs gap-1 text-green-400 hover:text-green-300"
                 >
-                  <Eye className="h-3.5 w-3.5" />
+                  <Eye className="h-3 w-3" />
                   Preview
                 </Button>
               </div>
-              <div className="flex items-center gap-1.5 flex-wrap">
-                <Button
-                  variant={emailVersion === 'v6' ? 'default' : 'outline'}
-                  size="sm"
-                  onClick={() => setEmailVersion('v6')}
-                  className={`h-8 touch-manipulation text-xs relative ${emailVersion === 'v6' ? 'bg-indigo-500 text-white hover:bg-indigo-600' : ''}`}
-                >
-                  v6 No Brainer
-                  <Badge className="absolute -top-1.5 -right-1.5 bg-green-500 text-[9px] px-1 py-0 h-4 text-white border-0">
-                    NEW
-                  </Badge>
-                </Button>
-                <Button
-                  variant={emailVersion === 'v5' ? 'default' : 'outline'}
-                  size="sm"
-                  onClick={() => setEmailVersion('v5')}
-                  className={`h-8 touch-manipulation text-xs ${emailVersion === 'v5' ? 'bg-red-500 text-white hover:bg-red-600' : ''}`}
-                >
-                  v5 Last Chance
-                </Button>
-                <Button
-                  variant={emailVersion === 'v4' ? 'default' : 'outline'}
-                  size="sm"
-                  onClick={() => setEmailVersion('v4')}
-                  className={`h-8 touch-manipulation text-xs ${emailVersion === 'v4' ? 'bg-amber-500 text-black hover:bg-amber-600' : ''}`}
-                >
-                  v4 Big Update
-                </Button>
-                <Button
-                  variant={emailVersion === 'v4b' ? 'default' : 'outline'}
-                  size="sm"
-                  onClick={() => setEmailVersion('v4b')}
-                  className={`h-8 touch-manipulation text-xs ${emailVersion === 'v4b' ? 'bg-purple-500 text-white hover:bg-purple-600' : ''}`}
-                >
-                  v4b Fortnight
-                </Button>
-                <Button
-                  variant={emailVersion === 'v3' ? 'default' : 'outline'}
-                  size="sm"
-                  onClick={() => setEmailVersion('v3')}
-                  className={`h-8 touch-manipulation text-xs ${emailVersion === 'v3' ? 'bg-emerald-500 text-black hover:bg-emerald-600' : ''}`}
-                >
-                  v3
-                </Button>
-                <Button
-                  variant={emailVersion === 'v2' ? 'default' : 'outline'}
-                  size="sm"
-                  onClick={() => setEmailVersion('v2')}
-                  className={`h-8 touch-manipulation text-xs ${emailVersion === 'v2' ? 'bg-green-500 text-black hover:bg-green-600' : ''}`}
-                >
-                  v2
-                </Button>
-                <Button
-                  variant={emailVersion === 'v1' ? 'default' : 'outline'}
-                  size="sm"
-                  onClick={() => setEmailVersion('v1')}
-                  className={`h-8 touch-manipulation text-xs ${emailVersion === 'v1' ? 'bg-amber-500 text-black hover:bg-amber-600' : ''}`}
-                >
-                  v1
-                </Button>
-              </div>
-            </div>
-
-            {/* Pricing preview */}
-            <div className="grid grid-cols-2 gap-2">
-              <div className="p-2 rounded-xl bg-green-500/10 border border-green-500/20 text-center">
-                <p className="text-xs text-green-400 font-semibold">Monthly</p>
-                <p className="text-lg font-bold text-green-400">£7.99</p>
-                <p className="text-[10px] text-white">
-                  <span className="line-through">£9.99</span> - 20% off
-                </p>
-              </div>
-              <div className="p-2 rounded-xl bg-amber-500/10 border border-amber-500/20 text-center">
-                <p className="text-xs text-amber-400 font-semibold">Yearly</p>
-                <p className="text-lg font-bold text-amber-400">£79.99</p>
-                <p className="text-[10px] text-white">
-                  <span className="line-through">£99.99</span> - 20% off
-                </p>
-              </div>
+              <p className="text-[11px] text-white leading-relaxed">
+                "7 weeks. No App Store. Just electricians getting shit done." — £7.99/mo locked
+                forever
+              </p>
             </div>
 
             {/* Test email section */}
             {showTestEmail && (
               <div className="p-3 rounded-xl bg-yellow-500/10 border border-yellow-500/20 space-y-2">
-                <p className="text-xs text-yellow-400 font-semibold">
-                  Send Test Email (
-                  {emailVersion === 'v6'
-                    ? 'No Brainer'
-                    : emailVersion === 'v5'
-                      ? 'Last Chance'
-                      : emailVersion === 'v4b'
-                        ? 'Fortnight Report'
-                        : emailVersion === 'v4'
-                          ? 'Big Update'
-                          : emailVersion === 'v3'
-                            ? 'This Week'
-                            : emailVersion === 'v2'
-                              ? 'Sunday Round-Up'
-                              : 'Original'}
-                  )
-                </p>
+                <p className="text-xs text-yellow-400 font-semibold">Send Test Email ( Stats )</p>
                 <div className="flex gap-2">
                   <Input
                     type="email"
@@ -1138,79 +1075,110 @@ export default function AdminWinback() {
                   description="Send win-back offers to see tracking data here."
                 />
               ) : (
-                <div className="space-y-1.5">
-                  {sentUsers.map((user) => {
-                    // Match per-user email against tracking events
-                    const userEmail = user.email?.toLowerCase();
-                    const userEvents = userEmail ? trackingStats.byEmail.get(userEmail) : undefined;
-                    const wasDelivered = userEvents?.has('email.delivered') || false;
-                    const wasOpened = userEvents?.has('email.opened') || false;
-                    const wasClicked = userEvents?.has('email.clicked') || false;
+                <div className="space-y-3">
+                  <div className="flex items-center justify-between">
+                    <p className="text-xs text-white">{sentUsers.length} sent</p>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => {
+                        const allSentIds = sentUsers.map((u) => u.id);
+                        if (
+                          confirm(
+                            `Reset all ${allSentIds.length} sent users so they can be re-sent?`
+                          )
+                        ) {
+                          resetSentMutation.mutate(allSentIds);
+                        }
+                      }}
+                      disabled={resetSentMutation.isPending}
+                      className="h-8 text-xs touch-manipulation gap-1"
+                    >
+                      {resetSentMutation.isPending ? (
+                        <Loader2 className="h-3 w-3 animate-spin" />
+                      ) : (
+                        <RotateCcw className="h-3 w-3" />
+                      )}
+                      Reset All
+                    </Button>
+                  </div>
+                  <div className="space-y-1.5">
+                    {sentUsers.map((user) => {
+                      // Match per-user email against tracking events
+                      const userEmail = user.email?.toLowerCase();
+                      const userEvents = userEmail
+                        ? trackingStats.byEmail.get(userEmail)
+                        : undefined;
+                      const wasDelivered = userEvents?.has('email.delivered') || false;
+                      const wasOpened = userEvents?.has('email.opened') || false;
+                      const wasClicked = userEvents?.has('email.clicked') || false;
 
-                    // Version badge colour
-                    const versionColours: Record<string, string> = {
-                      v1: 'bg-gray-500/20 text-gray-400',
-                      v2: 'bg-green-500/20 text-green-400',
-                      v3: 'bg-emerald-500/20 text-emerald-400',
-                      v4: 'bg-amber-500/20 text-amber-400',
-                      v4b: 'bg-purple-500/20 text-purple-400',
-                      v5: 'bg-red-500/20 text-red-400',
-                      v6: 'bg-indigo-500/20 text-indigo-400',
-                    };
-                    const vClass = versionColours[user.email_version] || versionColours.v1;
+                      // Version badge colour
+                      const versionColours: Record<string, string> = {
+                        v1: 'bg-gray-500/20 text-gray-400',
+                        v2: 'bg-green-500/20 text-green-400',
+                        v3: 'bg-emerald-500/20 text-emerald-400',
+                        v4: 'bg-amber-500/20 text-amber-400',
+                        v4b: 'bg-purple-500/20 text-purple-400',
+                        v5: 'bg-red-500/20 text-red-400',
+                        v6: 'bg-indigo-500/20 text-indigo-400',
+                        v7: 'bg-green-500/20 text-green-400',
+                      };
+                      const vClass = versionColours[user.email_version] || versionColours.v1;
 
-                    return (
-                      <div
-                        key={user.id}
-                        className="flex items-center gap-3 p-2.5 rounded-xl bg-muted/50"
-                      >
-                        <div className="w-9 h-9 rounded-xl bg-blue-500/20 flex items-center justify-center shrink-0">
-                          <User className="h-4 w-4 text-blue-400" />
+                      return (
+                        <div
+                          key={user.id}
+                          className="flex items-center gap-3 p-2.5 rounded-xl bg-muted/50"
+                        >
+                          <div className="w-9 h-9 rounded-xl bg-blue-500/20 flex items-center justify-center shrink-0">
+                            <User className="h-4 w-4 text-blue-400" />
+                          </div>
+                          <div className="flex-1 min-w-0">
+                            <p className="font-medium text-sm text-white truncate">
+                              {user.full_name || user.username}
+                            </p>
+                            <p className="text-xs text-white">
+                              Sent{' '}
+                              {formatDistanceToNow(parseISO(user.winback_offer_sent_at), {
+                                addSuffix: true,
+                              })}
+                            </p>
+                          </div>
+                          <div className="flex items-center gap-1 shrink-0 flex-wrap justify-end">
+                            <Badge className={`text-[9px] px-1.5 border-0 ${vClass}`}>
+                              {user.email_version?.toUpperCase() || 'V1'}
+                            </Badge>
+                            {wasDelivered && (
+                              <Badge className="bg-blue-500/20 text-blue-400 text-[9px] px-1 border-0">
+                                <CheckCircle className="h-2.5 w-2.5" />
+                              </Badge>
+                            )}
+                            {wasOpened && (
+                              <Badge className="bg-green-500/20 text-green-400 text-[9px] px-1 border-0">
+                                <MailOpen className="h-2.5 w-2.5" />
+                              </Badge>
+                            )}
+                            {wasClicked && (
+                              <Badge className="bg-amber-500/20 text-amber-400 text-[9px] px-1 border-0">
+                                <MousePointerClick className="h-2.5 w-2.5" />
+                              </Badge>
+                            )}
+                            {user.subscribed ? (
+                              <Badge className="bg-green-500/20 text-green-400 text-[10px] px-1.5 border-0">
+                                <CheckCheck className="h-3 w-3 mr-0.5" />
+                                Converted
+                              </Badge>
+                            ) : (
+                              <Badge className="bg-gray-500/20 text-gray-400 text-[10px] px-1.5 border-0">
+                                Pending
+                              </Badge>
+                            )}
+                          </div>
                         </div>
-                        <div className="flex-1 min-w-0">
-                          <p className="font-medium text-sm text-white truncate">
-                            {user.full_name || user.username}
-                          </p>
-                          <p className="text-xs text-white">
-                            Sent{' '}
-                            {formatDistanceToNow(parseISO(user.winback_offer_sent_at), {
-                              addSuffix: true,
-                            })}
-                          </p>
-                        </div>
-                        <div className="flex items-center gap-1 shrink-0 flex-wrap justify-end">
-                          <Badge className={`text-[9px] px-1.5 border-0 ${vClass}`}>
-                            {user.email_version?.toUpperCase() || 'V1'}
-                          </Badge>
-                          {wasDelivered && (
-                            <Badge className="bg-blue-500/20 text-blue-400 text-[9px] px-1 border-0">
-                              <CheckCircle className="h-2.5 w-2.5" />
-                            </Badge>
-                          )}
-                          {wasOpened && (
-                            <Badge className="bg-green-500/20 text-green-400 text-[9px] px-1 border-0">
-                              <MailOpen className="h-2.5 w-2.5" />
-                            </Badge>
-                          )}
-                          {wasClicked && (
-                            <Badge className="bg-amber-500/20 text-amber-400 text-[9px] px-1 border-0">
-                              <MousePointerClick className="h-2.5 w-2.5" />
-                            </Badge>
-                          )}
-                          {user.subscribed ? (
-                            <Badge className="bg-green-500/20 text-green-400 text-[10px] px-1.5 border-0">
-                              <CheckCheck className="h-3 w-3 mr-0.5" />
-                              Converted
-                            </Badge>
-                          ) : (
-                            <Badge className="bg-gray-500/20 text-gray-400 text-[10px] px-1.5 border-0">
-                              Pending
-                            </Badge>
-                          )}
-                        </div>
-                      </div>
-                    );
-                  })}
+                      );
+                    })}
+                  </div>
                 </div>
               )}
             </CardContent>
@@ -1299,17 +1267,7 @@ export default function AdminWinback() {
           <AlertDialogContent className="max-w-[calc(100vw-2rem)] sm:max-w-lg rounded-2xl p-5 sm:p-6">
             <AlertDialogHeader className="space-y-3">
               <AlertDialogTitle className="text-base sm:text-lg leading-tight">
-                Resend{' '}
-                {emailVersion === 'v6'
-                  ? 'No Brainer'
-                  : emailVersion === 'v5'
-                    ? 'Last Chance'
-                    : emailVersion === 'v4b'
-                      ? 'Fortnight Report'
-                      : emailVersion === 'v4'
-                        ? 'Big Update'
-                        : emailVersion.toUpperCase()}{' '}
-                to all?
+                Send Stats campaign to all?
               </AlertDialogTitle>
               <AlertDialogDescription asChild>
                 <div className="text-sm leading-relaxed space-y-2">
@@ -1435,20 +1393,7 @@ export default function AdminWinback() {
               <SheetHeader className="px-4 pb-3 border-b border-border">
                 <SheetTitle className="flex items-center gap-2 text-sm">
                   <FileText className="h-4 w-4 text-purple-400" />
-                  Preview:{' '}
-                  {emailVersion === 'v6'
-                    ? 'No Brainer'
-                    : emailVersion === 'v5'
-                      ? 'Last Chance'
-                      : emailVersion === 'v4b'
-                        ? 'Fortnight Report'
-                        : emailVersion === 'v4'
-                          ? 'Big Update'
-                          : emailVersion === 'v3'
-                            ? 'This Week'
-                            : emailVersion === 'v2'
-                              ? 'Sunday Round-Up'
-                              : 'Original'}
+                  Preview: Stats
                   <Badge className="bg-purple-500/20 text-purple-400 text-[10px] border-0">
                     {emailVersion.toUpperCase()}
                   </Badge>
@@ -1477,6 +1422,7 @@ export default function AdminWinback() {
                       v4b: '18 features shipped in 2 weeks',
                       v5: "Last time I'll send this",
                       v6: "I know you've seen emails from me",
+                      v7: '7 weeks. No App Store. Just electricians getting shit done.',
                     };
                     return `<!DOCTYPE html><html><head><meta name="color-scheme" content="dark"><style>body{margin:0;padding:40px 20px;font-family:-apple-system,system-ui,sans-serif;background:#0f172a;color:#e2e8f0;text-align:center;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:90vh}h2{color:#fbbf24;margin-bottom:8px}p{color:#94a3b8;font-size:14px;line-height:1.6;max-width:300px}.btn{display:inline-block;margin-top:20px;padding:12px 24px;background:linear-gradient(135deg,#fbbf24,#f59e0b);color:#0f172a;border-radius:12px;font-weight:700;font-size:14px;text-decoration:none;cursor:pointer}</style></head><body><h2>${versionLabels[emailVersion] || emailVersion}</h2><p>Send a test email to preview the full rendered template in your inbox.</p><p style="color:#64748b;font-size:12px;margin-top:4px">Email templates are rendered server-side for security. Use the test send button above to see the exact email.</p></body></html>`;
                   })()}

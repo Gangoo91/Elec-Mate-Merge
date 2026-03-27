@@ -1,10 +1,13 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useState } from 'react';
+import { saveOrSharePdf } from '@/utils/save-or-share-pdf';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import {
   MoreVertical,
   Eye,
   Download,
+  Trash2,
   Zap,
   Calculator,
   Shield,
@@ -21,6 +24,7 @@ import { toast } from 'sonner';
 import { formatDistanceToNow } from 'date-fns';
 import { SavedAgentResult, AgentType } from '@/hooks/useSavedAgentResults';
 import { supabase } from '@/integrations/supabase/client';
+import { cn } from '@/lib/utils';
 import {
   generateDesignerPDF,
   generateRAMSFromAgents,
@@ -31,7 +35,17 @@ import { openOrDownloadPdf } from '@/utils/pdf-download';
 interface SavedResultItemProps {
   result: SavedAgentResult;
   onClose?: () => void;
+  onDelete?: (id: string, agentType: AgentType) => Promise<boolean>;
 }
+
+// Per-agent accent colours
+const AGENT_COLOURS: Record<AgentType, string> = {
+  'circuit-designer': 'blue-500',
+  'cost-engineer': 'green-500',
+  'health-safety': 'red-500',
+  installer: 'orange-500',
+  maintenance: 'slate-400',
+};
 
 // Agent styling configuration
 const AGENT_CONFIG: Record<
@@ -63,9 +77,10 @@ const AGENT_CONFIG: Record<
   },
 };
 
-export const SavedResultItem: React.FC<SavedResultItemProps> = ({ result, onClose }) => {
+export const SavedResultItem: React.FC<SavedResultItemProps> = ({ result, onClose, onDelete }) => {
   const navigate = useNavigate();
   const [isDownloading, setIsDownloading] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
   const config = AGENT_CONFIG[result.agentType];
   const IconComponent = config.icon;
 
@@ -93,13 +108,16 @@ export const SavedResultItem: React.FC<SavedResultItemProps> = ({ result, onClos
     try {
       switch (result.agentType) {
         case 'circuit-designer': {
-          const projectName = result.inputData?.projectInfo?.projectName || result.inputData?.projectName || 'Circuit Design';
+          const projectName =
+            result.inputData?.projectInfo?.projectName ||
+            result.inputData?.projectName ||
+            'Circuit Design';
           const response =
             typeof result.outputData === 'string'
               ? result.outputData
               : JSON.stringify(result.outputData, null, 2);
           const pdf = generateDesignerPDF(response, projectName);
-          pdf.save(`${projectName.replace(/\s+/g, '_')}_Design.pdf`);
+          await saveOrSharePdf(pdf, `${projectName.replace(/\s+/g, '_')}_Design.pdf`);
           toast.success('PDF downloaded successfully');
           break;
         }
@@ -183,21 +201,69 @@ export const SavedResultItem: React.FC<SavedResultItemProps> = ({ result, onClos
     }
   };
 
+  // Get per-agent colour classes
+  const agentColour = AGENT_COLOURS[result.agentType];
+  const colourMap: Record<
+    string,
+    { bgLight: string; text: string; border: string; leftBar: string }
+  > = {
+    'blue-500': {
+      bgLight: 'bg-blue-500/10',
+      text: 'text-blue-400',
+      border: 'border-blue-500/20',
+      leftBar: 'bg-blue-500',
+    },
+    'green-500': {
+      bgLight: 'bg-green-500/10',
+      text: 'text-green-400',
+      border: 'border-green-500/20',
+      leftBar: 'bg-green-500',
+    },
+    'red-500': {
+      bgLight: 'bg-red-500/10',
+      text: 'text-red-400',
+      border: 'border-red-500/20',
+      leftBar: 'bg-red-500',
+    },
+    'orange-500': {
+      bgLight: 'bg-orange-500/10',
+      text: 'text-orange-400',
+      border: 'border-orange-500/20',
+      leftBar: 'bg-orange-500',
+    },
+    'slate-400': {
+      bgLight: 'bg-slate-400/10',
+      text: 'text-slate-300',
+      border: 'border-slate-400/20',
+      leftBar: 'bg-slate-400',
+    },
+  };
+  const cc = colourMap[agentColour] || colourMap['blue-500'];
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 4 }}
       animate={{ opacity: 1, y: 0 }}
-      className="flex items-center gap-3 p-3 rounded-xl bg-white/[0.03] border border-white/[0.06] active:bg-white/[0.06] transition-colors"
+      className="flex items-center gap-3 p-3 rounded-xl bg-white/[0.15] ring-1 ring-white/[0.15] active:bg-white/[0.15] transition-colors"
     >
+      {/* Coloured left accent */}
+      <div className={cn('w-1 self-stretch rounded-full -ml-1', cc.leftBar, 'opacity-50')} />
+
       {/* Agent Icon */}
-      <div className="flex-shrink-0 w-10 h-10 rounded-lg flex items-center justify-center bg-elec-yellow/10 border border-elec-yellow/20">
-        <IconComponent className="h-5 w-5 text-elec-yellow" />
+      <div
+        className={cn(
+          'flex-shrink-0 w-10 h-10 rounded-lg flex items-center justify-center ring-1',
+          cc.bgLight,
+          cc.border
+        )}
+      >
+        <IconComponent className={cn('h-5 w-5', cc.text)} />
       </div>
 
       {/* Content */}
       <button onClick={handleViewResults} className="flex-1 min-w-0 text-left touch-manipulation">
-        <h4 className="text-sm font-medium text-white truncate">{result.title}</h4>
-        <p className="text-xs text-white">{relativeDate}</p>
+        <h4 className="text-[14px] font-medium text-white truncate">{result.title}</h4>
+        <p className="text-[11px] text-white mt-0.5">{relativeDate}</p>
       </button>
 
       {/* Actions Menu */}
@@ -223,6 +289,25 @@ export const SavedResultItem: React.FC<SavedResultItemProps> = ({ result, onClos
             <Download className="h-4 w-4" />
             {isDownloading ? 'Generating...' : 'Download PDF'}
           </DropdownMenuItem>
+          {onDelete && (
+            <DropdownMenuItem
+              onClick={async () => {
+                setIsDeleting(true);
+                const success = await onDelete(result.id, result.agentType);
+                if (success) {
+                  toast.success('Result deleted');
+                } else {
+                  toast.error('Failed to delete');
+                  setIsDeleting(false);
+                }
+              }}
+              disabled={isDeleting}
+              className="gap-2 text-red-400 focus:bg-red-500/10 focus:text-red-400"
+            >
+              <Trash2 className="h-4 w-4" />
+              {isDeleting ? 'Deleting...' : 'Delete'}
+            </DropdownMenuItem>
+          )}
         </DropdownMenuContent>
       </DropdownMenu>
     </motion.div>

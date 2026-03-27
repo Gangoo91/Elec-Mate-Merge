@@ -1,6 +1,8 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
 import { format as formatDate } from 'date-fns';
+import { saveOrSharePdf } from '@/utils/save-or-share-pdf';
 
 // Extend jsPDF with autoTable
 declare module 'jspdf' {
@@ -141,7 +143,7 @@ export const generateProfessionalElectricalPDF = async (
       `${reportType.toLowerCase().replace(/\s+/g, '-')}-${formatDate(new Date(), 'ddMMyyyy')}.pdf`;
 
     // Save the PDF
-    pdf.save(finalFilename);
+    await saveOrSharePdf(pdf, finalFilename);
     console.log('PDF generated successfully');
   } catch (error) {
     console.error('PDF generation failed:', error);

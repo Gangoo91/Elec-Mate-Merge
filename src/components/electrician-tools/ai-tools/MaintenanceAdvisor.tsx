@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { saveOrSharePdf } from '@/utils/save-or-share-pdf';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Textarea } from '@/components/ui/textarea';
@@ -149,7 +150,8 @@ export const MaintenanceAdvisor = () => {
 
       // Generate PDF client-side
       const pdf = generateMaintenanceSchedulePDF(pdfData);
-      pdf.save(
+      await saveOrSharePdf(
+        pdf,
         `Maintenance_Schedule_${schedule.equipmentType.replace(/\s+/g, '_')}_${Date.now()}.pdf`
       );
 

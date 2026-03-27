@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-require-imports */
+ 
 import { useState, useEffect } from 'react';
 import { toast } from 'sonner';
 import { SendToAgentDropdown } from '@/components/install-planner-v2/SendToAgentDropdown';
@@ -12,6 +14,7 @@ import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { useCommissioningProgress } from '@/hooks/useCommissioningProgress';
 import type { CommissioningResponse } from '@/types/commissioning-response';
+import { saveOrSharePdf } from '@/utils/save-or-share-pdf';
 
 interface CommissioningResultsProps {
   results: CommissioningResponse;
@@ -102,7 +105,7 @@ const CommissioningResults = ({
     });
   };
 
-  const handleExportPDF = () => {
+  const handleExportPDF = async () => {
     try {
       const { generateEICSchedulePDF } = require('@/utils/pdf-generators/eic-schedule-pdf');
 
@@ -117,7 +120,8 @@ const CommissioningResults = ({
       };
 
       const pdf = generateEICSchedulePDF(pdfData);
-      pdf.save(
+      await saveOrSharePdf(
+        pdf,
         `EIC-Schedule-${projectName || 'Document'}-${new Date().toISOString().split('T')[0]}.pdf`
       );
 

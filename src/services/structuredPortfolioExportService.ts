@@ -1,5 +1,7 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
+import { saveOrSharePdf } from '@/utils/save-or-share-pdf';
 import type {
   StructuredExportData,
   UnitSection,
@@ -85,7 +87,7 @@ export class StructuredPortfolioExportService {
     // Save
     const timestamp = new Date().toISOString().split('T')[0];
     const safeName = data.apprentice.name.replace(/[^a-zA-Z0-9]/g, '_');
-    this.doc.save(`${safeName}_Structured_Portfolio_${timestamp}.pdf`);
+    await saveOrSharePdf(this.doc, `${safeName}_Structured_Portfolio_${timestamp}.pdf`);
   }
 
   // ============================================
@@ -154,9 +156,15 @@ export class StructuredPortfolioExportService {
     this.doc.setTextColor(0, 0, 0);
     const infoRows: string[][] = [];
     if (apprentice.employer) infoRows.push(['Employer', apprentice.employer]);
-    if (apprentice.training_provider) infoRows.push(['Training Provider', apprentice.training_provider]);
-    if (apprentice.start_date) infoRows.push(['Start Date', new Date(apprentice.start_date).toLocaleDateString('en-GB')]);
-    if (apprentice.expected_end) infoRows.push(['Expected End Date', new Date(apprentice.expected_end).toLocaleDateString('en-GB')]);
+    if (apprentice.training_provider)
+      infoRows.push(['Training Provider', apprentice.training_provider]);
+    if (apprentice.start_date)
+      infoRows.push(['Start Date', new Date(apprentice.start_date).toLocaleDateString('en-GB')]);
+    if (apprentice.expected_end)
+      infoRows.push([
+        'Expected End Date',
+        new Date(apprentice.expected_end).toLocaleDateString('en-GB'),
+      ]);
     infoRows.push(['Export Date', new Date().toLocaleDateString('en-GB')]);
 
     if (infoRows.length > 0) {
@@ -173,14 +181,23 @@ export class StructuredPortfolioExportService {
     }
 
     // Summary stats at bottom
-    const totalACs = data.units.reduce((sum, u) =>
-      sum + u.learning_outcomes.reduce((s, lo) => s + lo.assessment_criteria.length, 0), 0);
-    const metACs = data.units.reduce((sum, u) =>
-      sum + u.learning_outcomes.reduce((s, lo) =>
-        s + lo.assessment_criteria.filter(ac => ac.is_met).length, 0), 0);
+    const totalACs = data.units.reduce(
+      (sum, u) => sum + u.learning_outcomes.reduce((s, lo) => s + lo.assessment_criteria.length, 0),
+      0
+    );
+    const metACs = data.units.reduce(
+      (sum, u) =>
+        sum +
+        u.learning_outcomes.reduce(
+          (s, lo) => s + lo.assessment_criteria.filter((ac) => ac.is_met).length,
+          0
+        ),
+      0
+    );
     const totalKSBs = data.ksb_summary.knowledge.length + data.ksb_summary.behaviours.length;
-    const completedKSBs = [...data.ksb_summary.knowledge, ...data.ksb_summary.behaviours]
-      .filter(k => k.status === 'completed' || k.status === 'verified').length;
+    const completedKSBs = [...data.ksb_summary.knowledge, ...data.ksb_summary.behaviours].filter(
+      (k) => k.status === 'completed' || k.status === 'verified'
+    ).length;
 
     const statsY = this.pageHeight - 50;
     this.doc.setFillColor(...LIGHT_GREY);
@@ -227,7 +244,8 @@ export class StructuredPortfolioExportService {
       this.doc.setTextColor(0, 0, 0);
 
       // Title on left
-      const truncated = entry.title.length > 70 ? entry.title.substring(0, 67) + '...' : entry.title;
+      const truncated =
+        entry.title.length > 70 ? entry.title.substring(0, 67) + '...' : entry.title;
       this.doc.text(truncated, PAGE_MARGIN, y);
 
       // Page number on right
@@ -277,7 +295,10 @@ export class StructuredPortfolioExportService {
       this.doc.setFont('helvetica', 'bold');
       this.doc.setTextColor(0, 0, 0);
       const loLabel = lo.lo_number ? `LO${lo.lo_number}: ` : '';
-      const loText = this.doc.splitTextToSize(`${loLabel}${lo.lo_text}`, this.pageWidth - PAGE_MARGIN * 2);
+      const loText = this.doc.splitTextToSize(
+        `${loLabel}${lo.lo_text}`,
+        this.pageWidth - PAGE_MARGIN * 2
+      );
       this.doc.text(loText, PAGE_MARGIN, y);
       y += loText.length * 5 + 3;
 
@@ -313,8 +334,8 @@ export class StructuredPortfolioExportService {
               const ac = lo.assessment_criteria[rowIdx];
               if (ac) {
                 const bgColour = ac.is_met
-                  ? [220, 252, 231] as [number, number, number]  // green-100
-                  : [254, 226, 226] as [number, number, number]; // red-100
+                  ? ([220, 252, 231] as [number, number, number]) // green-100
+                  : ([254, 226, 226] as [number, number, number]); // red-100
                 hookData.cell.styles.fillColor = bgColour;
               }
             }
@@ -369,22 +390,27 @@ export class StructuredPortfolioExportService {
 
     const statusLabel = (s: string) => {
       switch (s) {
-        case 'completed': return 'Complete';
-        case 'verified': return 'Verified';
-        case 'in_progress': return 'In Progress';
-        case 'evidence_submitted': return 'Evidence Submitted';
-        default: return 'Not Started';
+        case 'completed':
+          return 'Complete';
+        case 'verified':
+          return 'Verified';
+        case 'in_progress':
+          return 'In Progress';
+        case 'evidence_submitted':
+          return 'Evidence Submitted';
+        default:
+          return 'Not Started';
       }
     };
 
-    const tableBody = items.map(k => [
+    const tableBody = items.map((k) => [
       k.code,
       k.title,
       k.route !== 'core' ? k.route.charAt(0).toUpperCase() + k.route.slice(1) : 'Core',
       statusLabel(k.status),
       k.delivering_units
-        .filter(u => u.mapping_type === 'primary')
-        .map(u => u.unit_code)
+        .filter((u) => u.mapping_type === 'primary')
+        .map((u) => u.unit_code)
         .join(', ') || '-',
     ]);
 
@@ -439,7 +465,11 @@ export class StructuredPortfolioExportService {
     const cards = [
       { label: 'Target Hours', value: String(otj_hours.target), colour: DARK_BG },
       { label: 'Current Hours', value: String(otj_hours.current), colour: ELEC_YELLOW },
-      { label: 'Completion', value: `${otj_hours.percentage}%`, colour: otj_hours.percentage >= 100 ? GREEN : RED },
+      {
+        label: 'Completion',
+        value: `${otj_hours.percentage}%`,
+        colour: otj_hours.percentage >= 100 ? GREEN : RED,
+      },
     ];
 
     cards.forEach((card, i) => {
@@ -477,7 +507,9 @@ export class StructuredPortfolioExportService {
     this.doc.setFontSize(8);
     this.doc.setFont('helvetica', 'bold');
     this.doc.setTextColor(0, 0, 0);
-    this.doc.text(`${otj_hours.percentage}%`, PAGE_MARGIN + barWidth / 2, y + barHeight / 2 + 3, { align: 'center' });
+    this.doc.text(`${otj_hours.percentage}%`, PAGE_MARGIN + barWidth / 2, y + barHeight / 2 + 3, {
+      align: 'center',
+    });
   }
 
   // ============================================
@@ -531,12 +563,9 @@ export class StructuredPortfolioExportService {
       this.doc.setFontSize(8);
       this.doc.setFont('helvetica', 'normal');
       this.doc.setTextColor(150, 150, 150);
-      this.doc.text(
-        `Page ${i} of ${totalPages}`,
-        this.pageWidth / 2,
-        this.pageHeight - 10,
-        { align: 'center' }
-      );
+      this.doc.text(`Page ${i} of ${totalPages}`, this.pageWidth / 2, this.pageHeight - 10, {
+        align: 'center',
+      });
     }
   }
 }

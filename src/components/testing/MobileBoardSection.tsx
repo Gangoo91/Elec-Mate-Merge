@@ -1,16 +1,8 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
-import {
-  ChevronDown,
-  Plus,
-  Trash2,
-  Zap,
-  CheckCircle,
-  Camera,
-  Mic,
-  Check,
-} from 'lucide-react';
+import { ChevronDown, Plus, Trash2, Zap, CheckCircle, Camera, Mic, Check } from 'lucide-react';
 import { DistributionBoard, MAIN_BOARD_ID } from '@/types/distributionBoard';
 
 export interface MobileBoardToolCallbacks {
@@ -116,8 +108,7 @@ const MobileBoardSection: React.FC<MobileBoardSectionProps> = ({
   children,
   tools,
 }) => {
-  const progressPercent =
-    circuitCount > 0 ? Math.round((completedCount / circuitCount) * 100) : 0;
+  const progressPercent = circuitCount > 0 ? Math.round((completedCount / circuitCount) * 100) : 0;
   const isComplete = progressPercent === 100;
   const isMainBoard = board.id === MAIN_BOARD_ID || board.order === 0;
 
@@ -153,11 +144,7 @@ const MobileBoardSection: React.FC<MobileBoardSectionProps> = ({
             <div
               className={`absolute inset-0 flex items-center justify-center text-sm font-bold ${isComplete ? 'text-green-400' : 'text-elec-yellow'}`}
             >
-              {isComplete ? (
-                <CheckCircle className="h-5 w-5" />
-              ) : (
-                <Zap className="h-5 w-5" />
-              )}
+              {isComplete ? <CheckCircle className="h-5 w-5" /> : <Zap className="h-5 w-5" />}
             </div>
           </div>
 
@@ -291,9 +278,7 @@ const MobileBoardSection: React.FC<MobileBoardSectionProps> = ({
               <div
                 className={`w-4 h-4 rounded border-2 flex items-center justify-center flex-shrink-0 pointer-events-none ${board.confirmedCorrectPolarity ? 'bg-green-500 border-green-500' : 'border-white'}`}
               >
-                {board.confirmedCorrectPolarity && (
-                  <Check className="h-3 w-3 text-white" />
-                )}
+                {board.confirmedCorrectPolarity && <Check className="h-3 w-3 text-white" />}
               </div>
               <span className="pointer-events-none">Polarity</span>
             </button>
@@ -302,11 +287,7 @@ const MobileBoardSection: React.FC<MobileBoardSectionProps> = ({
               onClick={(e) => {
                 e.preventDefault();
                 e.stopPropagation();
-                onUpdateBoard(
-                  board.id,
-                  'confirmedPhaseSequence',
-                  !board.confirmedPhaseSequence
-                );
+                onUpdateBoard(board.id, 'confirmedPhaseSequence', !board.confirmedPhaseSequence);
               }}
               className={`h-11 rounded-lg text-sm font-medium transition-all touch-manipulation active:scale-95 flex items-center gap-2 px-3 cursor-pointer select-none ${
                 board.confirmedPhaseSequence
@@ -317,9 +298,7 @@ const MobileBoardSection: React.FC<MobileBoardSectionProps> = ({
               <div
                 className={`w-4 h-4 rounded border-2 flex items-center justify-center flex-shrink-0 pointer-events-none ${board.confirmedPhaseSequence ? 'bg-green-500 border-green-500' : 'border-white'}`}
               >
-                {board.confirmedPhaseSequence && (
-                  <Check className="h-3 w-3 text-white" />
-                )}
+                {board.confirmedPhaseSequence && <Check className="h-3 w-3 text-white" />}
               </div>
               <span className="pointer-events-none">Phase Seq</span>
             </button>
@@ -367,11 +346,7 @@ const MobileBoardSection: React.FC<MobileBoardSectionProps> = ({
                   onClick={(e) => {
                     e.preventDefault();
                     e.stopPropagation();
-                    onUpdateBoard(
-                      board.id,
-                      'spdOperationalStatus',
-                      !board.spdOperationalStatus
-                    );
+                    onUpdateBoard(board.id, 'spdOperationalStatus', !board.spdOperationalStatus);
                   }}
                   className={`h-11 rounded-lg text-sm font-medium transition-all touch-manipulation active:scale-95 flex items-center gap-2 px-3 cursor-pointer select-none ${
                     board.spdOperationalStatus
@@ -382,9 +357,7 @@ const MobileBoardSection: React.FC<MobileBoardSectionProps> = ({
                   <div
                     className={`w-4 h-4 rounded border-2 flex items-center justify-center flex-shrink-0 pointer-events-none ${board.spdOperationalStatus ? 'bg-green-500 border-green-500' : 'border-white'}`}
                   >
-                    {board.spdOperationalStatus && (
-                      <Check className="h-3 w-3 text-white" />
-                    )}
+                    {board.spdOperationalStatus && <Check className="h-3 w-3 text-white" />}
                   </div>
                   <span className="pointer-events-none">SPD OK</span>
                 </button>
@@ -395,23 +368,23 @@ const MobileBoardSection: React.FC<MobileBoardSectionProps> = ({
 
         {/* Tools Bar - Above Circuit Table */}
         {tools && (
-          <div className="-mx-4 grid grid-cols-[1fr_1fr_48px] gap-2 p-4 bg-background border-y border-border/30">
+          <div className="grid grid-cols-[1fr_1fr_44px] gap-2 py-3 bg-background border-y border-border/30">
             <Button
-              className="h-12 rounded-xl bg-elec-yellow text-black font-bold hover:bg-elec-yellow/90 touch-manipulation active:scale-95"
+              className="h-11 rounded-xl bg-elec-yellow text-black font-bold hover:bg-elec-yellow/90 touch-manipulation active:scale-95"
               onClick={tools.onScanBoard}
             >
               <Camera className="h-5 w-5 mr-2" />
               AI Scan
             </Button>
             <Button
-              className="h-12 rounded-xl bg-card border border-border/50 text-foreground font-semibold hover:bg-card/80 touch-manipulation active:scale-95"
+              className="h-11 rounded-xl bg-white/[0.06] border border-white/[0.12] text-white font-semibold hover:bg-white/[0.08] touch-manipulation active:scale-95"
               onClick={() => onAddCircuit(board.id)}
             >
               <Plus className="h-5 w-5 mr-2" />
               Add Circuit
             </Button>
             <Button
-              className={`h-12 w-12 rounded-xl touch-manipulation active:scale-95 ${
+              className={`h-11 w-11 rounded-xl touch-manipulation active:scale-95 ${
                 tools.voiceActive
                   ? 'bg-green-500 text-white'
                   : tools.voiceConnecting

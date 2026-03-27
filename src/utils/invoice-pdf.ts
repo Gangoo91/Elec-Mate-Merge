@@ -1,7 +1,9 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
 import { format } from 'date-fns';
 import { Invoice, InvoiceItem } from '@/types/invoice';
+import { saveOrSharePdf } from '@/utils/save-or-share-pdf';
 
 export function generateInvoicePDF(invoice: Invoice, companyProfile?: any): jsPDF {
   const doc = new jsPDF('portrait', 'mm', 'a4');
@@ -313,5 +315,5 @@ export function generateInvoicePDF(invoice: Invoice, companyProfile?: any): jsPD
 export async function downloadInvoicePDF(invoice: Invoice, companyProfile?: any): Promise<void> {
   const doc = generateInvoicePDF(invoice, companyProfile);
   const fileName = `Invoice_${invoice.invoice_number || 'DRAFT'}_${format(new Date(), 'yyyyMMdd')}.pdf`;
-  doc.save(fileName);
+  await saveOrSharePdf(doc, fileName);
 }

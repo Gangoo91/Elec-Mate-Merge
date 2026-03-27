@@ -1,4 +1,5 @@
 import { Download } from 'lucide-react';
+import { saveOrSharePdf } from '@/utils/save-or-share-pdf';
 import { Button } from '@/components/ui/button';
 import { CanvasObject } from '@/pages/electrician-tools/ai-tools/DiagramBuilderPage';
 import { toast } from '@/hooks/use-toast';
@@ -176,7 +177,7 @@ export const ExportControls = ({ canvasObjects }: ExportControlsProps) => {
         { align: 'right' }
       );
 
-      pdf.save(`electrical-installation-${Date.now()}.pdf`);
+      await saveOrSharePdf(pdf, `electrical-installation-${Date.now()}.pdf`);
 
       toast({
         title: 'Exported successfully',

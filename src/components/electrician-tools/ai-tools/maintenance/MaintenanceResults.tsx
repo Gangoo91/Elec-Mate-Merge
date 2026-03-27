@@ -1,3 +1,4 @@
+import { saveOrSharePdf } from '@/utils/save-or-share-pdf';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import {
@@ -109,7 +110,8 @@ export const MaintenanceResults = ({ results, onReset }: MaintenanceResultsProps
       };
 
       const pdf = generateMaintenanceSchedulePDF(pdfData);
-      pdf.save(
+      await saveOrSharePdf(
+        pdf,
         `Maintenance_Schedule_${results.equipmentType.replace(/\s+/g, '_')}_${Date.now()}.pdf`
       );
       toast.success('PDF exported successfully');

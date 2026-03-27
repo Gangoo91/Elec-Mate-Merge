@@ -33,6 +33,7 @@ import {
   addReferencesSection,
   formatLinkedInUrl,
 } from './shared';
+import { saveOrSharePdf } from '@/utils/save-or-share-pdf';
 
 const colors = TEMPLATE_COLORS.modern;
 
@@ -520,5 +521,5 @@ export const generateModernPDF = async (cvData: CVData): Promise<void> => {
   // ═══════════════════════════════════════════════════════════════════════════
 
   const fileName = getFileName(cvData, 'Modern');
-  pdf.save(fileName);
+  await saveOrSharePdf(pdf, fileName);
 };

@@ -1,7 +1,9 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
 import { format as formatDate } from 'date-fns';
 import { safeText } from './rams-pdf-helpers';
+import { saveOrSharePdf } from '@/utils/save-or-share-pdf';
 
 // Extend jsPDF with autoTable
 declare module 'jspdf' {
@@ -497,7 +499,7 @@ export const generateLaTeXStylePDF = async (
         }
 
         // Enhanced list formatting with proper spacing
-        if (trimmed.match(/^[-\*\+]\s/)) {
+        if (trimmed.match(/^[-*+]\s/)) {
           if (!inList) {
             yPosition += 2;
             inList = true;
@@ -507,7 +509,7 @@ export const generateLaTeXStylePDF = async (
           pdf.setFontSize(fontSize);
           pdf.setTextColor(50, 50, 50);
 
-          const listText = trimmed.replace(/^[-\*\+]\s/, '• ');
+          const listText = trimmed.replace(/^[-*+]\s/, '• ');
           const processedText = processInlineFormatting(listText);
 
           // Use enhanced text wrapping
@@ -800,7 +802,7 @@ export const generateLaTeXStylePDF = async (
     }
 
     // Save the PDF
-    pdf.save(finalFilename);
+    await saveOrSharePdf(pdf, finalFilename);
     console.log('LaTeX-style PDF generated successfully');
   } catch (error) {
     console.error('LaTeX-style PDF generation failed:', error);

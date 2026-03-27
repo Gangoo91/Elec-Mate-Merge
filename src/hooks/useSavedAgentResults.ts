@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState, useEffect, useCallback } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/contexts/AuthContext';
@@ -25,7 +26,16 @@ export interface UseSavedAgentResultsReturn {
   isLoading: boolean;
   error: string | null;
   refetch: () => Promise<void>;
+  deleteResult: (id: string, agentType: AgentType) => Promise<boolean>;
 }
+
+const AGENT_TABLE_MAP: Record<AgentType, string> = {
+  'circuit-designer': 'circuit_design_jobs',
+  'cost-engineer': 'cost_engineer_jobs',
+  'health-safety': 'health_safety_jobs',
+  installer: 'installation_method_jobs',
+  maintenance: 'maintenance_method_jobs',
+};
 
 const AGENT_LABELS: Record<AgentType, string> = {
   'circuit-designer': 'Circuit Designer',
@@ -108,7 +118,8 @@ export function useSavedAgentResults(): UseSavedAgentResultsReturn {
           allResults.push({
             id: job.id,
             agentType: 'circuit-designer',
-            title: jobInputs?.projectInfo?.projectName || jobInputs?.projectName || 'Circuit Design',
+            title:
+              jobInputs?.projectInfo?.projectName || jobInputs?.projectName || 'Circuit Design',
             completedAt: job.completed_at || '',
             outputData: job.design_data,
             inputData: job.job_inputs,
@@ -208,6 +219,24 @@ export function useSavedAgentResults(): UseSavedAgentResultsReturn {
     maintenance: counts['maintenance'] || 0,
   };
 
+  const deleteResult = useCallback(async (id: string, agentType: AgentType): Promise<boolean> => {
+    const table = AGENT_TABLE_MAP[agentType];
+    if (!table) return false;
+
+    const { error: deleteError } = await supabase
+      .from(table as any)
+      .delete()
+      .eq('id', id);
+    if (deleteError) {
+      console.error('Failed to delete result:', deleteError);
+      return false;
+    }
+
+    // Optimistically remove from local state
+    setResults((prev) => prev.filter((r) => r.id !== id));
+    return true;
+  }, []);
+
   return {
     results,
     counts: allCounts,
@@ -215,6 +244,7 @@ export function useSavedAgentResults(): UseSavedAgentResultsReturn {
     isLoading,
     error,
     refetch: fetchAllResults,
+    deleteResult,
   };
 }
 

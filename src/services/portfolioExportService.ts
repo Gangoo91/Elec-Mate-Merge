@@ -1,6 +1,8 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
 import { PortfolioEntry, ExportOptions } from '@/types/portfolio';
+import { saveOrSharePdf } from '@/utils/save-or-share-pdf';
 
 export interface ExportProgress {
   step: string;
@@ -196,7 +198,7 @@ export class PortfolioExportService {
     const filename = `portfolio-export-${timestamp}.pdf`;
 
     // Save the PDF
-    doc.save(filename);
+    await saveOrSharePdf(doc, filename);
     this.updateProgress('Export complete', filteredEntries.length, filteredEntries.length);
   }
 

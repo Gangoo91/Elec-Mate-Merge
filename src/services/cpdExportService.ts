@@ -1,7 +1,9 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
 import { format } from 'date-fns';
 import { CPDEntry, CPDStats, CPDGoal } from './cpdDataService';
+import { saveOrSharePdf } from '@/utils/save-or-share-pdf';
 
 export interface ExportOptions {
   includeEvidence?: boolean;
@@ -15,7 +17,7 @@ export interface ExportOptions {
 }
 
 class CPDExportService {
-  exportToPDF(
+  async exportToPDF(
     entries: CPDEntry[],
     stats: CPDStats,
     goals: CPDGoal[],
@@ -140,7 +142,7 @@ class CPDExportService {
       );
     }
 
-    doc.save(`cpd-report-${format(new Date(), 'yyyy-MM-dd')}.pdf`);
+    await saveOrSharePdf(doc, `cpd-report-${format(new Date(), 'yyyy-MM-dd')}.pdf`);
   }
 
   exportToCSV(entries: CPDEntry[], options: ExportOptions = { format: 'csv' }): void {

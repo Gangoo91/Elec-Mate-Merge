@@ -7,6 +7,7 @@ import { SafetyPhoto, getCategoryLabel } from '@/hooks/useSafetyPhotos';
 import { toast } from '@/hooks/use-toast';
 import jsPDF from 'jspdf';
 import { format } from 'date-fns';
+import { saveOrSharePdf } from '@/utils/save-or-share-pdf';
 import JSZip from 'jszip';
 
 interface Annotation {
@@ -288,7 +289,7 @@ export default function ProjectExportSheet({
       }
 
       const filename = `${project.name.replace(/\s+/g, '-').toLowerCase()}-${format(new Date(), 'yyyy-MM-dd')}.pdf`;
-      doc.save(filename);
+      await saveOrSharePdf(doc, filename);
 
       toast({
         title: 'Report generated',

@@ -1,4 +1,5 @@
 import jsPDF from 'jspdf';
+import { saveOrSharePdf } from '@/utils/save-or-share-pdf';
 
 interface PortfolioTemplate {
   id: string;
@@ -70,7 +71,7 @@ export const generatePortfolioTemplate = (template: PortfolioTemplate) => {
   return pdf;
 };
 
-export const downloadTemplate = (template: PortfolioTemplate) => {
+export const downloadTemplate = async (template: PortfolioTemplate) => {
   const pdf = generatePortfolioTemplate(template);
-  pdf.save(`${template.name.replace(/\s+/g, '_')}_template.pdf`);
+  await saveOrSharePdf(pdf, `${template.name.replace(/\s+/g, '_')}_template.pdf`);
 };

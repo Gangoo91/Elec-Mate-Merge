@@ -1,5 +1,7 @@
+ 
 import jsPDF from 'jspdf';
 import { format } from 'date-fns';
+import { saveOrSharePdf } from '@/utils/save-or-share-pdf';
 import type { PolicyTemplate, UserPolicy } from '@/hooks/usePolicies';
 
 interface PolicyPdfOptions {
@@ -655,5 +657,5 @@ export async function downloadPolicyPDF(options: PolicyPdfOptions): Promise<void
   const dateStr = format(new Date(), 'yyyyMMdd');
   const fileName = `${safeName}_${dateStr}.pdf`;
 
-  doc.save(fileName);
+  await saveOrSharePdf(doc, fileName);
 }

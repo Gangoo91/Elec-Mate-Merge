@@ -1,8 +1,10 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
 import { Quote } from '@/types/quote';
 import { CompanyProfile } from '@/types/company';
 import { safeText, safeNumber, safeDate } from './rams-pdf-helpers';
+import { saveOrSharePdf } from '@/utils/save-or-share-pdf';
 import { AIService } from '@/components/cv-builder/ai/AIService';
 
 // No need to extend jsPDF interface since we're using autoTable directly
@@ -44,7 +46,7 @@ export const generateAIEnhancedQuotePDF = async ({
   let yPosition = margin;
 
   // Generate AI content
-  let aiContent: AIGeneratedContent = {};
+  const aiContent: AIGeneratedContent = {};
 
   try {
     if (aiEnhancements.executiveSummary && quote.jobDetails) {
@@ -569,7 +571,7 @@ export const generateAIEnhancedQuotePDF = async ({
 
     // Save the PDF
     const fileName = `AI_Enhanced_Quote_${safeText(quote.quoteNumber)}_${safeDate(quote.createdAt).replace(/\//g, '-')}.pdf`;
-    pdf.save(fileName);
+    await saveOrSharePdf(pdf, fileName);
 
     return true;
   } catch (error) {

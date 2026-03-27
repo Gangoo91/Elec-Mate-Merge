@@ -147,7 +147,7 @@ export default function MaterialsProcurement() {
           notes: item.best_supplier ? `Best price: ${item.best_supplier}` : undefined,
         })),
     };
-    sessionStorage.setItem(materialsSessionId, JSON.stringify({ materialsData }));
+    localStorage.setItem(materialsSessionId, JSON.stringify({ materialsData }));
     navigate(`/electrician/quote-builder/create?materialsSessionId=${materialsSessionId}`);
   };
 

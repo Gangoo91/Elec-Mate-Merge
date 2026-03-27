@@ -1,6 +1,7 @@
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
 import { format } from 'date-fns';
+import { saveOrSharePdf } from '@/utils/save-or-share-pdf';
 
 interface CertificateData {
   companyName?: string;
@@ -263,5 +264,5 @@ export async function generateCompletionCertificatePDF(data: CertificateData): P
 export async function downloadCompletionCertificatePDF(data: CertificateData): Promise<void> {
   const doc = await generateCompletionCertificatePDF(data);
   const fileName = `Completion_Certificate_${data.referenceId || 'CERT'}_${format(new Date(), 'yyyyMMdd')}.pdf`;
-  doc.save(fileName);
+  await saveOrSharePdf(doc, fileName);
 }

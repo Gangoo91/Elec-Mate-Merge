@@ -1,5 +1,7 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import jsPDF from 'jspdf';
 import { generatePdfFilename } from './pdfFilenameGenerator';
+import { saveOrSharePdf } from '@/utils/save-or-share-pdf';
 
 interface MinorWorksFormData {
   certificateNumber: string;
@@ -27,7 +29,7 @@ interface MinorWorksFormData {
   [key: string]: any;
 }
 
-export const generateMinorWorksPdf = (formData: MinorWorksFormData): void => {
+export const generateMinorWorksPdf = async (formData: MinorWorksFormData): Promise<void> => {
   const doc = new jsPDF();
   let yPosition = 20;
   const pageWidth = doc.internal.pageSize.width;
@@ -403,5 +405,5 @@ export const generateMinorWorksPdf = (formData: MinorWorksFormData): void => {
     formData.clientName || formData.propertyAddress || 'Client',
     formData.workDate || new Date()
   );
-  doc.save(fileName);
+  await saveOrSharePdf(doc, fileName);
 };

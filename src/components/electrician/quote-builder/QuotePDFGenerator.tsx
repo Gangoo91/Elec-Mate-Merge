@@ -1,7 +1,9 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
 import { Quote } from '@/types/quote';
 import { CompanyProfile } from '@/types/company';
+import { saveOrSharePdf } from '@/utils/save-or-share-pdf';
 
 // Helper function to convert hex color to RGB array
 const hexToRgb = (hex: string): [number, number, number] => {
@@ -26,7 +28,7 @@ const debugCompanyProfile = (companyProfile?: CompanyProfile) => {
   });
 };
 
-export const generateQuotePDF = (quote: Partial<Quote>, companyProfile?: CompanyProfile) => {
+export const generateQuotePDF = async (quote: Partial<Quote>, companyProfile?: CompanyProfile) => {
   // Debug company profile data
   debugCompanyProfile(companyProfile);
 
@@ -471,7 +473,11 @@ export const generateQuotePDF = (quote: Partial<Quote>, companyProfile?: Company
       const expiry = new Date(quote.expiryDate);
       const created = quote.createdAt ? new Date(quote.createdAt) : new Date();
       const days = Math.round((expiry.getTime() - created.getTime()) / (1000 * 60 * 60 * 24));
-      const expiryStr = expiry.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
+      const expiryStr = expiry.toLocaleDateString('en-GB', {
+        day: 'numeric',
+        month: 'long',
+        year: 'numeric',
+      });
       return days > 0
         ? `This quote is valid for ${days} days (until ${expiryStr}). All work complies with BS 7671:2018 (18th Edition) and Part P regulations.`
         : `This quote is valid until ${expiryStr}. All work complies with BS 7671:2018 (18th Edition) and Part P regulations.`;
@@ -482,5 +488,5 @@ export const generateQuotePDF = (quote: Partial<Quote>, companyProfile?: Company
   doc.text(validityText, margin, footerBarY, { maxWidth: pageWidth - margin * 2 });
 
   // Save the PDF
-  doc.save(`Quote-${quote.quoteNumber}.pdf`);
+  await saveOrSharePdf(doc, `Quote-${quote.quoteNumber}.pdf`);
 };

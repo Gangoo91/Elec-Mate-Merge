@@ -12,6 +12,21 @@ import { supabase } from '@/integrations/supabase/client';
 import type { EICPayload } from '@/types/eic-payload';
 
 /* ------------------------------------------------------------------ */
+/*  Normalise pass/fail/N/A values for PDFMonkey Liquid conditionals   */
+/* ------------------------------------------------------------------ */
+
+function normaliseTestResult(value: string | undefined): string {
+  if (!value) return 'N/A';
+  const v = value.trim();
+  if (v === '✓' || v.toLowerCase() === 'pass' || v.toLowerCase() === 'yes' || v === 'Y')
+    return 'Pass';
+  if (v === '✗' || v.toLowerCase() === 'fail' || v.toLowerCase() === 'no' || v === 'N')
+    return 'Fail';
+  if (v.toLowerCase() === 'n/a' || v === '') return 'N/A';
+  return v;
+}
+
+/* ------------------------------------------------------------------ */
 /*  Observations with photo evidence                                   */
 /* ------------------------------------------------------------------ */
 
@@ -361,12 +376,12 @@ export async function formatEicJson(
         rcd_one_x: test.rcdOneX || 'N/A',
         rcd_half_x: test.rcdHalfX || 'N/A',
         rcd_five_x: test.rcdFiveX || 'N/A',
-        rcd_test_button: test.rcdTestButton || 'N/A',
-        afdd_test: test.afddTest || 'N/A',
+        rcd_test_button: normaliseTestResult(test.rcdTestButton),
+        afdd_test: normaliseTestResult(test.afddTest),
         pfc: test.pfc || 'N/A',
         pfc_live_neutral: test.pfcLiveNeutral || 'N/A',
         pfc_live_earth: test.pfcLiveEarth || 'N/A',
-        functional_testing: test.functionalTesting || 'N/A',
+        functional_testing: normaliseTestResult(test.functionalTesting),
         notes: test.notes || 'N/A',
         phase_type: test.phaseType || 'N/A',
         phase_rotation: test.phaseRotation || 'N/A',

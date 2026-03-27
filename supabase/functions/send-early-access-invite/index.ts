@@ -781,6 +781,124 @@ function generateEarlyAccessOfferHTML(email: string): string {
 </body></html>`;
 }
 
+function generateEarlyAccessV7HTML(email: string, inviteToken: string): string {
+  const supabaseUrl = Deno.env.get('SUPABASE_URL') || 'https://jtwygbeceundfgnkirof.supabase.co';
+  const signupUrl = `${supabaseUrl}/functions/v1/track-launch-click?token=${inviteToken}`;
+  const trackingPixelUrl = `${supabaseUrl}/functions/v1/track-launch-open?token=${inviteToken}`;
+
+  return `<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><meta name="color-scheme" content="dark"><!--[if mso]><style>body,table,td{font-family:Arial,sans-serif!important}</style><![endif]--></head>
+<body style="margin:0;padding:0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;background:#0f172a">
+<table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background:#0f172a"><tr><td style="padding:24px 12px">
+<table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="max-width:500px;margin:0 auto;background:linear-gradient(180deg,#1e293b,#0f172a);border-radius:24px;overflow:hidden;border:1px solid rgba(251,191,36,0.2)">
+
+<!-- Opening -->
+<tr><td style="padding:32px 24px 20px">
+<p style="margin:0 0 16px;font-size:17px;color:#fff;line-height:1.6">Hey,</p>
+<p style="margin:0 0 14px;font-size:16px;color:#fff;line-height:1.7">You signed up for early access to Elec-Mate. Here's what's happened since:</p>
+<p style="margin:0 0 14px;font-size:16px;color:#fff;line-height:1.7">We built one place to do everything. Certs. RAMS. Quotes. Invoices. Calculators. Study. AI help. Business tools. No jumping between apps. No paper certificates. No late-night admin.</p>
+<p style="margin:0;font-size:16px;color:#fff;font-weight:700;line-height:1.7">7 weeks in. Before we've even hit the App Store. Here's the numbers:</p>
+</td></tr>
+
+<!-- Stats Strip Row 1 -->
+<tr><td style="padding:0 20px 6px">
+<table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%"><tr>
+<td width="25%" style="padding:0 3px 0 0"><div style="background:linear-gradient(135deg,#fbbf24,#f59e0b);border-radius:12px;padding:14px 4px;text-align:center">
+<p style="margin:0;font-size:20px;font-weight:800;color:#0f172a;line-height:1">&pound;245K</p>
+<p style="margin:4px 0 0;font-size:8px;font-weight:800;color:#0f172a;text-transform:uppercase;letter-spacing:0.3px">Quoted</p>
+</div></td>
+<td width="25%" style="padding:0 2px"><div style="background:linear-gradient(135deg,#fbbf24,#f59e0b);border-radius:12px;padding:14px 4px;text-align:center">
+<p style="margin:0;font-size:20px;font-weight:800;color:#0f172a;line-height:1">&pound;98K</p>
+<p style="margin:4px 0 0;font-size:8px;font-weight:800;color:#0f172a;text-transform:uppercase;letter-spacing:0.3px">Invoiced</p>
+</div></td>
+<td width="25%" style="padding:0 2px"><div style="background:linear-gradient(135deg,#fbbf24,#f59e0b);border-radius:12px;padding:14px 4px;text-align:center">
+<p style="margin:0;font-size:20px;font-weight:800;color:#0f172a;line-height:1">2,540</p>
+<p style="margin:4px 0 0;font-size:8px;font-weight:800;color:#0f172a;text-transform:uppercase;letter-spacing:0.3px">Customers</p>
+</div></td>
+<td width="25%" style="padding:0 0 0 3px"><div style="background:linear-gradient(135deg,#fbbf24,#f59e0b);border-radius:12px;padding:14px 4px;text-align:center">
+<p style="margin:0;font-size:20px;font-weight:800;color:#0f172a;line-height:1">633</p>
+<p style="margin:4px 0 0;font-size:8px;font-weight:800;color:#0f172a;text-transform:uppercase;letter-spacing:0.3px">Users</p>
+</div></td>
+</tr></table>
+</td></tr>
+
+<!-- Stats Strip Row 2 -->
+<tr><td style="padding:0 20px 16px">
+<table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%"><tr>
+<td width="25%" style="padding:0 3px 0 0"><div style="background:linear-gradient(135deg,#fbbf24,#f59e0b);border-radius:12px;padding:14px 4px;text-align:center">
+<p style="margin:0;font-size:20px;font-weight:800;color:#0f172a;line-height:1">2,185</p>
+<p style="margin:4px 0 0;font-size:8px;font-weight:800;color:#0f172a;text-transform:uppercase;letter-spacing:0.3px">Method Stmts</p>
+</div></td>
+<td width="25%" style="padding:0 2px"><div style="background:linear-gradient(135deg,#fbbf24,#f59e0b);border-radius:12px;padding:14px 4px;text-align:center">
+<p style="margin:0;font-size:20px;font-weight:800;color:#0f172a;line-height:1">1,264</p>
+<p style="margin:4px 0 0;font-size:8px;font-weight:800;color:#0f172a;text-transform:uppercase;letter-spacing:0.3px">RAMS</p>
+</div></td>
+<td width="25%" style="padding:0 2px"><div style="background:linear-gradient(135deg,#fbbf24,#f59e0b);border-radius:12px;padding:14px 4px;text-align:center">
+<p style="margin:0;font-size:20px;font-weight:800;color:#0f172a;line-height:1">491</p>
+<p style="margin:4px 0 0;font-size:8px;font-weight:800;color:#0f172a;text-transform:uppercase;letter-spacing:0.3px">Circuits</p>
+</div></td>
+<td width="25%" style="padding:0 0 0 3px"><div style="background:linear-gradient(135deg,#fbbf24,#f59e0b);border-radius:12px;padding:14px 4px;text-align:center">
+<p style="margin:0;font-size:20px;font-weight:800;color:#0f172a;line-height:1">435</p>
+<p style="margin:4px 0 0;font-size:8px;font-weight:800;color:#0f172a;text-transform:uppercase;letter-spacing:0.3px">Certs Signed</p>
+</div></td>
+</tr></table>
+</td></tr>
+
+<!-- And much more -->
+<tr><td style="padding:0 20px 16px"><div style="background:rgba(30,41,59,0.8);border:1px solid rgba(255,255,255,0.1);border-radius:14px;padding:20px">
+<p style="margin:0 0 14px;font-size:15px;color:#fbbf24;font-weight:700;text-transform:uppercase;letter-spacing:0.5px">And much more</p>
+<p style="margin:0 0 5px;font-size:14px;color:#fff;line-height:1.6">&#x2713; <strong style="color:#fff">215</strong> jobs priced by the AI cost engineer</p>
+<p style="margin:0 0 5px;font-size:14px;color:#fff;line-height:1.6">&#x2713; <strong style="color:#fff">141</strong> installations generated by the AI agent</p>
+<p style="margin:0 0 5px;font-size:14px;color:#fff;line-height:1.6">&#x2713; <strong style="color:#fff">112</strong> EPA readiness checks</p>
+<p style="margin:0 0 5px;font-size:14px;color:#fff;line-height:1.6">&#x2713; <strong style="color:#fff">87</strong> training videos watched</p>
+<p style="margin:0 0 5px;font-size:14px;color:#fff;line-height:1.6">&#x2713; <strong style="color:#fff">79</strong> active Elec-IDs</p>
+<p style="margin:0 0 5px;font-size:14px;color:#fff;line-height:1.6">&#x2713; <strong style="color:#fff">61</strong> mental health check-ins</p>
+<p style="margin:0 0 5px;font-size:14px;color:#fff;line-height:1.6">&#x2713; <strong style="color:#fff">53</strong> apprentices on active study streaks</p>
+<p style="margin:0;font-size:14px;color:#fff;line-height:1.6">&#x2713; <strong style="color:#fff">43</strong> AM2 simulations completed</p>
+</div></td></tr>
+
+<!-- We didn't build a demo -->
+<tr><td style="padding:0 20px 16px"><div style="background:linear-gradient(135deg,rgba(251,191,36,0.12),rgba(251,191,36,0.03));border:1px solid rgba(251,191,36,0.3);border-radius:14px;padding:20px">
+<p style="margin:0 0 10px;font-size:18px;color:#fbbf24;font-weight:800;line-height:1.5">We didn't build a demo.</p>
+<p style="margin:0 0 12px;font-size:16px;color:#fff;font-weight:700;line-height:1.6">We built something people actually use.</p>
+<p style="margin:0;font-size:14px;color:#fff;line-height:1.7">App Store launch is next week. Your early access price locks in now.</p>
+</div></td></tr>
+
+<!-- Pricing CTA -->
+<tr><td style="padding:0 20px 16px"><div style="background:linear-gradient(135deg,rgba(251,191,36,0.15),rgba(251,191,36,0.05));border:2px solid rgba(251,191,36,0.4);border-radius:16px;padding:24px 18px;text-align:center">
+<p style="margin:0 0 6px;font-size:13px;color:#fff;font-weight:600;letter-spacing:0.3px;text-transform:uppercase">Early access price &mdash; locked in forever</p>
+<p style="margin:0;font-size:52px;font-weight:800;color:#fbbf24;line-height:1">&pound;${EA_OFFER_CONFIG.monthlyPrice.toFixed(2)}<span style="font-size:18px;font-weight:600;color:#fff">/mo</span></p>
+<p style="margin:10px 0 4px;font-size:14px;color:#fff;line-height:1.5">App Store price will be <strong style="color:#fff">&pound;14.99/mo</strong>.</p>
+<p style="margin:0 0 18px;font-size:14px;color:#fff;line-height:1.5">You're getting &pound;7.99 because you signed up early.</p>
+<a href="${signupUrl}" style="display:block;padding:16px;background:linear-gradient(135deg,#fbbf24,#f59e0b);color:#0f172a;text-decoration:none;font-size:16px;font-weight:700;border-radius:12px;text-align:center;margin-bottom:10px">Start your free trial &#x2192;</a>
+<a href="${EA_OFFER_CONFIG.yearlyPaymentLink}" style="display:block;padding:14px;background:rgba(251,191,36,0.15);border:2px solid rgba(251,191,36,0.5);color:#fbbf24;text-decoration:none;font-size:15px;font-weight:600;border-radius:12px;text-align:center">Or go yearly: &pound;${EA_OFFER_CONFIG.yearlyPrice.toFixed(2)} (&pound;${(EA_OFFER_CONFIG.yearlyPrice / 12).toFixed(2)}/mo)</a>
+</div></td></tr>
+
+<!-- Not sure? -->
+<tr><td style="padding:0 20px 12px"><div style="background:rgba(59,130,246,0.08);border:1px solid rgba(59,130,246,0.25);border-radius:12px;padding:16px;text-align:center">
+<p style="margin:0 0 8px;font-size:14px;color:#fff;line-height:1.6">Questions? Just reply to this email.</p>
+<p style="margin:0;font-size:14px;color:#fff;line-height:1.6"><strong style="color:#60a5fa">founder@elec-mate.com</strong> &mdash; comes straight to me.</p>
+</div></td></tr>
+
+<!-- Sign-off -->
+<tr><td style="padding:0 20px 16px"><div style="background:linear-gradient(135deg,rgba(251,191,36,0.08),rgba(251,191,36,0.02));border:1px solid rgba(251,191,36,0.15);border-radius:14px;padding:18px">
+<p style="margin:0 0 4px;font-size:15px;color:#fff">Cheers,</p>
+<p style="margin:0 0 2px;font-size:17px;color:#fbbf24;font-weight:700">Andrew</p>
+<p style="margin:0;font-size:13px;color:#fff">Founder &middot; Elec-Mate</p>
+<p style="margin:6px 0 0;font-size:12px;color:#fff">Built in Cumbria. Built for the trade.</p>
+</div></td></tr>
+
+<!-- Footer -->
+<tr><td style="padding:16px 24px;text-align:center;border-top:1px solid rgba(255,255,255,0.08)">
+<p style="margin:0;font-size:12px;color:#fff">&copy; ${new Date().getFullYear()} Elec-Mate &middot; Built for UK Electricians &#x1F1EC;&#x1F1E7; &#x26A1;</p>
+</td></tr>
+
+<!-- Tracking Pixel -->
+<tr><td><img src="${trackingPixelUrl}" width="1" height="1" alt="" style="display:none" /></td></tr>
+
+</table></td></tr></table>
+</body></html>`;
+}
+
 function generateEarlyAccessV6HTML(): string {
   return `<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><meta name="color-scheme" content="dark"><!--[if mso]><style>body,table,td{font-family:Arial,sans-serif!important}</style><![endif]--></head>
 <body style="margin:0;padding:0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;background:#0f172a">
@@ -1596,10 +1714,9 @@ Deno.serve(async (req) => {
 
       case 'send_launch_campaign': {
         // Send launch emails to people who haven't signed up yet
-        // Rate limited: sends in batches with delays to avoid Resend rate limits
-        // 295 emails over 30 mins = ~10 per minute = 1 every 6 seconds
-        const BATCH_SIZE = 10; // Process 10 at a time
-        const DELAY_BETWEEN_EMAILS_MS = 6000; // 6 seconds between emails
+        // Send in batches — 500ms between emails, 50 per function call
+        const BATCH_SIZE = 50;
+        const DELAY_BETWEEN_EMAILS_MS = 500;
 
         // Get count of all unclaimed, non-bounced invites that haven't received launch email
         const { count: totalUnclaimedCount } = await supabaseAdmin
@@ -1962,9 +2079,9 @@ Deno.serve(async (req) => {
           throw new Error('Valid segment (hot, warm, cold) is required');
         }
 
-        // Batch configuration - same as send_launch_campaign
-        const BATCH_SIZE = 10; // Process 10 at a time per function call
-        const DELAY_BETWEEN_EMAILS_MS = 6000; // 6 seconds between emails to stay within rate limits
+        // Batch configuration — 50 per call, 500ms between
+        const BATCH_SIZE = 50;
+        const DELAY_BETWEEN_EMAILS_MS = 500;
 
         // 24-hour cooldown - can re-send to leads after 1 day
         const oneDayAgo = new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString();
@@ -2462,7 +2579,7 @@ Deno.serve(async (req) => {
 
       case 'send_conversion_campaign': {
         // Batch send conversion emails — called repeatedly by frontend until complete
-        const CONV_BATCH_SIZE = 10;
+        const CONV_BATCH_SIZE = 50;
         const CONV_DELAY_MS = 500;
 
         // Get auth users to exclude signed-up
@@ -2609,15 +2726,24 @@ Deno.serve(async (req) => {
         // Send a test offer email to a specific address
         if (!testEmail) throw new Error('testEmail is required');
 
-        const eaTestHtml =
-          email_version === 'v6'
-            ? generateEarlyAccessV6HTML()
-            : generateEarlyAccessOfferHTML(testEmail);
-        const eaTestSubject =
-          email_version === 'v6'
-            ? "[TEST] You signed up early. Here's what that gets you."
-            : '[TEST] One-off offer — £7.99/month, locked forever';
-        const eaTestVersion = email_version === 'v6' ? 'v6' : 'v1';
+        let eaTestHtml: string;
+        let eaTestSubject: string;
+        let eaTestVersion: string;
+        if (email_version === 'v7') {
+          // Need a token for tracking links
+          const testToken = generateToken();
+          eaTestHtml = generateEarlyAccessV7HTML(testEmail, testToken);
+          eaTestSubject = '[TEST] 7 weeks. No App Store. Just electricians getting shit done.';
+          eaTestVersion = 'v7';
+        } else if (email_version === 'v6') {
+          eaTestHtml = generateEarlyAccessV6HTML();
+          eaTestSubject = "[TEST] You signed up early. Here's what that gets you.";
+          eaTestVersion = 'v6';
+        } else {
+          eaTestHtml = generateEarlyAccessOfferHTML(testEmail);
+          eaTestSubject = '[TEST] One-off offer — £7.99/month, locked forever';
+          eaTestVersion = 'v1';
+        }
         const { data: eaTestData, error: eaTestErr } = await resend.emails.send({
           from: 'Elec-Mate <founder@elec-mate.com>',
           replyTo: 'founder@elec-mate.com',
@@ -2642,7 +2768,7 @@ Deno.serve(async (req) => {
 
       case 'send_ea_offer_campaign': {
         // Batch send offer emails — called repeatedly by frontend until complete
-        const EA_BATCH_SIZE = 10;
+        const EA_BATCH_SIZE = 50;
         const EA_DELAY_MS = 500;
 
         // Get auth users to exclude signed-up
@@ -2680,15 +2806,25 @@ Deno.serve(async (req) => {
         for (let i = 0; i < eaBatch.length; i++) {
           const invite = eaBatch[i];
           try {
-            const emailHtml =
-              email_version === 'v6'
-                ? generateEarlyAccessV6HTML()
-                : generateEarlyAccessOfferHTML(invite.email);
-            const eaCampSubject =
-              email_version === 'v6'
-                ? "You signed up early. Here's what that gets you."
-                : 'One-off offer — £7.99/month, locked forever';
-            const eaCampVersion = email_version === 'v6' ? 'v6' : 'v1';
+            let emailHtml: string;
+            let eaCampSubject: string;
+            let eaCampVersion: string;
+            if (email_version === 'v7') {
+              emailHtml = generateEarlyAccessV7HTML(
+                invite.email,
+                invite.invite_token || generateToken()
+              );
+              eaCampSubject = '7 weeks. No App Store. Just electricians getting shit done.';
+              eaCampVersion = 'v7';
+            } else if (email_version === 'v6') {
+              emailHtml = generateEarlyAccessV6HTML();
+              eaCampSubject = "You signed up early. Here's what that gets you.";
+              eaCampVersion = 'v6';
+            } else {
+              emailHtml = generateEarlyAccessOfferHTML(invite.email);
+              eaCampSubject = 'One-off offer — £7.99/month, locked forever';
+              eaCampVersion = 'v1';
+            }
 
             const { data: emailData, error: emailError } = await resend.emails.send({
               from: 'Elec-Mate <founder@elec-mate.com>',

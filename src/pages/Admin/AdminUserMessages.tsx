@@ -1,3 +1,4 @@
+ 
 import { useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
@@ -292,6 +293,19 @@ export default function AdminUserMessages() {
       });
 
       if (error) throw error;
+
+      // Fire-and-forget push notification to user
+      supabase.functions
+        .invoke('send-push-notification', {
+          body: {
+            userId: recipientId,
+            title: 'New message from Elec-Mate',
+            body: message.length > 100 ? message.substring(0, 97) + '...' : message,
+            type: 'job',
+            data: { senderId: user?.id, isAdminMessage: true },
+          },
+        })
+        .catch(() => {}); // fire-and-forget, never block the UI
     },
     onSuccess: () => {
       haptic.success();
@@ -342,8 +356,7 @@ export default function AdminUserMessages() {
 
   // Stats
   const totalUnread = conversations?.reduce((sum, c) => sum + c.unreadCount, 0) || 0;
-  const totalMessages =
-    conversations?.reduce((sum, c) => sum + c.messages.length, 0) || 0;
+  const totalMessages = conversations?.reduce((sum, c) => sum + c.messages.length, 0) || 0;
 
   // Get initials helper
   const getInitials = (name: string | null | undefined) => {
@@ -553,9 +566,7 @@ export default function AdminUserMessages() {
                       <p
                         className={cn(
                           'text-[13px] line-clamp-2 leading-snug',
-                          conv.unreadCount > 0
-                            ? '!text-white font-medium'
-                            : '!text-white'
+                          conv.unreadCount > 0 ? '!text-white font-medium' : '!text-white'
                         )}
                       >
                         {conv.lastMessage.message}

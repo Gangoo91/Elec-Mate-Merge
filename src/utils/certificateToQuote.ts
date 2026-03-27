@@ -30,7 +30,15 @@ export interface CertificateClientData {
   clientPhone?: string;
   clientAddress?: string;
   installationAddress?: string;
-  certificateType: 'EICR' | 'EIC' | 'Minor Works' | 'Emergency Lighting' | 'EV Charging' | 'PAT Testing' | 'Fire Alarm' | 'Solar PV';
+  certificateType:
+    | 'EICR'
+    | 'EIC'
+    | 'Minor Works'
+    | 'Emergency Lighting'
+    | 'EV Charging'
+    | 'PAT Testing'
+    | 'Fire Alarm'
+    | 'Solar PV';
   certificateReference?: string;
   // Certificate attachment info
   reportId?: string;
@@ -106,7 +114,7 @@ export function createQuoteFromCertificate(data: CertificateClientData): string 
     };
   }
 
-  sessionStorage.setItem(sessionId, JSON.stringify({ certificateData: quoteData }));
+  localStorage.setItem(sessionId, JSON.stringify({ certificateData: quoteData }));
 
   return `/electrician/quote-builder/create?certificateSessionId=${sessionId}`;
 }
@@ -156,7 +164,7 @@ export function createInvoiceFromCertificate(data: CertificateClientData): strin
     };
   }
 
-  sessionStorage.setItem(sessionId, JSON.stringify({ certificateData: invoiceData }));
+  localStorage.setItem(sessionId, JSON.stringify({ certificateData: invoiceData }));
 
   return `/electrician/invoice-builder/create?certificateSessionId=${sessionId}`;
 }

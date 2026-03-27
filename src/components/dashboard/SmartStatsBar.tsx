@@ -1,8 +1,11 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { FileText, PoundSterling, BookOpen, Award, Clock } from 'lucide-react';
+import { FileText, PoundSterling, BookOpen, Award, Flame } from 'lucide-react';
 import { useQuoteStorage } from '@/hooks/useQuoteStorage';
 import { useInvoiceStorage } from '@/hooks/useInvoiceStorage';
+import { useCourseProgress } from '@/hooks/useCourseProgress';
+import { useQuizResults } from '@/hooks/useQuizResults';
+import { useStudyStreak } from '@/hooks/useStudyStreak';
 
 interface StatItemProps {
   icon: React.ReactNode;
@@ -83,17 +86,16 @@ function StatItem({ icon, value, label, color = 'text-elec-yellow', path }: Stat
 export function SmartStatsBar() {
   const { savedQuotes } = useQuoteStorage();
   const { invoices } = useInvoiceStorage();
+  const { completedCount } = useCourseProgress();
+  const { getOverallStats } = useQuizResults();
+  const { streak } = useStudyStreak();
+
+  const quizStats = getOverallStats();
 
   const pendingQuotes =
     savedQuotes?.filter((q) => q.status === 'sent' || q.status === 'pending') || [];
 
   const totalQuoteValue = pendingQuotes.reduce((sum, q) => sum + (q.total || 0), 0);
-
-  const unpaidInvoices = invoices?.filter((i) => i.invoice_status !== 'paid') || [];
-  const overdueCount = unpaidInvoices.filter((i) => {
-    if (!i.due_date) return false;
-    return new Date(i.due_date) < new Date();
-  }).length;
 
   const formattedValue =
     totalQuoteValue >= 1000 ? `£${(totalQuoteValue / 1000).toFixed(1)}k` : `£${totalQuoteValue}`;
@@ -115,24 +117,24 @@ export function SmartStatsBar() {
     },
     {
       icon: <BookOpen className="h-4 w-4 sm:h-5 sm:w-5" />,
-      value: 3,
-      label: 'Courses',
+      value: completedCount,
+      label: 'Completed',
       color: 'text-blue-500',
       path: '/study-centre',
     },
     {
       icon: <Award className="h-4 w-4 sm:h-5 sm:w-5" />,
-      value: 12,
-      label: 'Certificates',
+      value: quizStats.averageScore > 0 ? `${quizStats.averageScore}%` : '—',
+      label: 'Avg Score',
       color: 'text-purple-500',
-      path: '/electrician/inspection-testing?section=my-reports',
+      path: '/study-centre',
     },
     {
-      icon: <Clock className="h-4 w-4 sm:h-5 sm:w-5" />,
-      value: overdueCount > 0 ? overdueCount : 0,
-      label: overdueCount > 0 ? 'Overdue' : 'All Clear',
-      color: overdueCount > 0 ? 'text-red-500' : 'text-green-500',
-      path: '/electrician/invoices',
+      icon: <Flame className="h-4 w-4 sm:h-5 sm:w-5" />,
+      value: streak.currentStreak,
+      label: streak.currentStreak === 1 ? 'Day Streak' : 'Day Streak',
+      color: streak.currentStreak > 0 ? 'text-orange-500' : 'text-white',
+      path: '/study-centre',
     },
   ];
 

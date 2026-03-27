@@ -3,6 +3,7 @@ import autoTable from 'jspdf-autotable';
 import { RAMSData, RAMSRisk, PPEItem } from '@/types/rams';
 import { MethodStatementData, MethodStep } from '@/types/method-statement';
 import { safeText, safeDate, getRiskLevel, getRiskColor, safeNumber } from './rams-pdf-helpers';
+import { saveOrSharePdf } from '@/utils/save-or-share-pdf';
 
 /**
  * Format control measures text with proper paragraph breaks for PDF readability
@@ -470,7 +471,8 @@ export async function generateCombinedRAMSPDF(
   options: CombinedRAMSOptions = {}
 ): Promise<void> {
   const doc = await buildCombinedRAMSDoc(ramsData, methodData, options);
-  doc.save(
+  await saveOrSharePdf(
+    doc,
     `Combined_RAMS_${safeText(ramsData.projectName || 'Document')}_${new Date().toISOString().split('T')[0]}.pdf`
   );
 }

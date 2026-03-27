@@ -18,6 +18,7 @@ import {
   getFileName,
   splitToBulletPoints,
 } from './shared';
+import { saveOrSharePdf } from '@/utils/save-or-share-pdf';
 
 export const generateATSPDF = async (cvData: CVData): Promise<void> => {
   const pdf = new jsPDF('p', 'mm', 'a4');
@@ -291,5 +292,5 @@ export const generateATSPDF = async (cvData: CVData): Promise<void> => {
   // ═══════════════════════════════════════════════════════════════════════════
 
   const fileName = getFileName(cvData, 'ATS');
-  pdf.save(fileName);
+  await saveOrSharePdf(pdf, fileName);
 };

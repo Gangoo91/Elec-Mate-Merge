@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useMemo, useState, useCallback, useEffect, useRef, memo } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -310,11 +311,7 @@ const BoardSection: React.FC<BoardSectionProps> = ({
                 <button
                   type="button"
                   onClick={() =>
-                    onUpdateBoard(
-                      board.id,
-                      'confirmedPhaseSequence',
-                      !board.confirmedPhaseSequence
-                    )
+                    onUpdateBoard(board.id, 'confirmedPhaseSequence', !board.confirmedPhaseSequence)
                   }
                   className={cn(
                     'h-10 px-4 rounded-lg border flex items-center gap-2 cursor-pointer select-none',
@@ -334,72 +331,76 @@ const BoardSection: React.FC<BoardSectionProps> = ({
 
               {/* SPD Section */}
               <div className={cn('flex items-center flex-wrap gap-2', isMobile && 'gap-1.5')}>
-              <span className="text-xs text-white mr-1">SPD:</span>
+                <span className="text-xs text-white mr-1">SPD:</span>
 
-              {/* SPD N/A */}
-              <button
-                type="button"
-                onClick={(e) => {
-                  e.preventDefault();
-                  e.stopPropagation();
-                  const newVal = !board.spdNA;
-                  onUpdateBoard(board.id, {
-                    spdNA: newVal,
-                    ...(newVal
-                      ? {
-                          spdOperationalStatus: false,
-                        }
-                      : {}),
-                  });
-                }}
-                className={cn(
-                  'h-10 px-4 rounded-lg border flex items-center gap-2 cursor-pointer select-none',
-                  'transition-colors duration-150 touch-manipulation',
-                  board.spdNA
-                    ? 'bg-amber-500/20 border-amber-500/50 text-amber-400'
-                    : 'bg-card border-border text-muted-foreground hover:bg-accent'
-                )}
-              >
-                <div
+                {/* SPD N/A */}
+                <button
+                  type="button"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    const newVal = !board.spdNA;
+                    onUpdateBoard(board.id, {
+                      spdNA: newVal,
+                      ...(newVal
+                        ? {
+                            spdOperationalStatus: false,
+                          }
+                        : {}),
+                    });
+                  }}
                   className={cn(
-                    'w-4 h-4 rounded border-2 flex items-center justify-center flex-shrink-0',
-                    board.spdNA ? 'bg-amber-500 border-amber-500' : 'border-muted-foreground'
+                    'h-10 px-4 rounded-lg border flex items-center gap-2 cursor-pointer select-none',
+                    'transition-colors duration-150 touch-manipulation',
+                    board.spdNA
+                      ? 'bg-amber-500/20 border-amber-500/50 text-amber-400'
+                      : 'bg-card border-border text-muted-foreground hover:bg-accent'
                   )}
                 >
-                  {board.spdNA && <Check className="h-3 w-3 text-black" />}
-                </div>
-                <span className="text-sm font-medium">N/A</span>
-              </button>
-
-              {/* SPD OK - only show when SPD is applicable */}
-              {!board.spdNA && (
-                <>
-                  {/* SPD OK */}
-                  <button
-                    type="button"
-                    onClick={(e) => {
-                      e.preventDefault();
-                      e.stopPropagation();
-                      console.log(
-                        '[BoardSection] SPD OK clicked, current:',
-                        board.spdOperationalStatus
-                      );
-                      onUpdateBoard(board.id, 'spdOperationalStatus', !board.spdOperationalStatus);
-                    }}
+                  <div
                     className={cn(
-                      'h-10 px-4 rounded-lg border flex items-center gap-2 cursor-pointer select-none',
-                      'transition-colors duration-150 touch-manipulation',
-                      board.spdOperationalStatus
-                        ? 'bg-green-500/20 border-green-500/50 text-green-400'
-                        : 'bg-card border-border text-muted-foreground hover:bg-accent'
+                      'w-4 h-4 rounded border-2 flex items-center justify-center flex-shrink-0',
+                      board.spdNA ? 'bg-amber-500 border-amber-500' : 'border-muted-foreground'
                     )}
                   >
-                    <CheckCircle className="h-4 w-4" />
-                    <span className="text-sm font-medium">SPD OK</span>
-                  </button>
-                </>
-              )}
-            </div>
+                    {board.spdNA && <Check className="h-3 w-3 text-black" />}
+                  </div>
+                  <span className="text-sm font-medium">N/A</span>
+                </button>
+
+                {/* SPD OK - only show when SPD is applicable */}
+                {!board.spdNA && (
+                  <>
+                    {/* SPD OK */}
+                    <button
+                      type="button"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        console.log(
+                          '[BoardSection] SPD OK clicked, current:',
+                          board.spdOperationalStatus
+                        );
+                        onUpdateBoard(
+                          board.id,
+                          'spdOperationalStatus',
+                          !board.spdOperationalStatus
+                        );
+                      }}
+                      className={cn(
+                        'h-10 px-4 rounded-lg border flex items-center gap-2 cursor-pointer select-none',
+                        'transition-colors duration-150 touch-manipulation',
+                        board.spdOperationalStatus
+                          ? 'bg-green-500/20 border-green-500/50 text-green-400'
+                          : 'bg-card border-border text-muted-foreground hover:bg-accent'
+                      )}
+                    >
+                      <CheckCircle className="h-4 w-4" />
+                      <span className="text-sm font-medium">SPD OK</span>
+                    </button>
+                  </>
+                )}
+              </div>
             </div>
 
             {/* Tools Bar - Above Circuit Table (Desktop & Mobile) */}
@@ -407,13 +408,13 @@ const BoardSection: React.FC<BoardSectionProps> = ({
               <div
                 className={cn(
                   'py-3 border-t border-white/10',
-                  isMobile ? '-mx-5 px-5 bg-background border-y border-border/30' : ''
+                  isMobile ? 'bg-background border-y border-border/30' : ''
                 )}
               >
                 <div
                   className={cn(
                     'flex items-center gap-2',
-                    isMobile ? 'grid grid-cols-[1fr_1fr_48px]' : 'flex flex-wrap'
+                    isMobile ? 'grid grid-cols-[1fr_1fr_44px]' : 'flex flex-wrap'
                   )}
                 >
                   {/* AI Board Scan */}

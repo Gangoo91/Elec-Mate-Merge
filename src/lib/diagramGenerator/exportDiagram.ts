@@ -2,6 +2,7 @@
 // Convert SVG to PNG/PDF for download
 
 import jsPDF from 'jspdf';
+import { saveOrSharePdf } from '@/utils/save-or-share-pdf';
 
 /**
  * Download a file with given data and filename
@@ -159,7 +160,7 @@ export async function exportDiagramsAsPDF(
   }
 
   // Download PDF
-  pdf.save(`${projectName}_circuit_diagrams.pdf`);
+  await saveOrSharePdf(pdf, `${projectName}_circuit_diagrams.pdf`);
 }
 
 /**

@@ -282,7 +282,7 @@ export default function AdminRevenue() {
                   <p className="text-sm font-medium text-white">Monthly Recurring Revenue</p>
                   <p className="text-xs text-white">
                     {stripeStats
-                      ? `From Stripe \u2022 ${new Date(stripeStats.generatedAt).toLocaleTimeString()}`
+                      ? `All Sources \u2022 ${new Date(stripeStats.generatedAt).toLocaleTimeString()}`
                       : 'Loading live data...'}
                   </p>
                 </div>
@@ -322,10 +322,7 @@ export default function AdminRevenue() {
             {/* Sub-stat boxes */}
             <div className="grid grid-cols-3 gap-2 mt-4">
               <div className="bg-white/[0.04] rounded-xl p-3 text-center">
-                <AnimatedCounter
-                  value={totalSubs}
-                  className="text-lg font-bold text-white"
-                />
+                <AnimatedCounter value={totalSubs} className="text-lg font-bold text-white" />
                 <p className="text-xs text-white uppercase mt-0.5">Active Subs</p>
               </div>
               <div className="bg-white/[0.04] rounded-xl p-3 text-center">
@@ -425,13 +422,60 @@ export default function AdminRevenue() {
                   >
                     {count}
                   </p>
-                  <p className="text-xs text-white mt-1">
-                    £{revenue.toFixed(2)}/mo
-                  </p>
+                  <p className="text-xs text-white mt-1">£{revenue.toFixed(2)}/mo</p>
                 </div>
               </div>
             );
           })}
+        </motion.div>
+
+        {/* Mobile App Tiers (RevenueCat) */}
+        <motion.div
+          className="space-y-2"
+          variants={sectionVariants}
+          initial="hidden"
+          animate="visible"
+          custom={1.5}
+        >
+          <p className="text-xs font-semibold text-white uppercase tracking-wider px-0.5">
+            Mobile App (RevenueCat)
+          </p>
+          <div className="grid grid-cols-2 gap-3">
+            <div className="glass-premium rounded-2xl border-l-4 border-l-cyan-500 overflow-hidden">
+              <div className="p-4">
+                <div className="flex items-center justify-between mb-3">
+                  <div className="flex items-center gap-2">
+                    <div className="w-8 h-8 rounded-lg bg-cyan-500/15 flex items-center justify-center">
+                      <GraduationCap className="h-4 w-4 text-cyan-400" />
+                    </div>
+                    <span className="text-xs text-white font-medium">Apprentice</span>
+                  </div>
+                  <Badge variant="outline" className="text-xs border-white/10 text-cyan-400">
+                    £6.99
+                  </Badge>
+                </div>
+                <p className="text-3xl font-bold text-cyan-400">0</p>
+                <p className="text-xs text-white mt-1">£0.00/mo</p>
+              </div>
+            </div>
+            <div className="glass-premium rounded-2xl border-l-4 border-l-blue-500 overflow-hidden">
+              <div className="p-4">
+                <div className="flex items-center justify-between mb-3">
+                  <div className="flex items-center gap-2">
+                    <div className="w-8 h-8 rounded-lg bg-blue-500/15 flex items-center justify-center">
+                      <Zap className="h-4 w-4 text-blue-400" />
+                    </div>
+                    <span className="text-xs text-white font-medium">Electrician</span>
+                  </div>
+                  <Badge variant="outline" className="text-xs border-white/10 text-blue-400">
+                    £14.99
+                  </Badge>
+                </div>
+                <p className="text-3xl font-bold text-blue-400">0</p>
+                <p className="text-xs text-white mt-1">£0.00/mo</p>
+              </div>
+            </div>
+          </div>
         </motion.div>
 
         {/* 14-Day Performance + Chart — Combined Glass Card */}
@@ -565,45 +609,79 @@ export default function AdminRevenue() {
           </div>
         </motion.div>
 
-        {/* Price Breakdown */}
-        {stripeStats?.stripe.subscriptionsByPrice &&
-          Object.keys(stripeStats.stripe.subscriptionsByPrice).length > 0 && (
-            <motion.div
-              className="glass-premium rounded-2xl overflow-hidden"
-              variants={sectionVariants}
-              initial="hidden"
-              animate="visible"
-              custom={4}
-            >
-              <div className="h-0.5 bg-gradient-to-r from-emerald-500 to-green-400" />
-              <div className="p-5">
-                <p className="text-sm font-medium text-white mb-3">Active Prices</p>
-                <div className="space-y-2">
-                  {Object.entries(stripeStats.stripe.subscriptionsByPrice)
-                    .sort((a, b) => b[1] - a[1])
-                    .map(([price, count]) => {
-                      const percentage = totalSubs > 0 ? (count / totalSubs) * 100 : 0;
-                      return (
-                        <div key={price} className="flex items-center gap-3">
-                          <div className="flex-1">
-                            <div className="flex justify-between text-sm mb-1">
+        {/* Price Breakdown — Stripe + App Store */}
+        <motion.div
+          className="glass-premium rounded-2xl overflow-hidden"
+          variants={sectionVariants}
+          initial="hidden"
+          animate="visible"
+          custom={4}
+        >
+          <div className="h-0.5 bg-gradient-to-r from-emerald-500 to-green-400" />
+          <div className="p-5">
+            <p className="text-sm font-medium text-white mb-3">Active Prices</p>
+            <div className="space-y-2">
+              {/* Stripe prices */}
+              {stripeStats?.stripe.subscriptionsByPrice &&
+                Object.entries(stripeStats.stripe.subscriptionsByPrice)
+                  .sort((a, b) => b[1] - a[1])
+                  .map(([price, count]) => {
+                    const percentage = totalSubs > 0 ? (count / totalSubs) * 100 : 0;
+                    return (
+                      <div key={price} className="flex items-center gap-3">
+                        <div className="w-1 h-6 rounded-full bg-purple-500 opacity-60" />
+                        <div className="flex-1">
+                          <div className="flex justify-between text-sm mb-1">
+                            <div className="flex items-center gap-2">
                               <span className="text-white">{price}</span>
-                              <span className="font-medium text-white">{count}</span>
+                              <Badge className="bg-purple-500/15 text-purple-400 border-0 text-[9px]">
+                                Stripe
+                              </Badge>
                             </div>
-                            <div className="h-2 bg-white/[0.06] rounded-full overflow-hidden">
-                              <div
-                                className="h-full bg-gradient-to-r from-emerald-500 to-green-400 rounded-full transition-all"
-                                style={{ width: `${percentage}%` }}
-                              />
-                            </div>
+                            <span className="font-medium text-white">{count}</span>
+                          </div>
+                          <div className="h-1.5 bg-white/[0.06] rounded-full overflow-hidden">
+                            <div
+                              className="h-full bg-gradient-to-r from-purple-500 to-purple-400 rounded-full transition-all"
+                              style={{ width: `${percentage}%` }}
+                            />
                           </div>
                         </div>
-                      );
-                    })}
+                      </div>
+                    );
+                  })}
+              {/* RevenueCat Mobile App prices */}
+              {[
+                { price: '£6.99/month', label: 'Apprentice' },
+                { price: '£14.99/month', label: 'Electrician' },
+                { price: '£69.99/year', label: 'Apprentice Yearly' },
+                { price: '£149.99/year', label: 'Electrician Yearly' },
+              ].map((rc) => (
+                <div key={rc.price} className="flex items-center gap-3">
+                  <div className="w-1 h-6 rounded-full bg-green-500 opacity-60" />
+                  <div className="flex-1">
+                    <div className="flex justify-between text-sm mb-1">
+                      <div className="flex items-center gap-2">
+                        <span className="text-white">{rc.price}</span>
+                        <Badge className="bg-green-500/15 text-green-400 border-0 text-[9px]">
+                          RevenueCat
+                        </Badge>
+                        <span className="text-[10px] text-white">{rc.label}</span>
+                      </div>
+                      <span className="font-medium text-white">0</span>
+                    </div>
+                    <div className="h-1.5 bg-white/[0.06] rounded-full overflow-hidden">
+                      <div
+                        className="h-full bg-gradient-to-r from-green-500 to-green-400 rounded-full"
+                        style={{ width: '0%' }}
+                      />
+                    </div>
+                  </div>
                 </div>
-              </div>
-            </motion.div>
-          )}
+              ))}
+            </div>
+          </div>
+        </motion.div>
       </div>
     </PullToRefresh>
   );

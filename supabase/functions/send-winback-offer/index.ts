@@ -1,3 +1,4 @@
+ 
 import 'jsr:@supabase/functions-js/edge-runtime.d.ts';
 import { createClient } from 'jsr:@supabase/supabase-js@2';
 import { Resend } from 'npm:resend@2.0.0';
@@ -898,6 +899,120 @@ function generateV5WinbackHTML(user: EligibleUser): string {
 </body></html>`;
 }
 
+function generateV7StatsHTML(firstName: string): string {
+  return `<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><meta name="color-scheme" content="dark"><!--[if mso]><style>body,table,td{font-family:Arial,sans-serif!important}</style><![endif]--></head>
+<body style="margin:0;padding:0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;background:#0f172a">
+<table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background:#0f172a"><tr><td style="padding:24px 12px">
+<table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="max-width:500px;margin:0 auto;background:linear-gradient(180deg,#1e293b,#0f172a);border-radius:24px;overflow:hidden;border:1px solid rgba(251,191,36,0.2)">
+
+<!-- Opening -->
+<tr><td style="padding:32px 24px 20px">
+<p style="margin:0 0 16px;font-size:17px;color:#fff;line-height:1.6">Hey ${firstName},</p>
+<p style="margin:0 0 14px;font-size:16px;color:#fff;line-height:1.7">When Elec-Mate started, it was just a simple idea:</p>
+<p style="margin:0 0 14px;font-size:16px;color:#fbbf24;font-weight:700;line-height:1.7">Give the electrical industry one place to do everything.</p>
+<p style="margin:0 0 6px;font-size:15px;color:#fff;line-height:1.8">Certificates. RAMS. Quotes. Invoices. Calculators. Study. AI help. Business tools.</p>
+<p style="margin:0 0 6px;font-size:15px;color:#fff;line-height:1.8">No jumping between apps. No paper certificates. No late-night admin.</p>
+<p style="margin:0 0 14px;font-size:15px;color:#fff;line-height:1.8">That was the idea.</p>
+<p style="margin:0;font-size:16px;color:#fff;font-weight:700;line-height:1.7">Here's the reality &mdash; 7 weeks in, before we've even hit the App Store:</p>
+</td></tr>
+
+<!-- Stats Strip Row 1 — 4 gold boxes -->
+<tr><td style="padding:0 20px 6px">
+<table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%"><tr>
+<td width="25%" style="padding:0 3px 0 0"><div style="background:linear-gradient(135deg,#fbbf24,#f59e0b);border-radius:12px;padding:14px 4px;text-align:center">
+<p style="margin:0;font-size:20px;font-weight:800;color:#0f172a;line-height:1">&pound;245K</p>
+<p style="margin:4px 0 0;font-size:8px;font-weight:800;color:#0f172a;text-transform:uppercase;letter-spacing:0.3px">Quoted</p>
+</div></td>
+<td width="25%" style="padding:0 2px"><div style="background:linear-gradient(135deg,#fbbf24,#f59e0b);border-radius:12px;padding:14px 4px;text-align:center">
+<p style="margin:0;font-size:20px;font-weight:800;color:#0f172a;line-height:1">&pound;98K</p>
+<p style="margin:4px 0 0;font-size:8px;font-weight:800;color:#0f172a;text-transform:uppercase;letter-spacing:0.3px">Invoiced</p>
+</div></td>
+<td width="25%" style="padding:0 2px"><div style="background:linear-gradient(135deg,#fbbf24,#f59e0b);border-radius:12px;padding:14px 4px;text-align:center">
+<p style="margin:0;font-size:20px;font-weight:800;color:#0f172a;line-height:1">2,540</p>
+<p style="margin:4px 0 0;font-size:8px;font-weight:800;color:#0f172a;text-transform:uppercase;letter-spacing:0.3px">Customers</p>
+</div></td>
+<td width="25%" style="padding:0 0 0 3px"><div style="background:linear-gradient(135deg,#fbbf24,#f59e0b);border-radius:12px;padding:14px 4px;text-align:center">
+<p style="margin:0;font-size:20px;font-weight:800;color:#0f172a;line-height:1">633</p>
+<p style="margin:4px 0 0;font-size:8px;font-weight:800;color:#0f172a;text-transform:uppercase;letter-spacing:0.3px">Users</p>
+</div></td>
+</tr></table>
+</td></tr>
+
+<!-- Stats Strip Row 2 — 4 gold boxes -->
+<tr><td style="padding:0 20px 16px">
+<table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%"><tr>
+<td width="25%" style="padding:0 3px 0 0"><div style="background:linear-gradient(135deg,#fbbf24,#f59e0b);border-radius:12px;padding:14px 4px;text-align:center">
+<p style="margin:0;font-size:20px;font-weight:800;color:#0f172a;line-height:1">2,185</p>
+<p style="margin:4px 0 0;font-size:8px;font-weight:800;color:#0f172a;text-transform:uppercase;letter-spacing:0.3px">Method Stmts</p>
+</div></td>
+<td width="25%" style="padding:0 2px"><div style="background:linear-gradient(135deg,#fbbf24,#f59e0b);border-radius:12px;padding:14px 4px;text-align:center">
+<p style="margin:0;font-size:20px;font-weight:800;color:#0f172a;line-height:1">1,264</p>
+<p style="margin:4px 0 0;font-size:8px;font-weight:800;color:#0f172a;text-transform:uppercase;letter-spacing:0.3px">RAMS</p>
+</div></td>
+<td width="25%" style="padding:0 2px"><div style="background:linear-gradient(135deg,#fbbf24,#f59e0b);border-radius:12px;padding:14px 4px;text-align:center">
+<p style="margin:0;font-size:20px;font-weight:800;color:#0f172a;line-height:1">491</p>
+<p style="margin:4px 0 0;font-size:8px;font-weight:800;color:#0f172a;text-transform:uppercase;letter-spacing:0.3px">Circuits</p>
+</div></td>
+<td width="25%" style="padding:0 0 0 3px"><div style="background:linear-gradient(135deg,#fbbf24,#f59e0b);border-radius:12px;padding:14px 4px;text-align:center">
+<p style="margin:0;font-size:20px;font-weight:800;color:#0f172a;line-height:1">435</p>
+<p style="margin:4px 0 0;font-size:8px;font-weight:800;color:#0f172a;text-transform:uppercase;letter-spacing:0.3px">Certs Signed</p>
+</div></td>
+</tr></table>
+</td></tr>
+
+<!-- And much more (dark card with checkmarks) -->
+<tr><td style="padding:0 20px 16px"><div style="background:rgba(30,41,59,0.8);border:1px solid rgba(255,255,255,0.1);border-radius:14px;padding:20px">
+<p style="margin:0 0 14px;font-size:15px;color:#fbbf24;font-weight:700;text-transform:uppercase;letter-spacing:0.5px">And much more</p>
+<p style="margin:0 0 5px;font-size:14px;color:#fff;line-height:1.6">&#x2713; <strong style="color:#fff">215</strong> jobs priced by the AI cost engineer</p>
+<p style="margin:0 0 5px;font-size:14px;color:#fff;line-height:1.6">&#x2713; <strong style="color:#fff">141</strong> installations generated by the AI agent</p>
+<p style="margin:0 0 5px;font-size:14px;color:#fff;line-height:1.6">&#x2713; <strong style="color:#fff">112</strong> EPA readiness checks</p>
+<p style="margin:0 0 5px;font-size:14px;color:#fff;line-height:1.6">&#x2713; <strong style="color:#fff">87</strong> training videos watched</p>
+<p style="margin:0 0 5px;font-size:14px;color:#fff;line-height:1.6">&#x2713; <strong style="color:#fff">79</strong> active Elec-IDs</p>
+<p style="margin:0 0 5px;font-size:14px;color:#fff;line-height:1.6">&#x2713; <strong style="color:#fff">61</strong> mental health check-ins</p>
+<p style="margin:0 0 5px;font-size:14px;color:#fff;line-height:1.6">&#x2713; <strong style="color:#fff">53</strong> apprentices on active study streaks</p>
+<p style="margin:0;font-size:14px;color:#fff;line-height:1.6">&#x2713; <strong style="color:#fff">43</strong> AM2 simulations completed</p>
+</div></td></tr>
+
+<!-- We didn't build a demo (gold accent card) -->
+<tr><td style="padding:0 20px 16px"><div style="background:linear-gradient(135deg,rgba(251,191,36,0.12),rgba(251,191,36,0.03));border:1px solid rgba(251,191,36,0.3);border-radius:14px;padding:20px">
+<p style="margin:0 0 10px;font-size:18px;color:#fbbf24;font-weight:800;line-height:1.5">We didn't build a demo.</p>
+<p style="margin:0 0 12px;font-size:16px;color:#fff;font-weight:700;line-height:1.6">We built something people actually use.</p>
+<p style="margin:0;font-size:14px;color:#fff;line-height:1.7">If you've been watching from the sidelines &mdash; now's the time to jump in before the price goes up.</p>
+</div></td></tr>
+
+<!-- Pricing CTA -->
+<tr><td style="padding:0 20px 16px"><div style="background:linear-gradient(135deg,rgba(251,191,36,0.15),rgba(251,191,36,0.05));border:2px solid rgba(251,191,36,0.4);border-radius:16px;padding:24px 18px;text-align:center">
+<p style="margin:0 0 6px;font-size:13px;color:#fff;font-weight:600;letter-spacing:0.3px;text-transform:uppercase">Early supporter price &mdash; locked in forever</p>
+<p style="margin:0;font-size:52px;font-weight:800;color:#fbbf24;line-height:1">&pound;${WINBACK_CONFIG.monthlyPrice.toFixed(2)}<span style="font-size:18px;font-weight:600;color:#fff">/mo</span></p>
+<p style="margin:10px 0 4px;font-size:14px;color:#fff;line-height:1.5">App Store price will be <strong style="color:#fff">&pound;14.99/mo</strong>.</p>
+<p style="margin:0 0 18px;font-size:14px;color:#fff;line-height:1.5">You're getting &pound;7.99 because you were here early.</p>
+<a href="${WINBACK_CONFIG.monthlyPaymentLink}" style="display:block;padding:16px;background:linear-gradient(135deg,#fbbf24,#f59e0b);color:#0f172a;text-decoration:none;font-size:16px;font-weight:700;border-radius:12px;text-align:center;margin-bottom:10px">Lock in &pound;${WINBACK_CONFIG.monthlyPrice.toFixed(2)}/mo forever &#x2192;</a>
+<a href="${WINBACK_CONFIG.yearlyPaymentLink}" style="display:block;padding:14px;background:rgba(251,191,36,0.15);border:2px solid rgba(251,191,36,0.5);color:#fbbf24;text-decoration:none;font-size:15px;font-weight:600;border-radius:12px;text-align:center">Or go yearly: &pound;${WINBACK_CONFIG.yearlyPrice.toFixed(2)} (&pound;${(WINBACK_CONFIG.yearlyPrice / 12).toFixed(2)}/mo)</a>
+</div></td></tr>
+
+<!-- Not sure? -->
+<tr><td style="padding:0 20px 12px"><div style="background:rgba(59,130,246,0.08);border:1px solid rgba(59,130,246,0.25);border-radius:12px;padding:16px;text-align:center">
+<p style="margin:0 0 8px;font-size:14px;color:#fff;line-height:1.6">Not sure? Reply to this email. I'll sort you another free trial &mdash; no card, no strings.</p>
+<p style="margin:0;font-size:14px;color:#fff;line-height:1.6"><strong style="color:#60a5fa">founder@elec-mate.com</strong> &mdash; comes straight to me.</p>
+</div></td></tr>
+
+<!-- Sign-off -->
+<tr><td style="padding:0 20px 16px"><div style="background:linear-gradient(135deg,rgba(251,191,36,0.08),rgba(251,191,36,0.02));border:1px solid rgba(251,191,36,0.15);border-radius:14px;padding:18px">
+<p style="margin:0 0 4px;font-size:15px;color:#fff">Cheers,</p>
+<p style="margin:0 0 2px;font-size:17px;color:#fbbf24;font-weight:700">Andrew</p>
+<p style="margin:0;font-size:13px;color:#fff">Founder &middot; Elec-Mate</p>
+<p style="margin:6px 0 0;font-size:12px;color:#fff">Built in Cumbria. Built for the trade.</p>
+</div></td></tr>
+
+<!-- Footer -->
+<tr><td style="padding:16px 24px;text-align:center;border-top:1px solid rgba(255,255,255,0.08)">
+<p style="margin:0;font-size:12px;color:#fff">&copy; ${new Date().getFullYear()} Elec-Mate &middot; Built for UK Electricians &#x1F1EC;&#x1F1E7; &#x26A1;</p>
+</td></tr>
+
+</table></td></tr></table>
+</body></html>`;
+}
+
 function generateV6WinbackHTML(user: EligibleUser): string {
   const firstName = user.full_name?.split(' ')[0] || 'mate';
 
@@ -1249,7 +1364,11 @@ Deno.serve(async (req) => {
 
         // Send email — select template by version
         let emailHtml, emailSubject;
-        if (email_version === 'v6') {
+        if (email_version === 'v7') {
+          const fn = userWithEmail.full_name?.split(' ')[0] || 'mate';
+          emailHtml = generateV7StatsHTML(fn);
+          emailSubject = '7 weeks. No App Store. Just electricians getting shit done.';
+        } else if (email_version === 'v6') {
           emailHtml = generateV6WinbackHTML(userWithEmail);
           emailSubject = "I know you've seen emails from me. This is the last one.";
         } else if (email_version === 'v5') {
@@ -1271,20 +1390,7 @@ Deno.serve(async (req) => {
           emailHtml = generateWinbackEmailHTML(userWithEmail);
           emailSubject = 'Fancy another look?';
         }
-        const versionTag =
-          email_version === 'v6'
-            ? 'v6'
-            : email_version === 'v5'
-              ? 'v5'
-              : email_version === 'v4b'
-                ? 'v4b'
-                : email_version === 'v4'
-                  ? 'v4'
-                  : email_version === 'v3'
-                    ? 'v3'
-                    : email_version === 'v2'
-                      ? 'v2'
-                      : 'v1';
+        const versionTag = email_version || 'v1';
         const { data: emailData, error: emailError } = await resend.emails.send({
           from: 'Elec-Mate <offers@elec-mate.com>',
           replyTo: 'founder@elec-mate.com',
@@ -1314,20 +1420,7 @@ Deno.serve(async (req) => {
         }
 
         // Log to email_logs table
-        const templateName =
-          email_version === 'v6'
-            ? 'winback_offer_v6'
-            : email_version === 'v5'
-              ? 'winback_offer_v5'
-              : email_version === 'v4b'
-                ? 'winback_fortnight_report'
-                : email_version === 'v4'
-                  ? 'winback_offer_v4'
-                  : email_version === 'v3'
-                    ? 'winback_offer_v3'
-                    : email_version === 'v2'
-                      ? 'winback_offer_v2'
-                      : 'winback_offer';
+        const templateName = `winback_offer_${email_version || 'v1'}`;
         await supabaseAdmin.from('email_logs').insert({
           to_email: userWithEmail.email,
           subject: emailSubject,
@@ -1345,6 +1438,38 @@ Deno.serve(async (req) => {
         break;
       }
 
+      case 'reset_sent': {
+        // Reset winback_offer_sent_at so users can be re-sent
+        // If userIds provided, reset specific users; otherwise reset ALL sent users
+        if (userIds && Array.isArray(userIds) && userIds.length > 0) {
+          const { error: resetError } = await supabaseAdmin
+            .from('profiles')
+            .update({ winback_offer_sent_at: null })
+            .in('id', userIds);
+          if (resetError) throw resetError;
+          console.log(`Reset ${userIds.length} specific users by admin ${user.id}`);
+          result = { success: true, reset: userIds.length, resetCount: userIds.length };
+        } else {
+          // Reset ALL users who have been sent
+          const { data: sentProfiles, error: countError } = await supabaseAdmin
+            .from('profiles')
+            .select('id')
+            .not('winback_offer_sent_at', 'is', null);
+          if (countError) throw countError;
+          const resetCount = sentProfiles?.length || 0;
+
+          const { error: resetError } = await supabaseAdmin
+            .from('profiles')
+            .update({ winback_offer_sent_at: null })
+            .not('winback_offer_sent_at', 'is', null);
+          if (resetError) throw resetError;
+
+          console.log(`Reset ALL ${resetCount} sent users by admin ${user.id}`);
+          result = { success: true, reset: resetCount, resetCount };
+        }
+        break;
+      }
+
       case 'send_bulk': {
         if (!userIds || !Array.isArray(userIds) || userIds.length === 0) {
           throw new Error('User IDs array is required');
@@ -1359,12 +1484,20 @@ Deno.serve(async (req) => {
             // Get user details
             const { data: profile, error: profileError } = await supabaseAdmin
               .from('profiles')
-              .select('id, full_name, username, created_at, winback_offer_sent_at')
+              .select(
+                'id, full_name, username, created_at, winback_offer_sent_at, subscribed, free_access_granted'
+              )
               .eq('id', uid)
               .single();
 
             if (profileError || !profile) {
               errors.push(`${uid}: User not found`);
+              continue;
+            }
+
+            // Skip if already subscribed or has free access
+            if (profile.subscribed === true || profile.free_access_granted === true) {
+              skippedCount++;
               continue;
             }
 
@@ -1396,7 +1529,11 @@ Deno.serve(async (req) => {
 
             // Send email — select template by version
             let emailHtml, bulkSubject;
-            if (email_version === 'v6') {
+            if (email_version === 'v7') {
+              const fn = userWithEmail.full_name?.split(' ')[0] || 'mate';
+              emailHtml = generateV7StatsHTML(fn);
+              bulkSubject = '7 weeks. No App Store. Just electricians getting shit done.';
+            } else if (email_version === 'v6') {
               emailHtml = generateV6WinbackHTML(userWithEmail);
               bulkSubject = "I know you've seen emails from me. This is the last one.";
             } else if (email_version === 'v5') {
@@ -1418,20 +1555,7 @@ Deno.serve(async (req) => {
               emailHtml = generateWinbackEmailHTML(userWithEmail);
               bulkSubject = 'Fancy another look?';
             }
-            const bulkVersionTag =
-              email_version === 'v6'
-                ? 'v6'
-                : email_version === 'v5'
-                  ? 'v5'
-                  : email_version === 'v4b'
-                    ? 'v4b'
-                    : email_version === 'v4'
-                      ? 'v4'
-                      : email_version === 'v3'
-                        ? 'v3'
-                        : email_version === 'v2'
-                          ? 'v2'
-                          : 'v1';
+            const bulkVersionTag = email_version || 'v1';
             const { data: bulkEmailData, error: emailError } = await resend.emails.send({
               from: 'Elec-Mate <offers@elec-mate.com>',
               replyTo: 'founder@elec-mate.com',
@@ -1457,20 +1581,7 @@ Deno.serve(async (req) => {
               .eq('id', uid);
 
             // Log email
-            const bulkTemplateName =
-              email_version === 'v6'
-                ? 'winback_offer_v6'
-                : email_version === 'v5'
-                  ? 'winback_offer_v5'
-                  : email_version === 'v4b'
-                    ? 'winback_fortnight_report'
-                    : email_version === 'v4'
-                      ? 'winback_offer_v4'
-                      : email_version === 'v3'
-                        ? 'winback_offer_v3'
-                        : email_version === 'v2'
-                          ? 'winback_offer_v2'
-                          : 'winback_offer';
+            const bulkTemplateName = `winback_offer_${email_version || 'v1'}`;
             await supabaseAdmin.from('email_logs').insert({
               to_email: userWithEmail.email,
               subject: bulkSubject,
@@ -1585,7 +1696,10 @@ Deno.serve(async (req) => {
 
         // Generate and send the email — select template by version
         let emailHtml, testSubject;
-        if (email_version === 'v6') {
+        if (email_version === 'v7') {
+          emailHtml = generateV7StatsHTML('Test');
+          testSubject = '[TEST] 7 weeks. No App Store. Just electricians getting shit done.';
+        } else if (email_version === 'v6') {
           emailHtml = generateV6WinbackHTML(testUser);
           testSubject = "[TEST] I know you've seen emails from me. This is the last one.";
         } else if (email_version === 'v5') {
@@ -1662,7 +1776,10 @@ Deno.serve(async (req) => {
 
         // Generate and send the email — select template by version
         let manualEmailHtml, manualSubject;
-        if (email_version === 'v6') {
+        if (email_version === 'v7') {
+          manualEmailHtml = generateV7StatsHTML(manualUser.full_name?.split(' ')[0] || 'mate');
+          manualSubject = '7 weeks. No App Store. Just electricians getting shit done.';
+        } else if (email_version === 'v6') {
           manualEmailHtml = generateV6WinbackHTML(manualUser);
           manualSubject = "I know you've seen emails from me. This is the last one.";
         } else if (email_version === 'v5') {
@@ -1684,20 +1801,7 @@ Deno.serve(async (req) => {
           manualEmailHtml = generateWinbackEmailHTML(manualUser);
           manualSubject = 'Fancy another look?';
         }
-        const manualVersionTag =
-          email_version === 'v6'
-            ? 'v6'
-            : email_version === 'v5'
-              ? 'v5'
-              : email_version === 'v4b'
-                ? 'v4b'
-                : email_version === 'v4'
-                  ? 'v4'
-                  : email_version === 'v3'
-                    ? 'v3'
-                    : email_version === 'v2'
-                      ? 'v2'
-                      : 'v1';
+        const manualVersionTag = email_version || 'v1';
         const { data: manualEmailData, error: manualEmailError } = await resend.emails.send({
           from: 'Elec-Mate <offers@elec-mate.com>',
           replyTo: 'founder@elec-mate.com',
@@ -1746,46 +1850,6 @@ Deno.serve(async (req) => {
 
         console.log(`Win-back offer manually sent to ${manualEmail} by admin ${user.id}`);
         result = { success: true, email: manualEmail };
-        break;
-      }
-
-      case 'reset_sent': {
-        // Reset winback_offer_sent_at for users who were sent 24+ hours ago
-        // and still haven't subscribed — allows resending the new email
-        const cutoff = new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString();
-
-        const { data: resetUsers, error: resetErr } = await supabaseAdmin
-          .from('profiles')
-          .select('id')
-          .eq('role', 'electrician')
-          .eq('subscribed', false)
-          .not('winback_offer_sent_at', 'is', null)
-          .lt('winback_offer_sent_at', cutoff);
-
-        if (resetErr) throw resetErr;
-
-        const resetIds = resetUsers?.map((u: Record<string, unknown>) => u.id) || [];
-
-        if (resetIds.length === 0) {
-          result = {
-            reset: 0,
-            message: 'No users eligible for reset (all sent < 24h ago or already subscribed)',
-          };
-          break;
-        }
-
-        const { error: updateErr } = await supabaseAdmin
-          .from('profiles')
-          .update({ winback_offer_sent_at: null })
-          .in('id', resetIds);
-
-        if (updateErr) throw updateErr;
-
-        console.log(`Admin ${user.id} reset winback_offer_sent_at for ${resetIds.length} users`);
-        result = {
-          reset: resetIds.length,
-          message: `${resetIds.length} users reset and eligible for resend`,
-        };
         break;
       }
 

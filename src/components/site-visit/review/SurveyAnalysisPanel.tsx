@@ -421,7 +421,14 @@ export const SurveyAnalysisPanel = ({ visit }: SurveyAnalysisPanelProps) => {
               <MaterialsTable items={result.materials_list} />
 
               {/* Materials action buttons */}
-              <div className="flex gap-2 mt-3 pt-3 border-t border-white/[0.06]">
+              <div className="flex flex-col gap-2 mt-3 pt-3 border-t border-white/[0.06]">
+                <Button
+                  onClick={() => sendToQuote(visit, result.materials_list)}
+                  className="w-full h-11 touch-manipulation bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold"
+                >
+                  <FileText className="h-4 w-4 mr-2" />
+                  Send to Quote
+                </Button>
                 <Button
                   onClick={async () => {
                     setIsSavingList(true);
@@ -430,7 +437,7 @@ export const SurveyAnalysisPanel = ({ visit }: SurveyAnalysisPanelProps) => {
                   }}
                   disabled={isSavingList}
                   variant="outline"
-                  className="flex-1 h-11 touch-manipulation border-elec-yellow/30 text-white"
+                  className="w-full h-11 touch-manipulation border-elec-yellow/30 text-white"
                 >
                   {isSavingList ? (
                     <Loader2 className="h-4 w-4 mr-2 animate-spin" />
@@ -438,13 +445,6 @@ export const SurveyAnalysisPanel = ({ visit }: SurveyAnalysisPanelProps) => {
                     <ListChecks className="h-4 w-4 mr-2" />
                   )}
                   Save to Materials List
-                </Button>
-                <Button
-                  onClick={() => sendToQuote(visit, result.materials_list)}
-                  className="flex-1 h-11 touch-manipulation bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold"
-                >
-                  <FileText className="h-4 w-4 mr-2" />
-                  Send to Quote
                 </Button>
               </div>
             </div>

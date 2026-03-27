@@ -69,7 +69,7 @@ export function useSurveyMaterialsActions() {
           },
         }),
       };
-      sessionStorage.setItem(materialsSessionId, JSON.stringify({ materialsData }));
+      localStorage.setItem(materialsSessionId, JSON.stringify({ materialsData }));
       navigate(`/electrician/quote-builder/create?materialsSessionId=${materialsSessionId}`);
     },
     [navigate]

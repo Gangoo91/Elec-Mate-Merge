@@ -726,7 +726,7 @@ export function useSiteVisitStorage(): UseSiteVisitStorageReturn {
       },
     };
 
-    sessionStorage.setItem(sessionId, JSON.stringify(siteVisitData));
+    localStorage.setItem(sessionId, JSON.stringify(siteVisitData));
     return sessionId;
   }, []);
 

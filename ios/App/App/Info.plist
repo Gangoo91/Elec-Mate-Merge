@@ -61,6 +61,8 @@
 	<string>Elec-Mate saves exported certificates and site photos to your photo library.</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>Elec-Mate uses your microphone for the voice assistant feature.</string>
+	<key>NSSpeechRecognitionUsageDescription</key>
+	<string>Elec-Mate uses speech recognition to capture details by voice. Audio is processed by Apple.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Elec-Mate uses your location to track job site attendance and routes.</string>
 	<key>ITSAppUsesNonExemptEncryption</key>

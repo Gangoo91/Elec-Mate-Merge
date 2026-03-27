@@ -1,6 +1,7 @@
 import jsPDF from 'jspdf';
 import { CVData } from './types';
 import { format } from 'date-fns';
+import { saveOrSharePdf } from '@/utils/save-or-share-pdf';
 
 export const generateCVPDF = async (cvData: CVData): Promise<void> => {
   const pdf = new jsPDF('p', 'mm', 'a4');
@@ -173,5 +174,5 @@ export const generateCVPDF = async (cvData: CVData): Promise<void> => {
 
   // Save the PDF
   const fileName = `${cvData.personalInfo.fullName || 'CV'}_CV.pdf`.replace(/[^a-zA-Z0-9]/g, '_');
-  pdf.save(fileName);
+  await saveOrSharePdf(pdf, fileName);
 };

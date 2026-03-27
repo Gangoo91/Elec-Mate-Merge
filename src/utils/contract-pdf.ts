@@ -1,5 +1,7 @@
+ 
 import jsPDF from 'jspdf';
 import { format } from 'date-fns';
+import { saveOrSharePdf } from '@/utils/save-or-share-pdf';
 import type { EmploymentContractTemplate, Contract } from '@/hooks/useContracts';
 
 interface ContractPdfOptions {
@@ -665,5 +667,5 @@ export async function downloadContractPDF(options: ContractPdfOptions): Promise<
   const dateStr = format(new Date(), 'yyyyMMdd');
   const fileName = `${safeName}_${dateStr}.pdf`;
 
-  doc.save(fileName);
+  await saveOrSharePdf(doc, fileName);
 }

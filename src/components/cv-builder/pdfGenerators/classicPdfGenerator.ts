@@ -34,6 +34,7 @@ import {
   addReferencesSection,
   formatLinkedInUrl,
 } from './shared';
+import { saveOrSharePdf } from '@/utils/save-or-share-pdf';
 
 const colors = TEMPLATE_COLORS.classic;
 
@@ -440,5 +441,5 @@ export const generateClassicPDF = async (cvData: CVData): Promise<void> => {
   // ═══════════════════════════════════════════════════════════════════════════
 
   const fileName = getFileName(cvData, 'Classic');
-  pdf.save(fileName);
+  await saveOrSharePdf(pdf, fileName);
 };

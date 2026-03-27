@@ -1,7 +1,14 @@
 import { useNavigate, useLocation } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import { motion } from 'framer-motion';
-import { CheckCircle, ArrowLeft, FileText, ClipboardCheck, Package, FolderOpen } from 'lucide-react';
+import {
+  CheckCircle,
+  ArrowLeft,
+  FileText,
+  ClipboardCheck,
+  Package,
+  FolderOpen,
+} from 'lucide-react';
 import { QuoteWizard } from '@/components/electrician/quote-builder/QuoteWizard';
 import { useQuoteStorage } from '@/hooks/useQuoteStorage';
 import { useState, useEffect } from 'react';
@@ -90,49 +97,57 @@ const QuoteBuilderCreate = () => {
     const materialsSessionId = params.get('materialsSessionId');
 
     if (costSessionId) {
-      const storedContext = sessionStorage.getItem(costSessionId);
+      const storedContext = localStorage.getItem(costSessionId);
       if (storedContext) {
         const parsed = JSON.parse(storedContext);
         setCostContext(parsed.costData);
-        sessionStorage.removeItem(costSessionId);
+        localStorage.removeItem(costSessionId);
       }
     }
 
     if (certificateSessionId) {
-      const storedContext = sessionStorage.getItem(certificateSessionId);
+      const storedContext = localStorage.getItem(certificateSessionId);
       if (storedContext) {
         const parsed = JSON.parse(storedContext);
         setCertificateContext(parsed.certificateData);
-        sessionStorage.removeItem(certificateSessionId);
+        localStorage.removeItem(certificateSessionId);
       }
     }
 
     if (siteVisitSessionId) {
-      const storedContext = sessionStorage.getItem(siteVisitSessionId);
+      const storedContext = localStorage.getItem(siteVisitSessionId);
       if (storedContext) {
         const parsed = JSON.parse(storedContext);
         setSiteVisitContext(parsed.siteVisitData);
-        sessionStorage.removeItem(siteVisitSessionId);
+        localStorage.removeItem(siteVisitSessionId);
       }
     }
 
     if (materialsSessionId) {
-      const storedContext = sessionStorage.getItem(materialsSessionId);
+      const storedContext = localStorage.getItem(materialsSessionId);
       if (storedContext) {
         const parsed = JSON.parse(storedContext);
         setMaterialsContext(parsed.materialsData);
-        sessionStorage.removeItem(materialsSessionId);
+        localStorage.removeItem(materialsSessionId);
       }
     }
 
     // If projectId is present and no other context was loaded, fetch project details
-    if (projectId && !costSessionId && !certificateSessionId && !siteVisitSessionId && !materialsSessionId) {
+    if (
+      projectId &&
+      !costSessionId &&
+      !certificateSessionId &&
+      !siteVisitSessionId &&
+      !materialsSessionId
+    ) {
       (async () => {
         try {
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
           const { data: project } = await (supabase as any)
             .from('spark_projects')
-            .select('title, description, location, customer_id, customers(name, email, phone, address)')
+            .select(
+              'title, description, location, customer_id, customers(name, email, phone, address)'
+            )
             .eq('id', projectId)
             .single();
 
@@ -276,9 +291,7 @@ const QuoteBuilderCreate = () => {
             </div>
             <div className="flex-1 min-w-0">
               <p className="text-[15px] font-medium text-blue-400">Certificate Data Imported</p>
-              <p className="text-[13px] text-white">
-                Client details pre-filled from certificate
-              </p>
+              <p className="text-[13px] text-white">Client details pre-filled from certificate</p>
             </div>
           </motion.div>
         )}
@@ -312,9 +325,7 @@ const QuoteBuilderCreate = () => {
             </div>
             <div className="flex-1 min-w-0">
               <p className="text-[15px] font-medium text-purple-400">Imported from Project</p>
-              <p className="text-[13px] text-white">
-                Client &amp; job details pre-filled
-              </p>
+              <p className="text-[13px] text-white">Client &amp; job details pre-filled</p>
             </div>
           </motion.div>
         )}
@@ -350,11 +361,15 @@ const QuoteBuilderCreate = () => {
           ) : (
             <QuoteWizard
               onQuoteGenerated={handleQuoteGenerated}
-              initialQuote={projectId ? {
-                project_id: projectId,
-                ...(projectContext?.client && { client: projectContext.client }),
-                ...(projectContext?.jobDetails && { jobDetails: projectContext.jobDetails }),
-              } : undefined}
+              initialQuote={
+                projectId
+                  ? {
+                      project_id: projectId,
+                      ...(projectContext?.client && { client: projectContext.client }),
+                      ...(projectContext?.jobDetails && { jobDetails: projectContext.jobDetails }),
+                    }
+                  : undefined
+              }
               initialCostData={costContext}
               initialCertificateData={certificateContext}
               initialSiteVisitData={siteVisitContext}

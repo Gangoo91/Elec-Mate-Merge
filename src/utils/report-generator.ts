@@ -2,6 +2,7 @@ import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
 import { TimeEntry } from '@/types/time-tracking';
 import { format } from 'date-fns';
+import { saveOrSharePdf } from '@/utils/save-or-share-pdf';
 
 interface ReportData {
   studentName: string;
@@ -15,7 +16,7 @@ interface ReportData {
   weeklyHours?: number;
 }
 
-export const generateTrainingReport = (data: ReportData): void => {
+export const generateTrainingReport = async (data: ReportData): Promise<void> => {
   const { studentName, totalHours, entries, filterMonth, targetHours, weeklyHours } = data;
 
   // Create a new PDF document
@@ -135,5 +136,5 @@ export const generateTrainingReport = (data: ReportData): void => {
   }
 
   // Save the PDF
-  doc.save('training-report.pdf');
+  await saveOrSharePdf(doc, 'training-report.pdf');
 };

@@ -274,6 +274,8 @@ const EnhancedTestResultDesktopTable: React.FC<EnhancedTestResultDesktopTablePro
               style={{
                 maxHeight: 'calc(100vh - 140px)',
                 overscrollBehavior: 'contain',
+                willChange: 'scroll-position',
+                contain: 'layout style',
               }}
             >
               <div className="min-w-max enhanced-table-scroll">

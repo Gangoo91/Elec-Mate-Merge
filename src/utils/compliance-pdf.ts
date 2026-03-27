@@ -1,5 +1,7 @@
+ 
 import jsPDF from 'jspdf';
 import { format } from 'date-fns';
+import { saveOrSharePdf } from '@/utils/save-or-share-pdf';
 
 // Types
 interface EmployeeQualification {
@@ -738,7 +740,7 @@ export async function downloadComplianceAuditPack(options: AuditPackOptions): Pr
   const dateStr = format(new Date(), 'yyyyMMdd');
   const fileName = `Compliance_Audit_Pack_${safeCompanyName}_${dateStr}.pdf`;
 
-  doc.save(fileName);
+  await saveOrSharePdf(doc, fileName);
 }
 
 export function getComplianceAuditPackBlob(options: AuditPackOptions): Blob {

@@ -753,7 +753,7 @@ const EICRSummary = ({ formData: propFormData, onUpdate: propOnUpdate }: EICRSum
     };
 
     const costSessionId = `estimate-${Date.now()}`;
-    sessionStorage.setItem(costSessionId, JSON.stringify({ costData }));
+    localStorage.setItem(costSessionId, JSON.stringify({ costData }));
 
     const certUrl = createQuoteFromCertificate({
       clientName: formData.clientName || '',
@@ -776,7 +776,7 @@ const EICRSummary = ({ formData: propFormData, onUpdate: propOnUpdate }: EICRSum
         const parsed = JSON.parse(stored);
         if (parsed.certificateData?.jobDetails) {
           parsed.certificateData.jobDetails.description = estimateResult.scopeOfWorks;
-          sessionStorage.setItem(certSessionId, JSON.stringify(parsed));
+          localStorage.setItem(certSessionId, JSON.stringify(parsed));
         }
       }
     }
