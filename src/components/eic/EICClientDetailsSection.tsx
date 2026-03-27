@@ -390,7 +390,7 @@ const EICClientDetailsSection = ({
               <h4 className="text-sm font-semibold text-elec-yellow border-b border-white/10 pb-2 pl-2.5 border-l-2 border-l-elec-yellow">
                 Installation Dates
               </h4>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                 <div className="space-y-2">
                   <Label htmlFor="installationDate" className="text-sm">
                     Date of Installation *
@@ -400,6 +400,18 @@ const EICClientDetailsSection = ({
                     type="date"
                     value={formData.installationDate || ''}
                     onChange={(e) => onUpdate('installationDate', e.target.value)}
+                    className="h-11 text-base touch-manipulation"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="constructionDate" className="text-sm">
+                    Date of Construction
+                  </Label>
+                  <Input
+                    id="constructionDate"
+                    type="date"
+                    value={formData.constructionDate || ''}
+                    onChange={(e) => onUpdate('constructionDate', e.target.value)}
                     className="h-11 text-base touch-manipulation"
                   />
                 </div>

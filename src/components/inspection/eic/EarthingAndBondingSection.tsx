@@ -650,6 +650,25 @@ const EarthingAndBondingSection: React.FC<EarthingAndBondingSectionProps> = ({
               </p>
             </div>
 
+            <div className="space-y-2 mb-4">
+              <Label htmlFor="supplementaryBonding" className="font-medium text-sm">
+                Supplementary Bonding Required
+              </Label>
+              <Select
+                value={formData.supplementaryBonding || ''}
+                onValueChange={(value) => onUpdate('supplementaryBonding', value)}
+              >
+                <SelectTrigger id="supplementaryBonding" className="h-11 touch-manipulation bg-elec-gray border-elec-gray focus:border-elec-yellow focus:ring-elec-yellow">
+                  <SelectValue placeholder="Select" />
+                </SelectTrigger>
+                <SelectContent className="bg-elec-gray border-elec-gray text-foreground z-50">
+                  <SelectItem value="yes">Yes</SelectItem>
+                  <SelectItem value="no">No</SelectItem>
+                  <SelectItem value="n/a">N/A</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
                 <Label htmlFor="supplementaryBondingSize" className="font-medium text-sm">

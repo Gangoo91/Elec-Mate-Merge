@@ -12,6 +12,37 @@ import { supabase } from '@/integrations/supabase/client';
 import type { EICPayload } from '@/types/eic-payload';
 
 /* ------------------------------------------------------------------ */
+/*  Normaliser helpers                                                  */
+/* ------------------------------------------------------------------ */
+
+function normaliseEarthing(raw: string): string {
+  if (!raw) return '';
+  const map: Record<string, string> = {
+    tncs: 'TN-C-S', 'tn-c-s': 'TN-C-S', 'tnc-s': 'TN-C-S',
+    tns: 'TN-S', 'tn-s': 'TN-S',
+    tnc: 'TN-C', 'tn-c': 'TN-C',
+    tt: 'TT', it: 'IT',
+  };
+  return map[raw.toLowerCase()] ?? raw;
+}
+
+function normalisePartPCompliance(raw: string): string {
+  if (!raw) return 'N/A';
+  if (raw === 'notApplicable' || raw === 'not-applicable') return 'Not Applicable';
+  if (raw === 'compliant') return 'Compliant';
+  if (raw === 'non-notifiable' || raw === 'nonNotifiable') return 'Non-Notifiable';
+  return raw;
+}
+
+function normaliseElectrodeType(raw: string): string {
+  if (!raw) return '';
+  // Capitalise known abbreviations fully; title-case everything else
+  const upper = raw.toUpperCase();
+  if (upper === 'PME' || upper === 'ROD' || upper === 'PLATE' || upper === 'TAPE' || upper === 'PIPE') return upper;
+  return raw.charAt(0).toUpperCase() + raw.slice(1);
+}
+
+/* ------------------------------------------------------------------ */
 /*  Normalise pass/fail/N/A values for PDFMonkey Liquid conditionals   */
 /* ------------------------------------------------------------------ */
 
@@ -142,7 +173,7 @@ export async function formatEicJson(
 
     installation_details: {
       address: formData.installationAddress || '',
-      same_as_client_address: formData.sameAsClientAddress === 'true',
+      same_as_client_address: formData.sameAsClientAddress === true || formData.sameAsClientAddress === 'true',
       installation_type: formData.installationType || '',
       work_type: formData.workType || formData.installationType || '',
       description: formData.description || '',
@@ -154,7 +185,7 @@ export async function formatEicJson(
 
     standards_compliance: {
       design_standard: formData.designStandard || '',
-      part_p_compliance: formData.partPCompliance || '',
+      part_p_compliance: normalisePartPCompliance(formData.partPCompliance || ''),
     },
 
     supply_characteristics: {
@@ -176,7 +207,8 @@ export async function formatEicJson(
         if (phases === 'three') return '3-phase-4-wire';
         return phases;
       })(),
-      earthing_arrangement: formData.earthingArrangement || '',
+      // Template checkboxes compare lowercase without hyphens (tncs, tns, tt, it)
+      earthing_arrangement: (formData.earthingArrangement || '').toLowerCase(),
       supply_type: formData.supplyType || '',
       supply_pme: formData.supplyPME || '',
       live_conductor_type: formData.liveCondutorType || formData.liveConductorType || '',
@@ -265,7 +297,7 @@ export async function formatEicJson(
 
     earthing_bonding: {
       means_of_earthing: formData.meansOfEarthing || '',
-      earth_electrode_type: formData.earthElectrodeNA ? 'N/A' : formData.earthElectrodeType || '',
+      earth_electrode_type: formData.earthElectrodeNA ? 'N/A' : normaliseElectrodeType(formData.earthElectrodeType || ''),
       earth_electrode_location:
         formData.earthElectrodeNA || formData.earthElectrodeType === 'pme'
           ? 'N/A'
@@ -296,7 +328,11 @@ export async function formatEicJson(
         : (formData.mainBondingVerified ?? false),
       main_bonding_na: formData.mainBondingNA ?? false,
       maximum_demand: formData.maximumDemand || '',
-      maximum_demand_unit: formData.maximumDemandUnit || 'A',
+      maximum_demand_unit: (() => {
+        const u = formData.maximumDemandUnit || 'amps';
+        if (u === 'amps') return 'A';
+        return u;
+      })(),
       bonding_water:
         bondingStr.includes('water') || formData.bondingToWater || formData.bondingWater || false,
       bonding_gas:
@@ -322,7 +358,7 @@ export async function formatEicJson(
         false,
       bonding_other_specify: formData.bondingOtherSpecify || formData.bondingToOtherSpecify || '',
       bonding_compliance: formData.bondingCompliance || '',
-      supplementary_bonding: formData.supplementaryBonding || '',
+      supplementary_bonding: formData.supplementaryBonding || 'N/A',
       supplementary_bonding_size: formData.supplementaryBondingSize || '',
       supplementary_bonding_size_custom: formData.supplementaryBondingSizeCustom || '',
       equipotential_bonding: formData.equipotentialBonding || '',
@@ -401,7 +437,9 @@ export async function formatEicJson(
       })) || [],
 
     test_instrument_details: {
-      make_model: formData.testInstrumentMake || formData.customTestInstrument || '',
+      make_model: (formData.testInstrumentMake === 'Other'
+        ? formData.customTestInstrument
+        : formData.testInstrumentMake) || '',
       serial_number: formData.testInstrumentSerial || '',
       calibration_date: formData.calibrationDate || '',
       test_temperature: formData.testTemperature || '',
@@ -452,15 +490,15 @@ export async function formatEicJson(
       risk_assessment_attached: formData.riskAssessmentAttached ?? false,
     },
 
-    designer_2: {
-      name: formData.designer2Name || '',
+    designer_2: formData.designer2Name ? {
+      name: formData.designer2Name,
       company: formData.designer2Company || '',
       address: formData.designer2Address || '',
       postcode: formData.designer2Postcode || '',
       phone: formData.designer2Phone || '',
       date: formData.designer2Date || '',
       signature: formData.designer2Signature || '',
-    },
+    } : null,
 
     constructor: {
       name: formData.constructorName || '',
@@ -505,7 +543,12 @@ export async function formatEicJson(
         for_on_behalf_of: formData.inspectedByForOnBehalfOf || '',
         position: formData.inspectedByPosition || '',
         address: formData.inspectedByAddress || '',
-        cp_scheme: formData.inspectedByCpScheme || '',
+        cp_scheme: formData.inspectedByCpSchemeNA
+          ? 'N/A'
+          : (formData.inspectedByCpScheme
+            || (companyProfile?.registration_scheme && companyProfile?.registration_number
+              ? `${companyProfile.registration_scheme} ${companyProfile.registration_number}`
+              : '')),
         cp_scheme_na: formData.inspectedByCpSchemeNA ?? false,
         same_as_inspector: formData.eicSameAsInspectedBy ?? false,
       },
@@ -548,6 +591,51 @@ export async function formatEicJson(
 
     // Accent colour for PDF theming (CSS --accent-color variable)
     company_accent_color: companyProfile?.accent_color || '',
+
+    // ============================================================
+    // ROOT-LEVEL FLAT COPIES — template reads these at root level
+    // ============================================================
+
+    // Installation dates
+    construction_date: formData.constructionDate || '',
+    installation_date: formData.installationDate || '',
+    test_date: formData.testDate || '',
+
+    // Supply — flat copies
+    earthing_arrangement: normaliseEarthing(formData.earthingArrangement || ''),
+
+    // Earthing arrangement per-type booleans (template may use these for checkboxes)
+    earthing_tncs: normaliseEarthing(formData.earthingArrangement || '') === 'TN-C-S',
+    earthing_tns:  normaliseEarthing(formData.earthingArrangement || '') === 'TN-S',
+    earthing_tnc:  normaliseEarthing(formData.earthingArrangement || '') === 'TN-C',
+    earthing_tt:   normaliseEarthing(formData.earthingArrangement || '') === 'TT',
+    earthing_it:   normaliseEarthing(formData.earthingArrangement || '') === 'IT',
+
+    // Earth electrode flat copies (edge fn debug confirms template reads these at root)
+    earth_electrode_type: formData.earthElectrodeNA
+      ? 'N/A'
+      : normaliseElectrodeType(formData.earthElectrodeType || ''),
+    earth_electrode_location:
+      formData.earthElectrodeNA || formData.earthElectrodeType === 'pme'
+        ? 'N/A'
+        : formData.earthElectrodeLocation || '',
+    earth_electrode_resistance:
+      formData.earthElectrodeNA || formData.earthElectrodeType === 'pme'
+        ? 'N/A'
+        : formData.earthElectrodeResistance || '',
+
+    // Designer flat copies (edge fn debug confirms template reads these at root)
+    designer_departures: formData.designerDepartures || '',
+    permitted_exceptions: formData.permittedExceptions || '',
+
+    // Designer 2 guard flag (explicit boolean so template can conditionally render)
+    has_designer_2: formData.designer2Name ? true : false,
+
+    // CP Scheme (flat copies with N/A support)
+    inspected_by_cp_scheme: formData.inspectedByCpSchemeNA
+      ? 'N/A'
+      : (formData.inspectedByCpScheme || ''),
+    inspected_by_cp_scheme_na: formData.inspectedByCpSchemeNA ?? false,
   };
 
   // --- Global "render blank as N/A" post-processing ---

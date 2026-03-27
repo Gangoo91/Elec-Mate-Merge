@@ -1114,6 +1114,7 @@ const EICDeclarations: React.FC<EICDeclarationsProps> = ({ formData, onUpdate })
                         'inspectedByAddress',
                         `${formData.inspectorAddress || ''}${formData.inspectorPostcode ? ', ' + formData.inspectorPostcode : ''}`
                       );
+                      // Note: CP scheme auto-fills from company profile in the formatter
                     }
                   }}
                   className="h-5 w-5 border-purple-500/40 data-[state=checked]:bg-purple-500 data-[state=checked]:border-purple-500"

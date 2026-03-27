@@ -1,41 +1,36 @@
 import React from 'react';
-import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { MobileSelectPicker } from '@/components/ui/mobile-select-picker';
 import { insulationTestVoltageOptions } from '@/types/testOptions';
-import { useIsMobile } from '@/hooks/use-mobile';
-import { cn } from '@/lib/utils';
 
 interface TestMethodInfoProps {
   formData: any;
   onUpdate: (field: string, value: string) => void;
 }
 
-const TestMethodInfo = ({ formData, onUpdate }: TestMethodInfoProps) => {
-  const isMobile = useIsMobile();
+const testMethodOptions = [
+  { value: 'Method 1', label: 'Method 1 — Live conductors, no isolation' },
+  { value: 'Method 2', label: 'Method 2 — Safe isolation applied' },
+  { value: 'Method 3', label: 'Method 3 — Isolation of protective devices' },
+  { value: 'Method 1 & 2', label: 'Method 1 & 2 — Combined' },
+  { value: 'Method 2 & 3', label: 'Method 2 & 3 — Combined' },
+];
 
+const TestMethodInfo = ({ formData, onUpdate }: TestMethodInfoProps) => {
   return (
     <div className="space-y-4">
-      <div
-        className={cn(
-          'grid gap-4',
-          isMobile
-            ? 'grid-cols-1'
-            : 'grid-cols-1 sm:grid-cols-2 p-4 bg-gradient-to-r from-elec-gray/10 to-elec-gray/5 rounded-xl border border-elec-yellow/30'
-        )}
-      >
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div className="space-y-2">
           <Label htmlFor="testMethod" className="text-sm text-white">
             Test Method Applied
           </Label>
-          <Input
-            id="testMethod"
+          <MobileSelectPicker
             value={formData.testMethod || ''}
-            onChange={(e) => onUpdate('testMethod', e.target.value)}
-            placeholder="BS 7671 Method 1, 2, or 3"
-            className="h-11 text-base touch-manipulation border-white/30"
-            style={{ fontSize: '16px' }}
+            onValueChange={(value) => onUpdate('testMethod', value)}
+            options={testMethodOptions}
+            placeholder="Select BS 7671 method..."
+            title="Test Method Applied"
           />
         </div>
         <div className="space-y-2">
@@ -60,7 +55,7 @@ const TestMethodInfo = ({ formData, onUpdate }: TestMethodInfoProps) => {
           id="testNotes"
           value={formData.testNotes || ''}
           onChange={(e) => onUpdate('testNotes', e.target.value)}
-          placeholder="Record any deviations from standard test procedures, limitations encountered, or additional observations..."
+          placeholder="Deviations, limitations, or additional observations..."
           className="min-h-[100px] resize-none text-base touch-manipulation border-white/30"
           style={{ fontSize: '16px' }}
         />

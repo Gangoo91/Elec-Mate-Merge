@@ -195,6 +195,22 @@ const EarthingAndBondingSection: React.FC<EarthingAndBondingSectionProps> = ({
                   </p>
                 </div>
               )}
+
+              {!isPMESelected && (
+                <div className="space-y-2">
+                  <Label htmlFor="earthElectrodeLocation" className="font-medium text-sm">
+                    Earth Electrode Location
+                  </Label>
+                  <Input
+                    id="earthElectrodeLocation"
+                    value={formData.earthElectrodeLocation || ''}
+                    onChange={(e) => onUpdate('earthElectrodeLocation', e.target.value)}
+                    placeholder="e.g., Garden adjacent to main building"
+                    className="h-11 text-base touch-manipulation"
+                    style={{ fontSize: '16px' }}
+                  />
+                </div>
+              )}
             </div>
 
             {/* Means of Earthing (IET Form) */}
@@ -296,23 +312,6 @@ const EarthingAndBondingSection: React.FC<EarthingAndBondingSectionProps> = ({
                 </Select>
               </div>
             </div>
-
-            {/* Earth Electrode Location (IET Form) */}
-            {!isPMESelected && (
-              <div className="space-y-2">
-                <Label htmlFor="earthElectrodeLocation" className="font-medium text-sm">
-                  Earth Electrode Location
-                </Label>
-                <Input
-                  id="earthElectrodeLocation"
-                  value={formData.earthElectrodeLocation || ''}
-                  onChange={(e) => onUpdate('earthElectrodeLocation', e.target.value)}
-                  placeholder="e.g., Garden adjacent to main building"
-                  className="h-11 text-base touch-manipulation"
-                  style={{ fontSize: '16px' }}
-                />
-              </div>
-            )}
 
             {/* Main Protective Conductors (IET Form) */}
             <div className="space-y-4">

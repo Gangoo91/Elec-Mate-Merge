@@ -299,7 +299,85 @@ async function sendWebPush(
   }
 }
 
-// ===== Send via FCM (for native iOS/Android tokens) =====
+// ===== Send via APNs (for native iOS tokens) =====
+async function createApnsJwt(): Promise<string> {
+  const privateKeyPem = Deno.env.get('APNS_PRIVATE_KEY') || '';
+  const keyId = Deno.env.get('APNS_KEY_ID') || '';
+  const teamId = Deno.env.get('APNS_TEAM_ID') || '';
+
+  const pemContent = privateKeyPem
+    .replace(/-----BEGIN PRIVATE KEY-----/g, '')
+    .replace(/-----END PRIVATE KEY-----/g, '')
+    .replace(/\s/g, '');
+
+  const keyData = Uint8Array.from(atob(pemContent), (c) => c.charCodeAt(0));
+  const privateKey = await crypto.subtle.importKey(
+    'pkcs8',
+    keyData,
+    { name: 'ECDSA', namedCurve: 'P-256' },
+    false,
+    ['sign']
+  );
+
+  const enc = new TextEncoder();
+  const header = base64UrlEncode(enc.encode(JSON.stringify({ alg: 'ES256', kid: keyId })));
+  const now = Math.floor(Date.now() / 1000);
+  const payload = base64UrlEncode(enc.encode(JSON.stringify({ iss: teamId, iat: now })));
+  const signingInput = `${header}.${payload}`;
+
+  const signature = await crypto.subtle.sign(
+    { name: 'ECDSA', hash: 'SHA-256' },
+    privateKey,
+    enc.encode(signingInput)
+  );
+
+  return `${signingInput}.${base64UrlEncode(new Uint8Array(signature))}`;
+}
+
+async function sendApnsPush(
+  deviceToken: string,
+  title: string,
+  body: string,
+  type: string,
+  data?: Record<string, unknown>
+): Promise<void> {
+  const bundleId = Deno.env.get('APNS_BUNDLE_ID') || 'com.elecmate.app';
+  const jwt = await createApnsJwt();
+
+  const apnsPayload = {
+    aps: {
+      alert: { title, body },
+      sound: 'default',
+      badge: 1,
+      'mutable-content': 1,
+    },
+    type,
+    ...Object.fromEntries(Object.entries(data || {}).map(([k, v]) => [k, String(v)])),
+  };
+
+  const response = await fetch(`https://api.push.apple.com/3/device/${deviceToken}`, {
+    method: 'POST',
+    headers: {
+      authorization: `bearer ${jwt}`,
+      'apns-topic': bundleId,
+      'apns-push-type': 'alert',
+      'apns-priority': '10',
+      'content-type': 'application/json',
+    },
+    body: JSON.stringify(apnsPayload),
+  });
+
+  if (!response.ok) {
+    const text = await response.text();
+    const apnsError = new Error(`APNs push failed: ${response.status} ${text}`) as Error & {
+      statusCode: number;
+    };
+    apnsError.statusCode = response.status === 410 ? 410 : response.status;
+    throw apnsError;
+  }
+}
+
+// ===== Send via FCM (for native Android tokens) =====
 async function sendFcmPush(
   token: string,
   title: string,
@@ -508,11 +586,18 @@ serve(async (req: Request) => {
         const isNativeToken = subscription.endpoint?.startsWith('native:');
 
         if (isNativeToken) {
-          // Native iOS/Android — send via FCM
+          // Native iOS/Android — route to APNs or FCM
+          const isIos = subscription.endpoint?.startsWith('native:ios:');
           const token =
             subscription.keys?.token || subscription.endpoint.replace(/^native:(ios|android):/, '');
-          console.log('[Push v24] Sending FCM to:', subscription.id, subscription.device_type);
-          await sendFcmPush(token, title, body, type, data);
+
+          if (isIos) {
+            console.log('[Push v25] Sending APNs to:', subscription.id);
+            await sendApnsPush(token, title, body, type, data);
+          } else {
+            console.log('[Push v25] Sending FCM to:', subscription.id, subscription.device_type);
+            await sendFcmPush(token, title, body, type, data);
+          }
         } else {
           // Web Push — existing VAPID flow
           console.log('[Push v24] Sending Web Push to:', subscription.id);

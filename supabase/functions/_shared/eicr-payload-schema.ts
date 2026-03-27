@@ -228,7 +228,9 @@ export const eicrPayloadSchema = z.object({
     construction_date: z.string().default(''),
     estimated_age: z.string().default(''),
     age_unit: z.string().default(''),
-    last_inspection_type: z.string().default(''),
+    // Valid values: '' | 'known' | 'unknown' | 'first'
+    // Frontend stores 'not-applicable' — normaliseLastInspectionType() in eicrJsonFormatter maps it to 'first'
+    last_inspection_type: z.enum(['', 'known', 'unknown', 'first']).default(''),
     date_of_last_inspection: z.string().default(''),
     evidence_of_alterations: z.string().default(''),
     alterations_details: z.string().default(''),

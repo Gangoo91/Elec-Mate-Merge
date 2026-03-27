@@ -2710,7 +2710,7 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
               </button>
             </CollapsibleTrigger>
             <CollapsibleContent>
-              <div className="bg-card/30">
+              <div className="bg-card/30 px-4 py-4">
                 <TestInstrumentInfo formData={formData} onUpdate={onUpdate} />
               </div>
             </CollapsibleContent>
@@ -2733,7 +2733,7 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
               </button>
             </CollapsibleTrigger>
             <CollapsibleContent>
-              <div className="bg-card/30">
+              <div className="bg-card/30 px-4 py-4">
                 <TestMethodInfo formData={formData} onUpdate={onUpdate} />
               </div>
             </CollapsibleContent>

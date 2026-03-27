@@ -717,6 +717,32 @@ export const formatEICRJson = async (formData: any, reportId: string): Promise<E
     });
   };
 
+  // Normalise lastInspectionType: frontend stores 'not-applicable' for the "First" button,
+  // but the PDF Monkey template checks for 'first' to tick the N/A (First) checkbox.
+  const normaliseLastInspectionType = (raw: string): string => {
+    if (raw === 'not-applicable') return 'first';
+    return raw;
+  };
+
+  // Normalise phases: form default is 'single', buttons write '1'/'3'.
+  // Normalise to numeric string so PDF and derived supply_type logic are consistent.
+  const normalisePhases = (raw: string): string => {
+    if (raw === 'single') return '1';
+    if (raw === 'three') return '3';
+    return raw;
+  };
+
+  // Normalise earthingArrangement: form default is 'tncs', select options use 'TN-C-S' etc.
+  const normaliseEarthing = (raw: string): string => {
+    const map: Record<string, string> = {
+      tncs: 'TN-C-S', 'tn-c-s': 'TN-C-S', 'tnc-s': 'TN-C-S',
+      tns: 'TN-S', 'tn-s': 'TN-S',
+      tnc: 'TN-C', 'tn-c': 'TN-C',
+      tt: 'TT', it: 'IT',
+    };
+    return map[raw.toLowerCase()] ?? raw;
+  };
+
   // Helper to convert string booleans to actual booleans
   const getBool = (key: string, defaultValue: boolean = false): boolean => {
     const value = formData[key];
@@ -767,7 +793,7 @@ export const formatEICRJson = async (formData: any, reportId: string): Promise<E
       construction_date: get('constructionDate'),
       estimated_age: get('estimatedAge'),
       age_unit: get('ageUnit'),
-      last_inspection_type: get('lastInspectionType'),
+      last_inspection_type: normaliseLastInspectionType(get('lastInspectionType')),
       date_of_last_inspection: get('dateOfLastInspection'),
       evidence_of_alterations: get('evidenceOfAlterations'),
       alterations_details: get('alterationsDetails'),
@@ -787,7 +813,7 @@ export const formatEICRJson = async (formData: any, reportId: string): Promise<E
 
     standards_compliance: {
       design_standard: get('designStandard', 'BS7671'),
-      part_p_compliance: get('partPCompliance'),
+      part_p_compliance: get('partPCompliance') || 'N/A',
     },
 
     supply_characteristics: {
@@ -795,9 +821,17 @@ export const formatEICRJson = async (formData: any, reportId: string): Promise<E
       supply_frequency: get('supplyFrequency', '50'),
       supply_ac_dc: get('supplyAcDc', 'ac'),
       conductor_configuration: get('conductorConfiguration'),
-      phases: get('phases'),
-      earthing_arrangement: get('earthingArrangement'),
-      supply_type: get('supplyType'),
+      phases: normalisePhases(get('phases')),
+      earthing_arrangement: normaliseEarthing(get('earthingArrangement')),
+      // supply_type: derived from phases when not explicitly set (no UI control for supplyType in EICR form)
+      supply_type: (() => {
+        const explicit = get('supplyType');
+        if (explicit) return explicit;
+        const p = normalisePhases(get('phases'));
+        if (p === '1') return 'Single Phase';
+        if (p === '3') return 'Three Phase';
+        return '';
+      })(),
       supply_pme: get('supplyPME'),
       dno_name: get('dnoName'),
       mpan: get('mpan'),
@@ -864,7 +898,7 @@ export const formatEICRJson = async (formData: any, reportId: string): Promise<E
         means_of_earthing_electrode: getBool('meansOfEarthingElectrode'),
         earth_electrode_type: get('earthElectrodeType'),
         earth_electrode_location: get('earthElectrodeLocation'),
-        earth_electrode_resistance: get('earthElectrodeResistance'),
+        earth_electrode_resistance: get('earthElectrodeResistance') || 'N/A',
         main_earthing_conductor_type: get('mainEarthingConductorType'),
         main_earthing_conductor_size:
           get('mainEarthingConductorSizeCustom') || get('mainEarthingConductorSize'),
@@ -899,7 +933,9 @@ export const formatEICRJson = async (formData: any, reportId: string): Promise<E
         bonding_compliance: get('bondingCompliance'),
         earthing_conductor_continuity_verified: getBool('earthingConductorContinuityVerified'),
         bonding_conductor_continuity_verified: getBool('bondingConductorContinuityVerified'),
-        supplementary_bonding: get('supplementaryBonding'),
+        // Derive presence from size when no explicit value set (no UI control for this field)
+        supplementary_bonding: get('supplementaryBonding') ||
+          (get('supplementaryBondingSizeCustom') || get('supplementaryBondingSize') ? 'Present' : 'N/A'),
         supplementary_bonding_size:
           get('supplementaryBondingSizeCustom') || get('supplementaryBondingSize'),
         supplementary_bonding_size_custom: get('supplementaryBondingSizeCustom'),
@@ -1089,14 +1125,14 @@ export const formatEICRJson = async (formData: any, reportId: string): Promise<E
     cutoutLocation: get('cutoutLocation'),
 
     // Supply Details
-    phases: get('phases'),
+    phases: normalisePhases(get('phases')),
     supply_voltage: get('supplyVoltageCustom') || get('supplyVoltage'),
     supplyVoltage: get('supplyVoltageCustom') || get('supplyVoltage'),
     supply_frequency: get('supplyFrequency', '50'),
     supply_pme: get('supplyPME'),
     supplyPME: get('supplyPME'),
-    earthing_arrangement: get('earthingArrangement'),
-    earthingArrangement: get('earthingArrangement'),
+    earthing_arrangement: normaliseEarthing(get('earthingArrangement')),
+    earthingArrangement: normaliseEarthing(get('earthingArrangement')),
 
     // Main Protective Device (flat - camelCase only to avoid duplicate with nested object)
     mainProtectiveDevice: get('mainProtectiveDevice'),
@@ -1126,7 +1162,7 @@ export const formatEICRJson = async (formData: any, reportId: string): Promise<E
     estimatedAge: get('estimatedAge'),
     age_unit: get('ageUnit'),
     ageUnit: get('ageUnit'),
-    last_inspection_type: get('lastInspectionType'),
+    last_inspection_type: normaliseLastInspectionType(get('lastInspectionType')),
     date_of_last_inspection: get('dateOfLastInspection'),
     evidence_of_alterations: get('evidenceOfAlterations'),
     alterations_details: get('alterationsDetails'),
