@@ -445,12 +445,7 @@ export default function AdminDashboard() {
     >
       <div className="space-y-5 sm:space-y-6 pb-24">
         {/* ── Hero Revenue Card ─────────────────────────────── */}
-        <motion.section
-          custom={0}
-          variants={sectionVariants}
-          initial="hidden"
-          animate="visible"
-        >
+        <motion.section custom={0} variants={sectionVariants} initial="hidden" animate="visible">
           <div
             className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-amber-600 via-yellow-600 to-orange-700 touch-manipulation active:scale-[0.99] transition-transform cursor-pointer"
             onClick={() => navigate('/admin/revenue')}
@@ -505,7 +500,12 @@ export default function AdminDashboard() {
                 </div>
                 <div className="bg-white/10 backdrop-blur-sm rounded-xl p-2.5 sm:p-3">
                   <p className="text-xl sm:text-2xl font-bold text-white">
-                    <AnimatedCounter value={arr / 1000} prefix="£" suffix="k" decimals={arr >= 10000 ? 0 : 1} />
+                    <AnimatedCounter
+                      value={arr / 1000}
+                      prefix="£"
+                      suffix="k"
+                      decimals={arr >= 10000 ? 0 : 1}
+                    />
                   </p>
                   <p className="text-white text-xs sm:text-[11px] uppercase">ARR</p>
                 </div>
@@ -523,77 +523,7 @@ export default function AdminDashboard() {
           </div>
         </motion.section>
 
-        {/* ── Pending Actions Card ──────────────────────────── */}
-        {totalPendingActions > 0 && (
-          <motion.section
-            custom={1}
-            variants={sectionVariants}
-            initial="hidden"
-            animate="visible"
-          >
-            <div className="glass-premium rounded-2xl overflow-hidden relative">
-              {/* Yellow gradient accent line */}
-              <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-yellow-500 via-amber-400 to-yellow-500 opacity-60" />
-              {/* Decorative blob */}
-              <div className="absolute -top-16 -right-16 w-32 h-32 bg-gradient-to-br from-yellow-500 via-amber-400 to-yellow-500 opacity-[0.03] blur-3xl pointer-events-none" />
-
-              <div className="relative z-10 p-4">
-                <div className="flex items-center gap-2 mb-3">
-                  <Bell className="h-4 w-4 text-yellow-400" />
-                  <span className="font-semibold text-sm text-white">Pending Actions</span>
-                  <span className="ml-auto text-xs text-white px-2 py-0.5 rounded bg-yellow-500/20">
-                    {totalPendingActions}
-                  </span>
-                </div>
-                <div className="space-y-2">
-                  {(pendingCounts?.unreadMessages || 0) > 0 && (
-                    <button
-                      onClick={() => navigate('/admin/user-messages')}
-                      className="w-full flex items-center justify-between p-2 rounded-lg hover:bg-white/5 active:bg-white/10 transition-colors touch-manipulation h-11"
-                    >
-                      <div className="flex items-center gap-2 text-sm text-white">
-                        <MessageSquare className="h-4 w-4 text-blue-400" />
-                        Unread Messages
-                      </div>
-                      <Badge className="bg-blue-500/20 text-blue-400 border-0">
-                        {pendingCounts?.unreadMessages}
-                      </Badge>
-                    </button>
-                  )}
-                  {(pendingCounts?.expiringTrials || 0) > 0 && (
-                    <button
-                      onClick={() => navigate('/admin/trials')}
-                      className="w-full flex items-center justify-between p-2 rounded-lg hover:bg-white/5 active:bg-white/10 transition-colors touch-manipulation h-11"
-                    >
-                      <div className="flex items-center gap-2 text-sm text-white">
-                        <Clock className="h-4 w-4 text-orange-400" />
-                        Trials Expiring Today
-                      </div>
-                      <Badge className="bg-orange-500/20 text-orange-400 border-0">
-                        {pendingCounts?.expiringTrials}
-                      </Badge>
-                    </button>
-                  )}
-                  {/* TODO: Enable when document_uploads table exists */}
-                  {(pendingCounts?.pendingDocuments || 0) > 0 && (
-                    <button
-                      onClick={() => navigate('/admin/documents')}
-                      className="w-full flex items-center justify-between p-2 rounded-lg hover:bg-white/5 active:bg-white/10 transition-colors touch-manipulation h-11"
-                    >
-                      <div className="flex items-center gap-2 text-sm text-white">
-                        <FileCheck className="h-4 w-4 text-green-400" />
-                        Documents Awaiting Review
-                      </div>
-                      <Badge className="bg-green-500/20 text-green-400 border-0">
-                        {pendingCounts?.pendingDocuments}
-                      </Badge>
-                    </button>
-                  )}
-                </div>
-              </div>
-            </div>
-          </motion.section>
-        )}
+        {/* Pending Actions removed — ELE-467 cleanup */}
 
         {/* ── Abandoned Checkouts Card ─────────────────────── */}
         {abandonedCheckouts.length > 0 && (
@@ -630,59 +560,7 @@ export default function AdminDashboard() {
           </motion.section>
         )}
 
-        {/* ── Campaign Overview Card ───────────────────────── */}
-        <motion.section
-          custom={3}
-          variants={sectionVariants}
-          initial="hidden"
-          animate="visible"
-        >
-          <div
-            className="glass-premium rounded-2xl overflow-hidden relative touch-manipulation active:scale-[0.99] transition-transform cursor-pointer"
-            onClick={() => navigate('/admin/winback')}
-          >
-            {/* Purple gradient accent line */}
-            <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-purple-500 via-indigo-400 to-purple-500 opacity-60" />
-            {/* Decorative blob */}
-            <div className="absolute -top-16 -right-16 w-32 h-32 bg-gradient-to-br from-purple-500 via-indigo-400 to-purple-500 opacity-[0.03] blur-3xl pointer-events-none" />
-
-            <div className="relative z-10 p-4">
-              <div className="flex items-center justify-between mb-3">
-                <div className="flex items-center gap-2">
-                  <Gift className="h-4 w-4 text-purple-400" />
-                  <span className="font-semibold text-sm text-white">Campaigns</span>
-                </div>
-                <ChevronRight className="h-4 w-4 text-white" />
-              </div>
-              <div className="grid grid-cols-4 gap-2">
-                <div className="text-center p-2 rounded-lg bg-white/5">
-                  <p className="text-lg font-bold text-blue-400">
-                    <AnimatedCounter value={campaignStats?.sent || 0} />
-                  </p>
-                  <p className="text-[10px] text-white">Sent</p>
-                </div>
-                <div className="text-center p-2 rounded-lg bg-white/5">
-                  <p className="text-lg font-bold text-green-400">
-                    <AnimatedCounter value={Number(campaignStats?.openRate || 0)} suffix="%" decimals={1} />
-                  </p>
-                  <p className="text-[10px] text-white">Open</p>
-                </div>
-                <div className="text-center p-2 rounded-lg bg-white/5">
-                  <p className="text-lg font-bold text-amber-400">
-                    <AnimatedCounter value={Number(campaignStats?.clickRate || 0)} suffix="%" decimals={1} />
-                  </p>
-                  <p className="text-[10px] text-white">Click</p>
-                </div>
-                <div className="text-center p-2 rounded-lg bg-white/5">
-                  <p className="text-lg font-bold text-purple-400">
-                    <AnimatedCounter value={campaignStats?.clicked || 0} />
-                  </p>
-                  <p className="text-[10px] text-white">Clicks</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </motion.section>
+        {/* Campaigns removed — ELE-467 cleanup */}
 
         {/* ── Section Header: Overview ─────────────────────── */}
         <p className="text-xs sm:text-sm font-medium text-white uppercase tracking-wider mb-3 px-0.5">
@@ -690,12 +568,7 @@ export default function AdminDashboard() {
         </p>
 
         {/* ── Quick Stats Grid ─────────────────────────────── */}
-        <motion.section
-          custom={4}
-          variants={sectionVariants}
-          initial="hidden"
-          animate="visible"
-        >
+        <motion.section custom={4} variants={sectionVariants} initial="hidden" animate="visible">
           <motion.div
             variants={containerVariants}
             initial="hidden"
@@ -764,12 +637,7 @@ export default function AdminDashboard() {
         </p>
 
         {/* ── Live Users Section ───────────────────────────── */}
-        <motion.section
-          custom={6}
-          variants={sectionVariants}
-          initial="hidden"
-          animate="visible"
-        >
+        <motion.section custom={6} variants={sectionVariants} initial="hidden" animate="visible">
           <div className="glass-premium rounded-2xl overflow-hidden relative">
             {/* Green gradient accent line */}
             <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-green-500 via-emerald-400 to-green-500 opacity-60" />
@@ -860,12 +728,7 @@ export default function AdminDashboard() {
         </motion.section>
 
         {/* ── Recent Signups ───────────────────────────────── */}
-        <motion.section
-          custom={7}
-          variants={sectionVariants}
-          initial="hidden"
-          animate="visible"
-        >
+        <motion.section custom={7} variants={sectionVariants} initial="hidden" animate="visible">
           <div className="glass-premium rounded-2xl overflow-hidden relative">
             {/* Blue gradient accent line */}
             <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-blue-500 via-cyan-400 to-blue-500 opacity-60" />
@@ -905,15 +768,16 @@ export default function AdminDashboard() {
                         {getInitials(user.full_name)}
                       </div>
                       <div className="flex-1 min-w-0 text-left">
-                        <p className="font-medium text-sm truncate text-white">{user.full_name || 'Unknown'}</p>
+                        <p className="font-medium text-sm truncate text-white">
+                          {user.full_name || 'Unknown'}
+                        </p>
                         <p className="text-xs text-white truncate">{user.email}</p>
                       </div>
                       <div className="text-right shrink-0">
                         <p className="text-xs text-white">
-                          {formatDistanceToNow(new Date(user.created_at), { addSuffix: true }).replace(
-                            'about ',
-                            ''
-                          )}
+                          {formatDistanceToNow(new Date(user.created_at), {
+                            addSuffix: true,
+                          }).replace('about ', '')}
                         </p>
                         {user.subscribed && (
                           <Badge className="text-[11px] px-1.5 py-0 bg-emerald-500/20 text-emerald-400 border-0">
@@ -931,12 +795,7 @@ export default function AdminDashboard() {
 
         {/* ── Recent Subscriptions ─────────────────────────── */}
         {recentSubscriptions.length > 0 && (
-          <motion.section
-            custom={8}
-            variants={sectionVariants}
-            initial="hidden"
-            animate="visible"
-          >
+          <motion.section custom={8} variants={sectionVariants} initial="hidden" animate="visible">
             <div className="glass-premium rounded-2xl overflow-hidden relative">
               {/* Emerald gradient accent line */}
               <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-emerald-500 via-teal-400 to-emerald-500 opacity-60" />
@@ -1024,12 +883,7 @@ export default function AdminDashboard() {
 
         {/* ── Support Inbox ────────────────────────────────── */}
         {supportMessages && supportMessages.length > 0 && (
-          <motion.section
-            custom={9}
-            variants={sectionVariants}
-            initial="hidden"
-            animate="visible"
-          >
+          <motion.section custom={9} variants={sectionVariants} initial="hidden" animate="visible">
             <div className="glass-premium rounded-2xl overflow-hidden relative">
               {/* Yellow gradient accent line */}
               <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-yellow-500 via-amber-400 to-yellow-500 opacity-60" />
@@ -1126,12 +980,7 @@ export default function AdminDashboard() {
         )}
 
         {/* ── Growth Stats ─────────────────────────────────── */}
-        <motion.section
-          custom={10}
-          variants={sectionVariants}
-          initial="hidden"
-          animate="visible"
-        >
+        <motion.section custom={10} variants={sectionVariants} initial="hidden" animate="visible">
           <div className="grid grid-cols-2 gap-3">
             <motion.div
               whileHover={{ y: -2 }}

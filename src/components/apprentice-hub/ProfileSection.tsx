@@ -8,6 +8,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
+import { saveOrSharePdf } from '@/utils/save-or-share-pdf';
 import JSZip from 'jszip';
 import {
   User,
@@ -225,7 +226,8 @@ export function ProfileSection() {
       }
 
       // Save PDF
-      doc.save(
+      await saveOrSharePdf(
+        doc,
         `${fullName.replace(/\s+/g, '_')}_Portfolio_${new Date().toISOString().split('T')[0]}.pdf`
       );
 

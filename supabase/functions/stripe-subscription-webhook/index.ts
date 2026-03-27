@@ -669,6 +669,7 @@ serve(async (req) => {
         subscribed,
         stripe_customer_id: customerId,
         subscription_tier: tier,
+        subscription_source: 'stripe',
       };
 
       if (subscribed && periodEnd) {

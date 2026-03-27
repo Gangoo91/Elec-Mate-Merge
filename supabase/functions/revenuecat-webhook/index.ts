@@ -131,9 +131,18 @@ serve(async (req) => {
       // Resolve whether this tier includes Business AI
       const isBusinessAiTier = subscriptionTier ? BUSINESS_AI_TIERS.has(subscriptionTier) : false;
 
+      // Resolve subscription source from RC store field
+      const subscriptionSource =
+        store === 'APP_STORE' || store === 'MAC_APP_STORE'
+          ? 'app_store'
+          : store === 'PLAY_STORE'
+            ? 'play_store'
+            : store || 'app_store';
+
       const updateData: Record<string, unknown> = {
         subscribed,
         subscription_end: subscriptionEnd,
+        subscription_source: subscriptionSource,
       };
 
       if (subscribed) {

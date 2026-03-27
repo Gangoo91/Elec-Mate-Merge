@@ -51,9 +51,16 @@ interface SubscribedUser {
   role: string;
   subscribed: boolean;
   created_at: string;
+  subscription_source?: string | null;
   offer_code?: string;
   offer_price?: number;
 }
+
+const SOURCE_BADGES: Record<string, { label: string; color: string }> = {
+  stripe: { label: 'Stripe', color: 'bg-purple-500/20 text-purple-400' },
+  app_store: { label: 'App Store', color: 'bg-blue-500/20 text-blue-400' },
+  play_store: { label: 'Play Store', color: 'bg-green-500/20 text-green-400' },
+};
 
 interface PromoOffer {
   id: string;
@@ -69,6 +76,7 @@ interface PromoOffer {
 export default function AdminSubscriptions() {
   const [search, setSearch] = useState('');
   const [roleFilter, setRoleFilter] = useState<string>('all');
+  const [sourceFilter, setSourceFilter] = useState<string>('all');
   const [selectedUser, setSelectedUser] = useState<SubscribedUser | null>(null);
 
   // Live Stripe stats — shares cache key with AdminDashboard (zero extra API calls)
@@ -130,16 +138,19 @@ export default function AdminSubscriptions() {
     isLoading,
     refetch,
   } = useQuery({
-    queryKey: ['admin-subscribed-users', search, roleFilter],
+    queryKey: ['admin-subscribed-users', search, roleFilter, sourceFilter],
     queryFn: async () => {
       let query = supabase
         .from('profiles')
-        .select('id, full_name, username, role, subscribed, created_at')
+        .select('id, full_name, username, role, subscribed, created_at, subscription_source')
         .eq('subscribed', true)
         .order('created_at', { ascending: false });
 
       if (roleFilter !== 'all') {
         query = query.eq('role', roleFilter);
+      }
+      if (sourceFilter !== 'all') {
+        query = query.eq('subscription_source', sourceFilter);
       }
 
       const { data, error } = await query;
@@ -394,6 +405,17 @@ export default function AdminSubscriptions() {
                   <SelectItem value="employer">Employer</SelectItem>
                 </SelectContent>
               </Select>
+              <Select value={sourceFilter} onValueChange={setSourceFilter}>
+                <SelectTrigger className="w-full sm:w-[140px] h-11 touch-manipulation">
+                  <SelectValue placeholder="Source" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="all">All Sources</SelectItem>
+                  <SelectItem value="stripe">Stripe</SelectItem>
+                  <SelectItem value="app_store">App Store</SelectItem>
+                  <SelectItem value="play_store">Play Store</SelectItem>
+                </SelectContent>
+              </Select>
             </div>
           </CardContent>
         </Card>
@@ -438,7 +460,14 @@ export default function AdminSubscriptions() {
                         <p className="text-xs text-muted-foreground">@{user.username}</p>
                       </div>
                     </div>
-                    <div className="flex items-center gap-2 shrink-0">
+                    <div className="flex items-center gap-1.5 shrink-0">
+                      {user.subscription_source && SOURCE_BADGES[user.subscription_source] && (
+                        <Badge
+                          className={`${SOURCE_BADGES[user.subscription_source].color} text-[10px] border-0 px-1.5`}
+                        >
+                          {SOURCE_BADGES[user.subscription_source].label}
+                        </Badge>
+                      )}
                       <Badge className={`${getRoleBadgeColor(user.role)} text-xs`}>
                         {getRoleIcon(user.role)}
                         <span className="ml-1 capitalize">{user.role || 'visitor'}</span>
