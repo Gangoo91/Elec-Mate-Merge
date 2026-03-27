@@ -2,6 +2,7 @@ import { useState, useEffect, useMemo, useCallback } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { useSearchParams } from 'react-router-dom';
 import { supabase } from '@/integrations/supabase/client';
+import { batchedInQuery } from '@/utils/batchedQuery';
 import { useAuth } from '@/contexts/AuthContext';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -230,12 +231,14 @@ export default function AdminUsers() {
       let allUsers = [...(baseUsers || [])];
       const userIds = allUsers.map((u: UserProfile) => u.id);
 
-      const [{ data: presenceData }, { data: elecIdData }] = await Promise.all([
-        supabase.from('user_presence').select('user_id, last_seen').in('user_id', userIds),
-        supabase
-          .from('employer_elec_id_profiles')
-          .select('id, employee_id, elec_id_number, is_verified, activated, ecs_card_type')
-          .in('employee_id', userIds),
+      const [presenceData, elecIdData] = await Promise.all([
+        batchedInQuery('user_presence', 'user_id', userIds, 'user_id, last_seen'),
+        batchedInQuery(
+          'employer_elec_id_profiles',
+          'employee_id',
+          userIds,
+          'id, employee_id, elec_id_number, is_verified, activated, ecs_card_type'
+        ),
       ]);
 
       const presenceMap = new Map(presenceData?.map((p) => [p.user_id, p.last_seen]) || []);

@@ -1,4 +1,6 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { supabase } from '@/integrations/supabase/client';
+import { batchedInQuery } from '@/utils/batchedQuery';
 
 export interface UserPresence {
   user_id: string;
@@ -91,15 +93,7 @@ export const getUserPresence = async (userId: string): Promise<UserPresence | nu
  */
 export const getMultipleUsersPresence = async (userIds: string[]): Promise<UserPresence[]> => {
   if (userIds.length === 0) return [];
-
-  const { data, error } = await supabase.from('user_presence').select('*').in('user_id', userIds);
-
-  if (error) {
-    console.error('Error fetching presence:', error);
-    return [];
-  }
-
-  return data || [];
+  return batchedInQuery<UserPresence>('user_presence', 'user_id', userIds, '*');
 };
 
 /**

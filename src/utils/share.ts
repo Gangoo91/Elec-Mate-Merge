@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /**
  * share.ts
  *
@@ -33,8 +34,12 @@ export async function shareContent({ title, text, url, onFallback }: ShareOption
 
     // Last resort: copy URL to clipboard
     if (url && navigator.clipboard) {
-      await navigator.clipboard.writeText(url);
-      return;
+      try {
+        await navigator.clipboard.writeText(url);
+        return;
+      } catch {
+        // iOS WKWebView may deny — fall through to fallback
+      }
     }
 
     // Nothing available — call caller's fallback

@@ -343,9 +343,14 @@ export default function AdminRevenue() {
           </div>
         </motion.section>
 
-        {/* Tier Breakdown */}
+        {/* Web (Stripe) Tiers */}
+        <motion.section variants={sectionVariants} initial="hidden" animate="visible" custom={1}>
+          <p className="text-[10px] font-semibold text-white uppercase tracking-widest mb-2 px-1">
+            Web App (Stripe)
+          </p>
+        </motion.section>
         <motion.div
-          className="grid grid-cols-2 gap-3"
+          className="space-y-2"
           variants={sectionVariants}
           initial="hidden"
           animate="visible"
@@ -381,102 +386,103 @@ export default function AdminRevenue() {
             return (
               <div
                 key={tier}
-                className={cn(
-                  'glass-premium rounded-2xl border-l-4 overflow-hidden touch-manipulation active:scale-[0.98] transition-transform',
-                  borderColors[config.color as keyof typeof borderColors]
-                )}
+                className="glass-premium rounded-xl overflow-hidden flex items-center gap-3 p-3.5"
               >
-                <div className="p-4">
-                  <div className="flex items-center justify-between mb-3">
-                    <div className="flex items-center gap-2">
-                      <div
-                        className={cn(
-                          'w-8 h-8 rounded-lg flex items-center justify-center',
-                          bgColors[config.color as keyof typeof bgColors]
-                        )}
-                      >
-                        <Icon
-                          className={cn(
-                            'h-4 w-4',
-                            textColors[config.color as keyof typeof textColors]
-                          )}
-                        />
-                      </div>
-                      <span className="text-xs text-white capitalize font-medium">{tier}</span>
-                    </div>
-                    <Badge
-                      variant="outline"
-                      className={cn(
-                        'text-xs border-white/10',
-                        textColors[config.color as keyof typeof textColors]
-                      )}
-                    >
-                      {config.price}
-                    </Badge>
-                  </div>
+                <div
+                  className={cn(
+                    'w-1 self-stretch rounded-full opacity-60',
+                    borderColors[config.color as keyof typeof borderColors].replace(
+                      'border-l-',
+                      'bg-'
+                    )
+                  )}
+                />
+                <div
+                  className={cn(
+                    'w-10 h-10 rounded-xl flex items-center justify-center shrink-0',
+                    bgColors[config.color as keyof typeof bgColors]
+                  )}
+                >
+                  <Icon
+                    className={cn('h-5 w-5', textColors[config.color as keyof typeof textColors])}
+                  />
+                </div>
+                <div className="flex-1 min-w-0">
+                  <p className="text-[14px] font-semibold text-white capitalize">{tier}</p>
+                  <p className="text-[11px] text-white">£{revenue.toFixed(2)}/mo</p>
+                </div>
+                <div className="text-right shrink-0">
                   <p
                     className={cn(
-                      'text-3xl font-bold',
+                      'text-2xl font-bold',
                       textColors[config.color as keyof typeof textColors]
                     )}
                   >
                     {count}
                   </p>
-                  <p className="text-xs text-white mt-1">£{revenue.toFixed(2)}/mo</p>
+                  <p
+                    className={cn(
+                      'text-[10px] font-medium',
+                      textColors[config.color as keyof typeof textColors]
+                    )}
+                  >
+                    {config.price}
+                  </p>
                 </div>
               </div>
             );
           })}
         </motion.div>
 
-        {/* Mobile App Tiers (RevenueCat) */}
-        <motion.div
-          className="space-y-2"
-          variants={sectionVariants}
-          initial="hidden"
-          animate="visible"
-          custom={1.5}
-        >
-          <p className="text-xs font-semibold text-white uppercase tracking-wider px-0.5">
+        {/* Mobile App (RevenueCat) Tiers */}
+        <motion.section variants={sectionVariants} initial="hidden" animate="visible" custom={1.5}>
+          <p className="text-[10px] font-semibold text-white uppercase tracking-widest mb-2 px-1">
             Mobile App (RevenueCat)
           </p>
-          <div className="grid grid-cols-2 gap-3">
-            <div className="glass-premium rounded-2xl border-l-4 border-l-cyan-500 overflow-hidden">
-              <div className="p-4">
-                <div className="flex items-center justify-between mb-3">
-                  <div className="flex items-center gap-2">
-                    <div className="w-8 h-8 rounded-lg bg-cyan-500/15 flex items-center justify-center">
-                      <GraduationCap className="h-4 w-4 text-cyan-400" />
-                    </div>
-                    <span className="text-xs text-white font-medium">Apprentice</span>
-                  </div>
-                  <Badge variant="outline" className="text-xs border-white/10 text-cyan-400">
-                    £6.99
-                  </Badge>
+          <div className="space-y-2">
+            {[
+              {
+                name: 'Apprentice',
+                price: '£6.99/mo',
+                icon: GraduationCap,
+                text: 'text-cyan-400',
+                bg: 'bg-cyan-500/15',
+                bar: 'bg-cyan-500',
+              },
+              {
+                name: 'Electrician',
+                price: '£14.99/mo',
+                icon: Zap,
+                text: 'text-blue-400',
+                bg: 'bg-blue-500/15',
+                bar: 'bg-blue-500',
+              },
+            ].map((t) => (
+              <div
+                key={t.name}
+                className="glass-premium rounded-xl overflow-hidden flex items-center gap-3 p-3.5"
+              >
+                <div className={cn('w-1 self-stretch rounded-full opacity-60', t.bar)} />
+                <div
+                  className={cn(
+                    'w-10 h-10 rounded-xl flex items-center justify-center shrink-0',
+                    t.bg
+                  )}
+                >
+                  <t.icon className={cn('h-5 w-5', t.text)} />
                 </div>
-                <p className="text-3xl font-bold text-cyan-400">0</p>
-                <p className="text-xs text-white mt-1">£0.00/mo</p>
-              </div>
-            </div>
-            <div className="glass-premium rounded-2xl border-l-4 border-l-blue-500 overflow-hidden">
-              <div className="p-4">
-                <div className="flex items-center justify-between mb-3">
-                  <div className="flex items-center gap-2">
-                    <div className="w-8 h-8 rounded-lg bg-blue-500/15 flex items-center justify-center">
-                      <Zap className="h-4 w-4 text-blue-400" />
-                    </div>
-                    <span className="text-xs text-white font-medium">Electrician</span>
-                  </div>
-                  <Badge variant="outline" className="text-xs border-white/10 text-blue-400">
-                    £14.99
-                  </Badge>
+                <div className="flex-1 min-w-0">
+                  <p className="text-[14px] font-semibold text-white">{t.name}</p>
+                  <p className="text-[11px] text-white">£0.00/mo</p>
                 </div>
-                <p className="text-3xl font-bold text-blue-400">0</p>
-                <p className="text-xs text-white mt-1">£0.00/mo</p>
+                <div className="text-right shrink-0">
+                  <p className={cn('text-2xl font-bold', t.text)}>0</p>
+                  <p className={cn('text-[10px] font-medium', t.text)}>{t.price}</p>
+                </div>
               </div>
-            </div>
+            ))}
           </div>
-        </motion.div>
+        </motion.section>
 
         {/* 14-Day Performance + Chart — Combined Glass Card */}
         <motion.div

@@ -43,12 +43,7 @@ const SubscriptionStatus = () => {
       if (error) throw new Error(error.message);
 
       if (data?.url) {
-        const newWindow = window.open(data.url, '_blank');
-        if (!newWindow || newWindow.closed) {
-          setTimeout(() => {
-            window.location.href = data.url;
-          }, 500);
-        }
+        window.location.href = data.url;
       } else {
         throw new Error('No portal URL returned');
       }

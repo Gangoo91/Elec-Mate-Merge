@@ -1,37 +1,12 @@
 import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
-import { Zap, ArrowLeft, Mail, Phone, MessageCircle, HelpCircle, Shield } from 'lucide-react';
+import { Mail, Phone, MessageCircle, HelpCircle, Shield } from 'lucide-react';
+import LegalPageLayout from '@/components/layout/LegalPageLayout';
 
 const Support = () => {
   return (
-    <div className="bg-black text-white min-h-screen">
-      {/* Sticky Header */}
-      <header className="sticky top-0 z-50 w-full px-4 pb-3 sm:pb-4 pt-[max(12px,env(safe-area-inset-top,12px))] border-b border-white/10 bg-black/95 backdrop-blur-sm">
-        <div className="max-w-4xl mx-auto flex items-center justify-between">
-          <Link to="/" className="flex items-center gap-2 group touch-manipulation">
-            <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-yellow-400 flex items-center justify-center transition-transform group-hover:scale-105">
-              <Zap className="h-4 w-4 sm:h-5 sm:w-5 text-black" />
-            </div>
-            <span className="text-lg sm:text-xl font-bold">
-              Elec-<span className="text-yellow-400">Mate</span>
-            </span>
-          </Link>
-          <Link to="/">
-            <Button
-              variant="outline"
-              size="sm"
-              className="h-9 px-3 border-white/20 text-white hover:bg-white/5 touch-manipulation active:scale-95"
-            >
-              <ArrowLeft className="h-4 w-4 mr-1.5" />
-              <span className="hidden sm:inline">Back</span>
-            </Button>
-          </Link>
-        </div>
-      </header>
-
-      {/* Content */}
-      <main className="max-w-4xl mx-auto px-4 py-8 sm:py-12 space-y-8">
+    <LegalPageLayout>
+      <div className="space-y-8">
         {/* Hero */}
         <div className="text-center">
           <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-yellow-400/10 border border-yellow-400/20 mb-4">
@@ -42,7 +17,8 @@ const Support = () => {
             How can we <span className="text-yellow-400">help?</span>
           </h1>
           <p className="text-white text-lg max-w-2xl mx-auto">
-            Got a question, found a bug or need a hand? We're here to help. Reach out through any of the channels below.
+            Got a question, found a bug or need a hand? We're here to help. Reach out through any of
+            the channels below.
           </p>
         </div>
 
@@ -56,12 +32,8 @@ const Support = () => {
                   <Mail className="h-6 w-6 text-yellow-400" />
                 </div>
                 <h3 className="text-lg font-semibold text-white">Email</h3>
-                <p className="text-white text-sm">
-                  info@elec-mate.com
-                </p>
-                <p className="text-white text-xs">
-                  We aim to reply within 24 hours
-                </p>
+                <p className="text-white text-sm">info@elec-mate.com</p>
+                <p className="text-white text-xs">We aim to reply within 24 hours</p>
               </CardContent>
             </Card>
           </a>
@@ -74,12 +46,8 @@ const Support = () => {
                   <Phone className="h-6 w-6 text-yellow-400" />
                 </div>
                 <h3 className="text-lg font-semibold text-white">Phone</h3>
-                <p className="text-white text-sm">
-                  07507 241 303
-                </p>
-                <p className="text-white text-xs">
-                  Mon-Fri, 9am-5pm
-                </p>
+                <p className="text-white text-sm">07507 241 303</p>
+                <p className="text-white text-xs">Mon-Fri, 9am-5pm</p>
               </CardContent>
             </Card>
           </a>
@@ -97,12 +65,8 @@ const Support = () => {
                   <MessageCircle className="h-6 w-6 text-yellow-400" />
                 </div>
                 <h3 className="text-lg font-semibold text-white">Telegram</h3>
-                <p className="text-white text-sm">
-                  Community Group
-                </p>
-                <p className="text-white text-xs">
-                  Chat with us and other sparks
-                </p>
+                <p className="text-white text-sm">Community Group</p>
+                <p className="text-white text-xs">Chat with us and other sparks</p>
               </CardContent>
             </Card>
           </a>
@@ -117,28 +81,33 @@ const Support = () => {
               <div>
                 <h3 className="font-medium text-white mb-1">How do I cancel my subscription?</h3>
                 <p className="text-white text-sm">
-                  Go to Settings &gt; Billing and tap Manage Subscription. On iOS you can also cancel via Settings &gt; Apple ID &gt; Subscriptions on your device.
+                  Go to Settings &gt; Billing and tap Manage Subscription. On iOS you can also
+                  cancel via Settings &gt; Apple ID &gt; Subscriptions on your device.
                 </p>
               </div>
 
               <div className="border-t border-white/10 pt-4">
                 <h3 className="font-medium text-white mb-1">How do I restore my purchases?</h3>
                 <p className="text-white text-sm">
-                  Go to Settings &gt; Billing and tap Restore Purchases. This will sync your subscription from Apple or Google Play.
+                  Go to Settings &gt; Billing and tap Restore Purchases. This will sync your
+                  subscription from Apple or Google Play.
                 </p>
               </div>
 
               <div className="border-t border-white/10 pt-4">
                 <h3 className="font-medium text-white mb-1">How do I delete my account?</h3>
                 <p className="text-white text-sm">
-                  Go to Settings &gt; Privacy and tap Delete My Account. This will permanently remove all your data. Please cancel your subscription first.
+                  Go to Settings &gt; Privacy and tap Delete My Account. This will permanently
+                  remove all your data. Please cancel your subscription first.
                 </p>
               </div>
 
               <div className="border-t border-white/10 pt-4">
                 <h3 className="font-medium text-white mb-1">Is my data secure?</h3>
                 <p className="text-white text-sm">
-                  Yes. All data is encrypted in transit and at rest. We use Supabase (built on PostgreSQL) with row-level security. Your certificates and business data are private to your account.
+                  Yes. All data is encrypted in transit and at rest. We use Supabase (built on
+                  PostgreSQL) with row-level security. Your certificates and business data are
+                  private to your account.
                 </p>
               </div>
             </div>
@@ -166,12 +135,10 @@ const Support = () => {
             <Shield className="h-4 w-4 text-yellow-400" />
             <span className="text-sm text-white">Built in the UK for UK electricians</span>
           </div>
-          <p className="text-xs text-white">
-            &copy; 2026 Elec-Mate. All rights reserved.
-          </p>
+          <p className="text-xs text-white">&copy; 2026 Elec-Mate. All rights reserved.</p>
         </div>
-      </main>
-    </div>
+      </div>
+    </LegalPageLayout>
   );
 };
 

@@ -83,12 +83,7 @@ const PlansList = ({ billing }: PlansListProps) => {
             : 'Opening secure Stripe checkout page.',
         });
 
-        const newWindow = window.open(data.url, '_blank');
-        if (!newWindow || newWindow.closed) {
-          setTimeout(() => {
-            window.location.href = data.url;
-          }, 1000);
-        }
+        window.location.href = data.url;
       } else {
         throw new Error('No checkout URL returned');
       }

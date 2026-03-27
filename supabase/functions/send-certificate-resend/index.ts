@@ -530,7 +530,10 @@ const handler = async (req: Request): Promise<Response> => {
     const dataUpdatedAt = new Date(report.updated_at);
     const isPdfStale = pdfGeneratedAt && dataUpdatedAt > pdfGeneratedAt;
 
-    if (!pdfUrl || isPdfStale) {
+    // Only regenerate if we have form data to work with
+    const availableFormData = formattedDataFromClient || report.pdf_payload || report.form_data;
+
+    if ((!pdfUrl || isPdfStale) && availableFormData) {
       console.log('🔄 Generating fresh PDF...');
       try {
         const pdfResponse = await fetch(`${supabaseUrl}/functions/v1/${edgeFunctionName}`, {
@@ -540,7 +543,7 @@ const handler = async (req: Request): Promise<Response> => {
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({
-            formData: formattedDataFromClient || report.pdf_payload || report.form_data,
+            formData: availableFormData,
             reportId: report.report_id,
           }),
         });

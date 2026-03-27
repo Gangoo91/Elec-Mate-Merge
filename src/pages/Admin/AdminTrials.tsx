@@ -2,6 +2,7 @@ import { useState, useMemo, useEffect } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { useSearchParams } from 'react-router-dom';
 import { supabase } from '@/integrations/supabase/client';
+import { batchedInQuery } from '@/utils/batchedQuery';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
@@ -471,21 +472,17 @@ export default function AdminTrials() {
         authDataMap.set(u.id, { last_sign_in: u.last_sign_in, email: u.email });
       });
 
-      const [
-        { data: activityData },
-        { data: quotesData },
-        { data: eicData },
-        { data: studyData },
-        { data: eventSummaryData },
-      ] = await Promise.all([
-        supabase
-          .from('user_activity')
-          .select('user_id, points, streak, last_active_date')
-          .in('user_id', userIds),
-        supabase.from('quotes').select('user_id').in('user_id', userIds),
-        supabase.from('eic_schedules').select('user_id').in('user_id', userIds),
-        supabase.from('study_sessions').select('user_id').in('user_id', userIds),
-        supabase.from('user_activity_summary').select('*').in('user_id', userIds),
+      const [activityData, quotesData, eicData, studyData, eventSummaryData] = await Promise.all([
+        batchedInQuery(
+          'user_activity',
+          'user_id',
+          userIds,
+          'user_id, points, streak, last_active_date'
+        ),
+        batchedInQuery('quotes', 'user_id', userIds, 'user_id'),
+        batchedInQuery('eic_schedules', 'user_id', userIds, 'user_id'),
+        batchedInQuery('study_sessions', 'user_id', userIds, 'user_id'),
+        batchedInQuery('user_activity_summary', 'user_id', userIds, '*'),
       ]);
 
       const activityMap = new Map<
@@ -1280,12 +1277,24 @@ export default function AdminTrials() {
                 <SelectValue placeholder="Status" />
               </SelectTrigger>
               <SelectContent className="z-[100]">
-                <SelectItem value="all" className="h-11">All Status</SelectItem>
-                <SelectItem value="ending_today" className="h-11">Ending Today</SelectItem>
-                <SelectItem value="ending_tomorrow" className="h-11">Ending Tomorrow</SelectItem>
-                <SelectItem value="active" className="h-11">Active</SelectItem>
-                <SelectItem value="expired" className="h-11">Expired</SelectItem>
-                <SelectItem value="subscribed" className="h-11">Subscribed</SelectItem>
+                <SelectItem value="all" className="h-11">
+                  All Status
+                </SelectItem>
+                <SelectItem value="ending_today" className="h-11">
+                  Ending Today
+                </SelectItem>
+                <SelectItem value="ending_tomorrow" className="h-11">
+                  Ending Tomorrow
+                </SelectItem>
+                <SelectItem value="active" className="h-11">
+                  Active
+                </SelectItem>
+                <SelectItem value="expired" className="h-11">
+                  Expired
+                </SelectItem>
+                <SelectItem value="subscribed" className="h-11">
+                  Subscribed
+                </SelectItem>
               </SelectContent>
             </Select>
             <Select value={engagementFilter} onValueChange={setEngagementFilter}>
@@ -1293,10 +1302,18 @@ export default function AdminTrials() {
                 <SelectValue placeholder="Lead" />
               </SelectTrigger>
               <SelectContent className="z-[100]">
-                <SelectItem value="all" className="h-11">All Leads</SelectItem>
-                <SelectItem value="hot" className="h-11">Hot ({stats.hot_leads})</SelectItem>
-                <SelectItem value="warm" className="h-11">Warm ({stats.warm_leads})</SelectItem>
-                <SelectItem value="cold" className="h-11">Cold ({stats.cold_leads})</SelectItem>
+                <SelectItem value="all" className="h-11">
+                  All Leads
+                </SelectItem>
+                <SelectItem value="hot" className="h-11">
+                  Hot ({stats.hot_leads})
+                </SelectItem>
+                <SelectItem value="warm" className="h-11">
+                  Warm ({stats.warm_leads})
+                </SelectItem>
+                <SelectItem value="cold" className="h-11">
+                  Cold ({stats.cold_leads})
+                </SelectItem>
               </SelectContent>
             </Select>
             <Select value={roleFilter} onValueChange={setRoleFilter}>
@@ -1304,10 +1321,18 @@ export default function AdminTrials() {
                 <SelectValue placeholder="Role" />
               </SelectTrigger>
               <SelectContent className="z-[100]">
-                <SelectItem value="all" className="h-11">All Roles</SelectItem>
-                <SelectItem value="apprentice" className="h-11">Apprentice</SelectItem>
-                <SelectItem value="electrician" className="h-11">Electrician</SelectItem>
-                <SelectItem value="employer" className="h-11">Employer</SelectItem>
+                <SelectItem value="all" className="h-11">
+                  All Roles
+                </SelectItem>
+                <SelectItem value="apprentice" className="h-11">
+                  Apprentice
+                </SelectItem>
+                <SelectItem value="electrician" className="h-11">
+                  Electrician
+                </SelectItem>
+                <SelectItem value="employer" className="h-11">
+                  Employer
+                </SelectItem>
               </SelectContent>
             </Select>
           </div>
@@ -1329,9 +1354,10 @@ export default function AdminTrials() {
                 {notEmailedCount > 0 && (
                   <>
                     {' '}
-                    &middot;{' '}
-                    <span className="font-semibold text-amber-400">{notEmailedCount}</span> not
-                    emailed
+                    &middot; <span className="font-semibold text-amber-400">
+                      {notEmailedCount}
+                    </span>{' '}
+                    not emailed
                   </>
                 )}
               </p>
@@ -1830,28 +1856,19 @@ export default function AdminTrials() {
                     {activityLoading ? (
                       <div className="space-y-2">
                         {[1, 2, 3].map((i) => (
-                          <div
-                            key={i}
-                            className="h-12 bg-white/[0.04] rounded-lg animate-pulse"
-                          />
+                          <div key={i} className="h-12 bg-white/[0.04] rounded-lg animate-pulse" />
                         ))}
                       </div>
                     ) : !userActivity || userActivity.length === 0 ? (
                       <div className="text-center py-6">
                         <Snowflake className="h-8 w-8 text-blue-400 mx-auto mb-2 opacity-50" />
                         <p className="text-sm text-white">No activity recorded yet</p>
-                        <p className="text-xs text-white mt-1">
-                          User hasn't used any features
-                        </p>
+                        <p className="text-xs text-white mt-1">User hasn't used any features</p>
                       </div>
                     ) : (
                       <div className="space-y-2 max-h-[300px] overflow-y-auto">
                         {userActivity.map((activity) => {
-                          const {
-                            icon: Icon,
-                            color,
-                            bg,
-                          } = getActivityIcon(activity.action_type);
+                          const { icon: Icon, color, bg } = getActivityIcon(activity.action_type);
                           return (
                             <div
                               key={activity.id}

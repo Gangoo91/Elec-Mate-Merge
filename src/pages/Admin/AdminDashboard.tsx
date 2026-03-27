@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
-import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import {
   Users,
@@ -15,14 +14,7 @@ import {
   CreditCard,
   ShoppingCart,
   Eye,
-  Mail,
   MessageSquare,
-  Bell,
-  FileCheck,
-  Send,
-  MailOpen,
-  MousePointerClick,
-  Gift,
 } from 'lucide-react';
 import { formatDistanceToNow } from 'date-fns';
 import { useState, useCallback } from 'react';
@@ -316,7 +308,7 @@ export default function AdminDashboard() {
     queryKey: ['admin-campaign-stats'],
     queryFn: async () => {
       const { data, error } = await supabase
-         
+
         .from('email_tracking_events' as any)
         .select('email_id, event_type')
         .limit(10000);
@@ -400,11 +392,12 @@ export default function AdminDashboard() {
 
   if (isLoading || stripeLoading) {
     return (
-      <div className="space-y-5 sm:space-y-6 animate-pulse p-1">
-        <div className="h-44 bg-gradient-to-br from-amber-900/50 to-amber-950/30 rounded-3xl" />
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+      <div className="space-y-4 animate-pulse p-1">
+        <div className="h-48 bg-white/[0.03] rounded-2xl border border-white/[0.06]" />
+        <div className="h-24 bg-white/[0.03] rounded-2xl border border-white/[0.06]" />
+        <div className="grid grid-cols-2 gap-3">
           {[...Array(4)].map((_, i) => (
-            <div key={i} className="h-20 bg-white/5 rounded-2xl" />
+            <div key={i} className="h-20 bg-white/[0.03] rounded-2xl border border-white/[0.06]" />
           ))}
         </div>
       </div>
@@ -446,39 +439,41 @@ export default function AdminDashboard() {
       .slice(0, 5);
   })();
 
+  const conversionRate = stats?.totalUsers ? Math.round((totalSubs / stats.totalUsers) * 100) : 0;
+
   return (
     <PullToRefresh
       onRefresh={async () => {
         await handleRefresh();
       }}
     >
-      <div className="space-y-5 sm:space-y-6 pb-24">
-        {/* ── Hero Revenue Card ─────────────────────────────── */}
+      <div className="space-y-4 pb-24">
+        {/* ── Revenue Hero ──────────────────────────────────── */}
         <motion.section custom={0} variants={sectionVariants} initial="hidden" animate="visible">
           <div
-            className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-amber-600 via-yellow-600 to-orange-700 touch-manipulation active:scale-[0.99] transition-transform cursor-pointer"
+            className="relative overflow-hidden rounded-2xl bg-white/[0.03] border border-white/[0.08] touch-manipulation active:scale-[0.99] transition-transform cursor-pointer"
             onClick={() => navigate('/admin/revenue')}
           >
-            {/* Gradient accent line */}
-            <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-amber-500 via-yellow-400 to-orange-500" />
+            {/* Amber accent line */}
+            <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-transparent via-amber-500 to-transparent" />
 
-            {/* Decorative elements */}
-            <div className="absolute top-0 right-0 w-48 h-48 bg-white/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/4" />
-            <div className="absolute bottom-0 left-0 w-32 h-32 bg-amber-400/10 rounded-full blur-2xl translate-y-1/2 -translate-x-1/4" />
+            {/* Warm glow */}
+            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-72 h-40 bg-amber-500/[0.06] rounded-full blur-3xl" />
+            <div className="absolute bottom-0 right-0 w-40 h-40 bg-amber-600/[0.03] rounded-full blur-3xl" />
 
             <div className="relative p-5">
-              {/* Header */}
-              <div className="flex items-center justify-between mb-4">
-                <div className="flex items-center gap-2">
-                  <div className="w-2 h-2 rounded-full bg-emerald-300 animate-pulse" />
-                  <span className="text-white text-xs font-medium uppercase tracking-wider">
+              {/* Header row */}
+              <div className="flex items-center justify-between mb-5">
+                <div className="flex items-center gap-2.5">
+                  <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
+                  <span className="text-white text-[11px] font-semibold uppercase tracking-[0.15em]">
                     Live Revenue
                   </span>
                 </div>
                 <Button
                   variant="ghost"
                   size="icon"
-                  className="h-11 w-11 text-white hover:text-white hover:bg-white/10 touch-manipulation"
+                  className="h-11 w-11 text-white hover:text-white hover:bg-white/5 touch-manipulation"
                   onClick={(e) => {
                     e.stopPropagation();
                     handleRefresh();
@@ -492,22 +487,24 @@ export default function AdminDashboard() {
               </div>
 
               {/* MRR */}
-              <div className="mb-4">
-                <p className="text-5xl font-bold text-white tracking-tight">
+              <div className="mb-6">
+                <p className="text-[42px] sm:text-5xl font-bold text-white tracking-tight leading-none">
                   <AnimatedCounter value={mrr} prefix="£" decimals={2} />
                 </p>
-                <p className="text-white text-sm mt-1">Monthly Recurring Revenue</p>
+                <p className="text-white text-sm mt-1.5 font-medium">Monthly Recurring Revenue</p>
               </div>
 
-              {/* Quick stats */}
-              <div className="grid grid-cols-3 gap-2 sm:gap-3">
-                <div className="bg-white/10 backdrop-blur-sm rounded-xl p-2.5 sm:p-3">
-                  <p className="text-xl sm:text-2xl font-bold text-white">
+              {/* Metric row */}
+              <div className="grid grid-cols-3 gap-3">
+                <div className="text-center">
+                  <p className="text-xl sm:text-2xl font-bold text-amber-400">
                     <AnimatedCounter value={totalSubs + appStoreSubs + playStoreSubs} />
                   </p>
-                  <p className="text-white text-xs sm:text-[11px] uppercase">Paying</p>
+                  <p className="text-white text-[11px] font-medium uppercase tracking-wider mt-0.5">
+                    Paying
+                  </p>
                 </div>
-                <div className="bg-white/10 backdrop-blur-sm rounded-xl p-2.5 sm:p-3">
+                <div className="text-center border-x border-white/[0.06]">
                   <p className="text-xl sm:text-2xl font-bold text-white">
                     <AnimatedCounter
                       value={arr / 1000}
@@ -516,437 +513,455 @@ export default function AdminDashboard() {
                       decimals={arr >= 10000 ? 0 : 1}
                     />
                   </p>
-                  <p className="text-white text-xs sm:text-[11px] uppercase">ARR</p>
+                  <p className="text-white text-[11px] font-medium uppercase tracking-wider mt-0.5">
+                    ARR
+                  </p>
                 </div>
-                <div className="bg-white/10 backdrop-blur-sm rounded-xl p-2.5 sm:p-3">
-                  <div className="flex items-center justify-center gap-1">
-                    <Crown className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-yellow-400" />
-                    <p className="text-xl sm:text-2xl font-bold text-white">
+                <div className="text-center">
+                  <div className="flex items-center justify-center gap-1.5">
+                    <Crown className="h-4 w-4 text-amber-400" />
+                    <p className="text-xl sm:text-2xl font-bold text-amber-400">
                       <AnimatedCounter value={stripeStats?.stripe.tierCounts?.founder || 0} />
                     </p>
                   </div>
-                  <p className="text-white text-xs sm:text-[11px] uppercase">Founders</p>
+                  <p className="text-white text-[11px] font-medium uppercase tracking-wider mt-0.5">
+                    Founders
+                  </p>
                 </div>
               </div>
 
-              {/* Revenue by source */}
-              <div className="grid grid-cols-3 gap-2 sm:gap-3 mt-3">
-                <div className="bg-white/10 backdrop-blur-sm rounded-xl p-2.5 sm:p-3 text-center">
-                  <p className="text-lg sm:text-xl font-bold text-purple-300">
-                    <AnimatedCounter value={totalSubs} />
-                  </p>
-                  <p className="text-white text-[10px] sm:text-[11px] uppercase">Stripe</p>
+              {/* Source row */}
+              <div className="flex items-center justify-center gap-4 mt-4 pt-4 border-t border-white/[0.06]">
+                <div className="flex items-center gap-1.5">
+                  <div className="w-1.5 h-1.5 rounded-full bg-purple-400" />
+                  <span className="text-[11px] text-white font-medium">Stripe</span>
+                  <span className="text-[11px] font-semibold text-purple-300">{totalSubs}</span>
                 </div>
-                <div className="bg-white/10 backdrop-blur-sm rounded-xl p-2.5 sm:p-3 text-center">
-                  <p className="text-lg sm:text-xl font-bold text-blue-300">
-                    <AnimatedCounter value={appStoreSubs} />
-                  </p>
-                  <p className="text-white text-[10px] sm:text-[11px] uppercase">App Store</p>
+                <div className="flex items-center gap-1.5">
+                  <div className="w-1.5 h-1.5 rounded-full bg-blue-400" />
+                  <span className="text-[11px] text-white font-medium">App Store</span>
+                  <span className="text-[11px] font-semibold text-blue-300">{appStoreSubs}</span>
                 </div>
-                <div className="bg-white/10 backdrop-blur-sm rounded-xl p-2.5 sm:p-3 text-center">
-                  <p className="text-lg sm:text-xl font-bold text-green-300">
-                    <AnimatedCounter value={playStoreSubs} />
-                  </p>
-                  <p className="text-white text-[10px] sm:text-[11px] uppercase">Play Store</p>
+                <div className="flex items-center gap-1.5">
+                  <div className="w-1.5 h-1.5 rounded-full bg-green-400" />
+                  <span className="text-[11px] text-white font-medium">Play Store</span>
+                  <span className="text-[11px] font-semibold text-green-300">{playStoreSubs}</span>
                 </div>
               </div>
             </div>
           </div>
         </motion.section>
 
-        {/* Pending Actions removed — ELE-467 cleanup */}
+        {/* ── Quick Stats ───────────────────────────────────── */}
+        <motion.section custom={1} variants={sectionVariants} initial="hidden" animate="visible">
+          <div className="rounded-2xl bg-white/[0.03] border border-white/[0.08] overflow-hidden">
+            <motion.div
+              variants={containerVariants}
+              initial="hidden"
+              animate="visible"
+              className="grid grid-cols-4"
+            >
+              <motion.button
+                variants={listItemVariants}
+                whileTap={{ scale: 0.97 }}
+                className="p-3 sm:p-4 text-center touch-manipulation border-r border-white/[0.06]"
+                onClick={() => navigate('/admin/users')}
+              >
+                <Users className="h-4 w-4 text-blue-400 mx-auto mb-1.5" />
+                <p className="text-xl sm:text-2xl font-bold text-white">
+                  <AnimatedCounter value={stats?.totalUsers || 0} />
+                </p>
+                <p className="text-[10px] text-white font-medium uppercase tracking-wider">Users</p>
+              </motion.button>
 
-        {/* ── Abandoned Checkouts Card ─────────────────────── */}
+              <motion.button
+                variants={listItemVariants}
+                whileTap={{ scale: 0.97 }}
+                className="p-3 sm:p-4 text-center touch-manipulation border-r border-white/[0.06]"
+                onClick={() => navigate('/admin/users?filter=active')}
+              >
+                <Activity className="h-4 w-4 text-green-400 mx-auto mb-1.5" />
+                <p className="text-xl sm:text-2xl font-bold text-white">
+                  <AnimatedCounter value={stats?.activeToday || 0} />
+                </p>
+                <p className="text-[10px] text-white font-medium uppercase tracking-wider">
+                  Active
+                </p>
+              </motion.button>
+
+              <motion.button
+                variants={listItemVariants}
+                whileTap={{ scale: 0.97 }}
+                className="p-3 sm:p-4 text-center touch-manipulation border-r border-white/[0.06]"
+                onClick={() => navigate('/admin/users?filter=today')}
+              >
+                <CreditCard className="h-4 w-4 text-amber-400 mx-auto mb-1.5" />
+                <p className="text-xl sm:text-2xl font-bold text-white">
+                  <AnimatedCounter value={stats?.signupsToday || 0} />
+                </p>
+                <p className="text-[10px] text-white font-medium uppercase tracking-wider">Today</p>
+              </motion.button>
+
+              <motion.button
+                variants={listItemVariants}
+                whileTap={{ scale: 0.97 }}
+                className="p-3 sm:p-4 text-center touch-manipulation"
+                onClick={() => navigate('/admin/users?filter=trial')}
+              >
+                <Clock className="h-4 w-4 text-orange-400 mx-auto mb-1.5" />
+                <p className="text-xl sm:text-2xl font-bold text-white">
+                  <AnimatedCounter
+                    value={stripeStats?.stripe.trialingSubscriptions ?? stats?.trialUsers ?? 0}
+                  />
+                </p>
+                <p className="text-[10px] text-white font-medium uppercase tracking-wider">Trial</p>
+              </motion.button>
+            </motion.div>
+          </div>
+        </motion.section>
+
+        {/* ── Abandoned Checkouts ────────────────────────────── */}
         {abandonedCheckouts.length > 0 && (
           <motion.section
             custom={2}
             variants={sectionVariants}
             initial="hidden"
             animate="visible"
-            whileHover={{ y: -2 }}
             whileTap={{ scale: 0.98 }}
           >
             <div
-              className="glass-premium rounded-2xl overflow-hidden relative touch-manipulation cursor-pointer"
+              className="rounded-2xl bg-white/[0.03] border border-orange-500/20 overflow-hidden relative touch-manipulation cursor-pointer"
               onClick={() => navigate('/admin/incomplete-signup')}
             >
-              {/* Orange gradient accent line */}
-              <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-orange-500 via-red-400 to-orange-500 opacity-60" />
-
-              <div className="relative z-10 p-4 flex items-center justify-between">
+              <div className="absolute inset-x-0 top-0 h-px bg-orange-500/40" />
+              <div className="p-4 flex items-center justify-between">
                 <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-xl bg-orange-500/15 flex items-center justify-center">
+                  <div className="w-10 h-10 rounded-xl bg-orange-500/10 flex items-center justify-center">
                     <ShoppingCart className="h-5 w-5 text-orange-400" />
                   </div>
                   <div>
                     <p className="font-semibold text-sm text-white">Abandoned Checkouts</p>
-                    <p className="text-xs text-white">Started checkout but never subscribed</p>
+                    <p className="text-xs text-white">Started checkout, never subscribed</p>
                   </div>
                 </div>
-                <Badge className="bg-orange-500/20 text-orange-400 border-0 text-base px-3 py-1">
-                  {abandonedCheckouts.length}
-                </Badge>
+                <div className="flex items-center gap-2">
+                  <span className="text-lg font-bold text-orange-400">
+                    {abandonedCheckouts.length}
+                  </span>
+                  <ChevronRight className="h-4 w-4 text-white" />
+                </div>
               </div>
             </div>
           </motion.section>
         )}
 
-        {/* Campaigns removed — ELE-467 cleanup */}
-
-        {/* ── Section Header: Overview ─────────────────────── */}
-        <p className="text-xs sm:text-sm font-medium text-white uppercase tracking-wider mb-3 px-0.5">
-          Overview
-        </p>
-
-        {/* ── Quick Stats Grid ─────────────────────────────── */}
-        <motion.section custom={4} variants={sectionVariants} initial="hidden" animate="visible">
-          <motion.div
-            variants={containerVariants}
-            initial="hidden"
-            animate="visible"
-            className="grid grid-cols-2 sm:grid-cols-4 gap-2"
-          >
+        {/* ── Growth Row ────────────────────────────────────── */}
+        <motion.section custom={3} variants={sectionVariants} initial="hidden" animate="visible">
+          <div className="grid grid-cols-2 gap-3">
             <motion.div
-              variants={listItemVariants}
               whileTap={{ scale: 0.97 }}
-              className="bg-white/5 rounded-xl p-3 sm:p-3 text-center touch-manipulation cursor-pointer"
-              onClick={() => navigate('/admin/users')}
+              className="rounded-2xl bg-white/[0.03] border border-white/[0.08] p-4 touch-manipulation cursor-pointer"
+              onClick={() => navigate('/admin/analytics')}
             >
-              <Users className="h-5 w-5 text-blue-400 mx-auto mb-1" />
-              <p className="text-2xl sm:text-xl font-bold text-blue-400">
-                <AnimatedCounter value={stats?.totalUsers || 0} />
+              <div className="flex items-center justify-between mb-3">
+                <TrendingUp className="h-4 w-4 text-green-400" />
+                <span className="text-[10px] text-white font-semibold uppercase tracking-wider px-2 py-0.5 rounded-full bg-white/[0.04]">
+                  7d
+                </span>
+              </div>
+              <p className="text-2xl font-bold text-white">
+                <AnimatedCounter value={stats?.signupsThisWeek || 0} />
               </p>
-              <p className="text-xs text-white">Users</p>
+              <p className="text-[11px] text-white font-medium mt-0.5">New this week</p>
             </motion.div>
 
             <motion.div
-              variants={listItemVariants}
               whileTap={{ scale: 0.97 }}
-              className="bg-white/5 rounded-xl p-3 sm:p-3 text-center touch-manipulation cursor-pointer"
-              onClick={() => navigate('/admin/users?filter=active')}
+              className="rounded-2xl bg-white/[0.03] border border-white/[0.08] p-4 touch-manipulation cursor-pointer"
+              onClick={() => navigate('/admin/analytics')}
             >
-              <Activity className="h-5 w-5 text-green-400 mx-auto mb-1" />
-              <p className="text-2xl sm:text-xl font-bold text-green-400">
-                <AnimatedCounter value={stats?.activeToday || 0} />
+              <div className="flex items-center justify-between mb-3">
+                <Zap className="h-4 w-4 text-amber-400" />
+                <span className="text-[10px] text-white font-semibold uppercase tracking-wider px-2 py-0.5 rounded-full bg-white/[0.04]">
+                  Rate
+                </span>
+              </div>
+              <p className="text-2xl font-bold text-amber-400">
+                <AnimatedCounter value={conversionRate} suffix="%" />
               </p>
-              <p className="text-xs text-white">Active</p>
+              <p className="text-[11px] text-white font-medium mt-0.5">Conversion</p>
             </motion.div>
-
-            <motion.div
-              variants={listItemVariants}
-              whileTap={{ scale: 0.97 }}
-              className="bg-white/5 rounded-xl p-3 sm:p-3 text-center touch-manipulation cursor-pointer"
-              onClick={() => navigate('/admin/users?filter=today')}
-            >
-              <CreditCard className="h-5 w-5 text-yellow-400 mx-auto mb-1" />
-              <p className="text-2xl sm:text-xl font-bold text-yellow-400">
-                <AnimatedCounter value={stats?.signupsToday || 0} />
-              </p>
-              <p className="text-xs text-white">Subs Today</p>
-            </motion.div>
-
-            <motion.div
-              variants={listItemVariants}
-              whileTap={{ scale: 0.97 }}
-              className="bg-white/5 rounded-xl p-3 sm:p-3 text-center touch-manipulation cursor-pointer"
-              onClick={() => navigate('/admin/users?filter=trial')}
-            >
-              <Clock className="h-5 w-5 text-orange-400 mx-auto mb-1" />
-              <p className="text-2xl sm:text-xl font-bold text-orange-400">
-                <AnimatedCounter
-                  value={stripeStats?.stripe.trialingSubscriptions ?? stats?.trialUsers ?? 0}
-                />
-              </p>
-              <p className="text-xs text-white">Trial</p>
-            </motion.div>
-          </motion.div>
+          </div>
         </motion.section>
 
-        {/* ── Section Header: Users & Activity ─────────────── */}
-        <p className="text-xs sm:text-sm font-medium text-white uppercase tracking-wider mb-3 px-0.5">
-          Users & Activity
-        </p>
+        {/* ── Section divider ───────────────────────────────── */}
+        <div className="flex items-center gap-3 pt-2">
+          <div className="h-px flex-1 bg-white/[0.06]" />
+          <span className="text-[10px] text-amber-400 font-semibold uppercase tracking-[0.2em]">
+            Activity
+          </span>
+          <div className="h-px flex-1 bg-white/[0.06]" />
+        </div>
 
-        {/* ── Live Users Section ───────────────────────────── */}
+        {/* ── Live Users ────────────────────────────────────── */}
+        <motion.section custom={5} variants={sectionVariants} initial="hidden" animate="visible">
+          <div className="rounded-2xl bg-white/[0.03] border border-white/[0.08] overflow-hidden">
+            <div className="p-4 border-b border-white/[0.06] flex items-center justify-between">
+              <div className="flex items-center gap-2.5">
+                <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
+                <span className="font-semibold text-sm text-white">Live Now</span>
+                <span className="text-[11px] text-green-400 font-medium">
+                  {liveUserCount} online
+                </span>
+              </div>
+              <Button
+                variant="ghost"
+                size="sm"
+                className="text-xs h-11 px-3 touch-manipulation text-white hover:text-white"
+                onClick={() => navigate('/admin/users')}
+              >
+                All
+                <ChevronRight className="h-3 w-3 ml-0.5" />
+              </Button>
+            </div>
+            <motion.div
+              variants={containerVariants}
+              initial="hidden"
+              animate="visible"
+              className="divide-y divide-white/[0.04]"
+            >
+              {onlineUsers?.slice(0, 5).map((activity) => {
+                const lastSeenMs = new Date(activity.last_seen).getTime();
+                const diffMins = Math.floor((Date.now() - lastSeenMs) / 60000);
+                const isOnline = diffMins < 5;
+                const profile = activity.profiles;
+                const roleColor = getRoleColor(profile?.role);
+
+                return (
+                  <motion.button
+                    key={activity.user_id}
+                    variants={listItemVariants}
+                    onClick={() =>
+                      setSelectedOnlineUser({
+                        userId: activity.user_id,
+                        userName: profile?.full_name || 'Unknown',
+                        userRole: profile?.role || '',
+                      })
+                    }
+                    className="w-full flex items-center gap-3 p-3 hover:bg-white/[0.03] active:bg-white/[0.06] transition-colors touch-manipulation"
+                  >
+                    <div
+                      className={cn(
+                        'w-9 h-9 rounded-lg flex items-center justify-center relative font-semibold text-xs shrink-0',
+                        roleColor.bg,
+                        roleColor.text
+                      )}
+                    >
+                      {getInitials(profile?.full_name)}
+                      <div
+                        className={cn(
+                          'absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 rounded-full border-2 border-background',
+                          isOnline ? 'bg-green-500' : 'bg-white/20'
+                        )}
+                      />
+                    </div>
+                    <div className="flex-1 min-w-0 text-left">
+                      <p className="font-medium text-sm truncate text-white">
+                        {profile?.full_name || 'Unknown'}
+                      </p>
+                      <p className="text-xs text-white">
+                        {isOnline ? 'Active now' : `${diffMins}m ago`}
+                        {activity.current_page &&
+                          ` · ${activity.current_page.replace(/^\//, '').split('/')[0] || 'Home'}`}
+                      </p>
+                    </div>
+                    <ChevronRight className="h-4 w-4 text-white shrink-0" />
+                  </motion.button>
+                );
+              })}
+              {(!onlineUsers || onlineUsers.length === 0) && (
+                <div className="p-8 text-center">
+                  <Eye className="h-6 w-6 mx-auto mb-2 text-white" />
+                  <p className="text-sm text-white">No active users</p>
+                </div>
+              )}
+            </motion.div>
+          </div>
+        </motion.section>
+
+        {/* ── Recent Signups ────────────────────────────────── */}
         <motion.section custom={6} variants={sectionVariants} initial="hidden" animate="visible">
-          <div className="glass-premium rounded-2xl overflow-hidden relative">
-            {/* Green gradient accent line */}
-            <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-green-500 via-emerald-400 to-green-500 opacity-60" />
-
-            <div className="relative z-10">
-              <div className="p-4 border-b border-white/[0.06] flex items-center justify-between">
-                <div className="flex items-center gap-2">
-                  <div className="w-2.5 h-2.5 rounded-full bg-green-500 animate-pulse" />
-                  <span className="font-semibold text-sm text-white">Live Now</span>
-                  <Badge variant="secondary" className="text-xs px-2 py-0">
-                    {liveUserCount} online
-                  </Badge>
-                </div>
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  className="text-xs h-11 px-3 touch-manipulation text-white"
-                  onClick={() => navigate('/admin/users')}
-                >
-                  View All
-                  <ChevronRight className="h-3 w-3 ml-1" />
-                </Button>
+          <div className="rounded-2xl bg-white/[0.03] border border-white/[0.08] overflow-hidden">
+            <div className="p-4 border-b border-white/[0.06] flex items-center justify-between">
+              <div className="flex items-center gap-2.5">
+                <div className="w-1.5 h-1.5 rounded-full bg-amber-400" />
+                <span className="font-semibold text-sm text-white">Recent Signups</span>
               </div>
-              <motion.div
-                variants={containerVariants}
-                initial="hidden"
-                animate="visible"
-                className="divide-y divide-white/[0.06]"
-              >
-                {onlineUsers?.slice(0, 5).map((activity) => {
-                  const lastSeenMs = new Date(activity.last_seen).getTime();
-                  const diffMins = Math.floor((Date.now() - lastSeenMs) / 60000);
-                  const isOnline = diffMins < 5;
-                  const profile = activity.profiles;
-                  const roleColor = getRoleColor(profile?.role);
-
-                  return (
-                    <motion.button
-                      key={activity.user_id}
-                      variants={listItemVariants}
-                      onClick={() =>
-                        setSelectedOnlineUser({
-                          userId: activity.user_id,
-                          userName: profile?.full_name || 'Unknown',
-                          userRole: profile?.role || '',
-                        })
-                      }
-                      className="w-full flex items-center gap-3 p-3 hover:bg-white/5 active:bg-white/10 transition-colors touch-manipulation"
-                    >
-                      <div
-                        className={cn(
-                          'w-10 h-10 rounded-xl flex items-center justify-center relative font-semibold text-sm shrink-0',
-                          roleColor.bg,
-                          roleColor.text
-                        )}
-                      >
-                        {getInitials(profile?.full_name)}
-                        <div
-                          className={cn(
-                            'absolute -bottom-0.5 -right-0.5 w-3 h-3 rounded-full border-2 border-background',
-                            isOnline ? 'bg-green-500' : 'bg-gray-400'
-                          )}
-                        />
-                      </div>
-                      <div className="flex-1 min-w-0 text-left">
-                        <p className="font-medium text-sm truncate text-white">
-                          {profile?.full_name || 'Unknown'}
-                        </p>
-                        <p className="text-xs text-white">
-                          {isOnline ? 'Active now' : `${diffMins}m ago`}
-                          {activity.current_page &&
-                            ` • ${activity.current_page.replace(/^\//, '').split('/')[0] || 'Home'}`}
-                        </p>
-                      </div>
-                      <ChevronRight className="h-4 w-4 text-white shrink-0" />
-                    </motion.button>
-                  );
-                })}
-                {(!onlineUsers || onlineUsers.length === 0) && (
-                  <div className="p-8 text-center text-white">
-                    <Eye className="h-8 w-8 mx-auto mb-2 opacity-50" />
-                    <p className="text-sm">No active users</p>
-                  </div>
-                )}
-              </motion.div>
+              <span className="text-[11px] text-white font-medium">
+                {stats?.signupsThisWeek} this week
+              </span>
             </div>
+            <motion.div
+              variants={containerVariants}
+              initial="hidden"
+              animate="visible"
+              className="divide-y divide-white/[0.04]"
+            >
+              {stats?.recentSignups?.slice(0, 5).map((user) => {
+                const roleColor = getRoleColor(user.role);
+                return (
+                  <motion.button
+                    key={user.id}
+                    variants={listItemVariants}
+                    onClick={() => setSelectedUser(user)}
+                    className="w-full flex items-center gap-3 p-3 hover:bg-white/[0.03] active:bg-white/[0.06] transition-colors touch-manipulation"
+                  >
+                    <div
+                      className={cn(
+                        'w-9 h-9 rounded-lg flex items-center justify-center font-semibold text-xs shrink-0',
+                        roleColor.bg,
+                        roleColor.text
+                      )}
+                    >
+                      {getInitials(user.full_name)}
+                    </div>
+                    <div className="flex-1 min-w-0 text-left">
+                      <p className="font-medium text-sm truncate text-white">
+                        {user.full_name || 'Unknown'}
+                      </p>
+                      <p className="text-xs text-white truncate">{user.email}</p>
+                    </div>
+                    <div className="text-right shrink-0 flex items-center gap-2">
+                      {user.subscribed && (
+                        <span className="text-[10px] font-semibold text-green-400 uppercase tracking-wider">
+                          Pro
+                        </span>
+                      )}
+                      <span className="text-xs text-white">
+                        {formatDistanceToNow(new Date(user.created_at), {
+                          addSuffix: true,
+                        }).replace('about ', '')}
+                      </span>
+                    </div>
+                  </motion.button>
+                );
+              })}
+            </motion.div>
           </div>
         </motion.section>
 
-        {/* ── Recent Signups ───────────────────────────────── */}
-        <motion.section custom={7} variants={sectionVariants} initial="hidden" animate="visible">
-          <div className="glass-premium rounded-2xl overflow-hidden relative">
-            {/* Blue gradient accent line */}
-            <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-blue-500 via-cyan-400 to-blue-500 opacity-60" />
-
-            <div className="relative z-10">
-              <div className="p-4 border-b border-white/[0.06] flex items-center justify-between">
-                <div className="flex items-center gap-2">
-                  <Mail className="h-4 w-4 text-blue-400" />
-                  <span className="font-semibold text-sm text-white">Recent Signups</span>
-                </div>
-                <Badge variant="secondary" className="text-xs px-2 py-0">
-                  {stats?.signupsThisWeek} this week
-                </Badge>
-              </div>
-              <motion.div
-                variants={containerVariants}
-                initial="hidden"
-                animate="visible"
-                className="divide-y divide-white/[0.06]"
-              >
-                {stats?.recentSignups?.slice(0, 5).map((user) => {
-                  const roleColor = getRoleColor(user.role);
-                  return (
-                    <motion.button
-                      key={user.id}
-                      variants={listItemVariants}
-                      onClick={() => setSelectedUser(user)}
-                      className="w-full flex items-center gap-3 p-3 hover:bg-white/5 active:bg-white/10 transition-colors touch-manipulation"
-                    >
-                      <div
-                        className={cn(
-                          'w-10 h-10 rounded-xl flex items-center justify-center font-semibold text-sm shrink-0',
-                          roleColor.bg,
-                          roleColor.text
-                        )}
-                      >
-                        {getInitials(user.full_name)}
-                      </div>
-                      <div className="flex-1 min-w-0 text-left">
-                        <p className="font-medium text-sm truncate text-white">
-                          {user.full_name || 'Unknown'}
-                        </p>
-                        <p className="text-xs text-white truncate">{user.email}</p>
-                      </div>
-                      <div className="text-right shrink-0">
-                        <p className="text-xs text-white">
-                          {formatDistanceToNow(new Date(user.created_at), {
-                            addSuffix: true,
-                          }).replace('about ', '')}
-                        </p>
-                        {user.subscribed && (
-                          <Badge className="text-[11px] px-1.5 py-0 bg-emerald-500/20 text-emerald-400 border-0">
-                            Pro
-                          </Badge>
-                        )}
-                      </div>
-                    </motion.button>
-                  );
-                })}
-              </motion.div>
-            </div>
-          </div>
-        </motion.section>
-
-        {/* ── Recent Subscriptions ─────────────────────────── */}
+        {/* ── Recent Subscriptions ──────────────────────────── */}
         {recentSubscriptions.length > 0 && (
-          <motion.section custom={8} variants={sectionVariants} initial="hidden" animate="visible">
-            <div className="glass-premium rounded-2xl overflow-hidden relative">
-              {/* Emerald gradient accent line */}
-              <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-emerald-500 via-teal-400 to-emerald-500 opacity-60" />
-
-              <div className="relative z-10">
-                <div className="p-4 border-b border-white/[0.06] flex items-center justify-between">
-                  <div className="flex items-center gap-2">
-                    <CreditCard className="h-4 w-4 text-emerald-400" />
-                    <span className="font-semibold text-sm text-white">Recent Subscriptions</span>
-                  </div>
-                  <Badge variant="secondary" className="text-xs px-2 py-0">
-                    {recentSubscriptions.length} today
-                  </Badge>
+          <motion.section custom={7} variants={sectionVariants} initial="hidden" animate="visible">
+            <div className="rounded-2xl bg-white/[0.03] border border-white/[0.08] overflow-hidden">
+              <div className="p-4 border-b border-white/[0.06] flex items-center justify-between">
+                <div className="flex items-center gap-2.5">
+                  <div className="w-1.5 h-1.5 rounded-full bg-green-500" />
+                  <span className="font-semibold text-sm text-white">New Subscriptions</span>
                 </div>
-                <motion.div
-                  variants={containerVariants}
-                  initial="hidden"
-                  animate="visible"
-                  className="divide-y divide-white/[0.06]"
-                >
-                  {recentSubscriptions.map((sub) => {
-                    const roleColor = getRoleColor(sub.role);
-                    const today = new Date();
-                    today.setHours(0, 0, 0, 0);
-                    const isNewUser = sub.user_created_at && new Date(sub.user_created_at) >= today;
-
-                    return (
-                      <motion.button
-                        key={sub.subscriptionId}
-                        variants={listItemVariants}
-                        onClick={() => {
-                          if (sub.matchedUser) setSelectedUser(sub.matchedUser);
-                        }}
-                        className="w-full flex items-center gap-3 p-3 hover:bg-white/5 active:bg-white/10 transition-colors touch-manipulation"
-                      >
-                        <div
-                          className={cn(
-                            'w-10 h-10 rounded-xl flex items-center justify-center font-semibold text-sm shrink-0',
-                            roleColor.bg,
-                            roleColor.text
-                          )}
-                        >
-                          {getInitials(sub.full_name)}
-                        </div>
-                        <div className="flex-1 min-w-0 text-left">
-                          <p className="font-medium text-sm truncate text-white">{sub.full_name}</p>
-                          <p className="text-xs text-white truncate">{sub.customerEmail}</p>
-                        </div>
-                        <div className="flex flex-col items-end gap-1 shrink-0">
-                          <div className="flex items-center gap-1">
-                            <Badge className="text-[11px] px-1.5 py-0 bg-emerald-500/20 text-emerald-400 border-0 capitalize">
-                              {sub.tier}
-                            </Badge>
-                            {isNewUser ? (
-                              <Badge className="text-[11px] px-1.5 py-0 bg-green-500/20 text-green-400 border-0">
-                                New
-                              </Badge>
-                            ) : (
-                              <Badge className="text-[11px] px-1.5 py-0 bg-blue-500/20 text-blue-400 border-0">
-                                Returning
-                              </Badge>
-                            )}
-                          </div>
-                          <p className="text-xs text-white">
-                            {formatDistanceToNow(new Date(sub.created), {
-                              addSuffix: true,
-                            }).replace('about ', '')}
-                          </p>
-                        </div>
-                      </motion.button>
-                    );
-                  })}
-                </motion.div>
+                <span className="text-[11px] text-white font-medium">
+                  {recentSubscriptions.length} today
+                </span>
               </div>
+              <motion.div
+                variants={containerVariants}
+                initial="hidden"
+                animate="visible"
+                className="divide-y divide-white/[0.04]"
+              >
+                {recentSubscriptions.map((sub) => {
+                  const roleColor = getRoleColor(sub.role);
+                  const today = new Date();
+                  today.setHours(0, 0, 0, 0);
+                  const isNewUser = sub.user_created_at && new Date(sub.user_created_at) >= today;
+
+                  return (
+                    <motion.button
+                      key={sub.subscriptionId}
+                      variants={listItemVariants}
+                      onClick={() => {
+                        if (sub.matchedUser) setSelectedUser(sub.matchedUser);
+                      }}
+                      className="w-full flex items-center gap-3 p-3 hover:bg-white/[0.03] active:bg-white/[0.06] transition-colors touch-manipulation"
+                    >
+                      <div
+                        className={cn(
+                          'w-9 h-9 rounded-lg flex items-center justify-center font-semibold text-xs shrink-0',
+                          roleColor.bg,
+                          roleColor.text
+                        )}
+                      >
+                        {getInitials(sub.full_name)}
+                      </div>
+                      <div className="flex-1 min-w-0 text-left">
+                        <p className="font-medium text-sm truncate text-white">{sub.full_name}</p>
+                        <p className="text-xs text-white truncate">{sub.customerEmail}</p>
+                      </div>
+                      <div className="flex items-center gap-2 shrink-0">
+                        <span className="text-[10px] font-semibold text-amber-400 uppercase tracking-wider capitalize">
+                          {sub.tier}
+                        </span>
+                        {isNewUser ? (
+                          <span className="text-[10px] font-semibold text-green-400 uppercase tracking-wider">
+                            New
+                          </span>
+                        ) : (
+                          <span className="text-[10px] font-semibold text-blue-400 uppercase tracking-wider">
+                            Return
+                          </span>
+                        )}
+                      </div>
+                    </motion.button>
+                  );
+                })}
+              </motion.div>
             </div>
           </motion.section>
         )}
 
-        {/* ── Section Header: Communication ────────────────── */}
+        {/* ── Support Inbox ─────────────────────────────────── */}
         {supportMessages && supportMessages.length > 0 && (
-          <p className="text-xs sm:text-sm font-medium text-white uppercase tracking-wider mb-3 px-0.5">
-            Communication
-          </p>
-        )}
+          <>
+            <div className="flex items-center gap-3 pt-2">
+              <div className="h-px flex-1 bg-white/[0.06]" />
+              <span className="text-[10px] text-amber-400 font-semibold uppercase tracking-[0.2em]">
+                Messages
+              </span>
+              <div className="h-px flex-1 bg-white/[0.06]" />
+            </div>
 
-        {/* ── Support Inbox ────────────────────────────────── */}
-        {supportMessages && supportMessages.length > 0 && (
-          <motion.section custom={9} variants={sectionVariants} initial="hidden" animate="visible">
-            <div className="glass-premium rounded-2xl overflow-hidden relative">
-              {/* Yellow gradient accent line */}
-              <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-yellow-500 via-amber-400 to-yellow-500 opacity-60" />
-
-              <div className="relative z-10">
+            <motion.section
+              custom={8}
+              variants={sectionVariants}
+              initial="hidden"
+              animate="visible"
+            >
+              <div className="rounded-2xl bg-white/[0.03] border border-white/[0.08] overflow-hidden">
                 <div className="p-4 border-b border-white/[0.06] flex items-center justify-between">
-                  <div className="flex items-center gap-2">
-                    <MessageSquare className="h-4 w-4 text-yellow-400" />
+                  <div className="flex items-center gap-2.5">
+                    <MessageSquare className="h-4 w-4 text-amber-400" />
                     <span className="font-semibold text-sm text-white">Support Inbox</span>
-                  </div>
-                  <div className="flex items-center gap-2">
                     {unreadSupportCount > 0 && (
-                      <Badge className="text-xs px-2 py-0 bg-yellow-500 text-black font-semibold">
-                        {unreadSupportCount} new
-                      </Badge>
+                      <span className="text-[10px] font-bold text-black bg-amber-400 rounded-full px-1.5 py-0.5 leading-none">
+                        {unreadSupportCount}
+                      </span>
                     )}
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      className="text-xs h-11 px-3 touch-manipulation text-white"
-                      onClick={() => navigate('/admin/user-messages')}
-                    >
-                      View All
-                      <ChevronRight className="h-3 w-3 ml-1" />
-                    </Button>
                   </div>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    className="text-xs h-11 px-3 touch-manipulation text-white hover:text-white"
+                    onClick={() => navigate('/admin/user-messages')}
+                  >
+                    All
+                    <ChevronRight className="h-3 w-3 ml-0.5" />
+                  </Button>
                 </div>
                 <motion.div
                   variants={containerVariants}
                   initial="hidden"
                   animate="visible"
-                  className="divide-y divide-white/[0.06]"
+                  className="divide-y divide-white/[0.04]"
                 >
                   {supportMessages.slice(0, 5).map((msg) => {
                     const sender = msg.sender;
@@ -961,14 +976,14 @@ export default function AdminDashboard() {
                         className={cn(
                           'w-full flex items-start gap-3 p-3 text-left transition-colors touch-manipulation',
                           isUnread
-                            ? 'bg-yellow-500/5 hover:bg-yellow-500/10 active:bg-yellow-500/15'
-                            : 'hover:bg-white/5 active:bg-white/10'
+                            ? 'bg-amber-500/[0.03] hover:bg-amber-500/[0.06]'
+                            : 'hover:bg-white/[0.03] active:bg-white/[0.06]'
                         )}
                       >
                         <div className="relative shrink-0">
                           <div
                             className={cn(
-                              'w-10 h-10 rounded-xl flex items-center justify-center font-semibold text-sm',
+                              'w-9 h-9 rounded-lg flex items-center justify-center font-semibold text-xs',
                               roleColor.bg,
                               roleColor.text
                             )}
@@ -976,7 +991,7 @@ export default function AdminDashboard() {
                             {getInitials(sender?.full_name)}
                           </div>
                           {isUnread && (
-                            <span className="absolute -top-1 -right-1 w-3 h-3 rounded-full bg-yellow-500 border-2 border-background" />
+                            <span className="absolute -top-0.5 -right-0.5 w-2.5 h-2.5 rounded-full bg-amber-400 border-2 border-background" />
                           )}
                         </div>
                         <div className="flex-1 min-w-0">
@@ -989,7 +1004,7 @@ export default function AdminDashboard() {
                             >
                               {sender?.full_name || 'Unknown'}
                             </p>
-                            <span className="text-xs text-white shrink-0">
+                            <span className="text-[11px] text-white shrink-0">
                               {formatDistanceToNow(new Date(msg.created_at), {
                                 addSuffix: true,
                               }).replace('about ', '')}
@@ -1006,49 +1021,9 @@ export default function AdminDashboard() {
                   })}
                 </motion.div>
               </div>
-            </div>
-          </motion.section>
+            </motion.section>
+          </>
         )}
-
-        {/* ── Growth Stats ─────────────────────────────────── */}
-        <motion.section custom={10} variants={sectionVariants} initial="hidden" animate="visible">
-          <div className="grid grid-cols-2 gap-3">
-            <motion.div
-              whileHover={{ y: -2 }}
-              whileTap={{ scale: 0.98 }}
-              className="bg-white/5 rounded-xl p-4 touch-manipulation cursor-pointer"
-              onClick={() => navigate('/admin/analytics')}
-            >
-              <div className="flex items-center justify-between mb-2">
-                <TrendingUp className="h-5 w-5 text-green-400" />
-                <span className="text-xs text-white px-2 py-0.5 rounded bg-white/5">7d</span>
-              </div>
-              <p className="text-2xl font-bold text-white">
-                <AnimatedCounter value={stats?.signupsThisWeek || 0} />
-              </p>
-              <p className="text-xs text-white">New this week</p>
-            </motion.div>
-
-            <motion.div
-              whileHover={{ y: -2 }}
-              whileTap={{ scale: 0.98 }}
-              className="bg-white/5 rounded-xl p-4 touch-manipulation cursor-pointer"
-              onClick={() => navigate('/admin/analytics')}
-            >
-              <div className="flex items-center justify-between mb-2">
-                <Zap className="h-5 w-5 text-yellow-400" />
-                <span className="text-xs text-white px-2 py-0.5 rounded bg-white/5">Rate</span>
-              </div>
-              <p className="text-2xl font-bold text-white">
-                <AnimatedCounter
-                  value={stats?.totalUsers ? Math.round((totalSubs / stats.totalUsers) * 100) : 0}
-                  suffix="%"
-                />
-              </p>
-              <p className="text-xs text-white">Conversion</p>
-            </motion.div>
-          </div>
-        </motion.section>
 
         {/* ── User Sheets ──────────────────────────────────── */}
         <UserManagementSheet

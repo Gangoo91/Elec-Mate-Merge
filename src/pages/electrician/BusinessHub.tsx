@@ -77,11 +77,12 @@ const BusinessHub = () => {
     : 'Log hours';
 
   const handleShareBookingLink = async () => {
+    // Get session synchronously (cached) to avoid async gap that breaks iOS clipboard
     const {
-      data: { user },
-    } = await supabase.auth.getUser();
-    if (!user) return;
-    const url = `${window.location.origin}/book/${user.id}`;
+      data: { session },
+    } = await supabase.auth.getSession();
+    if (!session?.user) return;
+    const url = `${window.location.origin}/book/${session.user.id}`;
     const shareData = { title: 'Book an Appointment', text: 'Book a time slot with me:', url };
     if (navigator.share && navigator.canShare?.(shareData)) {
       try {
@@ -90,8 +91,13 @@ const BusinessHub = () => {
         /* cancelled */
       }
     } else {
-      await navigator.clipboard.writeText(url);
-      toast({ title: 'Booking link copied to clipboard' });
+      try {
+        await navigator.clipboard.writeText(url);
+        toast({ title: 'Booking link copied to clipboard' });
+      } catch {
+        // Fallback for iOS WKWebView where clipboard is restricted
+        toast({ title: 'Share this link', description: url });
+      }
     }
   };
 
