@@ -4,6 +4,7 @@
  * to generate and sign a .pkpass file, returning the binary to the client.
  */
 
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { serve } from 'https://deno.land/std@0.168.0/http/server.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
 
@@ -34,7 +35,7 @@ serve(async (req) => {
 
     const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_KEY);
     const { data: userData, error: userError } = await supabase.auth.getUser(
-      authHeader.replace('Bearer ', ''),
+      authHeader.replace('Bearer ', '')
     );
     if (userError || !userData.user) {
       return new Response(JSON.stringify({ error: 'Unauthorised' }), {
@@ -74,7 +75,9 @@ serve(async (req) => {
       .limit(10);
 
     const qualifications = (quals || []).map((q: any) =>
-      q.qualification_number ? `${q.qualification_name} (${q.qualification_number})` : q.qualification_name,
+      q.qualification_number
+        ? `${q.qualification_name} (${q.qualification_number})`
+        : q.qualification_name
     );
     const skills = (skillRows || []).map((s: any) => s.skill_name);
 

@@ -16,6 +16,7 @@
  *   5. Add above secrets to Supabase dashboard
  */
 
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { serve } from 'https://deno.land/std@0.168.0/http/server.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
 
@@ -56,13 +57,13 @@ async function signRS256(payload: object, privateKeyPem: string): Promise<string
     keyBytes.buffer,
     { name: 'RSASSA-PKCS1-v1_5', hash: 'SHA-256' },
     false,
-    ['sign'],
+    ['sign']
   );
 
   const signatureBytes = await crypto.subtle.sign(
     'RSASSA-PKCS1-v1_5',
     cryptoKey,
-    new TextEncoder().encode(signingInput),
+    new TextEncoder().encode(signingInput)
   );
 
   const signatureEncoded = base64UrlEncode(new Uint8Array(signatureBytes));
@@ -104,17 +105,21 @@ serve(async (req) => {
 
     const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_KEY);
     const { data: userData, error: userError } = await supabase.auth.getUser(
-      authHeader.replace('Bearer ', ''),
+      authHeader.replace('Bearer ', '')
     );
     if (userError || !userData.user) return jsonResponse({ error: 'Unauthorised' }, 401);
     const userId = userData.user.id;
 
     // Check Google Wallet is configured
     if (!ISSUER_ID || !CLASS_ID || !SERVICE_ACCOUNT_JSON) {
-      return jsonResponse({
-        error: 'Google Wallet not configured',
-        message: 'Add GOOGLE_WALLET_ISSUER_ID, GOOGLE_WALLET_CLASS_ID, GOOGLE_SERVICE_ACCOUNT_KEY_JSON to Supabase secrets',
-      }, 503);
+      return jsonResponse(
+        {
+          error: 'Google Wallet not configured',
+          message:
+            'Add GOOGLE_WALLET_ISSUER_ID, GOOGLE_WALLET_CLASS_ID, GOOGLE_SERVICE_ACCOUNT_KEY_JSON to Supabase secrets',
+        },
+        503
+      );
     }
 
     // Parse service account
@@ -136,11 +141,13 @@ serve(async (req) => {
 
     // Fetch qualifications + skills
     const [{ data: quals }, { data: skillRows }] = await Promise.all([
-      supabase.from('employer_elec_id_qualifications')
+      supabase
+        .from('employer_elec_id_qualifications')
         .select('qualification_name')
         .eq('profile_id', elecId.id)
         .limit(6),
-      supabase.from('employer_elec_id_skills')
+      supabase
+        .from('employer_elec_id_skills')
         .select('skill_name')
         .eq('profile_id', elecId.id)
         .limit(8),
@@ -153,13 +160,16 @@ serve(async (req) => {
     const tier = elecId.verification_tier || 'basic';
     const avatarUrl = profile?.avatar_url;
 
-    const qualList = (quals || []).map((q: any) => q.qualification_name).join(' • ') || 'None listed';
+    const qualList =
+      (quals || []).map((q: any) => q.qualification_name).join(' • ') || 'None listed';
     const skillList = (skillRows || []).map((s: any) => s.skill_name).join(' • ') || 'None listed';
 
     // Google Wallet logos hosted on Supabase storage (public URLs)
     // These are static branded images for the pass hero/logo
-    const logoUri = 'https://jtwygbeceundfgnkirof.supabase.co/storage/v1/object/public/wallet-assets/elecmate-logo-660.png';
-    const heroUri = 'https://jtwygbeceundfgnkirof.supabase.co/storage/v1/object/public/wallet-assets/elecmate-hero-1125.png';
+    const logoUri =
+      'https://jtwygbeceundfgnkirof.supabase.co/storage/v1/object/public/wallet-assets/elecmate-logo-660.png';
+    const heroUri =
+      'https://jtwygbeceundfgnkirof.supabase.co/storage/v1/object/public/wallet-assets/elecmate-hero-1125.png';
 
     // Build Generic Pass object
     const objectId = `${ISSUER_ID}.elecid-${userId.replace(/-/g, '')}`;
@@ -186,20 +196,30 @@ serve(async (req) => {
         sourceUri: { uri: heroUri },
         contentDescription: { defaultValue: { language: 'en-GB', value: 'Elec-Mate Elec-ID' } },
       },
-      ...(avatarUrl ? {
-        imageModulesData: [{
-          mainImage: {
-            sourceUri: { uri: avatarUrl },
-            contentDescription: { defaultValue: { language: 'en-GB', value: `${name} photo` } },
-          },
-          id: 'profile_photo',
-        }],
-      } : {}),
+      ...(avatarUrl
+        ? {
+            imageModulesData: [
+              {
+                mainImage: {
+                  sourceUri: { uri: avatarUrl },
+                  contentDescription: {
+                    defaultValue: { language: 'en-GB', value: `${name} photo` },
+                  },
+                },
+                id: 'profile_photo',
+              },
+            ],
+          }
+        : {}),
       textModulesData: [
         { id: 'verification', header: 'VERIFICATION', body: formatTier(tier) },
         { id: 'ecs_card', header: 'ECS CARD', body: elecId.ecs_card_type || 'Not set' },
         { id: 'elecid', header: 'ELEC-ID', body: elecIdNumber },
-        { id: 'ecs_expiry', header: 'ECS EXPIRES', body: formatExpiry(elecId.ecs_expiry_date || null) },
+        {
+          id: 'ecs_expiry',
+          header: 'ECS EXPIRES',
+          body: formatExpiry(elecId.ecs_expiry_date || null),
+        },
         { id: 'qualifications', header: 'QUALIFICATIONS', body: qualList },
         { id: 'skills', header: 'SKILLS', body: skillList },
       ],
@@ -209,11 +229,13 @@ serve(async (req) => {
         alternateText: elecIdNumber,
       },
       linksModuleData: {
-        uris: [{
-          uri: verifyUrl,
-          description: 'Verify this credential',
-          id: 'verify',
-        }],
+        uris: [
+          {
+            uri: verifyUrl,
+            description: 'Verify this credential',
+            id: 'verify',
+          },
+        ],
       },
     };
 
