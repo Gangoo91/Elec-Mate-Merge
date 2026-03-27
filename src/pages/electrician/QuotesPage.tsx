@@ -45,6 +45,7 @@ const QuotesPage = () => {
 
   const {
     savedQuotes,
+    invoicedQuotes,
     deleteQuote,
     updateQuoteStatus,
     sendPaymentReminder,
@@ -88,6 +89,19 @@ const QuotesPage = () => {
   }, [refreshQuotes]);
 
   const filteredQuotes = useMemo(() => {
+    // Invoiced quotes come from a separate query
+    if (filter === 'invoiced') {
+      if (!searchQuery.trim()) return invoicedQuotes;
+      const query = searchQuery.toLowerCase();
+      return invoicedQuotes.filter(
+        (q) =>
+          q.client?.name?.toLowerCase().includes(query) ||
+          q.quoteNumber?.toLowerCase().includes(query) ||
+          q.jobDetails?.title?.toLowerCase().includes(query) ||
+          q.jobDetails?.description?.toLowerCase().includes(query)
+      );
+    }
+
     let filtered = savedQuotes;
 
     // Status filter
@@ -108,7 +122,7 @@ const QuotesPage = () => {
     }
 
     return filtered;
-  }, [savedQuotes, filter, searchQuery]);
+  }, [savedQuotes, invoicedQuotes, filter, searchQuery]);
 
   // Calculate stats
   const stats = useMemo(() => {
@@ -135,6 +149,7 @@ const QuotesPage = () => {
         all: savedQuotes.length,
         draft: savedQuotes.filter((q) => q.status === 'draft').length,
         sent: savedQuotes.filter((q) => q.status === 'sent' || q.status === 'pending').length,
+        invoiced: invoicedQuotes.length,
         approved: savedQuotes.filter(
           (q) => q.status === 'approved' || q.acceptance_status === 'accepted'
         ).length,
@@ -143,7 +158,7 @@ const QuotesPage = () => {
         ).length,
       },
     };
-  }, [savedQuotes]);
+  }, [savedQuotes, invoicedQuotes]);
 
   // Stale sent quotes (sent 7+ days ago, not yet approved/rejected)
   const staleQuotes = useMemo(() => {
@@ -201,6 +216,7 @@ const QuotesPage = () => {
     { id: 'sent', label: 'Sent', icon: Send, count: stats.counts.sent },
     { id: 'approved', label: 'Approved', icon: CheckCircle, count: stats.counts.approved },
     { id: 'rejected', label: 'Rejected', icon: XCircle, count: stats.counts.rejected },
+    { id: 'invoiced', label: 'Invoiced', icon: Receipt, count: stats.counts.invoiced },
   ];
 
   const canonical = `${window.location.origin}/electrician/quotes`;
@@ -455,7 +471,9 @@ const QuotesPage = () => {
             <h2 className="text-lg font-semibold">
               {filter === 'all'
                 ? 'All Quotes'
-                : filterOptions.find((f) => f.id === filter)?.label + ' Quotes'}
+                : filter === 'invoiced'
+                  ? 'Invoiced Quotes'
+                  : filterOptions.find((f) => f.id === filter)?.label + ' Quotes'}
             </h2>
             <span className="text-sm text-muted-foreground">
               {filteredQuotes.length} {filteredQuotes.length === 1 ? 'quote' : 'quotes'}
