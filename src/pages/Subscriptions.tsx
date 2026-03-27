@@ -152,6 +152,14 @@ const Subscriptions = () => {
       const { data, error } = await supabase.functions.invoke('customer-portal');
       if (error) throw new Error(error.message);
 
+      if (data?.noStripeCustomer) {
+        toast({
+          title: 'Subscription managed elsewhere',
+          description: 'Your subscription is managed via the App Store or was granted directly. Contact support if you need help.',
+        });
+        return;
+      }
+
       if (data?.url) {
         const w = window.open(data.url, '_blank');
         if (!w || w.closed) setTimeout(() => (window.location.href = data.url), 500);
