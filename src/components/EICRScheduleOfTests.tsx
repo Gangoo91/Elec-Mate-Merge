@@ -2398,9 +2398,9 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
                     </div>
 
                     {/* Tools Bar - Above Circuit Table */}
-                    <div className="-mx-4 grid grid-cols-[1fr_1fr_48px] gap-2 p-4 bg-background border-y border-border/30">
+                    <div className="grid grid-cols-[1fr_1fr_44px] gap-2 p-4 bg-background border-y border-border/30">
                       <Button
-                        className="h-12 rounded-xl bg-elec-yellow text-black font-bold hover:bg-elec-yellow/90 touch-manipulation active:scale-95"
+                        className="h-11 rounded-xl bg-elec-yellow text-black font-bold hover:bg-elec-yellow/90 touch-manipulation active:scale-95"
                         onClick={() => {
                           setActiveBoardId(board.id);
                           onOpenBoardScan ? onOpenBoardScan() : setShowBoardCapture(true);
@@ -2410,14 +2410,14 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
                         AI Scan
                       </Button>
                       <Button
-                        className="h-12 rounded-xl bg-card border border-border/50 text-foreground font-semibold hover:bg-card/80 touch-manipulation active:scale-95"
+                        className="h-11 rounded-xl bg-white/[0.06] border border-white/[0.12] text-white font-semibold hover:bg-white/[0.10] touch-manipulation active:scale-95"
                         onClick={() => addCircuitToBoard(board.id)}
                       >
                         <Plus className="h-5 w-5 mr-2" />
                         Add Circuit
                       </Button>
                       <Button
-                        className={`h-12 w-12 rounded-xl touch-manipulation active:scale-95 ${
+                        className={`h-11 w-11 rounded-xl touch-manipulation active:scale-95 ${
                           voiceActive
                             ? 'bg-green-500 text-white'
                             : voiceConnecting
