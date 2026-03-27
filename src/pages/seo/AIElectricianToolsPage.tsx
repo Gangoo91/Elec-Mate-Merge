@@ -3,6 +3,8 @@ import useSEO from '@/hooks/useSEO';
 import { PublicPageLayout } from '@/components/seo/PublicPageLayout';
 import { SEOCTASection } from '@/components/seo/SEOCTASection';
 import { SEOFeatureGrid } from '@/components/seo/SEOFeatureGrid';
+import { SEOInternalLink } from '@/components/seo/SEOInternalLink';
+import { SEOAppBridge } from '@/components/seo/SEOAppBridge';
 import {
   Brain,
   CircuitBoard,
@@ -281,7 +283,7 @@ export default function AIElectricianToolsPage() {
               loads, Type D for large inductive loads), the cable type and size calculated using the
               full adiabatic method from BS 7671 Appendix 4, the maximum Zs value for the chosen
               protective device rating, and whether additional RCD protection is required under
-              Regulation 411.3.3. The calculations account for all correction factors: ambient
+              Regulation 411.3.2. The calculations account for all correction factors: ambient
               temperature (Ca), grouping (Cg), thermal insulation (Ci), and the semi-enclosed fuse
               factor (Cc) where applicable.
             </p>
@@ -522,7 +524,7 @@ export default function AIElectricianToolsPage() {
               The core training data includes BS 7671:2018+A3:2024, which is the current 18th
               Edition of the IET Wiring Regulations — the standard that governs every electrical
               installation in the United Kingdom. It also includes Amendment 3:2024 (A3:2024),
-              issued on 31 July 2024, which adds Regulation 530.3.201 covering the requirements for
+              issued on 31 July 2024, which adds Regulation 530.3.2 covering the requirements for
               bidirectional and unidirectional protective devices. This amendment is particularly
               relevant for installations with battery storage systems, solar PV, and other sources
               of reverse power flow, where standard unidirectional devices may not provide adequate
@@ -570,6 +572,24 @@ export default function AIElectricianToolsPage() {
               <FAQItem key={faq.question} question={faq.question} answer={faq.answer} />
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* App Bridge */}
+      <section className="py-8 px-5 border-t border-white/5">
+        <div className="max-w-4xl mx-auto">
+          <SEOAppBridge
+            title="8 AI Specialists + All Your Electrical Tools"
+            description="Elec-Mate gives you 8 BS 7671-trained AI agents, 70 calculators, 8 certificate types, and 36+ training courses in one mobile-first platform. Start your free 7-day trial today."
+            icon={Brain}
+          />
+          <p className="text-white mt-4 text-sm">
+            Already doing EICRs?{' '}
+            <SEOInternalLink href="/tools/eicr-certificate">
+              Try the AI-assisted EICR certificate tool
+            </SEOInternalLink>{' '}
+            to complete inspection reports faster with automatic observation coding.
+          </p>
         </div>
       </section>
 

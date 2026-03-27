@@ -3,20 +3,18 @@ import { SEOInternalLink } from '@/components/seo/SEOInternalLink';
 import { SEOAppBridge } from '@/components/seo/SEOAppBridge';
 import type { RelatedPage } from '@/components/seo/SEORelatedPages';
 import {
-  Building2,
   FileCheck2,
   ShieldCheck,
   AlertTriangle,
-  Scale,
+  PoundSterling,
   Home,
-  Search,
-  Flame,
-  Lightbulb,
+  ClipboardCheck,
+  Scale,
+  Building2,
   Zap,
-  Send,
-  Receipt,
-  Clock,
   Users,
+  BellRing,
+  Flame,
 } from 'lucide-react';
 
 // -------------------------------------------------------------------
@@ -24,69 +22,74 @@ import {
 // -------------------------------------------------------------------
 
 const breadcrumbs = [
-  { label: 'Guides', href: '/guides' },
-  { label: 'HMO Requirements', href: '/guides/hmo-electrical-requirements' },
+  { label: 'Landlord Guides', href: '/guides/eicr-for-landlords' },
+  { label: 'HMO Electrical Requirements', href: '/hmo-electrical-requirements' },
 ];
 
 const tocItems = [
-  { id: 'what-is-hmo', label: 'What Is an HMO?' },
-  { id: 'hmo-licensing', label: 'HMO Licensing Requirements' },
-  { id: 'eicr-requirements', label: 'EICR Requirements for HMOs' },
-  { id: 'fire-alarm-requirements', label: 'Fire Alarm Requirements (BS 5839-6)' },
-  { id: 'emergency-lighting', label: 'Emergency Lighting Requirements' },
-  { id: 'rcd-and-afdd-protection', label: 'RCD and AFDD Protection' },
-  { id: 'common-hmo-defects', label: 'Common HMO Electrical Defects' },
+  { id: 'what-is-hmo', label: 'What Counts as an HMO?' },
+  { id: 'mandatory-licensing', label: 'Mandatory HMO Licensing' },
+  { id: 'eicr-requirements', label: 'EICR Frequency & Scope' },
+  { id: 'fire-detection', label: 'Fire Detection — BS 5839' },
+  { id: 'emergency-lighting', label: 'Emergency Lighting — BS 5266' },
+  { id: 'rcd-protection', label: 'RCD Protection' },
+  { id: 'smoke-heat-detectors', label: 'Smoke & Heat Detectors Per Room' },
   { id: 'landlord-responsibilities', label: 'Landlord Responsibilities' },
-  { id: 'local-authority-enforcement', label: 'Local Authority Enforcement and Penalties' },
-  { id: 'best-practice-electricians', label: 'Best Practice for Electricians Servicing HMOs' },
-  { id: 'elec-mate-for-hmos', label: 'Elec-Mate for HMO Electrical Work' },
+  { id: 'typical-costs', label: 'Typical Costs for HMO Compliance' },
+  { id: 'for-electricians', label: 'For Electricians' },
   { id: 'faq', label: 'FAQ' },
   { id: 'related', label: 'Related Pages' },
 ];
 
 const keyTakeaways = [
-  'HMOs (Houses in Multiple Occupation) have stricter electrical requirements than standard rented properties — a valid EICR every 5 years is mandatory, plus fire alarm and emergency lighting systems that must comply with specific British Standards.',
-  'Fire alarm systems in HMOs must comply with BS 5839-6, with the required grade and category depending on the HMO size and risk level — from Grade D Category LD3 for small HMOs to Grade A systems for larger or higher-risk properties.',
-  'Emergency lighting is required in all HMOs with common escape routes, complying with BS 5266 — this includes corridors, stairways, and any area that forms part of the escape route from the building.',
-  'RCD protection is required on all socket circuits in HMOs, and AFDDs (Arc Fault Detection Devices) are increasingly recommended by local authorities as an additional fire safety measure, particularly in older converted properties.',
-  'Elec-Mate covers all HMO certification needs — EICR, fire alarm certificate (BS 5839), and emergency lighting certificate (BS 5266). All in one app. Track multiple properties and send certificates to the landlord.',
+  'Mandatory HMO licensing applies to properties with five or more occupants from two or more households. A valid EICR is a mandatory licence condition — without one the property cannot legally operate as an HMO.',
+  'The EICR must be renewed at least every five years under the Electrical Safety Standards in the Private Rented Sector (England) Regulations 2020, but most local authorities specify a three-year cycle in HMO licence conditions.',
+  'Fire detection in HMOs must comply with BS 5839-6:2019. Most HMOs require at minimum a Grade D, LD2 system — interlinked mains-powered detectors in all escape routes and high-risk rooms.',
+  'Emergency lighting to BS 5266-1:2016 is required in communal areas and escape routes in all but the smallest HMOs. Non-maintained battery-backed luminaires are the most common solution.',
+  'RCD protection under Regulation 411.3.3 of BS 7671 is required on all socket-outlet circuits. Absence of RCD protection in shared areas is the most common C2 finding on HMO EICRs.',
+  'Full HMO electrical compliance — EICR, fire alarm system, and emergency lighting — typically costs £2,000 to £8,000 for a five-bedroom HMO depending on the condition of the existing installation.',
 ];
 
 const faqs = [
   {
-    question: 'What makes a property an HMO?',
+    question: 'Does my HMO legally require an EICR?',
     answer:
-      'A House in Multiple Occupation (HMO) is a property rented out by at least 3 people who are not from a single household (for example, not a family), forming 2 or more separate households, and sharing basic amenities such as a bathroom, toilet, or kitchen. The definition comes from the Housing Act 2004. A "household" is typically a single person, a couple, or a family living together. So a house rented to 3 unrelated individuals, each with their own tenancy agreement, sharing a kitchen and bathroom, is an HMO. A house rented to a single family is not an HMO, regardless of size. Under mandatory licensing (which applies in England), an HMO must be licensed if it is occupied by 5 or more people forming 2 or more separate households. Below this threshold, the property may still be classed as an HMO (for regulatory purposes, including electrical safety requirements) but may not require a mandatory licence. However, many local authorities operate additional licensing schemes that cover smaller HMOs — check with your local authority to see if additional licensing applies in your area.',
+      'Yes. A valid EICR is a mandatory condition of both mandatory and additional HMO licences issued by local authorities in England. The Electrical Safety Standards in the Private Rented Sector (England) Regulations 2020 also independently require an EICR for all private rented properties, including HMOs, at least every five years. Many councils impose shorter intervals — typically three years — as a licence condition. Operating an HMO without a valid EICR exposes landlords to civil penalties of up to £30,000 per breach and potential prosecution for operating an unlicensed HMO.',
   },
   {
-    question: 'How often does an HMO need an EICR?',
+    question: 'What fire detection system does an HMO need under BS 5839-6?',
     answer:
-      'An EICR for an HMO must be renewed at least every 5 years. This requirement comes from two overlapping sets of regulations. First, the Electrical Safety Standards in the Private Rented Sector (England) Regulations 2020 require a valid EICR for all privately rented properties, including HMOs. Second, HMO licensing conditions (whether mandatory, additional, or selective) typically include a specific requirement for a current EICR as a condition of the licence. The inspector may recommend a shorter interval based on the condition of the installation — for example, 3 years for an older HMO with ageing wiring or a history of electrical issues. The landlord must follow the shorter recommendation. When an HMO licence is being applied for or renewed, the local authority will require a copy of the current EICR as part of the application. An expired or unsatisfactory EICR can be grounds for refusing or revoking an HMO licence.',
+      'BS 5839-6:2019 is the relevant standard. The minimum requirement for most HMOs is a Grade D, LD2 system: interlinked mains-powered smoke detectors (with battery back-up) in all escape routes — hallways, landings, and stairwells — and heat detectors in every kitchen. Larger or higher-risk HMOs may require a Grade D, LD1 system (detectors in all rooms including bedrooms) or even a Grade A system with a central fire alarm panel. Your local fire authority or housing officer can advise on the correct category for your property.',
   },
   {
-    question: 'What grade of fire alarm does an HMO need?',
+    question: 'Is emergency lighting compulsory in an HMO?',
     answer:
-      'The required fire alarm grade depends on the size and risk level of the HMO, as assessed by the local authority. BS 5839-6 provides the framework, and local authority licensing conditions specify the required grade. For small HMOs (up to 2 storeys, low risk), a Grade D Category LD3 system is typically sufficient — this means mains-powered interconnected smoke alarms with battery backup, fitted in escape routes (hallways and landings). For larger HMOs (3 or more storeys, or properties with more complex layouts), a Grade D Category LD2 system is typically required — this extends the coverage to include high-risk rooms (kitchens, living rooms where doors open onto escape routes) as well as escape routes. For the largest or highest-risk HMOs, a Grade A system may be required — this is a full fire alarm system with a dedicated control panel, manual call points, automatic detectors throughout, and sounders providing a minimum sound level in all areas. The local authority fire safety officer or licensing officer will specify the required grade as part of the licensing conditions. Always check the specific requirements for the authority area where the HMO is located, as requirements vary between councils.',
+      'Emergency lighting to BS 5266-1:2016 is required in the communal areas and escape routes of most HMOs of three or more storeys, or with escape routes longer than 12 metres. HMO licence conditions issued by local authorities commonly specify BS 5266-compliant emergency lighting for these properties. Single-storey or small two-storey HMOs may not require formal emergency lighting, but self-contained emergency luminaires at the stair foot and final exit are strongly recommended and often required by licence conditions regardless.',
   },
   {
-    question: 'Does an HMO need emergency lighting?',
+    question: 'How often must the EICR be renewed for an HMO?',
     answer:
-      'Yes, emergency lighting is required in all HMOs where there are common escape routes — corridors, stairways, hallways, and any shared area that forms part of the means of escape. The emergency lighting must comply with BS 5266 and must operate automatically when the normal lighting fails (typically through a power cut or circuit fault). The system must provide sufficient illumination on the escape route for occupants to find their way to a place of safety. For smaller HMOs, self-contained maintained or non-maintained emergency luminaires are usually sufficient. For larger HMOs, a central battery system may be more appropriate. The emergency lighting must be tested regularly — a monthly 30-second function test and an annual 3-hour full-duration test are the standard requirements under BS 5266. Records of all tests must be maintained and are typically required as part of the HMO licensing conditions. The landlord is responsible for arranging the testing and maintaining the records, though many landlords delegate this to their electrician through a maintenance contract.',
+      "The Electrical Safety Standards Regulations 2020 require an EICR at least every five years for all private rented properties. However, most HMO licence conditions specify a shorter interval of three years. The EICR must also be renewed on any change of the named licence holder, or when significant electrical work is carried out. Always check your specific local authority's HMO licence conditions rather than relying on the statutory minimum five-year interval.",
   },
   {
-    question: 'Are AFDDs required in HMOs?',
+    question: 'What RCD protection is required in an HMO under BS 7671?',
     answer:
-      'AFDDs (Arc Fault Detection Devices) are not currently mandatory for all HMO installations, but the position is evolving. BS 7671:2018+A2:2022 introduced Regulation 421.1.7, which recommends (but does not require) AFDDs for certain situations — particularly in premises where occupants are at higher risk (including HMOs, care homes, and sheltered accommodation) and in buildings with combustible construction. Amendment 3 (A3:2024) focused on bidirectional devices (Regulation 530.3.201) and did not change the AFDD recommendation. Some local authorities are now including AFDDs as a condition of HMO licences, particularly for larger HMOs and those in older converted buildings where the fire risk is higher. Others recommend them but do not mandate them. If you are installing a new consumer unit in an HMO, fitting AFDDs is a prudent precaution — the additional cost is modest (approximately £50 to £80 per AFDD), and they provide genuine additional protection against electrical fires caused by arc faults in ageing wiring. When advising HMO landlords, recommend AFDDs even if the local authority does not currently mandate them — the direction of travel is clearly towards wider adoption.',
+      'Regulation 411.3.3 of BS 7671:2018+A3:2024 requires 30mA RCD protection on all socket-outlet circuits rated up to 32A. In an HMO, every circuit serving bedrooms, kitchens, and communal areas must have RCD protection. Best practice is an RCBO (residual current circuit-breaker with overcurrent protection) on each circuit, providing individual fault discrimination so one circuit tripping does not affect all tenants. A single split-load RCD consumer unit is inadequate for most HMOs.',
   },
   {
-    question: 'What are the penalties for HMO electrical non-compliance?',
+    question: 'What are the penalties for running an HMO without a valid EICR?',
     answer:
-      'The penalties for failing to maintain electrical safety in an HMO are severe and come from multiple enforcement routes. Under the Electrical Safety Standards in the Private Rented Sector (England) Regulations 2020, civil penalties of up to £30,000 per breach can be issued for failing to obtain an EICR or failing to carry out remedial work. Under the Housing Act 2004, operating an HMO without a licence (or breaching licence conditions, including electrical safety conditions) is a criminal offence punishable by an unlimited fine. The local authority can also issue civil penalties as an alternative to prosecution — up to £30,000 per offence. If the HMO is found to have serious electrical hazards, the local authority can take action under the Housing Health and Safety Rating System (HHSRS), including issuing improvement notices, prohibition orders (preventing occupation until the hazards are remedied), or emergency prohibition orders for imminent risks. In the most serious cases — where electrical defects cause injury or death — the landlord could face prosecution under the Health and Safety at Work Act 1974 or the Corporate Manslaughter and Corporate Homicide Act 2007. The maximum penalty for a health and safety offence committed by an individual is 2 years imprisonment and an unlimited fine.',
+      'Local authorities can impose civil penalties of up to £30,000 per breach under the Electrical Safety Standards Regulations 2020. Running an unlicensed HMO is also a criminal offence carrying an unlimited fine, and can result in a rent repayment order requiring the landlord to repay up to 12 months of rent received during the unlicensed period. These sanctions apply cumulatively — a landlord without a valid EICR while also operating an unlicensed HMO faces multiple simultaneous penalties.',
   },
   {
-    question: 'Can I use the same EICR form for HMOs as for normal domestic properties?',
+    question: 'Can the local authority inspect my HMO for electrical safety?',
     answer:
-      'Yes, the EICR form is the same — it follows the model forms in Appendix 6 of BS 7671, regardless of whether the property is a standard domestic dwelling or an HMO. However, the inspection of an HMO is typically more complex and takes longer than a standard domestic property. HMOs often have multiple distribution boards (sometimes one per floor or one per letting room), shared circuits serving common areas, separate metering for individual rooms, fire alarm systems that need separate testing and certification (BS 5839-6), emergency lighting that needs separate testing and certification (BS 5266), and more circuits overall. The EICR should cover the entire fixed electrical installation in the HMO — including common areas, individual letting rooms (as far as accessible), and any landlord-supplied equipment. If parts of the installation cannot be accessed (for example, because a tenant is not available), this should be recorded as a limitation on the EICR. For large HMOs with multiple distribution boards, a digital EICR tool like Elec-Mate is particularly valuable — it handles unlimited circuits and multiple boards, whereas paper forms become unwieldy very quickly.',
+      'Yes. Local housing authorities have powers of entry to inspect HMOs under the Housing Act 2004 and can request a copy of the EICR within seven days. If electrical hazards are identified, they can serve a Hazard Awareness Notice, an Improvement Notice requiring works within 21 days, or a Prohibition Order preventing use of part or all of the property. Fire authorities also have independent inspection powers under the Regulatory Reform (Fire Safety) Order 2005 in relation to communal areas.',
+  },
+  {
+    question: 'What is the minimum smoke detection requirement in each room of an HMO?',
+    answer:
+      'Under a Grade D, LD2 system (BS 5839-6:2019), optical smoke detectors are required in all escape routes — hallways, landings, and at the top of each stairwell. Heat detectors are required in kitchens instead of smoke detectors to avoid false alarms from cooking. Bedrooms are not required under LD2 but are required under LD1. Many local authorities now specify LD1 for all HMOs regardless of size, meaning a detector in every room including sleeping rooms. All detectors must be mains-powered and interlinked.',
   },
 ];
 
@@ -94,50 +97,37 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/guides/eicr-for-landlords',
     title: 'EICR for Landlords',
-    description:
-      'Complete guide to landlord EICR requirements — 2020 Regulations, penalties, deadlines, and compliance.',
+    description: 'Complete guide to landlord EICR requirements, compliance deadlines, and penalties.',
     icon: Home,
     category: 'Guide',
   },
   {
+    href: '/student-house-electrical',
+    title: 'Student House Electrical Safety',
+    description: 'EICR requirements, HMO considerations, and landlord obligations for student properties.',
+    icon: Users,
+    category: 'Guide',
+  },
+  {
+    href: '/guides/eicr-observation-codes-explained',
+    title: 'EICR Observation Codes',
+    description: 'Understand C1, C2, C3 and FI codes — what they mean and what action is required.',
+    icon: ClipboardCheck,
+    category: 'Guide',
+  },
+  {
     href: '/guides/eicr-fail-rented-property',
-    title: 'EICR Fail on Rented Property',
-    description:
-      'What happens when an EICR fails — landlord obligations, 28-day deadline, and remedial work requirements.',
+    title: 'EICR Fail — Rented Property',
+    description: 'What to do when a rented property receives an unsatisfactory EICR.',
     icon: AlertTriangle,
     category: 'Guide',
   },
   {
-    href: '/guides/fire-alarm-certificate',
-    title: 'Fire Alarm Certificate',
-    description:
-      'BS 5839 compliance, system grades and categories, and digital fire alarm certification.',
-    icon: Flame,
+    href: '/tools/eicr-certificate',
+    title: 'EICR Certificate App',
+    description: 'Complete EICRs on your phone with AI board scanning and instant PDF export.',
+    icon: FileCheck2,
     category: 'Certificate',
-  },
-  {
-    href: '/guides/emergency-lighting-certificate',
-    title: 'Emergency Lighting Certificate',
-    description:
-      'BS 5266 requirements, testing schedules, and emergency lighting certification on your phone.',
-    icon: Lightbulb,
-    category: 'Certificate',
-  },
-  {
-    href: '/guides/eicr-observation-codes-explained',
-    title: 'Observation Codes Explained',
-    description:
-      'C1, C2, C3, and FI codes explained with real examples from HMO and domestic inspections.',
-    icon: Search,
-    category: 'Guide',
-  },
-  {
-    href: '/guides/consumer-unit-change-guide',
-    title: 'Consumer Unit Change Guide',
-    description:
-      'Consumer unit replacement with RCBOs, AFDDs, and SPDs — the most common HMO electrical upgrade.',
-    icon: Zap,
-    category: 'Guide',
   },
 ];
 
@@ -148,717 +138,578 @@ const relatedPages: RelatedPage[] = [
 const sections = [
   {
     id: 'what-is-hmo',
-    heading: 'What Is an HMO?',
+    heading: 'What Counts as a House in Multiple Occupation?',
     content: (
       <>
         <p>
-          A House in Multiple Occupation (HMO) is a property rented out by at least 3 people who are
-          not from a single household, forming 2 or more separate households, and sharing basic
-          amenities such as a bathroom, toilet, or kitchen. The definition is set out in the Housing
-          Act 2004 and applies across England and Wales.
+          A House in Multiple Occupation (HMO) is a property occupied by three or more people who
+          form more than one household and share facilities such as a kitchen or bathroom. The
+          definition is set out in the Housing Act 2004 and has important consequences for both
+          licensing obligations and electrical safety requirements.
         </p>
+        <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-6 my-4">
+          <ul className="space-y-4 text-white">
+            <li className="flex items-start gap-3">
+              <Users className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>Small HMO (3–4 occupants)</strong> — three or more people from two or more
+                households sharing facilities. Not subject to mandatory licensing, but subject to
+                additional licensing where the local authority operates a scheme. Still requires an
+                EICR under the 2020 Regulations and basic fire detection under BS 5839-6.
+              </span>
+            </li>
+            <li className="flex items-start gap-3">
+              <Users className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>Mandatory licensing HMO (5+ occupants)</strong> — five or more people from
+                two or more households. Subject to mandatory HMO licensing under the Housing Act
+                2004. A valid EICR is a mandatory licence condition without exception.
+              </span>
+            </li>
+            <li className="flex items-start gap-3">
+              <Users className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>Section 257 HMOs — converted blocks</strong> — purpose-built or converted
+                blocks of flats where not all flats comply with the 1991 Building Regulations may
+                be classed as HMOs even if individually self-contained. The s257 HMO definition
+                catches many converted Victorian and Edwardian properties in England.
+              </span>
+            </li>
+          </ul>
+        </div>
         <p>
-          Common examples of HMOs include shared houses (3 or more unrelated tenants sharing a
-          kitchen and bathroom), bedsits (individual rooms rented out with shared facilities),
-          converted buildings (large houses subdivided into self-contained or non-self-contained
-          units), and purpose-built HMOs (buildings designed from the start to house multiple
-          separate households).
-        </p>
-        <p>
-          HMOs present unique electrical safety challenges. They typically have higher occupancy
-          than standard domestic dwellings, more diverse usage patterns, shared circuits serving
-          common areas, and fire safety systems that standard houses do not require. The electrical
-          installation in an HMO must be maintained to a higher standard than an ordinary rented
-          property, with additional requirements for fire alarm systems, emergency lighting, and
-          protective devices.
-        </p>
-        <p>
-          For electricians, HMOs represent a significant and growing market. The UK HMO sector
-          continues to expand, driven by housing demand and the growth of the private rented sector.
-          Each HMO requires a valid EICR, fire alarm certification, emergency lighting
-          certification, and ongoing maintenance — creating recurring work for electricians who
-          build relationships with HMO landlords and managing agents.
+          If you are unsure whether your property qualifies as an HMO, contact your local housing
+          authority before letting. Operating an unlicensed HMO carries criminal liability regardless
+          of whether the landlord was aware of the licensing requirement.
         </p>
       </>
     ),
   },
   {
-    id: 'hmo-licensing',
-    heading: 'HMO Licensing Requirements',
+    id: 'mandatory-licensing',
+    heading: 'Mandatory HMO Licensing — Key Electrical Conditions',
     content: (
       <>
         <p>
-          HMO licensing operates at three levels in England, each with implications for electrical
-          safety requirements:
+          Mandatory HMO licensing applies to properties with five or more occupants forming two or
+          more households. The licence is issued by the local housing authority and sets out specific
+          conditions the landlord must satisfy throughout the licence period, typically five years.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <Scale className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Mandatory licensing</strong> — applies to HMOs occupied by 5 or more people
-                from 2 or more separate households, regardless of the number of storeys. Since the
-                Licensing of Houses in Multiple Occupation (Mandatory Conditions of Licences)
-                (England) Regulations 2018, this applies nationwide. The licence conditions include
-                electrical safety requirements: a current EICR, appropriate fire alarm system, and
-                adequate means of escape.
+                <strong>Valid EICR mandatory</strong> — a current EICR (renewed every three to five
+                years depending on the licence condition) must be held for the entire fixed electrical
+                installation. The EICR must cover all circuits including communal areas, fire alarm
+                wiring, emergency lighting, and any outbuilding circuits.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Scale className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Additional licensing</strong> — local authorities can designate specific
-                areas where all HMOs (or certain types of HMOs that fall below the mandatory
-                threshold) require a licence. This captures smaller HMOs — for example, a 3-person
-                shared house in a designated area. Licence conditions typically mirror mandatory
-                licensing conditions, including electrical safety requirements.
+                <strong>Copy to council on demand</strong> — the licence holder must produce the
+                EICR to the local authority within seven days of a written request. Failure to
+                produce a valid report is a breach of licence conditions and can trigger a licence
+                review.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Scale className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Selective licensing</strong> — local authorities can designate areas where
-                all privately rented properties (not just HMOs) require a licence. While selective
-                licensing focuses on general property management standards, the licence conditions
-                typically include a requirement for a current EICR.
+                <strong>Remedial works — 28 days</strong> — where the EICR identifies C1 or C2
+                observations, all remedial works must be completed within 28 days or sooner if the
+                inspector specifies. Written confirmation of completion must be provided to tenants
+                and to the council.
+              </span>
+            </li>
+            <li className="flex items-start gap-3">
+              <Scale className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>Additional licensing schemes</strong> — many local authorities operate
+                additional licensing covering smaller HMOs with three or four occupants. These
+                schemes typically impose identical EICR and fire safety conditions. Check with your
+                local council whether additional licensing applies in your area.
               </span>
             </li>
           </ul>
         </div>
         <p>
-          Regardless of whether an HMO is licensed, the property must comply with the Electrical
-          Safety Standards in the Private Rented Sector (England) Regulations 2020, which require a
-          valid EICR for all privately rented properties. Licensing adds additional conditions —
-          particularly around fire alarm systems and emergency lighting — that go beyond the basic
-          EICR requirement.
-        </p>
-        <p>
-          When applying for or renewing an HMO licence, the local authority will require evidence of
-          electrical compliance — typically a copy of the current EICR, fire alarm certificate, and
-          emergency lighting certificate. An expired EICR or missing fire safety certificates can be
-          grounds for refusing a licence or attaching additional conditions.
+          The Electrical Safety Standards in the Private Rented Sector (England) Regulations 2020
+          operate in parallel with HMO licensing. Both regimes independently require a valid EICR.
+          Non-compliance with either can result in separate civil penalties of up to £30,000.
         </p>
       </>
     ),
   },
   {
     id: 'eicr-requirements',
-    heading: 'EICR Requirements for HMOs',
+    heading: 'EICR Frequency and Scope for HMOs',
     content: (
       <>
         <p>
-          A valid EICR is mandatory for all HMOs under both the Electrical Safety Standards in the
-          Private Rented Sector (England) Regulations 2020 and HMO licensing conditions. The
-          requirements are:
+          The EICR for an HMO is significantly more complex than a standard residential property
+          inspection. Multiple consumer units, fire alarm wiring, emergency lighting circuits, and
+          a larger number of final circuits all increase the inspection scope, duration, and cost.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <FileCheck2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Inspection frequency:</strong> at least every 5 years, or sooner if
-                recommended by the inspector. Some local authorities specify a shorter interval for
-                certain types of HMO.
+                <strong>Frequency</strong> — at least every five years under the 2020 Regulations,
+                but most local authority HMO licence conditions specify every three years. Some
+                councils require renewal on every change of the named licence holder. Always check
+                your specific licence conditions.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <FileCheck2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Scope:</strong> the EICR must cover the entire fixed electrical installation
-                — landlord supplies, common areas, individual letting rooms (as far as accessible),
-                and any external installations. Where tenants have their own metered supplies, these
-                are typically excluded from the landlord's EICR but should have their own
-                arrangements.
+                <strong>Full installation scope</strong> — the EICR must cover the entire fixed
+                electrical installation: main consumer unit(s), all final circuits in every room
+                and communal area, fire alarm system wiring, emergency lighting circuits, outdoor
+                lighting, and any ancillary buildings connected to the supply.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <FileCheck2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Competent person:</strong> the EICR must be carried out by a qualified and
-                competent electrician, ideally registered with a competent person scheme (NICEIC,
-                NAPIT, or ELECSA) and holding the C&G 2391 inspection and testing qualification.
+                <strong>Satisfactory outcome required</strong> — the EICR must record an overall
+                satisfactory condition (no unresolved C1 or C2 observations) before submission to
+                the local authority. An unsatisfactory EICR means the landlord is in breach of the
+                licence condition until all remedial works are completed and confirmed in writing.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <FileCheck2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Remedial work:</strong> if the EICR is Unsatisfactory (any{' '}
-                <SEOInternalLink href="/guides/eicr-observation-codes-explained">
-                  C1 or C2 observation codes
-                </SEOInternalLink>
-                ), the landlord must arrange remedial work within 28 days. For licensed HMOs, the
-                local authority may impose additional conditions or shorter deadlines.
+                <strong>Qualified inspector</strong> — the inspector must be registered with a
+                competent person scheme (NICEIC, NAPIT, or ELECSA) and hold City and Guilds 2391
+                (Inspection and Testing) or equivalent, plus a current BS 7671 qualification.
+                Experience with HMO installations and fire alarm systems is essential.
               </span>
             </li>
           </ul>
         </div>
-        <p>
-          HMO EICRs are typically more complex than standard domestic EICRs. HMOs often have
-          multiple consumer units or distribution boards (sometimes one per floor or per letting
-          room), shared circuits for common area lighting and power, older wiring from conversions
-          that may not meet current standards, and a higher total number of circuits. The inspection
-          may take longer and cost more than a standard domestic EICR — this should be reflected in
-          the pricing.
-        </p>
-        <SEOAppBridge
-          title="Multi-board EICR for HMOs"
-          description="Elec-Mate handles HMO EICRs with multiple distribution boards and unlimited circuits. AI board scanner works on every board in the building. Complete the full EICR on your phone and send it to the landlord from site."
-          icon={FileCheck2}
-        />
       </>
     ),
   },
   {
-    id: 'fire-alarm-requirements',
-    heading: 'Fire Alarm Requirements for HMOs (BS 5839-6)',
+    id: 'fire-detection',
+    heading: 'Fire Detection in HMOs — BS 5839-6:2019',
     content: (
       <>
         <p>
-          Fire alarm systems in HMOs must comply with{' '}
-          <SEOInternalLink href="/guides/fire-alarm-certificate">BS 5839-6</SEOInternalLink> (Fire
-          detection and fire alarm systems for dwellings — code of practice for the design,
-          installation, commissioning, and maintenance of systems in dwellings). The required grade
-          and category depend on the HMO size, layout, and risk level.
+          BS 5839-6:2019 is the British Standard for fire detection and fire alarm systems in
+          domestic premises including HMOs. The standard uses a two-part classification: Grade
+          (equipment quality) and Category (extent of coverage).
         </p>
-        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
+        <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Flame className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Flame className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Grade D, Category LD3</strong> — the minimum standard for small, low-risk
-                HMOs (typically up to 2 storeys, up to 4 occupants). Mains-powered interlinked smoke
-                alarms with integral battery backup, fitted in the escape routes (hallways,
-                landings, and stairways). A heat detector in the kitchen is also typically required.
+                <strong>Grade D, LD2 — minimum for most HMOs</strong> — interlinked mains-powered
+                smoke detectors with tamper-proof battery back-up, installed in all escape routes
+                (hallways, landings, stairwells) and heat detectors in all high-risk rooms
+                (kitchens). This is the minimum most local authorities accept for three-storey
+                HMOs with up to six occupants.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Flame className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Flame className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Grade D, Category LD2</strong> — the standard requirement for most HMOs.
-                Extends coverage beyond escape routes to include high-risk rooms — kitchens (heat
-                detector), living rooms (smoke detector), and any room where a fire could start and
-                develop undetected. Required for HMOs with 3 or more storeys or where the local
-                authority fire risk assessment identifies higher risk.
+                <strong>Grade D, LD1 — higher-risk or larger HMOs</strong> — extends coverage to
+                all rooms including every sleeping room. Required where the local fire authority or
+                housing authority assesses a higher risk, or where licence conditions specify LD1.
+                Many councils now apply LD1 to all HMOs regardless of size.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Flame className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Flame className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Grade D, Category LD1</strong> — full coverage. Smoke detectors in all rooms
-                (except kitchens and bathrooms, where heat detectors are used) plus escape routes.
-                Sometimes required for larger or higher-risk HMOs.
+                <strong>Grade A — large or multi-storey HMOs</strong> — a central fire alarm panel
+                with addressable detectors. Required for larger HMOs, purpose-built blocks, and any
+                HMO exceeding three storeys where the local fire authority specifies a Grade A
+                system. BS 5839-1:2017 applies to these commercial-grade systems.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Flame className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Flame className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Grade A</strong> — a full fire alarm system with a dedicated fire alarm
-                control panel, manual call points at each floor level, automatic detectors
-                throughout, sounders providing a minimum sound level in all areas, and
-                fire-resistant cabling (to BS 7629 or BS 8434). Required for the largest HMOs
-                (typically 4+ storeys or 20+ occupants) and those with complex layouts where the
-                local authority determines a Grade D system is insufficient.
+                <strong>Heat detectors in kitchens — mandatory</strong> — smoke detectors must not
+                be installed in kitchens due to false alarm risk. BS 5839-6 requires a heat detector
+                (fixed temperature 58°C or rate-of-rise type) interlinked with the rest of the
+                detector network.
               </span>
             </li>
           </ul>
         </div>
         <p>
-          The local authority licensing officer or fire safety officer will specify the required
-          grade as part of the HMO licence conditions. Always check the specific requirements for
-          the local authority area — requirements vary between councils, and some are more
-          prescriptive than others. If in doubt, install to a higher grade than the minimum — it
-          provides better protection for the occupants and reduces the risk of the local authority
-          requiring an upgrade later.
-        </p>
-        <p>
-          The fire alarm system must be tested regularly and a fire alarm certificate issued on
-          completion of the installation and after each annual service. The certificate should
-          confirm compliance with BS 5839-6 and state the grade and category of the system.
+          Fire alarm systems in HMOs are part of the fixed electrical installation and are within
+          the scope of the{' '}
+          <SEOInternalLink href="/tools/eicr-certificate">EICR</SEOInternalLink>. The inspector
+          will check the wiring, interlink operation, and functionality of all detectors and
+          sounders. Faults in the fire alarm system will generate C2 or C1 observations.
         </p>
       </>
     ),
   },
   {
     id: 'emergency-lighting',
-    heading: 'Emergency Lighting Requirements for HMOs',
+    heading: 'Emergency Lighting in HMOs — BS 5266-1:2016',
     content: (
       <>
         <p>
-          <SEOInternalLink href="/guides/emergency-lighting-certificate">
-            Emergency lighting
-          </SEOInternalLink>{' '}
-          is required in all HMOs where there are common escape routes. The system must comply with
-          BS 5266 and provide sufficient illumination for occupants to safely evacuate the building
-          when the normal lighting fails.
+          BS 5266-1:2016 is the British Standard for emergency lighting. In HMOs, emergency lighting
+          is required in communal areas and escape routes to enable safe evacuation during mains
+          power failure in a fire or other emergency.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Where required:</strong> all common escape routes — corridors, stairways,
-                hallways, and landings. Also required at changes of direction, changes of floor
-                level, intersections of corridors, near fire alarm call points, near fire-fighting
-                equipment, at final exits, and near any other safety equipment.
+                <strong>Where required</strong> — all communal hallways, landings, stairwells, and
+                final exits. In HMOs of three or more storeys, or where any escape route exceeds
+                12 metres from any point, emergency lighting is a standard licence condition.
+                Smaller two-storey HMOs may require only self-contained emergency luminaires at the
+                stair foot and the final exit door.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Illumination levels:</strong> a minimum of 1 lux at floor level along the
-                centre line of the escape route, with a minimum of 0.5 lux across the full width.
-                Higher levels (5 lux) are required in high-risk areas such as plant rooms and
-                generator rooms.
+                <strong>Non-maintained luminaires</strong> — the most common type in HMOs. They
+                only illuminate during a mains power failure, charging continuously from the mains.
+                Must provide at least one hour's illumination at a minimum of 1 lux measured at
+                floor level on the escape route centre line.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Duration:</strong> the emergency lighting must maintain illumination for at
-                least 3 hours (1 hour for some specific applications). Self-contained luminaires
-                with integral batteries are the most common type in HMOs.
+                <strong>Annual full-duration test</strong> — BS 5266-1 requires monthly 30-second
+                function tests and an annual full-duration discharge test of one to three hours.
+                Records must be kept in a logbook. The EICR inspector will verify that testing
+                records are current and that all luminaires operate correctly on test.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Testing:</strong> monthly function tests (brief operation to confirm the
-                luminaire works on battery) and an annual full-duration test (3 hours on battery).
-                Test records must be maintained and are typically checked as part of the HMO
-                licensing inspection.
+                <strong>Emergency lighting within EICR scope</strong> — the inspector will verify
+                correct installation, appropriate circuit connection, and satisfactory operation on
+                test. Defective emergency lighting is commonly recorded as a C2 observation on HMO
+                EICRs.
               </span>
             </li>
           </ul>
         </div>
-        <p>
-          For small HMOs, self-contained non-maintained emergency luminaires (which only illuminate
-          when the normal lighting fails) are usually sufficient. For larger HMOs or those with more
-          complex escape routes, maintained luminaires (which are always illuminated and switch to
-          battery backup when the mains fails) may be required. Exit signs with emergency lighting
-          are required at all final exits and where the direction of travel is not obvious.
-        </p>
       </>
     ),
   },
   {
-    id: 'rcd-and-afdd-protection',
-    heading: 'RCD and AFDD Protection in HMOs',
+    id: 'rcd-protection',
+    heading: 'RCD Protection in HMOs — Regulation 411.3.3',
     content: (
       <>
         <p>
-          Protective device requirements for HMOs follow{' '}
-          <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
-            BS 7671:2018+A3:2024
-          </SEOInternalLink>{' '}
-          with additional considerations specific to multi-occupancy dwellings:
+          RCD protection is one of the most critical — and most frequently deficient — electrical
+          safety measures in HMOs. Regulation 411.3.3 of BS 7671:2018+A3:2024 sets out the
+          requirement that applies without exception to all new and existing HMO installations.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>RCD protection</strong> — all socket circuits in HMOs should have 30mA RCD
-                protection. This is a requirement of BS 7671 for all new installations and is a
-                common C2 observation on older HMO installations that pre-date RCD requirements.
-                RCBOs (combined MCB and RCD in a single device) are preferred over a shared RCD
-                protecting multiple circuits, as a fault on one circuit does not trip the protection
-                for all circuits — reducing nuisance tripping in shared facilities.
+                <strong>30mA RCD on all socket circuits</strong> — every socket-outlet circuit rated
+                up to 32A must be protected by a 30mA RCD. This applies to every room in the HMO:
+                individual bedrooms, shared kitchens, communal lounges, and utility areas. There are
+                no exemptions for older properties.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>AFDD protection</strong> — Arc Fault Detection Devices provide additional
-                protection against electrical fires caused by arc faults in cables and connections.
-                While not currently mandatory for all HMO installations, BS 7671 Regulation 421.1.7
-                recommends AFDDs for premises where occupants are at higher risk — which includes
-                HMOs. Some local authorities now include AFDDs as a condition of HMO licences,
-                particularly for larger properties and those with older wiring. When fitting a new
-                consumer unit in an HMO, adding AFDDs is a prudent investment.
+                <strong>RCBO per circuit — best practice for HMOs</strong> — an RCBO (Residual
+                Current Circuit-Breaker with Overcurrent Protection) on each circuit provides
+                individual fault discrimination. When one circuit trips, others remain live. This
+                is essential in HMOs where a single consumer unit trip affects all tenants
+                simultaneously. A split-load single-RCD board is inadequate.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>SPD protection</strong> — Surge Protective Devices (SPDs) are required where
-                the consequences of an overvoltage event would be serious. In HMOs, where a surge
-                could affect multiple households simultaneously, SPDs are recommended practice. They
-                are relatively low cost to fit when installing a new consumer unit.
+                <strong>Most common C2 finding</strong> — absence of RCD protection on socket
+                circuits is the single most common C2 observation in HMO EICRs. Properties with
+                consumer units installed before 2008 are particularly likely to fail on this point.
+                Landlords should budget for consumer unit replacement as a likely compliance cost
+                when purchasing older HMOs.
+              </span>
+            </li>
+            <li className="flex items-start gap-3">
+              <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>Bathroom and outdoor circuits</strong> — under Regulation 701.411.3.3, all
+                circuits supplying bathroom zones require additional RCD protection. Outdoor sockets
+                used by the HMO (garden, bin store, outbuildings) must also have 30mA RCD
+                protection under Regulation 411.3.3.
               </span>
             </li>
           </ul>
         </div>
-        <p>
-          When advising HMO landlords on consumer unit upgrades, the best practice is to install a
-          modern consumer unit with individual RCBOs for each circuit, AFDDs on circuits supplying
-          sleeping areas and high-risk locations, and a Type 2 SPD. This provides the highest level
-          of protection for the occupants and future-proofs the installation against increasingly
-          stringent requirements.
-        </p>
       </>
     ),
   },
   {
-    id: 'common-hmo-defects',
-    heading: 'Common HMO Electrical Defects',
+    id: 'smoke-heat-detectors',
+    heading: 'Smoke and Heat Detectors — Room-by-Room Requirements',
     content: (
       <>
         <p>
-          HMOs, particularly older converted properties, are prone to specific electrical defects
-          that electricians should look for during inspections. Here are the most common issues
-          found during HMO EICRs:
+          The placement of smoke and heat detectors in an HMO is determined by the required BS
+          5839-6 category and the specific licence conditions imposed by the local housing authority.
+          The following guidance applies to a typical Grade D, LD2 system in a five-bedroom
+          three-storey HMO.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <BellRing className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>No RCD protection on socket circuits</strong> — common in older HMOs with
-                rewirable fuse boards or early MCB boards. Classified as C2 (Potentially Dangerous).
-                The fix is typically a consumer unit replacement with RCBOs.
+                <strong>Hallways and landings</strong> — optical smoke detector on each floor level.
+                Position within 1.5m of each bedroom door, and within 7.5m of any other point on
+                the escape route. Must be interlinked with all other detectors in the property.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <BellRing className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Inadequate earthing and bonding</strong> — older converted properties may
-                have incomplete main bonding, missing supplementary bonding, or earth connections
-                that have deteriorated over time. Can be C1 or C2 depending on severity.
+                <strong>Stairwells</strong> — optical smoke detector at the top of each stairwell.
+                In properties of four or more storeys, a detector on each intermediate landing is
+                recommended. The stairwell detector protects the main vertical escape route.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <BellRing className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Overloaded circuits</strong> — tenants in individual rooms may use
-                high-power appliances (heaters, cooking equipment) on circuits not designed for that
-                load. Undersized cables and inadequate protection are common findings.
+                <strong>Kitchens</strong> — heat detector only (not smoke, to avoid false alarms
+                from cooking). A fixed-temperature heat detector at 58°C, or a combined
+                fixed-temperature and rate-of-rise type, is standard. The heat detector must be
+                interlinked with the full smoke detector network.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <BellRing className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Poorly executed conversions</strong> — when a house is converted to an HMO,
-                the electrical work is not always done to the required standard. Additional circuits
-                added without proper installation, improvised wiring in converted rooms, and
-                distribution boards added without appropriate design are all common issues.
+                <strong>Communal lounges and living rooms</strong> — optical smoke detector required
+                under LD1, and recommended under LD2. Many local authority licence conditions require
+                detectors in all communal rooms regardless of the LD2 category minimum.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <BellRing className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Fire alarm system deficiencies</strong> — detectors missing, not working,
-                not interconnected, wrong type (smoke detector in kitchen instead of heat detector),
-                or not covering the required areas. Fire alarm defects are taken very seriously by
-                local authorities.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Emergency lighting failures</strong> — luminaires with dead batteries,
-                missing emergency lighting in required locations, no test records, and systems that
-                have never been tested to full duration. Common in HMOs where maintenance has been
-                neglected.
+                <strong>Individual bedrooms</strong> — required under LD1 but not under LD2. Many
+                councils now specify LD1 category for all HMOs, meaning a detector in every sleeping
+                room. Where provided, optical detectors are preferred over ionisation types in
+                sleeping areas.
               </span>
             </li>
           </ul>
         </div>
         <p>
-          A thorough HMO EICR should identify all of these issues. Where defects are found, the
-          electrician should classify them correctly (C1, C2, C3, or FI) and provide clear guidance
-          to the landlord on the required remedial action and priority.
+          All detectors must be mains-powered with tamper-proof battery back-up (Grade D minimum).
+          Battery-only detectors do not comply with BS 5839-6 requirements for HMOs. Interconnection
+          should be hard-wired where practicable; RF wireless interlink is acceptable where wiring is
+          not feasible.
         </p>
       </>
     ),
   },
   {
     id: 'landlord-responsibilities',
-    heading: 'Landlord Responsibilities for HMO Electrical Safety',
+    heading: 'Landlord Responsibilities — Ongoing Obligations',
     content: (
       <>
         <p>
-          HMO landlords have a broader set of electrical safety responsibilities than landlords of
-          standard rented properties. These come from multiple regulatory sources:
+          HMO landlords have a comprehensive and ongoing set of electrical safety obligations. These
+          are not one-off tasks at the point of licensing — they require continuous management
+          throughout the licence period and between licence renewals.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <Scale className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>EICR every 5 years</strong> — obtain and maintain a current EICR for the
-                entire electrical installation. Provide a copy to tenants before they move in and to
-                the local authority on request. Carry out remedial work within 28 days if the EICR
-                is unsatisfactory.
+                <strong>Commission and renew the EICR on schedule</strong> — engage a NICEIC, NAPIT,
+                or ELECSA registered inspector at the frequency specified in your licence conditions
+                (typically three years). Renew immediately after any significant electrical work.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Scale className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Fire alarm system</strong> — install, maintain, and regularly test the fire
-                alarm system to the grade and category specified by the local authority. Obtain a
-                fire alarm certificate on installation and after each annual service. Keep test
-                records available for inspection.
+                <strong>Provide EICR copies to all tenants</strong> — existing tenants must receive
+                a copy within 28 days of the inspection. New tenants must receive a copy before
+                moving in. Provide a copy to the local authority within seven days of a request.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Scale className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Emergency lighting</strong> — install and maintain emergency lighting in all
-                common escape routes. Carry out monthly function tests and annual full-duration
-                tests. Keep test records. Obtain an emergency lighting certificate on installation
-                and after each annual service.
+                <strong>Complete C1 and C2 remedial works within 28 days</strong> — C1 observations
+                (danger present) may require immediate action including disconnection of the affected
+                circuit before remedial work can be arranged. Do not wait the full 28 days for C1
+                findings.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Scale className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Fire risk assessment</strong> — carry out and regularly review a fire risk
-                assessment for the HMO under the Regulatory Reform (Fire Safety) Order 2005. The
-                electrical installation condition is a key factor in the fire risk assessment.
+                <strong>Maintain testing records for fire detection and emergency lighting</strong> —
+                carry out and record monthly 30-second function tests of all detectors and emergency
+                luminaires. Commission an annual full-duration discharge test of emergency lighting.
+                Keep the logbook available for inspection.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Scale className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Licence conditions</strong> — comply with all conditions attached to the HMO
-                licence, including any specific electrical safety requirements set by the local
-                authority. Licence conditions may go beyond the minimum legal requirements.
+                <strong>Replace detector heads and batteries on schedule</strong> — optical smoke
+                detector heads typically require replacement every ten years. Emergency lighting
+                battery packs typically require replacement every three to four years. Follow
+                manufacturer schedules and record all replacements in the logbook.
               </span>
             </li>
           </ul>
         </div>
-        <p>
-          For landlords with multiple HMO properties, managing all of these requirements across
-          multiple sites requires organisation. Each property has its own EICR cycle, fire alarm
-          testing schedule, emergency lighting testing programme, and licence renewal date. Missing
-          a deadline on any single property can trigger enforcement action. A systematic approach —
-          supported by good record-keeping and a reliable electrician — is essential.
-        </p>
       </>
     ),
   },
   {
-    id: 'local-authority-enforcement',
-    heading: 'Local Authority Enforcement and Penalties',
+    id: 'typical-costs',
+    heading: 'Typical Costs for Full HMO Electrical Compliance (2026)',
     content: (
       <>
         <p>
-          Local authorities take HMO electrical compliance seriously. The combination of multiple
-          occupants, shared facilities, and fire risk means that enforcement action for electrical
-          non-compliance in HMOs is typically swift and severe.
-        </p>
-        <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 my-4">
-          <ul className="space-y-4 text-white">
-            <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Civil penalties up to £30,000 per breach</strong> — under the 2020
-                Regulations for failing to obtain an EICR, failing to carry out remedial work, or
-                failing to provide documentation. Per breach, not per property.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Unlimited fines for licensing offences</strong> — operating an HMO without a
-                required licence is a criminal offence under the Housing Act 2004, punishable by an
-                unlimited fine. Breaching licence conditions (including electrical safety
-                conditions) is also a criminal offence.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Improvement and prohibition notices</strong> — under the Housing Health and
-                Safety Rating System (HHSRS), the local authority can issue improvement notices
-                requiring specific remedial action or prohibition orders preventing occupation until
-                hazards are remedied.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Rent repayment orders</strong> — tenants (or the local authority on their
-                behalf) can apply for a rent repayment order requiring the landlord to repay up to
-                12 months' rent if the HMO was unlicensed. This is in addition to any fine or civil
-                penalty.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Banning orders</strong> — for the most serious or persistent offenders, the
-                local authority can apply for a banning order preventing the landlord from letting
-                properties for a specified period.
-              </span>
-            </li>
-          </ul>
-        </div>
-        <p>
-          Local authorities are increasingly proactive in identifying non-compliant HMOs. Tenant
-          complaints, fire incidents, and routine licensing inspections all trigger investigations.
-          Many authorities use data-sharing agreements, council tax records, and other sources to
-          identify unlicensed HMOs and target enforcement activity. For landlords, the cost of
-          compliance is trivial compared to the cost of enforcement.
-        </p>
-      </>
-    ),
-  },
-  {
-    id: 'best-practice-electricians',
-    heading: 'Best Practice for Electricians Servicing HMOs',
-    content: (
-      <>
-        <p>
-          HMO electrical work is a lucrative niche for electricians who understand the specific
-          requirements. Here is best practice for building a profitable HMO service offering:
+          The total cost of bringing an HMO to full electrical compliance depends heavily on the
+          condition of the existing installation. A property with a modern consumer unit, existing
+          interlinked detectors, and no significant defects will cost far less than a property
+          requiring a full rewire and complete fire alarm installation.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Offer a complete HMO package</strong> — EICR, fire alarm certificate,
-                emergency lighting certificate, and PAT testing in a single visit (or a scheduled
-                programme). Landlords prefer dealing with one electrician who handles everything
-                rather than coordinating multiple contractors.
+                <strong>EICR — 5-bedroom HMO</strong> — £400 to £800. Multiple consumer units, fire
+                alarm wiring, and emergency lighting circuits increase the inspection scope compared
+                to a standard rental property.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Know the local authority requirements</strong> — fire alarm grades and
-                emergency lighting requirements vary between local authorities. Research the
-                specific requirements for each authority area where you work, and keep up to date
-                with any changes to licensing conditions.
+                <strong>Consumer unit replacement with RCBOs</strong> — £800 to £1,500 per consumer
+                unit. A five-bedroom HMO may require two or three consumer units. RCBO-equipped
+                boards suitable for HMOs cost more than standard split-load units but provide
+                essential individual circuit discrimination.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Build landlord relationships</strong> — an HMO landlord with a portfolio of
-                5 to 10 properties represents a steady pipeline of work: 5-yearly EICRs, annual fire
-                alarm servicing, emergency lighting testing, remedial work, and consumer unit
-                upgrades. One good landlord relationship can sustain a significant part of your
-                business.
+                <strong>Grade D, LD2 fire alarm installation</strong> — £500 to £1,500 for a
+                five-bedroom HMO, covering all detectors, sounders, wiring, and commissioning. A
+                Grade A system with a central panel costs £2,000 to £6,000 or more.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Provide clear documentation</strong> — HMO landlords need clear,
-                professional certificates that satisfy the local authority licensing team.
-                Handwritten or incomplete certificates create problems for the landlord and reflect
-                poorly on you. Use digital certification tools that produce professional, compliant
-                PDFs.
+                <strong>Emergency lighting installation</strong> — £600 to £2,000 for a three-storey
+                five-bedroom HMO, covering hallways, landings, stairwell, and final exit. Includes
+                supply, fixing, and commissioning of non-maintained luminaires.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Advise proactively</strong> — HMO landlords often do not fully understand
-                the electrical requirements. A good electrician advises on fire alarm upgrades,
-                consumer unit improvements, AFDD installation, and other measures that improve
-                safety and compliance. This positions you as a trusted adviser, not just a
-                contractor.
+                <strong>Full rewire — worst case</strong> — £8,000 to £20,000 for a five-bedroom
+                three-storey HMO requiring complete rewiring. Necessary for properties still on
+                rubber-insulated, cloth-covered, or aluminium wiring with fundamental installation
+                deficiencies.
               </span>
             </li>
           </ul>
         </div>
         <p>
-          The HMO market rewards electricians who provide a comprehensive, reliable service. The
-          recurring nature of the work (5-yearly EICRs, annual fire alarm and emergency lighting
-          servicing) creates predictable revenue, and the landlord relationship provides a platform
-          for additional work (remedials, upgrades, new installations).
+          Landlords acquiring an HMO should commission a full electrical survey before exchange and
+          factor compliance costs into their acquisition model. Deferring compliance work does not
+          reduce costs — it increases them through penalties, licensing delays, and more extensive
+          remedial work.
         </p>
       </>
     ),
   },
   {
-    id: 'elec-mate-for-hmos',
-    heading: 'Elec-Mate for HMO Electrical Work',
+    id: 'for-electricians',
+    heading: 'For Electricians: HMO Inspection and Compliance Work',
     content: (
       <>
         <p>
-          Elec-Mate covers every certificate and tool that an electrician needs for HMO work. One
-          app handles the entire HMO compliance package:
+          HMO EICRs are among the most lucrative inspection jobs available to UK electricians. A
+          thorough inspector who understands HMO licensing requirements, BS 5839-6 fire detection
+          categories, and BS 5266-1 emergency lighting obligations commands premium rates and builds
+          long-term landlord relationships.
         </p>
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
             <div className="flex items-start gap-4">
               <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
               <div>
-                <h4 className="font-bold text-white mb-1">EICR with Multi-Board Support</h4>
+                <h4 className="font-bold text-white mb-1">Complete HMO EICRs On Site</h4>
                 <p className="text-white text-sm leading-relaxed">
-                  HMOs often have multiple distribution boards. Elec-Mate handles them all — add as
-                  many boards and circuits as the installation has. The AI board scanner works on
-                  each board, and the schedule of test results stays organised across the entire
-                  installation.
-                </p>
-              </div>
-            </div>
-          </div>
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
-            <div className="flex items-start gap-4">
-              <Flame className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
-              <div>
-                <h4 className="font-bold text-white mb-1">Fire Alarm Certificate (BS 5839)</h4>
-                <p className="text-white text-sm leading-relaxed">
-                  Complete{' '}
-                  <SEOInternalLink href="/guides/fire-alarm-certificate">
-                    fire alarm certificates
+                  Use the{' '}
+                  <SEOInternalLink href="/tools/eicr-certificate">
+                    Elec-Mate EICR app
                   </SEOInternalLink>{' '}
-                  to BS 5839-6 on your phone. Record the system grade and category, detector
-                  schedule, zone plan, and test results. Export as a professional PDF that satisfies
-                  the local authority licensing team.
+                  to document large HMO installations circuit by circuit on your phone. AI board
+                  scanning speeds up consumer unit inspection, and the full schedule of test results
+                  can be completed on site. Send the PDF to the landlord before you leave the
+                  property.
                 </p>
               </div>
             </div>
           </div>
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-green-500/10 border border-green-500/20 p-5">
             <div className="flex items-start gap-4">
-              <Lightbulb className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-6 h-6 text-green-400 mt-0.5 shrink-0" />
               <div>
-                <h4 className="font-bold text-white mb-1">
-                  Emergency Lighting Certificate (BS 5266)
-                </h4>
+                <h4 className="font-bold text-white mb-1">Quote Remedial Work on the Day</h4>
                 <p className="text-white text-sm leading-relaxed">
-                  Complete{' '}
-                  <SEOInternalLink href="/guides/emergency-lighting-certificate">
-                    emergency lighting certificates
-                  </SEOInternalLink>{' '}
-                  to BS 5266 on your phone. Record luminaire locations, test results (monthly
-                  function tests and annual full-duration tests), and system details. Professional
-                  PDF output.
-                </p>
-              </div>
-            </div>
-          </div>
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
-            <div className="flex items-start gap-4">
-              <Send className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
-              <div>
-                <h4 className="font-bold text-white mb-1">Send All Certs to the Landlord</h4>
-                <p className="text-white text-sm leading-relaxed">
-                  Complete the EICR, fire alarm certificate, and emergency lighting certificate on
-                  site. Send all three to the landlord by email or WhatsApp in one go. Include the
-                  invoice. The landlord has the complete HMO compliance package before you leave the
-                  building.
+                  HMO remedial works — consumer unit upgrades, fire alarm installations, emergency
+                  lighting — are high-value jobs. Quote on site using the{' '}
+                  <SEOInternalLink href="/tools/electrical-quoting-app">
+                    quoting app
+                  </SEOInternalLink>
+                  . Landlords under a 28-day remedial deadline will instruct the electrician who
+                  quotes first.
                 </p>
               </div>
             </div>
           </div>
         </div>
-        <p>
-          For electricians servicing multiple HMO properties for the same landlord, Elec-Mate keeps
-          all certificates organised and accessible. Track which properties are due for renewal,
-          which have outstanding remedial work, and which are fully compliant. One app for the
-          entire HMO portfolio.
-        </p>
         <SEOAppBridge
-          title="All HMO certs in one app"
-          description="EICR, fire alarm (BS 5839), emergency lighting (BS 5266), and PAT testing. Complete every HMO certificate on your phone and send the full compliance package to the landlord. 7-day free trial."
-          icon={Building2}
+          title="Win more HMO work with Elec-Mate"
+          description="Complete HMO EICRs on your phone, quote remedial works on site, and build a recurring HMO landlord client base. 7-day free trial for UK electricians."
+          icon={FileCheck2}
         />
       </>
     ),
@@ -872,29 +723,29 @@ const sections = [
 export default function HMOElectricalRequirementsPage() {
   return (
     <GuideTemplate
-      title="HMO Electrical Requirements | Licensing & Safety UK"
-      description="Complete guide to HMO electrical requirements in the UK. EICR, fire alarm (BS 5839-6), emergency lighting (BS 5266), RCD and AFDD protection, licensing conditions, common defects, enforcement, and how Elec-Mate handles all HMO certificates."
-      datePublished="2025-07-15"
-      dateModified="2026-02-13"
+      title="HMO Electrical Requirements UK | Houses in Multiple Occupation"
+      description="Full guide to HMO electrical requirements in the UK. Mandatory licensing, EICR frequency, fire detection to BS 5839-6, emergency lighting to BS 5266-1, RCD protection, smoke and heat detector placement per room, landlord responsibilities, and 2026 compliance costs."
+      datePublished="2026-03-27"
+      dateModified="2026-03-27"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
-      badge="Compliance Guide"
+      badge="HMO Landlord Guide"
       badgeIcon={Building2}
       heroTitle={
         <>
-          HMO Electrical Requirements:{' '}
-          <span className="text-yellow-400">Full Compliance Guide for UK 2026</span>
+          HMO Electrical Requirements UK:{' '}
+          <span className="text-yellow-400">Complete Compliance Guide 2026</span>
         </>
       }
-      heroSubtitle="HMOs have stricter electrical requirements than standard rented properties — mandatory EICRs, fire alarm systems to BS 5839-6, emergency lighting to BS 5266, and RCD protection on all circuits. This guide covers every requirement, common defects, enforcement penalties, and how Elec-Mate handles all HMO certificates in one app."
-      readingTime={18}
+      heroSubtitle="Everything HMO landlords and electricians need to know — mandatory licensing conditions, EICR frequency, fire detection to BS 5839-6, emergency lighting to BS 5266-1, RCD protection under Regulation 411.3.3, room-by-room detector placement, and typical costs for full HMO electrical compliance."
+      readingTime={16}
       keyTakeaways={keyTakeaways}
       sections={sections}
       faqs={faqs}
       faqHeading="Frequently Asked Questions About HMO Electrical Requirements"
       relatedPages={relatedPages}
-      ctaHeading="Every HMO Certificate on Your Phone"
-      ctaSubheading="EICR, fire alarm (BS 5839), emergency lighting (BS 5266), and PAT testing. Complete the full HMO compliance package on site and send it to the landlord. 7-day free trial, cancel anytime."
+      ctaHeading="Complete HMO EICRs on Your Phone"
+      ctaSubheading="Join 430+ UK electricians using Elec-Mate for on-site EICR completion with AI board scanning, voice test entry, and instant PDF export. 7-day free trial, cancel anytime."
     />
   );
 }

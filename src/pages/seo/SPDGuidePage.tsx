@@ -366,7 +366,7 @@ const sections = [
           </ul>
         </div>
         <p>
-          Amendment 3 (A3:2024) added Regulation 530.3.201 dealing with bidirectional and
+          Amendment 3 (A3:2024) added new requirements in Section 530 dealing with bidirectional and
           unidirectional devices, which has implications for SPD installations in properties with
           solar PV or battery storage where current can flow in both directions.
         </p>

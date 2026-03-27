@@ -84,7 +84,7 @@ const faqs = [
   {
     question: 'How does Amendment 3 (A3:2024) affect special locations?',
     answer:
-      'Amendment 3 to BS 7671:2018 (published 31 July 2024) primarily introduces Regulation 530.3.201, which addresses bidirectional and unidirectional protective devices. While A3:2024 does not make sweeping changes to Part 7 itself, it affects special locations indirectly. For solar PV installations (712), the clarification around bidirectional devices is particularly relevant because PV systems export power back through the consumer unit. Electricians working on special locations should ensure they have access to the full text of BS 7671:2018+A2:2022+A3:2024 and are aware of the new regulation. Elec-Mate AI regulations lookup always references the latest edition including all amendments.',
+      'Amendment 3 to BS 7671:2018 (published 31 July 2024) primarily introduces new requirements in Section 530 addressing bidirectional and unidirectional protective devices. While A3:2024 does not make sweeping changes to Part 7 itself, it affects special locations indirectly. For solar PV installations (712), the clarification around bidirectional devices is particularly relevant because PV systems export power back through the consumer unit. Electricians working on special locations should ensure they have access to the full text of BS 7671:2018+A2:2022+A3:2024 and are aware of the new A3:2024 requirements. Elec-Mate AI regulations lookup always references the latest edition including all amendments.',
   },
 ];
 
@@ -712,10 +712,10 @@ const sections = [
           </ul>
         </div>
         <p>
-          Amendment 3 (A3:2024) introduces Regulation 530.3.201 regarding bidirectional protective
+          Amendment 3 (A3:2024) introduces new requirements in Section 530 regarding bidirectional protective
           devices, which is directly relevant to PV installations where power flows both into and
           out of the consumer unit. Electricians installing or inspecting PV systems must be aware
-          of this new regulation.
+          of this A3:2024 addition.
         </p>
         <SEOAppBridge
           title="Look up any PV regulation instantly"

@@ -3,6 +3,8 @@ import useSEO from '@/hooks/useSEO';
 import { PublicPageLayout } from '@/components/seo/PublicPageLayout';
 import { SEOCTASection } from '@/components/seo/SEOCTASection';
 import { SEOFeatureGrid } from '@/components/seo/SEOFeatureGrid';
+import { SEOAppBridge } from '@/components/seo/SEOAppBridge';
+import { SEOInternalLink } from '@/components/seo/SEOInternalLink';
 import {
   Zap,
   ShieldCheck,
@@ -48,6 +50,11 @@ const faqs = [
     question: 'What type of RCD and circuit breaker is required for an EV charger?',
     answer:
       'BS 7671 Section 722 requires that the EV charging circuit be protected by a Type A RCD (or Type B if the charger manufacturer specifies it) with a rated residual operating current not exceeding 30mA. The circuit breaker should be rated at 32A for a standard 7kW domestic charger. A Type A RCBO (combined RCD and MCB in one device) is the most common and practical solution, as it provides both overcurrent and earth fault protection in a single module. Some three-phase chargers or chargers with DC charging capability may require a Type B RCD, which detects DC fault currents that a Type A cannot. Always check the charger manufacturer installation manual for specific protection requirements.',
+  },
+  {
+    question: 'Is a specific grant available to help with the cost of EV charger installation?',
+    answer:
+      'The UK government\'s EV chargepoint grant (administered by Ozev, formerly OLEV) provides funding towards the cost of installing an EV charger at residential properties. As of 2025, the grant covers 75% of the installation cost, up to a maximum of £350 per installation, for eligible properties including flats, rental properties, and homes without off-street parking in specific schemes. The grant must be applied for by an Ozev-authorised installer before installation begins — it cannot be claimed retrospectively. Landlords of residential properties can also access the Ozev residential landlord scheme. As an electrician, being Ozev-registered opens an additional revenue stream and is increasingly sought by clients. The EV charger certificate and commissioning documentation required for grant claims are built into Elec-Mate\'s EV charger certificate workflow.',
   },
 ];
 
@@ -240,11 +247,18 @@ export default function EVChargerCertificatePage() {
             </p>
             <p>
               Unlike a standard domestic circuit installation, an EV charger certificate must
-              address several additional considerations specific to Section 722. These include the
-              earthing arrangement assessment (particularly for PME supplies), load management
-              provisions, the type of charging mode, cable sizing for continuous duty at maximum
-              load, and the selection of appropriate protective devices. The certificate must
-              demonstrate that all of these requirements have been properly assessed and met.
+              address several additional considerations specific to Section 722. These include the{' '}
+              <SEOInternalLink href="/guides/earthing-arrangements">
+                earthing arrangement assessment (particularly for PME supplies)
+              </SEOInternalLink>
+              , load management provisions, the type of charging mode, cable sizing for continuous
+              duty at maximum load, and the selection of appropriate protective devices. The
+              certificate must demonstrate that all of these requirements have been properly
+              assessed and met. The underlying{' '}
+              <SEOInternalLink href="/tools/eic-certificate">
+                Electrical Installation Certificate
+              </SEOInternalLink>{' '}
+              form is the basis for EV charger certification.
             </p>
             <p>
               Elec-Mate provides a purpose-built EV charger certificate form that includes all
@@ -657,6 +671,18 @@ export default function EVChargerCertificatePage() {
               </div>
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* App Bridge */}
+      <section className="py-8 px-5 border-t border-white/5">
+        <div className="max-w-4xl mx-auto">
+          <SEOAppBridge
+            title="Create EV Charger Certificates on Your Phone"
+            description="BS 7671 Section 722 compliant EV charger installation certificates with PME assessment, load management documentation, and digital signatures — completed on site before you leave."
+            ctaText="Start 7-day free trial"
+            ctaHref="/auth/signup"
+          />
         </div>
       </section>
 

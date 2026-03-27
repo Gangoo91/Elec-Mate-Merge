@@ -17,6 +17,8 @@ import {
   Lightbulb,
   Cable,
 } from 'lucide-react';
+import { SEOAppBridge } from '@/components/seo/SEOAppBridge';
+import { SEOInternalLink } from '@/components/seo/SEOInternalLink';
 
 const PAGE_TITLE = 'Level 2 Electrical Installation Course Online | C&G 2365 | Elec-Mate';
 const PAGE_DESCRIPTION =
@@ -246,7 +248,13 @@ export default function Level2ElectricalPage() {
               we earth and bond, how protective devices work, what happens when a fault occurs, how
               to select the correct cable for a given application, and how to carry out basic
               installation work competently and safely. This foundation is essential because
-              everything you learn at Level 3 and beyond assumes you have mastered these concepts.
+              everything you learn at{' '}
+              <SEOInternalLink href="/study/level-3-electrical">Level 3</SEOInternalLink>{' '}
+              and beyond assumes you have mastered these concepts. Once qualified, you will progress to
+              qualifications like the{' '}
+              <SEOInternalLink href="/study/inspection-testing-course">C&G 2391 Inspection and Testing</SEOInternalLink>{' '}
+              and the{' '}
+              <SEOInternalLink href="/study/18th-edition-course">18th Edition (C&G 2382)</SEOInternalLink>.
             </p>
           </div>
         </div>
@@ -520,6 +528,19 @@ export default function Level2ElectricalPage() {
               <p className="text-sm text-white">Plus 12 AI Tools</p>
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* App Bridge */}
+      <section className="py-4 px-5">
+        <div className="max-w-4xl mx-auto">
+          <SEOAppBridge
+            title="Study Level 2 Electrical Installation with Elec-Mate"
+            description="Elec-Mate's Study Centre has revision materials, exam prep, and on-the-job reference guides for the C&G 2365-02 Level 2 Diploma and the electrical apprenticeship."
+            ctaText="Try Elec-Mate free"
+            ctaHref="/auth/signup"
+            icon={GraduationCap}
+          />
         </div>
       </section>
 

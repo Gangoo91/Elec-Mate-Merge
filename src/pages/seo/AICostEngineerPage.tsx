@@ -3,6 +3,8 @@ import useSEO from '@/hooks/useSEO';
 import { PublicPageLayout } from '@/components/seo/PublicPageLayout';
 import { SEOCTASection } from '@/components/seo/SEOCTASection';
 import { SEOFeatureGrid } from '@/components/seo/SEOFeatureGrid';
+import { SEOInternalLink } from '@/components/seo/SEOInternalLink';
+import { SEOAppBridge } from '@/components/seo/SEOAppBridge';
 import {
   PoundSterling,
   Brain,
@@ -417,6 +419,24 @@ export default function AICostEngineerPage() {
               </details>
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* App Bridge */}
+      <section className="py-8 px-5 border-t border-white/5">
+        <div className="max-w-4xl mx-auto">
+          <SEOAppBridge
+            title="AI Quoting + Invoicing in One App"
+            description="Generate accurate electrical quotes with AI cost analysis, then convert them to invoices and certificates — all in Elec-Mate. Xero and QuickBooks integration included. Start free for 7 days."
+            icon={PoundSterling}
+          />
+          <p className="text-white mt-4 text-sm">
+            Want a complete quoting workflow?{' '}
+            <SEOInternalLink href="/tools/electrical-quoting-app">
+              See the electrical quoting app
+            </SEOInternalLink>{' '}
+            for job management, invoicing, and client communication.
+          </p>
         </div>
       </section>
 

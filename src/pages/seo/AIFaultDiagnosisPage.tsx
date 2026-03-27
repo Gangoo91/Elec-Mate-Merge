@@ -341,7 +341,7 @@ const sections = [
               <span>
                 <strong>Verification:</strong> You can check the AI's reasoning against the actual
                 regulation text. If the AI says an installation does not comply with Regulation
-                411.3.3 (additional protection by RCD), you can look up that regulation and confirm
+                411.3.2 (additional protection by RCD), you can look up that regulation and confirm
                 it applies to your situation.
               </span>
             </li>
@@ -371,7 +371,7 @@ const sections = [
         </div>
         <p>
           The AI references the complete BS 7671:2018+A3:2024 including Amendment 3 (issued July
-          2024), which adds Regulation 530.3.201 for bidirectional and unidirectional protective
+          2024), which adds Regulation 530.3.2 for bidirectional and unidirectional protective
           devices. It also references GN3 (Guidance Note 3: Inspection and Testing, 9th Edition) for
           test procedures and the IET On-Site Guide for practical installation guidance.
         </p>

@@ -3,6 +3,8 @@ import useSEO from '@/hooks/useSEO';
 import { PublicPageLayout } from '@/components/seo/PublicPageLayout';
 import { SEOCTASection } from '@/components/seo/SEOCTASection';
 import { SEOFeatureGrid } from '@/components/seo/SEOFeatureGrid';
+import { SEOInternalLink } from '@/components/seo/SEOInternalLink';
+import { SEOAppBridge } from '@/components/seo/SEOAppBridge';
 import {
   Award,
   Brain,
@@ -51,6 +53,11 @@ const faqs = [
     question: 'Can I use an electrician app for BS 7671 calculations?',
     answer:
       'Some apps include calculators, but the range varies enormously. Generic calculator apps may cover a few basics like cable sizing or voltage drop. Elec-Mate includes over 70 specialist electrical calculators covering cable sizing (to BS 7671 Appendix 4), voltage drop, maximum demand, diversity, conduit and trunking fill, earth fault loop impedance, prospective fault current, disconnection times, cable ratings for grouping and ambient temperature, and many more. All calculations reference the current 18th Edition tables and formulae.',
+  },
+  {
+    question: 'Can an electrician app help me manage jobs and invoices?',
+    answer:
+      'Yes. The best electrician apps go beyond certificates and calculators to handle the full business workflow. Elec-Mate combines job management, quoting, invoicing, and client records with its certification and testing tools in a single platform. You can create a quote on site, convert it to a job with one tap, track job progress, issue an invoice when complete, and follow up on unpaid invoices — all without switching between different apps or logging into a desktop system. The built-in business analytics dashboard shows your revenue, job completion rates, invoice ageing, and profit margins so you can see how your business is performing at a glance.',
   },
 ];
 
@@ -251,7 +258,7 @@ export default function BestElectricianAppPage() {
             <p>
               <strong>BS 7671 Compliance:</strong> The app should be built around the current
               edition of the Wiring Regulations — BS 7671:2018+A3:2024 — with an understanding that
-              Amendment 3 (A3:2024) added Regulation 530.3.201 covering bidirectional and
+              Amendment 3 (A3:2024) added Regulation 530.3.2 covering bidirectional and
               unidirectional devices. Any certificate forms should follow the model forms in
               Appendix 6, and calculations should reference the correct tables. An app that is not
               kept up to date with regulation changes is a liability.
@@ -708,6 +715,24 @@ export default function BestElectricianAppPage() {
               </details>
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* App Bridge */}
+      <section className="py-8 px-5 border-t border-white/5">
+        <div className="max-w-4xl mx-auto">
+          <SEOAppBridge
+            title="The Complete UK Electrician App — Free for 7 Days"
+            description="EICR, EIC, and 6 more certificate types. 70 calculators. 8 AI specialists. 36+ training courses. Xero and QuickBooks integration. Everything a UK electrician needs in one mobile-first platform."
+            icon={Award}
+          />
+          <p className="text-white mt-4 text-sm">
+            Want to see the EICR tool?{' '}
+            <SEOInternalLink href="/tools/eicr-certificate">
+              Try the AI-assisted EICR certificate tool
+            </SEOInternalLink>{' '}
+            with board scanner, voice test entry, and instant PDF export.
+          </p>
         </div>
       </section>
 

@@ -61,7 +61,7 @@ const faqs = [
   {
     question: 'Are AFDDs mandatory in new builds?',
     answer:
-      'AFDDs (Arc Fault Detection Devices) are recommended but not strictly mandatory under BS 7671:2018+A2:2022. Regulation 421.1.7 recommends AFDDs for circuits in single-occupancy dwellings, locations with sleeping accommodation, locations with risks due to the nature of processed or stored materials, locations with combustible constructional materials (such as timber-framed buildings), and fire-propagating structures. The key word is "recommended" rather than "required" — this makes AFDDs a strong recommendation rather than a mandatory requirement in BS 7671 itself. However, some competent person scheme providers (such as NICEIC) have indicated that they expect AFDDs to be fitted in new build installations, particularly in timber-framed properties, HMOs, and properties with sleeping accommodation above shops. The industry expectation is that AFDDs will become mandatory in a future amendment to BS 7671, so fitting them now in new builds is considered best practice.',
+      'AFDDs (Arc Fault Detection Devices) are recommended but not strictly mandatory under BS 7671:2018+A2:2022. Regulation 421.1 recommends AFDDs for circuits in single-occupancy dwellings, locations with sleeping accommodation, locations with risks due to the nature of processed or stored materials, locations with combustible constructional materials (such as timber-framed buildings), and fire-propagating structures. The key word is "recommended" rather than "required" — this makes AFDDs a strong recommendation rather than a mandatory requirement in BS 7671 itself. However, some competent person scheme providers (such as NICEIC) have indicated that they expect AFDDs to be fitted in new build installations, particularly in timber-framed properties, HMOs, and properties with sleeping accommodation above shops. The industry expectation is that AFDDs will become mandatory in a future amendment to BS 7671, so fitting them now in new builds is considered best practice.',
   },
   {
     question: 'What smoke and heat detectors are required in a new build?',
@@ -459,7 +459,7 @@ const sections = [
               <SEOInternalLink href="/guides/afdd-guide">AFDDs</SEOInternalLink>
             </h3>
             <p className="text-white text-sm leading-relaxed">
-              BS 7671 Regulation 421.1.7 recommends AFDDs for circuits in locations with sleeping
+              BS 7671 Regulation 421.1 recommends AFDDs for circuits in locations with sleeping
               accommodation, locations with risks due to stored materials, and locations with
               combustible constructional materials (timber frame). While the regulation uses
               "recommended" rather than "required", the direction of travel is clear — AFDDs are

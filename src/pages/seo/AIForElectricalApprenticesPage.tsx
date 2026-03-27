@@ -105,7 +105,7 @@ export default function AIForElectricalApprenticesPage() {
                 questions about any aspect of electrical installation work and get clear, accurate
                 explanations. You can ask in plain English — "why do we need RCD protection on
                 socket outlets?" — and the AI responds with an explanation that cites the specific
-                regulation (411.3.3), explains the safety reason (protection against electric shock
+                regulation (411.3.2), explains the safety reason (protection against electric shock
                 from earth faults that are too small to trip an MCB), and gives a practical example
                 of when this matters.
               </p>
@@ -174,7 +174,7 @@ export default function AIForElectricalApprenticesPage() {
                 standard itself.
               </p>
               <p>
-                You can also look up regulations by number. Type "Regulation 411.3.3" and the AI
+                You can also look up regulations by number. Type "Regulation 411.3.2" and the AI
                 explains what it requires (additional protection by 30mA RCD), who it applies to
                 (socket outlets not exceeding 32A, mobile equipment for outdoor use, cables
                 concealed in walls), and when it applies (all new installations under the 18th
@@ -183,7 +183,7 @@ export default function AIForElectricalApprenticesPage() {
               </p>
               <p>
                 The lookup tool covers the full scope of BS 7671:2018+A3:2024, including Amendment
-                3:2024 which added Regulation 530.3.201 for bidirectional protective devices. It
+                3:2024 which added Regulation 530.3.2 for bidirectional protective devices. It
                 also covers the IET On-Site Guide and all eight IET Guidance Notes, which are
                 essential study materials for{' '}
                 <SEOInternalLink href="/guides/city-guilds-2391">

@@ -1,6 +1,8 @@
 import { Helmet } from 'react-helmet';
 import useSEO from '@/hooks/useSEO';
 import { PublicPageLayout } from '@/components/seo/PublicPageLayout';
+import { SEOAppBridge } from '@/components/seo/SEOAppBridge';
+import { SEOInternalLink } from '@/components/seo/SEOInternalLink';
 import { SEOCTASection } from '@/components/seo/SEOCTASection';
 import { SEOFeatureGrid } from '@/components/seo/SEOFeatureGrid';
 import {
@@ -48,6 +50,11 @@ const faqs = [
     question: 'What records do I need to keep for PAT testing?',
     answer:
       'The IET Code of Practice recommends maintaining a register of all equipment tested, including: a unique identifier for each item (an asset number or label), a description of the equipment, the date of each inspection and test, the results of the inspection and test (pass or fail), the name of the person who carried out the test, and the date of the next scheduled test. Records should be retained for comparison at future tests — this allows trends to be identified and testing intervals to be adjusted based on actual failure rates. A well-maintained register demonstrates due diligence to health and safety inspectors and insurers. Elec-Mate stores all PAT testing records digitally, generates asset labels, and produces professional reports that can be exported as PDFs and shared with clients immediately.',
+  },
+  {
+    question: 'What are the pass/fail criteria for a PAT test?',
+    answer:
+      'The pass/fail criteria depend on the type of test. For earth continuity (earth bond) testing on Class I equipment: the resistance must not exceed 0.1 ohm plus the resistance of the flexible cable (in practice, a reading below 0.5 ohm is generally accepted as a pass for most equipment). For insulation resistance testing: Class I equipment must achieve a minimum of 1 megohm at 500 V DC between live conductors and earth. Class II equipment must achieve a minimum of 2 megohms at 500 V DC (some instruments apply 250 V DC for Class II). For the substitute leakage test (an alternative to insulation resistance for equipment that cannot be disconnected from internal components): the leakage current must not exceed 0.75 mA for Class I or 0.25 mA for Class II. Visual inspection failures (damaged cable, cracked plug, missing covers, incorrect fuse) are not instrument-based but are equally valid reasons to fail an appliance. Any failed item should be taken out of service immediately, labelled, and reported to the client.',
   },
 ];
 
@@ -760,9 +767,28 @@ export default function PATTestingPage() {
               Elec-Mate stores all PAT testing records digitally with automatic cloud backup. When
               you return to a client site, you can pull up the previous register instantly, compare
               results, and identify any items that need particular attention. This makes repeat
-              visits faster, more efficient, and more valuable to the client.
+              visits faster, more efficient, and more valuable to the client. For fixed installation
+              testing, see the{' '}
+              <SEOInternalLink href="/guides/eicr-guide">EICR guide</SEOInternalLink>
+              {' '}and{' '}
+              <SEOInternalLink href="/tools/prospective-fault-current-calculator">
+                prospective fault current calculator
+              </SEOInternalLink>
+              .
             </p>
           </div>
+        </div>
+      </section>
+
+      {/* App Bridge */}
+      <section className="py-8 px-5">
+        <div className="max-w-4xl mx-auto">
+          <SEOAppBridge
+            title="Run Your Electrical Business Smarter with Elec-Mate"
+            description="Quotes, certificates, job tracking, and team management — built for UK electricians."
+            ctaText="Try Elec-Mate free"
+            ctaHref="/auth/signup"
+          />
         </div>
       </section>
 

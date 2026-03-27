@@ -43,7 +43,7 @@ const tocItems = [
 
 const keyTakeaways = [
   'The UK\'s electrical wiring regulations have evolved through 18 editions since the first "Rules and Regulations for the Prevention of Fire Risks" was published by the IEE in 1882.',
-  'The current standard is BS 7671:2018+A3:2024 — the 18th Edition with Amendment 3, issued on 31 July 2024, which adds Regulation 530.3.201 covering bidirectional and unidirectional devices.',
+  'The current standard is BS 7671:2018+A3:2024 — the 18th Edition with Amendment 3, issued on 31 July 2024, which adds new Section 530 requirements covering bidirectional and unidirectional devices.',
   'Part P of the Building Regulations (2005, England and Wales) made domestic electrical work notifiable for the first time, requiring competent person scheme registration or Building Control notification.',
   'Amendment 4 to BS 7671 is expected in 2026, with potential changes to AFDD requirements, EV charging provisions, and energy storage systems.',
   'Elec-Mate keeps electricians current with the latest regulation changes through built-in AI regulation lookup that references BS 7671:2018+A3:2024 directly.',
@@ -53,7 +53,7 @@ const faqs = [
   {
     question: 'What is the current edition of the UK wiring regulations?',
     answer:
-      'The current edition is BS 7671:2018+A3:2024, commonly known as the 18th Edition with Amendment 3. BS 7671 is published by the Institution of Engineering and Technology (IET) in conjunction with the British Standards Institution (BSI). The 18th Edition was first published in July 2018 and came into effect on 1 January 2019. Amendment 1 was published in February 2020, Amendment 2 in March 2022, and Amendment 3 on 31 July 2024. Each amendment updates and refines the regulations without requiring a completely new edition. The physical book (the "brown book") covers BS 7671:2018+A2:2022. Amendment 3 is a separate free PDF supplement that adds Regulation 530.3.201 regarding bidirectional and unidirectional devices. All electricians working in the UK must work to the current edition of BS 7671, and holding the C&G 2382 (18th Edition) qualification is a requirement for competent person scheme registration.',
+      'The current edition is BS 7671:2018+A3:2024, commonly known as the 18th Edition with Amendment 3. BS 7671 is published by the Institution of Engineering and Technology (IET) in conjunction with the British Standards Institution (BSI). The 18th Edition was first published in July 2018 and came into effect on 1 January 2019. Amendment 1 was published in February 2020, Amendment 2 in March 2022, and Amendment 3 on 31 July 2024. Each amendment updates and refines the regulations without requiring a completely new edition. The physical book (the "brown book") covers BS 7671:2018+A2:2022. Amendment 3 is a separate free PDF supplement that adds new Section 530 requirements regarding bidirectional and unidirectional devices. All electricians working in the UK must work to the current edition of BS 7671, and holding the C&G 2382 (18th Edition) qualification is a requirement for competent person scheme registration.',
   },
   {
     question: 'How often does BS 7671 change?',
@@ -63,7 +63,7 @@ const faqs = [
   {
     question: 'What changed in Amendment 3 of BS 7671?',
     answer:
-      'Amendment 3 (A3:2024) to BS 7671:2018 was issued on 31 July 2024. It is a relatively narrow amendment compared to A1 and A2. The key addition is Regulation 530.3.201, which introduces requirements for the selection and use of bidirectional and unidirectional switching and protective devices. This is directly relevant to the growing prevalence of solar PV, battery storage, and EV charger installations where current can flow in both directions (from the grid to the installation and from the installation back to the grid). Standard MCBs and RCBOs are designed for unidirectional current flow. Using a unidirectional device on a bidirectional circuit can result in the device failing to operate correctly during a fault — a serious safety risk. A3:2024 clarifies when bidirectional devices are required and how to select them correctly. The amendment is available as a free PDF supplement from the IET and BSI. It does not require a new physical book — it supplements the existing BS 7671:2018+A2:2022 brown book.',
+      'Amendment 3 (A3:2024) to BS 7671:2018 was issued on 31 July 2024. It is a relatively narrow amendment compared to A1 and A2. The key addition introduces new requirements in Section 530 for the selection and use of bidirectional and unidirectional switching and protective devices. This is directly relevant to the growing prevalence of solar PV, battery storage, and EV charger installations where current can flow in both directions (from the grid to the installation and from the installation back to the grid). Standard MCBs and RCBOs are designed for unidirectional current flow. Using a unidirectional device on a bidirectional circuit can result in the device failing to operate correctly during a fault — a serious safety risk. A3:2024 clarifies when bidirectional devices are required and how to select them correctly. The amendment is available as a free PDF supplement from the IET and BSI. It does not require a new physical book — it supplements the existing BS 7671:2018+A2:2022 brown book.',
   },
   {
     question: 'When did Part P of the Building Regulations come into force?',
@@ -406,7 +406,7 @@ const sections = [
                 <strong>July 2018 — 18th Edition published.</strong> BS 7671:2018. Effective from 1
                 January 2019. Key changes included: recommendation for{' '}
                 <SEOInternalLink href="/guides/afdd-guide-bs7671">AFDDs</SEOInternalLink>{' '}
-                (Regulation 421.1.7), expanded surge protection requirements (Section 534), new
+                (Regulation 421.1), expanded surge protection requirements (Section 534), new
                 requirements for EV charging installations, and updated prosumer (solar PV)
                 guidance.
               </span>
@@ -430,7 +430,7 @@ const sections = [
             <li className="flex items-start gap-3">
               <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>31 July 2024 — Amendment 3.</strong> Adds Regulation 530.3.201 covering
+                <strong>31 July 2024 — Amendment 3.</strong> Adds new Section 530 requirements covering
                 bidirectional and unidirectional switching and protective devices. Directly relevant
                 to solar PV, battery storage, and EV charger installations where current flow can
                 reverse. Available as a free PDF supplement.
@@ -468,7 +468,7 @@ const sections = [
           <div className="flex items-start gap-4">
             <Zap className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
             <div>
-              <h4 className="font-bold text-white mb-2">Regulation 530.3.201</h4>
+              <h4 className="font-bold text-white mb-2">A3:2024 — Section 530 Bidirectional Device Requirements</h4>
               <p className="text-white text-sm leading-relaxed">
                 Where a circuit may carry current in both directions (bidirectional current flow),
                 any switching or protective device on that circuit must be suitable for

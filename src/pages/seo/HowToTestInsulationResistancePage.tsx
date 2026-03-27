@@ -19,6 +19,8 @@ import {
   Activity,
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { SEOAppBridge } from '@/components/seo/SEOAppBridge';
+import { SEOInternalLink } from '@/components/seo/SEOInternalLink';
 
 const faqs = [
   {
@@ -236,12 +238,17 @@ export default function HowToTestInsulationResistancePage() {
             <p>
               Insulation deteriorates over time due to heat, moisture, UV exposure, mechanical
               damage, chemical contamination, and simple ageing of the PVC or XLPE material. Regular
-              testing during periodic inspections (EICRs) catches deterioration before it reaches a
-              dangerous level. For new installations, the insulation resistance test on the
-              Electrical Installation Certificate (EIC) confirms that cables have not been damaged
+              testing during{' '}
+              <SEOInternalLink href="/electrical-certification/eicr">periodic inspections (EICRs)</SEOInternalLink>{' '}
+              catches deterioration before it reaches a
+              dangerous level. For new installations, the insulation resistance test on the{' '}
+              <SEOInternalLink href="/electrical-certification/eic">Electrical Installation Certificate (EIC)</SEOInternalLink>{' '}
+              confirms that cables have not been damaged
               during installation — which is particularly important given that cables may have been
               pulled through tight spaces, bent around corners, or clipped to surfaces where nails
-              or screws could have penetrated the sheathing.
+              or screws could have penetrated the sheathing. Always perform{' '}
+              <SEOInternalLink href="/guides/how-to-do-safe-isolation">safe isolation</SEOInternalLink>{' '}
+              before commencing any insulation resistance test.
             </p>
           </div>
         </div>
@@ -540,6 +547,19 @@ export default function HowToTestInsulationResistancePage() {
             against BS 7671 limits, and export professional certificates — all from your phone.
           </p>
           <SEOFeatureGrid features={features} columns={3} />
+        </div>
+      </section>
+
+      {/* App Bridge */}
+      <section className="py-4 px-5">
+        <div className="max-w-4xl mx-auto">
+          <SEOAppBridge
+            title="Record IR Test Results and Issue Certificates on Your Phone"
+            description="Elec-Mate's digital EICR and test certificates make inspection reporting faster and more professional. Auto-validate insulation resistance readings against BS 7671 limits."
+            ctaText="Try Elec-Mate free"
+            ctaHref="/auth/signup"
+            icon={ShieldCheck}
+          />
         </div>
       </section>
 

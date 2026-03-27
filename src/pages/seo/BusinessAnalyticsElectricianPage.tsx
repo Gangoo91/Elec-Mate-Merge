@@ -374,6 +374,11 @@ export default function BusinessAnalyticsElectricianPage() {
           answer:
             'Elec-Mate analytics complement your accounting software rather than replacing it. Your accountant uses accounting software (Xero, QuickBooks, FreeAgent) for tax returns, year-end accounts, and statutory compliance. Elec-Mate provides real-time operational analytics that help you make day-to-day business decisions — which jobs to quote on, how to price, which clients to prioritise, and where to focus your marketing. The data comes from your quotes, invoices, and expenses within Elec-Mate, so there is no duplicate data entry. You can export financial summaries for your accountant at any time.',
         },
+        {
+          question: 'Can I track multiple electricians or employees in Elec-Mate analytics?',
+          answer:
+            'Yes. Elec-Mate supports team views that allow you to analyse revenue, jobs, and profitability across multiple operatives. For electrical contractors managing employed or subcontracted electricians, you can see which individuals are generating the most revenue, which job types they are completing, and how their productivity compares. This makes it much easier to allocate work to your most profitable team members, identify training needs, and plan team expansion as your business grows. Analytics by operative is particularly valuable when deciding whether to take on a new member of staff — you can calculate exactly how many additional billable days are needed to break even on the employment cost.',
+        },
       ]}
       relatedPages={[
         {

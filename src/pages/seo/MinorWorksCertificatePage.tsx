@@ -1,6 +1,8 @@
 import { Helmet } from 'react-helmet';
 import useSEO from '@/hooks/useSEO';
 import { PublicPageLayout } from '@/components/seo/PublicPageLayout';
+import { SEOAppBridge } from '@/components/seo/SEOAppBridge';
+import { SEOInternalLink } from '@/components/seo/SEOInternalLink';
 import { SEOCTASection } from '@/components/seo/SEOCTASection';
 import { SEOFeatureGrid } from '@/components/seo/SEOFeatureGrid';
 import {
@@ -46,6 +48,11 @@ const faqs = [
     question: 'Can an apprentice sign a Minor Works certificate?',
     answer:
       'No. A Minor Works certificate must be signed by a competent person who takes responsibility for the design, construction, inspection, and testing of the work. Under BS 7671, this means the person signing the certificate must have the technical knowledge, skill, and experience to carry out the work safely and correctly. An apprentice may carry out the physical installation work under the supervision of a qualified electrician, but the certificate must be signed by the supervising electrician or another competent person within the company who has verified the work. The certificate carries legal liability, so the signatory must be confident that the work complies with BS 7671.',
+  },
+  {
+    question: 'Should I issue a Minor Works certificate for work in a bathroom?',
+    answer:
+      'Yes, and you should take particular care in bathrooms because work in special locations is classified as notifiable under Part P of the Building Regulations in England and Wales. Bathroom circuits are covered by BS 7671 Section 701 (Locations Containing a Bath or Shower), which imposes additional requirements for protection against electric shock — including mandatory 30mA RCD protection for all circuits in the location, IP ratings for equipment in different zones, and restrictions on the types of equipment permitted in Zone 1. A Minor Works certificate is appropriate for additions to an existing bathroom circuit (such as adding a shaver socket on an existing circuit), but the work must comply with the Section 701 requirements. Because it is notifiable, you must either be registered with a competent person scheme to self-certify, or notify your local building control authority before starting work.',
   },
 ];
 
@@ -278,9 +285,17 @@ export default function MinorWorksCertificatePage() {
           <div className="space-y-4 text-white leading-relaxed">
             <p>
               The choice between issuing a Minor Electrical Installation Works Certificate and a
-              full Electrical Installation Certificate (EIC) depends on whether new circuits are
-              being installed. Understanding the distinction is essential for compliance and
-              avoiding potential liability issues.
+              full{' '}
+              <SEOInternalLink href="/guides/electrical-installation-certificate">
+                Electrical Installation Certificate (EIC)
+              </SEOInternalLink>{' '}
+              depends on whether new circuits are being installed. Understanding the distinction is
+              essential for compliance and avoiding potential liability issues. For condition
+              reporting,{' '}
+              <SEOInternalLink href="/guides/eicr-guide">
+                EICRs
+              </SEOInternalLink>{' '}
+              are the appropriate document.
             </p>
             <div className="grid sm:grid-cols-2 gap-4 my-6">
               <div className="p-5 rounded-2xl bg-yellow-500/5 border border-yellow-500/20">
@@ -611,6 +626,18 @@ export default function MinorWorksCertificatePage() {
             PDF apps.
           </p>
           <SEOFeatureGrid features={features} columns={3} />
+        </div>
+      </section>
+
+      {/* App Bridge */}
+      <section className="py-8 px-5">
+        <div className="max-w-4xl mx-auto">
+          <SEOAppBridge
+            title="Generate Minor Works Certificates Instantly with Elec-Mate"
+            description="Complete and issue BS 7671-compliant certificates from your phone. Covers Minor Works, EICs, EICRs, and more — built for UK electricians."
+            ctaText="Try Elec-Mate free"
+            ctaHref="/auth/signup"
+          />
         </div>
       </section>
 

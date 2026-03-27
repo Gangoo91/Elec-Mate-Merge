@@ -75,6 +75,11 @@ const faqs = [
     answer:
       'The theoretical knowledge component of this course is fully available online through Elec-Mate, including video demonstrations of CPR technique, AED operation, recovery position, and burns treatment. However, to obtain a formally recognised First Aid at Work (FAW) or Emergency First Aid at Work (EFAW) certificate, you will need to attend a practical assessment session with an approved training provider (such as St John Ambulance, British Red Cross, or a private provider). The Elec-Mate course prepares you thoroughly for the practical assessment and provides ongoing reference material you can access at any time.',
   },
+  {
+    question: 'What first aid equipment should an electrician carry on site?',
+    answer:
+      'The HSE recommends that every workplace has at least a basic first aid kit, but for electricians working on construction sites or in isolation, it is advisable to carry a personal first aid pouch in the van. This should include disposable gloves, a face shield or pocket mask for CPR, sterile wound dressings in assorted sizes, a triangular bandage, adhesive plasters, burn dressings (at least two — one 10x10cm and one larger), foil emergency blanket, and a first aid guidance card. Some electricians also carry a tourniquet for working in remote locations. Importantly, know where the nearest AED is located on any site you work on — ask during the site induction. An AED cannot be carried in a van without specific authorisation, but their locations are increasingly mapped on the GoodSAM Responder app.',
+  },
 ];
 
 const modules = [

@@ -73,6 +73,11 @@ const faqs = [
     answer:
       'The ideal toolbox talk is 5 to 10 minutes long. Anything shorter risks being too superficial to be useful. Anything longer risks losing the audience — construction workers standing in PPE on a cold morning will not absorb a 30-minute lecture. The most effective format is: 1 minute to introduce the topic and explain why it is relevant today; 3 to 5 minutes to cover the key points, using real examples and practical demonstrations where possible; 1 to 2 minutes for questions and discussion; and 1 minute to summarise the key messages and confirm understanding. Some topics (such as a new piece of legislation or a major incident debrief) may justify a longer session, but these should be the exception rather than the rule. Keep it focused, keep it relevant, and keep it practical.',
   },
+  {
+    question: 'Can toolbox talks be used to introduce a new piece of legislation or regulation?',
+    answer:
+      'Yes — toolbox talks are an effective way to communicate regulatory changes to a site team quickly and practically. For electricians, examples include introducing the requirements of BS 7671 Amendment 3:2024 (covering EV charging, arc fault detection, and SPD requirements), changes to Part P of the Building Regulations, updates to CDM 2015 guidance, or new HSE guidance on safe isolation. When covering legislation in a toolbox talk, the goal is not to teach the full detail of the regulation but to explain the practical implications for the work being done — what it means for today\'s tasks, what has changed from previous practice, and what steps the team needs to take to comply. Follow up a legislative toolbox talk with a written summary, posted on the site notice board or shared digitally, so workers can refer back to it.',
+  },
 ];
 
 const relatedPages: RelatedPage[] = [

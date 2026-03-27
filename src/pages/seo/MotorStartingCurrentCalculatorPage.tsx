@@ -1,4 +1,5 @@
 import ToolTemplate from '@/pages/seo/templates/ToolTemplate';
+import { SEOAppBridge } from '@/components/seo/SEOAppBridge';
 import { SEOInternalLink } from '@/components/seo/SEOInternalLink';
 import {
   Gauge,
@@ -339,6 +340,12 @@ export default function MotorStartingCurrentCalculatorPage() {
         {
           id: 'impact-on-supply',
           heading: 'Impact on Supply and Voltage Drop',
+          appBridge: {
+            title: 'Elec-Mate Includes All the Electrical Calculators You Need',
+            description:
+              'Elec-Mate includes all the electrical calculators you need — use them on any job, on any device.',
+            icon: Calculator,
+          },
           content: (
             <>
               <p>

@@ -289,7 +289,7 @@ const sections = [
         <h4 className="font-bold text-white text-lg mb-3">Real Examples of C2 Defects</h4>
         <div className="space-y-3 mb-4">
           {[
-            'Absence of RCD protection on socket outlet circuits where required by BS 7671 Regulation 411.3.3 — particularly in bathrooms, kitchens, and circuits supplying equipment intended for outdoor use.',
+            'Absence of RCD protection on socket outlet circuits where required by BS 7671 — particularly in bathrooms, kitchens, and circuits supplying equipment intended for outdoor use.',
             'Missing circuit protective conductor (CPC / earth wire) connection at an accessory — the socket or light fitting has no earth, meaning metalwork could become live under a fault condition.',
             'Earth fault loop impedance (Zs) exceeding the maximum permitted value for the protective device — meaning the device may not disconnect within the required time during a fault.',
             'Absence of main protective bonding to gas, water, or oil services as required by Regulation 411.3.1.2.',

@@ -21,6 +21,8 @@ import {
   Activity,
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { SEOAppBridge } from '@/components/seo/SEOAppBridge';
+import { SEOInternalLink } from '@/components/seo/SEOInternalLink';
 
 const PAGE_TITLE = 'How to Do Safe Isolation | GS38 Procedure Steps | Elec-Mate';
 const PAGE_DESCRIPTION =
@@ -249,7 +251,12 @@ export default function HowToDoSafeIsolationPage() {
               and Regulation 13, which requires precautions to prevent equipment being inadvertently
               re-energised), the Health and Safety at Work Act 1974, and BS 7671:2018+A3:2024
               (Regulation 462, which covers isolation and switching). HSE Guidance Note GS38 sets
-              out the requirements for the test equipment used during safe isolation.
+              out the requirements for the test equipment used during safe isolation. After completing
+              the work, you will need to carry out{' '}
+              <SEOInternalLink href="/guides/how-to-test-insulation-resistance">insulation resistance testing</SEOInternalLink>{' '}
+              and issue the appropriate certificate — whether that is a{' '}
+              <SEOInternalLink href="/electrical-certification/minor-works">Minor Works Certificate</SEOInternalLink>{' '}
+              or a full <SEOInternalLink href="/electrical-certification/eicr">EICR</SEOInternalLink>.
             </p>
             <p>
               The core principle is simple: never trust a circuit to be dead until you have
@@ -504,6 +511,19 @@ export default function HowToDoSafeIsolationPage() {
             built for UK electricians working on site.
           </p>
           <SEOFeatureGrid features={features} columns={3} />
+        </div>
+      </section>
+
+      {/* App Bridge */}
+      <section className="py-4 px-5">
+        <div className="max-w-4xl mx-auto">
+          <SEOAppBridge
+            title="Digital EICR and Test Certificates for UK Electricians"
+            description="Elec-Mate's digital EICR and test certificates make inspection reporting faster and more professional. Complete forms on your phone and export professional PDFs instantly."
+            ctaText="Try Elec-Mate free"
+            ctaHref="/auth/signup"
+            icon={ShieldCheck}
+          />
         </div>
       </section>
 

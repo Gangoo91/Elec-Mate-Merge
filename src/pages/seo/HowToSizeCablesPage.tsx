@@ -5,6 +5,8 @@ import { SEOFeatureGrid } from '@/components/seo/SEOFeatureGrid';
 import { SEOCTASection } from '@/components/seo/SEOCTASection';
 import { SEOAppPreview } from '@/components/seo/SEOAppPreview';
 import { SEOWhyNotGoogle } from '@/components/seo/SEOWhyNotGoogle';
+import { SEOAppBridge } from '@/components/seo/SEOAppBridge';
+import { SEOInternalLink } from '@/components/seo/SEOInternalLink';
 import {
   Cable,
   Thermometer,
@@ -444,9 +446,12 @@ export default function HowToSizeCablesPage() {
               <div className="flex-1">
                 <h3 className="text-xl font-bold text-white mb-3">Verify Voltage Drop</h3>
                 <p className="text-white leading-relaxed mb-4">
-                  Check the cable selection meets BS 7671 voltage drop limits:{' '}
-                  <strong>3% for lighting</strong> (6.9V from 230V) and{' '}
-                  <strong>5% for power</strong> (11.5V from 230V).
+                  Check the cable selection meets BS 7671{' '}
+                  <SEOInternalLink href="/tools/voltage-drop-calculator">voltage drop</SEOInternalLink>{' '}
+                  limits: <strong>3% for lighting</strong> (6.9V from 230V) and{' '}
+                  <strong>5% for power</strong> (11.5V from 230V). Use the{' '}
+                  <SEOInternalLink href="/tools/cable-sizing-calculator">cable sizing calculator</SEOInternalLink>{' '}
+                  to automate these checks.
                 </p>
                 <div className="p-4 rounded-xl bg-white/[0.04] border border-white/10 mb-4">
                   <p className="text-white font-mono text-sm mb-2">
@@ -589,6 +594,19 @@ export default function HowToSizeCablesPage() {
 
       {/* Why not Google */}
       <SEOWhyNotGoogle />
+
+      {/* App Bridge */}
+      <section className="py-4 px-5">
+        <div className="max-w-4xl mx-auto">
+          <SEOAppBridge
+            title="Cable Sizing Calculator Built for UK Electricians"
+            description="Elec-Mate's digital EICR and test certificates make inspection reporting faster and more professional — and all 70 calculators, including full BS 7671 cable sizing, are included."
+            ctaText="Try Elec-Mate free"
+            ctaHref="/auth/signup"
+            icon={Cable}
+          />
+        </div>
+      </section>
 
       {/* FAQ */}
       <section className="py-12 sm:py-16 px-5">

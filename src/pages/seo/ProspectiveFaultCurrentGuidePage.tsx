@@ -474,13 +474,13 @@ const sections = [
               The rated short-circuit capacity of each protective device shall be not less than the
               prospective fault current at the point at which the device is installed. This is the
               fundamental requirement — every device must be able to safely interrupt the maximum
-              fault current it could face. There is an exception under Regulation 434.5.2 for
+              fault current it could face. There is an exception within Section 434 for
               back-up protection.
             </p>
           </div>
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
             <h3 className="font-bold text-white text-lg mb-2">
-              Regulation 434.5.2 — Back-up Protection
+              Section 434 — Back-up Protection Exception
             </h3>
             <p className="text-white text-sm leading-relaxed">
               A device with a rated breaking capacity less than the prospective fault current may be

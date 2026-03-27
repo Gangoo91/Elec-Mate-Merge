@@ -75,6 +75,11 @@ const faqs = [
     answer:
       'The Fire Safety Order does not specify an exact frequency, but the responsible person must ensure training is repeated periodically and whenever there is a significant change in fire risks, work procedures, or the workplace layout. Most fire safety training providers and industry bodies recommend annual refresher training. On construction sites, fire safety is typically covered during the site induction and reinforced through regular toolbox talks. The Elec-Mate course is available for unlimited revision, allowing you to refresh your knowledge at any time without waiting for formal refresher sessions.',
   },
+  {
+    question: 'What fire safety documentation should an electrician keep?',
+    answer:
+      'Electricians should retain records of fire safety training (including the date, content, and attendees for any toolbox talks on fire safety), hot works permits for every task where one was required (keep for at least 6 years), fire risk assessments carried out as part of a job, and any fire safety-related observations noted during inspection work. If you carry out electrical inspections under BS 7671, fire risks identified during an EICR — such as cables running through fire compartment walls without appropriate fire stopping — should be recorded as observations with a C2 or C3 code as appropriate. Maintaining clear records protects you legally in the event of a fire investigation and demonstrates to clients and scheme providers that you take fire safety seriously.',
+  },
 ];
 
 const modules = [

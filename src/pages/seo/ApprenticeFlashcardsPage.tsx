@@ -188,7 +188,7 @@ const sections = [
               <span>
                 <strong>Front of card: a question or prompt.</strong> For example: "What is the
                 minimum insulation resistance for a circuit tested at 500V DC?" or "What does
-                Regulation 411.3.3 require for socket outlets rated up to 32A?"
+                Regulation 411.3.2 require for socket outlets rated up to 32A?"
               </span>
             </li>
             <li className="flex items-start gap-3">

@@ -60,7 +60,7 @@ const faqs = [
   {
     question: 'How does the AI explain complex regulations in plain English?',
     answer:
-      'The AI Tutor translates the formal language of BS 7671 into clear, practical explanations. For example, if you ask about Regulation 411.3.3 (additional protection by RCD), the AI will first quote the regulation text, then explain in plain English what it means: "Any socket outlet rated at 32A or less must be protected by a 30 mA RCD, unless it is in a specific documented excluded location." It then provides practical examples of when this applies and when it does not, common mistakes electricians make when applying it, and how it relates to other regulations. The AI always includes the regulation reference so you can look it up yourself, and it distinguishes between mandatory requirements ("shall"), recommendations ("should"), and permitted alternatives ("may").',
+      'The AI Tutor translates the formal language of BS 7671 into clear, practical explanations. For example, if you ask about Regulation 411.3.2 (additional protection by RCD), the AI will first quote the regulation text, then explain in plain English what it means: "Any socket outlet rated at 32A or less must be protected by a 30 mA RCD, unless it is in a specific documented excluded location." It then provides practical examples of when this applies and when it does not, common mistakes electricians make when applying it, and how it relates to other regulations. The AI always includes the regulation reference so you can look it up yourself, and it distinguishes between mandatory requirements ("shall"), recommendations ("should"), and permitted alternatives ("may").',
   },
   {
     question: 'Can I use the AI Tutor for on-site learning between jobs?',
@@ -75,7 +75,7 @@ const faqs = [
   {
     question: 'Is the content kept up to date with regulation changes?',
     answer:
-      'Yes. The AI Tutor is updated to reflect the current edition of BS 7671, including Amendment 3:2024 (A3:2024, issued July 2024). When regulations change, the tutor content is updated to reflect the new requirements. It also notes where the current edition differs from previous editions, which is useful for electricians who qualified under an earlier edition and need to understand what has changed. For example, it explains the new Regulation 530.3.201 added by A3:2024 covering bidirectional and unidirectional protective devices, and how this affects installations with battery storage or solar PV. The tutor clearly distinguishes between requirements that have always been in BS 7671 and those added by recent amendments.',
+      'Yes. The AI Tutor is updated to reflect the current edition of BS 7671, including Amendment 3:2024 (A3:2024, issued July 2024). When regulations change, the tutor content is updated to reflect the new requirements. It also notes where the current edition differs from previous editions, which is useful for electricians who qualified under an earlier edition and need to understand what has changed. For example, it explains the new Regulation 530.3.2 added by A3:2024 covering bidirectional and unidirectional protective devices, and how this affects installations with battery storage or solar PV. The tutor clearly distinguishes between requirements that have always been in BS 7671 and those added by recent amendments.',
   },
 ];
 
@@ -172,7 +172,7 @@ const features = [
 const howToSteps = [
   {
     name: 'Ask a question or request a topic',
-    text: 'Type a question in plain English — for example, "Explain Regulation 411.3.3" or "What is the maximum Zs for a 32A Type B MCB?" — or request a topic to study such as "Teach me about discrimination between protective devices."',
+    text: 'Type a question in plain English — for example, "Explain Regulation 411.3.2" or "What is the maximum Zs for a 32A Type B MCB?" — or request a topic to study such as "Teach me about discrimination between protective devices."',
   },
   {
     name: 'Read the explanation',
@@ -243,7 +243,7 @@ const sections = [
         </p>
         <p>
           For example, if you ask about{' '}
-          <SEOInternalLink href="/tools/ai-regulations-lookup">Regulation 411.3.3</SEOInternalLink>{' '}
+          <SEOInternalLink href="/tools/ai-regulations-lookup">Regulation 411.3.2</SEOInternalLink>{' '}
           (additional protection), the AI will:
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
@@ -268,14 +268,14 @@ const sections = [
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Give practical examples:</strong> "A kitchen ring final circuit with sockets
-                rated 13A — yes, needs RCD. A 40A cooker circuit — no, not required by 411.3.3
+                rated 13A — yes, needs RCD. A 40A cooker circuit — no, not required by 411.3.2
                 because the circuit rating exceeds 32A."
               </span>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Highlight common mistakes:</strong> "Many electricians forget that 411.3.3
+                <strong>Highlight common mistakes:</strong> "Many electricians forget that 411.3.2
                 applies to mobile equipment up to 32A used outdoors, not just socket outlets."
               </span>
             </li>

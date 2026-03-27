@@ -76,6 +76,11 @@ const faqs = [
     answer:
       'Absolutely not. The current standard — BS 7671:2018+A3:2024 — is the one you must work to today. Understanding the current edition thoroughly, including the A3:2024 changes on bidirectional devices, is essential for your day-to-day work. CPD on the current standard is never wasted because the fundamentals of electrical installation design and inspection do not change between amendments. When Amendment 4 is published, the changes will build on the existing standard, so a strong understanding of the current edition makes it much easier to absorb the new requirements. Start your CPD now using Elec-Mate 46+ training courses, and the Amendment 4 content will be added automatically when it is published.',
   },
+  {
+    question: 'How does Elec-Mate keep up to date with BS 7671 amendments?',
+    answer:
+      'Elec-Mate tracks IET and BSI publications and updates its regulation database, calculators, training content, and AI regulation lookup as each amendment is officially published. When Amendment 3 (A3:2024) was published on 31 July 2024, the app was updated to reflect the new Section 530 requirements on bidirectional devices within 30 days. The AI regulation assistant references the live regulation database rather than a fixed training dataset, so it always returns answers based on the current edition. When Amendment 4 is published, the app will be updated through a standard app update — you do not need to do anything other than keep your app current. All existing subscribers receive regulation updates at no additional cost as part of their subscription.',
+  },
 ];
 
 const relatedPages: RelatedPage[] = [
@@ -91,7 +96,7 @@ const relatedPages: RelatedPage[] = [
     href: '/guides/bs-7671-amendment-3-changes',
     title: 'Amendment 3 Changes Explained',
     description:
-      'Regulation 530.3.201 — bidirectional and unidirectional devices for solar PV and battery storage installations.',
+      'A3:2024 Section 530 — bidirectional and unidirectional devices for solar PV and battery storage installations.',
     icon: Scale,
     category: 'Guide',
   },
@@ -147,7 +152,7 @@ const sections = [
           consultation is under way.
         </p>
         <p>
-          While Amendment 3 was narrowly focused on a single regulation (530.3.201 on bidirectional
+          While Amendment 3 was narrowly focused on a single Section 530 requirement (on bidirectional
           devices), Amendment 4 is anticipated to be broader in scope. The rapid evolution of
           electrical installation technology — energy storage systems, smart home infrastructure,
           electric vehicle charging, and the continuing harmonisation of European standards —
@@ -266,7 +271,7 @@ const sections = [
               <span>
                 <strong>AFDD requirements</strong> — potential expansion of Arc Fault Detection
                 Device requirements beyond the current recommendations in{' '}
-                <SEOInternalLink href="/guides/afdd-guide-uk">Regulation 421.1.7</SEOInternalLink>,
+                <SEOInternalLink href="/guides/afdd-guide-uk">BS 7671 Section 421</SEOInternalLink>,
                 possibly making AFDDs mandatory in more installation types.
               </span>
             </li>

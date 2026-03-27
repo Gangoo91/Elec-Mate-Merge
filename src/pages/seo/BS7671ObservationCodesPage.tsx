@@ -3,6 +3,8 @@ import useSEO from '@/hooks/useSEO';
 import { PublicPageLayout } from '@/components/seo/PublicPageLayout';
 import { SEOCTASection } from '@/components/seo/SEOCTASection';
 import { SEOFeatureGrid } from '@/components/seo/SEOFeatureGrid';
+import { SEOAppBridge } from '@/components/seo/SEOAppBridge';
+import { SEOInternalLink } from '@/components/seo/SEOInternalLink';
 import {
   ChevronDown,
   AlertTriangle,
@@ -47,6 +49,11 @@ const faqs = [
     question: 'Can I change an observation code after the EICR has been issued?',
     answer:
       'Once an EICR has been signed and issued to the client, it is a formal document and should not be altered retrospectively. If you realise an observation has been incorrectly coded, the correct procedure is to issue an amended report with a clear explanation of the correction, or to issue a new EICR if the error is significant. Some competent person scheme providers have specific procedures for amending issued certificates. In practice, the best approach is to take your time coding observations correctly before signing the report. Elec-Mate helps by providing classification guidance and examples for each code, so you can make an informed decision before finalising.',
+  },
+  {
+    question: 'What is the most common C2 observation found on domestic EICRs?',
+    answer:
+      'The most frequently occurring C2 observation in domestic installations is the absence of RCD protection on final socket-outlet circuits in dwellings. Under BS 7671, socket-outlet circuits rated up to 20 A in domestic premises must be protected by a 30 mA RCD. Many older consumer units contain MCBs without RCD protection for socket circuits, which represents a potentially dangerous condition given the risk of electric shock to occupants using portable appliances. Other commonly encountered C2 observations include: earthing and bonding deficiencies where the main bonding conductors are missing or undersized, damaged or deteriorated cable insulation particularly in older rubber-insulated wiring, and absence of supplementary bonding in bathrooms where required. Correctly identifying and coding these observations is essential — a C2 that should be a C1 could put a client at serious risk, while over-coding C3 observations as C2 creates unnecessary alarm.',
   },
 ];
 
@@ -203,11 +210,18 @@ export default function BS7671ObservationCodesPage() {
             </p>
             <p>
               The observation codes are used during the periodic inspection of existing
-              installations (producing an EICR). They are not used on Electrical Installation
-              Certificates (EICs), which cover new installations. On an EIC, any non-compliance
-              should be rectified before the certificate is issued, so there is no need for
-              classification codes. The EICR, by contrast, reports on the condition of an
-              installation as found, which may include defects of varying severity.
+              installations (producing an EICR). They are not used on{' '}
+              <SEOInternalLink href="/tools/eic-certificate">
+                Electrical Installation Certificates (EICs)
+              </SEOInternalLink>
+              , which cover new installations. On an EIC, any non-compliance should be rectified
+              before the certificate is issued, so there is no need for classification codes. The
+              EICR, by contrast, reports on the condition of an installation as found, which may
+              include defects of varying severity. Preparing for your{' '}
+              <SEOInternalLink href="/training/city-guilds-2391">
+                C&G 2391-52 inspection and testing qualification
+              </SEOInternalLink>{' '}
+              gives you the knowledge to code observations consistently and correctly.
             </p>
             <p>
               Understanding when and how to apply each code is one of the most important skills an
@@ -617,11 +631,11 @@ export default function BS7671ObservationCodesPage() {
                 <li>"Main bonding to water service absent. Reg 411.3.1.2."</li>
                 <li>
                   "RCD serving kitchen sockets tripped at 22mA (below 50% of rated current). Replace
-                  RCD. Reg 531.2.2."
+                  RCD. Reg 531.3.3."
                 </li>
                 <li>
                   "Circuit 7 (first-floor ring) — Zs measured 2.15 ohms, max permitted 1.37 ohms for
-                  B32. Reg 411.4.6."
+                  B32. Reg 411.3.2."
                 </li>
                 <li>
                   "Red/black wiring colours present throughout. Not re-identified. C3 — Reg 514.14."
@@ -836,6 +850,18 @@ export default function BS7671ObservationCodesPage() {
             AI-powered suggestions and regulation references.
           </p>
           <SEOFeatureGrid features={features} columns={3} />
+        </div>
+      </section>
+
+      {/* App Bridge */}
+      <section className="py-8 px-5 border-t border-white/5">
+        <div className="max-w-4xl mx-auto">
+          <SEOAppBridge
+            title="Produce Professional EICRs with Elec-Mate"
+            description="Generate compliant EICR certificates with smart observation coding guidance, AI-powered descriptions, and automatic overall assessment — all built to BS 7671:2018+A3:2024."
+            ctaText="Start 7-day free trial"
+            ctaHref="/auth/signup"
+          />
         </div>
       </section>
 

@@ -3,6 +3,8 @@ import useSEO from '@/hooks/useSEO';
 import { PublicPageLayout } from '@/components/seo/PublicPageLayout';
 import { SEOCTASection } from '@/components/seo/SEOCTASection';
 import { SEOFeatureGrid } from '@/components/seo/SEOFeatureGrid';
+import { SEOAppBridge } from '@/components/seo/SEOAppBridge';
+import { SEOInternalLink } from '@/components/seo/SEOInternalLink';
 import {
   GraduationCap,
   Brain,
@@ -246,7 +248,15 @@ export default function EPAPreparationPage() {
             </p>
             <p>
               You cannot attempt the EPA until you have passed through the gateway, which requires
-              completion of all mandatory qualifications (Level 3, AM2, functional skills), a
+              completion of all mandatory qualifications (including the{' '}
+              <SEOInternalLink href="/training/18th-edition-course">
+                18th Edition wiring regulations
+              </SEOInternalLink>{' '}
+              and{' '}
+              <SEOInternalLink href="/training/city-guilds-2391">
+                C&G 2391-52 inspection and testing qualification
+              </SEOInternalLink>
+              ), a
               comprehensive portfolio of evidence, and agreement from both your employer and
               training provider that you are ready. Elec-Mate tracks all of these gateway
               requirements so you know exactly where you stand at every point in your
@@ -528,6 +538,18 @@ export default function EPAPreparationPage() {
               <p className="text-sm text-white">Training Courses</p>
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* App Bridge */}
+      <section className="py-8 px-5 border-t border-white/5">
+        <div className="max-w-4xl mx-auto">
+          <SEOAppBridge
+            title="Prepare for Your EPA with Elec-Mate"
+            description="AI-graded simulators for all three EPA components — practical assessment, knowledge test, and professional discussion. Track your gateway readiness and prepare to achieve a Distinction."
+            ctaText="Start 7-day free trial"
+            ctaHref="/auth/signup"
+          />
         </div>
       </section>
 

@@ -18,6 +18,8 @@ import {
   ArrowDown,
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { SEOAppBridge } from '@/components/seo/SEOAppBridge';
+import { SEOInternalLink } from '@/components/seo/SEOInternalLink';
 
 const faqs = [
   {
@@ -45,6 +47,11 @@ const faqs = [
       'What is the difference between voltage drop for single-phase and three-phase circuits?',
     answer:
       'For single-phase circuits, you use the single-phase mV/A/m column (labelled "2-core cable, single-phase a.c. or d.c." in the tables). For three-phase circuits, you use the three-phase mV/A/m column (labelled "3-core or 4-core cable, three-phase a.c."). The three-phase values are lower because of the way voltage is distributed across the phases. The formula is the same in both cases: Voltage Drop = mV/A/m × Ib × L ÷ 1000. For single-phase, the result is compared against the percentage of 230 V. For three-phase, it is compared against the percentage of 400 V.',
+  },
+  {
+    question: 'Can voltage drop be a problem even if a circuit passes all other BS 7671 checks?',
+    answer:
+      'Yes. A circuit can have perfectly acceptable earth fault loop impedance, insulation resistance, and continuity values and still fail the voltage drop check. This is common on long circuit runs — for example, an outbuilding circuit running 40 to 50 metres from the distribution board, or a socket circuit in a large commercial unit serving the far end of a building. Excessive voltage drop causes equipment to run below its design voltage, which reduces the performance of motors and reduces the light output of certain lamp types. It can also cause electronic equipment to operate erratically or shut down. When you encounter high voltage drop on a circuit, the options are to increase the cable cross-sectional area, reduce the circuit length by adding a sub-distribution board closer to the load, or in some cases accept the situation with written agreement if the loads are tolerant of lower voltages. Elec-Mate\'s voltage drop calculator highlights circuits that exceed the BS 7671 limits and suggests alternative cable sizes.',
   },
 ];
 
@@ -249,7 +256,16 @@ export default function VoltageDropCalculatorPage() {
               current flowing through it, and the length of the cable run. Copper conductors have
               lower resistance than aluminium for the same cross-sectional area, and larger cables
               have lower resistance than smaller ones. This is why increasing the cable size is one
-              of the primary methods of reducing voltage drop.
+              of the primary methods of reducing voltage drop. Use the{' '}
+              <SEOInternalLink href="/tools/cable-sizing-calculator">
+                cable sizing calculator
+              </SEOInternalLink>{' '}
+              alongside this tool to ensure the selected cable meets both current-carrying capacity
+              and voltage drop requirements. The{' '}
+              <SEOInternalLink href="/tools/trunking-fill-calculator">
+                trunking fill calculator
+              </SEOInternalLink>{' '}
+              helps plan containment for the sized cables.
             </p>
           </div>
         </div>
@@ -578,6 +594,18 @@ export default function VoltageDropCalculatorPage() {
             manual table look-ups.
           </p>
           <SEOFeatureGrid features={features} columns={3} />
+        </div>
+      </section>
+
+      {/* App Bridge */}
+      <section className="py-8 px-5">
+        <div className="max-w-4xl mx-auto">
+          <SEOAppBridge
+            title="Run Your Electrical Business Smarter with Elec-Mate"
+            description="Quotes, certificates, job tracking, and 70+ BS 7671 calculators including voltage drop — built for UK electricians."
+            ctaText="Try Elec-Mate free"
+            ctaHref="/auth/signup"
+          />
         </div>
       </section>
 

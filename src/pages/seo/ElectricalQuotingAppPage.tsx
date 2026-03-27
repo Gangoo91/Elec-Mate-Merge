@@ -19,6 +19,8 @@ import {
   Users,
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { SEOAppBridge } from '@/components/seo/SEOAppBridge';
+import { SEOInternalLink } from '@/components/seo/SEOInternalLink';
 
 const faqs = [
   {
@@ -481,8 +483,8 @@ export default function ElectricalQuotingAppPage() {
               Elec-Mate is not just a quoting app — it is the complete platform for running an
               electrical business. Your subscription includes access to 70 calculators (56 technical
               + 14 business), 8 Elec-AI agents and 12 AI tools, 36+ training courses with 8
-              certificate types, digital EICR and EIC certification, and the full quoting,
-              invoicing, and payment system described on this page.
+              certificate types, <SEOInternalLink href="/electrical-certification/eicr">digital EICR and EIC certification</SEOInternalLink>, and the full quoting,
+              <SEOInternalLink href="/electrician-invoice-app"> invoicing</SEOInternalLink>, and payment system described on this page.
             </p>
             <p>
               Everything is designed to work together. The calculator results feed into your quotes.
@@ -492,6 +494,19 @@ export default function ElectricalQuotingAppPage() {
               information.
             </p>
           </div>
+        </div>
+      </section>
+
+      {/* App Bridge */}
+      <section className="py-4 px-5">
+        <div className="max-w-4xl mx-auto">
+          <SEOAppBridge
+            title="Quote, Invoice, and Get Paid — All in One App"
+            description="Elec-Mate's quoting tool is built for UK electricians. AI cost estimation, professional PDFs, Stripe payments, and a seamless link to your certificates and invoices."
+            ctaText="Try Elec-Mate free"
+            ctaHref="/auth/signup"
+            icon={PoundSterling}
+          />
         </div>
       </section>
 

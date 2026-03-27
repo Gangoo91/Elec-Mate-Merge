@@ -472,7 +472,7 @@ export default function BestElectricalTrainingAppPage() {
         {
           question: 'Is there an app for 18th Edition revision?',
           answer:
-            'Yes. Elec-Mate includes a complete 18th Edition course covering BS 7671:2018+A3:2024, including the changes introduced by Amendment 3 (A3:2024) such as Regulation 530.3.201 for bidirectional and unidirectional devices. The course includes structured learning content, practice questions, and flashcards covering all parts of BS 7671 — from fundamental principles and general characteristics through to inspection and testing. You can also use the AI study assistant to ask questions about specific regulations and receive detailed explanations. The IET also offers digital versions of the On-Site Guide and Guidance Notes, which are valuable reference tools but do not include practice questions or exam simulation.',
+            'Yes. Elec-Mate includes a complete 18th Edition course covering BS 7671:2018+A3:2024, including the changes introduced by Amendment 3 (A3:2024) such as Regulation 530.3.2 for bidirectional and unidirectional devices. The course includes structured learning content, practice questions, and flashcards covering all parts of BS 7671 — from fundamental principles and general characteristics through to inspection and testing. You can also use the AI study assistant to ask questions about specific regulations and receive detailed explanations. The IET also offers digital versions of the On-Site Guide and Guidance Notes, which are valuable reference tools but do not include practice questions or exam simulation.',
         },
         {
           question: 'How can I prepare for the AM2 assessment?',

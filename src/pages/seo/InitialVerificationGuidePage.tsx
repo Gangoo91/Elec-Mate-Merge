@@ -56,7 +56,7 @@ const faqs = [
   {
     question: 'Who can carry out initial verification?',
     answer:
-      'BS 7671 Regulation 631.1 requires that initial verification be carried out by a competent person. In practice, this means someone who holds the current edition qualification (C&G 2382 — 18th Edition), an inspection and testing qualification (C&G 2391 or equivalent), and is registered with a competent person scheme (NICEIC, NAPIT, ELECSA, or BRE Certification) if the work is notifiable under Part P of the Building Regulations. The person carrying out the verification must be independent of the installation work — ideally a different individual from the person who installed the circuits, although BS 7671 allows the same person to install and verify if they are competent to do both. For competent person scheme members, the verification may be carried out by the scheme member or their qualified employee.',
+      'BS 7671 Part 6 requires that initial verification be carried out by a competent person. In practice, this means someone who holds the current edition qualification (C&G 2382 — 18th Edition), an inspection and testing qualification (C&G 2391 or equivalent), and is registered with a competent person scheme (NICEIC, NAPIT, ELECSA, or BRE Certification) if the work is notifiable under Part P of the Building Regulations. The person carrying out the verification must be independent of the installation work — ideally a different individual from the person who installed the circuits, although BS 7671 allows the same person to install and verify if they are competent to do both. For competent person scheme members, the verification may be carried out by the scheme member or their qualified employee.',
   },
   {
     question: 'Do I need an EIC for every new circuit I install?',
@@ -72,6 +72,11 @@ const faqs = [
     question: 'What happens if initial verification reveals a fault?',
     answer:
       'If any test fails during initial verification, the circuit must not be energised (or must be immediately de-energised if already live). The fault must be identified, corrected by the installer, and the circuit retested before it can be put into service. The EIC cannot be issued until all tests pass. Common faults found during initial verification include: low insulation resistance (damaged cable, cable clipped through), reversed polarity (line and neutral transposed at a socket or switch), high R1+R2 values (poor termination, loose connection), missing earth connections, and RCDs not tripping within the required time. The inspector should record the fault, communicate it to the installer, and verify the correction before signing off the EIC.',
+  },
+  {
+    question: 'How long should I keep copies of EIC certificates and test schedules?',
+    answer:
+      'There is no single statutory retention period for EIC certificates, but best practice is to keep copies for a minimum of 6 years — the standard limitation period for civil claims in England and Wales. If the installation is in a commercial or industrial premises, some competent person schemes recommend keeping records for the life of the installation. Clients should receive the original EIC and schedule of test results at handover. You should retain a copy in your own records. Under Part P of the Building Regulations, the certificate is also registered with either the local authority building control or your competent person scheme — these organisations maintain their own copies. Elec-Mate stores all certificates securely in the cloud, so copies are always accessible regardless of what happens to your local paper records.',
   },
 ];
 
@@ -234,7 +239,7 @@ const sections = [
       <>
         <p>
           Before testing begins, a thorough visual inspection must be carried out. BS 7671
-          Regulation 611.3 provides a detailed list of items to inspect. The inspection schedule
+          Section 641 provides a detailed list of items to inspect. The inspection schedule
           (sometimes called the inspection checklist) is a systematic record of every item checked.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">

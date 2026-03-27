@@ -20,7 +20,7 @@ export default function AFDDGuidePage() {
   return (
     <GuideTemplate
       title="AFDD Guide | Arc Fault Detection Devices BS 7671"
-      description="Complete guide to Arc Fault Detection Devices (AFDDs). BS 7671 Regulation 421.1.7, where AFDDs are required (HMOs, buildings over 4 storeys, care homes, student accommodation), how they work, AFDD vs RCBO, installation requirements, manufacturers, and Amendment 2 changes."
+      description="Complete guide to Arc Fault Detection Devices (AFDDs). BS 7671 Regulation 421.1.6, where AFDDs are required (HMOs, buildings over 4 storeys, care homes, student accommodation), how they work, AFDD vs RCBO, installation requirements, manufacturers, and Amendment 2 changes."
       datePublished="2025-05-01"
       dateModified="2026-02-14"
       breadcrumbs={[
@@ -51,7 +51,7 @@ export default function AFDDGuidePage() {
       readingTime={15}
       keyTakeaways={[
         'AFDDs detect dangerous arc faults (both series and parallel) that cannot be detected by MCBs, RCDs, or RCBOs. They protect against electrical fires caused by damaged cables, loose connections, and deteriorated insulation.',
-        'BS 7671 Regulation 421.1.7 recommends AFDDs in locations with sleeping accommodation in higher-risk premises — HMOs, buildings over 4 storeys, care homes, student accommodation, and premises with combustible construction.',
+        'BS 7671 Regulation 421.1.6 recommends AFDDs in locations with sleeping accommodation in higher-risk premises — HMOs, buildings over 4 storeys, care homes, student accommodation, and premises with combustible construction.',
         'AFDDs are not a replacement for MCBs or RCDs — they provide an additional layer of protection. Most AFDD units combine arc detection with RCBO functionality (30mA RCD + MCB + AFDD in one device).',
         'Major manufacturers include Siemens, Schneider Electric, and Hager. Typical cost is £80 to £150 per device — significantly more than a standard RCBO at £25 to £50.',
         'Elec-Mate certificate forms include AFDD fields, and the AI regulations lookup explains exactly where AFDDs are recommended under BS 7671.',
@@ -186,7 +186,7 @@ export default function AFDDGuidePage() {
           content: (
             <>
               <p>
-                BS 7671 Regulation 421.1.7 was introduced in Amendment 2 to the 18th Edition and
+                BS 7671 Regulation 421.1.6 was introduced in Amendment 2 to the 18th Edition and
                 provides a recommendation (not a mandatory requirement) for the use of AFDDs. The
                 regulation states that arc fault detection devices conforming to BS EN 62606 are
                 recommended to provide additional protection against fire caused by arc faults in AC
@@ -558,7 +558,7 @@ export default function AFDDGuidePage() {
         {
           question: 'Are AFDDs mandatory in the UK under BS 7671?',
           answer:
-            'No, AFDDs are not currently mandatory under BS 7671. Regulation 421.1.7, introduced in Amendment 2 to the 18th Edition, uses the word "recommended" rather than "shall." This means AFDDs are formally recommended for specific locations (HMOs, buildings over four storeys with sleeping accommodation, care homes, student accommodation, premises with combustible construction) but are not a mandatory requirement. However, the trend in BS 7671 is for recommendations to become requirements in subsequent amendments — this happened with RCDs and SPDs, and it is widely expected that AFDDs will follow the same path in a future edition or amendment. Some local authority building control departments and fire officers are already requiring AFDDs for specific applications, particularly in HMO conversions and care home refurbishments, so it is important to check local requirements on each job.',
+            'No, AFDDs are not currently mandatory under BS 7671. Regulation 421.1.6, introduced in Amendment 2 to the 18th Edition, uses the word "recommended" rather than "shall." This means AFDDs are formally recommended for specific locations (HMOs, buildings over four storeys with sleeping accommodation, care homes, student accommodation, premises with combustible construction) but are not a mandatory requirement. However, the trend in BS 7671 is for recommendations to become requirements in subsequent amendments — this happened with RCDs and SPDs, and it is widely expected that AFDDs will follow the same path in a future edition or amendment. Some local authority building control departments and fire officers are already requiring AFDDs for specific applications, particularly in HMO conversions and care home refurbishments, so it is important to check local requirements on each job.',
         },
         {
           question: 'Can I use a standard consumer unit with AFDDs?',
@@ -583,7 +583,7 @@ export default function AFDDGuidePage() {
         {
           question: 'How does Elec-Mate help with AFDD specification and certification?',
           answer:
-            'Elec-Mate supports AFDD specification and documentation in several ways. The certificate forms (EIC and EICR) include dedicated fields for recording AFDD protection on each circuit — device manufacturer, model, type, and rating — ensuring the protection is properly documented. The consumer unit regulations section of the app cross-references AFDD requirements with BS 7671 Regulation 421.1.7 and lists the locations where AFDDs are recommended. The AI regulations lookup agent can answer specific questions about whether AFDDs are needed for a particular premises type and provide the relevant regulation references. For the schedule of test results, the AFDD test button operation is recorded alongside the standard MCB and RCD test data. This comprehensive digital documentation ensures nothing is missed when specifying and certifying installations with AFDDs.',
+            'Elec-Mate supports AFDD specification and documentation in several ways. The certificate forms (EIC and EICR) include dedicated fields for recording AFDD protection on each circuit — device manufacturer, model, type, and rating — ensuring the protection is properly documented. The consumer unit regulations section of the app cross-references AFDD requirements with BS 7671 Regulation 421.1.6 and lists the locations where AFDDs are recommended. The AI regulations lookup agent can answer specific questions about whether AFDDs are needed for a particular premises type and provide the relevant regulation references. For the schedule of test results, the AFDD test button operation is recorded alongside the standard MCB and RCD test data. This comprehensive digital documentation ensures nothing is missed when specifying and certifying installations with AFDDs.',
         },
       ]}
       relatedPages={[

@@ -1,6 +1,8 @@
 import { Helmet } from 'react-helmet';
 import useSEO from '@/hooks/useSEO';
 import { PublicPageLayout } from '@/components/seo/PublicPageLayout';
+import { SEOAppBridge } from '@/components/seo/SEOAppBridge';
+import { SEOInternalLink } from '@/components/seo/SEOInternalLink';
 import { SEOCTASection } from '@/components/seo/SEOCTASection';
 import { SEOFeatureGrid } from '@/components/seo/SEOFeatureGrid';
 import {
@@ -281,7 +283,15 @@ export default function ProspectiveFaultCurrentCalculatorPage() {
               installation and at other relevant points (Regulation 434.5.1 and Regulation 643.7).
               This measurement or calculation is a mandatory part of initial verification and
               periodic inspection, and the values must be recorded on the electrical installation
-              certificate or condition report.
+              certificate or condition report. Use the{' '}
+              <SEOInternalLink href="/tools/voltage-drop-calculator">
+                voltage drop calculator
+              </SEOInternalLink>{' '}
+              alongside PFC calculations for a complete circuit assessment, and the{' '}
+              <SEOInternalLink href="/tools/cable-sizing-calculator">
+                cable sizing calculator
+              </SEOInternalLink>{' '}
+              to size conductors correctly.
             </p>
           </div>
         </div>
@@ -554,6 +564,18 @@ export default function ProspectiveFaultCurrentCalculatorPage() {
               your jobs, certificates, and invoicing all from one app.
             </p>
           </div>
+        </div>
+      </section>
+
+      {/* App Bridge */}
+      <section className="py-8 px-5 border-t border-white/5">
+        <div className="max-w-4xl mx-auto">
+          <SEOAppBridge
+            title="Elec-Mate Includes All the Electrical Calculators You Need"
+            description="Elec-Mate includes all the electrical calculators you need — use them on any job, on any device."
+            ctaText="Try Elec-Mate free"
+            ctaHref="/auth/signup"
+          />
         </div>
       </section>
 

@@ -601,6 +601,11 @@ export default function BusbarSizingCalculatorPage() {
           answer:
             'Busbar orientation significantly affects heat dissipation and therefore current rating. A vertically mounted flat busbar dissipates heat more effectively than a horizontally mounted one because vertical orientation promotes natural convection — hot air rises past the busbar surfaces, creating an air flow that carries heat away. A horizontal busbar oriented on its edge (narrow face up) is better than flat (wide face up) because the edge orientation allows convection on both faces. For multiple busbars per phase, spacing them apart (typically one busbar thickness) allows air to circulate between them, further improving heat dissipation. The Elec-Mate calculator accounts for busbar orientation when calculating temperature rise.',
         },
+        {
+          question: 'What voltage drop limit applies to busbars under BS 7671?',
+          answer:
+            'BS 7671 recommends that voltage drop in installations should not exceed 3% for lighting and 5% for other uses from the origin of the installation to the point of use (Regulation 525.1). For a busbar trunking run feeding distribution boards, the voltage drop in the trunking itself plus the drop in the final circuits must remain within these limits. Busbars have very low resistance per unit length compared to cables, so voltage drop is rarely the critical constraint — thermal rating and short-circuit withstand are usually the governing factors. However, for very long busbar runs (over 50 metres) supplying sensitive equipment, voltage drop should be calculated and verified. The Elec-Mate busbar sizing calculator includes voltage drop calculation as part of its output.',
+        },
       ]}
       faqHeading="Frequently Asked Questions About Busbar Sizing"
       relatedPages={[

@@ -3,6 +3,8 @@ import useSEO from '@/hooks/useSEO';
 import { PublicPageLayout } from '@/components/seo/PublicPageLayout';
 import { SEOCTASection } from '@/components/seo/SEOCTASection';
 import { SEOFeatureGrid } from '@/components/seo/SEOFeatureGrid';
+import { SEOAppBridge } from '@/components/seo/SEOAppBridge';
+import { SEOInternalLink } from '@/components/seo/SEOInternalLink';
 import {
   ShieldCheck,
   Zap,
@@ -25,7 +27,7 @@ import { Link } from 'react-router-dom';
 
 const PAGE_TITLE = 'Consumer Unit Regulations 2024 | Amendment 3 Guide | Elec-Mate';
 const PAGE_DESCRIPTION =
-  'Complete guide to consumer unit regulations under BS 7671:2018+A3:2024. Metal CU requirements, RCD protection, RCBO vs split-load, Amendment 3 changes including Regulation 530.3.201, SPD requirements.';
+  'Complete guide to consumer unit regulations under BS 7671:2018+A3:2024. Metal CU requirements, RCD protection, RCBO vs split-load, Amendment 3 bidirectional device requirements (Section 530), SPD requirements.';
 
 const faqs = [
   {
@@ -36,7 +38,7 @@ const faqs = [
   {
     question: 'What did Amendment 3 (A3:2024) change for consumer units?',
     answer:
-      'Amendment 3 to BS 7671:2018, issued in July 2024, introduced several changes relevant to consumer units. The most significant addition is Regulation 530.3.201, which addresses bidirectional and unidirectional protective devices. This regulation requires that where a supply can operate in both directions — for example, in installations with battery storage or solar PV with battery backup that can export energy — the protective devices in the consumer unit must be suitable for bidirectional fault current flow. Standard MCBs and RCDs are typically unidirectional (designed to clear faults with current flowing in one direction only). With the growth of domestic battery storage and vehicle-to-grid (V2G) charging, this is an increasingly important consideration for consumer unit design. Amendment 3 also includes various corrections, clarifications, and editorial updates to the standard.',
+      'Amendment 3 to BS 7671:2018, issued in July 2024, introduced several changes relevant to consumer units. The most significant addition is a new requirement in Section 530 addressing bidirectional and unidirectional protective devices. This requires that where a supply can operate in both directions — for example, in installations with battery storage or solar PV with battery backup that can export energy — the protective devices in the consumer unit must be suitable for bidirectional fault current flow. Standard MCBs and RCDs are typically unidirectional (designed to clear faults with current flowing in one direction only). With the growth of domestic battery storage and vehicle-to-grid (V2G) charging, this is an increasingly important consideration for consumer unit design. Amendment 3 also includes various corrections, clarifications, and editorial updates to the standard.',
   },
   {
     question: 'Should I use RCBOs or a split-load board with dual RCDs?',
@@ -56,7 +58,7 @@ const faqs = [
   {
     question: 'What RCD protection is required in a domestic consumer unit?',
     answer:
-      'BS 7671 requires additional protection by a 30mA RCD for several categories of circuit: all socket outlet circuits rated up to 32A and all circuits supplying mobile equipment intended for outdoor use up to 32A (Regulation 411.3.3), and all circuits where cables are concealed in walls at a depth of less than 50mm unless the cable has an earthed metallic covering (Regulation 411.3.4). In practice, this covers the vast majority of circuits in a domestic installation. The only circuits that may not require 30mA RCD protection are those supplying fixed equipment with permanently connected cables at a depth exceeding 50mm, and specific circuits where RCD protection might cause a greater hazard (such as fire alarm circuits, where the loss of supply due to an RCD trip could compromise fire safety). Even for these circuits, many designers choose to provide RCD protection as good practice.',
+      'BS 7671 Section 411 requires additional protection by a 30 mA RCD for several categories of circuit: all socket-outlet circuits rated up to 32 A, all circuits supplying mobile equipment intended for outdoor use up to 32 A, and all circuits where cables are concealed in walls at a depth of less than 50 mm unless the cable has an earthed metallic covering. In practice, this covers the vast majority of circuits in a domestic installation. The only circuits that may not require 30 mA RCD protection are those supplying fixed equipment with permanently connected cables at a depth exceeding 50 mm, and specific circuits where RCD protection might cause a greater hazard (such as fire alarm circuits, where the loss of supply due to an RCD trip could compromise fire safety). Even for these circuits, many designers choose to provide RCD protection as good practice.',
   },
 ];
 
@@ -83,7 +85,7 @@ const features = [
     icon: ShieldCheck,
     title: 'BS 7671:2018+A3:2024',
     description:
-      'Built to the current 18th Edition including Amendment 3. Regulation 530.3.201, SPD requirements, and all RCD protection rules fully up to date.',
+      'Built to the current 18th Edition including Amendment 3. Bidirectional device requirements (Section 530), SPD requirements, and all RCD protection rules fully up to date.',
   },
   {
     icon: Smartphone,
@@ -184,7 +186,7 @@ export default function ConsumerUnitRegulationsPage() {
           <p className="text-lg sm:text-xl text-white max-w-2xl mx-auto mb-8 leading-relaxed">
             The definitive guide to consumer unit regulations under BS 7671:2018+A3:2024. Metal
             enclosures, RCD protection, RCBO design, SPD requirements, and the new Regulation
-            530.3.201.
+            Section 530 (Amendment 3).
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <Link
@@ -302,12 +304,12 @@ export default function ConsumerUnitRegulationsPage() {
               <Zap className="w-5 h-5 text-yellow-400" />
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">
-              RCD Protection Requirements (Regulations 411.3.3 and 411.3.4)
+              RCD Protection Requirements (BS 7671 Section 411)
             </h2>
           </div>
           <div className="space-y-4 text-white leading-relaxed">
             <p>
-              BS 7671 Regulations 411.3.3 and 411.3.4 set out the circumstances where additional
+              BS 7671 Section 411 sets out the circumstances where additional
               protection by a 30 mA RCD is required. The requirements have expanded with each
               edition of the standard, and in the current 18th Edition, almost every circuit in a
               domestic consumer unit requires RCD protection.
@@ -489,11 +491,11 @@ export default function ConsumerUnitRegulationsPage() {
               BS 7671:2018+A3:2024 was issued on 31 July 2024 as a free PDF supplement to the main
               standard. It is not a new book — it is an amendment document that modifies and adds to
               the existing 18th Edition. The most significant change for consumer unit design is the
-              introduction of Regulation 530.3.201.
+              introduction of new bidirectional device requirements in Section 530.
             </p>
             <div className="rounded-2xl bg-yellow-500/5 border border-yellow-500/20 p-6 my-6">
               <h3 className="font-bold text-yellow-400 text-lg mb-3">
-                Regulation 530.3.201 — Bidirectional and Unidirectional Devices
+                BS 7671:2018+A3:2024, Section 530 — Bidirectional and Unidirectional Devices
               </h3>
               <div className="space-y-3 text-white text-sm leading-relaxed">
                 <p>
@@ -514,7 +516,7 @@ export default function ConsumerUnitRegulationsPage() {
                   the fault and allowing it to persist.
                 </p>
                 <p>
-                  Regulation 530.3.201 requires that where bidirectional current flow is possible,
+                  BS 7671 Section 530 (Amendment 3) requires that where bidirectional current flow is possible,
                   the protective devices must be suitable for operation in both directions, or
                   additional measures must be taken to ensure correct fault clearance regardless of
                   the direction of current flow. For consumer unit design, this means checking with
@@ -526,7 +528,7 @@ export default function ConsumerUnitRegulationsPage() {
               </div>
             </div>
             <p>
-              Beyond Regulation 530.3.201, Amendment 3 includes various corrections, clarifications,
+              Beyond the Section 530 bidirectional device requirements, Amendment 3 includes various corrections, clarifications,
               and editorial amendments to the standard. It is important to note that Amendment 3
               does not change the fundamental requirements for consumer unit design — metal
               enclosures, RCD protection, circuit protection, and labelling requirements all remain
@@ -611,19 +613,27 @@ export default function ConsumerUnitRegulationsPage() {
               Additional labelling requirements include: a warning notice at the origin of the
               installation stating the type and rating of the main protective device (Regulation
               514.12.1), a warning notice identifying that the installation has more than one source
-              of supply where applicable (Regulation 514.15.1), the earthing arrangement (TN-S,
+              of supply where applicable (BS 7671 Section 514), the earthing arrangement (TN-S,
               TN-C-S, or TT), and a notice advising that the RCDs fitted should be tested at
               quarterly intervals by pressing the test button.
             </p>
             <p>
-              A consumer unit replacement requires a full Electrical Installation Certificate (EIC)
+              A consumer unit replacement requires a full{' '}
+              <SEOInternalLink href="/tools/eic-certificate">
+                Electrical Installation Certificate (EIC)
+              </SEOInternalLink>{' '}
               — not a Minor Works Certificate. The EIC must include the design, construction, and
               inspection and testing sections completed in full, together with a schedule of test
               results for every circuit. The schedule must include continuity of protective
               conductors (R1+R2), insulation resistance, polarity, earth fault loop impedance (Zs),
               prospective fault current (Ipf), and RCD test results. Elec-Mate generates all of
               these forms digitally, validates test results against BS 7671 limits, and produces
-              professional PDF output ready to hand to the client.
+              professional PDF output ready to hand to the client. For a full understanding of
+              Amendment 3 requirements, see the{' '}
+              <SEOInternalLink href="/training/18th-edition-course">
+                18th Edition training course
+              </SEOInternalLink>
+              .
             </p>
           </div>
         </div>
@@ -640,6 +650,18 @@ export default function ConsumerUnitRegulationsPage() {
             36+ training courses — all built to BS 7671:2018+A3:2024.
           </p>
           <SEOFeatureGrid features={features} columns={3} />
+        </div>
+      </section>
+
+      {/* App Bridge */}
+      <section className="py-8 px-5 bg-white/[0.02]">
+        <div className="max-w-4xl mx-auto">
+          <SEOAppBridge
+            title="Certify Consumer Unit Work Digitally with Elec-Mate"
+            description="Generate compliant Electrical Installation Certificates for consumer unit replacements — with test result validation, digital signatures, and professional PDF output. Built to BS 7671:2018+A3:2024."
+            ctaText="Try Elec-Mate free"
+            ctaHref="/auth/signup"
+          />
         </div>
       </section>
 

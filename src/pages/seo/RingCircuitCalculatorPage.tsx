@@ -1,6 +1,8 @@
 import { Helmet } from 'react-helmet';
 import useSEO from '@/hooks/useSEO';
 import { PublicPageLayout } from '@/components/seo/PublicPageLayout';
+import { SEOAppBridge } from '@/components/seo/SEOAppBridge';
+import { SEOInternalLink } from '@/components/seo/SEOInternalLink';
 import { SEOCTASection } from '@/components/seo/SEOCTASection';
 import { SEOFeatureGrid } from '@/components/seo/SEOFeatureGrid';
 import {
@@ -260,7 +262,15 @@ export default function RingCircuitCalculatorPage() {
               ring must be verified to confirm that the cable forms a complete loop and that no
               interconnections have been made incorrectly. This is where the cross-connection method
               comes in — the standard testing procedure described in GN3 (Guidance Note 3:
-              Inspection and Testing) and BS 7671:2018+A3:2024.
+              Inspection and Testing) and BS 7671:2018+A3:2024. Use the{' '}
+              <SEOInternalLink href="/tools/cable-sizing-calculator">
+                cable sizing calculator
+              </SEOInternalLink>{' '}
+              when adding new ring circuits and the{' '}
+              <SEOInternalLink href="/tools/voltage-drop-calculator">
+                voltage drop calculator
+              </SEOInternalLink>{' '}
+              to verify compliance on long ring runs.
             </p>
           </div>
         </div>
@@ -559,6 +569,18 @@ export default function RingCircuitCalculatorPage() {
             Validates readings, identifies faults, and provides R1+R2 values instantly.
           </p>
           <SEOFeatureGrid features={features} columns={3} />
+        </div>
+      </section>
+
+      {/* App Bridge */}
+      <section className="py-8 px-5">
+        <div className="max-w-4xl mx-auto">
+          <SEOAppBridge
+            title="Elec-Mate Includes All the Electrical Calculators You Need"
+            description="Elec-Mate includes all the electrical calculators you need — use them on any job, on any device."
+            ctaText="Try Elec-Mate free"
+            ctaHref="/auth/signup"
+          />
         </div>
       </section>
 

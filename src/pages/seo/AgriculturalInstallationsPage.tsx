@@ -56,7 +56,7 @@ const faqs = [
   {
     question: 'Why is supplementary bonding so critical in agricultural buildings?',
     answer:
-      'Supplementary equipotential bonding is critical in agricultural buildings because livestock — particularly cattle and horses — are far more sensitive to electric shock than humans. The physiological threshold for perception of electric current in cattle is approximately 2 to 4 mA, compared with around 1 mA for humans. However, the critical difference is that cattle cannot release their grip on an energised conductor, and even small touch voltages can cause behavioural disturbance (reduced milk yield, refusal to enter the milking parlour, kicking) that has a direct economic impact on the farmer. BS 7671 Regulation 705.415.2 requires supplementary equipotential bonding connecting all extraneous-conductive-parts accessible to livestock — including metal stalls, partitions, water pipes, feeding troughs, milking equipment, and structural steelwork — to the protective conductor. The bonding conductor must be at least 4 mm² copper (or equivalent). This bonding ensures that the touch voltage between any two simultaneously accessible parts is minimised, even under fault conditions.',
+      'Supplementary equipotential bonding is critical in agricultural buildings because livestock — particularly cattle and horses — are far more sensitive to electric shock than humans. The physiological threshold for perception of electric current in cattle is approximately 2 to 4 mA, compared with around 1 mA for humans. However, the critical difference is that cattle cannot release their grip on an energised conductor, and even small touch voltages can cause behavioural disturbance (reduced milk yield, refusal to enter the milking parlour, kicking) that has a direct economic impact on the farmer. BS 7671 Regulation 705.415.2.1 requires supplementary equipotential bonding connecting all extraneous-conductive-parts accessible to livestock — including metal stalls, partitions, water pipes, feeding troughs, milking equipment, and structural steelwork — to the protective conductor. The bonding conductor must be at least 4 mm² copper (or equivalent). This bonding ensures that the touch voltage between any two simultaneously accessible parts is minimised, even under fault conditions.',
   },
   {
     question: 'What IP ratings are required for electrical equipment on farms?',
@@ -192,7 +192,7 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Supplementary equipotential bonding (Regulation 705.415.2).</strong> All
+                <strong>Supplementary equipotential bonding (Regulation 705.415.2.1).</strong> All
                 extraneous-conductive-parts simultaneously accessible to livestock must be connected
                 by supplementary bonding conductors. This includes metal stalls, partitions, feeding
                 troughs, water pipes, milking equipment, gate frames, structural steelwork, and any
@@ -549,7 +549,7 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   Describe the defect — "no supplementary bonding to metal feeding troughs in cattle
                   shed" — and the AI returns the correct observation code with the matching BS 7671
-                  regulation reference (705.415.2). No looking up regulation numbers in the book
+                  regulation reference (705.415.2.1). No looking up regulation numbers in the book
                   while standing in a barn.
                 </p>
               </div>

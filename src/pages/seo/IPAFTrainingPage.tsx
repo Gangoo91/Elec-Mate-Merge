@@ -20,6 +20,8 @@ import {
   Layers,
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { SEOAppBridge } from '@/components/seo/SEOAppBridge';
+import { SEOInternalLink } from '@/components/seo/SEOInternalLink';
 
 const PAGE_TITLE = 'IPAF Training Course Online | MEWP Safety | Elec-Mate';
 const PAGE_DESCRIPTION =
@@ -231,7 +233,12 @@ export default function IPAFTrainingPage() {
               pre-use inspections, operating the controls safely, understanding stability and load
               limits, working near hazards such as overhead power lines and traffic, using personal
               protective equipment correctly, and knowing the emergency procedures for every
-              scenario — from hydraulic failure to operator incapacitation.
+              scenario — from hydraulic failure to operator incapacitation. IPAF is often studied
+              alongside other safety qualifications such as{' '}
+              <SEOInternalLink href="/study/pasma-training">PASMA scaffold tower training</SEOInternalLink>{' '}
+              and pairs with technical qualifications like the{' '}
+              <SEOInternalLink href="/study/inspection-testing-course">C&G 2391 Inspection and Testing</SEOInternalLink>{' '}
+              for a well-rounded professional profile.
             </p>
           </div>
         </div>
@@ -393,6 +400,19 @@ export default function IPAFTrainingPage() {
             courses — all from your mobile device.
           </p>
           <SEOFeatureGrid features={features} columns={3} />
+        </div>
+      </section>
+
+      {/* App Bridge */}
+      <section className="py-4 px-5">
+        <div className="max-w-4xl mx-auto">
+          <SEOAppBridge
+            title="Study IPAF and 36+ Electrical Courses with Elec-Mate"
+            description="Elec-Mate's Study Centre has revision materials, exam prep, and on-the-job reference guides for IPAF, PASMA, C&G 2391, Level 2/3, 18th Edition, and more."
+            ctaText="Try Elec-Mate free"
+            ctaHref="/auth/signup"
+            icon={BookOpen}
+          />
         </div>
       </section>
 

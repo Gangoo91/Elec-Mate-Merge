@@ -414,6 +414,11 @@ export default function CircuitBreakerSizingCalculatorPage() {
           answer:
             'An MCB provides overcurrent protection only (overload and short circuit). An RCBO combines overcurrent protection with residual current (earth leakage) protection in a single device. BS 7671 now requires 30mA RCD protection for all socket outlets up to 32A in domestic premises and for many other circuit types. If you use individual MCBs, you need a separate RCD upstream (typically a split-load or dual-RCD board arrangement). If you use RCBOs, each circuit has its own independent RCD protection, which means a fault on one circuit does not trip other circuits. RCBOs are more expensive per circuit but provide better discrimination and are increasingly the preferred choice for new installations.',
         },
+        {
+          question: 'What is a Type D MCB and when is it used?',
+          answer:
+            'A Type D MCB has an instantaneous trip threshold of 10 to 20 times the rated current (compared to 3 to 5 times for Type B and 5 to 10 times for Type C). Type D devices are designed for loads with very high inrush currents — such as large transformers, UPS systems, welding equipment, and X-ray machines — where even a Type C MCB would nuisance trip during starting. Type D MCBs are rarely used in domestic installations and are more common in industrial and commercial applications with specialist equipment. Because the high trip threshold means fault current must reach a very high level before instantaneous disconnection occurs, the earth fault loop impedance requirement is much more demanding for Type D devices — always verify Zs compliance using the relevant table in BS 7671.',
+        },
       ]}
       relatedPages={[
         {

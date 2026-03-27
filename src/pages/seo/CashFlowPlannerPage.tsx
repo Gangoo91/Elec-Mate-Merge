@@ -3,6 +3,8 @@ import useSEO from '@/hooks/useSEO';
 import { PublicPageLayout } from '@/components/seo/PublicPageLayout';
 import { SEOCTASection } from '@/components/seo/SEOCTASection';
 import { SEOFeatureGrid } from '@/components/seo/SEOFeatureGrid';
+import { SEOAppBridge } from '@/components/seo/SEOAppBridge';
+import { SEOInternalLink } from '@/components/seo/SEOInternalLink';
 import {
   Zap,
   CheckCircle2,
@@ -223,7 +225,15 @@ export default function CashFlowPlannerPage() {
               Cash flow planning is not complicated, but it does require discipline and the right
               tools. Elec-Mate's Cash Flow Planner is designed specifically for electrical
               businesses, pulling data from your jobs, quotes, invoices, and expenses to build an
-              accurate cash flow forecast automatically.
+              accurate cash flow forecast automatically. Pair it with the{' '}
+              <SEOInternalLink href="/tools/business-analytics-electrician">
+                business analytics dashboard
+              </SEOInternalLink>{' '}
+              to track profitability alongside cash position, and use the{' '}
+              <SEOInternalLink href="/tools/electrician-invoice-app">
+                invoice app
+              </SEOInternalLink>{' '}
+              to reduce debtor days with automatic payment reminders.
             </p>
           </div>
         </div>
@@ -373,6 +383,18 @@ export default function CashFlowPlannerPage() {
               subscription starts with a 7-day free trial — no card required, cancel anytime.
             </p>
           </div>
+        </div>
+      </section>
+
+      {/* App Bridge */}
+      <section className="py-8 px-5">
+        <div className="max-w-4xl mx-auto">
+          <SEOAppBridge
+            title="Take Control of Your Cash Flow with Elec-Mate"
+            description="Forecast cash flow, track invoices, manage expenses, and spot cash gaps early — all in an app built specifically for UK electrical businesses. Integrates with your jobs, quotes, and invoices automatically."
+            ctaText="Start planning free"
+            ctaHref="/auth/signup"
+          />
         </div>
       </section>
 

@@ -52,7 +52,7 @@ export default function WiringColoursUKPage() {
       keyTakeaways={[
         'Current harmonised single-phase colours are brown (line), blue (neutral), and green/yellow (earth). These replaced the old red, black, and green colours from 2004/2006.',
         'Three-phase colours are brown (L1), black (L2), and grey (L3) — replacing the old red, yellow, and blue. The neutral is blue and earth is green/yellow.',
-        'Mixed-colour installations (old and new colours present) require a warning notice at the consumer unit or distribution board per BS 7671 Regulation 514.14.1.',
+        'Mixed-colour installations (old and new colours present) require a warning notice at the consumer unit or distribution board per BS 7671 Regulation 514.14.',
         'During a rewire or partial rewire, all conductors must be correctly identified using the current harmonised colour scheme. Sleeving must be applied to the CPC in twin-and-earth cable.',
         'Elec-Mate certificates auto-reference the correct colour standards, and the AI board scanner identifies cable colours from site photos.',
       ]}
@@ -309,7 +309,7 @@ export default function WiringColoursUKPage() {
                     <div className="text-white text-sm leading-relaxed">
                       BS 7671:2008 (17th Edition) was published with the harmonised colours fully
                       embedded throughout the standard. The 17th Edition included the requirement
-                      for warning notices in mixed-colour installations (Regulation 514.14.1).
+                      for warning notices in mixed-colour installations (Regulation 514.14).
                     </div>
                   </div>
                 </div>
@@ -339,7 +339,7 @@ export default function WiringColoursUKPage() {
                   <AlertTriangle className="w-5 h-5 text-orange-400 mt-0.5 flex-shrink-0" />
                   <div>
                     <h4 className="font-bold text-white mb-2">
-                      BS 7671 Regulation 514.14.1 — Warning Notice Required
+                      BS 7671 Regulation 514.14 — Warning Notice Required
                     </h4>
                     <p className="text-white text-sm leading-relaxed">
                       Where an installation contains wiring using both old and new colour codes, a
@@ -394,7 +394,7 @@ export default function WiringColoursUKPage() {
                     The most common domestic cable. Contains two insulated conductors (brown for
                     line, blue for neutral in current cable) plus a bare copper CPC. The CPC has no
                     factory-applied insulation — it must be sleeved green/yellow at every
-                    termination point (Regulation 514.4.2). Old T&E has red (line) and black
+                    termination point (Regulation 514.4). Old T&E has red (line) and black
                     (neutral) conductors with bare copper earth.
                   </p>
                   <p className="text-white text-sm leading-relaxed">
@@ -566,13 +566,13 @@ export default function WiringColoursUKPage() {
         {
           question: 'When did UK wiring colours change from red and black to brown and blue?',
           answer:
-            'The change was introduced on 1 April 2004 through Amendment 2 to BS 7671:2001 (the 16th Edition). From that date, both the old colours (red/black) and the new colours (brown/blue) were permitted during a two-year transition period. From 1 April 2006, only the new harmonised colours were permitted for new installations, additions, and alterations. The transition period allowed cable manufacturers to switch production and gave electricians and suppliers time to use up stocks of old-colour cable. Existing installations using the old colours did not need to be changed — there is no requirement to rewire an installation solely because it uses the pre-harmonisation colours. However, any new work on an existing installation must use the current colours, which creates mixed-colour installations requiring a warning notice under Regulation 514.14.1.',
+            'The change was introduced on 1 April 2004 through Amendment 2 to BS 7671:2001 (the 16th Edition). From that date, both the old colours (red/black) and the new colours (brown/blue) were permitted during a two-year transition period. From 1 April 2006, only the new harmonised colours were permitted for new installations, additions, and alterations. The transition period allowed cable manufacturers to switch production and gave electricians and suppliers time to use up stocks of old-colour cable. Existing installations using the old colours did not need to be changed — there is no requirement to rewire an installation solely because it uses the pre-harmonisation colours. However, any new work on an existing installation must use the current colours, which creates mixed-colour installations requiring a warning notice under Regulation 514.14.',
         },
         {
           question:
             'What should I do if I find both old and new wiring colours in the same installation?',
           answer:
-            'This is a very common scenario in UK properties where new work has been added to an older installation. BS 7671 Regulation 514.14.1 requires a warning notice to be fitted at or near the main distribution board. The notice must state: "CAUTION — This installation has wiring colours to two versions of BS 7671. Great care should be taken before undertaking extension, alteration, or repair that all conductors are correctly identified." If the warning notice is missing during an EICR inspection, it should be recorded as an observation — typically C3 (Improvement Recommended). When working on mixed-colour installations, take extra care to identify every conductor before assuming its function. The overlap between old and new colour schemes (especially blue and black) creates a genuine risk of misidentification that could be fatal.',
+            'This is a very common scenario in UK properties where new work has been added to an older installation. BS 7671 Regulation 514.14 requires a warning notice to be fitted at or near the main distribution board. The notice must state: "CAUTION — This installation has wiring colours to two versions of BS 7671. Great care should be taken before undertaking extension, alteration, or repair that all conductors are correctly identified." If the warning notice is missing during an EICR inspection, it should be recorded as an observation — typically C3 (Improvement Recommended). When working on mixed-colour installations, take extra care to identify every conductor before assuming its function. The overlap between old and new colour schemes (especially blue and black) creates a genuine risk of misidentification that could be fatal.',
         },
         {
           question: 'What are the three-phase wiring colours in the UK?',
@@ -587,7 +587,7 @@ export default function WiringColoursUKPage() {
         {
           question: 'Why must the bare earth in twin-and-earth cable be sleeved green/yellow?',
           answer:
-            'BS 7671 Regulation 514.4.2 requires that every protective conductor is identified by the combination of green and yellow colours throughout its length, or at every point where it is accessible. In twin-and-earth cable, the circuit protective conductor (CPC) is manufactured as bare copper without insulation. At every termination point — at accessories, junction boxes, the consumer unit, and anywhere the conductor is exposed — it must be sleeved with green/yellow sleeving. The reasons are twofold. First, it identifies the conductor as the protective earth so there is no confusion about its function. Second, it provides insulation at the termination point to prevent the bare copper from accidentally touching live or neutral conductors. Missing CPC sleeving is one of the most common observations on EICR inspections and is typically classified as C3 (Improvement Recommended), though it could be C2 (Potentially Dangerous) if the bare conductor could make contact with a live terminal.',
+            'BS 7671 Regulation 514.4 requires that every protective conductor is identified by the combination of green and yellow colours throughout its length, or at every point where it is accessible. In twin-and-earth cable, the circuit protective conductor (CPC) is manufactured as bare copper without insulation. At every termination point — at accessories, junction boxes, the consumer unit, and anywhere the conductor is exposed — it must be sleeved with green/yellow sleeving. The reasons are twofold. First, it identifies the conductor as the protective earth so there is no confusion about its function. Second, it provides insulation at the termination point to prevent the bare copper from accidentally touching live or neutral conductors. Missing CPC sleeving is one of the most common observations on EICR inspections and is typically classified as C3 (Improvement Recommended), though it could be C2 (Potentially Dangerous) if the bare conductor could make contact with a live terminal.',
         },
       ]}
       relatedPages={[

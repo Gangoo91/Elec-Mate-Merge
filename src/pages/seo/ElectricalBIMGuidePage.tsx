@@ -632,6 +632,11 @@ export default function ElectricalBIMGuidePage() {
           answer:
             'Clash detection identifies physical conflicts between the electrical model and other disciplines (structure, mechanical, architecture) before construction begins. This means cable tray routes are confirmed as buildable, distribution board positions have adequate clearance, and containment does not clash with ductwork or structural elements. Without clash detection, these conflicts are discovered on site — requiring rework, delays, and additional costs that typically fall on the subcontractor. On a well-coordinated BIM project, the electrical installation should proceed with minimal surprises.',
         },
+        {
+          question: 'What qualifications or training do electricians need for BIM projects?',
+          answer:
+            'There are no mandatory BIM qualifications for electricians working on BIM projects. However, practical skills in using BIM viewers (such as Autodesk Viewer or Navisworks Freedom) are increasingly expected. Electrical designers and estimators working on BIM projects typically benefit from Revit MEP training. The CIBSE and the Chartered Institution of Building Services Engineers offer BIM CPD courses relevant to electrical building services work. The BRE Academy and the Royal Institution of Chartered Surveyors (RICS) also provide BIM training at various levels. In practice, most site electricians on BIM projects need to understand how to access and navigate the federated model on a tablet, interpret coordination drawings, and follow the site BIM execution plan for reporting clashes and deviations from the model.',
+        },
       ]}
       relatedPages={[
         {

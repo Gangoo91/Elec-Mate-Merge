@@ -73,6 +73,11 @@ const faqs = [
     answer:
       'For a true fall of potential measurement, the earth electrode under test should be disconnected from the installation earthing conductor. This is because you want to measure the resistance of the electrode itself, not the parallel path through the installation. If the electrode is left connected, the measurement may include other earth paths (such as a metallic water pipe or the neutral-earth connection at the supply transformer), giving a misleadingly low reading. Disconnect the main earthing conductor at the earth electrode connection point before testing. Make sure the installation is safely isolated before disconnecting the earthing conductor — removing the earth from a live installation is extremely dangerous. After testing, reconnect the earthing conductor securely and check the connection is tight. If you cannot safely disconnect the electrode (for example, in an occupied property where you cannot isolate the supply), the stakeless clamp-on method can give an indicative reading without disconnection.',
   },
+  {
+    question: 'Where should an earth electrode be installed and how deep should it be driven?',
+    answer:
+      'Earth electrodes should be installed in a location where the soil remains moist throughout the year — away from paths, driveways, and areas with good drainage. They should be located as close as practical to the main earthing terminal of the installation to minimise the length of the earthing conductor. In terms of depth, a standard 1.2-metre earth rod is suitable for many domestic and small commercial TT installations, but for higher-resistance soils (sandy, gravelly, or chalk soils), deeper electrodes or multiple rods in parallel may be required. The electrode should be driven vertically and the head should be accessible for testing and reconnection. Where multiple electrodes are installed in parallel to reduce resistance, they should be spaced at least twice their length apart — otherwise the resistance zones around each electrode overlap and the benefit of parallelism is reduced.',
+  },
 ];
 
 const relatedPages: RelatedPage[] = [
@@ -340,7 +345,7 @@ const sections = [
         <p>
           The maximum acceptable earth electrode resistance depends on the type of protective device
           and its rated residual operating current. The fundamental requirement from BS 7671
-          Regulation 411.5.1 for TT systems is:
+          BS 7671 Section 411 for TT systems is:
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <p className="text-white font-mono text-lg text-center mb-4">RA x I&#916;n &le; 50 V</p>

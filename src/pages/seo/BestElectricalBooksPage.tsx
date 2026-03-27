@@ -217,7 +217,7 @@ const sections = [
         <p>
           The current printed edition is BS 7671:2018+A2:2022 (incorporating Amendments 1 and 2).
           Amendment 3 (A3:2024) is a free PDF supplement available from the IET website — download
-          it and keep it with your Brown Book. Amendment 3 adds Regulation 530.3.201 covering
+          it and keep it with your Brown Book. Amendment 3 adds Regulation 530.3.2 covering
           bidirectional and unidirectional devices.
         </p>
       </>

@@ -501,6 +501,11 @@ export default function TransformerSizingCalculatorPage() {
           answer:
             'An undersized transformer will overheat under full load, causing the thermal protection to trip and disconnect the supply. Prolonged overloading degrades the winding insulation, significantly shortening the transformer life. An oversized transformer wastes capital on unnecessary capacity and operates less efficiently at light load. All transformers have iron losses (core losses) that are constant regardless of load — these represent wasted energy when the transformer is lightly loaded. The optimal loading for efficiency is typically 50-75% of the transformer rated capacity. This is why the 20-25% oversize factor is a good compromise between reliability and efficiency.',
         },
+        {
+          question: 'What information do I need before sizing a transformer?',
+          answer:
+            'To size a transformer accurately you need: the full list of connected loads (in kW or kVA for each piece of equipment), the power factor of each load type (resistive loads such as heaters and incandescent lighting have a power factor of 1.0; motors, fluorescent fittings, and drives typically have a power factor of 0.7 to 0.85), whether any motors will be started direct-on-line (DOL) and their full load and starting currents, the diversity or demand factor applicable to the installation, whether the installation is single-phase or three-phase, and the secondary voltage required (typically 230 V single-phase or 400 V three-phase for UK installations, or 110 V centre-tapped earth for construction sites). For future-proofing, also ask the client whether additional loads are planned within the transformer\'s expected service life — adding capacity now is far cheaper than replacing the transformer later.',
+        },
       ]}
       faqHeading="Frequently Asked Questions About Transformer Sizing"
       relatedPages={[

@@ -74,6 +74,11 @@ const faqs = [
     answer:
       'Electrician day rates have been steadily increasing over the past 5 years. The average day rate has risen by approximately 4-7% per year since 2020, driven by a shortage of skilled electricians, increasing demand for electrical work (particularly EV charging and renewable energy), rising costs of living and materials, and new regulations creating more work (EICR requirements for landlords, AFDD requirements). The trend is expected to continue through 2026 and beyond. The UK has a significant skills shortage in the electrical trade, with an ageing workforce and insufficient new entrants to replace retiring electricians. This supply-demand imbalance supports continued upward pressure on day rates.',
   },
+  {
+    question: 'How does the Construction Industry Scheme (CIS) affect my day rate?',
+    answer:
+      'If you work as a self-employed electrician as a subcontractor to a main or electrical contractor, your day rate payments will usually fall under the Construction Industry Scheme (CIS). The contractor deducts 20% (or 30% if you are not registered) from your day rate payment and pays it to HMRC on your behalf. This is not an additional tax — it is a payment on account against your income tax and National Insurance liability. At the end of the tax year, these deductions are reconciled against your actual tax bill, and any overpayment is refunded. The key point for day rate setting: your quoted day rate is your gross rate before CIS deductions. Make sure your day rate calculation is based on your target net income — factor in the CIS deduction when working out what you need to charge to achieve your financial goals. Elec-Mate\'s job profitability calculator handles CIS deductions automatically.',
+  },
 ];
 
 const relatedPages: RelatedPage[] = [

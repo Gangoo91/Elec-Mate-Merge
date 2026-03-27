@@ -21,7 +21,7 @@ import {
 
 const PAGE_TITLE = 'BS 7671 18th Edition Guide 2026 | Wiring Regulations UK';
 const PAGE_DESCRIPTION =
-  'Complete guide to BS 7671:2018 — the 18th Edition IET Wiring Regulations. All 7 parts explained, key changes from 17th Edition, Amendment 2 (2022), Amendment 3 (2024) including Regulation 530.3.201, and expected Amendment 4. For UK electricians.';
+  'Complete guide to BS 7671:2018 — the 18th Edition IET Wiring Regulations. All 7 parts explained, key changes from 17th Edition, Amendment 2 (2022), Amendment 3 (2024) on bidirectional devices, and expected Amendment 4. For UK electricians.';
 
 const breadcrumbs = [
   { label: 'Guides', href: '/guides' },
@@ -42,8 +42,8 @@ const tocItems = [
 
 const keyTakeaways = [
   'BS 7671:2018+A2:2022 is the current base standard (the "brown book") — all new electrical work in the UK must comply.',
-  'Amendment 3 (A3:2024), issued 31 July 2024, adds Regulation 530.3.201 covering bidirectional and unidirectional protective devices for battery storage and V2G installations.',
-  'The 18th Edition introduced major changes including AFDDs (Regulation 421.1.7), surge protection (Section 534), metal consumer unit requirements, and EV charging provisions (Section 722).',
+  'Amendment 3 (A3:2024), issued 31 July 2024, adds a new regulation within Section 530 covering bidirectional and unidirectional protective devices for battery storage and V2G installations.',
+  'The 18th Edition introduced major changes including AFDDs (Regulation 421.1.1 and Section 421), surge protection (Section 534), metal consumer unit requirements, and EV charging provisions (Section 722).',
   'Amendment 4 is expected in 2026 and will likely address evolving requirements for energy storage, smart grid integration, and prosumer installations.',
   'Elec-Mate has every BS 7671 regulation built into the app — tap any certificate field to see the relevant clause, with 70+ calculators based on BS 7671 tables.',
 ];
@@ -62,7 +62,7 @@ const faqs = [
   {
     question: 'What changed between the 17th and 18th Edition of BS 7671?',
     answer:
-      'The 18th Edition (BS 7671:2018) replaced the 17th Edition on 1 January 2019. The major changes include: (1) New requirements for Arc Fault Detection Devices (AFDDs) in Regulation 421.1.7, recommended for specific higher-risk installations. (2) Significantly expanded surge protection requirements in Section 534, requiring a risk assessment and, in many cases, installation of Type 2 SPDs. (3) A new Section 722 for Electric Vehicle Charging Installations, covering cable sizing, protection, and earthing for EV charge points. (4) Metal consumer unit enclosure requirements (Regulation 421.1.201) carried forward from Amendment 3 to the 17th Edition. (5) Updated requirements for energy efficiency in Part 8 (Section 801 to 805), addressing metering, power factor, and switching. (6) Revised RCD requirements, with Type A (or better) required for circuits likely to produce DC residual currents. (7) Strengthened requirements for installations in locations containing a bath or shower (Section 701). The 18th Edition is a substantially different document from the 17th Edition and electricians were given a one-year transition period to adopt it.',
+      'The 18th Edition (BS 7671:2018) replaced the 17th Edition on 1 January 2019. The major changes include: (1) New requirements for Arc Fault Detection Devices (AFDDs) under Section 421, recommended for specific higher-risk installations. (2) Significantly expanded surge protection requirements in Section 534, requiring a risk assessment and, in many cases, installation of Type 2 SPDs. (3) A new Section 722 for Electric Vehicle Charging Installations, covering cable sizing, protection, and earthing for EV charge points. (4) Metal consumer unit enclosure requirements (Regulation 421.1.201) carried forward from Amendment 3 to the 17th Edition. (5) Updated requirements for energy efficiency in Part 8 (Section 801 to 805), addressing metering, power factor, and switching. (6) Revised RCD requirements, with Type A (or better) required for circuits likely to produce DC residual currents. (7) Strengthened requirements for installations in locations containing a bath or shower (Section 701). The 18th Edition is a substantially different document from the 17th Edition and electricians were given a one-year transition period to adopt it.',
   },
   {
     question: 'Do I need to buy a new copy of BS 7671 for each amendment?',
@@ -80,9 +80,9 @@ const faqs = [
       'Major new editions of BS 7671 are published approximately every 10 years. The 16th Edition was published in 2001, the 17th Edition in 2008, and the 18th Edition in 2018. Between editions, amendments are issued to address urgent changes, new technologies, or corrections. The 18th Edition has had three amendments so far: Amendment 1 (2020), Amendment 2 (2022), and Amendment 3 (2024). Amendment 4 is expected in 2026. The next full new edition (the 19th Edition) would typically be expected around 2028, but the IET has not confirmed a date. Each amendment requires electricians to update their knowledge and potentially their qualifications.',
   },
   {
-    question: 'What is Regulation 530.3.201 introduced by Amendment 3?',
+    question: 'What did Amendment 3 introduce for bidirectional devices?',
     answer:
-      'Regulation 530.3.201 was introduced by Amendment 3 (A3:2024), issued on 31 July 2024. It addresses the requirements for bidirectional and unidirectional protective devices in installations where the supply can operate in both directions — specifically, installations with battery energy storage systems (BESS), solar PV with battery backup, or vehicle-to-grid (V2G) EV chargers that can export energy back to the grid. Standard MCBs and RCDs are typically designed for unidirectional fault current flow. When energy can flow in reverse (from the battery or EV back through the consumer unit to the grid), fault current can also flow in reverse. Regulation 530.3.201 requires that the protective devices installed are suitable for the direction(s) of fault current that can occur. This may require bidirectional MCBs, bidirectional RCDs, or specific arrangements to ensure that unidirectional devices are not subjected to reverse fault currents they cannot safely interrupt.',
+      'Amendment 3 (A3:2024), issued on 31 July 2024, added new requirements within Section 530 of BS 7671 for bidirectional and unidirectional protective devices in installations where the supply can operate in both directions — specifically, installations with battery energy storage systems (BESS), solar PV with battery backup, or vehicle-to-grid (V2G) EV chargers that can export energy back to the grid. Standard MCBs and RCDs are typically designed for unidirectional fault current flow. When energy can flow in reverse (from the battery or EV back through the consumer unit to the grid), fault current can also flow in reverse. The Amendment 3 requirement is that protective devices installed are suitable for the direction(s) of fault current that can occur. This may require bidirectional MCBs, bidirectional RCDs, or specific arrangements to ensure that unidirectional devices are not subjected to reverse fault currents they cannot safely interrupt.',
   },
 ];
 
@@ -197,8 +197,8 @@ const sections = [
               52), switching devices (Chapter 53), earthing arrangements and protective conductors
               (Chapter 54), other equipment (Chapter 55), and safety services (Chapter 56). This is
               where you find the regulations for cable selection, installation methods, minimum
-              conductor sizes, and equipment ratings. Amendment 3's Regulation 530.3.201 on
-              bidirectional devices sits in this part.
+              conductor sizes, and equipment ratings. Amendment 3's new requirement on
+              bidirectional devices (within Section 530) sits in this part.
             </p>
           </div>
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
@@ -259,7 +259,7 @@ const sections = [
               <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <div>
                 <h3 className="font-bold text-white mb-1">
-                  Arc Fault Detection Devices (Regulation 421.1.7)
+                  Arc Fault Detection Devices (Section 421)
                 </h3>
                 <p className="text-white text-sm leading-relaxed">
                   The 18th Edition introduced a recommendation (not a mandatory requirement) for
@@ -380,7 +380,7 @@ const sections = [
   },
   {
     id: 'amendment-3',
-    heading: 'Amendment 3 (2024) — Regulation 530.3.201',
+    heading: 'Amendment 3 (2024) — Bidirectional Device Requirements',
     content: (
       <>
         <p>
@@ -389,20 +389,20 @@ const sections = [
           website and use alongside their existing copy of BS 7671:2018+A2:2022.
         </p>
         <p>
-          The headline change in Amendment 3 is the introduction of Regulation 530.3.201, which
-          addresses the requirements for bidirectional and unidirectional protective devices. This
-          regulation is a direct response to the growth of domestic battery energy storage systems
+          The headline change in Amendment 3 is a new requirement within Section 530 of BS 7671,
+          which addresses the selection of bidirectional and unidirectional protective devices. This
+          addition is a direct response to the growth of domestic battery energy storage systems
           (BESS), solar PV installations with battery backup, and vehicle-to-grid (V2G) electric
           vehicle charging — all of which can cause electrical energy to flow in the reverse
           direction, from the installation back through the consumer unit towards the supply.
         </p>
         <div className="rounded-2xl bg-yellow-500/5 border border-yellow-500/20 p-5 my-6">
-          <h3 className="font-bold text-white text-lg mb-3">What Regulation 530.3.201 requires</h3>
+          <h3 className="font-bold text-white text-lg mb-3">What the Amendment 3 Section 530 requirement covers</h3>
           <p className="text-white text-sm leading-relaxed mb-3">
             Standard MCBs, RCDs, and RCBOs are designed to interrupt fault current flowing in one
             direction — from the supply, through the device, to the load. When a battery or V2G
-            charger exports energy, fault current can flow in the opposite direction. Regulation
-            530.3.201 requires that:
+            charger exports energy, fault current can flow in the opposite direction. The Amendment 3
+            requirement within Section 530 states that:
           </p>
           <ul className="space-y-2 text-white text-sm leading-relaxed">
             <li className="flex items-start gap-3">
@@ -482,7 +482,7 @@ const sections = [
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
             <h3 className="font-bold text-white mb-2">AFDD Requirements</h3>
             <p className="text-white text-sm leading-relaxed">
-              The current Regulation 421.1.7 recommends AFDDs but does not mandate them. There is
+              The current BS 7671 Chapter 42 guidance recommends AFDDs but does not mandate them in all cases. There is
               ongoing industry discussion about strengthening this to a requirement for specific
               circuit types or building types — particularly in HMOs, care homes, and buildings of
               historical significance where the fire risk is elevated. Amendment 4 may move AFDDs
@@ -598,7 +598,7 @@ const relatedPages = [
     href: '/guides/amendment-3-changes',
     title: 'Amendment 3 Changes (A3:2024)',
     description:
-      'Detailed breakdown of every change in Amendment 3, including Regulation 530.3.201.',
+      'Detailed breakdown of every change in Amendment 3, including the new bidirectional device requirements in Section 530.',
     icon: ShieldCheck,
     category: 'Guide',
   },
@@ -660,7 +660,7 @@ export default function BS7671EighteenthEditionGuidePage() {
           BS 7671: 18th Edition <span className="text-yellow-400">Wiring Regulations Guide</span>
         </>
       }
-      heroSubtitle="The complete guide to BS 7671:2018 — the 18th Edition of the IET Wiring Regulations. All 7 parts explained, key changes from the 17th Edition, Amendment 2 (2022), Amendment 3 (2024) including Regulation 530.3.201 for bidirectional devices, and what to expect from Amendment 4 in 2026."
+      heroSubtitle="The complete guide to BS 7671:2018 — the 18th Edition of the IET Wiring Regulations. All 7 parts explained, key changes from the 17th Edition, Amendment 2 (2022), Amendment 3 (2024) covering bidirectional device requirements, and what to expect from Amendment 4 in 2026."
       readingTime={18}
       keyTakeaways={keyTakeaways}
       sections={sections}

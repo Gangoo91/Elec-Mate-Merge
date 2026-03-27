@@ -3,6 +3,8 @@ import useSEO from '@/hooks/useSEO';
 import { PublicPageLayout } from '@/components/seo/PublicPageLayout';
 import { SEOCTASection } from '@/components/seo/SEOCTASection';
 import { SEOFeatureGrid } from '@/components/seo/SEOFeatureGrid';
+import { SEOAppBridge } from '@/components/seo/SEOAppBridge';
+import { SEOInternalLink } from '@/components/seo/SEOInternalLink';
 import {
   BookOpen,
   BrainCircuit,
@@ -42,6 +44,11 @@ const faqs = [
     question: 'What is the difference between the 17th and 18th Edition wiring regulations?',
     answer:
       'The 18th Edition (BS 7671:2018) replaced the 17th Edition (BS 7671:2008+A3:2015) on 1 January 2019. Key changes include updated requirements for arc fault detection devices (AFDDs) in Regulation 421.1.7, new surge protection requirements under Section 534, revised consumer unit metal enclosure rules, additional requirements for electric vehicle charging in Section 722, and updated special installation rules for solar PV systems. Amendment 2 (2022) and Amendment 3 (2024) have further refined these areas.',
+  },
+  {
+    question: 'How do I know which parts of BS 7671 are most likely to come up in the C&G 2382 exam?',
+    answer:
+      'The City & Guilds 2382-22 exam syllabus covers all seven parts of BS 7671, but some areas are tested more heavily than others. Part 4 (Protection for Safety) — covering automatic disconnection of supply, RCD requirements, and protection against overvoltage — typically accounts for the largest proportion of questions. Part 5 (Selection and Erection of Equipment) — covering cable sizing, installation methods, and special locations — is also heavily tested. Regulations relating to earthing arrangements (Chapter 54), bonding (Chapter 54), and circuit design are consistently examined. Elec-Mate\'s practice question bank is mapped to the exam syllabus by topic, so you can see which areas you are weakest in and focus your revision accordingly. Our AI study assistant can generate questions on any specific regulation or chapter on demand.',
   },
 ];
 
@@ -237,7 +244,11 @@ export default function EighteenthEditionCoursePage() {
               assessment of general characteristics, protection for safety, selection and erection
               of equipment, inspection and testing, and special installations or locations.
               Together, these parts form a comprehensive framework that governs everything from
-              domestic rewires to large commercial installations.
+              domestic rewires to large commercial installations. Once qualified, you can apply your
+              knowledge directly in practice — generating compliant{' '}
+              <SEOInternalLink href="/tools/eic-certificate">Electrical Installation Certificates</SEOInternalLink> and
+              preparing for the{' '}
+              <SEOInternalLink href="/training/city-guilds-2391">City &amp; Guilds 2391 Inspection &amp; Testing</SEOInternalLink> qualification.
             </p>
           </div>
         </div>
@@ -458,6 +469,18 @@ export default function EighteenthEditionCoursePage() {
             A complete study toolkit designed around how electricians actually learn and revise.
           </p>
           <SEOFeatureGrid features={features} columns={3} />
+        </div>
+      </section>
+
+      {/* App Bridge */}
+      <section className="py-8 px-5">
+        <div className="max-w-4xl mx-auto">
+          <SEOAppBridge
+            title="Pass Your 18th Edition with Elec-Mate"
+            description="AI-powered 18th Edition study platform built for UK electricians — practice exams updated to Amendment 3:2024, instant regulation search, progress tracking, and mock tests. Study on your phone, around your working day."
+            ctaText="Start 7-day free trial"
+            ctaHref="/auth/signup"
+          />
         </div>
       </section>
 

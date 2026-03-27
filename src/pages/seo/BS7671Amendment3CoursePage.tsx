@@ -24,7 +24,7 @@ import {
 
 const PAGE_TITLE = 'BS 7671 Amendment 3 Course | A3:2024 Update Training';
 const PAGE_DESCRIPTION =
-  'Comprehensive BS 7671 Amendment 3 (A3:2024) training for UK electricians. Regulation 530.3.201, bidirectional and unidirectional devices, updated requirements, and practical implications. 6 modules with video content, interactive quizzes, and AI tutor.';
+  'Comprehensive BS 7671 Amendment 3 (A3:2024) training for UK electricians. Bidirectional and unidirectional device requirements, updated Section 530 rules, and practical implications. 6 modules with video content, interactive quizzes, and AI tutor.';
 
 const breadcrumbs = [
   { label: 'Training', href: '/training' },
@@ -33,7 +33,7 @@ const breadcrumbs = [
 
 const tocItems = [
   { id: 'what-is-amendment-3', label: 'What Is Amendment 3?' },
-  { id: 'reg-530-3-201', label: 'Regulation 530.3.201' },
+  { id: 'reg-530-3-201', label: 'A3:2024 Bidirectional Device Requirement' },
   { id: 'bidirectional-devices', label: 'Bidirectional and Unidirectional Devices' },
   { id: 'practical-impact', label: 'Practical Impact on Installation Work' },
   { id: 'update-training', label: 'Updating Your Knowledge' },
@@ -46,7 +46,7 @@ const tocItems = [
 
 const keyTakeaways = [
   'BS 7671:2018+A3:2024 was issued on 31 July 2024 as a free PDF supplement to the 18th Edition — it is not a new book and does not replace the existing brown book, but electricians must be aware of its contents.',
-  'The key addition is Regulation 530.3.201, which addresses the selection and installation of switching and control devices that may be subjected to bidirectional power flows — a direct response to the growth of battery storage, solar PV, and vehicle-to-grid systems.',
+  'The key addition in A3:2024 is a new requirement within Section 530, which addresses the selection and installation of switching and control devices that may be subjected to bidirectional power flows — a direct response to the growth of battery storage, solar PV, and vehicle-to-grid systems.',
   'Bidirectional power flow occurs when energy can travel in both directions through a device — for example, from a solar PV inverter exporting to the grid, or from an EV battery discharging back into the property through a vehicle-to-grid charger.',
   'Electricians must verify that all switching, protective, and control devices in an installation with bidirectional power flow are rated and suitable for operation in both directions — not all MCBs, RCDs, and isolators are bidirectional.',
   'Amendment 4 is expected in 2026 and will bring further changes — Elec-Mate keeps your knowledge current with updates as each amendment is published.',
@@ -56,12 +56,12 @@ const faqs = [
   {
     question: 'Do I need to buy a new copy of BS 7671 for Amendment 3?',
     answer:
-      'No. Amendment 3 (A3:2024) was published on 31 July 2024 as a free PDF supplement by the IET. It is not a replacement for the brown book (BS 7671:2018+A2:2022). You download the supplement and read it alongside your existing copy. The supplement contains the new and amended regulations, including Regulation 530.3.201. When Amendment 4 is published (expected 2026), it is likely to be incorporated into a consolidated reprint — at that point, a new edition or updated brown book may be issued. Until then, electricians should ensure they have both the brown book (with Amendment 2 incorporated) and the free A3:2024 supplement.',
+      'No. Amendment 3 (A3:2024) was published on 31 July 2024 as a free PDF supplement by the IET. It is not a replacement for the brown book (BS 7671:2018+A2:2022). You download the supplement and read it alongside your existing copy. The supplement contains the new and amended regulations, including the A3:2024 Section 530 requirement. When Amendment 4 is published (expected 2026), it is likely to be incorporated into a consolidated reprint — at that point, a new edition or updated brown book may be issued. Until then, electricians should ensure they have both the brown book (with Amendment 2 incorporated) and the free A3:2024 supplement.',
   },
   {
-    question: 'What does Regulation 530.3.201 actually require?',
+    question: 'What does the A3:2024 Section 530 requirement actually require?',
     answer:
-      'Regulation 530.3.201 requires that where a switching device or control device may be subjected to power flow in both directions (bidirectional power flow), the device shall be suitable for that duty. In practical terms, this means that every MCB, RCBO, RCD, isolator, changeover switch, and contactor in a circuit that could carry current in either direction must be verified as suitable for bidirectional operation. Not all devices are — some MCBs, for example, are designed to be connected with the supply on one specific terminal. Where a device is unidirectional (suitable for current flow in one direction only), it must either be replaced with a bidirectional-rated device, or additional measures must be taken to prevent reverse power flow through it.',
+      'the A3:2024 Section 530 requirement requires that where a switching device or control device may be subjected to power flow in both directions (bidirectional power flow), the device shall be suitable for that duty. In practical terms, this means that every MCB, RCBO, RCD, isolator, changeover switch, and contactor in a circuit that could carry current in either direction must be verified as suitable for bidirectional operation. Not all devices are — some MCBs, for example, are designed to be connected with the supply on one specific terminal. Where a device is unidirectional (suitable for current flow in one direction only), it must either be replaced with a bidirectional-rated device, or additional measures must be taken to prevent reverse power flow through it.',
   },
   {
     question: 'Which installations are affected by bidirectional power flow?',
@@ -76,12 +76,12 @@ const faqs = [
   {
     question: 'Is the 18th Edition exam updated for Amendment 3?',
     answer:
-      'The City and Guilds 2382 (18th Edition) examination syllabus is periodically updated to reflect amendments. Following the publication of A3:2024, exam questions related to bidirectional power flow and Regulation 530.3.201 may appear. If you are sitting or resitting the 2382 exam, you should ensure your study materials cover Amendment 3. Elec-Mate has updated all 18th Edition course content and mock exams to include A3:2024 material. The key topics to study are: Regulation 530.3.201 requirements, the definition of bidirectional and unidirectional devices, identification of installations with bidirectional power flow, and verification that devices are suitable for their intended duty.',
+      'The City and Guilds 2382 (18th Edition) examination syllabus is periodically updated to reflect amendments. Following the publication of A3:2024, exam questions related to bidirectional power flow and the A3:2024 Section 530 requirement may appear. If you are sitting or resitting the 2382 exam, you should ensure your study materials cover Amendment 3. Elec-Mate has updated all 18th Edition course content and mock exams to include A3:2024 material. The key topics to study are: the A3:2024 Section 530 requirement requirements, the definition of bidirectional and unidirectional devices, identification of installations with bidirectional power flow, and verification that devices are suitable for their intended duty.',
   },
   {
     question: 'What is the difference between Amendment 3 and the expected Amendment 4?',
     answer:
-      'Amendment 3 (A3:2024) is a focused amendment addressing primarily the issue of bidirectional power flow through Regulation 530.3.201. It was published as a free supplement on 31 July 2024. Amendment 4 is expected in 2026 and is anticipated to be a broader amendment covering multiple areas of BS 7671, potentially including further updates to Section 722 (electric vehicle charging), energy storage systems, and prosumer installations. The exact content of Amendment 4 has not been confirmed at the time of writing. Elec-Mate will update course content as soon as Amendment 4 is published. Some industry commentators expect Amendment 4 to be incorporated into a new consolidated reprint of BS 7671, which would become the definitive brown book for the remainder of the 18th Edition lifecycle.',
+      'Amendment 3 (A3:2024) is a focused amendment addressing primarily the issue of bidirectional power flow through the A3:2024 Section 530 requirement. It was published as a free supplement on 31 July 2024. Amendment 4 is expected in 2026 and is anticipated to be a broader amendment covering multiple areas of BS 7671, potentially including further updates to Section 722 (electric vehicle charging), energy storage systems, and prosumer installations. The exact content of Amendment 4 has not been confirmed at the time of writing. Elec-Mate will update course content as soon as Amendment 4 is published. Some industry commentators expect Amendment 4 to be incorporated into a new consolidated reprint of BS 7671, which would become the definitive brown book for the remainder of the 18th Edition lifecycle.',
   },
 ];
 
@@ -92,9 +92,9 @@ const modules = [
       'What A3:2024 is, when it was published, how it relates to the 18th Edition brown book and previous amendments (A1:2020, A2:2022). The regulatory timeline from the 17th to 18th Edition and beyond.',
   },
   {
-    title: 'Regulation 530.3.201 in Detail',
+    title: 'A3:2024 Section 530 Requirement in Detail',
     description:
-      'Full analysis of Regulation 530.3.201 — its wording, its scope, and its practical implications. What constitutes a switching device, a control device, and bidirectional power flow under the regulation.',
+      'Full analysis of the Amendment 3 bidirectional device requirement — its wording, its scope, and its practical implications. What constitutes a switching device, a control device, and bidirectional power flow under the requirement.',
   },
   {
     title: 'Bidirectional vs Unidirectional Devices',
@@ -104,7 +104,7 @@ const modules = [
   {
     title: 'Installations With Bidirectional Power Flow',
     description:
-      'Solar PV systems, battery energy storage systems (BESS), vehicle-to-grid (V2G) chargers, micro-CHP, and wind turbines. How bidirectional power flow occurs in each installation type and where Regulation 530.3.201 applies.',
+      'Solar PV systems, battery energy storage systems (BESS), vehicle-to-grid (V2G) chargers, micro-CHP, and wind turbines. How bidirectional power flow occurs in each installation type and where the A3:2024 Section 530 requirement applies.',
   },
   {
     title: 'Design and Installation Considerations',
@@ -114,7 +114,7 @@ const modules = [
   {
     title: 'Verification, Testing, and Documentation',
     description:
-      'How to verify compliance with Regulation 530.3.201 during initial verification and periodic inspection. Documentation requirements for EICs and EICRs. Observation codes for non-compliant installations.',
+      'How to verify compliance with the A3:2024 Section 530 requirement during initial verification and periodic inspection. Documentation requirements for EICs and EICRs. Observation codes for non-compliant installations.',
   },
 ];
 
@@ -123,7 +123,7 @@ const features = [
     icon: BrainCircuit,
     title: 'AI Study Assistant',
     description:
-      'Ask any question about Amendment 3 in plain English. Get detailed answers on Regulation 530.3.201, bidirectional devices, and practical installation scenarios.',
+      'Ask any question about Amendment 3 in plain English. Get detailed answers on the A3:2024 Section 530 requirement, bidirectional devices, and practical installation scenarios.',
   },
   {
     icon: Radio,
@@ -135,7 +135,7 @@ const features = [
     icon: ClipboardCheck,
     title: 'Interactive Quizzes',
     description:
-      'Test your understanding of Amendment 3 with scenario-based questions. Identify bidirectional circuits, select suitable devices, and apply Regulation 530.3.201 correctly.',
+      'Test your understanding of Amendment 3 with scenario-based questions. Identify bidirectional circuits, select suitable devices, and apply the A3:2024 Section 530 requirement correctly.',
   },
   {
     icon: Clock,
@@ -153,7 +153,7 @@ const features = [
     icon: FileCheck2,
     title: 'Updated Mock Exams',
     description:
-      'All 18th Edition mock exams updated to include A3:2024 content. Practise with questions covering Regulation 530.3.201 and bidirectional power flow scenarios.',
+      'All 18th Edition mock exams updated to include A3:2024 content. Practise with questions covering the A3:2024 Section 530 requirement and bidirectional power flow scenarios.',
   },
 ];
 
@@ -181,7 +181,7 @@ const sections = [
           <SEOInternalLink href="/training/eighteenth-edition-course">
             18th Edition qualification (C&G 2382)
           </SEOInternalLink>
-          , Amendment 3 is required knowledge. Exam questions may reference Regulation 530.3.201 and
+          , Amendment 3 is required knowledge. Exam questions may reference the A3:2024 Section 530 requirement and
           the concept of bidirectional power flow. For practising electricians, understanding
           A3:2024 is essential for any installation involving solar PV, battery storage, or V2G
           charging.
@@ -191,11 +191,11 @@ const sections = [
   },
   {
     id: 'reg-530-3-201',
-    heading: 'Regulation 530.3.201: The Key Addition',
+    heading: 'A3:2024 Section 530: The Key Addition',
     content: (
       <>
         <p>
-          The central addition in Amendment 3 is Regulation 530.3.201. This regulation sits within
+          The central addition in Amendment 3 is the new bidirectional device requirement within Section 530 of BS 7671. This addition sits within
           Part 5 of BS 7671 (Selection and Erection of Equipment) and specifically within Chapter 53
           (Switching Devices). It states that where a switching device or control device may be
           subjected to power flow in both directions, the device must be suitable for that duty.
@@ -218,15 +218,15 @@ const sections = [
                 If a fault occurs on a circuit protected by a unidirectional MCB and the fault
                 current flows in the reverse direction (from the load side), the MCB may not trip at
                 all, or may trip at a significantly higher current than its rating. This could
-                result in overheating, cable damage, or fire. Regulation 530.3.201 makes it explicit
+                result in overheating, cable damage, or fire. The A3:2024 Section 530 addition makes it explicit
                 that this risk must be addressed at the design and installation stage.
               </p>
             </div>
           </div>
         </div>
         <SEOAppBridge
-          title="Understand Regulation 530.3.201 with AI explanations"
-          description="Not sure whether your installation needs bidirectional devices? Ask the Elec-Mate AI tutor about specific scenarios — solar PV, battery storage, V2G chargers — and get clear guidance on Regulation 530.3.201 compliance."
+          title="Understand the A3:2024 bidirectional device requirement with AI explanations"
+          description="Not sure whether your installation needs bidirectional devices? Ask the Elec-Mate AI tutor about specific scenarios — solar PV, battery storage, V2G chargers — and get clear guidance on Amendment 3 Section 530 compliance."
           icon={BrainCircuit}
         />
       </>
@@ -300,7 +300,7 @@ const sections = [
         <p>
           For many electricians, the practical impact of Amendment 3 is focused on specific
           installation types. If you are installing solar PV, battery storage, or V2G chargers, you
-          need to apply Regulation 530.3.201 from the design stage. If you are carrying out general
+          need to apply the A3:2024 Section 530 bidirectional device requirement from the design stage. If you are carrying out general
           domestic or commercial installation work without microgeneration, the regulation has
           minimal direct impact on your day-to-day work — but you still need to know it.
         </p>
@@ -425,7 +425,7 @@ const sections = [
             <div>
               <h3 className="font-bold text-white text-lg mb-1">Amendment 3 (A3:2024)</h3>
               <p className="text-white text-sm leading-relaxed">
-                Published 31 July 2024. Adds Regulation 530.3.201 addressing bidirectional and
+                Published 31 July 2024. Adds a new Section 530 requirement addressing bidirectional and
                 unidirectional switching devices. Free PDF supplement — not incorporated into a new
                 brown book.
               </p>
@@ -564,7 +564,7 @@ export default function BS7671Amendment3CoursePage() {
           BS 7671 Amendment 3: <span className="text-yellow-400">A3:2024 Update Training</span>
         </>
       }
-      heroSubtitle="Master the latest amendment to the 18th Edition wiring regulations. Regulation 530.3.201, bidirectional and unidirectional devices, practical impact on solar PV, battery storage, and V2G installations. 6 modules with video content, quizzes, and AI tutor."
+      heroSubtitle="Master the latest amendment to the 18th Edition wiring regulations. New Section 530 bidirectional device requirements, practical impact on solar PV, battery storage, and V2G installations. 6 modules with video content, quizzes, and AI tutor."
       readingTime={14}
       courseDuration="6 hours"
       courseLevel="Intermediate"

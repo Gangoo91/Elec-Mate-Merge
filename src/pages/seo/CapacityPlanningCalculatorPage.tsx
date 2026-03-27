@@ -406,6 +406,11 @@ export default function CapacityPlanningCalculatorPage() {
           answer:
             'Most UK electrical businesses experience seasonal patterns — busier in autumn and winter (lighting work, heating season, Christmas preparation) and sometimes quieter in summer. Capacity planning accounts for this by tracking your historical workload patterns and adjusting your target utilisation rate by season. In busy months, you might target 75% to 80% utilisation. In quiet months, 55% to 65% might be realistic. The key is to avoid making hiring decisions based on a single busy month and to build a cash reserve during peak periods to cover quieter months.',
         },
+        {
+          question: 'How much revenue should each additional electrician generate?',
+          answer:
+            'As a general rule, each employed electrician should generate revenue at least twice their total employment cost (salary plus national insurance, pension, tools, PPE, training, and vehicle). If an electrician costs you £40,000 per year all in, they need to generate at least £80,000 of revenue to be worthwhile — covering their costs and contributing to your overheads and profit. At a day rate of £350 and 200 billable days per year, they would generate £70,000 — which may fall short of target once non-billable days (training, travel, admin) are accounted for. Elec-Mate capacity planning helps you model these numbers before committing to a hire, so you can set clear performance targets from day one.',
+        },
       ]}
       relatedPages={[
         {

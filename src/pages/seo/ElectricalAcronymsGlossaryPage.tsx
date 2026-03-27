@@ -55,7 +55,7 @@ const faqs = [
   {
     question: 'What does AFDD stand for and when is it required?',
     answer:
-      'AFDD stands for Arc Fault Detection Device. It detects dangerous electrical arcing — such as arcing caused by damaged cable insulation, loose connections, or crushed cables — and disconnects the circuit before the arcing can start a fire. AFDDs are covered by Regulation 421.1.7 of BS 7671:2018+A2:2022, which recommends their use in AC single-phase circuits supplying socket outlets rated up to 32A in residential premises and locations with sleeping accommodation. Amendment 2 (2022) strengthened the recommendation. While not yet a mandatory requirement in all cases, AFDDs are increasingly specified by building control and are expected to become mandatory in future amendments. They are already required in some European countries under HD 60364.',
+      'AFDD stands for Arc Fault Detection Device. It detects dangerous electrical arcing — such as arcing caused by damaged cable insulation, loose connections, or crushed cables — and disconnects the circuit before the arcing can start a fire. AFDDs are covered by Regulation 421.1 of BS 7671:2018+A2:2022, which recommends their use in AC single-phase circuits supplying socket outlets rated up to 32A in residential premises and locations with sleeping accommodation. Amendment 2 (2022) strengthened the recommendation. While not yet a mandatory requirement in all cases, AFDDs are increasingly specified by building control and are expected to become mandatory in future amendments. They are already required in some European countries under HD 60364.',
   },
   {
     question: 'What is the difference between Ze and Zs?',
@@ -70,7 +70,7 @@ const faqs = [
   {
     question: 'What does CPC stand for?',
     answer:
-      'CPC stands for Circuit Protective Conductor. It is the conductor that connects exposed conductive parts (such as the metal casing of an appliance or the earth terminal of a socket) to the main earthing terminal of the installation. In twin-and-earth cable, the CPC is the bare copper conductor that runs between the line and neutral insulated conductors. The CPC provides the fault current return path — if a live conductor touches an exposed metal part, the fault current flows through the CPC back to the source, causing the protective device to trip. The CPC must have adequate cross-sectional area to carry the fault current without overheating. Its size is determined by the adiabatic equation (Regulation 543.1.3) or by reference to Table 54.7 of BS 7671.',
+      'CPC stands for Circuit Protective Conductor. It is the conductor that connects exposed conductive parts (such as the metal casing of an appliance or the earth terminal of a socket) to the main earthing terminal of the installation. In twin-and-earth cable, the CPC is the bare copper conductor that runs between the line and neutral insulated conductors. The CPC provides the fault current return path — if a live conductor touches an exposed metal part, the fault current flows through the CPC back to the source, causing the protective device to trip. The CPC must have adequate cross-sectional area to carry the fault current without overheating. Its size is determined by the adiabatic equation (Regulation 543.1) or by reference to Table 54.7 of BS 7671.',
   },
   {
     question: 'What is the difference between EIC, EICR, and Minor Works?',
@@ -227,7 +227,7 @@ const sections = [
                   Detects dangerous electrical arcing — from damaged insulation, crushed cables, or
                   loose connections — and disconnects the circuit before a fire starts. Analyses the
                   waveform of the current for arc signatures. Recommended by BS 7671 Regulation
-                  421.1.7 for socket circuits up to 32A in dwellings with sleeping accommodation.
+                  421.1 for socket circuits up to 32A in dwellings with sleeping accommodation.
                   Expected to become mandatory in future amendments.
                 </p>
               </div>

@@ -348,7 +348,7 @@ const sections = [
           not detect a series arc fault (since the current is not leaking to earth). Arc Fault
           Detection Devices (AFDDs), covered by{' '}
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
-            BS 7671 Regulation 421.1.7
+            BS 7671 Section 421
           </SEOInternalLink>
           , are designed to detect the high-frequency signature of an arcing fault and disconnect
           the circuit — but they are not yet mandatory in all domestic installations.

@@ -3,6 +3,8 @@ import useSEO from '@/hooks/useSEO';
 import { PublicPageLayout } from '@/components/seo/PublicPageLayout';
 import { SEOCTASection } from '@/components/seo/SEOCTASection';
 import { SEOFeatureGrid } from '@/components/seo/SEOFeatureGrid';
+import { SEOAppBridge } from '@/components/seo/SEOAppBridge';
+import { SEOInternalLink } from '@/components/seo/SEOInternalLink';
 import {
   Building2,
   BrainCircuit,
@@ -252,7 +254,15 @@ export default function BMSCoursePage() {
               owners seek to reduce energy consumption and meet tightening environmental
               regulations. The combination of electrical installation skills, IT networking
               knowledge, and HVAC understanding that BMS work demands means qualified engineers are
-              in short supply and command premium day rates.
+              in short supply and command premium day rates. Before moving into BMS, ensure your{' '}
+              <SEOInternalLink href="/training/18th-edition-course">
+                18th Edition qualification
+              </SEOInternalLink>{' '}
+              and{' '}
+              <SEOInternalLink href="/training/city-guilds-2391">
+                inspection and testing certificate
+              </SEOInternalLink>{' '}
+              are up to date.
             </p>
           </div>
         </div>
@@ -477,6 +487,18 @@ export default function BMSCoursePage() {
             A complete BMS study toolkit designed for electricians moving into building automation.
           </p>
           <SEOFeatureGrid features={features} columns={3} />
+        </div>
+      </section>
+
+      {/* App Bridge */}
+      <section className="py-8 px-5">
+        <div className="max-w-4xl mx-auto">
+          <SEOAppBridge
+            title="Upskill into BMS with Elec-Mate"
+            description="Access BMS training, 70+ electrical calculators, 8 certificate types, and AI-powered study tools — all in one app built for UK electricians. Study at your own pace around your working day."
+            ctaText="Start 7-day free trial"
+            ctaHref="/auth/signup"
+          />
         </div>
       </section>
 

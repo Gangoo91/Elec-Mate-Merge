@@ -19,6 +19,8 @@ import {
   Shield,
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { SEOAppBridge } from '@/components/seo/SEOAppBridge';
+import { SEOInternalLink } from '@/components/seo/SEOInternalLink';
 
 const faqs = [
   {
@@ -496,7 +498,9 @@ export default function ElectricianInvoiceAppPage() {
               The quoting and invoicing system is part of the 14 business calculators that
               complement the 56 technical calculators. Together with the AI tools and training
               courses, Elec-Mate covers every aspect of electrical work — from design and
-              calculation, through installation and testing, to certification, invoicing, and
+              calculation, through installation and testing, to{' '}
+              <SEOInternalLink href="/electrical-certification/eicr">EICR certification</SEOInternalLink>,{' '}
+              <SEOInternalLink href="/electrical-quoting-app">quoting</SEOInternalLink>, invoicing, and
               payment. One platform, one subscription, no gaps.
             </p>
           </div>
@@ -514,6 +518,19 @@ export default function ElectricianInvoiceAppPage() {
             your accounts in order.
           </p>
           <SEOFeatureGrid features={features} columns={3} />
+        </div>
+      </section>
+
+      {/* App Bridge */}
+      <section className="py-4 px-5">
+        <div className="max-w-4xl mx-auto">
+          <SEOAppBridge
+            title="Send Invoices and Get Paid Faster"
+            description="Elec-Mate's invoicing tool lets you create professional invoices on site, send them instantly, and accept card payments via Stripe — all linked to your quotes and certificates."
+            ctaText="Try Elec-Mate free"
+            ctaHref="/auth/signup"
+            icon={PoundSterling}
+          />
         </div>
       </section>
 

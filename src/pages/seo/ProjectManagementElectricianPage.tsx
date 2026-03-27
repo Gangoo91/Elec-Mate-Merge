@@ -1,4 +1,5 @@
 import BusinessTemplate from '@/pages/seo/templates/BusinessTemplate';
+import { SEOAppBridge } from '@/components/seo/SEOAppBridge';
 import { SEOInternalLink } from '@/components/seo/SEOInternalLink';
 import {
   Calendar,
@@ -229,6 +230,12 @@ export default function ProjectManagementElectricianPage() {
         {
           id: 'progress-monitoring',
           heading: 'Progress Monitoring — Catch Problems Early',
+          appBridge: {
+            title: 'Run Your Electrical Business Smarter with Elec-Mate',
+            description:
+              'Quotes, certificates, job tracking, and team management — built for UK electricians.',
+            icon: Target,
+          },
           content: (
             <>
               <p>

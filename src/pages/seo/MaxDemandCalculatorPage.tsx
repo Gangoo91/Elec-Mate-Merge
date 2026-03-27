@@ -1,6 +1,8 @@
 import { Helmet } from 'react-helmet';
 import useSEO from '@/hooks/useSEO';
 import { PublicPageLayout } from '@/components/seo/PublicPageLayout';
+import { SEOAppBridge } from '@/components/seo/SEOAppBridge';
+import { SEOInternalLink } from '@/components/seo/SEOInternalLink';
 import { SEOCTASection } from '@/components/seo/SEOCTASection';
 import { SEOFeatureGrid } from '@/components/seo/SEOFeatureGrid';
 import {
@@ -44,6 +46,11 @@ const faqs = [
     question: 'When should I NOT apply diversity?',
     answer:
       'Diversity should not be applied in situations where all loads genuinely do operate simultaneously at full capacity. Common examples include data centres (where server loads are continuous and redundant supplies must handle full capacity), process control systems, hospital critical care areas, and any installation where load shedding could cause safety or operational failures. Diversity should also not be applied when sizing standby generators unless the generator has automatic load management. When in doubt, it is safer to design for the full connected load. Under-estimating maximum demand leads to overloaded supplies, nuisance tripping of the main protective device, and potential requests from the DNO for a supply upgrade — which can be costly and time-consuming.',
+  },
+  {
+    question: 'How does maximum demand affect the size of the main switch and meter tails?',
+    answer:
+      'The maximum demand calculation directly determines the minimum current rating required for the main switch, the meter tails, and the service cut-out (supply fuse). The meter tails must be sized to carry the maximum demand current without exceeding their current-carrying capacity after correction factors are applied. In most domestic properties, the supply fuse is 60 A, 80 A, or 100 A — if the maximum demand exceeds this rating, you must either reduce the demand (for example, by specifying a load management system for EV chargers) or liaise with the DNO for a supply upgrade, which can take weeks or months and incurs additional costs. The Elec-Mate maximum demand calculator helps you check whether the proposed installation stays within the available supply capacity before you commit to a design, avoiding expensive surprises later.',
   },
 ];
 
@@ -257,7 +264,15 @@ export default function MaxDemandCalculatorPage() {
               installations increasingly include EV chargers (7.4 kW for a typical single-phase home
               charger), heat pumps (3 to 12 kW), and battery storage systems. These new loads can
               significantly increase the maximum demand beyond what the existing supply was designed
-              to handle, and electricians must assess the impact before adding them.
+              to handle, and electricians must assess the impact before adding them. Use the{' '}
+              <SEOInternalLink href="/tools/cable-sizing-calculator">
+                cable sizing calculator
+              </SEOInternalLink>{' '}
+              to size meter tails once maximum demand is confirmed, and the{' '}
+              <SEOInternalLink href="/tools/voltage-drop-calculator">
+                voltage drop calculator
+              </SEOInternalLink>{' '}
+              to verify long submain runs.
             </p>
           </div>
         </div>
@@ -590,6 +605,18 @@ export default function MaxDemandCalculatorPage() {
             manual calculations with Table 1B.
           </p>
           <SEOFeatureGrid features={features} columns={3} />
+        </div>
+      </section>
+
+      {/* App Bridge */}
+      <section className="py-8 px-5">
+        <div className="max-w-4xl mx-auto">
+          <SEOAppBridge
+            title="Elec-Mate Includes All the Electrical Calculators You Need"
+            description="Elec-Mate includes all the electrical calculators you need — use them on any job, on any device."
+            ctaText="Try Elec-Mate free"
+            ctaHref="/auth/signup"
+          />
         </div>
       </section>
 

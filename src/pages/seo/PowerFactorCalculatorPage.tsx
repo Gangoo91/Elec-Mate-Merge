@@ -1,6 +1,8 @@
 import { Helmet } from 'react-helmet';
 import useSEO from '@/hooks/useSEO';
 import { PublicPageLayout } from '@/components/seo/PublicPageLayout';
+import { SEOAppBridge } from '@/components/seo/SEOAppBridge';
+import { SEOInternalLink } from '@/components/seo/SEOInternalLink';
 import { SEOCTASection } from '@/components/seo/SEOCTASection';
 import { SEOFeatureGrid } from '@/components/seo/SEOFeatureGrid';
 import {
@@ -255,10 +257,17 @@ export default function PowerFactorCalculatorPage() {
             <p>
               Understanding power factor matters because it directly affects installation sizing,
               energy costs, and equipment lifespan. A poor power factor means the installation draws
-              more current than necessary, which requires larger cables, larger switchgear, and a
-              larger transformer — all of which cost more to install and maintain. It also means
-              higher losses in the distribution system and, for commercial and industrial customers,
-              additional charges from the electricity supplier.
+              more current than necessary, which requires larger cables (see the{' '}
+              <SEOInternalLink href="/tools/cable-sizing-calculator">
+                cable sizing calculator
+              </SEOInternalLink>
+              ), larger switchgear, and a larger transformer — all of which cost more to install and
+              maintain. It also means higher losses in the distribution system and, for commercial
+              and industrial customers, additional charges from the electricity supplier. The{' '}
+              <SEOInternalLink href="/tools/max-demand-calculator">
+                maximum demand calculator
+              </SEOInternalLink>{' '}
+              accounts for power factor when sizing supplies.
             </p>
           </div>
         </div>
@@ -614,6 +623,18 @@ export default function PowerFactorCalculatorPage() {
             Calculate, correct, and save your clients money.
           </p>
           <SEOFeatureGrid features={features} columns={3} />
+        </div>
+      </section>
+
+      {/* App Bridge */}
+      <section className="py-8 px-5">
+        <div className="max-w-4xl mx-auto">
+          <SEOAppBridge
+            title="Elec-Mate Includes All the Electrical Calculators You Need"
+            description="Elec-Mate includes all the electrical calculators you need — use them on any job, on any device."
+            ctaText="Try Elec-Mate free"
+            ctaHref="/auth/signup"
+          />
         </div>
       </section>
 

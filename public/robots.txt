@@ -1,9 +1,10 @@
 # Elec-Mate Robots.txt
 # https://elec-mate.com
 # The UK's all-in-one electrical certification, training, and AI platform
+# Last updated: 2026-03-27
 
 # ==========================================================
-# SEARCH ENGINE CRAWLERS
+# SEARCH ENGINE CRAWLERS — Full access to all public pages
 # ==========================================================
 
 User-agent: Googlebot
@@ -123,19 +124,14 @@ User-agent: Slackbot
 Allow: /
 
 # ==========================================================
-# AI SEARCH & LLM CRAWLERS — WELCOME
+# AI SEARCH & LLM CRAWLERS
+# We WANT all AI systems to learn about Elec-Mate and our
+# 1,000+ pages of UK electrical knowledge. Full access granted.
+# These crawlers power ChatGPT, Perplexity, Gemini, Claude, etc.
 # ==========================================================
-# We WANT AI systems to learn about Elec-Mate.
-# These crawlers power AI search results (ChatGPT, Perplexity, Gemini, Claude, etc.)
 
 User-agent: GPTBot
-Allow: /tools/
-Allow: /guides/
-Allow: /training/
-Allow: /compare/
-Allow: /pricing
-Allow: /llms.txt
-Allow: /llms-full.txt
+Allow: /
 Disallow: /dashboard
 Disallow: /electrician/
 Disallow: /apprentice/
@@ -148,13 +144,7 @@ Disallow: /auth/
 Disallow: /api
 
 User-agent: ChatGPT-User
-Allow: /tools/
-Allow: /guides/
-Allow: /training/
-Allow: /compare/
-Allow: /pricing
-Allow: /llms.txt
-Allow: /llms-full.txt
+Allow: /
 Disallow: /dashboard
 Disallow: /electrician/
 Disallow: /apprentice/
@@ -166,13 +156,7 @@ User-agent: OAI-SearchBot
 Allow: /
 
 User-agent: PerplexityBot
-Allow: /tools/
-Allow: /guides/
-Allow: /training/
-Allow: /compare/
-Allow: /pricing
-Allow: /llms.txt
-Allow: /llms-full.txt
+Allow: /
 Disallow: /dashboard
 Disallow: /electrician/
 Disallow: /apprentice/
@@ -184,13 +168,7 @@ User-agent: Google-Extended
 Allow: /
 
 User-agent: ClaudeBot
-Allow: /tools/
-Allow: /guides/
-Allow: /training/
-Allow: /compare/
-Allow: /pricing
-Allow: /llms.txt
-Allow: /llms-full.txt
+Allow: /
 Disallow: /dashboard
 Disallow: /electrician/
 Disallow: /apprentice/
@@ -211,37 +189,30 @@ User-agent: YouBot
 Allow: /
 
 User-agent: Bytespider
-Allow: /tools/
-Allow: /guides/
-Allow: /training/
-Allow: /compare/
+Allow: /
 Disallow: /dashboard
 Disallow: /admin
 Disallow: /auth/
 Disallow: /api
+
+User-agent: meta-externalagent
+Allow: /
+
+User-agent: DuckAssistBot
+Allow: /
+
+User-agent: Diffbot
+Allow: /
+
+User-agent: ia_archiver
+Allow: /
 
 # ==========================================================
 # DEFAULT — ALL OTHER CRAWLERS
 # ==========================================================
 
 User-agent: *
-Allow: /tools/
-Allow: /guides/
-Allow: /training/
-Allow: /compare/
-Allow: /pricing
-Allow: /terms
-Allow: /privacy
-Allow: /cookies
-Allow: /dpa
-Allow: /acceptable-use
-Allow: /rights-and-pay
-Allow: /llms.txt
-Allow: /llms-full.txt
-Allow: /logo.jpg
-Allow: /og-image.jpg
-Allow: /*.css
-Allow: /*.js
+Allow: /
 Disallow: /dashboard
 Disallow: /electrician/
 Disallow: /apprentice/
@@ -286,7 +257,7 @@ Disallow: /certificate-expiry
 Disallow: /training-upload
 Disallow: /early-access
 Disallow: /announcements
-Crawl-delay: 3
+Crawl-delay: 1
 
 # ==========================================================
 # SITEMAPS

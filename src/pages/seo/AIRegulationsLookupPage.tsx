@@ -55,7 +55,7 @@ const faqs = [
   {
     question: 'How is this different from using the BS 7671 book index?',
     answer:
-      'The BS 7671 book index is organised by topic and regulation number, which works well if you already know which regulation you are looking for. The AI Regulations Lookup lets you search by question — "Do I need RCD protection on a cooker circuit?" or "What is the maximum disconnection time for a 32A socket circuit?" — and returns the specific regulation(s) that answer your question. This is faster and more practical when you have a real-world question on site and do not know which regulation number to look up. The AI also cross-references related regulations automatically. For example, if you ask about RCD protection requirements, it will show you Regulation 411.3.3 (additional protection) and also reference Regulation 531.3 (selection and erection of RCDs), because they interact.',
+      'The BS 7671 book index is organised by topic and regulation number, which works well if you already know which regulation you are looking for. The AI Regulations Lookup lets you search by question — "Do I need RCD protection on a cooker circuit?" or "What is the maximum disconnection time for a 32A socket circuit?" — and returns the specific regulation(s) that answer your question. This is faster and more practical when you have a real-world question on site and do not know which regulation number to look up. The AI also cross-references related regulations automatically. For example, if you ask about RCD protection requirements, it will show you Regulation 411.3.2 (additional protection) and also reference Regulation 531.3 (selection and erection of RCDs), because they interact.',
   },
   {
     question: 'Does it include the tables and appendices from BS 7671?',
@@ -70,7 +70,7 @@ const faqs = [
   {
     question: 'Does it cover Amendment 3:2024?',
     answer:
-      'Yes. The AI includes the complete content of BS 7671:2018+A3:2024, which is Amendment 3 issued on 31 July 2024. The key addition in A3:2024 is Regulation 530.3.201, which introduces requirements for bidirectional and unidirectional protective devices. This is particularly relevant for installations incorporating battery energy storage systems (BESS), solar PV arrays with battery storage, and other installations where power can flow in both directions through protective devices. The AI explains what this new regulation requires, when it applies, and what it means in practice for the selection and installation of protective devices in modern installations with distributed generation and energy storage.',
+      'Yes. The AI includes the complete content of BS 7671:2018+A3:2024, which is Amendment 3 issued on 31 July 2024. The key addition in A3:2024 is Regulation 530.3.2, which introduces requirements for bidirectional and unidirectional protective devices. This is particularly relevant for installations incorporating battery energy storage systems (BESS), solar PV arrays with battery storage, and other installations where power can flow in both directions through protective devices. The AI explains what this new regulation requires, when it applies, and what it means in practice for the selection and installation of protective devices in modern installations with distributed generation and energy storage.',
   },
   {
     question: 'How quickly does the AI return an answer?',
@@ -159,7 +159,7 @@ const features = [
     icon: ShieldCheck,
     title: 'Amendment 3:2024 Included',
     description:
-      'Full coverage of the latest amendment including Regulation 530.3.201 for bidirectional and unidirectional protective devices.',
+      'Full coverage of the latest amendment including Regulation 530.3.2 for bidirectional and unidirectional protective devices.',
   },
   {
     icon: Bot,
@@ -256,7 +256,7 @@ const sections = [
           When multiple regulations are relevant to your question, the AI returns all of them and
           explains how they interact. For example, if you ask about bathroom electrical
           requirements, the AI will reference Section 701 (special locations — bathrooms),
-          Regulation 411.3.3 (additional RCD protection), the IP ratings required for equipment in
+          Regulation 411.3.2 (additional RCD protection), the IP ratings required for equipment in
           different zones (Regulation 701.512.2), and the supplementary bonding requirements
           (Regulation 701.415.2). It explains which requirements are mandatory and which have been
           relaxed by recent amendments.
@@ -337,7 +337,7 @@ const sections = [
           answers based on the current requirements.
         </p>
         <p>
-          The key addition in Amendment 3 is <strong>Regulation 530.3.201</strong>, which introduces
+          The key addition in Amendment 3 is <strong>Regulation 530.3.2</strong>, which introduces
           requirements for the selection and erection of bidirectional and unidirectional protective
           devices. This regulation is particularly relevant for installations incorporating:
         </p>
@@ -369,7 +369,7 @@ const sections = [
           </ul>
         </div>
         <p>
-          The AI explains not just what Regulation 530.3.201 says, but how to apply it in practice:
+          The AI explains not just what Regulation 530.3.2 says, but how to apply it in practice:
           which protective devices need to be bidirectional, how to verify that existing devices are
           suitable, and what to specify when designing new installations with energy storage. It
           also notes that Amendment 4 is expected in 2026, so the regulations will continue to

@@ -3,6 +3,8 @@ import useSEO from '@/hooks/useSEO';
 import { PublicPageLayout } from '@/components/seo/PublicPageLayout';
 import { SEOCTASection } from '@/components/seo/SEOCTASection';
 import { SEOFeatureGrid } from '@/components/seo/SEOFeatureGrid';
+import { SEOAppBridge } from '@/components/seo/SEOAppBridge';
+import { SEOInternalLink } from '@/components/seo/SEOInternalLink';
 import {
   Calculator,
   Zap,
@@ -213,7 +215,15 @@ export default function DiversityFactorCalculatorPage() {
               diversity and the installation may require an unnecessarily expensive supply upgrade,
               larger main tails, and an oversized distribution board. The IET On-Site Guide Table 1A
               provides standardised diversity allowances based on decades of measured usage patterns
-              in UK installations.
+              in UK installations. Use the{' '}
+              <SEOInternalLink href="/tools/cable-sizing-calculator">
+                cable sizing calculator
+              </SEOInternalLink>{' '}
+              to size main tails once your diversified demand is confirmed, and the{' '}
+              <SEOInternalLink href="/tools/ev-charger-load-calculator">
+                EV charger load calculator
+              </SEOInternalLink>{' '}
+              to assess how a new charge point affects your total demand.
             </p>
           </div>
         </div>
@@ -479,6 +489,18 @@ export default function DiversityFactorCalculatorPage() {
             standards.
           </p>
           <SEOFeatureGrid features={features} columns={3} />
+        </div>
+      </section>
+
+      {/* App Bridge */}
+      <section className="py-8 px-5">
+        <div className="max-w-4xl mx-auto">
+          <SEOAppBridge
+            title="Calculate Diversity Instantly with Elec-Mate"
+            description="Enter your connected loads by type — lighting, sockets, cookers, showers, EV chargers — and Elec-Mate applies IET On-Site Guide Table 1A diversity allowances automatically. Know whether the existing supply is adequate in seconds."
+            ctaText="Try Elec-Mate free"
+            ctaHref="/auth/signup"
+          />
         </div>
       </section>
 

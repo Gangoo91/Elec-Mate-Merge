@@ -3,6 +3,8 @@ import useSEO from '@/hooks/useSEO';
 import { PublicPageLayout } from '@/components/seo/PublicPageLayout';
 import { SEOCTASection } from '@/components/seo/SEOCTASection';
 import { SEOFeatureGrid } from '@/components/seo/SEOFeatureGrid';
+import { SEOAppBridge } from '@/components/seo/SEOAppBridge';
+import { SEOInternalLink } from '@/components/seo/SEOInternalLink';
 import {
   Brain,
   Calculator,
@@ -48,6 +50,11 @@ const faqs = [
     question: 'Does Elec-Mate work on both iPhone and Android?',
     answer:
       'Yes. Elec-Mate works on iOS (iPhone and iPad), Android phones and tablets, and desktop computers via a Progressive Web App (PWA). The interface adapts to your screen size, so you get a mobile-optimised experience on phones and a fuller layout on tablets and desktops. iCertifi also supports both iOS and Android. Both apps work across the major mobile platforms.',
+  },
+  {
+    question: 'Can Elec-Mate manage quoting and invoicing as well as certificates?',
+    answer:
+      'Yes. Elec-Mate includes built-in quoting and invoicing tools that let you create professional quotes, convert accepted quotes to invoices, record payments, and track outstanding balances — all within the same app as your certificates and calculators. This means you can go from generating a quote on site to issuing the certificate and invoice without switching between different software packages. iCertifi focuses on certification and does not include quoting or invoicing features. For electricians who want to reduce the number of apps and subscriptions they manage, Elec-Mate\'s all-in-one approach is a significant time and cost saving.',
   },
 ];
 
@@ -225,7 +232,9 @@ export default function ElecMateVsICertifiPage() {
               management into a single mobile-first app.
             </p>
             <p>
-              The platform includes 8 certificate types (EICR, EIC, Minor Works, EV Charger, Solar
+              The platform includes 8 certificate types (EICR,{' '}
+              <SEOInternalLink href="/tools/eic-certificate">EIC</SEOInternalLink>, Minor Works,{' '}
+              <SEOInternalLink href="/tools/ev-charger-certificate">EV Charger</SEOInternalLink>, Solar
               PV, Fire Alarm, Emergency Lighting, and PAT Testing), over 70 specialist electrical
               calculators, 8 Elec-AI tools (Circuit Designer, Cost Engineer, Installation Guide,
               Commissioning Specialist, Maintenance Agent, Health & Safety, Fault Finder, and
@@ -652,6 +661,18 @@ export default function ElecMateVsICertifiPage() {
             What You Get with Elec-Mate
           </h2>
           <SEOFeatureGrid features={features} columns={3} />
+        </div>
+      </section>
+
+      {/* App Bridge */}
+      <section className="py-8 px-5">
+        <div className="max-w-4xl mx-auto">
+          <SEOAppBridge
+            title="More Than Just Certificates — Try Elec-Mate Free"
+            description="Unlimited certificates, 70+ BS 7671 calculators, 8 Elec-AI specialist tools, full training courses, and business management. Everything iCertifi offers, and much more — from £4.99/month."
+            ctaText="Try Elec-Mate free for 7 days"
+            ctaHref="/auth/signup"
+          />
         </div>
       </section>
 

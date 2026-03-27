@@ -1,6 +1,8 @@
 import { Helmet } from 'react-helmet';
 import useSEO from '@/hooks/useSEO';
 import { PublicPageLayout } from '@/components/seo/PublicPageLayout';
+import { SEOAppBridge } from '@/components/seo/SEOAppBridge';
+import { SEOInternalLink } from '@/components/seo/SEOInternalLink';
 import { SEOCTASection } from '@/components/seo/SEOCTASection';
 import { SEOFeatureGrid } from '@/components/seo/SEOFeatureGrid';
 import {
@@ -339,7 +341,15 @@ export default function PASMATrainingPage() {
               The Elec-Mate PASMA study course is structured into six modules covering the full
               PASMA Towers for Users syllabus. Each module includes detailed study material,
               diagrams, and AI-powered practice questions to test your understanding before moving
-              on.
+              on. It pairs well with our{' '}
+              <SEOInternalLink href="/training/manual-handling">
+                manual handling course
+              </SEOInternalLink>{' '}
+              and{' '}
+              <SEOInternalLink href="/training/working-at-height">
+                working at height training
+              </SEOInternalLink>
+              .
             </p>
             <div className="grid sm:grid-cols-2 gap-4 my-6">
               {[
@@ -396,6 +406,18 @@ export default function PASMATrainingPage() {
             courses — all from your mobile device.
           </p>
           <SEOFeatureGrid features={features} columns={3} />
+        </div>
+      </section>
+
+      {/* App Bridge */}
+      <section className="py-8 px-5">
+        <div className="max-w-4xl mx-auto">
+          <SEOAppBridge
+            title="Run Your Electrical Business Smarter with Elec-Mate"
+            description="Quotes, certificates, job tracking, and team management — built for UK electricians."
+            ctaText="Try Elec-Mate free"
+            ctaHref="/auth/signup"
+          />
         </div>
       </section>
 

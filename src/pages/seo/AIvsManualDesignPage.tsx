@@ -229,7 +229,7 @@ export default function AIvsManualDesignPage() {
                 </li>
                 <li>
                   <span className="font-semibold text-white">Amendment 3:2024</span> — Regulation
-                  530.3.201 for bidirectional protective devices in installations with solar PV,
+                  530.3.2 for bidirectional protective devices in installations with solar PV,
                   battery storage, or V2G capability.
                 </li>
               </ul>

@@ -67,12 +67,12 @@ const faqs = [
   {
     question: 'Where should the cooker control unit be positioned?',
     answer:
-      'The cooker control unit (also called a cooker switch or cooker isolator) must be within 2 metres of the cooker, measured horizontally, and must be readily accessible for emergency switching. BS 7671 Regulation 537.5.2.2 requires the switch to be in a location where it can be operated by a person standing near the cooker — this means it should not be behind the cooker or in a position where you would need to reach across the hob to operate it. The standard mounting height is between 450mm and 1200mm from the finished floor level (within the accessible zone). If the cooker control unit includes a 13A socket outlet, the socket must not be positioned directly above the hob where a kettle lead could trail across the cooking surface.',
+      'The cooker control unit (also called a cooker switch or cooker isolator) must be within 2 metres of the cooker, measured horizontally, and must be readily accessible for emergency switching. BS 7671 Section 537 requires the switch to be in a location where it can be operated by a person standing near the cooker — this means it should not be behind the cooker or in a position where you would need to reach across the hob to operate it. The standard mounting height is between 450 mm and 1200 mm from the finished floor level (within the accessible zone). If the cooker control unit includes a 13 A socket outlet, the socket must not be positioned directly above the hob where a kettle lead could trail across the cooking surface.',
   },
   {
     question: 'Do cooker circuits need RCD protection?',
     answer:
-      'Under BS 7671:2018+A3:2024, a dedicated cooker circuit supplying a fixed cooker via a cooker control unit does not automatically require 30mA RCD protection in all cases. However, Regulation 411.3.4 requires RCD protection for cables concealed in walls at a depth less than 50mm that do not have earthed metallic covering or are not enclosed in earthed conduit or trunking. In practice, most domestic cooker circuit cables are concealed in walls, so 30mA RCD protection is usually required. If the cooker control unit includes a 13A socket outlet, that socket is a socket outlet rated up to 32A and requires 30mA RCD protection under Regulation 411.3.3. In a modern RCBO consumer unit, every circuit gets individual RCD protection by default, so this is not usually a separate design consideration.',
+      'Under BS 7671:2018+A3:2024, a dedicated cooker circuit supplying a fixed cooker via a cooker control unit does not automatically require 30 mA RCD protection in all cases. However, BS 7671 Section 411 requires RCD protection for cables concealed in walls at a depth less than 50 mm that do not have earthed metallic covering or are not enclosed in earthed conduit or trunking. In practice, most domestic cooker circuit cables are concealed in walls, so 30 mA RCD protection is usually required. If the cooker control unit includes a 13 A socket outlet, that socket is a socket outlet rated up to 32 A and also requires 30 mA RCD protection. In a modern RCBO consumer unit, every circuit gets individual RCD protection by default, so this is not usually a separate design consideration.',
   },
   {
     question: 'What MCB type should I use for a cooker circuit?',
@@ -296,7 +296,7 @@ const sections = [
         <p>
           The cooker control unit provides a means of local isolation for the cooker. BS 7671
           requires every cooker to have a means of switching off within easy reach of the person
-          using the cooker (Regulation 537.5.2.2).
+          using the cooker (BS 7671 Section 537).
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -423,8 +423,8 @@ const sections = [
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>RCD protection</strong> — required if the cable is concealed in a wall at
-                less than 50mm depth without earthed metallic covering (Regulation 411.3.4). Also
-                required if the cooker control unit includes a socket outlet (Regulation 411.3.3).
+                less than 50 mm depth without earthed metallic covering, and also required if the
+                cooker control unit includes a socket outlet (BS 7671 Section 411).
                 In modern RCBO boards, this is provided automatically.
               </span>
             </li>

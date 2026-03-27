@@ -1,6 +1,8 @@
 import { Helmet } from 'react-helmet';
 import useSEO from '@/hooks/useSEO';
 import { PublicPageLayout } from '@/components/seo/PublicPageLayout';
+import { SEOAppBridge } from '@/components/seo/SEOAppBridge';
+import { SEOInternalLink } from '@/components/seo/SEOInternalLink';
 import { SEOCTASection } from '@/components/seo/SEOCTASection';
 import { SEOFeatureGrid } from '@/components/seo/SEOFeatureGrid';
 import {
@@ -249,7 +251,9 @@ export default function ManualHandlingCoursePage() {
               distribution boards into position at height, transport heavy power tools up ladders,
               and manoeuvre lengths of conduit and trunking through corridors and ceiling voids.
               Each of these tasks presents a genuine risk of musculoskeletal injury if performed
-              incorrectly.
+              incorrectly. Proper{' '}
+              <SEOInternalLink href="/tools/rams-generator">RAMS documentation</SEOInternalLink>{' '}
+              should always include manual handling risk assessments for these activities.
             </p>
             <p>
               The Health and Safety Executive (HSE) reports that manual handling injuries account
@@ -448,7 +452,11 @@ export default function ManualHandlingCoursePage() {
               Never carry a heavy toolbox up a ladder — use a tool belt to distribute weight across
               your body and make multiple trips if necessary. A tool hoist or bucket-and-rope system
               is safer for heavier items. Your hands should be free to maintain three points of
-              contact on the ladder at all times.
+              contact on the ladder at all times. See also the{' '}
+              <SEOInternalLink href="/training/pasma-training">
+                PASMA training course
+              </SEOInternalLink>{' '}
+              for safe working at height with mobile towers.
             </p>
           </div>
         </div>
@@ -488,6 +496,18 @@ export default function ManualHandlingCoursePage() {
               </div>
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* App Bridge */}
+      <section className="py-8 px-5">
+        <div className="max-w-4xl mx-auto">
+          <SEOAppBridge
+            title="Run Your Electrical Business Smarter with Elec-Mate"
+            description="Quotes, certificates, job tracking, and team management — built for UK electricians."
+            ctaText="Try Elec-Mate free"
+            ctaHref="/auth/signup"
+          />
         </div>
       </section>
 

@@ -76,6 +76,11 @@ const faqs = [
     answer:
       'CDM 2015 and the Electricity at Work Regulations 1989 (EAWR) are complementary pieces of legislation that both apply to electrical work on construction sites. CDM 2015 deals with the management and coordination of health and safety during construction work — planning, designing out risks, coordinating contractors, and managing the construction phase. The EAWR deal specifically with electrical safety — safe isolation, competence, live working restrictions, and the condition of electrical systems. As an electrical contractor working on a construction site, you must comply with both sets of regulations simultaneously. Your CDM duties require you to plan your work, cooperate with the principal contractor, and follow the construction phase plan. Your EAWR duties require you to follow safe isolation procedures, use competent workers, and ensure the electrical installation is safe. Elec-Mate training courses cover both CDM 2015 and the EAWR, and the AI Health and Safety agent generates RAMS that address requirements from both regulations.',
   },
+  {
+    question: 'What records must an electrical contractor keep under CDM 2015?',
+    answer:
+      'As an electrical contractor (worker or contractor role under CDM 2015), you must retain copies of any pre-construction information passed to you, your contribution to the construction phase plan (method statements, RAMS, risk assessments for your electrical work activities), records of any notifications made to the HSE (F10 notifications for notifiable projects), and evidence of competency for your workers. For projects with a health and safety file, you must also provide the principal designer with any relevant information about the completed installation that should be included in the file — for example, as-fitted drawings, test results, and details of any concealed cable routes. Elec-Mate lets you generate, store, and share RAMS, method statements, and test certificates directly from the app, keeping your CDM records organised and accessible.',
+  },
 ];
 
 const relatedPages: RelatedPage[] = [

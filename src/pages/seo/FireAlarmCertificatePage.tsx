@@ -3,6 +3,8 @@ import useSEO from '@/hooks/useSEO';
 import { PublicPageLayout } from '@/components/seo/PublicPageLayout';
 import { SEOCTASection } from '@/components/seo/SEOCTASection';
 import { SEOFeatureGrid } from '@/components/seo/SEOFeatureGrid';
+import { SEOAppBridge } from '@/components/seo/SEOAppBridge';
+import { SEOInternalLink } from '@/components/seo/SEOInternalLink';
 import {
   Bell,
   Smartphone,
@@ -556,12 +558,27 @@ export default function FireAlarmCertificatePage() {
               actually carried out on site.
             </p>
             <p>
-              The platform includes 70 electrical calculators, 8 certificate types (EICR, EIC, Minor
-              Works, emergency lighting, fire alarm, EV charger, PAT testing, and solar PV), 8
+              The platform includes 70 electrical calculators, 8 certificate types ({' '}
+              <SEOInternalLink href="/electrical-certification/eicr">EICR</SEOInternalLink>,{' '}
+              <SEOInternalLink href="/electrical-certification/eic">EIC</SEOInternalLink>, Minor
+              Works, <SEOInternalLink href="/emergency-lighting-certificate">emergency lighting</SEOInternalLink>, fire alarm, EV charger, PAT testing, and solar PV), 8
               Elec-AI agents, 12 AI tools, and 36+ training courses. Xero and QuickBooks integration
               means you can raise invoices directly from completed jobs without re-entering data.
             </p>
           </div>
+        </div>
+      </section>
+
+      {/* App Bridge */}
+      <section className="py-4 px-5">
+        <div className="max-w-4xl mx-auto">
+          <SEOAppBridge
+            title="Create BS 5839-1 Fire Alarm Certificates on Your Phone"
+            description="Elec-Mate's fire alarm certificate app covers zone schedules, cause-and-effect matrices, weekly test records, and annual servicing reports — with professional PDF export."
+            ctaText="Try Elec-Mate free"
+            ctaHref="/auth/signup"
+            icon={Bell}
+          />
         </div>
       </section>
 

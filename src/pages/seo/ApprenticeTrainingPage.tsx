@@ -3,6 +3,8 @@ import useSEO from '@/hooks/useSEO';
 import { PublicPageLayout } from '@/components/seo/PublicPageLayout';
 import { SEOCTASection } from '@/components/seo/SEOCTASection';
 import { SEOFeatureGrid } from '@/components/seo/SEOFeatureGrid';
+import { SEOInternalLink } from '@/components/seo/SEOInternalLink';
+import { SEOAppBridge } from '@/components/seo/SEOAppBridge';
 import {
   Award,
   BrainCircuit,
@@ -44,6 +46,11 @@ const faqs = [
     question: 'Can I use Elec-Mate alongside my college course?',
     answer:
       'Absolutely. Elec-Mate is designed to complement your college or training provider course, not replace it. Many apprentices use the platform to revise topics covered in class, practise with additional questions beyond their course materials, track their OJT hours, build their portfolio evidence, and prepare for the AM2 and EPA. Your employer or training provider can also view your progress reports to support your development reviews. The 7-day free trial lets you try everything before committing.',
+  },
+  {
+    question: 'What apprenticeship wage should I expect as an electrical apprentice?',
+    answer:
+      'Electrical apprentice pay varies depending on the employer, your year of training, and whether your employer follows the JIB (Joint Industry Board) national rates or pays above them. In 2025/26, the JIB apprentice rates are: Year 1 — approximately £7.55 per hour, Year 2 — approximately £9.50 per hour, Year 3 — approximately £12.25 per hour, Year 4 — approximately £16.10 per hour. These are minimum rates; many employers — particularly larger contractors — pay above the JIB minimum. The national minimum wage for apprentices applies if your employer does not follow JIB rates, but this is typically lower than the JIB scale, so look for JIB-registered employers for the best pay progression. On qualification (Gold Card), starting pay for a fully qualified installation electrician typically ranges from £18 to £25 per hour depending on location and sector.',
   },
 ];
 
@@ -530,6 +537,24 @@ export default function ApprenticeTrainingPage() {
               <p className="text-sm text-white">UK Electricians</p>
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* App Bridge */}
+      <section className="py-8 px-5 border-t border-white/5">
+        <div className="max-w-4xl mx-auto">
+          <SEOAppBridge
+            title="The Training App Built for Electrical Apprentices"
+            description="46+ courses covering Level 2, Level 3, and 18th Edition. 2,000+ practice questions, AM2 simulator, AI tutor, and flashcards with spaced repetition. Join 430+ UK electricians on Elec-Mate."
+            icon={Award}
+          />
+          <p className="text-white mt-4 text-sm">
+            Ready to access your training?{' '}
+            <SEOInternalLink href="/training/apprentice">
+              Go to the apprentice training centre
+            </SEOInternalLink>{' '}
+            to start your Level 2 or Level 3 courses.
+          </p>
         </div>
       </section>
 

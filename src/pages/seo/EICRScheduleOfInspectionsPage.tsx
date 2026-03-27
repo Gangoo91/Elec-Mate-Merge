@@ -58,7 +58,7 @@ const faqs = [
   {
     question: 'What are the most common C2 observations found during visual inspection?',
     answer:
-      'The most common C2 (Potentially Dangerous) observations found during the visual inspection phase of an EICR include: absence of a circuit protective conductor (CPC) on one or more circuits, particularly in older installations wired before earthing was mandatory; absence of RCD protection for socket outlet circuits (required by Regulation 411.3.3 for socket outlets up to 32A in domestic premises); damaged consumer unit or distribution board enclosure exposing live parts; absence of main protective bonding to gas, water, or oil services as required by Regulation 411.3.1.2; incorrect polarity at accessories (live and neutral reversed); damaged or deteriorated cable insulation exposing conductors; and absence of fire barriers where cables pass through walls or floors. Each of these observations represents a condition that could lead to electric shock or fire and requires urgent remedial action.',
+      'The most common C2 (Potentially Dangerous) observations found during the visual inspection phase of an EICR include: absence of a circuit protective conductor (CPC) on one or more circuits, particularly in older installations wired before earthing was mandatory; absence of RCD protection for socket outlet circuits in domestic premises; damaged consumer unit or distribution board enclosure exposing live parts; absence of main protective bonding to gas, water, or oil services as required by Regulation 411.3.1.2; incorrect polarity at accessories (live and neutral reversed); damaged or deteriorated cable insulation exposing conductors; and absence of fire barriers where cables pass through walls or floors. Each of these observations represents a condition that could lead to electric shock or fire and requires urgent remedial action.',
   },
   {
     question: 'How do I record an unsatisfactory item on the schedule of inspections?',
@@ -176,7 +176,7 @@ const sections = [
               <Zap className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>RCD quarterly test notice:</strong> Is the notice advising the user to test
-                the RCD quarterly present? (Regulation 514.12.2)
+                the RCD quarterly present? (Regulation 514.12)
               </span>
             </li>
           </ul>
@@ -224,7 +224,7 @@ const sections = [
               <Zap className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Cable routing:</strong> Are cables routed in safe zones where concealed in
-                walls (Regulation 522.6.101)? Any evidence of cables being routed through thermal
+                walls? Any evidence of cables being routed through thermal
                 insulation without derating?
               </span>
             </li>
@@ -348,7 +348,7 @@ const sections = [
               <ShieldCheck className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>RCD protection:</strong> Are RCDs (30mA) fitted to circuits that require
-                additional protection? Socket outlet circuits up to 32A (Regulation 411.3.3),
+                additional protection? Socket outlet circuits up to 32A,
                 bathroom circuits (Section 701), outdoor circuits, and circuits supplying mobile
                 equipment used outdoors.
               </span>
@@ -464,7 +464,7 @@ const sections = [
               <Zap className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Warning and caution labels:</strong> Are all required warning labels
-                present? This includes RCD quarterly test notices (Regulation 514.12.2), dual supply
+                present? This includes RCD quarterly test notices (Regulation 514.12), dual supply
                 warnings (where applicable), voltage warnings, and labels indicating the type of
                 earthing system.
               </span>

@@ -22,6 +22,8 @@ import {
   ListOrdered,
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { SEOAppBridge } from '@/components/seo/SEOAppBridge';
+import { SEOInternalLink } from '@/components/seo/SEOInternalLink';
 
 const PAGE_TITLE = 'How to Fill In an EICR Form | Step-by-Step Guide | Elec-Mate';
 const PAGE_DESCRIPTION =
@@ -287,7 +289,13 @@ export default function HowToFillInEICRPage() {
               report can result in rejection by the scheme provider, disputes with clients, or — in
               the worst case — failure to identify a dangerous condition that leads to an incident.
               This guide walks through every section of the EICR form in the order you should
-              complete it on site, with practical tips for avoiding the most common mistakes.
+              complete it on site, with practical tips for avoiding the most common mistakes. Before
+              you start the inspection, ensure you have carried out{' '}
+              <SEOInternalLink href="/guides/how-to-do-safe-isolation">safe isolation</SEOInternalLink>{' '}
+              and understand how to carry out{' '}
+              <SEOInternalLink href="/guides/how-to-test-insulation-resistance">insulation resistance testing</SEOInternalLink>{' '}
+              and interpret the results against{' '}
+              <SEOInternalLink href="/tools/bs7671-observation-codes">BS 7671 observation codes</SEOInternalLink>.
             </p>
           </div>
         </div>
@@ -559,6 +567,19 @@ export default function HowToFillInEICRPage() {
             auto-validation, and export a professional PDF on site.
           </p>
           <SEOFeatureGrid features={features} columns={3} />
+        </div>
+      </section>
+
+      {/* App Bridge */}
+      <section className="py-4 px-5">
+        <div className="max-w-4xl mx-auto">
+          <SEOAppBridge
+            title="Digital EICR Forms — Complete on Your Phone, Export PDF on Site"
+            description="Elec-Mate's digital EICR and test certificates make inspection reporting faster and more professional. Auto-validate results against BS 7671 limits and send PDFs to clients instantly."
+            ctaText="Try Elec-Mate free"
+            ctaHref="/auth/signup"
+            icon={FileCheck2}
+          />
         </div>
       </section>
 

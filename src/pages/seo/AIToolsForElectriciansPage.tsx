@@ -212,14 +212,14 @@ export default function AIToolsForElectriciansPage() {
               <p>
                 AI defect classification solves this by letting you describe the defect in plain
                 English — for example, "no RCD protection on socket outlets in the kitchen" — and
-                the AI returns the correct code (C2), the regulation reference (Regulation 411.3.3),
+                the AI returns the correct code (C2), the regulation reference (Regulation 411.3.2),
                 and a properly worded observation for the certificate.
               </p>
               <p>
                 Elec-Mate's Defect Code AI is trained on BS 7671:2018+A3:2024 and thousands of
                 real-world EICR observations. It handles everything from simple non-compliances ("no
                 earth on lighting circuit" = C2, Reg 411.3.1.1) to nuanced situations ("original
-                wiring in good condition but no RCD protection" = C3, Reg 411.3.3 — because it was
+                wiring in good condition but no RCD protection" = C3, Reg 411.3.2 — because it was
                 compliant at the time of installation under the 16th Edition).
               </p>
               <SEOAppBridge
@@ -411,7 +411,7 @@ export default function AIToolsForElectriciansPage() {
                   <span className="font-semibold text-white">Regulation accuracy</span> — the AI
                   must cite specific BS 7671 regulation numbers, not make vague references to "the
                   regulations." Ask it about RCD protection requirements and check whether it cites
-                  Regulation 411.3.3 correctly.
+                  Regulation 411.3.2 correctly.
                 </li>
                 <li>
                   <span className="font-semibold text-white">Current data</span> — pricing tools

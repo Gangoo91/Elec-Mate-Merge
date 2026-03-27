@@ -22,6 +22,8 @@ import {
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
+import { SEOAppBridge } from '@/components/seo/SEOAppBridge';
+import { SEOInternalLink } from '@/components/seo/SEOInternalLink';
 
 const PAGE_TITLE = 'Electrical Testing Calculators | Zs, Fault Current, RCD | Elec-Mate';
 const PAGE_DESCRIPTION =
@@ -90,7 +92,7 @@ const faqData = [
   {
     question: 'Are the calculators compliant with the latest BS 7671 amendments?',
     answer:
-      'Yes. All Elec-Mate calculators are compliant with BS 7671:2018+A3:2024 (the 18th Edition IET Wiring Regulations) and incorporate values from Amendment 3:2024 where applicable. Amendment 3 (A3:2024), issued 31 July 2024, adds Regulation 530.3.201 covering bidirectional and unidirectional protective devices. Our maximum Zs values, disconnection times, cable ratings, and all reference tables are sourced directly from BS 7671 and the IET On-Site Guide. When amendments or corrections are published, we update all affected calculators within 30 days.',
+      'Yes. All Elec-Mate calculators are compliant with BS 7671:2018+A3:2024 (the 18th Edition IET Wiring Regulations) and incorporate values from Amendment 3:2024 where applicable. Amendment 3 (A3:2024), issued 31 July 2024, adds new Section 530 requirements covering bidirectional and unidirectional protective devices. Our maximum Zs values, disconnection times, cable ratings, and all reference tables are sourced directly from BS 7671 and the IET On-Site Guide. When amendments or corrections are published, we update all affected calculators within 30 days.',
   },
 ];
 
@@ -462,8 +464,11 @@ export default function ElectricalTestingCalculatorsPage() {
               protective device (Cf). The required current carrying capacity is the design current
               divided by the product of all these factors. You then select a cable from the
               appropriate table in Appendix 4 whose tabulated current rating meets or exceeds this
-              value. Finally, you verify that the cable also satisfies the adiabatic equation for
-              fault protection, and that the volt drop is within limits. Our cable sizing calculator
+              value. Finally, you verify that the cable also satisfies the{' '}
+              <SEOInternalLink href="/tools/adiabatic-equation-calculator">adiabatic equation</SEOInternalLink>{' '}
+              for fault protection, and that the{' '}
+              <SEOInternalLink href="/tools/voltage-drop-calculator">volt drop</SEOInternalLink>{' '}
+              is within limits. Our <SEOInternalLink href="/tools/cable-sizing-calculator">cable sizing calculator</SEOInternalLink>{' '}
               performs all of these steps in one go, showing the full working and the selected cable
               size.
             </p>
@@ -488,6 +493,19 @@ export default function ElectricalTestingCalculatorsPage() {
               </div>
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* App Bridge */}
+      <section className="py-4 px-5">
+        <div className="max-w-4xl mx-auto">
+          <SEOAppBridge
+            title="70 Electrical Calculators in One App"
+            description="Elec-Mate's calculator suite covers earth loop impedance, cable sizing, voltage drop, RCD testing, conduit fill, and more — all BS 7671 compliant and available on your phone."
+            ctaText="Try Elec-Mate free"
+            ctaHref="/auth/signup"
+            icon={Calculator}
+          />
         </div>
       </section>
 

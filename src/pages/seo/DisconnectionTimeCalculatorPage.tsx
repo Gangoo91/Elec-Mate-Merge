@@ -192,7 +192,7 @@ export default function DisconnectionTimeCalculatorPage() {
               </p>
               <p>
                 It is important to note that BS 7671 now requires 30mA RCD protection for all socket
-                outlets rated up to 32A in domestic premises (Regulation 411.3.3), regardless of
+                outlets rated up to 32 A in domestic premises (BS 7671 Section 411), regardless of
                 whether the overcurrent device meets the disconnection time on its own. The RCD
                 provides additional protection against electric shock, particularly in cases where
                 the fault current is too low to trip the overcurrent device promptly.
@@ -392,7 +392,7 @@ export default function DisconnectionTimeCalculatorPage() {
         {
           question: 'When does the 5 second disconnection time apply?',
           answer:
-            'The 5 second disconnection time applies to distribution circuits in TN systems — that is, circuits that feed sub-distribution boards rather than final equipment. It also applies to final circuits rated above 63A in TN systems. The rationale is that these circuits do not typically supply equipment that people touch or hold directly. However, the 5 second rule requires that all exposed conductive parts of the distribution circuit and the circuits it supplies are connected to the same equipotential bonding system. Regulation 411.3.2.3 permits this longer disconnection time.',
+            'The 5 second disconnection time applies to distribution circuits in TN systems — that is, circuits that feed sub-distribution boards rather than final equipment. It also applies to final circuits rated above 63 A in TN systems. The rationale is that these circuits do not typically supply equipment that people touch or hold directly. However, the 5 second rule requires that all exposed conductive parts of the distribution circuit and the circuits it supplies are connected to the same equipotential bonding system. BS 7671 Table 41.1 permits this longer disconnection time for distribution circuits.',
         },
         {
           question: 'How do I find the maximum Zs for my protective device?',
@@ -407,7 +407,7 @@ export default function DisconnectionTimeCalculatorPage() {
         {
           question: 'Can I use an RCD to achieve disconnection time compliance?',
           answer:
-            'Yes. An RCD (residual current device) can provide disconnection within the required time regardless of the earth fault loop impedance, as long as Zs is low enough for the RCD operating current to flow. For a 30mA RCD, the maximum Zs is 1667 ohms (50V / 0.03A), which is virtually always met. This is why RCDs are essential in TT systems and are increasingly required in TN systems for socket outlets. BS 7671 Regulation 411.3.3 requires 30mA RCD protection for socket outlets up to 32A in domestic installations, providing a backup to the overcurrent device disconnection time.',
+            'Yes. An RCD (residual current device) can provide disconnection within the required time regardless of the earth fault loop impedance, as long as Zs is low enough for the RCD operating current to flow. For a 30 mA RCD, the maximum Zs is 1667 ohms (50V / 0.03A), which is virtually always met. This is why RCDs are essential in TT systems and are increasingly required in TN systems for socket outlets. BS 7671 Section 411 requires 30 mA RCD protection for socket outlets up to 32 A in domestic installations, providing a backup to the overcurrent device disconnection time.',
         },
         {
           question: 'What happens if my measured Zs exceeds the maximum?',

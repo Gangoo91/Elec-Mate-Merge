@@ -3,6 +3,8 @@ import useSEO from '@/hooks/useSEO';
 import { PublicPageLayout } from '@/components/seo/PublicPageLayout';
 import { SEOCTASection } from '@/components/seo/SEOCTASection';
 import { SEOFeatureGrid } from '@/components/seo/SEOFeatureGrid';
+import { SEOAppBridge } from '@/components/seo/SEOAppBridge';
+import { SEOInternalLink } from '@/components/seo/SEOInternalLink';
 import {
   Calculator,
   Zap,
@@ -255,7 +257,15 @@ export default function EarthLoopImpedanceCalculatorPage() {
               during initial verification (when a new installation is being commissioned) and during
               periodic inspection and testing (EICR). The results are recorded on Schedule of Test
               Results forms and compared against the maximum values published in BS 7671 Tables
-              41.2, 41.3, and 41.4.
+              41.2, 41.3, and 41.4. Use the{' '}
+              <SEOInternalLink href="/tools/disconnection-time-calculator">
+                disconnection time calculator
+              </SEOInternalLink>{' '}
+              to verify 0.4s and 5s compliance, and the{' '}
+              <SEOInternalLink href="/tools/eicr-certificate">
+                EICR certificate tool
+              </SEOInternalLink>{' '}
+              to record your test results digitally.
             </p>
           </div>
         </div>
@@ -823,6 +833,18 @@ export default function EarthLoopImpedanceCalculatorPage() {
             flipping through tables on site.
           </p>
           <SEOFeatureGrid features={features} columns={3} />
+        </div>
+      </section>
+
+      {/* App Bridge */}
+      <section className="py-8 px-5">
+        <div className="max-w-4xl mx-auto">
+          <SEOAppBridge
+            title="Verify Zs on Site — Instantly"
+            description="Use Elec-Mate's built-in Zs calculator on every job. Enter your measured earth fault loop impedance and the app checks it against BS 7671 tables for your protective device. Works offline."
+            ctaText="Try Elec-Mate free"
+            ctaHref="/auth/signup"
+          />
         </div>
       </section>
 

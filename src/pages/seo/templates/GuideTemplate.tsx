@@ -85,7 +85,45 @@ export default function GuideTemplate({
   ctaSubheading,
   extraSchemas = [],
 }: GuideTemplateProps) {
+  const pageUrl = breadcrumbs.length > 0 ? breadcrumbs[breadcrumbs.length - 1].href : '/';
+
   const articleSchema = SEOSchemas.article(title, description, datePublished, dateModified);
+
+  // WebPage schema — tells Google this is a standalone educational page with clear author/publisher
+  const webPageSchema = {
+    '@type': 'WebPage',
+    '@id': `https://elec-mate.com${pageUrl}`,
+    url: `https://elec-mate.com${pageUrl}`,
+    name: title,
+    description,
+    datePublished,
+    dateModified: dateModified || datePublished,
+    inLanguage: 'en-GB',
+    isPartOf: { '@id': 'https://elec-mate.com/#website' },
+    publisher: {
+      '@type': 'Organization',
+      '@id': 'https://elec-mate.com/#organization',
+      name: 'Elec-Mate',
+    },
+    author: {
+      '@type': 'Organization',
+      name: 'Elec-Mate Technical Team',
+      url: 'https://elec-mate.com',
+    },
+    breadcrumb: {
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://elec-mate.com/' },
+        ...breadcrumbs.map((b, i) => ({
+          '@type': 'ListItem',
+          position: i + 2,
+          name: b.label,
+          item: `https://elec-mate.com${b.href}`,
+        })),
+      ],
+    },
+  };
+
   const faqSchema = faqs.length > 0 ? SEOSchemas.faqPage(faqs) : null;
   const howToSchema =
     howToSteps && howToSteps.length > 0
@@ -93,6 +131,7 @@ export default function GuideTemplate({
       : null;
 
   const allSchemas = [
+    webPageSchema,
     articleSchema,
     ...(faqSchema ? [faqSchema] : []),
     ...(howToSchema ? [howToSchema] : []),

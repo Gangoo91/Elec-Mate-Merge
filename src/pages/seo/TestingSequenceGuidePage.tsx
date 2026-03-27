@@ -21,6 +21,8 @@ import {
   Gauge,
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { SEOAppBridge } from '@/components/seo/SEOAppBridge';
+import { SEOInternalLink } from '@/components/seo/SEOInternalLink';
 
 const PAGE_TITLE = 'Electrical Testing Sequence | GN3 Order Explained | Elec-Mate';
 const PAGE_DESCRIPTION =
@@ -238,7 +240,15 @@ export default function TestingSequenceGuidePage() {
               resistance testing requires a 500V DC test voltage. Earth fault loop impedance testing
               requires the circuit to be energised at mains voltage. RCD testing requires both mains
               voltage and a specific test current. Each step introduces more energy into the system,
-              and the preceding tests ensure that the system is safe to receive that energy.
+              and the preceding tests ensure that the system is safe to receive that energy. See the{' '}
+              <SEOInternalLink href="/tools/eicr-certificate">
+                EICR certificate guide
+              </SEOInternalLink>{' '}
+              for how test results are recorded and reported, and the{' '}
+              <SEOInternalLink href="/tools/cable-sizing-calculator">
+                cable sizing calculator
+              </SEOInternalLink>{' '}
+              for verifying that cables meet the correct current-carrying capacity.
             </p>
           </div>
         </div>
@@ -783,6 +793,18 @@ export default function TestingSequenceGuidePage() {
             7671 limits, and produce professional certificates — all from your phone.
           </p>
           <SEOFeatureGrid features={features} columns={3} />
+        </div>
+      </section>
+
+      {/* App Bridge */}
+      <section className="py-8 px-5">
+        <div className="max-w-4xl mx-auto">
+          <SEOAppBridge
+            title="Run Your Electrical Business Smarter with Elec-Mate"
+            description="Guided testing sequence, digital certificates, 70+ calculators, and AI tools — built for UK electricians."
+            ctaText="Try Elec-Mate free"
+            ctaHref="/auth/signup"
+          />
         </div>
       </section>
 

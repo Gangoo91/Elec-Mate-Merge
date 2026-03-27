@@ -18,6 +18,8 @@ import {
   Box,
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { SEOAppBridge } from '@/components/seo/SEOAppBridge';
+import { SEOInternalLink } from '@/components/seo/SEOInternalLink';
 
 const faqs = [
   {
@@ -258,7 +260,16 @@ export default function TrunkingFillCalculatorPage() {
               capacity for additional circuits. Building use changes over time, and new circuits are
               frequently needed for additional power points, data outlets, or replacement of
               existing services. A trunking system designed to 45% fill on day one has no spare
-              capacity; designing to 30 to 35% fill on day one leaves room for growth.
+              capacity; designing to 30 to 35% fill on day one leaves room for growth. When planning
+              containment, use the{' '}
+              <SEOInternalLink href="/tools/cable-sizing-calculator">
+                cable sizing calculator
+              </SEOInternalLink>{' '}
+              to determine the required cable cross-section before checking trunking fill, and the{' '}
+              <SEOInternalLink href="/tools/voltage-drop-calculator">
+                voltage drop calculator
+              </SEOInternalLink>{' '}
+              to verify the circuit meets BS 7671 limits.
             </p>
             <div className="p-6 rounded-2xl bg-yellow-500/5 border border-yellow-500/20 text-center my-6">
               <p className="text-xl sm:text-2xl font-mono font-bold text-yellow-400">
@@ -587,6 +598,18 @@ export default function TrunkingFillCalculatorPage() {
             ensures your trunking is correctly sized every time.
           </p>
           <SEOFeatureGrid features={features} columns={3} />
+        </div>
+      </section>
+
+      {/* App Bridge */}
+      <section className="py-8 px-5">
+        <div className="max-w-4xl mx-auto">
+          <SEOAppBridge
+            title="Run Your Electrical Business Smarter with Elec-Mate"
+            description="Quotes, certificates, job tracking, and 70+ BS 7671 calculators — built for UK electricians."
+            ctaText="Try Elec-Mate free"
+            ctaHref="/auth/signup"
+          />
         </div>
       </section>
 

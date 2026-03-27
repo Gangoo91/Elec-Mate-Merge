@@ -1,6 +1,8 @@
 import { Helmet } from 'react-helmet';
 import useSEO from '@/hooks/useSEO';
 import { PublicPageLayout } from '@/components/seo/PublicPageLayout';
+import { SEOAppBridge } from '@/components/seo/SEOAppBridge';
+import { SEOInternalLink } from '@/components/seo/SEOInternalLink';
 import { SEOCTASection } from '@/components/seo/SEOCTASection';
 import { SEOFeatureGrid } from '@/components/seo/SEOFeatureGrid';
 import {
@@ -588,7 +590,15 @@ export default function PartPBuildingRegulationsPage() {
               requirements. The app guides you through the correct certificate for each type of
               work, ensures all mandatory fields are completed, and validates test results against
               BS 7671 limits. This reduces the risk of certification errors that could lead to
-              building regulations queries or enforcement issues.
+              building regulations queries or enforcement issues. See also our guide on{' '}
+              <SEOInternalLink href="/guides/minor-works-certificate">
+                Minor Works certificates
+              </SEOInternalLink>{' '}
+              and the difference between a{' '}
+              <SEOInternalLink href="/guides/eicr-guide">
+                Minor Works certificate and an EICR
+              </SEOInternalLink>
+              .
             </p>
           </div>
         </div>
@@ -605,6 +615,18 @@ export default function PartPBuildingRegulationsPage() {
             courses — all built to BS 7671:2018+A3:2024.
           </p>
           <SEOFeatureGrid features={features} columns={3} />
+        </div>
+      </section>
+
+      {/* App Bridge */}
+      <section className="py-8 px-5">
+        <div className="max-w-4xl mx-auto">
+          <SEOAppBridge
+            title="Run Your Electrical Business Smarter with Elec-Mate"
+            description="Quotes, certificates, job tracking, and team management — built for UK electricians."
+            ctaText="Try Elec-Mate free"
+            ctaHref="/auth/signup"
+          />
         </div>
       </section>
 

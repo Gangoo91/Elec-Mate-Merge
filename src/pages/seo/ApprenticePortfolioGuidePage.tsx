@@ -3,6 +3,8 @@ import useSEO from '@/hooks/useSEO';
 import { PublicPageLayout } from '@/components/seo/PublicPageLayout';
 import { SEOCTASection } from '@/components/seo/SEOCTASection';
 import { SEOFeatureGrid } from '@/components/seo/SEOFeatureGrid';
+import { SEOInternalLink } from '@/components/seo/SEOInternalLink';
+import { SEOAppBridge } from '@/components/seo/SEOAppBridge';
 import {
   GraduationCap,
   Brain,
@@ -555,6 +557,24 @@ export default function ApprenticePortfolioGuidePage() {
               </details>
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* App Bridge */}
+      <section className="py-8 px-5 border-t border-white/5">
+        <div className="max-w-4xl mx-auto">
+          <SEOAppBridge
+            title="Build Your Portfolio + Study for Exams in One App"
+            description="Elec-Mate helps electrical apprentices track their NVQ progress, study for assessments with 2,000+ practice questions, and prepare professional portfolio evidence. Start your free trial today."
+            icon={GraduationCap}
+          />
+          <p className="text-white mt-4 text-sm">
+            Ready to study for your next assessment?{' '}
+            <SEOInternalLink href="/training/apprentice">
+              Access the full apprentice training centre
+            </SEOInternalLink>{' '}
+            with courses, flashcards, and AI tutoring.
+          </p>
         </div>
       </section>
 

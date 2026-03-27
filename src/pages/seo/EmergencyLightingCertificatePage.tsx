@@ -3,6 +3,8 @@ import useSEO from '@/hooks/useSEO';
 import { PublicPageLayout } from '@/components/seo/PublicPageLayout';
 import { SEOCTASection } from '@/components/seo/SEOCTASection';
 import { SEOFeatureGrid } from '@/components/seo/SEOFeatureGrid';
+import { SEOAppBridge } from '@/components/seo/SEOAppBridge';
+import { SEOInternalLink } from '@/components/seo/SEOInternalLink';
 import {
   Flashlight,
   Smartphone,
@@ -597,12 +599,27 @@ export default function EmergencyLightingCertificatePage() {
             <p>
               The platform includes 70 electrical calculators covering cable sizing, voltage drop,
               maximum demand, diversity, conduit and trunking fill, prospective fault current, and
-              more. Combined with 8 certificate types — including EICR, EIC, Minor Works, emergency
-              lighting, fire alarm, and EV charger certificates — plus 8 Elec-AI agents and 12 AI
+              more. Combined with 8 certificate types — including{' '}
+              <SEOInternalLink href="/electrical-certification/eicr">EICR</SEOInternalLink>,{' '}
+              <SEOInternalLink href="/electrical-certification/eic">EIC</SEOInternalLink>, Minor Works, emergency
+              lighting, <SEOInternalLink href="/fire-alarm-certificate">fire alarm</SEOInternalLink>, and EV charger certificates — plus 8 Elec-AI agents and 12 AI
               tools, it replaces multiple separate tools with one integrated system. Xero and
               QuickBooks integration means you can raise invoices directly from completed jobs.
             </p>
           </div>
+        </div>
+      </section>
+
+      {/* App Bridge */}
+      <section className="py-4 px-5">
+        <div className="max-w-4xl mx-auto">
+          <SEOAppBridge
+            title="Create Emergency Lighting Certificates on Your Phone"
+            description="Elec-Mate's digital emergency lighting certificate covers BS 5266-1 monthly function tests, annual duration tests, and luminaire schedules — with instant PDF export."
+            ctaText="Try Elec-Mate free"
+            ctaHref="/auth/signup"
+            icon={Flashlight}
+          />
         </div>
       </section>
 

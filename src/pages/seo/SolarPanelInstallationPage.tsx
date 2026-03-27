@@ -387,7 +387,7 @@ export default function SolarPanelInstallationPage() {
                 wiring.
               </p>
               <p>
-                BS 7671:2018+A3:2024 Regulation 530.3.201 is particularly relevant to battery
+                BS 7671:2018+A3:2024 Section 530 is particularly relevant to battery
                 storage installations. Because a battery can supply fault current back through the
                 consumer unit (bidirectional current flow), the protective devices must be suitable
                 for operation in both directions. Standard unidirectional MCBs and RCBOs may not

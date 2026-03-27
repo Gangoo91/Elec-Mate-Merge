@@ -3,6 +3,8 @@ import useSEO from '@/hooks/useSEO';
 import { PublicPageLayout } from '@/components/seo/PublicPageLayout';
 import { SEOCTASection } from '@/components/seo/SEOCTASection';
 import { SEOFeatureGrid } from '@/components/seo/SEOFeatureGrid';
+import { SEOAppBridge } from '@/components/seo/SEOAppBridge';
+import { SEOInternalLink } from '@/components/seo/SEOInternalLink';
 import {
   Sun,
   Smartphone,
@@ -463,8 +465,16 @@ export default function SolarPVCertificatePage() {
             <p>
               Elec-Mate is part of a complete platform for UK electricians that includes 70
               electrical calculators, 8 Elec-AI agents and 12 AI tools, 36+ training courses, 8
-              certificate types, and integration with Xero and QuickBooks for invoicing. Everything
-              in one mobile-first tool.
+              certificate types, and integration with Xero and QuickBooks for invoicing. The{' '}
+              <SEOInternalLink href="/tools/cable-sizing-calculator">
+                cable sizing calculator
+              </SEOInternalLink>{' '}
+              handles DC and AC cable sizing for solar installations, and the{' '}
+              <SEOInternalLink href="/tools/solar-panel-sizing-calculator">
+                solar panel sizing calculator
+              </SEOInternalLink>{' '}
+              helps determine the correct system capacity before you begin. Everything in one
+              mobile-first tool.
             </p>
           </div>
           <SEOFeatureGrid features={features} columns={3} />
@@ -572,6 +582,18 @@ export default function SolarPVCertificatePage() {
               installations.
             </p>
           </div>
+        </div>
+      </section>
+
+      {/* App Bridge */}
+      <section className="py-8 px-5 border-t border-white/5">
+        <div className="max-w-4xl mx-auto">
+          <SEOAppBridge
+            title="Manage Solar PV Certification with Elec-Mate"
+            description="Quotes, certificates, G98/G99 documentation, and job tracking — built for UK solar PV installers and electricians."
+            ctaText="Try Elec-Mate free"
+            ctaHref="/auth/signup"
+          />
         </div>
       </section>
 

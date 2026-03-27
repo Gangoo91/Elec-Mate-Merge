@@ -1,6 +1,8 @@
 import { Helmet } from 'react-helmet';
 import useSEO from '@/hooks/useSEO';
 import { PublicPageLayout } from '@/components/seo/PublicPageLayout';
+import { SEOAppBridge } from '@/components/seo/SEOAppBridge';
+import { SEOInternalLink } from '@/components/seo/SEOInternalLink';
 import { SEOCTASection } from '@/components/seo/SEOCTASection';
 import { SEOFeatureGrid } from '@/components/seo/SEOFeatureGrid';
 import {
@@ -322,7 +324,15 @@ export default function RAMSGeneratorPage() {
               and building managers before being permitted to start work on site. The commercial
               expectation now exceeds the legal minimum, and any electrician who cannot produce
               professional RAMS will struggle to win work on commercial and managed residential
-              sites.
+              sites. Pair RAMS with your{' '}
+              <SEOInternalLink href="/training/manual-handling">
+                manual handling training
+              </SEOInternalLink>{' '}
+              and{' '}
+              <SEOInternalLink href="/training/pasma-training">
+                PASMA certification
+              </SEOInternalLink>{' '}
+              for a complete health and safety package.
             </p>
           </div>
         </div>
@@ -609,6 +619,18 @@ export default function RAMSGeneratorPage() {
             instead of hours. Part of 70 calculators, 8 AI agents, and 12 AI tools.
           </p>
           <SEOFeatureGrid features={features} columns={3} />
+        </div>
+      </section>
+
+      {/* App Bridge */}
+      <section className="py-8 px-5">
+        <div className="max-w-4xl mx-auto">
+          <SEOAppBridge
+            title="Run Your Electrical Business Smarter with Elec-Mate"
+            description="Quotes, certificates, job tracking, and team management — built for UK electricians."
+            ctaText="Try Elec-Mate free"
+            ctaHref="/auth/signup"
+          />
         </div>
       </section>
 

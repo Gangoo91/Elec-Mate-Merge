@@ -261,7 +261,7 @@ const sections = [
                 <strong>Consumer unit with AFDD protection:</strong> £900 to £1,300. Includes Arc
                 Fault Detection Devices as recommended by{' '}
                 <SEOInternalLink href="/guides/afdd-guide-bs7671">
-                  BS 7671 regulation 421.1.7
+                  BS 7671 Regulation 421.1
                 </SEOInternalLink>
                 . AFDDs detect dangerous arc faults that MCBs and RCDs cannot.
               </span>

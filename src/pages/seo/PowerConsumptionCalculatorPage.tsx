@@ -1,4 +1,5 @@
 import ToolTemplate from '@/pages/seo/templates/ToolTemplate';
+import { SEOAppBridge } from '@/components/seo/SEOAppBridge';
 import { SEOInternalLink } from '@/components/seo/SEOInternalLink';
 import {
   Calculator,
@@ -328,6 +329,12 @@ export default function PowerConsumptionCalculatorPage() {
         {
           id: 'reducing-consumption',
           heading: 'Reducing Power Consumption — Advice for Customers',
+          appBridge: {
+            title: 'Elec-Mate Includes All the Electrical Calculators You Need',
+            description:
+              'Elec-Mate includes all the electrical calculators you need — use them on any job, on any device.',
+            icon: Zap,
+          },
           content: (
             <>
               <p>

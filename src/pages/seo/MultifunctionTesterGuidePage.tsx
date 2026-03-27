@@ -73,6 +73,11 @@ const faqs = [
     answer:
       'Most multifunction testers include a basic earth electrode test mode, but it performs a simplified 2-wire measurement rather than the full 3-wire fall of potential method required by BS 7671 for accurate electrode resistance measurement. The 2-wire mode on an MFT measures the combined resistance of the electrode under test and the test spike, which can overestimate the true electrode resistance. For commissioning a new TT installation or investigating a problem, you need a dedicated earth electrode tester (such as the Megger DET4TC2 or Fluke 1625-2) that performs the proper 3-wire fall of potential measurement. However, the MFT earth electrode mode can be useful for quick verification checks on existing TT systems during periodic inspections, provided you understand its limitations. See the earth electrode testing guide for the full fall of potential procedure.',
   },
+  {
+    question: 'How do I check my MFT is working correctly before starting testing?',
+    answer:
+      'Before beginning any session of testing, you should verify that your MFT is functioning correctly using a proving unit or calibration verification accessory. Many instruments (including the Megger MFT range) have a built-in self-test function — activate this before use and confirm it passes. For continuity testing, short the test leads together and verify the instrument reads close to zero ohms (accounting for lead resistance). For insulation resistance, open-circuit the leads and confirm the instrument reads greater than 999 megohms. For loop impedance, use a known-value loop impedance test accessory (sometimes called a Zs reference box) to confirm the reading is within specification. You should also check that the test leads and probes are in good condition — no cracked insulation, damaged tips, or loose connections. Damaged leads are both a safety hazard and a source of inaccurate readings.',
+  },
 ];
 
 const relatedPages: RelatedPage[] = [

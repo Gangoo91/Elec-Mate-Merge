@@ -17,6 +17,8 @@ import {
   Search,
   Wrench,
 } from 'lucide-react';
+import { SEOAppBridge } from '@/components/seo/SEOAppBridge';
+import { SEOInternalLink } from '@/components/seo/SEOInternalLink';
 
 const PAGE_TITLE = 'Level 3 Electrical Installation Course Online | Advanced Diploma | Elec-Mate';
 const PAGE_DESCRIPTION =
@@ -245,11 +247,16 @@ export default function Level3ElectricalPage() {
             <p>
               Achieving Level 3 is a major milestone because it is the last knowledge-based
               qualification before the AM2 practical assessment. Once you have Level 3 plus the AM2,
-              plus the 18th Edition (C&G 2382), you are eligible for the JIB Installation
+              plus the{' '}
+              <SEOInternalLink href="/study/18th-edition-course">18th Edition (C&G 2382)</SEOInternalLink>,
+              you are eligible for the JIB Installation
               Electrician Gold Card — the industry's benchmark for a fully qualified electrician.
-              From there, the path continues to the 2391-52 (Inspection and Testing), scheme
-              registration with NICEIC, NAPIT, or ELECSA, and potentially the JIB Approved
-              Electrician grading.
+              From there, the path continues to the{' '}
+              <SEOInternalLink href="/study/inspection-testing-course">C&G 2391 Inspection and Testing</SEOInternalLink>,
+              scheme registration with NICEIC, NAPIT, or ELECSA, and potentially the JIB Approved
+              Electrician grading. Elec-Mate covers every step with AI-powered study tools,{' '}
+              <SEOInternalLink href="/tools/electrical-testing-calculators">70 technical calculators</SEOInternalLink>,
+              and digital certification.
             </p>
           </div>
         </div>
@@ -421,7 +428,7 @@ export default function Level3ElectricalPage() {
                 step: '712',
                 title: 'Solar Photovoltaic (PV) Power Supply Systems',
                 description:
-                  'Covers the installation of solar PV systems including DC circuit protection, string isolation, inverter requirements, earthing of PV arrays, and labelling requirements. Amendment 3 (A3:2024) adds Regulation 530.3.201 covering bidirectional and unidirectional protective devices.',
+                  'Covers the installation of solar PV systems including DC circuit protection, string isolation, inverter requirements, earthing of PV arrays, and labelling requirements. Amendment 3 (A3:2024) adds new Section 530 requirements covering bidirectional and unidirectional protective devices.',
               },
               {
                 step: '722',
@@ -515,6 +522,19 @@ export default function Level3ElectricalPage() {
               <p className="text-sm text-white">Training Courses</p>
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* App Bridge */}
+      <section className="py-4 px-5">
+        <div className="max-w-4xl mx-auto">
+          <SEOAppBridge
+            title="Study Level 3 Electrical Installation with Elec-Mate"
+            description="Elec-Mate's Study Centre has revision materials, exam prep, and on-the-job reference guides for the C&G 2365-03 Advanced Diploma, circuit design, and BS 7671 special locations."
+            ctaText="Try Elec-Mate free"
+            ctaHref="/auth/signup"
+            icon={GraduationCap}
+          />
         </div>
       </section>
 

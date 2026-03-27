@@ -42,7 +42,7 @@ const faqs = [
   {
     question: 'What is the key rule for choosing between Minor Works and EIC?',
     answer:
-      'The key rule is whether a new circuit is being installed. If the work involves running a new cable from the distribution board with a new protective device (MCB, RCBO, or fuse), you are installing a new circuit and a full Electrical Installation Certificate (EIC) is required. If the work is an addition or alteration to an existing circuit — such as adding a socket outlet to an existing ring, extending a lighting circuit, or installing a fused connection unit from an existing supply — a Minor Electrical Installation Works Certificate is the correct document. This distinction comes from BS 7671 Regulations 631.1 (EIC) and 631.2 (Minor Works). The defining question is: did you install a new protective device at the distribution board for a new circuit? If yes, EIC. If no, Minor Works.',
+      'The key rule is whether a new circuit is being installed. If the work involves running a new cable from the distribution board with a new protective device (MCB, RCBO, or fuse), you are installing a new circuit and a full Electrical Installation Certificate (EIC) is required. If the work is an addition or alteration to an existing circuit — such as adding a socket outlet to an existing ring, extending a lighting circuit, or installing a fused connection unit from an existing supply — a Minor Electrical Installation Works Certificate is the correct document. This distinction is set out in BS 7671 Part 6. The defining question is: did you install a new protective device at the distribution board for a new circuit? If yes, EIC. If no, Minor Works.',
   },
   {
     question: 'Does replacing a consumer unit require an EIC or Minor Works?',
@@ -145,10 +145,9 @@ const sections = [
           is the correct document.
         </p>
         <p>
-          This distinction comes from BS 7671 Regulations 631.1 and 631.2. Regulation 631.1 requires
-          an EIC for new installations and additions or alterations that include new circuits.
-          Regulation 631.2 requires a Minor Works certificate for additions or alterations to
-          existing circuits that do not extend to the installation of a new circuit.
+          This distinction is set out in BS 7671 Part 6. Part 6 requires an EIC for new installations
+          and additions or alterations that include new circuits, and a Minor Works certificate for
+          additions or alterations to existing circuits that do not extend to the installation of a new circuit.
         </p>
         <p>
           Getting this right matters. Issuing the wrong certificate can result in scheme provider

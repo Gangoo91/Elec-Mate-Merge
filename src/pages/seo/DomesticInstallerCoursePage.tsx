@@ -76,7 +76,7 @@ const faqs = [
   {
     question: 'What consumer unit regulations have changed recently?',
     answer:
-      'The most significant recent change was the amendment to Approved Document P in 2016 that made consumer unit replacements notifiable work. This means any replacement of a consumer unit (even a like-for-like swap) must be notified to building control or self-certified through a Competent Person Scheme. Additionally, Amendment 3 to the Building Regulations introduced a requirement for consumer units in domestic premises to be enclosed in a non-combustible enclosure — which in practice means using a metal consumer unit (most new units are metal as standard). BS 7671:2018+A2:2022 further clarified requirements for AFDD (Arc Fault Detection Device) protection, which Regulation 421.1.7 recommends for certain domestic circuits, particularly in higher-risk premises such as HMOs, care homes, and properties with thatched roofs.',
+      'The most significant recent change was the amendment to Approved Document P in 2016 that made consumer unit replacements notifiable work. This means any replacement of a consumer unit (even a like-for-like swap) must be notified to building control or self-certified through a Competent Person Scheme. Additionally, regulations introduced a requirement for consumer units in domestic premises to be enclosed in a non-combustible enclosure — which in practice means using a metal consumer unit (most new units are metal as standard). BS 7671:2018+A3:2024 further addresses AFDD (Arc Fault Detection Device) protection in Section 421, recommending AFDDs for certain domestic circuits, particularly in higher-risk premises such as HMOs, care homes, and properties with thatched roofs.',
   },
 ];
 
@@ -398,11 +398,11 @@ const sections = [
           circuits.
         </p>
         <p>
-          <strong>AFDD (Arc Fault Detection Devices):</strong> Regulation 421.1.7 of BS 7671
-          recommends the use of AFDDs for final circuits supplying socket outlets with a rated
-          current up to 32A in certain domestic premises, including HMOs, care homes, student
-          accommodation, and properties with thatched roofs. While currently a recommendation rather
-          than a requirement, AFDDs are expected to become mandatory in future amendments.
+          <strong>AFDD (Arc Fault Detection Devices):</strong> BS 7671 Section 421 recommends
+          the use of AFDDs for final circuits in certain domestic premises, including HMOs, care
+          homes, student accommodation, and properties with thatched roofs. While currently a
+          recommendation rather than a requirement, AFDDs are expected to become mandatory in
+          future amendments.
         </p>
         <p>
           <strong>Surge protection:</strong> Regulation 443.4 requires a risk assessment for surge

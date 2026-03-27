@@ -75,6 +75,11 @@ const faqs = [
     answer:
       'For a new fire alarm installation, the installer should issue a commissioning certificate confirming that the system has been designed, installed, and commissioned in accordance with BS 5839-1 (commercial) or BS 5839-6 (domestic). The certificate should include system drawings, zone plans, detector schedules, and test results. For domestic installations (Grade D smoke alarms as part of an electrical installation), the fire alarm work is typically covered by the Electrical Installation Certificate (EIC) for the overall electrical work, with the fire alarm system noted in the circuit schedule. Elec-Mate includes a dedicated fire alarm certificate template that produces a professional PDF compliant with BS 5839 requirements, separate from the EIC. For periodic testing and maintenance of commercial systems, a service report should be issued after each visit, recording tests carried out, any faults found, and remedial actions taken.',
   },
+  {
+    question: 'What is the difference between a Grade C and Grade D fire alarm system?',
+    answer:
+      'BS 5839-6 defines fire alarm grades for domestic premises based on the power supply and detection capability. Grade C systems are connected to a mains supply with battery backup and consist of separate control equipment — they are closer to a commercial-style system and typically used in larger residential buildings or HMOs requiring a higher level of protection. Grade D systems are the most common in standard domestic properties: each detector is individually mains-powered with a built-in integral standby battery. Grade D systems must be interlinked so that when one activates, all others sound — this interlinking can be hardwired (D1) or radio-frequency wireless (D2). Grade D1 or D2 with LD2 category coverage (circulation areas, principal habitable room, and kitchen) meets the minimum requirement for new builds and most HMO licensing conditions.',
+  },
 ];
 
 const relatedPages: RelatedPage[] = [

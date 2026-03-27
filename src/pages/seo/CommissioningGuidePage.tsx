@@ -57,7 +57,7 @@ const faqs = [
   {
     question: 'Is commissioning a legal requirement?',
     answer:
-      'BS 7671 Regulation 610.1 requires that every installation is inspected and tested during erection and on completion before being put into service. Regulation 631.1 requires an Electrical Installation Certificate to be issued upon completion of initial verification. While BS 7671 does not use the word "commissioning" as a formal requirement, the practical reality is that initial verification, functional testing, and certification together constitute commissioning. For notifiable work under Part P of the Building Regulations, the installation must be certified before it is put into service. Under the CDM Regulations 2015 (Construction Design and Management), the principal contractor must ensure that all building services — including electrical installations — are commissioned and tested before handover. In practice, commissioning is expected by clients, main contractors, scheme providers, and building control.',
+      'BS 7671 Part 6 (Regulation 641.1) requires that every installation is inspected and tested during erection and on completion before being put into service. An Electrical Installation Certificate must be issued upon completion of initial verification. While BS 7671 does not use the word "commissioning" as a formal requirement, the practical reality is that initial verification, functional testing, and certification together constitute commissioning. For notifiable work under Part P of the Building Regulations, the installation must be certified before it is put into service. Under the CDM Regulations 2015 (Construction Design and Management), the principal contractor must ensure that all building services — including electrical installations — are commissioned and tested before handover. In practice, commissioning is expected by clients, main contractors, scheme providers, and building control.',
   },
   {
     question: 'What documentation should I provide at commissioning handover?',
@@ -514,7 +514,7 @@ const sections = [
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>Visual inspection completed per BS 7671 Regulation 611.3</span>
+              <span>Visual inspection completed per BS 7671 Part 6 (Section 641)</span>
             </li>
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />

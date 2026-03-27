@@ -71,7 +71,7 @@ const faqs = [
   {
     question: 'What did Amendment 3 to the 18th Edition change?',
     answer:
-      'Amendment 3 (BS 7671:2018+A3:2024) was issued on 31 July 2024. The most significant change was the addition of Regulation 530.3.201, which covers requirements for bidirectional and unidirectional protective and switching devices. This was driven by the growing installation of solar PV, battery storage, and EV chargers that can feed energy back into the installation. Amendment 3 clarifies which types of protective devices are suitable for use in installations where current can flow in both directions. A3:2024 is published as a free PDF supplement to the existing 18th Edition book — it is not a new book.',
+      'Amendment 3 (BS 7671:2018+A3:2024) was issued on 31 July 2024. The most significant change was the addition of new requirements in Section 530 covering bidirectional and unidirectional protective and switching devices. This was driven by the growing installation of solar PV, battery storage, and EV chargers that can feed energy back into the installation. Amendment 3 clarifies which types of protective devices are suitable for use in installations where current can flow in both directions. A3:2024 is published as a free PDF supplement to the existing 18th Edition book — it is not a new book.',
   },
   {
     question: 'Is Amendment 4 expected?',
@@ -331,7 +331,7 @@ const sections = [
             {
               title: 'Key changes in the 18th Edition (2018)',
               description:
-                'Introduction of AFDDs (Arc Fault Detection Devices) in Regulation 421.1.7. Energy efficiency requirements in a new Section 801. Requirements for EV charging installations in Section 722. Expanded requirements for solar PV in Section 712. New requirements for prosumer installations.',
+                'Introduction of AFDDs (Arc Fault Detection Devices) per Regulation 421.1. Energy efficiency requirements in a new Section 801. Requirements for EV charging installations in Section 722. Expanded requirements for solar PV in Section 712. New requirements for prosumer installations.',
             },
             {
               title: 'Amendment 1 (A1:2020)',
@@ -346,7 +346,7 @@ const sections = [
             {
               title: 'Amendment 3 (A3:2024)',
               description:
-                'Issued 31 July 2024. Added Regulation 530.3.201 covering bidirectional and unidirectional protective and switching devices — driven by the growth of solar PV, battery storage, and EV chargers. Published as a free PDF supplement.',
+                'Issued 31 July 2024. Added new Section 530 requirements covering bidirectional and unidirectional protective and switching devices — driven by the growth of solar PV, battery storage, and EV chargers. Published as a free PDF supplement.',
             },
           ].map((item) => (
             <div

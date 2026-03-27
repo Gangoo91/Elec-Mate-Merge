@@ -382,7 +382,7 @@ const sections = [
           Chapter 64.
         </p>
         <p>
-          Amendment 3:2024 adds Regulation 530.3.201 covering bidirectional and unidirectional
+          Amendment 3:2024 adds Regulation 530.3.2 covering bidirectional and unidirectional
           protective devices. For installations with solar PV, battery storage, or other sources of
           reverse power flow, the Commissioning Specialist includes verification steps to confirm
           that the installed protective devices are suitable for the direction of energy flow — a

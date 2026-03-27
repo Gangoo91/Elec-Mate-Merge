@@ -3,6 +3,8 @@ import useSEO from '@/hooks/useSEO';
 import { PublicPageLayout } from '@/components/seo/PublicPageLayout';
 import { SEOCTASection } from '@/components/seo/SEOCTASection';
 import { SEOFeatureGrid } from '@/components/seo/SEOFeatureGrid';
+import { SEOInternalLink } from '@/components/seo/SEOInternalLink';
+import { SEOAppBridge } from '@/components/seo/SEOAppBridge';
 import {
   ShieldAlert,
   Brain,
@@ -390,6 +392,24 @@ export default function AIHealthSafetyAgentPage() {
               </details>
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* App Bridge */}
+      <section className="py-8 px-5 border-t border-white/5">
+        <div className="max-w-4xl mx-auto">
+          <SEOAppBridge
+            title="RAMS + Certificates + AI Tools in One App"
+            description="Generate CDM 2015 compliant RAMS with AI, then complete your EIC or EICR certificates on the same job — all from your phone. Elec-Mate covers every document an electrician needs."
+            icon={ShieldAlert}
+          />
+          <p className="text-white mt-4 text-sm">
+            Also need electrical certificates?{' '}
+            <SEOInternalLink href="/tools/eicr-certificate">
+              Complete EICR and EIC certificates digitally
+            </SEOInternalLink>{' '}
+            with AI-assisted observation coding and instant PDF export.
+          </p>
         </div>
       </section>
 

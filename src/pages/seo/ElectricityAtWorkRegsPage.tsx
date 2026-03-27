@@ -75,6 +75,11 @@ const faqs = [
     answer:
       'The EAWR apply to "workplaces," which is defined broadly. Any premises where a person is at work — including a private dwelling where electrical work is being carried out — is a workplace for the purpose of the regulations. This means that when you (as an electrician) are working in a domestic property, the EAWR apply to your work activities. You must follow safe isolation procedures (Regulation 12), you must not work live unless justified (Regulation 14), and you must be competent (Regulation 16). The EAWR do not apply to the homeowner in their own home for their own domestic activities — a homeowner changing a light bulb is not "at work." But any electrical work carried out by a professional electrician in a domestic property is covered by the regulations because the electrician is at work.',
   },
+  {
+    question: 'What records must be kept to demonstrate compliance with the Electricity at Work Regulations?',
+    answer:
+      'The EAWR do not specify a particular set of records that must be kept, but the HSE strongly recommends maintaining documentation that demonstrates the electrical systems are safe and maintained as required by Regulation 4. For workplaces, this means keeping records of periodic inspection and testing (EICRs), maintenance records for fixed electrical equipment, records of portable appliance testing (PAT), risk assessments for electrical work, any permits to work issued, and training and competence records for personnel carrying out electrical work. For electricians, the EIC or MEIWC issued at the completion of installation work is the primary documentary evidence that the installation was constructed and tested in accordance with BS 7671. Retaining copies of these certificates is important for demonstrating EAWR compliance in the event of an incident or HSE inspection.',
+  },
 ];
 
 const relatedPages: RelatedPage[] = [

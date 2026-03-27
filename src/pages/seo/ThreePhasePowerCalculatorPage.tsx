@@ -18,6 +18,8 @@ import {
   Settings,
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { SEOAppBridge } from '@/components/seo/SEOAppBridge';
+import { SEOInternalLink } from '@/components/seo/SEOInternalLink';
 
 const faqs = [
   {
@@ -213,7 +215,15 @@ export default function ThreePhasePowerCalculatorPage() {
               current draw of a motor, or assessing voltage drop on a long cable run, the
               three-phase formulas are essential. The key difference from single-phase is the
               presence of the square root of 3 factor in the power and voltage/current
-              relationships.
+              relationships. Use the{' '}
+              <SEOInternalLink href="/tools/cable-sizing-calculator">
+                cable sizing calculator
+              </SEOInternalLink>{' '}
+              to size three-phase cables once the line current is known, and the{' '}
+              <SEOInternalLink href="/tools/voltage-drop-calculator">
+                voltage drop calculator
+              </SEOInternalLink>{' '}
+              to verify compliance with BS 7671 limits on three-phase distribution circuits.
             </p>
           </div>
         </div>
@@ -456,6 +466,18 @@ export default function ThreePhasePowerCalculatorPage() {
             installations.
           </p>
           <SEOFeatureGrid features={features} columns={3} />
+        </div>
+      </section>
+
+      {/* App Bridge */}
+      <section className="py-8 px-5">
+        <div className="max-w-4xl mx-auto">
+          <SEOAppBridge
+            title="Three-Phase Calculations for Commercial Electricians"
+            description="Balanced and unbalanced loads, star and delta configurations, motor starting currents — all calculated instantly on your phone."
+            ctaText="Try Elec-Mate free"
+            ctaHref="/auth/signup"
+          />
         </div>
       </section>
 

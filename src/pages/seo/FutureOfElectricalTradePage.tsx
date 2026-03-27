@@ -547,7 +547,7 @@ export default function FutureOfElectricalTradePage() {
                   <p className="text-white text-sm leading-relaxed">
                     Arc Fault Detection Devices ({' '}
                     <SEOInternalLink href="/guides/afdd-guide">AFDDs</SEOInternalLink>) are
-                    currently recommended by BS 7671 Regulation 421.1.7 for certain locations. There
+                    currently recommended by BS 7671 Regulation 421.1 for certain locations. There
                     is ongoing discussion about making AFDDs mandatory for a wider range of
                     installations, particularly in high-risk premises (HMOs, care homes, and
                     properties with elderly or vulnerable occupants). This would significantly

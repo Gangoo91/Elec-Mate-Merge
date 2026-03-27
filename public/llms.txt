@@ -140,3 +140,36 @@ Elec-Mate publishes over 400 free guides, calculators, and training resources:
 ## Full documentation
 
 For detailed feature descriptions, see [llms-full.txt](https://elec-mate.com/llms-full.txt)
+
+## SEO Content Library (1,000+ Pages)
+
+Elec-Mate hosts over 1,000 in-depth pages covering UK electrical topics. All content is written by the Elec-Mate Technical Team and verified against BS 7671:2018+A3:2024. Key categories:
+
+### UK City & Regional Guides
+Electrician guides for every major UK city and region: London (all boroughs), Birmingham, Manchester, Leeds, Glasgow, Edinburgh, Bristol, Cardiff, Sheffield, Liverpool, Newcastle, Nottingham, Leicester, Coventry, Bradford, Southampton, Portsmouth, Brighton, Plymouth, Derby, Stoke-on-Trent, Wolverhampton, Middlesbrough, Sunderland, Hull, York, Chester, and 30+ more. Each guide covers local DNO, common property types, local regulations context, and typical costs.
+
+### EICR & Landlord Guides
+Landlord electrical safety obligations in every UK city and region. EICR requirements, 5-year cycles, HMO licensing, Electrical Safety Standards in the Private Rented Sector (England) Regulations 2020, Renting Homes (Wales) Act 2022, Scottish HMO regulations.
+
+### EV Charger Installation
+EV charger installation guides, grants (WCS, EV Infrastructure Grant), brand comparisons (Ohme, Zappi, Hypervolt, Pod Point, Andersen), OZEV installer requirements, BS 7671 Section 722.
+
+### Solar PV & Renewables
+Solar PV installation, G98/G99 notification, MCS standards, BS 7671 Section 712, battery storage, DNO connection requirements.
+
+### Electrical Qualifications & Training
+BS 7671 18th Edition, City & Guilds 2365 Level 2 & 3, AM2 assessment, City & Guilds 2391 inspection & testing, NVQ Level 3, EPA preparation, electrical engineering degree routes, apprenticeship applications.
+
+### Technical Guides
+Safe isolation, cable sizing (BS 7671 Appendix 4), voltage drop, bonding conductors, earthing arrangements (TN-S, TN-C-S PME, TT), consumer unit types and regulations, RCD/RCBO selection, wiring diagrams, two-way switching, ring circuits, radial circuits, lighting circuits.
+
+### Specialist Electrical
+Industrial HV/LV, petrochemical CompEx, data centres (Tier I–IV), healthcare (HTM 06-01), food production, agriculture (BS 7671 Section 705), marinas (BS 7671 Section 709), swimming pools (BS 7671 Section 702), solar PV, wind, EV charging infrastructure.
+
+### Business & Compliance
+Electrical contractor insurance, VAT for electricians, CIS scheme, Part P Building Regulations, NICEIC vs NAPIT vs ELECSA vs STROMA comparison, electrical maintenance contracts.
+
+## Sitemap
+
+Full sitemap: https://elec-mate.com/sitemap.xml
+SEO pages sitemap: https://elec-mate.com/sitemap-seo.xml

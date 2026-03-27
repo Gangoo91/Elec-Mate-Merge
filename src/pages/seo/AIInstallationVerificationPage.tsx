@@ -79,7 +79,7 @@ export default function AIInstallationVerificationPage() {
                 circuit marginally exceeds the maximum permitted value for the installed protective
                 device. Perhaps the voltage drop on a long lighting circuit is 3.2% when the maximum
                 permitted is 3%. Perhaps an RCD protecting socket outlets has a rated residual
-                operating current of 100mA when Regulation 411.3.3 requires 30mA. These are the
+                operating current of 100mA when Regulation 411.3.2 requires 30mA. These are the
                 kinds of non-compliances that can slip through during a manual review, especially on
                 large installations with dozens of circuits.
               </p>
@@ -131,7 +131,7 @@ export default function AIInstallationVerificationPage() {
                   installed protective device type and rating. Disconnection times verified for
                   final circuits (0.4s) and distribution circuits (5s). RCD protection requirements
                   checked for socket outlets, cables in walls, and bathroom circuits per Regulation
-                  411.3.3.
+                  411.3.2.
                 </li>
                 <li>
                   <span className="font-semibold text-white">
@@ -159,7 +159,7 @@ export default function AIInstallationVerificationPage() {
                 </li>
                 <li>
                   <span className="font-semibold text-white">Amendment 3:2024 requirements</span> —
-                  Regulation 530.3.201 checked for installations with bidirectional power flow
+                  Regulation 530.3.2 checked for installations with bidirectional power flow
                   (solar PV, battery storage). Correct protective device directionality verified.
                 </li>
               </ul>
@@ -374,7 +374,7 @@ export default function AIInstallationVerificationPage() {
           icon: ClipboardCheck,
           title: 'Amendment 3:2024 Ready',
           description:
-            'Includes checks for BS 7671 Amendment 3:2024 requirements including Regulation 530.3.201 for bidirectional and unidirectional protective devices.',
+            'Includes checks for BS 7671 Amendment 3:2024 requirements including Regulation 530.3.2 for bidirectional and unidirectional protective devices.',
         },
       ]}
       featuresHeading="Verification Features"
@@ -409,7 +409,7 @@ export default function AIInstallationVerificationPage() {
         {
           question: 'Can it verify installations with solar PV or battery storage?',
           answer:
-            'Yes. The verification engine includes specific checks for installations with distributed energy resources including solar PV, battery energy storage systems (BESS), wind turbines, and EV chargers with vehicle-to-grid (V2G) capability. These checks cover the requirements of BS 7671 Amendment 3:2024, particularly the new Regulation 530.3.201 regarding bidirectional and unidirectional protective devices. The AI verifies that the correct RCD type is installed (Type B for systems with DC fault current), that protective devices are suitable for bidirectional power flow, that the earthing arrangement is correct for the generation source, and that G98/G99 connection requirements are addressed. For solar PV installations, it also checks DC isolator provision and labelling requirements.',
+            'Yes. The verification engine includes specific checks for installations with distributed energy resources including solar PV, battery energy storage systems (BESS), wind turbines, and EV chargers with vehicle-to-grid (V2G) capability. These checks cover the requirements of BS 7671 Amendment 3:2024, particularly the new Regulation 530.3.2 regarding bidirectional and unidirectional protective devices. The AI verifies that the correct RCD type is installed (Type B for systems with DC fault current), that protective devices are suitable for bidirectional power flow, that the earthing arrangement is correct for the generation source, and that G98/G99 connection requirements are addressed. For solar PV installations, it also checks DC isolator provision and labelling requirements.',
         },
         {
           question: 'How does the verification handle special locations under BS 7671 Part 7?',

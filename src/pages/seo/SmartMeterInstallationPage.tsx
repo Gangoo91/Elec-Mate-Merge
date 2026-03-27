@@ -3,18 +3,14 @@ import { SEOInternalLink } from '@/components/seo/SEOInternalLink';
 import { SEOAppBridge } from '@/components/seo/SEOAppBridge';
 import type { RelatedPage } from '@/components/seo/SEORelatedPages';
 import {
-  Gauge,
   Zap,
-  ShieldCheck,
-  Calculator,
-  ClipboardCheck,
-  Brain,
-  FileCheck2,
   AlertTriangle,
-  Building2,
+  CheckCircle2,
+  Info,
+  ShieldCheck,
+  FileCheck2,
   Home,
-  BookOpen,
-  Wifi,
+  ClipboardCheck,
 } from 'lucide-react';
 
 // -------------------------------------------------------------------
@@ -22,114 +18,103 @@ import {
 // -------------------------------------------------------------------
 
 const breadcrumbs = [
-  { label: 'Installation', href: '/guides' },
-  { label: 'Smart Meters', href: '/guides/smart-meter-installation' },
+  { label: 'Electrical Guides', href: '/home-office-electrical-guide' },
+  { label: 'Smart Meter Installation', href: '/smart-meter-installation' },
 ];
 
 const tocItems = [
-  { id: 'smart-meter-overview', label: 'Smart Meter Overview' },
   { id: 'smets1-vs-smets2', label: 'SMETS1 vs SMETS2' },
-  { id: 'who-can-install', label: 'Who Can Install Smart Meters' },
-  { id: 'impact-on-consumer-units', label: 'Impact on Consumer Units' },
-  { id: 'customer-questions', label: 'Answering Customer Questions' },
-  { id: 'smart-meters-and-testing', label: 'Smart Meters and Testing' },
-  { id: 'electrician-opportunities', label: 'Opportunities for Electricians' },
+  { id: 'who-is-responsible', label: 'Who Is Responsible for What' },
+  { id: 'why-cant-be-installed', label: 'Why Smart Meters Cannot Always Be Installed' },
+  { id: 'consumer-unit-issues', label: 'Consumer Unit and Earthing Issues' },
+  { id: 'ihd', label: 'In-Home Display (IHD)' },
+  { id: 'electrician-role', label: "The Electrician's Role" },
+  { id: 'costs', label: 'Costs and Preparation' },
   { id: 'faq', label: 'FAQ' },
   { id: 'related', label: 'Related Pages' },
 ];
 
 const keyTakeaways = [
-  'SMETS2 meters are the current standard, using the national DCC network to communicate — unlike SMETS1 meters which used proprietary networks and often lost smart functionality when customers switched supplier.',
-  'Smart meters are installed by energy suppliers (or their contractors), not by independent electricians — but electricians need to understand them because they affect consumer units, earthing, and testing.',
-  'A smart meter installation may require changes to the consumer unit, main earthing, and bonding — electricians are often called in to address issues discovered during or after smart meter installation.',
-  'Electricians should be prepared to answer customer questions about smart meters, especially around safety, data privacy, and whether they affect the electrical installation.',
-  'Elec-Mate helps electricians manage smart meter-related work with EICR certificates, consumer unit change documentation, and AI-powered regulation guidance.',
+  'Smart meters are installed by your electricity supplier, not an electrician. However, electricians are often called in before or after a smart meter installation to resolve issues that prevent the meter from being fitted — such as an outdated consumer unit, no RCD protection, or a TT earthing system requiring attention.',
+  'SMETS2 meters are the current generation. They communicate via the national Data Communications Company (DCC) network and retain their smart functionality even if you switch energy supplier — unlike first-generation SMETS1 meters, which often reverted to dumb mode after a switch.',
+  'Common barriers to smart meter installation include: old consumer units without RCD protection, TT (earth electrode) earthing systems with complications at the service head, inadequate clearance at the meter position, or a defective service head (the sealed fuse supplied by the DNO).',
+  'The Distribution Network Operator (DNO) owns and is responsible for the service head (cutout) and the supply cable to your property. Your electricity supplier is responsible for the meter itself.',
+  'An In-Home Display (IHD) provides real-time energy use data and is supplied free of charge with a smart meter. It connects wirelessly to the meter via Zigbee and does not require any electrical work to install.',
 ];
 
 const faqs = [
   {
-    question: 'What is the difference between SMETS1 and SMETS2 smart meters?',
+    question: 'Can I refuse a smart meter installation?',
     answer:
-      'SMETS1 (Smart Metering Equipment Technical Specifications 1) meters were the first generation, installed from 2011 to 2018. They used proprietary communication networks run by individual energy suppliers, which meant they often lost smart functionality when the customer switched to a different supplier — reverting to "dumb" meters that required manual readings. SMETS2 meters are the current standard, installed from 2018 onwards. They use the national Data Communications Company (DCC) network, which is supplier-independent. This means SMETS2 meters retain their smart functionality regardless of which energy supplier the customer uses. The DCC network uses a combination of cellular, mesh radio, and long-range radio to communicate with the meter. All smart meter installations now use SMETS2, and SMETS1 meters are being upgraded to communicate through the DCC network.',
+      'Yes. Smart meter installation is not currently compulsory for domestic customers in Great Britain. Your energy supplier is required to offer you a smart meter but cannot force you to accept one. Some suppliers are beginning to introduce smart-only tariffs, which may make it difficult to access certain price plans without one. If you refuse, your supplier should continue to provide you with a standard meter.',
   },
   {
-    question: 'Can an electrician install a smart meter?',
+    question: 'Why does my smart meter show an error after switching supplier?',
     answer:
-      'No, not in the normal course of work. Smart meters are installed by the energy supplier or their authorised contractor — typically a specialist smart meter installer employed by companies such as Calisen, SMS, or the energy supplier directly. These installers are trained to the MCoS (Meter Operator Code of Practice) standard and are authorised to work on metering equipment. As an independent electrician, you are not permitted to install, remove, or tamper with a smart meter or any metering equipment. However, you are likely to encounter smart meters on every domestic installation, inspection, and testing job. You need to understand how they work, where they fit in the installation, and how they affect the consumer unit, earthing, and supply characteristics.',
+      "If you have an older SMETS1 meter, it may have lost its smart functions when you switched supplier. SMETS1 meters communicated via each supplier's own proprietary system, so changing supplier could cause the meter to revert to dumb mode — meaning it stopped sending automatic readings. The DCC has been migrating SMETS1 meters onto the national network, and many have been restored to full smart functionality. If yours has not, contact your new supplier.",
   },
   {
-    question: 'How does a smart meter installation affect the consumer unit?',
+    question: 'What is a TT earthing system and why does it cause problems with smart meters?',
     answer:
-      'A smart meter replaces the existing meter, but the installation process can reveal or cause issues with the consumer unit and wider electrical installation. Common situations include: the meter tail connections being disturbed, requiring re-tightening or replacement; the earthing conductor being disconnected or re-routed, particularly if the DNO changes the earthing arrangement (for example, from TN-C-S to TT); the main switch in the consumer unit being found to be inadequate or damaged; and the existing installation being found to have defects that the smart meter installer is obliged to report. In some cases, the smart meter installer will refuse to complete the installation if they identify a dangerous condition (such as a damaged consumer unit, exposed live parts, or inadequate earthing) and will advise the customer to call an electrician first.',
+      "A TT (terra-terra) earthing system is one where the installation's earth connection is provided by a local earth electrode driven into the ground, rather than by the electricity supplier's network. TT systems are common in rural properties, older properties, and some regions. They can cause complications with smart meter installation because the installer may need to assess the earth electrode resistance and the integrity of the earthing arrangement before fitting the meter. If the earthing is deficient, the smart meter installer may decline to proceed.",
   },
   {
-    question: 'Do smart meters affect EICR testing?',
+    question: "What is the DNO's role in smart meter installation?",
     answer:
-      'Smart meters do not fundamentally change the EICR testing procedure, but there are practical considerations. The supply characteristics (Ze, PSCC, PFC) are measured at the origin, which is downstream of the meter. If the smart meter has a built-in isolator, this is the main switch for the supply — not the main switch in the consumer unit. Some SMETS2 meters have a supply disconnect feature that the energy supplier can operate remotely, which could theoretically disconnect the supply during testing (though this is unlikely). When recording supply details on the EICR, note the meter type (SMETS2) and any relevant details. If the smart meter has replaced an older meter and the earthing arrangement has changed, this must be reflected in the EICR.',
+      'The Distribution Network Operator (DNO) owns and maintains the electricity network up to and including the service head (the sealed fuse unit, also called the cutout) on your property. The DNO is responsible for the service cable, the service head, and the meter tails up to the meter. If the service head is damaged, too small, or in the wrong position, the DNO must attend to resolve the issue before a smart meter can be fitted. Your energy supplier arranges the smart meter itself and books the installation engineer.',
   },
   {
-    question: 'Do smart meters emit harmful radiation?',
+    question: 'Does my consumer unit need to be upgraded before a smart meter?',
     answer:
-      'No. This is one of the most common customer concerns, but it is not supported by evidence. Smart meters use radio frequencies similar to mobile phones, Wi-Fi routers, and baby monitors. The radio transmissions are low-power and intermittent — the meter sends data for a few seconds a few times per day, far less than a mobile phone which transmits continuously during calls. Public Health England (now UKHSA) has stated that smart meters do not pose a health risk. The radio frequency exposure from a smart meter is many times below the international safety guidelines set by ICNIRP. As an electrician, you may need to reassure customers on this point.',
+      "Not always, but a smart meter installer may decline to fit the meter if your consumer unit presents a safety concern. Old-style consumer units with rewirable (fuse wire) protection and no RCD protection are a common issue. The supplier's engineer is not permitted to work on your internal wiring, so if the consumer unit needs upgrading, you would need to hire a registered electrician to carry out the work first. Some suppliers will fit the meter regardless; others will not proceed where there is an obvious safety deficiency.",
   },
   {
-    question: 'What happens if the smart meter installer finds a defect in the installation?',
+    question: 'Does a smart meter affect my electrical installation?',
     answer:
-      'If the smart meter installer identifies a dangerous condition during the meter exchange, they are required to make the situation safe (if possible) and report the defect to the energy supplier. In practice, they may refuse to complete the installation until the defect is resolved. Common defects found during smart meter installations include: damaged or overheating meter tails, inadequate main earthing, broken or missing consumer unit covers, exposed live parts, and evidence of tampering or illegal connections. The customer is then advised to contact a qualified electrician to carry out the remedial work before the smart meter installation can proceed. This creates work for electricians — and Elec-Mate makes it easy to document the remedial work with a Minor Works Certificate or EIC.',
+      'A smart meter replaces your existing gas and/or electricity meter. It does not alter your consumer unit, circuits, or earthing arrangement. The meter sits between the service head and your consumer unit. One change to be aware of: smart meters typically communicate via a radio link (the Home Area Network, using Zigbee protocol) with the IHD and, in some installations, with compatible smart home devices. There is no cabling required for the IHD — it communicates wirelessly.',
   },
   {
-    question: 'How does Elec-Mate help with smart meter-related electrical work?',
+    question: 'What should I check before the smart meter engineer arrives?',
     answer:
-      'Elec-Mate helps electricians manage the work that arises from smart meter installations — consumer unit changes, earthing upgrades, remedial work on defects found during meter exchanges, and EICR inspections that include smart-metered properties. The 8 digital certificate types cover every documentation need, the 70 calculators handle Zs verification, prospective fault current, and cable sizing, and the 8 Elec-AI agents can answer questions about earthing arrangements, supply characteristics, and BS 7671 requirements in real time on site.',
+      'Ensure the meter is accessible — clear any cupboards, furniture, or stored items blocking the meter position. Check that the meter tails (cables between the service head and the meter) are in good condition and the insulation is intact. If your property has a TT earthing system, advise the installer in advance. If your consumer unit is old or has known faults, consider having an electrician inspect it beforehand. The installation appointment typically takes 30 to 60 minutes.',
   },
 ];
 
 const relatedPages: RelatedPage[] = [
   {
-    href: '/guides/consumer-unit-regulations',
-    title: 'Consumer Unit Regulations',
-    description:
-      'Current regulations for consumer units including Amendment 3 and AFDD requirements.',
-    icon: ShieldCheck,
+    href: '/consumer-unit-types-guide',
+    title: 'Consumer Unit Types Guide',
+    description: 'Metal clad, split-load, high-integrity, and RCBO boards explained with upgrade costs.',
+    icon: Zap,
     category: 'Guide',
   },
   {
-    href: '/guides/consumer-unit-change',
-    title: 'Consumer Unit Change Guide',
-    description:
-      'How to change a consumer unit — regulations, procedure, testing, and certification.',
+    href: '/new-home-electrical-checklist',
+    title: 'New Home Electrical Checklist',
+    description: 'Things to check when moving into a new property — RCDs, smoke detectors, meter registration.',
+    icon: Home,
+    category: 'Guide',
+  },
+  {
+    href: '/guides/eicr-observation-codes-explained',
+    title: 'EICR Observation Codes Explained',
+    description: 'Understand C1, C2, C3 and FI codes — what they mean and what action is required.',
     icon: ClipboardCheck,
     category: 'Guide',
   },
   {
-    href: '/guides/earthing-arrangements',
-    title: 'Earthing Arrangements Guide',
-    description: 'TN-S, TN-C-S, and TT earthing systems explained with testing requirements.',
-    icon: Zap,
+    href: '/guides/eicr-for-landlords',
+    title: 'EICR for Landlords',
+    description: 'Complete guide to landlord EICR requirements, compliance deadlines, and penalties.',
+    icon: ShieldCheck,
     category: 'Guide',
   },
   {
     href: '/tools/eicr-certificate',
     title: 'EICR Certificate App',
-    description:
-      'Complete digital EICR certificates on your phone with AI board scanner and voice test entry.',
+    description: 'Complete EICRs on your phone with AI board scanning and instant PDF export.',
     icon: FileCheck2,
     category: 'Certificate',
-  },
-  {
-    href: '/guides/ev-charger-installation',
-    title: 'EV Charger Installation',
-    description:
-      'Complete guide to EV charger installation — regulations, cable sizing, protection, and certification.',
-    icon: Gauge,
-    category: 'Guide',
-  },
-  {
-    href: '/guides/electrical-testing-cost-uk',
-    title: 'Electrical Testing Cost UK',
-    description: 'How much to charge for EICRs, PAT testing, and periodic inspections in 2026.',
-    icon: Calculator,
-    category: 'Guide',
   },
 ];
 
@@ -139,355 +124,397 @@ const relatedPages: RelatedPage[] = [
 
 const sections = [
   {
-    id: 'smart-meter-overview',
-    heading: 'Smart Meters: What Every Electrician Needs to Know',
-    content: (
-      <>
-        <p>
-          Smart meters are now installed in over 30 million UK homes and businesses, replacing
-          traditional gas and electricity meters with digital devices that send readings
-          automatically to the energy supplier. As an electrician, you will not install smart meters
-          yourself — that is done by the energy supplier — but you need to understand them because
-          they affect every domestic installation you work on.
-        </p>
-        <p>
-          Smart meters sit at the origin of the electrical installation, between the DNO cutout and
-          the{' '}
-          <SEOInternalLink href="/guides/consumer-unit-regulations">consumer unit</SEOInternalLink>.
-          They replace the traditional credit or prepayment meter and include an in-home display
-          (IHD) that shows the customer their energy usage in real time. The meter communicates with
-          the energy supplier via a wireless network — either a proprietary network (SMETS1) or the
-          national DCC network (SMETS2).
-        </p>
-        <p>
-          This guide covers the differences between SMETS1 and SMETS2, who can install smart meters,
-          how they affect the consumer unit and wider installation, and how to answer the customer
-          questions you will inevitably receive.
-        </p>
-      </>
-    ),
-  },
-  {
     id: 'smets1-vs-smets2',
-    heading: 'SMETS1 vs SMETS2: What Changed',
+    heading: 'SMETS1 vs SMETS2 — What Is the Difference?',
     content: (
       <>
         <p>
-          The smart meter rollout has gone through two distinct phases, each with a different
-          technical standard. Understanding the difference is important because you will encounter
-          both types on site.
+          Smart meters in Great Britain are deployed in two generations, known as SMETS1 (Smart
+          Metering Equipment Technical Specifications version 1) and SMETS2. Understanding the
+          difference matters because it affects whether your meter retains its smart functions
+          when you switch energy supplier.
         </p>
-        <div className="space-y-4 my-4">
-          <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6">
-            <div className="flex items-center gap-3 mb-4">
-              <Wifi className="w-6 h-6 text-yellow-400" />
-              <h3 className="font-bold text-white text-lg">SMETS1 (First Generation)</h3>
-            </div>
-            <div className="grid grid-cols-2 gap-4 mb-4">
-              <div>
-                <div className="text-sm text-white mb-1">Installed</div>
-                <div className="text-xl font-bold text-white">2011 — 2018</div>
-              </div>
-              <div>
-                <div className="text-sm text-white mb-1">Communication</div>
-                <div className="text-xl font-bold text-white">Proprietary network</div>
-              </div>
-            </div>
-            <p className="text-white text-sm leading-relaxed">
-              Used supplier-specific communication networks. Often lost smart functionality when
-              customers switched energy supplier — reverting to manual readings. Different suppliers
-              used different SMETS1 meters, creating compatibility issues. Now being enrolled onto
-              the DCC network to restore smart functionality.
-            </p>
-          </div>
-
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-6">
-            <div className="flex items-center gap-3 mb-4">
-              <Wifi className="w-6 h-6 text-yellow-400" />
-              <h3 className="font-bold text-white text-lg">SMETS2 (Current Standard)</h3>
-            </div>
-            <div className="grid grid-cols-2 gap-4 mb-4">
-              <div>
-                <div className="text-sm text-white mb-1">Installed</div>
-                <div className="text-xl font-bold text-yellow-400">2018 onwards</div>
-              </div>
-              <div>
-                <div className="text-sm text-white mb-1">Communication</div>
-                <div className="text-xl font-bold text-yellow-400">DCC national network</div>
-              </div>
-            </div>
-            <p className="text-white text-sm leading-relaxed">
-              Uses the national Data Communications Company (DCC) network, which is
-              supplier-independent. Smart functionality is retained regardless of which energy
-              supplier the customer uses. Standardised across all suppliers. Supports both credit
-              and prepayment modes. All new installations now use SMETS2.
-            </p>
-          </div>
-        </div>
-      </>
-    ),
-  },
-  {
-    id: 'who-can-install',
-    heading: 'Who Can Install Smart Meters?',
-    content: (
-      <>
-        <p>
-          Smart meters are installed by the energy supplier or their authorised contractor. This is
-          not work that independent electricians carry out. The installers are trained to the MCoS
-          (Meter Operator Code of Practice) standard and are specifically authorised to work on
-          metering equipment, which sits upstream of the consumer unit in the supply chain.
-        </p>
-        <p>The main organisations involved in smart meter installation include:</p>
-        <div className="space-y-4 my-4">
-          {[
-            {
-              title: 'Energy suppliers',
-              description:
-                'British Gas, EDF, E.ON, Octopus Energy, and other suppliers have their own in-house smart meter installation teams or use contracted installers.',
-            },
-            {
-              title: 'Specialist metering companies',
-              description:
-                'Companies such as Calisen, SMS (Smart Metering Systems), and Morrison Energy Services employ large numbers of smart meter installers who work on behalf of multiple energy suppliers.',
-            },
-            {
-              title: 'The Data Communications Company (DCC)',
-              description:
-                'The DCC operates the national communication network that SMETS2 meters use. While the DCC does not install meters, it provides the infrastructure that makes SMETS2 work.',
-            },
-          ].map((item) => (
-            <div
-              key={item.title}
-              className="rounded-2xl bg-white/[0.04] border border-white/10 p-5"
-            >
-              <div className="flex items-start gap-3">
-                <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-                <div>
-                  <h4 className="font-bold text-white mb-1">{item.title}</h4>
-                  <p className="text-white text-sm leading-relaxed">{item.description}</p>
-                </div>
-              </div>
-            </div>
-          ))}
+        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
+          <ul className="space-y-4 text-white">
+            <li className="flex items-start gap-3">
+              <Info className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>SMETS1 (first generation, deployed 2012 to 2019)</strong> — communicated
+                via each energy supplier's own proprietary network. When you switched supplier,
+                the meter often lost smart functionality and reverted to dumb mode, requiring
+                manual meter readings. Many SMETS1 meters have since been migrated to the DCC
+                network and restored to smart operation.
+              </span>
+            </li>
+            <li className="flex items-start gap-3">
+              <Info className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>SMETS2 (second generation, deployed from 2019)</strong> — communicates
+                via the Data Communications Company (DCC) national network. SMETS2 meters retain
+                full smart functionality regardless of which energy supplier you use, because
+                they all connect to the same DCC infrastructure. All new smart meter
+                installations now use SMETS2.
+              </span>
+            </li>
+            <li className="flex items-start gap-3">
+              <CheckCircle2 className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>DCC migration of SMETS1 meters</strong> — Smart Energy GB and the DCC
+                have been progressively migrating SMETS1 meters onto the national network. If
+                you have a SMETS1 meter that lost smart functions after switching supplier,
+                contact your current supplier to check whether migration has been completed for
+                your meter.
+              </span>
+            </li>
+          </ul>
         </div>
         <p>
-          Although you cannot install smart meters yourself, the work they generate — consumer unit
-          upgrades, earthing remedials, and EICR inspections — is all within the scope of a
-          qualified electrician. Many smart meter installations uncover defects that need fixing by
-          an electrician before the meter exchange can be completed.
+          From an electrician's perspective, the distinction between SMETS1 and SMETS2 is less
+          important than the physical installation conditions. Both are fitted by the energy
+          supplier's engineer, not by an electrician. What matters electrically is whether the
+          installation is in a suitable condition to accept a new meter.
         </p>
       </>
     ),
   },
   {
-    id: 'impact-on-consumer-units',
-    heading: 'How Smart Meters Affect Consumer Units and Earthing',
+    id: 'who-is-responsible',
+    heading: 'Who Is Responsible for What',
     content: (
       <>
         <p>
-          The smart meter installation process can reveal or create issues with the consumer unit,
-          earthing, and wider electrical installation. As an electrician, you may be called to site
-          to resolve issues found during a meter exchange.
+          Smart meter installation involves several parties with distinct responsibilities.
+          Understanding who does what helps homeowners and electricians identify the correct
+          point of contact when problems arise.
         </p>
-        <div className="space-y-4 my-4">
-          {[
-            {
-              title: 'Meter tail connections',
-              description:
-                'The meter tails are disconnected and reconnected during the meter exchange. This can reveal corroded, damaged, or undersized tails that need replacing. If the tails are disturbed, the connections at the consumer unit end should also be checked.',
-            },
-            {
-              title: 'Earthing changes',
-              description:
-                'Some smart meter installations involve changes to the earthing arrangement — particularly when the DNO upgrades the supply at the same time. A property that was TN-C-S may be changed to TT, requiring an earth electrode and different RCD protection. An electrician must verify the earthing and update the installation accordingly.',
-            },
-            {
-              title: 'Consumer unit condition',
-              description:
-                'Smart meter installers are trained to identify dangerous conditions. If they find a damaged consumer unit, exposed live parts, or a board that does not meet current standards, they may refuse to complete the installation until an electrician resolves the issue.',
-            },
-            {
-              title: 'Supply characteristics',
-              description:
-                'A new smart meter may alter the measured supply impedance slightly due to different internal connections. When carrying out an EICR on a property with a recently installed smart meter, measure Ze fresh rather than relying on previous records.',
-            },
-          ].map((item) => (
-            <div
-              key={item.title}
-              className="rounded-2xl bg-white/[0.04] border border-white/10 p-5"
-            >
-              <div className="flex items-start gap-3">
-                <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-                <div>
-                  <h4 className="font-bold text-white mb-1">{item.title}</h4>
-                  <p className="text-white text-sm leading-relaxed">{item.description}</p>
-                </div>
-              </div>
-            </div>
-          ))}
+        <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-6 my-4">
+          <ul className="space-y-4 text-white">
+            <li className="flex items-start gap-3">
+              <AlertTriangle className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>Distribution Network Operator (DNO)</strong> — owns and maintains the
+                electricity network from the substation to the service head (cutout) at your
+                property. The DNO is responsible for the service head, service cable, and
+                anything upstream of the meter. The six DNO areas in England, Scotland, and
+                Wales are National Grid Electricity Distribution, UK Power Networks, Northern
+                Powergrid, Electricity North West, SP Energy Networks, and SSEN.
+              </span>
+            </li>
+            <li className="flex items-start gap-3">
+              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>Electricity supplier</strong> — your energy company is responsible for
+                the meter itself. The supplier arranges and books the smart meter installation
+                and sends their own engineer or a third-party metering contractor to carry
+                out the work.
+              </span>
+            </li>
+            <li className="flex items-start gap-3">
+              <AlertTriangle className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>The homeowner and their electrician</strong> — responsible for
+                everything downstream of the meter: the meter tails from the meter to the
+                consumer unit, the consumer unit itself, all circuits, and the earthing
+                arrangement within the property. If any of these require attention before a
+                smart meter can be fitted, a registered electrician must carry out the work.
+              </span>
+            </li>
+          </ul>
         </div>
         <SEOAppBridge
-          title="Document consumer unit changes on site"
-          description="When a smart meter installation leads to consumer unit work, use Elec-Mate to complete the EIC or Minor Works Certificate on your phone. AI board scanner, voice test entry, and instant PDF delivery — no post-site paperwork."
+          title="Need to issue a certificate after resolving smart meter installation barriers?"
+          description="Elec-Mate lets you complete Minor Works Certificates and EICRs on your phone, with instant PDF generation and cloud storage."
+          ctaText="Start 7-day free trial"
           icon={FileCheck2}
         />
       </>
     ),
   },
   {
-    id: 'customer-questions',
-    heading: 'Answering Customer Questions About Smart Meters',
+    id: 'why-cant-be-installed',
+    heading: 'Why Smart Meters Cannot Always Be Installed',
     content: (
       <>
         <p>
-          Customers frequently ask electricians about smart meters — even though you did not install
-          them. Being able to answer these questions confidently builds trust and positions you as a
-          knowledgeable professional.
+          A significant proportion of smart meter installation appointments fail or are aborted
+          because of conditions at the property. The smart meter engineer — who is not a
+          qualified electrician — is not permitted to carry out electrical work on your
+          installation. If problems are found, they will typically leave and refer the homeowner
+          back to their supplier or to an electrician.
         </p>
-        <div className="space-y-4 my-4">
-          {[
-            {
-              title: '"Are smart meters safe?"',
-              description:
-                'Yes. Smart meters meet all UK safety standards. They are tested and approved by Ofgem and installed by trained, authorised installers. The radio frequency emissions are far below international safety limits — comparable to a Wi-Fi router but with much less transmission time.',
-            },
-            {
-              title: '"Will the smart meter affect my electrics?"',
-              description:
-                'The smart meter replaces the existing meter and does not change the rest of the installation. However, the installation process may reveal existing defects (corroded tails, poor earthing, damaged consumer unit) that need attention. This is a good thing — it identifies problems that were already there.',
-            },
-            {
-              title: '"Can the energy company switch off my supply remotely?"',
-              description:
-                'SMETS2 meters have a remote disconnect function, but it is heavily regulated by Ofgem. It can only be used in specific circumstances (for example, when a property is empty and the supply needs to be made safe). It cannot be used to disconnect a customer for non-payment without following strict legal procedures, including an in-person visit.',
-            },
-            {
-              title: '"My smart meter has gone dumb — can you fix it?"',
-              description:
-                'This typically affects SMETS1 meters that lost smart functionality after a supplier switch. The fix is to contact the energy supplier and request enrolment onto the DCC network (for SMETS1) or a SMETS2 meter upgrade. This is not something an electrician can fix — it is a communications issue between the meter and the supplier.',
-            },
-            {
-              title: '"Do I have to have a smart meter?"',
-              description:
-                'No. Smart meter installation is voluntary. Customers can decline a smart meter from their energy supplier. However, they may miss out on smart tariffs and accurate billing. As an electrician, remain neutral — your job is to inform, not to persuade.',
-            },
-          ].map((item) => (
-            <div
-              key={item.title}
-              className="rounded-2xl bg-white/[0.04] border border-white/10 p-5"
-            >
-              <div className="flex items-start gap-3">
-                <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-                <div>
-                  <h4 className="font-bold text-white mb-1">{item.title}</h4>
-                  <p className="text-white text-sm leading-relaxed">{item.description}</p>
-                </div>
-              </div>
-            </div>
-          ))}
+        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
+          <ul className="space-y-4 text-white">
+            <li className="flex items-start gap-3">
+              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>Defective or undersized service head</strong> — the service head (cutout)
+                is the sealed unit that contains the DNO's main fuse. If it is old, damaged,
+                undersized, or in the wrong location, the DNO must attend before the meter can
+                be changed. Service head issues are outside the electrician's scope — contact
+                the DNO directly.
+              </span>
+            </li>
+            <li className="flex items-start gap-3">
+              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>Meter tails in poor condition</strong> — the cables between the service
+                head and the meter (meter tails) must be in sound condition. Old rubber-insulated
+                or lead-sheathed tails, or tails with damaged insulation, will prevent the
+                installation. Replacement of meter tails is a job for a registered electrician
+                and is notifiable under Part P in England.
+              </span>
+            </li>
+            <li className="flex items-start gap-3">
+              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>No adequate earthing at the meter position</strong> — where the property
+                uses a TT earthing system, the smart meter engineer may request confirmation that
+                the earth electrode provides adequate resistance to earth. An electrician may need
+                to test and document the earthing arrangement.
+              </span>
+            </li>
+            <li className="flex items-start gap-3">
+              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>Meter in an inaccessible location</strong> — the meter must be accessible
+                for the engineer to safely disconnect and reconnect. Meters concealed in built-in
+                furniture, under stairs without access, or behind fixed cladding may need to be
+                relocated. Relocation of a meter involves the supplier, DNO, and an electrician.
+              </span>
+            </li>
+            <li className="flex items-start gap-3">
+              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>Wireless signal issues</strong> — SMETS2 meters communicate via the DCC
+                wide-area network using a SMETS2 communications hub. In some rural or shielded
+                locations, the signal is weak. Where signal is insufficient, the installation may
+                be deferred pending network improvements or an alternative communications solution.
+              </span>
+            </li>
+          </ul>
         </div>
       </>
     ),
   },
   {
-    id: 'smart-meters-and-testing',
-    heading: 'Smart Meters and EICR Testing',
+    id: 'consumer-unit-issues',
+    heading: 'Consumer Unit and TT Earthing Issues',
     content: (
       <>
         <p>
-          When carrying out an{' '}
-          <SEOInternalLink href="/tools/eicr-certificate">EICR</SEOInternalLink> on a property with
-          a smart meter, be aware of the following practical considerations:
+          Two of the most common reasons smart meter installations are blocked relate to the
+          consumer unit and the earthing system. An electrician is the correct person to resolve
+          both of these.
         </p>
-        <div className="space-y-4 my-4">
-          {[
-            {
-              title: 'Record the meter type',
-              description:
-                'Note whether the meter is SMETS1 or SMETS2 in the supply details section of the EICR. This helps future inspectors understand the installation.',
-            },
-            {
-              title: 'Measure Ze at the origin',
-              description:
-                'The external earth fault loop impedance (Ze) is measured between the incoming phase and earth at the origin. With a smart meter, ensure you are measuring downstream of the meter. The meter itself should not affect Ze, but measure fresh rather than relying on previous records.',
-            },
-            {
-              title: 'Check the meter tails',
-              description:
-                'Inspect the condition of the meter tails as part of the visual inspection. Look for signs of overheating, corrosion, or damage — particularly if the smart meter was recently installed and the tails were disturbed.',
-            },
-            {
-              title: 'Note the earthing arrangement',
-              description:
-                'Confirm the earthing arrangement (TN-S, TN-C-S, or TT) and whether it has changed since the last inspection. A smart meter installation may have triggered an earthing change by the DNO.',
-            },
-          ].map((item) => (
-            <div
-              key={item.title}
-              className="rounded-2xl bg-white/[0.04] border border-white/10 p-5"
-            >
-              <div className="flex items-start gap-3">
-                <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-                <div>
-                  <h4 className="font-bold text-white mb-1">{item.title}</h4>
-                  <p className="text-white text-sm leading-relaxed">{item.description}</p>
-                </div>
-              </div>
-            </div>
-          ))}
+        <p>
+          Many older properties still have consumer units with rewirable fuse carriers (fuse wire)
+          or early cartridge fuse types, with no RCD protection. While a smart meter engineer is
+          not required to refuse installation solely because of an old consumer unit, some
+          engineers and some supplier policies will not proceed where there is an obvious safety
+          concern. Upgrading to a modern metal-clad consumer unit with RCD or RCBO protection
+          resolves this and brings the installation closer to the current edition of BS 7671.
+        </p>
+        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
+          <ul className="space-y-4 text-white">
+            <li className="flex items-start gap-3">
+              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>TT earthing systems</strong> — in a TT system, the earth path for fault
+                current passes through a local earth electrode rather than through the supplier's
+                network. The electrode resistance must be low enough to allow protective devices
+                to operate within the required disconnection time. An electrician should test the
+                electrode resistance using a loop impedance tester and document the result. RCD
+                protection is essential in all TT installations under BS 7671 Regulation 411.5.3.
+              </span>
+            </li>
+            <li className="flex items-start gap-3">
+              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>PME (TN-C-S) earthing and modern loads</strong> — properties on a PME
+                supply should be aware that connecting certain loads such as EV chargers requires
+                specific precautions under BS 7671. This is separate from smart metering but
+                increasingly relevant as electric vehicle charging and smart tariffs converge.
+              </span>
+            </li>
+          </ul>
+        </div>
+        <p>
+          If you are uncertain about your earthing system type, an{' '}
+          <SEOInternalLink href="/guides/eicr-observation-codes-explained">
+            EICR (Electrical Installation Condition Report)
+          </SEOInternalLink>{' '}
+          will identify this and any related deficiencies as part of its findings.
+        </p>
+      </>
+    ),
+  },
+  {
+    id: 'ihd',
+    heading: 'In-Home Display (IHD) — What It Does and Does Not Do',
+    content: (
+      <>
+        <p>
+          The In-Home Display (IHD) is a small wireless screen provided free with every smart
+          meter installation. It communicates with the smart meter using Zigbee (a low-power
+          wireless protocol) via the Home Area Network (HAN) and displays real-time energy
+          consumption data for both electricity and gas.
+        </p>
+        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
+          <ul className="space-y-4 text-white">
+            <li className="flex items-start gap-3">
+              <Info className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>What the IHD shows</strong> — current electricity consumption in watts
+                or kilowatts, cost per hour at current consumption rate, cumulative daily and
+                weekly usage, gas consumption where a smart gas meter is also fitted, and a
+                traffic light indicator for low, medium, and high consumption.
+              </span>
+            </li>
+            <li className="flex items-start gap-3">
+              <Info className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>What the IHD does not do</strong> — it does not control appliances, it
+                does not communicate with the internet directly, and it does not replace a smart
+                home hub. It is a display device only. It requires no electrical installation
+                work — it simply plugs into a standard socket outlet.
+              </span>
+            </li>
+            <li className="flex items-start gap-3">
+              <Info className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>Range limitations</strong> — the IHD communicates wirelessly with the
+                meter via Zigbee. The range is typically 10 to 30 metres through walls. If your
+                meter is in an outbuilding or in a remote location, the IHD may not receive a
+                reliable signal. In this case, a third-party smart energy monitor connected
+                directly to the electricity supply may be a better solution.
+              </span>
+            </li>
+          </ul>
         </div>
       </>
     ),
   },
   {
-    id: 'electrician-opportunities',
-    heading: 'Opportunities for Electricians from Smart Meter Rollout',
+    id: 'electrician-role',
+    heading: "The Electrician's Role in Smart Meter Installations",
     content: (
       <>
         <p>
-          The smart meter rollout is generating significant work for electricians. Every meter
-          exchange has the potential to uncover defects that need remedying, and the growing
-          electrification of homes (heat pumps, EV chargers, battery storage) means consumer units
-          are being upgraded more frequently.
+          Electricians do not install smart meters — that is the energy supplier's responsibility.
+          However, electricians frequently carry out preparatory or remedial work that enables a
+          smart meter installation to proceed or that is triggered by issues discovered during a
+          failed smart meter appointment.
         </p>
-        <div className="space-y-4 my-4">
-          {[
-            {
-              title: 'Pre-installation remedials',
-              description:
-                'Smart meter installers refuse to complete the exchange if they find dangerous conditions. The customer then needs an electrician to fix the problem. Common jobs include consumer unit replacements, earthing upgrades, and meter tail replacements.',
-            },
-            {
-              title: 'Consumer unit upgrades',
-              description:
-                'Many properties getting smart meters have older consumer units that do not meet current standards. The smart meter installation prompts the customer to think about their electrics, creating an upsell opportunity for a full consumer unit upgrade.',
-            },
-            {
-              title: 'EICR inspections',
-              description:
-                'Landlords scheduling smart meter installations for their rental properties often need an EICR at the same time. Offering both services in a single visit saves the landlord time and earns you more per trip.',
-            },
-          ].map((item) => (
-            <div
-              key={item.title}
-              className="rounded-2xl bg-white/[0.04] border border-white/10 p-5"
-            >
-              <div className="flex items-start gap-3">
-                <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-                <div>
-                  <h4 className="font-bold text-white mb-1">{item.title}</h4>
-                  <p className="text-white text-sm leading-relaxed">{item.description}</p>
-                </div>
-              </div>
-            </div>
-          ))}
+        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
+          <ul className="space-y-4 text-white">
+            <li className="flex items-start gap-3">
+              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>Replacing meter tails</strong> — old rubber-insulated, lead-sheathed, or
+                damaged meter tails between the service head and consumer unit. This requires
+                working in close proximity to the live service head; a properly insulated mat and
+                appropriate PPE must be used. The service head cannot be de-energised by the
+                electrician — only the DNO can do this.
+              </span>
+            </li>
+            <li className="flex items-start gap-3">
+              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>Upgrading the consumer unit</strong> — replacing an old fuse board with
+                a modern, metal-clad split-load or RCBO consumer unit complying with BS EN
+                61439-3. This is notifiable work under Part P and must be certified with an
+                Electrical Installation Certificate (EIC) and a Building Regulations compliance
+                certificate from a registered competent person scheme.
+              </span>
+            </li>
+            <li className="flex items-start gap-3">
+              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>Earthing system assessment and improvement</strong> — testing earth
+                electrode resistance on TT systems, installing additional electrodes where
+                required, and documenting the results on the appropriate certificate. Issuing
+                an{' '}
+                <SEOInternalLink href="/tools/eicr-certificate">EICR or EIC</SEOInternalLink>{' '}
+                that the homeowner can provide to the smart meter installer as evidence of
+                compliance.
+              </span>
+            </li>
+            <li className="flex items-start gap-3">
+              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>Main bonding</strong> — ensuring main protective bonding conductors are
+                in place for gas and water services under BS 7671 Regulation 411.3.1.2. Old
+                properties sometimes lack bonding on one or both services, which is a C2
+                deficiency on an EICR and should be rectified before any new meter work.
+              </span>
+            </li>
+          </ul>
         </div>
-        <SEOAppBridge
-          title="Manage all your electrical certification in one app"
-          description="EICR, EIC, Minor Works, and 5 more certificate types — all completed on your phone with AI assistance. Turn smart meter-related call-outs into fully documented, professionally delivered jobs."
-          icon={Brain}
-        />
+      </>
+    ),
+  },
+  {
+    id: 'costs',
+    heading: 'Costs and How to Prepare for a Smart Meter Installation',
+    content: (
+      <>
+        <p>
+          The smart meter itself and its installation are provided free of charge by your energy
+          supplier. You should never pay for the meter or the installation engineer. However, if
+          your property requires preparatory electrical work, you will need to pay an electrician
+          for that separately.
+        </p>
+        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
+          <ul className="space-y-4 text-white">
+            <li className="flex items-start gap-3">
+              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>Smart meter installation</strong> — free, arranged by your supplier. The
+                appointment typically takes 30 to 90 minutes. You do not need to be present for
+                the electricity meter only, but you must be present if a gas meter is also being
+                changed.
+              </span>
+            </li>
+            <li className="flex items-start gap-3">
+              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>Meter tail replacement</strong> — typically £150 to £350 depending on the
+                length of the run and the condition of the existing installation. Includes
+                materials, labour, and the required Minor Works or EIC certificate.
+              </span>
+            </li>
+            <li className="flex items-start gap-3">
+              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>Consumer unit upgrade</strong> — typically £300 to £900 for a full
+                consumer unit replacement in a domestic property. See the{' '}
+                <SEOInternalLink href="/consumer-unit-types-guide">
+                  consumer unit types guide
+                </SEOInternalLink>{' '}
+                for a detailed cost breakdown by unit type and property size.
+              </span>
+            </li>
+            <li className="flex items-start gap-3">
+              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>Earthing system assessment</strong> — an EICR including earthing tests
+                typically costs £150 to £350 for a domestic property. Where additional earth
+                electrodes or bonding conductors are required, allow an additional £100 to £250
+                for materials and labour.
+              </span>
+            </li>
+          </ul>
+        </div>
+        <p>
+          Electricians working on smart meter-related preparatory work should issue the
+          appropriate certificate: a Minor Electrical Installation Works Certificate (MEWC) for
+          minor additions and alterations, or an{' '}
+          <SEOInternalLink href="/tools/eicr-certificate">
+            Electrical Installation Certificate (EIC)
+          </SEOInternalLink>{' '}
+          for new consumer unit installations. Elec-Mate supports both certificate types with
+          on-site PDF generation and cloud storage.
+        </p>
       </>
     ),
   },
@@ -500,29 +527,29 @@ const sections = [
 export default function SmartMeterInstallationPage() {
   return (
     <GuideTemplate
-      title="Smart Meter Installation | What Electricians Need to Know"
-      description="What electricians need to know about smart meter installation. SMETS1 vs SMETS2 explained, who can install smart meters, impact on consumer units and earthing, customer FAQ answers, and work opportunities from the smart meter rollout."
-      datePublished="2025-09-01"
-      dateModified="2026-02-13"
+      title="Smart Meter Installation — An Electrician's Guide | Elec-Mate"
+      description="Understand what happens during a smart meter installation from an electrician's perspective. SMETS1 vs SMETS2, DNO vs supplier responsibilities, TT earthing complications, consumer unit issues, and when to call an electrician."
+      datePublished="2024-06-01"
+      dateModified="2025-03-01"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
-      badge="Installation Guide"
-      badgeIcon={Gauge}
+      badge="Guide"
+      badgeIcon={Zap}
       heroTitle={
         <>
-          Smart Meter Installation:{' '}
-          <span className="text-yellow-400">What Electricians Need to Know</span>
+          Smart Meter Installation{' '}
+          <span className="text-yellow-400">— An Electrician&apos;s Perspective</span>
         </>
       }
-      heroSubtitle="Smart meters are now in over 30 million UK homes. Electricians do not install them, but you need to understand SMETS1 vs SMETS2, their impact on consumer units and earthing, how they affect EICR testing, and how to answer the customer questions you will inevitably be asked."
-      readingTime={13}
+      heroSubtitle="Smart meters are fitted by your energy supplier, not an electrician. But a significant number of installations fail because of electrical issues at the property. Here is what electricians need to know — and what homeowners should resolve before the appointment."
+      readingTime={9}
       keyTakeaways={keyTakeaways}
       sections={sections}
       faqs={faqs}
-      faqHeading="Frequently Asked Questions About Smart Meters"
+      faqHeading="Smart Meter Installation — Frequently Asked Questions"
       relatedPages={relatedPages}
-      ctaHeading="Handle smart meter-related work with Elec-Mate"
-      ctaSubheading="Consumer unit changes, earthing upgrades, EICR inspections — document everything on your phone with Elec-Mate. 8 certificate types, 70 calculators, 8 AI agents. 7-day free trial, cancel anytime."
+      ctaHeading="Certify your smart meter prep work on site"
+      ctaSubheading="Generate Minor Works Certificates and EICRs from your phone. PDF in seconds, stored in the cloud."
     />
   );
 }

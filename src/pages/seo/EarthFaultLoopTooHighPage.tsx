@@ -80,7 +80,7 @@ const faqs = [
   {
     question: 'What should I do if Zs is too high for the existing MCB?',
     answer:
-      'If Zs exceeds the maximum for the existing MCB but is within limits for a different protective device, one option is to change the protective device. For example, the maximum Zs for a 20A Type B MCB is 2.19 ohms, but for a 20A Type C MCB it is 1.09 ohms (Type C has a higher magnetic trip multiple). Moving from Type B to Type C is only appropriate if the load characteristics require it. Alternatively, fitting an RCBO in place of the MCB ensures earth fault disconnection via the 30 mA RCD function, which operates independently of Zs. However, Regulation 411.4.4 still requires ADS (automatic disconnection of supply), so RCD protection alone does not remove the need for Zs verification. In all cases, verify that the cable is adequately protected against thermal effects during a fault using the adiabatic equation per BS 7671 Regulation 543.1.3.',
+      'If Zs exceeds the maximum for the existing MCB but is within limits for a different protective device, one option is to change the protective device. For example, the maximum Zs for a 20 A Type B MCB is 2.19 ohms, but for a 20 A Type C MCB it is 1.09 ohms (Type C has a higher magnetic trip multiple). Moving from Type B to Type C is only appropriate if the load characteristics require it. Alternatively, fitting an RCBO in place of the MCB ensures earth fault disconnection via the 30 mA RCD function, which operates independently of Zs. However, BS 7671 still requires automatic disconnection of supply (ADS), so RCD protection alone does not remove the need for Zs verification. In all cases, verify that the cable is adequately protected against thermal effects during a fault using the adiabatic equation per BS 7671 Section 543.',
   },
 ];
 
@@ -326,8 +326,8 @@ const sections = [
               For TT earthing systems (common in rural areas), the earth path goes through the
               general mass of earth via an earth rod, which inherently has much higher impedance
               than a metallic return path. On TT systems, Zs will often exceed the MCB maximum
-              values, which is why BS 7671 Regulation 411.5.2 requires RCD protection (not
-              overcurrent protection) as the primary means of fault disconnection. If the earth
+              values, which is why BS 7671 requires RCD protection (not
+              overcurrent protection) as the primary means of fault disconnection in TT systems. If the earth
               electrode resistance (RA) is too high even for RCD operation, driving the earth rod
               deeper, using multiple earth rods in parallel, or treating the soil with bentonite can
               reduce RA.

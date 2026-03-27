@@ -401,6 +401,11 @@ export default function BreakEvenCalculatorPage() {
           answer:
             'The contribution margin is the amount of revenue that remains after deducting variable costs. It represents how much each unit of work (day, hour, or job) contributes towards covering your fixed costs and generating profit. For example, if you charge £300 per day and your variable costs are £30, your contribution margin is £270 (90%). Higher contribution margins mean you reach break-even faster and each additional day of work generates more profit. To improve your contribution margin, either increase your prices or reduce your variable costs per job.',
         },
+        {
+          question: 'How does raising my day rate affect my break-even point?',
+          answer:
+            'Raising your day rate has a powerful effect on your break-even point because it increases your contribution margin on every job. For example, if your fixed costs are £2,800 per month and your contribution margin increases from £270 to £320 per day (a £50 price rise with the same variable costs), your break-even drops from 10.4 billable days to 8.75 days. That is nearly two fewer days you need to work each month just to cover your costs — and every additional day above break-even generates more profit per day too. Elec-Mate models the effect of price changes on your break-even point in real time, so you can see exactly what a £10, £20, or £50 day rate increase means for your monthly profit.',
+        },
       ]}
       relatedPages={[
         {

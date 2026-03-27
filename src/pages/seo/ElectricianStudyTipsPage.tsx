@@ -73,6 +73,11 @@ const faqs = [
     answer:
       'Long-term study motivation is a common challenge, especially when you are working full-time and studying in the evenings. Strategies that work: (1) Set specific, measurable goals — not "study the 18th Edition" but "complete 3 flashcard sessions and 1 mock exam this week." Track your progress visually. (2) Study in short, focused blocks (25 to 50 minutes) with breaks (the Pomodoro Technique). This prevents burnout and maintains concentration. (3) Vary your study methods — alternate between reading, flashcards, mock exams, and video lessons to keep things fresh. (4) Study with others if possible — even a short weekly study session with a colleague or fellow apprentice adds accountability and perspective. (5) Remember the end goal: passing the exam leads to better qualifications, a better ECS card, and better earning potential. Each study session is an investment in your career. Elec-Mate\'s progress tracking shows you how far you have come, which can be motivating when the end feels far away.',
   },
+  {
+    question: 'How is studying for the 18th Edition different from the 17th Edition?',
+    answer:
+      'If you previously studied the 17th Edition (BS 7671:2008), the 18th Edition (BS 7671:2018, with Amendment 1 in 2020 and Amendment 2 in 2022) introduces several significant changes you need to be aware of. Key additions and changes include: arc fault detection devices (AFDDs) — new requirements in Chapter 42 for AFDDs in specific locations such as student accommodation and houses in multiple occupation; surge protection devices (SPDs) — expanded requirements for surge protection in Chapter 44; electric vehicle charging — new Section 722 covering EV charger installations; renewable energy systems — updates to Sections 712 (solar PV) and 551 (generating sets); RCD requirements — refined requirements for supplementary protection with RCDs; voltage drop — updated calculation methods and limits; and prosumer installations — new definitions and requirements for properties with both consumption and generation. The examination questions in the C&G 2382 test the 18th Edition content specifically, including the amendments. If your copy of BS 7671 is pre-amendment, update it before sitting the exam.',
+  },
 ];
 
 const relatedPages: RelatedPage[] = [

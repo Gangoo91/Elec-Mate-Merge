@@ -3,6 +3,8 @@ import useSEO from '@/hooks/useSEO';
 import { PublicPageLayout } from '@/components/seo/PublicPageLayout';
 import { SEOCTASection } from '@/components/seo/SEOCTASection';
 import { SEOFeatureGrid } from '@/components/seo/SEOFeatureGrid';
+import { SEOAppBridge } from '@/components/seo/SEOAppBridge';
+import { SEOInternalLink } from '@/components/seo/SEOInternalLink';
 import {
   GraduationCap,
   Brain,
@@ -245,13 +247,21 @@ export default function CityGuilds2391Page() {
               job — an additional cost and delay that most clients will not accept.
             </p>
             <p>
-              The 2391-52 also underpins your ability to issue Electrical Installation Certificates
-              (EICs) for new work and Electrical Installation Condition Reports (EICRs) for periodic
+              The 2391-52 also underpins your ability to issue{' '}
+              <SEOInternalLink href="/tools/eic-certificate">
+                Electrical Installation Certificates (EICs)
+              </SEOInternalLink>{' '}
+              for new work and Electrical Installation Condition Reports (EICRs) for periodic
               inspections. Since the Electrical Safety Standards in the Private Rented Sector
               (England) Regulations 2020 made five-yearly EICRs mandatory for all rented properties,
               the demand for qualified inspection and testing professionals has increased
               significantly. Holding the 2391-52 opens a lucrative revenue stream for self-employed
-              electricians and small contractors.
+              electricians and small contractors. Before sitting the 2391-52, ensure you have
+              completed the{' '}
+              <SEOInternalLink href="/training/18th-edition-course">
+                18th Edition wiring regulations course
+              </SEOInternalLink>
+              .
             </p>
           </div>
         </div>
@@ -591,6 +601,18 @@ export default function CityGuilds2391Page() {
               <p className="text-sm text-white">Training Courses</p>
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* App Bridge */}
+      <section className="py-8 px-5 border-t border-white/5">
+        <div className="max-w-4xl mx-auto">
+          <SEOAppBridge
+            title="Pass the C&G 2391-52 with Elec-Mate"
+            description="AI-powered quiz prep, GN3 testing walkthroughs, certificate practice, and scenario simulations — everything you need to pass the Inspection and Testing qualification first time. From £4.99/month."
+            ctaText="Start 7-day free trial"
+            ctaHref="/auth/signup"
+          />
         </div>
       </section>
 

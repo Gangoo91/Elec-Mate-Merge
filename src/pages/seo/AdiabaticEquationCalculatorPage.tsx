@@ -3,6 +3,8 @@ import useSEO from '@/hooks/useSEO';
 import { PublicPageLayout } from '@/components/seo/PublicPageLayout';
 import { SEOCTASection } from '@/components/seo/SEOCTASection';
 import { SEOFeatureGrid } from '@/components/seo/SEOFeatureGrid';
+import { SEOInternalLink } from '@/components/seo/SEOInternalLink';
+import { SEOAppBridge } from '@/components/seo/SEOAppBridge';
 import {
   Calculator,
   Smartphone,
@@ -23,13 +25,13 @@ import {
 
 const PAGE_TITLE = 'Adiabatic Equation Calculator | CPC Sizing BS 7671 | Elec-Mate';
 const PAGE_DESCRIPTION =
-  'Calculate minimum CPC size using the adiabatic equation (S = square root of I squared t divided by k). BS 7671 Regulation 543.1.3 compliant. k values for copper, aluminium, and steel conductors. Start free.';
+  'Calculate minimum CPC size using the adiabatic equation (S = square root of I squared t divided by k). BS 7671 Regulation 543.1 compliant. k values for copper, aluminium, and steel conductors. Start free.';
 
 const faqs = [
   {
     question: 'What is the adiabatic equation and when is it used?',
     answer:
-      'The adiabatic equation is the formula used to calculate the minimum cross-sectional area (CSA) of a protective conductor (circuit protective conductor, earthing conductor, or supplementary bonding conductor) required to withstand the thermal effects of a fault current flowing for the duration of the disconnection time. The equation is S = square root of (I squared multiplied by t) divided by k, where S is the minimum conductor CSA in mm squared, I is the fault current in amperes, t is the disconnection time of the protective device in seconds, and k is a factor that depends on the conductor material, insulation type, and initial and final temperatures. It is used whenever you need to verify that a protective conductor is large enough to carry the earth fault current until the protective device disconnects — a requirement of BS 7671 Regulation 543.1.3.',
+      'The adiabatic equation is the formula used to calculate the minimum cross-sectional area (CSA) of a protective conductor (circuit protective conductor, earthing conductor, or supplementary bonding conductor) required to withstand the thermal effects of a fault current flowing for the duration of the disconnection time. The equation is S = square root of (I squared multiplied by t) divided by k, where S is the minimum conductor CSA in mm squared, I is the fault current in amperes, t is the disconnection time of the protective device in seconds, and k is a factor that depends on the conductor material, insulation type, and initial and final temperatures. It is used whenever you need to verify that a protective conductor is large enough to carry the earth fault current until the protective device disconnects — a requirement of BS 7671 Regulation 543.1.',
   },
   {
     question: 'What are the k values for different conductor materials?',
@@ -44,7 +46,7 @@ const faqs = [
   {
     question: 'Can the CPC be smaller than the line conductor?',
     answer:
-      'Yes, in many cases the CPC can be smaller than the line conductor. BS 7671 provides two methods for sizing protective conductors: the simplified method in Table 54.7 (which relates CPC size to the line conductor size) and the adiabatic equation method in Regulation 543.1.3 (which calculates the actual minimum size needed). The simplified method in Table 54.7 states that for line conductors up to 16 mm squared, the CPC should be the same size as the line conductor; for 16 to 35 mm squared, the CPC should be 16 mm squared; and for line conductors above 35 mm squared, the CPC should be half the line conductor CSA. However, the adiabatic equation often shows that a smaller CPC is adequate because the fault current and disconnection time combination does not generate enough energy to overheat the conductor. Using the adiabatic equation can allow a smaller CPC, potentially saving material cost, but the calculated minimum must never be less than the values in Table 54.7 footnotes or any other applicable requirement.',
+      'Yes, in many cases the CPC can be smaller than the line conductor. BS 7671 provides two methods for sizing protective conductors: the simplified method in Table 54.7 (which relates CPC size to the line conductor size) and the adiabatic equation method in Regulation 543.1 (which calculates the actual minimum size needed). The simplified method in Table 54.7 states that for line conductors up to 16 mm squared, the CPC should be the same size as the line conductor; for 16 to 35 mm squared, the CPC should be 16 mm squared; and for line conductors above 35 mm squared, the CPC should be half the line conductor CSA. However, the adiabatic equation often shows that a smaller CPC is adequate because the fault current and disconnection time combination does not generate enough energy to overheat the conductor. Using the adiabatic equation can allow a smaller CPC, potentially saving material cost, but the calculated minimum must never be less than the values in Table 54.7 footnotes or any other applicable requirement.',
   },
   {
     question: 'What happens if the CPC is too small for the fault current?',
@@ -54,7 +56,7 @@ const faqs = [
   {
     question: 'Does the adiabatic equation apply to earthing conductors and bonding conductors?',
     answer:
-      'Yes. The adiabatic equation applies to all types of protective conductors — circuit protective conductors (CPCs), main earthing conductors, supplementary bonding conductors, and equipotential bonding conductors. Regulation 543.1.3 covers CPCs, Regulation 544.1.1 covers main earthing conductors, and Regulation 544.2 covers bonding conductors. For each type, the calculation uses the relevant fault current (the earth fault current for CPCs, the let-through energy of the upstream protective device for earthing conductors), the disconnection time of the relevant protective device, and the appropriate k value for the conductor material and insulation. In practice, the main earthing conductor and main bonding conductors must also withstand the fault current for the disconnection time of the main protective device (the supply fuse or main switch).',
+      'Yes. The adiabatic equation applies to all types of protective conductors — circuit protective conductors (CPCs), main earthing conductors, supplementary bonding conductors, and equipotential bonding conductors. Regulation 543.1 covers CPC sizing requirements, Regulation 544.1.1 covers main earthing conductors, and Regulation 544.2 covers bonding conductors. For each type, the calculation uses the relevant fault current (the earth fault current for CPCs, the let-through energy of the upstream protective device for earthing conductors), the disconnection time of the relevant protective device, and the appropriate k value for the conductor material and insulation. In practice, the main earthing conductor and main bonding conductors must also withstand the fault current for the disconnection time of the main protective device (the supply fuse or main switch).',
   },
 ];
 
@@ -112,9 +114,9 @@ const features = [
   },
   {
     icon: ShieldCheck,
-    title: 'BS 7671 Reg 543.1.3',
+    title: 'BS 7671 Reg 543.1',
     description:
-      'Designed around BS 7671:2018+A3:2024 Regulation 543.1.3 — the requirement to verify protective conductor sizing against fault energy.',
+      'Designed around BS 7671:2018+A3:2024 Regulation 543.1 — the requirement to verify protective conductor sizing against fault energy.',
   },
   {
     icon: Smartphone,
@@ -216,7 +218,7 @@ export default function AdiabaticEquationCalculatorPage() {
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-yellow-500/10 border border-yellow-500/20 mb-6">
             <Ruler className="w-4 h-4 text-yellow-400" />
             <span className="text-sm font-medium text-yellow-400">
-              BS 7671:2018+A3:2024 Regulation 543.1.3
+              BS 7671:2018+A3:2024 Regulation 543.1
             </span>
           </div>
           <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white leading-tight mb-5">
@@ -270,7 +272,7 @@ export default function AdiabaticEquationCalculatorPage() {
               (worst-case) result.
             </p>
             <p>
-              The equation is given in BS 7671 Regulation 543.1.3 and is the method used to verify
+              The equation is given in BS 7671 Regulation 543.1 and is the method used to verify
               that protective conductors are adequately sized. It applies to circuit protective
               conductors (CPCs), main earthing conductors, supplementary bonding conductors, and all
               other protective conductors within an installation. It is one of the most important
@@ -481,7 +483,11 @@ export default function AdiabaticEquationCalculatorPage() {
               The adiabatic equation calculator works seamlessly with the prospective fault current
               calculator — calculate the fault current in one, feed it into the adiabatic equation
               in the other, and verify your CPC sizing in seconds. Both calculators work offline on
-              your phone.
+              your phone. Use the{' '}
+              <SEOInternalLink href="/tools/eicr-certificate">
+                EICR certificate tool
+              </SEOInternalLink>{' '}
+              to record your test results and verified conductor sizes on site.
             </p>
             <p>
               These are two of 70 electrical calculators available in Elec-Mate — 56 technical
@@ -490,6 +496,11 @@ export default function AdiabaticEquationCalculatorPage() {
               it is the complete platform for UK electricians.
             </p>
           </div>
+          <SEOAppBridge
+            title="Adiabatic Calculations + Certification in One App"
+            description="Calculate minimum CPC sizes using the adiabatic equation, then record your verified results directly onto your EIC or EICR certificate — all within Elec-Mate. 70 calculators, 8 certificate types, AI tools, and 36+ training courses."
+            icon={Calculator}
+          />
           <SEOFeatureGrid features={features} columns={3} />
         </div>
       </section>
@@ -523,24 +534,25 @@ export default function AdiabaticEquationCalculatorPage() {
         </div>
       </section>
 
-      {/* Regulation 543.1.3 */}
+      {/* Regulation 543.1 */}
       <section className="py-12 px-5 border-t border-white/5">
         <div className="max-w-4xl mx-auto">
           <h2 className="text-2xl sm:text-3xl font-bold text-white mb-6">
-            BS 7671:2018+A3:2024 Regulation 543.1.3
+            BS 7671:2018+A3:2024 Regulation 543.1
           </h2>
           <div className="space-y-4 text-white leading-relaxed">
             <p>
-              Regulation 543.1.3 of BS 7671 states that the cross-sectional area of every protective
-              conductor, other than a protective bonding conductor, shall be calculated by the
-              adiabatic equation or selected in accordance with Table 54.7. The regulation makes it
-              clear that the adiabatic equation is the definitive method — Table 54.7 is a
-              simplified alternative that gives conservative (larger) sizes.
+              Regulation 543.1 of BS 7671 sets out the requirements for sizing protective conductors.
+              It states that the cross-sectional area of every protective conductor, other than a
+              protective bonding conductor, shall be calculated by the adiabatic equation or selected
+              in accordance with Table 54.7. The regulation makes it clear that the adiabatic
+              equation is the definitive method — Table 54.7 is a simplified alternative that gives
+              conservative (larger) sizes.
             </p>
             <p>
-              The regulation further specifies that the calculated cross-sectional area shall be not
-              less than the value determined by the equation S = √(I²t) / k, where the symbols have
-              the meanings described above. It also notes that the k values are given in Tables 54.2
+              The regulation specifies that the calculated cross-sectional area shall be not less than
+              the value determined by the equation S = √(I²t) / k, where the symbols have the
+              meanings described above. It also notes that the k values are given in Tables 54.2
               to 54.6, and that the value of I²t shall not exceed the value given by the
               manufacturer for the protective device.
             </p>
@@ -555,9 +567,9 @@ export default function AdiabaticEquationCalculatorPage() {
             </p>
             <p>
               Amendment 3 to BS 7671 (A3:2024), issued in July 2024, did not change the fundamental
-              adiabatic equation requirements but added Regulation 530.3.201 covering bidirectional
-              and unidirectional devices. The core CPC sizing requirements in Regulation 543.1.3
-              remain as established in the 18th Edition.
+              adiabatic equation requirements but added Regulation 530.3.2 covering requirements for
+              bidirectional and unidirectional switching devices. The core CPC sizing requirements in
+              Regulation 543.1 remain as established in the 18th Edition.
             </p>
           </div>
         </div>

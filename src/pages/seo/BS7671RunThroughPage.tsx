@@ -252,7 +252,7 @@ const sections = [
           <SEOInternalLink href="/training/bs-7671-amendment-3-course">
             Amendment 3 addition
           </SEOInternalLink>{' '}
-          on bidirectional devices (Regulation 530.3.201) is relevant here.
+          on bidirectional devices (Section 530, A3:2024 addition) is relevant here.
         </p>
         <SEOAppBridge
           title="Practise Chapter 41 questions with AI feedback"
@@ -281,7 +281,7 @@ const sections = [
         </p>
         <p>
           <strong>Chapter 53 — Switchgear.</strong> Covers the selection of protective devices,
-          isolation devices, and switching devices. Regulation 530.3.201 (Amendment 3) on
+          isolation devices, and switching devices. The A3:2024 addition on
           bidirectional devices sits in this chapter.
         </p>
         <p>
@@ -468,7 +468,7 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/training/bs-7671-amendment-3-course',
     title: 'Amendment 3 Course',
-    description: 'A3:2024 update training — Regulation 530.3.201 and bidirectional devices.',
+    description: 'A3:2024 update training — Section 530 bidirectional device requirements.',
     icon: BookMarked,
     category: 'Training',
   },

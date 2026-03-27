@@ -427,7 +427,7 @@ const sections = [
               <ClipboardCheck className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Learning outcome</strong> — what you learned. Be specific: not "attended
-                18th Edition update" but "learned about Amendment 3 changes to Regulation 530.3.201
+                18th Edition update" but "learned about Amendment 3 changes to Section 530
                 regarding bidirectional devices."
               </span>
             </li>

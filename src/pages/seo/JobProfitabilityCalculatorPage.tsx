@@ -18,6 +18,8 @@ import {
   AlertTriangle,
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { SEOAppBridge } from '@/components/seo/SEOAppBridge';
+import { SEOInternalLink } from '@/components/seo/SEOInternalLink';
 
 const faqs = [
   {
@@ -415,9 +417,13 @@ export default function JobProfitabilityCalculatorPage() {
               Elec-Mate is not a generic business tool — it is built exclusively for UK
               electricians. The Job Profitability Calculator is one of 14 business calculators in
               the Business Hub, sitting alongside 56 technical calculators (cable sizing, voltage
-              drop, fault current, Zs values, and more), 8 certificate types (EICR, EIC, Minor
+              drop, fault current, Zs values, and more), 8 certificate types ({' '}
+              <SEOInternalLink href="/electrical-certification/eicr">EICR</SEOInternalLink>,{' '}
+              <SEOInternalLink href="/electrical-certification/eic">EIC</SEOInternalLink>, Minor
               Works, EV charger, and more), 8 Elec-AI agents with 12 AI tools, and 36+ training
-              courses. Everything works together in one platform.
+              courses. Everything works together in one platform. Quotes from the{' '}
+              <SEOInternalLink href="/electrical-quoting-app">quoting tool</SEOInternalLink>{' '}
+              feed directly into profit tracking, giving you real margin data per job.
             </p>
             <p>
               The profitability data you generate feeds into your business reports, helping you spot
@@ -434,6 +440,19 @@ export default function JobProfitabilityCalculatorPage() {
               securely on UK-region servers, and never shared with third parties.
             </p>
           </div>
+        </div>
+      </section>
+
+      {/* App Bridge */}
+      <section className="py-4 px-5">
+        <div className="max-w-4xl mx-auto">
+          <SEOAppBridge
+            title="Track Every Job's Profit — Built for UK Electricians"
+            description="Elec-Mate's Job Profitability Calculator is part of the complete business hub. Quote, invoice, track profits, and run your electrical business from one app."
+            ctaText="Try Elec-Mate free"
+            ctaHref="/auth/signup"
+            icon={TrendingUp}
+          />
         </div>
       </section>
 

@@ -158,7 +158,7 @@ const sections = [
         <p>
           An Electrical Installation Certificate (EIC) is the formal document issued upon completion
           of a new electrical installation or the installation of new circuits. It is required by BS
-          7671 Regulation 631.1, which states that an EIC shall be provided upon completion of the
+          7671, which states that an EIC shall be provided upon completion of the
           verification of a new installation or an addition or alteration to an existing
           installation that includes new circuits.
         </p>
@@ -312,8 +312,8 @@ const sections = [
                 },
                 {
                   aspect: 'Legal requirement',
-                  eic: 'BS 7671 Regulation 631.1',
-                  eicr: 'BS 7671 Regulation 631.3 + Electrical Safety Standards Regs 2020 for landlords',
+                  eic: 'BS 7671 — certification on completion',
+                  eicr: 'BS 7671 Section 6 + Electrical Safety Standards Regs 2020 for landlords',
                 },
                 {
                   aspect: 'Part P notification',

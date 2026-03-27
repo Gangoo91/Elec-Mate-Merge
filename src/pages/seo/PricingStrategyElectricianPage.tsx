@@ -1,4 +1,5 @@
 import BusinessTemplate from '@/pages/seo/templates/BusinessTemplate';
+import { SEOAppBridge } from '@/components/seo/SEOAppBridge';
 import { SEOInternalLink } from '@/components/seo/SEOInternalLink';
 import {
   PoundSterling,
@@ -184,6 +185,12 @@ export default function PricingStrategyElectricianPage() {
         {
           id: 'hourly-rate',
           heading: 'Hourly Rate Pricing — Transparent but Risky',
+          appBridge: {
+            title: 'Run Your Electrical Business Smarter with Elec-Mate',
+            description:
+              'Quotes, certificates, job tracking, and team management — built for UK electricians.',
+            icon: PoundSterling,
+          },
           content: (
             <>
               <p>
@@ -371,6 +378,11 @@ export default function PricingStrategyElectricianPage() {
           question: 'How do I handle price increases from suppliers?',
           answer:
             "Material prices in the electrical industry fluctuate regularly, particularly for copper cable. Protect yourself by including a quote validity period (14 to 30 days) on every quote, so clients cannot accept an old quote after prices have risen. For larger projects that span several weeks, include a price variation clause in your terms that allows you to pass on material cost increases above a certain threshold (typically 5% to 10%). Keep your material pricing database up to date — Elec-Mate's built-in pricing data reflects current UK trade prices and is updated regularly.",
+        },
+        {
+          question: 'How do I calculate my minimum hourly rate to break even?',
+          answer:
+            'Start by calculating your total annual business costs: van finance or depreciation, insurance (public liability, employers\' liability, van, tools), fuel, tool maintenance and replacement, certification scheme fees, training and CPD, phone and software subscriptions, accountancy, and any other fixed overheads. Add your desired personal drawings (salary). Divide the total by your billable hours per year — typically 1,200 to 1,400 hours for a sole trader who does their own admin and quoting. The result is your break-even hourly rate. Add your target profit margin (typically 15% to 25%) to get your minimum charge-out rate. Most electricians who do this calculation for the first time discover their break-even rate is significantly higher than they expected, which is why many sole traders are effectively working below minimum wage without realising it.',
         },
       ]}
       relatedPages={[

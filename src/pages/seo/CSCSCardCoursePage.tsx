@@ -75,6 +75,11 @@ const faqs = [
     answer:
       'The JIB ECS (Electrotechnical Certification Scheme) card is the CSCS-affiliated card specifically for the electrotechnical industry. It carries the CSCS logo and is accepted on all CSCS-registered construction sites. The ECS card is administered by the Joint Industry Board (JIB) and requires both a valid HS&E test pass and proof of electrical qualifications. The main advantage of the ECS card over a generic CSCS card is that it specifically identifies the holder as an electrician with verified electrical qualifications, and it includes the JIB grading (Electrician, Approved Electrician, Technician, etc.) which affects pay rates on JIB-graded sites. For electricians, the ECS card is the recommended option.',
   },
+  {
+    question: 'Do I need a CSCS card for domestic electrical work?',
+    answer:
+      'A CSCS card is not a legal requirement for domestic electrical work, but it is increasingly expected by contractors and housebuilders who require proof of site safety competence before allowing access. Many larger domestic clients and main contractors in the new-build sector follow the Build UK Code of Practice, which mandates CSCS cards for all workers on their sites. For purely private domestic work — self-employed electricians working direct for homeowners — a CSCS card is not compulsory. However, holding a valid ECS Gold card demonstrates both your electrical qualification and your construction site safety awareness, which adds credibility when quoting for work and can be the deciding factor when a homeowner is choosing between tradespeople.',
+  },
 ];
 
 const modules = [

@@ -149,7 +149,7 @@ export default function BestAIToolElectriciansPage() {
                 ChatGPT and Gemini have general awareness of electrical concepts from their web
                 training data, but they frequently produce regulation numbers that do not exist,
                 confuse different editions of BS 7671, and lack knowledge of Amendment 3 (A3:2024)
-                which added Regulation 530.3.201 for bidirectional devices. When asked specific
+                which added Regulation 530.3.2 for bidirectional devices. When asked specific
                 questions about Zs limits, cable grouping factors, or disconnection times, they
                 often hallucinate values that are close but incorrect — the most dangerous kind of
                 error.
@@ -243,7 +243,7 @@ export default function BestAIToolElectriciansPage() {
         {
           question: 'Does Elec-Mate AI know about BS 7671 Amendment 3?',
           answer:
-            'Yes. Elec-Mate AI is trained on BS 7671:2018+A3:2024, including the latest amendment which added Regulation 530.3.201 for bidirectional and unidirectional devices. ChatGPT and Gemini have limited or no knowledge of Amendment 3, as their training data may not include this recent update issued in July 2024.',
+            'Yes. Elec-Mate AI is trained on BS 7671:2018+A3:2024, including the latest amendment which added Regulation 530.3.2 for bidirectional and unidirectional devices. ChatGPT and Gemini have limited or no knowledge of Amendment 3, as their training data may not include this recent update issued in July 2024.',
         },
         {
           question: 'How does the AI Cost Engineer work?',

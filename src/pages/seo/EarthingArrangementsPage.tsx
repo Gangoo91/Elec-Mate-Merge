@@ -3,6 +3,8 @@ import useSEO from '@/hooks/useSEO';
 import { PublicPageLayout } from '@/components/seo/PublicPageLayout';
 import { SEOCTASection } from '@/components/seo/SEOCTASection';
 import { SEOFeatureGrid } from '@/components/seo/SEOFeatureGrid';
+import { SEOAppBridge } from '@/components/seo/SEOAppBridge';
+import { SEOInternalLink } from '@/components/seo/SEOInternalLink';
 import {
   ShieldCheck,
   Zap,
@@ -233,7 +235,9 @@ export default function EarthingArrangementsPage() {
               impedance at the origin of the installation. This information is fundamental to the
               design because it determines the maximum permitted earth fault loop impedance (Zs) for
               every circuit, which in turn affects cable sizing, protective device selection, and
-              the need for additional protection by RCDs.
+              the need for additional protection by RCDs. All earthing details must be recorded on
+              your <SEOInternalLink href="/tools/eic-certificate">Electrical Installation Certificate</SEOInternalLink> or{' '}
+              <SEOInternalLink href="/tools/ev-charger-certificate">EV charger installation certificate</SEOInternalLink> at the time of inspection.
             </p>
           </div>
         </div>
@@ -630,6 +634,18 @@ export default function EarthingArrangementsPage() {
             and 36+ training courses — all built to BS 7671:2018+A3:2024.
           </p>
           <SEOFeatureGrid features={features} columns={3} />
+        </div>
+      </section>
+
+      {/* App Bridge */}
+      <section className="py-8 px-5">
+        <div className="max-w-4xl mx-auto">
+          <SEOAppBridge
+            title="Verify Earthing Arrangements Digitally with Elec-Mate"
+            description="Record Ze measurements, earthing system type, and PME restrictions directly in your EIC or EICR — with built-in Zs verification and BS 7671 compliance checks. Generate professional certificates on site."
+            ctaText="Start 7-day free trial"
+            ctaHref="/auth/signup"
+          />
         </div>
       </section>
 

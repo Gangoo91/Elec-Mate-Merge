@@ -506,7 +506,7 @@ export default function LandlordElectricalSafetyPage() {
                     <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
                     <span>
                       <strong className="text-yellow-400">AFDD recommendation</strong> — BS 7671
-                      Regulation 421.1.7 recommends{' '}
+                      Regulation 421.1 recommends{' '}
                       <SEOInternalLink href="/guides/afdd-arc-fault-detection">
                         AFDDs
                       </SEOInternalLink>{' '}

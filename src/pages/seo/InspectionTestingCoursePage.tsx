@@ -15,6 +15,8 @@ import {
   Search,
   FileCheck2,
 } from 'lucide-react';
+import { SEOAppBridge } from '@/components/seo/SEOAppBridge';
+import { SEOInternalLink } from '@/components/seo/SEOInternalLink';
 
 const PAGE_TITLE = 'Inspection and Testing Course Online | C&G 2391 Preparation | Elec-Mate';
 const PAGE_DESCRIPTION =
@@ -45,6 +47,11 @@ const faqs = [
     question: 'Can I study for the 2391 online?',
     answer:
       'The theory component of the 2391 can be studied online, and many candidates choose this route because it allows them to study at their own pace around work commitments. Elec-Mate provides AI-powered study materials, mock exam questions, and practical scenario walkthroughs that cover the full 2391 syllabus. However, the practical assessment must be completed in person at an approved assessment centre — there is no online alternative for the practical component. The best approach is to study the theory thoroughly online, then book the practical assessment when you feel confident with the testing procedures and documentation.',
+  },
+  {
+    question: 'What observation codes are used on an EICR and what do they mean?',
+    answer:
+      'EICR observation codes classify the severity of deficiencies found during periodic inspection. Code C1 (Danger Present) indicates an immediate risk of injury — the supply should be disconnected as soon as possible and the client informed urgently. Code C2 (Potentially Dangerous) indicates a deficiency that could become dangerous — the client must be advised that remedial work is necessary and the overall condition of the installation is unsatisfactory. Code C3 (Improvement Recommended) indicates a deficiency that does not present an immediate danger but where improvement would enhance safety — the installation can still be given a satisfactory overall condition assessment. Code FI (Further Investigation Required) is used when a deficiency cannot be fully assessed without further investigation — the EICR condition is unsatisfactory until the investigation is complete. The presence of any C1 or C2 observations means the EICR result is unsatisfactory. An EICR with only C3 observations can be issued as satisfactory.',
   },
 ];
 
@@ -253,11 +260,14 @@ export default function InspectionTestingCoursePage() {
             </p>
             <p>
               For working electricians, the 2391 is one of the most important qualifications after
-              the 18th Edition (C&G 2382) and the Level 3 NVQ. Without it, you cannot join a
+              the <SEOInternalLink href="/study/18th-edition-course">18th Edition (C&G 2382)</SEOInternalLink> and the{' '}
+              <SEOInternalLink href="/study/level-3-electrical">Level 3 NVQ</SEOInternalLink>. Without it, you cannot join a
               competent person scheme (NICEIC, NAPIT, ELECSA) as a qualified supervisor, and you
-              cannot independently sign off Electrical Installation Certificates (EICs) or
-              Electrical Installation Condition Reports (EICRs). If you want to work as a
-              self-employed electrician and certify your own work, the 2391 is not optional — it is
+              cannot independently sign off{' '}
+              <SEOInternalLink href="/electrical-certification/eic">Electrical Installation Certificates (EICs)</SEOInternalLink>{' '}
+              or{' '}
+              <SEOInternalLink href="/electrical-certification/eicr">Electrical Installation Condition Reports (EICRs)</SEOInternalLink>.
+              If you want to work as a self-employed electrician and certify your own work, the 2391 is not optional — it is
               essential.
             </p>
           </div>
@@ -594,6 +604,19 @@ export default function InspectionTestingCoursePage() {
               </div>
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* App Bridge */}
+      <section className="py-4 px-5">
+        <div className="max-w-4xl mx-auto">
+          <SEOAppBridge
+            title="Study for the C&G 2391 with Elec-Mate"
+            description="Elec-Mate's Study Centre has revision materials, exam prep, and on-the-job reference guides — including full coverage of inspection and testing, BS 7671, and practical scenario walkthroughs."
+            ctaText="Try Elec-Mate free"
+            ctaHref="/auth/signup"
+            icon={GraduationCap}
+          />
         </div>
       </section>
 

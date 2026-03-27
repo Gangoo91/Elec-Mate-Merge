@@ -73,6 +73,11 @@ const faqs = [
     answer:
       'Both sectors are in demand, but for different reasons. Domestic work is driven by housing stock — there are approximately 29 million homes in the UK, all of which need periodic electrical inspection, maintenance, and upgrading. As long as people live in houses, domestic electricians will have work. Commercial work is driven by construction projects, fit-outs, refurbishments, and maintenance contracts. It tends to be more cyclical — busy during construction booms, quieter during recessions. However, employed commercial electricians on maintenance contracts often have very stable, long-term employment. In general, domestic work offers more independence but less predictability; commercial work offers more structure but is tied to the construction market.',
   },
+  {
+    question: 'What certificates does a domestic electrician need to issue?',
+    answer:
+      'A domestic electrician must issue an Electrical Installation Certificate (EIC) for new installations and major alterations, a Minor Electrical Installation Works Certificate (MEIWC) for minor additions or alterations to existing circuits, and an Electrical Installation Condition Report (EICR) for periodic inspection and testing. Domestic electricians who are registered with a Competent Person Scheme (such as NICEIC, NAPIT, or ELECSA) can self-certify their work, notifying Building Control on behalf of the client without requiring a separate Building Control application. Commercial electricians typically issue the same certificate types but are not usually required to self-certify under Part P (which applies only to domestic properties).',
+  },
 ];
 
 const relatedPages: RelatedPage[] = [

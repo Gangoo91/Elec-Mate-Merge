@@ -57,7 +57,7 @@ const faqs = [
   {
     question: 'Does the AI explain the regulations behind each wiring instruction?',
     answer:
-      'Yes. Every wiring instruction includes specific references to BS 7671:2018+A3:2024 regulations. For example, when the AI instructs you to run cables within the permitted safe zones in a wall, it cites Regulation 522.6.101 which defines those zones. When it specifies the cable size for a shower circuit, it references the relevant tables in Appendix 4 and the correction factors from Section 523. When it requires RCD protection for a socket outlet circuit, it cites Regulation 411.3.3. This is not just regulatory decoration — it allows you to verify every instruction against the published standard and ensures the guidance is always traceable to its source.',
+      'Yes. Every wiring instruction includes specific references to BS 7671:2018+A3:2024 regulations. For example, when the AI instructs you to run cables within the permitted safe zones in a wall, it cites Regulation 522.6.101 which defines those zones. When it specifies the cable size for a shower circuit, it references the relevant tables in Appendix 4 and the correction factors from Section 523. When it requires RCD protection for a socket outlet circuit, it cites Regulation 411.3.2. This is not just regulatory decoration — it allows you to verify every instruction against the published standard and ensures the guidance is always traceable to its source.',
   },
   {
     question: 'Can the AI help with two-way and intermediate switching wiring?',
@@ -384,11 +384,11 @@ const sections = [
           the correction factors from Section 523 (ambient temperature, grouping, thermal
           insulation). For cable routing, it references Regulation 522.6.101 (safe zones in walls)
           and Regulation 522.6.103 (cable depth requirements). For protection device selection, it
-          references Regulations 411.3.3 (additional protection by RCD), 432.1 (overload
+          references Regulations 411.3.2 (additional protection by RCD), 432.1 (overload
           protection), and 434.1 (fault current protection).
         </p>
         <p>
-          Amendment 3:2024 is particularly relevant for modern circuit types. Regulation 530.3.201
+          Amendment 3:2024 is particularly relevant for modern circuit types. Regulation 530.3.2
           (bidirectional and unidirectional protective devices) affects the wiring of circuits with
           solar PV, battery storage, and other sources of reverse power flow. The AI includes these
           requirements in the wiring instructions for the relevant circuit types, ensuring your

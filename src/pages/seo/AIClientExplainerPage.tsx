@@ -261,7 +261,7 @@ const sections = [
             <h4 className="font-bold text-white mb-2">C2 — Potentially Dangerous</h4>
             <p className="text-white text-sm leading-relaxed mb-2">
               <strong>Technical:</strong> "Lack of RCD protection for socket outlets. Regulation
-              411.3.3."
+              411.3.2."
             </p>
             <p className="text-white text-sm leading-relaxed">
               <strong>Plain English:</strong> "Your socket outlets do not have RCD (residual current

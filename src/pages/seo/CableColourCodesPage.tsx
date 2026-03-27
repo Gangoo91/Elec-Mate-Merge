@@ -60,7 +60,7 @@ const faqs = [
   {
     question: 'Do I need to rewire an installation with old colours?',
     answer:
-      'No. An installation using the old pre-2004 colour code does not need to be rewired purely because of the colours. The old colours were compliant when installed and remain acceptable in existing installations. However, BS 7671 Regulation 514.14.1 requires that where an installation or part of an installation contains wiring to both the old and new colour codes, a warning notice must be affixed at or near the appropriate distribution board. This notice must read: "Caution — This installation has wiring colours to two versions of BS 7671. Great care should be taken before undertaking extension, alteration or repair that all conductors are correctly identified." If old-colour circuits have conductors used as switch wires without correct identification sleeving, this is a deficiency.',
+      'No. An installation using the old pre-2004 colour code does not need to be rewired purely because of the colours. The old colours were compliant when installed and remain acceptable in existing installations. However, BS 7671 Regulation 514.14 requires that where an installation or part of an installation contains wiring to both the old and new colour codes, a warning notice must be affixed at or near the appropriate distribution board. This notice must read: "Caution — This installation has wiring colours to two versions of BS 7671. Great care should be taken before undertaking extension, alteration or repair that all conductors are correctly identified." If old-colour circuits have conductors used as switch wires without correct identification sleeving, this is a deficiency.',
   },
   {
     question: 'What colour is a switch wire in the old system?',
@@ -75,7 +75,7 @@ const faqs = [
   {
     question: 'What warning notice is required for mixed colour installations?',
     answer:
-      'BS 7671 Regulation 514.14.1 requires a specific warning notice wherever an installation contains wiring using both the old and new colour codes. The notice must state: "Caution — This installation has wiring colours to two versions of BS 7671. Great care should be taken before undertaking extension, alteration or repair that all conductors are correctly identified." This notice must be placed at or near every distribution board, consumer unit, or other point where circuits with both colour codes are present. The notice must be durable and legible. If this notice is missing during an EICR, it should be raised as a C3 observation. Elec-Mate includes pre-formatted notice text that can be printed and applied on site.',
+      'BS 7671 Regulation 514.14 requires a specific warning notice wherever an installation contains wiring using both the old and new colour codes. The notice must state: "Caution — This installation has wiring colours to two versions of BS 7671. Great care should be taken before undertaking extension, alteration or repair that all conductors are correctly identified." This notice must be placed at or near every distribution board, consumer unit, or other point where circuits with both colour codes are present. The notice must be durable and legible. If this notice is missing during an EICR, it should be raised as a C3 observation. Elec-Mate includes pre-formatted notice text that can be printed and applied on site.',
   },
 ];
 
@@ -345,7 +345,7 @@ const sections = [
       <>
         <p>
           BS 7671 Section 514 sets out the requirements for conductor identification. Regulation
-          514.3.1 requires that every conductor shall be identifiable by colour at its terminations
+          514.3 requires that every conductor shall be identifiable by colour at its terminations
           and preferably throughout its length. This is not optional — it is a regulatory
           requirement.
         </p>
@@ -357,7 +357,7 @@ const sections = [
               <strong className="text-yellow-400">Protective conductors</strong> — must be
               identified by the bi-colour combination green/yellow throughout their length. A bare
               copper earth conductor in twin and earth cable must be sleeved with green/yellow
-              sleeving at every termination and at every accessible position (Regulation 514.4.2).
+              sleeving at every termination and at every accessible position (Regulation 514.4).
             </span>
           </li>
           <li className="flex items-start gap-3">
@@ -410,7 +410,7 @@ const sections = [
           significant identification risk that must be managed.
         </p>
         <p>
-          BS 7671 Regulation 514.14.1 requires a specific warning notice at every distribution board
+          BS 7671 Regulation 514.14 requires a specific warning notice at every distribution board
           in a mixed-colour installation:
         </p>
         <div className="rounded-2xl bg-yellow-500/5 border border-yellow-500/20 p-6 my-4">
@@ -542,7 +542,7 @@ const sections = [
                   <SEOInternalLink href="/guides/consumer-unit-regulations">
                     consumer unit
                   </SEOInternalLink>
-                  . This is required by Regulation 514.14.1 and is commonly missing after partial
+                  . This is required by Regulation 514.14 and is commonly missing after partial
                   rewires or extensions. Typically C3.
                 </p>
               </div>

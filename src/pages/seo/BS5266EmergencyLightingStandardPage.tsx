@@ -75,6 +75,11 @@ const faqs = [
     answer:
       'Yes. A qualified electrician is competent to design, install, and test emergency lighting systems in accordance with BS 5266-1. The testing does not require specialist fire alarm qualifications — it is fundamentally an electrical testing task. The monthly functional test involves isolating the supply to the emergency lighting circuit and checking that each luminaire operates on battery. The annual full duration test involves the same isolation but allowing the system to run for the full 3-hour rated duration. The electrician must record the results, including any luminaires that fail to illuminate, provide inadequate light output, or fail to achieve the full duration. Any defective luminaires must be replaced. Emergency lighting testing is a valuable recurring revenue stream — commercial premises need monthly and annual tests, creating regular maintenance contracts for electricians.',
   },
+  {
+    question: 'What documentation should I issue after emergency lighting installation or testing?',
+    answer:
+      'After installing a new emergency lighting system, you should issue an installation completion certificate confirming the system complies with BS 5266-1 and the relevant parts of BS EN 50172. This certificate should record the type and category of system, number and location of luminaires, battery duration rating, and the results of the commissioning tests. After each periodic test (monthly or annual), a test log entry must be made in the system log book — which should be kept on site and available for inspection. Many commercial clients and building insurers specifically request sight of the emergency lighting log book. Elec-Mate provides a digital emergency lighting certificate and log that lets you record all tests, generate a professional PDF, and email the completed documentation to the client directly from the app.',
+  },
 ];
 
 const relatedPages: RelatedPage[] = [

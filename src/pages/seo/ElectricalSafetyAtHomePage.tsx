@@ -3,20 +3,14 @@ import { SEOInternalLink } from '@/components/seo/SEOInternalLink';
 import { SEOAppBridge } from '@/components/seo/SEOAppBridge';
 import type { RelatedPage } from '@/components/seo/SEORelatedPages';
 import {
-  Home,
-  Shield,
-  AlertTriangle,
-  Zap,
-  Search,
-  FileCheck2,
   ShieldCheck,
-  Flame,
-  Phone,
-  ClipboardCheck,
-  GraduationCap,
-  PoundSterling,
+  AlertTriangle,
+  Home,
+  Zap,
+  FileCheck2,
+  CheckCircle,
   Lightbulb,
-  Camera,
+  Phone,
 } from 'lucide-react';
 
 // -------------------------------------------------------------------
@@ -24,116 +18,100 @@ import {
 // -------------------------------------------------------------------
 
 const breadcrumbs = [
-  { label: 'Guides', href: '/guides' },
-  { label: 'Electrical Safety at Home', href: '/guides/electrical-safety-at-home' },
+  { label: 'Electrical Safety', href: '/electrical-safety-at-home' },
 ];
 
 const tocItems = [
-  { id: 'why-electrical-safety-matters', label: 'Why Electrical Safety Matters' },
-  { id: 'danger-signs', label: 'Warning Signs of Electrical Problems' },
-  { id: 'diy-limits', label: 'What You Can and Cannot Do Yourself' },
-  { id: 'when-to-call-electrician', label: 'When to Call an Electrician' },
-  { id: 'eicr-for-homeowners', label: 'EICR for Homeowners' },
-  { id: 'smoke-alarms', label: 'Smoke Alarms and Fire Safety' },
-  { id: 'consumer-unit', label: 'Understanding Your Consumer Unit' },
-  { id: 'outdoor-electrics', label: 'Outdoor Electrics and Garden Safety' },
-  { id: 'for-electricians', label: 'For Electricians: Homeowner Work' },
+  { id: 'common-hazards', label: 'Common Electrical Hazards' },
+  { id: 'overloaded-sockets', label: 'Overloaded Sockets' },
+  { id: 'damaged-leads', label: 'Damaged Leads & Cables' },
+  { id: 'diy-wiring', label: 'DIY Wiring Dangers' },
+  { id: 'testing-rcds', label: 'How to Test Your RCD' },
+  { id: 'when-to-call', label: 'When to Call an Electrician' },
+  { id: 'children-safety', label: 'Electrical Safety for Children' },
+  { id: 'christmas-safety', label: 'Christmas Decoration Safety' },
+  { id: 'extension-leads', label: 'Extension Lead Safety' },
   { id: 'faq', label: 'FAQ' },
   { id: 'related', label: 'Related Pages' },
 ];
 
 const keyTakeaways = [
-  'Electrical faults cause around 14,000 house fires each year in the UK — early warning signs include flickering lights, burning smells, warm sockets, and frequently tripping circuit breakers.',
-  'Homeowners can change light bulbs, replace fuse wire, and swap like-for-like socket faceplates, but anything involving fixed wiring or new circuits requires a qualified electrician.',
-  'An EICR is not legally required for owner-occupied homes, but it is strongly recommended every 10 years (or 5 years for properties over 25 years old) to identify hidden defects.',
-  'All smoke alarms should be tested monthly and replaced every 10 years — the Smoke and Carbon Monoxide Alarm (Amendment) Regulations 2022 now require alarms in all rented properties.',
-  'Elec-Mate helps electricians complete homeowner EICRs, minor works certificates, and remedial quotes on site — so homeowners get a professional report before the electrician leaves.',
+  'Overloaded sockets are one of the leading causes of electrical fires in UK homes — never exceed the 13A maximum load on a single socket or extension lead.',
+  'Test your RCD (Residual Current Device) monthly by pressing the test button. If it does not trip, call an electrician immediately.',
+  'RoSPA does not recommend socket covers for standard UK sockets — modern UK sockets have built-in shutters that are safer than plastic covers.',
+  'Damaged or frayed cables should be replaced immediately — wrapping with insulating tape is not a safe fix.',
+  'Any new wiring work in a kitchen or bathroom must be notified to your local building control authority under Part P of the Building Regulations.',
+  'If you smell burning from an electrical outlet or fitting, turn off the circuit at your consumer unit and call a qualified electrician.',
 ];
 
 const faqs = [
   {
-    question: 'How often should a homeowner have their electrics checked?',
+    question: 'Are socket covers safe for children in the UK?',
     answer:
-      'There is no legal requirement for owner-occupiers to have their electrics inspected, but the IET Wiring Regulations (BS 7671) recommend a periodic inspection every 10 years for domestic properties. If your home is over 25 years old, or you have recently bought a property and do not have a recent EICR, a 5-year interval is more appropriate. The inspection covers the entire fixed installation — from the meter to every socket, switch, and light fitting — and identifies any deterioration, damage, or non-compliance. It is particularly important before major renovation work, after a flood or fire, or if you notice any warning signs such as flickering lights, burning smells, or frequently tripping circuit breakers.',
+      'No — RoSPA (Royal Society for the Prevention of Accidents) does not recommend socket covers for standard UK sockets. UK sockets are designed with built-in shutters that only open when both pins of a plug are inserted simultaneously. Socket covers can actually defeat these safety shutters if they are poorly designed. The Health and Safety Executive (HSE) and RoSPA both advise against using socket covers.',
   },
   {
-    question: 'Can I change a light switch or socket myself?',
+    question: 'How do I test my RCD?',
     answer:
-      'You can replace a like-for-like socket faceplate or light switch faceplate (same type, same location, no change to the circuit wiring) as a minor maintenance task. However, adding a new socket, moving a socket to a different location, or changing the circuit (for example, adding a dimmer switch that requires a neutral conductor) is notifiable electrical work under Part P of the Building Regulations in England and Wales. Notifiable work must either be carried out by an electrician registered with a competent person scheme (NICEIC, NAPIT, ELECSA) or inspected by Building Control. The key distinction is between replacing an accessory on an existing circuit (generally permitted) and altering or extending the fixed wiring (notifiable).',
+      'Press the test button (usually labelled "T" or "Test") on your RCD or on your consumer unit. The RCD should trip immediately, cutting power to the protected circuits. Reset it by pushing the switch back to the on position. You should do this monthly. If the RCD does not trip when you press the test button, or trips but cannot be reset, call a qualified electrician — the RCD may be faulty and not providing protection.',
   },
   {
-    question: 'What are the signs of dangerous wiring in a house?',
+    question: 'What is the maximum load I can put on a socket?',
     answer:
-      'The most common warning signs include: sockets or switches that feel warm to the touch; a burning smell with no obvious source; scorch marks or discolouration around sockets or the consumer unit; lights that flicker or dim unexpectedly; circuit breakers or RCDs that trip repeatedly; fuses that blow frequently; electric shocks when touching appliances or switches; sparking when plugging in or unplugging devices; and a buzzing or humming sound from the consumer unit. Any of these signs should prompt an immediate call to a qualified electrician. Do not attempt to investigate the wiring yourself — isolate the affected circuit at the consumer unit if you can identify it, and leave it off until a professional has inspected the installation.',
+      'A standard UK socket outlet is rated at 13 amps. The total load of all appliances plugged into that socket (including via an extension lead) must not exceed 13A. To calculate the load in amps, divide the wattage by 230V. For example, a 2,500W kettle draws approximately 10.9A on its own, leaving very little headroom for other appliances on the same circuit.',
   },
   {
-    question: 'Do I need an EICR when buying a house?',
+    question: 'Is it safe to do my own electrical work at home?',
     answer:
-      'An EICR is not a legal requirement when buying a house in England or Wales, but it is strongly recommended. A standard home survey or mortgage valuation does not include an electrical inspection — the surveyor will note visible defects but will not test the wiring. An EICR carried out by a qualified electrician will reveal hidden problems such as deteriorated insulation, missing earthing, lack of RCD protection, or overloaded circuits. If the EICR identifies C1 or C2 defects, you can use this information to negotiate the purchase price or require the seller to complete remedial work before completion. Many conveyancing solicitors now recommend an EICR as part of the due diligence process, particularly for older properties.',
+      'Minor tasks such as replacing a light fitting or a socket faceplate are generally permitted, but any notifiable electrical work — including new circuits, work in kitchens, work in bathrooms, or any work in a special location — must be either carried out by a registered electrician or notified to your local building control authority under Part P of the Building Regulations. Unregistered notifiable work can affect your home insurance and cause problems when selling your property.',
   },
   {
-    question: 'How do I know if my consumer unit needs upgrading?',
+    question: 'What should I do if I smell burning from an electrical socket?',
     answer:
-      'Your consumer unit (fuse box) may need upgrading if: it still uses rewirable fuses instead of MCBs (miniature circuit breakers); it is a plastic unit rather than a metal unit with a non-combustible enclosure (required by Amendment 3 to BS 7671); it does not have RCD protection on all circuits; the unit is showing signs of overheating, discolouration, or damage; or the installation has been extended with additional circuits that exceed the capacity of the existing unit. A consumer unit upgrade is notifiable work under Part P and must be carried out by a registered electrician who will issue an Electrical Installation Certificate (EIC) on completion.',
+      'Turn off the power to that circuit at your consumer unit (fuse box) immediately. Do not use the socket or circuit until it has been inspected by a qualified electrician. A burning smell indicates overheating, arcing, or a loose connection — all of which are serious fire hazards. If you see smoke or flames, call 999 immediately.',
   },
   {
-    question: 'Are plug-in electrical safety devices worth buying?',
+    question: 'How often should I have my home\'s electrics checked?',
     answer:
-      'Plug-in RCDs (residual current devices) can provide additional protection for specific appliances, particularly in older homes without RCD protection on all circuits. They are a sensible precaution for power tools, outdoor equipment, and appliances used in wet areas. However, they are not a substitute for proper RCD protection at the consumer unit — a plug-in RCD only protects the single socket it is plugged into. Plug-in surge protectors are useful for sensitive electronics (computers, TVs, routers) but do not protect against electrical faults in the fixed wiring. The best protection is a properly installed and tested consumer unit with RCBOs or split-load RCD protection, combined with a current EICR confirming the installation is in satisfactory condition.',
+      'The IET (Institution of Engineering and Technology) recommends an Electrical Installation Condition Report (EICR) every ten years for owner-occupied homes, or every five years for privately rented properties (which is a legal requirement for landlords). If you move into an older property, have had significant electrical work done, or notice any warning signs such as flickering lights, frequent trips, or discoloured sockets, arrange an inspection sooner.',
   },
   {
-    question: 'What should I do if I get an electric shock from an appliance?',
+    question: 'What does it mean when my RCD keeps tripping?',
     answer:
-      'If you receive an electric shock from an appliance, stop using the appliance immediately and unplug it. Do not use the appliance again until it has been tested. If the shock was from the fixed installation (a socket, switch, or light fitting), isolate the circuit at the consumer unit and call a qualified electrician. If anyone has received a significant electric shock — especially if they lost consciousness, have burns, or feel unwell — call 999 immediately. Electric shocks can cause internal injuries that are not immediately apparent, including cardiac arrhythmia, and medical assessment is essential. After the immediate situation is dealt with, arrange for a qualified electrician to inspect the installation and identify the cause of the shock, which could be a fault in the earthing, a failed RCD, or deteriorated insulation.',
+      'Frequent RCD tripping indicates a fault — most commonly a damaged appliance, a wiring fault, or a genuine earth leakage current. Try unplugging all appliances on the affected circuits and resetting the RCD. If it holds, plug appliances back in one at a time to identify the faulty one. If the RCD trips immediately with no appliances plugged in, there is a wiring fault and you should call a qualified electrician.',
   },
 ];
 
 const relatedPages: RelatedPage[] = [
   {
-    href: '/tools/eicr-certificate',
-    title: 'EICR Certificate App',
+    href: '/extension-lead-safety',
+    title: 'Extension Lead Safety',
     description:
-      'Complete digital EICR certificates on your phone. AI board scanner, voice test entry, and professional PDF export.',
-    icon: FileCheck2,
-    category: 'Certificate',
-  },
-  {
-    href: '/guides/eicr-for-landlords',
-    title: 'EICR for Landlords',
-    description:
-      'Legal requirements under the 2020 Regulations, penalties up to £30,000, and 5-year inspection cycle.',
-    icon: Home,
-    category: 'Guide',
-  },
-  {
-    href: '/guides/consumer-unit-upgrade',
-    title: 'Consumer Unit Upgrade Guide',
-    description: 'When to upgrade, metal vs plastic, AFDD and SPD requirements, and cost guide.',
+      'Safe use of extension leads and multi-plugs, load limits, and when to get a socket installed.',
     icon: Zap,
     category: 'Guide',
   },
   {
-    href: '/guides/electrical-emergency-what-to-do',
-    title: 'Electrical Emergency Guide',
+    href: '/finding-emergency-electrician',
+    title: 'Finding an Emergency Electrician',
     description:
-      'What to do in a power cut, burning smell, electric shock, or flooding — and who to call.',
-    icon: AlertTriangle,
+      'What counts as an electrical emergency and how to find a 24/7 registered electrician.',
+    icon: Phone,
     category: 'Guide',
   },
   {
-    href: '/guides/eicr-observation-codes-explained',
-    title: 'EICR Observation Codes Explained',
-    description: 'In-depth guide to C1, C2, C3, and FI classification codes with real examples.',
-    icon: Search,
+    href: '/guides/eicr-for-landlords',
+    title: 'EICR for Landlords',
+    description: 'Landlord EICR requirements, compliance deadlines, and penalties.',
+    icon: Home,
     category: 'Guide',
   },
   {
-    href: '/guides/why-choose-niceic-electrician',
-    title: 'Why Choose a NICEIC Electrician',
-    description:
-      'What NICEIC registration means, quality guarantees, and how to find a registered electrician.',
-    icon: ShieldCheck,
-    category: 'Guide',
+    href: '/tools/eicr-certificate',
+    title: 'EICR Certificate App',
+    description: 'Complete EICRs on your phone with AI board scanning and instant PDF export.',
+    icon: FileCheck2,
+    category: 'Certificate',
   },
 ];
 
@@ -143,484 +121,442 @@ const relatedPages: RelatedPage[] = [
 
 const sections = [
   {
-    id: 'why-electrical-safety-matters',
-    heading: 'Why Electrical Safety Matters in Your Home',
+    id: 'common-hazards',
+    heading: 'Common Electrical Hazards in UK Homes',
     content: (
       <>
         <p>
-          Electricity is so reliable that most homeowners never think about the wiring behind their
-          walls — until something goes wrong. According to Electrical Safety First, faulty electrics
-          cause around 14,000 house fires in the UK every year. Electrical faults are also
-          responsible for approximately 70 deaths and 350,000 serious injuries annually. Many of
-          these incidents are preventable.
+          Electricity is responsible for around 20,000 fires in UK homes each year, according to
+          Electrical Safety First. Most of these fires are preventable. Understanding the most
+          common electrical hazards is the first step to keeping your household safe.
         </p>
         <p>
-          The fixed electrical installation in your home — the wiring, sockets, switches, light
-          fittings, consumer unit, and earthing arrangement — deteriorates over time. Insulation
-          breaks down, connections loosen, and cables that were installed decades ago may no longer
-          meet modern safety standards. Add to that the increased electrical load of modern living
-          (electric showers, induction hobs, EV chargers, heat pumps) and it becomes clear why
-          periodic inspection is essential.
-        </p>
-        <p>
-          This guide explains the warning signs of electrical problems, what you can safely do
-          yourself, when you must call a qualified electrician, and how to protect your home and
-          family from electrical hazards.
+          The most frequently occurring hazards are overloaded sockets and extension leads,
+          damaged or deteriorated cables, and unauthorised DIY wiring. Each of these can cause
+          electric shock, fire, or both. Modern homes protected by RCDs (Residual Current Devices)
+          have significantly better protection than older properties, but no electrical protection
+          system is a substitute for good habits and a properly maintained installation.
         </p>
       </>
     ),
   },
   {
-    id: 'danger-signs',
-    heading: 'Warning Signs of Electrical Problems',
+    id: 'overloaded-sockets',
+    heading: 'Overloaded Sockets: The Most Common Fire Risk',
     content: (
       <>
         <p>
-          Electrical faults often give warning signs before they become dangerous. Knowing what to
-          look for can help you act before a fault causes a fire or injury.
+          A standard UK socket outlet is rated at 13 amperes (A). When the total load of all
+          appliances connected to a socket — including those on an extension lead — exceeds this
+          limit, the cable and socket can overheat. This is one of the leading causes of electrical
+          fires in UK homes.
         </p>
         <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Burning smell with no obvious source.</strong> This could indicate
-                overheating wiring, a loose connection, or an arcing fault behind the wall. Turn off
-                the circuit immediately and call an electrician.
+                <strong>Calculate your load</strong> — divide the wattage of each appliance by
+                230V to get the current in amps. A 2,500W kettle draws approximately 10.9A, a
+                1,000W microwave draws 4.3A, and a 700W toaster draws 3A. The total must not
+                exceed 13A per socket outlet.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Warm or hot sockets and switches.</strong> A socket that feels warm to the
-                touch is a sign of a high-resistance connection, overloading, or a fault in the
-                accessory. Stop using it immediately.
+                <strong>Never use cube adaptors</strong> — the old-style cube (block) adaptors
+                that allow two or three plugs in one socket are particularly dangerous as they
+                concentrate load at a single outlet. Use a fused extension lead with individual
+                switched sockets instead.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Flickering or dimming lights.</strong> Occasional flickering can be caused
-                by a loose lamp, but persistent flickering across multiple fittings may indicate a
-                loose neutral connection or deteriorating wiring.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Frequently tripping circuit breakers or RCDs.</strong> An{' '}
-                <SEOInternalLink href="/guides/rcd-keeps-tripping">
-                  RCD that keeps tripping
-                </SEOInternalLink>{' '}
-                is doing its job — detecting a fault and disconnecting the circuit. But the
-                underlying fault needs to be found and fixed.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Scorch marks or discolouration around sockets.</strong> Brown or black marks
-                around a socket or switch indicate arcing or overheating — a serious fire risk.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Electric shocks when touching switches or appliances.</strong> Even a mild
-                tingling sensation indicates a fault in the earthing or insulation that needs
-                immediate investigation.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Buzzing or humming from the consumer unit.</strong> A persistent buzzing
-                noise from the fuse box can indicate a loose connection, an overloaded circuit, or
-                an arcing fault inside the enclosure.
+                <strong>High-current appliances need dedicated sockets</strong> — kettles, washing
+                machines, tumble dryers, dishwashers, and electric cookers draw large currents and
+                should ideally have their own dedicated socket outlet or, in the case of cookers,
+                a dedicated circuit.
               </span>
             </li>
           </ul>
         </div>
         <p>
-          If you notice any of these signs, do not ignore them. Isolate the affected circuit at the
-          consumer unit if you can safely identify which one it is, and contact a{' '}
-          <SEOInternalLink href="/guides/why-choose-niceic-electrician">
-            qualified electrician
+          See the full guide to{' '}
+          <SEOInternalLink href="/extension-lead-safety">
+            extension lead safety
           </SEOInternalLink>{' '}
-          as soon as possible.
+          for load calculations. If you regularly need more sockets than you have, the safest
+          solution is to have additional socket outlets installed by a registered electrician —
+          not to daisy-chain extension leads.
         </p>
       </>
     ),
   },
   {
-    id: 'diy-limits',
-    heading: 'What You Can and Cannot Do Yourself',
+    id: 'damaged-leads',
+    heading: 'Damaged Leads and Cables: Do Not Use Insulating Tape',
     content: (
       <>
         <p>
-          Under{' '}
-          <SEOInternalLink href="/guides/part-p-building-regulations">
-            Part P of the Building Regulations
-          </SEOInternalLink>{' '}
-          (England and Wales), most electrical work in a domestic property is classed as
-          "notifiable" — meaning it must either be carried out by an electrician registered with a
-          competent person scheme or inspected by Building Control. There are, however, a few minor
-          tasks that homeowners can safely do themselves.
-        </p>
-        <div className="grid gap-4 sm:grid-cols-2 my-4">
-          <div className="rounded-2xl bg-green-500/10 border border-green-500/20 p-5">
-            <h3 className="font-bold text-white text-lg mb-3">What You Can Do</h3>
-            <ul className="space-y-2 text-white text-sm leading-relaxed">
-              <li>Replace a blown fuse in a plug (use the correct rating)</li>
-              <li>Change light bulbs and starter switches</li>
-              <li>Replace a damaged plug on an appliance</li>
-              <li>Replace a like-for-like socket faceplate or light switch faceplate</li>
-              <li>Replace a damaged pendant lampholder</li>
-              <li>Replace a fuse in a fused spur (with the correct rating)</li>
-              <li>Test your RCD using the test button (monthly)</li>
-            </ul>
-          </div>
-          <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-5">
-            <h3 className="font-bold text-white text-lg mb-3">What Requires an Electrician</h3>
-            <ul className="space-y-2 text-white text-sm leading-relaxed">
-              <li>Adding a new socket or light point</li>
-              <li>Installing a new circuit (e.g., for an electric shower)</li>
-              <li>Consumer unit replacement or upgrade</li>
-              <li>Any work in a bathroom or kitchen (special location)</li>
-              <li>Any work in a garden building, shed, or garage</li>
-              <li>Installing an EV charger</li>
-              <li>Any changes to the earthing or bonding</li>
-            </ul>
-          </div>
-        </div>
-        <p>
-          The penalties for carrying out notifiable work without proper certification can include
-          enforcement action from Building Control, difficulty selling your home (the buyer's
-          conveyancer will ask for electrical certificates), and invalidation of your home insurance
-          if an uncertified installation causes a fire or injury.
-        </p>
-      </>
-    ),
-  },
-  {
-    id: 'when-to-call-electrician',
-    heading: 'When to Call an Electrician',
-    content: (
-      <>
-        <p>
-          Beyond the DIY limits set by Part P, there are specific situations where you should call a
-          qualified electrician without delay:
+          Damaged, frayed, or cracked cables and flexes are a serious hazard. Exposed conductors
+          can cause electric shock if touched, and damaged insulation can allow arcing that leads
+          to fire. Cable damage is particularly common on appliance leads that run under rugs,
+          are trapped under furniture, or are regularly kinked at the point where the flex enters
+          the plug.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Phone className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
-                <strong>You notice any of the danger signs listed above</strong> — burning smells,
-                warm sockets, persistent tripping, electric shocks, or scorch marks.
+                <strong>Replace damaged flexes — do not tape them</strong> — wrapping a damaged
+                flex in insulating tape is not a safe repair. The tape cannot restore the
+                structural integrity of the insulation, may conceal worsening damage, and will
+                eventually fail. Replace the flex or the entire appliance.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Phone className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
-                <strong>You are buying or selling a property</strong> — arrange an EICR to confirm
-                the installation is safe before exchange or completion.
+                <strong>Check cords regularly</strong> — inspect appliance leads where they enter
+                the plug and where they enter the appliance. These points take the most stress and
+                are where damage most commonly starts. If the outer sheath is cracked or the inner
+                conductors are visible, replace the flex immediately.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Phone className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Your home has not been inspected in over 10 years</strong> — or you have no
-                record of the last inspection.
+                <strong>Route cables safely</strong> — never run cables under rugs or carpets
+                (where they can be damaged and overheat without being visible), around door
+                frames, or in areas where they will be regularly walked on or compressed.
+              </span>
+            </li>
+          </ul>
+        </div>
+      </>
+    ),
+  },
+  {
+    id: 'diy-wiring',
+    heading: 'DIY Wiring: What Is and Is Not Allowed',
+    content: (
+      <>
+        <p>
+          Part P of the Building Regulations governs electrical work in domestic premises in
+          England and Wales. Not all electrical work requires notification — but the most
+          important and risky work does.
+        </p>
+        <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-6 my-4">
+          <ul className="space-y-4 text-white">
+            <li className="flex items-start gap-3">
+              <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>Generally permitted without notification</strong> — replacing like-for-like
+                fittings such as swapping a socket faceplate, replacing a ceiling light fitting
+                (not in a bathroom), or replacing a consumer unit like-for-like. However, the
+                work must still be carried out to BS 7671 standard.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Phone className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>You are planning a renovation or extension</strong> — any changes to the
-                electrical installation need to be designed and certified by a qualified person.
+                <strong>Notifiable work</strong> — installing a new circuit, adding a circuit
+                in a kitchen or bathroom, any work in a bathroom (including replacing a fitting),
+                installing electrical equipment in a garden, and installing solar PV or EV
+                charging equipment. This work must be done by a registered competent person or
+                notified to building control.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Phone className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>After a flood, fire, or lightning strike</strong> — the installation must be
-                inspected and tested before the supply is restored.
+                <strong>Consequences of unpermitted work</strong> — completing notifiable work
+                without registration or building control notification can invalidate your home
+                insurance, cause problems when selling your property, and — most importantly —
+                leave unsafe wiring without the independent verification a registered electrician
+                provides.
+              </span>
+            </li>
+          </ul>
+        </div>
+      </>
+    ),
+  },
+  {
+    id: 'testing-rcds',
+    heading: 'How to Test Your RCD Monthly',
+    content: (
+      <>
+        <p>
+          A Residual Current Device (RCD) monitors the electrical current flowing in a circuit.
+          If it detects a difference between the live and neutral conductors — indicating current
+          is leaking to earth, potentially through a person — it cuts the power in milliseconds.
+          RCDs save lives, but they must be tested regularly to verify they are working correctly.
+        </p>
+        <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-6 my-4">
+          <ul className="space-y-4 text-white">
+            <li className="flex items-start gap-3">
+              <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>Step 1 — Locate your RCDs</strong> — open your consumer unit (fuse box).
+                RCDs are typically the larger switches with a T or Test button. Modern consumer
+                units may have RCBO devices (combined RCD and circuit breaker) on individual
+                circuits, or a main RCD covering multiple circuits.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Phone className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Your consumer unit still has rewirable fuses</strong> — these provide much
-                less protection than modern MCBs and RCDs. An upgrade is overdue.
+                <strong>Step 2 — Press the test button</strong> — press the button firmly. The
+                RCD should trip immediately, clicking to the off position and cutting power to
+                all circuits it protects. This will turn off lights and appliances on those
+                circuits — be prepared for this.
+              </span>
+            </li>
+            <li className="flex items-start gap-3">
+              <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>Step 3 — Reset</strong> — push the RCD switch back to the on position.
+                Power should be restored to all protected circuits. If the RCD does not trip when
+                tested, or cannot be reset after testing, call a qualified electrician — the RCD
+                may be faulty and must be replaced.
+              </span>
+            </li>
+            <li className="flex items-start gap-3">
+              <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>Test monthly</strong> — set a reminder to test your RCDs monthly. Many
+                households test on the first of every month. A functioning RCD can be the
+                difference between a minor incident and a fatality.
+              </span>
+            </li>
+          </ul>
+        </div>
+      </>
+    ),
+  },
+  {
+    id: 'when-to-call',
+    heading: 'When to Call a Qualified Electrician',
+    content: (
+      <>
+        <p>
+          Some electrical issues require immediate professional attention. Do not attempt to
+          investigate or repair these yourself.
+        </p>
+        <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 my-4">
+          <ul className="space-y-4 text-white">
+            <li className="flex items-start gap-3">
+              <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>Burning smell</strong> from a socket, switch, or fitting
+              </span>
+            </li>
+            <li className="flex items-start gap-3">
+              <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>Scorch marks or discolouration</strong> around a socket or switch
+              </span>
+            </li>
+            <li className="flex items-start gap-3">
+              <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>Sparking</strong> from a socket, switch, or appliance connection
+              </span>
+            </li>
+            <li className="flex items-start gap-3">
+              <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>Frequent circuit breaker or RCD trips</strong> without an obvious cause
+              </span>
+            </li>
+            <li className="flex items-start gap-3">
+              <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>Flickering lights</strong> that are not caused by a faulty bulb
+              </span>
+            </li>
+            <li className="flex items-start gap-3">
+              <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>Tingling sensation</strong> when touching an appliance or switch
+              </span>
+            </li>
+            <li className="flex items-start gap-3">
+              <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>Water near electrics</strong> — any situation where water has contacted
+                electrical fittings requires professional assessment before the circuit is
+                re-energised
               </span>
             </li>
           </ul>
         </div>
         <p>
-          When choosing an electrician, look for registration with a competent person scheme such as
-          NICEIC, NAPIT, or ELECSA. Ask for proof of qualifications (18th Edition and C&G 2391 for
-          inspection work) and public liability insurance.
-        </p>
-      </>
-    ),
-  },
-  {
-    id: 'eicr-for-homeowners',
-    heading: 'EICR for Homeowners: Not Required, but Essential',
-    content: (
-      <>
-        <p>
-          Unlike{' '}
-          <SEOInternalLink href="/guides/eicr-for-landlords">
-            landlords, who must have a valid EICR by law
+          Find a registered electrician through the NICEIC, NAPIT, or ELECSA online registers.
+          All registered electricians are assessed for competence and carry professional
+          indemnity insurance. For emergencies, see our guide on{' '}
+          <SEOInternalLink href="/finding-emergency-electrician">
+            finding an emergency electrician
           </SEOInternalLink>
-          , owner-occupiers have no legal obligation to arrange a periodic inspection. However, the
-          IET Wiring Regulations (BS 7671) recommend an inspection every 10 years for domestic
-          properties — and more frequently for older installations.
+          .
         </p>
-        <p>An EICR for a homeowner typically covers:</p>
+      </>
+    ),
+  },
+  {
+    id: 'children-safety',
+    heading: 'Electrical Safety for Children: The Truth About Socket Covers',
+    content: (
+      <>
+        <p>
+          Many parents instinctively reach for plastic socket covers to protect young children.
+          However, RoSPA (the Royal Society for the Prevention of Accidents) and the Health and
+          Safety Executive do not recommend them — and for good reason.
+        </p>
+        <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-6 my-4">
+          <ul className="space-y-4 text-white">
+            <li className="flex items-start gap-3">
+              <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>UK sockets already have built-in shutters</strong> — standard BS 1363
+                socket outlets (the UK standard) have internal shutters that only open when both
+                pins of a plug are inserted simultaneously. A child cannot insert a single object
+                such as a finger or a hairpin and access live conductors.
+              </span>
+            </li>
+            <li className="flex items-start gap-3">
+              <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>Socket covers can defeat the shutters</strong> — poorly designed socket
+                covers — particularly those with only a single earth pin — can actually open the
+                live and neutral shutters when inserted, creating a hazard rather than preventing
+                one. The British Standards Institution has raised concerns about non-compliant
+                socket covers on the market.
+              </span>
+            </li>
+            <li className="flex items-start gap-3">
+              <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>Supervision and education</strong> — teaching children from an early age
+                not to touch electrical sockets and appliances, and supervising young children
+                near electrical equipment, is far more effective than socket covers.
+              </span>
+            </li>
+          </ul>
+        </div>
+      </>
+    ),
+  },
+  {
+    id: 'christmas-safety',
+    heading: 'Christmas Decoration Electrical Safety',
+    content: (
+      <>
+        <p>
+          Christmas is a period of significantly increased electrical fire risk. The combination
+          of additional electrical load from lights, drier indoor conditions, and proximity of
+          decorations to heat sources increases the risk of both fire and electric shock.
+        </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Visual inspection</strong> of the consumer unit, accessories, wiring,
-                earthing, and bonding for signs of damage, deterioration, or non-compliance.
+                <strong>Check for the CE or UKCA mark</strong> — only buy Christmas lights marked
+                with the UKCA (UK Conformity Assessed) or CE mark, indicating they meet UK or
+                European safety standards. Avoid very cheap lights from unknown sources.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Dead testing</strong> — continuity of protective conductors, insulation
-                resistance, and polarity with the supply isolated.
+                <strong>Check lights before use</strong> — inspect lights each year for damaged
+                wires, broken bulbs, or loose connections. Discard any sets with damaged wiring.
+                Do not attempt to repair damaged light sets.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Live testing</strong> — earth fault loop impedance, prospective fault
-                current, and RCD operation with the supply restored.
+                <strong>Do not leave lights on unattended</strong> — turn off Christmas lights
+                when leaving the house and before going to bed. Use a timer switch to automate
+                this if helpful.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Schedule of test results</strong> — every circuit is tested and the results
-                recorded on the EICR form.
+                <strong>Indoor and outdoor lights are different</strong> — outdoor Christmas lights
+                must be rated for outdoor use with an IP rating of at least IP44. Using indoor
+                lights outdoors risks electric shock or fire.
+              </span>
+            </li>
+            <li className="flex items-start gap-3">
+              <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>Keep lights away from real trees</strong> — real Christmas trees dry out
+                over the season and become increasingly flammable. Keep lights well clear of dry
+                branches and never use older lights that may run warm.
+              </span>
+            </li>
+          </ul>
+        </div>
+      </>
+    ),
+  },
+  {
+    id: 'extension-leads',
+    heading: 'Safe Use of Extension Leads at Home',
+    content: (
+      <>
+        <p>
+          Extension leads are one of the most misused items in UK homes. Used correctly they are
+          safe; used incorrectly they present a significant fire risk.
+        </p>
+        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
+          <ul className="space-y-4 text-white">
+            <li className="flex items-start gap-3">
+              <CheckCircle className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>Never daisy-chain extension leads</strong> — plugging one extension lead
+                into another multiplies the risk of overloading and fire. Use a single extension
+                lead with enough sockets for your needs.
+              </span>
+            </li>
+            <li className="flex items-start gap-3">
+              <CheckCircle className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>Uncoil cable reels fully</strong> — a coiled extension cable carrying
+                current generates heat. A fully coiled 13A cable reel can reach temperatures high
+                enough to melt the insulation and cause a fire. Always fully uncoil cable reels
+                before use.
+              </span>
+            </li>
+            <li className="flex items-start gap-3">
+              <CheckCircle className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>Consider a permanent socket</strong> — if you regularly need an extension
+                lead in the same location, have a qualified electrician install an additional
+                socket outlet. This is a safer and tidier long-term solution.
               </span>
             </li>
           </ul>
         </div>
         <p>
-          The cost of a homeowner EICR typically ranges from £150 to £300 depending on property size
-          and location. It is a small price for the peace of mind that your family is safe from
-          hidden electrical defects.
+          See the full guide to{' '}
+          <SEOInternalLink href="/extension-lead-safety">
+            extension lead safety
+          </SEOInternalLink>{' '}
+          for more detail on load calculations, RCD-protected leads, and outdoor use.
         </p>
         <SEOAppBridge
-          title="Complete homeowner EICRs on site"
-          description="Elec-Mate's EICR app lets you complete the inspection, record test results by voice, classify observations with AI, and send the professional PDF report to the homeowner before you leave the property."
+          title="Are you an electrician? Complete EICRs faster with Elec-Mate"
+          description="Join 430+ UK electricians using Elec-Mate for on-site EICR completion, AI board scanning, and instant PDF export. Start your 7-day free trial."
           icon={FileCheck2}
-        />
-      </>
-    ),
-  },
-  {
-    id: 'smoke-alarms',
-    heading: 'Smoke Alarms and Fire Safety',
-    content: (
-      <>
-        <p>
-          Smoke alarms are your first line of defence against fire. The Smoke and Carbon Monoxide
-          Alarm (Amendment) Regulations 2022 require smoke alarms on every floor of rented
-          properties — but even if you own your home, the advice is the same.
-        </p>
-        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
-          <ul className="space-y-4 text-white">
-            <li className="flex items-start gap-3">
-              <Flame className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Fit smoke alarms on every floor</strong> — at minimum, one on each storey in
-                the circulation area (hallway or landing). Ideally, also fit them in bedrooms and
-                living rooms.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <Flame className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Test monthly</strong> — press the test button on each alarm every month. If
-                the alarm does not sound, replace the battery or the entire unit.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <Flame className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Replace every 10 years</strong> — smoke alarms have a limited lifespan.
-                Check the manufacture date on the unit and replace it after 10 years.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <Flame className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Consider mains-wired, interlinked alarms</strong> — these are more reliable
-                than battery-only units and will sound all alarms when any one detects smoke.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <Flame className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Fit a carbon monoxide alarm</strong> — in any room with a gas appliance,
-                solid fuel appliance, or flue. The 2022 Regulations require this in rented
-                properties.
-              </span>
-            </li>
-          </ul>
-        </div>
-        <p>
-          Installing mains-wired smoke alarms is electrical work that should be carried out by a
-          qualified electrician. The electrician will issue a{' '}
-          <SEOInternalLink href="/guides/minor-works-certificate">
-            Minor Electrical Installation Works Certificate
-          </SEOInternalLink>{' '}
-          for the installation.
-        </p>
-      </>
-    ),
-  },
-  {
-    id: 'consumer-unit',
-    heading: 'Understanding Your Consumer Unit',
-    content: (
-      <>
-        <p>
-          The consumer unit (often still called the fuse box) is the heart of your home's electrical
-          installation. It distributes power to every circuit in the house and provides protection
-          against overloads, short circuits, and earth faults.
-        </p>
-        <p>
-          Modern consumer units contain MCBs (miniature circuit breakers) that trip automatically
-          when they detect a fault, and RCDs (residual current devices) or RCBOs that detect earth
-          leakage and disconnect the circuit in milliseconds to prevent electric shock.
-        </p>
-        <p>
-          If your consumer unit still has rewirable fuses (wire fuse carriers), a wooden back board,
-          or no RCD protection, it is seriously outdated. A{' '}
-          <SEOInternalLink href="/guides/consumer-unit-upgrade">
-            consumer unit upgrade
-          </SEOInternalLink>{' '}
-          is one of the most important electrical safety improvements you can make to your home.
-          Since Amendment 3 to BS 7671, all new consumer units must be in a non-combustible (metal)
-          enclosure and have RCD protection on all circuits.
-        </p>
-        <p>
-          You should know the location of your consumer unit, how to identify which circuit breaker
-          controls which circuit, and how to reset a tripped breaker. Label the circuits clearly —
-          your electrician should do this as part of any inspection or installation work.
-        </p>
-      </>
-    ),
-  },
-  {
-    id: 'outdoor-electrics',
-    heading: 'Outdoor Electrics and Garden Safety',
-    content: (
-      <>
-        <p>
-          Outdoor electrical installations — garden lighting, power supplies to sheds and
-          outbuildings, hot tubs, and EV chargers — require particular attention to safety. Water
-          and electricity are a dangerous combination, and outdoor installations are exposed to
-          weather, physical damage, and moisture ingress.
-        </p>
-        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
-          <ul className="space-y-4 text-white">
-            <li className="flex items-start gap-3">
-              <Shield className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>All outdoor circuits must have 30mA RCD protection</strong> — this is a
-                non-negotiable requirement of BS 7671.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <Shield className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>IP-rated enclosures and accessories</strong> — outdoor sockets, junction
-                boxes, and light fittings must have an appropriate IP rating (typically IP65 or
-                IP66) to prevent water ingress.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <Shield className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>SWA cable or protected conduit</strong> — buried cables must be steel wire
-                armoured (SWA) or run in suitable protective conduit at a minimum depth of 500mm.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <Shield className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Separate circuit for outbuildings</strong> — a supply to a shed, garage, or
-                summerhouse should be on its own dedicated circuit from the consumer unit with its
-                own overcurrent and RCD protection.
-              </span>
-            </li>
-          </ul>
-        </div>
-        <p>
-          Installing outdoor electrics is always notifiable work under Part P. Do not attempt to run
-          a cable from the house to the garden yourself — a qualified electrician will design the
-          circuit correctly and issue the appropriate certificate.
-        </p>
-      </>
-    ),
-  },
-  {
-    id: 'for-electricians',
-    heading: 'For Electricians: Homeowner Work Made Efficient',
-    content: (
-      <>
-        <p>
-          Domestic work for homeowners — EICRs, consumer unit upgrades, additional circuits, outdoor
-          supplies, smoke alarm installations — is steady, reliable work. Homeowners increasingly
-          understand the importance of electrical safety, and many are proactively booking periodic
-          inspections.
-        </p>
-        <p>
-          The key to profitability in homeowner work is completing the job end-to-end on site:
-          inspection, report, certificate, quote for any follow-up work, and invoice — all before
-          you leave. This is exactly what Elec-Mate is designed to do.
-        </p>
-        <div className="space-y-4 my-4">
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
-            <div className="flex items-start gap-4">
-              <Camera className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
-              <div>
-                <h4 className="font-bold text-white mb-1">AI Board Scanner</h4>
-                <p className="text-white text-sm leading-relaxed">
-                  Photograph the consumer unit and let the AI read the MCB ratings, circuit
-                  descriptions, and board layout. The EICR schedule is half-completed before you
-                  pick up the test leads.
-                </p>
-              </div>
-            </div>
-          </div>
-          <div className="rounded-2xl bg-green-500/10 border border-green-500/20 p-5">
-            <div className="flex items-start gap-4">
-              <Lightbulb className="w-6 h-6 text-green-400 mt-0.5 shrink-0" />
-              <div>
-                <h4 className="font-bold text-white mb-1">Instant Remedial Quoting</h4>
-                <p className="text-white text-sm leading-relaxed">
-                  Found a missing earth bond or an outdated consumer unit? The remedial works
-                  estimator prices the fix — materials, labour, and margin — and generates a
-                  professional quote the homeowner can approve on the spot.
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-        <SEOAppBridge
-          title="Complete homeowner jobs faster with Elec-Mate"
-          description="Join 430+ UK electricians completing EICR certificates, minor works, and remedial quotes on their phones. AI board scanner, voice test entry, and instant PDF delivery. 7-day free trial."
-          icon={Camera}
         />
       </>
     ),
@@ -634,29 +570,29 @@ const sections = [
 export default function ElectricalSafetyAtHomePage() {
   return (
     <GuideTemplate
-      title="Electrical Safety at Home | Consumer Guide UK"
-      description="Complete guide to electrical safety at home. Warning signs of dangerous wiring, DIY limits under Part P, when to call an electrician, EICR for homeowners, smoke alarms, and consumer unit safety."
-      datePublished="2025-06-15"
-      dateModified="2026-02-13"
+      title="Electrical Safety at Home UK | Home Electrical Safety Guide"
+      description="Complete guide to electrical safety at home in the UK. Common hazards, how to test RCDs monthly, DIY wiring rules, socket covers for children (RoSPA advice), Christmas light safety, and when to call an electrician."
+      datePublished="2026-03-27"
+      dateModified="2026-03-27"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
-      badge="Consumer Guide"
-      badgeIcon={Home}
+      badge="Safety Guide"
+      badgeIcon={ShieldCheck}
       heroTitle={
         <>
-          Electrical Safety at Home:{' '}
-          <span className="text-yellow-400">The Complete Consumer Guide</span>
+          Electrical Safety at Home UK:{' '}
+          <span className="text-yellow-400">Your Complete Guide</span>
         </>
       }
-      heroSubtitle="Electrical faults cause around 14,000 house fires in the UK every year. This guide explains the warning signs you should never ignore, what you can safely do yourself, when you must call a qualified electrician, and how to protect your home and family."
+      heroSubtitle="Everything you need to know about keeping your home electrically safe — from testing your RCD monthly and avoiding overloaded sockets, to the truth about socket covers for children and Christmas decoration safety."
       readingTime={12}
       keyTakeaways={keyTakeaways}
       sections={sections}
       faqs={faqs}
-      faqHeading="Frequently Asked Questions About Electrical Safety at Home"
+      faqHeading="Frequently Asked Questions About Home Electrical Safety"
       relatedPages={relatedPages}
-      ctaHeading="Professional Electrical Certificates on Your Phone"
-      ctaSubheading="Join 430+ UK electricians creating professional EICR certificates, minor works, and remedial quotes with AI-powered tools. 7-day free trial, cancel anytime."
+      ctaHeading="Are You an Electrician? Try Elec-Mate Free"
+      ctaSubheading="Complete EICRs on your phone with AI board scanning, voice test entry, and instant PDF export. Join 430+ UK electricians. 7-day free trial, cancel anytime."
     />
   );
 }

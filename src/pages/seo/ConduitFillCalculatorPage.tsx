@@ -3,6 +3,8 @@ import useSEO from '@/hooks/useSEO';
 import { PublicPageLayout } from '@/components/seo/PublicPageLayout';
 import { SEOCTASection } from '@/components/seo/SEOCTASection';
 import { SEOFeatureGrid } from '@/components/seo/SEOFeatureGrid';
+import { SEOAppBridge } from '@/components/seo/SEOAppBridge';
+import { SEOInternalLink } from '@/components/seo/SEOInternalLink';
 import {
   Calculator,
   Zap,
@@ -44,6 +46,11 @@ const faqs = [
     question: 'Can I mix different cable sizes in the same conduit?',
     answer:
       'Yes, you can install different cable sizes in the same conduit, and the cable factor method is specifically designed to handle this. Simply add the cable factor for each individual cable (not per circuit — per conductor). For example, if you have three 2.5 mm² singles (cable factor 30 each) and two 1.5 mm² singles (cable factor 22 each), the total cable factor is (3 x 30) + (2 x 22) = 90 + 44 = 134. You then check this against the conduit factor for your chosen conduit size. A 20 mm conduit (straight run) has a conduit factor of 460, so 134 is well within capacity. Remember that grouping correction factors for current-carrying capacity must also be applied when multiple circuits share a conduit.',
+  },
+  {
+    question: 'Why must I apply grouping correction factors when cables share a conduit?',
+    answer:
+      'When multiple current-carrying conductors are enclosed together in a conduit, they each generate heat and cannot dissipate it as effectively as a cable installed in free air. This thermal grouping effect reduces the current-carrying capacity of every cable in the conduit. BS 7671 Appendix 4 provides correction factors (Cg) that account for the number of circuits or multi-core cables grouped together. For example, two circuits in a conduit require a grouping factor of 0.80, reducing the rated current capacity to 80% of the single-cable value. Failing to apply the grouping factor means you may select a cable that is undersized for the actual heat conditions inside the conduit, creating a risk of overheating and insulation damage.',
   },
 ];
 
@@ -263,7 +270,16 @@ export default function ConduitFillCalculatorPage() {
               design. They should be performed before any conduit is installed, and the results
               documented as part of the design records. Guessing conduit sizes based on experience
               alone often leads to under-sized conduit that causes problems during cable pulling, or
-              over-sized conduit that wastes material and installation time.
+              over-sized conduit that wastes material and installation time. Pair conduit fill checks
+              with the{' '}
+              <SEOInternalLink href="/tools/cable-derating-calculator">
+                cable derating calculator
+              </SEOInternalLink>{' '}
+              to account for grouping factors, and the{' '}
+              <SEOInternalLink href="/tools/cable-sizing-calculator">
+                cable sizing calculator
+              </SEOInternalLink>{' '}
+              to confirm your conductor sizes before pulling.
             </p>
           </div>
         </div>
@@ -666,6 +682,18 @@ export default function ConduitFillCalculatorPage() {
             your conduit is correctly sized every time.
           </p>
           <SEOFeatureGrid features={features} columns={3} />
+        </div>
+      </section>
+
+      {/* App Bridge */}
+      <section className="py-8 px-5">
+        <div className="max-w-4xl mx-auto">
+          <SEOAppBridge
+            title="Conduit Fill Calculator — Always in Your Pocket"
+            description="Use Elec-Mate's built-in calculators on any job site — conduit fill, cable sizing, voltage drop and more. All BS 7671 cable factor tables included, works offline."
+            ctaText="Try Elec-Mate free"
+            ctaHref="/auth/signup"
+          />
         </div>
       </section>
 

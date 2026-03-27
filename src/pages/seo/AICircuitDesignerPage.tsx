@@ -3,6 +3,8 @@ import useSEO from '@/hooks/useSEO';
 import { PublicPageLayout } from '@/components/seo/PublicPageLayout';
 import { SEOCTASection } from '@/components/seo/SEOCTASection';
 import { SEOFeatureGrid } from '@/components/seo/SEOFeatureGrid';
+import { SEOInternalLink } from '@/components/seo/SEOInternalLink';
+import { SEOAppBridge } from '@/components/seo/SEOAppBridge';
 import {
   CircuitBoard,
   Brain,
@@ -378,7 +380,7 @@ export default function AICircuitDesignerPage() {
             </p>
             <p>
               The designer also applies the RCD protection requirements of BS 7671. Under Regulation
-              411.3.3, additional protection by an RCD with a rated residual operating current not
+              411.3.2, additional protection by an RCD with a rated residual operating current not
               exceeding 30 mA must be provided for socket outlets with a rated current not exceeding
               32A, mobile equipment with a rated current not exceeding 32A for use outdoors, and
               cables concealed in walls at a depth less than 50mm where the wall does not have
@@ -392,7 +394,7 @@ export default function AICircuitDesignerPage() {
               RCDs detect only AC residual currents, Type A RCDs detect AC and pulsating DC residual
               currents, and Type B RCDs detect AC, pulsating DC, and smooth DC residual currents.
               The designer selects the correct type based on the equipment connected, in accordance
-              with BS 7671 Regulation 531.3 and the new Regulation 530.3.201 added by Amendment
+              with BS 7671 Regulation 531.3 and the new Regulation 530.3.2 added by Amendment
               3:2024 covering bidirectional and unidirectional protective devices.
             </p>
           </div>
@@ -435,7 +437,7 @@ export default function AICircuitDesignerPage() {
             </p>
             <p>
               Amendment 3:2024 (A3:2024) is particularly relevant for the Circuit Designer because
-              it adds Regulation 530.3.201, which introduces requirements for bidirectional and
+              it adds Regulation 530.3.2, which introduces requirements for bidirectional and
               unidirectional protective devices. This is critical for modern installations
               incorporating battery energy storage systems, solar PV arrays, and other sources of
               reverse power flow where standard unidirectional devices may not provide adequate
@@ -446,7 +448,7 @@ export default function AICircuitDesignerPage() {
           <div className="mt-8 grid sm:grid-cols-2 gap-4">
             {[
               'BS 7671:2018+A3:2024 (18th Edition)',
-              'Amendment 3:2024 — Regulation 530.3.201',
+              'Amendment 3:2024 — Regulation 530.3.2',
               'IET On-Site Guide',
               'IET Guidance Notes 1-8',
               'GN3: Inspection & Testing (9th Edition)',
@@ -493,6 +495,24 @@ export default function AICircuitDesignerPage() {
               </details>
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* App Bridge */}
+      <section className="py-8 px-5 border-t border-white/5">
+        <div className="max-w-4xl mx-auto">
+          <SEOAppBridge
+            title="Design Circuits + Create Certificates in One App"
+            description="Use the AI Circuit Designer alongside Elec-Mate's EIC certificate tool. Design the circuit, verify compliance, then document it — all from your phone. Try the full platform free for 7 days."
+            icon={CircuitBoard}
+          />
+          <p className="text-white mt-4 text-sm">
+            Need to complete an installation certificate?{' '}
+            <SEOInternalLink href="/tools/eicr-certificate">
+              Use the EICR and EIC certificate tool
+            </SEOInternalLink>{' '}
+            to record your design parameters and test results digitally.
+          </p>
         </div>
       </section>
 

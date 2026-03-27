@@ -90,8 +90,9 @@ export default function ConsumerUnitChangePage() {
                   </div>
                   <p className="text-white text-sm leading-relaxed">
                     If the existing consumer unit has no RCD protection at all, it does not meet the
-                    current requirements of BS 7671 Regulations 411.3.3 and 411.3.4, which require
-                    30 mA RCD protection for almost all circuits in a domestic installation. While
+                    current requirements of BS 7671, which require 30 mA RCD protection for almost
+                    all circuits in a domestic installation, including all socket-outlet circuits and
+                    cables concealed in walls. While
                     there is no legal requirement to upgrade an existing installation
                     retrospectively, the safety benefit of adding RCD protection is substantial — an
                     RCD can prevent fatal electric shock and reduce the risk of electrical fires.
@@ -178,17 +179,16 @@ export default function ConsumerUnitChangePage() {
                     <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
                     <span>
                       <strong className="text-yellow-400">
-                        30 mA RCD protection (Regulations 411.3.3 and 411.3.4)
+                        30 mA RCD protection
                       </strong>{' '}
-                      — Almost all circuits require 30 mA RCD protection. This is typically achieved
-                      with individual RCBOs or a split-load arrangement with dual RCDs.
+                      — BS 7671 requires 30 mA RCD protection for all socket-outlet circuits, cables concealed in walls, and most other domestic circuits. This is typically achieved with individual RCBOs or a split-load arrangement with dual RCDs.
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
                     <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
                     <span>
                       <strong className="text-yellow-400">
-                        Type A RCDs minimum (Regulation 531.3.3)
+                        Type A RCDs minimum (BS 7671 Section 531)
                       </strong>{' '}
                       — RCDs must be at least Type A for circuits supplying equipment likely to
                       produce pulsating DC fault currents. In practice, this covers most domestic
@@ -208,7 +208,7 @@ export default function ConsumerUnitChangePage() {
                     <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
                     <span>
                       <strong className="text-yellow-400">
-                        Bidirectional devices (Regulation 530.3.201)
+                        Bidirectional devices (BS 7671:2018+A3:2024, Section 530)
                       </strong>{' '}
                       — Introduced by Amendment 3 (A3:2024). Where the installation includes battery
                       storage, solar PV with battery backup, or V2G EV chargers, protective devices
@@ -311,7 +311,7 @@ export default function ConsumerUnitChangePage() {
                 arcs.
               </p>
               <p>
-                BS 7671 Regulation 421.1.7 recommends that AFDDs to BS EN 62606 are considered for
+                BS 7671 Section 421 recommends that AFDDs to BS EN 62606 are considered for
                 circuits in the following locations: premises with sleeping accommodation (houses,
                 flats, care homes, hotels), locations with a risk of fire due to the nature of
                 processed or stored materials, locations with combustible constructional materials
