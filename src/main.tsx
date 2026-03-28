@@ -79,19 +79,6 @@ const handleChunkError = (event: ErrorEvent | PromiseRejectionEvent) => {
 window.addEventListener('error', handleChunkError);
 window.addEventListener('unhandledrejection', handleChunkError);
 
-// Add Android status bar spacer
-if (Capacitor.isNativePlatform() && Capacitor.getPlatform() === 'android') {
-  const spacer = document.createElement('div');
-  spacer.id = 'android-status-bar-spacer';
-  spacer.style.cssText =
-    'height: 68px; width: 100%; background-color: #0a0a0a; position: fixed; top: 0; left: 0; z-index: 99999;';
-  document.body.insertBefore(spacer, document.body.firstChild);
-  document.body.style.paddingTop = '68px';
-  // Expose spacer height as CSS variable so fixed-position elements (toasts, modals) can offset
-  document.documentElement.style.setProperty('--native-header-offset', '68px');
-  console.log('[Elec-Mate] Android status bar spacer added (68px)');
-}
-
 const rootElement = document.getElementById('root');
 
 if (!rootElement) {
