@@ -338,16 +338,14 @@ const SignUp = () => {
                 .maybeSingle();
               if (refData?.user_id) {
                 payload.referred_by = refData.user_id;
-                await supabase
-                  .from('referrals')
-                  .insert({
-                    referrer_id: refData.user_id,
-                    referred_id: data.user!.id,
-                    referred_email: email,
-                    referral_code: storedRef,
-                    status: 'signed_up',
-                    source: (searchParams.get('src') as string) || 'link',
-                  });
+                await supabase.from('referrals').insert({
+                  referrer_id: refData.user_id,
+                  referred_id: data.user!.id,
+                  referred_email: email,
+                  referral_code: storedRef,
+                  status: 'signed_up',
+                  source: (searchParams.get('src') as string) || 'link',
+                });
               }
             } catch {
               /* non-critical */
@@ -545,21 +543,29 @@ const SignUp = () => {
                         onToggle={() => setShowPassword(!showPassword)}
                       />
                       {password && (
-                        <div className="flex gap-1.5 mt-2">
-                          {PASSWORD_REQUIREMENTS.map((req) => (
-                            <div
-                              key={req.id}
-                              className={cn(
-                                'flex-1 py-1 rounded text-center text-[10px] font-semibold transition-all duration-150',
-                                req.test(password)
-                                  ? 'bg-green-500/10 text-green-400/80'
-                                  : 'bg-white/[0.03] text-white'
-                              )}
-                            >
-                              {req.label}
-                            </div>
-                          ))}
-                        </div>
+                        <>
+                          <div className="flex gap-1.5 mt-2">
+                            {PASSWORD_REQUIREMENTS.map((req) => (
+                              <div
+                                key={req.id}
+                                className={cn(
+                                  'flex-1 py-1 rounded text-center text-[10px] font-semibold transition-all duration-150',
+                                  req.test(password)
+                                    ? 'bg-green-500/10 text-green-400/80'
+                                    : 'bg-white/[0.03] text-white'
+                                )}
+                              >
+                                {req.label}
+                              </div>
+                            ))}
+                          </div>
+                          {allPasswordRequirementsMet && (
+                            <p className="text-[10px] text-white mt-1.5">
+                              Avoid passwords you've used on other sites — they may be rejected if
+                              found in a data breach
+                            </p>
+                          )}
+                        </>
                       )}
                     </div>
                     <InputField

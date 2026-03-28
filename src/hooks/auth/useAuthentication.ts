@@ -29,7 +29,7 @@ export function useAuthentication() {
       return 'This email is already registered. Try signing in instead.';
     }
     if (lowerMessage.includes('password') && lowerMessage.includes('weak')) {
-      return "This password has been found in data breaches. Please choose a unique password that you haven't used elsewhere.";
+      return "This password has appeared in a known data breach and cannot be used. Your password meets our complexity rules — the issue is that this exact password has been leaked online. Please choose a different password that you haven't used on other sites.";
     }
     if (lowerMessage.includes('rate limit') || lowerMessage.includes('too many')) {
       return 'Too many attempts. Please wait a moment and try again.';

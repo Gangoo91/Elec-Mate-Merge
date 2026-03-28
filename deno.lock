@@ -57,6 +57,7 @@
         "npm:@capacitor/browser@^8.0.2",
         "npm:@capacitor/camera@^8.0.2",
         "npm:@capacitor/cli@^8.2.0",
+        "npm:@capacitor/clipboard@^8.0.1",
         "npm:@capacitor/core@^8.2.0",
         "npm:@capacitor/filesystem@^8.1.2",
         "npm:@capacitor/haptics@^8.0.1",

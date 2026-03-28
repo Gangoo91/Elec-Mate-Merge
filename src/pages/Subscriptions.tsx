@@ -1,4 +1,3 @@
- 
 import { useState } from 'react';
 import {
   ArrowLeft,
@@ -32,7 +31,7 @@ import { useAuth } from '@/contexts/AuthContext';
 import { useToast } from '@/components/ui/use-toast';
 import { Capacitor } from '@capacitor/core';
 import { supabase } from '@/integrations/supabase/client';
-import { stripePriceData, PlanDetails } from '@/data/stripePrices';
+import { stripePriceData, nativePriceData, PlanDetails } from '@/data/stripePrices';
 import { cn } from '@/lib/utils';
 import { capturePaymentError, trackMilestone, addBreadcrumb } from '@/lib/sentry';
 
@@ -111,7 +110,7 @@ const Subscriptions = () => {
   const [isLoading, setIsLoading] = useState<Record<string, boolean>>({});
   const [showError, setShowError] = useState(true);
 
-  const plans = stripePriceData[billing];
+  const plans = isNative ? nativePriceData[billing] : stripePriceData[billing];
   const planDisplayName = getPlanDisplayName(subscriptionTier);
   const planColours = PLAN_COLOURS[planDisplayName] || PLAN_COLOURS['Electrician Pro'];
   const PlanIconComponent = getPlanIcon(planDisplayName);
@@ -155,7 +154,8 @@ const Subscriptions = () => {
       if (data?.noStripeCustomer) {
         toast({
           title: 'Subscription managed elsewhere',
-          description: 'Your subscription is managed via the App Store or was granted directly. Contact support if you need help.',
+          description:
+            'Your subscription is managed via the App Store or was granted directly. Contact support if you need help.',
         });
         return;
       }

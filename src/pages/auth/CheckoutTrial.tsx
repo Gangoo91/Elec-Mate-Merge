@@ -6,18 +6,17 @@ import { Button } from '@/components/ui/button';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   Loader2,
-  CreditCard,
   Shield,
   Zap,
-  Check,
   LogOut,
   ArrowRight,
   RefreshCw,
   Mail,
   Clock,
-  Ban,
-  Sparkles,
-  Star,
+  FileCheck,
+  GraduationCap,
+  Bot,
+  Wrench,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Capacitor } from '@capacitor/core';
@@ -30,6 +29,14 @@ const ROLE_TO_PRICE: Record<string, { planId: string; priceId: string }> = {
 };
 
 const MAX_PACKAGE_RETRIES = 3;
+
+const FEATURES = [
+  { icon: FileCheck, label: 'Certificates, quotes & invoices' },
+  { icon: Bot, label: 'AI design consultations' },
+  { icon: GraduationCap, label: 'Full study centre access' },
+  { icon: Wrench, label: 'Every calculator & tool' },
+  { icon: Zap, label: 'Unlimited usage — no caps' },
+];
 
 const CheckoutTrial = () => {
   const { user, profile, signOut } = useAuth();
@@ -81,7 +88,6 @@ const CheckoutTrial = () => {
     if (!isNative || packagesReady || !isInitialised) return;
     if (retryCount >= MAX_PACKAGE_RETRIES) return;
 
-    // First retry fires quickly (1.5s), subsequent retries back off (3s each)
     const delay = retryCount === 0 ? 1500 : 3000;
 
     retryTimerRef.current = setTimeout(async () => {
@@ -99,7 +105,7 @@ const CheckoutTrial = () => {
     };
   }, [isNative, packagesReady, isInitialised, retryCount, loadOfferings]);
 
-  // Reset retry count when packages finally arrive (e.g. after logIn attach)
+  // Reset retry count when packages finally arrive
   useEffect(() => {
     if (packagesReady && retryCount > 0) {
       setRetryCount(0);
@@ -150,15 +156,13 @@ const CheckoutTrial = () => {
     }
   }, [isRedirecting, priceInfo]);
 
-  // Native IAP purchase handler — uses role-matched package, not just availablePackages[0]
+  // Native IAP purchase handler
   const startNativePurchase = useCallback(async () => {
     if (!packagesReady) {
-      // Trigger a manual retry rather than just showing an error
       setIsRetrying(true);
       await loadOfferings();
       setIsRetrying(false);
 
-      // Check again after the retry
       if (!availablePackages.length) {
         setError(
           'Subscription plans are taking longer than usual to load. Please check your internet connection and try again.'
@@ -169,7 +173,6 @@ const CheckoutTrial = () => {
 
     setError(null);
 
-    // Pick the package matching the user's plan (electrician vs apprentice)
     const pkg = getPackageForPlan(priceInfo.planId) ?? availablePackages[0];
     if (!pkg) {
       setError(
@@ -180,7 +183,6 @@ const CheckoutTrial = () => {
 
     const success = await purchasePackage(pkg);
     if (success) {
-      // Navigate with actual plan ID so payment-success shows correct tier
       navigate(`/payment-success?plan=${priceInfo.planId}&trial=true`);
     }
   }, [
@@ -230,53 +232,63 @@ const CheckoutTrial = () => {
 
   const platform = Capacitor.getPlatform();
 
-  // Web: show full-screen loading while auto-redirecting to Stripe
-  if (isRedirecting && !error) {
-    return (
-      <div className="min-h-[100svh] bg-black flex items-center justify-center p-6">
-        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-center">
-          <div className="w-12 h-12 rounded-xl bg-white/[0.10] ring-1 ring-white/20 flex items-center justify-center mx-auto mb-5">
-            <Loader2 className="h-6 w-6 text-elec-yellow animate-spin" />
-          </div>
-          <h1 className="text-[17px] font-semibold text-white mb-1">Setting up your trial...</h1>
-          <p className="text-[13px] text-white">Redirecting to secure checkout</p>
-        </motion.div>
-      </div>
-    );
-  }
-
   // Derive CTA state for native
   const persistentError =
     isNative && !packagesReady && retryCount >= MAX_PACKAGE_RETRIES && !isRetrying;
   const ctaLoading =
     isRedirecting || isPurchasing || (isNative && packagesLoading && !error) || isRetrying;
 
+  // Web: full-screen loading while auto-redirecting to Stripe
+  if (isRedirecting && !error) {
+    return (
+      <div className="min-h-[100svh] bg-[#0a0a0a] flex items-center justify-center p-6">
+        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-center">
+          <div className="w-14 h-14 rounded-2xl bg-elec-yellow/10 ring-1 ring-elec-yellow/20 flex items-center justify-center mx-auto mb-6">
+            <Loader2 className="h-7 w-7 text-elec-yellow animate-spin" />
+          </div>
+          <h1 className="text-[18px] font-semibold text-white mb-2">Setting up your trial...</h1>
+          <p className="text-[14px] text-white">Redirecting to secure checkout</p>
+        </motion.div>
+      </div>
+    );
+  }
+
   return (
-    <div className="min-h-[100svh] bg-black flex flex-col">
-      <div className="flex-1 flex flex-col justify-center px-6 py-10 pt-[calc(env(safe-area-inset-top)+40px)] pb-[calc(env(safe-area-inset-bottom)+24px)]">
-        <div className="w-full max-w-[380px] mx-auto">
+    <div
+      className="min-h-[100svh] flex flex-col relative overflow-hidden"
+      style={{
+        background:
+          'radial-gradient(ellipse 80% 50% at 50% 0%, rgba(250,204,21,0.06) 0%, transparent 60%), #0a0a0a',
+      }}
+    >
+      <div className="flex-1 flex flex-col justify-center px-5 py-10 pt-[calc(env(safe-area-inset-top)+48px)] pb-[calc(env(safe-area-inset-bottom)+24px)]">
+        <div className="w-full max-w-[400px] mx-auto">
           {/* Logo */}
           <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            className="flex items-center justify-center gap-2.5 mb-8"
+            initial={{ opacity: 0, y: -8 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="flex items-center justify-center gap-3 mb-10"
           >
-            <img src="/logo.jpg" alt="" className="w-8 h-8 rounded-lg object-cover" />
-            <span className="text-[16px] font-bold tracking-tight">
+            <img
+              src="/logo.jpg"
+              alt=""
+              className="w-11 h-11 rounded-xl object-cover ring-1 ring-white/10"
+            />
+            <span className="text-[20px] font-bold tracking-tight">
               <span className="text-elec-yellow">Elec-</span>
               <span className="text-white">Mate</span>
             </span>
           </motion.div>
 
-          {/* Free trial badge */}
+          {/* Trial badge */}
           <motion.div
-            initial={{ opacity: 0, y: 5 }}
-            animate={{ opacity: 1, y: 0 }}
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.05 }}
-            className="flex justify-center mb-4"
+            className="flex justify-center mb-5"
           >
-            <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-green-500/8 ring-1 ring-green-500/15 text-[12px] font-semibold text-green-400">
-              <Clock className="h-3.5 w-3.5" /> 7 days free
+            <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-elec-yellow/8 ring-1 ring-elec-yellow/15 text-[13px] font-semibold text-elec-yellow tracking-wide">
+              <Clock className="h-4 w-4" />7 DAYS FREE
             </span>
           </motion.div>
 
@@ -285,55 +297,57 @@ const CheckoutTrial = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.1 }}
-            className="text-center mb-6"
+            className="text-center mb-7"
           >
-            <h1 className="text-[24px] font-semibold text-white tracking-tight mb-1.5">
+            <h1 className="text-[28px] font-bold text-white tracking-tight leading-tight mb-2">
               Start your free trial
             </h1>
-            <p className="text-[13px] text-white leading-relaxed">
+            <p className="text-[14px] text-white leading-relaxed">
               {isNative
-                ? `Full access — payment secured by ${platform === 'ios' ? 'Apple' : 'Google'}`
+                ? `Full access to every feature — payment secured by ${platform === 'ios' ? 'Apple' : 'Google'}`
                 : 'Full access for 7 days. Card details at checkout.'}
             </p>
           </motion.div>
 
-          {/* Not charged callout */}
+          {/* No charge callout */}
           <motion.div
             initial={{ opacity: 0, y: 8 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.15 }}
-            className="p-3.5 rounded-xl bg-elec-yellow/[0.04] ring-1 ring-elec-yellow/10 mb-5"
+            className="p-4 rounded-2xl bg-white/[0.04] ring-1 ring-white/[0.08] mb-6"
           >
-            <div className="flex items-center gap-3">
-              <div className="w-9 h-9 rounded-lg bg-elec-yellow/10 flex items-center justify-center flex-shrink-0">
-                <Shield className="h-4 w-4 text-elec-yellow" />
+            <div className="flex items-center gap-3.5">
+              <div className="w-10 h-10 rounded-xl bg-elec-yellow/10 flex items-center justify-center flex-shrink-0">
+                <Shield className="h-5 w-5 text-elec-yellow" />
               </div>
               <div>
-                <p className="text-[13px] font-medium text-white">No charge until {trialEndDate}</p>
-                <p className="text-[11px] text-white mt-0.5">
-                  Cancel anytime in Settings → Subscriptions
+                <p className="text-[14px] font-semibold text-white">
+                  Not charged until {trialEndDate}
+                </p>
+                <p className="text-[12px] text-white mt-0.5">
+                  Cancel anytime — no commitment, no lock-in
                 </p>
               </div>
             </div>
           </motion.div>
 
-          {/* Errors */}
+          {/* Error states */}
           <AnimatePresence>
             {error && (
               <motion.div
                 initial={{ opacity: 0, height: 0 }}
                 animate={{ opacity: 1, height: 'auto' }}
                 exit={{ opacity: 0, height: 0 }}
-                className="mb-5 overflow-hidden"
+                className="mb-6 overflow-hidden"
               >
-                <div className="p-3 rounded-lg bg-red-500/8 ring-1 ring-red-500/15 space-y-2">
-                  <p className="text-[13px] text-red-400 text-center">{error}</p>
+                <div className="p-4 rounded-2xl bg-red-500/8 ring-1 ring-red-500/20 space-y-3">
+                  <p className="text-[14px] text-white text-center font-medium">{error}</p>
                   {isNative && (
                     <button
                       onClick={handleManualRetry}
-                      className="w-full flex items-center justify-center gap-1.5 text-[12px] text-white font-medium py-2 rounded-lg bg-white/[0.10] hover:bg-white/[0.08] touch-manipulation"
+                      className="w-full flex items-center justify-center gap-2 text-[14px] text-white font-semibold h-11 rounded-xl bg-white/[0.08] active:bg-white/[0.12] touch-manipulation transition-colors"
                     >
-                      <RefreshCw className="h-3 w-3" /> Try again
+                      <RefreshCw className="h-4 w-4" /> Try again
                     </button>
                   )}
                 </div>
@@ -345,57 +359,49 @@ const CheckoutTrial = () => {
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              className="mb-5 p-3 rounded-lg bg-amber-500/8 ring-1 ring-amber-500/15 space-y-2"
+              className="mb-6 p-4 rounded-2xl bg-white/[0.04] ring-1 ring-white/[0.08] space-y-3"
             >
-              <p className="text-[12px] text-amber-400 text-center">
-                Payment options couldn't be loaded.
+              <p className="text-[14px] text-white text-center font-medium">
+                Payment options couldn't be loaded
               </p>
-              <div className="flex gap-2">
+              <div className="flex gap-3">
                 <button
                   onClick={handleManualRetry}
-                  className="flex-1 flex items-center justify-center gap-1 text-[11px] text-white font-medium py-2 rounded-lg bg-white/[0.05] hover:bg-white/[0.08] touch-manipulation"
+                  className="flex-1 flex items-center justify-center gap-2 text-[13px] text-white font-semibold h-11 rounded-xl bg-elec-yellow/10 ring-1 ring-elec-yellow/20 active:bg-elec-yellow/15 touch-manipulation transition-colors"
                 >
-                  <RefreshCw className="h-3 w-3" /> Retry
+                  <RefreshCw className="h-3.5 w-3.5" /> Retry
                 </button>
                 <a
                   href="mailto:support@elec-mate.com"
-                  className="flex-1 flex items-center justify-center gap-1 text-[11px] text-white font-medium py-2 rounded-lg bg-white/[0.05] hover:bg-white/[0.08] touch-manipulation"
+                  className="flex-1 flex items-center justify-center gap-2 text-[13px] text-white font-semibold h-11 rounded-xl bg-white/[0.06] ring-1 ring-white/[0.08] active:bg-white/[0.10] touch-manipulation transition-colors"
                 >
-                  <Mail className="h-3 w-3" /> Support
+                  <Mail className="h-3.5 w-3.5" /> Contact support
                 </a>
               </div>
             </motion.div>
           )}
 
-          {/* What's included */}
+          {/* Features */}
           <motion.div
             initial={{ opacity: 0, y: 8 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
-            className="mb-6"
+            className="mb-8"
           >
-            <div className="space-y-2.5">
-              {[
-                { icon: Zap, text: 'Every feature unlocked', accent: true },
-                { icon: CreditCard, text: 'Card held securely — not charged today', accent: false },
-                { icon: Star, text: 'Cancel anytime — no lock-in', accent: false },
-              ].map((item) => (
-                <div key={item.text} className="flex items-center gap-3">
-                  <div
-                    className={cn(
-                      'w-7 h-7 rounded-lg flex items-center justify-center flex-shrink-0',
-                      item.accent ? 'bg-elec-yellow/10' : 'bg-white/[0.10]'
-                    )}
-                  >
-                    <item.icon
-                      className={cn(
-                        'h-3.5 w-3.5',
-                        item.accent ? 'text-elec-yellow/70' : 'text-white'
-                      )}
-                    />
+            <div className="space-y-3">
+              {FEATURES.map((item, i) => (
+                <motion.div
+                  key={item.label}
+                  initial={{ opacity: 0, x: -10 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 0.25 + i * 0.04 }}
+                  className="flex items-center gap-3.5"
+                >
+                  <div className="w-9 h-9 rounded-xl bg-white/[0.06] ring-1 ring-white/[0.08] flex items-center justify-center flex-shrink-0">
+                    <item.icon className="h-4 w-4 text-elec-yellow" />
                   </div>
-                  <span className="text-[13px] text-white">{item.text}</span>
-                </div>
+                  <span className="text-[14px] text-white font-medium">{item.label}</span>
+                </motion.div>
               ))}
             </div>
           </motion.div>
@@ -404,24 +410,28 @@ const CheckoutTrial = () => {
           <motion.div
             initial={{ opacity: 0, y: 8 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.25 }}
+            transition={{ delay: 0.45 }}
           >
             <Button
               onClick={isNative ? startNativePurchase : startCheckout}
               disabled={ctaLoading || persistentError}
               className={cn(
-                'w-full h-12 rounded-xl text-[15px] font-semibold transition-all duration-150 touch-manipulation',
+                'w-full h-14 rounded-2xl text-[16px] font-bold transition-all duration-150 touch-manipulation',
                 ctaLoading
                   ? 'bg-white/10 text-white cursor-not-allowed'
                   : error
-                    ? 'bg-red-500/80 hover:bg-red-500 text-white'
-                    : 'bg-elec-yellow hover:bg-elec-yellow/90 text-black shadow-[0_1px_20px_rgba(250,204,21,0.15)] active:scale-[0.98]'
+                    ? 'bg-white/10 hover:bg-white/15 text-white ring-1 ring-white/10'
+                    : 'bg-[#FFD700] hover:bg-[#FFD700]/90 text-black shadow-[0_2px_24px_rgba(255,215,0,0.2)] active:scale-[0.98]'
               )}
             >
               {ctaLoading ? (
                 <>
-                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                  {isPurchasing ? 'Processing...' : isRedirecting ? 'Redirecting...' : 'Loading...'}
+                  <Loader2 className="mr-2 h-5 w-5 animate-spin" />
+                  {isPurchasing
+                    ? 'Processing...'
+                    : isRedirecting
+                      ? 'Redirecting...'
+                      : 'Loading plans...'}
                 </>
               ) : error ? (
                 <>
@@ -429,40 +439,48 @@ const CheckoutTrial = () => {
                 </>
               ) : (
                 <>
-                  {isNative ? 'Start Free Trial' : 'Continue to Checkout'}{' '}
-                  <ArrowRight className="ml-1.5 h-4 w-4" />
+                  {isNative ? 'Start Free Trial' : 'Continue to Checkout'}
+                  <ArrowRight className="ml-2 h-5 w-5" />
                 </>
               )}
             </Button>
           </motion.div>
 
           {isNative && packagesLoading && !error && (
-            <p className="text-center text-[10px] text-white mt-2">Loading payment options...</p>
+            <p className="text-center text-[12px] text-white mt-3">Loading payment options...</p>
           )}
 
-          {/* Trust line */}
-          <div className="flex items-center justify-center gap-3 mt-5 text-[11px] text-white">
-            <span className="flex items-center gap-1">
-              <Shield className="h-3 w-3 text-green-500/40" />
-              {isNative
-                ? `Secured by ${platform === 'ios' ? 'Apple' : 'Google'}`
-                : 'Secured by Stripe'}
-            </span>
-            <span className="w-0.5 h-0.5 rounded-full bg-white/10" />
-            <span>Cancel anytime</span>
-          </div>
+          {/* Trust signals */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.5 }}
+            className="mt-6"
+          >
+            <div className="flex items-center justify-center gap-4 text-[12px] text-white">
+              <span className="flex items-center gap-1.5">
+                <Shield className="h-3.5 w-3.5 text-elec-yellow/50" />
+                {isNative
+                  ? `Secured by ${platform === 'ios' ? 'Apple' : 'Google'}`
+                  : 'Secured by Stripe'}
+              </span>
+              <span className="w-1 h-1 rounded-full bg-white/15" />
+              <span>Cancel anytime</span>
+            </div>
 
-          {isNative && (
-            <p className="text-[9px] text-white text-center mt-3 leading-relaxed max-w-xs mx-auto">
-              Payment charged to your {platform === 'ios' ? 'Apple ID' : 'Google account'} at
-              confirmation. Auto-renews unless cancelled 24h before period ends. 7-day free trial.
-            </p>
-          )}
+            {isNative && (
+              <p className="text-[10px] text-white/60 text-center mt-3 leading-relaxed max-w-[320px] mx-auto">
+                Payment charged to your {platform === 'ios' ? 'Apple ID' : 'Google account'} at
+                confirmation. Auto-renews unless cancelled 24h before period ends.
+              </p>
+            )}
+          </motion.div>
 
-          <div className="mt-8 text-center">
+          {/* Sign out */}
+          <div className="mt-10 text-center">
             <button
               onClick={handleSignOut}
-              className="inline-flex items-center gap-1 text-[11px] text-white hover:text-white transition-colors touch-manipulation py-2 px-3 rounded-lg"
+              className="inline-flex items-center gap-1.5 text-[12px] text-white/40 hover:text-white/60 transition-colors touch-manipulation py-2 px-4 rounded-xl"
             >
               <LogOut className="h-3 w-3" /> Sign out
             </button>

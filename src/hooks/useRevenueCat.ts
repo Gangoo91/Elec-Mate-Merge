@@ -1,6 +1,11 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
 import { Capacitor } from '@capacitor/core';
-import { Purchases, type PurchasesPackage, LOG_LEVEL } from '@revenuecat/purchases-capacitor';
+import {
+  Purchases,
+  type PurchasesPackage,
+  LOG_LEVEL,
+  STOREKIT_VERSION,
+} from '@revenuecat/purchases-capacitor';
 import { useHaptic } from '@/hooks/useHaptic';
 
 // RevenueCat public API keys (loaded from .env — not secret, safe for client-side)
@@ -64,6 +69,7 @@ export function useRevenueCat(userId?: string) {
         await Purchases.configure({
           apiKey,
           ...(userId ? { appUserID: userId } : {}),
+          storeKitVersion: STOREKIT_VERSION.STOREKIT_1,
         });
 
         if (userId) attachedUserIdRef.current = userId;
