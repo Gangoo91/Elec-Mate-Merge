@@ -406,7 +406,9 @@ const Subscriptions = () => {
               </div>
               <div className="flex-1 min-w-0">
                 <p className="text-sm font-medium text-white">
-                  {errorMessage.includes('cancelled') ? 'Purchase cancelled' : 'Unable to load plans'}
+                  {errorMessage.includes('cancelled')
+                    ? 'Purchase cancelled'
+                    : 'Unable to load plans'}
                 </p>
                 <p className="text-xs text-white/50 mt-0.5">Tap retry to try again</p>
               </div>
@@ -470,15 +472,13 @@ const Subscriptions = () => {
           {plans.map((plan: PlanDetails) => {
             // On native, don't disable any plan — Apple handles upgrades/downgrades
             // and shows the appropriate sheet (upgrade, downgrade, or "already subscribed")
-            const isCurrentPlan = isNative
-              ? false
-              : subscriptionTier === plan.name && isSubscribed;
+            const isCurrentPlan = isNative ? false : subscriptionTier === plan.name && isSubscribed;
             const isPremium = plan.name === 'Business AI';
 
-            // Native store price from RevenueCat
+            // Native: use hardcoded GBP prices (StoreKit returns USD on TestFlight)
+            // Apple's payment sheet always shows the correct local price at checkout
             const nativePackage = isNative ? getPackageForPlan(plan.id) : null;
-            const nativePrice = nativePackage?.product?.priceString ?? null;
-            const displayPrice = nativePrice || plan.price;
+            const displayPrice = plan.price;
 
             const cardPlanName =
               plan.name === 'Business AI'
