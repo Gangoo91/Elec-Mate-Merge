@@ -86,7 +86,7 @@ export function useAIRAMS(): UseAIRAMSReturn {
   const [rawHSResponse, setRawHSResponse] = useState<any | null>(null);
   const [rawInstallerResponse, setRawInstallerResponse] = useState<any | null>(null);
   const { toast } = useToast();
-  const { recordPositiveAction } = useAppReview();
+  const { recordPositiveAction, showReviewPrompt, handleRate, handleDismiss } = useAppReview();
 
   const abortControllerRef = useRef<AbortController | null>(null);
   const progressIntervalsRef = useRef<NodeJS.Timeout[]>([]);
@@ -1441,5 +1441,8 @@ export function useAIRAMS(): UseAIRAMSReturn {
     saveToDatabase,
     reset,
     cancelGeneration,
+    showReviewPrompt,
+    handleRate,
+    handleDismiss,
   };
 }

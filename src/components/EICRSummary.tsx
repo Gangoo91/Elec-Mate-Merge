@@ -57,6 +57,7 @@ import { useCustomers } from '@/hooks/useCustomers';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { useHaptics } from '@/hooks/useHaptics';
 import { useAppReview } from '@/hooks/useAppReview';
+import AppReviewPromptSheet from '@/components/AppReviewPromptSheet';
 import {
   createQuoteFromCertificate,
   createInvoiceFromCertificate,
@@ -95,7 +96,7 @@ const EICRSummary = ({ formData: propFormData, onUpdate: propOnUpdate }: EICRSum
   const navigate = useNavigate();
   const isMobile = useIsMobile();
   const haptics = useHaptics();
-  const { recordPositiveAction } = useAppReview();
+  const { recordPositiveAction, showReviewPrompt, handleRate, handleDismiss } = useAppReview();
   const [isJsonOpen, setIsJsonOpen] = useState(false);
   const [isGenerating, setIsGenerating] = useState(false);
   const [showDialog, setShowDialog] = useState(false);
@@ -1722,6 +1723,11 @@ const EICRSummary = ({ formData: propFormData, onUpdate: propOnUpdate }: EICRSum
           cancel();
           setShowEstimatorSheet(false);
         }}
+      />
+      <AppReviewPromptSheet
+        open={showReviewPrompt}
+        onRate={handleRate}
+        onDismiss={handleDismiss}
       />
     </div>
   );

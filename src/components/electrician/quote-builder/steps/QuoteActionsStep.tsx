@@ -7,6 +7,7 @@ import { Quote } from '@/types/quote';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from '@/hooks/use-toast';
 import { useAppReview } from '@/hooks/useAppReview';
+import AppReviewPromptSheet from '@/components/AppReviewPromptSheet';
 import { useHaptic } from '@/hooks/useHaptic';
 
 interface QuoteActionsStepProps {
@@ -17,7 +18,7 @@ interface QuoteActionsStepProps {
 const QuoteActionsStep = ({ quote, onQuoteUpdate }: QuoteActionsStepProps) => {
   const [loading, setLoading] = useState(false);
   const [publicLink, setPublicLink] = useState<string>('');
-  const { recordPositiveAction } = useAppReview();
+  const { recordPositiveAction, showReviewPrompt, handleRate, handleDismiss } = useAppReview();
   const haptic = useHaptic();
 
   const createPublicLink = async () => {
@@ -210,6 +211,11 @@ const QuoteActionsStep = ({ quote, onQuoteUpdate }: QuoteActionsStepProps) => {
           )}
         </CardContent>
       </Card>
+      <AppReviewPromptSheet
+        open={showReviewPrompt}
+        onRate={handleRate}
+        onDismiss={handleDismiss}
+      />
     </div>
   );
 };

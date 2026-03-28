@@ -13,6 +13,7 @@ import { useCloudSync } from '@/hooks/useCloudSync';
 import { useReportId } from '@/hooks/useReportId';
 import { useToast } from '@/hooks/use-toast';
 import { useAppReview } from '@/hooks/useAppReview';
+import AppReviewPromptSheet from '@/components/AppReviewPromptSheet';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
@@ -107,7 +108,7 @@ export const EICFormProvider: React.FC<EICFormProviderProps> = ({
   const navigate = useNavigate();
   const location = useLocation();
   const queryClient = useQueryClient();
-  const { recordPositiveAction } = useAppReview();
+  const { recordPositiveAction, showReviewPrompt, handleRate, handleDismiss } = useAppReview();
   const lastSaveErrorToastRef = useRef<number>(0);
 
   // Capture customer data from navigation state
@@ -1159,6 +1160,11 @@ export const EICFormProvider: React.FC<EICFormProviderProps> = ({
           certificateNumber={formData.certificateNumber}
         />
         {children}
+        <AppReviewPromptSheet
+          open={showReviewPrompt}
+          onRate={handleRate}
+          onDismiss={handleDismiss}
+        />
       </CertificatePhotoProvider>
     </EICFormContext.Provider>
   );
