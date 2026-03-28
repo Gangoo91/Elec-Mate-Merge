@@ -74,7 +74,6 @@ const hubsConfig: HubConfig[] = [
     iconColor: 'text-elec-yellow',
     iconBg: 'bg-elec-yellow/10 border border-elec-yellow/20',
     roles: ['electrician', 'apprentice', 'employer', 'admin'],
-    isPrimary: true,
     getStat: (data) =>
       data.business.activeQuotes > 0
         ? {
@@ -193,9 +192,8 @@ function PremiumHubCard({
         // Touch optimization
         'touch-manipulation',
         // Overflow for gradient line
-        'overflow-hidden',
-        // Bento: primary hub spans 2 cols on mobile
-        isPrimary && 'col-span-2 sm:col-span-1'
+        'overflow-hidden'
+        // All cards same size in 2x2 grid
       )}
     >
       {/* Gradient accent line at top */}
@@ -355,12 +353,7 @@ export function PremiumHubGrid() {
         className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4"
       >
         {filteredHubs.map((hub) => (
-          <PremiumHubCard
-            key={hub.id}
-            hub={hub}
-            data={dashboardData}
-            isPrimary={hub.isPrimary}
-          />
+          <PremiumHubCard key={hub.id} hub={hub} data={dashboardData} isPrimary={hub.isPrimary} />
         ))}
       </motion.div>
     </div>

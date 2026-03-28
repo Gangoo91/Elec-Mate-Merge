@@ -57,7 +57,8 @@ const Dashboard = () => {
   // Show welcome modal for first-time users
   useEffect(() => {
     if (!isLoading && profile && !profile.onboarding_completed) {
-      // Small delay to let the dashboard load first
+      // Also check localStorage as fallback (in case profile update was slow)
+      if (localStorage.getItem('elec-mate-onboarding-done')) return;
       const timer = setTimeout(() => setShowWelcome(true), 500);
       return () => clearTimeout(timer);
     }
