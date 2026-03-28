@@ -1,4 +1,5 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
+import { useAppReview } from '@/hooks/useAppReview';
 import { useNavigate } from 'react-router-dom';
 import { Quote } from '@/types/quote';
 import { Button } from '@/components/ui/button';
@@ -46,6 +47,7 @@ export const InvoiceSendDropdown = ({
   compact = false,
 }: InvoiceSendDropdownProps) => {
   const navigate = useNavigate();
+  const { recordPositiveAction } = useAppReview();
   const [isSendingEmail, setIsSendingEmail] = useState(false);
   const [isSharingWhatsApp, setIsSharingWhatsApp] = useState(false);
   const [isConnectingStripe, setIsConnectingStripe] = useState(false);
@@ -252,6 +254,7 @@ export const InvoiceSendDropdown = ({
         .eq('id', invoice.id);
 
       onSuccess?.();
+      recordPositiveAction();
     } catch (error: any) {
       toast({
         title: 'Error sending invoice',

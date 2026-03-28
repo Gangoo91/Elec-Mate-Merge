@@ -1,11 +1,6 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
 import { Capacitor } from '@capacitor/core';
-import {
-  Purchases,
-  type PurchasesPackage,
-  LOG_LEVEL,
-  STOREKIT_VERSION,
-} from '@revenuecat/purchases-capacitor';
+import { Purchases, type PurchasesPackage, LOG_LEVEL } from '@revenuecat/purchases-capacitor';
 import { useHaptic } from '@/hooks/useHaptic';
 
 // RevenueCat public API keys (loaded from .env — not secret, safe for client-side)
@@ -65,18 +60,18 @@ export function useRevenueCat(userId?: string) {
         const platform = Capacitor.getPlatform();
         const apiKey = platform === 'ios' ? RC_IOS_API_KEY : RC_ANDROID_API_KEY;
 
-        await Purchases.setLogLevel({ level: LOG_LEVEL.DEBUG });
+        await Purchases.setLogLevel({ level: LOG_LEVEL.WARN });
         await Purchases.configure({
           apiKey,
           ...(userId ? { appUserID: userId } : {}),
-          storeKitVersion: STOREKIT_VERSION.STOREKIT_1,
+          // Let SDK auto-select best StoreKit version (SK1 is deprecated on iOS 26+)
+          diagnosticsEnabled: true,
         });
 
         if (userId) attachedUserIdRef.current = userId;
         initRef.current = true;
 
-        // Fetch initial entitlements & offerings BEFORE marking initialised
-        // so consumers know packages are ready (or failed) when isInitialised flips
+        // Fetch initial entitlements & offerings
         await checkEntitlements();
         await loadOfferings();
       } catch (err) {
@@ -168,7 +163,7 @@ export function useRevenueCat(userId?: string) {
     if (!isNative) return;
 
     try {
-      const { offerings } = await Purchases.getOfferings();
+      const offerings = await Purchases.getOfferings();
       const current = offerings?.current;
 
       if (current?.availablePackages && current.availablePackages.length > 0) {
@@ -284,16 +279,27 @@ export function useRevenueCat(userId?: string) {
   // Find the package matching a given plan ID (e.g. 'apprentice-monthly')
   const getPackageForPlan = useCallback(
     (planId: string): PurchasesPackage | undefined => {
-      // RevenueCat package identifiers should match plan IDs
-      // e.g. '$rc_monthly' for monthly, '$rc_annual' for yearly, or custom IDs
-      // Try exact match first, then look for partial match on plan tier
+      // Convert dashes to underscores to match RC package identifiers
+      // e.g. 'apprentice-monthly' → 'apprentice_monthly'
+      const normalised = planId.replace(/-/g, '_');
       const tierKey = planId.replace(/-(?:monthly|yearly)$/, '');
       const resolvedKey = TIER_ALIASES[tierKey] || tierKey;
+      const resolvedNormalised = normalised.replace(
+        tierKey,
+        TIER_ALIASES[tierKey] || tierKey
+      );
+
       return (
-        state.availablePackages.find((pkg) => pkg.identifier === planId) ||
+        // 1. Exact match with underscores (e.g. 'apprentice_monthly')
+        state.availablePackages.find((pkg) => pkg.identifier === normalised) ||
+        // 2. Exact match with resolved alias (e.g. 'business-ai-monthly' → 'mate_monthly')
+        state.availablePackages.find((pkg) => pkg.identifier === resolvedNormalised) ||
+        // 3. Match on full plan ID including period (e.g. includes 'apprentice_monthly')
         state.availablePackages.find((pkg) =>
-          pkg.identifier.toLowerCase().includes(resolvedKey.replace(/-/g, '_'))
-        )
+          pkg.identifier.toLowerCase().includes(resolvedKey.replace(/-/g, '_') + '_' + (planId.includes('yearly') ? 'yearly' : 'monthly'))
+        ) ||
+        // 4. Last resort: exact match on original plan ID
+        state.availablePackages.find((pkg) => pkg.identifier === planId)
       );
     },
     [state.availablePackages]

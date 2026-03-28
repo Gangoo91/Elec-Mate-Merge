@@ -183,6 +183,28 @@ const CheckoutTrial = () => {
 
     const success = await purchasePackage(pkg);
     if (success) {
+      // ELE-509: Immediately update Supabase profile so ProtectedRoute doesn't loop
+      // Don't wait for RC webhook — set subscribed=true now
+      try {
+        const tier = priceInfo.planId.replace(/-monthly|-yearly/, '');
+        await supabase
+          .from('profiles')
+          .update({
+            subscribed: true,
+            subscription_tier: tier,
+            subscription_source: 'app_store',
+            updated_at: new Date().toISOString(),
+          })
+          .eq('id', user?.id);
+
+        // Clear subscription status cache so ProtectedRoute gets fresh data
+        if (user?.id) {
+          sessionStorage.removeItem(`elecmate_sub_cache_${user.id}`);
+        }
+      } catch (updateErr) {
+        console.warn('Profile update after purchase failed (webhook will handle):', updateErr);
+      }
+
       navigate(`/payment-success?plan=${priceInfo.planId}&trial=true`);
     }
   }, [

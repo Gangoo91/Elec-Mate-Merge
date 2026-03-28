@@ -1,6 +1,7 @@
 import { ReactNode, useRef, useEffect } from 'react';
 import { Navigate, useLocation } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
+import { useRevenueCat } from '@/hooks/useRevenueCat';
 import { Loader2 } from 'lucide-react';
 import TrialExpiredPaywall from './TrialExpiredPaywall';
 
@@ -10,6 +11,7 @@ interface ProtectedRouteProps {
 
 const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
   const { user, profile, isLoading, isSubscribed, hasCompletedInitialCheck } = useAuth();
+  const { isProEntitled, isNative } = useRevenueCat(user?.id);
   const location = useLocation();
   const isMounted = useRef(true);
   useEffect(
@@ -31,11 +33,13 @@ const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
   // Trust `subscribed` — it is set by Stripe/RevenueCat webhooks (ELE-432).
   const hasProfileAccess = profile?.subscribed || profile?.free_access_granted;
 
-  // User can access if they have an active subscription (including Stripe trialing)
+  // ELE-509: On native, also check RevenueCat entitlements directly — this is the
+  // source of truth right after an IAP purchase (before the webhook updates Supabase)
   const canAccess =
     isDevelopment ||
     isSubscribed ||
     hasProfileAccess ||
+    isProEntitled ||
     isSubscriptionPage ||
     isCheckoutPage ||
     isPaymentPage;

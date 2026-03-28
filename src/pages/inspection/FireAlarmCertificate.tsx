@@ -10,6 +10,7 @@
  */
 
 import { useState, useEffect, useCallback } from 'react';
+import { useAppReview } from '@/hooks/useAppReview';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
@@ -53,6 +54,7 @@ const REPORT_TYPE = 'fire-alarm' as const;
 export default function FireAlarmCertificate() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
+  const { recordPositiveAction } = useAppReview();
 
   const isNew = id === 'new' || !id;
 
@@ -336,6 +338,7 @@ export default function FireAlarmCertificate() {
       }
 
       toast.success('Certificate generated successfully');
+      recordPositiveAction();
     } catch (error) {
       const msg = error instanceof Error ? error.message : 'Failed to generate certificate';
       setGenerationError(msg);

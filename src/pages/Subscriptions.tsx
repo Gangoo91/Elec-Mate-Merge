@@ -399,30 +399,23 @@ const Subscriptions = () => {
 
         {/* ── Error state ────────────────────────────────────────────── */}
         {errorMessage && (
-          <section className="rounded-2xl border border-red-500/30 bg-red-500/[0.06] p-5 space-y-3">
-            <div className="flex items-start gap-3">
-              <div className="w-10 h-10 rounded-xl bg-red-500/20 flex items-center justify-center shrink-0">
-                <AlertTriangle className="h-5 w-5 text-red-400" />
+          <section className="rounded-2xl border border-white/10 bg-white/[0.03] p-4 space-y-3">
+            <div className="flex items-center gap-3">
+              <div className="w-9 h-9 rounded-full bg-amber-500/15 flex items-center justify-center shrink-0">
+                <RefreshCw className="h-4 w-4 text-amber-400" />
               </div>
               <div className="flex-1 min-w-0">
-                <p className="text-sm font-semibold text-white">Something went wrong</p>
-                <p className="text-xs text-white/70 mt-1 leading-relaxed">{errorMessage}</p>
+                <p className="text-sm font-medium text-white">
+                  {errorMessage.includes('cancelled') ? 'Purchase cancelled' : 'Unable to load plans'}
+                </p>
+                <p className="text-xs text-white/50 mt-0.5">Tap retry to try again</p>
               </div>
-            </div>
-            <div className="flex gap-2">
               <Button
                 onClick={() => loadOfferings()}
-                className="flex-1 h-11 bg-white/10 hover:bg-white/15 text-white font-semibold rounded-xl touch-manipulation active:scale-[0.98]"
+                size="sm"
+                className="h-9 px-4 bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold rounded-xl touch-manipulation active:scale-[0.98]"
               >
-                <RefreshCw className="mr-2 h-4 w-4" />
                 Retry
-              </Button>
-              <Button
-                onClick={() => setShowError(false)}
-                variant="ghost"
-                className="h-11 text-white/70 hover:text-white hover:bg-white/[0.05] rounded-xl touch-manipulation"
-              >
-                Dismiss
               </Button>
             </div>
           </section>
@@ -475,7 +468,11 @@ const Subscriptions = () => {
         {/* ── Plan Cards — vertical stack ─────────────────────────────── */}
         <section className="space-y-4">
           {plans.map((plan: PlanDetails) => {
-            const isCurrentPlan = subscriptionTier === plan.name && isSubscribed;
+            // On native, don't disable any plan — Apple handles upgrades/downgrades
+            // and shows the appropriate sheet (upgrade, downgrade, or "already subscribed")
+            const isCurrentPlan = isNative
+              ? false
+              : subscriptionTier === plan.name && isSubscribed;
             const isPremium = plan.name === 'Business AI';
 
             // Native store price from RevenueCat

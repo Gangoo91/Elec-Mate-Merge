@@ -16,6 +16,7 @@ import { useEffect, useState, useRef, useCallback } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
 import { supabase } from '@/integrations/supabase/client';
 import { motion } from 'framer-motion';
+import { cn } from '@/lib/utils';
 
 // Plan display info
 const planInfo: Record<
@@ -250,190 +251,128 @@ const PaymentSuccess = () => {
   }, [profile?.subscribed, isReady]);
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-slate-900 via-slate-800 to-slate-900 flex flex-col pt-[env(safe-area-inset-top,0px)] pb-[env(safe-area-inset-bottom,0px)]">
-      {/* Decorative background elements */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-green-500/10 rounded-full blur-3xl" />
-        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-emerald-500/10 rounded-full blur-3xl" />
-      </div>
-
-      {/* Main content */}
-      <div className="flex-1 flex items-center justify-center p-4 sm:p-6 relative z-10">
-        <div className="w-full max-w-lg">
-          {/* Success Icon with animation */}
+    <div
+      className="min-h-screen flex flex-col pt-[env(safe-area-inset-top,0px)] pb-[env(safe-area-inset-bottom,0px)]"
+      style={{
+        background:
+          'radial-gradient(ellipse 90% 60% at 50% 20%, rgba(250,204,21,0.07) 0%, transparent 50%), #0a0a0a',
+      }}
+    >
+      <div className="flex-1 flex items-center justify-center p-5 relative z-10">
+        <div className="w-full max-w-[400px]">
+          {/* Success icon */}
           <motion.div
-            initial={{ scale: 0, rotate: -180 }}
-            animate={{ scale: 1, rotate: 0 }}
-            transition={{ type: 'spring', duration: 0.8, bounce: 0.4 }}
-            className="flex justify-center mb-6"
+            initial={{ scale: 0 }}
+            animate={{ scale: 1 }}
+            transition={{ type: 'spring', duration: 0.6, bounce: 0.4 }}
+            className="flex justify-center mb-8"
           >
-            <div className="relative">
-              <div className="w-24 h-24 sm:w-28 sm:h-28 rounded-full bg-gradient-to-br from-green-500 to-emerald-600 flex items-center justify-center shadow-lg shadow-green-500/30">
-                <CheckCircle className="h-12 w-12 sm:h-14 sm:w-14 text-white" strokeWidth={2.5} />
-              </div>
-              {/* Sparkle decorations */}
-              <motion.div
-                initial={{ opacity: 0, scale: 0 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ delay: 0.5 }}
-                className="absolute -top-2 -right-2"
-              >
-                <Sparkles className="h-6 w-6 text-yellow-400" />
-              </motion.div>
-              <motion.div
-                initial={{ opacity: 0, scale: 0 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ delay: 0.7 }}
-                className="absolute -bottom-1 -left-3"
-              >
-                <Sparkles className="h-5 w-5 text-green-400" />
-              </motion.div>
+            <div className="w-20 h-20 rounded-full bg-elec-yellow/15 ring-1 ring-elec-yellow/30 flex items-center justify-center">
+              <CheckCircle className="h-10 w-10 text-elec-yellow" strokeWidth={2} />
             </div>
           </motion.div>
 
-          {/* Text content */}
+          {/* Heading */}
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: showContent ? 1 : 0, y: showContent ? 0 : 20 }}
-            transition={{ duration: 0.5 }}
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: showContent ? 1 : 0, y: showContent ? 0 : 12 }}
+            transition={{ duration: 0.4 }}
             className="text-center mb-8"
           >
-            <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3">
-              {isTrial ? 'Your 7-day free trial has started!' : `Welcome to ${plan.name}!`}
+            <h1 className="text-[26px] font-bold text-white tracking-tight mb-2">
+              {isTrial ? 'Welcome to Elec-Mate' : `${plan.name} is live`}
             </h1>
-            <p className="text-white text-[15px] sm:text-base">
-              {isTrial && isBusinessAIPlan ? (
+            <p className="text-[15px] text-white/70">
+              {isTrial ? (
                 <>
-                  You won&apos;t be charged until{' '}
-                  <span className="text-white font-medium">{trialEndDate}</span>. Let&apos;s set up
-                  your AI agent.
+                  Your 7-day free trial starts now. No charge until{' '}
+                  <span className="text-white font-medium">{trialEndDate}</span>.
                 </>
-              ) : isTrial ? (
-                <>
-                  You won&apos;t be charged until{' '}
-                  <span className="text-white font-medium">{trialEndDate}</span>
-                </>
-              ) : isBusinessAIPlan ? (
-                <>Your plan is live. Let&apos;s set up your WhatsApp AI agent.</>
               ) : (
-                <>
-                  Your <span className="text-white font-medium">{plan.name}</span> subscription is
-                  now active
-                </>
+                <>Your {plan.name} subscription is active</>
               )}
             </p>
           </motion.div>
 
-          {/* Plan Card */}
+          {/* Plan card */}
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: showContent ? 1 : 0, y: showContent ? 0 : 20 }}
-            transition={{ duration: 0.5, delay: 0.1 }}
-            className={`rounded-2xl bg-gradient-to-br ${plan.color} p-[1px] mb-6`}
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: showContent ? 1 : 0, y: showContent ? 0 : 12 }}
+            transition={{ duration: 0.4, delay: 0.1 }}
+            className="rounded-2xl border border-elec-yellow/20 bg-white/[0.03] p-5 mb-6"
           >
-            <div className="rounded-2xl bg-slate-900/95 p-5 sm:p-6">
-              <div className="flex items-center gap-3 mb-4">
-                <div
-                  className={`w-10 h-10 rounded-xl bg-gradient-to-br ${plan.color} flex items-center justify-center`}
-                >
-                  <PlanIcon className="h-5 w-5 text-white" />
-                </div>
-                <div>
-                  <h3 className="text-[15px] font-semibold text-white">{plan.name} Plan</h3>
-                  <p className="text-[12px] text-green-400 flex items-center gap-1">
-                    <Shield className="h-3 w-3" />
-                    {isTrial ? '7-day free trial active' : 'Subscription active'}
-                  </p>
-                </div>
+            <div className="flex items-center gap-3 mb-4">
+              <div className="w-10 h-10 rounded-xl bg-elec-yellow/15 flex items-center justify-center">
+                <PlanIcon className="h-5 w-5 text-elec-yellow" />
               </div>
+              <div>
+                <h3 className="text-[15px] font-semibold text-white">{plan.name}</h3>
+                <p className="text-[12px] text-elec-yellow flex items-center gap-1">
+                  <Shield className="h-3 w-3" />
+                  {isTrial ? '7-day free trial active' : 'Subscription active'}
+                </p>
+              </div>
+            </div>
 
-              {/* Features list */}
-              <div className="grid grid-cols-2 gap-2">
-                {plan.features.map((feature, idx) => (
-                  <div key={idx} className="flex items-center gap-2 text-[13px] text-white">
-                    <CheckCircle className="h-3.5 w-3.5 text-green-400 flex-shrink-0" />
-                    <span>{feature}</span>
+            <div className="space-y-2.5">
+              {plan.features.map((feature, idx) => (
+                <div key={idx} className="flex items-center gap-2.5 text-[13px] text-white">
+                  <div className="w-5 h-5 rounded-full bg-elec-yellow/15 flex items-center justify-center flex-shrink-0">
+                    <CheckCircle className="h-3 w-3 text-elec-yellow" />
                   </div>
-                ))}
-              </div>
+                  {feature}
+                </div>
+              ))}
             </div>
           </motion.div>
 
-          {/* Activation status */}
+          {/* CTA */}
           <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: showContent ? 1 : 0 }}
-            transition={{ duration: 0.3, delay: 0.15 }}
-            className="flex items-center justify-center gap-2 mb-4"
-          >
-            {isReady && activationSlow ? (
-              <span className="text-[13px] text-amber-400 flex items-center gap-1.5 text-center px-4">
-                <Shield className="h-3.5 w-3.5 flex-shrink-0" />
-                Activation is taking longer than usual. Try refreshing or contact info@elec-mate.com
-              </span>
-            ) : isReady ? (
-              <span className="text-[13px] text-green-400 flex items-center gap-1.5">
-                <CheckCircle className="h-3.5 w-3.5" />
-                Account activated
-              </span>
-            ) : (
-              <span className="text-[13px] text-white flex items-center gap-1.5">
-                <Loader2 className="h-3.5 w-3.5 animate-spin" />
-                Activating your account...
-              </span>
-            )}
-          </motion.div>
-
-          {/* Action Buttons */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: showContent ? 1 : 0, y: showContent ? 0 : 20 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-            className="space-y-3"
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: showContent ? 1 : 0, y: showContent ? 0 : 12 }}
+            transition={{ duration: 0.4, delay: 0.2 }}
           >
             <Button
               onClick={handleGoToDashboard}
               disabled={!isReady}
-              className="w-full h-12 text-[15px] font-medium bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white rounded-xl shadow-lg shadow-green-500/20 touch-manipulation disabled:opacity-50"
+              className={cn(
+                'w-full h-14 rounded-2xl text-[16px] font-bold touch-manipulation transition-all',
+                isReady
+                  ? 'bg-[#FFD700] hover:bg-[#FFD700]/90 text-black shadow-[0_2px_24px_rgba(255,215,0,0.2)] active:scale-[0.98]'
+                  : 'bg-white/10 text-white/60'
+              )}
             >
               {!isReady ? (
                 <>
-                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                  {isBusinessAIPlan ? 'Preparing Setup...' : 'Preparing Dashboard...'}
+                  <Loader2 className="mr-2 h-5 w-5 animate-spin" />
+                  Setting up your account...
                 </>
               ) : (
                 <>
                   {isBusinessAIPlan ? 'Set Up Mate' : 'Go to Dashboard'}
-                  <ArrowRight className="ml-2 h-4 w-4" />
+                  <ArrowRight className="ml-2 h-5 w-5" />
                 </>
               )}
             </Button>
-
-            <Button
-              variant="outline"
-              asChild
-              className="w-full h-11 text-[14px] bg-white/[0.03] border-white/10 hover:bg-white/[0.06] text-white rounded-xl touch-manipulation"
-            >
-              <Link to="/settings">Manage Subscription</Link>
-            </Button>
           </motion.div>
 
-          {/* Help text */}
+          {/* Status + help */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: showContent ? 1 : 0 }}
-            transition={{ duration: 0.5, delay: 0.4 }}
-            className="text-center mt-6 space-y-2"
+            transition={{ duration: 0.4, delay: 0.3 }}
+            className="mt-6 text-center space-y-3"
           >
-            <p className="text-[12px] text-white">
-              A confirmation email has been sent to your inbox.
-            </p>
-            <p className="text-[12px] text-white">
-              Need help? Email{' '}
-              <a href="mailto:info@elec-mate.com" className="text-white hover:text-white underline">
-                info@elec-mate.com
-              </a>{' '}
-              or use the chat icon in the top right corner.
+            {activationSlow && (
+              <p className="text-[12px] text-amber-400">
+                Taking longer than usual — you can still proceed
+              </p>
+            )}
+            <p className="text-[11px] text-white/40">
+              Cancel anytime in Settings. Need help?{' '}
+              <a href="mailto:support@elec-mate.com" className="text-white/50 underline">
+                support@elec-mate.com
+              </a>
             </p>
           </motion.div>
         </div>

@@ -112,14 +112,14 @@ export const nativePriceData = {
 // Define Stripe price IDs for each plan
 export const stripePrices = {
   monthly: {
-    apprentice: 'price_1SmUef2RKw5t5RAmRIMTWTqU', // £6.99 Apprentice Monthly
-    electrician: 'price_1SqJVr2RKw5t5RAmaiTGelLN', // £14.99 Electrician Monthly (Elec-Mate Mobile App)
+    apprentice: 'price_1SmUef2RKw5t5RAmRIMTWTqU', // £4.99 Apprentice Monthly (web)
+    electrician: 'price_1SqJVr2RKw5t5RAmaiTGelLN', // £9.99 Electrician Monthly (web)
     business_ai: 'price_1T6DUx2RKw5t5RAmpb177NJV', // £29.99 Business AI Monthly
     employer: 'price_1SlyAT2RKw5t5RAmUmTRGimH', // £29.99 Employer Monthly (will become £49.99)
   },
   yearly: {
-    apprentice: 'price_1SmUfK2RKw5t5RAml6bj1I77', // £69.99 Apprentice Yearly
-    electrician: 'price_1SqJVs2RKw5t5RAmVeD2QVsb', // £149.99 Electrician Yearly (Elec-Mate Mobile App Yearly)
+    apprentice: 'price_1SmUfK2RKw5t5RAml6bj1I77', // £49.99 Apprentice Yearly (web)
+    electrician: 'price_1SqJVs2RKw5t5RAmVeD2QVsb', // £99.99 Electrician Yearly (web)
     business_ai: 'price_1T6DUy2RKw5t5RAmo9HgAukW', // £299.99 Business AI Yearly
     employer: 'price_1SlyB82RKw5t5RAmN447YJUW', // £299.99 Employer Yearly (will become £499.99)
   },

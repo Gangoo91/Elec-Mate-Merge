@@ -1,4 +1,5 @@
 import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useAppReview } from '@/hooks/useAppReview';
 import { Helmet } from 'react-helmet';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
@@ -42,6 +43,7 @@ import { openExternalUrl } from '@/utils/open-external-url';
 const InvoicesPage = () => {
   const { invoices, isLoading, fetchInvoices, deleteInvoice, lastUpdated } = useInvoiceStorage();
   const navigate = useNavigate();
+  const { recordPositiveAction } = useAppReview();
   const [searchParams, setSearchParams] = useSearchParams();
   const highlightId = searchParams.get('highlight');
   const activeFilter = searchParams.get('filter') || 'all';
@@ -223,6 +225,7 @@ const InvoicesPage = () => {
         title: 'Invoice marked as paid',
         description: `Invoice ${invoice.invoice_number} has been marked as paid.`,
       });
+      recordPositiveAction();
       await fetchInvoices();
     } catch (error) {
       console.error('Error marking invoice as paid:', error);
