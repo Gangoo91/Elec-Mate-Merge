@@ -147,7 +147,63 @@ export function useAuthentication() {
       });
 
       if (error) {
-        logger.api('auth/signUp', requestId).error(error, { email });
+        const lowerMsg = (error.message || '').toLowerCase();
+        const isWeakPassword = lowerMsg.includes('password') && lowerMsg.includes('weak');
+        const isAlreadyRegistered =
+          lowerMsg.includes('already registered') || lowerMsg.includes('already been registered');
+
+        // If "already registered" — might be a zombie from a previous weak-password rejection.
+        // Try to clean up by calling the admin cleanup edge function.
+        if (isAlreadyRegistered) {
+          try {
+            console.log('[signUp] User already registered — attempting zombie cleanup for', email);
+            const { error: cleanupError } = await supabase.functions.invoke('cleanup-zombie-user', {
+              body: { email },
+            });
+            if (!cleanupError) {
+              // Retry signup after cleanup
+              console.log('[signUp] Zombie cleaned up, retrying signup');
+              const { data: retryData, error: retryError } = await supabase.auth.signUp({
+                email,
+                password,
+                options: { data: { full_name: fullName } },
+              });
+
+              if (!retryError && retryData?.user) {
+                logger
+                  .api('auth/signUp', requestId)
+                  .success({ email, userId: retryData.user.id, recovered: true });
+                trackMilestone('User Signed Up', { userId: retryData.user.id, email });
+                toast({
+                  title: 'Almost there!',
+                  description: 'Please check your email to confirm your account.',
+                });
+                return { error: null, data: retryData };
+              }
+
+              // Retry also failed — fall through to error
+              if (retryError) {
+                logger.api('auth/signUp', requestId).error(retryError, { email });
+                toast({
+                  title: 'Signup Failed',
+                  description: getFriendlyErrorMessage(retryError.message),
+                  variant: 'destructive',
+                });
+                return { error: retryError };
+              }
+            }
+          } catch (cleanupErr) {
+            console.warn('[signUp] Zombie cleanup failed:', cleanupErr);
+          }
+        }
+
+        // If weak password, add extra context about what to do
+        if (isWeakPassword) {
+          logger.api('auth/signUp', requestId).error(error, { email, reason: 'weak_password' });
+        } else {
+          logger.api('auth/signUp', requestId).error(error, { email });
+        }
+
         toast({
           title: 'Signup Failed',
           description: getFriendlyErrorMessage(error.message),
@@ -158,21 +214,16 @@ export function useAuthentication() {
 
       logger.api('auth/signUp', requestId).success({ email, userId: data?.user?.id });
 
-      // Track signup milestone
       if (data?.user) {
         trackMilestone('User Signed Up', { userId: data.user.id, email });
       }
 
-      // Note: Welcome email is now sent after email confirmation
-      // The confirmation email is sent from SignUp.tsx via send-confirmation-email edge function
-
-      // Success toast - ask user to check email
       toast({
         title: 'Almost there!',
         description: 'Please check your email to confirm your account.',
       });
 
-      return { error: null, user: data?.user };
+      return { error: null, data };
     } catch (error: unknown) {
       const err = error instanceof Error ? error : new Error(String(error));
       logger.api('auth/signUp', requestId).error(err, { email });

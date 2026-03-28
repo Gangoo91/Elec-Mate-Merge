@@ -32,6 +32,7 @@ import { storeConsent } from '@/services/consentService';
 import { supabase } from '@/integrations/supabase/client';
 import { cn } from '@/lib/utils';
 import { addBreadcrumb } from '@/lib/sentry';
+import { isPasswordBreached } from '@/utils/passwordCheck';
 
 const PASSWORD_REQUIREMENTS = [
   { id: 'length', label: '8+', test: (p: string) => p.length >= 8 },
@@ -313,13 +314,39 @@ const SignUp = () => {
       marketingOptIn: consent.marketingOptIn,
     });
     try {
-      const { error, data } = await signUp(email, password, fullName);
-      if (error) {
-        setError(error.message);
+      // Pre-check password against HaveIBeenPwned BEFORE calling Supabase signUp.
+      // This prevents Supabase from creating a zombie user when it rejects the password.
+      const breached = await isPasswordBreached(password);
+      if (breached) {
+        setError(
+          "This password has appeared in a known data breach and cannot be used. Please go back and choose a different password that you haven't used on other sites."
+        );
+        setStep('account');
         setIsSubmitting(false);
         return;
       }
-      if (data?.user?.id) {
+
+      const { error, data } = await signUp(email, password, fullName);
+      if (error) {
+        const lowerMsg = (error.message || '').toLowerCase();
+        const isWeakPassword = lowerMsg.includes('password') && lowerMsg.includes('weak');
+
+        if (isWeakPassword) {
+          // Send user back to account step to change password
+          setError(
+            "This password cannot be used — please choose a different one that you haven't used on other sites."
+          );
+          setStep('account');
+        } else {
+          setError(error.message);
+        }
+        setIsSubmitting(false);
+        return;
+      }
+
+      const userId = data?.user?.id;
+
+      if (userId) {
         localStorage.setItem('elec-mate-profile-role', profile.role);
         const saveRole = async (retries = 3): Promise<boolean> => {
           const payload: Record<string, unknown> = {
@@ -340,7 +367,7 @@ const SignUp = () => {
                 payload.referred_by = refData.user_id;
                 await supabase.from('referrals').insert({
                   referrer_id: refData.user_id,
-                  referred_id: data.user!.id,
+                  referred_id: userId,
                   referred_email: email,
                   referral_code: storedRef,
                   status: 'signed_up',
@@ -354,7 +381,7 @@ const SignUp = () => {
           const { error: profileErr } = await supabase
             .from('profiles')
             .update(payload)
-            .eq('id', data.user!.id);
+            .eq('id', userId);
           if (profileErr) {
             if (retries > 0) {
               await new Promise((r) => setTimeout(r, 500));
@@ -366,6 +393,7 @@ const SignUp = () => {
         };
         await saveRole();
       }
+
       await storeConsent({
         email,
         full_name: fullName,
@@ -375,9 +403,11 @@ const SignUp = () => {
         marketing_opt_in: consent.marketingOptIn,
         consent_timestamp: new Date().toISOString(),
       }).catch(() => {});
+
       supabase.functions
-        .invoke('send-welcome-email', { body: { userId: data?.user?.id, email, fullName } })
+        .invoke('send-welcome-email', { body: { userId, email, fullName } })
         .catch(() => {});
+
       const rp = ROLE_TO_PRICE[profile.role];
       if (rp) {
         localStorage.setItem('elec-mate-checkout-planId', rp.planId);

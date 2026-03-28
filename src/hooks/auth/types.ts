@@ -69,7 +69,11 @@ export type AuthContextType = {
   isDevelopmentMode: boolean;
   toggleDevelopmentMode: () => void;
   signIn: (email: string, password: string) => Promise<{ error: any; user?: User | undefined }>;
-  signUp: (email: string, password: string, fullName: string) => Promise<{ error: any }>;
+  signUp: (
+    email: string,
+    password: string,
+    fullName: string
+  ) => Promise<{ error: any; data?: any }>;
   signOut: () => Promise<void>;
   resetPassword: (email: string) => Promise<{ error: any }>;
   updatePassword: (newPassword: string) => Promise<{ error: any }>;
