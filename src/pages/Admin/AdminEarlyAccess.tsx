@@ -31,7 +31,7 @@ export default function AdminEarlyAccess() {
     queryKey: ['ea-stats'],
     queryFn: async () => {
       const { data, error } = await supabase.functions.invoke('send-early-access-invite', {
-        body: { action: 'get_ea_offer_stats' },
+        body: { action: 'get_ea_offer_status' },
       });
       if (error) throw error;
       return data as {
