@@ -105,6 +105,7 @@ export default function SiteDiary() {
   const [coachExpanded, setCoachExpanded] = useState(true);
   const [viewMode, setViewMode] = useState<ViewMode>('feed');
   const [sheetOpen, setSheetOpen] = useState(false);
+  const [sheetInitialDate, setSheetInitialDate] = useState<string | null>(null);
   const [searchOpen, setSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [activeSkillFilter, setActiveSkillFilter] = useState<string | null>(null);
@@ -202,6 +203,7 @@ export default function SiteDiary() {
   const handleSheetClose = useCallback(() => {
     setSheetOpen(false);
     setEditEntry(null);
+    setSheetInitialDate(null);
   }, []);
 
   const handleSave = useCallback(
@@ -429,22 +431,27 @@ export default function SiteDiary() {
                   <div className="flex items-center gap-2">
                     <Sparkles className="h-4 w-4 text-purple-400" />
                     <h3 className="text-sm font-semibold text-white">AI Coach</h3>
-                    {coachLoading && <RefreshCw className="h-3 w-3 text-purple-400 animate-spin" />}
                   </div>
-                  <div className="flex items-center gap-2">
-                    <button
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        refreshCoach();
-                      }}
-                      className="h-8 w-8 flex items-center justify-center rounded-lg active:bg-white/10 touch-manipulation"
-                    >
-                      <RefreshCw className={`h-3.5 w-3.5 text-white ${coachLoading ? 'animate-spin' : ''}`} />
-                    </button>
+                  <div className="flex items-center gap-1">
+                    {!coachLoading && coachInsight && (
+                      <div
+                        role="button"
+                        tabIndex={0}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          refreshCoach();
+                        }}
+                        onKeyDown={(e) => { if (e.key === 'Enter') { e.stopPropagation(); refreshCoach(); } }}
+                        className="h-9 px-2.5 flex items-center gap-1.5 rounded-lg bg-purple-500/15 border border-purple-500/25 touch-manipulation cursor-pointer active:bg-purple-500/25 transition-colors"
+                      >
+                        <RefreshCw className="h-3 w-3 text-purple-400" />
+                        <span className="text-[11px] font-medium text-purple-400">Refresh</span>
+                      </div>
+                    )}
                     {coachExpanded ? (
-                      <ChevronUp className="h-4 w-4 text-white" />
+                      <ChevronUp className="h-4 w-4 text-white ml-1" />
                     ) : (
-                      <ChevronDown className="h-4 w-4 text-white" />
+                      <ChevronDown className="h-4 w-4 text-white ml-1" />
                     )}
                   </div>
                 </button>
@@ -487,49 +494,80 @@ export default function SiteDiary() {
                 )}
 
                 {coachExpanded && coachInsight && (
-                  <div className="px-4 pb-4 space-y-3">
-                    <div className="flex items-start gap-2">
-                      <Sparkles className="h-3.5 w-3.5 text-purple-400 mt-0.5 flex-shrink-0" />
+                  <div className="px-4 pb-4 space-y-4">
+                    {/* Entry count badge */}
+                    <p className="text-[10px] text-white uppercase tracking-wider text-center">
+                      Based on {entries.length} entr{entries.length !== 1 ? 'ies' : 'y'}
+                    </p>
+
+                    {/* Encouragement — hero section */}
+                    <div className="px-4 py-3 rounded-xl bg-purple-500/[0.08] border border-purple-500/20">
                       <p className="text-sm text-white leading-relaxed">{coachInsight.encouragement}</p>
                     </div>
-                    <div className="flex items-start gap-2 px-3 py-2.5 rounded-lg bg-white/[0.04] border border-white/[0.06]">
-                      <Lightbulb className="h-3.5 w-3.5 text-elec-yellow mt-0.5 flex-shrink-0" />
-                      <p className="text-xs text-white leading-relaxed">{coachInsight.recommendation}</p>
+
+                    {/* 2-col grid on desktop for key insights */}
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
+                      {/* Recommendation */}
+                      <div className="px-4 py-3 rounded-xl bg-white/[0.03] border border-white/[0.06]">
+                        <div className="flex items-center gap-2 mb-2">
+                          <Lightbulb className="h-4 w-4 text-elec-yellow" />
+                          <span className="text-[10px] text-white uppercase tracking-wider font-semibold">Next Steps</span>
+                        </div>
+                        <p className="text-xs text-white leading-relaxed">{coachInsight.recommendation}</p>
+                      </div>
+
+                      {/* Mood */}
+                      {coachInsight.moodInsight && (
+                        <div className="px-4 py-3 rounded-xl bg-white/[0.03] border border-white/[0.06]">
+                          <div className="flex items-center gap-2 mb-2">
+                            <Brain className="h-4 w-4 text-cyan-400" />
+                            <span className="text-[10px] text-white uppercase tracking-wider font-semibold">Wellbeing</span>
+                          </div>
+                          <p className="text-xs text-white leading-relaxed">{coachInsight.moodInsight}</p>
+                        </div>
+                      )}
+
+                      {/* Regulation tip */}
+                      {coachInsight.regulationTip && (
+                        <div className="px-4 py-3 rounded-xl bg-amber-500/[0.06] border border-amber-500/15">
+                          <div className="flex items-center gap-2 mb-2">
+                            <AlertTriangle className="h-4 w-4 text-amber-400" />
+                            <span className="text-[10px] text-amber-300 uppercase tracking-wider font-semibold">BS 7671 Tip</span>
+                          </div>
+                          <p className="text-xs text-amber-300/90 leading-relaxed">{coachInsight.regulationTip}</p>
+                        </div>
+                      )}
+
+                      {/* KSB + Qualification */}
+                      {(coachInsight.ksbSuggestion || coachInsight.qualificationProgress) && (
+                        <div className="px-4 py-3 rounded-xl bg-green-500/[0.06] border border-green-500/15">
+                          <div className="flex items-center gap-2 mb-2">
+                            <BookOpen className="h-4 w-4 text-green-400" />
+                            <span className="text-[10px] text-green-300 uppercase tracking-wider font-semibold">Evidence &amp; Progress</span>
+                          </div>
+                          {coachInsight.ksbSuggestion && (
+                            <p className="text-xs text-white leading-relaxed">{coachInsight.ksbSuggestion}</p>
+                          )}
+                          {coachInsight.qualificationProgress && (
+                            <p className="text-xs text-green-300/90 leading-relaxed mt-1.5">{coachInsight.qualificationProgress}</p>
+                          )}
+                        </div>
+                      )}
                     </div>
-                    {coachInsight.moodInsight && (
-                      <div className="flex items-start gap-2">
-                        <Brain className="h-3.5 w-3.5 text-cyan-400 mt-0.5 flex-shrink-0" />
-                        <p className="text-xs text-white leading-relaxed">{coachInsight.moodInsight}</p>
-                      </div>
-                    )}
-                    {coachInsight.regulationTip && (
-                      <div className="flex items-start gap-2 px-3 py-2 rounded-lg bg-amber-500/[0.06] border border-amber-500/15">
-                        <AlertTriangle className="h-3.5 w-3.5 text-amber-400 mt-0.5 flex-shrink-0" />
-                        <p className="text-[11px] text-amber-300/90 leading-relaxed">{coachInsight.regulationTip}</p>
-                      </div>
-                    )}
+
+                    {/* Skill gaps */}
                     {coachInsight.skillGaps && coachInsight.skillGaps.length > 0 && (
                       <div>
-                        <span className="text-[10px] text-white uppercase tracking-wider font-medium">Skills to practise</span>
-                        <div className="flex flex-wrap gap-1 mt-1">
+                        <span className="text-[10px] text-white uppercase tracking-wider font-semibold">Skills to Practise</span>
+                        <div className="flex flex-wrap gap-1.5 mt-2">
                           {coachInsight.skillGaps.map((skill) => (
-                            <span key={skill} className="px-2 py-0.5 rounded text-[10px] font-medium bg-purple-500/10 border border-purple-500/20 text-purple-400">{skill}</span>
+                            <span key={skill} className="px-2.5 py-1 rounded-lg text-[11px] font-medium bg-purple-500/10 border border-purple-500/20 text-purple-400">{skill}</span>
                           ))}
                         </div>
                       </div>
                     )}
-                    {coachInsight.ksbSuggestion && (
-                      <div className="flex items-start gap-2">
-                        <BookOpen className="h-3.5 w-3.5 text-green-400 mt-0.5 flex-shrink-0" />
-                        <p className="text-[11px] text-white leading-relaxed">{coachInsight.ksbSuggestion}</p>
-                      </div>
-                    )}
-                    {coachInsight.qualificationProgress && (
-                      <div className="flex items-start gap-2 px-3 py-2 rounded-lg bg-green-500/[0.06] border border-green-500/15">
-                        <TrendingUp className="h-3.5 w-3.5 text-green-400 mt-0.5 flex-shrink-0" />
-                        <p className="text-[11px] text-green-300/90 leading-relaxed">{coachInsight.qualificationProgress}</p>
-                      </div>
-                    )}
+
+                    {/* Portfolio evidence suggestion */}
                     {coachInsight.suggestedEvidence && (
                       <button
                         onClick={() => {
@@ -539,17 +577,18 @@ export default function SiteDiary() {
                             if (target) { setDetailEntry(target); setDetailOpen(true); }
                           }
                         }}
-                        className="w-full flex items-start gap-2 px-3 py-2 min-h-[44px] rounded-lg bg-elec-yellow/[0.06] border border-elec-yellow/15 text-left touch-manipulation active:bg-elec-yellow/10 transition-colors"
+                        className="w-full flex items-start gap-3 px-4 py-3 min-h-[44px] rounded-xl bg-elec-yellow/[0.06] border border-elec-yellow/15 text-left touch-manipulation active:bg-elec-yellow/10 transition-colors"
                       >
-                        <Briefcase className="h-3.5 w-3.5 text-elec-yellow mt-0.5 flex-shrink-0" />
+                        <Briefcase className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
                         <div className="flex-1 min-w-0">
-                          <p className="text-[11px] text-elec-yellow/90 leading-relaxed">{coachInsight.suggestedEvidence}</p>
+                          <span className="text-[10px] text-elec-yellow uppercase tracking-wider font-semibold">Portfolio Suggestion</span>
+                          <p className="text-xs text-white leading-relaxed mt-1">{coachInsight.suggestedEvidence}</p>
                           {coachInsight.portfolioNudges?.[0] && (
-                            <p className="text-[11px] text-elec-yellow/60 mt-0.5">Tap to view &amp; add to portfolio</p>
+                            <p className="text-[11px] text-elec-yellow/60 mt-1">Tap to view &amp; add to portfolio</p>
                           )}
                         </div>
                         {coachInsight.portfolioNudges?.[0] && (
-                          <ChevronRight className="h-3.5 w-3.5 text-elec-yellow/50 mt-0.5 flex-shrink-0" />
+                          <ChevronRight className="h-4 w-4 text-elec-yellow/50 mt-0.5 flex-shrink-0" />
                         )}
                       </button>
                     )}
@@ -594,6 +633,11 @@ export default function SiteDiary() {
             <DiaryCalendarView
               entries={entries}
               onDayTap={handleDayTap}
+              onEmptyDayTap={(date) => {
+                setSheetInitialDate(date);
+                setEditEntry(null);
+                setSheetOpen(true);
+              }}
               selectedDate={dateFilter}
             />
           )}
@@ -610,6 +654,7 @@ export default function SiteDiary() {
         onSave={handleSave}
         recentSites={recentSites}
         existingEntry={editEntry}
+        initialDate={sheetInitialDate}
         qualificationUnits={qualificationUnits}
       />
 

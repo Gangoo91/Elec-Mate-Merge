@@ -1950,8 +1950,11 @@ Deno.serve(async (req) => {
         let eaTestHtml: string;
         let eaTestSubject: string;
         let eaTestVersion: string;
-        if (email_version === 'v7') {
-          // Need a token for tracking links
+        if (email_version === 'v8') {
+          eaTestHtml = generateEarlyAccessV8AppStoreHTML();
+          eaTestSubject = "[TEST] We're on the App Store.";
+          eaTestVersion = 'v8';
+        } else if (email_version === 'v7') {
           const testToken = generateToken();
           eaTestHtml = generateEarlyAccessV7HTML(testEmail, testToken);
           eaTestSubject = '[TEST] 7 weeks. No App Store. Just electricians getting shit done.';
@@ -1961,9 +1964,9 @@ Deno.serve(async (req) => {
           eaTestSubject = "[TEST] You signed up early. Here's what that gets you.";
           eaTestVersion = 'v6';
         } else {
-          eaTestHtml = generateEarlyAccessOfferHTML(testEmail);
-          eaTestSubject = '[TEST] One-off offer — £7.99/month, locked forever';
-          eaTestVersion = 'v1';
+          eaTestHtml = generateEarlyAccessV8AppStoreHTML();
+          eaTestSubject = "[TEST] We're on the App Store.";
+          eaTestVersion = 'v8';
         }
         const { data: eaTestData, error: eaTestErr } = await resend.emails.send({
           from: 'Elec-Mate <founder@elec-mate.com>',
@@ -1988,9 +1991,9 @@ Deno.serve(async (req) => {
       }
 
       case 'send_ea_offer_campaign': {
-        // Batch send offer emails — called repeatedly by frontend until complete
+        // Send a batch of 50, called repeatedly by frontend until complete
         const EA_BATCH_SIZE = 50;
-        const EA_DELAY_MS = 500;
+        const EA_SEND_DELAY_MS = 300;
 
         // Get auth users to exclude signed-up
         const { data: eaCampAuthData } = await supabaseAdmin.auth.admin.listUsers({
@@ -2010,10 +2013,11 @@ Deno.serve(async (req) => {
 
         if (eaUnsentErr) throw eaUnsentErr;
 
-        // Filter out signed-up users then take first batch
+        // Filter out signed-up users
         const eaEligible = (eaUnsent || []).filter(
           (i) => !eaCampSignedUp.has(i.email.toLowerCase().trim())
         );
+
         const eaBatch = eaEligible.slice(0, EA_BATCH_SIZE);
 
         if (eaBatch.length === 0) {
@@ -2024,38 +2028,19 @@ Deno.serve(async (req) => {
         let eaSentCount = 0;
         const eaErrors: string[] = [];
 
-        for (let i = 0; i < eaBatch.length; i++) {
-          const invite = eaBatch[i];
+        for (const invite of eaBatch) {
           try {
-            let emailHtml: string;
-            let eaCampSubject: string;
-            let eaCampVersion: string;
-            if (email_version === 'v7') {
-              emailHtml = generateEarlyAccessV7HTML(
-                invite.email,
-                invite.invite_token || generateToken()
-              );
-              eaCampSubject = '7 weeks. No App Store. Just electricians getting shit done.';
-              eaCampVersion = 'v7';
-            } else if (email_version === 'v6') {
-              emailHtml = generateEarlyAccessV6HTML();
-              eaCampSubject = "You signed up early. Here's what that gets you.";
-              eaCampVersion = 'v6';
-            } else {
-              emailHtml = generateEarlyAccessOfferHTML(invite.email);
-              eaCampSubject = 'One-off offer — £7.99/month, locked forever';
-              eaCampVersion = 'v1';
-            }
+            const emailHtml = generateEarlyAccessV8AppStoreHTML();
 
             const { data: emailData, error: emailError } = await resend.emails.send({
               from: 'Elec-Mate <founder@elec-mate.com>',
               replyTo: 'founder@elec-mate.com',
               to: [invite.email.trim().toLowerCase()],
-              subject: eaCampSubject,
+              subject: "We're on the App Store.",
               html: emailHtml,
               tags: [
                 { name: 'campaign', value: 'early_access_offer' },
-                { name: 'version', value: eaCampVersion },
+                { name: 'version', value: 'v8' },
               ],
             });
 
@@ -2073,40 +2058,32 @@ Deno.serve(async (req) => {
               .eq('id', invite.id);
 
             eaSentCount++;
-
-            // Rate limit between sends
-            if (i < eaBatch.length - 1) {
-              await new Promise((r) => setTimeout(r, EA_DELAY_MS));
-            }
+            await new Promise((r) => setTimeout(r, EA_SEND_DELAY_MS));
           } catch (err: any) {
             eaErrors.push(`${invite.email}: ${err.message}`);
           }
         }
 
         // Count remaining
-        const { data: eaRemainingRows } = await supabaseAdmin
+        const { data: eaRemRows } = await supabaseAdmin
           .from('early_access_invites')
           .select('email')
           .is('offer_sent_at', null)
           .is('bounced_at', null);
-
-        const eaRemainingCount = (eaRemainingRows || []).filter(
+        const eaRemCount = (eaRemRows || []).filter(
           (r) => !eaCampSignedUp.has(r.email.toLowerCase().trim())
         ).length;
-        const eaComplete = eaRemainingCount === 0;
 
-        console.log(
-          `EA offer campaign: Sent ${eaSentCount}/${eaBatch.length} by admin ${user.id}. ~${eaRemainingCount} remaining.`
-        );
+        console.log(`EA campaign: Sent ${eaSentCount}. ${eaRemCount} remaining.`);
 
         result = {
           sent: eaSentCount,
-          remaining: eaRemainingCount,
-          complete: eaComplete,
+          remaining: eaRemCount,
+          complete: eaRemCount === 0,
           errors: eaErrors.length > 0 ? eaErrors : undefined,
-          message: eaComplete
+          message: eaRemCount === 0
             ? `All done! Sent ${eaSentCount} emails.`
-            : `Sent ${eaSentCount}. ~${eaRemainingCount} remaining.`,
+            : `Sent ${eaSentCount}. ${eaRemCount} remaining.`,
         };
         break;
       }

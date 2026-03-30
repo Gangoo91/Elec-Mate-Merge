@@ -3,20 +3,19 @@ import { useSearchParams, Link, useNavigate } from 'react-router-dom';
 import {
   ArrowLeft,
   Flame,
-  Tag,
   Search,
   RefreshCw,
   Clock,
   ListChecks,
   BarChart3,
   LucideIcon,
-  Ticket,
   LayoutGrid,
 } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { ProductGrid } from '@/components/marketplace/ProductGrid';
+import { MarketplaceProductCard } from '@/components/marketplace/MarketplaceProductCard';
 import { SortDropdown } from '@/components/marketplace/SearchFilters';
 import {
   useMarketplaceSearch,
@@ -30,7 +29,7 @@ import { DealOfTheDay } from '@/components/marketplace/DealOfTheDay';
 import { PriceAlertsBanner } from '@/components/marketplace/PriceAlertsBanner';
 import { useMarketplacePriceAlerts } from '@/hooks/useMarketplacePriceAlerts';
 import { cn } from '@/lib/utils';
-import { proxyImageUrl } from '@/lib/proxyImage';
+
 
 export interface UnifiedMarketplaceProps {
   productType: 'tools' | 'materials';
@@ -82,6 +81,36 @@ const itemVariants = {
     transition: { duration: 0.2, ease: 'easeOut' },
   },
 };
+
+/** Collapsible coupon section — shows 2 by default */
+function CouponSection({ coupons }: { coupons: import('@/hooks/useMarketplaceSearch').MarketplaceCoupon[] }) {
+  const [expanded, setExpanded] = useState(false);
+  const visible = expanded ? coupons : coupons.slice(0, 2);
+  const hasMore = coupons.length > 2;
+
+  return (
+    <motion.section variants={itemVariants} className="space-y-2">
+      <button
+        onClick={() => hasMore && setExpanded(!expanded)}
+        className="w-full flex items-center justify-between px-0.5 touch-manipulation"
+      >
+        <h2 className="text-xs font-medium text-white uppercase tracking-wider">
+          Discount Codes
+        </h2>
+        {hasMore && (
+          <span className="text-xs font-medium text-elec-yellow">
+            {expanded ? 'Show less' : `+${coupons.length - 2} more`}
+          </span>
+        )}
+      </button>
+      <div className="space-y-2">
+        {visible.map((coupon) => (
+          <CouponCard key={coupon.id} coupon={coupon} />
+        ))}
+      </div>
+    </motion.section>
+  );
+}
 
 /**
  * Unified marketplace page component shared by Materials and Tools pages.
@@ -376,31 +405,23 @@ export default function UnifiedMarketplace({
           animate="visible"
           className="flex-1 min-w-0 px-4 lg:px-0 lg:pr-6 py-4 space-y-5"
         >
-          {/* ── Hero ── */}
-          <motion.div variants={itemVariants} className="flex items-center gap-3">
-            <div className={cn('p-2.5 rounded-xl', accent.iconBg)}>
-              <Icon className={cn('h-6 w-6', accent.iconColor)} />
-            </div>
-            <div className="flex-1 min-w-0">
-              <h1 className="text-xl lg:text-2xl font-bold text-white">{title}</h1>
-              <div className="flex items-center gap-2 flex-wrap">
-                <p className="text-sm text-white">
-                  {data?.total?.toLocaleString() || '...'} products from {supplierLabel}
-                </p>
-                {data?.lastUpdated && (
-                  <span className="flex items-center gap-1 text-xs text-white">
-                    <Clock className="h-3 w-3" />
-                    {formatLastUpdated(data.lastUpdated)}
-                  </span>
-                )}
-              </div>
-            </div>
+          {/* ── Product count + refresh ── */}
+          <motion.div variants={itemVariants} className="flex items-center justify-between">
+            <p className="text-xs text-white">
+              {data?.total?.toLocaleString() || '...'} products from {supplierLabel}
+              {data?.lastUpdated && (
+                <span className="ml-2 inline-flex items-center gap-1">
+                  <Clock className="h-3 w-3 inline" />
+                  {formatLastUpdated(data.lastUpdated)}
+                </span>
+              )}
+            </p>
             <Button
               variant="ghost"
               size="sm"
               onClick={handleRefresh}
               disabled={isFetching}
-              className="h-11 touch-manipulation text-white flex-shrink-0 px-2"
+              className="h-9 touch-manipulation text-white px-2"
             >
               <RefreshCw className={`h-4 w-4 ${isFetching ? 'animate-spin' : ''}`} />
             </Button>
@@ -447,86 +468,34 @@ export default function UnifiedMarketplace({
             </motion.section>
           )}
 
-          {/* ── Coupon Codes ── */}
+          {/* ── Coupon Codes (collapsible) ── */}
           {data?.coupons && data.coupons.length > 0 && !query && (
-            <motion.section variants={itemVariants} className="space-y-3">
-              <div className="flex items-center gap-2.5">
-                <div className="h-1.5 w-1.5 rounded-full bg-green-400" />
-                <h2 className="text-base font-bold text-white">Discount Codes</h2>
-                <Ticket className="h-4 w-4 text-green-400" />
-              </div>
-              <div className="flex gap-3 overflow-x-auto pb-2 scrollbar-hide -mx-4 px-4 lg:mx-0 lg:px-0 snap-x snap-mandatory">
-                {data.coupons.map((coupon) => (
-                  <div key={coupon.id} className="snap-start">
-                    <CouponCard coupon={coupon} />
-                  </div>
-                ))}
-              </div>
-            </motion.section>
+            <CouponSection coupons={data.coupons} />
           )}
 
           {/* ── Deals Section ── */}
           {dealsData?.products && dealsData.products.length > 0 && !filters.dealsOnly && !query && (
             <motion.section variants={itemVariants} className="space-y-3">
               <div className="flex items-center justify-between">
-                <div className="flex items-center gap-2.5">
-                  <div className="h-1.5 w-1.5 rounded-full bg-red-400" />
-                  <h2 className="text-base font-bold text-white">{dealsTitle}</h2>
-                </div>
+                <h2 className="text-xs font-medium text-white uppercase tracking-wider px-0.5">
+                  {dealsTitle}
+                </h2>
                 <Button
                   variant="ghost"
                   size="sm"
                   onClick={handleDealsToggle}
-                  className="h-11 touch-manipulation text-red-400 active:bg-red-500/10"
+                  className="h-9 touch-manipulation text-elec-yellow text-xs font-medium"
                 >
-                  View All
+                  View All Deals
                 </Button>
               </div>
-              <div className="flex gap-3 overflow-x-auto pb-2 scrollbar-hide -mx-4 px-4 lg:mx-0 lg:px-0 snap-x snap-mandatory lg:grid lg:grid-cols-4 xl:grid-cols-5 lg:overflow-visible">
-                {dealsData.products.slice(0, 6).map((product) => (
-                  <a
+              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-4">
+                {dealsData.products.slice(0, 4).map((product) => (
+                  <MarketplaceProductCard
                     key={product.id}
-                    href={product.product_url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="group snap-start flex-shrink-0 w-[160px] lg:w-auto bg-white/[0.03] border border-white/[0.08] rounded-2xl p-3 transition-colors touch-manipulation active:bg-white/[0.06] hover:border-white/20"
-                  >
-                    {product.discount_percentage && (
-                      <div className="inline-flex items-center gap-1 bg-red-500 text-white text-xs font-bold px-2 py-0.5 rounded mb-2">
-                        <Tag className="h-3 w-3" />
-                        {product.discount_percentage}% OFF
-                      </div>
-                    )}
-                    <div className="aspect-square bg-white rounded-lg overflow-hidden mb-2">
-                      {product.image_url ? (
-                        <img
-                          src={proxyImageUrl(product.image_url)!}
-                          alt={product.name}
-                          className="w-full h-full object-contain p-2"
-                          loading="lazy"
-                          referrerPolicy="no-referrer"
-                        />
-                      ) : (
-                        <div className="w-full h-full flex items-center justify-center">
-                          <Icon className="h-8 w-8 text-gray-300" />
-                        </div>
-                      )}
-                    </div>
-                    <p className="text-xs font-medium text-white line-clamp-2 min-h-[2.5rem] mb-1">
-                      {product.brand ? `${product.brand} ${product.name}` : product.name}
-                    </p>
-                    <div className="flex items-center gap-1.5 flex-wrap">
-                      <span className="text-sm font-bold text-green-400">
-                        £{formatPrice(product.current_price)}
-                      </span>
-                      {product.regular_price && (
-                        <span className="text-xs text-white line-through">
-                          £{formatPrice(product.regular_price)}
-                        </span>
-                      )}
-                    </div>
-                    <p className="text-xs text-white mt-1">{product.supplier_name}</p>
-                  </a>
+                    product={product}
+                    onSave={handleSaveProduct}
+                  />
                 ))}
               </div>
             </motion.section>

@@ -91,6 +91,10 @@ export function useDiaryCoach(entries: SiteDiaryEntry[], qualificationCode?: str
 
       setIsLoading(true);
       setError(null);
+      if (force) {
+        setInsight(null);
+        localStorage.removeItem(CACHE_KEY);
+      }
 
       try {
         const {
@@ -101,7 +105,7 @@ export function useDiaryCoach(entries: SiteDiaryEntry[], qualificationCode?: str
           return;
         }
 
-        // Send last 7 entries
+        // Send all entries — recent with full detail, older condensed
         const recentEntries = entries.slice(0, 7).map((e) => ({
           id: e.id,
           date: e.date,
@@ -112,18 +116,38 @@ export function useDiaryCoach(entries: SiteDiaryEntry[], qualificationCode?: str
           issues_or_questions: e.issues_or_questions,
           mood_rating: e.mood_rating,
         }));
+        const olderEntries = entries.slice(7).map((e) => ({
+          id: e.id,
+          date: e.date,
+          site_name: e.site_name,
+          task_count: e.tasks_completed?.length || 0,
+          skills_practised: e.skills_practised,
+          mood_rating: e.mood_rating,
+        }));
 
-        const response = await supabase.functions.invoke('diary-coach', {
-          body: { entries: recentEntries, qualificationCode: qualificationCode || undefined },
+        // Use raw fetch to get the actual error body on non-2xx (supabase.functions.invoke swallows it)
+        const fnUrl = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/diary-coach`;
+        const rawResponse = await fetch(fnUrl, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${session?.access_token}`,
+            apikey: import.meta.env.VITE_SUPABASE_ANON_KEY,
+          },
+          body: JSON.stringify({
+            entries: recentEntries,
+            olderEntries,
+            totalEntryCount: entries.length,
+            qualificationCode: qualificationCode || undefined,
+          }),
         });
 
-        if (response.error) {
-          // Real error detail is in response.data when function returns non-2xx
-          const detail = response.data?.error || response.error.message || 'Failed to get coaching insight';
-          throw new Error(detail);
+        const result = await rawResponse.json();
+
+        if (!rawResponse.ok) {
+          throw new Error(result?.error || `Edge function error: ${rawResponse.status}`);
         }
 
-        const result = response.data;
         if (!result?.success || !result?.insight) {
           throw new Error(result?.error || 'No insight returned');
         }

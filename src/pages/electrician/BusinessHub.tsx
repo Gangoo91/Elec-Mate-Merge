@@ -77,7 +77,6 @@ const BusinessHub = () => {
     : 'Log hours';
 
   const handleShareBookingLink = async () => {
-    // Get session synchronously (cached) to avoid async gap that breaks iOS clipboard
     const {
       data: { session },
     } = await supabase.auth.getSession();
@@ -95,7 +94,6 @@ const BusinessHub = () => {
         await navigator.clipboard.writeText(url);
         toast({ title: 'Booking link copied to clipboard' });
       } catch {
-        // Fallback for iOS WKWebView where clipboard is restricted
         toast({ title: 'Share this link', description: url });
       }
     }
@@ -121,9 +119,9 @@ const BusinessHub = () => {
       </Helmet>
 
       {/* Sticky Header */}
-      <div className="sticky top-0 z-50 bg-background/95 backdrop-blur-sm border-b border-white/10">
+      <div className="sticky top-0 z-50 bg-background/95 backdrop-blur-sm border-b border-white/[0.06]">
         <div className="px-4 py-2">
-          <div className="flex items-center h-11">
+          <div className="flex items-center gap-3 h-11">
             <Button
               variant="ghost"
               size="icon"
@@ -132,6 +130,12 @@ const BusinessHub = () => {
             >
               <ArrowLeft className="h-5 w-5" />
             </Button>
+            <div className="flex items-center gap-2.5">
+              <div className="p-1.5 rounded-lg bg-elec-yellow/10 border border-elec-yellow/20">
+                <Briefcase className="h-4 w-4 text-elec-yellow" />
+              </div>
+              <h1 className="text-base font-semibold text-white">Business Hub</h1>
+            </div>
           </div>
         </div>
       </div>
@@ -143,14 +147,6 @@ const BusinessHub = () => {
         animate="visible"
         className="px-4 py-4 space-y-5"
       >
-        {/* Compact Title */}
-        <motion.div variants={itemVariants} className="flex items-center gap-2.5 pt-2">
-          <div className="p-2 rounded-lg bg-elec-yellow/10">
-            <Briefcase className="h-5 w-5 text-elec-yellow" />
-          </div>
-          <h1 className="text-lg font-bold text-white">Business Hub</h1>
-        </motion.div>
-
         {/* KPI Strip */}
         <motion.div variants={itemVariants}>
           <BusinessKPIStrip
@@ -163,75 +159,89 @@ const BusinessHub = () => {
           />
         </motion.div>
 
-        {/* YOUR DAY — Hero Cards */}
-        <motion.section variants={itemVariants} className="space-y-2.5">
-          <h2 className="text-[11px] font-bold text-white uppercase tracking-widest">Your Day</h2>
+        {/* YOUR DAY */}
+        <motion.section variants={itemVariants} className="space-y-3">
+          <h2 className="text-xs font-medium text-white uppercase tracking-wider px-0.5">
+            Your Day
+          </h2>
           <div className="grid grid-cols-2 gap-3">
             <BusinessCard
               title="Tasks"
-              description="To-dos, reminders & follow-ups"
+              description="To-dos & reminders"
               icon={ClipboardCheck}
               href="/electrician/tasks"
-              gradient="from-purple-500 to-fuchsia-500"
               variant="hero"
+              accentColor="from-elec-yellow via-amber-400 to-orange-400"
+              iconColor="text-elec-yellow"
+              iconBg="bg-elec-yellow/10 border border-elec-yellow/20"
               liveSubtitle={overdueCount > 0 ? `${overdueCount} overdue` : 'All clear'}
             />
             <BusinessCard
               title="Calendar"
-              description="Jobs, meetings & appointments"
+              description="Jobs & appointments"
               icon={CalendarDays}
               href="/electrician/business/calendar"
-              gradient="from-blue-500 to-indigo-500"
               variant="hero"
+              accentColor="from-blue-500 via-blue-400 to-cyan-400"
+              iconColor="text-blue-400"
+              iconBg="bg-blue-500/10 border border-blue-500/20"
               liveSubtitle={todayFormatted}
             />
             <BusinessCard
               title="Time Tracker"
-              description="Log your hours on site"
+              description="Log hours on site"
               icon={Timer}
               href="/electrician/time-tracker"
-              gradient="from-amber-500 to-orange-500"
               variant="hero"
+              accentColor="from-amber-500 via-orange-400 to-orange-500"
+              iconColor="text-amber-400"
+              iconBg="bg-amber-500/10 border border-amber-500/20"
               liveSubtitle={timeTrackerSubtitle}
             />
           </div>
         </motion.section>
 
-        {/* FINANCIALS — Standard Cards */}
-        <motion.section variants={itemVariants} className="space-y-2.5">
-          <h2 className="text-[11px] font-bold text-white uppercase tracking-widest">Financials</h2>
+        {/* FINANCIALS */}
+        <motion.section variants={itemVariants} className="space-y-3">
+          <h2 className="text-xs font-medium text-white uppercase tracking-wider px-0.5">
+            Financials
+          </h2>
           <div className="grid grid-cols-2 gap-3">
             <BusinessCard
               title="Quotes"
               description="Create & manage"
               icon={FileText}
               href="/electrician/quotes"
-              gradient="from-emerald-400 to-green-500"
-              variant="standard"
+              accentColor="from-emerald-500 via-emerald-400 to-green-400"
+              iconColor="text-emerald-400"
+              iconBg="bg-emerald-500/10 border border-emerald-500/20"
             />
             <BusinessCard
               title="Invoices"
               description="Billing & payments"
               icon={PoundSterling}
               href="/electrician/invoices"
-              gradient="from-emerald-400 to-teal-500"
-              variant="standard"
+              accentColor="from-emerald-500 via-teal-400 to-cyan-400"
+              iconColor="text-teal-400"
+              iconBg="bg-teal-500/10 border border-teal-500/20"
             />
             <BusinessCard
               title="Customers"
               description="Clients & history"
               icon={Users}
               href="/customers"
-              gradient="from-blue-400 to-cyan-500"
-              variant="standard"
+              accentColor="from-blue-500 via-blue-400 to-cyan-400"
+              iconColor="text-blue-400"
+              iconBg="bg-blue-500/10 border border-blue-500/20"
             />
             <BusinessCard
               title="Booking Link"
               description="Share with clients"
               icon={Share2}
               onClick={handleShareBookingLink}
-              gradient="from-emerald-400 to-teal-500"
-              variant="standard"
+              accentColor="from-violet-500 via-purple-400 to-indigo-400"
+              iconColor="text-violet-400"
+              iconBg="bg-violet-500/10 border border-violet-500/20"
             />
             <BusinessCard
               title="Projects"
@@ -240,47 +250,53 @@ const BusinessHub = () => {
               }
               icon={FolderKanban}
               href="/electrician/projects"
-              gradient="from-amber-400 to-orange-500"
-              variant="standard"
+              accentColor="from-elec-yellow via-amber-400 to-orange-400"
+              iconColor="text-elec-yellow"
+              iconBg="bg-elec-yellow/10 border border-elec-yellow/20"
             />
           </div>
         </motion.section>
 
-        {/* ON THE JOB — Standard Cards */}
-        <motion.section variants={itemVariants} className="space-y-2.5">
-          <h2 className="text-[11px] font-bold text-white uppercase tracking-widest">On the Job</h2>
+        {/* ON THE JOB */}
+        <motion.section variants={itemVariants} className="space-y-3">
+          <h2 className="text-xs font-medium text-white uppercase tracking-wider px-0.5">
+            On the Job
+          </h2>
           <div className="grid grid-cols-2 gap-3">
             <BusinessCard
               title="Site Visits"
               description="Pre & post-site"
               icon={ClipboardList}
               href="/electrician/site-visits"
-              gradient="from-emerald-400 to-green-500"
-              variant="standard"
+              accentColor="from-emerald-500 via-emerald-400 to-green-400"
+              iconColor="text-emerald-400"
+              iconBg="bg-emerald-500/10 border border-emerald-500/20"
             />
             <BusinessCard
               title="Photo Docs"
               description="Project photos"
               icon={Camera}
               href="/electrician/photo-docs"
-              gradient="from-blue-400 to-cyan-500"
-              variant="standard"
+              accentColor="from-blue-500 via-blue-400 to-cyan-400"
+              iconColor="text-blue-400"
+              iconBg="bg-blue-500/10 border border-blue-500/20"
             />
             <BusinessCard
               title="Snagging"
-              description="Track & resolve snags"
+              description="Track & resolve"
               icon={AlertTriangle}
               href="/electrician/snagging"
-              gradient="from-orange-400 to-red-500"
-              variant="standard"
+              accentColor="from-orange-500 via-amber-400 to-yellow-400"
+              iconColor="text-orange-400"
+              iconBg="bg-orange-500/10 border border-orange-500/20"
               liveSubtitle={snagCounts.open > 0 ? `${snagCounts.open} open` : 'All clear'}
             />
           </div>
         </motion.section>
 
-        {/* MONEY & STOCK — Compact Cards */}
-        <motion.section variants={itemVariants} className="space-y-2.5">
-          <h2 className="text-[11px] font-bold text-white uppercase tracking-widest">
+        {/* MONEY & STOCK */}
+        <motion.section variants={itemVariants} className="space-y-3">
+          <h2 className="text-xs font-medium text-white uppercase tracking-wider px-0.5">
             Money & Stock
           </h2>
           <div className="grid grid-cols-2 gap-3">
@@ -289,57 +305,69 @@ const BusinessHub = () => {
               description="Receipts & mileage"
               icon={Receipt}
               href="/electrician/expenses"
-              gradient="from-red-400 to-rose-500"
               variant="compact"
+              accentColor="from-rose-500 via-pink-400 to-red-400"
+              iconColor="text-rose-400"
+              iconBg="bg-rose-500/10 border border-rose-500/20"
             />
             <BusinessCard
               title="Materials"
               description="Stock & inventory"
               icon={Package}
               href="/electrician/materials"
-              gradient="from-red-400 to-orange-500"
               variant="compact"
+              accentColor="from-amber-500 via-orange-400 to-red-400"
+              iconColor="text-amber-400"
+              iconBg="bg-amber-500/10 border border-amber-500/20"
             />
             <BusinessCard
               title="Tools"
               description="Equipment tracking"
               icon={Wrench}
               href="/electrician/tools"
-              gradient="from-red-400 to-amber-500"
               variant="compact"
+              accentColor="from-elec-yellow via-amber-400 to-orange-400"
+              iconColor="text-elec-yellow"
+              iconBg="bg-elec-yellow/10 border border-elec-yellow/20"
             />
             <BusinessCard
               title="Live Pricing"
               description="Market rates"
               icon={PoundSterling}
               href="/electrician/live-pricing"
-              gradient="from-emerald-400 to-cyan-500"
               variant="compact"
+              accentColor="from-emerald-500 via-teal-400 to-cyan-400"
+              iconColor="text-emerald-400"
+              iconBg="bg-emerald-500/10 border border-emerald-500/20"
             />
           </div>
         </motion.section>
 
-        {/* GROW YOUR BUSINESS — Compact Cards */}
-        <motion.section variants={itemVariants} className="space-y-2.5">
-          <h2 className="text-[11px] font-bold text-white uppercase tracking-widest">
+        {/* GROW YOUR BUSINESS */}
+        <motion.section variants={itemVariants} className="space-y-3">
+          <h2 className="text-xs font-medium text-white uppercase tracking-wider px-0.5">
             Grow Your Business
           </h2>
           <div className="grid grid-cols-2 gap-3">
             <BusinessCard
               title="Start & Grow"
-              description="Business development"
+              description="Business guides"
               icon={TrendingUp}
               href="/electrician/business-development"
-              gradient="from-yellow-400 to-amber-500"
               variant="compact"
+              accentColor="from-elec-yellow via-amber-400 to-orange-400"
+              iconColor="text-elec-yellow"
+              iconBg="bg-elec-yellow/10 border border-elec-yellow/20"
             />
             <BusinessCard
               title="Calculators"
               description="Financial planning"
               icon={Calculator}
               href="/electrician/business-development/tools"
-              gradient="from-yellow-400 to-orange-500"
               variant="compact"
+              accentColor="from-violet-500 via-purple-400 to-indigo-400"
+              iconColor="text-violet-400"
+              iconBg="bg-violet-500/10 border border-violet-500/20"
             />
           </div>
         </motion.section>
@@ -348,13 +376,13 @@ const BusinessHub = () => {
         <motion.div variants={itemVariants}>
           <Collapsible open={insightsOpen} onOpenChange={setInsightsOpen}>
             <CollapsibleTrigger asChild>
-              <button className="w-full flex items-center justify-between p-4 rounded-2xl bg-white/[0.03] border border-white/[0.08] touch-manipulation h-14 active:bg-white/[0.06] transition-colors">
+              <button className="w-full flex items-center justify-between card-surface-interactive p-4 touch-manipulation h-14 active:scale-[0.98] transition-all">
                 <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-xl bg-elec-yellow flex items-center justify-center">
-                    <BarChart3 className="h-5 w-5 text-black" />
+                  <div className="w-10 h-10 rounded-xl bg-elec-yellow/10 border border-elec-yellow/20 flex items-center justify-center">
+                    <BarChart3 className="h-5 w-5 text-elec-yellow" />
                   </div>
                   <div className="text-left">
-                    <p className="text-[15px] font-bold text-white">Business Insights</p>
+                    <p className="text-[15px] font-semibold text-white">Business Insights</p>
                     <p className="text-[13px] text-white">{formatCurrency(revenue)} revenue</p>
                   </div>
                 </div>
@@ -379,10 +407,7 @@ const BusinessHub = () => {
         </motion.div>
 
         {/* Disclaimer */}
-        <motion.div
-          variants={itemVariants}
-          className="p-4 rounded-2xl bg-white/[0.03] border border-white/[0.08]"
-        >
+        <motion.div variants={itemVariants} className="card-surface p-4">
           <p className="text-xs text-white leading-relaxed">
             The information provided is for general guidance only and does not constitute financial,
             legal, or business advice. Always consult with qualified professionals regarding your

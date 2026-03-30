@@ -59,6 +59,8 @@ interface DiaryEntrySheetProps {
   onSave: (entry: NewDiaryEntry) => Promise<unknown>;
   recentSites: string[];
   existingEntry?: SiteDiaryEntry | null;
+  /** Pre-fill the date field when creating from calendar */
+  initialDate?: string | null;
   /** Qualification unit codes + titles for course-aware skill prompts */
   qualificationUnits?: { unitCode: string; unitTitle: string }[];
 }
@@ -69,11 +71,12 @@ export function DiaryEntrySheet({
   onSave,
   recentSites,
   existingEntry,
+  initialDate,
   qualificationUnits,
 }: DiaryEntrySheetProps) {
   const isEditing = !!existingEntry;
   const today = new Date().toISOString().split('T')[0];
-  const [date, setDate] = useState(today);
+  const [date, setDate] = useState(initialDate || today);
   const [siteName, setSiteName] = useState('');
   const [supervisor, setSupervisor] = useState('');
   const [taskInput, setTaskInput] = useState('');
@@ -118,8 +121,8 @@ export function DiaryEntrySheet({
       setMoodRating(existingEntry.mood_rating);
       setPhotos(existingEntry.photos || []);
     } else if (!existingEntry && open) {
-      // Reset for new entry
-      setDate(new Date().toISOString().split('T')[0]);
+      // Reset for new entry — use initialDate if provided (from calendar tap)
+      setDate(initialDate || new Date().toISOString().split('T')[0]);
       setSiteName('');
       setSupervisor('');
       setTaskInput('');
@@ -131,7 +134,7 @@ export function DiaryEntrySheet({
       setPhotos([]);
       setHoursSpent('');
     }
-  }, [existingEntry, open]);
+  }, [existingEntry, open, initialDate]);
 
   const addTask = useCallback(() => {
     const trimmed = taskInput.trim();
@@ -245,7 +248,7 @@ export function DiaryEntrySheet({
             <div className="flex items-center justify-between">
               <div>
                 <SheetTitle className="text-lg font-bold text-white">
-                  {isEditing ? 'Edit Entry' : 'Log Today'}
+                  {isEditing ? 'Edit Entry' : date === new Date().toISOString().split('T')[0] ? 'Log Today' : 'Log Entry'}
                 </SheetTitle>
                 <p className="text-xs text-white mt-0.5">
                   {new Date(date + 'T00:00:00').toLocaleDateString('en-GB', {

@@ -8,17 +8,6 @@ interface CouponCardProps {
   coupon: MarketplaceCoupon;
 }
 
-const supplierColors: Record<string, string> = {
-  screwfix: 'border-orange-500/30 bg-orange-500/5',
-  toolstation: 'border-blue-500/30 bg-blue-500/5',
-  cef: 'border-green-500/30 bg-green-500/5',
-  ffx: 'border-purple-500/30 bg-purple-500/5',
-  'machine-mart': 'border-red-500/30 bg-red-500/5',
-  'rs-components': 'border-red-500/30 bg-red-500/5',
-  'tlc-electrical': 'border-cyan-500/30 bg-cyan-500/5',
-  'electrical-direct': 'border-purple-500/30 bg-purple-500/5',
-};
-
 export function CouponCard({ coupon }: CouponCardProps) {
   const [copied, setCopied] = useState(false);
   const { toast } = useToast();
@@ -33,7 +22,6 @@ export function CouponCard({ coupon }: CouponCardProps) {
       });
       setTimeout(() => setCopied(false), 2000);
     } catch {
-      // Fallback for older browsers
       const input = document.createElement('input');
       input.value = coupon.code;
       document.body.appendChild(input);
@@ -45,13 +33,12 @@ export function CouponCard({ coupon }: CouponCardProps) {
     }
   };
 
-  const discountIcon =
+  const DiscountIcon =
     coupon.discount_type === 'free_shipping'
       ? Truck
       : coupon.discount_type === 'percentage'
         ? BadgePercent
         : Tag;
-  const DiscountIcon = discountIcon;
 
   const discountText =
     coupon.discount_type === 'percentage' && coupon.discount_value
@@ -65,32 +52,27 @@ export function CouponCard({ coupon }: CouponCardProps) {
   return (
     <button
       onClick={handleCopy}
-      className={cn(
-        'relative flex items-center gap-3 w-full min-w-[240px] p-3 rounded-xl border touch-manipulation',
-        'transition-all duration-200 active:scale-[0.98] lg:hover:scale-[1.02] lg:hover:shadow-lg lg:hover:shadow-black/20',
-        supplierColors[coupon.supplier_slug] || 'border-white/10 bg-white/[0.03]'
-      )}
+      className="w-full card-surface-interactive p-3 flex items-center gap-3 touch-manipulation active:scale-[0.98] transition-all duration-200 text-left"
     >
-      {/* Left: discount icon + value */}
-      <div className="flex-shrink-0 flex flex-col items-center justify-center w-14 h-14 rounded-lg bg-white/[0.06]">
-        <DiscountIcon className="h-4 w-4 text-elec-yellow mb-0.5" />
-        <span className="text-xs font-bold text-elec-yellow">{discountText}</span>
+      {/* Discount icon */}
+      <div className="flex-shrink-0 p-2 rounded-xl bg-elec-yellow/10 border border-elec-yellow/20">
+        <DiscountIcon className="h-4 w-4 text-elec-yellow" />
       </div>
 
-      {/* Middle: details */}
-      <div className="flex-1 min-w-0 text-left">
-        <div className="flex items-center gap-1.5 mb-0.5">
-          <span className="text-xs font-medium text-white">{coupon.supplier_name}</span>
+      {/* Details */}
+      <div className="flex-1 min-w-0">
+        <div className="flex items-center gap-1.5">
+          <span className="text-sm font-semibold text-elec-yellow">{discountText}</span>
           {coupon.is_verified && <Check className="h-3 w-3 text-green-500 flex-shrink-0" />}
         </div>
-        <p className="text-xs text-white line-clamp-1">{coupon.description}</p>
-        {coupon.minimum_spend && (
-          <p className="text-xs text-white mt-0.5">Min. spend £{coupon.minimum_spend}</p>
-        )}
+        <p className="text-xs text-white line-clamp-1">
+          {coupon.supplier_name}
+          {coupon.minimum_spend ? ` · Min. £${coupon.minimum_spend}` : ''}
+        </p>
       </div>
 
-      {/* Right: code + copy */}
-      <div className="flex-shrink-0 flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-white/[0.08] border border-dashed border-white/20">
+      {/* Code + copy */}
+      <div className="flex-shrink-0 flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-white/[0.06] border border-dashed border-white/15">
         <span className="text-xs font-mono font-bold text-elec-yellow tracking-wider">
           {coupon.code}
         </span>

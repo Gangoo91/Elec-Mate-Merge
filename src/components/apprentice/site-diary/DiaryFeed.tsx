@@ -6,7 +6,7 @@
  * Staggered framer-motion entrance animations for best-in-class feel.
  */
 
-import { useMemo } from 'react';
+import React, { useMemo } from 'react';
 import { motion } from 'framer-motion';
 import { DiaryEntryCard } from './DiaryEntryCard';
 import type { SiteDiaryEntry } from '@/hooks/site-diary/useSiteDiaryEntries';
@@ -115,7 +115,7 @@ export function DiaryFeed({
   return (
     <div className="space-y-1">
       {groupedEntries.map((group, groupIndex) => (
-        <>
+        <React.Fragment key={group.date}>
           {/* Date header */}
           <motion.div
             key={`header-${group.date}`}
@@ -149,7 +149,7 @@ export function DiaryFeed({
               </motion.div>
             );
           })}
-        </>
+        </React.Fragment>
       ))}
     </div>
   );

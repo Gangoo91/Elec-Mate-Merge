@@ -836,19 +836,16 @@ Deno.serve(async (req) => {
           created_at: profile.created_at,
         };
 
-        const isApprentice = profile.role === 'apprentice';
-        const emailHtml = isApprentice
-          ? generateApprenticeEmailHTML(userWithEmail)
-          : generateElectricianEmailHTML(userWithEmail);
+        const emailHtml = generateV8AppStoreLaunchHTML(userWithEmail.full_name?.split(' ')[0] || 'mate');
 
         const { data: emailData, error: emailError } = await resend.emails.send({
           from: 'Andrew at Elec-Mate <founder@elec-mate.com>',
           to: [userWithEmail.email.trim().toLowerCase()],
-          subject: 'Your Elec-Mate account is waiting for you',
+          subject: "We're on the App Store.",
           reply_to: 'founder@elec-mate.com',
           html: emailHtml,
           tags: [
-            { name: 'campaign', value: 'incomplete_signup' },
+            { name: 'campaign', value: 'incomplete_signup_v8' },
             { name: 'role', value: profile.role || 'unknown' },
             { name: 'user_id', value: userId },
           ],
@@ -928,19 +925,16 @@ Deno.serve(async (req) => {
               created_at: profile.created_at,
             };
 
-            const isApprentice = profile.role === 'apprentice';
-            const emailHtml = isApprentice
-              ? generateApprenticeEmailHTML(userWithEmail)
-              : generateElectricianEmailHTML(userWithEmail);
+            const emailHtml = generateV8AppStoreLaunchHTML(userWithEmail.full_name?.split(' ')[0] || 'mate');
 
             const { data: bulkEmailData, error: emailError } = await resend.emails.send({
               from: 'Andrew at Elec-Mate <founder@elec-mate.com>',
               to: [userWithEmail.email.trim().toLowerCase()],
-              subject: 'Your Elec-Mate account is waiting for you',
+              subject: "We're on the App Store.",
               reply_to: 'founder@elec-mate.com',
               html: emailHtml,
               tags: [
-                { name: 'campaign', value: 'incomplete_signup' },
+                { name: 'campaign', value: 'incomplete_signup_v8' },
                 { name: 'role', value: profile.role || 'unknown' },
                 { name: 'user_id', value: uid },
               ],
@@ -1043,15 +1037,15 @@ Deno.serve(async (req) => {
           created_at: new Date(Date.now() - 2 * 60 * 60 * 1000).toISOString(),
         };
 
-        const manualEmailHtml = generateElectricianEmailHTML(manualUser);
+        const manualEmailHtml = generateV8AppStoreLaunchHTML(manualUser.full_name?.split(' ')[0] || 'mate');
         const { data: manualEmailData, error: manualEmailError } = await resend.emails.send({
           from: 'Andrew at Elec-Mate <founder@elec-mate.com>',
           to: [manualEmail.trim().toLowerCase()],
-          subject: 'Your Elec-Mate account is waiting for you',
+          subject: "We're on the App Store.",
           reply_to: 'founder@elec-mate.com',
           html: manualEmailHtml,
           tags: [
-            { name: 'campaign', value: 'incomplete_signup' },
+            { name: 'campaign', value: 'incomplete_signup_v8' },
             { name: 'type', value: 'manual' },
           ],
         });
@@ -1064,8 +1058,8 @@ Deno.serve(async (req) => {
         // Log to email_logs table
         await supabaseAdmin.from('email_logs').insert({
           to_email: manualEmail.trim().toLowerCase(),
-          subject: 'Your Elec-Mate account is waiting for you',
-          template: 'incomplete_signup_manual',
+          subject: "We're on the App Store.",
+          template: 'incomplete_signup_v8_manual',
           status: 'sent',
           metadata: {
             sent_by_admin: user.id,
@@ -1452,8 +1446,9 @@ Deno.serve(async (req) => {
       }
 
       case 'send_v3_campaign': {
-        // Batch send V3 emails
-        const V3_BATCH_SIZE = 10;
+        // Send ALL eligible users in batches of 10 with 8s pause between batches
+        const BATCH_SIZE = 10;
+        const BATCH_DELAY_MS = 8000;
 
         const { data: v3CampProfiles, error: v3CampErr } = await supabaseAdmin
           .from('profiles')
@@ -1475,93 +1470,83 @@ Deno.serve(async (req) => {
           if (u.email) v3CampEmailMap.set(u.id, u.email);
         });
 
-        const v3CampWithEmails = v3CampFiltered
+        const allToSend = v3CampFiltered
           .map((p: any) => ({ ...p, email: v3CampEmailMap.get(p.id) || null }))
           .filter((p: any) => p.email);
 
-        const v3Batch = v3CampWithEmails.slice(0, V3_BATCH_SIZE);
-
-        if (v3Batch.length === 0) {
-          result = { sent: 0, remaining: 0, complete: true, message: 'All V3 emails sent!' };
+        if (allToSend.length === 0) {
+          result = { sent: 0, remaining: 0, complete: true, message: 'All emails already sent!' };
           break;
         }
 
         let v3SentCount = 0;
         const v3Errors: string[] = [];
 
-        for (let i = 0; i < v3Batch.length; i++) {
-          const profile = v3Batch[i];
-          try {
-            const emailUser: EligibleUser = {
-              id: profile.id,
-              full_name: profile.full_name,
-              username: profile.username,
-              email: profile.email,
-              role: profile.role,
-              created_at: profile.created_at,
-            };
+        // Process in batches of 10
+        for (let batchStart = 0; batchStart < allToSend.length; batchStart += BATCH_SIZE) {
+          const batch = allToSend.slice(batchStart, batchStart + BATCH_SIZE);
+          const batchNum = Math.floor(batchStart / BATCH_SIZE) + 1;
+          const totalBatches = Math.ceil(allToSend.length / BATCH_SIZE);
 
-            const emailHtml = generateV8AppStoreLaunchHTML(emailUser.full_name?.split(' ')[0] || 'mate');
+          console.log(`Sending batch ${batchNum}/${totalBatches} (${batch.length} emails)...`);
 
-            const { data: emailData, error: emailError } = await resend.emails.send({
-              from: 'Andrew at Elec-Mate <founder@elec-mate.com>',
-              replyTo: 'founder@elec-mate.com',
-              to: [profile.email.trim().toLowerCase()],
-              subject: "We're on the App Store.",
-              html: emailHtml,
-              tags: [
-                { name: 'campaign', value: 'incomplete_signup_v3' },
-                { name: 'role', value: profile.role || 'electrician' },
-                { name: 'user_id', value: profile.id },
-              ],
-            });
+          for (const profile of batch) {
+            try {
+              const emailHtml = generateV8AppStoreLaunchHTML(profile.full_name?.split(' ')[0] || 'mate');
 
-            if (emailError) {
-              v3Errors.push(`${profile.email}: ${emailError.message}`);
-              continue;
+              const { data: emailData, error: emailError } = await resend.emails.send({
+                from: 'Andrew at Elec-Mate <founder@elec-mate.com>',
+                replyTo: 'founder@elec-mate.com',
+                to: [profile.email.trim().toLowerCase()],
+                subject: "We're on the App Store.",
+                html: emailHtml,
+                tags: [
+                  { name: 'campaign', value: 'incomplete_signup_v8' },
+                  { name: 'role', value: profile.role || 'electrician' },
+                  { name: 'user_id', value: profile.id },
+                ],
+              });
+
+              if (emailError) {
+                v3Errors.push(`${profile.email}: ${emailError.message}`);
+                continue;
+              }
+
+              // Mark as sent
+              await supabaseAdmin
+                .from('profiles')
+                .update({ incomplete_signup_v3_sent_at: new Date().toISOString() })
+                .eq('id', profile.id);
+
+              // Log to email_logs
+              await supabaseAdmin.from('email_logs').insert({
+                to_email: profile.email,
+                subject: "We're on the App Store.",
+                template: 'incomplete_signup_v8',
+                status: 'sent',
+                metadata: {
+                  resend_id: emailData?.id,
+                  user_id: profile.id,
+                  role: profile.role,
+                },
+              });
+
+              v3SentCount++;
+              await sleep(SEND_DELAY_MS); // 500ms between individual emails
+            } catch (err: any) {
+              v3Errors.push(`${profile.email}: ${err.message}`);
             }
+          }
 
-            // Mark as sent
-            await supabaseAdmin
-              .from('profiles')
-              .update({ incomplete_signup_v3_sent_at: new Date().toISOString() })
-              .eq('id', profile.id);
-
-            // Log to email_logs
-            await supabaseAdmin.from('email_logs').insert({
-              to_email: profile.email,
-              subject: "You got to the card bit and thought 'nah' \u2014 fair enough",
-              template: 'incomplete_signup_v3',
-              status: 'sent',
-              metadata: {
-                resend_id: emailData?.id,
-                user_id: profile.id,
-                role: profile.role,
-              },
-            });
-
-            v3SentCount++;
-
-            if (i < v3Batch.length - 1) {
-              await sleep(SEND_DELAY_MS);
-            }
-          } catch (err: any) {
-            v3Errors.push(`${profile.email}: ${err.message}`);
+          // 8 second pause between batches (unless last batch)
+          if (batchStart + BATCH_SIZE < allToSend.length) {
+            console.log(`Batch ${batchNum} done. Waiting ${BATCH_DELAY_MS / 1000}s before next batch...`);
+            await sleep(BATCH_DELAY_MS);
           }
         }
 
-        // Count remaining
-        const { data: v3RemProfiles } = await supabaseAdmin
-          .from('profiles')
-          .select('id, subscribed, free_access_granted')
-          .or('role.eq.electrician,role.eq.apprentice')
-          .not('stripe_customer_id', 'is', null)
-          .is('incomplete_signup_v3_sent_at', null);
-
-        const v3RemCount = (v3RemProfiles || []).filter(
-          (p: any) => !p.subscribed && !p.free_access_granted
-        ).length;
-        const v3Complete = v3RemCount === 0;
+        const v3RemCount = 0;
+        const v3Complete = true;
 
         console.log(
           `V3 campaign: Sent ${v3SentCount}/${v3Batch.length} by admin ${user.id}. ~${v3RemCount} remaining.`

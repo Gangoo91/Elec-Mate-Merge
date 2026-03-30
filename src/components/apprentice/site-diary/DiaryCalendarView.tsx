@@ -22,10 +22,12 @@ function moodDotColour(mood: number | null): string {
 interface DiaryCalendarViewProps {
   entries: SiteDiaryEntry[];
   onDayTap?: (date: string) => void;
+  /** Called when tapping a past date with no entries — opens create sheet */
+  onEmptyDayTap?: (date: string) => void;
   selectedDate?: string | null;
 }
 
-export function DiaryCalendarView({ entries, onDayTap, selectedDate }: DiaryCalendarViewProps) {
+export function DiaryCalendarView({ entries, onDayTap, onEmptyDayTap, selectedDate }: DiaryCalendarViewProps) {
   const [currentMonth, setCurrentMonth] = useState(() => {
     const now = new Date();
     return { year: now.getFullYear(), month: now.getMonth() };
@@ -110,6 +112,7 @@ export function DiaryCalendarView({ entries, onDayTap, selectedDate }: DiaryCale
           const hasEntries = dayEntries.length > 0;
           const isToday = dateStr === today;
           const isSelected = dateStr === selectedDate;
+          const isFuture = dateStr > today;
 
           // Get up to 3 dots with mood colours
           const dots = dayEntries
@@ -121,22 +124,38 @@ export function DiaryCalendarView({ entries, onDayTap, selectedDate }: DiaryCale
               />
             ));
 
+          const handleClick = () => {
+            if (isFuture) return;
+            if (hasEntries) {
+              onDayTap?.(dateStr);
+            } else {
+              onEmptyDayTap?.(dateStr);
+            }
+          };
+
           return (
             <button
               key={day}
-              onClick={() => hasEntries && onDayTap?.(dateStr)}
+              onClick={handleClick}
+              disabled={isFuture}
               className={`aspect-square min-h-[44px] flex flex-col items-center justify-center rounded-lg text-xs touch-manipulation transition-colors ${
-                isSelected
-                  ? 'bg-elec-yellow/25 text-elec-yellow font-bold ring-2 ring-elec-yellow/40'
-                  : isToday
-                    ? 'ring-1 ring-elec-yellow/30 text-elec-yellow font-semibold'
-                    : hasEntries
-                      ? 'text-white active:bg-white/15'
-                      : 'text-white'
+                isFuture
+                  ? 'text-white/20 cursor-default'
+                  : isSelected
+                    ? 'bg-elec-yellow/25 text-elec-yellow font-bold ring-2 ring-elec-yellow/40'
+                    : isToday
+                      ? 'ring-1 ring-elec-yellow/30 text-elec-yellow font-semibold active:bg-white/10'
+                      : hasEntries
+                        ? 'text-white active:bg-white/15'
+                        : 'text-white active:bg-white/10'
               }`}
             >
               <span>{day}</span>
-              {hasEntries && <div className="flex items-center gap-0.5 mt-0.5">{dots}</div>}
+              {hasEntries ? (
+                <div className="flex items-center gap-0.5 mt-0.5">{dots}</div>
+              ) : !isFuture ? (
+                <div className="w-1 h-1 rounded-full bg-white/10 mt-0.5" />
+              ) : null}
             </button>
           );
         })}

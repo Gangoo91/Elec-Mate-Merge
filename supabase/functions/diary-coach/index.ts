@@ -248,6 +248,8 @@ serve(async (req: Request) => {
 
     const body = await req.json();
     const entries: any[] = body.entries || [];
+    const olderEntries: any[] = body.olderEntries || [];
+    const totalEntryCount: number = body.totalEntryCount || entries.length;
     const qualificationCode: string | null = body.qualificationCode || null;
 
     if (entries.length < 3) {
@@ -390,22 +392,31 @@ serve(async (req: Request) => {
     ];
     const missingSkills = allSkillCategories.filter((s) => !recentSkills.includes(s));
 
-    const entrySummary = entries
-      .slice(0, 7)
-      .map((e: any) => {
-        const parts = [`ID: ${e.id}`, `Date: ${e.date}`, `Site: ${e.site_name}`];
-        if (e.tasks_completed?.length) parts.push(`Tasks: ${e.tasks_completed.join(', ')}`);
-        if (e.skills_practised?.length) parts.push(`Skills: ${e.skills_practised.join(', ')}`);
-        if (e.what_i_learned) parts.push(`Learned: ${e.what_i_learned}`);
-        if (e.issues_or_questions) parts.push(`Issues: ${e.issues_or_questions}`);
-        if (e.mood_rating) parts.push(`Mood: ${e.mood_rating}/5`);
-        return parts.join(' | ');
-      })
-      .join('\n');
+    // Recent entries — full detail
+    const recentSummary = entries.map((e: any) => {
+      const parts = [`ID: ${e.id}`, `Date: ${e.date}`, `Site: ${e.site_name}`];
+      if (e.tasks_completed?.length) parts.push(`Tasks: ${e.tasks_completed.join(', ')}`);
+      if (e.skills_practised?.length) parts.push(`Skills: ${e.skills_practised.join(', ')}`);
+      if (e.what_i_learned) parts.push(`Learned: ${e.what_i_learned}`);
+      if (e.issues_or_questions) parts.push(`Issues: ${e.issues_or_questions}`);
+      if (e.mood_rating) parts.push(`Mood: ${e.mood_rating}/5`);
+      return parts.join(' | ');
+    }).join('\n');
+
+    // Older entries — condensed one-liners for full portfolio context
+    const olderSummary = olderEntries.length > 0
+      ? '\n\n--- Older Entries (condensed) ---\n' + olderEntries.map((e: any) => {
+          const skills = e.skills_practised?.length ? ` [${e.skills_practised.join(', ')}]` : '';
+          return `${e.date} @ ${e.site_name} — ${e.task_count} tasks, mood ${e.mood_rating || '?'}/5${skills}`;
+        }).join('\n')
+      : '';
+
+    const entrySummary = recentSummary + olderSummary;
 
     // ---------- Call OpenAI ----------
-    // Detect mood and repetition patterns for prompt guidance
-    const moodRatings = entries.map((e: any) => e.mood_rating).filter(Boolean);
+    // Include ALL entries (recent + older) for mood/repetition analysis
+    const allEntries = [...entries, ...olderEntries];
+    const moodRatings = allEntries.map((e: any) => e.mood_rating).filter(Boolean);
     const lowMoodCount = moodRatings.filter((m: number) => m <= 2).length;
     const taskCounts = new Map<string, number>();
     for (const task of recentTasks) {
@@ -458,12 +469,12 @@ ${ragContext}`;
       },
       body: JSON.stringify({
         model: 'gpt-5-mini-2025-08-07',
-        max_completion_tokens: 1000,
+        max_completion_tokens: 6000,
         messages: [
           { role: 'system', content: systemPrompt },
           {
             role: 'user',
-            content: `Here are my last ${entries.length} diary entries:\n\n${entrySummary}\n\nSkills I haven't practised recently: ${missingSkills.join(', ') || 'None — great coverage!'}\n\nPlease give me your coaching insight.`,
+            content: `I have ${totalEntryCount} diary entries total. Here are my ${entries.length} most recent in detail${olderEntries.length > 0 ? `, plus ${olderEntries.length} older entries condensed` : ''}:\n\n${entrySummary}\n\nSkills I haven't practised recently: ${missingSkills.join(', ') || 'None — great coverage!'}\n\nPlease give me your coaching insight based on my full portfolio.`,
           },
         ],
         tools: [coachTool],
@@ -482,7 +493,10 @@ ${ragContext}`;
     // Extract tool call result
     const toolCall = data.choices?.[0]?.message?.tool_calls?.[0];
     if (!toolCall?.function?.arguments) {
-      throw new Error('No tool call in OpenAI response');
+      const finishReason = data.choices?.[0]?.finish_reason;
+      const content = data.choices?.[0]?.message?.content?.substring(0, 200);
+      console.error('[diary-coach] No tool call. finish_reason:', finishReason, 'content:', content);
+      throw new Error(`No tool call in response (finish_reason: ${finishReason || 'unknown'})`);
     }
 
     const insight = JSON.parse(toolCall.function.arguments);
