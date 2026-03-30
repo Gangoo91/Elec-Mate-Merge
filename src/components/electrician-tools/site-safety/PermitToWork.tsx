@@ -70,6 +70,7 @@ import { useShowMore } from '@/hooks/useShowMore';
 import { SaveAsTemplateSheet } from './common/SaveAsTemplateSheet';
 import { LoadTemplateSheet } from './common/LoadTemplateSheet';
 import { SafetyDocumentShare } from './common/SafetyDocumentShare';
+import { CorrectiveActionsPanel } from './common/CorrectiveActionsPanel';
 
 // ─── Types ───
 
@@ -1343,6 +1344,9 @@ export function PermitToWork({ onBack }: { onBack: () => void }) {
                         )}
                       </div>
                     </div>
+
+                    {/* Corrective Actions */}
+                    <CorrectiveActionsPanel sourceType="permit" sourceId={viewingPermit.id} />
 
                     {/* Related Records */}
                     {(relatedFireWatches.length > 0 || relatedIsolations.length > 0) && (

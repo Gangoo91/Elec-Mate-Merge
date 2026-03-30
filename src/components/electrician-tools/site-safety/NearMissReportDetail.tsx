@@ -33,6 +33,8 @@ import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 import { AuditTimeline } from './common/AuditTimeline';
 import { SafetyDocumentShare } from './common/SafetyDocumentShare';
+import { CorrectiveActionsPanel } from './common/CorrectiveActionsPanel';
+import { FiveWhysAnalysis } from './common/FiveWhysAnalysis';
 
 interface NearMissReportDetailProps {
   report: NearMissReport;
@@ -601,6 +603,18 @@ export const NearMissReportDetail: React.FC<NearMissReportDetailProps> = ({
           )}
         </CardContent>
       </Card>
+
+      {/* Root Cause Analysis */}
+      <FiveWhysAnalysis
+        table="near_miss_reports"
+        recordId={report.id}
+        existingWhys={((report as Record<string, unknown>).five_whys as []) || []}
+        existingCategory={((report as Record<string, unknown>).root_cause_category as string) || ''}
+        existingSummary={((report as Record<string, unknown>).root_cause_analysis as string) || ''}
+      />
+
+      {/* Corrective Actions */}
+      <CorrectiveActionsPanel sourceType="near_miss" sourceId={report.id} />
 
       {/* Photos */}
       {report.photos && report.photos.length > 0 && (

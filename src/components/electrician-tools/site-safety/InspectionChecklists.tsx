@@ -49,6 +49,8 @@ import { SafetyRecordCard, fmtCardDate } from './common/SafetyRecordCard';
 import { Calendar } from 'lucide-react';
 import { useShowMore } from '@/hooks/useShowMore';
 import { SafetyDocumentShare } from './common/SafetyDocumentShare';
+import { CorrectiveActionsPanel } from './common/CorrectiveActionsPanel';
+import { useCustomInspectionTemplates } from '@/hooks/useCustomInspectionTemplates';
 
 // ─── Types ───
 
@@ -1806,6 +1808,8 @@ export function InspectionChecklists({ onBack }: { onBack: () => void }) {
                     <p className="text-sm text-white">{viewingInspection.additional_notes}</p>
                   </div>
                 )}
+                {/* Corrective Actions Tracker */}
+                <CorrectiveActionsPanel sourceType="inspection" sourceId={viewingInspection.id} />
               </div>
               <div className="px-4 py-3 border-t border-white/10 pb-[max(0.75rem,env(safe-area-inset-bottom))]">
                 <div className="grid grid-cols-2 gap-2">

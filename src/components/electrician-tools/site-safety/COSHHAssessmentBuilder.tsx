@@ -55,6 +55,7 @@ import {
 } from 'lucide-react';
 import { LoadMoreButton } from './common/LoadMoreButton';
 import { SafetyRecordCard, fmtCardDate } from './common/SafetyRecordCard';
+import { CorrectiveActionsPanel } from './common/CorrectiveActionsPanel';
 import { Calendar } from 'lucide-react';
 import { SignaturePad } from './common/SignaturePad';
 import { useShowMore } from '@/hooks/useShowMore';
@@ -1827,6 +1828,9 @@ export function COSHHAssessmentBuilder({ onBack }: { onBack: () => void }) {
                     <span>Review by: {viewingAssessment.review_date}</span>
                   </div>
                 </div>
+
+                {/* Corrective Actions Tracker */}
+                <CorrectiveActionsPanel sourceType="coshh" sourceId={viewingAssessment.id} />
 
                 {/* Signatures */}
                 {((viewingAssessment as Record<string, unknown>).assessor_signature ||

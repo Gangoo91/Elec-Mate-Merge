@@ -60,6 +60,9 @@ import { LoadMoreButton } from './common/LoadMoreButton';
 import { SafetyRecordCard, fmtCardDate } from './common/SafetyRecordCard';
 import { useShowMore } from '@/hooks/useShowMore';
 import { SafetyDocumentShare } from './common/SafetyDocumentShare';
+import { CorrectiveActionsPanel } from './common/CorrectiveActionsPanel';
+import { FiveWhysAnalysis } from './common/FiveWhysAnalysis';
+import { RIDDORCountdown } from './common/RIDDORCountdown';
 
 // ─── Types ───
 
@@ -1293,7 +1296,17 @@ export function DigitalAccidentBook({ onBack }: { onBack: () => void }) {
                   </div>
                 )}
 
-                {/* RIDDOR */}
+                {/* RIDDOR Countdown */}
+                {viewingRecord.is_riddor_reportable && (
+                  <RIDDORCountdown
+                    category={viewingRecord.riddor_category}
+                    incidentDate={viewingRecord.incident_date}
+                    isReported={!!viewingRecord.riddor_reported_date}
+                    hseReference={viewingRecord.riddor_reference}
+                  />
+                )}
+
+                {/* RIDDOR Details */}
                 {viewingRecord.is_riddor_reportable &&
                   (() => {
                     const deadlineStatus = getRIDDORDeadlineStatus(viewingRecord);
@@ -1429,6 +1442,22 @@ export function DigitalAccidentBook({ onBack }: { onBack: () => void }) {
                     <p className="text-sm text-white">{viewingRecord.corrective_actions}</p>
                   </div>
                 )}
+
+                {/* Root Cause Analysis */}
+                <FiveWhysAnalysis
+                  table="accident_records"
+                  recordId={viewingRecord.id}
+                  existingWhys={((viewingRecord as Record<string, unknown>).five_whys as []) || []}
+                  existingCategory={
+                    ((viewingRecord as Record<string, unknown>).root_cause_category as string) || ''
+                  }
+                  existingSummary={
+                    ((viewingRecord as Record<string, unknown>).root_cause as string) || ''
+                  }
+                />
+
+                {/* Corrective Actions Tracker */}
+                <CorrectiveActionsPanel sourceType="accident" sourceId={viewingRecord.id} />
 
                 <div className="p-3 rounded-xl border border-white/10 bg-white/[0.03] mt-4">
                   <div className="flex justify-between text-xs text-white">

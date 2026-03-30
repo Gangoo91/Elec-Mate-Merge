@@ -24,6 +24,7 @@ import { useUpdateObservation } from '@/hooks/useSafetyObservations';
 import { useSafetyPDFExport } from '@/hooks/useSafetyPDFExport';
 import { AuditTimeline } from '../common/AuditTimeline';
 import { SafetyDocumentShare } from '../common/SafetyDocumentShare';
+import { CorrectiveActionsPanel } from '../common/CorrectiveActionsPanel';
 
 const STATUS_CONFIG: Record<
   string,
@@ -304,6 +305,9 @@ export function ObservationDetailSheet({
                   )}
                 </div>
               )}
+
+              {/* Corrective Actions */}
+              <CorrectiveActionsPanel sourceType="observation" sourceId={observation.id} />
 
               {/* Photos */}
               {observation.photos && observation.photos.length > 0 && (

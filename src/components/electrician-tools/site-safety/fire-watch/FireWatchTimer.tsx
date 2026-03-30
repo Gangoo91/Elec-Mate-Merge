@@ -96,6 +96,12 @@ export function FireWatchTimer({ onBack }: FireWatchTimerProps) {
   const [completerSigName, setCompleterSigName] = useState('');
   const [completerSigDate, setCompleterSigDate] = useState(new Date().toISOString().split('T')[0]);
   const [completerSigData, setCompleterSigData] = useState('');
+
+  // Check-in tracking
+  const CHECK_IN_INTERVAL = 30; // minutes
+  const [checkIns, setCheckIns] = useState<
+    { timestamp: string; notes: string; allClear: boolean }[]
+  >([]);
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const { toast } = useToast();
 
@@ -107,6 +113,15 @@ export function FireWatchTimer({ onBack }: FireWatchTimerProps) {
   const allChecked = checklist.every((item) => item.checked);
   const timerComplete = elapsedSeconds >= durationSecs;
   const canComplete = allChecked && timerComplete;
+
+  // Check-in derived values
+  const nextCheckInAt =
+    checkIns.length > 0
+      ? new Date(checkIns[checkIns.length - 1].timestamp).getTime() + CHECK_IN_INTERVAL * 60 * 1000
+      : startedAt
+        ? startedAt.getTime() + CHECK_IN_INTERVAL * 60 * 1000
+        : 0;
+  const checkInDue = isActive && !isPaused && Date.now() >= nextCheckInAt && !timerComplete;
 
   // Timer tick
   useEffect(() => {
@@ -180,6 +195,7 @@ export function FireWatchTimer({ onBack }: FireWatchTimerProps) {
         photos: photoUrls,
         completed_by: completerSigName.trim() || null,
         completed_signature: completerSigData || null,
+        check_ins: checkIns,
       });
 
       if (error) throw error;
@@ -296,9 +312,9 @@ export function FireWatchTimer({ onBack }: FireWatchTimerProps) {
                           </h3>
                           <p className="text-sm text-white leading-relaxed">
                             A fire watch must be maintained for a minimum of 60 minutes after
-                            completion of hot works such as soldering, brazing, welding, grinding, or
-                            using blow torches. The watch person must remain in the area and check for
-                            signs of smouldering or fire.
+                            completion of hot works such as soldering, brazing, welding, grinding,
+                            or using blow torches. The watch person must remain in the area and
+                            check for signs of smouldering or fire.
                           </p>
                         </div>
                       </div>
@@ -485,6 +501,77 @@ export function FireWatchTimer({ onBack }: FireWatchTimerProps) {
                         >
                           <X className="w-4 h-4" /> Cancel
                         </button>
+                      </div>
+                    )}
+
+                    {/* Check-in prompt */}
+                    {checkInDue && (
+                      <div className="mb-4 rounded-xl border border-amber-500/20 bg-amber-500/[0.04] p-4 space-y-3">
+                        <div className="flex items-center gap-2">
+                          <Clock className="h-4 w-4 text-amber-400" />
+                          <h4 className="text-sm font-bold text-amber-400">
+                            Check-In #{checkIns.length + 1} Due
+                          </h4>
+                        </div>
+                        <p className="text-xs text-white">
+                          Inspect the area for fire, smouldering, or heat.
+                        </p>
+                        <div className="flex gap-2">
+                          <button
+                            onClick={() =>
+                              setCheckIns([
+                                ...checkIns,
+                                { timestamp: new Date().toISOString(), notes: '', allClear: true },
+                              ])
+                            }
+                            className="flex-1 h-11 rounded-xl bg-emerald-500/15 border border-emerald-500/25 text-emerald-400 text-sm font-bold touch-manipulation active:scale-[0.97] flex items-center justify-center gap-2"
+                          >
+                            <CheckCircle2 className="h-4 w-4" /> All Clear
+                          </button>
+                          <button
+                            onClick={() =>
+                              setCheckIns([
+                                ...checkIns,
+                                {
+                                  timestamp: new Date().toISOString(),
+                                  notes: 'Issue found',
+                                  allClear: false,
+                                },
+                              ])
+                            }
+                            className="flex-1 h-11 rounded-xl bg-red-500/15 border border-red-500/25 text-red-400 text-sm font-bold touch-manipulation active:scale-[0.97] flex items-center justify-center gap-2"
+                          >
+                            <AlertTriangle className="h-4 w-4" /> Issue Found
+                          </button>
+                        </div>
+                      </div>
+                    )}
+
+                    {/* Check-in history */}
+                    {checkIns.length > 0 && (
+                      <div className="mb-4 space-y-1">
+                        <span className="text-[10px] text-white uppercase tracking-wide font-semibold">
+                          {checkIns.length} Check-in{checkIns.length !== 1 ? 's' : ''}
+                        </span>
+                        {checkIns.map((ci, i) => (
+                          <div
+                            key={i}
+                            className={`flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs ${ci.allClear ? 'bg-emerald-500/[0.06] text-emerald-400' : 'bg-red-500/[0.06] text-red-400'}`}
+                          >
+                            {ci.allClear ? (
+                              <CheckCircle2 className="h-3 w-3" />
+                            ) : (
+                              <AlertTriangle className="h-3 w-3" />
+                            )}
+                            <span>{ci.allClear ? 'All clear' : 'Issue'}</span>
+                            <span className="ml-auto text-white">
+                              {new Date(ci.timestamp).toLocaleTimeString('en-GB', {
+                                hour: '2-digit',
+                                minute: '2-digit',
+                              })}
+                            </span>
+                          </div>
+                        ))}
                       </div>
                     )}
 

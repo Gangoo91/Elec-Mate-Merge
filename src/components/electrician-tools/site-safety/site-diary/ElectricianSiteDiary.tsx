@@ -46,7 +46,6 @@ import { useRAMSDocumentsByStatus } from '@/hooks/useRAMSDocuments';
 import { SafetyPhotoCapture } from '../common/SafetyPhotoCapture';
 import { SafetyEmptyState } from '../common/SafetyEmptyState';
 import { SafetyRecordCard } from '../common/SafetyRecordCard';
-import { BookOpen } from 'lucide-react';
 import { SafetySkeletonLoader } from '../common/SafetySkeletonLoader';
 import { SwipeableListItem } from '../common/SwipeableListItem';
 import { useHaptic } from '@/hooks/useHaptic';
