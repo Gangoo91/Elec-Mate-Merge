@@ -8,7 +8,13 @@ const config: CapacitorConfig = {
   // Server configuration
   server: {
     // Allow navigation to your Supabase domain for OAuth
-    allowNavigation: ['jtwygbeceundfgnkirof.supabase.co', '*.stripe.com'],
+    allowNavigation: [
+      'jtwygbeceundfgnkirof.supabase.co',
+      '*.stripe.com',
+      '*.youtube.com',
+      '*.youtube-nocookie.com',
+      '*.googlevideo.com',
+    ],
     // Enable mixed content for local development
     androidScheme: 'https',
     iosScheme: 'https',
@@ -38,9 +44,10 @@ const config: CapacitorConfig = {
       presentationOptions: ['badge', 'sound', 'alert'],
     },
 
-    // Keyboard
+    // Keyboard — 'native' shrinks WKWebView when keyboard opens,
+    // so fixed bottom sheets sit above the keyboard automatically
     Keyboard: {
-      resize: 'body',
+      resize: 'native',
       resizeOnFullScreen: true,
     },
 

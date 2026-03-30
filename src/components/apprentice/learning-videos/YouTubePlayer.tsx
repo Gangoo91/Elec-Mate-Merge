@@ -1,16 +1,14 @@
 /**
  * YouTubePlayer
  *
- * Tap-to-play YouTube embed — works identically on web, iOS and Android.
+ * Tap-to-play YouTube embed — works on web, iOS and Android.
  * Shows a thumbnail with a play button. Tapping replaces it with an inline
- * iframe using `playsinline=1` so the video plays inside the app's WebView
- * rather than launching an external browser or the YouTube app.
+ * iframe using youtube-nocookie.com for privacy-enhanced embedding.
+ * playsinline=1 keeps playback inside the app on all platforms.
  */
 
 import { useState } from 'react';
 import { Play } from 'lucide-react';
-import { Capacitor } from '@capacitor/core';
-import { Browser } from '@capacitor/browser';
 
 interface YouTubePlayerProps {
   videoId: string;
@@ -24,29 +22,25 @@ export function YouTubePlayer({ videoId, title, onOpen }: YouTubePlayerProps) {
   const thumbnailUrl = `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`;
   const fallbackThumbnailUrl = `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
 
-  const handlePlay = async () => {
+  const handlePlay = () => {
     onOpen?.();
-    // Native iOS/Android: open in Safari View Controller / Chrome Custom Tab
-    // to avoid WKWebView Error 153 blocking YouTube iframe embeds
-    if (Capacitor.isNativePlatform()) {
-      await Browser.open({ url: `https://www.youtube.com/watch?v=${videoId}` });
-      return;
-    }
     setIsPlaying(true);
   };
 
-  // Once tapped (web only) — show inline iframe.
-  // playsinline=1 is essential for iOS WKWebView (prevents full-screen hijack).
-  // autoplay=1 starts playback immediately after tap.
+  // Once tapped — show inline iframe on ALL platforms.
+  // youtube-nocookie.com avoids WKWebView Error 153 on iOS.
+  // playsinline=1 prevents full-screen hijack on mobile.
+  // origin parameter helps with iframe API compatibility.
   if (isPlaying) {
     return (
       <div className="relative w-full aspect-video bg-black">
         <iframe
-          src={`https://www.youtube.com/embed/${videoId}?autoplay=1&playsinline=1&rel=0&modestbranding=1`}
+          src={`https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&playsinline=1&rel=0&modestbranding=1&origin=${encodeURIComponent(window.location.origin)}`}
           title={title}
           className="absolute inset-0 w-full h-full border-0"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share; fullscreen"
           allowFullScreen
+          sandbox="allow-scripts allow-same-origin allow-presentation allow-popups"
         />
       </div>
     );

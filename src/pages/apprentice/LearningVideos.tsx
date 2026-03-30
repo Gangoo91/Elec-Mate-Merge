@@ -29,6 +29,7 @@ import {
 import type { CuratedVideo, VideoCategory } from '@/data/apprentice/curatedVideos';
 import { useVideoBookmarks } from '@/hooks/learning-videos/useVideoBookmarks';
 import { YouTubePlayer } from '@/components/apprentice/learning-videos/YouTubePlayer';
+import { openExternalUrl } from '@/utils/open-external-url';
 
 export default function LearningVideos() {
   const navigate = useNavigate();
@@ -260,15 +261,15 @@ export default function LearningVideos() {
                     {isBookmarked(selectedVideo.id) ? 'Saved' : 'Save'}
                   </span>
                 </button>
-                <a
-                  href={`https://www.youtube.com/watch?v=${selectedVideo.id}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                <button
+                  onClick={() =>
+                    openExternalUrl(`https://www.youtube.com/watch?v=${selectedVideo.id}`)
+                  }
                   className="flex-1 flex items-center justify-center gap-2 h-12 rounded-xl bg-white/[0.05] border border-white/[0.08] text-white touch-manipulation active:scale-[0.98] transition-all"
                 >
                   <ExternalLink className="h-4 w-4" />
                   <span className="text-sm font-medium">Open in YouTube</span>
-                </a>
+                </button>
               </div>
 
               {/* Description */}
