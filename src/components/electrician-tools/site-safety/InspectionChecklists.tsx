@@ -46,7 +46,6 @@ import {
 } from 'lucide-react';
 import { LoadMoreButton } from './common/LoadMoreButton';
 import { SafetyRecordCard, fmtCardDate } from './common/SafetyRecordCard';
-import { Calendar } from 'lucide-react';
 import { useShowMore } from '@/hooks/useShowMore';
 import { SafetyDocumentShare } from './common/SafetyDocumentShare';
 import { CorrectiveActionsPanel } from './common/CorrectiveActionsPanel';

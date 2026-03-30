@@ -602,37 +602,77 @@ export const NearMissReporting: React.FC = () => {
     return (
       <div className="space-y-4">
         <div className="space-y-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <div className="p-2.5 rounded-xl bg-red-500/10 border border-red-500/20">
-                <AlertTriangle className="h-5 w-5 text-red-400" />
+          {/* Hero Card */}
+          <div className="relative overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-br from-red-500/[0.08] via-background to-background">
+            <div className="h-0.5 bg-gradient-to-r from-red-500 via-amber-400 to-red-500" />
+            <div className="p-4">
+              <div className="flex items-center gap-3 mb-3">
+                <div className="p-2.5 rounded-xl bg-red-500/15 border border-red-500/25">
+                  <AlertTriangle className="h-5 w-5 text-red-400" />
+                </div>
+                <div>
+                  <h2 className="text-lg font-bold text-white">Near Miss Reports</h2>
+                  <p className="text-xs text-white">Record and track safety incidents</p>
+                </div>
               </div>
-              <div>
-                <h2 className="text-xl font-semibold text-white">Near Miss Reports</h2>
-                <p className="text-sm text-white">Record and track safety incidents</p>
-              </div>
+
+              {/* Stats */}
+              {reports.length > 0 && (
+                <div className="grid grid-cols-4 gap-2 mb-3">
+                  {[
+                    {
+                      label: 'Total',
+                      value: reports.length,
+                      bg: 'from-white/[0.06] to-white/[0.02]',
+                      text: 'text-white',
+                      border: 'border-white/10',
+                    },
+                    {
+                      label: 'Critical',
+                      value: reports.filter(
+                        (r) => r.severity === 'critical' || r.severity === 'high'
+                      ).length,
+                      bg: 'from-red-500/20 to-red-500/5',
+                      text: 'text-red-400',
+                      border: 'border-red-500/20',
+                    },
+                    {
+                      label: 'Open',
+                      value: reports.filter(
+                        (r) => !r.status || r.status === 'open' || r.status === 'in_progress'
+                      ).length,
+                      bg: 'from-amber-500/20 to-amber-500/5',
+                      text: 'text-amber-400',
+                      border: 'border-amber-500/20',
+                    },
+                    {
+                      label: 'Closed',
+                      value: reports.filter((r) => r.status === 'closed').length,
+                      bg: 'from-emerald-500/20 to-emerald-500/5',
+                      text: 'text-emerald-400',
+                      border: 'border-emerald-500/20',
+                    },
+                  ].map((s) => (
+                    <div
+                      key={s.label}
+                      className={`p-2 rounded-xl bg-gradient-to-br ${s.bg} border ${s.border} text-center`}
+                    >
+                      <div className={`text-lg font-bold ${s.text}`}>{s.value}</div>
+                      <div className="text-[9px] text-white uppercase tracking-wide">{s.label}</div>
+                    </div>
+                  ))}
+                </div>
+              )}
+
+              <button
+                onClick={() => setShowForm(true)}
+                className="w-full h-12 flex items-center justify-center gap-2 rounded-xl bg-elec-yellow text-black font-bold text-sm shadow-lg shadow-elec-yellow/20 touch-manipulation active:scale-[0.98] transition-all"
+              >
+                <Plus className="h-5 w-5" />
+                Report Near Miss
+              </button>
             </div>
-            {reports.length > 0 && (
-              <Badge className="bg-white/5 border border-white/10 text-white">
-                {searchQuery || severityFilter !== 'all'
-                  ? `${filteredReports.length}/${reports.length}`
-                  : reports.length}{' '}
-                report
-                {(searchQuery || severityFilter !== 'all'
-                  ? filteredReports.length
-                  : reports.length) !== 1
-                  ? 's'
-                  : ''}
-              </Badge>
-            )}
           </div>
-          <Button
-            onClick={() => setShowForm(true)}
-            className="w-full h-14 text-base bg-elec-yellow hover:bg-elec-yellow/90 text-black font-medium touch-manipulation active:scale-[0.98]"
-          >
-            <Plus className="h-5 w-5 mr-2" />
-            Report Near Miss
-          </Button>
         </div>
 
         {reports.length > 0 && (
@@ -641,7 +681,7 @@ export const NearMissReporting: React.FC = () => {
               <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 h-4 w-4 text-white" />
               <Input
                 placeholder="Search reports..."
-                className="pl-8 pr-8 h-9 bg-white/5 border-0 focus:ring-1 focus:ring-elec-yellow/50 text-sm touch-manipulation rounded-lg"
+                className="pl-8 pr-8 h-11 bg-white/5 border border-white/10 focus:ring-1 focus:ring-elec-yellow/50 text-sm touch-manipulation rounded-xl"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
               />
