@@ -115,42 +115,41 @@ export function DiaryFeed({
   return (
     <div className="space-y-1">
       {groupedEntries.map((group, groupIndex) => (
-        <div key={group.date}>
-          {/* Sticky date header */}
+        <>
+          {/* Date header */}
           <motion.div
+            key={`header-${group.date}`}
             initial={{ opacity: 0, x: -10 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: groupIndex * 0.08, duration: 0.3 }}
-            className="sticky top-0 z-10 bg-[hsl(240,5.9%,10%)]/95 backdrop-blur-sm py-1.5 px-1"
+            className="py-1.5 px-1"
           >
             <span className="text-[11px] font-semibold text-white uppercase tracking-wider">
               {group.label}
             </span>
           </motion.div>
 
-          {/* Entries for this date */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 pb-2">
-            {group.entries.map((entry) => {
-              const currentIndex = entryIndex++;
-              return (
-                <motion.div
-                  key={entry.id}
-                  initial={{ opacity: 0, y: 12 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: Math.min(currentIndex * 0.06, 0.5), duration: 0.3 }}
-                >
-                  <DiaryEntryCard
-                    entry={entry}
-                    onTap={() => onEntryTap?.(entry)}
-                    onEdit={onEdit}
-                    onDelete={onDelete ? (id) => onDelete(id) : undefined}
-                    portfolioNudge={portfolioNudges?.get(entry.id)}
-                  />
-                </motion.div>
-              );
-            })}
-          </div>
-        </div>
+          {/* Entries for this date — each is a grid item */}
+          {group.entries.map((entry) => {
+            const currentIndex = entryIndex++;
+            return (
+              <motion.div
+                key={entry.id}
+                initial={{ opacity: 0, y: 12 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: Math.min(currentIndex * 0.06, 0.5), duration: 0.3 }}
+              >
+                <DiaryEntryCard
+                  entry={entry}
+                  onTap={() => onEntryTap?.(entry)}
+                  onEdit={onEdit}
+                  onDelete={onDelete ? (id) => onDelete(id) : undefined}
+                  portfolioNudge={portfolioNudges?.get(entry.id)}
+                />
+              </motion.div>
+            );
+          })}
+        </>
       ))}
     </div>
   );

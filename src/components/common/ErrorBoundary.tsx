@@ -23,7 +23,6 @@ class ErrorBoundary extends Component<Props, State> {
   };
 
   public static getDerivedStateFromError(_: Error): Partial<State> {
-    // Update state so the next render will show the fallback UI
     return { hasError: true };
   }
 
@@ -32,6 +31,14 @@ class ErrorBoundary extends Component<Props, State> {
       error,
       errorInfo,
     });
+
+    // In dev mode, always log full details and never auto-refresh
+    if (import.meta.env.DEV) {
+      console.error('[ErrorBoundary] CAUGHT ERROR:', error);
+      console.error('[ErrorBoundary] Component Stack:', errorInfo?.componentStack);
+      console.error('[ErrorBoundary] Full Stack:', error?.stack);
+      return;
+    }
 
     // Check for chunk loading errors - auto-refresh instead of showing error
     // Use multiple error representations since some browsers (Edge Mobile, Android WebViews)
@@ -100,6 +107,12 @@ class ErrorBoundary extends Component<Props, State> {
   }
 
   private handleRefresh = (): void => {
+    if (import.meta.env.DEV) {
+      const confirmed = window.confirm(
+        'Are you sure you want to refresh? Check the console logs first for error details.'
+      );
+      if (!confirmed) return;
+    }
     window.location.reload();
   };
 

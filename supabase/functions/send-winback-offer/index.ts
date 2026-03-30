@@ -899,6 +899,167 @@ function generateV5WinbackHTML(user: EligibleUser): string {
 </body></html>`;
 }
 
+function generateV8AppStoreLaunchHTML(firstName: string): string {
+  const appStoreUrl = 'https://apps.apple.com/gb/app/elec-mate/id6758948665';
+  const appStoreBadge = 'https://toolbox.marketingtools.apple.com/api/badges/download-on-the-app-store/black/en-gb?size=250x83';
+  const logoUrl = 'https://elec-mate.com/logo.jpg';
+  const heroImg = 'https://elec-mate.com/images/walkthrough/appstore-dashboard.png';
+  const heroFallback = 'https://elec-mate.com/pwa-512x512.png';
+
+  return `<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><meta name="color-scheme" content="dark"><!--[if mso]><style>body,table,td{font-family:Arial,sans-serif!important}</style><![endif]--></head>
+<body style="margin:0;padding:0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;background:#000000">
+<table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background:#000000"><tr><td style="padding:0">
+<table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="max-width:600px;margin:0 auto;background:#000000">
+
+<!-- Spacer -->
+<tr><td style="height:48px"></td></tr>
+
+<!-- Logo — large, centred -->
+<tr><td style="text-align:center;padding:0 32px">
+<a href="${appStoreUrl}" style="display:inline-block;text-decoration:none">
+<img src="${logoUrl}" alt="Elec-Mate" width="120" height="120" style="display:block;border-radius:26px;margin:0 auto">
+</a>
+</td></tr>
+
+<tr><td style="height:28px"></td></tr>
+
+<!-- Headline — Apple-style, large, centred -->
+<tr><td style="text-align:center;padding:0 32px">
+<h1 style="margin:0;font-size:34px;font-weight:700;color:#ffffff;line-height:1.15;letter-spacing:-0.5px">Now on the App Store.</h1>
+</td></tr>
+
+<tr><td style="height:16px"></td></tr>
+
+<!-- Subhead -->
+<tr><td style="text-align:center;padding:0 40px">
+<p style="margin:0;font-size:17px;color:#ffffff;line-height:1.5;font-weight:400">The all-in-one app for UK electricians. Certificates, quotes, AI tools, and more.</p>
+</td></tr>
+
+<tr><td style="height:28px"></td></tr>
+
+<!-- Apple badge — crisp PNG -->
+<tr><td style="text-align:center;padding:0 32px">
+<a href="${appStoreUrl}" style="display:inline-block"><img src="${appStoreBadge}" alt="Download on the App Store" width="180" height="60" style="display:block"></a>
+</td></tr>
+
+<tr><td style="height:40px"></td></tr>
+
+<!-- Divider -->
+<tr><td style="padding:0 32px"><div style="height:1px;background:rgba(255,255,255,0.08)"></div></td></tr>
+
+<tr><td style="height:40px"></td></tr>
+
+<!-- Feature list — minimal, no boxes, just clean lines -->
+<tr><td style="padding:0 32px">
+
+<table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="margin-bottom:24px">
+<tr>
+<td width="44" valign="top" style="padding-top:2px"><div style="width:36px;height:36px;background:rgba(251,191,36,0.12);border-radius:10px;text-align:center;line-height:36px;font-size:18px">&#x26A1;</div></td>
+<td style="padding-left:14px">
+<p style="margin:0;font-size:16px;font-weight:600;color:#ffffff">Certificates</p>
+<p style="margin:4px 0 0;font-size:14px;color:#ffffff;line-height:1.4">EICR, EIC, minor works, PAT, fire alarm, solar PV, EV charging. Sign and send from your phone.</p>
+</td>
+</tr>
+</table>
+
+<table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="margin-bottom:24px">
+<tr>
+<td width="44" valign="top" style="padding-top:2px"><div style="width:36px;height:36px;background:rgba(59,130,246,0.12);border-radius:10px;text-align:center;line-height:36px;font-size:18px">&#x1F916;</div></td>
+<td style="padding-left:14px">
+<p style="margin:0;font-size:16px;font-weight:600;color:#ffffff">AI Tools</p>
+<p style="margin:4px 0 0;font-size:14px;color:#ffffff;line-height:1.4">Cost engineer, circuit designer, RAMS generator, fault diagnosis, installation guide. 15 specialist agents.</p>
+</td>
+</tr>
+</table>
+
+<table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="margin-bottom:24px">
+<tr>
+<td width="44" valign="top" style="padding-top:2px"><div style="width:36px;height:36px;background:rgba(34,197,94,0.12);border-radius:10px;text-align:center;line-height:36px;font-size:18px">&#x1F4B7;</div></td>
+<td style="padding-left:14px">
+<p style="margin:0;font-size:16px;font-weight:600;color:#ffffff">Quotes &amp; Invoices</p>
+<p style="margin:4px 0 0;font-size:14px;color:#ffffff;line-height:1.4">Create, send, and get paid. Track everything in one place. No more spreadsheets.</p>
+</td>
+</tr>
+</table>
+
+<table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="margin-bottom:24px">
+<tr>
+<td width="44" valign="top" style="padding-top:2px"><div style="width:36px;height:36px;background:rgba(168,85,247,0.12);border-radius:10px;text-align:center;line-height:36px;font-size:18px">&#x1F4DA;</div></td>
+<td style="padding-left:14px">
+<p style="margin:0;font-size:16px;font-weight:600;color:#ffffff">Study Centre</p>
+<p style="margin:4px 0 0;font-size:14px;color:#ffffff;line-height:1.4">Level 2 &amp; 3 courses, AM2 simulator, flashcards, EPA prep. Over 2,000 practice questions.</p>
+</td>
+</tr>
+</table>
+
+<table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+<tr>
+<td width="44" valign="top" style="padding-top:2px"><div style="width:36px;height:36px;background:rgba(244,63,94,0.12);border-radius:10px;text-align:center;line-height:36px;font-size:18px">&#x1F6E1;</div></td>
+<td style="padding-left:14px">
+<p style="margin:0;font-size:16px;font-weight:600;color:#ffffff">Site Safety</p>
+<p style="margin:4px 0 0;font-size:14px;color:#ffffff;line-height:1.4">RAMS, method statements, risk assessments, toolbox talks. 64+ electrical calculators built in.</p>
+</td>
+</tr>
+</table>
+
+</td></tr>
+
+<tr><td style="height:40px"></td></tr>
+
+<!-- Divider -->
+<tr><td style="padding:0 32px"><div style="height:1px;background:rgba(255,255,255,0.08)"></div></td></tr>
+
+<tr><td style="height:40px"></td></tr>
+
+<!-- Pricing — two tiers -->
+<tr><td style="padding:0 32px">
+<table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%"><tr>
+<td width="50%" style="text-align:center;padding:0 4px 0 0">
+<div style="background:rgba(251,191,36,0.08);border:1px solid rgba(251,191,36,0.2);border-radius:16px;padding:20px 12px">
+<p style="margin:0 0 4px;font-size:12px;color:#ffffff;letter-spacing:0.3px;text-transform:uppercase;font-weight:600">Apprentice</p>
+<p style="margin:0;font-size:32px;font-weight:700;color:#ffffff;line-height:1;letter-spacing:-0.5px">&pound;6.99<span style="font-size:14px;font-weight:400">/mo</span></p>
+</div>
+</td>
+<td width="50%" style="text-align:center;padding:0 0 0 4px">
+<div style="background:rgba(251,191,36,0.15);border:2px solid rgba(251,191,36,0.4);border-radius:16px;padding:20px 12px">
+<p style="margin:0 0 4px;font-size:12px;color:#fbbf24;letter-spacing:0.3px;text-transform:uppercase;font-weight:600">Electrician</p>
+<p style="margin:0;font-size:32px;font-weight:700;color:#ffffff;line-height:1;letter-spacing:-0.5px">&pound;14.99<span style="font-size:14px;font-weight:400">/mo</span></p>
+</div>
+</td>
+</tr></table>
+</td></tr>
+
+<tr><td style="height:24px"></td></tr>
+
+<!-- Second CTA — Apple badge again -->
+<tr><td style="text-align:center;padding:0 32px">
+<a href="${appStoreUrl}" style="display:inline-block"><img src="${appStoreBadge}" alt="Download on the App Store" width="200" style="display:block"></a>
+</td></tr>
+
+<tr><td style="height:48px"></td></tr>
+
+<!-- Divider -->
+<tr><td style="padding:0 32px"><div style="height:1px;background:rgba(255,255,255,0.08)"></div></td></tr>
+
+<tr><td style="height:32px"></td></tr>
+
+<!-- P.S. from founder — quiet, personal -->
+<tr><td style="padding:0 32px">
+<p style="margin:0 0 12px;font-size:14px;color:#ffffff;line-height:1.6">Hey ${firstName} &mdash; it's Andrew. We've come a long way since you first signed up. If you've got any questions, just reply to this email. It comes straight to me.</p>
+<p style="margin:0;font-size:14px;color:#ffffff;line-height:1.6">Cheers,<br><span style="color:#fbbf24;font-weight:600">Andrew</span> &middot; Founder, Elec-Mate</p>
+</td></tr>
+
+<tr><td style="height:40px"></td></tr>
+
+<!-- Footer -->
+<tr><td style="text-align:center;padding:0 32px 40px">
+<p style="margin:0;font-size:12px;color:#ffffff">&copy; ${new Date().getFullYear()} Elec-Mate Ltd &middot; Built in Cumbria for UK electricians</p>
+</td></tr>
+
+</table></td></tr></table>
+</body></html>`;
+}
+
 function generateV7StatsHTML(firstName: string): string {
   return `<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><meta name="color-scheme" content="dark"><!--[if mso]><style>body,table,td{font-family:Arial,sans-serif!important}</style><![endif]--></head>
 <body style="margin:0;padding:0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;background:#0f172a">
@@ -1364,7 +1525,11 @@ Deno.serve(async (req) => {
 
         // Send email — select template by version
         let emailHtml, emailSubject;
-        if (email_version === 'v7') {
+        if (email_version === 'v8') {
+          const fn = userWithEmail.full_name?.split(' ')[0] || 'mate';
+          emailHtml = generateV8AppStoreLaunchHTML(fn);
+          emailSubject = "We're on the App Store.";
+        } else if (email_version === 'v7') {
           const fn = userWithEmail.full_name?.split(' ')[0] || 'mate';
           emailHtml = generateV7StatsHTML(fn);
           emailSubject = '7 weeks. No App Store. Just electricians getting shit done.';
@@ -1529,7 +1694,11 @@ Deno.serve(async (req) => {
 
             // Send email — select template by version
             let emailHtml, bulkSubject;
-            if (email_version === 'v7') {
+            if (email_version === 'v8') {
+              const fn = userWithEmail.full_name?.split(' ')[0] || 'mate';
+              emailHtml = generateV8AppStoreLaunchHTML(fn);
+              bulkSubject = "We're on the App Store.";
+            } else if (email_version === 'v7') {
               const fn = userWithEmail.full_name?.split(' ')[0] || 'mate';
               emailHtml = generateV7StatsHTML(fn);
               bulkSubject = '7 weeks. No App Store. Just electricians getting shit done.';
@@ -1696,7 +1865,10 @@ Deno.serve(async (req) => {
 
         // Generate and send the email — select template by version
         let emailHtml, testSubject;
-        if (email_version === 'v7') {
+        if (email_version === 'v8') {
+          emailHtml = generateV8AppStoreLaunchHTML('Test');
+          testSubject = "[TEST] We're on the App Store.";
+        } else if (email_version === 'v7') {
           emailHtml = generateV7StatsHTML('Test');
           testSubject = '[TEST] 7 weeks. No App Store. Just electricians getting shit done.';
         } else if (email_version === 'v6') {
@@ -1776,7 +1948,10 @@ Deno.serve(async (req) => {
 
         // Generate and send the email — select template by version
         let manualEmailHtml, manualSubject;
-        if (email_version === 'v7') {
+        if (email_version === 'v8') {
+          manualEmailHtml = generateV8AppStoreLaunchHTML(manualUser.full_name?.split(' ')[0] || 'mate');
+          manualSubject = "We're on the App Store.";
+        } else if (email_version === 'v7') {
           manualEmailHtml = generateV7StatsHTML(manualUser.full_name?.split(' ')[0] || 'mate');
           manualSubject = '7 weeks. No App Store. Just electricians getting shit done.';
         } else if (email_version === 'v6') {
@@ -1954,6 +2129,40 @@ Deno.serve(async (req) => {
           totalUsers: profiles.length,
           totalTarget,
         };
+        break;
+      }
+
+      case 'get_all_users': {
+        // Get ALL users with email addresses for App Store launch blast
+        const { data: allUserProfiles, error: allUsersError } = await supabaseAdmin
+          .from('profiles')
+          .select('id, full_name, username, created_at')
+          .order('created_at', { ascending: false });
+
+        if (allUsersError) throw allUsersError;
+
+        // Get emails
+        const { data: allAuthUsers, error: allAuthError } =
+          await supabaseAdmin.rpc('get_auth_user_emails');
+        if (allAuthError) {
+          console.error('get_all_users: get_auth_user_emails RPC error:', allAuthError);
+        }
+        const allEmailMap = new Map<string, string>();
+        (allAuthUsers || []).forEach((u: Record<string, unknown>) => {
+          if (u.email) allEmailMap.set(u.id as string, u.email as string);
+        });
+
+        const allUsersWithEmail = (allUserProfiles || [])
+          .filter((u: Record<string, unknown>) => allEmailMap.has(u.id as string))
+          .map((u: Record<string, unknown>) => ({
+            ...u,
+            email: allEmailMap.get(u.id as string),
+            trial_ended_at: new Date(
+              new Date(u.created_at as string).getTime() + 7 * 24 * 60 * 60 * 1000
+            ).toISOString(),
+          }));
+
+        result = { users: allUsersWithEmail, total: allUsersWithEmail.length };
         break;
       }
 

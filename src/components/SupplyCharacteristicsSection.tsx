@@ -566,8 +566,9 @@ const SupplyCharacteristicsSectionInner = ({
             </FormField>
           </div>
 
-          <button
-            type="button"
+          <div
+            role="button"
+            tabIndex={0}
             onClick={() => {
               haptics.tap();
               onUpdate(
@@ -575,8 +576,18 @@ const SupplyCharacteristicsSectionInner = ({
                 formData.supplyPolarityConfirmed === 'true' ? 'false' : 'true'
               );
             }}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                haptics.tap();
+                onUpdate(
+                  'supplyPolarityConfirmed',
+                  formData.supplyPolarityConfirmed === 'true' ? 'false' : 'true'
+                );
+              }
+            }}
             className={cn(
-              'w-full flex items-center gap-3 p-4 rounded-xl border-2 transition-all touch-manipulation',
+              'w-full flex items-center gap-3 p-4 rounded-xl border-2 transition-all touch-manipulation cursor-pointer',
               formData.supplyPolarityConfirmed === 'true'
                 ? 'border-elec-yellow bg-elec-yellow/10'
                 : 'border-border/30 bg-card/30'
@@ -584,10 +595,11 @@ const SupplyCharacteristicsSectionInner = ({
           >
             <Checkbox
               checked={formData.supplyPolarityConfirmed === 'true'}
-              className="h-5 w-5 data-[state=checked]:bg-elec-yellow data-[state=checked]:border-elec-yellow"
+              tabIndex={-1}
+              className="h-5 w-5 pointer-events-none data-[state=checked]:bg-elec-yellow data-[state=checked]:border-elec-yellow"
             />
-            <span className="font-medium">Confirmation of supply polarity</span>
-          </button>
+            <span className="font-medium text-white">Confirmation of supply polarity</span>
+          </div>
 
           <FormField
             label="Other Sources of Supply"

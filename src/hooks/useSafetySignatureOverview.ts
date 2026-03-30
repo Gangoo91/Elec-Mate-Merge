@@ -132,7 +132,7 @@ export function useSafetySignatureOverview() {
         byType.push({ type, label, total, signed, unsigned: total - signed });
       };
 
-      addType('Permits to Work', 'permit', permits.data, [
+      addType('Permits to Work', 'permit-to-work', permits.data, [
         'issuer_signature',
         'receiver_signature',
       ]);
@@ -141,12 +141,12 @@ export function useSafetySignatureOverview() {
         'verifier_signature',
       ]);
       addType('COSHH Assessments', 'coshh', coshh.data, ['assessor_signature']);
-      addType('Accident Records', 'accident', accidents.data, ['reporter_signature']);
+      addType('Accident Records', 'accident-book', accidents.data, ['reporter_signature']);
       addType('Near Miss Reports', 'near-miss', nearMiss.data, ['reporter_signature']);
-      addType('Inspection Reports', 'inspection', inspections.data, ['inspector_signature']);
+      addType('Inspection Reports', 'inspection-checklists', inspections.data, ['inspector_signature']);
       addType('Site Diary', 'site-diary', diary.data, ['recorder_signature']);
-      addType('Safety Observations', 'observation', observations.data, ['observer_signature']);
-      addType('Pre-Use Checks', 'pre-use-check', preUse.data, ['signature']);
+      addType('Safety Observations', 'safety-observations', observations.data, ['observer_signature']);
+      addType('Pre-Use Checks', 'pre-use-checks', preUse.data, ['signature']);
       addType('Fire Watch', 'fire-watch', fireWatch.data, ['completed_signature']);
 
       const totalDocuments = byType.reduce((sum, t) => sum + t.total, 0);

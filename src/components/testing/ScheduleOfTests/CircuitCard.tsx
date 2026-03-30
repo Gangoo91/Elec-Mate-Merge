@@ -143,7 +143,7 @@ const CircuitCardInner = ({
     success: 'bg-gradient-to-br from-green-500 to-green-600 text-white border-green-400',
     warning: 'bg-gradient-to-br from-amber-500 to-amber-600 text-white border-amber-400',
     error: 'bg-gradient-to-br from-red-500 to-red-600 text-white border-red-400',
-    pending: 'bg-gradient-to-br from-muted to-muted-foreground/20 text-foreground border-border',
+    pending: 'bg-gradient-to-br from-white/10 to-white/5 text-white border-white/20',
   };
 
   // Progress bar gradient colors
@@ -151,7 +151,7 @@ const CircuitCardInner = ({
     success: 'from-green-400 to-green-500',
     warning: 'from-amber-400 to-amber-500',
     error: 'from-red-400 to-red-500',
-    pending: 'from-muted-foreground/50 to-muted-foreground/30',
+    pending: 'from-white/20 to-white/10',
   };
 
   const cardContent = (
@@ -185,10 +185,19 @@ const CircuitCardInner = ({
             </h3>
             <div className="flex items-center gap-2 mt-1">
               {/* Protection Device Badge */}
-              <Badge variant="secondary" className="h-5 px-2 text-[11px] font-medium bg-muted/80">
+              <Badge variant="secondary" className="h-5 px-2 text-[11px] font-medium bg-white/10 text-white">
                 {circuit.protectiveDeviceType || 'MCB'} {circuit.protectiveDeviceCurve || ''}
                 {circuit.protectiveDeviceRating || '--'}A
               </Badge>
+              {/* Three-Phase Indicator */}
+              {circuit.phaseType === '3P' && (
+                <Badge
+                  variant="outline"
+                  className="h-5 px-1.5 text-[10px] font-bold gap-0.5 bg-purple-500/10 text-purple-400 border-purple-500/30"
+                >
+                  3P
+                </Badge>
+              )}
               {/* RCD Indicator */}
               {hasRcd && (
                 <Badge
@@ -208,7 +217,7 @@ const CircuitCardInner = ({
           </div>
 
           {/* Edit Arrow */}
-          <ChevronRight className="h-5 w-5 text-muted-foreground mt-1 shrink-0" />
+          <ChevronRight className="h-5 w-5 text-white/60 mt-1 shrink-0" />
         </div>
       </div>
 
@@ -292,7 +301,7 @@ const CircuitCardInner = ({
               status.level === 'success' && 'text-green-500 bg-green-500/10 border-green-500/30',
               status.level === 'warning' && 'text-amber-500 bg-amber-500/10 border-amber-500/30',
               status.level === 'error' && 'text-red-500 bg-red-500/10 border-red-500/30',
-              status.level === 'pending' && 'text-muted-foreground bg-muted/50 border-border'
+              status.level === 'pending' && 'text-white/70 bg-white/5 border-white/10'
             )}
           >
             <StatusIcon className="h-3 w-3" />
@@ -300,7 +309,7 @@ const CircuitCardInner = ({
           </Badge>
 
           {/* Progress Bar */}
-          <div className="flex-1 h-2 bg-muted/50 rounded-full overflow-hidden">
+          <div className="flex-1 h-2 bg-white/10 rounded-full overflow-hidden">
             <div
               className={cn(
                 'h-full rounded-full bg-gradient-to-r transition-all duration-500 ease-out',
@@ -311,7 +320,7 @@ const CircuitCardInner = ({
           </div>
 
           {/* Percentage */}
-          <span className="text-xs font-medium text-muted-foreground w-8 text-right">
+          <span className="text-xs font-medium text-white w-8 text-right">
             {Math.round(status.completionPercent)}%
           </span>
         </div>
@@ -382,14 +391,14 @@ const ValueTile: React.FC<ValueTileProps> = ({
     pass: 'bg-green-500/10 border-green-500/30',
     fail: 'bg-red-500/10 border-red-500/30',
     warning: 'bg-amber-500/10 border-amber-500/30',
-    empty: 'bg-muted/30 border-border/50',
+    empty: 'bg-white/[0.04] border-white/10',
   };
 
   const valueColors = {
-    pass: 'text-green-500',
-    fail: 'text-red-500',
-    warning: 'text-amber-500',
-    empty: 'text-muted-foreground',
+    pass: 'text-green-400',
+    fail: 'text-red-400',
+    warning: 'text-amber-400',
+    empty: 'text-white/40',
   };
 
   // Handle status display
@@ -436,7 +445,7 @@ const ValueTile: React.FC<ValueTileProps> = ({
       {/* Label */}
       <span
         className={cn(
-          'text-muted-foreground font-medium leading-none',
+          'text-white/70 font-medium leading-none',
           compact ? 'text-[9px]' : 'text-[10px]'
         )}
       >
@@ -457,7 +466,7 @@ const ValueTile: React.FC<ValueTileProps> = ({
         {value && unit && !isStatus && (
           <span
             className={cn(
-              'font-normal text-muted-foreground ml-0.5',
+              'font-normal text-white/50 ml-0.5',
               compact ? 'text-[8px]' : 'text-[10px]'
             )}
           >
@@ -468,7 +477,7 @@ const ValueTile: React.FC<ValueTileProps> = ({
 
       {/* Sub Value (e.g., max Zs) */}
       {subValue && !compact && (
-        <span className="text-[9px] text-muted-foreground leading-none mt-0.5">{subValue}</span>
+        <span className="text-[9px] text-white/50 leading-none mt-0.5">{subValue}</span>
       )}
     </div>
   );
@@ -519,7 +528,7 @@ const CircuitCardCompactInner = ({
       </span>
 
       {/* Rating */}
-      <span className="text-sm text-muted-foreground shrink-0">
+      <span className="text-sm text-white shrink-0">
         {circuit.protectiveDeviceRating || '--'}A
       </span>
 
@@ -527,7 +536,7 @@ const CircuitCardCompactInner = ({
       {hasIssue ? (
         <AlertTriangle className="h-4 w-4 text-red-500 shrink-0" />
       ) : (
-        <ChevronRight className="h-4 w-4 text-muted-foreground shrink-0" />
+        <ChevronRight className="h-4 w-4 text-white/60 shrink-0" />
       )}
     </div>
   );

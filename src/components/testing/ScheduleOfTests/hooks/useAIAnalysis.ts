@@ -131,12 +131,16 @@ export function useAIAnalysis({ testResults, setTestResults, onSave }: UseAIAnal
 
   // Utility: Check if row is blank
   const isBlankRow = (result: TestResult): boolean => {
-    return (
-      !result.circuitDescription &&
-      !result.protectiveDeviceType &&
-      !result.protectiveDeviceRating &&
-      !result.liveSize
-    );
+    // Catch the default init row explicitly (id='1' with no description)
+    if (result.id === '1' && (!result.circuitDescription || result.circuitDescription.trim() === '')) {
+      return true;
+    }
+    // A row is blank if it has no meaningful data filled in
+    const hasDescription = result.circuitDescription && result.circuitDescription.trim() !== '';
+    const hasDevice = result.protectiveDeviceType && result.protectiveDeviceType.trim() !== '';
+    const hasRating = result.protectiveDeviceRating && result.protectiveDeviceRating.trim() !== '';
+    const hasTestData = !!(result.r1r2 || result.zs || result.insulationResistance || result.insulationLiveEarth);
+    return !hasDescription && !hasDevice && !hasRating && !hasTestData;
   };
 
   // Handler: Board analysis complete
@@ -248,86 +252,27 @@ export function useAIAnalysis({ testResults, setTestResults, onSave }: UseAIAnal
   // Handler: Apply AI detected circuits from board scan
   const handleApplyAICircuits = useCallback(
     (selectedCircuits: any[]) => {
-      const blankIndices: number[] = [];
-      testResults.forEach((result, idx) => {
-        if (isBlankRow(result)) {
-          blankIndices.push(idx);
-        }
-      });
+      console.log('[handleApplyAICircuits] Called with', selectedCircuits.length, 'circuits');
+      try {
+      // Remove all blank/empty rows — AI scan replaces them cleanly
+      const blankCount = testResults.filter((r) => isBlankRow(r)).length;
+      console.log('[handleApplyAICircuits] Existing rows:', testResults.length, 'blank:', blankCount);
+      const nonBlankResults = testResults.filter((result) => !isBlankRow(result));
+      const updatedResults = [...nonBlankResults];
 
-      const updatedResults = [...testResults];
-      const remainingCircuits: any[] = [];
+      // Detect if this is a three-phase board
+      const boardLayout = state.detectedCircuits?.board?.boardLayout || '';
+      const isThreePhaseBoard =
+        boardLayout.startsWith('3P') ||
+        selectedCircuits.some((c: any) => c.phase === '3P' || c.phaseType === '3P');
 
-      selectedCircuits.forEach((circuit) => {
-        const normalisedCircuit = normaliseAICircuit(circuit);
+      if (isThreePhaseBoard) {
+        console.log('[handleApplyAICircuits] Three-phase TP&N board detected, using Way/Phase numbering');
+      }
 
-        if (blankIndices.length > 0) {
-          const blankIdx = blankIndices.shift()!;
-          const existingResult = updatedResults[blankIdx];
-          const liveSize = normalisedCircuit.liveSize;
-          const circuitType = normalisedCircuit.circuitType || '';
-          const circuitDesc = normalisedCircuit.circuitDescription || '';
-
-          const isRingCircuit = circuitType.toLowerCase().includes('ring');
-          const isSocketCircuit = circuitType.toLowerCase().includes('socket');
-          const isBathroomCircuit = circuitDesc.toLowerCase().includes('bathroom');
-          const isOutdoorCircuit =
-            circuitDesc.toLowerCase().includes('outdoor') ||
-            circuitDesc.toLowerCase().includes('garden');
-          const isRCBOOrRCD =
-            normalisedCircuit.protectiveDeviceType.toUpperCase().includes('RCD') ||
-            normalisedCircuit.protectiveDeviceType.toUpperCase().includes('RCBO');
-          const requiresRCD =
-            isSocketCircuit || isBathroomCircuit || isOutdoorCircuit || isRCBOOrRCD;
-
-          updatedResults[blankIdx] = {
-            ...existingResult,
-            circuitDescription: circuitDesc,
-            circuitType: circuitType,
-            type: circuitType,
-            referenceMethod: normalisedCircuit.referenceMethod,
-            liveSize: liveSize,
-            cpcSize: normalisedCircuit.cpcSize,
-            protectiveDeviceType: normalisedCircuit.protectiveDeviceType,
-            protectiveDeviceCurve: normalisedCircuit.protectiveDeviceCurve || '',
-            protectiveDeviceRating: normalisedCircuit.protectiveDeviceRating,
-            protectiveDeviceKaRating: normalisedCircuit.protectiveDeviceKaRating,
-            protectiveDeviceLocation: 'Consumer Unit',
-            bsStandard: normalisedCircuit.bsStandard,
-            cableSize: liveSize,
-            protectiveDevice:
-              `${normalisedCircuit.protectiveDeviceType} ${normalisedCircuit.protectiveDeviceRating}`.trim(),
-            maxZs: calculateMaxZsForCircuit(
-              normalisedCircuit.bsStandard,
-              normalisedCircuit.protectiveDeviceCurve,
-              normalisedCircuit.protectiveDeviceRating
-            ),
-            ringContinuityLive: isRingCircuit ? '' : 'N/A',
-            ringContinuityNeutral: isRingCircuit ? '' : 'N/A',
-            insulationTestVoltage: '500V',
-            polarity: 'Satisfactory',
-            pointsServed: calculatePointsServed(
-              circuitDesc,
-              circuitType,
-              normalisedCircuit.protectiveDeviceType
-            ),
-            rcdRating: requiresRCD ? '30mA' : '',
-            rcdType: isRCBOOrRCD ? 'A' : '',
-            rcdBsStandard: isRCBOOrRCD ? 'RCBO (BS EN 61009)' : '',
-            rcdRatingA: requiresRCD ? '30' : '',
-            phaseType: normalisedCircuit.phase || '1P',
-            functionalTesting: 'Satisfactory',
-            notes: '',
-            autoFilled: true,
-          };
-        } else {
-          remainingCircuits.push(normalisedCircuit);
-        }
-      });
-
-      // Append remaining circuits
-      remainingCircuits.forEach((circuit) => {
-        const circuitNumber = (updatedResults.length + 1).toString();
+      selectedCircuits.forEach((rawCircuit) => {
+        const circuit = normaliseAICircuit(rawCircuit);
+        const isThreePole = circuit.phase === '3P';
         const liveSize = circuit.liveSize;
         const circuitType = circuit.circuitType || '';
         const circuitDesc = circuit.circuitDescription || '';
@@ -343,10 +288,39 @@ export function useAIAnalysis({ testResults, setTestResults, onSave }: UseAIAnal
           circuit.protectiveDeviceType.toUpperCase().includes('RCBO');
         const requiresRCD = isSocketCircuit || isBathroomCircuit || isOutdoorCircuit || isRCBOOrRCD;
 
+        // Three-phase board: C1 L1, C1 L2, C1 L3, C2 L1...
+        // Single-phase board: C1, C2, C3...
+        // Three-pole device on 3P board: C5 L1,L2,L3
+        let circuitDesignation: string;
+        let circuitNum: string;
+
+        // Use AI-provided way_number and phase_designation if available
+        const aiWayNumber = (rawCircuit as any).wayNumber || (rawCircuit as any).way_number;
+        const aiPhaseDesignation = (rawCircuit as any).phaseDesignation || (rawCircuit as any).phase_designation;
+
+        if (isThreePhaseBoard && aiWayNumber && aiPhaseDesignation) {
+          // AI provided way/phase — use directly (e.g. "Way 1 L1", "Way 9 L1,L2,L3")
+          circuitDesignation = `Way ${aiWayNumber} ${aiPhaseDesignation}`;
+          circuitNum = aiWayNumber.toString();
+        } else if (isThreePhaseBoard) {
+          // Fallback: sequential numbering with phase index
+          const seqNum = updatedResults.length + 1;
+          const fallbackWay = Math.ceil(seqNum / 3);
+          const fallbackPhase = ['L1', 'L2', 'L3'][(seqNum - 1) % 3];
+          circuitDesignation = isThreePole
+            ? `Way ${fallbackWay} L1,L2,L3`
+            : `Way ${fallbackWay} ${fallbackPhase}`;
+          circuitNum = fallbackWay.toString();
+        } else {
+          // Single-phase board — simple sequential
+          circuitNum = (updatedResults.length + 1).toString();
+          circuitDesignation = `C${circuitNum}`;
+        }
+
         const newResult: TestResult = {
           id: crypto.randomUUID(),
-          circuitNumber: circuitNumber,
-          circuitDesignation: `C${circuitNumber}`,
+          circuitNumber: circuitNum,
+          circuitDesignation: circuitDesignation,
           circuitDescription: circuitDesc,
           circuitType: circuitType,
           type: circuitType,
@@ -400,11 +374,13 @@ export function useAIAnalysis({ testResults, setTestResults, onSave }: UseAIAnal
           rcdBsStandard: isRCBOOrRCD ? 'RCBO (BS EN 61009)' : '',
           rcdType: isRCBOOrRCD ? 'A' : '',
           rcdRatingA: requiresRCD ? '30' : '',
-          phaseType: circuit.phase || '1P',
+          phaseType: isThreePole ? '3P' : (isThreePhaseBoard ? '1P' : (circuit.phase || '1P')),
+          notes: isThreePole ? '3-pole device (L1,L2,L3)' : '',
         };
         updatedResults.push(newResult);
       });
 
+      console.log('[handleApplyAICircuits] Setting', updatedResults.length, 'test results');
       setTestResults(updatedResults);
       onSave(updatedResults);
       setState((s) => ({
@@ -414,8 +390,12 @@ export function useAIAnalysis({ testResults, setTestResults, onSave }: UseAIAnal
       }));
 
       toast.success(`Added ${selectedCircuits.length} circuits from AI scan`);
+      } catch (err) {
+        console.error('[handleApplyAICircuits] CRASH:', err);
+        toast.error('Failed to apply circuits: ' + (err instanceof Error ? err.message : String(err)));
+      }
     },
-    [testResults, setTestResults, onSave]
+    [testResults, setTestResults, onSave, state.detectedCircuits]
   );
 
   // Close AI review

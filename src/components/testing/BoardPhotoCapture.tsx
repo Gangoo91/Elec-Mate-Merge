@@ -1,7 +1,7 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Camera, X, Check, Loader2, Upload, Info } from 'lucide-react';
+import { Camera, X, Check, Loader2, Upload, Sparkles, ScanLine, ArrowRight } from 'lucide-react';
 import { toast } from 'sonner';
 import { supabase } from '@/integrations/supabase/client';
 import { v4 as uuidv4 } from 'uuid';
@@ -526,39 +526,34 @@ export const BoardPhotoCapture: React.FC<BoardPhotoCaptureProps> = ({
     // Notify parent of progress start - include first photo URL for display during analysis
     const firstPhotoUrl = capturedImages[0]?.url || null;
     onProgressUpdate?.('uploading', 5, undefined, firstPhotoUrl || undefined);
-    toast.loading('📤 Preparing images for AI analysis...', { id: 'analysis' });
 
     const stage2Timer = setTimeout(() => {
       onProgressUpdate?.('uploading', 15);
-      toast.loading(`📤 Uploading ${capturedImages.length} photo(s) to AI...`, { id: 'analysis' });
     }, 1000);
 
     const stage3Timer = setTimeout(() => {
       onProgressUpdate?.('detecting', 30);
-      toast.loading('🤖 AI reading protective devices (MCBs/RCBOs)...', { id: 'analysis' });
     }, 3000);
 
     const stage4Timer = setTimeout(() => {
       onProgressUpdate?.('reading', 50);
-      toast.loading('🔍 Extracting circuit labels and ratings...', { id: 'analysis' });
     }, 6000);
 
     const stage5Timer = setTimeout(() => {
       onProgressUpdate?.('verifying', 75);
-      toast.loading('✅ Verifying board configuration...', { id: 'analysis' });
     }, 9000);
 
     const timeoutId = setTimeout(() => {
       toast.warning(
-        'This is taking longer than usual. Please ensure good lighting and try again if needed.',
+        'This is taking longer than usual — three-phase boards can take up to a minute. Please wait or try again with better lighting.',
         {
           id: 'timeout-warning',
         }
       );
-    }, 20000);
+    }, 60000);
 
     // Hard timeout to prevent infinite hangs - 2 minutes for complex 3-phase boards
-    const ANALYSIS_TIMEOUT_MS = 120000;
+    const ANALYSIS_TIMEOUT_MS = 200000; // 200s - 3-phase boards with retry need extra time
 
     try {
       const hints = {
@@ -591,11 +586,15 @@ export const BoardPhotoCapture: React.FC<BoardPhotoCaptureProps> = ({
       clearTimeout(stage4Timer);
       clearTimeout(stage5Timer);
       clearTimeout(timeoutId);
-      toast.dismiss('analysis');
       toast.dismiss('timeout-warning');
 
       if (invokeError) {
-        throw new Error(invokeError.message || 'Failed to analyse images');
+        // Friendly error messages instead of raw API errors
+        const msg = invokeError.message?.toLowerCase() || '';
+        if (msg.includes('non-2xx') || msg.includes('503') || msg.includes('timeout') || msg.includes('timed out')) {
+          throw new Error('Sorry, there was a hiccup analysing your board. Please try again — three-phase boards can take a bit longer.');
+        }
+        throw new Error(invokeError.message || 'Sorry, something went wrong. Please try again.');
       }
 
       // Display warnings if present
@@ -690,6 +689,9 @@ export const BoardPhotoCapture: React.FC<BoardPhotoCaptureProps> = ({
               notes: circuit?.notes ?? '',
               phase: circuit?.phase ?? '1P',
               phases: circuit?.phases ?? null,
+              wayNumber: circuit?.way_number ?? null,
+              phaseDesignation: circuit?.phase_designation ?? null,
+              boardSide: circuit?.board_side ?? null,
             };
           })
           .sort((a, b) => a.position - b.position);
@@ -709,7 +711,8 @@ export const BoardPhotoCapture: React.FC<BoardPhotoCaptureProps> = ({
                 : data?.spd_status === 'yellow_check'
                   ? 'Check'
                   : 'Unknown',
-          totalWays: resolvedWays,
+          totalWays: data?.total_ways || resolvedWays,
+          waysPerSide: data?.ways_per_side || null,
           evidence: data?.evidence,
           boardLayout: data?.board_layout ?? '1P',
           waysPerCircuit: data?.ways_per_circuit ?? 1,
@@ -724,24 +727,8 @@ export const BoardPhotoCapture: React.FC<BoardPhotoCaptureProps> = ({
           photoUrl: capturedImages[0]?.url || null, // Pass photo for training
         };
 
-        toast.success(`Found ${data.circuits.length} circuits from ${photoText}`);
+        toast.success(`Found ${data.circuits.length} circuits`);
         onAnalysisComplete(transformedData);
-
-        const lowConfCircuits = transformedCircuits.filter((c) => c.confidence === 'low');
-        if (lowConfCircuits.length > 0) {
-          toast.warning(
-            `⚠️ ${lowConfCircuits.length} circuit(s) detected with low confidence: ${lowConfCircuits.map((c) => `#${c.position}`).join(', ')}. Please verify these manually before finalising.`,
-            { duration: 8000 }
-          );
-        }
-
-        const mediumConfCount = transformedCircuits.filter((c) => c.confidence === 'medium').length;
-        if (mediumConfCount > transformedCircuits.length * 0.3) {
-          toast.warning(
-            `⚠️ ${mediumConfCount} of ${transformedCircuits.length} circuits have medium confidence. Consider retaking photos with better lighting and closer angle.`,
-            { duration: 6000 }
-          );
-        }
       } else {
         toast.error(
           'AI could not detect any circuits. Please try another angle or ensure the board is clearly visible and well-lit.'
@@ -753,10 +740,13 @@ export const BoardPhotoCapture: React.FC<BoardPhotoCaptureProps> = ({
       clearTimeout(stage4Timer);
       clearTimeout(stage5Timer);
       clearTimeout(timeoutId);
-      const errorMessage = error instanceof Error ? error.message : 'Failed to analyze images';
+      const rawMsg = error instanceof Error ? error.message : String(error);
+      // Show friendly message, not raw API errors
+      const errorMessage = rawMsg.includes('non-2xx') || rawMsg.includes('503') || rawMsg.includes('abort')
+        ? 'Sorry, there was a hiccup. Please try again.'
+        : rawMsg;
       toast.error(errorMessage);
     } finally {
-      toast.dismiss('analysis');
       toast.dismiss('timeout-warning');
       setIsAnalyzing(false);
     }
@@ -795,49 +785,71 @@ export const BoardPhotoCapture: React.FC<BoardPhotoCaptureProps> = ({
         </div>
       )}
 
-      {/* AI Reading Direction Guidance */}
-      <div className="bg-blue-50 dark:bg-blue-950/30 border border-blue-200 dark:border-blue-800 rounded-lg p-3 md:p-4">
-        <div className="flex gap-2 md:gap-3">
-          <Info className="h-5 w-5 text-blue-600 dark:text-blue-400 flex-shrink-0 mt-0.5" />
-          <div className="space-y-1.5">
-            <p className="text-xs md:text-sm font-medium text-blue-900 dark:text-blue-100">
-              AI reads circuits left → right
-            </p>
-            <p className="text-xs text-blue-700 dark:text-blue-300">
-              If your <span className="font-semibold">main switch is on the right side</span>, use
-              the <span className="font-semibold">"Reverse Order"</span> button after analysis to
-              correct circuit numbering.
-            </p>
-          </div>
-        </div>
-      </div>
-
       {capturedImages.length === 0 && !showCamera && (
-        <div className="space-y-2.5 md:space-y-3">
-          <p className="text-xs md:text-sm text-muted-foreground">
-            Take multiple photos of the consumer unit from different angles for better accuracy.
-            <span className="block mt-1 text-yellow-600 dark:text-yellow-500 font-medium">
-              Note: You'll need to allow camera access when prompted by your browser.
-            </span>
-          </p>
-          <div className="flex flex-col gap-2 md:gap-3">
-            <Button onClick={startCamera} className="w-full h-10 md:h-12 text-sm md:text-base">
-              <Camera className="h-4 w-4 mr-2" />
-              Use Camera
-            </Button>
-            <Button
-              variant="outline"
-              onClick={(e) => {
-                e.preventDefault();
-                e.stopPropagation();
-                fileInputRef.current?.click();
-              }}
-              className="w-full h-10 md:h-12 text-sm md:text-base"
-            >
-              <Upload className="h-4 w-4 mr-2" />
-              Upload Photos
-            </Button>
+        <div className="flex flex-col items-center space-y-5">
+          {/* Hero — glowing icon */}
+          <div className="relative flex items-center justify-center pt-2">
+            <div className="absolute inset-0 bg-elec-yellow/10 blur-3xl rounded-full scale-150" />
+            <div className="relative p-5 rounded-3xl bg-gradient-to-br from-elec-yellow/15 to-elec-yellow/5 border border-elec-yellow/25 shadow-lg shadow-elec-yellow/10">
+              <ScanLine className="h-10 w-10 text-elec-yellow" />
+            </div>
+            <div className="absolute -top-0.5 -right-0.5 p-1.5 rounded-full bg-elec-yellow shadow-md shadow-elec-yellow/30">
+              <Sparkles className="h-3 w-3 text-black" />
+            </div>
           </div>
+
+          {/* Description */}
+          <p className="text-sm text-white text-center max-w-[280px] leading-relaxed">
+            Snap a photo and AI will instantly detect your circuits, ratings and device types.
+          </p>
+
+          {/* What AI Detects — clean vertical list */}
+          <div className="w-full rounded-xl bg-white/[0.03] border border-white/10 px-4 py-3 space-y-2.5">
+            {[
+              { label: 'Circuit labels & descriptions' },
+              { label: 'MCB, RCBO & RCD ratings' },
+              { label: 'Board make, model & ways' },
+            ].map(({ label }) => (
+              <div key={label} className="flex items-center gap-3">
+                <div className="h-5 w-5 rounded-full bg-green-500/15 flex items-center justify-center flex-shrink-0">
+                  <Check className="h-3 w-3 text-green-400" />
+                </div>
+                <span className="text-sm text-white">{label}</span>
+              </div>
+            ))}
+          </div>
+
+          {/* Reading Direction Guidance */}
+          <div className="w-full flex items-start gap-3 px-4 py-3 rounded-xl bg-elec-yellow/[0.06] border border-elec-yellow/20">
+            <ArrowRight className="h-4 w-4 text-elec-yellow flex-shrink-0 mt-0.5" />
+            <p className="text-xs text-white leading-relaxed">
+              AI reads circuits <span className="font-semibold text-elec-yellow">left → right</span>.
+              Main switch on the right? Use{' '}
+              <span className="font-semibold">"Reverse Order"</span> after scanning.
+            </p>
+          </div>
+
+          {/* Primary CTA */}
+          <Button
+            onClick={startCamera}
+            className="w-full h-14 text-base gap-3 bg-elec-yellow text-black hover:bg-elec-yellow/90 font-semibold rounded-xl touch-manipulation shadow-lg shadow-elec-yellow/20"
+          >
+            <Camera className="h-5 w-5" />
+            Use Camera
+          </Button>
+
+          {/* Secondary — text link style */}
+          <button
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              fileInputRef.current?.click();
+            }}
+            className="flex items-center gap-2 text-sm text-white font-medium py-2 touch-manipulation active:opacity-70 transition-opacity"
+          >
+            <Upload className="h-4 w-4" />
+            Upload from gallery
+          </button>
         </div>
       )}
 

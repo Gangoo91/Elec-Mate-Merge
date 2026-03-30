@@ -67,17 +67,16 @@ export function useActivityTracking() {
       sessionStarted.current = true;
       trackEvent('session_start');
 
-      // Track session end on unload
+      // Track session end on unload — fire-and-forget via supabase client
       const handleUnload = () => {
-        // Use sendBeacon for reliable tracking on page close
-        if (navigator.sendBeacon) {
-          const payload = JSON.stringify({
+        supabase
+          .from('user_events')
+          .insert({
             user_id: user.id,
             event_type: 'session_end',
             page_path: location.pathname,
-          });
-          navigator.sendBeacon(`${import.meta.env.VITE_SUPABASE_URL}/rest/v1/user_events`, payload);
-        }
+          })
+          .then(() => {});
       };
 
       window.addEventListener('beforeunload', handleUnload);

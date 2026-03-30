@@ -6,12 +6,10 @@
 
 import { useState, useCallback, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { useNavigate } from 'react-router-dom';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import {
-  ArrowLeft,
   Briefcase,
   Bookmark,
   BarChart3,
@@ -116,7 +114,6 @@ const toInternalVacancy = (job: UnifiedJobListing): InternalVacancy => ({
 });
 
 const PremiumJobsHub = () => {
-  const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState<TabId>('explore');
   const [filters, setFilters] = useState<JobFilters>(DEFAULT_FILTERS);
   const [searchQuery, setSearchQuery] = useState('');
@@ -228,8 +225,6 @@ const PremiumJobsHub = () => {
   }, [jobs, filters]);
 
   // Handlers
-  const handleBack = () => navigate(-1);
-
   const handleJobSelect = (job: UnifiedJobListing) => {
     setSelectedJob(job);
     if (job.is_internal) {
@@ -363,51 +358,9 @@ const PremiumJobsHub = () => {
       exit="exit"
       className="min-h-screen bg-background"
     >
-      {/* Header */}
-      <header className="sticky top-0 z-40 bg-background/95 backdrop-blur-sm border-b border-white/5">
-        <div className="flex items-center justify-between px-3 sm:px-4 py-2 sm:py-3">
-          <div className="flex items-center gap-3">
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={handleBack}
-              className="h-10 w-10 rounded-xl text-white hover:text-white hover:bg-white/10"
-            >
-              <ArrowLeft className="h-5 w-5" />
-            </Button>
-            <div>
-              <h1 className="text-lg font-bold text-white">Job Vacancies</h1>
-              <p className="text-xs text-white">Find your next role</p>
-            </div>
-          </div>
-
-          <div className="flex items-center gap-2">
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={() => setIsSearchOpen(true)}
-              className="h-10 w-10 rounded-xl text-white hover:text-white hover:bg-white/10 touch-manipulation"
-            >
-              <Search className="h-5 w-5" />
-            </Button>
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={handleRefresh}
-              disabled={isRefreshing}
-              className="h-10 w-10 rounded-xl text-white hover:text-white hover:bg-white/10 touch-manipulation"
-            >
-              {isRefreshing ? (
-                <Loader2 className="h-5 w-5 animate-spin" />
-              ) : (
-                <RefreshCw className="h-5 w-5" />
-              )}
-            </Button>
-          </div>
-        </div>
-
-        {/* Tabs */}
-        <div className="flex gap-1 px-3 sm:px-4 pb-2 sm:pb-3">
+      {/* Tab bar + actions */}
+      <div className="border-b border-white/5">
+        <div className="flex items-center gap-1 px-3 sm:px-4 py-2 sm:py-3">
           {TABS.map((tab) => {
             const Icon = tab.icon;
             const isActive = activeTab === tab.id;
@@ -434,8 +387,31 @@ const PremiumJobsHub = () => {
               </button>
             );
           })}
+
+          {/* Search + Refresh */}
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={() => setIsSearchOpen(true)}
+            className="h-10 w-10 rounded-xl text-white hover:text-white hover:bg-white/10 touch-manipulation flex-shrink-0"
+          >
+            <Search className="h-5 w-5" />
+          </Button>
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={handleRefresh}
+            disabled={isRefreshing}
+            className="h-10 w-10 rounded-xl text-white hover:text-white hover:bg-white/10 touch-manipulation flex-shrink-0"
+          >
+            {isRefreshing ? (
+              <Loader2 className="h-5 w-5 animate-spin" />
+            ) : (
+              <RefreshCw className="h-5 w-5" />
+            )}
+          </Button>
         </div>
-      </header>
+      </div>
 
       {/* Main Content */}
       <main className="pb-20">

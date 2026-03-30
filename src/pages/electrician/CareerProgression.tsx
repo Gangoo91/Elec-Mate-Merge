@@ -24,7 +24,6 @@ import CareerCourses from '@/components/electrician/career/CareerCourses';
 import EnhancedFurtherEducation from '@/components/electrician/career/EnhancedFurtherEducation';
 import ProfessionalAccreditation from '@/components/electrician/career/ProfessionalAccreditation';
 import CPDTracker from '@/components/electrician/career/CPDTracker';
-import JobVacancies from '@/pages/electrician/JobVacancies';
 import { CareerSectionList } from '@/components/electrician/career/CareerSectionList';
 import { CareerListItem } from '@/components/electrician/career/CareerListItem';
 import { OpportunityStack } from '@/components/electrician/career/OpportunityStack';
@@ -148,6 +147,11 @@ const CareerProgression = () => {
   const activeSection = searchParams.get('section') || null;
 
   const setActiveSection = (section: string | null) => {
+    // Job Vacancies is a standalone full-screen route — navigate instead of embedding
+    if (section === 'job-vacancies') {
+      navigate('/electrician/job-vacancies');
+      return;
+    }
     if (section) {
       setSearchParams({ section }, { replace: false });
     } else {
@@ -172,15 +176,13 @@ const CareerProgression = () => {
         return <ProfessionalAccreditation />;
       case 'cpd':
         return <CPDTracker />;
-      case 'job-vacancies':
-        return <JobVacancies onBack={handleBackToSections} />;
       default:
         return null;
     }
   };
 
   return (
-    <div className="bg-[#1a1a1a] min-h-screen animate-fade-in">
+    <div className="bg-background min-h-screen animate-fade-in">
       <Helmet>
         <title>Electrician Career Progression UK | JIB Timeline & CPD</title>
         <meta
@@ -192,7 +194,7 @@ const CareerProgression = () => {
 
       {/* Sticky Header — hidden when education section has its own header */}
       {activeSection !== 'education' && (
-        <header className="sticky top-0 z-40 bg-[#1a1a1a]/95 backdrop-blur-xl border-b border-white/10">
+        <header className="sticky top-0 z-40 bg-background/95 backdrop-blur-xl border-b border-white/10">
           <div className="max-w-5xl mx-auto px-4 sm:px-6">
             <div className="flex items-center h-14 sm:h-16">
               <Button
@@ -219,7 +221,7 @@ const CareerProgression = () => {
       {activeSection === null ? (
         <>
           {/* Hero Section */}
-          <section className="border-b border-white/10 bg-gradient-to-b from-purple-500/10 to-[#1a1a1a]">
+          <section className="border-b border-white/10 bg-gradient-to-b from-purple-500/10 to-background">
             <div className="max-w-5xl mx-auto px-4 sm:px-6 py-8 sm:py-12">
               <div className="flex flex-col sm:flex-row items-center gap-6">
                 <div className="p-4 bg-purple-500/20 rounded-2xl border border-purple-500/20">

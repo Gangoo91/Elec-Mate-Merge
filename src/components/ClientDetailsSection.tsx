@@ -289,11 +289,18 @@ const ClientDetailsSectionInner = ({ formData, onUpdate }: ClientDetailsSectionP
         <SectionTitle icon={Building2} title="Installation Details" isMobile={isMobile} />
         <div className={cn('space-y-4 py-4', isMobile ? 'px-4' : '')}>
           {/* Same Address Toggle */}
-          <button
-            type="button"
+          <div
+            role="button"
+            tabIndex={0}
             onClick={() => handleSameAddressToggle(localValues.sameAsClientAddress !== 'true')}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                handleSameAddressToggle(localValues.sameAsClientAddress !== 'true');
+              }
+            }}
             className={cn(
-              'w-full flex items-center gap-3 p-4 rounded-xl border-2 transition-all touch-manipulation',
+              'w-full flex items-center gap-3 p-4 rounded-xl border-2 transition-all touch-manipulation cursor-pointer',
               localValues.sameAsClientAddress === 'true'
                 ? 'border-elec-yellow bg-elec-yellow/10'
                 : 'border-border/30 bg-card/30'
@@ -301,11 +308,12 @@ const ClientDetailsSectionInner = ({ formData, onUpdate }: ClientDetailsSectionP
           >
             <Checkbox
               checked={localValues.sameAsClientAddress === 'true'}
-              className="h-5 w-5 data-[state=checked]:bg-elec-yellow data-[state=checked]:border-elec-yellow"
+              tabIndex={-1}
+              className="h-5 w-5 pointer-events-none data-[state=checked]:bg-elec-yellow data-[state=checked]:border-elec-yellow"
             />
             <div className="flex-1 text-left">
-              <span className="font-medium">Same as client address</span>
-              <p className="text-xs text-muted-foreground mt-0.5">
+              <span className="font-medium text-white">Same as client address</span>
+              <p className="text-xs text-white mt-0.5">
                 Use client address for installation
               </p>
             </div>
@@ -314,10 +322,10 @@ const ClientDetailsSectionInner = ({ formData, onUpdate }: ClientDetailsSectionP
                 'h-5 w-5',
                 localValues.sameAsClientAddress === 'true'
                   ? 'text-elec-yellow'
-                  : 'text-muted-foreground'
+                  : 'text-white'
               )}
             />
-          </button>
+          </div>
 
           {localValues.sameAsClientAddress !== 'true' && (
             <FormField label="Installation Address" required>

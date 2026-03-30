@@ -77,6 +77,9 @@ interface DetectedCircuit {
   pictograms: Array<{ type: string; confidence: number }>;
   phase: '1P' | '3P';
   phases?: string[];
+  way_number?: number;
+  phase_designation?: string;
+  board_side?: 'left' | 'right';
   confidence: 'high' | 'medium' | 'low';
   evidence: string;
   notes: string;
@@ -90,6 +93,8 @@ interface BoardStructure {
   spd_status: 'green_ok' | 'yellow_check' | 'red_replace' | 'not_present' | 'unknown';
   board_layout: '1P' | '3P-vertical' | '3P-horizontal';
   estimated_total_ways: number;
+  total_ways?: number;
+  ways_per_side?: number;
   ways_per_circuit: number;
   evidence: string;
 }
@@ -173,6 +178,42 @@ const fetchWithTimeout = async (
     clearTimeout(timeoutId);
     throw error;
   }
+};
+
+/**
+ * Fetch with retry — exponential backoff for transient errors (429, 500, 503)
+ */
+const fetchWithRetry = async (
+  url: string,
+  options: RequestInit,
+  timeoutMs: number,
+  maxRetries: number = 1
+): Promise<Response> => {
+  let lastError: Error | null = null;
+  for (let attempt = 0; attempt <= maxRetries; attempt++) {
+    try {
+      const response = await fetchWithTimeout(url, options, timeoutMs);
+      if (response.ok || (response.status !== 429 && response.status !== 500 && response.status !== 503)) {
+        return response;
+      }
+      const retryAfter = response.headers.get('Retry-After');
+      const delay = retryAfter ? parseInt(retryAfter) * 1000 : 2000 * Math.pow(2, attempt);
+      console.warn(`[RETRY] ${response.status} on attempt ${attempt + 1}/${maxRetries + 1}, waiting ${delay}ms`);
+      if (attempt < maxRetries) {
+        await new Promise((r) => setTimeout(r, delay));
+      } else {
+        return response;
+      }
+    } catch (error) {
+      lastError = error instanceof Error ? error : new Error(String(error));
+      if (attempt < maxRetries) {
+        const delay = 2000 * Math.pow(2, attempt);
+        console.warn(`[RETRY] Error on attempt ${attempt + 1}: ${lastError.message}, retrying in ${delay}ms`);
+        await new Promise((r) => setTimeout(r, delay));
+      }
+    }
+  }
+  throw lastError || new Error('fetchWithRetry exhausted retries');
 };
 
 // ============================================================================
@@ -326,13 +367,13 @@ async function getManufacturerKnowledge(
  */
 async function getReferenceImages(brand: string, supabase: any): Promise<string[]> {
   try {
-    // Get verified reference images for this brand (prioritize dirty/real-world)
+    // Get reference images for this brand — prefer verified, fall back to unverified
     const { data, error } = await supabase
       .from('board_reference_images')
       .select('image_url')
       .ilike('manufacturer', `%${brand}%`)
-      .eq('verified', true)
       .in('image_type', ['in_situ_dirty', 'in_situ_clean', 'product_catalogue'])
+      .order('verified', { ascending: false }) // verified first
       .order('image_type', { ascending: true }) // dirty first
       .limit(2);
 
@@ -382,8 +423,8 @@ async function getTrainingExamples(brand: string, supabase: any): Promise<Traini
       `
       )
       .ilike('manufacturer', `%${brand}%`)
-      .eq('human_verified', true)
       .not('circuits', 'is', null)
+      .order('human_verified', { ascending: false }) // verified first
       .limit(2);
 
     if (error || !data || data.length === 0) {
@@ -448,6 +489,158 @@ function buildTrainingExamplesPrompt(examples: TrainingExample[]): string {
 }
 
 /**
+ * Training Correction Layer
+ * Reads user corrections from board_scanner_training and applies
+ * statistically significant patterns (3+ occurrences) as post-processing.
+ */
+interface CorrectionPattern {
+  field: 'device' | 'rating' | 'curve';
+  aiValue: string;
+  correctValue: string;
+  count: number;
+  brand: string | null;
+}
+
+async function getTrainingCorrections(
+  supabase: any,
+  brand: string | null
+): Promise<CorrectionPattern[]> {
+  try {
+    const { data, error } = await supabase
+      .from('board_scanner_training')
+      .select('ai_device_type, correct_device_type, ai_rating, correct_rating, ai_curve, correct_curve, board_brand');
+
+    if (error || !data || data.length === 0) return [];
+
+    // Aggregate correction patterns in memory (faster than SQL GROUP BY for <500 rows)
+    const patterns = new Map<string, CorrectionPattern>();
+
+    for (const row of data) {
+      // Device type corrections
+      if (row.ai_device_type && row.correct_device_type && row.ai_device_type !== row.correct_device_type) {
+        const key = `device:${row.ai_device_type}→${row.correct_device_type}:${row.board_brand || '*'}`;
+        const existing = patterns.get(key);
+        if (existing) {
+          existing.count++;
+        } else {
+          patterns.set(key, {
+            field: 'device',
+            aiValue: row.ai_device_type,
+            correctValue: row.correct_device_type,
+            count: 1,
+            brand: row.board_brand,
+          });
+        }
+      }
+
+      // Rating corrections
+      if (row.ai_rating && row.correct_rating && row.ai_rating !== row.correct_rating) {
+        const key = `rating:${row.ai_rating}→${row.correct_rating}:${row.board_brand || '*'}`;
+        const existing = patterns.get(key);
+        if (existing) {
+          existing.count++;
+        } else {
+          patterns.set(key, {
+            field: 'rating',
+            aiValue: row.ai_rating,
+            correctValue: row.correct_rating,
+            count: 1,
+            brand: row.board_brand,
+          });
+        }
+      }
+
+      // Curve corrections
+      if (row.ai_curve && row.correct_curve && row.ai_curve !== row.correct_curve) {
+        const key = `curve:${row.ai_curve}→${row.correct_curve}:${row.board_brand || '*'}`;
+        const existing = patterns.get(key);
+        if (existing) {
+          existing.count++;
+        } else {
+          patterns.set(key, {
+            field: 'curve',
+            aiValue: row.ai_curve,
+            correctValue: row.correct_curve,
+            count: 1,
+            brand: row.board_brand,
+          });
+        }
+      }
+    }
+
+    // Filter to statistically significant patterns (3+ occurrences)
+    const significant = [...patterns.values()].filter((p) => p.count >= 3);
+
+    // Sort: brand-specific first, then by count descending
+    significant.sort((a, b) => {
+      if (a.brand && !b.brand) return -1;
+      if (!a.brand && b.brand) return 1;
+      return b.count - a.count;
+    });
+
+    console.log(`[CORRECTIONS] Found ${significant.length} significant patterns from ${data.length} training records`);
+    return significant;
+  } catch (err) {
+    console.error('[CORRECTIONS] Failed to load training corrections:', err);
+    return [];
+  }
+}
+
+function applyTrainingCorrections(
+  circuits: any[],
+  corrections: CorrectionPattern[],
+  brand: string | null
+): { count: number; details: string[] } {
+  let count = 0;
+  const details: string[] = [];
+
+  for (const circuit of circuits) {
+    for (const rule of corrections) {
+      // Brand-specific rules only apply to matching brand
+      if (rule.brand && brand && rule.brand.toLowerCase() !== brand.toLowerCase()) continue;
+
+      if (rule.field === 'device') {
+        const deviceType = circuit.device?.category || circuit.device_type || '';
+        if (deviceType.toLowerCase() === rule.aiValue.toLowerCase()) {
+          const old = deviceType;
+          if (circuit.device) circuit.device.category = rule.correctValue;
+          circuit.device_type = rule.correctValue;
+          details.push(`Circuit ${circuit.position}: device ${old}→${rule.correctValue} (${rule.count} corrections)`);
+          count++;
+          break; // One correction per circuit per field
+        }
+      }
+
+      if (rule.field === 'rating') {
+        const rating = String(circuit.device?.rating_amps || circuit.rating_amps || '');
+        if (rating === rule.aiValue) {
+          const old = rating;
+          if (circuit.device) circuit.device.rating_amps = parseInt(rule.correctValue);
+          circuit.rating_amps = parseInt(rule.correctValue);
+          details.push(`Circuit ${circuit.position}: rating ${old}A→${rule.correctValue}A (${rule.count} corrections)`);
+          count++;
+          break;
+        }
+      }
+
+      if (rule.field === 'curve') {
+        const curve = circuit.device?.curve || circuit.curve || '';
+        if (curve.toLowerCase() === rule.aiValue.toLowerCase()) {
+          const old = curve;
+          if (circuit.device) circuit.device.curve = rule.correctValue;
+          circuit.curve = rule.correctValue;
+          details.push(`Circuit ${circuit.position}: curve ${old}→${rule.correctValue} (${rule.count} corrections)`);
+          count++;
+          break;
+        }
+      }
+    }
+  }
+
+  return { count, details };
+}
+
+/**
  * Build enhanced prompt with manufacturer-specific context
  */
 function buildEnhancedPrompt(knowledge: ManufacturerKnowledge | null): string {
@@ -499,6 +692,7 @@ async function detectBrand(images: string[]): Promise<string | null> {
   parts.push({ inlineData: { mimeType, data } });
 
   try {
+    // No retry for brand — fail fast, not critical
     const response = await fetchWithTimeout(
       `https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key=${geminiApiKey}`,
       {
@@ -507,12 +701,12 @@ async function detectBrand(images: string[]): Promise<string | null> {
         body: JSON.stringify({
           contents: [{ role: 'user', parts }],
           generationConfig: {
-            maxOutputTokens: 500,
+            maxOutputTokens: 600,
             temperature: 0.1,
           },
         }),
       },
-      20000 // 20 second timeout for brand detection
+      10000 // 10s brand detection — fail fast, not critical
     );
 
     if (!response.ok) {
@@ -568,27 +762,26 @@ async function analyzeWithGemini(
     console.log(`Including ${trainingExamples.length} training examples with circuit context`);
   }
 
-  // OPTIMIZED PROMPT - Concise but comprehensive
-  const systemPrompt = `UK electrician: Analyse consumer unit photo. Return JSON only.
+  // OPTIMIZED PROMPT - Balanced: concise but with strong 3P detection rules
+  const systemPrompt = `UK electrician: Analyse UK distribution board photo. Return JSON only. Do NOT include empty/spare positions.
 
-BOARD: brand, model, main_switch_rating (amps), spd_status (green_ok/yellow_check/red_replace/not_present), board_layout (1P/3P-vertical/3P-horizontal), estimated_total_ways, evidence.
+BOARD: brand, model, main_switch_rating (amps), spd_status (green_ok/yellow_check/red_replace/not_present), board_layout (1P/3P-vertical/3P-horizontal), estimated_total_ways, ways_per_side, evidence.
 
-THREE-PHASE DETECTION:
-- 3P boards: L1/L2/L3 busbar labels, 3 rows of MCBs, phase colour coding (brown/black/grey or red/yellow/blue)
-- 3-pole MCBs: 3 adjacent positions with linked toggles, same rating, wider device
-- Mark 3P circuits with phase:"3P", phases:["L1","L2","L3"]
-- Common 3P loads: cookers 32A+, EV chargers, motors, HVAC
+THREE-PHASE DETECTION (CRITICAL):
+- "DANGER 400 VOLTS" or "400V" visible = three-phase board. Set board_layout:"3P-vertical"
+- TP&N boards have LEFT side + RIGHT side. List LEFT circuits first (top→bottom), then RIGHT (top→bottom)
+- 3-POLE devices — mark phase:"3P" if: triple width device, linked toggles, rotary switch/isolator, L1+L2+L3 labels together, or 32A+ on 400V board. Common 3P loads: VMX/VSD/VFD, TMS, UPS, AHU, HVAC, compressor, chiller, motor, pump, fan, roller door, hoist, lift, crane, conveyor, welder, CNC, oven, cold room, DB2/DB3, generator, EV charger
+- Single-pole on 3P board: mark phase:"1P", read printed L1/L2/L3 label next to it → phase_designation
+- The board chart prints L1,L2,L3 next to each circuit. READ these labels — do not guess.
 
-CIRCUITS (left→right, top→bottom for 3P):
-- index (position 1,2,3...)
-- label_text (exact text, expand abbreviations: "K Skt"→"Kitchen Sockets")
-- device.category (MCB/RCBO/RCD/AFDD/Isolator), device.type (B32/C20 etc), device.rating_amps, device.curve (B/C/D)
-- phase (1P or 3P)
+CIRCUITS (only populated positions, no spares):
+- index, label_text (expand abbreviations: "K Skt"→"Kitchen Sockets")
+- board_side ("left"/"right" for 3P boards)
+- device.category (MCB/RCBO/RCD/AFDD/Isolator/MCCB), device.rating_amps, device.curve (B/C/D)
+- phase ("1P" or "3P"), phase_designation ("L1"/"L2"/"L3" or "L1,L2,L3" for 3-pole)
 - confidence (high/medium/low)
-- pictograms [{type, confidence}] - types: SOCKET,LIGHTING,COOKER_OVEN,HOB,SHOWER,IMMERSION,GARAGE,SMOKE_ALARM,BOILER,FREEZER,FRIDGE,WASHING_MACHINE,DISHWASHER,EV_CHARGER,OUTDOOR,RING_MAIN
 
-JSON format:
-{"board":{...},"circuits":[{...}],"three_phase_groups":[{"circuit_indices":[5,6,7],"description":"Cooker 3P","rating":32}]}`;
+JSON: {"board":{...},"circuits":[{...}]}`;
 
   // Build enhanced prompt with manufacturer-specific RAG context + OCR hints + training examples
   const ragContext = buildEnhancedPrompt(manufacturerKnowledge);
@@ -629,6 +822,7 @@ JSON format:
 - Three phase: ${hints.is_three_phase || 'unknown'}`;
   }
 
+  // No retry for main analysis — Supabase edge functions cap at 150s wall clock
   const response = await fetchWithTimeout(
     `https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key=${geminiApiKey}`,
     {
@@ -637,13 +831,13 @@ JSON format:
       body: JSON.stringify({
         contents: [{ role: 'user', parts }],
         generationConfig: {
-          maxOutputTokens: 8000,
+          maxOutputTokens: 9600,
           temperature: 0.2,
           responseMimeType: 'application/json',
         },
       }),
     },
-    120000 // 120 second timeout for Gemini (3-phase boards with many circuits need time)
+    140000 // 140s — push close to Supabase 150s limit for complex 3P boards
   );
 
   if (!response.ok) {
@@ -685,6 +879,7 @@ JSON format:
   return {
     board: result.board || {},
     circuits: (result.circuits || []).map((c: any) => ({ ...c, source_model: 'gemini' })),
+    threePhaseGroups: result.three_phase_groups || [],
   };
 }
 
@@ -706,19 +901,25 @@ async function verifyWithOpenAI(
   console.log('Stage 3: OpenAI - Component Verification');
 
   // OPTIMIZED: Concise prompt, only return corrections
-  const systemPrompt = `Electrical device specialist: Verify MCB/RCBO ratings in UK consumer unit. Return JSON only.
+  const systemPrompt = `Electrical device specialist: Verify MCB/RCBO ratings in UK distribution board (consumer unit or TP&N panel). Return JSON only.
 
 Verify these detections:
 ${circuits
-  .slice(0, 20)
-  .map((c) => `${c.index}:${c.device?.category || '?'} ${c.device?.rating_amps || '?'}A`)
+  .slice(0, 30)
+  .map((c) => `${c.index}:${c.device?.category || '?'} ${c.device?.rating_amps || '?'}A${c.way_number ? ` W${c.way_number}${c.phase_designation || ''}` : ''}`)
   .join(', ')}
 
-Device ID: MCB=no test button. RCBO=small test button (red/white). RCD=2 modules, large test button. AFDD=marked "AFDD"/"Arc". 3-pole MCB=3 linked toggles, triple width.
+Device ID: MCB=no test button. RCBO=small test button (red/white). RCD=2 modules, large test button. AFDD=marked "AFDD"/"Arc". 3-pole MCB/MCCB=3 linked toggles, triple width. Isolator/Rotary Switch=no overload protection, on/off only.
 
-Ratings: 6,10,16,20,32,40,50,63A. Curves: B(domestic), C(motors), D(high inrush).
+Ratings: 6,10,16,20,25,32,40,50,63,80,100,125A. Curves: B(domestic), C(motors/commercial), D(high inrush).
 
-THREE-PHASE: Look for 3-pole linked devices (20-63A typical), L1/L2/L3 busbar connections.
+THREE-PHASE TP&N BOARDS:
+- "DANGER 400 VOLTS" = three-phase board
+- Left side circuits = Ways 1 to N, right side = Ways N+1 to 2N
+- Each way has L1, L2, L3 positions — READ the printed phase labels on the board chart
+- 3-pole devices (linked toggles, rotary switches): occupy full way L1,L2,L3
+- Single-pole: sits on one phase — verify the printed L1/L2/L3 marker is correct
+- Include spares (empty positions)
 
 Return ONLY corrections (skip verified): {"device_verifications":[{"position":3,"verified":false,"corrections":{"category":"RCBO","rating_amps":16,"curve":"B"},"reason":"Test button visible"}]}`;
 
@@ -734,7 +935,7 @@ Return ONLY corrections (skip verified): {"device_verifications":[{"position":3,
     })
   );
 
-  const response = await fetchWithTimeout(
+  const response = await fetchWithRetry(
     'https://api.openai.com/v1/chat/completions',
     {
       method: 'POST',
@@ -744,7 +945,7 @@ Return ONLY corrections (skip verified): {"device_verifications":[{"position":3,
       },
       body: JSON.stringify({
         model: 'gpt-4o',
-        max_tokens: 2000,
+        max_tokens: 2400,
         temperature: 0.2,
         messages: [
           {
@@ -755,7 +956,7 @@ Return ONLY corrections (skip verified): {"device_verifications":[{"position":3,
         response_format: { type: 'json_object' },
       }),
     },
-    30000
+    30000 // 30s OpenAI verification
   );
 
   if (!response.ok) {
@@ -794,7 +995,7 @@ Return ONLY corrections (skip verified): {"device_verifications":[{"position":3,
 // ============================================================================
 
 function mergeResults(
-  geminiResult: { board: Partial<BoardStructure>; circuits: Partial<DetectedCircuit>[] },
+  geminiResult: { board: Partial<BoardStructure>; circuits: Partial<DetectedCircuit>[]; threePhaseGroups?: any[] },
   openaiResult: { deviceCorrections: Map<number, Partial<DetectedCircuit['device']>> },
   hints: BoardReadRequest['hints']
 ): AnalysisResult {
@@ -825,6 +1026,9 @@ function mergeResults(
       pictograms: circuit.pictograms || [],
       phase: circuit.phase || '1P',
       phases: circuit.phases,
+      way_number: circuit.way_number || undefined,
+      phase_designation: circuit.phase_designation || undefined,
+      board_side: circuit.board_side || undefined,
       confidence: circuit.confidence || 'medium',
       evidence: circuit.evidence || '',
       notes: circuit.notes || '',
@@ -849,7 +1053,49 @@ function mergeResults(
   }
 
   // Sort circuits by index
-  const circuits = Array.from(circuitMap.values()).sort((a, b) => a.index - b.index);
+  let circuits = Array.from(circuitMap.values()).sort((a, b) => a.index - b.index);
+
+  // Merge three-phase groups: combine 3 individual ways into 1 three-phase circuit
+  const threePhaseGroups = geminiResult.threePhaseGroups || [];
+  if (threePhaseGroups.length > 0) {
+    const indicesToRemove = new Set<number>();
+    const mergedCircuits: DetectedCircuit[] = [];
+
+    for (const group of threePhaseGroups) {
+      const indices: number[] = group.circuit_indices || [];
+      if (indices.length < 2) continue;
+
+      // Find the grouped circuits
+      const groupedCircuits = circuits.filter((c) => indices.includes(c.index));
+      if (groupedCircuits.length === 0) continue;
+
+      // Use first circuit as base, enrich with group info
+      const base = { ...groupedCircuits[0] };
+      base.label_text = group.description || base.label_text || 'Three-Phase Load';
+      base.phase = '3P';
+      base.phases = ['L1', 'L2', 'L3'];
+      if (group.rating) {
+        base.device = { ...base.device, rating_amps: group.rating };
+      }
+      base.notes = `3-pole device, Ways ${Math.min(...indices)}-${Math.max(...indices)} (L1,L2,L3)`;
+
+      mergedCircuits.push(base);
+      indices.forEach((i) => indicesToRemove.add(i));
+    }
+
+    // Remove grouped individual circuits, add merged ones
+    circuits = circuits.filter((c) => !indicesToRemove.has(c.index));
+    circuits.push(...mergedCircuits);
+    circuits.sort((a, b) => a.index - b.index);
+
+    // Renumber positions sequentially
+    circuits.forEach((c, i) => {
+      c.index = i + 1;
+      c.position = i + 1;
+    });
+
+    decisions.push(`Merged ${threePhaseGroups.length} three-phase group(s) — ${indicesToRemove.size} ways → ${mergedCircuits.length} circuit(s)`);
+  }
 
   // Build board structure
   const board: BoardStructure = {
@@ -859,6 +1105,8 @@ function mergeResults(
     spd_status: geminiResult.board.spd_status || 'unknown',
     board_layout: geminiResult.board.board_layout || '1P',
     estimated_total_ways: geminiResult.board.estimated_total_ways || circuits.length,
+    total_ways: geminiResult.board.total_ways || geminiResult.board.estimated_total_ways || undefined,
+    ways_per_side: geminiResult.board.ways_per_side || undefined,
     ways_per_circuit: geminiResult.board.ways_per_circuit || 1,
     evidence: geminiResult.board.evidence || '',
   };
@@ -871,6 +1119,74 @@ function mergeResults(
       board.board_layout = '3P-vertical';
       decisions.push('Board layout updated to 3P based on circuit detection');
     }
+  }
+
+  // Post-process: TP&N way/phase numbering with LEFT/RIGHT side split
+  if (board.board_layout.startsWith('3P')) {
+    const waysPerSide = board.ways_per_side || Math.ceil(board.estimated_total_ways / 2) || 8;
+    const phaseLabels: string[] = ['L1', 'L2', 'L3'];
+
+    // Helper: number a group of circuits starting from a given way
+    function numberGroup(group: DetectedCircuit[], startWay: number, side: 'left' | 'right') {
+      let way = startWay;
+      let phaseIdx = 0;
+      for (const c of group) {
+        if (c.phase === '3P') {
+          // 3-pole — occupies full way
+          if (phaseIdx > 0) { way++; phaseIdx = 0; } // finish partial way first
+          c.way_number = way;
+          c.phase_designation = 'L1,L2,L3';
+          c.board_side = side;
+          way++;
+          phaseIdx = 0;
+        } else {
+          // Single-pole — assign to current phase position
+          c.way_number = way;
+          c.phase_designation = c.phase_designation || phaseLabels[phaseIdx];
+          c.board_side = side;
+          phaseIdx++;
+          if (phaseIdx >= 3) { phaseIdx = 0; way++; }
+        }
+      }
+    }
+
+    // Split circuits into left and right groups
+    // Count physical positions (1P=1, 3P=3) to find where left side fills up
+    const maxLeftPositions = waysPerSide * 3;
+    let leftPositionCount = 0;
+    let splitIdx = circuits.length; // default: all on left
+
+    for (let i = 0; i < circuits.length; i++) {
+      const positionsUsed = circuits[i].phase === '3P' ? 3 : 1;
+      if (leftPositionCount + positionsUsed > maxLeftPositions) {
+        splitIdx = i;
+        break;
+      }
+      leftPositionCount += positionsUsed;
+    }
+
+    const leftCircuits = circuits.slice(0, splitIdx);
+    const rightCircuits = circuits.slice(splitIdx);
+
+    // Number each side independently
+    numberGroup(leftCircuits, 1, 'left');
+    numberGroup(rightCircuits, waysPerSide + 1, 'right');
+
+    board.ways_per_side = waysPerSide;
+    board.total_ways = waysPerSide * 2;
+
+    decisions.push(`TP&N split: ${leftCircuits.length} circuits left (Ways 1-${waysPerSide}), ${rightCircuits.length} right (Ways ${waysPerSide + 1}-${board.total_ways})`);
+
+    // Sort by way then phase, renumber sequentially
+    const phaseOrder: Record<string, number> = { 'L1': 0, 'L2': 1, 'L3': 2, 'L1,L2,L3': 0 };
+    circuits.sort((a, b) => {
+      const wayDiff = (a.way_number || 0) - (b.way_number || 0);
+      if (wayDiff !== 0) return wayDiff;
+      return (phaseOrder[a.phase_designation || 'L1'] || 0) - (phaseOrder[b.phase_designation || 'L1'] || 0);
+    });
+    circuits.forEach((c, i) => { c.index = i + 1; c.position = i + 1; });
+
+    decisions.push(`TP&N: ${circuits.length} circuits detected (${board.total_ways} ways, ${waysPerSide} per side)`);
   }
 
   // Check for missing circuits
@@ -1007,7 +1323,9 @@ serve(async (req) => {
 
     // Stage 1: Gemini - Board Structure (with RAG context + OCR hints + reference images + training examples)
     console.log('[STAGE 1] Starting Gemini analysis...');
-    const geminiResult = await analyzeWithGemini(
+    let geminiResult;
+    try {
+    geminiResult = await analyzeWithGemini(
       images,
       hints,
       manufacturerKnowledge,
@@ -1018,14 +1336,50 @@ serve(async (req) => {
     console.log(
       `[STAGE 1] Gemini completed, detected ${geminiResult.circuits?.length || 0} circuits`
     );
+    } catch (geminiError) {
+      console.error('[STAGE 1] Gemini failed after retries:', geminiError);
+      return new Response(
+        JSON.stringify({
+          error: 'Board analysis timed out — three-phase boards take longer. Please try again.',
+          circuits: [],
+          warnings: ['AI analysis timed out. Try again with good lighting and a clear photo.'],
+          metadata: { analysisTime: Date.now() - startTime, modelsUsed: [], imageCount: images.length },
+        }),
+        { status: 503, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      );
+    }
 
-    // Stage 2: OpenAI Verification
-    console.log('[STAGE 2] Starting OpenAI verification...');
-    const openaiResult = await verifyWithOpenAI(images, geminiResult.circuits || []);
-    console.log(`[STAGE 2] OpenAI completed, ${openaiResult.deviceCorrections.size} corrections`);
+    // Stage 2: OpenAI Verification — skip for 3P boards to stay within 150s Supabase limit
+    const is3PBoard = geminiResult.board?.board_layout?.startsWith('3P') ||
+      geminiResult.circuits?.some((c: any) => c.phase === '3P');
+    let openaiResult: { deviceCorrections: Map<number, any> } = { deviceCorrections: new Map() };
+    if (!is3PBoard) {
+      console.log('[STAGE 2] Starting OpenAI verification...');
+      openaiResult = await verifyWithOpenAI(images, geminiResult.circuits || []);
+      console.log(`[STAGE 2] OpenAI completed, ${openaiResult.deviceCorrections.size} corrections`);
+    } else {
+      console.log('[STAGE 2] Skipped OpenAI — 3P board, using time budget for Gemini + training corrections');
+    }
 
     // Merge results
     const result = mergeResults(geminiResult, openaiResult, hints);
+
+    // Stage 3: Apply training corrections from user feedback
+    console.log('[STAGE 3] Loading training corrections...');
+    const corrections = await getTrainingCorrections(supabase, detectedBrand);
+    if (corrections.length > 0) {
+      const { count: correctionCount, details: correctionDetails } = applyTrainingCorrections(
+        result.circuits,
+        corrections,
+        detectedBrand
+      );
+      if (correctionCount > 0) {
+        result.decisions.push(
+          `Applied ${correctionCount} training corrections from ${corrections.length} patterns`
+        );
+        correctionDetails.forEach((d) => console.log(`[CORRECTION] ${d}`));
+      }
+    }
 
     // Add metadata
     result.metadata.analysisTime = Date.now() - startTime;

@@ -3,7 +3,7 @@ import { List } from 'react-window';
 import { useHaptics } from '@/hooks/useHaptics';
 import { TestResult } from '@/types/testResult';
 import { CircuitCard } from './CircuitCard';
-import { MobileBottomSheet } from '@/components/ui/MobileBottomSheet';
+import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -31,7 +31,9 @@ import {
 } from 'lucide-react';
 
 // Virtualization threshold - use virtualization when circuit count exceeds this
-const VIRTUALIZATION_THRESHOLD = 10;
+// Set high enough that typical board scans (6-20 circuits) don't trigger it
+// react-window's List can crash with Object.values on null during rapid state transitions
+const VIRTUALIZATION_THRESHOLD = 50;
 // Fixed height for circuit cards
 const CARD_HEIGHT = 186; // Includes padding
 // List container height
@@ -227,29 +229,43 @@ export const CircuitList: React.FC<CircuitListProps> = ({
       )}
 
       {/* Edit Sheet */}
-      <MobileBottomSheet
-        isOpen={!!editingCircuit}
-        onClose={handleClose}
-        title={`Edit ${editingCircuit?.circuitDesignation || 'Circuit'}`}
-        snapPoints={[0.9]}
-      >
-        {editingCircuit && (
-          <CircuitEditForm
-            circuit={editingCircuit}
-            editedValues={editedValues}
-            onChange={handleFieldChange}
-            onSave={handleSave}
-            onDelete={handleDelete}
-            onClose={handleClose}
-            onMarkAsSpare={handleMarkAsSpare}
-            onNavigate={navigateCircuit}
-            canNavigatePrev={circuits.findIndex((c) => c.id === editingCircuit.id) > 0}
-            canNavigateNext={
-              circuits.findIndex((c) => c.id === editingCircuit.id) < circuits.length - 1
-            }
-          />
-        )}
-      </MobileBottomSheet>
+      <Sheet open={!!editingCircuit} onOpenChange={(open) => { if (!open) handleClose(); }}>
+        <SheetContent
+          side="bottom"
+          className="h-[95vh] rounded-t-2xl p-0 flex flex-col overflow-hidden"
+        >
+          {/* Drag handle */}
+          <div className="flex justify-center pt-3 pb-1">
+            <div className="w-10 h-1 rounded-full bg-white/20" />
+          </div>
+
+          {/* Header */}
+          <SheetHeader className="px-4 pb-3 border-b border-white/10">
+            <div className="flex items-center justify-between">
+              <SheetTitle className="text-lg font-semibold text-white">
+                Edit {editingCircuit?.circuitDesignation || 'Circuit'}
+              </SheetTitle>
+            </div>
+          </SheetHeader>
+
+          {editingCircuit && (
+            <CircuitEditForm
+              circuit={editingCircuit}
+              editedValues={editedValues}
+              onChange={handleFieldChange}
+              onSave={handleSave}
+              onDelete={handleDelete}
+              onClose={handleClose}
+              onMarkAsSpare={handleMarkAsSpare}
+              onNavigate={navigateCircuit}
+              canNavigatePrev={circuits.findIndex((c) => c.id === editingCircuit.id) > 0}
+              canNavigateNext={
+                circuits.findIndex((c) => c.id === editingCircuit.id) < circuits.length - 1
+              }
+            />
+          )}
+        </SheetContent>
+      </Sheet>
     </>
   );
 };
@@ -396,18 +412,18 @@ const CircuitEditForm: React.FC<CircuitEditFormProps> = ({
   return (
     <div className="flex flex-col h-full">
       {/* Navigation header */}
-      <div className="flex items-center justify-between px-3 py-2 border-b border-border bg-muted/30">
+      <div className="flex items-center justify-between px-3 py-2 border-b border-white/10">
         <Button
           variant="ghost"
           size="sm"
           onClick={() => onNavigate('prev')}
           disabled={!canNavigatePrev}
-          className="h-8 px-2 gap-1"
+          className="h-9 px-3 gap-1 text-white touch-manipulation"
         >
           <ChevronLeft className="h-4 w-4" />
           Prev
         </Button>
-        <Badge variant="secondary" className="px-2 text-xs">
+        <Badge className="px-3 py-1 text-xs font-bold bg-elec-yellow/15 text-elec-yellow border border-elec-yellow/25">
           {circuit.circuitDesignation || `C${circuit.circuitNumber}`}
         </Badge>
         <Button
@@ -415,7 +431,7 @@ const CircuitEditForm: React.FC<CircuitEditFormProps> = ({
           size="sm"
           onClick={() => onNavigate('next')}
           disabled={!canNavigateNext}
-          className="h-8 px-2 gap-1"
+          className="h-9 px-3 gap-1 text-white touch-manipulation"
         >
           Next
           <ChevronRight className="h-4 w-4" />
@@ -423,10 +439,10 @@ const CircuitEditForm: React.FC<CircuitEditFormProps> = ({
       </div>
 
       {/* Sticky Quick Values Row */}
-      <div className="px-3 py-2 border-b border-border bg-card">
-        <div className="flex items-center gap-1 mb-2">
-          <Zap className="h-3 w-3 text-primary" />
-          <span className="text-[10px] font-semibold text-muted-foreground uppercase tracking-wide">
+      <div className="px-3 py-2.5 border-b border-white/10 bg-white/[0.02]">
+        <div className="flex items-center gap-1.5 mb-2">
+          <Zap className="h-3 w-3 text-elec-yellow" />
+          <span className="text-[10px] font-semibold text-white uppercase tracking-wide">
             Quick Values
           </span>
         </div>
@@ -463,17 +479,17 @@ const CircuitEditForm: React.FC<CircuitEditFormProps> = ({
       </div>
 
       {/* Tab Navigation */}
-      <div className="flex border-b border-border bg-background">
+      <div className="flex border-b border-white/10">
         {tabs.map((tab) => (
           <button
             key={tab.id}
             onClick={() => handleTabChange(tab.id)}
             className={cn(
-              'flex-1 flex items-center justify-center gap-1.5 py-3 text-sm font-medium transition-colors',
+              'flex-1 flex items-center justify-center gap-1.5 py-3 text-sm font-medium transition-colors touch-manipulation',
               'border-b-2 -mb-[2px]',
               activeTab === tab.id
-                ? 'text-primary border-primary'
-                : 'text-muted-foreground border-transparent hover:text-foreground hover:bg-muted/30'
+                ? 'text-elec-yellow border-elec-yellow'
+                : 'text-white border-transparent hover:text-white hover:bg-white/5'
             )}
           >
             {tab.icon}
@@ -496,24 +512,24 @@ const CircuitEditForm: React.FC<CircuitEditFormProps> = ({
       </div>
 
       {/* Footer actions */}
-      <div className="flex items-center gap-2 p-3 border-t border-border bg-background">
-        <Button variant="destructive" size="sm" onClick={handleDelete} className="h-10 px-3">
+      <div className="flex items-center gap-2 p-3 pb-6 border-t border-white/10">
+        <Button variant="destructive" size="sm" onClick={handleDelete} className="h-11 px-3 touch-manipulation">
           <Trash2 className="h-4 w-4 mr-1" />
           Delete
         </Button>
         {onMarkAsSpare && (
-          <Button variant="outline" size="sm" onClick={onMarkAsSpare} className="h-10 px-3 text-muted-foreground border-muted">
+          <Button variant="outline" size="sm" onClick={onMarkAsSpare} className="h-11 px-3 text-white border-white/20 touch-manipulation">
             Spare
           </Button>
         )}
         <div className="flex-1" />
-        <Button variant="outline" size="sm" onClick={onClose} className="h-10 px-3">
+        <Button variant="outline" size="sm" onClick={onClose} className="h-11 px-3 text-white border-white/20 touch-manipulation">
           Cancel
         </Button>
         <Button
           size="sm"
           onClick={handleSave}
-          className="h-10 px-4 bg-gradient-to-r from-primary to-primary/80"
+          className="h-11 px-5 bg-elec-yellow text-black font-semibold hover:bg-elec-yellow/90 touch-manipulation"
         >
           <Save className="h-4 w-4 mr-1" />
           Save
@@ -546,10 +562,10 @@ const QuickValueTile: React.FC<QuickValueTileProps> = ({
   const haptics = useHaptics();
 
   const tileColors = {
-    pass: 'bg-green-500/10 border-green-500/40 text-green-400',
-    fail: 'bg-red-500/10 border-red-500/40 text-red-400',
-    warning: 'bg-amber-500/10 border-amber-500/40 text-amber-400',
-    empty: 'bg-muted/30 border-border/50 text-muted-foreground',
+    pass: 'bg-green-500/10 border-green-500/30 text-green-400',
+    fail: 'bg-red-500/10 border-red-500/30 text-red-400',
+    warning: 'bg-amber-500/10 border-amber-500/30 text-amber-400',
+    empty: 'bg-white/[0.04] border-white/10 text-white/60',
   };
 
   const handleClick = useCallback(() => {
@@ -568,22 +584,23 @@ const QuickValueTile: React.FC<QuickValueTileProps> = ({
     <button
       onClick={handleClick}
       className={cn(
-        'flex flex-col items-center justify-center p-2 rounded-lg border transition-transform',
+        'flex flex-col items-center justify-center p-2.5 rounded-xl border transition-transform touch-manipulation',
         'active:scale-95',
         tileColors[validation]
       )}
     >
-      <span className="text-[10px] font-medium text-muted-foreground mb-0.5">{label}</span>
+      <span className="text-[10px] font-medium text-white/70 mb-0.5">{label}</span>
       <span
         className={cn(
           'text-base font-bold',
+          validation === 'empty' && 'text-white/40',
           isStatus && value === '✓' && 'text-green-400',
           isStatus && value === '✗' && 'text-red-400'
         )}
       >
         {value}
       </span>
-      {unit && <span className="text-[10px] text-muted-foreground">{unit}</span>}
+      {unit && <span className="text-[10px] text-white/70">{unit}</span>}
     </button>
   );
 };
@@ -608,6 +625,9 @@ const CircuitTabContent: React.FC<TabContentProps> = ({ getValue, onChange }) =>
             className="h-11 text-sm"
             inputMode="numeric"
           />
+          {getValue('phaseType') === '3P' && (
+            <p className="text-[10px] text-purple-400 mt-1">3-pole: occupies 3 ways (L1, L2, L3)</p>
+          )}
         </FormField>
         <FormField label="Description">
           <Input
@@ -779,8 +799,132 @@ const CircuitTabContent: React.FC<TabContentProps> = ({ getValue, onChange }) =>
         </FormField>
       </FormRow>
     </FormSection>
+
+    {/* Phase Configuration */}
+    <FormSection title="Phase">
+      <FormRow>
+        <FormField label="Phase Type">
+          <Select
+            value={(getValue('phaseType') as string) || '1P'}
+            onValueChange={(v) => onChange('phaseType', v)}
+          >
+            <SelectTrigger className="h-11 text-sm">
+              <SelectValue placeholder="1P" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="1P">Single Phase (1P)</SelectItem>
+              <SelectItem value="3P">Three Phase (3P)</SelectItem>
+            </SelectContent>
+          </Select>
+        </FormField>
+        {getValue('phaseType') === '3P' && (
+          <FormField label="Phase Rotation">
+            <Select
+              value={(getValue('phaseRotation') as string) || ''}
+              onValueChange={(v) => onChange('phaseRotation', v)}
+            >
+              <SelectTrigger className="h-11 text-sm">
+                <SelectValue placeholder="Select..." />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="L1-L2-L3">L1-L2-L3 (Correct)</SelectItem>
+                <SelectItem value="L1-L3-L2">L1-L3-L2 (Reversed)</SelectItem>
+              </SelectContent>
+            </Select>
+          </FormField>
+        )}
+      </FormRow>
+      {getValue('phaseType') === '3P' && (
+        <>
+          <FormRow>
+            <FormField label="L-L Voltage (V)">
+              <Input
+                value={getValue('lineToLineVoltage') as string}
+                onChange={(e) => onChange('lineToLineVoltage', e.target.value)}
+                className="h-11 text-sm"
+                inputMode="decimal"
+                placeholder="400"
+              />
+            </FormField>
+            <div />
+          </FormRow>
+          <FormRow>
+            <FormField label="L1 Load (A)">
+              <Input
+                value={getValue('phaseBalanceL1') as string}
+                onChange={(e) => onChange('phaseBalanceL1', e.target.value)}
+                className="h-11 text-sm"
+                inputMode="decimal"
+                placeholder="0.0"
+              />
+            </FormField>
+            <FormField label="L2 Load (A)">
+              <Input
+                value={getValue('phaseBalanceL2') as string}
+                onChange={(e) => onChange('phaseBalanceL2', e.target.value)}
+                className="h-11 text-sm"
+                inputMode="decimal"
+                placeholder="0.0"
+              />
+            </FormField>
+          </FormRow>
+          <FormRow>
+            <FormField label="L3 Load (A)">
+              <Input
+                value={getValue('phaseBalanceL3') as string}
+                onChange={(e) => onChange('phaseBalanceL3', e.target.value)}
+                className="h-11 text-sm"
+                inputMode="decimal"
+                placeholder="0.0"
+              />
+            </FormField>
+            <FormField label="Balance">
+              <PhaseBalanceDisplay
+                l1={getValue('phaseBalanceL1') as string}
+                l2={getValue('phaseBalanceL2') as string}
+                l3={getValue('phaseBalanceL3') as string}
+              />
+            </FormField>
+          </FormRow>
+        </>
+      )}
+    </FormSection>
   </>
 );
+
+/**
+ * Phase Balance Display - inline indicator for the edit form
+ */
+const PhaseBalanceDisplay: React.FC<{ l1: string; l2: string; l3: string }> = ({ l1, l2, l3 }) => {
+  const l1v = parseFloat(l1) || 0;
+  const l2v = parseFloat(l2) || 0;
+  const l3v = parseFloat(l3) || 0;
+
+  if (l1v === 0 && l2v === 0 && l3v === 0) {
+    return (
+      <div className="h-11 flex items-center justify-center text-sm text-white/40 bg-white/[0.04] rounded-md border border-white/10">
+        Enter loads
+      </div>
+    );
+  }
+
+  const max = Math.max(l1v, l2v, l3v);
+  const min = Math.min(l1v, l2v, l3v);
+  const avg = (l1v + l2v + l3v) / 3;
+  const imbalance = avg > 0 ? ((max - min) / avg) * 100 : 0;
+  const isOk = imbalance <= 10;
+
+  return (
+    <div className={cn(
+      'h-11 flex items-center justify-center text-sm font-bold rounded-md border',
+      isOk
+        ? 'bg-green-500/10 border-green-500/30 text-green-400'
+        : 'bg-red-500/10 border-red-500/30 text-red-400'
+    )}>
+      {imbalance.toFixed(1)}% {isOk ? '✓' : '⚠'}
+    </div>
+  );
+};
 
 /**
  * Tests Tab Content
@@ -1144,8 +1288,11 @@ const FormSection: React.FC<{ title: string; children: React.ReactNode }> = ({
   children,
 }) => (
   <div className="space-y-3">
-    <h4 className="text-sm font-semibold text-foreground uppercase tracking-wide">{title}</h4>
-    <div className="space-y-3">{children}</div>
+    <div className="flex items-center gap-2">
+      <div className="w-1 h-4 rounded-full bg-elec-yellow" />
+      <h4 className="text-xs font-semibold text-white uppercase tracking-wider">{title}</h4>
+    </div>
+    <div className="space-y-3 pl-3">{children}</div>
   </div>
 );
 
@@ -1155,7 +1302,7 @@ const FormRow: React.FC<{ children: React.ReactNode }> = ({ children }) => (
 
 const FormField: React.FC<{ label: string; children: React.ReactNode }> = ({ label, children }) => (
   <div className="space-y-1.5">
-    <Label className="text-xs text-muted-foreground font-medium">{label}</Label>
+    <Label className="text-xs text-white font-medium">{label}</Label>
     {children}
   </div>
 );

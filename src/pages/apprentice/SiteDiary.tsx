@@ -78,6 +78,7 @@ export default function SiteDiary() {
   const {
     insight: coachInsight,
     isLoading: coachLoading,
+    error: coachError,
     refresh: refreshCoach,
   } = useDiaryCoach(entries, qualificationCode);
   // Portfolio data for evidence awareness
@@ -215,7 +216,7 @@ export default function SiteDiary() {
   );
 
   return (
-    <div className="h-[100dvh] flex flex-col bg-[hsl(240,5.9%,10%)] overflow-hidden">
+    <div className="flex flex-col bg-background min-h-0">
       {/* ═══ FIXED TOP BAR ═══ */}
       <div className="flex-shrink-0 bg-[hsl(240,5.9%,10%)]/95 backdrop-blur-xl border-b border-white/[0.06] z-20">
         {/* Title row */}
@@ -379,216 +380,184 @@ export default function SiteDiary() {
       </div>
 
       {/* ═══ SCROLLABLE CONTENT ═══ */}
-      <div className="flex-1 overflow-y-auto overscroll-contain">
+      <div className="flex-1">
         <div className="max-w-7xl mx-auto px-3 py-3 sm:px-6 lg:px-8 space-y-3">
-          {/* Weekly Summary (always at top) */}
+          {/* Weekly Summary (full width) */}
           <DiaryWeeklySummary entries={entries} aiSummary={coachInsight?.weekSummary} />
 
-          {/* Portfolio Opportunities card */}
-          {portfolioOpportunities.length > 0 && (
-            <button
-              onClick={() => {
-                const nudge = portfolioOpportunities[0];
-                const target = entries.find((e) => e.id === nudge.entryId);
-                if (target) {
-                  setDetailEntry(target);
-                  setDetailOpen(true);
-                }
-              }}
-              className="w-full rounded-xl border border-amber-500/20 bg-gradient-to-br from-amber-500/[0.06] to-yellow-500/[0.04] overflow-hidden text-left touch-manipulation active:bg-amber-500/[0.08] transition-colors"
-            >
-              <div className="h-0.5 bg-gradient-to-r from-amber-500 via-yellow-500 to-amber-500" />
-              <div className="px-4 py-3 flex items-center gap-3">
-                <div className="h-9 w-9 rounded-lg bg-amber-500/15 flex items-center justify-center flex-shrink-0">
-                  <Briefcase className="h-4 w-4 text-amber-400" />
-                </div>
-                <div className="flex-1 min-w-0">
-                  <h4 className="text-sm font-semibold text-white">Portfolio Opportunities</h4>
-                  <p className="text-[11px] text-amber-300/80 mt-0.5">
-                    {portfolioOpportunities.length} entr
-                    {portfolioOpportunities.length !== 1 ? 'ies' : 'y'} could strengthen your
-                    portfolio
-                  </p>
-                </div>
-                <ChevronRight className="h-4 w-4 text-amber-400/60 flex-shrink-0" />
-              </div>
-            </button>
-          )}
-
-          {/* AI Coach card — only when 3+ entries */}
-          {entries.length >= 3 && (
-            <div className="rounded-xl overflow-hidden border border-purple-500/20 bg-gradient-to-br from-purple-500/[0.06] to-blue-500/[0.06]">
-              {/* Gradient accent */}
-              <div className="h-0.5 bg-gradient-to-r from-purple-500 via-blue-500 to-purple-500" />
-
-              {/* Header */}
+          {/* Portfolio + AI Coach */}
+          <div className="space-y-3">
+            {/* Portfolio Opportunities card */}
+            {portfolioOpportunities.length > 0 && (
               <button
-                onClick={() => setCoachExpanded(!coachExpanded)}
-                className="w-full flex items-center justify-between px-4 py-3 touch-manipulation"
+                onClick={() => {
+                  const nudge = portfolioOpportunities[0];
+                  const target = entries.find((e) => e.id === nudge.entryId);
+                  if (target) {
+                    setDetailEntry(target);
+                    setDetailOpen(true);
+                  }
+                }}
+                className="w-full rounded-xl border border-amber-500/20 bg-gradient-to-br from-amber-500/[0.06] to-yellow-500/[0.04] overflow-hidden text-left touch-manipulation active:bg-amber-500/[0.08] transition-colors"
               >
-                <div className="flex items-center gap-2">
-                  <Sparkles className="h-4 w-4 text-purple-400" />
-                  <h3 className="text-sm font-semibold text-white">AI Coach</h3>
-                  {coachLoading && <RefreshCw className="h-3 w-3 text-purple-400 animate-spin" />}
-                </div>
-                <div className="flex items-center gap-2">
-                  <button
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      refreshCoach();
-                    }}
-                    className="h-8 w-8 flex items-center justify-center rounded-lg active:bg-white/10 touch-manipulation"
-                  >
-                    <RefreshCw
-                      className={`h-3.5 w-3.5 text-white ${coachLoading ? 'animate-spin' : ''}`}
-                    />
-                  </button>
-                  {coachExpanded ? (
-                    <ChevronUp className="h-4 w-4 text-white" />
-                  ) : (
-                    <ChevronDown className="h-4 w-4 text-white" />
-                  )}
+                <div className="h-0.5 bg-gradient-to-r from-amber-500 via-yellow-500 to-amber-500" />
+                <div className="px-4 py-3 flex items-center gap-3">
+                  <div className="h-9 w-9 rounded-lg bg-amber-500/15 flex items-center justify-center flex-shrink-0">
+                    <Briefcase className="h-4 w-4 text-amber-400" />
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <h4 className="text-sm font-semibold text-white">Portfolio Opportunities</h4>
+                    <p className="text-[11px] text-amber-300/80 mt-0.5">
+                      {portfolioOpportunities.length} entr
+                      {portfolioOpportunities.length !== 1 ? 'ies' : 'y'} could strengthen your
+                      portfolio
+                    </p>
+                  </div>
+                  <ChevronRight className="h-4 w-4 text-amber-400/60 flex-shrink-0" />
                 </div>
               </button>
+            )}
 
-              {/* Get insights button — when no cached insight */}
-              {coachExpanded && !coachInsight && !coachLoading && (
-                <div className="px-4 pb-4">
-                  <button
-                    onClick={refreshCoach}
-                    className="w-full flex items-center justify-center gap-2 h-12 rounded-xl bg-purple-500/15 border border-purple-500/30 text-purple-400 text-sm font-semibold touch-manipulation active:scale-[0.98] transition-all"
-                  >
-                    <Sparkles className="h-4 w-4" />
-                    Get AI Insights
-                  </button>
-                  <p className="text-[11px] text-white text-center mt-2">
-                    Analyses your recent diary entries for patterns and guidance
-                  </p>
-                </div>
-              )}
-
-              {/* Loading state */}
-              {coachExpanded && coachLoading && !coachInsight && (
-                <div className="flex items-center justify-center py-6 px-4">
-                  <div className="animate-spin h-5 w-5 border-2 border-purple-400 border-t-transparent rounded-full" />
-                  <span className="text-xs text-white ml-2">Analysing your diary...</span>
-                </div>
-              )}
-
-              {/* Expanded content */}
-              {coachExpanded && coachInsight && (
-                <div className="px-4 pb-4 space-y-3">
-                  {/* Encouragement */}
-                  <div className="flex items-start gap-2">
-                    <Sparkles className="h-3.5 w-3.5 text-purple-400 mt-0.5 flex-shrink-0" />
-                    <p className="text-sm text-white leading-relaxed">
-                      {coachInsight.encouragement}
-                    </p>
+            {/* AI Coach card — only when 3+ entries */}
+            {entries.length >= 3 && (
+              <div className="rounded-xl overflow-hidden border border-purple-500/20 bg-gradient-to-br from-purple-500/[0.06] to-blue-500/[0.06]">
+                <div className="h-0.5 bg-gradient-to-r from-purple-500 via-blue-500 to-purple-500" />
+                <button
+                  onClick={() => setCoachExpanded(!coachExpanded)}
+                  className="w-full flex items-center justify-between px-4 py-3 touch-manipulation"
+                >
+                  <div className="flex items-center gap-2">
+                    <Sparkles className="h-4 w-4 text-purple-400" />
+                    <h3 className="text-sm font-semibold text-white">AI Coach</h3>
+                    {coachLoading && <RefreshCw className="h-3 w-3 text-purple-400 animate-spin" />}
                   </div>
-
-                  {/* Recommendation */}
-                  <div className="flex items-start gap-2 px-3 py-2.5 rounded-lg bg-white/[0.04] border border-white/[0.06]">
-                    <Lightbulb className="h-3.5 w-3.5 text-elec-yellow mt-0.5 flex-shrink-0" />
-                    <p className="text-xs text-white leading-relaxed">
-                      {coachInsight.recommendation}
-                    </p>
-                  </div>
-
-                  {/* Mood insight */}
-                  {coachInsight.moodInsight && (
-                    <div className="flex items-start gap-2">
-                      <Brain className="h-3.5 w-3.5 text-cyan-400 mt-0.5 flex-shrink-0" />
-                      <p className="text-xs text-white leading-relaxed">
-                        {coachInsight.moodInsight}
-                      </p>
-                    </div>
-                  )}
-
-                  {/* Regulation tip */}
-                  {coachInsight.regulationTip && (
-                    <div className="flex items-start gap-2 px-3 py-2 rounded-lg bg-amber-500/[0.06] border border-amber-500/15">
-                      <AlertTriangle className="h-3.5 w-3.5 text-amber-400 mt-0.5 flex-shrink-0" />
-                      <p className="text-[11px] text-amber-300/90 leading-relaxed">
-                        {coachInsight.regulationTip}
-                      </p>
-                    </div>
-                  )}
-
-                  {/* Skill gaps */}
-                  {coachInsight.skillGaps && coachInsight.skillGaps.length > 0 && (
-                    <div>
-                      <span className="text-[10px] text-white uppercase tracking-wider font-medium">
-                        Skills to practise
-                      </span>
-                      <div className="flex flex-wrap gap-1 mt-1">
-                        {coachInsight.skillGaps.map((skill) => (
-                          <span
-                            key={skill}
-                            className="px-2 py-0.5 rounded text-[10px] font-medium bg-purple-500/10 border border-purple-500/20 text-purple-400"
-                          >
-                            {skill}
-                          </span>
-                        ))}
-                      </div>
-                    </div>
-                  )}
-
-                  {/* KSB suggestion */}
-                  {coachInsight.ksbSuggestion && (
-                    <div className="flex items-start gap-2">
-                      <BookOpen className="h-3.5 w-3.5 text-green-400 mt-0.5 flex-shrink-0" />
-                      <p className="text-[11px] text-white leading-relaxed">
-                        {coachInsight.ksbSuggestion}
-                      </p>
-                    </div>
-                  )}
-
-                  {/* Qualification progress */}
-                  {coachInsight.qualificationProgress && (
-                    <div className="flex items-start gap-2 px-3 py-2 rounded-lg bg-green-500/[0.06] border border-green-500/15">
-                      <TrendingUp className="h-3.5 w-3.5 text-green-400 mt-0.5 flex-shrink-0" />
-                      <p className="text-[11px] text-green-300/90 leading-relaxed">
-                        {coachInsight.qualificationProgress}
-                      </p>
-                    </div>
-                  )}
-
-                  {/* Suggested evidence — tappable to open matching entry */}
-                  {coachInsight.suggestedEvidence && (
+                  <div className="flex items-center gap-2">
                     <button
-                      onClick={() => {
-                        const nudge = coachInsight.portfolioNudges?.[0];
-                        if (nudge) {
-                          const target = entries.find((e) => e.id === nudge.entryId);
-                          if (target) {
-                            setDetailEntry(target);
-                            setDetailOpen(true);
-                            return;
-                          }
-                        }
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        refreshCoach();
                       }}
-                      className="w-full flex items-start gap-2 px-3 py-2 min-h-[44px] rounded-lg bg-elec-yellow/[0.06] border border-elec-yellow/15 text-left touch-manipulation active:bg-elec-yellow/10 transition-colors"
+                      className="h-8 w-8 flex items-center justify-center rounded-lg active:bg-white/10 touch-manipulation"
                     >
-                      <Briefcase className="h-3.5 w-3.5 text-elec-yellow mt-0.5 flex-shrink-0" />
-                      <div className="flex-1 min-w-0">
-                        <p className="text-[11px] text-elec-yellow/90 leading-relaxed">
-                          {coachInsight.suggestedEvidence}
-                        </p>
-                        {coachInsight.portfolioNudges?.[0] && (
-                          <p className="text-[11px] text-elec-yellow/60 mt-0.5">
-                            Tap to view &amp; add to portfolio
-                          </p>
-                        )}
-                      </div>
-                      {coachInsight.portfolioNudges?.[0] && (
-                        <ChevronRight className="h-3.5 w-3.5 text-elec-yellow/50 mt-0.5 flex-shrink-0" />
-                      )}
+                      <RefreshCw className={`h-3.5 w-3.5 text-white ${coachLoading ? 'animate-spin' : ''}`} />
                     </button>
-                  )}
-                </div>
-              )}
-            </div>
-          )}
+                    {coachExpanded ? (
+                      <ChevronUp className="h-4 w-4 text-white" />
+                    ) : (
+                      <ChevronDown className="h-4 w-4 text-white" />
+                    )}
+                  </div>
+                </button>
+
+                {coachExpanded && !coachInsight && !coachLoading && !coachError && (
+                  <div className="px-4 pb-4">
+                    <button
+                      onClick={refreshCoach}
+                      className="w-full flex items-center justify-center gap-2 h-12 rounded-xl bg-purple-500/15 border border-purple-500/30 text-purple-400 text-sm font-semibold touch-manipulation active:scale-[0.98] transition-all"
+                    >
+                      <Sparkles className="h-4 w-4" />
+                      Get AI Insights
+                    </button>
+                    <p className="text-[11px] text-white text-center mt-2">
+                      Analyses your recent diary entries for patterns and guidance
+                    </p>
+                  </div>
+                )}
+
+                {coachExpanded && coachLoading && !coachInsight && (
+                  <div className="flex items-center justify-center py-6 px-4">
+                    <div className="animate-spin h-5 w-5 border-2 border-purple-400 border-t-transparent rounded-full" />
+                    <span className="text-xs text-white ml-2">Analysing your diary...</span>
+                  </div>
+                )}
+
+                {coachExpanded && coachError && !coachLoading && !coachInsight && (
+                  <div className="px-4 pb-4 space-y-2">
+                    <div className="flex items-start gap-2 px-3 py-2.5 rounded-lg bg-red-500/[0.06] border border-red-500/20">
+                      <AlertTriangle className="h-3.5 w-3.5 text-red-400 mt-0.5 flex-shrink-0" />
+                      <p className="text-xs text-red-300 leading-relaxed">{coachError}</p>
+                    </div>
+                    <button
+                      onClick={refreshCoach}
+                      className="w-full flex items-center justify-center gap-2 h-11 rounded-xl bg-purple-500/15 border border-purple-500/30 text-purple-400 text-sm font-semibold touch-manipulation active:scale-[0.98] transition-all"
+                    >
+                      Try Again
+                    </button>
+                  </div>
+                )}
+
+                {coachExpanded && coachInsight && (
+                  <div className="px-4 pb-4 space-y-3">
+                    <div className="flex items-start gap-2">
+                      <Sparkles className="h-3.5 w-3.5 text-purple-400 mt-0.5 flex-shrink-0" />
+                      <p className="text-sm text-white leading-relaxed">{coachInsight.encouragement}</p>
+                    </div>
+                    <div className="flex items-start gap-2 px-3 py-2.5 rounded-lg bg-white/[0.04] border border-white/[0.06]">
+                      <Lightbulb className="h-3.5 w-3.5 text-elec-yellow mt-0.5 flex-shrink-0" />
+                      <p className="text-xs text-white leading-relaxed">{coachInsight.recommendation}</p>
+                    </div>
+                    {coachInsight.moodInsight && (
+                      <div className="flex items-start gap-2">
+                        <Brain className="h-3.5 w-3.5 text-cyan-400 mt-0.5 flex-shrink-0" />
+                        <p className="text-xs text-white leading-relaxed">{coachInsight.moodInsight}</p>
+                      </div>
+                    )}
+                    {coachInsight.regulationTip && (
+                      <div className="flex items-start gap-2 px-3 py-2 rounded-lg bg-amber-500/[0.06] border border-amber-500/15">
+                        <AlertTriangle className="h-3.5 w-3.5 text-amber-400 mt-0.5 flex-shrink-0" />
+                        <p className="text-[11px] text-amber-300/90 leading-relaxed">{coachInsight.regulationTip}</p>
+                      </div>
+                    )}
+                    {coachInsight.skillGaps && coachInsight.skillGaps.length > 0 && (
+                      <div>
+                        <span className="text-[10px] text-white uppercase tracking-wider font-medium">Skills to practise</span>
+                        <div className="flex flex-wrap gap-1 mt-1">
+                          {coachInsight.skillGaps.map((skill) => (
+                            <span key={skill} className="px-2 py-0.5 rounded text-[10px] font-medium bg-purple-500/10 border border-purple-500/20 text-purple-400">{skill}</span>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+                    {coachInsight.ksbSuggestion && (
+                      <div className="flex items-start gap-2">
+                        <BookOpen className="h-3.5 w-3.5 text-green-400 mt-0.5 flex-shrink-0" />
+                        <p className="text-[11px] text-white leading-relaxed">{coachInsight.ksbSuggestion}</p>
+                      </div>
+                    )}
+                    {coachInsight.qualificationProgress && (
+                      <div className="flex items-start gap-2 px-3 py-2 rounded-lg bg-green-500/[0.06] border border-green-500/15">
+                        <TrendingUp className="h-3.5 w-3.5 text-green-400 mt-0.5 flex-shrink-0" />
+                        <p className="text-[11px] text-green-300/90 leading-relaxed">{coachInsight.qualificationProgress}</p>
+                      </div>
+                    )}
+                    {coachInsight.suggestedEvidence && (
+                      <button
+                        onClick={() => {
+                          const nudge = coachInsight.portfolioNudges?.[0];
+                          if (nudge) {
+                            const target = entries.find((e) => e.id === nudge.entryId);
+                            if (target) { setDetailEntry(target); setDetailOpen(true); }
+                          }
+                        }}
+                        className="w-full flex items-start gap-2 px-3 py-2 min-h-[44px] rounded-lg bg-elec-yellow/[0.06] border border-elec-yellow/15 text-left touch-manipulation active:bg-elec-yellow/10 transition-colors"
+                      >
+                        <Briefcase className="h-3.5 w-3.5 text-elec-yellow mt-0.5 flex-shrink-0" />
+                        <div className="flex-1 min-w-0">
+                          <p className="text-[11px] text-elec-yellow/90 leading-relaxed">{coachInsight.suggestedEvidence}</p>
+                          {coachInsight.portfolioNudges?.[0] && (
+                            <p className="text-[11px] text-elec-yellow/60 mt-0.5">Tap to view &amp; add to portfolio</p>
+                          )}
+                        </div>
+                        {coachInsight.portfolioNudges?.[0] && (
+                          <ChevronRight className="h-3.5 w-3.5 text-elec-yellow/50 mt-0.5 flex-shrink-0" />
+                        )}
+                      </button>
+                    )}
+                  </div>
+                )}
+              </div>
+            )}
+          </div>
 
           {/* Results count when filtered */}
           {(searchQuery.trim() || activeSkillFilter || dateFilter) && (

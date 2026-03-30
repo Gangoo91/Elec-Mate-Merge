@@ -9,7 +9,6 @@ import React from 'react';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Zap, Upload, Scan, FileText, CheckCircle2, Loader2, X } from 'lucide-react';
-import { cn } from '@/lib/utils';
 import { motion, AnimatePresence } from 'framer-motion';
 
 export type AnalysisStage =
@@ -90,15 +89,15 @@ export const AnalysisProgress: React.FC<AnalysisProgressProps> = ({
   const config = stageConfig[stage];
 
   return (
-    <div className="flex flex-col h-full min-h-[50vh]">
-      {/* Photo display - compact to show full board */}
+    <div className="flex flex-col items-center">
+      {/* Photo display */}
       {photoUrl && (
-        <div className="flex-shrink-0 pb-3">
-          <div className="relative w-full max-h-[28vh] rounded-xl overflow-hidden border border-border/50 bg-black/20 mx-auto max-w-md">
+        <div className="w-full pb-4">
+          <div className="relative w-full max-h-[30vh] rounded-xl overflow-hidden border border-white/10 bg-black/20 mx-auto max-w-md">
             <img
               src={photoUrl}
               alt="Board being analysed"
-              className="w-full h-auto max-h-[28vh] object-contain mx-auto"
+              className="w-full h-auto max-h-[30vh] object-contain mx-auto"
             />
             {/* Scanning animation overlay */}
             <div className="absolute inset-0 pointer-events-none overflow-hidden">
@@ -108,13 +107,8 @@ export const AnalysisProgress: React.FC<AnalysisProgressProps> = ({
         </div>
       )}
 
-      {/* Bottom half: Progress info */}
-      <div
-        className={cn(
-          'flex flex-col items-center justify-center space-y-4 py-4',
-          !photoUrl && 'flex-1'
-        )}
-      >
+      {/* Progress info */}
+      <div className="flex flex-col items-center space-y-4 py-2">
         {/* Stage Indicator Dots */}
         <div className="flex justify-center gap-2">
           {stages.slice(0, -1).map((s, i) => (
@@ -125,7 +119,7 @@ export const AnalysisProgress: React.FC<AnalysisProgressProps> = ({
                 backgroundColor:
                   i <= currentStageIndex - 1 || (i === currentStageIndex && stage !== 'complete')
                     ? 'var(--elec-yellow, #FACC15)'
-                    : 'var(--muted, #404040)',
+                    : 'rgba(255,255,255,0.15)',
                 scale: i === currentStageIndex ? 1.2 : 1,
               }}
               className="w-2.5 h-2.5 rounded-full transition-colors"
@@ -133,7 +127,7 @@ export const AnalysisProgress: React.FC<AnalysisProgressProps> = ({
           ))}
         </div>
 
-        {/* Stage Label with Animation */}
+        {/* Stage Label */}
         <AnimatePresence mode="wait">
           <motion.div
             key={stage}
@@ -141,22 +135,13 @@ export const AnalysisProgress: React.FC<AnalysisProgressProps> = ({
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
             transition={{ duration: 0.2 }}
-            className="flex items-center gap-2 text-foreground"
+            className="flex items-center gap-2 text-white"
           >
-            <motion.div
-              animate={{ rotate: stage === 'complete' ? 0 : 360 }}
-              transition={{
-                duration: 1,
-                repeat: stage === 'complete' ? 0 : Infinity,
-                ease: 'linear',
-              }}
-            >
-              {stage === 'complete' ? (
-                <CheckCircle2 className="h-5 w-5 text-green-500" />
-              ) : (
-                <Loader2 className="h-5 w-5 animate-spin text-elec-yellow" />
-              )}
-            </motion.div>
+            {stage === 'complete' ? (
+              <CheckCircle2 className="h-5 w-5 text-green-400" />
+            ) : (
+              <Loader2 className="h-5 w-5 animate-spin text-elec-yellow" />
+            )}
             <span className="text-base font-medium">{config.label}</span>
           </motion.div>
         </AnimatePresence>
@@ -180,13 +165,13 @@ export const AnalysisProgress: React.FC<AnalysisProgressProps> = ({
           )}
         </AnimatePresence>
 
-        {/* Helpful hint text */}
-        <p className="text-xs text-muted-foreground text-center max-w-xs px-4">
+        {/* Hint text */}
+        <p className="text-xs text-white text-center max-w-xs">
           {stage === 'reading' || stage === 'verifying'
-            ? 'Reading device ratings and labels...'
+            ? 'Reading device ratings and labels — three-phase boards may take longer...'
             : stage === 'complete'
               ? 'Review the detected circuits before adding them'
-              : 'This usually takes 10-15 seconds'}
+              : 'This usually takes 30 seconds to 1 minute'}
         </p>
 
         {/* Cancel button */}
@@ -194,7 +179,7 @@ export const AnalysisProgress: React.FC<AnalysisProgressProps> = ({
           <Button
             variant="outline"
             onClick={onCancel}
-            className="mt-4 h-11 px-6 touch-manipulation"
+            className="mt-3 h-11 px-6 touch-manipulation border-white/20 text-white hover:bg-white/5"
           >
             <X className="h-4 w-4 mr-2" />
             Cancel

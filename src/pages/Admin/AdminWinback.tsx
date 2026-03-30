@@ -1,7 +1,7 @@
 import { useState, useMemo } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
@@ -27,13 +27,9 @@ import {
   CheckCircle,
   Mail,
   Calendar,
-  TrendingUp,
   ChevronRight,
   Loader2,
   Clock,
-  Zap,
-  Gift,
-  PoundSterling,
   Eye,
   User,
   Target,
@@ -41,12 +37,8 @@ import {
   TestTube,
   MousePointerClick,
   MailOpen,
-  Ban,
-  ExternalLink,
-  BarChart3,
-  ArrowRight,
   FileText,
-  Sparkles,
+  Smartphone,
 } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { format, formatDistanceToNow, parseISO } from 'date-fns';
@@ -80,31 +72,6 @@ interface WinbackStats {
   conversionRate: string;
 }
 
-interface AudienceBreakdown {
-  electricians: {
-    total: number;
-    subscribed: number;
-    freeAccess: number;
-    lapsed: number;
-    sentNotConverted: number;
-    neverSent: number;
-  };
-  apprentices: {
-    total: number;
-    subscribed: number;
-    freeAccess: number;
-    lapsed: number;
-  };
-  employers: {
-    total: number;
-    subscribed: number;
-    freeAccess: number;
-    lapsed: number;
-  };
-  totalUsers: number;
-  totalTarget: number;
-}
-
 export default function AdminWinback() {
   const queryClient = useQueryClient();
   const haptic = useHaptic();
@@ -112,7 +79,6 @@ export default function AdminWinback() {
   const [selectedUsers, setSelectedUsers] = useState<Set<string>>(new Set());
   const [selectedUser, setSelectedUser] = useState<EligibleUser | null>(null);
   const [confirmSendAll, setConfirmSendAll] = useState(false);
-  const [showSentHistory, setShowSentHistory] = useState(false);
   const [testEmail, setTestEmail] = useState('');
   const [showTestEmail, setShowTestEmail] = useState(false);
   const [manualEmail, setManualEmail] = useState('');
@@ -129,7 +95,7 @@ export default function AdminWinback() {
   });
   const [confirmResend, setConfirmResend] = useState(false);
   const [resetting, setResetting] = useState(false);
-  const [emailVersion] = useState<'v7'>('v7');
+  const [emailVersion] = useState<'v8'>('v8');
   const [showPreview, setShowPreview] = useState(false);
 
   // Fetch campaign stats
@@ -184,6 +150,20 @@ export default function AdminWinback() {
     staleTime: 30 * 1000,
   });
 
+  // Fetch all users (for App Store blast)
+  const { data: allUsers } = useQuery<EligibleUser[]>({
+    queryKey: ['admin-winback-all-users'],
+    queryFn: async () => {
+      const { data, error } = await supabase.functions.invoke('send-winback-offer', {
+        body: { action: 'get_all_users' },
+      });
+      if (error) throw error;
+      if (data?.error) throw new Error(data.error);
+      return (data?.users || []) as EligibleUser[];
+    },
+    staleTime: 60 * 1000,
+  });
+
   // Fetch email tracking events
   const { data: trackingEvents } = useQuery({
     queryKey: ['admin-winback-tracking'],
@@ -207,55 +187,10 @@ export default function AdminWinback() {
     refetchInterval: 30 * 1000,
   });
 
-  // Fetch audience breakdown
-  const { data: audienceBreakdown } = useQuery<AudienceBreakdown>({
-    queryKey: ['admin-winback-audience'],
-    queryFn: async () => {
-      const { data, error } = await supabase.functions.invoke('send-winback-offer', {
-        body: { action: 'get_audience_breakdown' },
-      });
-      if (error) throw error;
-      if (data?.error) throw new Error(data.error);
-      return data as AudienceBreakdown;
-    },
-    staleTime: 60 * 1000,
-    retry: false,
-  });
-
-  // Compute tracking stats
-  const trackingStats = useMemo(() => {
-    const empty = {
-      delivered: 0,
-      opened: 0,
-      clicked: 0,
-      bounced: 0,
-      complained: 0,
-      openRate: '0',
-      clickRate: '0',
-      bounceRate: '0',
-      topLinks: [] as Array<{ url: string; count: number }>,
-      byEmail: new Map<string, Set<string>>(),
-    };
-    if (!trackingEvents || trackingEvents.length === 0) return empty;
-
-    const delivered = new Set(
-      trackingEvents.filter((e) => e.event_type === 'email.delivered').map((e) => e.email_id)
-    ).size;
-    const opened = new Set(
-      trackingEvents.filter((e) => e.event_type === 'email.opened').map((e) => e.email_id)
-    ).size;
-    const clicked = new Set(
-      trackingEvents.filter((e) => e.event_type === 'email.clicked').map((e) => e.email_id)
-    ).size;
-    const bounced = new Set(
-      trackingEvents.filter((e) => e.event_type === 'email.bounced').map((e) => e.email_id)
-    ).size;
-    const complained = new Set(
-      trackingEvents.filter((e) => e.event_type === 'email.complained').map((e) => e.email_id)
-    ).size;
-
-    // Per-email tracking status
+  // Compute tracking stats (per-email for sent list badges)
+  const trackingByEmail = useMemo(() => {
     const byEmail = new Map<string, Set<string>>();
+    if (!trackingEvents) return byEmail;
     trackingEvents.forEach((e) => {
       if (e.user_email) {
         const key = e.user_email.toLowerCase();
@@ -263,33 +198,7 @@ export default function AdminWinback() {
         byEmail.get(key)!.add(e.event_type);
       }
     });
-
-    // Top clicked links
-    const linkCounts = new Map<string, number>();
-    trackingEvents
-      .filter((e) => e.event_type === 'email.clicked' && e.link_url)
-      .forEach((e) => {
-        const url = e.link_url!;
-        linkCounts.set(url, (linkCounts.get(url) || 0) + 1);
-      });
-    const topLinks = Array.from(linkCounts.entries())
-      .map(([url, count]) => ({ url, count }))
-      .sort((a, b) => b.count - a.count)
-      .slice(0, 5);
-
-    const base = delivered || 1;
-    return {
-      delivered,
-      opened,
-      clicked,
-      bounced,
-      complained,
-      openRate: ((opened / base) * 100).toFixed(1),
-      clickRate: ((clicked / base) * 100).toFixed(1),
-      bounceRate: ((bounced / base) * 100).toFixed(1),
-      topLinks,
-      byEmail,
-    };
+    return byEmail;
   }, [trackingEvents]);
 
   // Send single email mutation
@@ -478,43 +387,6 @@ export default function AdminWinback() {
     sendBatchedEmails(Array.from(selectedUsers));
   };
 
-  // Funnel bar helper
-  const FunnelBar = ({
-    label,
-    value,
-    max,
-    colour,
-    icon: Icon,
-  }: {
-    label: string;
-    value: number;
-    max: number;
-    colour: string;
-    icon: React.ComponentType<{ className?: string }>;
-  }) => {
-    const pct = max > 0 ? (value / max) * 100 : 0;
-    return (
-      <div className="flex items-center gap-3">
-        <div className="flex items-center gap-1.5 w-24 shrink-0">
-          <Icon className={`h-3.5 w-3.5 ${colour}`} />
-          <span className="text-xs text-white font-medium">{label}</span>
-        </div>
-        <div className="flex-1 h-5 bg-muted/50 rounded-full overflow-hidden relative">
-          <div
-            className="h-full rounded-full transition-all duration-700"
-            style={{
-              width: `${Math.max(pct, 2)}%`,
-              background: `var(--bar-${label.toLowerCase()})`,
-            }}
-          />
-          <span className="absolute inset-0 flex items-center justify-center text-[10px] font-bold text-white">
-            {value} ({pct.toFixed(1)}%)
-          </span>
-        </div>
-      </div>
-    );
-  };
-
   const totalSent = stats?.offersSent || 0;
 
   return (
@@ -523,26 +395,16 @@ export default function AdminWinback() {
         await refetch();
       }}
     >
-      <div
-        className="space-y-4 pb-20"
-        style={
-          {
-            '--bar-delivered': '#3b82f6',
-            '--bar-opened': '#22c55e',
-            '--bar-clicked': '#fbbf24',
-            '--bar-bounced': '#ef4444',
-          } as React.CSSProperties
-        }
-      >
+      <div className="space-y-4 pb-20">
         {/* Header */}
         <div className="flex items-center justify-between">
           <div>
             <h2 className="text-lg font-semibold flex items-center gap-2">
-              <Gift className="h-5 w-5 text-amber-400" />
-              Win-Back Campaign
+              <Smartphone className="h-5 w-5 text-amber-400" />
+              App Store Launch
             </h2>
             <p className="text-sm text-white">
-              Send discounted offers to expired trial electricians
+              Announce the App Store launch to lapsed users
             </p>
           </div>
           <Button
@@ -553,7 +415,6 @@ export default function AdminWinback() {
               queryClient.invalidateQueries({ queryKey: ['admin-winback-tracking'] });
               queryClient.invalidateQueries({ queryKey: ['admin-winback-stats'] });
               queryClient.invalidateQueries({ queryKey: ['admin-winback-sent'] });
-              queryClient.invalidateQueries({ queryKey: ['admin-winback-audience'] });
             }}
             className="gap-2 h-11 touch-manipulation"
           >
@@ -562,114 +423,56 @@ export default function AdminWinback() {
           </Button>
         </div>
 
-        {/* Audience Breakdown */}
+        {/* Campaign Controls */}
         <Card className="border-amber-500/30 bg-gradient-to-br from-amber-500/5 to-orange-500/5">
           <CardHeader className="pb-2">
-            <CardTitle className="text-sm flex items-center gap-2">
-              <Users className="h-4 w-4 text-amber-400" />
-              Audience Breakdown
+            <CardTitle className="text-sm flex items-center justify-between">
+              <span className="flex items-center gap-2">
+                <Send className="h-4 w-4 text-amber-400" />
+                Send Controls
+              </span>
+              <div className="flex items-center gap-2">
+                <Badge className="bg-amber-500/20 text-amber-400 text-[10px] border-0">
+                  V8
+                </Badge>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => setShowTestEmail(!showTestEmail)}
+                  className="gap-1.5 h-9 touch-manipulation text-yellow-400 border-yellow-400/30 hover:bg-yellow-500/10"
+                >
+                  <TestTube className="h-3.5 w-3.5" />
+                  Test
+                </Button>
+              </div>
             </CardTitle>
-            <CardDescription className="text-xs text-white">
-              Full user base — {audienceBreakdown?.totalUsers?.toLocaleString() || '...'} total
-              users
-            </CardDescription>
           </CardHeader>
           <CardContent className="space-y-3">
-            {/* Role breakdown table */}
-            <div className="rounded-xl border border-border overflow-hidden">
-              <table className="w-full text-xs">
-                <thead>
-                  <tr className="bg-muted/50">
-                    <th className="text-left p-2 font-semibold text-white">Role</th>
-                    <th className="text-center p-2 font-semibold text-white">Total</th>
-                    <th className="text-center p-2 font-semibold text-green-400">Subscribed</th>
-                    <th className="text-center p-2 font-semibold text-blue-400">Free</th>
-                    <th className="text-center p-2 font-semibold text-red-400">Lapsed</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr className="border-t border-border/50">
-                    <td className="p-2 text-white font-medium">Electrician</td>
-                    <td className="p-2 text-center text-white font-bold">
-                      {audienceBreakdown?.electricians.total ?? '...'}
-                    </td>
-                    <td className="p-2 text-center text-green-400">
-                      {audienceBreakdown?.electricians.subscribed ?? '-'}
-                    </td>
-                    <td className="p-2 text-center text-blue-400">
-                      {audienceBreakdown?.electricians.freeAccess ?? '-'}
-                    </td>
-                    <td className="p-2 text-center text-red-400">
-                      {audienceBreakdown?.electricians.lapsed ?? '-'}
-                    </td>
-                  </tr>
-                  <tr className="border-t border-border/50">
-                    <td className="p-2 text-white font-medium">Apprentice</td>
-                    <td className="p-2 text-center text-white font-bold">
-                      {audienceBreakdown?.apprentices.total ?? '...'}
-                    </td>
-                    <td className="p-2 text-center text-green-400">
-                      {audienceBreakdown?.apprentices.subscribed ?? '-'}
-                    </td>
-                    <td className="p-2 text-center text-blue-400">
-                      {audienceBreakdown?.apprentices.freeAccess ?? '-'}
-                    </td>
-                    <td className="p-2 text-center text-red-400">
-                      {audienceBreakdown?.apprentices.lapsed ?? '-'}
-                    </td>
-                  </tr>
-                  <tr className="border-t border-border/50">
-                    <td className="p-2 text-white font-medium">Employer</td>
-                    <td className="p-2 text-center text-white font-bold">
-                      {audienceBreakdown?.employers.total ?? '...'}
-                    </td>
-                    <td className="p-2 text-center text-green-400">
-                      {audienceBreakdown?.employers.subscribed ?? '-'}
-                    </td>
-                    <td className="p-2 text-center text-blue-400">
-                      {audienceBreakdown?.employers.freeAccess ?? '-'}
-                    </td>
-                    <td className="p-2 text-center text-red-400">
-                      {audienceBreakdown?.employers.lapsed ?? '-'}
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-
-            {/* Electrician targeting detail */}
-            <div className="p-3 rounded-xl bg-muted/50 border border-border space-y-2">
-              <p className="text-xs text-white font-semibold flex items-center gap-1.5">
-                <Target className="h-3.5 w-3.5 text-amber-400" />
-                Electrician Targeting (this blast)
-              </p>
-              <div className="grid grid-cols-2 gap-2">
-                <div className="flex items-center justify-between text-xs">
-                  <span className="text-white">Previously sent (resendable)</span>
-                  <span className="text-amber-400 font-bold">
-                    {audienceBreakdown?.electricians.sentNotConverted ?? '-'}
-                  </span>
+            {/* Campaign info */}
+            <div className="p-3 rounded-xl bg-amber-500/10 border border-amber-500/20">
+              <div className="flex items-center justify-between mb-2">
+                <div className="flex items-center gap-2">
+                  <Badge className="bg-amber-500 text-black text-[10px] px-2 border-0">
+                    V8 App Store
+                  </Badge>
+                  <span className="text-xs text-white font-medium">Launch announcement</span>
                 </div>
-                <div className="flex items-center justify-between text-xs">
-                  <span className="text-white">Never sent (new)</span>
-                  <span className="text-green-400 font-bold">
-                    {audienceBreakdown?.electricians.neverSent ?? '-'}
-                  </span>
-                </div>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => setShowPreview(true)}
+                  className="h-7 touch-manipulation text-xs gap-1 text-amber-400 hover:text-amber-300"
+                >
+                  <Eye className="h-3 w-3" />
+                  Preview
+                </Button>
               </div>
-              <div className="flex items-center justify-between pt-1 border-t border-border/50">
-                <span className="text-sm text-white font-bold">Target</span>
-                <span className="text-lg font-extrabold text-amber-400">
-                  ~{audienceBreakdown?.totalTarget ?? '...'}
-                </span>
-              </div>
-              <p className="text-[10px] text-white">
-                Apprentices ({audienceBreakdown?.apprentices.lapsed ?? '...'} lapsed) targeted
-                separately via apprentice admin
+              <p className="text-[11px] text-white leading-relaxed">
+                "We're on the App Store." — Apprentice £6.99/mo, Electrician £14.99/mo
               </p>
             </div>
 
-            {/* Quick stat row */}
+            {/* Quick stats */}
             <div className="grid grid-cols-3 gap-2">
               <div className="p-2 rounded-lg bg-blue-500/10 border border-blue-500/20 text-center">
                 <p className="text-lg font-bold text-blue-400">{totalSent}</p>
@@ -680,165 +483,15 @@ export default function AdminWinback() {
                 <p className="text-[10px] text-white">Converted</p>
               </div>
               <div className="p-2 rounded-lg bg-amber-500/10 border border-amber-500/20 text-center">
-                <p className="text-lg font-bold text-amber-400">{stats?.conversionRate || '0'}%</p>
-                <p className="text-[10px] text-white">Conv. Rate</p>
+                <p className="text-lg font-bold text-amber-400">{allUsers?.length || 0}</p>
+                <p className="text-[10px] text-white">All Users</p>
               </div>
-            </div>
-          </CardContent>
-        </Card>
-
-        {/* Engagement Funnel */}
-        <Card className="border-purple-500/30 bg-gradient-to-br from-purple-500/5 to-indigo-500/5">
-          <CardHeader className="pb-2">
-            <CardTitle className="text-sm flex items-center justify-between">
-              <span className="flex items-center gap-2">
-                <BarChart3 className="h-4 w-4 text-purple-400" />
-                Engagement Funnel
-              </span>
-              <a
-                href="https://resend.com/emails"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-1 text-xs text-purple-400 hover:text-purple-300 touch-manipulation"
-              >
-                Resend Dashboard <ExternalLink className="h-3 w-3" />
-              </a>
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-3">
-            {/* Rates row */}
-            <div className="grid grid-cols-3 gap-2">
-              <div className="p-2 rounded-lg bg-green-500/10 border border-green-500/20 text-center">
-                <p className="text-base sm:text-lg font-bold text-green-400">
-                  {trackingStats.openRate}%
-                </p>
-                <p className="text-[10px] text-white">Open Rate</p>
-              </div>
-              <div className="p-2 rounded-lg bg-amber-500/10 border border-amber-500/20 text-center">
-                <p className="text-base sm:text-lg font-bold text-amber-400">
-                  {trackingStats.clickRate}%
-                </p>
-                <p className="text-[10px] text-white">Click Rate</p>
-              </div>
-              <div className="p-2 rounded-lg bg-red-500/10 border border-red-500/20 text-center">
-                <p className="text-base sm:text-lg font-bold text-red-400">
-                  {trackingStats.bounceRate}%
-                </p>
-                <p className="text-[10px] text-white">Bounce Rate</p>
-              </div>
-            </div>
-
-            {/* Funnel bars */}
-            <div className="space-y-2">
-              <FunnelBar
-                label="Delivered"
-                value={trackingStats.delivered}
-                max={totalSent || trackingStats.delivered}
-                colour="text-blue-400"
-                icon={CheckCircle}
-              />
-              <FunnelBar
-                label="Opened"
-                value={trackingStats.opened}
-                max={trackingStats.delivered || 1}
-                colour="text-green-400"
-                icon={MailOpen}
-              />
-              <FunnelBar
-                label="Clicked"
-                value={trackingStats.clicked}
-                max={trackingStats.delivered || 1}
-                colour="text-amber-400"
-                icon={MousePointerClick}
-              />
-              <FunnelBar
-                label="Bounced"
-                value={trackingStats.bounced}
-                max={trackingStats.delivered || 1}
-                colour="text-red-400"
-                icon={Ban}
-              />
-            </div>
-
-            {/* Top clicked links */}
-            {trackingStats.topLinks.length > 0 && (
-              <div className="space-y-1.5 pt-2 border-t border-border/50">
-                <p className="text-xs text-white font-semibold">Top Clicked Links</p>
-                {trackingStats.topLinks.map((link, i) => (
-                  <div
-                    key={i}
-                    className="flex items-center gap-2 p-2 rounded-lg bg-muted/50 text-sm"
-                  >
-                    <ExternalLink className="h-3 w-3 text-white shrink-0" />
-                    <span className="truncate flex-1 text-xs text-white">
-                      {link.url.replace('https://', '').slice(0, 50)}
-                    </span>
-                    <Badge variant="outline" className="text-xs shrink-0">
-                      {link.count} clicks
-                    </Badge>
-                  </div>
-                ))}
-              </div>
-            )}
-
-            {(trackingEvents?.length ?? 0) === 0 && (
-              <p className="text-xs text-white text-center py-2">
-                No tracking data yet. Events will appear here after emails are sent and recipients
-                interact with them.
-              </p>
-            )}
-          </CardContent>
-        </Card>
-
-        {/* Campaign Controls */}
-        <Card className="border-amber-500/30 bg-gradient-to-br from-amber-500/5 to-orange-500/5">
-          <CardHeader className="pb-2">
-            <CardTitle className="text-sm flex items-center justify-between">
-              <span className="flex items-center gap-2">
-                <Send className="h-4 w-4 text-amber-400" />
-                Campaign Controls
-              </span>
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={() => setShowTestEmail(!showTestEmail)}
-                className="gap-1.5 h-9 touch-manipulation text-yellow-400 border-yellow-400/30 hover:bg-yellow-500/10"
-              >
-                <TestTube className="h-3.5 w-3.5" />
-                Test
-              </Button>
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-3">
-            {/* Campaign info */}
-            <div className="p-3 rounded-xl bg-green-500/10 border border-green-500/20">
-              <div className="flex items-center justify-between mb-2">
-                <div className="flex items-center gap-2">
-                  <Badge className="bg-green-500 text-white text-[10px] px-2 border-0">
-                    V7 Stats
-                  </Badge>
-                  <span className="text-xs text-white font-medium">Social proof campaign</span>
-                </div>
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  onClick={() => setShowPreview(true)}
-                  className="h-7 touch-manipulation text-xs gap-1 text-green-400 hover:text-green-300"
-                >
-                  <Eye className="h-3 w-3" />
-                  Preview
-                </Button>
-              </div>
-              <p className="text-[11px] text-white leading-relaxed">
-                "7 weeks. No App Store. Just electricians getting shit done." — £7.99/mo locked
-                forever
-              </p>
             </div>
 
             {/* Test email section */}
             {showTestEmail && (
               <div className="p-3 rounded-xl bg-yellow-500/10 border border-yellow-500/20 space-y-2">
-                <p className="text-xs text-yellow-400 font-semibold">Send Test Email ( Stats )</p>
+                <p className="text-xs text-yellow-400 font-semibold">Send Test Email (V8)</p>
                 <div className="flex gap-2">
                   <Input
                     type="email"
@@ -921,19 +574,19 @@ export default function AdminWinback() {
                   {resetting ? (
                     <Loader2 className="h-4 w-4 animate-spin" />
                   ) : (
-                    <RefreshCw className="h-4 w-4" />
+                    <Send className="h-4 w-4" />
                   )}
-                  Resend New Email to All (~{audienceBreakdown?.totalTarget || totalSent} users)
+                  Send V8 to All Users ({allUsers?.length || 0})
                 </Button>
                 <p className="text-[10px] text-white text-center">
-                  Resets users sent 24h+ ago then sends the new email in batches of {BATCH_SIZE}
+                  Resets all sent users then sends the App Store launch email to everyone in batches of {BATCH_SIZE}
                 </p>
               </div>
             )}
           </CardContent>
         </Card>
 
-        {/* Tab switcher: Eligible / Sent & Tracking */}
+        {/* Tab switcher: Eligible / Sent */}
         <div className="flex gap-1 p-1 bg-muted/50 rounded-xl border border-border">
           <Button
             variant={activeTab === 'eligible' ? 'default' : 'ghost'}
@@ -951,7 +604,7 @@ export default function AdminWinback() {
             className={`flex-1 h-10 touch-manipulation text-sm gap-1.5 ${activeTab === 'sent' ? 'bg-blue-500 text-black hover:bg-blue-600' : ''}`}
           >
             <Mail className="h-3.5 w-3.5" />
-            Sent & Tracking ({sentUsers?.length || 0})
+            Sent ({sentUsers?.length || 0})
           </Button>
         </div>
 
@@ -1058,7 +711,7 @@ export default function AdminWinback() {
           </Card>
         )}
 
-        {/* Sent & Tracking Tab */}
+        {/* Sent Tab */}
         {activeTab === 'sent' && (
           <Card>
             <CardContent className="pt-4 pb-4 px-3 sm:px-4">
@@ -1072,7 +725,7 @@ export default function AdminWinback() {
                 <AdminEmptyState
                   icon={Mail}
                   title="No emails sent yet"
-                  description="Send win-back offers to see tracking data here."
+                  description="Send the App Store launch email to see results here."
                 />
               ) : (
                 <div className="space-y-3">
@@ -1104,16 +757,14 @@ export default function AdminWinback() {
                   </div>
                   <div className="space-y-1.5">
                     {sentUsers.map((user) => {
-                      // Match per-user email against tracking events
                       const userEmail = user.email?.toLowerCase();
                       const userEvents = userEmail
-                        ? trackingStats.byEmail.get(userEmail)
+                        ? trackingByEmail.get(userEmail)
                         : undefined;
                       const wasDelivered = userEvents?.has('email.delivered') || false;
                       const wasOpened = userEvents?.has('email.opened') || false;
                       const wasClicked = userEvents?.has('email.clicked') || false;
 
-                      // Version badge colour
                       const versionColours: Record<string, string> = {
                         v1: 'bg-gray-500/20 text-gray-400',
                         v2: 'bg-green-500/20 text-green-400',
@@ -1123,6 +774,7 @@ export default function AdminWinback() {
                         v5: 'bg-red-500/20 text-red-400',
                         v6: 'bg-indigo-500/20 text-indigo-400',
                         v7: 'bg-green-500/20 text-green-400',
+                        v8: 'bg-amber-500/20 text-amber-400',
                       };
                       const vClass = versionColours[user.email_version] || versionColours.v1;
 
@@ -1253,7 +905,7 @@ export default function AdminWinback() {
                   ) : (
                     <>
                       <Mail className="h-4 w-4 mr-2" />
-                      Send Win-Back Offer
+                      Send App Store Launch Email
                     </>
                   )}
                 </Button>
@@ -1267,35 +919,17 @@ export default function AdminWinback() {
           <AlertDialogContent className="max-w-[calc(100vw-2rem)] sm:max-w-lg rounded-2xl p-5 sm:p-6">
             <AlertDialogHeader className="space-y-3">
               <AlertDialogTitle className="text-base sm:text-lg leading-tight">
-                Send Stats campaign to all?
+                Send V8 App Store launch to all users?
               </AlertDialogTitle>
               <AlertDialogDescription asChild>
                 <div className="text-sm leading-relaxed space-y-2">
-                  {audienceBreakdown ? (
-                    <>
-                      <p className="text-white">
-                        <span className="font-bold text-amber-400">
-                          {audienceBreakdown.electricians.sentNotConverted}
-                        </span>{' '}
-                        users will be reset (sent 24h+ ago, not subscribed)
-                      </p>
-                      <p className="text-white">
-                        <span className="font-bold text-green-400">
-                          {audienceBreakdown.electricians.neverSent}
-                        </span>{' '}
-                        never-sent users will also receive it
-                      </p>
-                      <p className="text-white font-bold">
-                        Total: ~{audienceBreakdown.totalTarget} emails via{' '}
-                        {emailVersion.toUpperCase()} in batches of {BATCH_SIZE}
-                      </p>
-                    </>
-                  ) : (
-                    <p className="text-white">
-                      Resets all users sent the old email 24+ hours ago (who haven't subscribed),
-                      then sends the new email in batches of {BATCH_SIZE}.
-                    </p>
-                  )}
+                  <p className="text-white">
+                    Resets all previously sent users then sends the App Store launch email
+                    to every user with an account, in batches of {BATCH_SIZE}.
+                  </p>
+                  <p className="text-white font-bold">
+                    ~{allUsers?.length || 0} emails via V8
+                  </p>
                 </div>
               </AlertDialogDescription>
             </AlertDialogHeader>
@@ -1316,22 +950,27 @@ export default function AdminWinback() {
 
                     haptic.success();
                     toast({
-                      title: `${data.reset} users reset — now sending new email...`,
+                      title: `${data.reset} users reset — now sending V8 to all users...`,
                       variant: 'success',
                     });
 
                     await queryClient.invalidateQueries({ queryKey: ['admin-winback-eligible'] });
                     await queryClient.invalidateQueries({ queryKey: ['admin-winback-stats'] });
-                    const freshData = await refetch();
-                    const freshUsers = freshData.data || [];
+                    await queryClient.invalidateQueries({ queryKey: ['admin-winback-all-users'] });
+
+                    // Fetch ALL users (not just eligible)
+                    const { data: allData, error: allError } = await supabase.functions.invoke('send-winback-offer', {
+                      body: { action: 'get_all_users' },
+                    });
+                    const allUsersList = (!allError && allData?.users) ? allData.users as EligibleUser[] : [];
 
                     setResetting(false);
 
-                    if (freshUsers.length > 0) {
-                      sendBatchedEmails(freshUsers.map((u: EligibleUser) => u.id));
+                    if (allUsersList.length > 0) {
+                      sendBatchedEmails(allUsersList.map((u: EligibleUser) => u.id));
                     } else {
                       toast({
-                        title: 'No users to resend to (all subscribed or sent < 24h ago)',
+                        title: 'No users found',
                         variant: 'info',
                       });
                     }
@@ -1347,7 +986,7 @@ export default function AdminWinback() {
                 className="h-12 sm:h-11 touch-manipulation text-base sm:text-sm bg-amber-500 hover:bg-amber-600 text-black font-semibold w-full sm:w-auto"
               >
                 <RefreshCw className="h-4 w-4 mr-2" />
-                Reset &amp; Resend All
+                Reset &amp; Send V8 to All
               </AlertDialogAction>
             </AlertDialogFooter>
           </AlertDialogContent>
@@ -1361,8 +1000,7 @@ export default function AdminWinback() {
                 Send to all {eligibleUsers?.length || 0} eligible users?
               </AlertDialogTitle>
               <AlertDialogDescription className="text-sm leading-relaxed">
-                Sends the win-back offer in batches of {BATCH_SIZE}. Each person only receives one
-                email ever. This cannot be undone.
+                Sends the App Store launch email in batches of {BATCH_SIZE}. This cannot be undone.
               </AlertDialogDescription>
             </AlertDialogHeader>
             <AlertDialogFooter className="flex-col-reverse sm:flex-row gap-2 sm:gap-2 pt-2">
@@ -1392,10 +1030,10 @@ export default function AdminWinback() {
               </div>
               <SheetHeader className="px-4 pb-3 border-b border-border">
                 <SheetTitle className="flex items-center gap-2 text-sm">
-                  <FileText className="h-4 w-4 text-purple-400" />
-                  Preview: Stats
-                  <Badge className="bg-purple-500/20 text-purple-400 text-[10px] border-0">
-                    {emailVersion.toUpperCase()}
+                  <FileText className="h-4 w-4 text-amber-400" />
+                  Preview: App Store Launch
+                  <Badge className="bg-amber-500/20 text-amber-400 text-[10px] border-0">
+                    V8
                   </Badge>
                 </SheetTitle>
               </SheetHeader>
@@ -1404,28 +1042,7 @@ export default function AdminWinback() {
                   title="Email Preview"
                   sandbox="allow-same-origin"
                   className="w-full h-full border-0"
-                  srcDoc={(() => {
-                    const mockUser = {
-                      id: 'preview',
-                      full_name: 'Test User',
-                      username: 'testuser',
-                      email: 'test@example.com',
-                      created_at: new Date(Date.now() - 14 * 24 * 60 * 60 * 1000).toISOString(),
-                      trial_ended_at: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString(),
-                    };
-                    // Return placeholder HTML with version info — actual template rendered on server
-                    const versionLabels: Record<string, string> = {
-                      v1: 'Fancy another look?',
-                      v2: 'Your Sunday Round-Up',
-                      v3: 'This week at Elec-Mate',
-                      v4: "You won't recognise this app",
-                      v4b: '18 features shipped in 2 weeks',
-                      v5: "Last time I'll send this",
-                      v6: "I know you've seen emails from me",
-                      v7: '7 weeks. No App Store. Just electricians getting shit done.',
-                    };
-                    return `<!DOCTYPE html><html><head><meta name="color-scheme" content="dark"><style>body{margin:0;padding:40px 20px;font-family:-apple-system,system-ui,sans-serif;background:#0f172a;color:#e2e8f0;text-align:center;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:90vh}h2{color:#fbbf24;margin-bottom:8px}p{color:#94a3b8;font-size:14px;line-height:1.6;max-width:300px}.btn{display:inline-block;margin-top:20px;padding:12px 24px;background:linear-gradient(135deg,#fbbf24,#f59e0b);color:#0f172a;border-radius:12px;font-weight:700;font-size:14px;text-decoration:none;cursor:pointer}</style></head><body><h2>${versionLabels[emailVersion] || emailVersion}</h2><p>Send a test email to preview the full rendered template in your inbox.</p><p style="color:#64748b;font-size:12px;margin-top:4px">Email templates are rendered server-side for security. Use the test send button above to see the exact email.</p></body></html>`;
-                  })()}
+                  srcDoc={`<!DOCTYPE html><html><head><meta name="color-scheme" content="dark"><style>body{margin:0;padding:40px 20px;font-family:-apple-system,system-ui,sans-serif;background:#000;color:#e2e8f0;text-align:center;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:90vh}h2{color:#fbbf24;margin-bottom:8px;font-size:24px}p{color:#86868b;font-size:14px;line-height:1.6;max-width:300px}.badge{display:inline-block;margin-bottom:16px;padding:6px 16px;background:linear-gradient(135deg,#fbbf24,#f59e0b);border-radius:20px;font-size:11px;font-weight:800;color:#0f172a;text-transform:uppercase;letter-spacing:0.5px}</style></head><body><div class="badge">V8 — App Store Launch</div><h2>We're on the App Store.</h2><p>Send a test email to preview the full rendered template in your inbox.</p><p style="color:#48484a;font-size:12px;margin-top:4px">Email templates are rendered server-side. Use the test send button above.</p></body></html>`}
                 />
               </div>
             </div>

@@ -51,17 +51,18 @@ const EnhancedTestResultDesktopTableRow: React.FC<EnhancedTestResultDesktopTable
   // Validate the test result - memoized to prevent expensive recalculation
   const validation = useMemo(() => validateTestResult(result), [result]);
 
-  // Get overall compliance status - memoized helper
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  // Get overall compliance status
   const getOverallCompliance = (validation: any): 'error' | 'warning' | 'pass' => {
-    if (!validation) return 'pass';
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const hasErrors = Object.values(validation).some((v: any) => v?.type === 'error');
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const hasWarnings = Object.values(validation).some((v: any) => v?.type === 'warning');
-
-    if (hasErrors) return 'error';
-    if (hasWarnings) return 'warning';
+    if (!validation || typeof validation !== 'object') return 'pass';
+    try {
+      const values = Object.values(validation);
+      const hasErrors = values.some((v: any) => v?.type === 'error');
+      const hasWarnings = values.some((v: any) => v?.type === 'warning');
+      if (hasErrors) return 'error';
+      if (hasWarnings) return 'warning';
+    } catch {
+      return 'pass';
+    }
     return 'pass';
   };
 

@@ -251,18 +251,9 @@ export const usePortfolioData = () => {
     try {
       setIsLoading(true);
 
-      // Try join with junction table; fall back to plain query if table doesn't exist yet
+      // Query portfolio items (portfolio_evidence_files junction table not yet deployed)
       let rows: any[] | null = null;
-      const joinResult = await supabase
-        .from('portfolio_items')
-        .select('*, portfolio_evidence_files(*)')
-        .eq('user_id', user.id)
-        .order('created_at', { ascending: false });
-
-      if (!joinResult.error) {
-        rows = joinResult.data;
-      } else {
-        // Junction table not deployed yet — fall back to legacy storage_urls
+      {
         const fallback = await supabase
           .from('portfolio_items')
           .select('*')

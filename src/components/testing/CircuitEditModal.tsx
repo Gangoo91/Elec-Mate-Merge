@@ -1,18 +1,11 @@
 /**
- * CircuitEditModal - Modal for editing detected circuit details
+ * CircuitEditModal - Edit detected circuit details
  *
- * Allows users to correct AI-detected circuit information before adding.
- * ENHANCED: Captures corrections as training data for AI improvement.
+ * Compact bottom sheet design. Captures corrections as training data.
  */
 
 import React, { useState, useCallback } from 'react';
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogFooter,
-} from '@/components/ui/dialog';
+import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -24,7 +17,8 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { Textarea } from '@/components/ui/textarea';
-import { Save, X } from 'lucide-react';
+import { Save, Check, ChevronDown } from 'lucide-react';
+import { cn } from '@/lib/utils';
 import { supabase } from '@/integrations/supabase/client';
 
 interface DetectedCircuit {
@@ -36,6 +30,9 @@ interface DetectedCircuit {
   curve: string | null;
   confidence: 'high' | 'medium' | 'low';
   phase?: '1P' | '3P';
+  wayNumber?: number | null;
+  phaseDesignation?: string | null;
+  boardSide?: string | null;
   pictograms?: Array<{ type: string; confidence: number }>;
   notes?: string;
   evidence?: string;
@@ -45,9 +42,7 @@ interface CircuitEditModalProps {
   circuit: DetectedCircuit;
   onSave: (circuit: DetectedCircuit) => void;
   onClose: () => void;
-  /** Optional: Board brand for training context */
   boardBrand?: string;
-  /** Optional: Image URL(s) for training data */
   imageUrls?: string[];
 }
 
@@ -60,93 +55,76 @@ async function saveTrainingCorrection(
   boardBrand?: string,
   imageUrl?: string
 ): Promise<void> {
-  // Check if there were any actual corrections
   const hasCorrections =
     originalCircuit.device !== correctedCircuit.device ||
     originalCircuit.rating !== correctedCircuit.rating ||
     originalCircuit.curve !== correctedCircuit.curve ||
     originalCircuit.label !== correctedCircuit.label;
 
-  if (!hasCorrections) {
-    // No corrections made, data was verified as correct
-    console.log('No corrections made - AI detection verified');
-    return;
-  }
+  if (!hasCorrections) return;
 
   try {
-    // Get current user
     const {
       data: { user },
     } = await supabase.auth.getUser();
 
-    const trainingData = {
+    await supabase.from('board_scanner_training').insert({
       image_url: imageUrl || null,
       board_brand: boardBrand || null,
       circuit_position: originalCircuit.position,
-      // AI predictions
       ai_device_type: originalCircuit.device,
       ai_rating: originalCircuit.rating?.toString() || null,
       ai_curve: originalCircuit.curve || null,
       ai_label: originalCircuit.label,
       ai_confidence: originalCircuit.confidence,
-      // User corrections (ground truth)
       correct_device_type: correctedCircuit.device,
       correct_rating: correctedCircuit.rating?.toString() || null,
       correct_curve: correctedCircuit.curve || null,
       correct_label: correctedCircuit.label,
       user_id: user?.id || null,
-    };
-
-    const { error } = await supabase.from('board_scanner_training').insert(trainingData);
-
-    if (error) {
-      console.error('Failed to save training correction:', error);
-    } else {
-      console.log('Training correction saved:', {
-        position: originalCircuit.position,
-        deviceChange:
-          originalCircuit.device !== correctedCircuit.device
-            ? `${originalCircuit.device} → ${correctedCircuit.device}`
-            : null,
-        ratingChange:
-          originalCircuit.rating !== correctedCircuit.rating
-            ? `${originalCircuit.rating}A → ${correctedCircuit.rating}A`
-            : null,
-      });
-    }
+    });
   } catch (error) {
-    console.error('Error saving training correction:', error);
-    // Don't throw - training data capture should never block the user
+    console.error('Training save error:', error);
   }
 }
 
-// Comprehensive device types for UK consumer units
 const deviceTypes = [
-  { value: 'MCB', label: 'MCB', description: 'Miniature Circuit Breaker' },
-  { value: 'RCBO', label: 'RCBO', description: 'RCD + MCB Combined' },
-  { value: 'RCD', label: 'RCD', description: 'Residual Current Device' },
-  { value: 'AFDD', label: 'AFDD', description: 'Arc Fault Detection Device' },
-  { value: 'SPD', label: 'SPD', description: 'Surge Protection Device' },
-  { value: 'MCCB', label: 'MCCB', description: 'Moulded Case Circuit Breaker' },
-  { value: 'Main Switch', label: 'Main Switch', description: 'Main Isolator' },
-  { value: 'Isolator', label: 'Isolator', description: 'Switch Disconnector' },
-  { value: 'Contactor', label: 'Contactor', description: 'Power Contactor' },
-  { value: 'Timer', label: 'Timer', description: 'Time Switch' },
-  { value: 'Fuse', label: 'Fuse', description: 'BS88/BS3036 Fuse' },
-  { value: 'HRC Fuse', label: 'HRC Fuse', description: 'High Rupturing Capacity Fuse' },
-  { value: 'Blank', label: 'Blank', description: 'Blank/Spare Way' },
+  { value: 'MCB', label: 'MCB', desc: 'Miniature Circuit Breaker' },
+  { value: 'RCBO', label: 'RCBO', desc: 'RCD + MCB Combined' },
+  { value: 'RCD', label: 'RCD', desc: 'Residual Current Device' },
+  { value: 'AFDD', label: 'AFDD', desc: 'Arc Fault Detection' },
+  { value: 'SPD', label: 'SPD', desc: 'Surge Protection' },
+  { value: 'MCCB', label: 'MCCB', desc: 'Moulded Case CB' },
+  { value: 'Main Switch', label: 'Main Switch', desc: 'Main Isolator' },
+  { value: 'Isolator', label: 'Isolator', desc: 'Switch Disconnector' },
+  { value: 'Contactor', label: 'Contactor', desc: 'Power Contactor' },
+  { value: 'Timer', label: 'Timer', desc: 'Time Switch' },
+  { value: 'Fuse', label: 'Fuse', desc: 'BS88/BS3036' },
+  { value: 'HRC Fuse', label: 'HRC Fuse', desc: 'High Rupturing Capacity' },
+  { value: 'Blank', label: 'Blank', desc: 'Spare Way' },
 ];
 
 const curveTypes = [
-  { value: 'B', label: 'Type B', description: '3-5× In (General use)' },
-  { value: 'C', label: 'Type C', description: '5-10× In (Motors/Inductive)' },
-  { value: 'D', label: 'Type D', description: '10-20× In (High inrush)' },
-  { value: 'K', label: 'Type K', description: '8-12× In (Motor protection)' },
-  { value: 'Z', label: 'Type Z', description: '2-3× In (Semiconductor)' },
+  { value: 'B', label: 'Type B', desc: '3-5× In' },
+  { value: 'C', label: 'Type C', desc: '5-10× In' },
+  { value: 'D', label: 'Type D', desc: '10-20× In' },
+  { value: 'K', label: 'Type K', desc: '8-12× In' },
+  { value: 'Z', label: 'Type Z', desc: '2-3× In' },
 ];
 
-// All standard ratings from 1A to 125A
-const commonRatings = [1, 2, 3, 4, 5, 6, 10, 13, 16, 20, 25, 32, 40, 45, 50, 63, 80, 100, 125];
+// Smart ratings based on device type
+const ratingsByDevice: Record<string, number[]> = {
+  'MCB': [6, 10, 16, 20, 25, 32, 40, 50, 63],
+  'RCBO': [6, 10, 16, 20, 25, 32, 40, 50, 63],
+  'RCD': [25, 40, 63, 80, 100],
+  'AFDD': [6, 10, 16, 20, 25, 32, 40],
+  'MCCB': [16, 20, 25, 32, 40, 50, 63, 80, 100, 125, 160, 200, 250],
+  'Main Switch': [63, 80, 100, 125],
+  'Isolator': [20, 32, 40, 63, 80, 100, 125],
+  'Fuse': [3, 5, 13, 15, 20, 30, 45, 60, 80, 100],
+  'HRC Fuse': [6, 10, 16, 20, 25, 32, 40, 50, 63, 80, 100],
+};
+const defaultRatings = [1, 2, 3, 4, 5, 6, 10, 13, 16, 20, 25, 32, 40, 45, 50, 63, 80, 100, 125];
 
 export const CircuitEditModal: React.FC<CircuitEditModalProps> = ({
   circuit,
@@ -155,15 +133,11 @@ export const CircuitEditModal: React.FC<CircuitEditModalProps> = ({
   boardBrand,
   imageUrls,
 }) => {
-  // Store original circuit for comparison (not affected by edits)
   const [originalCircuit] = useState<DetectedCircuit>({ ...circuit });
-
   const [editedCircuit, setEditedCircuit] = useState<DetectedCircuit>({
     ...circuit,
-    // Ensure confidence is upgraded to high after manual edit
     confidence: 'high',
   });
-
   const [isSaving, setIsSaving] = useState(false);
 
   const handleChange = useCallback(
@@ -175,76 +149,79 @@ export const CircuitEditModal: React.FC<CircuitEditModalProps> = ({
 
   const handleSave = useCallback(async () => {
     setIsSaving(true);
-
-    // Save training correction in background (non-blocking)
     saveTrainingCorrection(originalCircuit, editedCircuit, boardBrand, imageUrls?.[0]).catch(
       (err) => console.error('Training save error:', err)
     );
-
-    // Call parent save immediately
     onSave(editedCircuit);
     setIsSaving(false);
   }, [originalCircuit, editedCircuit, boardBrand, imageUrls, onSave]);
 
+  const confidenceColour =
+    circuit.confidence === 'low'
+      ? 'text-orange-400'
+      : circuit.confidence === 'medium'
+        ? 'text-yellow-400'
+        : 'text-green-400';
+
   return (
-    <Dialog open onOpenChange={onClose}>
-      <DialogContent className="sm:max-w-lg max-h-[85vh] p-0 gap-0 bg-background overflow-hidden flex flex-col">
-        {/* Header with circuit number */}
-        <DialogHeader className="px-4 pt-4 pb-3 border-b border-border/30 bg-muted/20">
+    <Sheet open onOpenChange={() => onClose()}>
+      <SheetContent
+        side="bottom"
+        className="h-auto max-h-[85vh] rounded-t-2xl p-0 flex flex-col overflow-hidden"
+      >
+        {/* Drag handle */}
+        <div className="flex justify-center pt-3 pb-1">
+          <div className="w-10 h-1 rounded-full bg-white/20" />
+        </div>
+
+        {/* Header */}
+        <SheetHeader className="px-5 pb-4 border-b border-white/10">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-full bg-elec-yellow/20 flex items-center justify-center">
+            <div className="w-11 h-11 rounded-2xl bg-elec-yellow/15 flex items-center justify-center">
               <span className="text-lg font-bold text-elec-yellow">{circuit.position}</span>
             </div>
-            <div>
-              <DialogTitle className="text-base">Edit Circuit</DialogTitle>
-              <p className="text-xs text-muted-foreground mt-0.5">
+            <div className="flex-1 min-w-0">
+              <SheetTitle className="text-base font-semibold text-white">Edit Circuit</SheetTitle>
+              <p className={cn('text-xs mt-0.5', confidenceColour)}>
                 {circuit.confidence === 'low'
-                  ? '⚠️ Low confidence - needs verification'
+                  ? 'Low confidence — verify details'
                   : circuit.confidence === 'medium'
-                    ? '⚠️ Medium confidence'
-                    : '✓ High confidence'}
+                    ? 'Medium confidence'
+                    : 'High confidence'}
               </p>
             </div>
           </div>
-        </DialogHeader>
+        </SheetHeader>
 
-        <div className="px-4 py-4 space-y-4 flex-1 min-h-0 overflow-y-auto">
+        {/* Form */}
+        <div className="px-5 py-4 space-y-4 flex-1 min-h-0 overflow-y-auto">
           {/* Circuit Label */}
-          <div className="space-y-2">
-            <Label htmlFor="label" className="text-sm font-medium">
-              Circuit Label
-            </Label>
+          <div className="space-y-1.5">
+            <Label className="text-xs font-medium text-white uppercase tracking-wider">Label</Label>
             <Input
-              id="label"
               value={editedCircuit.label}
               onChange={(e) => handleChange('label', e.target.value)}
               placeholder="e.g., Kitchen Sockets"
-              className="h-12 text-base touch-manipulation border-white/30 focus:border-elec-yellow focus:ring-elec-yellow"
+              className="h-12 text-base touch-manipulation bg-white/[0.04] border-white/10 focus:border-elec-yellow focus:ring-elec-yellow text-white placeholder:text-white/30"
             />
           </div>
 
-          {/* Device Type - Enhanced with descriptions */}
-          <div className="space-y-2">
-            <Label htmlFor="device" className="text-sm font-medium">
-              Device Type
-            </Label>
+          {/* Device Type — full width */}
+          <div className="space-y-1.5">
+            <Label className="text-xs font-medium text-white uppercase tracking-wider">Device Type</Label>
             <Select
               value={editedCircuit.device}
               onValueChange={(value) => handleChange('device', value)}
             >
-              <SelectTrigger className="h-12 touch-manipulation bg-elec-gray border-elec-gray focus:border-elec-yellow focus:ring-elec-yellow data-[state=open]:border-elec-yellow data-[state=open]:ring-2">
+              <SelectTrigger className="h-12 touch-manipulation bg-white/[0.04] border-white/10 focus:border-elec-yellow focus:ring-elec-yellow data-[state=open]:border-elec-yellow text-white">
                 <SelectValue placeholder="Select device type" />
               </SelectTrigger>
               <SelectContent className="z-[100] max-h-[40vh] bg-elec-gray border-elec-gray">
                 {deviceTypes.map((type) => (
-                  <SelectItem
-                    key={type.value}
-                    value={type.value}
-                    className="py-2.5 focus:bg-elec-yellow/20"
-                  >
-                    <div className="flex flex-col">
-                      <span className="font-medium">{type.label}</span>
-                      <span className="text-xs text-muted-foreground">{type.description}</span>
+                  <SelectItem key={type.value} value={type.value} className="py-2.5">
+                    <div className="flex items-center gap-2">
+                      <span className="font-medium text-white">{type.label}</span>
+                      <span className="text-xs text-white/60">{type.desc}</span>
                     </div>
                   </SelectItem>
                 ))}
@@ -252,46 +229,42 @@ export const CircuitEditModal: React.FC<CircuitEditModalProps> = ({
             </Select>
           </div>
 
-          {/* Rating and Curve - Side by side */}
+          {/* Rating + Curve — side by side */}
           <div className="grid grid-cols-2 gap-3">
-            <div className="space-y-2">
-              <Label htmlFor="rating" className="text-sm font-medium">
-                Rating (A)
-              </Label>
+            <div className="space-y-1.5">
+              <Label className="text-xs font-medium text-white uppercase tracking-wider">Rating (A)</Label>
               <Select
                 value={editedCircuit.rating?.toString() || ''}
                 onValueChange={(value) => handleChange('rating', parseInt(value))}
               >
-                <SelectTrigger className="h-12 touch-manipulation bg-elec-gray border-elec-gray focus:border-elec-yellow focus:ring-elec-yellow data-[state=open]:border-elec-yellow">
+                <SelectTrigger className="h-12 touch-manipulation bg-white/[0.04] border-white/10 focus:border-elec-yellow focus:ring-elec-yellow data-[state=open]:border-elec-yellow text-white">
                   <SelectValue placeholder="Select" />
                 </SelectTrigger>
                 <SelectContent className="z-[100] max-h-[40vh] bg-elec-gray border-elec-gray">
-                  {commonRatings.map((rating) => (
+                  {(ratingsByDevice[editedCircuit.device] || defaultRatings).map((rating) => (
                     <SelectItem key={rating} value={rating.toString()} className="py-2.5">
-                      <span className="font-medium">{rating}A</span>
+                      <span className="font-medium text-white">{rating}A</span>
                     </SelectItem>
                   ))}
                 </SelectContent>
               </Select>
             </div>
 
-            <div className="space-y-2">
-              <Label htmlFor="curve" className="text-sm font-medium">
-                Curve Type
-              </Label>
+            <div className="space-y-1.5">
+              <Label className="text-xs font-medium text-white uppercase tracking-wider">Curve Type</Label>
               <Select
                 value={editedCircuit.curve || ''}
                 onValueChange={(value) => handleChange('curve', value)}
               >
-                <SelectTrigger className="h-12 touch-manipulation bg-elec-gray border-elec-gray focus:border-elec-yellow focus:ring-elec-yellow data-[state=open]:border-elec-yellow">
+                <SelectTrigger className="h-12 touch-manipulation bg-white/[0.04] border-white/10 focus:border-elec-yellow focus:ring-elec-yellow data-[state=open]:border-elec-yellow text-white">
                   <SelectValue placeholder="Select" />
                 </SelectTrigger>
                 <SelectContent className="z-[100] bg-elec-gray border-elec-gray">
                   {curveTypes.map((curve) => (
                     <SelectItem key={curve.value} value={curve.value} className="py-2.5">
-                      <div className="flex flex-col">
-                        <span className="font-medium">{curve.label}</span>
-                        <span className="text-xs text-muted-foreground">{curve.description}</span>
+                      <div className="flex items-center gap-2">
+                        <span className="font-medium text-white">{curve.label}</span>
+                        <span className="text-xs text-white/60">{curve.desc}</span>
                       </div>
                     </SelectItem>
                   ))}
@@ -300,83 +273,74 @@ export const CircuitEditModal: React.FC<CircuitEditModalProps> = ({
             </div>
           </div>
 
-          {/* Phase - styled as toggle buttons */}
-          <div className="space-y-2">
-            <Label className="text-sm font-medium">Phase</Label>
+          {/* Phase toggle */}
+          <div className="space-y-1.5">
+            <Label className="text-xs font-medium text-white uppercase tracking-wider">Phase</Label>
             <div className="grid grid-cols-2 gap-2">
-              <Button
-                type="button"
-                variant={editedCircuit.phase !== '3P' ? 'default' : 'outline'}
-                onClick={() => handleChange('phase', '1P')}
-                className={`h-11 touch-manipulation ${
-                  editedCircuit.phase !== '3P'
-                    ? 'bg-elec-yellow text-black hover:bg-elec-yellow/90'
-                    : 'border-white/30'
-                }`}
-              >
-                Single Phase (1P)
-              </Button>
-              <Button
-                type="button"
-                variant={editedCircuit.phase === '3P' ? 'default' : 'outline'}
-                onClick={() => handleChange('phase', '3P')}
-                className={`h-11 touch-manipulation ${
-                  editedCircuit.phase === '3P'
-                    ? 'bg-elec-yellow text-black hover:bg-elec-yellow/90'
-                    : 'border-white/30'
-                }`}
-              >
-                Three Phase (3P)
-              </Button>
+              {[
+                { value: '1P', label: 'Single Phase (1P)' },
+                { value: '3P', label: 'Three Phase (3P)' },
+              ].map((option) => (
+                <button
+                  key={option.value}
+                  type="button"
+                  onClick={() => handleChange('phase', option.value)}
+                  className={cn(
+                    'h-11 rounded-xl font-medium transition-all touch-manipulation text-sm',
+                    (editedCircuit.phase || '1P') === option.value
+                      ? 'bg-elec-yellow text-black'
+                      : 'bg-white/[0.04] text-white border border-white/10'
+                  )}
+                >
+                  {option.label}
+                </button>
+              ))}
             </div>
           </div>
 
           {/* Notes */}
-          <div className="space-y-2">
-            <Label htmlFor="notes" className="text-sm font-medium">
-              Notes (optional)
+          <div className="space-y-1.5">
+            <Label className="text-xs font-medium text-white uppercase tracking-wider">
+              Notes <span className="normal-case text-white/50">(optional)</span>
             </Label>
             <Textarea
-              id="notes"
               value={editedCircuit.notes || ''}
               onChange={(e) => handleChange('notes', e.target.value)}
               placeholder="Any additional notes..."
-              className="min-h-[80px] text-base touch-manipulation border-white/30 focus:border-elec-yellow focus:ring-elec-yellow"
+              className="min-h-[72px] text-base touch-manipulation bg-white/[0.04] border-white/10 focus:border-elec-yellow focus:ring-elec-yellow text-white placeholder:text-white/30 resize-none"
             />
           </div>
 
-          {/* AI Evidence (read-only) */}
+          {/* AI Evidence */}
           {circuit.evidence && (
-            <div className="space-y-2 bg-muted/30 rounded-lg p-3 border border-border/30">
-              <Label className="text-xs text-muted-foreground uppercase tracking-wide">
-                AI Detection Evidence
-              </Label>
-              <p className="text-sm text-foreground">{circuit.evidence}</p>
+            <div className="px-3 py-2.5 rounded-xl bg-white/[0.03] border border-white/10">
+              <p className="text-[10px] font-medium text-white/50 uppercase tracking-wider mb-1">AI Evidence</p>
+              <p className="text-xs text-white leading-relaxed">{circuit.evidence}</p>
             </div>
           )}
         </div>
 
-        {/* Footer - Fixed at bottom */}
-        <div className="px-4 py-4 border-t border-border/30 bg-background flex gap-3">
+        {/* Footer */}
+        <div className="px-5 py-4 border-t border-white/10 flex gap-3 safe-area-bottom">
           <Button
             variant="outline"
             onClick={onClose}
-            className="flex-1 h-12 touch-manipulation border-white/30"
+            className="flex-1 h-12 touch-manipulation rounded-xl border-white/10 text-white hover:bg-white/5"
             disabled={isSaving}
           >
             Cancel
           </Button>
           <Button
             onClick={handleSave}
-            className="flex-1 h-12 bg-elec-yellow text-black hover:bg-elec-yellow/90 touch-manipulation font-medium"
+            className="flex-1 h-12 bg-elec-yellow text-black hover:bg-elec-yellow/90 touch-manipulation font-semibold rounded-xl shadow-lg shadow-elec-yellow/20"
             disabled={isSaving}
           >
             <Save className="h-4 w-4 mr-2" />
             {isSaving ? 'Saving...' : 'Save Changes'}
           </Button>
         </div>
-      </DialogContent>
-    </Dialog>
+      </SheetContent>
+    </Sheet>
   );
 };
 

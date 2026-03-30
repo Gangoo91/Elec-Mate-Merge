@@ -38,6 +38,9 @@ interface DetectedCircuit {
   curve: string | null;
   confidence: 'high' | 'medium' | 'low';
   phase?: '1P' | '3P';
+  wayNumber?: number | null;
+  phaseDesignation?: string | null;
+  boardSide?: string | null;
   pictograms?: Array<{ type: string; confidence: number }>;
   notes?: string;
   evidence?: string;
@@ -156,7 +159,7 @@ export const CircuitReviewSheet: React.FC<CircuitReviewSheetProps> = ({
                   <SheetTitle className="text-base sm:text-lg font-semibold text-white">
                     AI Detection Results
                   </SheetTitle>
-                  <p className="text-xs sm:text-sm text-white/50 truncate">
+                  <p className="text-xs sm:text-sm text-white truncate">
                     {board.make || 'Unknown'} {board.model ? `${board.model} ` : ''}
                     {'\u00b7'} {board.mainSwitch || 'Unknown'}
                   </p>
@@ -166,7 +169,7 @@ export const CircuitReviewSheet: React.FC<CircuitReviewSheetProps> = ({
                 variant="ghost"
                 size="icon"
                 onClick={() => onOpenChange(false)}
-                className="h-10 w-10 rounded-xl touch-manipulation text-white/40 hover:text-white hover:bg-white/10 flex-shrink-0"
+                className="h-10 w-10 rounded-xl touch-manipulation text-white hover:text-white hover:bg-white/10 flex-shrink-0"
               >
                 <X className="h-5 w-5" />
               </Button>
@@ -235,7 +238,7 @@ export const CircuitReviewSheet: React.FC<CircuitReviewSheetProps> = ({
                   'h-8 gap-1.5 text-xs font-medium rounded-lg touch-manipulation transition-all',
                   isReversed
                     ? 'bg-elec-yellow/15 text-elec-yellow hover:bg-elec-yellow/20'
-                    : 'text-white/50 hover:text-white hover:bg-white/10'
+                    : 'text-white hover:text-white hover:bg-white/10'
                 )}
               >
                 {isReversed ? (
@@ -243,10 +246,7 @@ export const CircuitReviewSheet: React.FC<CircuitReviewSheetProps> = ({
                 ) : (
                   <ArrowUpDown className="h-3.5 w-3.5" />
                 )}
-                <span className="hidden sm:inline">
-                  {isReversed ? 'Reversed' : 'Reverse Order'}
-                </span>
-                <ArrowUpDown className="h-3.5 w-3.5 sm:hidden" />
+                {isReversed ? 'Reversed' : 'Reverse'}
               </Button>
             </div>
           </SheetHeader>
@@ -271,7 +271,7 @@ export const CircuitReviewSheet: React.FC<CircuitReviewSheetProps> = ({
                 onClick={() => {
                   // Could open an add circuit modal - for now just a visual cue
                 }}
-                className="mt-2.5 w-full py-3 rounded-xl border border-dashed border-white/10 text-white/30 text-sm font-medium flex items-center justify-center gap-2 hover:border-white/20 hover:text-white/50 hover:bg-white/[0.02] transition-all touch-manipulation"
+                className="mt-2.5 w-full py-3 rounded-xl border border-dashed border-white/10 text-white/80 text-sm font-medium flex items-center justify-center gap-2 hover:border-white/20 hover:text-white hover:bg-white/[0.02] transition-all touch-manipulation"
               >
                 <Plus className="h-4 w-4" />
                 Add Circuit
@@ -287,7 +287,7 @@ export const CircuitReviewSheet: React.FC<CircuitReviewSheetProps> = ({
                 className="w-full px-3 py-2.5 rounded-xl bg-gradient-to-r from-elec-yellow/[0.06] to-amber-500/[0.06] border border-elec-yellow/20 flex items-center gap-3 touch-manipulation hover:from-elec-yellow/10 hover:to-amber-500/10 transition-colors"
               >
                 <Sparkles className="h-4 w-4 text-elec-yellow flex-shrink-0" />
-                <span className="text-xs sm:text-sm text-white/70 flex-1 text-left">
+                <span className="text-xs sm:text-sm text-white flex-1 text-left">
                   {correctionsCount > 0
                     ? `${correctionsCount} correction${correctionsCount > 1 ? 's' : ''} — share to improve AI`
                     : 'Great scan — share to train AI'}
@@ -305,7 +305,7 @@ export const CircuitReviewSheet: React.FC<CircuitReviewSheetProps> = ({
               <Button
                 variant="outline"
                 onClick={onRescan}
-                className="h-12 sm:h-11 px-5 gap-2 touch-manipulation rounded-xl border-white/10 text-white/70 hover:text-white hover:bg-white/10 hover:border-white/20"
+                className="h-12 sm:h-11 px-5 gap-2 touch-manipulation rounded-xl border-white/10 text-white hover:text-white hover:bg-white/10 hover:border-white/20"
               >
                 <RotateCcw className="h-4 w-4" />
                 <span>Rescan</span>

@@ -244,8 +244,9 @@ const EarthingBondingSectionInner = ({ formData, onUpdate }: EarthingBondingSect
         <SectionTitle icon={Zap} title="Means of Earthing" color="yellow" isMobile={isMobile} />
         <div className={cn('space-y-4 py-4', isMobile ? 'px-4' : '')}>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-            <button
-              type="button"
+            <div
+              role="button"
+              tabIndex={0}
               onClick={() => {
                 haptics.tap();
                 onUpdate(
@@ -253,8 +254,9 @@ const EarthingBondingSectionInner = ({ formData, onUpdate }: EarthingBondingSect
                   formData.meansOfEarthingDistributor === 'true' ? 'false' : 'true'
                 );
               }}
+              onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); haptics.tap(); onUpdate('meansOfEarthingDistributor', formData.meansOfEarthingDistributor === 'true' ? 'false' : 'true'); } }}
               className={cn(
-                'flex items-center gap-3 p-4 rounded-xl border-2 transition-all touch-manipulation',
+                'flex items-center gap-3 p-4 rounded-xl border-2 transition-all touch-manipulation cursor-pointer',
                 formData.meansOfEarthingDistributor === 'true'
                   ? 'border-elec-yellow bg-elec-yellow/10'
                   : 'border-border/30 bg-card/30'
@@ -262,12 +264,14 @@ const EarthingBondingSectionInner = ({ formData, onUpdate }: EarthingBondingSect
             >
               <Checkbox
                 checked={formData.meansOfEarthingDistributor === 'true'}
-                className="h-5 w-5 data-[state=checked]:bg-elec-yellow data-[state=checked]:border-elec-yellow"
+                tabIndex={-1}
+                className="h-5 w-5 pointer-events-none data-[state=checked]:bg-elec-yellow data-[state=checked]:border-elec-yellow"
               />
-              <span className="font-medium text-sm">Distributor's facility</span>
-            </button>
-            <button
-              type="button"
+              <span className="font-medium text-sm text-white">Distributor's facility</span>
+            </div>
+            <div
+              role="button"
+              tabIndex={0}
               onClick={() => {
                 haptics.tap();
                 onUpdate(
@@ -275,8 +279,9 @@ const EarthingBondingSectionInner = ({ formData, onUpdate }: EarthingBondingSect
                   formData.meansOfEarthingElectrode === 'true' ? 'false' : 'true'
                 );
               }}
+              onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); haptics.tap(); onUpdate('meansOfEarthingElectrode', formData.meansOfEarthingElectrode === 'true' ? 'false' : 'true'); } }}
               className={cn(
-                'flex items-center gap-3 p-4 rounded-xl border-2 transition-all touch-manipulation',
+                'flex items-center gap-3 p-4 rounded-xl border-2 transition-all touch-manipulation cursor-pointer',
                 formData.meansOfEarthingElectrode === 'true'
                   ? 'border-elec-yellow bg-elec-yellow/10'
                   : 'border-border/30 bg-card/30'
@@ -284,10 +289,11 @@ const EarthingBondingSectionInner = ({ formData, onUpdate }: EarthingBondingSect
             >
               <Checkbox
                 checked={formData.meansOfEarthingElectrode === 'true'}
-                className="h-5 w-5 data-[state=checked]:bg-elec-yellow data-[state=checked]:border-elec-yellow"
+                tabIndex={-1}
+                className="h-5 w-5 pointer-events-none data-[state=checked]:bg-elec-yellow data-[state=checked]:border-elec-yellow"
               />
-              <span className="font-medium text-sm">Installation earth electrode</span>
-            </button>
+              <span className="font-medium text-sm text-white">Installation earth electrode</span>
+            </div>
           </div>
         </div>
       </div>
@@ -366,8 +372,9 @@ const EarthingBondingSectionInner = ({ formData, onUpdate }: EarthingBondingSect
             </FormField>
           )}
 
-          <button
-            type="button"
+          <div
+            role="button"
+            tabIndex={0}
             onClick={() => {
               haptics.tap();
               onUpdate(
@@ -375,8 +382,9 @@ const EarthingBondingSectionInner = ({ formData, onUpdate }: EarthingBondingSect
                 formData.earthingConductorContinuityVerified === 'true' ? 'false' : 'true'
               );
             }}
+            onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); haptics.tap(); onUpdate('earthingConductorContinuityVerified', formData.earthingConductorContinuityVerified === 'true' ? 'false' : 'true'); } }}
             className={cn(
-              'w-full flex items-center gap-3 p-4 rounded-xl border-2 transition-all touch-manipulation',
+              'w-full flex items-center gap-3 p-4 rounded-xl border-2 transition-all touch-manipulation cursor-pointer',
               formData.earthingConductorContinuityVerified === 'true'
                 ? 'border-green-500 bg-green-500/10'
                 : 'border-border/30 bg-card/30'
@@ -384,10 +392,11 @@ const EarthingBondingSectionInner = ({ formData, onUpdate }: EarthingBondingSect
           >
             <Checkbox
               checked={formData.earthingConductorContinuityVerified === 'true'}
-              className="h-5 w-5 data-[state=checked]:bg-green-500 data-[state=checked]:border-green-500"
+              tabIndex={-1}
+              className="h-5 w-5 pointer-events-none data-[state=checked]:bg-green-500 data-[state=checked]:border-green-500"
             />
-            <span className="font-medium text-sm">Connection/continuity verified</span>
-          </button>
+            <span className="font-medium text-sm text-white">Connection/continuity verified</span>
+          </div>
         </div>
       </div>
 
@@ -499,8 +508,9 @@ const EarthingBondingSectionInner = ({ formData, onUpdate }: EarthingBondingSect
             </div>
           </FormField>
 
-          <button
-            type="button"
+          <div
+            role="button"
+            tabIndex={0}
             onClick={() => {
               haptics.tap();
               onUpdate(
@@ -508,8 +518,9 @@ const EarthingBondingSectionInner = ({ formData, onUpdate }: EarthingBondingSect
                 formData.bondingConductorContinuityVerified === 'true' ? 'false' : 'true'
               );
             }}
+            onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); haptics.tap(); onUpdate('bondingConductorContinuityVerified', formData.bondingConductorContinuityVerified === 'true' ? 'false' : 'true'); } }}
             className={cn(
-              'w-full flex items-center gap-3 p-4 rounded-xl border-2 transition-all touch-manipulation',
+              'w-full flex items-center gap-3 p-4 rounded-xl border-2 transition-all touch-manipulation cursor-pointer',
               formData.bondingConductorContinuityVerified === 'true'
                 ? 'border-green-500 bg-green-500/10'
                 : 'border-border/30 bg-card/30'
@@ -517,10 +528,11 @@ const EarthingBondingSectionInner = ({ formData, onUpdate }: EarthingBondingSect
           >
             <Checkbox
               checked={formData.bondingConductorContinuityVerified === 'true'}
-              className="h-5 w-5 data-[state=checked]:bg-green-500 data-[state=checked]:border-green-500"
+              tabIndex={-1}
+              className="h-5 w-5 pointer-events-none data-[state=checked]:bg-green-500 data-[state=checked]:border-green-500"
             />
-            <span className="font-medium text-sm">Connection/continuity verified</span>
-          </button>
+            <span className="font-medium text-sm text-white">Connection/continuity verified</span>
+          </div>
 
           <FormField
             label="Bonding Locations"

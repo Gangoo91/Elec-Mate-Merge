@@ -9,6 +9,8 @@
 
 import { useState } from 'react';
 import { Play } from 'lucide-react';
+import { Capacitor } from '@capacitor/core';
+import { Browser } from '@capacitor/browser';
 
 interface YouTubePlayerProps {
   videoId: string;
@@ -22,12 +24,18 @@ export function YouTubePlayer({ videoId, title, onOpen }: YouTubePlayerProps) {
   const thumbnailUrl = `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`;
   const fallbackThumbnailUrl = `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
 
-  const handlePlay = () => {
+  const handlePlay = async () => {
     onOpen?.();
+    // Native iOS/Android: open in Safari View Controller / Chrome Custom Tab
+    // to avoid WKWebView Error 153 blocking YouTube iframe embeds
+    if (Capacitor.isNativePlatform()) {
+      await Browser.open({ url: `https://www.youtube.com/watch?v=${videoId}` });
+      return;
+    }
     setIsPlaying(true);
   };
 
-  // Once tapped — show inline iframe.
+  // Once tapped (web only) — show inline iframe.
   // playsinline=1 is essential for iOS WKWebView (prevents full-screen hijack).
   // autoplay=1 starts playback immediately after tap.
   if (isPlaying) {

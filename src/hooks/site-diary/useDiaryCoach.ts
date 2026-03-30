@@ -118,7 +118,9 @@ export function useDiaryCoach(entries: SiteDiaryEntry[], qualificationCode?: str
         });
 
         if (response.error) {
-          throw new Error(response.error.message || 'Failed to get coaching insight');
+          // Real error detail is in response.data when function returns non-2xx
+          const detail = response.data?.error || response.error.message || 'Failed to get coaching insight';
+          throw new Error(detail);
         }
 
         const result = response.data;

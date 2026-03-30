@@ -7,9 +7,7 @@
 
 import React, { useState, useCallback } from 'react';
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
-import { Button } from '@/components/ui/button';
-import { X, Camera } from 'lucide-react';
-import { cn } from '@/lib/utils';
+import { Camera } from 'lucide-react';
 import { BoardPhotoCapture } from './BoardPhotoCapture';
 import { AnalysisProgress } from './AnalysisProgress';
 import { CircuitReviewSheet } from './CircuitReviewSheet';
@@ -107,26 +105,20 @@ export const BoardScannerOverlay: React.FC<BoardScannerOverlayProps> = ({
       <Sheet open={true} onOpenChange={(open) => !open && !isAnalysing && onClose()}>
         <SheetContent
           side="bottom"
-          className="h-[90vh] rounded-t-2xl p-0 flex flex-col overflow-hidden"
+          className="h-[85vh] rounded-t-2xl p-0 flex flex-col overflow-hidden"
         >
-          {/* Header with close button - native app style */}
-          <SheetHeader className="flex-shrink-0 px-4 py-3 border-b bg-background/95 backdrop-blur-sm">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-3">
-                <div className="p-2 rounded-lg bg-elec-yellow/10">
-                  <Camera className="h-5 w-5 text-elec-yellow" />
-                </div>
-                <SheetTitle className="text-lg font-semibold">{title}</SheetTitle>
+          {/* Drag handle */}
+          <div className="flex justify-center pt-3 pb-1">
+            <div className="w-10 h-1 rounded-full bg-white/20" />
+          </div>
+
+          {/* Header - close button is built into SheetContent (top-right X) */}
+          <SheetHeader className="flex-shrink-0 px-4 pb-3 border-b border-white/10">
+            <div className="flex items-center gap-3 pr-8">
+              <div className="p-2 rounded-xl bg-elec-yellow/10">
+                <Camera className="h-5 w-5 text-elec-yellow" />
               </div>
-              <Button
-                variant="ghost"
-                size="icon"
-                onClick={onClose}
-                className="h-10 w-10 touch-manipulation"
-                disabled={isAnalysing}
-              >
-                <X className="h-5 w-5" />
-              </Button>
+              <SheetTitle className="text-lg font-semibold text-white">{title}</SheetTitle>
             </div>
           </SheetHeader>
 

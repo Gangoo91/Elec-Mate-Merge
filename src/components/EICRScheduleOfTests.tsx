@@ -1409,6 +1409,9 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
   // Single effect handles both debounced save AND unmount flush.
   const testResultsRef = useRef(testResults);
   testResultsRef.current = testResults;
+  // Stable ref for onUpdate to avoid infinite re-render loops
+  const onUpdateRef = useRef(onUpdate);
+  onUpdateRef.current = onUpdate;
 
   useEffect(() => {
     if (saveTimeoutRef.current) {
@@ -1418,7 +1421,7 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
     saveTimeoutRef.current = setTimeout(() => {
       const nextHash = computeResultsHash(testResultsRef.current);
       if (nextHash === lastSavedHashRef.current) return;
-      onUpdate('scheduleOfTests', testResultsRef.current);
+      onUpdateRef.current('scheduleOfTests', testResultsRef.current);
       lastSavedHashRef.current = nextHash;
     }, 1000);
 
@@ -1426,10 +1429,10 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
       if (saveTimeoutRef.current) {
         clearTimeout(saveTimeoutRef.current);
         // Flush on unmount using ref (avoids stale closure)
-        onUpdate('scheduleOfTests', testResultsRef.current);
+        onUpdateRef.current('scheduleOfTests', testResultsRef.current);
       }
     };
-  }, [testResults, onUpdate]);
+  }, [testResults]);
 
   const removeAllTestResults = () => {
     if (

@@ -21,6 +21,9 @@ interface DetectedCircuit {
   curve: string | null;
   confidence: 'high' | 'medium' | 'low';
   phase?: '1P' | '3P';
+  wayNumber?: number | null;
+  phaseDesignation?: string | null;
+  boardSide?: string | null;
   pictograms?: Array<{ type: string; confidence: number }>;
   notes?: string;
   evidence?: string;
@@ -70,86 +73,82 @@ export const CircuitReviewCard: React.FC<CircuitReviewCardProps> = ({
         'relative flex items-stretch rounded-xl border border-white/[0.06] bg-white/[0.03] transition-all',
         'hover:bg-white/[0.05] hover:border-white/[0.1]',
         'border-l-[3px]',
-        config.accent
+        circuit.phase === '3P' ? 'border-l-purple-500' : config.accent
       )}
     >
-      {/* Position number */}
-      <div className="flex items-center justify-center w-12 sm:w-14 flex-shrink-0">
-        <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-elec-yellow/15 flex items-center justify-center">
-          <span className="text-sm sm:text-base font-bold text-elec-yellow tabular-nums">
-            {circuit.position}
-          </span>
-        </div>
+      {/* Position / Way number */}
+      <div className="flex items-center justify-center w-14 sm:w-16 flex-shrink-0">
+        {circuit.wayNumber ? (
+          <div className="flex flex-col items-center justify-center px-1">
+            <span className="text-[10px] font-medium text-white/70">W{circuit.wayNumber}</span>
+            <span className="text-xs font-bold text-elec-yellow">
+              {circuit.phaseDesignation || `L${((circuit.position - 1) % 3) + 1}`}
+            </span>
+          </div>
+        ) : (
+          <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-elec-yellow/15 flex items-center justify-center">
+            <span className="text-sm sm:text-base font-bold text-elec-yellow tabular-nums">
+              {circuit.position}
+            </span>
+          </div>
+        )}
       </div>
 
       {/* Content */}
-      <div className="flex-1 min-w-0 py-3 pr-2">
+      <div className="flex-1 min-w-0 py-3 pr-1">
         {/* Top row: label + phase */}
-        <div className="flex items-center gap-2">
-          <p className="text-sm sm:text-base font-semibold text-white truncate">
+        <div className="flex items-center gap-2 min-w-0">
+          <p className="text-sm font-semibold text-white truncate max-w-[180px] sm:max-w-none">
             {circuit.label || `Circuit ${circuit.position}`}
           </p>
           {circuit.phase === '3P' && (
             <Badge
               variant="outline"
-              className="text-[10px] px-1.5 py-0 leading-4 border-purple-500/40 text-purple-400 flex-shrink-0"
+              className="text-[10px] px-1.5 py-0 leading-4 border-purple-500/40 text-purple-400 bg-purple-500/10 flex-shrink-0"
             >
-              3P
+              3P · L1,L2,L3
             </Badge>
           )}
         </div>
 
         {/* Bottom row: device + rating + curve as inline tags */}
         <div className="flex items-center gap-1.5 mt-1.5 flex-wrap">
-          <span className="inline-flex items-center text-xs px-2 py-0.5 rounded-md bg-white/[0.06] text-white/70 font-medium">
+          <span className="inline-flex items-center text-xs px-2 py-0.5 rounded-md bg-white/[0.06] text-white font-medium">
             {circuit.device}
           </span>
           {circuit.rating && (
-            <span className="inline-flex items-center text-xs px-2 py-0.5 rounded-md bg-white/[0.06] text-white/70">
+            <span className="inline-flex items-center text-xs px-2 py-0.5 rounded-md bg-white/[0.06] text-white">
               {circuit.rating}A
             </span>
           )}
           {circuit.curve && (
-            <span className="inline-flex items-center text-xs px-2 py-0.5 rounded-md bg-white/[0.06] text-white/70">
+            <span className="inline-flex items-center text-xs px-2 py-0.5 rounded-md bg-white/[0.06] text-white">
               Type {circuit.curve}
             </span>
           )}
         </div>
 
-        {circuit.notes && <p className="text-xs text-white/40 mt-1.5 truncate">{circuit.notes}</p>}
+        {circuit.notes && <p className="text-xs text-white mt-1.5 truncate">{circuit.notes}</p>}
       </div>
 
-      {/* Right side: confidence badge + actions */}
-      <div className="flex items-center gap-1 pr-2 flex-shrink-0">
-        <Badge
-          variant="outline"
-          className={cn(
-            'text-[10px] sm:text-xs px-1.5 sm:px-2 py-0.5 gap-1 font-medium flex-shrink-0 hidden xs:flex',
-            config.badgeCls
-          )}
-        >
-          <ConfidenceIcon className="h-3 w-3" />
-          {config.label}
-        </Badge>
-        {/* Mobile: icon only */}
-        <div className="flex xs:hidden">
-          <ConfidenceIcon className={cn('h-4 w-4', config.iconCls)} />
-        </div>
+      {/* Right side: confidence + actions */}
+      <div className="flex items-center gap-0.5 pr-1.5 flex-shrink-0">
+        <ConfidenceIcon className={cn('h-4 w-4 flex-shrink-0', config.iconCls)} />
         <Button
           variant="ghost"
           size="icon"
           onClick={onEdit}
-          className="h-9 w-9 sm:h-10 sm:w-10 touch-manipulation text-white/50 hover:text-white hover:bg-white/10 rounded-lg"
+          className="h-8 w-8 touch-manipulation text-white hover:text-white hover:bg-white/10 rounded-lg"
         >
-          <Pencil className="h-4 w-4" />
+          <Pencil className="h-3.5 w-3.5" />
         </Button>
         <Button
           variant="ghost"
           size="icon"
           onClick={onRemove}
-          className="h-9 w-9 sm:h-10 sm:w-10 touch-manipulation text-white/30 hover:text-red-400 hover:bg-red-500/10 rounded-lg"
+          className="h-8 w-8 touch-manipulation text-white/80 hover:text-red-400 hover:bg-red-500/10 rounded-lg"
         >
-          <Trash2 className="h-4 w-4" />
+          <Trash2 className="h-3.5 w-3.5" />
         </Button>
       </div>
     </div>
