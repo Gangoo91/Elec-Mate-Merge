@@ -268,31 +268,139 @@ export default function PriceBook() {
   };
   const resetBundleSheet = () => { setBundleName(''); setBundleDesc(''); setBundleLabourHours(''); setBundleItems([]); setBundleSheetOpen(false); };
 
-  // Import CSV/text parsing
+  // Import — parse price string (handles £, commas in numbers)
+  const cleanPrice = (raw: string): number => {
+    if (!raw) return 0;
+    const cleaned = raw.replace(/[£$,\s]/g, '').trim();
+    const val = parseFloat(cleaned);
+    return isNaN(val) ? 0 : val;
+  };
+
+  // Detect if a line is a header row
+  const isHeaderRow = (parts: string[]): boolean => {
+    const joined = parts.join(' ').toLowerCase();
+    return ['name', 'price', 'cost', 'description', 'item', 'product', 'unit price'].some((h) => joined.includes(h));
+  };
+
+  // Parse text (paste, CSV content, or extracted doc text) into items
   const parseImportText = (text: string) => {
     const lines = text.split('\n').filter((l) => l.trim());
     const parsed: typeof importParsed = [];
-    for (const line of lines) {
-      // Try comma, then tab separated
-      const parts = line.includes('\t') ? line.split('\t') : line.split(',');
-      const name = parts[0]?.trim();
-      if (!name) continue;
-      const price = parseFloat(parts[1]?.trim() || '0');
-      const unit = parts[2]?.trim() || 'each';
-      const supplier = parts[3]?.trim() || '';
-      parsed.push({ name, price: isNaN(price) ? 0 : price, unit, supplier });
+    for (let i = 0; i < lines.length; i++) {
+      const line = lines[i];
+      // Tab-separated takes priority (unambiguous)
+      if (line.includes('\t')) {
+        const parts = line.split('\t');
+        if (i === 0 && isHeaderRow(parts)) continue;
+        const name = parts[0]?.trim();
+        if (!name) continue;
+        parsed.push({ name, price: cleanPrice(parts[1] || ''), unit: parts[2]?.trim() || 'each', supplier: parts[3]?.trim() || '' });
+        continue;
+      }
+      // Comma-separated — but names might contain commas
+      // Strategy: find the LAST comma-separated segment that looks like a price, everything before it is the name
+      const parts = line.split(',').map((p) => p.trim());
+      if (i === 0 && isHeaderRow(parts)) continue;
+      if (parts.length === 1) {
+        // Single value — just a name, no price
+        if (parts[0]) parsed.push({ name: parts[0], price: 0, unit: 'each', supplier: '' });
+        continue;
+      }
+      // Find the first part after index 0 that looks like a price
+      let priceIdx = -1;
+      for (let j = 1; j < parts.length; j++) {
+        const cleaned = parts[j].replace(/[£$,\s]/g, '');
+        if (/^\d+\.?\d*$/.test(cleaned) && parseFloat(cleaned) > 0) { priceIdx = j; break; }
+      }
+      if (priceIdx === -1) {
+        // No price found — treat whole line as name
+        parsed.push({ name: line.trim(), price: 0, unit: 'each', supplier: '' });
+      } else {
+        const name = parts.slice(0, priceIdx).join(', ').trim();
+        if (!name) continue;
+        parsed.push({
+          name,
+          price: cleanPrice(parts[priceIdx]),
+          unit: parts[priceIdx + 1]?.trim() || 'each',
+          supplier: parts[priceIdx + 2]?.trim() || '',
+        });
+      }
     }
     setImportParsed(parsed);
   };
 
+  // Handle file upload (CSV, XLSX, DOCX)
+  const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    const ext = file.name.split('.').pop()?.toLowerCase();
+
+    try {
+      if (ext === 'csv' || ext === 'txt') {
+        // CSV/TXT — read as text and parse
+        const text = await file.text();
+        setImportText(text);
+        parseImportText(text);
+      } else if (ext === 'xlsx' || ext === 'xls') {
+        // Excel — use xlsx library
+        const XLSX = await import('xlsx');
+        const buffer = await file.arrayBuffer();
+        const wb = XLSX.read(buffer, { type: 'array' });
+        const ws = wb.Sheets[wb.SheetNames[0]];
+        const csv = XLSX.utils.sheet_to_csv(ws);
+        setImportText(csv);
+        parseImportText(csv);
+      } else if (ext === 'docx') {
+        // Word .docx — unzip and extract text from word/document.xml
+        try {
+          const JSZip = (await import('jszip')).default;
+          const zip = await JSZip.loadAsync(await file.arrayBuffer());
+          const docXml = await zip.file('word/document.xml')?.async('text');
+          if (!docXml) throw new Error('No document.xml found');
+          // Extract text from XML — get content between <w:t> tags, separate paragraphs with newlines
+          const textParts: string[] = [];
+          let currentLine = '';
+          // Match paragraph boundaries and text runs
+          const paragraphs = docXml.split(/<\/w:p>/);
+          for (const para of paragraphs) {
+            const texts = para.match(/<w:t[^>]*>([^<]*)<\/w:t>/g);
+            if (texts) {
+              currentLine = texts.map((t) => t.replace(/<[^>]+>/g, '')).join('');
+              if (currentLine.trim()) textParts.push(currentLine.trim());
+            }
+          }
+          const extracted = textParts.join('\n');
+          if (!extracted.trim()) {
+            toast({ title: 'No text found in document', description: 'The Word document appears to be empty or uses an unsupported format.', variant: 'destructive' });
+          } else {
+            setImportText(extracted);
+            parseImportText(extracted);
+          }
+        } catch {
+          toast({ title: 'Could not read Word document', description: 'Try saving as CSV or copy-paste the content instead.', variant: 'destructive' });
+        }
+      } else if (ext === 'doc') {
+        toast({ title: 'Old Word format (.doc) not supported', description: 'Please save as .docx, .csv, or copy-paste the content.', variant: 'destructive' });
+      } else {
+        toast({ title: 'Unsupported file type', description: 'Please use CSV, Excel (.xlsx), or Word (.docx) files.', variant: 'destructive' });
+      }
+    } catch (err) {
+      console.error('File import error:', err);
+      toast({ title: 'Failed to read file', description: 'Please try pasting the content instead.', variant: 'destructive' });
+    }
+
+    // Reset the input so the same file can be re-selected
+    e.target.value = '';
+  };
+
   const handleImport = async () => {
-    if (importParsed.length === 0) return;
+    const validItems = importParsed.filter((i) => i.name && i.price > 0);
+    if (validItems.length === 0) return;
     setImporting(true);
     let list = lists.find((l) => l.name === 'Price Book');
     if (!list) { const created = await createList('Price Book', 'Items added directly to My Price Book'); if (!created) { setImporting(false); return; } list = created; }
     let count = 0;
-    for (const item of importParsed) {
-      if (!item.name || item.price <= 0) continue;
+    for (const item of validItems) {
       const sellPrice = calcSellPrice(item.price, settings.globalMarkupPercent);
       await addItem(list.id, { name: item.name, current_price: sellPrice, cost_price: item.price, markup_percent: settings.globalMarkupPercent, supplier_name: item.supplier || undefined });
       count++;
@@ -782,8 +890,36 @@ export default function PriceBook() {
           </SheetHeader>
           <div className="mt-4 space-y-4 pb-6">
             <p className="text-xs text-white leading-relaxed">
-              Paste your price list from a spreadsheet. Format: <span className="text-elec-yellow font-medium">name, cost price, unit, supplier</span> — one item per line. Comma or tab separated.
+              Upload a file or paste your price list. Format: <span className="text-elec-yellow font-medium">name, cost price, unit, supplier</span> — one item per line.
             </p>
+
+            {/* File upload */}
+            <div className="grid grid-cols-2 gap-2">
+              <label className="group card-surface-interactive p-3 flex items-center gap-2.5 touch-manipulation active:scale-[0.98] transition-all cursor-pointer">
+                <div className="p-1.5 rounded-lg bg-emerald-500/10 border border-emerald-500/20">
+                  <Upload className="h-3.5 w-3.5 text-emerald-400" />
+                </div>
+                <div className="min-w-0">
+                  <span className="text-xs font-medium text-white group-hover:text-emerald-300 transition-colors block">Upload File</span>
+                  <span className="text-[10px] text-white">.csv, .xlsx, .docx</span>
+                </div>
+                <input
+                  type="file"
+                  accept=".csv,.txt,.xlsx,.xls,.docx,.doc"
+                  onChange={handleFileUpload}
+                  className="hidden"
+                />
+              </label>
+              <div className="card-surface p-3 flex items-center gap-2.5">
+                <div className="p-1.5 rounded-lg bg-blue-500/10 border border-blue-500/20">
+                  <ClipboardPaste className="h-3.5 w-3.5 text-blue-400" />
+                </div>
+                <div className="min-w-0">
+                  <span className="text-xs font-medium text-white block">Or Paste Below</span>
+                  <span className="text-[10px] text-white">From spreadsheet</span>
+                </div>
+              </div>
+            </div>
 
             <Textarea
               value={importText}
@@ -792,7 +928,7 @@ export default function PriceBook() {
                 parseImportText(e.target.value);
               }}
               placeholder={"2.5mm T&E 100m, 45.99, roll, Screwfix\n32A MCB Type B, 8.50, each, Toolstation\nLED Downlight 10W, 4.99, each, CEF"}
-              className="min-h-[140px] text-sm font-mono touch-manipulation"
+              className="min-h-[120px] text-sm font-mono touch-manipulation"
             />
 
             {/* Preview */}

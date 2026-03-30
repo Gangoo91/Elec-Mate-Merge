@@ -12,14 +12,30 @@ const TYPE_LABELS: Record<string, string> = {
   power_tool: 'Power Tool',
   test_instrument: 'Test Instrument',
   access_equipment: 'Access Equipment',
+  harness: 'Harness & Lanyard',
+  extension_lead: 'Extension Lead / Cable Reel',
+  portable_rcd: 'Portable RCD',
+  generator: 'Generator',
+  fire_extinguisher: 'Fire Extinguisher',
+  first_aid_kit: 'First Aid Kit',
+  ppe: 'PPE (General)',
+  mewp: 'MEWP / Cherry Picker',
 };
 
 const REGULATION_NOTES: Record<string, string> = {
-  ladder: 'LOLER 1998 Reg. 9 — Ladders used as a workplace require 6-monthly thorough examination. BS EN 131 — Classification and duty rating must be appropriate for the task. INDG 455 — Visual inspection required before each use.',
-  scaffold: 'Work at Height Regulations 2005 Reg. 12 — Scaffold must be inspected before first use, after alteration, and at intervals not exceeding 7 days. NASC SG4:15 / TG20:13 — Erection and inspection by CISRS competent person.',
-  power_tool: 'PUWER 1998 Reg. 5 — Work equipment must be maintained in efficient working order. Electricity at Work Regulations 1989 — Portable appliances require periodic testing (PAT). IET Code of Practice for In-Service Inspection and Testing.',
-  test_instrument: 'HSE GS38 (4th Edition) — Test probes must have shrouded tips (max 4mm / 2mm for voltage detection), finger guards, fused leads, and be suitable for the intended measurement category (CAT III/IV). BS 7671 Chapter 64.',
-  access_equipment: 'LOLER 1998 Reg. 9 — Mobile access towers require 6-monthly thorough examination. PASMA guidance — Erection by trained person only. Height-to-base ratio: 3:1 indoor, 2.5:1 outdoor.',
+  ladder: 'LOLER 1998 Reg. 9 \u2014 Ladders used as a workplace require 6-monthly thorough examination. BS EN 131 \u2014 Classification and duty rating must be appropriate for the task. INDG 455 \u2014 Visual inspection required before each use.',
+  scaffold: 'Work at Height Regulations 2005 Reg. 12 \u2014 Scaffold must be inspected before first use, after alteration, and at intervals not exceeding 7 days. NASC SG4:15 / TG20:13 \u2014 Erection and inspection by CISRS competent person.',
+  power_tool: 'PUWER 1998 Reg. 5 \u2014 Work equipment must be maintained in efficient working order. Electricity at Work Regulations 1989 \u2014 Portable appliances require periodic testing (PAT). IET Code of Practice for In-Service Inspection and Testing.',
+  test_instrument: 'HSE GS38 (4th Edition) \u2014 Test probes must have shrouded tips (max 4mm / 2mm for voltage detection), finger guards, fused leads, and be suitable for the intended measurement category (CAT III/IV). BS 7671 Chapter 64.',
+  access_equipment: 'LOLER 1998 Reg. 9 \u2014 Mobile access towers require 6-monthly thorough examination. PASMA guidance \u2014 Erection by trained person only. Height-to-base ratio: 3:1 indoor, 2.5:1 outdoor.',
+  harness: 'LOLER 1998 Reg. 9 \u2014 Fall arrest harnesses require 6-monthly thorough examination. BS EN 361 \u2014 Full body harnesses. BS EN 355 \u2014 Energy absorbers. Visual inspection before each use mandatory.',
+  extension_lead: 'PUWER 1998 Reg. 5 \u2014 Work equipment maintained in efficient working order. EAW 1989 \u2014 Electrical equipment must be suitable and maintained. IET Code of Practice \u2014 PAT testing at risk-appropriate intervals.',
+  portable_rcd: 'EAW 1989 Reg. 4 \u2014 All electrical systems shall be constructed and maintained to prevent danger. BS 7671 Reg. 411.3.3 \u2014 RCD protection required. BS EN 61008/61009 \u2014 RCD performance standards.',
+  generator: 'PUWER 1998 Reg. 5-6 \u2014 Equipment maintenance and inspection. EAW 1989 \u2014 Electrical safety requirements. BS 7430 \u2014 Code of practice for protective earthing of electrical installations. BS 7671 \u2014 Temporary installations.',
+  fire_extinguisher: 'Regulatory Reform (Fire Safety) Order 2005 Art. 13 \u2014 Fire-fighting equipment must be maintained. BS 5306-3 \u2014 Commissioning and maintenance of portable fire extinguishers. Monthly visual inspections required.',
+  first_aid_kit: 'Health & Safety (First-Aid) Regulations 1981 Reg. 3 \u2014 Employers must provide adequate first-aid equipment. BS 8599-1:2019 \u2014 Workplace first aid kit specification. Contents must be checked regularly and replenished.',
+  ppe: 'Personal Protective Equipment at Work Regulations 2022 Reg. 4-7 \u2014 PPE must be suitable, properly fitting, maintained and replaced when defective. Individual BS EN standards apply per PPE type.',
+  mewp: 'LOLER 1998 Reg. 9 \u2014 6-monthly thorough examination required. PUWER 1998 Reg. 5-9 \u2014 Maintenance, inspection and training. IPAF \u2014 Operators must hold valid licence for the category of MEWP being operated.',
 };
 
 // deno-lint-ignore no-explicit-any

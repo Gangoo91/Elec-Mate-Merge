@@ -18,6 +18,14 @@ import {
   X,
   RotateCcw,
   Share2,
+  Shield,
+  Cable,
+  ShieldCheck,
+  Zap,
+  Flame,
+  HeartPulse,
+  HardHat,
+  ChevronsUp,
 } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import {
@@ -28,6 +36,8 @@ import {
   type PreUseCheck,
 } from '@/hooks/usePreUseChecks';
 import { ApprovalBadge } from '../common/ApprovalBadge';
+import { SafetyRecordCard, fmtCardDate } from '../common/SafetyRecordCard';
+import { MapPin, Calendar } from 'lucide-react';
 import { ChecklistForm } from './ChecklistForm';
 import { SafetyEmptyState } from '../common/SafetyEmptyState';
 import { SafetySkeletonLoader } from '../common/SafetySkeletonLoader';
@@ -45,6 +55,14 @@ const CATEGORIES = [
   { key: 'power_tool', label: 'Power Tool', icon: Hammer },
   { key: 'test_instrument', label: 'Test Instrument', icon: Gauge },
   { key: 'access_equipment', label: 'Access Equipment', icon: Wrench },
+  { key: 'harness', label: 'Harness & Lanyard', icon: Shield },
+  { key: 'extension_lead', label: 'Extension Lead', icon: Cable },
+  { key: 'portable_rcd', label: 'Portable RCD', icon: ShieldCheck },
+  { key: 'generator', label: 'Generator', icon: Zap },
+  { key: 'fire_extinguisher', label: 'Fire Extinguisher', icon: Flame },
+  { key: 'first_aid_kit', label: 'First Aid Kit', icon: HeartPulse },
+  { key: 'ppe', label: 'PPE (General)', icon: HardHat },
+  { key: 'mewp', label: 'MEWP / Cherry Picker', icon: ChevronsUp },
 ] as const;
 
 type CategoryKey = (typeof CATEGORIES)[number]['key'];
@@ -163,22 +181,36 @@ export function PreUseCheckTool({ onBack }: PreUseCheckToolProps) {
               {/* Category Selector */}
               <div className="px-4 pt-4 pb-2">
                 <h2 className="text-sm font-semibold text-white mb-3">Select Equipment Type</h2>
-                <div className="flex flex-wrap gap-2">
+                <div className="grid grid-cols-2 lg:grid-cols-3 gap-2.5">
                   {CATEGORIES.map((cat) => {
                     const Icon = cat.icon;
                     const isSelected = selectedCategory === cat.key;
+                    const reg = REGULATION_REFS[cat.key];
+                    const itemCount = CHECK_TEMPLATES[cat.key]?.length || 0;
                     return (
                       <button
                         key={cat.key}
                         onClick={() => handleCategorySelect(cat.key)}
-                        className={`h-11 px-4 rounded-full flex items-center gap-2 text-sm font-medium touch-manipulation active:scale-95 transition-all border ${
+                        className={`relative overflow-hidden rounded-xl p-3.5 text-left touch-manipulation active:scale-[0.97] transition-all border ${
                           isSelected
-                            ? 'bg-elec-yellow text-black border-elec-yellow'
-                            : 'bg-white/5 text-white border-white/10 active:bg-white/10'
+                            ? 'bg-elec-yellow/15 border-elec-yellow/40 ring-1 ring-elec-yellow/30'
+                            : 'bg-white/[0.03] border-white/[0.08] hover:border-white/[0.15] active:bg-white/[0.06]'
                         }`}
                       >
-                        <Icon className="w-4 h-4" />
-                        {cat.label}
+                        <div className="flex items-center gap-2.5 mb-2">
+                          <div className={`p-2 rounded-lg ${isSelected ? 'bg-elec-yellow/20' : 'bg-white/[0.06]'}`}>
+                            <Icon className={`w-4 h-4 ${isSelected ? 'text-elec-yellow' : 'text-white'}`} />
+                          </div>
+                          <span className={`text-sm font-semibold ${isSelected ? 'text-elec-yellow' : 'text-white'}`}>{cat.label}</span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          {reg && (
+                            <span className="text-[9px] font-semibold px-1.5 py-0.5 rounded bg-blue-500/10 text-blue-400 border border-blue-500/20">
+                              {reg.shortName}
+                            </span>
+                          )}
+                          <span className="text-[10px] text-white">{itemCount} checks</span>
+                        </div>
                       </button>
                     );
                   })}
@@ -251,87 +283,35 @@ export function PreUseCheckTool({ onBack }: PreUseCheckToolProps) {
                   </div>
                 ) : (
                   <div className="space-y-3">
-                    {filteredChecks.map((check: PreUseCheck) => (
-                      <motion.div
-                        key={check.id}
-                        initial={{ opacity: 0, y: 8 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        className="p-4 rounded-xl bg-white/5 border border-white/10"
-                      >
-                        <div className="flex items-start justify-between mb-2">
-                          <div className="flex items-center gap-2">
-                            {check.overall_result === 'pass' ? (
-                              <CheckCircle2 className="w-5 h-5 text-green-400" />
-                            ) : check.overall_result === 'fail' ? (
-                              <XCircle className="w-5 h-5 text-red-400" />
-                            ) : (
-                              <ClipboardCheck className="w-5 h-5 text-white" />
-                            )}
-                            <span className="text-sm font-semibold text-white capitalize">
-                              {check.equipment_type.replace(/_/g, ' ')}
-                            </span>
-                          </div>
-                          {resultBadge(check.overall_result)}
-                        </div>
-                        {check.equipment_description && (
-                          <p className="text-sm text-white mb-1">{check.equipment_description}</p>
-                        )}
-                        <div className="flex items-center gap-1.5 flex-wrap mb-1">
-                          {REGULATION_REFS[check.equipment_type] && (
-                            <Badge className="bg-blue-500/15 text-blue-400 border-blue-500/20 text-[10px]">
-                              {REGULATION_REFS[check.equipment_type].shortName}
-                            </Badge>
-                          )}
-                          <ApprovalBadge
-                            status={check.approval_status}
-                            approvedBy={check.approved_by}
-                          />
-                        </div>
-                        <div className="flex items-center gap-3 text-sm text-white mb-3">
-                          <div className="flex items-center gap-1">
-                            <Clock className="w-3.5 h-3.5" />
-                            {new Date(check.created_at).toLocaleDateString('en-GB', {
-                              day: 'numeric',
-                              month: 'short',
-                              year: 'numeric',
-                            })}
-                          </div>
-                          {check.site_address && (
-                            <span className="truncate max-w-[180px]">{check.site_address}</span>
-                          )}
-                        </div>
-                        <div className="flex items-center gap-2">
-                          <button
-                            onClick={() => handleRecheck(check.equipment_type as CategoryKey)}
-                            className="h-11 px-4 rounded-xl bg-white/5 border border-white/10 text-white text-sm font-medium flex items-center gap-2 touch-manipulation active:scale-[0.98] transition-all"
-                          >
-                            <RotateCcw className="h-4 w-4" />
-                            Re-check
-                          </button>
-                          <button
-                            onClick={() => exportPDF('pre-use-check', check.id)}
-                            disabled={isExporting && exportingId === check.id}
-                            className="h-11 px-4 rounded-xl bg-white/5 border border-white/10 text-white text-sm font-medium flex items-center gap-2 touch-manipulation active:scale-[0.98] transition-all disabled:opacity-50"
-                          >
-                            {isExporting && exportingId === check.id ? (
-                              <Loader2 className="h-4 w-4 animate-spin" />
-                            ) : (
-                              <Download className="h-4 w-4" />
-                            )}
-                            Export PDF
-                          </button>
-                          <button
-                            onClick={() => {
-                              setShareRecordId(check.id);
-                              setShareRecordTitle(check.equipment_type);
-                            }}
-                            className="h-11 w-11 rounded-xl bg-elec-yellow/10 border border-elec-yellow/20 text-elec-yellow flex items-center justify-center touch-manipulation active:scale-[0.98] transition-all"
-                          >
-                            <Share2 className="h-4 w-4" />
-                          </button>
-                        </div>
-                      </motion.div>
-                    ))}
+                    {filteredChecks.map((check: PreUseCheck, idx: number) => {
+                      const cat = CATEGORIES.find((c) => c.key === check.equipment_type);
+                      const CatIcon = cat?.icon || ClipboardCheck;
+                      const reg = REGULATION_REFS[check.equipment_type];
+                      const passCount = check.items.filter((i) => i.result === 'pass').length;
+                      const failCount = check.items.filter((i) => i.result === 'fail').length;
+                      return (
+                        <SafetyRecordCard
+                          key={check.id}
+                          id={check.id}
+                          title={`${(check.equipment_type || '').replace(/_/g, ' ')} Check`}
+                          subtitle={check.equipment_description || undefined}
+                          status={check.overall_result}
+                          statusLabel={check.overall_result.toUpperCase()}
+                          regulation={reg?.shortName}
+                          icon={CatIcon}
+                          meta={[
+                            { icon: Calendar, label: fmtCardDate(check.created_at) },
+                            ...(check.site_address ? [{ icon: MapPin, label: check.site_address }] : []),
+                            { label: `${passCount}P / ${failCount}F / ${check.items.length} items` },
+                          ]}
+                          actions={[
+                            { label: 'Re-check', icon: RotateCcw, onClick: () => handleRecheck(check.equipment_type as CategoryKey) },
+                          ]}
+                          pdfType="pre-use-check"
+                          index={idx}
+                        />
+                      );
+                    })}
                   </div>
                 )}
               </div>

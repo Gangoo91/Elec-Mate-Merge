@@ -153,6 +153,126 @@ export const CHECK_TEMPLATES: Record<string, CheckTemplate[]> = {
     { id: 'ae15', label: 'Inspection tag current and within date', section: 'Compliance' },
     { id: 'ae16', label: 'Wind speed acceptable (<17mph / 7.7m/s for standard towers)', section: 'Compliance' },
   ],
+  // LOLER 1998 + WAHR 2005 + BS EN 361/355/362
+  harness: [
+    { id: 'h1', label: 'Webbing free from cuts, fraying, abrasion or chemical damage', section: 'Webbing & Stitching' },
+    { id: 'h2', label: 'All stitching intact — no loose, broken or pulled threads', section: 'Webbing & Stitching' },
+    { id: 'h3', label: 'No heat damage, discolouration or UV degradation', section: 'Webbing & Stitching' },
+    { id: 'h4', label: 'D-rings and attachment points free from corrosion and distortion', section: 'Hardware' },
+    { id: 'h5', label: 'Buckles and adjusters functioning correctly', section: 'Hardware' },
+    { id: 'h6', label: 'Karabiners gate closing and locking properly', section: 'Hardware' },
+    { id: 'h7', label: 'Lanyard / energy absorber free from damage', section: 'Lanyard' },
+    { id: 'h8', label: 'Shock absorber pack sealed — not deployed', section: 'Lanyard' },
+    { id: 'h9', label: 'Lanyard length appropriate for fall distance available', section: 'Lanyard' },
+    { id: 'h10', label: 'Labels legible — manufacturer, model, serial, date of manufacture', section: 'Compliance' },
+    { id: 'h11', label: 'Thorough examination (6-monthly) in date', section: 'Compliance' },
+    { id: 'h12', label: 'Stored correctly — dry, ventilated, away from chemicals/UV', section: 'Compliance' },
+  ],
+  // PUWER 1998 + EAW 1989 + IET Code of Practice
+  extension_lead: [
+    { id: 'el1', label: 'Cable sheath undamaged — no cuts, splits or exposed conductors', section: 'Cable Condition' },
+    { id: 'el2', label: 'No taped joints or repairs on cable', section: 'Cable Condition' },
+    { id: 'el3', label: 'Cable not kinked, crushed or showing heat damage', section: 'Cable Condition' },
+    { id: 'el4', label: 'Plug undamaged — pins straight, not burnt or loose', section: 'Connections' },
+    { id: 'el5', label: 'Socket undamaged — no cracks, shutters operating', section: 'Connections' },
+    { id: 'el6', label: 'Cable entry to plug and socket secure — no strain', section: 'Connections' },
+    { id: 'el7', label: 'Earth continuity verified (green/yellow present)', section: 'Connections' },
+    { id: 'el8', label: 'PAT test label present and in date', section: 'Electrical Safety' },
+    { id: 'el9', label: 'Correct voltage rating for site use (110V CTE preferred)', section: 'Electrical Safety' },
+    { id: 'el10', label: 'Cable reel fully unwound during use (thermal protection)', section: 'Electrical Safety' },
+    { id: 'el11', label: 'RCD protection in use if 230V', section: 'Electrical Safety' },
+    { id: 'el12', label: 'Cable length and rating appropriate for load', section: 'Electrical Safety' },
+  ],
+  // EAW 1989 Reg 12 + BS 7671 Reg 411.3.3 + BS EN 61008/61009
+  portable_rcd: [
+    { id: 'rcd1', label: 'Test button operates correctly — trips on press', section: 'Functional Test' },
+    { id: 'rcd2', label: 'Reset button re-engages after trip', section: 'Functional Test' },
+    { id: 'rcd3', label: 'Trip time within 40ms at rated residual current (30mA)', section: 'Functional Test' },
+    { id: 'rcd4', label: 'Enclosure undamaged — no cracks or missing covers', section: 'Physical Condition' },
+    { id: 'rcd5', label: 'Plug pins straight and undamaged', section: 'Physical Condition' },
+    { id: 'rcd6', label: 'Socket outlet undamaged and shuttered', section: 'Physical Condition' },
+    { id: 'rcd7', label: 'Lead/cable in good condition — no damage', section: 'Physical Condition' },
+    { id: 'rcd8', label: 'Rating label legible (30mA, rated current)', section: 'Compliance' },
+    { id: 'rcd9', label: 'PAT test label present and in date', section: 'Compliance' },
+    { id: 'rcd10', label: 'Compatible with equipment to be protected', section: 'Compliance' },
+  ],
+  // PUWER 1998 + EAW 1989 + BS 7671 + BS 7430
+  generator: [
+    { id: 'gen1', label: 'Fuel level adequate — no leaks from tank or lines', section: 'Engine & Fuel' },
+    { id: 'gen2', label: 'Oil level correct — no leaks', section: 'Engine & Fuel' },
+    { id: 'gen3', label: 'Coolant level correct (liquid-cooled units)', section: 'Engine & Fuel' },
+    { id: 'gen4', label: 'Air filter clean and correctly fitted', section: 'Engine & Fuel' },
+    { id: 'gen5', label: 'Exhaust system secure — no leaks or damage', section: 'Engine & Fuel' },
+    { id: 'gen6', label: 'Output voltage correct (110V CTE or 230V as specified)', section: 'Electrical' },
+    { id: 'gen7', label: 'Earth connection present and secure (BS 7430)', section: 'Electrical' },
+    { id: 'gen8', label: 'Circuit breakers operational — test trip and reset', section: 'Electrical' },
+    { id: 'gen9', label: 'Output sockets undamaged and weatherproof', section: 'Electrical' },
+    { id: 'gen10', label: 'PAT test label in date (if applicable)', section: 'Electrical' },
+    { id: 'gen11', label: 'Emergency stop accessible and functional', section: 'Safety' },
+    { id: 'gen12', label: 'Guards and covers in place — no exposed moving parts', section: 'Safety' },
+    { id: 'gen13', label: 'Adequate ventilation — not in enclosed space', section: 'Safety' },
+    { id: 'gen14', label: 'Operating manual available on site', section: 'Safety' },
+  ],
+  // RRO 2005 + BS 5306-3 + BS 5306-8
+  fire_extinguisher: [
+    { id: 'fe1', label: 'Pressure gauge in green zone (stored pressure type)', section: 'Condition' },
+    { id: 'fe2', label: 'Safety pin present and sealed with tamper tag', section: 'Condition' },
+    { id: 'fe3', label: 'Hose and nozzle undamaged and clear', section: 'Condition' },
+    { id: 'fe4', label: 'Body free from damage, corrosion or dents', section: 'Condition' },
+    { id: 'fe5', label: 'Operating instructions legible', section: 'Condition' },
+    { id: 'fe6', label: 'Service label present and within annual service date', section: 'Compliance' },
+    { id: 'fe7', label: 'Correct type for hazards present (water/foam/CO₂/powder/wet chemical)', section: 'Compliance' },
+    { id: 'fe8', label: 'Mounted at correct height and accessible (not obstructed)', section: 'Compliance' },
+    { id: 'fe9', label: 'Fire point signage visible', section: 'Compliance' },
+    { id: 'fe10', label: 'Weight feels correct — not discharged or empty', section: 'Compliance' },
+  ],
+  // H&S First Aid Regs 1981 + BS 8599-1:2019
+  first_aid_kit: [
+    { id: 'fa1', label: 'Container clean, undamaged and closes properly', section: 'Container' },
+    { id: 'fa2', label: 'Contents list present and readable', section: 'Container' },
+    { id: 'fa3', label: 'HSE guidance leaflet included', section: 'Container' },
+    { id: 'fa4', label: 'Location clearly signed with white cross on green background', section: 'Container' },
+    { id: 'fa5', label: 'Assorted plasters (sterile, individually wrapped) — sufficient quantity', section: 'Contents' },
+    { id: 'fa6', label: 'Eye pads (sterile) — minimum 2', section: 'Contents' },
+    { id: 'fa7', label: 'Triangular bandages — minimum 2', section: 'Contents' },
+    { id: 'fa8', label: 'Medium/large sterile dressings — sufficient quantity', section: 'Contents' },
+    { id: 'fa9', label: 'Sterile cleansing wipes — sufficient quantity', section: 'Contents' },
+    { id: 'fa10', label: 'Disposable gloves (nitrile) — minimum 3 pairs', section: 'Contents' },
+    { id: 'fa11', label: 'Microporous tape present', section: 'Contents' },
+    { id: 'fa12', label: 'All items within expiry date', section: 'Expiry & Replenishment' },
+  ],
+  // PPER 2022 + BS EN 397/20345/166/352/20471
+  ppe: [
+    { id: 'ppe1', label: 'Hard hat undamaged — no cracks, dents or UV degradation (BS EN 397)', section: 'Head Protection' },
+    { id: 'ppe2', label: 'Hard hat within replacement date (typically 5 years from manufacture)', section: 'Head Protection' },
+    { id: 'ppe3', label: 'Harness/cradle adjusted and secure', section: 'Head Protection' },
+    { id: 'ppe4', label: 'Safety boots in good condition — steel toe intact (BS EN ISO 20345)', section: 'Foot Protection' },
+    { id: 'ppe5', label: 'Sole grip adequate — not worn smooth', section: 'Foot Protection' },
+    { id: 'ppe6', label: 'Hi-vis vest/jacket clean and reflective strips intact (BS EN 20471)', section: 'Visibility' },
+    { id: 'ppe7', label: 'Correct class for environment (Class 1/2/3)', section: 'Visibility' },
+    { id: 'ppe8', label: 'Safety glasses/goggles undamaged — lenses clear (BS EN 166)', section: 'Eye Protection' },
+    { id: 'ppe9', label: 'Ear protection available and in good condition (BS EN 352)', section: 'Hearing Protection' },
+    { id: 'ppe10', label: 'Gloves appropriate for task — no holes or degradation', section: 'Hand Protection' },
+    { id: 'ppe11', label: 'RPE face-fit tested and filter in date (if required)', section: 'Respiratory' },
+    { id: 'ppe12', label: 'All PPE correctly stored when not in use', section: 'General' },
+  ],
+  // LOLER 1998 + PUWER 1998 + IPAF guidance
+  mewp: [
+    { id: 'mw1', label: 'Structure sound — no visible damage, cracks or corrosion', section: 'Structure' },
+    { id: 'mw2', label: 'Hydraulic system — no leaks, hoses in good condition', section: 'Structure' },
+    { id: 'mw3', label: 'Pins, bolts and safety clips secure', section: 'Structure' },
+    { id: 'mw4', label: 'All controls functional — lift, lower, drive, slew', section: 'Controls' },
+    { id: 'mw5', label: 'Emergency lowering system operational', section: 'Controls' },
+    { id: 'mw6', label: 'Horn and warning devices working', section: 'Controls' },
+    { id: 'mw7', label: 'Guardrails and mid-rails secure on platform', section: 'Platform Safety' },
+    { id: 'mw8', label: 'Platform floor secure and non-slip', section: 'Platform Safety' },
+    { id: 'mw9', label: 'Gate/chain at access point closes properly', section: 'Platform Safety' },
+    { id: 'mw10', label: 'Outriggers/stabilisers deploy and lock correctly', section: 'Stability' },
+    { id: 'mw11', label: 'Ground conditions suitable — firm, level surface', section: 'Stability' },
+    { id: 'mw12', label: 'Clear of overhead obstructions and power lines (minimum distances)', section: 'Stability' },
+    { id: 'mw13', label: 'Operator holds valid IPAF card for this category', section: 'Compliance' },
+    { id: 'mw14', label: 'LOLER thorough examination (6-monthly) in date', section: 'Compliance' },
+  ],
 };
 
 // ─── Regulation References ───
@@ -197,6 +317,56 @@ export const REGULATION_REFS: Record<string, RegulationRef> = {
     shortName: 'LOLER 1998',
     description:
       'Mobile access equipment (towers, MEWPs) requires 6-monthly thorough examination under LOLER Regulation 9. Pre-use visual inspection before each use.',
+    statutoryIntervalDays: 183,
+  },
+  harness: {
+    name: 'LOLER 1998 / WAHR 2005 / BS EN 361',
+    shortName: 'LOLER 1998',
+    description:
+      'Fall arrest harnesses require 6-monthly thorough examination under LOLER Regulation 9. Visual inspection before each use. Lanyards must comply with BS EN 355.',
+    statutoryIntervalDays: 183,
+  },
+  extension_lead: {
+    name: 'PUWER 1998 / Electricity at Work Regulations 1989',
+    shortName: 'PUWER 1998',
+    description:
+      'Extension leads must be visually inspected before each use (PUWER Reg 5). PAT testing at intervals appropriate to risk. 110V CTE preferred for construction sites.',
+  },
+  portable_rcd: {
+    name: 'Electricity at Work Regulations 1989 / BS 7671 Reg 411.3.3',
+    shortName: 'EAW 1989',
+    description:
+      'Portable RCDs must be tested before each use — press test button to verify trip. 30mA sensitivity, <40ms trip time. Required for 230V equipment on construction sites.',
+  },
+  generator: {
+    name: 'PUWER 1998 / EAW 1989 / BS 7430',
+    shortName: 'PUWER 1998',
+    description:
+      'Portable generators must be maintained in efficient working order (PUWER Reg 5). Earthing per BS 7430. Output voltage and circuit protection checked before use.',
+  },
+  fire_extinguisher: {
+    name: 'Regulatory Reform (Fire Safety) Order 2005 / BS 5306-3',
+    shortName: 'RRO 2005',
+    description:
+      'Fire extinguishers require monthly visual inspection and annual servicing (BS 5306-3). Correct type must be provided for hazards present. Must be accessible and signed.',
+  },
+  first_aid_kit: {
+    name: 'Health & Safety (First-Aid) Regulations 1981 / BS 8599-1',
+    shortName: 'First Aid 1981',
+    description:
+      'Employers must provide adequate first aid equipment (Reg 3). Contents per BS 8599-1. Check expiry dates and replenish after use.',
+  },
+  ppe: {
+    name: 'Personal Protective Equipment at Work Regulations 2022',
+    shortName: 'PPER 2022',
+    description:
+      'PPE must be maintained in good working order and replaced when defective (Reg 7). Employers must ensure PPE is suitable, properly fitting, and used correctly.',
+  },
+  mewp: {
+    name: 'LOLER 1998 / PUWER 1998 / IPAF Guidance',
+    shortName: 'LOLER 1998',
+    description:
+      'MEWPs require 6-monthly thorough examination under LOLER. Operators must hold valid IPAF card. Pre-use checks before each shift. Emergency lowering must be tested.',
     statutoryIntervalDays: 183,
   },
 };
