@@ -20,6 +20,8 @@ import {
   Timer,
 } from 'lucide-react';
 import { LoadMoreButton } from '../common/LoadMoreButton';
+import { SafetyRecordCard, fmtCardDate } from '../common/SafetyRecordCard';
+import { Calendar } from 'lucide-react';
 import { useShowMore } from '@/hooks/useShowMore';
 import {
   useSafeIsolationRecords,
@@ -574,63 +576,29 @@ export function SafeIsolationRecord({ onBack }: SafeIsolationRecordProps) {
             animate="visible"
             className="space-y-2 pb-20"
           >
-            {visibleRecords.map((record) => {
-              const statusConf = STATUS_CONFIG[record.status];
-              const StatusIcon = statusConf.icon;
+            {visibleRecords.map((record, idx) => {
               const completedSteps = record.steps.filter((s) => s.completed).length;
               const dur = getIsolationDuration(record);
-
               return (
-                <motion.button
+                <SafetyRecordCard
                   key={record.id}
-                  variants={itemVariants}
-                  whileTap={{ scale: 0.98 }}
-                  onClick={() => setSelectedRecord(record)}
-                  className="w-full text-left rounded-xl border border-white/[0.08] bg-white/[0.03] active:bg-white/[0.06] p-4 touch-manipulation"
-                >
-                  <div className="flex items-center gap-3">
-                    <div className="w-11 h-11 rounded-xl flex items-center justify-center bg-gradient-to-br from-red-500/20 to-amber-500/20 flex-shrink-0">
-                      <Zap className="h-5 w-5 text-red-400" />
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <h4 className="text-[15px] font-bold text-white truncate">
-                        {record.circuit_description}
-                      </h4>
-                      <div className="flex items-center gap-2 text-xs text-white">
-                        <MapPin className="h-3 w-3" />
-                        <span className="truncate">{record.site_address}</span>
-                      </div>
-                      <div className="flex items-center gap-2 flex-wrap mt-1">
-                        <Badge
-                          className={`${statusConf.bg} ${statusConf.colour} border-none text-[10px]`}
-                        >
-                          <StatusIcon className="h-2.5 w-2.5 mr-0.5" />
-                          {statusConf.label}
-                        </Badge>
-                        {record.status === 'in_progress' && (
-                          <span className="text-[10px] text-white">
-                            {completedSteps}/{record.steps.length} steps
-                          </span>
-                        )}
-                        {dur.label && (
-                          <Badge
-                            className={`border-none text-[10px] ${
-                              dur.isExpired
-                                ? 'bg-red-500/15 text-red-400 animate-pulse'
-                                : dur.isExpiring
-                                  ? 'bg-amber-500/15 text-amber-400'
-                                  : 'bg-blue-500/15 text-blue-400'
-                            }`}
-                          >
-                            <Timer className="h-2.5 w-2.5 mr-0.5" />
-                            {dur.label}
-                          </Badge>
-                        )}
-                      </div>
-                    </div>
-                    <ChevronRight className="h-4 w-4 text-white flex-shrink-0" />
-                  </div>
-                </motion.button>
+                  id={record.id}
+                  title={record.circuit_description}
+                  subtitle={record.distribution_board || undefined}
+                  status={record.status}
+                  statusLabel={STATUS_CONFIG[record.status]?.label || record.status}
+                  regulation="BS 7671 / GS38"
+                  icon={Zap}
+                  meta={[
+                    { icon: MapPin, label: record.site_address },
+                    { icon: Calendar, label: fmtCardDate(record.created_at) },
+                    { label: `${completedSteps}/${record.steps.length} steps` },
+                    ...(dur.label ? [{ icon: Timer, label: dur.label }] : []),
+                  ]}
+                  onTap={() => setSelectedRecord(record)}
+                  pdfType="safe-isolation"
+                  index={idx}
+                />
               );
             })}
             {hasMoreRecords && (

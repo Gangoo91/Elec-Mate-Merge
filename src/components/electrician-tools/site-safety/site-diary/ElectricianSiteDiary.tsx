@@ -45,6 +45,8 @@ import { useActivePermits } from '@/hooks/usePermitsToWork';
 import { useRAMSDocumentsByStatus } from '@/hooks/useRAMSDocuments';
 import { SafetyPhotoCapture } from '../common/SafetyPhotoCapture';
 import { SafetyEmptyState } from '../common/SafetyEmptyState';
+import { SafetyRecordCard } from '../common/SafetyRecordCard';
+import { BookOpen } from 'lucide-react';
 import { SafetySkeletonLoader } from '../common/SafetySkeletonLoader';
 import { SwipeableListItem } from '../common/SwipeableListItem';
 import { useHaptic } from '@/hooks/useHaptic';
@@ -735,122 +737,44 @@ export function ElectricianSiteDiary({ onBack }: ElectricianSiteDiaryProps) {
                   </div>
                 ) : (
                   <div className="space-y-3">
-                    {filteredEntriesForDate.map((entry: SiteDiaryEntry) => (
-                      <SwipeableListItem
+                    {filteredEntriesForDate.map((entry: SiteDiaryEntry, idx: number) => (
+                      <SafetyRecordCard
                         key={entry.id}
-                        rightActions={[
+                        id={entry.id}
+                        title={entry.site_name}
+                        subtitle={entry.work_completed?.substring(0, 60) || undefined}
+                        status="recorded"
+                        statusLabel="Recorded"
+                        icon={BookOpen}
+                        meta={[
+                          ...(entry.site_address
+                            ? [{ icon: MapPin, label: entry.site_address }]
+                            : []),
+                          ...(entry.weather ? [{ label: entry.weather }] : []),
+                          ...(entry.start_time || entry.end_time
+                            ? [
+                                {
+                                  icon: Clock,
+                                  label: `${entry.start_time ?? '?'} - ${entry.end_time ?? '?'}`,
+                                },
+                              ]
+                            : []),
+                          ...(entry.personnel_count != null
+                            ? [{ icon: Users, label: `${entry.personnel_count} on site` }]
+                            : []),
+                        ]}
+                        actions={[
+                          { label: 'Duplicate', icon: Copy, onClick: () => handleDuplicate(entry) },
                           {
-                            icon: Trash2,
                             label: 'Delete',
-                            color: 'bg-red-500',
-                            onAction: () => setDeleteTarget(entry.id),
+                            icon: Trash2,
+                            onClick: () => setDeleteTarget(entry.id),
+                            variant: 'danger' as const,
                           },
                         ]}
-                      >
-                        <motion.div
-                          initial={{ opacity: 0, y: 8 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          className="p-4 rounded-xl bg-white/5 border border-white/10"
-                        >
-                          <h3 className="text-base font-semibold text-white mb-2">
-                            {entry.site_name}
-                          </h3>
-                          {entry.site_address && (
-                            <div className="flex items-center gap-2 text-sm text-white mb-2">
-                              <MapPin className="w-3.5 h-3.5" />
-                              {entry.site_address}
-                            </div>
-                          )}
-                          <div className="flex flex-wrap gap-3 text-sm text-white mb-2">
-                            {entry.weather && (
-                              <div className="flex items-center gap-1 capitalize">
-                                {(() => {
-                                  const opt = WEATHER_OPTIONS.find(
-                                    (w) => w.value === entry.weather
-                                  );
-                                  const Icon = opt?.icon ?? Cloud;
-                                  return (
-                                    <>
-                                      <Icon className="w-3.5 h-3.5" />
-                                      {entry.weather}
-                                    </>
-                                  );
-                                })()}
-                              </div>
-                            )}
-                            {(entry.start_time || entry.end_time) && (
-                              <div className="flex items-center gap-1">
-                                <Clock className="w-3.5 h-3.5" />
-                                {entry.start_time ?? '?'} - {entry.end_time ?? '?'}
-                              </div>
-                            )}
-                            {entry.personnel_count != null && (
-                              <div className="flex items-center gap-1">
-                                <Users className="w-3.5 h-3.5" />
-                                {entry.personnel_count} on site
-                              </div>
-                            )}
-                          </div>
-                          {entry.work_completed && (
-                            <p className="text-sm text-white line-clamp-3">
-                              {entry.work_completed}
-                            </p>
-                          )}
-                          {((entry.rams_ids?.length ?? 0) > 0 ||
-                            (entry.permit_ids?.length ?? 0) > 0) && (
-                            <div className="flex flex-wrap gap-1.5 mt-2">
-                              {entry.rams_ids?.map((id) => (
-                                <Badge
-                                  key={id}
-                                  className="bg-cyan-500/15 text-cyan-300 border-cyan-500/20 text-[10px] flex items-center gap-1"
-                                >
-                                  <Shield className="h-3 w-3" />
-                                  RAMS
-                                </Badge>
-                              ))}
-                              {entry.permit_ids?.map((id) => (
-                                <Badge
-                                  key={id}
-                                  className="bg-amber-500/15 text-amber-300 border-amber-500/20 text-[10px] flex items-center gap-1"
-                                >
-                                  <FileText className="h-3 w-3" />
-                                  Permit
-                                </Badge>
-                              ))}
-                            </div>
-                          )}
-                          <div className="mt-3 pt-3 border-t border-white/10 flex items-center gap-2">
-                            <button
-                              onClick={() => exportPDF('site-diary', entry.id)}
-                              disabled={isExporting && exportingId === entry.id}
-                              className="h-11 px-4 rounded-xl bg-white/5 border border-white/10 text-white text-sm font-medium flex items-center gap-2 touch-manipulation active:scale-[0.98] transition-all disabled:opacity-50"
-                            >
-                              {isExporting && exportingId === entry.id ? (
-                                <Loader2 className="h-4 w-4 animate-spin" />
-                              ) : (
-                                <Download className="h-4 w-4" />
-                              )}
-                              Export PDF
-                            </button>
-                            <button
-                              onClick={() => {
-                                setShareRecordId(entry.id);
-                                setShareRecordTitle(entry.site_name || 'Site Diary');
-                              }}
-                              className="h-11 w-11 rounded-xl bg-elec-yellow/10 border border-elec-yellow/20 text-elec-yellow flex items-center justify-center touch-manipulation active:scale-[0.98] transition-all"
-                            >
-                              <Share2 className="h-4 w-4" />
-                            </button>
-                            <button
-                              onClick={() => handleDuplicate(entry)}
-                              className="h-11 px-3 rounded-xl bg-white/5 border border-white/[0.08] text-white text-xs font-medium flex items-center gap-1 touch-manipulation active:scale-[0.98] transition-all"
-                            >
-                              <Copy className="h-3.5 w-3.5 mr-1" />
-                              Duplicate
-                            </button>
-                          </div>
-                        </motion.div>
-                      </SwipeableListItem>
+                        pdfType="site-diary"
+                        index={idx}
+                      />
                     ))}
                   </div>
                 )}

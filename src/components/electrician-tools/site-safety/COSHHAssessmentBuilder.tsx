@@ -54,6 +54,8 @@ import {
   Share2,
 } from 'lucide-react';
 import { LoadMoreButton } from './common/LoadMoreButton';
+import { SafetyRecordCard, fmtCardDate } from './common/SafetyRecordCard';
+import { Calendar } from 'lucide-react';
 import { SignaturePad } from './common/SignaturePad';
 import { useShowMore } from '@/hooks/useShowMore';
 import { SaveAsTemplateSheet } from './common/SaveAsTemplateSheet';
@@ -1493,56 +1495,37 @@ export function COSHHAssessmentBuilder({ onBack }: { onBack: () => void }) {
           </div>
         ) : (
           <div className="space-y-2 pb-20">
-            {visibleAssessments.map((assessment) => {
-              const riskColours = RISK_COLOURS[assessment.risk_rating];
+            {visibleAssessments.map((assessment, idx) => {
+              const riskLabel =
+                assessment.risk_rating === 'very-high'
+                  ? 'Very High'
+                  : assessment.risk_rating.charAt(0).toUpperCase() +
+                    assessment.risk_rating.slice(1);
               return (
-                <motion.button
+                <SafetyRecordCard
                   key={assessment.id}
-                  whileTap={{ scale: 0.98 }}
-                  onClick={() => setViewingAssessment(assessment)}
-                  className="w-full text-left rounded-xl border border-white/[0.08] bg-white/[0.03] active:bg-white/[0.06] p-4 touch-manipulation"
-                >
-                  <div className="flex items-center gap-3">
-                    <div className="w-11 h-11 rounded-xl flex items-center justify-center bg-gradient-to-br from-green-400/20 to-emerald-500/20 border border-green-500/20 flex-shrink-0">
-                      <FlaskConical className="h-5 w-5 text-green-400" />
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <h4 className="text-[15px] font-bold text-white truncate">
-                        {assessment.substance_name}
-                      </h4>
-                      <div className="flex items-center gap-2 mt-0.5">
-                        <Badge
-                          className={`${riskColours.bg} ${riskColours.text} border-none text-[10px]`}
-                        >
-                          {assessment.risk_rating === 'very-high'
-                            ? 'Very High'
-                            : assessment.risk_rating.charAt(0).toUpperCase() +
-                              assessment.risk_rating.slice(1)}{' '}
-                          Risk
-                        </Badge>
-                        <span className="text-xs text-white flex items-center gap-1">
-                          <Clock className="h-3 w-3" />
-                          Review: {assessment.review_date}
-                        </span>
-                      </div>
-                    </div>
-                    <div className="flex items-center gap-1 flex-shrink-0">
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          handleDuplicate(assessment);
-                        }}
-                        className="h-11 px-3 text-xs text-white hover:text-white hover:bg-white/10 border border-white/[0.08] touch-manipulation"
-                      >
-                        <Copy className="h-3.5 w-3.5 mr-1" />
-                        Duplicate
-                      </Button>
-                      <ChevronRight className="h-4 w-4 text-white" />
-                    </div>
-                  </div>
-                </motion.button>
+                  id={assessment.id}
+                  title={assessment.substance_name}
+                  subtitle={assessment.manufacturer || undefined}
+                  status={assessment.risk_rating}
+                  statusLabel={`${riskLabel} Risk`}
+                  regulation="COSHH 2002"
+                  icon={FlaskConical}
+                  iconColour="text-green-400"
+                  meta={[
+                    { icon: Calendar, label: `Review: ${fmtCardDate(assessment.review_date)}` },
+                    {
+                      label: `${((assessment.control_measures as string[]) || []).length} controls`,
+                    },
+                    { label: `${((assessment.ppe_required as string[]) || []).length} PPE` },
+                  ]}
+                  actions={[
+                    { label: 'Duplicate', icon: Copy, onClick: () => handleDuplicate(assessment) },
+                  ]}
+                  onTap={() => setViewingAssessment(assessment)}
+                  pdfType="coshh"
+                  index={idx}
+                />
               );
             })}
             {hasMoreAssessments && (

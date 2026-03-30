@@ -65,6 +65,7 @@ import {
   Share2,
 } from 'lucide-react';
 import { LoadMoreButton } from './common/LoadMoreButton';
+import { SafetyRecordCard, fmtCardDate } from './common/SafetyRecordCard';
 import { useShowMore } from '@/hooks/useShowMore';
 import { SaveAsTemplateSheet } from './common/SaveAsTemplateSheet';
 import { LoadTemplateSheet } from './common/LoadTemplateSheet';
@@ -1093,63 +1094,33 @@ export function PermitToWork({ onBack }: { onBack: () => void }) {
           </div>
         ) : (
           <div className="space-y-2 pb-20">
-            {visiblePermits.map((permit) => {
-              const typeConf = PERMIT_TYPES.find((t) => t.id === permit.type)!;
-              const statusConf = STATUS_CONFIG[permit.status];
-              const StatusIcon = statusConf.icon;
-              const TypeIcon = typeConf.icon;
-
+            {visiblePermits.map((permit, idx) => {
+              const typeConf = PERMIT_TYPES.find((t) => t.id === permit.type);
+              const TypeIcon = typeConf?.icon || Shield;
               return (
-                <motion.button
+                <SafetyRecordCard
                   key={permit.id}
-                  whileTap={{ scale: 0.98 }}
-                  onClick={() => setViewingPermit(permit)}
-                  className="w-full text-left rounded-xl border border-white/[0.08] bg-white/[0.03] active:bg-white/[0.06] p-4 touch-manipulation"
-                >
-                  <div className="flex items-center gap-3">
-                    <div
-                      className={`w-11 h-11 rounded-xl flex items-center justify-center bg-gradient-to-br ${typeConf.gradient} flex-shrink-0`}
-                    >
-                      <TypeIcon className="h-5 w-5 text-white" />
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <div className="flex items-center gap-2 mb-0.5">
-                        <h4 className="text-[15px] font-bold text-white truncate">
-                          {permit.title}
-                        </h4>
-                      </div>
-                      <div className="flex items-center gap-2 text-xs text-white">
-                        <MapPin className="h-3 w-3" />
-                        <span className="truncate">{permit.location}</span>
-                      </div>
-                      <div className="flex items-center gap-2 flex-wrap mt-1">
-                        <Badge
-                          className={`${statusConf.bg} ${statusConf.colour} border-none text-[10px]`}
-                        >
-                          <StatusIcon className="h-2.5 w-2.5 mr-0.5" />
-                          {statusConf.label}
-                        </Badge>
-                        {permit.status === 'active' && <TimeRemaining endTime={permit.end_time} />}
-                        <ApprovalBadge status={permit.approval_status} />
-                      </div>
-                    </div>
-                    <div className="flex items-center gap-1 flex-shrink-0">
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          handleDuplicate(permit);
-                        }}
-                        className="h-11 px-3 text-xs text-white hover:text-white hover:bg-white/10 border border-white/[0.08] touch-manipulation"
-                      >
-                        <Copy className="h-3.5 w-3.5 mr-1" />
-                        Duplicate
-                      </Button>
-                      <ChevronRight className="h-4 w-4 text-white" />
-                    </div>
-                  </div>
-                </motion.button>
+                  id={permit.id}
+                  title={permit.title}
+                  subtitle={typeConf?.label || permit.type}
+                  status={permit.status}
+                  statusLabel={STATUS_CONFIG[permit.status]?.label || permit.status}
+                  regulation="HSG250"
+                  icon={TypeIcon}
+                  meta={[
+                    { icon: MapPin, label: permit.location },
+                    { icon: Calendar, label: fmtCardDate(permit.start_time || permit.created_at) },
+                    ...(permit.duration_hours
+                      ? [{ icon: Clock, label: `${permit.duration_hours}h` }]
+                      : []),
+                  ]}
+                  actions={[
+                    { label: 'Duplicate', icon: Copy, onClick: () => handleDuplicate(permit) },
+                  ]}
+                  onTap={() => setViewingPermit(permit)}
+                  pdfType="permit"
+                  index={idx}
+                />
               );
             })}
             {hasMorePermits && (

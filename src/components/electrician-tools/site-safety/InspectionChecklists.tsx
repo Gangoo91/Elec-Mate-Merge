@@ -45,6 +45,8 @@ import {
   Share2,
 } from 'lucide-react';
 import { LoadMoreButton } from './common/LoadMoreButton';
+import { SafetyRecordCard, fmtCardDate } from './common/SafetyRecordCard';
+import { Calendar } from 'lucide-react';
 import { useShowMore } from '@/hooks/useShowMore';
 import { SafetyDocumentShare } from './common/SafetyDocumentShare';
 
@@ -1483,98 +1485,30 @@ export function InspectionChecklists({ onBack }: { onBack: () => void }) {
             {visibleInspections.map((inspection, index) => {
               const template = TEMPLATES.find((t) => t.id === inspection.template_id);
               const Icon = template?.icon || ClipboardCheck;
-              const gradient = template?.gradient || 'from-gray-400 to-gray-500';
-              const resultColour =
-                inspection.overall_result === 'pass'
-                  ? 'text-green-400'
-                  : inspection.overall_result === 'fail'
-                    ? 'text-red-400'
-                    : 'text-amber-400';
-              const resultBg =
-                inspection.overall_result === 'pass'
-                  ? 'bg-green-500/15'
-                  : inspection.overall_result === 'fail'
-                    ? 'bg-red-500/15'
-                    : 'bg-amber-500/15';
-
-              // Comparative trend — find previous inspection with same template
-              const previousSame = completedInspections.find(
-                (prev) =>
-                  prev.id !== inspection.id &&
-                  prev.template_id === inspection.template_id &&
-                  new Date(prev.date) < new Date(inspection.date)
-              );
-              const currentRate =
-                inspection.total_items > 0 ? inspection.pass_count / inspection.total_items : 0;
-              const previousRate =
-                previousSame && previousSame.total_items > 0
-                  ? previousSame.pass_count / previousSame.total_items
-                  : null;
-              const rateChange =
-                previousRate !== null ? Math.round((currentRate - previousRate) * 100) : null;
-
+              const passRate =
+                inspection.total_items > 0
+                  ? Math.round((inspection.pass_count / inspection.total_items) * 100)
+                  : 0;
               return (
-                <motion.button
+                <SafetyRecordCard
                   key={inspection.id}
-                  initial={{ opacity: 0, y: 8 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: index * 0.03, duration: 0.2 }}
-                  whileTap={{ scale: 0.98 }}
-                  onClick={() => setViewingInspection(inspection)}
-                  className="w-full text-left rounded-xl border border-white/[0.08] bg-white/[0.03] active:bg-white/[0.06] p-4 touch-manipulation"
-                >
-                  <div className="flex items-center gap-3">
-                    <div
-                      className={`w-11 h-11 rounded-xl flex items-center justify-center bg-gradient-to-br ${gradient} flex-shrink-0`}
-                    >
-                      <Icon className="h-5 w-5 text-white" />
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <h4 className="text-[15px] font-bold text-white truncate">
-                        {inspection.template_title}
-                      </h4>
-                      <div className="flex items-center gap-2 text-xs text-white mt-0.5">
-                        <MapPin className="h-3 w-3" />
-                        <span className="truncate">{inspection.location || 'No location'}</span>
-                        <span>•</span>
-                        <span>{inspection.date}</span>
-                      </div>
-                      <div className="flex items-center gap-2 mt-1">
-                        <Badge
-                          className={`${resultBg} ${resultColour} border-none text-[10px] uppercase font-bold`}
-                        >
-                          {inspection.overall_result}
-                        </Badge>
-                        <span className="text-[10px] text-white">
-                          {inspection.pass_count}P / {inspection.fail_count}F /{' '}
-                          {inspection.na_count}NA
-                        </span>
-                        {rateChange !== null && (
-                          <span
-                            className={`inline-flex items-center gap-0.5 text-[10px] font-bold ${
-                              rateChange > 5
-                                ? 'text-green-400'
-                                : rateChange < -5
-                                  ? 'text-red-400'
-                                  : 'text-white'
-                            }`}
-                          >
-                            {rateChange > 5 ? (
-                              <TrendingUp className="h-2.5 w-2.5" />
-                            ) : rateChange < -5 ? (
-                              <TrendingDown className="h-2.5 w-2.5" />
-                            ) : (
-                              <Minus className="h-2.5 w-2.5" />
-                            )}
-                            {rateChange > 0 ? '+' : ''}
-                            {rateChange}%
-                          </span>
-                        )}
-                      </div>
-                    </div>
-                    <ChevronRight className="h-4 w-4 text-white flex-shrink-0" />
-                  </div>
-                </motion.button>
+                  id={inspection.id}
+                  title={inspection.template_title}
+                  subtitle={inspection.inspector_name || undefined}
+                  status={inspection.overall_result || 'pending'}
+                  statusLabel={(inspection.overall_result || 'Pending').toUpperCase()}
+                  icon={Icon}
+                  meta={[
+                    { icon: MapPin, label: inspection.location || 'No location' },
+                    { icon: Calendar, label: fmtCardDate(inspection.date) },
+                    {
+                      label: `${inspection.pass_count}P / ${inspection.fail_count}F / ${inspection.na_count}NA — ${passRate}%`,
+                    },
+                  ]}
+                  onTap={() => setViewingInspection(inspection)}
+                  pdfType="inspection"
+                  index={index}
+                />
               );
             })}
             {hasMoreInspections && (

@@ -56,6 +56,7 @@ import { NearMissReportDetail } from './NearMissReportDetail';
 import { SwipeableListItem } from './common/SwipeableListItem';
 import { DeleteConfirmSheet } from './common/DeleteConfirmSheet';
 import { LoadMoreButton } from './common/LoadMoreButton';
+import { SafetyRecordCard, fmtCardDate } from './common/SafetyRecordCard';
 import { SafetyPhotoCapture } from './common/SafetyPhotoCapture';
 import { useShowMore } from '@/hooks/useShowMore';
 import { NearMissReport, Witness } from './types';
@@ -254,7 +255,9 @@ export const NearMissReporting: React.FC = () => {
       ...(data.category && { category: data.category as string }),
       ...(data.severity && { severity: data.severity as string }),
       ...(data.description && { description: data.description as string }),
-      ...(data.potential_consequences && { potential_consequences: data.potential_consequences as string }),
+      ...(data.potential_consequences && {
+        potential_consequences: data.potential_consequences as string,
+      }),
       ...(data.immediate_actions && { immediate_actions: data.immediate_actions as string }),
       ...(data.preventive_measures && { preventive_measures: data.preventive_measures as string }),
       ...(data.weather_conditions && { weather_conditions: data.weather_conditions as string }),
@@ -589,9 +592,7 @@ export const NearMissReporting: React.FC = () => {
         onBack={() => setSelectedReport(null)}
         onUpdate={(updated) => {
           setSelectedReport((prev) => (prev ? { ...prev, ...updated } : prev));
-          setReports((prev) =>
-            prev.map((r) => (r.id === updated.id ? { ...r, ...updated } : r))
-          );
+          setReports((prev) => prev.map((r) => (r.id === updated.id ? { ...r, ...updated } : r)));
         }}
       />
     );
@@ -709,67 +710,35 @@ export const NearMissReporting: React.FC = () => {
           </div>
         ) : (
           <div className="space-y-3">
-            {visibleReports.map((report) => (
-              <SwipeableListItem
+            {visibleReports.map((report, idx) => (
+              <SafetyRecordCard
                 key={report.id}
-                rightActions={[
+                id={report.id}
+                title={report.description?.substring(0, 60) || 'Near Miss'}
+                subtitle={getCategoryLabel(report.category)}
+                status={report.severity}
+                statusLabel={(report.severity || 'Unknown').toUpperCase()}
+                regulation="MHSWR 1999"
+                icon={AlertTriangle}
+                meta={[
+                  { icon: MapPin, label: report.location },
+                  { icon: Clock, label: fmtCardDate(report.incident_date) },
+                  ...(report.status && report.status !== 'open'
+                    ? [{ label: report.status === 'closed' ? 'Closed' : 'In Progress' }]
+                    : []),
+                ]}
+                actions={[
                   {
-                    icon: Trash2,
                     label: 'Delete',
-                    color: 'bg-red-500',
-                    onAction: () => setDeleteTarget(report.id),
+                    icon: Trash2,
+                    onClick: () => setDeleteTarget(report.id),
+                    variant: 'danger' as const,
                   },
                 ]}
-              >
-                <Card
-                  className={`bg-[#1e1e1e] border border-white/10 rounded-2xl border-l-4 ${getSeverityBorder(report.severity)} cursor-pointer hover:border-white/20 active:scale-[0.98] transition-all touch-manipulation`}
-                  onClick={() => setSelectedReport(report)}
-                >
-                  <CardContent className="p-4">
-                    <div className="flex items-start justify-between gap-3">
-                      <div className="flex-1 min-w-0">
-                        <div className="flex items-center gap-2 mb-2 flex-wrap">
-                          {report.incident_number && (
-                            <Badge className="bg-white/10 text-white border-white/20 text-[10px] font-mono">
-                              {report.incident_number}
-                            </Badge>
-                          )}
-                          {getSeverityBadge(report.severity)}
-                          <Badge
-                            variant="outline"
-                            className="text-xs bg-white/5 border-white/10 text-white"
-                          >
-                            {getCategoryLabel(report.category)}
-                          </Badge>
-                          {report.status && report.status !== 'open' && (
-                            <Badge
-                              className={`text-[10px] border ${
-                                report.status === 'closed'
-                                  ? 'bg-green-500/15 text-green-400 border-green-500/30'
-                                  : 'bg-blue-500/15 text-blue-400 border-blue-500/30'
-                              }`}
-                            >
-                              {report.status === 'closed' ? 'Closed' : 'In Progress'}
-                            </Badge>
-                          )}
-                        </div>
-                        <p className="text-sm text-white line-clamp-2 mb-3">{report.description}</p>
-                        <div className="flex items-center gap-4 text-xs text-white">
-                          <span className="flex items-center gap-1.5">
-                            <MapPin className="h-3 w-3" />
-                            <span className="truncate max-w-[120px]">{report.location}</span>
-                          </span>
-                          <span className="flex items-center gap-1.5">
-                            <Clock className="h-3 w-3" />
-                            {new Date(report.incident_date).toLocaleDateString('en-GB')}
-                          </span>
-                        </div>
-                      </div>
-                      <ChevronRight className="h-5 w-5 text-white shrink-0 mt-1" />
-                    </div>
-                  </CardContent>
-                </Card>
-              </SwipeableListItem>
+                onTap={() => setSelectedReport(report)}
+                pdfType="near-miss"
+                index={idx}
+              />
             ))}
             {hasMoreReports && (
               <LoadMoreButton onLoadMore={loadMoreReports} remaining={remainingReports} />
@@ -984,9 +953,7 @@ export const NearMissReporting: React.FC = () => {
                   <button
                     key={l.value}
                     type="button"
-                    onClick={() =>
-                      setFormData((prev) => ({ ...prev, likelihood: l.value }))
-                    }
+                    onClick={() => setFormData((prev) => ({ ...prev, likelihood: l.value }))}
                     className={`flex-1 h-11 rounded-xl border text-center touch-manipulation active:scale-[0.97] transition-all ${
                       formData.likelihood === l.value
                         ? 'bg-elec-yellow text-black border-elec-yellow font-bold'
@@ -1056,9 +1023,7 @@ export const NearMissReporting: React.FC = () => {
               <SmartTextarea
                 placeholder="What did you do?"
                 value={formData.immediate_actions}
-                onChange={(val) =>
-                  setFormData((prev) => ({ ...prev, immediate_actions: val }))
-                }
+                onChange={(val) => setFormData((prev) => ({ ...prev, immediate_actions: val }))}
                 className="min-h-[80px] text-base resize-none bg-[#1a1a1a] border-white/10 text-white placeholder:text-white"
               />
             </div>
@@ -1067,9 +1032,7 @@ export const NearMissReporting: React.FC = () => {
               <SmartTextarea
                 placeholder="How to prevent this?"
                 value={formData.preventive_measures}
-                onChange={(val) =>
-                  setFormData((prev) => ({ ...prev, preventive_measures: val }))
-                }
+                onChange={(val) => setFormData((prev) => ({ ...prev, preventive_measures: val }))}
                 className="min-h-[80px] text-base resize-none bg-[#1a1a1a] border-white/10 text-white placeholder:text-white"
               />
             </div>

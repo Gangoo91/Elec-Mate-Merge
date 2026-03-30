@@ -57,6 +57,7 @@ import {
   Share2,
 } from 'lucide-react';
 import { LoadMoreButton } from './common/LoadMoreButton';
+import { SafetyRecordCard, fmtCardDate } from './common/SafetyRecordCard';
 import { useShowMore } from '@/hooks/useShowMore';
 import { SafetyDocumentShare } from './common/SafetyDocumentShare';
 
@@ -1068,87 +1069,29 @@ export function DigitalAccidentBook({ onBack }: { onBack: () => void }) {
           </div>
         ) : (
           <div className="space-y-2 pb-20">
-            {visibleRecords.map((record) => {
+            {visibleRecords.map((record, idx) => {
               const sevConfig = SEVERITY_CONFIG[record.severity];
+              const injuryLabel =
+                INJURY_TYPES.find((t) => t.id === record.injury_type)?.label || record.injury_type;
               return (
-                <motion.button
+                <SafetyRecordCard
                   key={record.id}
-                  whileTap={{ scale: 0.98 }}
-                  onClick={() => setViewingRecord(record)}
-                  className="w-full text-left rounded-xl border border-white/[0.08] bg-white/[0.03] active:bg-white/[0.06] p-4 touch-manipulation"
-                >
-                  <div className="flex items-center gap-3">
-                    <div
-                      className={`w-11 h-11 rounded-xl flex items-center justify-center ${sevConfig.bg} flex-shrink-0`}
-                    >
-                      <Activity className={`h-5 w-5 ${sevConfig.colour}`} />
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <div className="flex items-center gap-2">
-                        <h4 className="text-[15px] font-bold text-white truncate">
-                          {record.injured_name}
-                        </h4>
-                        {record.incident_number && (
-                          <Badge className="bg-white/10 text-white border-white/20 text-[10px] font-mono flex-shrink-0">
-                            {record.incident_number}
-                          </Badge>
-                        )}
-                        {isArchived(record) && (
-                          <Badge className="bg-amber-500/10 text-amber-400 border-amber-500/20 text-[10px] flex-shrink-0">
-                            Archived
-                          </Badge>
-                        )}
-                      </div>
-                      <div className="flex items-center gap-2 text-xs text-white mt-0.5">
-                        <Calendar className="h-3 w-3" />
-                        <span>{record.incident_date}</span>
-                        <span>•</span>
-                        <MapPin className="h-3 w-3" />
-                        <span className="truncate">{record.location}</span>
-                      </div>
-                      <div className="flex items-center gap-2 mt-1">
-                        <Badge
-                          className={`${sevConfig.bg} ${sevConfig.colour} border-none text-[10px]`}
-                        >
-                          {sevConfig.label}
-                        </Badge>
-                        <Badge className="bg-white/5 text-white border-none text-[10px]">
-                          {INJURY_TYPES.find((t) => t.id === record.injury_type)?.label ||
-                            record.injury_type}
-                        </Badge>
-                        {record.is_riddor_reportable &&
-                          (() => {
-                            const deadlineStatus = getRIDDORDeadlineStatus(record);
-                            return (
-                              <>
-                                <Badge className="bg-red-500/15 text-red-400 border-none text-[10px]">
-                                  RIDDOR
-                                </Badge>
-                                {deadlineStatus.status === 'reported' ? (
-                                  <Badge className="bg-green-500/15 text-green-400 border-none text-[10px]">
-                                    Reported
-                                  </Badge>
-                                ) : deadlineStatus.status === 'overdue' ? (
-                                  <Badge className="bg-red-500/20 text-red-300 border-red-500/30 text-[10px] animate-pulse">
-                                    {deadlineStatus.label}
-                                  </Badge>
-                                ) : deadlineStatus.status === 'immediate' ? (
-                                  <Badge className="bg-red-500/20 text-red-300 border-red-500/30 text-[10px] animate-pulse">
-                                    Report Now
-                                  </Badge>
-                                ) : deadlineStatus.status === 'due_soon' ? (
-                                  <Badge className="bg-amber-500/15 text-amber-400 border-none text-[10px]">
-                                    {deadlineStatus.label}
-                                  </Badge>
-                                ) : null}
-                              </>
-                            );
-                          })()}
-                      </div>
-                    </div>
-                    <ChevronRight className="h-4 w-4 text-white flex-shrink-0" />
-                  </div>
-                </motion.button>
+                  id={record.id}
+                  title={record.injured_name}
+                  subtitle={injuryLabel}
+                  status={record.severity}
+                  statusLabel={sevConfig?.label || record.severity}
+                  regulation={record.is_riddor_reportable ? 'RIDDOR 2013' : undefined}
+                  icon={Activity}
+                  meta={[
+                    { icon: Calendar, label: fmtCardDate(record.incident_date) },
+                    { icon: MapPin, label: record.location },
+                    ...(record.is_riddor_reportable ? [{ label: 'RIDDOR Reportable' }] : []),
+                  ]}
+                  onTap={() => setViewingRecord(record)}
+                  pdfType="accident"
+                  index={idx}
+                />
               );
             })}
             {hasMoreRecords && (
