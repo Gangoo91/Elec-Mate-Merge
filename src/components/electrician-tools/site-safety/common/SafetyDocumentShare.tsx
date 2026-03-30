@@ -170,8 +170,8 @@ export function SafetyDocumentShare({
               </button>
             </div>
 
-            <div className="p-5 space-y-4">
-              {/* Download PDF — primary action */}
+            <div className="p-5 space-y-3">
+              {/* Export PDF — single primary action (on native, opens share sheet) */}
               <Button
                 type="button"
                 onClick={handleDownloadPDF}
@@ -181,52 +181,15 @@ export function SafetyDocumentShare({
                 {isExporting ? (
                   <Loader2 className="h-5 w-5 animate-spin mr-2" />
                 ) : (
-                  <Download className="h-5 w-5 mr-2" />
+                  <FileText className="h-5 w-5 mr-2" />
                 )}
-                {isExporting ? 'Generating PDF...' : 'Download PDF'}
+                {isExporting ? 'Generating PDF...' : 'Export PDF'}
               </Button>
-
-              {/* Share options grid */}
-              <div className="grid grid-cols-3 gap-3">
-                <button
-                  type="button"
-                  onClick={handleWhatsApp}
-                  className={cn(
-                    'flex flex-col items-center gap-2 p-4 rounded-xl border transition-all',
-                    'bg-white/[0.04] border-white/10 hover:bg-white/[0.08] active:scale-[0.97]',
-                    'touch-manipulation min-h-[80px]'
-                  )}
-                >
-                  <MessageCircle className="h-5 w-5 text-green-400" />
-                  <span className="text-xs font-medium text-white">WhatsApp</span>
-                </button>
-
-                <button
-                  type="button"
-                  onClick={handleEmail}
-                  className={cn(
-                    'flex flex-col items-center gap-2 p-4 rounded-xl border transition-all',
-                    'bg-white/[0.04] border-white/10 hover:bg-white/[0.08] active:scale-[0.97]',
-                    'touch-manipulation min-h-[80px]'
-                  )}
-                >
-                  <Mail className="h-5 w-5 text-blue-400" />
-                  <span className="text-xs font-medium text-white">Email</span>
-                </button>
-
-                <button
-                  type="button"
-                  onClick={handleNativeShare}
-                  className={cn(
-                    'flex flex-col items-center gap-2 p-4 rounded-xl border transition-all',
-                    'bg-white/[0.04] border-white/10 hover:bg-white/[0.08] active:scale-[0.97]',
-                    'touch-manipulation min-h-[80px]'
-                  )}
-                >
-                  <ExternalLink className="h-5 w-5 text-purple-400" />
-                  <span className="text-xs font-medium text-white">More...</span>
-                </button>
-              </div>
+              <p className="text-[11px] text-white text-center">
+                {Capacitor.isNativePlatform()
+                  ? 'Opens share sheet — send via WhatsApp, email, AirDrop, or save to Files'
+                  : 'Opens PDF in a new tab for download or printing'}
+              </p>
 
               {/* Close */}
               <Button

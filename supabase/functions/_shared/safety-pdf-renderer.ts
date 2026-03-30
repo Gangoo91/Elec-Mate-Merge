@@ -1,6 +1,7 @@
 /**
  * safety-pdf-renderer.ts
  * Converts HTML to PDF via Browserless.io REST API.
+ * Professional A4 output with running footer (page numbers + Powered by Elec-Mate).
  */
 
 export async function htmlToPdf(html: string): Promise<Uint8Array> {
@@ -20,7 +21,15 @@ export async function htmlToPdf(html: string): Promise<Uint8Array> {
         options: {
           format: 'A4',
           printBackground: true,
-          margin: { top: '0mm', right: '0mm', bottom: '0mm', left: '0mm' },
+          margin: { top: '0mm', right: '0mm', bottom: '14mm', left: '0mm' },
+          displayHeaderFooter: true,
+          headerTemplate: '<span></span>',
+          footerTemplate: `
+            <div style="width: 100%; font-family: 'Inter', Arial, sans-serif; font-size: 7px; color: #94a3b8; display: flex; justify-content: space-between; align-items: center; padding: 0 32px;">
+              <span>Powered by <strong style="color: #f59e0b; font-weight: 700;">Elec-Mate</strong></span>
+              <span>Page <span class="pageNumber"></span> of <span class="totalPages"></span></span>
+            </div>
+          `,
         },
       }),
     }

@@ -6,6 +6,7 @@ export interface CheckItem {
   id: string;
   label: string;
   result: 'pass' | 'fail' | 'na';
+  section?: string;
   notes?: string;
   photoUrl?: string;
 }
@@ -32,50 +33,125 @@ export interface PreUseCheck {
   created_at: string;
 }
 
-export const CHECK_TEMPLATES: Record<string, Omit<CheckItem, 'result'>[]> = {
+export interface CheckTemplate {
+  id: string;
+  label: string;
+  section?: string;
+}
+
+export const CHECK_TEMPLATES: Record<string, CheckTemplate[]> = {
+  // LOLER 1998 + BS EN 131 + INDG 455
   ladder: [
-    { id: 'l1', label: 'Stiles straight and undamaged' },
-    { id: 'l2', label: 'Rungs secure and free from damage' },
-    { id: 'l3', label: 'Feet/shoes present and in good condition' },
-    { id: 'l4', label: 'Locking mechanisms working' },
-    { id: 'l5', label: 'No cracks, splits, or corrosion' },
-    { id: 'l6', label: 'Labels/rating plate visible' },
-    { id: 'l7', label: 'Clean and free from oil/grease' },
+    // Structure & Condition
+    { id: 'l1', label: 'Stiles straight and undamaged — no bends, cracks or dents', section: 'Structure & Condition' },
+    { id: 'l2', label: 'Rungs secure, evenly spaced and free from damage', section: 'Structure & Condition' },
+    { id: 'l3', label: 'No cracks, splits, corrosion or excessive wear', section: 'Structure & Condition' },
+    { id: 'l4', label: 'Locking mechanisms/hinges working correctly (stepladders)', section: 'Structure & Condition' },
+    { id: 'l5', label: 'Extension mechanisms and locks functional (extending ladders)', section: 'Structure & Condition' },
+    { id: 'l6', label: 'Not warped, twisted or distorted from heat/weather damage', section: 'Structure & Condition' },
+    // Safety Features
+    { id: 'l7', label: 'Feet/shoes present, in good condition and anti-slip', section: 'Safety Features' },
+    { id: 'l8', label: 'Anti-slip devices at base functioning', section: 'Safety Features' },
+    { id: 'l9', label: 'Tie-off point or stabiliser present for use above 3m', section: 'Safety Features' },
+    // Compliance & Suitability
+    { id: 'l10', label: 'Labels/rating plate visible — duty rating and classification legible', section: 'Compliance' },
+    { id: 'l11', label: 'Inspection sticker/tag present and within date', section: 'Compliance' },
+    { id: 'l12', label: 'Maximum safe working load not exceeded', section: 'Compliance' },
+    { id: 'l13', label: 'Appropriate ladder type for the task (not used as scaffold substitute)', section: 'Compliance' },
+    { id: 'l14', label: 'Clean and free from oil, grease or other contaminants', section: 'Compliance' },
+    { id: 'l15', label: 'Correct angle of use — 75° (1-in-4 rule) for leaning ladders', section: 'Compliance' },
   ],
+  // WAHR 2005 Reg 12 + NASC SG4:15 + TG20:13
   scaffold: [
-    { id: 's1', label: 'Base plates secure on firm ground' },
-    { id: 's2', label: 'Standards plumb and braced' },
-    { id: 's3', label: 'Handrails at correct height (950mm)' },
-    { id: 's4', label: 'Toe boards fitted' },
-    { id: 's5', label: 'Platforms fully boarded' },
-    { id: 's6', label: 'Scaffold tag present and in date' },
-    { id: 's7', label: 'Safe access (ladder/stairway)' },
+    // Foundation & Base
+    { id: 's1', label: 'Base plates secure on firm, level ground', section: 'Foundation & Base' },
+    { id: 's2', label: 'Sole boards in place where required', section: 'Foundation & Base' },
+    { id: 's3', label: 'Standards plumb and properly braced', section: 'Foundation & Base' },
+    // Structure
+    { id: 's4', label: 'Ledger and transom connections secure and tight', section: 'Structure' },
+    { id: 's5', label: 'Couplers tight — no slipping or rotation', section: 'Structure' },
+    { id: 's6', label: 'Ties/anchors at correct intervals (max 4m vertical, 6m horizontal)', section: 'Structure' },
+    { id: 's7', label: 'Erected to TG20 compliance or has specific design drawing', section: 'Structure' },
+    // Platform & Edge Protection
+    { id: 's8', label: 'Platforms fully boarded with no gaps >25mm', section: 'Platform & Edge Protection' },
+    { id: 's9', label: 'Handrails fitted at correct height (950mm minimum)', section: 'Platform & Edge Protection' },
+    { id: 's10', label: 'Mid-rails fitted', section: 'Platform & Edge Protection' },
+    { id: 's11', label: 'Toe boards fitted (minimum 150mm height)', section: 'Platform & Edge Protection' },
+    { id: 's12', label: 'Brick guards fitted where materials stored on platform', section: 'Platform & Edge Protection' },
+    { id: 's13', label: 'Gap between scaffold and building <300mm (or edge protected)', section: 'Platform & Edge Protection' },
+    // Access
+    { id: 's14', label: 'Safe access provided — internal ladder or stairway', section: 'Access' },
+    { id: 's15', label: 'Access ladders properly secured and extending 1m above platform', section: 'Access' },
+    { id: 's16', label: 'Loading bay properly constructed with gate', section: 'Access' },
+    // Documentation & Compliance
+    { id: 's17', label: 'Scaffold tag present, signed and within 7-day inspection date', section: 'Documentation' },
+    { id: 's18', label: 'Scaffold inspection register present on site', section: 'Documentation' },
+    { id: 's19', label: 'Inspected by CISRS competent person', section: 'Documentation' },
+    { id: 's20', label: '"Do Not Use" signage procedure in place if failed', section: 'Documentation' },
   ],
+  // PUWER 1998 + Electricity at Work Regulations 1989 + IET Code of Practice
   power_tool: [
-    { id: 'pt1', label: 'Casing undamaged' },
-    { id: 'pt2', label: 'Cable/flex in good condition' },
-    { id: 'pt3', label: 'Plug pins not bent or loose' },
-    { id: 'pt4', label: 'PAT test label in date' },
-    { id: 'pt5', label: 'Guards and safety features operational' },
-    { id: 'pt6', label: 'Ventilation clear' },
-    { id: 'pt7', label: 'Correct accessories fitted' },
+    // Physical Condition
+    { id: 'pt1', label: 'Casing undamaged — no cracks, holes or missing parts', section: 'Physical Condition' },
+    { id: 'pt2', label: 'Cable/flex in good condition — no cuts, fraying or exposed conductors', section: 'Physical Condition' },
+    { id: 'pt3', label: 'Plug pins not bent, loose or damaged', section: 'Physical Condition' },
+    { id: 'pt4', label: 'Cable entry to tool and plug secure — no strain on connections', section: 'Physical Condition' },
+    { id: 'pt5', label: 'Ventilation openings clear and unobstructed', section: 'Physical Condition' },
+    // Safety Features
+    { id: 'pt6', label: 'Guards and safety features operational and correctly fitted', section: 'Safety Features' },
+    { id: 'pt7', label: 'Emergency stop/trigger lock-off functioning', section: 'Safety Features' },
+    { id: 'pt8', label: 'Correct accessories and consumables fitted (blades, discs, bits)', section: 'Safety Features' },
+    { id: 'pt9', label: 'Correct RPM rating of accessories for the tool', section: 'Safety Features' },
+    { id: 'pt10', label: 'Dust extraction fitted where required (COSHH)', section: 'Safety Features' },
+    // Electrical Safety & Compliance
+    { id: 'pt11', label: 'PAT test label present and in date', section: 'Electrical Safety' },
+    { id: 'pt12', label: 'Correct voltage for site use (110V CTE or battery preferred)', section: 'Electrical Safety' },
+    { id: 'pt13', label: 'RCD protection in use if 230V on site', section: 'Electrical Safety' },
+    { id: 'pt14', label: 'Operator trained and competent to use this specific tool', section: 'Electrical Safety' },
   ],
+  // GS38 4th Ed + BS EN 61010 + BS 7671 Chapter 64
   test_instrument: [
-    { id: 'ti1', label: 'Calibration sticker in date' },
-    { id: 'ti2', label: 'Case undamaged' },
-    { id: 'ti3', label: 'Test leads GS38 compliant' },
-    { id: 'ti4', label: 'Probes shrouded (max 4mm exposed)' },
-    { id: 'ti5', label: 'Fuses correct rating' },
-    { id: 'ti6', label: 'Battery level adequate' },
-    { id: 'ti7', label: 'Display clear and readable' },
+    // Calibration & Certification
+    { id: 'ti1', label: 'Calibration sticker present and within date', section: 'Calibration' },
+    { id: 'ti2', label: 'Calibration certificate available if requested', section: 'Calibration' },
+    { id: 'ti3', label: 'Self-test/zero check performed successfully', section: 'Calibration' },
+    // Physical Condition
+    { id: 'ti4', label: 'Instrument case undamaged — no cracks or exposed internals', section: 'Physical Condition' },
+    { id: 'ti5', label: 'Display clear, readable and all segments functional', section: 'Physical Condition' },
+    { id: 'ti6', label: 'Battery level adequate for intended tests', section: 'Physical Condition' },
+    { id: 'ti7', label: 'Selector switch/buttons functioning correctly', section: 'Physical Condition' },
+    // GS38 Test Lead Compliance
+    { id: 'ti8', label: 'Test leads GS38 compliant — finger guards and shrouded', section: 'GS38 Compliance' },
+    { id: 'ti9', label: 'Probes shrouded with maximum 4mm exposed tip (2mm for voltage detection)', section: 'GS38 Compliance' },
+    { id: 'ti10', label: 'Lead fuses present and correct rating (typically 500mA HRC)', section: 'GS38 Compliance' },
+    { id: 'ti11', label: 'Leads undamaged — no cracking, fraying or exposed conductors', section: 'GS38 Compliance' },
+    { id: 'ti12', label: 'CAT rating appropriate for intended use (CAT III/IV for distribution)', section: 'GS38 Compliance' },
+    // Functional Checks
+    { id: 'ti13', label: 'Continuity range functional — test leads <1Ω resistance', section: 'Functional Checks' },
+    { id: 'ti14', label: 'Insulation resistance range functional and correct test voltage available', section: 'Functional Checks' },
   ],
+  // LOLER 1998 + PUWER 1998 + PASMA guidance + IPAF
   access_equipment: [
-    { id: 'ae1', label: 'Structure sound — no visible damage' },
-    { id: 'ae2', label: 'Wheels locked (if applicable)' },
-    { id: 'ae3', label: 'Guardrails fitted' },
-    { id: 'ae4', label: 'Platform secure' },
-    { id: 'ae5', label: 'Outriggers deployed (if applicable)' },
-    { id: 'ae6', label: 'Inspection tag current' },
+    // Structure & Condition
+    { id: 'ae1', label: 'Structure sound — no visible damage, bends or corrosion', section: 'Structure & Condition' },
+    { id: 'ae2', label: 'All components present — no missing braces, frames or rungs', section: 'Structure & Condition' },
+    { id: 'ae3', label: 'Locking pins and clips secure and undamaged', section: 'Structure & Condition' },
+    // Stability
+    { id: 'ae4', label: 'On firm, level ground (spirit level check)', section: 'Stability' },
+    { id: 'ae5', label: 'Castors/wheels in locked position', section: 'Stability' },
+    { id: 'ae6', label: 'Outriggers/stabilisers correctly deployed and secured', section: 'Stability' },
+    { id: 'ae7', label: 'Correct height-to-base ratio maintained (3:1 indoor, 2.5:1 outdoor)', section: 'Stability' },
+    { id: 'ae8', label: 'Clear of overhead obstructions and power lines', section: 'Stability' },
+    // Platform & Edge Protection
+    { id: 'ae9', label: 'Guardrails fitted on all open sides', section: 'Platform & Safety' },
+    { id: 'ae10', label: 'Platform secure and fully boarded', section: 'Platform & Safety' },
+    { id: 'ae11', label: 'Trap door platforms closed when platform in use', section: 'Platform & Safety' },
+    { id: 'ae12', label: 'Not overloaded — within duty rating for persons and materials', section: 'Platform & Safety' },
+    // Compliance & Documentation
+    { id: 'ae13', label: 'Erected by PASMA trained person (card verified)', section: 'Compliance' },
+    { id: 'ae14', label: 'Erected per manufacturer instruction manual', section: 'Compliance' },
+    { id: 'ae15', label: 'Inspection tag current and within date', section: 'Compliance' },
+    { id: 'ae16', label: 'Wind speed acceptable (<17mph / 7.7m/s for standard towers)', section: 'Compliance' },
   ],
 };
 

@@ -265,66 +265,90 @@ export function ChecklistForm({
           />
         </div>
 
-        {/* Checklist Items */}
-        <div className="space-y-2">
-          <h3 className="text-sm font-semibold text-white">Inspection Items</h3>
-          {items.map((item, index) => (
-            <motion.div
-              key={item.id}
-              initial={{ opacity: 0, y: 8 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: index * 0.03 }}
-              className="flex items-center gap-3 p-3 rounded-xl bg-white/5 border border-white/10"
-            >
-              <span className="flex-1 text-sm text-white">{item.label}</span>
-              <div className="flex items-center gap-1">
-                {/* Pass */}
-                <button
-                  onClick={() => updateItemResult(item.id, 'pass')}
-                  className={`h-11 w-11 flex items-center justify-center rounded-lg touch-manipulation active:scale-90 transition-all ${
-                    item.result === 'pass'
-                      ? 'bg-green-500/20 border border-green-500/50'
-                      : 'bg-white/5 border border-white/10'
-                  }`}
-                  aria-label={`Mark ${item.label} as pass`}
-                >
-                  <CheckCircle2
-                    className={`w-5 h-5 ${
-                      item.result === 'pass' ? 'text-green-400' : 'text-white'
-                    }`}
-                  />
-                </button>
-                {/* Fail */}
-                <button
-                  onClick={() => updateItemResult(item.id, 'fail')}
-                  className={`h-11 w-11 flex items-center justify-center rounded-lg touch-manipulation active:scale-90 transition-all ${
-                    item.result === 'fail'
-                      ? 'bg-red-500/20 border border-red-500/50'
-                      : 'bg-white/5 border border-white/10'
-                  }`}
-                  aria-label={`Mark ${item.label} as fail`}
-                >
-                  <XCircle
-                    className={`w-5 h-5 ${item.result === 'fail' ? 'text-red-400' : 'text-white'}`}
-                  />
-                </button>
-                {/* N/A */}
-                <button
-                  onClick={() => updateItemResult(item.id, 'na')}
-                  className={`h-11 w-11 flex items-center justify-center rounded-lg touch-manipulation active:scale-90 transition-all ${
-                    item.result === 'na'
-                      ? 'bg-white/15 border border-white/30'
-                      : 'bg-white/5 border border-white/10'
-                  }`}
-                  aria-label={`Mark ${item.label} as not applicable`}
-                >
-                  <MinusCircle
-                    className={`w-5 h-5 ${item.result === 'na' ? 'text-white' : 'text-white'}`}
-                  />
-                </button>
-              </div>
-            </motion.div>
-          ))}
+        {/* Checklist Items — grouped by section */}
+        <div className="space-y-4">
+          {(() => {
+            // Group items by section
+            const sections: { name: string; items: typeof items }[] = [];
+            const sectionMap = new Map<string, typeof items>();
+            for (const item of items) {
+              const sec = item.section || 'General';
+              if (!sectionMap.has(sec)) {
+                const arr: typeof items = [];
+                sectionMap.set(sec, arr);
+                sections.push({ name: sec, items: arr });
+              }
+              sectionMap.get(sec)!.push(item);
+            }
+            return sections.map((sec) => {
+              const passCount = sec.items.filter((i) => i.result === 'pass').length;
+              const failCount = sec.items.filter((i) => i.result === 'fail').length;
+              const total = sec.items.length;
+              return (
+                <div key={sec.name} className="rounded-xl border border-white/[0.08] overflow-hidden">
+                  {/* Section header */}
+                  <div className="flex items-center justify-between px-4 py-2.5 bg-white/[0.04] border-b border-white/[0.06]">
+                    <span className="text-xs font-bold text-white uppercase tracking-wider">{sec.name}</span>
+                    <div className="flex items-center gap-2">
+                      {passCount > 0 && (
+                        <span className="text-[10px] font-semibold text-green-400 bg-green-500/15 px-2 py-0.5 rounded">{passCount}P</span>
+                      )}
+                      {failCount > 0 && (
+                        <span className="text-[10px] font-semibold text-red-400 bg-red-500/15 px-2 py-0.5 rounded">{failCount}F</span>
+                      )}
+                      <span className="text-[10px] text-white">{passCount + failCount}/{total}</span>
+                    </div>
+                  </div>
+                  {/* Items */}
+                  <div className="divide-y divide-white/[0.04]">
+                    {sec.items.map((item) => (
+                      <div
+                        key={item.id}
+                        className="flex items-center gap-3 px-4 py-2.5"
+                      >
+                        <span className="flex-1 text-[13px] text-white leading-snug">{item.label}</span>
+                        <div className="flex items-center gap-1 flex-shrink-0">
+                          <button
+                            onClick={() => updateItemResult(item.id, 'pass')}
+                            className={`h-10 w-10 flex items-center justify-center rounded-lg touch-manipulation active:scale-90 transition-all ${
+                              item.result === 'pass'
+                                ? 'bg-green-500/20 border border-green-500/50'
+                                : 'bg-white/[0.04] border border-white/[0.08]'
+                            }`}
+                            aria-label="Pass"
+                          >
+                            <CheckCircle2 className={`w-4.5 h-4.5 ${item.result === 'pass' ? 'text-green-400' : 'text-white/40'}`} />
+                          </button>
+                          <button
+                            onClick={() => updateItemResult(item.id, 'fail')}
+                            className={`h-10 w-10 flex items-center justify-center rounded-lg touch-manipulation active:scale-90 transition-all ${
+                              item.result === 'fail'
+                                ? 'bg-red-500/20 border border-red-500/50'
+                                : 'bg-white/[0.04] border border-white/[0.08]'
+                            }`}
+                            aria-label="Fail"
+                          >
+                            <XCircle className={`w-4.5 h-4.5 ${item.result === 'fail' ? 'text-red-400' : 'text-white/40'}`} />
+                          </button>
+                          <button
+                            onClick={() => updateItemResult(item.id, 'na')}
+                            className={`h-10 w-10 flex items-center justify-center rounded-lg touch-manipulation active:scale-90 transition-all ${
+                              item.result === 'na'
+                                ? 'bg-white/15 border border-white/30'
+                                : 'bg-white/[0.04] border border-white/[0.08]'
+                            }`}
+                            aria-label="N/A"
+                          >
+                            <MinusCircle className={`w-4.5 h-4.5 ${item.result === 'na' ? 'text-white' : 'text-white/40'}`} />
+                          </button>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              );
+            });
+          })()}
         </div>
 
         {/* Evidence Photos */}
