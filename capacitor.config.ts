@@ -14,6 +14,7 @@ const config: CapacitorConfig = {
       '*.youtube.com',
       '*.youtube-nocookie.com',
       '*.googlevideo.com',
+      'www.elec-mate.com',
     ],
     // Enable mixed content for local development
     androidScheme: 'https',

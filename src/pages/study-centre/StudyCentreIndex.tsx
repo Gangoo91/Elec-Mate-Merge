@@ -274,68 +274,28 @@ export default function StudyCentreIndex() {
           {lastLocation && !lastLocLoading && (
             <motion.div variants={itemVariants}>
               <Link to={lastLocation.path} className="block touch-manipulation active:scale-[0.98]">
-                <div style={{ background: 'hsl(0 0% 12%)', border: '1px solid rgba(250, 204, 21, 0.3)', borderRadius: '16px', padding: '16px', display: 'flex', alignItems: 'center', gap: '16px' }}>
-                  <div style={{ padding: '12px', borderRadius: '12px', background: 'rgba(250, 204, 21, 0.1)', border: '1px solid rgba(250, 204, 21, 0.2)', flexShrink: 0 }}>
-                    <Sparkles className="h-5 w-5 text-elec-yellow" />
-                  </div>
+                <div style={{ background: 'hsl(0 0% 12%)', border: '1px solid rgba(255, 255, 255, 0.1)', borderRadius: '16px', padding: '16px', display: 'flex', alignItems: 'center', gap: '16px' }}>
                   <div style={{ flex: 1, minWidth: 0 }}>
                     <p className="text-[11px] text-elec-yellow font-bold uppercase tracking-wider">Continue where you left off</p>
-                    <p className="text-sm font-semibold text-white truncate mt-0.5">{lastLocation.title}</p>
-                    <div className="flex items-center gap-2 mt-1">
-                      <p className="text-xs text-white">{getLastStudiedDisplay()}</p>
-                      {currentStreak > 0 && (
-                        <span className="flex items-center gap-1 text-xs text-orange-400">
-                          <Flame className="h-3 w-3" />{currentStreak}d
-                        </span>
-                      )}
-                    </div>
+                    <p className="text-sm font-semibold text-white truncate mt-1">{lastLocation.title}</p>
+                    <p className="text-xs text-white mt-1">{getLastStudiedDisplay()}</p>
                   </div>
-                  <ChevronRight className="h-5 w-5 text-elec-yellow flex-shrink-0" />
+                  <ChevronRight className="h-5 w-5 text-white flex-shrink-0" />
                 </div>
               </Link>
             </motion.div>
           )}
 
-          {/* Stats + Leaderboard Row */}
-          <motion.div variants={itemVariants} className="grid grid-cols-3 gap-2.5">
-            {/* Quizzes */}
-            <div className="group relative overflow-hidden card-surface-interactive rounded-2xl p-4 touch-manipulation">
-              <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-transparent via-purple-400/60 to-transparent opacity-30" />
-              <div className="p-2 rounded-xl bg-purple-500/10 border border-purple-500/20 inline-flex mb-2">
-                <Target className="h-5 w-5 text-purple-400" />
+          {/* Leaderboard Card — full width, inline styles to match Continue card */}
+          <motion.div variants={itemVariants}>
+            <Link to="/study-centre/leaderboard" className="block touch-manipulation active:scale-[0.98]">
+              <div style={{ background: 'hsl(0 0% 12%)', border: '1px solid rgba(255, 255, 255, 0.1)', borderRadius: '16px', padding: '16px', display: 'flex', alignItems: 'center', gap: '16px' }}>
+                <div style={{ flex: 1, minWidth: 0 }}>
+                  <p className="text-[11px] text-elec-yellow font-bold uppercase tracking-wider">Leaderboard</p>
+                  <p className="text-sm font-semibold text-white mt-1">Rankings, Streaks & Achievements</p>
+                </div>
+                <ChevronRight className="h-5 w-5 text-white flex-shrink-0" />
               </div>
-              <p className="text-xl font-bold text-white">{totalQuizzesTaken || 0}</p>
-              <p className="text-[10px] text-white font-medium uppercase tracking-wider">Quizzes</p>
-              {averageScore > 0 && (
-                <p className="text-[10px] text-purple-400 mt-0.5">{averageScore}% avg</p>
-              )}
-            </div>
-
-            {/* Streak */}
-            <div className="group relative overflow-hidden card-surface-interactive rounded-2xl p-4 touch-manipulation">
-              <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-transparent via-orange-400/60 to-transparent opacity-30" />
-              <div className="p-2 rounded-xl bg-orange-500/10 border border-orange-500/20 inline-flex mb-2">
-                <Flame className="h-5 w-5 text-orange-400" />
-              </div>
-              <p className="text-xl font-bold text-white">{currentStreak || 0}</p>
-              <p className="text-[10px] text-white font-medium uppercase tracking-wider">Streak</p>
-              {currentStreak > 0 && (
-                <p className="text-[10px] text-orange-400 mt-0.5">days</p>
-              )}
-            </div>
-
-            {/* Leaderboard */}
-            <Link
-              to="/study-centre/leaderboard"
-              className="group relative overflow-hidden card-surface-interactive rounded-2xl p-4 touch-manipulation active:scale-[0.97]"
-            >
-              <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-transparent via-elec-yellow/60 to-transparent opacity-30 group-hover:opacity-80 transition-opacity" />
-              <div className="p-2 rounded-xl bg-elec-yellow/10 border border-elec-yellow/20 inline-flex mb-2">
-                <Trophy className="h-5 w-5 text-elec-yellow" />
-              </div>
-              <p className="text-sm font-semibold text-white group-hover:text-elec-yellow transition-colors">Board</p>
-              <p className="text-[10px] text-white font-medium uppercase tracking-wider">Rankings</p>
-              <ChevronRight className="absolute bottom-3 right-3 h-4 w-4 text-white/30 group-hover:text-elec-yellow group-hover:translate-x-0.5 transition-all" />
             </Link>
           </motion.div>
 

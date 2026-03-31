@@ -56,7 +56,7 @@ export function StudyLeaderboard() {
     try {
       // Get visible users with their progress
       const { data, error } = await supabase
-        .rpc('get_study_leaderboard' as any)
+        .rpc('get_study_leaderboard' as any, { time_filter: 'all' })
         .limit(10);
 
       if (error) {
@@ -84,7 +84,17 @@ export function StudyLeaderboard() {
         return;
       }
 
-      setEntries((data as any) || []);
+      setEntries(((data as any[]) || []).map((d: any) => ({
+        user_id: d.uid,
+        full_name: d.display_name,
+        avatar_url: d.avatar,
+        sections_completed: d.sections_done || 0,
+        total_xp: d.xp || 0,
+        streak: d.current_streak || 0,
+        quiz_count: d.quizzes_taken || 0,
+        quiz_avg: parseFloat(d.avg_quiz_score) || 0,
+        achievement_count: d.awards || 0,
+      })));
     } catch (err) {
       console.error('Error fetching leaderboard:', err);
     } finally {

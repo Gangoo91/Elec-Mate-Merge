@@ -3,10 +3,9 @@
  */
 
 import React, { useState, useEffect, useCallback } from 'react';
-import { ArrowLeft, Trophy, Flame, Zap, Target, Award, Medal, ChevronRight, Lock, Star } from 'lucide-react';
+import { ArrowLeft, Trophy, Flame, Zap, Target, ChevronRight, Star } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
 import { cn } from '@/lib/utils';
 import { motion } from 'framer-motion';
 import { supabase } from '@/integrations/supabase/client';
@@ -55,20 +54,36 @@ export default function LeaderboardPage() {
   const [loading, setLoading] = useState(true);
   const [sortBy, setSortBy] = useState<SortKey>('xp');
   const [unlockedAchievements, setUnlockedAchievements] = useState<string[]>([]);
+  const [showAllRankings, setShowAllRankings] = useState(false);
+  const [showAllAchievements, setShowAllAchievements] = useState(false);
+  const [timeFilter, setTimeFilter] = useState<'week' | 'month' | 'all'>('all');
 
   useSEO({ title: 'Leaderboard | Study Centre | Elec-Mate' });
 
   // Fetch leaderboard
   const fetchLeaderboard = useCallback(async () => {
     try {
-      const { data, error } = await supabase.rpc('get_study_leaderboard' as any);
-      if (!error && data) setEntries(data as any);
+      const { data, error } = await supabase.rpc('get_study_leaderboard' as any, { time_filter: timeFilter });
+      if (!error && data) {
+        // Map RPC column names to our interface
+        setEntries((data as any[]).map((d: any) => ({
+          user_id: d.uid,
+          full_name: d.display_name,
+          avatar_url: d.avatar,
+          sections_completed: d.sections_done || 0,
+          total_xp: d.xp || 0,
+          streak: d.current_streak || 0,
+          quiz_count: d.quizzes_taken || 0,
+          quiz_avg: parseFloat(d.avg_quiz_score) || 0,
+          achievement_count: d.awards || 0,
+        })));
+      }
     } catch {
       // Fail silently
     } finally {
       setLoading(false);
     }
-  }, []);
+  }, [timeFilter]);
 
   // Fetch user's achievements
   useEffect(() => {
@@ -83,8 +98,9 @@ export default function LeaderboardPage() {
   }, [user]);
 
   useEffect(() => {
+    setLoading(true);
     fetchLeaderboard();
-  }, [fetchLeaderboard]);
+  }, [fetchLeaderboard, timeFilter]);
 
   // Sort entries
   const sortedEntries = [...entries].sort((a, b) => {
@@ -108,7 +124,7 @@ export default function LeaderboardPage() {
 
   return (
     <div className="-mt-3 sm:-mt-4 md:-mt-6 bg-background pb-24">
-      <div className="max-w-2xl mx-auto">
+      <div className="max-w-4xl mx-auto lg:px-8">
         {/* Header */}
         <div className="sticky top-0 z-50 bg-background/95 backdrop-blur-sm border-b border-white/[0.06]">
           <div className="px-4 py-2">
@@ -189,6 +205,28 @@ export default function LeaderboardPage() {
             )}
           </motion.div>
 
+          {/* Time Filter */}
+          <div className="flex gap-1 p-1 rounded-xl" style={{ background: 'hsl(0 0% 10%)' }}>
+            {([
+              { key: 'week', label: 'This Week' },
+              { key: 'month', label: 'This Month' },
+              { key: 'all', label: 'All Time' },
+            ] as const).map(({ key, label }) => (
+              <button
+                key={key}
+                onClick={() => setTimeFilter(key)}
+                className={cn(
+                  'flex-1 py-2 rounded-lg text-xs font-medium transition-all touch-manipulation',
+                  timeFilter === key
+                    ? 'bg-elec-yellow text-black'
+                    : 'text-white hover:bg-white/[0.06]'
+                )}
+              >
+                {label}
+              </button>
+            ))}
+          </div>
+
           {/* Sort Tabs */}
           <div className="flex gap-2">
             {([
@@ -214,7 +252,7 @@ export default function LeaderboardPage() {
           </div>
 
           {/* Rankings */}
-          <div className="rounded-2xl bg-white/[0.04] border border-white/10 overflow-hidden">
+          <div className="rounded-2xl overflow-hidden" style={{ background: 'hsl(0 0% 12%)', border: '1px solid rgba(255,255,255,0.06)' }}>
             {loading ? (
               <div className="py-12 text-center text-sm text-white/40">Loading...</div>
             ) : sortedEntries.length === 0 ? (
@@ -223,7 +261,7 @@ export default function LeaderboardPage() {
               </div>
             ) : (
               <div className="divide-y divide-white/[0.04]">
-                {sortedEntries.map((entry, idx) => {
+                {(showAllRankings ? sortedEntries : sortedEntries.slice(0, 5)).map((entry, idx) => {
                   const rank = idx + 1;
                   const isCurrentUser = entry.user_id === user?.id;
                   const medalColors = [
@@ -294,39 +332,87 @@ export default function LeaderboardPage() {
                 })}
               </div>
             )}
+            {!loading && sortedEntries.length > 5 && (
+              <button
+                onClick={() => setShowAllRankings(!showAllRankings)}
+                className="w-full py-3 text-xs font-medium text-elec-yellow hover:text-white transition-colors touch-manipulation"
+                style={{ borderTop: '1px solid rgba(255,255,255,0.04)' }}
+              >
+                {showAllRankings ? 'Show less' : `View all ${sortedEntries.length} learners`}
+              </button>
+            )}
           </div>
 
           {/* Achievements */}
           {allAchievements.length > 0 && (
             <div className="space-y-3">
-              <h3 className="text-xs font-medium text-white uppercase tracking-wider px-0.5">
-                Achievements ({unlockedAchievements.length}/{allAchievements.length})
-              </h3>
-              <div className="grid grid-cols-4 sm:grid-cols-6 gap-2">
-                {allAchievements.map((ach: any) => {
+              <div className="flex items-center justify-between px-0.5">
+                <h3 className="text-xs font-medium text-white uppercase tracking-wider">
+                  Achievements
+                </h3>
+                <span className="text-xs text-elec-yellow font-semibold">
+                  {unlockedAchievements.length}/{allAchievements.length}
+                </span>
+              </div>
+
+              {/* Progress bar */}
+              <div className="h-2 rounded-full overflow-hidden" style={{ background: 'hsl(0 0% 12%)' }}>
+                <div
+                  className="h-full bg-gradient-to-r from-elec-yellow to-amber-500 rounded-full transition-all duration-500"
+                  style={{ width: `${(unlockedAchievements.length / allAchievements.length) * 100}%` }}
+                />
+              </div>
+
+              {/* Achievement list — clean rows, no icons */}
+              <div className="rounded-2xl overflow-hidden" style={{ background: 'hsl(0 0% 12%)', border: '1px solid rgba(255,255,255,0.06)' }}>
+                {(showAllAchievements ? allAchievements : allAchievements.slice(0, 5)).map((ach: any, idx: number) => {
                   const unlocked = unlockedAchievements.includes(ach.id);
+                  const categoryColors: Record<string, string> = {
+                    flashcards: 'text-blue-400',
+                    quizzes: 'text-green-400',
+                    streaks: 'text-orange-400',
+                    ojt: 'text-purple-400',
+                    portfolio: 'text-cyan-400',
+                    diary: 'text-pink-400',
+                    xp: 'text-elec-yellow',
+                    epa: 'text-red-400',
+                  };
                   return (
                     <div
                       key={ach.id}
                       className={cn(
-                        'flex flex-col items-center justify-center p-2.5 rounded-xl border text-center transition-all',
-                        unlocked
-                          ? 'bg-elec-yellow/10 border-elec-yellow/20'
-                          : 'bg-white/[0.02] border-white/[0.06] opacity-40'
+                        'flex items-center gap-3 px-4 py-3',
+                        idx < allAchievements.length - 1 && 'border-b border-white/[0.04]',
+                        !unlocked && 'opacity-30'
                       )}
                     >
-                      <span className="text-xl mb-1">{ach.icon || '🏆'}</span>
-                      <p className="text-[9px] font-medium text-white leading-tight line-clamp-2">
-                        {ach.title}
-                      </p>
-                      {unlocked && (
-                        <Badge className="mt-1 text-[8px] px-1 py-0 bg-elec-yellow/20 text-elec-yellow border-elec-yellow/30">
-                          +{ach.xpBonus} XP
-                        </Badge>
-                      )}
+                      <div className={cn(
+                        'w-8 h-8 rounded-lg flex items-center justify-center text-sm font-bold flex-shrink-0',
+                        unlocked ? 'bg-elec-yellow/15 text-elec-yellow' : 'bg-white/[0.04] text-white/30'
+                      )}>
+                        {unlocked ? '✓' : '?'}
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <p className="text-sm font-medium text-white truncate">{ach.title}</p>
+                        <p className={cn('text-[10px] truncate', categoryColors[ach.category] || 'text-white/50')}>
+                          {ach.description}
+                        </p>
+                      </div>
+                      <span className="text-[10px] text-elec-yellow font-semibold flex-shrink-0">
+                        +{ach.xpBonus} XP
+                      </span>
                     </div>
                   );
                 })}
+                {allAchievements.length > 5 && (
+                  <button
+                    onClick={() => setShowAllAchievements(!showAllAchievements)}
+                    className="w-full py-3 text-xs font-medium text-elec-yellow hover:text-white transition-colors touch-manipulation"
+                    style={{ borderTop: '1px solid rgba(255,255,255,0.04)' }}
+                  >
+                    {showAllAchievements ? 'Show less' : `View all ${allAchievements.length} achievements`}
+                  </button>
+                )}
               </div>
             </div>
           )}
