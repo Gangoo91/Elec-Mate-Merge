@@ -12,6 +12,7 @@ import {
   ArrowLeft,
   Shield,
   Compass,
+  Trophy,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { motion } from 'framer-motion';
@@ -19,6 +20,9 @@ import { cn } from '@/lib/utils';
 import { useStudyStreak } from '@/hooks/useStudyStreak';
 import { useQuizResults } from '@/hooks/useQuizResults';
 import { useAuth } from '@/contexts/AuthContext';
+import { useLastStudyLocation } from '@/hooks/useLastStudyLocation';
+import { useCourseProgress } from '@/hooks/useCourseProgress';
+import { StudyStatsDashboard } from '@/components/study-centre/StudyStatsDashboard';
 import useSEO from '@/hooks/useSEO';
 
 const containerVariants = {
@@ -50,6 +54,8 @@ interface CategoryCardProps {
   hoverColor: string;
   onClick: () => void;
   badge?: { label: string; icon: React.ElementType };
+  progressPct?: number;
+  completedCourses?: number;
 }
 
 function CategoryCard({
@@ -64,6 +70,8 @@ function CategoryCard({
   hoverColor,
   onClick,
   badge,
+  progressPct = 0,
+  completedCourses = 0,
 }: CategoryCardProps) {
   return (
     <motion.div
@@ -138,12 +146,32 @@ function CategoryCard({
           ))}
         </div>
 
+        {/* Progress bar */}
+        {completedCourses > 0 && (
+          <div className="mb-3">
+            <div className="flex items-center justify-between mb-1">
+              <span className="text-[10px] font-medium text-white">
+                {completedCourses}/{courseCount} completed
+              </span>
+              <span className="text-[10px] font-medium text-white">{Math.round(progressPct)}%</span>
+            </div>
+            <div className="h-1.5 bg-white/10 rounded-full overflow-hidden">
+              <div
+                className={cn('h-full rounded-full bg-gradient-to-r transition-all duration-500', accentGradient)}
+                style={{ width: `${progressPct}%` }}
+              />
+            </div>
+          </div>
+        )}
+
         {/* Spacer */}
         <div className="flex-grow" />
 
         {/* Bottom action */}
         <div className="flex items-center justify-between mt-2">
-          <span className="text-xs sm:text-sm font-medium text-elec-yellow">Start Learning</span>
+          <span className="text-xs sm:text-sm font-medium text-elec-yellow">
+            {completedCourses > 0 ? 'Continue Learning' : 'Start Learning'}
+          </span>
           <div
             className={cn(
               'w-7 h-7 sm:w-8 sm:h-8 rounded-full',
@@ -189,6 +217,17 @@ export default function StudyCentreIndex() {
     },
   });
 
+  const { lastLocation, loading: lastLocLoading, getLastStudiedDisplay } = useLastStudyLocation();
+  const { allProgress } = useCourseProgress();
+
+  // Count completed courses per category
+  const completedByCategory = {
+    apprentice: allProgress.filter((p) => p.completed && p.course_key.startsWith('apprentice-')).length,
+    upskilling: allProgress.filter((p) => p.completed && p.course_key.startsWith('upskilling-')).length,
+    general: allProgress.filter((p) => p.completed && p.course_key.startsWith('general-')).length,
+    personal: allProgress.filter((p) => p.completed && p.course_key.startsWith('personal-')).length,
+  };
+
   const currentStreak = studyStreakData?.streak?.currentStreak || 0;
   const quizResults = quizData?.results || [];
   const totalQuizzesTaken = quizResults.length;
@@ -231,6 +270,36 @@ export default function StudyCentreIndex() {
           animate="visible"
           className="px-4 py-4 space-y-5"
         >
+          {/* Continue Where You Left Off */}
+          {lastLocation && !lastLocLoading && (
+            <motion.div variants={itemVariants}>
+              <Link
+                to={lastLocation.path}
+                className="flex items-center gap-4 p-4 rounded-2xl bg-white/[0.04] border border-elec-yellow/20 hover:border-elec-yellow/40 hover:bg-white/[0.06] transition-all touch-manipulation active:scale-[0.99]"
+              >
+                <div className="p-3 rounded-xl bg-elec-yellow/15 border border-elec-yellow/20 flex-shrink-0">
+                  <Sparkles className="h-5 w-5 text-elec-yellow" />
+                </div>
+                <div className="flex-1 min-w-0">
+                  <p className="text-xs text-elec-yellow font-medium">Continue where you left off</p>
+                  <p className="text-sm font-semibold text-white truncate">{lastLocation.title}</p>
+                  <div className="flex items-center gap-2 mt-0.5">
+                    <p className="text-xs text-white">{getLastStudiedDisplay()}</p>
+                    {currentStreak > 0 && (
+                      <span className="flex items-center gap-1 text-xs text-orange-400">
+                        <Flame className="h-3 w-3" />
+                        {currentStreak} day streak
+                      </span>
+                    )}
+                  </div>
+                </div>
+                <div className="w-8 h-8 rounded-full bg-elec-yellow/15 border border-elec-yellow/20 flex items-center justify-center flex-shrink-0">
+                  <ChevronRight className="h-4 w-4 text-elec-yellow" />
+                </div>
+              </Link>
+            </motion.div>
+          )}
+
           {/* KPI Strip */}
           <motion.div variants={itemVariants}>
             <div className="grid grid-cols-4 gap-2">
@@ -269,6 +338,30 @@ export default function StudyCentreIndex() {
             </motion.div>
           )}
 
+          {/* Personal Stats */}
+          <motion.div variants={itemVariants}>
+            <StudyStatsDashboard />
+          </motion.div>
+
+          {/* Leaderboard Card — links to full page */}
+          <motion.div variants={itemVariants}>
+            <Link
+              to="/study-centre/leaderboard"
+              className="flex items-center gap-4 p-4 rounded-2xl bg-white/[0.04] border border-elec-yellow/20 hover:border-elec-yellow/40 hover:bg-white/[0.06] transition-all touch-manipulation active:scale-[0.99]"
+            >
+              <div className="p-3 rounded-xl bg-elec-yellow/15 border border-elec-yellow/20 flex-shrink-0">
+                <Trophy className="h-5 w-5 text-elec-yellow" />
+              </div>
+              <div className="flex-1 min-w-0">
+                <p className="text-sm font-semibold text-white">Leaderboard</p>
+                <p className="text-xs text-white mt-0.5">See how you rank against other learners</p>
+              </div>
+              <div className="w-8 h-8 rounded-full bg-elec-yellow/15 border border-elec-yellow/20 flex items-center justify-center flex-shrink-0">
+                <ChevronRight className="h-4 w-4 text-elec-yellow" />
+              </div>
+            </Link>
+          </motion.div>
+
           {/* Course Categories */}
           <motion.section variants={itemVariants} className="space-y-3">
             <h2 className="text-xs font-medium text-white uppercase tracking-wider px-0.5">
@@ -280,6 +373,8 @@ export default function StudyCentreIndex() {
                 description="Level 2 & 3 qualifications, AM2 preparation, and essential fundamentals"
                 icon={GraduationCap}
                 courseCount={8}
+                completedCourses={completedByCategory.apprentice}
+                progressPct={(completedByCategory.apprentice / 8) * 100}
                 accentGradient="from-blue-500 via-blue-400 to-cyan-400"
                 iconColor="text-blue-400"
                 iconBg="bg-blue-500/10 border border-blue-500/20"
@@ -298,6 +393,8 @@ export default function StudyCentreIndex() {
                 description="BS7671, EV charging, solar PV, smart home technology, and specialist courses"
                 icon={Zap}
                 courseCount={14}
+                completedCourses={completedByCategory.upskilling}
+                progressPct={(completedByCategory.upskilling / 14) * 100}
                 accentGradient="from-elec-yellow via-amber-400 to-orange-400"
                 iconColor="text-elec-yellow"
                 iconBg="bg-elec-yellow/10 border border-elec-yellow/20"
@@ -317,6 +414,8 @@ export default function StudyCentreIndex() {
                 description="Cross-industry safety training — IPAF, first aid, working at height, and site skills"
                 icon={Shield}
                 courseCount={14}
+                completedCourses={completedByCategory.general}
+                progressPct={(completedByCategory.general / 14) * 100}
                 accentGradient="from-emerald-500 via-emerald-400 to-green-400"
                 iconColor="text-emerald-400"
                 iconBg="bg-emerald-500/10 border border-emerald-500/20"
@@ -335,6 +434,8 @@ export default function StudyCentreIndex() {
                 description="Leadership, emotional intelligence, resilience, and becoming the best version of yourself"
                 icon={Compass}
                 courseCount={10}
+                completedCourses={completedByCategory.personal}
+                progressPct={(completedByCategory.personal / 10) * 100}
                 accentGradient="from-pink-500 via-rose-400 to-red-400"
                 iconColor="text-pink-400"
                 iconBg="bg-pink-500/10 border border-pink-500/20"

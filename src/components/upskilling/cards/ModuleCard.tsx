@@ -1,7 +1,8 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useMemo } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { ChevronRight, Clock, CheckCircle2 } from 'lucide-react';
+import { useCourseProgress } from '@/hooks/useCourseProgress';
 
 interface ModuleCardProps {
   to: string;
@@ -24,10 +25,52 @@ export const ModuleCard: React.FC<ModuleCardProps> = ({
   duration,
   icon: Icon,
   isExam = false,
-  isCompleted = false,
-  progress,
+  isCompleted: isCompletedProp = false,
+  progress: progressProp,
   index = 0,
 }) => {
+  const { allProgress } = useCourseProgress();
+  const location = useLocation();
+
+  // Auto-detect progress from the route path
+  // The `to` prop is relative (e.g. "../fire-safety-module-1")
+  // Resolve it against current location to get the full path
+  const autoProgress = useMemo(() => {
+    if (!allProgress.length) return { completed: false, pct: 0 };
+
+    // Resolve relative path to absolute
+    const basePath = location.pathname.replace(/\/[^/]*$/, ''); // parent dir
+    const resolvedPath = to.startsWith('../')
+      ? basePath.replace(/\/[^/]*$/, '') + '/' + to.replace('../', '')
+      : to.startsWith('/')
+        ? to
+        : basePath + '/' + to;
+
+    // Extract course key and section from resolved path
+    const studyCentrePath = resolvedPath.replace(/.*\/study-centre\//, '');
+    const parts = studyCentrePath.split('/');
+    const courseKey = parts[0] || '';
+    const sectionKey = parts.slice(1).join('/') || parts[0] || '';
+
+    // Find matching progress rows (check both course_key match and section_key match)
+    const matchingRows = allProgress.filter(
+      (p) =>
+        p.course_key === courseKey && p.section_key?.startsWith(sectionKey) ||
+        p.course_key === studyCentrePath ||
+        p.section_key === studyCentrePath
+    );
+
+    if (matchingRows.length === 0) return { completed: false, pct: 0 };
+
+    const anyComplete = matchingRows.some((r) => r.completed);
+    const maxPct = Math.max(...matchingRows.map((r) => r.progress_pct));
+
+    return { completed: anyComplete, pct: maxPct };
+  }, [allProgress, to, location.pathname]);
+
+  // Use explicit props if provided, otherwise auto-detect
+  const isCompleted = isCompletedProp || autoProgress.completed;
+  const progress = progressProp ?? (autoProgress.pct > 0 && autoProgress.pct < 100 ? autoProgress.pct : undefined);
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
