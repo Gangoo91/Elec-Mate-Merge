@@ -1,12 +1,25 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react-swc';
 import path from 'path';
+import { execSync } from 'child_process';
 // import { componentTagger } from "lovable-tagger"; // Disabled - causing JSX corruption
 import { VitePWA } from 'vite-plugin-pwa';
 import { compression } from 'vite-plugin-compression2';
 
+// Git commit hash for Sentry release tracking
+const gitCommit = (() => {
+  try {
+    return execSync('git rev-parse --short HEAD').toString().trim();
+  } catch {
+    return 'unknown';
+  }
+})();
+
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => ({
+  define: {
+    __SENTRY_RELEASE__: JSON.stringify(`elec-mate@${gitCommit}`),
+  },
   server: {
     host: '::',
     port: 8080,
