@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { Copy, Download, RotateCcw, Edit2, Save, X, Shield, AlertTriangle } from 'lucide-react';
 import { toast } from 'sonner';
+import { openOrDownloadPdf } from '@/utils/pdf-download';
 import { RiskSummaryStats } from './results/RiskSummaryStats';
 import { EnhancedHazardCard } from './results/EnhancedHazardCard';
 import { PPERequirementsGrid } from './results/PPERequirementsGrid';
@@ -198,13 +199,10 @@ export const HealthSafetyResults = ({ data, onStartOver }: HealthSafetyResultsPr
       if (pdfResult?.success && pdfResult?.downloadUrl) {
         toast.dismiss(loadingToast);
 
-        // Trigger download
-        const link = document.createElement('a');
-        link.href = pdfResult.downloadUrl;
-        link.download = `Health-Safety-${editableData.projectName || 'Document'}-${new Date().toISOString().split('T')[0]}.pdf`;
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
+        await openOrDownloadPdf(
+          pdfResult.downloadUrl,
+          `Health-Safety-${editableData.projectName || 'Document'}-${new Date().toISOString().split('T')[0]}.pdf`
+        );
 
         toast.success('Professional PDF exported successfully');
       } else {
@@ -349,11 +347,11 @@ export const HealthSafetyResults = ({ data, onStartOver }: HealthSafetyResultsPr
         </Card>
       )}
 
-      {/* Generate PDF Button at Bottom */}
+      {/* Download PDF Button at Bottom */}
       <div className="pt-4 border-t">
         <Button onClick={handleExportPDF} className="w-full h-12 text-base font-semibold" size="lg">
           <Download className="h-5 w-5 mr-2" />
-          Generate PDF
+          Download PDF
         </Button>
       </div>
     </div>

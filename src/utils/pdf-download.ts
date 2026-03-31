@@ -85,3 +85,54 @@ export async function openOrDownloadPdf(url: string, filename = 'document.pdf'):
   // ── Regular browser tab ─────────────────────────────────────────────────
   window.open(url, '_blank');
 }
+
+/**
+ * Same as openOrDownloadPdf but accepts a Blob directly.
+ * Use this when the PDF is generated client-side (jsPDF) so we already
+ * have the data in memory and don't need a round-trip fetch.
+ */
+export async function openOrDownloadBlobPdf(blob: Blob, filename = 'document.pdf'): Promise<void> {
+  const safeFilename = filename.replace(/[/\\:*?"<>|]/g, '-');
+
+  // ── Capacitor native (iOS / Android) ────────────────────────────────────
+  if (Capacitor.isNativePlatform()) {
+    const base64Data = await new Promise<string>((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => {
+        const result = reader.result as string;
+        resolve(result.includes(',') ? result.split(',')[1] : result);
+      };
+      reader.onerror = reject;
+      reader.readAsDataURL(blob);
+    });
+
+    const saved = await Filesystem.writeFile({
+      path: safeFilename,
+      data: base64Data,
+      directory: Directory.Cache,
+      recursive: true,
+    });
+
+    await Share.share({
+      title: safeFilename,
+      files: [saved.uri],
+      dialogTitle: 'Save or share your PDF',
+    });
+    return;
+  }
+
+  // ── Web PWA / standalone + regular browser ───────────────────────────────
+  // Both use a temporary blob URL + <a download>; the browser handles disposal.
+  const blobUrl = URL.createObjectURL(blob);
+
+  const a = document.createElement('a');
+  a.href = blobUrl;
+  a.download = safeFilename;
+  document.body.appendChild(a);
+  a.click();
+
+  setTimeout(() => {
+    document.body.removeChild(a);
+    URL.revokeObjectURL(blobUrl);
+  }, 200);
+}

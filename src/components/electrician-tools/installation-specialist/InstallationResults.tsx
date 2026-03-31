@@ -24,6 +24,7 @@ import {
 } from '@/types/installation-method';
 import { toast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
+import { openOrDownloadPdf } from '@/utils/pdf-download';
 import { ProjectMetadataForm } from './ProjectMetadataForm';
 import { InstallationHeroSummary } from './InstallationHeroSummary';
 import { TestingProceduresSection } from './TestingProceduresSection';
@@ -443,12 +444,10 @@ export const InstallationResults = ({
       if (error) throw new Error(error.message || 'Failed to generate PDF');
       if (!data || !data.publicUrl) throw new Error('PDF generation returned no URL');
 
-      const link = document.createElement('a');
-      link.href = data.publicUrl;
-      link.download = `installation-method-${projectDetails?.projectName?.replace(/\s+/g, '-') || Date.now()}.pdf`;
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
+      await openOrDownloadPdf(
+        data.publicUrl,
+        `installation-method-${(projectDetails?.projectName?.replace(/\s+/g, '-') || Date.now())}.pdf`
+      );
 
       toast({
         title: 'PDF Generated Successfully',
@@ -821,7 +820,7 @@ export const InstallationResults = ({
       <Card className="mt-8">
         <CardContent className={cn('p-6', isMobile && 'p-4')}>
           <div className="space-y-3">
-            {/* Primary CTA - Generate PDF */}
+            {/* Primary CTA - Download PDF */}
             <Button
               onClick={handleExportPDF}
               variant="default"
@@ -832,7 +831,7 @@ export const InstallationResults = ({
               )}
             >
               <Download className={cn(isMobile ? 'h-6 w-6 mr-2' : 'h-5 w-5 mr-2')} />
-              {isGeneratingPDF ? 'Generating PDF...' : 'Generate PDF'}
+              {isGeneratingPDF ? 'Generating...' : 'Download PDF'}
             </Button>
 
             {/* Secondary Actions */}
@@ -899,7 +898,7 @@ export const InstallationResults = ({
             className="flex-1 bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90 min-h-[48px]"
           >
             <Download className="h-4 w-4 mr-2" />
-            {isGeneratingPDF ? 'Generating...' : 'Export PDF'}
+            {isGeneratingPDF ? 'Generating...' : 'Download PDF'}
           </Button>
           <Button onClick={addNewStep} variant="outline" className="min-h-[48px]">
             <Plus className="h-4 w-4" />

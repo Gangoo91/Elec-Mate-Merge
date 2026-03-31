@@ -63,6 +63,7 @@ import {
 import { ResultsSuccessAnimation } from './ResultsSuccessAnimation';
 import { downloadEICPDF } from '@/lib/eic/pdfGenerator';
 import { generateEICSchedule } from '@/lib/eic/scheduleGenerator';
+import { openOrDownloadPdf } from '@/utils/pdf-download';
 import { toast } from 'sonner';
 import { supabase } from '@/integrations/supabase/client';
 import { useNavigate } from 'react-router-dom';
@@ -1976,10 +1977,10 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
         // PDF Monkey success - download the PDF
         console.log('[PDF-EXPORT] PDF Monkey success, downloading:', data.downloadUrl);
 
-        const link = document.createElement('a');
-        link.href = data.downloadUrl;
-        link.download = `${(design.projectName || 'Design').replace(/\s+/g, '_')}_Design.pdf`;
-        link.click();
+        await openOrDownloadPdf(
+          data.downloadUrl,
+          `${(design.projectName || 'Design').replace(/\s+/g, '_')}_Design.pdf`
+        );
 
         toast.success('Professional PDF Generated', {
           id: 'pdf-export',
@@ -3402,12 +3403,12 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
             {isExporting ? (
               <>
                 <Loader2 className="h-6 w-6 mr-2 animate-spin" />
-                <span className="animate-pulse">Generating PDF...</span>
+                <span className="animate-pulse">Generating...</span>
               </>
             ) : (
               <>
                 <Download className="h-5 w-5 mr-2" />
-                Export PDF
+                Download PDF
               </>
             )}
           </Button>

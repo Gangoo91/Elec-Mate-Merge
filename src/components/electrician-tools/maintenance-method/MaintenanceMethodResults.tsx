@@ -464,7 +464,7 @@ export const MaintenanceMethodResults = ({
         </Card>
       )}
 
-      {/* Sticky Export PDF Button */}
+      {/* Sticky Download PDF Button */}
       {onExportPDF && (
         <StickyGenerateButton>
           <Button
@@ -472,7 +472,7 @@ export const MaintenanceMethodResults = ({
             className="w-full h-14 text-lg font-semibold bg-gradient-to-r from-elec-yellow via-elec-yellow to-elec-yellow/90 text-black hover:scale-[1.02] active:scale-95 transition-all"
           >
             <Download className="h-5 w-5 mr-2" />
-            Export PDF
+            Download PDF
           </Button>
         </StickyGenerateButton>
       )}

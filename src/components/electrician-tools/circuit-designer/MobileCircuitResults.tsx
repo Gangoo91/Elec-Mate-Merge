@@ -319,7 +319,7 @@ export const MobileCircuitResults = ({
               onClick={onExport}
               className="h-12"
             >
-              Export PDF
+              Download PDF
             </MobileButton>
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
