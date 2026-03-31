@@ -101,12 +101,12 @@ export const CustomerTasksCard = ({ customerId, customerName }: CustomerTasksCar
       <CardHeader className="pb-2">
         <CardTitle className="text-base flex items-center justify-between">
           <span className="flex items-center gap-2">
-            <ClipboardCheck className="h-4 w-4 text-purple-400" />
+            <ClipboardCheck className="h-4 w-4 text-elec-yellow" />
             Tasks
             {openTasks.length > 0 && (
               <Badge
                 variant="outline"
-                className="text-[10px] bg-purple-500/10 border-purple-500/30 text-purple-400"
+                className="text-[10px] bg-elec-yellow/10 border-elec-yellow/30 text-elec-yellow"
               >
                 {openTasks.length} open
               </Badge>
@@ -116,7 +116,7 @@ export const CustomerTasksCard = ({ customerId, customerName }: CustomerTasksCar
             variant="ghost"
             size="sm"
             onClick={() => navigate('/electrician/tasks')}
-            className="h-8 text-xs touch-manipulation text-purple-400"
+            className="h-8 text-xs touch-manipulation text-elec-yellow"
           >
             <Plus className="h-3.5 w-3.5 mr-1" />
             New
@@ -136,7 +136,7 @@ export const CustomerTasksCard = ({ customerId, customerName }: CustomerTasksCar
                 <div
                   key={task.id}
                   onClick={() => navigate('/electrician/tasks')}
-                  className="flex items-center gap-3 p-3 rounded-lg bg-card/50 border border-border hover:border-purple-500/30 active:bg-purple-500/10 cursor-pointer transition-all touch-manipulation"
+                  className="flex items-center gap-3 p-3 rounded-lg bg-card/50 border border-border hover:border-elec-yellow/30 active:bg-elec-yellow/10 cursor-pointer transition-all touch-manipulation"
                 >
                   {/* Priority dot */}
                   <div
@@ -172,7 +172,7 @@ export const CustomerTasksCard = ({ customerId, customerName }: CustomerTasksCar
               <button
                 type="button"
                 onClick={() => navigate('/electrician/tasks')}
-                className="w-full text-center text-xs text-purple-400 font-medium py-2 touch-manipulation"
+                className="w-full text-center text-xs text-elec-yellow font-medium py-2 touch-manipulation"
               >
                 View all tasks
               </button>

@@ -8,7 +8,6 @@ import { ReliabilityLevel } from '@/hooks/useCustomerPaymentStats';
 import { CustomerListRow } from '@/components/customers/CustomerListRow';
 import { CustomerForm } from '@/components/customers/CustomerForm';
 import { CustomerImportDialog } from '@/components/customers/customers/CustomerImportDialog';
-import { CustomerAnalyticsPanel } from '@/components/customers/CustomerAnalyticsPanel';
 import { QuickNoteDialog } from '@/components/customers/QuickNoteDialog';
 import { StartCertificateDialog } from '@/components/customers/StartCertificateDialog';
 import { Button } from '@/components/ui/button';
@@ -33,22 +32,17 @@ const sortTabs: { value: SortField; label: string }[] = [
   { value: 'certificateCount', label: 'Certs' },
 ];
 
-// Animation variants
 const containerVariants = {
   hidden: { opacity: 0 },
-  show: {
+  visible: {
     opacity: 1,
     transition: { staggerChildren: 0.04 },
   },
 };
 
-const cardVariants = {
-  hidden: { opacity: 0, y: 12 },
-  show: {
-    opacity: 1,
-    y: 0,
-    transition: { type: 'spring', stiffness: 300, damping: 24 },
-  },
+const itemVariants = {
+  hidden: { opacity: 0, y: 8 },
+  visible: { opacity: 1, y: 0, transition: { type: 'spring', stiffness: 300, damping: 24 } },
 };
 
 export default function CustomersPage() {
@@ -74,7 +68,6 @@ export default function CustomersPage() {
     refreshCustomers,
   } = useCustomers({ sortField, sortDirection });
 
-  // Fetch invoice data for reliability badges
   const [invoiceData, setInvoiceData] = useState<
     { customer_id: string; invoice_status: string | null; invoice_paid_at: string | null; invoice_due_date: string | null }[]
   >([]);
@@ -93,7 +86,6 @@ export default function CustomersPage() {
 
   const reliabilityMap = useMemo(() => {
     const map = new Map<string, ReliabilityLevel>();
-    // Group invoices by customer
     const grouped = new Map<string, typeof invoiceData>();
     for (const inv of invoiceData) {
       if (!inv.customer_id) continue;
@@ -128,7 +120,6 @@ export default function CustomersPage() {
   const [quickNoteCustomer, setQuickNoteCustomer] = useState<Customer | null>(null);
   const [certificateCustomer, setCertificateCustomer] = useState<Customer | null>(null);
 
-  // Filter customers by search
   const filteredCustomers = useMemo(() => {
     if (!searchTerm.trim()) return customers;
     const term = searchTerm.toLowerCase();
@@ -172,208 +163,188 @@ export default function CustomersPage() {
     }
   };
 
+  // KPI data
+  const kpiData = useMemo(() => {
+    const withCerts = customers.filter((c) => (c as any).certificateCount > 0).length;
+    const thisMonth = customers.filter((c) => {
+      const d = new Date(c.createdAt);
+      const now = new Date();
+      return d.getMonth() === now.getMonth() && d.getFullYear() === now.getFullYear();
+    }).length;
+    const reliable = Array.from(reliabilityMap.values()).filter((v) => v === 'good').length;
+    return { withCerts, thisMonth, reliable };
+  }, [customers, reliabilityMap]);
+
   return (
-    <div className="min-h-screen bg-background">
-      {/* Header */}
-      <header className="sticky top-0 z-30 w-full bg-background/95 backdrop-blur-xl border-b border-white/10">
-        {showSearch ? (
-          /* Search mode */
-          <div className="flex items-center h-14 px-4 gap-2">
-            <div className="relative flex-1">
-              {!searchTerm && (
-                <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white pointer-events-none" />
-              )}
-              <Input
-                placeholder="Search customers..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className={cn(
-                  'h-11 pr-9 text-base touch-manipulation rounded-xl bg-white/[0.05] border-white/[0.06] focus:border-blue-500 focus:ring-1 focus:ring-blue-500/20',
-                  !searchTerm && 'pl-9'
+    <div className="-mt-3 sm:-mt-4 md:-mt-6 bg-background pb-24">
+      {/* Sticky Header — Business Hub pattern */}
+      <div className="sticky top-0 z-50 bg-background/95 backdrop-blur-sm border-b border-white/[0.06]">
+        <div className="px-4 py-2">
+          {showSearch ? (
+            <div className="flex items-center h-11 gap-2">
+              <div className="relative flex-1">
+                {!searchTerm && (
+                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white pointer-events-none" />
                 )}
-                autoFocus
-              />
-              {searchTerm && (
-                <button
-                  onClick={() => setSearchTerm('')}
-                  aria-label="Clear search"
-                  className="absolute right-3 top-1/2 -translate-y-1/2 h-5 w-5 flex items-center justify-center rounded-full bg-white/[0.1] hover:bg-white/[0.15] touch-manipulation"
-                >
-                  <X className="h-3 w-3 text-white" />
+                <Input
+                  placeholder="Search customers..."
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  className={cn(
+                    'h-11 pr-9 text-base touch-manipulation rounded-xl bg-white/[0.05] border-white/[0.06] focus:border-elec-yellow focus:ring-1 focus:ring-elec-yellow/20',
+                    !searchTerm && 'pl-9'
+                  )}
+                  autoFocus
+                />
+                {searchTerm && (
+                  <button
+                    onClick={() => setSearchTerm('')}
+                    className="absolute right-3 top-1/2 -translate-y-1/2 h-5 w-5 flex items-center justify-center rounded-full bg-white/[0.1] touch-manipulation"
+                  >
+                    <X className="h-3 w-3 text-white" />
+                  </button>
+                )}
+              </div>
+              <button onClick={() => { setShowSearch(false); setSearchTerm(''); }} className="text-sm text-elec-yellow font-medium px-2 touch-manipulation">
+                Cancel
+              </button>
+            </div>
+          ) : (
+            <div className="flex items-center justify-between h-11">
+              <div className="flex items-center gap-2.5">
+                <Button variant="ghost" size="icon" onClick={() => navigate('/electrician/business')} className="text-white hover:bg-white/10 rounded-xl h-11 w-11 touch-manipulation active:scale-[0.98]">
+                  <ArrowLeft className="h-5 w-5" />
+                </Button>
+                <div className="p-1.5 rounded-lg bg-elec-yellow/10 border border-elec-yellow/20">
+                  <Users className="h-4 w-4 text-elec-yellow" />
+                </div>
+                <h1 className="text-base font-semibold text-white">Customers</h1>
+              </div>
+              <div className="flex items-center gap-1">
+                <button onClick={() => setShowSearch(true)} className="h-10 w-10 flex items-center justify-center rounded-xl hover:bg-white/[0.05] active:scale-[0.98] touch-manipulation transition-all">
+                  <Search className="h-5 w-5 text-white" />
                 </button>
-              )}
+                <button
+                  onClick={() => { setEditingCustomer(null); setShowAddDialog(true); }}
+                  className="h-10 w-10 rounded-xl bg-elec-yellow flex items-center justify-center active:scale-[0.98] touch-manipulation shadow-lg shadow-elec-yellow/25"
+                >
+                  <Plus className="h-5 w-5 text-black" />
+                </button>
+              </div>
             </div>
-            <button
-              onClick={() => {
-                setShowSearch(false);
-                setSearchTerm('');
-              }}
-              className="text-sm text-blue-400 font-medium px-2 touch-manipulation"
-            >
-              Cancel
-            </button>
-          </div>
-        ) : (
-          /* Normal header */
-          <>
-            <div className="flex items-center h-14 px-4 gap-2">
-              <button
-                onClick={() => navigate('/electrician/business')}
-                aria-label="Go back"
-                className="h-10 w-10 -ml-2 flex items-center justify-center rounded-xl hover:bg-white/[0.05] active:scale-[0.98] transition-all touch-manipulation"
-              >
-                <ArrowLeft className="h-5 w-5" />
-              </button>
-              <h1 className="flex-1 text-xl font-bold">Customers</h1>
-              <span className="text-xs text-muted-foreground bg-white/[0.06] px-2.5 py-1 rounded-full font-medium">
-                {totalCount || customers.length}
-              </span>
-              <button
-                onClick={() => setShowSearch(true)}
-                aria-label="Search customers"
-                className="h-10 w-10 flex items-center justify-center rounded-xl hover:bg-white/[0.05] active:scale-[0.98] transition-all touch-manipulation"
-              >
-                <Search className="h-5 w-5 text-white" />
-              </button>
-              <button
-                onClick={() => {
-                  setEditingCustomer(null);
-                  setShowAddDialog(true);
-                }}
-                aria-label="Add customer"
-                className="h-10 w-10 rounded-xl bg-blue-500 flex items-center justify-center active:scale-[0.98] touch-manipulation shadow-lg shadow-blue-500/25"
-              >
-                <Plus className="h-5 w-5 text-white" />
-              </button>
-            </div>
-
-            {/* Action pills row */}
-            <div className="flex items-center gap-3 px-4 pb-3">
-              <button
-                onClick={() => setShowImportDialog(true)}
-                className="flex items-center gap-1.5 text-blue-400 active:opacity-70 touch-manipulation"
-              >
-                <Upload className="h-3.5 w-3.5" />
-                <span className="text-[13px] font-medium">Import</span>
-              </button>
-              <button
-                onClick={exportCustomers}
-                disabled={customers.length === 0}
-                className="flex items-center gap-1.5 text-blue-400 active:opacity-70 touch-manipulation disabled:opacity-40"
-              >
-                <Download className="h-3.5 w-3.5" />
-                <span className="text-[13px] font-medium">Export</span>
-              </button>
-            </div>
-          </>
-        )}
-
-        {/* Sort pills — always visible */}
-        {!showSearch && (
-          <div className="flex gap-2 px-4 pb-3 overflow-x-auto scrollbar-hide">
-            {sortTabs.map((tab) => (
-              <button
-                key={tab.value}
-                onClick={() => handleSortChange(tab.value)}
-                className={cn(
-                  'shrink-0 h-8 px-3.5 rounded-full text-[13px] font-medium transition-all touch-manipulation active:scale-[0.97]',
-                  sortField === tab.value
-                    ? 'bg-blue-500 text-white'
-                    : 'bg-white/[0.06] text-white'
-                )}
-              >
-                {tab.label}
-                {sortField === tab.value && (
-                  <span className="ml-1 text-[11px] opacity-80">
-                    {sortDirection === 'asc' ? '\u2191' : '\u2193'}
-                  </span>
-                )}
-              </button>
-            ))}
-          </div>
-        )}
-      </header>
+          )}
+        </div>
+      </div>
 
       <PullToRefresh onRefresh={refreshCustomers} isRefreshing={isLoading}>
-      <main className="px-4 py-3 pb-24 space-y-3 max-w-4xl mx-auto">
-        {/* Analytics Panel */}
-        {customers.length > 0 && <CustomerAnalyticsPanel />}
+      <motion.main
+        variants={containerVariants}
+        initial="hidden"
+        animate="visible"
+        className="px-4 py-4 space-y-4 max-w-4xl mx-auto"
+      >
+        {/* KPI Strip */}
+        {customers.length > 0 && (
+          <motion.div variants={itemVariants} className="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
+            <div className="card-surface p-3.5">
+              <p className="text-2xl font-bold text-white">{totalCount || customers.length}</p>
+              <p className="text-[11px] font-medium text-white mt-0.5">Total Customers</p>
+            </div>
+            <div className="card-surface p-3.5">
+              <p className="text-2xl font-bold text-emerald-400">{kpiData.withCerts}</p>
+              <p className="text-[11px] font-medium text-white mt-0.5">With Certificates</p>
+            </div>
+            <div className="card-surface p-3.5">
+              <p className="text-2xl font-bold text-elec-yellow">{kpiData.thisMonth}</p>
+              <p className="text-[11px] font-medium text-white mt-0.5">Added This Month</p>
+            </div>
+            <div className="card-surface p-3.5">
+              <p className="text-2xl font-bold text-blue-400">{kpiData.reliable}</p>
+              <p className="text-[11px] font-medium text-white mt-0.5">Reliable Payers</p>
+            </div>
+          </motion.div>
+        )}
+
+        {/* Sort + Actions row */}
+        {!showSearch && customers.length > 0 && (
+          <motion.div variants={itemVariants} className="flex items-center justify-between">
+            <div className="flex gap-2 overflow-x-auto scrollbar-hide">
+              {sortTabs.map((tab) => (
+                <button
+                  key={tab.value}
+                  onClick={() => handleSortChange(tab.value)}
+                  className={cn(
+                    'shrink-0 h-9 px-4 rounded-full text-[13px] font-medium transition-all touch-manipulation active:scale-[0.97]',
+                    sortField === tab.value
+                      ? 'bg-elec-yellow text-black'
+                      : 'bg-white/[0.06] text-white'
+                  )}
+                >
+                  {tab.label}
+                  {sortField === tab.value && (
+                    <span className="ml-1 text-[11px] opacity-80">
+                      {sortDirection === 'asc' ? '\u2191' : '\u2193'}
+                    </span>
+                  )}
+                </button>
+              ))}
+            </div>
+            <div className="flex items-center gap-1 shrink-0 ml-2">
+              <button onClick={() => setShowImportDialog(true)} className="h-9 w-9 flex items-center justify-center rounded-xl hover:bg-white/[0.05] active:scale-[0.97] touch-manipulation" aria-label="Import">
+                <Upload className="h-4 w-4 text-white" />
+              </button>
+              <button onClick={exportCustomers} disabled={customers.length === 0} className="h-9 w-9 flex items-center justify-center rounded-xl hover:bg-white/[0.05] active:scale-[0.97] touch-manipulation disabled:opacity-40" aria-label="Export">
+                <Download className="h-4 w-4 text-white" />
+              </button>
+            </div>
+          </motion.div>
+        )}
 
         {/* Customer List */}
         {isLoading ? (
           <div className="flex items-center justify-center py-12">
-            <Loader2 className="h-8 w-8 animate-spin text-blue-500" />
+            <Loader2 className="h-8 w-8 animate-spin text-elec-yellow" />
           </div>
         ) : filteredCustomers.length === 0 ? (
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ type: 'spring', stiffness: 300, damping: 24 }}
-            className="text-center py-12"
-          >
+          <motion.div variants={itemVariants} className="text-center py-12">
             <div className="max-w-sm mx-auto space-y-5">
               {searchTerm ? (
-                /* Search empty state */
-                <div className="p-6 rounded-2xl bg-white/[0.02] border border-white/10 text-center">
+                <div className="card-surface p-6 text-center">
                   <Search className="h-10 w-10 text-white mx-auto mb-3" />
                   <p className="text-base font-semibold text-white mb-1">No customers found</p>
                   <p className="text-sm text-white">Try a different name or postcode</p>
                 </div>
               ) : (
-                /* First-time empty state */
                 <>
                   <div className="text-center space-y-3">
-                    <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br from-elec-yellow/20 to-amber-500/10 border border-elec-yellow/30 mx-auto">
+                    <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-elec-yellow/10 border border-elec-yellow/20 mx-auto">
                       <Users className="h-8 w-8 text-elec-yellow" />
                     </div>
                     <div>
                       <p className="text-lg font-bold text-white">Build Your Customer Base</p>
-                      <p className="text-sm text-white mt-1">
-                        Store clients, track jobs, and send quotes all in one place
-                      </p>
+                      <p className="text-sm text-white mt-1">Store clients, track jobs, and send quotes all in one place</p>
                     </div>
                   </div>
-
                   <div className="grid grid-cols-1 gap-3">
-                    <Button
-                      onClick={() => setShowAddDialog(true)}
-                      className="w-full h-12 bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold rounded-xl shadow-lg shadow-elec-yellow/20 touch-manipulation"
-                    >
+                    <Button onClick={() => setShowAddDialog(true)} className="w-full h-12 bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold rounded-xl shadow-lg shadow-elec-yellow/20 touch-manipulation">
                       <Plus className="w-4 h-4 mr-2" />
                       Add First Customer
                     </Button>
-                    <Button
-                      onClick={() => setShowImportDialog(true)}
-                      variant="outline"
-                      className="w-full h-12 border-white/10 bg-white/5 text-white font-medium rounded-xl touch-manipulation"
-                    >
+                    <Button onClick={() => setShowImportDialog(true)} variant="outline" className="w-full h-12 border-white/10 bg-white/5 text-white font-medium rounded-xl touch-manipulation">
                       <Upload className="w-4 h-4 mr-2" />
                       Import from Contacts
                     </Button>
                   </div>
-
-                  <p className="text-center text-xs text-white">
-                    All customer data is stored securely and never shared
-                  </p>
+                  <p className="text-center text-xs text-white">All customer data is stored securely and never shared</p>
                 </>
               )}
             </div>
           </motion.div>
         ) : (
-          <motion.div
-            variants={containerVariants}
-            initial="hidden"
-            animate="show"
-            className="space-y-2"
-          >
+          <motion.div variants={containerVariants} initial="hidden" animate="visible" className="space-y-2">
             <AnimatePresence mode="popLayout">
               {filteredCustomers.map((customer) => (
-                <motion.div
-                  key={customer.id}
-                  variants={cardVariants}
-                  layout
-                  exit={{ opacity: 0, scale: 0.95 }}
-                >
+                <motion.div key={customer.id} variants={itemVariants} layout exit={{ opacity: 0, scale: 0.95 }}>
                   <CustomerListRow
                     customer={customer}
                     onEdit={handleEdit}
@@ -389,25 +360,15 @@ export default function CustomersPage() {
             {/* Pagination */}
             {totalPages > 1 && !searchTerm && (
               <div className="flex items-center justify-between pt-4 pb-2">
-                <p className="text-xs text-muted-foreground">
-                  Showing {((currentPage - 1) * 50) + 1}–{Math.min(currentPage * 50, totalCount)} of {totalCount} customers
+                <p className="text-xs text-white">
+                  Showing {((currentPage - 1) * 50) + 1}–{Math.min(currentPage * 50, totalCount)} of {totalCount}
                 </p>
                 <div className="flex items-center gap-2">
-                  <button
-                    onClick={prevPage}
-                    disabled={!hasPrevPage}
-                    className="h-9 w-9 rounded-xl bg-white/[0.05] border border-white/10 flex items-center justify-center disabled:opacity-30 disabled:cursor-not-allowed hover:bg-white/10 transition-colors touch-manipulation"
-                  >
+                  <button onClick={prevPage} disabled={!hasPrevPage} className="h-9 w-9 rounded-xl bg-white/[0.05] border border-white/10 flex items-center justify-center disabled:opacity-30 hover:bg-white/10 transition-colors touch-manipulation">
                     <ChevronLeft className="h-4 w-4" />
                   </button>
-                  <span className="text-sm font-medium text-muted-foreground min-w-[60px] text-center">
-                    {currentPage} / {totalPages}
-                  </span>
-                  <button
-                    onClick={nextPage}
-                    disabled={!hasNextPage}
-                    className="h-9 w-9 rounded-xl bg-white/[0.05] border border-white/10 flex items-center justify-center disabled:opacity-30 disabled:cursor-not-allowed hover:bg-white/10 transition-colors touch-manipulation"
-                  >
+                  <span className="text-sm font-medium text-white min-w-[60px] text-center">{currentPage} / {totalPages}</span>
+                  <button onClick={nextPage} disabled={!hasNextPage} className="h-9 w-9 rounded-xl bg-white/[0.05] border border-white/10 flex items-center justify-center disabled:opacity-30 hover:bg-white/10 transition-colors touch-manipulation">
                     <ChevronRight className="h-4 w-4" />
                   </button>
                 </div>
@@ -415,65 +376,23 @@ export default function CustomersPage() {
             )}
           </motion.div>
         )}
-      </main>
+      </motion.main>
       </PullToRefresh>
 
-      {/* Add/Edit Customer Dialog */}
-      <CustomerForm
-        open={showAddDialog}
-        onOpenChange={(open) => {
-          setShowAddDialog(open);
-          if (!open) setEditingCustomer(null);
-        }}
-        customer={editingCustomer}
-        onSave={handleSaveCustomer}
-      />
+      <CustomerForm open={showAddDialog} onOpenChange={(open) => { setShowAddDialog(open); if (!open) setEditingCustomer(null); }} customer={editingCustomer} onSave={handleSaveCustomer} />
+      <CustomerImportDialog open={showImportDialog} onOpenChange={setShowImportDialog} onImportComplete={refreshCustomers} />
+      {quickNoteCustomer && <QuickNoteDialog open={!!quickNoteCustomer} onOpenChange={(open) => !open && setQuickNoteCustomer(null)} customerId={quickNoteCustomer.id} />}
+      {certificateCustomer && <StartCertificateDialog open={!!certificateCustomer} onOpenChange={(open) => !open && setCertificateCustomer(null)} customer={certificateCustomer} />}
 
-      {/* Import Dialog */}
-      <CustomerImportDialog
-        open={showImportDialog}
-        onOpenChange={setShowImportDialog}
-        onImportComplete={refreshCustomers}
-      />
-
-      {/* Quick Note Dialog */}
-      {quickNoteCustomer && (
-        <QuickNoteDialog
-          open={!!quickNoteCustomer}
-          onOpenChange={(open) => !open && setQuickNoteCustomer(null)}
-          customerId={quickNoteCustomer.id}
-        />
-      )}
-
-      {/* Start Certificate Dialog */}
-      {certificateCustomer && (
-        <StartCertificateDialog
-          open={!!certificateCustomer}
-          onOpenChange={(open) => !open && setCertificateCustomer(null)}
-          customer={certificateCustomer}
-        />
-      )}
-
-      {/* Delete Confirmation */}
       <AlertDialog open={!!deleteConfirmId} onOpenChange={() => setDeleteConfirmId(null)}>
         <AlertDialogContent className="max-w-[90vw] sm:max-w-md bg-card/95 backdrop-blur-xl border-white/10 rounded-2xl">
           <AlertDialogHeader>
-            <AlertDialogTitle>Delete Customer?</AlertDialogTitle>
-            <AlertDialogDescription>
-              This will permanently remove this customer and cannot be undone. Their certificates
-              will remain but won't be linked to this customer.
-            </AlertDialogDescription>
+            <AlertDialogTitle className="text-white">Delete Customer?</AlertDialogTitle>
+            <AlertDialogDescription className="text-white">This will permanently remove this customer and cannot be undone.</AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel className="min-h-[44px] bg-white/[0.02] border-white/10 rounded-xl">
-              Cancel
-            </AlertDialogCancel>
-            <AlertDialogAction
-              onClick={handleDelete}
-              className="bg-red-600 hover:bg-red-700 min-h-[44px] rounded-xl"
-            >
-              Delete
-            </AlertDialogAction>
+            <AlertDialogCancel className="min-h-[44px] bg-white/[0.02] border-white/10 rounded-xl touch-manipulation">Cancel</AlertDialogCancel>
+            <AlertDialogAction onClick={handleDelete} className="bg-red-600 hover:bg-red-700 min-h-[44px] rounded-xl touch-manipulation">Delete</AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>

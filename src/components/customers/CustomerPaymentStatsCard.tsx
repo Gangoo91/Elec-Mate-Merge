@@ -107,34 +107,34 @@ export const CustomerPaymentStatsCard = ({ customerId }: CustomerPaymentStatsCar
               <Receipt className="h-4 w-4 text-blue-400" />
               {stats.totalInvoices}
             </div>
-            <p className="text-xs text-muted-foreground mt-0.5">Total Invoices</p>
+            <p className="text-xs text-white mt-0.5">Total Invoices</p>
           </div>
           <div className="p-3 rounded-lg bg-card/50 border border-border text-center">
             <div className="text-lg font-bold text-white">
               {stats.onTimeRate !== null ? `${stats.onTimeRate}%` : '—'}
             </div>
-            <p className="text-xs text-muted-foreground mt-0.5">On-Time Rate</p>
+            <p className="text-xs text-white mt-0.5">On-Time Rate</p>
           </div>
           <div className="p-3 rounded-lg bg-card/50 border border-border text-center">
             <div className="flex items-center justify-center gap-1.5 text-lg font-bold text-white">
               <Clock className="h-4 w-4 text-white" />
               {stats.averageDaysToPayment !== null ? `${stats.averageDaysToPayment}d` : '—'}
             </div>
-            <p className="text-xs text-muted-foreground mt-0.5">Avg Days to Pay</p>
+            <p className="text-xs text-white mt-0.5">Avg Days to Pay</p>
           </div>
           <div className="p-3 rounded-lg bg-card/50 border border-border text-center">
             <div className="flex items-center justify-center gap-1.5 text-lg font-bold text-white">
               <AlertTriangle className="h-4 w-4 text-amber-400" />
               {stats.paidLateCount}
             </div>
-            <p className="text-xs text-muted-foreground mt-0.5">Late Payments</p>
+            <p className="text-xs text-white mt-0.5">Late Payments</p>
           </div>
         </div>
 
         {/* Recent Invoices */}
         {stats.recentInvoices.length > 0 && (
           <div className="space-y-1.5">
-            <p className="text-xs font-medium text-muted-foreground uppercase tracking-wider">
+            <p className="text-xs font-medium text-white uppercase tracking-wider">
               Recent Invoices
             </p>
             {stats.recentInvoices.map((invoice) => (
@@ -148,7 +148,7 @@ export const CustomerPaymentStatsCard = ({ customerId }: CustomerPaymentStatsCar
                 <div className="flex items-center gap-2 flex-shrink-0">
                   {getInvoiceStatusBadge(invoice)}
                   {invoice.invoice_date && (
-                    <span className="text-[10px] text-muted-foreground flex items-center gap-1">
+                    <span className="text-[10px] text-white flex items-center gap-1">
                       <Calendar className="h-3 w-3" />
                       {new Date(invoice.invoice_date).toLocaleDateString('en-GB', {
                         day: 'numeric',
@@ -164,7 +164,7 @@ export const CustomerPaymentStatsCard = ({ customerId }: CustomerPaymentStatsCar
 
         {/* Not enough data message */}
         {stats.paidCount < 2 && stats.totalInvoices > 0 && (
-          <p className="text-xs text-muted-foreground text-center">
+          <p className="text-xs text-white text-center">
             Need 2+ paid invoices to calculate reliability score
           </p>
         )}

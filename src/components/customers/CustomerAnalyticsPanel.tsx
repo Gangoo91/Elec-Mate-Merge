@@ -36,7 +36,7 @@ const CustomTooltip = ({ active, payload, label }: any) => {
     <div className="rounded-lg border border-white/10 bg-card/95 backdrop-blur-xl px-3 py-2 text-sm shadow-xl">
       <p className="font-medium text-foreground">{label}</p>
       {payload.map((p: any, i: number) => (
-        <p key={i} className="text-muted-foreground">
+        <p key={i} className="text-white">
           {typeof p.value === 'number' && p.name === 'revenue' ? formatCurrency(p.value) : p.value}
         </p>
       ))}
@@ -106,10 +106,10 @@ export const CustomerAnalyticsPanel = () => {
               >
                 <stat.icon className={cn('h-3.5 w-3.5', stat.colour)} />
               </div>
-              <span className="text-xs text-muted-foreground">{stat.label}</span>
+              <span className="text-xs text-white">{stat.label}</span>
             </div>
             <p className={cn('text-lg font-bold', stat.colour)}>{stat.value}</p>
-            {stat.sub && <p className="text-[11px] text-muted-foreground mt-0.5">{stat.sub}</p>}
+            {stat.sub && <p className="text-[11px] text-white mt-0.5">{stat.sub}</p>}
           </div>
         ))}
       </div>
@@ -123,7 +123,7 @@ export const CustomerAnalyticsPanel = () => {
         <span className="flex-1 text-left">View Insights</span>
         <ChevronDown
           className={cn(
-            'h-4 w-4 text-muted-foreground transition-transform duration-200',
+            'h-4 w-4 text-white transition-transform duration-200',
             expanded && 'rotate-180'
           )}
         />
@@ -249,7 +249,7 @@ export const CustomerAnalyticsPanel = () => {
                     {data.certTypeDistribution.map((item, i) => (
                       <div
                         key={item.type}
-                        className="flex items-center gap-1.5 text-xs text-muted-foreground"
+                        className="flex items-center gap-1.5 text-xs text-white"
                       >
                         <div
                           className="w-2 h-2 rounded-full flex-shrink-0"

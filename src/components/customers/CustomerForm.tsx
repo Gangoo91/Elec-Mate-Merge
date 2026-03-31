@@ -232,7 +232,7 @@ export const CustomerForm = ({ open, onOpenChange, customer, onSave }: CustomerF
           <div className="px-4 pb-8 overflow-y-auto h-[calc(85vh-48px)]">
             <SheetHeader className="mb-6">
               <SheetTitle className="text-lg font-bold text-foreground">{title}</SheetTitle>
-              <SheetDescription className="text-sm text-muted-foreground">
+              <SheetDescription className="text-sm text-white">
                 {description}
               </SheetDescription>
             </SheetHeader>
@@ -258,7 +258,7 @@ export const CustomerForm = ({ open, onOpenChange, customer, onSave }: CustomerF
       <DialogContent className="w-[calc(100%-2rem)] max-w-[500px] max-h-[90vh] overflow-y-auto bg-card/95 backdrop-blur-xl border-white/10 p-4 sm:p-6 rounded-2xl">
         <DialogHeader>
           <DialogTitle className="text-lg sm:text-xl text-foreground">{title}</DialogTitle>
-          <DialogDescription className="text-sm text-muted-foreground">
+          <DialogDescription className="text-sm text-white">
             {description}
           </DialogDescription>
         </DialogHeader>

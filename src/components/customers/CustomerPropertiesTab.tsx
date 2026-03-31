@@ -116,9 +116,9 @@ export const CustomerPropertiesTab = ({ customerId, onRefresh }: CustomerPropert
       {properties.length === 0 ? (
         <Card>
           <CardContent className="py-12 text-center">
-            <MapPin className="h-12 w-12 mx-auto text-muted-foreground mb-4" />
+            <MapPin className="h-12 w-12 mx-auto text-white mb-4" />
             <p className="text-lg font-medium mb-2">No properties yet</p>
-            <p className="text-sm text-muted-foreground mb-4">
+            <p className="text-sm text-white mb-4">
               Add properties to track certificates for each location
             </p>
           </CardContent>
@@ -149,12 +149,12 @@ export const CustomerPropertiesTab = ({ customerId, onRefresh }: CustomerPropert
                     </div>
                     <p className="font-medium text-sm break-words">{property.address}</p>
                     {property.notes && (
-                      <p className="text-xs text-muted-foreground mt-1 line-clamp-2">
+                      <p className="text-xs text-white mt-1 line-clamp-2">
                         {property.notes}
                       </p>
                     )}
                     {(property.certificateCount || 0) > 0 && (
-                      <div className="flex items-center gap-1 mt-2 text-xs text-muted-foreground">
+                      <div className="flex items-center gap-1 mt-2 text-xs text-white">
                         <FileText className="h-3 w-3" />
                         {property.certificateCount} certificate
                         {property.certificateCount !== 1 ? 's' : ''}

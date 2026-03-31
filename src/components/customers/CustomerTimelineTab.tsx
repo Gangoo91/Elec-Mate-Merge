@@ -88,7 +88,7 @@ export const CustomerTimelineTab = ({ customerId }: CustomerTimelineTabProps) =>
     <div className="space-y-4">
       {/* Filter */}
       <div className="flex items-center gap-3">
-        <span className="text-sm text-muted-foreground">Filter:</span>
+        <span className="text-sm text-white">Filter:</span>
         <MobileSelectPicker
           value={filterType}
           onValueChange={(value) => setFilterType(value as ActivityType | 'all')}
@@ -110,9 +110,9 @@ export const CustomerTimelineTab = ({ customerId }: CustomerTimelineTabProps) =>
       {activities.length === 0 ? (
         <Card>
           <CardContent className="py-12 text-center">
-            <Clock className="h-12 w-12 mx-auto text-muted-foreground mb-4" />
+            <Clock className="h-12 w-12 mx-auto text-white mb-4" />
             <p className="text-lg font-medium mb-2">No activity yet</p>
-            <p className="text-sm text-muted-foreground">
+            <p className="text-sm text-white">
               {filterType === 'all'
                 ? 'Activities will appear here as you interact with this customer'
                 : `No ${activityTypeConfig[filterType as ActivityType]?.label.toLowerCase()} activities`}
@@ -153,22 +153,22 @@ export const CustomerTimelineTab = ({ customerId }: CustomerTimelineTabProps) =>
                             <Badge variant="outline" className="text-[10px]">
                               {config?.label}
                             </Badge>
-                            <span className="text-xs text-muted-foreground">
+                            <span className="text-xs text-white">
                               {formatDateTime(activity.createdAt)}
                             </span>
-                            <span className="text-xs text-muted-foreground hidden sm:inline">
+                            <span className="text-xs text-white hidden sm:inline">
                               at {formatTime(activity.createdAt)}
                             </span>
                           </div>
                           <p className="font-medium text-sm">{activity.title}</p>
                           {activity.description && (
-                            <p className="text-sm text-muted-foreground mt-1 whitespace-pre-wrap">
+                            <p className="text-sm text-white mt-1 whitespace-pre-wrap">
                               {activity.description}
                             </p>
                           )}
                           {/* Certificate metadata */}
                           {activity.activityType === 'certificate' && activity.metadata && (
-                            <div className="flex items-center gap-2 mt-2 text-xs text-muted-foreground">
+                            <div className="flex items-center gap-2 mt-2 text-xs text-white">
                               {activity.metadata.certificateNumber && (
                                 <span>#{activity.metadata.certificateNumber}</span>
                               )}

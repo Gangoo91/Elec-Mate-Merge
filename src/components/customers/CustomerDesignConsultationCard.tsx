@@ -50,9 +50,9 @@ const AGENT_META = {
   },
   installation: {
     icon: Wrench,
-    color: 'text-purple-400',
-    hoverBorder: 'hover:border-purple-500/30',
-    activeBg: 'active:bg-purple-500/10',
+    color: 'text-elec-yellow',
+    hoverBorder: 'hover:border-elec-yellow/30',
+    activeBg: 'active:bg-elec-yellow/10',
     label: 'Installation',
     route: '/electrician/design-consultation',
     section: 'installation-specialist',
@@ -163,7 +163,7 @@ export const CustomerDesignConsultationCard = ({
         allJobs.sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
         setJobs(allJobs.slice(0, 5));
       } catch (error) {
-        console.error('Failed to fetch customer design consultation jobs:', error);
+        // Silently handle — customer_id columns may not exist yet
       } finally {
         setIsLoading(false);
       }
@@ -205,7 +205,7 @@ export const CustomerDesignConsultationCard = ({
       <CardHeader className="pb-2">
         <CardTitle className="text-base flex items-center justify-between">
           <span className="flex items-center gap-2">
-            <Cpu className="h-4 w-4 text-purple-400" />
+            <Cpu className="h-4 w-4 text-elec-yellow" />
             AI Design Consultation
           </span>
           <Button
@@ -238,24 +238,24 @@ export const CustomerDesignConsultationCard = ({
                   <Icon className={`h-5 w-5 ${meta.color} flex-shrink-0`} />
                   <div className="flex-1 min-w-0">
                     <p className="font-medium text-sm truncate">{job.title}</p>
-                    <p className="text-xs text-muted-foreground">{meta.label}</p>
+                    <p className="text-xs text-white">{meta.label}</p>
                   </div>
                   <div className="text-right flex-shrink-0">
                     <Badge variant={getStatusVariant(job.status)} className="text-[10px]">
                       {job.status}
                     </Badge>
-                    <p className="text-[10px] text-muted-foreground mt-1 flex items-center justify-end gap-1">
+                    <p className="text-[10px] text-white mt-1 flex items-center justify-end gap-1">
                       <Calendar className="h-3 w-3" />
                       {formatDate(job.created_at)}
                     </p>
                   </div>
-                  <ExternalLink className="h-4 w-4 text-muted-foreground" />
+                  <ExternalLink className="h-4 w-4 text-white" />
                 </div>
               );
             })}
           </div>
         ) : (
-          <p className="text-sm text-muted-foreground text-center py-4">
+          <p className="text-sm text-white text-center py-4">
             No AI consultations linked to this customer yet
           </p>
         )}

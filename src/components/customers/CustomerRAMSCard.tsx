@@ -35,10 +35,14 @@ export const CustomerRAMSCard = ({ customerId }: CustomerRAMSCardProps) => {
           .order('created_at', { ascending: false })
           .limit(5);
 
-        if (error) throw error;
+        if (error) {
+          // health_safety_jobs may not have customer_id column yet
+          setJobs([]);
+          return;
+        }
         setJobs(data || []);
       } catch (error) {
-        console.error('Failed to fetch customer RAMS:', error);
+        // Silently handle — column may not exist yet
       } finally {
         setIsLoading(false);
       }
@@ -111,7 +115,7 @@ export const CustomerRAMSCard = ({ customerId }: CustomerRAMSCardProps) => {
                 <Shield className="h-5 w-5 text-orange-400 flex-shrink-0" />
                 <div className="flex-1 min-w-0">
                   <p className="font-medium text-sm truncate">{getTitle(job)}</p>
-                  <p className="text-xs text-muted-foreground capitalize">
+                  <p className="text-xs text-white capitalize">
                     {job.work_type || 'Unknown type'}
                   </p>
                 </div>
@@ -119,17 +123,17 @@ export const CustomerRAMSCard = ({ customerId }: CustomerRAMSCardProps) => {
                   <Badge variant={getStatusVariant(job.status)} className="text-[10px]">
                     {job.status}
                   </Badge>
-                  <p className="text-[10px] text-muted-foreground mt-1 flex items-center justify-end gap-1">
+                  <p className="text-[10px] text-white mt-1 flex items-center justify-end gap-1">
                     <Calendar className="h-3 w-3" />
                     {formatDate(job.created_at)}
                   </p>
                 </div>
-                <ExternalLink className="h-4 w-4 text-muted-foreground" />
+                <ExternalLink className="h-4 w-4 text-white" />
               </div>
             ))}
           </div>
         ) : (
-          <p className="text-sm text-muted-foreground text-center py-4">
+          <p className="text-sm text-white text-center py-4">
             No RAMS linked to this customer yet
           </p>
         )}

@@ -51,7 +51,7 @@ const CustomTooltip = ({ active, payload, label }: any) => {
     <div className="rounded-lg border border-white/10 bg-card/95 backdrop-blur-xl px-3 py-2 text-sm shadow-xl">
       <p className="font-medium text-foreground">{label}</p>
       {payload.map((p: any, i: number) => (
-        <p key={i} className="text-muted-foreground">
+        <p key={i} className="text-white">
           {p.name}:{' '}
           {typeof p.value === 'number' && p.dataKey?.includes('value')
             ? formatCurrency(p.value)
@@ -172,7 +172,7 @@ export const CustomerDetailAnalytics = ({ customerId }: CustomerDetailAnalyticsP
         <div className="rounded-xl border border-white/10 bg-white/[0.02] px-3 py-3 text-center">
           <div className="flex items-center justify-center gap-1.5 mb-1">
             <PoundSterling className="h-3.5 w-3.5 text-green-400" />
-            <span className="text-xs text-muted-foreground">Quoted</span>
+            <span className="text-xs text-white">Quoted</span>
           </div>
           <p className="text-lg font-bold text-green-400">
             {formatCurrency(quoteStats.totalQuoted)}
@@ -181,7 +181,7 @@ export const CustomerDetailAnalytics = ({ customerId }: CustomerDetailAnalyticsP
         <div className="rounded-xl border border-white/10 bg-white/[0.02] px-3 py-3 text-center">
           <div className="flex items-center justify-center gap-1.5 mb-1">
             <FileText className="h-3.5 w-3.5 text-blue-400" />
-            <span className="text-xs text-muted-foreground">Invoiced</span>
+            <span className="text-xs text-white">Invoiced</span>
           </div>
           <p className="text-lg font-bold text-blue-400">
             {formatCurrency(quoteStats.totalInvoiced)}
@@ -190,7 +190,7 @@ export const CustomerDetailAnalytics = ({ customerId }: CustomerDetailAnalyticsP
         <div className="rounded-xl border border-white/10 bg-white/[0.02] px-3 py-3 text-center">
           <div className="flex items-center justify-center gap-1.5 mb-1">
             <TrendingUp className="h-3.5 w-3.5 text-amber-400" />
-            <span className="text-xs text-muted-foreground">Avg Job</span>
+            <span className="text-xs text-white">Avg Job</span>
           </div>
           <p className="text-lg font-bold text-amber-400">{formatCurrency(averageJobValue)}</p>
         </div>
@@ -236,7 +236,7 @@ export const CustomerDetailAnalytics = ({ customerId }: CustomerDetailAnalyticsP
           {/* Legend */}
           <div className="flex flex-wrap gap-x-3 gap-y-1 mt-2">
             {certTypes.map((type) => (
-              <div key={type} className="flex items-center gap-1.5 text-xs text-muted-foreground">
+              <div key={type} className="flex items-center gap-1.5 text-xs text-white">
                 <div
                   className="w-2 h-2 rounded-full flex-shrink-0"
                   style={{ backgroundColor: CERT_COLOURS[type] || '#6b7280' }}
@@ -292,8 +292,8 @@ export const CustomerDetailAnalytics = ({ customerId }: CustomerDetailAnalyticsP
       {/* Empty state */}
       {certTypes.length === 0 && activityFrequency.length === 0 && totalValue === 0 && (
         <div className="rounded-xl border border-white/10 bg-white/[0.02] px-4 py-8 text-center">
-          <TrendingUp className="h-8 w-8 text-muted-foreground/40 mx-auto mb-2" />
-          <p className="text-sm text-muted-foreground">
+          <TrendingUp className="h-8 w-8 text-white/40 mx-auto mb-2" />
+          <p className="text-sm text-white">
             Analytics will appear once this customer has certificates or activity
           </p>
         </div>

@@ -145,23 +145,23 @@ export const CustomerInvoicesCard = ({ customerId, customerName }: CustomerInvoi
                   <p className="font-medium text-sm truncate">
                     {invoice.invoice_number || 'Invoice'}
                   </p>
-                  <p className="text-xs text-muted-foreground">{formatCurrency(invoice.total)}</p>
+                  <p className="text-xs text-white">{formatCurrency(invoice.total)}</p>
                 </div>
                 <div className="text-right flex-shrink-0">
                   {getInvoiceStatusBadge(invoice)}
                   {invoice.invoice_date && (
-                    <p className="text-[10px] text-muted-foreground mt-1 flex items-center justify-end gap-1">
+                    <p className="text-[10px] text-white mt-1 flex items-center justify-end gap-1">
                       <Calendar className="h-3 w-3" />
                       {formatDate(invoice.invoice_date)}
                     </p>
                   )}
                 </div>
-                <ExternalLink className="h-4 w-4 text-muted-foreground" />
+                <ExternalLink className="h-4 w-4 text-white" />
               </div>
             ))}
           </div>
         ) : (
-          <p className="text-sm text-muted-foreground text-center py-4">
+          <p className="text-sm text-white text-center py-4">
             No invoices linked to this customer yet
           </p>
         )}

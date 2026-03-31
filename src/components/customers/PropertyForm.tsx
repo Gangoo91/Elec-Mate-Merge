@@ -113,7 +113,7 @@ export const PropertyForm = ({ open, onOpenChange, property, onSave }: PropertyF
         <form onSubmit={handleSubmit(onSubmit)} className="px-5 pb-5 space-y-5 mt-3">
           {/* Property Type — tappable cards */}
           <div className="space-y-2.5">
-            <Label className="text-xs text-muted-foreground uppercase tracking-wider">
+            <Label className="text-xs text-white uppercase tracking-wider">
               Property Type
             </Label>
             <div className="grid grid-cols-3 gap-2">
@@ -141,7 +141,7 @@ export const PropertyForm = ({ open, onOpenChange, property, onSave }: PropertyF
                     <span
                       className={cn(
                         'text-[10px] leading-tight text-center',
-                        isSelected ? 'opacity-80' : 'text-muted-foreground'
+                        isSelected ? 'opacity-80' : 'text-white'
                       )}
                     >
                       {type.description}
@@ -156,7 +156,7 @@ export const PropertyForm = ({ open, onOpenChange, property, onSave }: PropertyF
           <div className="space-y-2.5">
             <Label
               htmlFor="address"
-              className="text-xs text-muted-foreground uppercase tracking-wider flex items-center gap-1.5"
+              className="text-xs text-white uppercase tracking-wider flex items-center gap-1.5"
             >
               <MapPin className="h-3 w-3" />
               Address
@@ -175,11 +175,11 @@ export const PropertyForm = ({ open, onOpenChange, property, onSave }: PropertyF
           <div className="space-y-2.5">
             <Label
               htmlFor="notes"
-              className="text-xs text-muted-foreground uppercase tracking-wider flex items-center gap-1.5"
+              className="text-xs text-white uppercase tracking-wider flex items-center gap-1.5"
             >
               <StickyNote className="h-3 w-3" />
               Notes{' '}
-              <span className="normal-case tracking-normal text-muted-foreground/60">
+              <span className="normal-case tracking-normal text-white/60">
                 (optional)
               </span>
             </Label>

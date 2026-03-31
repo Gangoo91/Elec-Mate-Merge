@@ -44,7 +44,7 @@ export const CustomerCard = ({ customer, onView, onEdit, onDelete }: CustomerCar
 
         {/* Notes Preview */}
         {customer.notes && (
-          <p className="text-sm text-muted-foreground line-clamp-2 border-t border-border pt-3.5">
+          <p className="text-sm text-white line-clamp-2 border-t border-border pt-3.5">
             {customer.notes}
           </p>
         )}
