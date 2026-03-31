@@ -221,11 +221,18 @@ export default function StudyCentreIndex() {
   const { allProgress } = useCourseProgress();
 
   // Count completed courses per category
+  // Course keys from tracker are URL path segments (e.g. "fire-safety", "bs7671")
+  // Map route prefixes to categories based on StudyCentreRoutes structure
+  const apprenticeKeys = ['apprentice'];
+  const upskillingKeys = ['upskilling', 'bs7671', 'ev-charging', 'solar-pv', 'smart-home', 'fire-alarm', 'data-cabling', 'bms', 'inspection-testing', 'industrial-electrical', 'energy-efficiency', 'fiber-optics', 'instrumentation', 'renewable-energy', 'emergency-lighting'];
+  const generalKeys = ['general-upskilling', 'fire-safety', 'first-aid', 'manual-handling', 'working-at-height', 'ipaf', 'pasma', 'mewp', 'coshh-awareness', 'confined-spaces', 'asbestos', 'scaffolding-awareness', 'cdm-regulations', 'cscs-card', 'environmental-sustainability'];
+  const personalKeys = ['personal-development', 'leadership-on-site', 'mental-health', 'mental-health-awareness', 'communication-confidence', 'conflict-resolution', 'emotional-intelligence', 'resilience-stress-management', 'time-management-organisation', 'goal-setting-growth', 'mentoring-developing-others', 'personal-finance'];
+
   const completedByCategory = {
-    apprentice: allProgress.filter((p) => p.completed && p.course_key.startsWith('apprentice-')).length,
-    upskilling: allProgress.filter((p) => p.completed && p.course_key.startsWith('upskilling-')).length,
-    general: allProgress.filter((p) => p.completed && p.course_key.startsWith('general-')).length,
-    personal: allProgress.filter((p) => p.completed && p.course_key.startsWith('personal-')).length,
+    apprentice: allProgress.filter((p) => p.completed && apprenticeKeys.some((k) => p.course_key === k || p.course_key.startsWith(k + '/'))).length,
+    upskilling: allProgress.filter((p) => p.completed && upskillingKeys.some((k) => p.course_key === k || p.course_key.startsWith(k + '/'))).length,
+    general: allProgress.filter((p) => p.completed && generalKeys.some((k) => p.course_key === k || p.course_key.startsWith(k + '/'))).length,
+    personal: allProgress.filter((p) => p.completed && personalKeys.some((k) => p.course_key === k || p.course_key.startsWith(k + '/'))).length,
   };
 
   const currentStreak = studyStreakData?.streak?.currentStreak || 0;

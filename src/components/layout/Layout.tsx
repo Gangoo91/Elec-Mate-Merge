@@ -7,6 +7,7 @@ import { useState, useEffect } from 'react';
 import { PageTransition } from '@/components/layout/PageTransition';
 import AnnouncementBanner from '@/components/announcements/AnnouncementBanner';
 import PushNotificationPrompt from '@/components/notifications/PushNotificationPrompt';
+import { AchievementListener } from '@/components/study-centre/AchievementListener';
 
 const Layout = () => {
   const isMobile = useIsMobile();
@@ -26,6 +27,9 @@ const Layout = () => {
 
   return (
     <div className="flex min-h-screen bg-elec-dark text-slate-50 overflow-x-hidden">
+      {/* Global achievement checker — listens for activity events */}
+      <AchievementListener />
+
       {/* Sidebar navigation - mobile-ready with glass morphism */}
       <Sidebar open={sidebarOpen} setOpen={setSidebarOpen} />
 

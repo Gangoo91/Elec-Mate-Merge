@@ -239,7 +239,10 @@ export function useLearningXP() {
           // Streak update is non-critical
         }
 
-        // 4. Refresh local state
+        // 4. Trigger achievement check (global event — any listener can pick this up)
+        window.dispatchEvent(new CustomEvent('elecmate:activity-logged'));
+
+        // 5. Refresh local state
         await fetchSummary();
       } catch (err) {
         console.error('Error logging XP activity:', err);
