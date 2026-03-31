@@ -25,7 +25,7 @@ import { EmergencyLightingFormData } from '@/types/emergency-lighting';
 import { toast } from 'sonner';
 import { supabase } from '@/integrations/supabase/client';
 import { createInvoiceFromCertificate } from '@/utils/certificateToQuote';
-import { openExternalUrl } from '@/utils/open-external-url';
+import { WhatsAppShareButton } from '@/components/ui/WhatsAppShareButton';
 
 interface EmergencyLightingTabNavigationProps {
   currentTab: string;
@@ -233,23 +233,16 @@ const EmergencyLightingTabNavigation: React.FC<EmergencyLightingTabNavigationPro
                 </Button>
 
                 {/* WhatsApp */}
-                {whatsApp && (
-                  <Button
+                {whatsApp && reportId && (
+                  <WhatsAppShareButton
+                    type="emergency-lighting"
+                    id={reportId}
+                    recipientPhone={whatsApp.recipientPhone}
+                    recipientName={whatsApp.recipientName}
+                    documentLabel={whatsApp.documentLabel}
                     variant="outline"
-                    size="icon"
-                    onClick={async () => {
-                      const phone = whatsApp.recipientPhone.replace(/\D/g, '');
-                      const ukPhone = phone.startsWith('0') ? `44${phone.slice(1)}` : phone;
-                      const message = encodeURIComponent(
-                        `Hi ${whatsApp.recipientName}, your ${whatsApp.documentLabel} is ready. I'll send the PDF shortly.`
-                      );
-                      await openExternalUrl(`https://wa.me/${ukPhone}?text=${message}`);
-                    }}
-                    className="h-11 w-11 touch-manipulation border-green-500/30 text-green-400 hover:bg-green-500/10 active:scale-[0.98] transition-transform"
-                    aria-label="Share via WhatsApp"
-                  >
-                    <MessageCircle className="h-5 w-5" />
-                  </Button>
+                    className="h-11 w-11 !p-0"
+                  />
                 )}
 
                 {/* Generate */}

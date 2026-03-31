@@ -36,6 +36,7 @@ import { useSparkTaskOverdueCount } from '@/hooks/useSparkTaskOverdueCount';
 import { useSparkProjects } from '@/hooks/useSparkProjects';
 import { useSnags } from '@/hooks/useSnags';
 import { useTimeTracker, formatDuration } from '@/hooks/useTimeTracker';
+import { shareContent } from '@/utils/share';
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -81,22 +82,15 @@ const BusinessHub = () => {
       data: { session },
     } = await supabase.auth.getSession();
     if (!session?.user) return;
-    const url = `${window.location.origin}/book/${session.user.id}`;
-    const shareData = { title: 'Book an Appointment', text: 'Book a time slot with me:', url };
-    if (navigator.share && navigator.canShare?.(shareData)) {
-      try {
-        await navigator.share(shareData);
-      } catch {
-        /* cancelled */
-      }
-    } else {
-      try {
-        await navigator.clipboard.writeText(url);
-        toast({ title: 'Booking link copied to clipboard' });
-      } catch {
+    const url = `https://www.elec-mate.com/book/${session.user.id}`;
+    await shareContent({
+      title: 'Book an Appointment',
+      text: 'Book a time slot with me:',
+      url,
+      onFallback: () => {
         toast({ title: 'Share this link', description: url });
-      }
-    }
+      },
+    });
   };
 
   const todayFormatted = new Date().toLocaleDateString('en-GB', {
