@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import {
@@ -58,24 +57,6 @@ const TaxFinances = () => {
     { label: 'Personal Allowance', value: '£12,570', sublabel: 'Tax-free' },
     { label: 'Basic Rate', value: '20%', sublabel: 'Up to £50,270' },
   ];
-
-  useEffect(() => {
-    const handleScroll = () => {
-      const sectionElements = sections.map((s) => document.getElementById(s.id));
-      const scrollPosition = window.scrollY + 200;
-
-      for (let i = sectionElements.length - 1; i >= 0; i--) {
-        const element = sectionElements[i];
-        if (element && element.offsetTop <= scrollPosition) {
-          setActiveSection(sections[i].id);
-          break;
-        }
-      }
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
 
   const canonical = `${window.location.origin}/electrician/business-development/tax-finances`;
 
@@ -591,9 +572,7 @@ const TaxFinances = () => {
                       </span>
                       <span className="text-xs text-yellow-400">5 October</span>
                     </div>
-                    <p className="text-sm text-white">
-                      Register by 5 Oct after year you started
-                    </p>
+                    <p className="text-sm text-white">Register by 5 Oct after year you started</p>
                   </div>
                   <div className="p-3 rounded-lg bg-white/[0.03] border border-white/10">
                     <div className="flex justify-between items-center mb-1">

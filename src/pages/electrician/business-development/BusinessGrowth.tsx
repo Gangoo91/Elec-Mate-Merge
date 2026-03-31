@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import {
@@ -56,24 +55,6 @@ const BusinessGrowth = () => {
     { label: 'Productivity', value: '200-400%', sublabel: 'Team scaling efficiency' },
     { label: 'Value Increase', value: '£50-200k', sublabel: 'Annual business value' },
   ];
-
-  useEffect(() => {
-    const handleScroll = () => {
-      const sectionElements = sections.map((s) => document.getElementById(s.id));
-      const scrollPosition = window.scrollY + 200;
-
-      for (let i = sectionElements.length - 1; i >= 0; i--) {
-        const element = sectionElements[i];
-        if (element && element.offsetTop <= scrollPosition) {
-          setActiveSection(sections[i].id);
-          break;
-        }
-      }
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
 
   const canonical = `${window.location.origin}/electrician/business-development/growth`;
 
@@ -266,9 +247,7 @@ const BusinessGrowth = () => {
                   </div>
                   <div className="flex items-start gap-2">
                     <CheckCircle className="h-4 w-4 text-yellow-400 flex-shrink-0 mt-0.5" />
-                    <span className="text-sm text-white">
-                      Smart home technology adoption surge
-                    </span>
+                    <span className="text-sm text-white">Smart home technology adoption surge</span>
                   </div>
                   <div className="flex items-start gap-2">
                     <CheckCircle className="h-4 w-4 text-yellow-400 flex-shrink-0 mt-0.5" />
@@ -640,9 +619,7 @@ const BusinessGrowth = () => {
                   </div>
                   <div className="flex items-start gap-2">
                     <CheckCircle className="h-4 w-4 text-yellow-400 flex-shrink-0 mt-0.5" />
-                    <span className="text-sm text-white">
-                      City & Guilds 2919 for EV charging
-                    </span>
+                    <span className="text-sm text-white">City & Guilds 2919 for EV charging</span>
                   </div>
                 </div>
               </div>
@@ -876,9 +853,7 @@ const BusinessGrowth = () => {
                   </div>
                   <div className="flex items-start gap-2">
                     <CheckCircle className="h-4 w-4 text-yellow-400 flex-shrink-0 mt-0.5" />
-                    <span className="text-sm text-white">
-                      Claim R&D tax credits for innovation
-                    </span>
+                    <span className="text-sm text-white">Claim R&D tax credits for innovation</span>
                   </div>
                   <div className="flex items-start gap-2">
                     <CheckCircle className="h-4 w-4 text-yellow-400 flex-shrink-0 mt-0.5" />

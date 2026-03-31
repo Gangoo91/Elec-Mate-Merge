@@ -94,28 +94,39 @@ const SectionNav = ({
   const activeTabRef = useRef<HTMLButtonElement>(null);
   const accent = accentConfig[accentColor];
 
+  // Stable ref for onSectionChange to avoid re-creating the observer on every render
+  const onSectionChangeRef = useRef(onSectionChange);
+  onSectionChangeRef.current = onSectionChange;
+
+  // Debounce replaceState calls — prevent >100 calls per 10 seconds
+  const lastChangeRef = useRef<string>('');
+
   // Set up intersection observer for auto-tracking active section
+  // Only depends on section IDs (stringified), NOT on onSectionChange callback
+  const sectionIds = sections.map((s) => s.id).join(',');
   useEffect(() => {
     observerRef.current = new IntersectionObserver(
       (entries) => {
         if (isScrollingRef.current) return;
 
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            onSectionChange(entry.target.id);
+        for (const entry of entries) {
+          if (entry.isIntersecting && entry.target.id !== lastChangeRef.current) {
+            lastChangeRef.current = entry.target.id;
+            onSectionChangeRef.current(entry.target.id);
+            break; // Only process the first visible section
           }
-        });
+        }
       },
       { rootMargin: '-20% 0px -70% 0px' }
     );
 
-    sections.forEach((section) => {
-      const el = document.getElementById(section.id);
+    sectionIds.split(',').forEach((id) => {
+      const el = document.getElementById(id);
       if (el) observerRef.current?.observe(el);
     });
 
     return () => observerRef.current?.disconnect();
-  }, [sections, onSectionChange]);
+  }, [sectionIds]);
 
   // Scroll active tab into view when it changes
   useEffect(() => {

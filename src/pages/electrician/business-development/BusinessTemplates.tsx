@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import {
@@ -47,24 +46,6 @@ const BusinessTemplates = () => {
     { label: 'Professional', value: '100%', sublabel: 'Industry standard' },
     { label: 'Customisable', value: 'Yes', sublabel: 'Your branding' },
   ];
-
-  useEffect(() => {
-    const handleScroll = () => {
-      const sectionElements = sections.map((s) => document.getElementById(s.id));
-      const scrollPosition = window.scrollY + 200;
-
-      for (let i = sectionElements.length - 1; i >= 0; i--) {
-        const element = sectionElements[i];
-        if (element && element.offsetTop <= scrollPosition) {
-          setActiveSection(sections[i].id);
-          break;
-        }
-      }
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
 
   const canonical = `${window.location.origin}/electrician/business-development/templates`;
 

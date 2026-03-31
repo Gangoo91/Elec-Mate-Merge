@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import {
@@ -51,24 +50,6 @@ const DebtRecovery = () => {
     { label: 'Small Claims Limit', value: '£10,000', sublabel: 'No solicitor needed' },
     { label: 'Statutory Interest', value: '8%+', sublabel: 'Above BoE base rate' },
   ];
-
-  useEffect(() => {
-    const handleScroll = () => {
-      const sectionElements = sections.map((s) => document.getElementById(s.id));
-      const scrollPosition = window.scrollY + 200;
-
-      for (let i = sectionElements.length - 1; i >= 0; i--) {
-        const element = sectionElements[i];
-        if (element && element.offsetTop <= scrollPosition) {
-          setActiveSection(sections[i].id);
-          break;
-        }
-      }
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
 
   const canonical = `${window.location.origin}/electrician/business-development/debt-recovery`;
 
