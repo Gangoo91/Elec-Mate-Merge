@@ -11,7 +11,6 @@ import {
   CheckCircle,
   Clock,
   Loader2,
-  MessageCircle,
   Receipt,
 } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
@@ -32,7 +31,6 @@ import { Input } from '@/components/ui/input';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { useHaptics } from '@/hooks/useHaptics';
 import { cn } from '@/lib/utils';
-import { openExternalUrl } from '@/utils/open-external-url';
 
 interface EICCertificateActionsProps {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -64,7 +62,6 @@ const EICCertificateActions: React.FC<EICCertificateActionsProps> = ({
   const [showEmailDialog, setShowEmailDialog] = useState(false);
   const [emailRecipient, setEmailRecipient] = useState('');
   const [isSendingEmail, setIsSendingEmail] = useState(false);
-  const [isSendingWhatsApp, setIsSendingWhatsApp] = useState(false);
 
   // Validation checks
   const hasRequiredInstallationDetails =
@@ -222,21 +219,9 @@ const EICCertificateActions: React.FC<EICCertificateActionsProps> = ({
 
       setExportProgress(90);
 
-      // Download the PDF for the user - add cache-busting to prevent stale downloads
-      const cacheBustUrl = `${permanentUrl}?t=${Date.now()}`;
-      const response = await fetch(cacheBustUrl, { cache: 'no-store' });
-      const blob = await response.blob();
-      const blobUrl = URL.createObjectURL(blob);
-
-      const link = document.createElement('a');
-      link.href = blobUrl;
-      link.download = filename;
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-
-      // Clean up blob URL
-      setTimeout(() => URL.revokeObjectURL(blobUrl), 100);
+      // Download the PDF — uses native share sheet on iOS, blob download on web
+      const { openOrDownloadPdf } = await import('@/utils/pdf-download');
+      await openOrDownloadPdf(permanentUrl, filename);
 
       setExportProgress(100);
       setExportStatus('complete');
@@ -474,70 +459,6 @@ const EICCertificateActions: React.FC<EICCertificateActionsProps> = ({
           >
             <Mail className="h-4 w-4 mr-2" />
             Email Certificate
-          </Button>
-
-          <Button
-            onClick={async () => {
-              if (!canGenerateCertificate) return;
-              setIsSendingWhatsApp(true);
-              try {
-                // Fetch the PDF URL from the reports table
-                const { data: report } = await supabase
-                  .from('reports')
-                  .select('pdf_url, pdf_generated_at')
-                  .eq('report_id', reportId)
-                  .single();
-
-                if (!report?.pdf_url) {
-                  toast({
-                    title: 'No PDF Generated',
-                    description: 'Please generate the EIC PDF first before sharing via WhatsApp.',
-                    variant: 'destructive',
-                  });
-                  return;
-                }
-
-                const certRef = formData.certificateNumber || 'EIC';
-                const clientName = formData.clientName || '';
-                const address = formData.installationAddress || 'your property';
-
-                const text = `Hi ${clientName},\n\nPlease find your Electrical Installation Certificate (${certRef}) for ${address}.\n\nDownload your certificate:\n${report.pdf_url}\n\nKind regards`;
-
-                // Build WhatsApp URL — use client phone if available
-                let whatsappUrl: string;
-                const clientPhone = formData.clientPhone || '';
-                if (
-                  clientPhone &&
-                  (clientPhone.startsWith('+44') || clientPhone.startsWith('44'))
-                ) {
-                  const cleanPhone = clientPhone.replace(/\s/g, '').replace(/^44/, '+44');
-                  whatsappUrl = `https://wa.me/${cleanPhone.replace('+', '')}?text=${encodeURIComponent(text)}`;
-                } else {
-                  whatsappUrl = `https://wa.me/?text=${encodeURIComponent(text)}`;
-                }
-
-                await openExternalUrl(whatsappUrl);
-              } catch (err) {
-                console.error('[EIC WhatsApp] Error:', err);
-                toast({
-                  title: 'WhatsApp Error',
-                  description: 'Failed to prepare WhatsApp message. Please try again.',
-                  variant: 'destructive',
-                });
-              } finally {
-                setIsSendingWhatsApp(false);
-              }
-            }}
-            variant="outline"
-            disabled={!canGenerateCertificate || isSendingWhatsApp}
-            className="h-12 touch-manipulation border-green-500/30 text-green-400 hover:bg-green-500/10 rounded-xl active:scale-[0.98] transition-transform disabled:opacity-50"
-          >
-            {isSendingWhatsApp ? (
-              <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-            ) : (
-              <MessageCircle className="h-4 w-4 mr-2" />
-            )}
-            WhatsApp
           </Button>
 
           <Button

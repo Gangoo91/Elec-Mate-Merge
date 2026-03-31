@@ -14,7 +14,6 @@ import {
   ChevronLeft,
   ChevronRight,
   CheckCircle2,
-  MessageCircle,
   Mail,
   PoundSterling,
   Loader2,
@@ -24,7 +23,6 @@ import { useIsMobile } from '@/hooks/use-mobile';
 import { toast } from 'sonner';
 import { supabase } from '@/integrations/supabase/client';
 import { createInvoiceFromCertificate } from '@/utils/certificateToQuote';
-import { WhatsAppShareButton } from '@/components/ui/WhatsAppShareButton';
 
 interface EVChargingTabNavigationProps {
   currentTab: string;
@@ -38,13 +36,6 @@ interface EVChargingTabNavigationProps {
   isCurrentTabComplete: boolean;
   onGenerateCertificate?: () => void;
   canGenerateCertificate?: boolean;
-  whatsApp?: {
-    type: string;
-    id: string;
-    recipientPhone: string;
-    recipientName: string;
-    documentLabel: string;
-  };
   // Email & Invoice props
   reportId?: string | null;
   formData?: any;
@@ -62,7 +53,6 @@ const EVChargingTabNavigation: React.FC<EVChargingTabNavigationProps> = ({
   isCurrentTabComplete,
   onGenerateCertificate,
   canGenerateCertificate = true,
-  whatsApp,
   reportId,
   formData,
 }) => {
@@ -233,19 +223,6 @@ const EVChargingTabNavigation: React.FC<EVChargingTabNavigationProps> = ({
                 >
                   <PoundSterling className="h-5 w-5" />
                 </Button>
-
-                {/* WhatsApp */}
-                {whatsApp && reportId && (
-                  <WhatsAppShareButton
-                    type="ev-charging"
-                    id={reportId}
-                    recipientPhone={whatsApp.recipientPhone}
-                    recipientName={whatsApp.recipientName}
-                    documentLabel={whatsApp.documentLabel}
-                    variant="outline"
-                    className="h-11 w-11 !p-0"
-                  />
-                )}
 
                 {/* Generate */}
                 <Button

@@ -3,7 +3,6 @@ import { Button } from '@/components/ui/button';
 import { ChevronLeft, ChevronRight, CheckCircle2, PoundSterling } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useIsMobile } from '@/hooks/use-mobile';
-import { WhatsAppShareButton } from '@/components/ui/WhatsAppShareButton';
 
 interface SolarPVTabNavigationProps {
   currentTab: string;
@@ -18,13 +17,6 @@ interface SolarPVTabNavigationProps {
   onGenerateCertificate?: () => void;
   canGenerateCertificate?: boolean;
   onCreateInvoice?: () => void;
-  whatsApp?: {
-    type: string;
-    id: string;
-    recipientPhone: string;
-    recipientName: string;
-    documentLabel: string;
-  };
 }
 
 const SolarPVTabNavigation: React.FC<SolarPVTabNavigationProps> = ({
@@ -40,7 +32,6 @@ const SolarPVTabNavigation: React.FC<SolarPVTabNavigationProps> = ({
   onGenerateCertificate,
   canGenerateCertificate = true,
   onCreateInvoice,
-  whatsApp,
 }) => {
   const isMobile = useIsMobile();
   const progress = getProgressPercentage();
@@ -128,17 +119,6 @@ const SolarPVTabNavigation: React.FC<SolarPVTabNavigationProps> = ({
               >
                 Generate Certificate
               </Button>
-              {whatsApp && (
-                <WhatsAppShareButton
-                  type={whatsApp.type}
-                  id={whatsApp.id}
-                  recipientPhone={whatsApp.recipientPhone}
-                  recipientName={whatsApp.recipientName}
-                  documentLabel={whatsApp.documentLabel}
-                  variant="ghost"
-                  className="h-11 w-11 touch-manipulation active:scale-[0.98] transition-transform flex-shrink-0"
-                />
-              )}
             </div>
           ) : (
             <Button

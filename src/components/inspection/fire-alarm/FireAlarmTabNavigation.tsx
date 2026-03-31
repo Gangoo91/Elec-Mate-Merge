@@ -3,7 +3,6 @@ import { Button } from '@/components/ui/button';
 import { ChevronLeft, ChevronRight, CheckCircle2, PoundSterling, Mail } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useIsMobile } from '@/hooks/use-mobile';
-import { WhatsAppShareButton } from '@/components/ui/WhatsAppShareButton';
 
 interface FireAlarmTabNavigationProps {
   currentTab: string;
@@ -18,13 +17,6 @@ interface FireAlarmTabNavigationProps {
   onGenerateCertificate?: () => void;
   canGenerateCertificate?: boolean;
   onCreateInvoice?: () => void;
-  whatsApp?: {
-    type: string;
-    id: string;
-    recipientPhone: string;
-    recipientName: string;
-    documentLabel: string;
-  };
   onOpenEmailDialog?: () => void;
   canEmail?: boolean;
 }
@@ -42,7 +34,6 @@ const FireAlarmTabNavigation: React.FC<FireAlarmTabNavigationProps> = ({
   onGenerateCertificate,
   canGenerateCertificate = true,
   onCreateInvoice,
-  whatsApp,
   onOpenEmailDialog,
   canEmail = false,
 }) => {
@@ -111,18 +102,6 @@ const FireAlarmTabNavigation: React.FC<FireAlarmTabNavigationProps> = ({
 
           {isLastTab ? (
             <div className="flex items-center gap-2">
-              {whatsApp && (
-                <WhatsAppShareButton
-                  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                  type={whatsApp.type as any}
-                  id={whatsApp.id}
-                  recipientPhone={whatsApp.recipientPhone}
-                  recipientName={whatsApp.recipientName}
-                  documentLabel={whatsApp.documentLabel}
-                  variant="ghost"
-                  className="h-11 w-11 touch-manipulation active:scale-[0.98] transition-transform"
-                />
-              )}
               {onOpenEmailDialog && (
                 <Button
                   variant="outline"

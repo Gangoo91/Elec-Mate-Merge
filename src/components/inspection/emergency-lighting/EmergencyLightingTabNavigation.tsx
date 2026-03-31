@@ -14,7 +14,6 @@ import {
   ChevronLeft,
   ChevronRight,
   CheckCircle2,
-  MessageCircle,
   Mail,
   PoundSterling,
   Loader2,
@@ -25,7 +24,6 @@ import { EmergencyLightingFormData } from '@/types/emergency-lighting';
 import { toast } from 'sonner';
 import { supabase } from '@/integrations/supabase/client';
 import { createInvoiceFromCertificate } from '@/utils/certificateToQuote';
-import { WhatsAppShareButton } from '@/components/ui/WhatsAppShareButton';
 
 interface EmergencyLightingTabNavigationProps {
   currentTab: string;
@@ -39,13 +37,6 @@ interface EmergencyLightingTabNavigationProps {
   isCurrentTabComplete: boolean;
   onGenerateCertificate?: () => void;
   canGenerateCertificate?: boolean;
-  whatsApp?: {
-    type: string;
-    id: string;
-    recipientPhone: string;
-    recipientName: string;
-    documentLabel: string;
-  };
   reportId?: string | null;
   formData?: EmergencyLightingFormData & { pdfUrl?: string };
 }
@@ -62,7 +53,6 @@ const EmergencyLightingTabNavigation: React.FC<EmergencyLightingTabNavigationPro
   isCurrentTabComplete,
   onGenerateCertificate,
   canGenerateCertificate = true,
-  whatsApp,
   reportId,
   formData,
 }) => {
@@ -231,19 +221,6 @@ const EmergencyLightingTabNavigation: React.FC<EmergencyLightingTabNavigationPro
                 >
                   <PoundSterling className="h-5 w-5" />
                 </Button>
-
-                {/* WhatsApp */}
-                {whatsApp && reportId && (
-                  <WhatsAppShareButton
-                    type="emergency-lighting"
-                    id={reportId}
-                    recipientPhone={whatsApp.recipientPhone}
-                    recipientName={whatsApp.recipientName}
-                    documentLabel={whatsApp.documentLabel}
-                    variant="outline"
-                    className="h-11 w-11 !p-0"
-                  />
-                )}
 
                 {/* Generate */}
                 <Button

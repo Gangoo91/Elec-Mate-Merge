@@ -62,7 +62,6 @@ import {
   createQuoteFromCertificate,
   createInvoiceFromCertificate,
 } from '@/utils/certificateToQuote';
-import { WhatsAppShareButton } from '@/components/ui/WhatsAppShareButton';
 import { useEstimateRemedialCosts } from '@/hooks/useEstimateRemedialCosts';
 import type { EstimateResult } from '@/hooks/useEstimateRemedialCosts';
 import type { RemedialQuoteItem } from '@/utils/defectToQuoteItems';
@@ -1513,7 +1512,7 @@ const EICRSummary = ({ formData: propFormData, onUpdate: propOnUpdate }: EICRSum
             <FileText className="h-4 w-4" />
             Quote
           </Button>
-          <div className="grid grid-cols-2 gap-3">
+          <div className="grid grid-cols-1 gap-3">
             <Button
               variant="outline"
               className="h-12 gap-2 bg-blue-500/10 border-blue-500/30 hover:bg-blue-500/20 text-blue-400 transition-all duration-200 active:scale-95 touch-manipulation"
@@ -1522,14 +1521,6 @@ const EICRSummary = ({ formData: propFormData, onUpdate: propOnUpdate }: EICRSum
               <Receipt className="h-4 w-4" />
               Invoice
             </Button>
-            <WhatsAppShareButton
-              type="eicr"
-              id={effectiveReportId || 'new'}
-              recipientPhone={formData.clientPhone || formData.clientTelephone || ''}
-              recipientName={formData.clientName || ''}
-              documentLabel={`EICR ${formData.certificateNumber || ''}`}
-              className="h-12"
-            />
           </div>
 
           {!isFormComplete() && (
