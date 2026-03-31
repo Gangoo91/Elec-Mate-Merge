@@ -692,12 +692,12 @@ const MinorWorksPdfGenerator: React.FC<MinorWorksPdfGeneratorProps> = ({
           {isExporting ? 'Generating...' : 'Generate Minor Works PDF'}
         </Button>
 
-        {/* Secondary Actions — 2x2 grid */}
-        <div className="grid grid-cols-2 gap-3">
+        {/* Secondary Actions */}
+        <div className="space-y-3">
           <Button
             onClick={handleSaveDraft}
             variant="outline"
-            className="h-12 touch-manipulation border-white/20 text-white hover:bg-white/5 rounded-xl active:scale-[0.98] transition-transform"
+            className="w-full h-12 touch-manipulation border-white/20 text-white hover:bg-white/5 rounded-xl active:scale-[0.98] transition-transform"
           >
             <Save className="h-4 w-4 mr-2" />
             Save Draft
@@ -707,31 +707,17 @@ const MinorWorksPdfGenerator: React.FC<MinorWorksPdfGeneratorProps> = ({
             onClick={handleEmailCertificate}
             variant="outline"
             disabled={!canGenerateCertificate}
-            className="h-12 touch-manipulation border-white/20 text-white hover:bg-white/5 rounded-xl active:scale-[0.98] transition-transform disabled:opacity-50"
+            className="w-full h-12 touch-manipulation border-white/20 text-white hover:bg-white/5 rounded-xl active:scale-[0.98] transition-transform disabled:opacity-50"
           >
             <Mail className="h-4 w-4 mr-2" />
             Email Certificate
           </Button>
 
           <Button
-            onClick={handleWhatsApp}
-            variant="outline"
-            disabled={!canGenerateCertificate || isSendingWhatsApp}
-            className="h-12 touch-manipulation border-green-500/30 text-green-400 hover:bg-green-500/10 rounded-xl active:scale-[0.98] transition-transform disabled:opacity-50"
-          >
-            {isSendingWhatsApp ? (
-              <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-            ) : (
-              <MessageCircle className="h-4 w-4 mr-2" />
-            )}
-            WhatsApp
-          </Button>
-
-          <Button
             onClick={handleCreateInvoice}
             variant="outline"
             disabled={!canGenerateCertificate}
-            className="h-12 touch-manipulation border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10 rounded-xl active:scale-[0.98] transition-transform disabled:opacity-50"
+            className="w-full h-12 touch-manipulation border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10 rounded-xl active:scale-[0.98] transition-transform disabled:opacity-50"
           >
             <Receipt className="h-4 w-4 mr-2" />
             Create Invoice

@@ -1501,18 +1501,18 @@ const EICRSummary = ({ formData: propFormData, onUpdate: propOnUpdate }: EICRSum
           </div>
 
           {/* Quote & Invoice Buttons */}
-          <Button
-            variant="outline"
-            className="w-full h-12 gap-2 bg-emerald-500/10 border-emerald-500/30 hover:bg-emerald-500/20 text-emerald-400 transition-all duration-200 active:scale-95 touch-manipulation"
-            onClick={() => {
-              haptics.tap();
-              setShowQuoteOptions(true);
-            }}
-          >
-            <FileText className="h-4 w-4" />
-            Quote
-          </Button>
-          <div className="grid grid-cols-1 gap-3">
+          <div className="grid grid-cols-2 gap-3">
+            <Button
+              variant="outline"
+              className="h-12 gap-2 bg-emerald-500/10 border-emerald-500/30 hover:bg-emerald-500/20 text-emerald-400 transition-all duration-200 active:scale-95 touch-manipulation"
+              onClick={() => {
+                haptics.tap();
+                setShowQuoteOptions(true);
+              }}
+            >
+              <FileText className="h-4 w-4" />
+              Quote
+            </Button>
             <Button
               variant="outline"
               className="h-12 gap-2 bg-blue-500/10 border-blue-500/30 hover:bg-blue-500/20 text-blue-400 transition-all duration-200 active:scale-95 touch-manipulation"
@@ -1715,11 +1715,7 @@ const EICRSummary = ({ formData: propFormData, onUpdate: propOnUpdate }: EICRSum
           setShowEstimatorSheet(false);
         }}
       />
-      <AppReviewPromptSheet
-        open={showReviewPrompt}
-        onRate={handleRate}
-        onDismiss={handleDismiss}
-      />
+      <AppReviewPromptSheet open={showReviewPrompt} onRate={handleRate} onDismiss={handleDismiss} />
     </div>
   );
 };
