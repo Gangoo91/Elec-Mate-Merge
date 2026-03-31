@@ -11,6 +11,7 @@ import { MaintenanceMethodResults } from './MaintenanceMethodResults';
 import { MaintenanceSuccess } from './MaintenanceSuccess';
 import { useMaintenanceMethodJobPolling } from '@/hooks/useMaintenanceMethodJobPolling';
 import { buildMaintenancePdfPayload } from '@/utils/maintenance-pdf-payload-builder';
+import { openOrDownloadPdf } from '@/utils/pdf-download';
 import {
   getStoredCircuitContext,
   clearStoredCircuitContext,
@@ -238,18 +239,7 @@ export const MaintenanceMethodInterface = () => {
       if (error) throw error;
 
       if (data.downloadUrl) {
-        // Fetch PDF as blob and download with custom filename
-        const pdfResponse = await fetch(data.downloadUrl);
-        const pdfBlob = await pdfResponse.blob();
-
-        const blobUrl = URL.createObjectURL(pdfBlob);
-        const link = document.createElement('a');
-        link.href = blobUrl;
-        link.download = data.filename || 'Maintenance Instructions.pdf';
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-        URL.revokeObjectURL(blobUrl);
+        await openOrDownloadPdf(data.downloadUrl, data.filename || 'Maintenance Instructions.pdf');
 
         toast({
           title: 'PDF Downloaded',

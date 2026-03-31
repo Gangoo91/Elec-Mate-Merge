@@ -13,6 +13,7 @@ import { toast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
 import { useState } from 'react';
 import { Copy, Download, Eye, ArrowRight, Send, RefreshCw } from 'lucide-react';
+import { openOrDownloadPdf } from '@/utils/pdf-download';
 import { useNavigate } from 'react-router-dom';
 import {
   transformCostOutputToQuoteItems,
@@ -344,17 +345,7 @@ const CostAnalysisResults = ({
       if (error) throw error;
 
       if (data.success && data.downloadUrl) {
-        const response = await fetch(data.downloadUrl);
-        const blob = await response.blob();
-        const url = window.URL.createObjectURL(blob);
-
-        const link = document.createElement('a');
-        link.href = url;
-        link.download = data.filename || 'AI Cost Engineer.pdf';
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-        window.URL.revokeObjectURL(url);
+        await openOrDownloadPdf(data.downloadUrl, data.filename || 'AI Cost Engineer.pdf');
 
         toast({
           title: 'PDF Downloaded',

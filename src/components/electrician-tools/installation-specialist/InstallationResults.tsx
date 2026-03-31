@@ -24,6 +24,7 @@ import {
 } from '@/types/installation-method';
 import { toast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
+import { openOrDownloadPdf } from '@/utils/pdf-download';
 import { ProjectMetadataForm } from './ProjectMetadataForm';
 import { InstallationHeroSummary } from './InstallationHeroSummary';
 import { TestingProceduresSection } from './TestingProceduresSection';
@@ -443,12 +444,10 @@ export const InstallationResults = ({
       if (error) throw new Error(error.message || 'Failed to generate PDF');
       if (!data || !data.publicUrl) throw new Error('PDF generation returned no URL');
 
-      const link = document.createElement('a');
-      link.href = data.publicUrl;
-      link.download = `installation-method-${projectDetails?.projectName?.replace(/\s+/g, '-') || Date.now()}.pdf`;
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
+      await openOrDownloadPdf(
+        data.publicUrl,
+        `installation-method-${(projectDetails?.projectName?.replace(/\s+/g, '-') || Date.now())}.pdf`
+      );
 
       toast({
         title: 'PDF Generated Successfully',

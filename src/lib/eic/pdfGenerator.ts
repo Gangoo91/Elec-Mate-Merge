@@ -5,6 +5,7 @@
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
 import { EICScheduleOfTests } from '@/types/eic-integration';
+import { openOrDownloadBlobPdf } from '@/utils/pdf-download';
 
 export async function generateEICPDF(schedule: EICScheduleOfTests): Promise<Blob> {
   const pdf = new jsPDF({
@@ -172,14 +173,8 @@ export async function downloadEICPDF(
   filename?: string
 ): Promise<void> {
   const pdfBlob = await generateEICPDF(schedule);
-  const url = URL.createObjectURL(pdfBlob);
-
-  const link = document.createElement('a');
-  link.href = url;
-  link.download = filename || `EIC_Schedule_${schedule.installationId}.pdf`;
-  document.body.appendChild(link);
-  link.click();
-  document.body.removeChild(link);
-
-  URL.revokeObjectURL(url);
+  await openOrDownloadBlobPdf(
+    pdfBlob,
+    filename || `EIC_Schedule_${schedule.installationId}.pdf`
+  );
 }
