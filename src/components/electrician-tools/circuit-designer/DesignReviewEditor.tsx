@@ -3403,12 +3403,12 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
             {isExporting ? (
               <>
                 <Loader2 className="h-6 w-6 mr-2 animate-spin" />
-                <span className="animate-pulse">Generating PDF...</span>
+                <span className="animate-pulse">Generating...</span>
               </>
             ) : (
               <>
                 <Download className="h-5 w-5 mr-2" />
-                Export PDF
+                Download PDF
               </>
             )}
           </Button>

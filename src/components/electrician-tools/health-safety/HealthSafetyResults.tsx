@@ -347,11 +347,11 @@ export const HealthSafetyResults = ({ data, onStartOver }: HealthSafetyResultsPr
         </Card>
       )}
 
-      {/* Generate PDF Button at Bottom */}
+      {/* Download PDF Button at Bottom */}
       <div className="pt-4 border-t">
         <Button onClick={handleExportPDF} className="w-full h-12 text-base font-semibold" size="lg">
           <Download className="h-5 w-5 mr-2" />
-          Generate PDF
+          Download PDF
         </Button>
       </div>
     </div>

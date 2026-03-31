@@ -471,7 +471,7 @@ const CostAnalysisResults = ({
                 disabled={isGeneratingPDF}
               >
                 <Download className="h-4 w-4 mr-2" />
-                {isGeneratingPDF ? 'Generating...' : 'Export PDF'}
+                {isGeneratingPDF ? 'Generating...' : 'Download PDF'}
               </Button>
               <Button
                 variant="ghost"
@@ -528,7 +528,7 @@ const CostAnalysisResults = ({
               disabled={isGeneratingPDF}
             >
               <Download className="h-4 w-4 mr-2" />
-              {isGeneratingPDF ? 'Generating...' : 'Export PDF'}
+              {isGeneratingPDF ? 'Generating...' : 'Download PDF'}
             </Button>
             <Button
               variant="ghost"
