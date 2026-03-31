@@ -19,6 +19,9 @@ interface LeaderboardEntry {
   sections_completed: number;
   total_xp: number;
   streak: number;
+  quiz_count: number;
+  quiz_avg: number;
+  achievement_count: number;
 }
 
 function formatDisplayName(fullName: string | null): string {
@@ -209,14 +212,17 @@ export function StudyLeaderboard() {
                 </div>
 
                 {/* Stats */}
-                <div className="flex items-center gap-3 flex-shrink-0">
+                <div className="flex items-center gap-2.5 flex-shrink-0">
                   {entry.streak > 0 && (
-                    <div className="flex items-center gap-1 text-xs text-orange-400">
+                    <div className="flex items-center gap-1 text-[11px] text-orange-400">
                       <Flame className="h-3 w-3" />
                       {entry.streak}
                     </div>
                   )}
-                  <div className="flex items-center gap-1 text-xs text-elec-yellow font-medium">
+                  {entry.sections_completed > 0 && (
+                    <span className="text-[11px] text-green-400">{entry.sections_completed} done</span>
+                  )}
+                  <div className="flex items-center gap-1 text-[11px] text-elec-yellow font-semibold">
                     <Zap className="h-3 w-3" />
                     {entry.total_xp || 0}
                   </div>

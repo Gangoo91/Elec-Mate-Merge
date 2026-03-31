@@ -195,7 +195,51 @@ export function useLearningXP() {
           } as any);
         }
 
-        // 3. Refresh local state
+        // 3. Update study streak — ANY activity counts as a study day
+        try {
+          const { data: streakRow } = await supabase
+            .from('user_study_streaks' as any)
+            .select('*')
+            .eq('user_id', user.id)
+            .maybeSingle();
+
+          const todayStr = new Date().toLocaleDateString('en-CA');
+          const yesterdayStr = new Date(Date.now() - 86400000).toLocaleDateString('en-CA');
+
+          if (streakRow) {
+            const row = streakRow as any;
+            const lastDate = row.last_study_date;
+            if (lastDate !== todayStr) {
+              // New day — extend streak or reset
+              const newStreak = lastDate === yesterdayStr ? (row.current_streak || 0) + 1 : 1;
+              const longestStreak = Math.max(newStreak, row.longest_streak || 0);
+              await supabase
+                .from('user_study_streaks' as any)
+                .update({
+                  current_streak: newStreak,
+                  longest_streak: longestStreak,
+                  last_study_date: todayStr,
+                  total_sessions: (row.total_sessions || 0) + 1,
+                  updated_at: new Date().toISOString(),
+                } as any)
+                .eq('user_id', user.id);
+            }
+          } else {
+            // First ever activity — create streak
+            await supabase.from('user_study_streaks' as any).insert({
+              user_id: user.id,
+              current_streak: 1,
+              longest_streak: 1,
+              last_study_date: todayStr,
+              total_sessions: 1,
+              total_cards_reviewed: 0,
+            } as any);
+          }
+        } catch {
+          // Streak update is non-critical
+        }
+
+        // 4. Refresh local state
         await fetchSummary();
       } catch (err) {
         console.error('Error logging XP activity:', err);

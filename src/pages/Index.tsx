@@ -674,6 +674,11 @@ const Index = () => {
               Elec-<span className="text-elec-yellow">Mate</span>
             </span>
           </div>
+          <div className="flex items-center gap-4 text-ios-caption-1">
+            <a href="/privacy" className="text-white hover:text-white underline">Privacy Policy</a>
+            <span className="text-white/20">|</span>
+            <a href="/terms" className="text-white hover:text-white underline">Terms of Service</a>
+          </div>
           <p className="text-ios-caption-1 text-white">
             © {new Date().getFullYear()} Elec-Mate. Powering UK electrical professionals.
           </p>

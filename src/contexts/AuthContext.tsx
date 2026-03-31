@@ -35,6 +35,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         id: user.id,
         email: user.email,
         role: profile?.role,
+        subscriptionTier: profile?.subscription_tier,
+        isSubscribed: profile?.subscribed || profile?.free_access_granted || false,
       });
     } else {
       logger.info('User session ended');

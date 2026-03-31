@@ -10,34 +10,29 @@ declare global {
 import React from 'react';
 import { createRoot } from 'react-dom/client';
 import { Capacitor } from '@capacitor/core';
+import { initSentry, addBreadcrumb } from './lib/sentry';
 import './index.css';
 
 console.log('[Elec-Mate] Core imports loaded');
 
-// Defer analytics loading until after app is interactive (saves ~427KB from initial bundle)
+// ── SENTRY FIRST — initialise BEFORE anything else so boot errors are captured ──
+initSentry();
+
+// Global network error detection
+window.addEventListener('offline', () => {
+  addBreadcrumb('Network went offline', 'network', { online: false });
+});
+window.addEventListener('online', () => {
+  addBreadcrumb('Network came back online', 'network', { online: true });
+});
+
+// Defer PostHog (non-critical analytics) until after app is interactive
 const initAnalyticsDeferred = () => {
-  // Use requestIdleCallback if available, otherwise setTimeout
   const scheduleInit = window.requestIdleCallback || ((cb: () => void) => setTimeout(cb, 1));
-
   scheduleInit(() => {
-    // Dynamically import analytics to defer bundle loading
-    import('./lib/sentry.ts').then(({ initSentry, addBreadcrumb }) => {
-      initSentry();
-
-      // Global network error detection (after Sentry is ready)
-      window.addEventListener('offline', () => {
-        addBreadcrumb('Network went offline', 'network', { online: false });
-      });
-      window.addEventListener('online', () => {
-        addBreadcrumb('Network came back online', 'network', { online: true });
-      });
-    });
-
     import('./components/analytics/PostHogProvider.tsx').then(({ initPostHog }) => {
       initPostHog();
     });
-
-    console.log('[Elec-Mate] Analytics initialized (deferred)');
   });
 };
 

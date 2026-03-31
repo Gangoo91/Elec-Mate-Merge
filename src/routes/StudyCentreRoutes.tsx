@@ -4,6 +4,7 @@ import { lazyWithRetry } from '@/utils/lazyWithRetry';
 import { CourseSkeleton } from '@/components/ui/page-skeleton';
 import { useLastStudyLocation } from '@/hooks/useLastStudyLocation';
 import { useCourseProgress } from '@/hooks/useCourseProgress';
+import { useLearningXP } from '@/hooks/useLearningXP';
 
 // Lazy load with retry for chunk failures
 const StudyCentreIndex = lazyWithRetry(() => import('@/pages/study-centre/StudyCentreIndex'));
@@ -42,6 +43,7 @@ function StudyCentreTracker() {
   const location = useLocation();
   const { updateLastLocation } = useLastStudyLocation();
   const { recordProgress } = useCourseProgress();
+  const { logActivity } = useLearningXP();
   const prevContentPathRef = useRef(''); // Last CONTENT page (not landing pages)
   const prevPathRef = useRef('');
   const pageEntryRef = useRef(Date.now());
@@ -67,6 +69,12 @@ function StudyCentreTracker() {
         const timeOnPage = Date.now() - pageEntryRef.current;
         if (timeOnPage > 10000) {
           recordProgress(prevCourse, prevSection, 100, true);
+          // Award XP for completing a section (also updates streak via logActivity)
+          logActivity({
+            activityType: 'study_module' as any,
+            sourceId: prevCourse,
+            sourceTitle: prevSection,
+          });
         }
       }
     }

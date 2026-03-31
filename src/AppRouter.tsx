@@ -4,6 +4,7 @@ import { AnimatePresence } from 'framer-motion';
 import { LazyRoute } from '@/components/LazyRoute';
 import { lazyWithRetry } from '@/utils/lazyWithRetry';
 import { getSEORoutes } from '@/routes/SEORoutes';
+import { SentryErrorBoundary } from '@/components/common/SentryErrorBoundary';
 
 // Core components that should load immediately (small, critical path)
 import Layout from '@/components/layout/Layout';
@@ -1728,9 +1729,11 @@ const AppRouter = () => {
           <Route
             path="electrician/*"
             element={
-              <LazyRoute>
-                <ElectricianHubRoutes />
-              </LazyRoute>
+              <SentryErrorBoundary section="Electrical Hub">
+                <LazyRoute>
+                  <ElectricianHubRoutes />
+                </LazyRoute>
+              </SentryErrorBoundary>
             }
           />
 
@@ -1740,9 +1743,11 @@ const AppRouter = () => {
           <Route
             path="electrician/inspection-testing/*"
             element={
-              <LazyRoute>
-                <InspectionRoutes />
-              </LazyRoute>
+              <SentryErrorBoundary section="Inspection & Testing">
+                <LazyRoute>
+                  <InspectionRoutes />
+                </LazyRoute>
+              </SentryErrorBoundary>
             }
           />
 
@@ -1750,9 +1755,11 @@ const AppRouter = () => {
           <Route
             path="study-centre/*"
             element={
-              <LazyRoute>
-                <StudyCentreRoutes />
-              </LazyRoute>
+              <SentryErrorBoundary section="Study Centre">
+                <LazyRoute>
+                  <StudyCentreRoutes />
+                </LazyRoute>
+              </SentryErrorBoundary>
             }
           />
 
@@ -1760,9 +1767,11 @@ const AppRouter = () => {
           <Route
             path="electrician/upskilling/*"
             element={
-              <LazyRoute>
-                <UpskillingRoutes />
-              </LazyRoute>
+              <SentryErrorBoundary section="Upskilling">
+                <LazyRoute>
+                  <UpskillingRoutes />
+                </LazyRoute>
+              </SentryErrorBoundary>
             }
           />
           <Route
@@ -1800,9 +1809,11 @@ const AppRouter = () => {
           <Route
             path="apprentice/*"
             element={
-              <LazyRoute>
-                <ApprenticeRoutes />
-              </LazyRoute>
+              <SentryErrorBoundary section="Apprentice Hub">
+                <LazyRoute>
+                  <ApprenticeRoutes />
+                </LazyRoute>
+              </SentryErrorBoundary>
             }
           />
 
