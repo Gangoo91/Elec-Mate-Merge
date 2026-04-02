@@ -404,9 +404,18 @@ export default function AdminFailedPayments() {
               variant="outline"
               size="icon"
               className="h-11 w-11 touch-manipulation"
-              onClick={() => refetch()}
+              disabled={backfillMutation.isPending}
+              onClick={async () => {
+                haptic.medium();
+                backfillMutation.mutate();
+              }}
+              title="Sync from Stripe"
             >
-              <RefreshCw className="h-4 w-4" />
+              {backfillMutation.isPending ? (
+                <Loader2 className="h-4 w-4 animate-spin" />
+              ) : (
+                <RefreshCw className="h-4 w-4" />
+              )}
             </Button>
           </div>
         </div>
