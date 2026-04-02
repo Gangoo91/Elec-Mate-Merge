@@ -10,6 +10,7 @@
 
 import { serve } from 'https://deno.land/std@0.168.0/http/server.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.49.4';
+import Stripe from 'https://esm.sh/stripe@14.21.0?target=deno';
 import { Resend } from 'npm:resend@2.0.0';
 import { createLogger, generateRequestId } from '../_shared/logger.ts';
 import { captureException } from '../_shared/sentry.ts';
@@ -244,6 +245,127 @@ serve(async (req: Request) => {
     }
 
     const resend = new Resend(resendApiKey);
+
+    // ── Step 0: Backfill missed failed payments from Stripe ─────────────────
+    // Catches any invoice.payment_failed webhooks that were missed
+    const stripeKey = Deno.env.get('STRIPE_SECRET_KEY');
+    if (stripeKey) {
+      try {
+        const stripe = new Stripe(stripeKey, { apiVersion: '2023-10-16' });
+
+        // Build customer → user_id map
+        const { data: profiles } = await supabase
+          .from('profiles')
+          .select('id, stripe_customer_id')
+          .not('stripe_customer_id', 'is', null);
+
+        const customerToUser = new Map<string, string>();
+        for (const p of profiles ?? []) {
+          if (p.stripe_customer_id) customerToUser.set(p.stripe_customer_id, p.id);
+        }
+
+        // Get existing invoice IDs to skip duplicates
+        const { data: existingRows } = await supabase
+          .from('failed_payment_emails')
+          .select('stripe_invoice_id');
+        const existingIds = new Set((existingRows ?? []).map((r) => r.stripe_invoice_id));
+
+        // Pull open invoices from Stripe (failed payments that Stripe is still retrying)
+        let backfilled = 0;
+        const openInvoices = await stripe.invoices.list({
+          status: 'open',
+          limit: 100,
+          expand: ['data.subscription'],
+        });
+
+        for (const invoice of openInvoices.data) {
+          if (!invoice.subscription || existingIds.has(invoice.id)) continue;
+
+          const customerId = invoice.customer as string;
+          let userId = customerToUser.get(customerId) || null;
+
+          // Fallback: match by email
+          if (!userId) {
+            try {
+              const customer = await stripe.customers.retrieve(customerId);
+              if (!customer.deleted && 'email' in customer && customer.email) {
+                const { data: usersData } = await supabase.auth.admin.listUsers({
+                  page: 1,
+                  perPage: 1000,
+                });
+                const authUser = usersData?.users?.find(
+                  (u: { email?: string }) =>
+                    u.email?.toLowerCase() === customer.email!.toLowerCase()
+                );
+                if (authUser?.id) {
+                  userId = authUser.id;
+                  await supabase
+                    .from('profiles')
+                    .update({ stripe_customer_id: customerId })
+                    .eq('id', authUser.id);
+                  customerToUser.set(customerId, authUser.id);
+                }
+              }
+            } catch {
+              /* non-fatal */
+            }
+          }
+
+          if (!userId) continue;
+
+          const subscriptionId =
+            typeof invoice.subscription === 'string'
+              ? invoice.subscription
+              : (invoice.subscription as Stripe.Subscription)?.id || null;
+
+          const { error: insertErr } = await supabase.from('failed_payment_emails').insert({
+            user_id: userId,
+            stripe_invoice_id: invoice.id,
+            stripe_customer_id: customerId,
+            stripe_subscription_id: subscriptionId,
+            amount_due: invoice.amount_due,
+            hosted_invoice_url: invoice.hosted_invoice_url || null,
+            emails_sent: 0,
+          });
+
+          if (!insertErr) {
+            backfilled++;
+            existingIds.add(invoice.id);
+          }
+        }
+
+        // Also check for invoices that were paid since last run — resolve them
+        const { data: unresolvedRows } = await supabase
+          .from('failed_payment_emails')
+          .select('id, stripe_invoice_id')
+          .eq('resolved', false);
+
+        let autoResolved = 0;
+        for (const row of unresolvedRows ?? []) {
+          try {
+            const inv = await stripe.invoices.retrieve(row.stripe_invoice_id);
+            if (inv.status === 'paid') {
+              await supabase
+                .from('failed_payment_emails')
+                .update({ resolved: true, resolved_at: new Date().toISOString() })
+                .eq('id', row.id);
+              autoResolved++;
+            }
+          } catch {
+            /* invoice may have been deleted */
+          }
+        }
+
+        if (backfilled > 0 || autoResolved > 0) {
+          logger.info('Stripe sync complete', { backfilled, autoResolved });
+        }
+      } catch (syncErr: unknown) {
+        // Non-fatal — continue with dunning emails even if sync fails
+        logger.warn('Stripe sync failed (non-fatal)', { error: (syncErr as Error)?.message });
+      }
+    } else {
+      logger.warn('STRIPE_SECRET_KEY not set — skipping Stripe sync');
+    }
 
     // Fetch unresolved rows that still need emails (< 3 sent)
     const { data: rows, error: queryError } = await supabase
