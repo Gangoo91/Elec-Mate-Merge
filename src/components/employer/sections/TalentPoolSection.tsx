@@ -316,41 +316,15 @@ export function TalentPoolSection() {
 
   return (
     <div className="space-y-3 md:space-y-4 animate-fade-in -mx-4 px-4 sm:mx-0 sm:px-0">
-      {/* Header - Compact on Mobile */}
-      {isMobile ? (
-        <div className="flex items-center justify-between py-2">
-          <h1 className="text-lg font-semibold text-foreground">Talent Pool</h1>
-          {!isLoading && availableNowCount > 0 && (
-            <Badge className="bg-success/10 text-success border-success/30 text-xs">
-              <Sparkles className="h-3 w-3 mr-1" />
-              {availableNowCount} ready
-            </Badge>
-          )}
-        </div>
-      ) : (
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <div className="p-2 bg-elec-yellow/10 rounded-lg">
-              <Users className="h-5 w-5 text-elec-yellow" />
-            </div>
-            <div>
-              <h1 className="text-2xl font-bold text-foreground">Talent Pool</h1>
-              <p className="text-sm text-foreground/70">
-                {isLoading ? (
-                  'Loading...'
-                ) : (
-                  <>
-                    {totalCount} electricians • {availableNowCount} available now
-                  </>
-                )}
-              </p>
-            </div>
-          </div>
-          {!isLoading && availableNowCount > 0 && (
-            <Badge className="bg-success/10 text-success border-success/30">
-              <Sparkles className="h-3 w-3 mr-1" />
-              {availableNowCount} ready to work
-            </Badge>
+      {/* Stats strip */}
+      {!isLoading && (
+        <div className="flex items-center gap-3">
+          <span className="text-sm text-white font-medium">{totalCount} electricians</span>
+          {availableNowCount > 0 && (
+            <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-xs font-medium text-emerald-400">
+              <Sparkles className="h-3 w-3" />
+              {availableNowCount} available now
+            </span>
           )}
         </div>
       )}
@@ -368,14 +342,14 @@ export function TalentPoolSection() {
       <div className="flex gap-2">
         <div className="relative flex-1">
           {!searchQuery && (
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-foreground/70 pointer-events-none" />
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white/70 pointer-events-none" />
           )}
           <Input
             placeholder="Search sparkies..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             className={cn(
-              'h-12 bg-elec-gray border-border touch-manipulation',
+              'h-12 bg-white/[0.03] border-white/[0.08] touch-manipulation',
               !searchQuery && 'pl-10'
             )}
           />
@@ -409,7 +383,7 @@ export function TalentPoolSection() {
             </Button>
           </SheetTrigger>
           <SheetContent side="bottom" className="max-h-[85vh] rounded-t-2xl flex flex-col">
-            <SheetHeader className="pb-4 border-b border-border shrink-0">
+            <SheetHeader className="pb-4 border-b border-white/[0.08] shrink-0">
               <div className="flex items-center justify-between">
                 <SheetTitle>Filters</SheetTitle>
                 {activeFilterCount > 0 && (
@@ -467,7 +441,7 @@ export function TalentPoolSection() {
                     );
                   })}
                 </div>
-                <p className="text-xs text-foreground/70">
+                <p className="text-xs text-white/70">
                   Verified = ECS + qualification. Premium = full credentials.
                 </p>
               </div>
@@ -571,7 +545,7 @@ export function TalentPoolSection() {
               <div className="space-y-3">
                 <div className="flex items-center justify-between">
                   <Label className="text-sm font-medium">Day Rate</Label>
-                  <span className="text-sm text-foreground/70">
+                  <span className="text-sm text-white/70">
                     £{rateRange[0]} - £{rateRange[1]}
                     {rateRange[1] >= 500 ? '+' : ''}
                   </span>
@@ -586,7 +560,7 @@ export function TalentPoolSection() {
                     className="touch-manipulation"
                   />
                 </div>
-                <div className="flex justify-between text-xs text-foreground/70">
+                <div className="flex justify-between text-xs text-white/70">
                   <span>£150</span>
                   <span>£500+</span>
                 </div>
@@ -598,7 +572,7 @@ export function TalentPoolSection() {
                   <Zap className="h-5 w-5 text-success" />
                   <div>
                     <p className="font-medium">Labour Bank Only</p>
-                    <p className="text-sm text-foreground/70">Pre-agreed rates</p>
+                    <p className="text-sm text-white/70">Pre-agreed rates</p>
                   </div>
                 </div>
                 <Button
@@ -611,7 +585,7 @@ export function TalentPoolSection() {
               </div>
             </div>
 
-            <div className="shrink-0 pt-4 border-t border-border bg-background pb-safe">
+            <div className="shrink-0 pt-4 border-t border-white/[0.08] bg-background pb-safe">
               <Button
                 className="w-full h-12 touch-manipulation"
                 onClick={() => setFilterSheetOpen(false)}
@@ -773,11 +747,11 @@ export function TalentPoolSection() {
 
           {/* Empty State */}
           {!isLoading && filteredElectricians.length === 0 && (
-            <Card className="bg-elec-gray border-border">
+            <Card className="bg-white/[0.03] border-white/[0.08]">
               <CardContent className="p-8 text-center">
-                <Search className="h-12 w-12 text-foreground/70 mx-auto mb-4" />
-                <h3 className="font-semibold text-foreground mb-2">No sparkies found</h3>
-                <p className="text-sm text-foreground/70 mb-4">
+                <Search className="h-12 w-12 text-white/70 mx-auto mb-4" />
+                <h3 className="font-semibold text-white mb-2">No sparkies found</h3>
+                <p className="text-sm text-white/70 mb-4">
                   Try adjusting your search or filters
                 </p>
                 {activeFilterCount > 0 && (
@@ -798,7 +772,7 @@ export function TalentPoolSection() {
             <Card className="h-[400px] flex items-center justify-center">
               <div className="text-center">
                 <div className="animate-spin h-8 w-8 border-2 border-elec-yellow border-t-transparent rounded-full mx-auto mb-2" />
-                <p className="text-sm text-foreground/70">Loading map...</p>
+                <p className="text-sm text-white/70">Loading map...</p>
               </div>
             </Card>
           ) : (
@@ -820,7 +794,7 @@ export function TalentPoolSection() {
             <Card className="h-[400px] flex items-center justify-center">
               <div className="text-center">
                 <div className="animate-spin h-8 w-8 border-2 border-elec-yellow border-t-transparent rounded-full mx-auto mb-2" />
-                <p className="text-sm text-foreground/70">Loading calendar...</p>
+                <p className="text-sm text-white/70">Loading calendar...</p>
               </div>
             </Card>
           ) : (
