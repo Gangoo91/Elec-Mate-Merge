@@ -41,7 +41,7 @@ import {
   Loader2,
   type LucideIcon,
 } from 'lucide-react';
-import DraggableVoiceAssistant from '@/components/DraggableVoiceAssistant';
+// DraggableVoiceAssistant removed — not needed for employer hub
 import { EmployerProvider } from '@/contexts/EmployerContext';
 import { SectionSkeleton } from '@/components/ui/page-skeleton';
 
@@ -1051,6 +1051,7 @@ const EmployerDashboard = () => {
         icon={<CurrentIcon />}
         headerColor={currentMeta.color}
         showBackButton={activeSection !== 'overview'}
+        hideHeader={activeSection === 'overview'}
         onBack={handleBack}
         onRefresh={
           currentMeta.queryKeys && currentMeta.queryKeys.length > 0 ? handleRefresh : undefined
@@ -1123,8 +1124,7 @@ const EmployerDashboard = () => {
         )}
       </Suspense>
 
-      {/* Draggable Voice Assistant */}
-      <DraggableVoiceAssistant onNavigate={handleNavigate} currentSection={activeSection} />
+      {/* Voice assistant removed */}
     </EmployerProvider>
   );
 };

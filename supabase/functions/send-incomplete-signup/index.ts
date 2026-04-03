@@ -264,6 +264,103 @@ function generateApprenticeEmailHTML(user: EligibleUser): string {
 </body></html>`;
 }
 
+// V9 "Quick question" — card-entered-never-subscribed, personal, curious
+function generateV9CardEnteredEmailHTML(firstName: string): string {
+  const appStoreUrl = 'https://apps.apple.com/gb/app/elec-mate/id6758948665';
+  const appStoreBadge = 'https://toolbox.marketingtools.apple.com/api/badges/download-on-the-app-store/black/en-gb?size=250x83';
+  const logoUrl = 'https://elec-mate.com/logo.jpg';
+
+  return `<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><meta name="color-scheme" content="dark"><!--[if mso]><style>body,table,td{font-family:Arial,sans-serif!important}</style><![endif]--></head>
+<body style="margin:0;padding:0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;background:#000000">
+<table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background:#000000"><tr><td style="padding:0">
+<table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="max-width:600px;margin:0 auto;background:#000000">
+
+<tr><td style="height:48px"></td></tr>
+
+<!-- Logo -->
+<tr><td style="text-align:center;padding:0 32px">
+<a href="${appStoreUrl}" style="display:inline-block;text-decoration:none">
+<img src="${logoUrl}" alt="Elec-Mate" width="120" height="120" style="display:block;border-radius:26px;margin:0 auto">
+</a>
+</td></tr>
+
+<tr><td style="height:28px"></td></tr>
+
+<!-- Headline -->
+<tr><td style="text-align:center;padding:0 32px">
+<h1 style="margin:0;font-size:34px;font-weight:700;color:#ffffff;line-height:1.15;letter-spacing:-0.5px">Quick question.</h1>
+</td></tr>
+
+<tr><td style="height:24px"></td></tr>
+
+<!-- Body copy — personal, curious -->
+<tr><td style="padding:0 32px">
+<p style="margin:0 0 16px;font-size:17px;color:#ffffff;line-height:1.6">Hey ${firstName},</p>
+<p style="margin:0 0 16px;font-size:16px;color:#ffffff;line-height:1.7">You created an Elec-Mate account and got as far as entering your card details &mdash; but you didn&rsquo;t finish.</p>
+<p style="margin:0 0 16px;font-size:16px;color:#ffffff;line-height:1.7">I&rsquo;m not emailing to chase you up. I&rsquo;m emailing because I genuinely want to know: <strong style="color:#fbbf24">what put you off?</strong></p>
+<p style="margin:0 0 16px;font-size:16px;color:#ffffff;line-height:1.7">Was it the price? The features? Did something feel off? Or did life just get in the way?</p>
+<p style="margin:0;font-size:16px;color:#ffffff;line-height:1.7">I read every reply personally. Whatever your reason, it&rsquo;ll help me build something better.</p>
+</td></tr>
+
+<tr><td style="height:32px"></td></tr>
+
+<!-- Divider -->
+<tr><td style="padding:0 32px"><div style="height:1px;background:rgba(255,255,255,0.08)"></div></td></tr>
+
+<tr><td style="height:32px"></td></tr>
+
+<!-- One thing that's changed -->
+<tr><td style="padding:0 32px">
+<p style="margin:0 0 16px;font-size:16px;color:#ffffff;font-weight:600;line-height:1.5">One thing that&rsquo;s changed since you last looked:</p>
+</td></tr>
+
+<!-- App Store trust block -->
+<tr><td style="padding:0 32px">
+<table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+<tr>
+<td width="50" valign="top" style="padding-top:2px">
+<div style="width:40px;height:40px;background:rgba(251,191,36,0.12);border-radius:12px;text-align:center;line-height:40px;font-size:20px">&#127823;</div>
+</td>
+<td style="padding-left:14px">
+<p style="margin:0 0 4px;font-size:16px;font-weight:600;color:#ffffff">Now on the App Store</p>
+<p style="margin:0;font-size:15px;color:#ffffff;line-height:1.6">Subscribe through Apple. They handle billing, refunds, and cancellation. <strong style="color:#fbbf24">7-day free trial</strong> &mdash; your card won&rsquo;t be charged until day 8. Cancel any time with one tap in your iPhone settings.</p>
+</td>
+</tr>
+</table>
+</td></tr>
+
+<tr><td style="height:32px"></td></tr>
+
+<!-- Apple badge CTA -->
+<tr><td style="text-align:center;padding:0 32px">
+<a href="${appStoreUrl}" style="display:inline-block"><img src="${appStoreBadge}" alt="Download on the App Store" width="180" height="60" style="display:block"></a>
+</td></tr>
+
+<tr><td style="height:40px"></td></tr>
+
+<!-- Divider -->
+<tr><td style="padding:0 32px"><div style="height:1px;background:rgba(255,255,255,0.08)"></div></td></tr>
+
+<tr><td style="height:32px"></td></tr>
+
+<!-- Sign-off -->
+<tr><td style="padding:0 32px">
+<p style="margin:0 0 4px;font-size:15px;color:#ffffff">Cheers,</p>
+<p style="margin:0 0 16px;font-size:15px;color:#ffffff"><span style="color:#fbbf24;font-weight:600">Andrew</span> &middot; Founder, Elec-Mate</p>
+<p style="margin:0;font-size:14px;color:#ffffff;line-height:1.6;font-style:italic">P.S. Seriously &mdash; just hit reply and tell me what put you off. Even one line helps.</p>
+</td></tr>
+
+<tr><td style="height:40px"></td></tr>
+
+<!-- Footer -->
+<tr><td style="text-align:center;padding:0 32px 40px">
+<p style="margin:0;font-size:12px;color:#ffffff">&copy; ${new Date().getFullYear()} Elec-Mate Ltd &middot; Built in Cumbria for UK electricians</p>
+</td></tr>
+
+</table></td></tr></table>
+</body></html>`;
+}
+
 // V8 App Store Launch email
 function generateV8AppStoreLaunchHTML(firstName: string): string {
   const appStoreUrl = 'https://apps.apple.com/gb/app/elec-mate/id6758948665';
@@ -836,12 +933,13 @@ Deno.serve(async (req) => {
           created_at: profile.created_at,
         };
 
-        const emailHtml = generateV8AppStoreLaunchHTML(userWithEmail.full_name?.split(' ')[0] || 'mate');
+        const singleFirstName = userWithEmail.full_name?.split(' ')[0] || 'mate';
+        const emailHtml = generateV9CardEnteredEmailHTML(singleFirstName);
 
         const { data: emailData, error: emailError } = await resend.emails.send({
           from: 'Andrew at Elec-Mate <founder@elec-mate.com>',
           to: [userWithEmail.email.trim().toLowerCase()],
-          subject: "We're on the App Store.",
+          subject: `Quick question, ${singleFirstName}`,
           reply_to: 'founder@elec-mate.com',
           html: emailHtml,
           tags: [
@@ -925,12 +1023,13 @@ Deno.serve(async (req) => {
               created_at: profile.created_at,
             };
 
-            const emailHtml = generateV8AppStoreLaunchHTML(userWithEmail.full_name?.split(' ')[0] || 'mate');
+            const bulkFirstName = userWithEmail.full_name?.split(' ')[0] || 'mate';
+            const emailHtml = generateV9CardEnteredEmailHTML(bulkFirstName);
 
             const { data: bulkEmailData, error: emailError } = await resend.emails.send({
               from: 'Andrew at Elec-Mate <founder@elec-mate.com>',
               to: [userWithEmail.email.trim().toLowerCase()],
-              subject: "We're on the App Store.",
+              subject: `Quick question, ${bulkFirstName}`,
               reply_to: 'founder@elec-mate.com',
               html: emailHtml,
               tags: [
@@ -1037,11 +1136,12 @@ Deno.serve(async (req) => {
           created_at: new Date(Date.now() - 2 * 60 * 60 * 1000).toISOString(),
         };
 
-        const manualEmailHtml = generateV8AppStoreLaunchHTML(manualUser.full_name?.split(' ')[0] || 'mate');
+        const manualFirstName = manualUser.full_name?.split(' ')[0] || 'mate';
+        const manualEmailHtml = generateV9CardEnteredEmailHTML(manualFirstName);
         const { data: manualEmailData, error: manualEmailError } = await resend.emails.send({
           from: 'Andrew at Elec-Mate <founder@elec-mate.com>',
           to: [manualEmail.trim().toLowerCase()],
-          subject: "We're on the App Store.",
+          subject: `Quick question, ${manualFirstName}`,
           reply_to: 'founder@elec-mate.com',
           html: manualEmailHtml,
           tags: [
@@ -1090,22 +1190,19 @@ Deno.serve(async (req) => {
       }
 
       case 'reset_sent': {
-        // Reset incomplete_signup_sent_at for all unsent users who haven't subscribed
+        // Reset BOTH sent flags for all unsubscribed users who have either flag set
         const { data: resetUsers, error: resetErr } = await supabaseAdmin
           .from('profiles')
           .select('id')
           .or('subscribed.is.null,subscribed.eq.false')
-          .not('incomplete_signup_sent_at', 'is', null);
+          .or('incomplete_signup_sent_at.not.is.null,incomplete_signup_v3_sent_at.not.is.null');
 
         if (resetErr) throw resetErr;
 
-        const resetIds = resetUsers?.map((u: Record<string, unknown>) => u.id) || [];
+        const resetIds = (resetUsers || []).map((u: Record<string, unknown>) => u.id);
 
         if (resetIds.length === 0) {
-          result = {
-            reset: 0,
-            message: 'No users eligible for reset (all sent < 24h ago or already subscribed)',
-          };
+          result = { reset: 0, message: 'No users to reset' };
           break;
         }
 
@@ -1114,25 +1211,9 @@ Deno.serve(async (req) => {
           .update({ incomplete_signup_sent_at: null, incomplete_signup_v3_sent_at: null })
           .in('id', resetIds);
 
-        // Also reset v3-only users
-        const { data: v3ResetUsers } = await supabaseAdmin
-          .from('profiles')
-          .select('id')
-          .or('subscribed.is.null,subscribed.eq.false')
-          .not('incomplete_signup_v3_sent_at', 'is', null);
-        const v3ResetIds = (v3ResetUsers || []).map((u: Record<string, unknown>) => u.id);
-        if (v3ResetIds.length > 0) {
-          await supabaseAdmin
-            .from('profiles')
-            .update({ incomplete_signup_v3_sent_at: null })
-            .in('id', v3ResetIds);
-        }
-
         if (updateErr) throw updateErr;
 
-        console.log(
-          `Admin ${user.id} reset incomplete_signup_sent_at for ${resetIds.length} users`
-        );
+        console.log(`Admin ${user.id} reset incomplete signup flags for ${resetIds.length} users`);
         result = {
           reset: resetIds.length,
           message: `${resetIds.length} users reset and eligible for resend`,
@@ -1425,12 +1506,12 @@ Deno.serve(async (req) => {
           created_at: new Date().toISOString(),
         };
 
-        const v3TestHtml = generateV8AppStoreLaunchHTML(v3TestUser.full_name?.split(' ')[0] || 'Test');
+        const v3TestHtml = generateV9CardEnteredEmailHTML(v3TestUser.full_name?.split(' ')[0] || 'Test');
         const { data: v3TestData, error: v3TestErr } = await resend.emails.send({
           from: 'Andrew at Elec-Mate <founder@elec-mate.com>',
           replyTo: 'founder@elec-mate.com',
           to: [testEmail.trim().toLowerCase()],
-          subject: "[TEST] We're on the App Store.",
+          subject: '[TEST] Quick question, Test',
           html: v3TestHtml,
           tags: [
             { name: 'campaign', value: 'incomplete_signup_v3' },
@@ -1448,7 +1529,7 @@ Deno.serve(async (req) => {
       case 'send_v3_campaign': {
         // Send ALL eligible users in batches of 10 with 8s pause between batches
         const BATCH_SIZE = 10;
-        const BATCH_DELAY_MS = 8000;
+        const BATCH_DELAY_MS = 2000;
 
         const { data: v3CampProfiles, error: v3CampErr } = await supabaseAdmin
           .from('profiles')
@@ -1492,16 +1573,17 @@ Deno.serve(async (req) => {
 
           for (const profile of batch) {
             try {
-              const emailHtml = generateV8AppStoreLaunchHTML(profile.full_name?.split(' ')[0] || 'mate');
+              const campFirstName = profile.full_name?.split(' ')[0] || 'mate';
+              const emailHtml = generateV9CardEnteredEmailHTML(campFirstName);
 
               const { data: emailData, error: emailError } = await resend.emails.send({
                 from: 'Andrew at Elec-Mate <founder@elec-mate.com>',
                 replyTo: 'founder@elec-mate.com',
                 to: [profile.email.trim().toLowerCase()],
-                subject: "We're on the App Store.",
+                subject: `Quick question, ${campFirstName}`,
                 html: emailHtml,
                 tags: [
-                  { name: 'campaign', value: 'incomplete_signup_v8' },
+                  { name: 'campaign', value: 'incomplete_signup_v9' },
                   { name: 'role', value: profile.role || 'electrician' },
                   { name: 'user_id', value: profile.id },
                 ],

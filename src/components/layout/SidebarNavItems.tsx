@@ -42,14 +42,13 @@ export const mainNavItems: NavItem[] = [
     icon: <Zap className="h-5 w-5" />,
     roles: ['visitor', 'apprentice', 'electrician', 'employer', 'admin', 'beta_tester'],
   },
-  // Employer Hub - Hidden for now
-  // {
-  //   name: 'Employer Hub',
-  //   path: '/employer',
-  //   icon: <Briefcase className="h-5 w-5" />,
-  //   roles: ['visitor', 'apprentice', 'electrician', 'employer', 'admin', 'beta_tester'],
-  //   allowedEmails: ['founder@elec-mate.com', 'andrewgangoo91@gmail.com'],
-  // },
+  {
+    name: 'Employer Hub',
+    path: '/employer',
+    icon: <Briefcase className="h-5 w-5" />,
+    roles: ['visitor', 'apprentice', 'electrician', 'employer', 'admin', 'beta_tester'],
+    allowedEmails: ['founder@elec-mate.com', 'andrewgangoo91@gmail.com'],
+  },
   {
     name: 'College Hub',
     path: '/college',

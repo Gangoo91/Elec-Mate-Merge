@@ -1,6 +1,4 @@
-import { Card, CardContent } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { Skeleton } from '@/components/ui/skeleton';
+import BusinessCard from '@/components/business-hub/BusinessCard';
 import type { Section } from '@/pages/employer/EmployerDashboard';
 import {
   PoundSterling,
@@ -13,10 +11,8 @@ import {
   CreditCard,
   PenTool,
   Package,
-  ChevronRight,
-  Loader2,
   AlertTriangle,
-  Zap,
+  Loader2,
 } from 'lucide-react';
 import {
   useQuotes,
@@ -107,262 +103,116 @@ export function FinanceHub({ onNavigate }: FinanceHubProps) {
 
   if (isLoading) {
     return (
-      <div className="fixed inset-0 bg-background/80 backdrop-blur-md flex items-center justify-center z-50">
-        <div className="flex flex-col items-center gap-4 bg-card p-6 rounded-2xl border-2 border-success/20 shadow-2xl">
-          <div className="relative">
-            <div className="absolute inset-0 bg-success/20 rounded-full blur-xl animate-pulse" />
-            <Loader2 className="relative h-8 w-8 animate-spin text-success" />
-          </div>
-          <span className="text-sm font-medium">Loading Finance Hub...</span>
-        </div>
+      <div className="flex items-center justify-center py-20">
+        <Loader2 className="h-8 w-8 animate-spin text-elec-yellow" />
       </div>
     );
   }
 
   return (
-    <div className="space-y-6 pb-6">
-      {/* Overdue warning badge */}
-      {totalOverdueInvoices > 0 && (
-        <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-destructive/10 border border-destructive/20 w-fit">
-          <AlertTriangle className="h-3.5 w-3.5 text-destructive" />
-          <span className="text-xs font-medium text-destructive">
-            £{(totalOverdueInvoices / 1000).toFixed(0)}k overdue
-          </span>
-        </div>
-      )}
-
-      {/* Quick Stats - Centered Grid */}
-      <div className="grid grid-cols-4 gap-2 md:gap-3">
-        {statsConfig.map((stat) => {
-          const Icon = stat.icon;
-          return (
-            <Card
-              key={stat.label}
-              className={`relative overflow-hidden border-2 ${stat.borderClass} bg-gradient-to-br ${stat.bgClass} cursor-pointer transition-all duration-300 hover:scale-[1.02] hover:shadow-lg active:scale-[0.98] touch-manipulation`}
-              onClick={() => onNavigate(stat.section)}
-            >
-              {stat.pulse && (
-                <div className="absolute top-2 right-2">
-                  <span className="relative flex h-2.5 w-2.5">
-                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-destructive opacity-75"></span>
-                    <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-destructive"></span>
-                  </span>
-                </div>
-              )}
-              <CardContent className="p-3 md:p-4 flex flex-col items-center text-center">
-                <div className="p-2 md:p-2.5 rounded-xl bg-background/60 backdrop-blur-sm mb-2">
-                  <Icon className={`h-5 w-5 md:h-6 md:w-6 ${stat.textClass}`} />
-                </div>
-                <p className={`text-xl md:text-2xl font-bold ${stat.textClass} tabular-nums`}>
-                  {stat.value}
-                </p>
-                <p className="text-[10px] md:text-xs text-muted-foreground mt-0.5 font-medium">
-                  {stat.label}
-                </p>
-              </CardContent>
-            </Card>
-          );
-        })}
-      </div>
-
+    <div className="space-y-5 pb-6 animate-fade-in">
       {/* Invoicing & Quotes */}
-      <div>
-        <div className="flex items-center justify-between mb-3">
-          <h2 className="text-sm font-semibold text-foreground flex items-center gap-2">
-            <span className="w-1 h-5 bg-success rounded-full"></span>
-            Invoicing & Quotes
-          </h2>
-          <TrendingUp className="h-4 w-4 text-success" />
-        </div>
+      <section className="space-y-3">
+        <h2 className="text-xs font-medium text-white uppercase tracking-wider px-0.5">
+          Invoicing & Quotes
+        </h2>
         <div className="grid grid-cols-2 gap-3">
-          <Card
-            className="group relative overflow-hidden border-2 border-border/50 hover:border-success/50 bg-gradient-to-br from-elec-gray/50 via-background to-success/5 cursor-pointer transition-all duration-300 hover:shadow-xl hover:shadow-success/5"
+          <BusinessCard
+            title="Quotes & Invoices"
+            description="Create & track docs"
+            icon={FileText}
             onClick={() => onNavigate('quotes')}
-          >
-            <div className="absolute inset-0 bg-gradient-to-br from-success/0 to-success/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-            <CardContent className="relative p-4">
-              <div className="flex items-center justify-between mb-3">
-                <div className="p-2.5 rounded-xl bg-success/10 group-hover:bg-success/20 transition-colors duration-300">
-                  <FileText className="h-5 w-5 text-success" />
-                </div>
-                <ChevronRight className="h-4 w-4 text-muted-foreground group-hover:text-success group-hover:translate-x-0.5 transition-all duration-300" />
-              </div>
-              <h3 className="font-semibold text-foreground mb-1">Quotes & Invoices</h3>
-              <p className="text-xs text-muted-foreground">Create & track docs</p>
-              {pendingQuotes.length > 0 && (
-                <Badge className="mt-2.5 bg-info/20 text-info border-info/30 text-xs font-medium">
-                  {pendingQuotes.length} pending
-                </Badge>
-              )}
-            </CardContent>
-          </Card>
-
-          <Card
-            className="group relative overflow-hidden border-2 border-border/50 hover:border-purple-500/50 bg-gradient-to-br from-elec-gray/50 via-background to-purple-500/5 cursor-pointer transition-all duration-300 hover:shadow-xl hover:shadow-purple-500/5"
+            accentColor="from-emerald-500 via-emerald-400 to-green-400"
+            iconColor="text-emerald-400"
+            iconBg="bg-emerald-500/10 border border-emerald-500/20"
+            liveSubtitle={pendingQuotes.length > 0 ? `${pendingQuotes.length} pending` : undefined}
+          />
+          <BusinessCard
+            title="Signatures"
+            description="Digital sign capture"
+            icon={PenTool}
             onClick={() => onNavigate('signatures')}
-          >
-            <div className="absolute inset-0 bg-gradient-to-br from-purple-500/0 to-purple-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-            <CardContent className="relative p-4">
-              <div className="flex items-center justify-between mb-3">
-                <div className="p-2.5 rounded-xl bg-purple-500/10 group-hover:bg-purple-500/20 transition-colors duration-300">
-                  <PenTool className="h-5 w-5 text-purple-500" />
-                </div>
-                <ChevronRight className="h-4 w-4 text-muted-foreground group-hover:text-purple-500 group-hover:translate-x-0.5 transition-all duration-300" />
-              </div>
-              <h3 className="font-semibold text-foreground mb-1">Signatures</h3>
-              <p className="text-xs text-muted-foreground">Digital sign capture</p>
-            </CardContent>
-          </Card>
-
-          <Card
-            className="group relative overflow-hidden border-2 border-border/50 hover:border-elec-yellow/50 bg-gradient-to-br from-elec-gray/50 via-background to-elec-yellow/5 cursor-pointer transition-all duration-300 hover:shadow-xl hover:shadow-elec-yellow/5 col-span-2"
+            accentColor="from-purple-500 via-violet-400 to-indigo-400"
+            iconColor="text-purple-400"
+            iconBg="bg-purple-500/10 border border-purple-500/20"
+          />
+          <BusinessCard
+            title="Tenders"
+            description="AI-powered estimating & bids"
+            icon={Gavel}
             onClick={() => onNavigate('tenders')}
-          >
-            <div className="absolute inset-0 bg-gradient-to-br from-elec-yellow/0 to-elec-yellow/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-            <CardContent className="relative p-4 flex items-center justify-between">
-              <div className="flex items-center gap-4">
-                <div className="p-2.5 rounded-xl bg-elec-yellow/10 group-hover:bg-elec-yellow/20 transition-colors duration-300">
-                  <Gavel className="h-5 w-5 text-elec-yellow" />
-                </div>
-                <div>
-                  <h3 className="font-semibold text-foreground flex items-center gap-2">
-                    Tenders
-                    <Badge className="bg-purple-500/90 text-white border-purple-400 text-xs font-semibold">
-                      AI
-                    </Badge>
-                  </h3>
-                  <p className="text-xs text-muted-foreground">AI-powered estimating & bids</p>
-                </div>
-              </div>
-              <ChevronRight className="h-4 w-4 text-muted-foreground group-hover:text-elec-yellow group-hover:translate-x-0.5 transition-all duration-300" />
-            </CardContent>
-          </Card>
+            accentColor="from-elec-yellow via-amber-400 to-orange-400"
+            iconColor="text-elec-yellow"
+            iconBg="bg-elec-yellow/10 border border-elec-yellow/20"
+          />
         </div>
-      </div>
+      </section>
 
       {/* Expenses & Procurement */}
-      <div>
-        <div className="flex items-center justify-between mb-3">
-          <h2 className="text-sm font-semibold text-foreground flex items-center gap-2">
-            <span className="w-1 h-5 bg-warning rounded-full"></span>
-            Expenses & Procurement
-          </h2>
-          <Zap className="h-4 w-4 text-warning" />
-        </div>
+      <section className="space-y-3">
+        <h2 className="text-xs font-medium text-white uppercase tracking-wider px-0.5">
+          Expenses & Procurement
+        </h2>
         <div className="grid grid-cols-2 gap-3">
-          <Card
-            className="group relative overflow-hidden border-2 border-border/50 hover:border-warning/50 bg-gradient-to-br from-elec-gray/50 via-background to-warning/5 cursor-pointer transition-all duration-300 hover:shadow-xl hover:shadow-warning/5"
+          <BusinessCard
+            title="Expense Claims"
+            description="Review & approve"
+            icon={Receipt}
             onClick={() => onNavigate('expenses')}
-          >
-            <div className="absolute inset-0 bg-gradient-to-br from-warning/0 to-warning/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-            <CardContent className="relative p-4">
-              <div className="flex items-center justify-between mb-3">
-                <div className="p-2.5 rounded-xl bg-warning/10 group-hover:bg-warning/20 transition-colors duration-300">
-                  <Receipt className="h-5 w-5 text-warning" />
-                </div>
-                <ChevronRight className="h-4 w-4 text-muted-foreground group-hover:text-warning group-hover:translate-x-0.5 transition-all duration-300" />
-              </div>
-              <h3 className="font-semibold text-foreground mb-1">Expense Claims</h3>
-              <p className="text-xs text-muted-foreground">Review & approve</p>
-              {pendingExpenses.length > 0 && (
-                <Badge className="mt-2.5 bg-warning/20 text-warning border-warning/30 text-xs font-medium">
-                  {pendingExpenses.length} pending
-                </Badge>
-              )}
-            </CardContent>
-          </Card>
-
-          <Card
-            className="group relative overflow-hidden border-2 border-border/50 hover:border-info/50 bg-gradient-to-br from-elec-gray/50 via-background to-info/5 cursor-pointer transition-all duration-300 hover:shadow-xl hover:shadow-info/5"
+            accentColor="from-orange-500 via-amber-400 to-red-400"
+            iconColor="text-orange-400"
+            iconBg="bg-orange-500/10 border border-orange-500/20"
+            liveSubtitle={pendingExpenses.length > 0 ? `${pendingExpenses.length} pending` : undefined}
+          />
+          <BusinessCard
+            title="Procurement"
+            description="Materials & suppliers"
+            icon={ShoppingCart}
             onClick={() => onNavigate('procurement')}
-          >
-            <div className="absolute inset-0 bg-gradient-to-br from-info/0 to-info/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-            <CardContent className="relative p-4">
-              <div className="flex items-center justify-between mb-3">
-                <div className="p-2.5 rounded-xl bg-info/10 group-hover:bg-info/20 transition-colors duration-300">
-                  <ShoppingCart className="h-5 w-5 text-info" />
-                </div>
-                <ChevronRight className="h-4 w-4 text-muted-foreground group-hover:text-info group-hover:translate-x-0.5 transition-all duration-300" />
-              </div>
-              <h3 className="font-semibold text-foreground mb-1">Procurement</h3>
-              <p className="text-xs text-muted-foreground">Materials & suppliers</p>
-              {pendingOrders.length > 0 && (
-                <Badge className="mt-2.5 bg-info/20 text-info border-info/30 text-xs font-medium">
-                  {pendingOrders.length} orders
-                </Badge>
-              )}
-            </CardContent>
-          </Card>
-
-          <Card
-            className="group relative overflow-hidden border-2 border-border/50 hover:border-orange-500/50 bg-gradient-to-br from-elec-gray/50 via-background to-orange-500/5 cursor-pointer transition-all duration-300 hover:shadow-xl hover:shadow-orange-500/5"
+            accentColor="from-blue-500 via-blue-400 to-cyan-400"
+            iconColor="text-blue-400"
+            iconBg="bg-blue-500/10 border border-blue-500/20"
+            liveSubtitle={pendingOrders.length > 0 ? `${pendingOrders.length} orders` : undefined}
+          />
+          <BusinessCard
+            title="Price Book"
+            description="Materials & markup"
+            icon={Package}
             onClick={() => onNavigate('pricebook')}
-          >
-            <div className="absolute inset-0 bg-gradient-to-br from-orange-500/0 to-orange-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-            <CardContent className="relative p-4">
-              <div className="flex items-center justify-between mb-3">
-                <div className="p-2.5 rounded-xl bg-orange-500/10 group-hover:bg-orange-500/20 transition-colors duration-300">
-                  <Package className="h-5 w-5 text-orange-500" />
-                </div>
-                <ChevronRight className="h-4 w-4 text-muted-foreground group-hover:text-orange-500 group-hover:translate-x-0.5 transition-all duration-300" />
-              </div>
-              <h3 className="font-semibold text-foreground mb-1">Price Book</h3>
-              <p className="text-xs text-muted-foreground">Materials & markup</p>
-              {lowStockItems.length > 0 && (
-                <Badge className="mt-2.5 bg-warning/20 text-warning border-warning/30 text-xs font-medium">
-                  {lowStockItems.length} low stock
-                </Badge>
-              )}
-            </CardContent>
-          </Card>
+            accentColor="from-amber-500 via-orange-400 to-orange-500"
+            iconColor="text-amber-400"
+            iconBg="bg-amber-500/10 border border-amber-500/20"
+            liveSubtitle={lowStockItems.length > 0 ? `${lowStockItems.length} low stock` : undefined}
+          />
         </div>
-      </div>
+      </section>
 
       {/* Job Financials */}
-      <div>
-        <div className="flex items-center justify-between mb-3">
-          <h2 className="text-sm font-semibold text-foreground flex items-center gap-2">
-            <span className="w-1 h-5 bg-info rounded-full"></span>
-            Job Financials
-          </h2>
-          <BarChart3 className="h-4 w-4 text-info" />
-        </div>
+      <section className="space-y-3">
+        <h2 className="text-xs font-medium text-white uppercase tracking-wider px-0.5">
+          Job Financials
+        </h2>
         <div className="grid grid-cols-2 gap-3">
-          <Card
-            className="group relative overflow-hidden border-2 border-border/50 hover:border-cyan-500/50 bg-gradient-to-br from-elec-gray/50 via-background to-cyan-500/5 cursor-pointer transition-all duration-300 hover:shadow-xl hover:shadow-cyan-500/5"
+          <BusinessCard
+            title="Job Costs"
+            description="Budget vs actual"
+            icon={CreditCard}
             onClick={() => onNavigate('financials')}
-          >
-            <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/0 to-cyan-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-            <CardContent className="relative p-4">
-              <div className="flex items-center justify-between mb-3">
-                <div className="p-2.5 rounded-xl bg-cyan-500/10 group-hover:bg-cyan-500/20 transition-colors duration-300">
-                  <CreditCard className="h-5 w-5 text-cyan-500" />
-                </div>
-                <ChevronRight className="h-4 w-4 text-muted-foreground group-hover:text-cyan-500 group-hover:translate-x-0.5 transition-all duration-300" />
-              </div>
-              <h3 className="font-semibold text-foreground mb-1">Job Costs</h3>
-              <p className="text-xs text-muted-foreground">Budget vs actual</p>
-            </CardContent>
-          </Card>
-
-          <Card
-            className="group relative overflow-hidden border-2 border-border/50 hover:border-pink-500/50 bg-gradient-to-br from-elec-gray/50 via-background to-pink-500/5 cursor-pointer transition-all duration-300 hover:shadow-xl hover:shadow-pink-500/5"
+            accentColor="from-cyan-500 via-blue-400 to-blue-500"
+            iconColor="text-cyan-400"
+            iconBg="bg-cyan-500/10 border border-cyan-500/20"
+          />
+          <BusinessCard
+            title="Reports"
+            description="Analytics & insights"
+            icon={BarChart3}
             onClick={() => onNavigate('reports')}
-          >
-            <div className="absolute inset-0 bg-gradient-to-br from-pink-500/0 to-pink-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-            <CardContent className="relative p-4">
-              <div className="flex items-center justify-between mb-3">
-                <div className="p-2.5 rounded-xl bg-pink-500/10 group-hover:bg-pink-500/20 transition-colors duration-300">
-                  <BarChart3 className="h-5 w-5 text-pink-500" />
-                </div>
-                <ChevronRight className="h-4 w-4 text-muted-foreground group-hover:text-pink-500 group-hover:translate-x-0.5 transition-all duration-300" />
-              </div>
-              <h3 className="font-semibold text-foreground mb-1">Reports</h3>
-              <p className="text-xs text-muted-foreground">Analytics & insights</p>
-            </CardContent>
-          </Card>
+            accentColor="from-rose-500 via-pink-400 to-red-400"
+            iconColor="text-rose-400"
+            iconBg="bg-rose-500/10 border border-rose-500/20"
+          />
         </div>
-      </div>
+      </section>
     </div>
   );
 }

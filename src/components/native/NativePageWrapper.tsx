@@ -16,6 +16,7 @@ interface NativePageWrapperProps {
   icon?: ReactNode;
   headerColor?: 'yellow' | 'blue' | 'green' | 'purple' | 'orange';
   showBackButton?: boolean;
+  hideHeader?: boolean;
   onBack?: () => void;
   onRefresh?: () => Promise<void>;
   collapsingHeader?: boolean;
@@ -58,6 +59,7 @@ export const NativePageWrapper: React.FC<NativePageWrapperProps> = ({
   headerColor = 'yellow',
   showBackButton = true,
   onBack,
+  hideHeader = false,
   headerActions,
   className,
   contentClassName,
@@ -76,6 +78,7 @@ export const NativePageWrapper: React.FC<NativePageWrapperProps> = ({
   return (
     <div className={cn('min-h-screen bg-background', className)}>
       {/* Simple Header */}
+      {!hideHeader && (
       <header className="sticky top-0 z-20 bg-background border-b border-white/[0.06]">
         <div className="max-w-7xl mx-auto px-4">
           <div className="flex items-center justify-between h-14">
@@ -85,7 +88,7 @@ export const NativePageWrapper: React.FC<NativePageWrapperProps> = ({
                   onClick={handleBack}
                   className="touch-target flex items-center justify-center -ml-2 rounded-xl hover:bg-white/5 active:scale-95 transition-all"
                 >
-                  <ArrowLeft className="h-5 w-5 text-muted-foreground" />
+                  <ArrowLeft className="h-5 w-5 text-white" />
                 </button>
               )}
 
@@ -98,8 +101,8 @@ export const NativePageWrapper: React.FC<NativePageWrapperProps> = ({
                   </div>
                 )}
                 <div>
-                  <span className="text-base font-semibold text-foreground">{title}</span>
-                  {subtitle && <p className="text-xs text-muted-foreground">{subtitle}</p>}
+                  <span className="text-base font-semibold text-white">{title}</span>
+                  {subtitle && <p className="text-xs text-white">{subtitle}</p>}
                 </div>
               </div>
             </div>
@@ -108,6 +111,7 @@ export const NativePageWrapper: React.FC<NativePageWrapperProps> = ({
           </div>
         </div>
       </header>
+      )}
 
       {/* Content */}
       <div className={cn('max-w-7xl mx-auto px-4 py-6 space-y-6', contentClassName)}>

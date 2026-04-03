@@ -109,6 +109,55 @@ const EmployerPortalSection = lazy(() =>
   }))
 );
 
+// New feature sections (batch 1)
+const OTJTrainingSection = lazy(() =>
+  import('@/components/college/sections/OTJTrainingSection').then((m) => ({
+    default: m.OTJTrainingSection,
+  }))
+);
+const Student360Section = lazy(() =>
+  import('@/components/college/sections/Student360Section').then((m) => ({
+    default: m.Student360Section,
+  }))
+);
+const QualityDashboardSection = lazy(() =>
+  import('@/components/college/sections/QualityDashboardSection').then((m) => ({
+    default: m.QualityDashboardSection,
+  }))
+);
+const TimetableSection = lazy(() =>
+  import('@/components/college/sections/TimetableSection').then((m) => ({
+    default: m.TimetableSection,
+  }))
+);
+const LiveLessonSection = lazy(() =>
+  import('@/components/college/sections/LiveLessonSection').then((m) => ({
+    default: m.LiveLessonSection,
+  }))
+);
+
+// New feature sections (batch 2)
+const AIILPGeneratorSection = lazy(() =>
+  import('@/components/college/sections/AIILPGeneratorSection').then((m) => ({
+    default: m.AIILPGeneratorSection,
+  }))
+);
+const IQAWorkflowSection = lazy(() =>
+  import('@/components/college/sections/IQAWorkflowSection').then((m) => ({
+    default: m.IQAWorkflowSection,
+  }))
+);
+const BatchOperationsSection = lazy(() =>
+  import('@/components/college/sections/BatchOperationsSection').then((m) => ({
+    default: m.BatchOperationsSection,
+  }))
+);
+const AssessmentCalendarSection = lazy(() =>
+  import('@/components/college/sections/AssessmentCalendarSection').then((m) => ({
+    default: m.AssessmentCalendarSection,
+  }))
+);
+
 // Lazy-loaded hubs
 const CollegePeopleHub = lazy(() =>
   import('@/components/college/hubs/CollegePeopleHub').then((m) => ({
@@ -158,7 +207,17 @@ export type CollegeSection =
   | 'ltisettings'
   | 'collegesettings'
   // Employer Portal
-  | 'employerportal';
+  | 'employerportal'
+  // New sections
+  | 'otjtraining'
+  | 'student360'
+  | 'qualitydashboard'
+  | 'timetable'
+  | 'livelesson'
+  | 'aiilpgenerator'
+  | 'iqaworkflow'
+  | 'batchoperations'
+  | 'assessmentcalendar';
 
 // Section titles for the header
 const sectionTitles: Record<CollegeSection, string> = {
@@ -186,6 +245,15 @@ const sectionTitles: Record<CollegeSection, string> = {
   ltisettings: 'LTI Settings',
   collegesettings: 'College Settings',
   employerportal: 'Employer Portal',
+  otjtraining: 'OTJ Training',
+  student360: 'Student Profile',
+  qualitydashboard: 'Quality Dashboard',
+  timetable: 'Timetable',
+  livelesson: 'Live Lesson',
+  aiilpgenerator: 'AI ILP Generator',
+  iqaworkflow: 'IQA Workflow',
+  batchoperations: 'Batch Operations',
+  assessmentcalendar: 'Assessment Calendar',
 };
 
 const CollegeDashboard = () => {
@@ -334,6 +402,8 @@ const CollegeDashboard = () => {
       'lessonplans',
       'teachingresources',
       'tutornotebook',
+      'timetable',
+      'livelesson',
     ];
     const assessmentSubSections: CollegeSection[] = [
       'grading',
@@ -343,11 +413,18 @@ const CollegeDashboard = () => {
       'progresstracking',
       'portfolio',
       'workqueue',
+      'otjtraining',
+      'student360',
+      'aiilpgenerator',
+      'batchoperations',
+      'assessmentcalendar',
     ];
     const resourcesSubSections: CollegeSection[] = [
       'compliancedocs',
       'ltisettings',
       'collegesettings',
+      'qualitydashboard',
+      'iqaworkflow',
     ];
 
     if (peopleSubSections.includes(activeSection)) {
@@ -435,6 +512,38 @@ const CollegeDashboard = () => {
       case 'employerportal':
         return <EmployerPortalSection />;
 
+      // New feature sections
+      case 'otjtraining':
+        return <OTJTrainingSection onNavigate={handleNavigate} />;
+      case 'student360':
+        return (
+          <Student360Section
+            studentId={searchParams.get('studentId') || ''}
+            onNavigate={handleNavigate}
+            onBack={handleBack}
+          />
+        );
+      case 'qualitydashboard':
+        return <QualityDashboardSection onNavigate={handleNavigate} />;
+      case 'timetable':
+        return <TimetableSection onNavigate={handleNavigate} />;
+      case 'livelesson':
+        return (
+          <LiveLessonSection
+            lessonId={searchParams.get('lessonId') || undefined}
+            onNavigate={handleNavigate}
+            onBack={handleBack}
+          />
+        );
+      case 'aiilpgenerator':
+        return <AIILPGeneratorSection onNavigate={handleNavigate} />;
+      case 'iqaworkflow':
+        return <IQAWorkflowSection onNavigate={handleNavigate} />;
+      case 'batchoperations':
+        return <BatchOperationsSection onNavigate={handleNavigate} />;
+      case 'assessmentcalendar':
+        return <AssessmentCalendarSection onNavigate={handleNavigate} />;
+
       default:
         return <CollegeOverviewSection onNavigate={handleNavigate} />;
     }
@@ -442,63 +551,62 @@ const CollegeDashboard = () => {
 
   return (
     <CollegeSupabaseProvider collegeId={profile?.college_id ?? undefined}>
-      <div className="mobile-safe-area bg-elec-dark">
-        <div className="space-y-4 sm:space-y-6 md:space-y-8 animate-fade-in px-4 sm:px-6 py-4 md:py-6 pb-20 sm:pb-12">
-          {/* Header - flex row matching ElectricalHub */}
-          <div className="flex items-center h-14 gap-2">
-            {/* Back button */}
-            <Button
-              variant="ghost"
-              size="sm"
-              aria-label="Go back"
-              onClick={activeSection === 'overview' ? handleGoHome : handleBack}
-              className="h-10 w-10 -ml-2 hover:bg-accent/10 flex items-center justify-center rounded-xl touch-manipulation"
-            >
-              <ArrowLeft className="h-5 w-5" />
-            </Button>
-
-            {/* Title */}
-            <div className="flex-1 flex items-center gap-2 min-w-0">
-              <School className="h-5 w-5 text-elec-yellow shrink-0" />
-              <h1 className="text-xl font-bold truncate">{sectionTitles[activeSection]}</h1>
+      <div className="-mt-3 sm:-mt-4 md:-mt-6 bg-background pb-24">
+        {/* Sticky Header */}
+        <div className="sticky top-0 z-50 bg-background/95 backdrop-blur-sm border-b border-white/[0.06]">
+          <div className="px-4 py-2">
+            <div className="flex items-center gap-3 h-11">
+              <Button
+                variant="ghost"
+                size="icon"
+                aria-label="Go back"
+                onClick={activeSection === 'overview' ? handleGoHome : handleBack}
+                className="text-white hover:text-white hover:bg-white/10 rounded-xl h-11 w-11 touch-manipulation active:scale-[0.98]"
+              >
+                <ArrowLeft className="h-5 w-5" />
+              </Button>
+              <div className="flex items-center gap-2.5 flex-1 min-w-0">
+                <div className="p-1.5 rounded-lg bg-emerald-500/10 border border-emerald-500/20">
+                  <School className="h-4 w-4 text-emerald-400" />
+                </div>
+                <h1 className="text-base font-semibold text-white truncate">{sectionTitles[activeSection]}</h1>
+              </div>
+              <div className="flex items-center gap-1">
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  onClick={() => setCommandPaletteOpen(true)}
+                  aria-label="Search"
+                  className="text-white hover:text-white hover:bg-white/10 rounded-xl h-9 w-9 touch-manipulation"
+                >
+                  <Search className="h-4 w-4" />
+                </Button>
+                <NotificationCenter onNavigate={handleNavigate} />
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  onClick={() => setActiveSection('collegesettings')}
+                  aria-label="Settings"
+                  className="text-white hover:text-white hover:bg-white/10 rounded-xl h-9 w-9 touch-manipulation"
+                >
+                  <Settings className="h-4 w-4" />
+                </Button>
+              </div>
             </div>
-
-            {/* Search button */}
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => setCommandPaletteOpen(true)}
-              aria-label="Search"
-              className="h-10 w-10 rounded-xl bg-elec-yellow/10 border-elec-yellow/30 hover:bg-elec-yellow/20 hover:border-elec-yellow/50 transition-all p-0 touch-manipulation"
-            >
-              <Search className="h-4 w-4 text-elec-yellow" />
-            </Button>
-
-            {/* Notifications */}
-            <NotificationCenter onNavigate={handleNavigate} />
-
-            {/* Settings button */}
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => setActiveSection('collegesettings')}
-              aria-label="Settings"
-              className="h-10 w-10 rounded-xl hover:bg-accent/10 transition-all p-0 touch-manipulation"
-            >
-              <Settings className="h-4 w-4" />
-            </Button>
           </div>
-
-          {/* Main Content */}
-          <Suspense fallback={<SectionLoader />}>{renderSection()}</Suspense>
-
-          {/* Command Palette */}
-          <CommandPalette
-            open={commandPaletteOpen}
-            onOpenChange={setCommandPaletteOpen}
-            onNavigate={handleNavigate}
-          />
         </div>
+
+        {/* Main Content */}
+        <div className="px-4 py-4">
+          <Suspense fallback={<SectionLoader />}>{renderSection()}</Suspense>
+        </div>
+
+        {/* Command Palette */}
+        <CommandPalette
+          open={commandPaletteOpen}
+          onOpenChange={setCommandPaletteOpen}
+          onNavigate={handleNavigate}
+        />
       </div>
     </CollegeSupabaseProvider>
   );

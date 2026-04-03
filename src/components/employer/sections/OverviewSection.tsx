@@ -1,10 +1,9 @@
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
+import BusinessCard from '@/components/business-hub/BusinessCard';
 import { useEmployerDashboardStats } from '@/hooks/useEmployerDashboardStats';
 import { useVacancyStats } from '@/hooks/useVacancies';
 import type { Section } from '@/pages/employer/EmployerDashboard';
-import { WorkerStatusCard } from '@/components/employer/WorkerStatusCard';
 import {
   Users,
   Briefcase,
@@ -16,12 +15,10 @@ import {
   Plus,
   FileText,
   Receipt,
-  UserSearch,
   Bell,
-  Loader2,
   TrendingUp,
-  Calendar,
-  Zap,
+  Cpu,
+  Loader2,
 } from 'lucide-react';
 
 interface OverviewSectionProps {
@@ -159,276 +156,130 @@ export function OverviewSection({ onNavigate }: OverviewSectionProps) {
   ];
 
   return (
-    <div className="space-y-6 animate-fade-in pb-6">
-      {/* Hero Section with Gradient Background */}
-      <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-elec-gray via-background to-elec-gray/50 border border-border/50 p-5 md:p-6">
-        {/* Decorative elements */}
-        <div className="absolute top-0 right-0 w-32 h-32 bg-elec-yellow/5 rounded-full blur-3xl" />
-        <div className="absolute bottom-0 left-0 w-24 h-24 bg-info/5 rounded-full blur-2xl" />
-
-        <div className="relative">
-          <div className="flex items-start justify-between">
-            <div>
-              <h1 className="text-2xl md:text-3xl font-bold text-foreground tracking-tight">
-                <span className="hidden sm:inline">{getGreeting()}</span>
-                <span className="sm:hidden">Dashboard</span>
-              </h1>
-              <div className="flex items-center gap-2 mt-1.5">
-                <Calendar className="h-3.5 w-3.5 text-muted-foreground" />
-                <p className="text-sm text-muted-foreground">{formatDate()}</p>
-              </div>
-            </div>
-            {/* Status indicator */}
-            <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-success/10 border border-success/20">
-              <div className="w-2 h-2 rounded-full bg-success animate-pulse" />
-              <span className="text-xs font-medium text-success">All systems go</span>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* My Status - Worker location/status card */}
-      <WorkerStatusCard />
-
-      {/* Quick Stats - Hidden on mobile for native app feel */}
-      <div className="hidden sm:grid grid-cols-4 gap-2 md:gap-3">
-        {statsConfig.map((stat, index) => {
+    <div className="space-y-5 animate-fade-in pb-6">
+      {/* KPI Strip — 4 stats in a row */}
+      <div className="grid grid-cols-4 gap-2">
+        {statsConfig.map((stat) => {
           const Icon = stat.icon;
           return (
-            <Card
+            <button
               key={stat.label}
-              className={`relative overflow-hidden border-2 ${stat.borderClass} bg-gradient-to-br ${stat.bgClass} cursor-pointer transition-all duration-300 hover:scale-[1.02] hover:shadow-lg active:scale-[0.98]`}
               onClick={() => onNavigate(stat.section)}
-              style={{ animationDelay: `${index * 50}ms` }}
+              className="relative flex flex-col items-center gap-1 p-3 rounded-xl bg-white/[0.03] border border-white/[0.08] touch-manipulation active:scale-[0.97] transition-transform"
             >
               {stat.pulse && (
-                <div className="absolute top-2 right-2">
-                  <span className="relative flex h-2.5 w-2.5">
-                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-warning opacity-75"></span>
-                    <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-warning"></span>
-                  </span>
-                </div>
+                <span className="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-amber-400 animate-pulse" />
               )}
-              <CardContent className="p-3 md:p-4 flex flex-col items-center text-center">
-                <div className={`p-2 md:p-2.5 rounded-xl bg-background/60 backdrop-blur-sm mb-2`}>
-                  <Icon className={`h-5 w-5 md:h-6 md:w-6 ${stat.textClass}`} />
-                </div>
-                <p className={`text-xl md:text-2xl font-bold ${stat.textClass} tabular-nums`}>
-                  {stat.value}
-                </p>
-                <p className="text-[10px] md:text-xs text-muted-foreground mt-0.5 font-medium">
-                  {stat.label}
-                </p>
-              </CardContent>
-            </Card>
+              <Icon className={`h-4 w-4 ${stat.textClass}`} />
+              <span className={`text-lg font-bold ${stat.textClass} tabular-nums`}>{stat.value}</span>
+              <span className="text-[9px] text-white/50 font-medium">{stat.label}</span>
+            </button>
           );
         })}
       </div>
 
-      {/* Needs Attention Card */}
+      {/* Needs Attention — compact */}
       {attentionItems.length > 0 && (
-        <Card className="border-2 border-warning/30 bg-gradient-to-r from-warning/5 via-background to-warning/5 overflow-hidden">
-          <CardHeader className="pb-2 pt-4 px-4">
-            <div className="flex items-center justify-between">
+        <div className="rounded-2xl border border-amber-500/20 bg-amber-500/[0.04] p-4 space-y-2">
+          <div className="flex items-center justify-between mb-1">
+            <div className="flex items-center gap-2">
+              <Bell className="h-4 w-4 text-amber-400" />
+              <span className="text-sm font-semibold text-white">Needs attention</span>
+            </div>
+            <span className="text-xs font-bold text-amber-400 bg-amber-400/10 px-2 py-0.5 rounded-full">
+              {attentionItems.length}
+            </span>
+          </div>
+          {attentionItems.slice(0, 3).map((item, index) => (
+            <button
+              key={`${item.type}-${index}`}
+              onClick={() => onNavigate(item.section)}
+              className="w-full flex items-center justify-between p-3 rounded-xl bg-white/[0.03] border border-white/[0.06] hover:border-amber-500/20 transition-colors text-left group touch-manipulation active:scale-[0.99]"
+            >
               <div className="flex items-center gap-2.5">
-                <div className="p-2 rounded-lg bg-warning/20">
-                  <Bell className="h-4 w-4 text-warning" />
-                </div>
-                <CardTitle className="text-base font-semibold">Needs Attention</CardTitle>
+                <div className={`w-1.5 h-1.5 rounded-full ${item.urgent ? 'bg-amber-400' : 'bg-white/30'}`} />
+                <span className="text-sm text-white">
+                  {item.count > 1 ? `${item.count} ${item.label}` : item.label}
+                </span>
               </div>
-              <Badge className="bg-warning/20 text-warning border-warning/30 font-semibold">
-                {attentionItems.length}
-              </Badge>
-            </div>
-          </CardHeader>
-          <CardContent className="px-4 pb-4 pt-1">
-            <div className="space-y-1.5">
-              {attentionItems.slice(0, 4).map((item, index) => (
-                <button
-                  key={`${item.type}-${index}`}
-                  onClick={() => onNavigate(item.section)}
-                  className="w-full flex items-center justify-between p-3 rounded-xl bg-background/60 hover:bg-background/90 border border-border/50 hover:border-warning/30 transition-all duration-200 text-left group touch-manipulation min-h-[52px] active:scale-[0.99]"
-                >
-                  <div className="flex items-center gap-3">
-                    <div
-                      className={`w-2.5 h-2.5 rounded-full ${item.urgent ? 'bg-warning' : 'bg-muted-foreground/50'}`}
-                    >
-                      {item.urgent && (
-                        <span className="absolute w-2.5 h-2.5 rounded-full bg-warning animate-ping opacity-75" />
-                      )}
-                    </div>
-                    <span className="text-sm font-medium">
-                      {item.count > 1 ? `${item.count} ${item.label}` : item.label}
-                    </span>
-                  </div>
-                  <ChevronRight className="h-4 w-4 text-muted-foreground group-hover:text-warning group-hover:translate-x-0.5 transition-all" />
-                </button>
-              ))}
-            </div>
-          </CardContent>
-        </Card>
+              <ChevronRight className="h-3.5 w-3.5 text-white/30 group-hover:text-amber-400 transition-colors" />
+            </button>
+          ))}
+        </div>
       )}
 
-      {/* Quick Actions */}
+      {/* Quick Actions — clean row */}
       <div>
-        <div className="flex items-center justify-between mb-3">
-          <h2 className="text-sm font-semibold text-foreground">Quick Actions</h2>
-          <Zap className="h-4 w-4 text-elec-yellow" />
-        </div>
-        <div className="grid grid-cols-4 gap-2 touch-grid">
+        <h2 className="text-xs font-medium text-white/50 uppercase tracking-wider mb-3">Quick Actions</h2>
+        <div className="grid grid-cols-4 gap-2">
           {[
-            { icon: Plus, label: 'New Job', color: 'elec-yellow', section: 'jobs' as Section },
-            { icon: FileText, label: 'Quote', color: 'info', section: 'quotes' as Section },
-            {
-              icon: isSoloTrader ? PoundSterling : UserSearch,
-              label: isSoloTrader ? 'Invoice' : 'Sparkies',
-              color: 'success',
-              section: (isSoloTrader ? 'invoices' : 'talentpool') as Section,
-              badge: !isSoloTrader && availableTalent > 0 ? availableTalent : undefined,
-            },
-            {
-              icon: Receipt,
-              label: 'Expense',
-              color: 'warning',
-              section: 'expenses' as Section,
-              badge: pendingExpenses > 0 ? pendingExpenses : undefined,
-            },
+            { icon: Plus, label: 'New Job', color: 'text-elec-yellow', bg: 'bg-elec-yellow/10 border-elec-yellow/20', section: 'jobs' as Section },
+            { icon: FileText, label: 'Quote', color: 'text-blue-400', bg: 'bg-blue-500/10 border-blue-500/20', section: 'quotes' as Section },
+            { icon: PoundSterling, label: 'Invoice', color: 'text-emerald-400', bg: 'bg-emerald-500/10 border-emerald-500/20', section: 'invoices' as Section },
+            { icon: Receipt, label: 'Expense', color: 'text-orange-400', bg: 'bg-orange-500/10 border-orange-500/20', section: 'expenses' as Section },
           ].map((action) => {
             const Icon = action.icon;
-            const colorMap: Record<string, string> = {
-              'elec-yellow':
-                'text-elec-yellow bg-elec-yellow/10 hover:bg-elec-yellow/20 border-elec-yellow/20 hover:border-elec-yellow/40',
-              info: 'text-info bg-info/10 hover:bg-info/20 border-info/20 hover:border-info/40',
-              success:
-                'text-success bg-success/10 hover:bg-success/20 border-success/20 hover:border-success/40',
-              warning:
-                'text-warning bg-warning/10 hover:bg-warning/20 border-warning/20 hover:border-warning/40',
-            };
             return (
               <button
                 key={action.label}
                 onClick={() => onNavigate(action.section)}
-                className={`relative flex flex-col items-center gap-1.5 p-3 rounded-xl border-2 transition-all duration-200 hover:scale-[1.02] active:scale-[0.98] touch-manipulation min-h-[72px] ${colorMap[action.color]}`}
+                className={`flex flex-col items-center gap-2 p-3 rounded-xl border ${action.bg} touch-manipulation active:scale-[0.95] transition-transform`}
               >
-                <Icon className="h-5 w-5" />
-                <span className="text-[10px] md:text-xs font-medium text-foreground">
-                  {action.label}
-                </span>
-                {action.badge && action.badge > 0 && (
-                  <span
-                    className={`absolute -top-1.5 -right-1.5 min-w-[18px] h-[18px] rounded-full text-[10px] font-bold flex items-center justify-center px-1 ${
-                      action.color === 'success'
-                        ? 'bg-success text-success-foreground'
-                        : 'bg-warning text-warning-foreground'
-                    }`}
-                  >
-                    {action.badge > 9 ? '9+' : action.badge}
-                  </span>
-                )}
+                <Icon className={`h-5 w-5 ${action.color}`} />
+                <span className="text-[10px] font-medium text-white">{action.label}</span>
               </button>
             );
           })}
         </div>
       </div>
 
-      {/* Main Hub Grid - 2x2 */}
+      {/* Main Hub Grid - 2x2 using BusinessCard */}
       <div>
         <div className="flex items-center justify-between mb-3">
-          <h2 className="text-sm font-semibold text-foreground">Your Hubs</h2>
+          <h2 className="text-xs font-medium text-white uppercase tracking-wider">Your Hubs</h2>
           <TrendingUp className="h-4 w-4 text-muted-foreground" />
         </div>
-        <div className="grid grid-cols-2 gap-3 touch-grid">
-          {/* People Hub */}
-          <Card
-            className="group relative overflow-hidden border-2 border-border/50 hover:border-elec-yellow/50 bg-gradient-to-br from-elec-gray/50 via-background to-elec-yellow/5 cursor-pointer transition-all duration-300 hover:shadow-xl hover:shadow-elec-yellow/5 touch-manipulation min-h-[140px]"
+        <div className="grid grid-cols-2 gap-3">
+          <BusinessCard
+            title="People"
+            description="Team, hiring, talent"
+            icon={Users}
             onClick={() => onNavigate('peoplehub')}
-          >
-            <div className="absolute inset-0 bg-gradient-to-br from-elec-yellow/0 to-elec-yellow/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-            <CardContent className="relative p-4">
-              <div className="flex items-center justify-between mb-3">
-                <div className="p-2.5 rounded-xl bg-elec-yellow/10 group-hover:bg-elec-yellow/20 transition-colors duration-300">
-                  <Users className="h-5 w-5 text-elec-yellow" />
-                </div>
-                <ChevronRight className="h-4 w-4 text-muted-foreground group-hover:text-elec-yellow group-hover:translate-x-0.5 transition-all duration-300" />
-              </div>
-              <h3 className="font-semibold text-foreground mb-1">People</h3>
-              <p className="text-xs text-muted-foreground line-clamp-2">Team, hiring, talent</p>
-              {!isSoloTrader && newApplications > 0 && (
-                <Badge className="mt-2.5 bg-warning/20 text-warning border-warning/30 text-xs font-medium">
-                  {newApplications} new apps
-                </Badge>
-              )}
-            </CardContent>
-          </Card>
-
-          {/* Jobs Hub */}
-          <Card
-            className="group relative overflow-hidden border-2 border-border/50 hover:border-info/50 bg-gradient-to-br from-elec-gray/50 via-background to-info/5 cursor-pointer transition-all duration-300 hover:shadow-xl hover:shadow-info/5 touch-manipulation min-h-[140px]"
+            accentColor="from-elec-yellow via-amber-400 to-orange-400"
+            iconColor="text-elec-yellow"
+            iconBg="bg-elec-yellow/10 border border-elec-yellow/20"
+            liveSubtitle={!isSoloTrader && newApplications > 0 ? `${newApplications} new apps` : undefined}
+          />
+          <BusinessCard
+            title="Jobs"
+            description="Projects & tracking"
+            icon={Briefcase}
             onClick={() => onNavigate('jobshub')}
-          >
-            <div className="absolute inset-0 bg-gradient-to-br from-info/0 to-info/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-            <CardContent className="relative p-4">
-              <div className="flex items-center justify-between mb-3">
-                <div className="p-2.5 rounded-xl bg-info/10 group-hover:bg-info/20 transition-colors duration-300">
-                  <Briefcase className="h-5 w-5 text-info" />
-                </div>
-                <ChevronRight className="h-4 w-4 text-muted-foreground group-hover:text-info group-hover:translate-x-0.5 transition-all duration-300" />
-              </div>
-              <h3 className="font-semibold text-foreground mb-1">Jobs</h3>
-              <p className="text-xs text-muted-foreground line-clamp-2">Projects & tracking</p>
-              {activeJobs > 0 && (
-                <Badge className="mt-2.5 bg-info/20 text-info border-info/30 text-xs font-medium">
-                  {activeJobs} active
-                </Badge>
-              )}
-            </CardContent>
-          </Card>
-
-          {/* Finance Hub */}
-          <Card
-            className="group relative overflow-hidden border-2 border-border/50 hover:border-success/50 bg-gradient-to-br from-elec-gray/50 via-background to-success/5 cursor-pointer transition-all duration-300 hover:shadow-xl hover:shadow-success/5 touch-manipulation min-h-[140px]"
+            accentColor="from-blue-500 via-blue-400 to-cyan-400"
+            iconColor="text-blue-400"
+            iconBg="bg-blue-500/10 border border-blue-500/20"
+            liveSubtitle={activeJobs > 0 ? `${activeJobs} active` : undefined}
+          />
+          <BusinessCard
+            title="Finance"
+            description="Quotes & invoices"
+            icon={PoundSterling}
             onClick={() => onNavigate('financehub')}
-          >
-            <div className="absolute inset-0 bg-gradient-to-br from-success/0 to-success/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-            <CardContent className="relative p-4">
-              <div className="flex items-center justify-between mb-3">
-                <div className="p-2.5 rounded-xl bg-success/10 group-hover:bg-success/20 transition-colors duration-300">
-                  <PoundSterling className="h-5 w-5 text-success" />
-                </div>
-                <ChevronRight className="h-4 w-4 text-muted-foreground group-hover:text-success group-hover:translate-x-0.5 transition-all duration-300" />
-              </div>
-              <h3 className="font-semibold text-foreground mb-1">Finance</h3>
-              <p className="text-xs text-muted-foreground line-clamp-2">Quotes & invoices</p>
-              {pendingExpenses > 0 && (
-                <Badge className="mt-2.5 bg-warning/20 text-warning border-warning/30 text-xs font-medium">
-                  {pendingExpenses} pending
-                </Badge>
-              )}
-            </CardContent>
-          </Card>
-
-          {/* Safety Hub */}
-          <Card
-            className="group relative overflow-hidden border-2 border-border/50 hover:border-orange-500/50 bg-gradient-to-br from-elec-gray/50 via-background to-orange-500/5 cursor-pointer transition-all duration-300 hover:shadow-xl hover:shadow-orange-500/5 touch-manipulation min-h-[140px]"
+            accentColor="from-emerald-500 via-green-400 to-teal-400"
+            iconColor="text-emerald-400"
+            iconBg="bg-emerald-500/10 border border-emerald-500/20"
+            liveSubtitle={pendingExpenses > 0 ? `${pendingExpenses} pending` : undefined}
+          />
+          <BusinessCard
+            title="HR & Safety"
+            description="RAMS & compliance"
+            icon={ShieldCheck}
             onClick={() => onNavigate('safetyhub')}
-          >
-            <div className="absolute inset-0 bg-gradient-to-br from-orange-500/0 to-orange-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-            <CardContent className="relative p-4">
-              <div className="flex items-center justify-between mb-3">
-                <div className="p-2.5 rounded-xl bg-orange-500/10 group-hover:bg-orange-500/20 transition-colors duration-300">
-                  <ShieldCheck className="h-5 w-5 text-orange-500" />
-                </div>
-                <ChevronRight className="h-4 w-4 text-muted-foreground group-hover:text-orange-500 group-hover:translate-x-0.5 transition-all duration-300" />
-              </div>
-              <h3 className="font-semibold text-foreground mb-1">HR & Safety</h3>
-              <p className="text-xs text-muted-foreground line-clamp-2">RAMS & compliance</p>
-              {expiringCerts > 0 && (
-                <Badge className="mt-2.5 bg-warning/20 text-warning border-warning/30 text-xs font-medium">
-                  {expiringCerts} alerts
-                </Badge>
-              )}
-            </CardContent>
-          </Card>
+            accentColor="from-orange-500 via-amber-400 to-red-400"
+            iconColor="text-orange-400"
+            iconBg="bg-orange-500/10 border border-orange-500/20"
+            liveSubtitle={expiringCerts > 0 ? `${expiringCerts} alerts` : undefined}
+          />
         </div>
       </div>
 

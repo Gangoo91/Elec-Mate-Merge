@@ -301,7 +301,7 @@ export default function AdminIncompleteSignup() {
               <div className="flex items-center justify-between mb-2">
                 <div className="flex items-center gap-2">
                   <Badge className="bg-amber-500 text-black text-[10px] px-2 border-0">
-                    V8 App Store
+                    V9 Quick Question
                   </Badge>
                   <span className="text-xs text-white font-medium">Launch announcement</span>
                 </div>
@@ -316,7 +316,7 @@ export default function AdminIncompleteSignup() {
                 </Button>
               </div>
               <p className="text-[11px] text-white leading-relaxed">
-                "We're on the App Store." — Download via Apple, trusted &amp; verified business
+                "Quick question" — Personal, asks why they didn't finish, App Store free trial
               </p>
             </div>
 
@@ -339,7 +339,7 @@ export default function AdminIncompleteSignup() {
             {/* Test email */}
             {showTestEmail && (
               <div className="p-3 rounded-xl bg-yellow-500/10 border border-yellow-500/20 space-y-2">
-                <p className="text-xs text-yellow-400 font-semibold">Send Test Email (V8)</p>
+                <p className="text-xs text-yellow-400 font-semibold">Send Test Email (V9)</p>
                 <div className="flex gap-2">
                   <Input
                     type="email"
@@ -495,7 +495,7 @@ export default function AdminIncompleteSignup() {
               <AdminEmptyState
                 icon={Mail}
                 title="No emails sent yet"
-                description="Send the App Store launch email to see results here."
+                description="Send the V9 email to see results here."
               />
             ) : (
               <div className="space-y-1.5 max-h-[300px] overflow-y-auto">
@@ -579,12 +579,12 @@ export default function AdminIncompleteSignup() {
           <AlertDialogContent className="max-w-[calc(100vw-2rem)] sm:max-w-lg rounded-2xl p-5 sm:p-6">
             <AlertDialogHeader className="space-y-3">
               <AlertDialogTitle className="text-base sm:text-lg leading-tight">
-                Send App Store launch email to all incomplete signups?
+                Send V9 email to all incomplete signups?
               </AlertDialogTitle>
               <AlertDialogDescription asChild>
                 <div className="text-sm leading-relaxed space-y-2">
                   <p className="text-white">
-                    Resets all previously sent users then sends the V8 App Store launch
+                    Resets all previously sent users then sends the V9 Quick Question launch
                     email to all {stats?.totalAbandoned || 108} incomplete signups.
                   </p>
                 </div>
@@ -615,7 +615,7 @@ export default function AdminIncompleteSignup() {
               <SheetHeader className="px-4 pb-3 border-b border-border">
                 <SheetTitle className="flex items-center gap-2 text-sm">
                   <FileText className="h-4 w-4 text-amber-400" />
-                  Preview: App Store Launch
+                  Preview: Quick Question
                   <Badge className="bg-amber-500/20 text-amber-400 text-[10px] border-0">
                     V8
                   </Badge>
@@ -626,7 +626,7 @@ export default function AdminIncompleteSignup() {
                   title="Email Preview"
                   sandbox="allow-same-origin"
                   className="w-full h-full border-0"
-                  srcDoc={`<!DOCTYPE html><html><head><meta name="color-scheme" content="dark"><style>body{margin:0;padding:40px 20px;font-family:-apple-system,system-ui,sans-serif;background:#000;color:#e2e8f0;text-align:center;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:90vh}h2{color:#fbbf24;margin-bottom:8px;font-size:24px}p{color:#fff;font-size:14px;line-height:1.6;max-width:300px}.badge{display:inline-block;margin-bottom:16px;padding:6px 16px;background:linear-gradient(135deg,#fbbf24,#f59e0b);border-radius:20px;font-size:11px;font-weight:800;color:#0f172a;text-transform:uppercase;letter-spacing:0.5px}</style></head><body><div class="badge">V8 — App Store Launch</div><h2>We're on the App Store.</h2><p>Send a test email to preview the full rendered template in your inbox.</p></body></html>`}
+                  srcDoc={`<!DOCTYPE html><html><head><meta name="color-scheme" content="dark"><style>body{margin:0;padding:40px 20px;font-family:-apple-system,system-ui,sans-serif;background:#000;color:#e2e8f0;text-align:center;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:90vh}h2{color:#fbbf24;margin-bottom:8px;font-size:24px}p{color:#fff;font-size:14px;line-height:1.6;max-width:300px}.badge{display:inline-block;margin-bottom:16px;padding:6px 16px;background:linear-gradient(135deg,#fbbf24,#f59e0b);border-radius:20px;font-size:11px;font-weight:800;color:#0f172a;text-transform:uppercase;letter-spacing:0.5px}</style></head><body><div class="badge">V9 — Quick Question</div><h2>We're on the App Store.</h2><p>Send a test email to preview the full rendered template in your inbox.</p></body></html>`}
                 />
               </div>
             </div>
