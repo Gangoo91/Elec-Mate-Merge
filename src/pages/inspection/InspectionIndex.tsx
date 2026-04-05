@@ -12,6 +12,9 @@ const EICForm = lazy(() => import('@/components/EICForm'));
 const MinorWorksForm = lazy(() => import('@/components/MinorWorksForm'));
 const MyReports = lazy(() => import('@/components/MyReports'));
 const LearningHub = lazy(() => import('@/components/LearningHub'));
+const CertificatesSection = lazy(() => import('@/components/dashboard/CertificatesSection'));
+const SpecialistSection = lazy(() => import('@/components/dashboard/SpecialistSection'));
+const LabelsWarningsSection = lazy(() => import('@/components/dashboard/LabelsWarningsSection'));
 
 // Skeleton loader for lazy components
 const SectionLoader = SectionSkeleton;
@@ -177,6 +180,17 @@ const InspectionIndex = () => {
             onEditReport={handleEditReport}
           />
         );
+      case 'certificates':
+        return (
+          <CertificatesSection
+            onNavigate={handleNavigate}
+            onBack={() => handleNavigate('dashboard')}
+          />
+        );
+      case 'specialist':
+        return <SpecialistSection onBack={() => handleNavigate('dashboard')} />;
+      case 'labels-warnings':
+        return <LabelsWarningsSection onBack={() => handleNavigate('dashboard')} />;
       case 'learning-hub':
         return <LearningHub onBack={() => handleNavigate('dashboard')} />;
       case 'notifications':
