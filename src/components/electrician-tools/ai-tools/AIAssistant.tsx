@@ -20,6 +20,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import ReactMarkdown from 'react-markdown';
 import { processElectricalText } from '@/lib/text-processor';
 import { EnhancedTabContent } from './EnhancedTabContent';
+import { copyToClipboard } from '@/utils/clipboard';
 
 interface AIResponse {
   quick_answer: string;
@@ -41,7 +42,7 @@ const AIAssistant = () => {
 
     const fullText = `QUICK ANSWER:\n${aiResponse.quick_answer}\n\nTECHNICAL ANSWER:\n${aiResponse.technical_answer}\n\nREGULATIONS:\n${aiResponse.regulations}\n\nPRACTICAL GUIDANCE:\n${aiResponse.practical_guidance}`;
 
-    navigator.clipboard.writeText(fullText);
+    copyToClipboard(fullText);
     toast({
       title: 'Copied to Clipboard',
       description: 'Full AI response copied successfully',

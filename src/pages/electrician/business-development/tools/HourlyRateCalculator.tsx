@@ -23,6 +23,8 @@ import {
   CALCULATOR_CONFIG,
 } from '@/components/calculators/shared';
 import { useToast } from '@/hooks/use-toast';
+import { useHaptic } from '@/hooks/useHaptic';
+import { storageGetJSONSync, storageSetJSONSync } from '@/utils/storage';
 import { Helmet } from 'react-helmet';
 import { SmartBackButton } from '@/components/ui/smart-back-button';
 import { ResponsiveContainer, BarChart, Bar, XAxis, YAxis, Tooltip, CartesianGrid } from 'recharts';
@@ -52,6 +54,7 @@ interface RateInputs {
 const HourlyRateCalculator = () => {
   const config = CALCULATOR_CONFIG['business'];
   const { toast } = useToast();
+  const haptic = useHaptic();
 
   const [inputs, setInputs] = useState<RateInputs>({
     annualSalary: '35000',
@@ -89,6 +92,7 @@ const HourlyRateCalculator = () => {
   };
 
   const calculateRate = () => {
+    haptic.light();
     setCalculated(true);
     toast({
       title: 'Rate Calculated',
@@ -113,8 +117,8 @@ const HourlyRateCalculator = () => {
         dayRate,
       },
     };
-    const existing = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
-    localStorage.setItem(STORAGE_KEY, JSON.stringify([payload, ...existing].slice(0, 20)));
+    const existing = storageGetJSONSync<any[]>(STORAGE_KEY, []);
+    storageSetJSONSync(STORAGE_KEY, [payload, ...existing].slice(0, 20));
     toast({
       title: 'Scenario saved',
       description: 'Saved locally on this device.',

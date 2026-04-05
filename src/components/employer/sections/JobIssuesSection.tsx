@@ -79,15 +79,15 @@ const severityColors: Record<IssueSeverity, string> = {
   Critical: 'bg-destructive text-destructive-foreground',
   High: 'bg-destructive/80 text-destructive-foreground',
   Medium: 'bg-warning text-warning-foreground',
-  Low: 'bg-muted text-muted-foreground',
+  Low: 'bg-muted text-white/60',
 };
 
 const statusColors: Record<IssueStatus, string> = {
   Open: 'bg-destructive/20 text-destructive',
   'In Progress': 'bg-warning/20 text-warning',
   Resolved: 'bg-success/20 text-success',
-  Closed: 'bg-muted text-muted-foreground',
-  Rejected: 'bg-muted text-muted-foreground',
+  Closed: 'bg-muted text-white/60',
+  Rejected: 'bg-muted text-white/60',
 };
 
 function JobIssuesSkeleton() {
@@ -241,7 +241,7 @@ export function JobIssuesSection() {
         <div className="flex items-center justify-between">
           <div>
             <h1 className="text-xl md:text-2xl font-bold text-foreground">Live Issues</h1>
-            <p className="text-sm text-muted-foreground">
+            <p className="text-sm text-white/60">
               Track and resolve job blockers in real-time
             </p>
           </div>
@@ -253,7 +253,7 @@ export function JobIssuesSection() {
 
         <div className="relative">
           {!searchQuery && (
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none" />
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white/60 pointer-events-none" />
           )}
           <Input
             placeholder="Search issues..."
@@ -277,7 +277,7 @@ export function JobIssuesSection() {
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-xl md:text-2xl font-bold text-destructive">{stats?.open || 0}</p>
-                <p className="text-xs md:text-sm text-muted-foreground">Open</p>
+                <p className="text-xs md:text-sm text-white/60">Open</p>
               </div>
               <AlertCircle className="h-6 w-6 md:h-8 md:w-8 text-destructive opacity-70" />
             </div>
@@ -296,7 +296,7 @@ export function JobIssuesSection() {
                 <p className="text-xl md:text-2xl font-bold text-warning">
                   {stats?.inProgress || 0}
                 </p>
-                <p className="text-xs md:text-sm text-muted-foreground">In Progress</p>
+                <p className="text-xs md:text-sm text-white/60">In Progress</p>
               </div>
               <Clock className="h-6 w-6 md:h-8 md:w-8 text-warning opacity-70" />
             </div>
@@ -313,7 +313,7 @@ export function JobIssuesSection() {
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-xl md:text-2xl font-bold text-success">{stats?.resolved || 0}</p>
-                <p className="text-xs md:text-sm text-muted-foreground">Resolved</p>
+                <p className="text-xs md:text-sm text-white/60">Resolved</p>
               </div>
               <CheckCircle className="h-6 w-6 md:h-8 md:w-8 text-success opacity-70" />
             </div>
@@ -326,7 +326,7 @@ export function JobIssuesSection() {
                 <p className="text-xl md:text-2xl font-bold text-destructive">
                   {(stats?.critical || 0) + (stats?.high || 0)}
                 </p>
-                <p className="text-xs md:text-sm text-muted-foreground">High Priority</p>
+                <p className="text-xs md:text-sm text-white/60">High Priority</p>
               </div>
               <AlertTriangle className="h-6 w-6 md:h-8 md:w-8 text-destructive opacity-70" />
             </div>
@@ -340,7 +340,7 @@ export function JobIssuesSection() {
           <CardContent className="p-6 md:p-8 text-center">
             <CheckCircle className="h-10 w-10 md:h-12 md:w-12 text-success mx-auto mb-4" />
             <h3 className="text-base md:text-lg font-semibold text-foreground">No issues found</h3>
-            <p className="text-sm text-muted-foreground mt-1 mb-4">
+            <p className="text-sm text-white/60 mt-1 mb-4">
               {statusFilter
                 ? `No ${statusFilter.toLowerCase()} issues`
                 : 'All clear! No issues reported yet.'}
@@ -398,11 +398,11 @@ export function JobIssuesSection() {
                         </Badge>
                       </div>
                       {issue.description && (
-                        <p className="text-xs text-muted-foreground mt-1 line-clamp-2">
+                        <p className="text-xs text-white/60 mt-1 line-clamp-2">
                           {issue.description}
                         </p>
                       )}
-                      <div className="flex items-center gap-3 mt-2 text-[10px] text-muted-foreground flex-wrap">
+                      <div className="flex items-center gap-3 mt-2 text-[10px] text-white/60 flex-wrap">
                         <span className="flex items-center gap-1">
                           <Wrench className="h-3 w-3" />
                           {issue.job?.title || 'No job'}

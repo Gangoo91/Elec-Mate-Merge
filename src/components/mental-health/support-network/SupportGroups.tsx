@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { openExternalUrl } from '@/utils/open-external-url';
 import { Users, Clock, Monitor, ExternalLink, ChevronDown } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
@@ -23,7 +24,7 @@ const SupportGroups = ({ groups, defaultExpanded = true }: SupportGroupsProps) =
 
   const handleJoinGroup = (group: SupportGroup) => {
     if (group.url) {
-      window.open(group.url, '_blank', 'noopener,noreferrer');
+      openExternalUrl(group.url);
     } else {
       toast.success('Request sent!', {
         description: "We'll contact you with details about joining the support group.",

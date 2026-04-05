@@ -125,7 +125,7 @@ export function AutomationsSection() {
             <Zap className="h-6 w-6 text-elec-yellow" />
             Workflow Automations
           </h1>
-          <p className="text-muted-foreground text-sm">
+          <p className="text-white/60 text-sm">
             Automate repetitive tasks and stay on top of compliance
           </p>
         </div>
@@ -141,7 +141,7 @@ export function AutomationsSection() {
           <CardContent className="p-4">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-xs text-muted-foreground">Active Rules</p>
+                <p className="text-xs text-white/60">Active Rules</p>
                 <p className="text-2xl font-bold text-foreground">{stats?.activeRules || 0}</p>
               </div>
               <div className="h-10 w-10 rounded-full bg-elec-yellow/20 flex items-center justify-center">
@@ -155,11 +155,11 @@ export function AutomationsSection() {
           <CardContent className="p-4">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-xs text-muted-foreground">Total Executions</p>
+                <p className="text-xs text-white/60">Total Executions</p>
                 <p className="text-2xl font-bold text-foreground">{stats?.totalExecutions || 0}</p>
               </div>
               <div className="h-10 w-10 rounded-full bg-muted flex items-center justify-center">
-                <Activity className="h-5 w-5 text-muted-foreground" />
+                <Activity className="h-5 w-5 text-white/60" />
               </div>
             </div>
           </CardContent>
@@ -169,7 +169,7 @@ export function AutomationsSection() {
           <CardContent className="p-4">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-xs text-muted-foreground">Success Rate</p>
+                <p className="text-xs text-white/60">Success Rate</p>
                 <p className="text-2xl font-bold text-green-600">
                   {stats?.totalExecutions
                     ? Math.round((stats.successfulExecutions / stats.totalExecutions) * 100)
@@ -188,11 +188,11 @@ export function AutomationsSection() {
           <CardContent className="p-4">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-xs text-muted-foreground">Actions This Week</p>
+                <p className="text-xs text-white/60">Actions This Week</p>
                 <p className="text-2xl font-bold text-foreground">{stats?.actionsThisWeek || 0}</p>
               </div>
               <div className="h-10 w-10 rounded-full bg-muted flex items-center justify-center">
-                <History className="h-5 w-5 text-muted-foreground" />
+                <History className="h-5 w-5 text-white/60" />
               </div>
             </div>
           </CardContent>
@@ -258,8 +258,8 @@ export function AutomationsSection() {
             {filteredRules?.length === 0 && (
               <Card className="border-dashed">
                 <CardContent className="p-8 text-center">
-                  <Zap className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
-                  <p className="text-muted-foreground">No automation rules found</p>
+                  <Zap className="h-12 w-12 text-white/60 mx-auto mb-4" />
+                  <p className="text-white/60">No automation rules found</p>
                 </CardContent>
               </Card>
             )}
@@ -294,9 +294,9 @@ export function AutomationsSection() {
                 </ScrollArea>
               ) : (
                 <div className="p-8 text-center">
-                  <History className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
-                  <p className="text-muted-foreground">No automation logs yet</p>
-                  <p className="text-sm text-muted-foreground mt-1">
+                  <History className="h-12 w-12 text-white/60 mx-auto mb-4" />
+                  <p className="text-white/60">No automation logs yet</p>
+                  <p className="text-sm text-white/60 mt-1">
                     Logs will appear here when automations run
                   </p>
                 </div>
@@ -356,10 +356,10 @@ function AutomationRuleCard({
                   </Badge>
                 )}
               </div>
-              <p className="text-sm text-muted-foreground line-clamp-1 mt-0.5">
+              <p className="text-sm text-white/60 line-clamp-1 mt-0.5">
                 {rule.description}
               </p>
-              <div className="flex items-center gap-3 mt-2 text-xs text-muted-foreground">
+              <div className="flex items-center gap-3 mt-2 text-xs text-white/60">
                 <span className="flex items-center gap-1">
                   {getTriggerIcon(rule.trigger_type)}
                   {rule.trigger_config?.description || triggerInfo.label}
@@ -434,7 +434,7 @@ function AutomationLogItem({ log, rules, getStatusIcon }: AutomationLogItemProps
               {log.status}
             </Badge>
           </div>
-          <p className="text-xs text-muted-foreground mt-1">
+          <p className="text-xs text-white/60 mt-1">
             {log.records_processed} records processed • {successfulActions}/{totalActions} actions
             {log.duration_ms && ` • ${log.duration_ms}ms`}
           </p>
@@ -442,7 +442,7 @@ function AutomationLogItem({ log, rules, getStatusIcon }: AutomationLogItemProps
             <p className="text-xs text-destructive mt-1">{log.error_message}</p>
           )}
         </div>
-        <span className="text-xs text-muted-foreground whitespace-nowrap">
+        <span className="text-xs text-white/60 whitespace-nowrap">
           {formatDistanceToNow(new Date(log.executed_at), { addSuffix: true })}
         </span>
       </div>

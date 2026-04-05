@@ -83,7 +83,7 @@ export const VersionHistorySheet: React.FC<VersionHistorySheetProps> = ({
                 <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-elec-yellow" />
               </div>
             ) : versions.length === 0 ? (
-              <div className="text-center py-12 text-muted-foreground text-sm">
+              <div className="text-center py-12 text-white text-sm">
                 {reportId
                   ? 'No version history available'
                   : 'Save your report first to see version history'}
@@ -132,10 +132,10 @@ export const VersionHistorySheet: React.FC<VersionHistorySheetProps> = ({
                           </span>
                         )}
                       </div>
-                      <p className="text-xs text-muted-foreground mt-0.5">
+                      <p className="text-xs text-white mt-0.5">
                         {version.certificate_number}
                       </p>
-                      <p className="text-xs text-muted-foreground">
+                      <p className="text-xs text-white">
                         {formatDate(version.created_at)}
                       </p>
                     </div>

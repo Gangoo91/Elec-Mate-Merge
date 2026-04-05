@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { copyToClipboard } from '@/utils/clipboard';
 import { Send, Copy, Check, Loader2, Mail, MessageSquare } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -95,7 +96,7 @@ export const CompletionShareButton = ({ visit }: CompletionShareButtonProps) => 
 
   const handleCopy = async () => {
     if (!shareUrl) return;
-    await navigator.clipboard.writeText(shareUrl);
+    await copyToClipboard(shareUrl);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
     toast({ title: 'Link copied to clipboard' });
@@ -115,7 +116,7 @@ export const CompletionShareButton = ({ visit }: CompletionShareButtonProps) => 
     const body = encodeURIComponent(
       `Hi ${visit.customerName || ''},\n\nThe electrical work at your property has been completed. Please review and sign off at the link below:\n\n${shareUrl}\n\nThank you.`
     );
-    window.open(`mailto:${visit.customerEmail || ''}?subject=${subject}&body=${body}`);
+    openExternalUrl(`mailto:${visit.customerEmail || ''}?subject=${subject}&body=${body}`);
   };
 
   if (!shareUrl) {

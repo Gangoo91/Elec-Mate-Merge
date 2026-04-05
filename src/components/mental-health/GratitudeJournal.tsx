@@ -3,6 +3,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { ArrowLeft, Sparkles, Plus, Check, Calendar, Heart } from 'lucide-react';
+import { storageGetJSONSync, storageSetJSONSync } from '@/utils/storage';
 
 interface GratitudeEntry {
   date: string;
@@ -26,10 +27,9 @@ const GratitudeJournal = ({ onClose }: GratitudeJournalProps) => {
   ];
 
   useEffect(() => {
-    // Load entries from localStorage
-    const stored = localStorage.getItem('elec-mate-gratitude');
-    if (stored) {
-      const parsed = JSON.parse(stored);
+    // Load entries from storage
+    const parsed = storageGetJSONSync<GratitudeEntry[]>('elec-mate-gratitude', []);
+    if (parsed.length > 0) {
       setEntries(parsed);
 
       // Check if we have an entry for today
@@ -60,7 +60,7 @@ const GratitudeJournal = ({ onClose }: GratitudeJournalProps) => {
 
     const updatedEntries = [newEntry, ...entries.filter((e) => e.date !== today)].slice(0, 30);
     setEntries(updatedEntries);
-    localStorage.setItem('elec-mate-gratitude', JSON.stringify(updatedEntries));
+    storageSetJSONSync('elec-mate-gratitude', updatedEntries);
 
     setTodayEntry(newEntry);
     setStep('complete');

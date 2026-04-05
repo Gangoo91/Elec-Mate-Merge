@@ -9,6 +9,7 @@ import {
   CarouselPrevious,
 } from '@/components/ui/carousel';
 import { ExternalLink, TrendingDown, Star } from 'lucide-react';
+import { openExternalUrl } from '@/utils/open-external-url';
 
 interface MaterialDeal {
   id: string | number;
@@ -139,7 +140,7 @@ const MaterialTopDiscounts = ({ deals }: MaterialTopDiscountsProps) => {
                     {/* Compact button */}
                     <Button
                       size="sm"
-                      onClick={() => window.open(getProductUrl(deal), '_blank')}
+                      onClick={() => openExternalUrl(getProductUrl(deal))}
                       className="w-full h-7 text-[10px] border border-elec-yellow text-elec-yellow bg-transparent hover:bg-elec-yellow hover:text-background transition-colors px-2"
                     >
                       <ExternalLink className="w-2.5 h-2.5 mr-1" />

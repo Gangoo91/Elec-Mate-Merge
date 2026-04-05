@@ -129,7 +129,7 @@ export function QuotesInvoicesSection() {
           <div className="min-w-0">
             <p className="truncate max-w-[200px]">{item.description || '-'}</p>
             {itemCount > 0 && (
-              <p className="text-xs text-muted-foreground">
+              <p className="text-xs text-white/60">
                 {itemCount} line item{itemCount > 1 ? 's' : ''}
               </p>
             )}
@@ -320,7 +320,7 @@ export function QuotesInvoicesSection() {
       <div className="sticky top-0 z-10 bg-background/95 backdrop-blur-sm pb-3 -mx-4 px-4 md:mx-0 md:px-0 pt-1">
         <div className="relative">
           {!searchQuery && (
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none" />
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white/60 pointer-events-none" />
           )}
           <Input
             placeholder="Search quotes & invoices..."
@@ -378,7 +378,7 @@ export function QuotesInvoicesSection() {
           <CardContent className="p-4">
             <div className="flex items-start justify-between">
               <div className="space-y-1">
-                <p className="text-xs text-muted-foreground font-medium uppercase tracking-wide">
+                <p className="text-xs text-white/60 font-medium uppercase tracking-wide">
                   Total Quoted
                 </p>
                 <p className="text-2xl font-bold text-elec-yellow">
@@ -397,16 +397,16 @@ export function QuotesInvoicesSection() {
           <CardContent className="p-4">
             <div className="flex items-start justify-between">
               <div className="space-y-1">
-                <p className="text-xs text-muted-foreground font-medium uppercase tracking-wide">
+                <p className="text-xs text-white/60 font-medium uppercase tracking-wide">
                   Total Invoiced
                 </p>
                 <p className="text-2xl font-bold text-foreground">
                   £{(totalInvoiced / 1000).toFixed(0)}k
                 </p>
-                <p className="text-xs text-muted-foreground">{invoices.length} invoices</p>
+                <p className="text-xs text-white/60">{invoices.length} invoices</p>
               </div>
               <div className="h-10 w-10 rounded-full bg-muted flex items-center justify-center">
-                <Receipt className="h-5 w-5 text-muted-foreground" />
+                <Receipt className="h-5 w-5 text-white/60" />
               </div>
             </div>
           </CardContent>
@@ -416,7 +416,7 @@ export function QuotesInvoicesSection() {
           <CardContent className="p-4">
             <div className="flex items-start justify-between">
               <div className="space-y-1">
-                <p className="text-xs text-muted-foreground font-medium uppercase tracking-wide">
+                <p className="text-xs text-white/60 font-medium uppercase tracking-wide">
                   Paid
                 </p>
                 <p className="text-2xl font-bold text-success">
@@ -440,13 +440,13 @@ export function QuotesInvoicesSection() {
           <CardContent className="p-4">
             <div className="flex items-start justify-between">
               <div className="space-y-1">
-                <p className="text-xs text-muted-foreground font-medium uppercase tracking-wide">
+                <p className="text-xs text-white/60 font-medium uppercase tracking-wide">
                   Overdue
                 </p>
                 <p
                   className={cn(
                     'text-2xl font-bold',
-                    overdueAmount > 0 ? 'text-destructive' : 'text-muted-foreground'
+                    overdueAmount > 0 ? 'text-destructive' : 'text-white/60'
                   )}
                 >
                   £{(overdueAmount / 1000).toFixed(0)}k
@@ -464,7 +464,7 @@ export function QuotesInvoicesSection() {
                 <AlertTriangle
                   className={cn(
                     'h-5 w-5',
-                    overdueAmount > 0 ? 'text-destructive' : 'text-muted-foreground'
+                    overdueAmount > 0 ? 'text-destructive' : 'text-white/60'
                   )}
                 />
               </div>
@@ -508,9 +508,9 @@ export function QuotesInvoicesSection() {
               </div>
             ) : (
               <Card className="p-8 text-center">
-                <FileText className="h-12 w-12 mx-auto text-muted-foreground/50 mb-3" />
-                <p className="text-muted-foreground font-medium">No quotes found</p>
-                <p className="text-sm text-muted-foreground mt-1">
+                <FileText className="h-12 w-12 mx-auto text-white/60/50 mb-3" />
+                <p className="text-white/60 font-medium">No quotes found</p>
+                <p className="text-sm text-white/60 mt-1">
                   Create your first quote to get started
                 </p>
                 <Button className="mt-4 h-12 px-6" onClick={() => setShowCreateQuote(true)}>
@@ -540,9 +540,9 @@ export function QuotesInvoicesSection() {
               </div>
             ) : (
               <Card className="p-8 text-center">
-                <Receipt className="h-12 w-12 mx-auto text-muted-foreground/50 mb-3" />
-                <p className="text-muted-foreground font-medium">No invoices found</p>
-                <p className="text-sm text-muted-foreground mt-1">
+                <Receipt className="h-12 w-12 mx-auto text-white/60/50 mb-3" />
+                <p className="text-white/60 font-medium">No invoices found</p>
+                <p className="text-sm text-white/60 mt-1">
                   Create your first invoice to get started
                 </p>
                 <Button className="mt-4 h-12 px-6" onClick={() => setShowCreateInvoice(true)}>

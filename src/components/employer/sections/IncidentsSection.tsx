@@ -180,7 +180,7 @@ export function IncidentsSection() {
       case 'submitted':
         return 'bg-warning/10 text-warning';
       default:
-        return 'bg-muted/50 text-muted-foreground';
+        return 'bg-muted/50 text-white/60';
     }
   };
 
@@ -277,7 +277,7 @@ export function IncidentsSection() {
       <div className="flex flex-col sm:flex-row gap-3">
         <div className="relative flex-1">
           {!searchQuery && (
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none" />
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white/60 pointer-events-none" />
           )}
           <Input
             placeholder="Search incidents..."
@@ -318,7 +318,7 @@ export function IncidentsSection() {
           <Card className="border-dashed">
             <CardContent className="p-8 text-center">
               <Shield className="h-12 w-12 text-success/40 mx-auto mb-4" />
-              <p className="text-muted-foreground">No incidents found</p>
+              <p className="text-white/60">No incidents found</p>
               <Button variant="outline" className="mt-4" onClick={() => setShowCreateSheet(true)}>
                 <Plus className="h-4 w-4 mr-2" />
                 Report First Incident
@@ -345,11 +345,11 @@ export function IncidentsSection() {
                         <p className="font-medium text-foreground text-sm md:text-base truncate">
                           {incident.title}
                         </p>
-                        <p className="text-xs text-muted-foreground truncate">
+                        <p className="text-xs text-white/60 truncate">
                           {INCIDENT_TYPES.find((t) => t.value === incident.incident_type)?.label} •{' '}
                           {incident.location}
                         </p>
-                        <div className="flex items-center gap-2 mt-1 text-xs text-muted-foreground">
+                        <div className="flex items-center gap-2 mt-1 text-xs text-white/60">
                           <Calendar className="h-3 w-3" />
                           {format(new Date(incident.date_occurred), 'dd MMM yyyy')}
                         </div>
@@ -364,7 +364,7 @@ export function IncidentsSection() {
                       <Badge className={`text-xs ${getStatusColor(incident.status)}`}>
                         {incident.status.replace('_', ' ')}
                       </Badge>
-                      <ChevronRight className="h-4 w-4 text-muted-foreground" />
+                      <ChevronRight className="h-4 w-4 text-white/60" />
                     </div>
                   </div>
                 </CardContent>
@@ -450,7 +450,7 @@ export function IncidentsSection() {
             <div className="space-y-2">
               <Label>Location</Label>
               <div className="relative">
-                <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white/60" />
                 <Input
                   value={formData.location}
                   onChange={(e) => setFormData((prev) => ({ ...prev, location: e.target.value }))}
@@ -490,7 +490,7 @@ export function IncidentsSection() {
             <div className="space-y-2">
               <Label>Witnesses</Label>
               <div className="relative">
-                <User className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                <User className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white/60" />
                 <Input
                   value={formData.witnesses}
                   onChange={(e) => setFormData((prev) => ({ ...prev, witnesses: e.target.value }))}
@@ -563,20 +563,20 @@ export function IncidentsSection() {
 
                 <div className="space-y-4">
                   <div>
-                    <Label className="text-muted-foreground">Description</Label>
+                    <Label className="text-white/60">Description</Label>
                     <p className="mt-1">{selectedIncident.description}</p>
                   </div>
 
                   <div className="grid grid-cols-2 gap-4">
                     <div>
-                      <Label className="text-muted-foreground">Location</Label>
+                      <Label className="text-white/60">Location</Label>
                       <p className="mt-1 flex items-center gap-2">
                         <MapPin className="h-4 w-4" />
                         {selectedIncident.location}
                       </p>
                     </div>
                     <div>
-                      <Label className="text-muted-foreground">Date Occurred</Label>
+                      <Label className="text-white/60">Date Occurred</Label>
                       <p className="mt-1 flex items-center gap-2">
                         <Calendar className="h-4 w-4" />
                         {format(new Date(selectedIncident.date_occurred), 'dd MMM yyyy HH:mm')}
@@ -586,14 +586,14 @@ export function IncidentsSection() {
 
                   {selectedIncident.immediate_action_taken && (
                     <div>
-                      <Label className="text-muted-foreground">Immediate Action Taken</Label>
+                      <Label className="text-white/60">Immediate Action Taken</Label>
                       <p className="mt-1">{selectedIncident.immediate_action_taken}</p>
                     </div>
                   )}
 
                   {selectedIncident.witnesses && (
                     <div>
-                      <Label className="text-muted-foreground">Witnesses</Label>
+                      <Label className="text-white/60">Witnesses</Label>
                       <p className="mt-1">{selectedIncident.witnesses}</p>
                     </div>
                   )}
@@ -601,7 +601,7 @@ export function IncidentsSection() {
 
                 {/* Status Actions */}
                 <div className="border-t pt-4">
-                  <Label className="text-muted-foreground mb-2 block">Update Status</Label>
+                  <Label className="text-white/60 mb-2 block">Update Status</Label>
                   <div className="flex flex-wrap gap-2">
                     {STATUS_OPTIONS.filter((s) => s.value !== selectedIncident.status).map(
                       (option) => (

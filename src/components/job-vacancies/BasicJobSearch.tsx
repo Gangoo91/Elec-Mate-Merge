@@ -13,6 +13,7 @@ import {
   Loader2,
   AlertCircle,
 } from 'lucide-react';
+import { openExternalUrl } from '@/utils/open-external-url';
 import { toast } from '@/hooks/use-toast';
 import { formatDistanceToNow } from 'date-fns';
 import { LocationService } from '@/services/locationService';
@@ -163,7 +164,7 @@ const BasicJobSearch = () => {
   };
 
   const handleApply = (jobId: string, url: string) => {
-    window.open(url, '_blank', 'noopener,noreferrer');
+    openExternalUrl(url);
 
     toast({
       title: 'Application Opened',

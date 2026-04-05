@@ -2,6 +2,7 @@ import { ExternalLink, CheckCircle2, FileText } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { PORTAL_LINKS, PortalType } from '@/utils/portalLinks';
 import { useToast } from '@/hooks/use-toast';
+import { openExternalUrl } from '@/utils/open-external-url';
 
 interface QuickActionButtonsProps {
   notificationId: string;
@@ -27,7 +28,7 @@ export const QuickActionButtons = ({
 
   const handlePortalOpen = (portalType: PortalType, submittedField: string) => {
     const portal = PORTAL_LINKS[portalType];
-    window.open(portal.url, '_blank', 'noopener,noreferrer');
+    openExternalUrl(portal.url);
 
     // Update submission timestamp
     const now = new Date().toISOString();

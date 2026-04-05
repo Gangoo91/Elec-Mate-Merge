@@ -1,6 +1,7 @@
 import React, { Component, ErrorInfo, ReactNode } from 'react';
 import { AlertTriangle, RefreshCw, Home, Copy } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { copyToClipboard } from '@/utils/clipboard';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 
 interface Props {
@@ -111,7 +112,7 @@ class ErrorBoundary extends Component<Props, State> {
       '',
       `Component Stack: ${this.state.errorInfo?.componentStack || 'N/A'}`,
     ].join('\n');
-    navigator.clipboard.writeText(errorText);
+    copyToClipboard(errorText);
   };
 
   public render() {

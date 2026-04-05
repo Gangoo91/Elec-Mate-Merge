@@ -3,6 +3,7 @@ import { useFlashcardProgress } from './useFlashcardProgress';
 import { useStudyStreak } from './useStudyStreak';
 import { flashcardSetDefinitions, flashcardSetMeta } from '@/data/flashcards';
 import { FLASHCARD_ACHIEVEMENTS, type FlashcardAchievementDef } from '@/data/flashcardAchievements';
+import { storageGetJSONSync, storageSetJSONSync } from '@/utils/storage';
 
 export interface FlashcardAchievementStatus {
   def: FlashcardAchievementDef;
@@ -22,26 +23,16 @@ interface SessionReport {
 
 const STORAGE_KEY = 'elec-mate:fc-achievements';
 
-/** Read persisted session-level flags from localStorage */
+/** Read persisted session-level flags from storage */
 function readSessionFlags(): {
   perfectSession: boolean;
   quickReview: boolean;
 } {
-  try {
-    const raw = localStorage.getItem(STORAGE_KEY);
-    if (raw) return JSON.parse(raw);
-  } catch {
-    /* ignore */
-  }
-  return { perfectSession: false, quickReview: false };
+  return storageGetJSONSync(STORAGE_KEY, { perfectSession: false, quickReview: false });
 }
 
 function writeSessionFlags(flags: { perfectSession: boolean; quickReview: boolean }) {
-  try {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(flags));
-  } catch {
-    /* ignore */
-  }
+  storageSetJSONSync(STORAGE_KEY, flags);
 }
 
 export function useFlashcardAchievements() {

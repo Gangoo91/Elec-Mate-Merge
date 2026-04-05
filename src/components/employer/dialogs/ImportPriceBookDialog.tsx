@@ -221,9 +221,9 @@ export function ImportPriceBookDialog({ open, onOpenChange }: ImportPriceBookDia
                 onChange={handleFileChange}
                 className="hidden"
               />
-              <Upload className="h-10 w-10 mx-auto text-muted-foreground mb-3" />
+              <Upload className="h-10 w-10 mx-auto text-white/60 mb-3" />
               <p className="text-sm font-medium">{file ? file.name : 'Tap to select file'}</p>
-              <p className="text-xs text-muted-foreground mt-1">
+              <p className="text-xs text-white/60 mt-1">
                 CSV or Excel with name & price columns
               </p>
             </div>
@@ -258,9 +258,9 @@ export function ImportPriceBookDialog({ open, onOpenChange }: ImportPriceBookDia
                       min={0}
                       max={500}
                     />
-                    <span className="text-sm text-muted-foreground">%</span>
+                    <span className="text-sm text-white/60">%</span>
                   </div>
-                  <p className="text-xs text-muted-foreground">
+                  <p className="text-xs text-white/60">
                     Sell price = Buy price + {markup}%
                   </p>
                 </div>
@@ -275,7 +275,7 @@ export function ImportPriceBookDialog({ open, onOpenChange }: ImportPriceBookDia
                         className="flex justify-between items-center p-2 bg-muted/50 rounded-lg text-sm"
                       >
                         <span className="truncate flex-1 mr-2">{item.name}</span>
-                        <span className="text-muted-foreground shrink-0">
+                        <span className="text-white/60 shrink-0">
                           £{item.buy_price.toFixed(2)} → £
                           {(item.buy_price * (1 + markup / 100)).toFixed(2)}
                         </span>
@@ -290,7 +290,7 @@ export function ImportPriceBookDialog({ open, onOpenChange }: ImportPriceBookDia
             {isImporting && (
               <div className="space-y-2">
                 <Progress value={progress} className="h-2" />
-                <p className="text-xs text-center text-muted-foreground">
+                <p className="text-xs text-center text-white/60">
                   Importing... {progress}%
                 </p>
               </div>

@@ -33,6 +33,7 @@ import { cn } from '@/lib/utils';
 import { useUpdateContractContent, type Contract } from '@/hooks/useContracts';
 import { sanitizeHtmlSafe } from '@/utils/inputSanitization';
 import { useToast } from '@/hooks/use-toast';
+import { storageGetSync, storageSetSync, storageRemoveSync } from '@/utils/storage';
 
 interface ContractEditorProps {
   open: boolean;
@@ -70,7 +71,7 @@ export function ContractEditor({ open, onOpenChange, contract, onSaved }: Contra
     onUpdate: ({ editor }) => {
       setHasChanges(true);
       // Auto-save draft
-      localStorage.setItem(draftKey, editor.getHTML());
+      storageSetSync(draftKey, editor.getHTML());
     },
     editorProps: {
       attributes: {
@@ -92,7 +93,7 @@ export function ContractEditor({ open, onOpenChange, contract, onSaved }: Contra
   // Load draft on mount
   useEffect(() => {
     if (editor) {
-      const draft = localStorage.getItem(draftKey);
+      const draft = storageGetSync(draftKey);
       if (draft && draft !== contract.content) {
         // Ask user if they want to restore draft
         const useDraft = window.confirm(
@@ -102,7 +103,7 @@ export function ContractEditor({ open, onOpenChange, contract, onSaved }: Contra
           editor.commands.setContent(draft);
           setHasChanges(true);
         } else {
-          localStorage.removeItem(draftKey);
+          storageRemoveSync(draftKey);
           editor.commands.setContent(contract.content || '');
         }
       } else {
@@ -119,7 +120,7 @@ export function ContractEditor({ open, onOpenChange, contract, onSaved }: Contra
       );
       if (!confirmClose) return;
     }
-    localStorage.removeItem(draftKey);
+    storageRemoveSync(draftKey);
     onOpenChange(false);
   }, [hasChanges, draftKey, onOpenChange]);
 
@@ -137,7 +138,7 @@ export function ContractEditor({ open, onOpenChange, contract, onSaved }: Contra
       });
 
       // Clear draft
-      localStorage.removeItem(draftKey);
+      storageRemoveSync(draftKey);
       setHasChanges(false);
 
       toast({
@@ -196,7 +197,7 @@ export function ContractEditor({ open, onOpenChange, contract, onSaved }: Contra
                 </div>
                 <div>
                   <span className="text-lg font-semibold">Edit Contract</span>
-                  <p className="text-xs text-muted-foreground font-normal line-clamp-1">
+                  <p className="text-xs text-white/60 font-normal line-clamp-1">
                     {contract.title}
                   </p>
                 </div>
@@ -341,7 +342,7 @@ export function ContractEditor({ open, onOpenChange, contract, onSaved }: Contra
           </div>
 
           {/* Help text */}
-          <div className="flex justify-between text-xs text-muted-foreground mt-2">
+          <div className="flex justify-between text-xs text-white/60 mt-2">
             <span>Use headings to structure your contract. Changes auto-save as draft.</span>
           </div>
 

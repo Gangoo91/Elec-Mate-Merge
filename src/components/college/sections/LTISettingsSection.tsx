@@ -7,6 +7,8 @@ import { Switch } from '@/components/ui/switch';
 import { Label } from '@/components/ui/label';
 import { CollegeSectionHeader } from '@/components/college/CollegeSectionHeader';
 import { useToast } from '@/hooks/use-toast';
+import { copyToClipboard } from '@/utils/clipboard';
+import { openExternalUrl } from '@/utils/open-external-url';
 import {
   Plus,
   Plug,
@@ -117,8 +119,8 @@ export function LTISettingsSection() {
     deploymentId: '',
   });
 
-  const copyToClipboard = (text: string, field: string) => {
-    navigator.clipboard.writeText(text);
+  const handleCopyToClipboard = (text: string, field: string) => {
+    copyToClipboard(text);
     setCopiedField(field);
     toast({
       title: 'Copied to clipboard',
@@ -380,7 +382,7 @@ export function LTISettingsSection() {
                                 </DropdownMenuItem>
                                 <DropdownMenuItem
                                   className="h-11 touch-manipulation"
-                                  onClick={() => window.open(platform.url, '_blank')}
+                                  onClick={() => openExternalUrl(platform.url)}
                                 >
                                   <ExternalLink className="h-4 w-4 mr-2" />
                                   Open LMS
@@ -521,7 +523,7 @@ export function LTISettingsSection() {
                       variant="outline"
                       size="icon"
                       className="border-elec-yellow/20 hover:bg-elec-yellow/10"
-                      onClick={() => copyToClipboard(item.value, item.key)}
+                      onClick={() => handleCopyToClipboard(item.value, item.key)}
                     >
                       {copiedField === item.key ? (
                         <Check className="h-4 w-4 text-green-500" />

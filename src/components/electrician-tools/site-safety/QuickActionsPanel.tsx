@@ -7,6 +7,7 @@ import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 import jsPDF from 'jspdf';
 import { saveOrSharePdf } from '@/utils/save-or-share-pdf';
+import { copyToClipboard } from '@/utils/clipboard';
 
 interface QuickActionsPanelProps {
   briefing: any;
@@ -80,7 +81,7 @@ export const QuickActionsPanel = ({ briefing, onRefresh }: QuickActionsPanelProp
         console.log('Share cancelled');
       }
     } else {
-      navigator.clipboard.writeText(shareUrl);
+      copyToClipboard(shareUrl);
       toast({
         title: 'Link Copied',
         description: 'Briefing link copied to clipboard',

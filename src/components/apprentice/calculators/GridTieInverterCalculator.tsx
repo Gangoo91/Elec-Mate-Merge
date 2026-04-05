@@ -1,4 +1,5 @@
 import { useState, useCallback, useMemo } from 'react';
+import { copyToClipboard } from '@/utils/clipboard';
 import { Copy, Check, ChevronDown, AlertTriangle, Settings } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { cn } from '@/lib/utils';
@@ -231,7 +232,7 @@ export function GridTieInverterCalculator() {
     ]
       .filter(Boolean)
       .join('\n');
-    navigator.clipboard.writeText(text);
+    copyToClipboard(text);
     setCopied(true);
     toast({ title: 'Copied to clipboard' });
     setTimeout(() => setCopied(false), 2000);

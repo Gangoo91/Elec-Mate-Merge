@@ -20,6 +20,7 @@ import {
   Copy,
   Check,
 } from 'lucide-react';
+import { copyToClipboard } from '@/utils/clipboard';
 import type { AIReviewResult, CriterionAnalysis } from '@/hooks/college/useAIPortfolioReview';
 
 interface AIReviewSheetProps {
@@ -127,8 +128,8 @@ export function AIReviewSheet({
     onApplyCriteria(result.criteria_analysis.filter((c) => c.status === 'met'));
   };
 
-  const handleCopyFeedback = () => {
-    navigator.clipboard.writeText(editedFeedback || result?.draft_feedback || '');
+  const handleCopyFeedback = async () => {
+    await copyToClipboard(editedFeedback || result?.draft_feedback || '');
     setCopiedFeedback(true);
     setTimeout(() => setCopiedFeedback(false), 2000);
   };

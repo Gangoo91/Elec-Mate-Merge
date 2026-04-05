@@ -110,7 +110,7 @@ export const AddWorkHistoryDialog = ({
         <div className="space-y-4 py-4">
           <div className="space-y-2">
             <Label htmlFor="employer" className="flex items-center gap-2">
-              <Building className="h-4 w-4 text-muted-foreground" />
+              <Building className="h-4 w-4 text-white/60" />
               Employer *
             </Label>
             <Input
@@ -134,7 +134,7 @@ export const AddWorkHistoryDialog = ({
           <div className="grid grid-cols-2 gap-4">
             <div className="space-y-2">
               <Label htmlFor="startDate" className="flex items-center gap-2">
-                <Calendar className="h-4 w-4 text-muted-foreground" />
+                <Calendar className="h-4 w-4 text-white/60" />
                 Start Date *
               </Label>
               <Input

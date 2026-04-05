@@ -1,4 +1,5 @@
 import { useState, useMemo, useCallback } from 'react';
+import { copyToClipboard } from '@/utils/clipboard';
 import { ChevronDown, Copy, Check } from 'lucide-react';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { cn } from '@/lib/utils';
@@ -166,7 +167,7 @@ const LEDDriverCalculator = () => {
       `Recommended: ${result.nearestStandardDriver}`,
       `Status: ${result.statusLabel}`,
     ].join('\n');
-    navigator.clipboard.writeText(text);
+    copyToClipboard(text);
     setCopied(true);
     toast({ title: 'Copied to clipboard' });
     setTimeout(() => setCopied(false), 2000);

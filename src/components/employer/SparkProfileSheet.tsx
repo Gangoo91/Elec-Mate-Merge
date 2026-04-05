@@ -102,7 +102,7 @@ const tierConfig: Record<
 > = {
   basic: {
     label: 'Basic',
-    color: 'text-muted-foreground',
+    color: 'text-white/60',
     icon: Shield,
     bg: 'bg-muted',
     description: 'Profile created',
@@ -175,12 +175,12 @@ export function SparkProfileSheet({
                         <CheckCircle className="h-5 w-5 text-success shrink-0" />
                       )}
                     </div>
-                    <p className="text-muted-foreground">{electrician.ecsCardType}</p>
+                    <p className="text-white/60">{electrician.ecsCardType}</p>
                     <div className="flex items-center gap-3 mt-2 text-sm">
                       <span className="flex items-center gap-1">
                         <Star className="h-4 w-4 text-warning fill-warning" />
                         <span className="font-semibold">{electrician.rating}</span>
-                        <span className="text-muted-foreground">({electrician.completedJobs})</span>
+                        <span className="text-white/60">({electrician.completedJobs})</span>
                       </span>
                       <Badge variant="outline" className={`${tier.bg} ${tier.color} border-0`}>
                         {tier.label} Verified
@@ -202,21 +202,21 @@ export function SparkProfileSheet({
             <div className="grid grid-cols-4 gap-2 px-4 py-3 bg-muted/50">
               <div className="text-center">
                 <p className="text-lg font-bold text-foreground">{electrician.experience}</p>
-                <p className="text-xs text-muted-foreground">Years Exp</p>
+                <p className="text-xs text-white/60">Years Exp</p>
               </div>
               <div className="text-center">
                 <p className="text-lg font-bold text-foreground">{electrician.distance}mi</p>
-                <p className="text-xs text-muted-foreground">Distance</p>
+                <p className="text-xs text-white/60">Distance</p>
               </div>
               <div className="text-center">
                 <p className="text-lg font-bold text-foreground">{electrician.responseTime}</p>
-                <p className="text-xs text-muted-foreground">Response</p>
+                <p className="text-xs text-white/60">Response</p>
               </div>
               <div className="text-center">
                 <p className="text-lg font-bold text-success">
                   £{isInLabourBank && labourBankRate ? labourBankRate : electrician.dayRate}
                 </p>
-                <p className="text-xs text-muted-foreground">/day</p>
+                <p className="text-xs text-white/60">/day</p>
               </div>
             </div>
 
@@ -226,7 +226,7 @@ export function SparkProfileSheet({
                 <Zap className="h-5 w-5 text-success" />
                 <div>
                   <p className="font-medium text-success">Labour Bank Member</p>
-                  <p className="text-xs text-muted-foreground">
+                  <p className="text-xs text-white/60">
                     Pre-agreed rate: £{labourBankRate}/day
                   </p>
                 </div>
@@ -248,7 +248,7 @@ export function SparkProfileSheet({
                   />
                   <span className="font-medium">{electrician.availability}</span>
                 </div>
-                <div className="flex items-center gap-1 text-sm text-muted-foreground">
+                <div className="flex items-center gap-1 text-sm text-white/60">
                   <MapPin className="h-4 w-4" />
                   {electrician.location}
                 </div>
@@ -260,7 +260,7 @@ export function SparkProfileSheet({
             {/* Bio */}
             <div className="px-4 py-4">
               <h3 className="font-semibold mb-2">About</h3>
-              <p className="text-muted-foreground">{electrician.bio}</p>
+              <p className="text-white/60">{electrician.bio}</p>
             </div>
 
             <Separator />
@@ -298,7 +298,7 @@ export function SparkProfileSheet({
               <div className="space-y-2">
                 {electrician.qualifications.map((qual, i) => (
                   <div key={i} className="flex items-center gap-2 text-sm">
-                    <FileText className="h-4 w-4 text-muted-foreground" />
+                    <FileText className="h-4 w-4 text-white/60" />
                     <span>{qual}</span>
                     {electrician.verified && <CheckCircle className="h-3.5 w-3.5 text-success" />}
                   </div>
@@ -328,15 +328,15 @@ export function SparkProfileSheet({
                           <span className="text-sm font-medium">{review.rating}</span>
                         </div>
                       </div>
-                      <p className="text-sm text-muted-foreground line-clamp-2">{review.comment}</p>
-                      <p className="text-xs text-muted-foreground mt-1">
+                      <p className="text-sm text-white/60 line-clamp-2">{review.comment}</p>
+                      <p className="text-xs text-white/60 mt-1">
                         {review.jobType} • {review.date}
                       </p>
                     </div>
                   ))}
                 </div>
               ) : (
-                <p className="text-sm text-muted-foreground">No reviews yet</p>
+                <p className="text-sm text-white/60">No reviews yet</p>
               )}
             </div>
 
@@ -349,34 +349,34 @@ export function SparkProfileSheet({
                 </Badge>
               </div>
               {electrician.elecIdNumber && (
-                <p className="text-xs text-muted-foreground mb-3">
+                <p className="text-xs text-white/60 mb-3">
                   Elec-ID: {electrician.elecIdNumber}
                 </p>
               )}
               <div className="space-y-2">
                 <div className="flex items-center justify-between">
-                  <span className="text-sm text-muted-foreground">ECS Card</span>
+                  <span className="text-sm text-white/60">ECS Card</span>
                   <div className="flex items-center gap-1 text-sm text-success">
                     <CheckCircle className="h-4 w-4" />
                     Verified
                   </div>
                 </div>
                 <div className="flex items-center justify-between">
-                  <span className="text-sm text-muted-foreground">Identity</span>
+                  <span className="text-sm text-white/60">Identity</span>
                   <div className="flex items-center gap-1 text-sm text-success">
                     <CheckCircle className="h-4 w-4" />
                     Verified
                   </div>
                 </div>
                 <div className="flex items-center justify-between">
-                  <span className="text-sm text-muted-foreground">Qualifications</span>
+                  <span className="text-sm text-white/60">Qualifications</span>
                   <div className="flex items-center gap-1 text-sm text-success">
                     <CheckCircle className="h-4 w-4" />
                     {electrician.verifiedDocsCount || electrician.qualifications.length} Verified
                   </div>
                 </div>
                 <div className="flex items-center justify-between">
-                  <span className="text-sm text-muted-foreground">Right to Work</span>
+                  <span className="text-sm text-white/60">Right to Work</span>
                   <div className="flex items-center gap-1 text-sm text-success">
                     <CheckCircle className="h-4 w-4" />
                     Verified
@@ -384,7 +384,7 @@ export function SparkProfileSheet({
                 </div>
               </div>
               {/* Tier Description */}
-              <p className="text-xs text-muted-foreground mt-3 pt-3 border-t border-border">
+              <p className="text-xs text-white/60 mt-3 pt-3 border-t border-border">
                 {tier.description}
               </p>
             </div>

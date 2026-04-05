@@ -8,6 +8,8 @@ import { useState, useEffect, useCallback } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/contexts/AuthContext';
 import { useToast } from '@/hooks/use-toast';
+import { copyToClipboard } from '@/utils/clipboard';
+import { openExternalUrl } from '@/utils/open-external-url';
 
 export type ShareChannel = 'whatsapp' | 'copy_link' | 'qr' | 'native_share' | 'email';
 
@@ -79,7 +81,7 @@ export function useReferralShare(options: ReferralShareOptions = {}) {
 
     const message = SHARE_MESSAGE(referralCode, 'whatsapp');
     const url = buildWhatsAppUrl(message);
-    window.open(url, '_blank');
+    openExternalUrl(url);
 
     await trackShare('whatsapp');
 
@@ -94,7 +96,7 @@ export function useReferralShare(options: ReferralShareOptions = {}) {
     if (!referralUrl) return;
 
     try {
-      await navigator.clipboard.writeText(referralUrl);
+      await copyToClipboard(referralUrl);
       await trackShare('copy_link');
 
       toast({

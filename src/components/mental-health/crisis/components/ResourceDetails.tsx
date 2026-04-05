@@ -1,7 +1,9 @@
+import { openExternalUrl } from '@/utils/open-external-url';
 import { ChevronLeft, MapPin, Phone } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { LocalResource } from '../models/resource-types';
 import { toast } from 'sonner';
+import { copyToClipboard } from '@/utils/clipboard';
 
 interface ResourceDetailsProps {
   resource: LocalResource;
@@ -9,15 +11,15 @@ interface ResourceDetailsProps {
 }
 
 const ResourceDetails = ({ resource, onBack }: ResourceDetailsProps) => {
-  const handleCopyContact = (contact: string) => {
-    navigator.clipboard.writeText(contact);
+  const handleCopyContact = async (contact: string) => {
+    await copyToClipboard(contact);
     toast.success('Contact information copied to clipboard');
   };
 
   const handleGetDirections = (address: string) => {
     // Open in Google Maps
     const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(address)}`;
-    window.open(mapsUrl, '_blank');
+    openExternalUrl(mapsUrl);
     toast.success('Directions opened in Google Maps');
   };
 

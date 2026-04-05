@@ -7,6 +7,7 @@ import {
   INSTALLATION_METHOD_FULL_SCHEMA,
   INSTALLATION_METHOD_SIMPLIFIED_SCHEMA,
 } from '@/types/installation-method-schema';
+import { copyToClipboard } from '@/utils/clipboard';
 
 interface JSONSchemaViewerProps {
   fullMethodStatement: any;
@@ -28,7 +29,7 @@ export const JSONSchemaViewer = ({ fullMethodStatement, mode = 'full' }: JSONSch
         : JSON.stringify(fullMethodStatement, null, 2);
 
     try {
-      await navigator.clipboard.writeText(content);
+      await copyToClipboard(content);
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
     } catch (err) {

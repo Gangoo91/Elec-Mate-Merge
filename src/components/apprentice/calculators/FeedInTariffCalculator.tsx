@@ -1,4 +1,5 @@
 import { useState, useCallback, useMemo } from 'react';
+import { copyToClipboard } from '@/utils/clipboard';
 import { Copy, Check, ChevronDown, AlertTriangle } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { cn } from '@/lib/utils';
@@ -212,7 +213,7 @@ export function FeedInTariffCalculator() {
       `20-Year Return (${(result.rpiRate * 100).toFixed(0)}% RPI): £${result.totalReturn20Years.toFixed(0)}`,
       `Payback: ${result.simplePayback.toFixed(1)} years`,
     ].join('\n');
-    navigator.clipboard.writeText(text);
+    copyToClipboard(text);
     setCopied(true);
     toast({ title: 'Copied to clipboard' });
     setTimeout(() => setCopied(false), 2000);

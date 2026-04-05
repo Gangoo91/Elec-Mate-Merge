@@ -29,7 +29,7 @@ export const NotificationFilters = ({
     <div className="space-y-3 sm:space-y-0 sm:flex sm:items-center gap-2 sm:gap-3">
       {/* Search */}
       <div className="relative flex-1">
-        <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground pointer-events-none" />
+        <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-white pointer-events-none" />
         <Input
           placeholder="Search certificates, work description, authority..."
           value={searchQuery}

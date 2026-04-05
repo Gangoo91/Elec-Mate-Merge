@@ -1,5 +1,6 @@
 import React, { useState, useCallback, useEffect, useRef } from 'react';
 import { useConversation } from '@elevenlabs/react';
+import { storageGetJSONSync, storageSetJSONSync, storageSetSync } from '@/utils/storage';
 import {
   Mic,
   Volume2,
@@ -21,6 +22,7 @@ import { cn } from '@/lib/utils';
 import { getSetting } from '@/services/settingsService';
 import { useOptionalVoiceFormContext } from '@/contexts/VoiceFormContext';
 import { useQueryClient } from '@tanstack/react-query';
+import { openExternalUrl } from '@/utils/open-external-url';
 
 interface DraggableVoiceAssistantProps {
   onNavigate?: (section: string) => void;
@@ -155,27 +157,22 @@ export const DraggableVoiceAssistant: React.FC<DraggableVoiceAssistantProps> = (
 
   // Initialize position on mount
   useEffect(() => {
-    const savedPos = localStorage.getItem('voice-assistant-position');
-    const wasDocked = localStorage.getItem('voice-assistant-docked') === 'true';
+    const savedPos = storageGetJSONSync<{ x: number; y: number } | null>('voice-assistant-position', null);
+    const wasDocked = storageGetJSONSync<boolean>('voice-assistant-docked', false);
 
     if (wasDocked) {
       setIsDocked(true);
     } else if (savedPos) {
-      try {
-        const pos = JSON.parse(savedPos);
-        setPosition(pos);
-      } catch {
-        // Default position
-      }
+      setPosition(savedPos);
     }
   }, []);
 
   // Save position when it changes
   useEffect(() => {
     if (!isDocked && (position.x !== 0 || position.y !== 0)) {
-      localStorage.setItem('voice-assistant-position', JSON.stringify(position));
+      storageSetJSONSync('voice-assistant-position', position);
     }
-    localStorage.setItem('voice-assistant-docked', isDocked.toString());
+    storageSetSync('voice-assistant-docked', isDocked.toString());
   }, [position, isDocked]);
 
   // Load agent ID (falls back to default)
@@ -959,7 +956,7 @@ export const DraggableVoiceAssistant: React.FC<DraggableVoiceAssistantProps> = (
       }) => executeServerTool('get_client_phone', { jobTitle, clientName }),
       initiate_call: async ({ phoneNumber }: { phoneNumber: string }) => {
         const cleaned = phoneNumber.replace(/\s+/g, '');
-        window.open(`tel:${cleaned}`, '_self');
+        openExternalUrl(`tel:${cleaned}`);
         toast({ title: 'Calling...', description: phoneNumber });
         return `Initiating call to ${phoneNumber}`;
       },

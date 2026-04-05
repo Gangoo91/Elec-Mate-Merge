@@ -4,6 +4,7 @@ import { useAuthState } from './useAuthState';
 import { useEntriesLoader } from './useEntriesLoader';
 import { useTimeEntryAdder } from './useTimeEntryAdder';
 import { supabase } from '@/integrations/supabase/client';
+import { storageRemoveSync } from '@/utils/storage';
 
 export const useTimeEntries = () => {
   const { userId, isLoading: authLoading } = useAuthState();
@@ -48,8 +49,8 @@ export const useTimeEntries = () => {
         }
       }
 
-      // Also clear localStorage fallback
-      localStorage.removeItem('manualEntries');
+      // Also clear storage fallback
+      storageRemoveSync('manualEntries');
     } else {
       // Filter out entries from the specified month
       const entriesToDelete = manualEntries.filter((entry) => {

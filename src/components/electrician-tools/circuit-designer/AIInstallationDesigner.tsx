@@ -12,6 +12,8 @@ import { useCircuitDesignGeneration } from '@/hooks/useCircuitDesignGeneration';
 import { ImportedContextBanner } from '@/components/electrician-tools/shared/ImportedContextBanner';
 import { AnimatePresence } from 'framer-motion';
 import { SaveCustomerPrompt } from '@/components/electrician/shared/SaveCustomerPrompt';
+import { trackFeatureUse } from '@/components/ActivityTracker';
+import { useAuth } from '@/contexts/AuthContext';
 
 // User-friendly error message mapper
 const getFriendlyErrorMessage = (error: string): string => {
@@ -240,6 +242,7 @@ interface ImportedAgentContext {
 
 export const AIInstallationDesigner = () => {
   const routerLocation = useLocation();
+  const { user } = useAuth();
 
   // Check if we're viewing saved results
   const savedResultsState = routerLocation.state as {
@@ -354,6 +357,7 @@ export const AIInstallationDesigner = () => {
 
       // Start polling the job
       setJobId(data.jobId);
+      trackFeatureUse(user?.id || '', 'ai_circuit_designer', {});
       console.log('🚀 Started circuit design job:', data.jobId);
 
       // Link customer to job

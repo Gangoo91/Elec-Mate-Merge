@@ -5,6 +5,7 @@ import { cn } from '@/lib/utils';
 import { File, FileText, Image, Table, Download, X, Loader2, Paperclip, Eye } from 'lucide-react';
 import { formatFileSize, isImageFile, getFileIcon } from '@/services/fileUploadService';
 import type { MessageAttachment } from '@/services/fileUploadService';
+import { openExternalUrl } from '@/utils/open-external-url';
 
 interface FileAttachmentProps {
   attachment: MessageAttachment;
@@ -35,7 +36,7 @@ export function FileAttachment({ attachment, className }: FileAttachmentProps) {
 
   const handleDownload = () => {
     if (fileUrl) {
-      window.open(fileUrl, '_blank');
+      openExternalUrl(fileUrl);
     }
   };
 
@@ -47,7 +48,7 @@ export function FileAttachment({ attachment, className }: FileAttachmentProps) {
           src={fileUrl}
           alt={attachment.file_name}
           className="max-w-[300px] max-h-[200px] rounded-lg object-cover cursor-pointer hover:opacity-90 transition-opacity"
-          onClick={() => window.open(fileUrl, '_blank')}
+          onClick={() => openExternalUrl(fileUrl)}
           onError={() => setImageError(true)}
         />
         <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors rounded-lg flex items-center justify-center opacity-0 group-hover:opacity-100">
@@ -55,7 +56,7 @@ export function FileAttachment({ attachment, className }: FileAttachmentProps) {
             variant="secondary"
             size="sm"
             className="gap-1"
-            onClick={() => window.open(fileUrl, '_blank')}
+            onClick={() => openExternalUrl(fileUrl)}
           >
             <Eye className="h-4 w-4" />
             View

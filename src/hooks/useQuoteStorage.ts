@@ -4,6 +4,7 @@ import { Quote } from '@/types/quote';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from '@/hooks/use-toast';
 import { captureError, captureApiError, trackMilestone, addBreadcrumb } from '@/lib/sentry';
+import { trackFeatureUse } from '@/components/ActivityTracker';
 
 // Database storage for quotes (no longer using localStorage)
 
@@ -349,6 +350,7 @@ export const useQuoteStorage = () => {
 
         // Track successful quote creation/update
         trackMilestone('Quote Saved', { quoteId: quote.id, total: quote.total });
+        trackFeatureUse(quote.user_id || '', 'quote_saved', { quoteId: quote.id, total: quote.total });
 
         return true;
       } catch (error) {

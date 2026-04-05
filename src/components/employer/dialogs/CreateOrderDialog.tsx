@@ -194,7 +194,7 @@ export function CreateOrderDialog({
                 </div>
                 <div>
                   <SheetTitle className="text-lg">New Order</SheetTitle>
-                  <p className="text-xs text-muted-foreground">{orderNumber}</p>
+                  <p className="text-xs text-white/60">{orderNumber}</p>
                 </div>
               </div>
             </div>
@@ -224,7 +224,7 @@ export function CreateOrderDialog({
                   </SelectContent>
                 </Select>
                 {selectedSupplier && (
-                  <p className="text-xs text-muted-foreground">
+                  <p className="text-xs text-white/60">
                     {selectedSupplier.delivery_days === 0
                       ? 'Same day delivery'
                       : `${selectedSupplier.delivery_days} day delivery`}
@@ -271,7 +271,7 @@ export function CreateOrderDialog({
                                 className="w-16 h-8 text-sm"
                                 min={1}
                               />
-                              <span className="text-xs text-muted-foreground">
+                              <span className="text-xs text-white/60">
                                 × £{item.price.toFixed(2)}
                               </span>
                             </div>
@@ -375,8 +375,8 @@ export function CreateOrderDialog({
           <div className="px-4 py-2 border-t border-border bg-muted/30">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
-                <Calculator className="h-4 w-4 text-muted-foreground" />
-                <span className="text-sm text-muted-foreground">Order Total</span>
+                <Calculator className="h-4 w-4 text-white/60" />
+                <span className="text-sm text-white/60">Order Total</span>
               </div>
               <span className="text-xl font-bold text-elec-yellow">£{total.toFixed(2)}</span>
             </div>

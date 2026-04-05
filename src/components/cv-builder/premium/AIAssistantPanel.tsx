@@ -21,6 +21,7 @@ import {
   Lightbulb,
   Zap,
 } from 'lucide-react';
+import { copyToClipboard } from '@/utils/clipboard';
 import { aiPanelVariants, fadeUpVariants } from './animations/variants';
 
 interface AISuggestion {
@@ -98,7 +99,7 @@ const AIAssistantPanel = ({
 
   const handleCopy = async () => {
     if (suggestion) {
-      await navigator.clipboard.writeText(suggestion);
+      await copyToClipboard(suggestion);
       setCopiedId('suggestion');
       setTimeout(() => setCopiedId(null), 2000);
     }

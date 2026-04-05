@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { openExternalUrl } from '@/utils/open-external-url';
 import { useIsMobile } from '@/hooks/use-mobile';
 import {
   MobileAccordion,
@@ -397,7 +398,7 @@ const ResourcesSupportTab = () => {
                           size="sm"
                           variant="outline"
                           className="text-xs"
-                          onClick={() => window.open(`tel:${resource.phone}`)}
+                          onClick={() => openExternalUrl(`tel:${resource.phone}`)}
                         >
                           <Phone className="h-3 w-3 mr-1" />
                           Call
@@ -408,7 +409,7 @@ const ResourcesSupportTab = () => {
                           size="sm"
                           variant="outline"
                           className="text-xs"
-                          onClick={() => window.open(`https://${resource.website}`, '_blank')}
+                          onClick={() => openExternalUrl(`https://${resource.website}`)}
                         >
                           <ExternalLink className="h-3 w-3 mr-1" />
                           Visit
@@ -511,7 +512,7 @@ const ResourcesSupportTab = () => {
                           size="sm"
                           variant="outline"
                           className="text-xs flex-1"
-                          onClick={() => window.open(`tel:${resource.phone}`)}
+                          onClick={() => openExternalUrl(`tel:${resource.phone}`)}
                         >
                           <Phone className="h-3 w-3 mr-1" />
                           Call
@@ -522,7 +523,7 @@ const ResourcesSupportTab = () => {
                           size="sm"
                           variant="outline"
                           className="text-xs flex-1"
-                          onClick={() => window.open(`https://${resource.website}`, '_blank')}
+                          onClick={() => openExternalUrl(`https://${resource.website}`)}
                         >
                           <ExternalLink className="h-3 w-3 mr-1" />
                           Visit

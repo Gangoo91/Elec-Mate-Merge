@@ -123,7 +123,7 @@ export function LiveWorkerMap({
     return (
       <Card className={cn('bg-elec-gray overflow-hidden', className)}>
         <CardContent className="p-6 text-center">
-          <p className="text-muted-foreground">Loading map...</p>
+          <p className="text-white/60">Loading map...</p>
         </CardContent>
       </Card>
     );
@@ -299,7 +299,7 @@ export function LiveWorkerMap({
                   className="w-3 h-3 border border-white/50"
                   style={{ background: OFFICE_MARKER_COLOUR, borderRadius: '2px' }}
                 />
-                <span className="text-muted-foreground">Head Office</span>
+                <span className="text-white/60">Head Office</span>
               </div>
             )}
             {/* Job marker */}
@@ -308,7 +308,7 @@ export function LiveWorkerMap({
                 className="w-3 h-3 border border-white/50"
                 style={{ background: '#3b82f6', clipPath: 'polygon(50% 0%, 100% 100%, 0% 100%)' }}
               />
-              <span className="text-muted-foreground">Job Site</span>
+              <span className="text-white/60">Job Site</span>
             </div>
             {/* Worker status colours */}
             {Object.entries(STATUS_COLOURS)
@@ -319,7 +319,7 @@ export function LiveWorkerMap({
                     className="w-3 h-3 rounded-full border border-white/50"
                     style={{ background: colour }}
                   />
-                  <span className="text-muted-foreground">{status}</span>
+                  <span className="text-white/60">{status}</span>
                 </div>
               ))}
           </div>

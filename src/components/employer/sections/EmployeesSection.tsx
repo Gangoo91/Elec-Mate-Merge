@@ -214,7 +214,7 @@ export function EmployeesSection() {
       <div className="text-center py-16">
         <Users className="h-12 w-12 text-destructive/30 mx-auto mb-3" />
         <h3 className="font-medium text-foreground mb-1">Failed to load team</h3>
-        <p className="text-sm text-muted-foreground">Please try again later</p>
+        <p className="text-sm text-white/60">Please try again later</p>
       </div>
     );
   }
@@ -226,7 +226,7 @@ export function EmployeesSection() {
         <div className="flex items-center justify-between">
           <div>
             <h1 className="text-xl font-bold text-foreground">Your Team</h1>
-            <p className="text-xs text-muted-foreground">
+            <p className="text-xs text-white/60">
               {activeEmployees.length} team · {availableNow.length} available · {onJob.length} on
               job
             </p>
@@ -295,7 +295,7 @@ export function EmployeesSection() {
         <div className="flex gap-2">
           <div className="relative flex-1">
             {!searchQuery && (
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none" />
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white/60 pointer-events-none" />
             )}
             <Input
               placeholder="Search team..."
@@ -330,7 +330,7 @@ export function EmployeesSection() {
                       variant="ghost"
                       size="sm"
                       onClick={clearFilters}
-                      className="text-muted-foreground"
+                      className="text-white/60"
                     >
                       Clear all
                     </Button>
@@ -471,9 +471,9 @@ export function EmployeesSection() {
         {/* Empty State */}
         {filteredEmployees.length === 0 && (
           <div className="text-center py-16">
-            <Users className="h-12 w-12 text-muted-foreground/30 mx-auto mb-3" />
+            <Users className="h-12 w-12 text-white/60/30 mx-auto mb-3" />
             <h3 className="font-medium text-foreground mb-1">No team members found</h3>
-            <p className="text-sm text-muted-foreground mb-4">
+            <p className="text-sm text-white/60 mb-4">
               Try adjusting your filters or search
             </p>
             {hasActiveFilters && (

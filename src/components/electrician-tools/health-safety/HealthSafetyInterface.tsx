@@ -10,6 +10,8 @@ import { HealthSafetyProcessingView } from './HealthSafetyProcessingView';
 import { HealthSafetySuccess } from './HealthSafetySuccess';
 import { HealthSafetyResults } from './HealthSafetyResults';
 import { triggerHaptic } from '@/utils/animation-helpers';
+import { trackFeatureUse } from '@/components/ActivityTracker';
+import { useAuth } from '@/contexts/AuthContext';
 import {
   getStoredCircuitContext,
   clearStoredCircuitContext,
@@ -21,6 +23,7 @@ import { AnimatePresence } from 'framer-motion';
 
 const HealthSafetyInterface = () => {
   const location = useLocation();
+  const { user } = useAuth();
 
   // Check if we're viewing saved results
   const savedResultsState = location.state as {
@@ -175,6 +178,7 @@ const HealthSafetyInterface = () => {
       toast.success('Generation started', {
         description: 'Your safety documentation is being created',
       });
+      trackFeatureUse(user?.id || '', 'ai_rams_generator', { jobId: data?.jobId });
     } catch (error) {
       console.error('Failed to start generation:', error);
       toast.error('Failed to start generation', {

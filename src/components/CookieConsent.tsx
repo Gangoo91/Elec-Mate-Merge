@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { storageGetSync, storageSetSync, storageGetJSONSync, storageSetJSONSync } from '@/utils/storage';
 import { Button } from '@/components/ui/button';
 import { Switch } from '@/components/ui/switch';
 import { Cookie, Shield, BarChart3, Megaphone, ChevronDown, ChevronUp } from 'lucide-react';
@@ -25,27 +26,23 @@ export const CookieConsent = () => {
 
   useEffect(() => {
     // Check if user has already consented
-    const hasConsented = localStorage.getItem(COOKIE_CONSENT_KEY);
+    const hasConsented = storageGetSync(COOKIE_CONSENT_KEY);
     if (!hasConsented) {
       // Small delay to prevent banner flashing on fast page loads
       const timer = setTimeout(() => setShowBanner(true), 500);
       return () => clearTimeout(timer);
     } else {
       // Load saved preferences
-      const savedPrefs = localStorage.getItem(COOKIE_PREFERENCES_KEY);
+      const savedPrefs = storageGetJSONSync<CookiePreferences | null>(COOKIE_PREFERENCES_KEY, null);
       if (savedPrefs) {
-        try {
-          setPreferences(JSON.parse(savedPrefs));
-        } catch {
-          // Invalid JSON, use defaults
-        }
+        setPreferences(savedPrefs);
       }
     }
   }, []);
 
   const saveConsent = (prefs: CookiePreferences) => {
-    localStorage.setItem(COOKIE_CONSENT_KEY, 'true');
-    localStorage.setItem(COOKIE_PREFERENCES_KEY, JSON.stringify(prefs));
+    storageSetSync(COOKIE_CONSENT_KEY, 'true');
+    storageSetJSONSync(COOKIE_PREFERENCES_KEY, prefs);
     setPreferences(prefs);
     setShowBanner(false);
 
@@ -256,14 +253,8 @@ export const useCookieConsent = () => {
 
   useEffect(() => {
     const loadPreferences = () => {
-      const savedPrefs = localStorage.getItem(COOKIE_PREFERENCES_KEY);
-      if (savedPrefs) {
-        try {
-          setPreferences(JSON.parse(savedPrefs));
-        } catch {
-          setPreferences(null);
-        }
-      }
+      const savedPrefs = storageGetJSONSync<CookiePreferences | null>(COOKIE_PREFERENCES_KEY, null);
+      setPreferences(savedPrefs);
     };
 
     loadPreferences();

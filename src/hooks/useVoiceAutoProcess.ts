@@ -12,6 +12,7 @@
 
 import { useRef, useCallback, useState, useEffect } from 'react';
 import { supabase } from '@/integrations/supabase/client';
+import { storageGetJSONSync, storageSetJSONSync, storageRemoveSync } from '@/utils/storage';
 import { ACCESSORY_TYPES, getAccessoryLabel } from '@/data/siteVisit/accessoryTypes';
 import { getGlobalPrompts, ROOM_PROMPTS } from '@/data/siteVisit/smartPrompts';
 import { mapRoomName } from '@/utils/roomTypeMapper';
@@ -147,9 +148,7 @@ export function useVoiceAutoProcess(
 
     const processOfflineQueue = async () => {
       try {
-        const stored = localStorage.getItem(VOICE_OFFLINE_KEY);
-        if (!stored) return;
-        const queue: string[] = JSON.parse(stored);
+        const queue = storageGetJSONSync<string[]>(VOICE_OFFLINE_KEY, []);
         if (queue.length === 0) return;
 
         // Process each queued batch sequentially
@@ -157,11 +156,11 @@ export function useVoiceAutoProcess(
           await processBufferOnline(queue[i]);
           // Remove processed item
           const remaining = queue.slice(i + 1);
-          localStorage.setItem(VOICE_OFFLINE_KEY, JSON.stringify(remaining));
+          storageSetJSONSync(VOICE_OFFLINE_KEY, remaining);
           setOfflineQueueCount(remaining.length);
         }
 
-        localStorage.removeItem(VOICE_OFFLINE_KEY);
+        storageRemoveSync(VOICE_OFFLINE_KEY);
         setOfflineQueueCount(0);
         toast.success('Offline voice batches processed');
       } catch (err) {
@@ -339,13 +338,12 @@ export function useVoiceAutoProcess(
     async (text: string) => {
       if (!text.trim()) return;
 
-      // Offline: queue to localStorage
+      // Offline: queue to storage
       if (!navigator.onLine) {
         try {
-          const stored = localStorage.getItem(VOICE_OFFLINE_KEY);
-          const queue: string[] = stored ? JSON.parse(stored) : [];
+          const queue = storageGetJSONSync<string[]>(VOICE_OFFLINE_KEY, []);
           queue.push(text.trim());
-          localStorage.setItem(VOICE_OFFLINE_KEY, JSON.stringify(queue));
+          storageSetJSONSync(VOICE_OFFLINE_KEY, queue);
           setOfflineQueueCount(queue.length);
           toast.info('Saved offline — will process when connected');
         } catch (err) {

@@ -6,6 +6,7 @@ import { healthAndSafetySections } from '@/data/healthAndSafety/index';
 import BackButton from '../BackButton';
 import { useAuth } from '@/contexts/AuthContext';
 import { userKey } from '@/lib/userStorage';
+import { storageGetSync } from '@/utils/storage';
 
 interface HealthSafetyUnitProps {
   unitCode: string;
@@ -19,7 +20,7 @@ const HealthSafetyUnit = ({ unitCode, onResourceClick }: HealthSafetyUnitProps) 
 
   // Load completion status (user-scoped)
   useEffect(() => {
-    const storedQuizStatus = localStorage.getItem(
+    const storedQuizStatus = storageGetSync(
       userKey(user?.id, `unit_${unitCode}_quiz_completed`)
     );
     if (storedQuizStatus === 'true') {

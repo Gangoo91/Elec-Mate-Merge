@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import TheorySections from './components/TheorySections';
 import { useAuth } from '@/contexts/AuthContext';
 import { userKey } from '@/lib/userStorage';
+import { storageGetSync } from '@/utils/storage';
 
 interface ElectricalTheoryUnitProps {
   unitCode: string;
@@ -16,7 +17,7 @@ const ElectricalTheoryUnit = ({ unitCode, onResourceClick }: ElectricalTheoryUni
 
   // Load completion status (user-scoped)
   useEffect(() => {
-    const storedQuizStatus = localStorage.getItem(
+    const storedQuizStatus = storageGetSync(
       userKey(user?.id, `unit_${unitCode}_quiz_completed`)
     );
     if (storedQuizStatus === 'true') {

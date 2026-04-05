@@ -17,6 +17,7 @@ import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
 import { cn } from '@/lib/utils';
 import { getSetting } from '@/services/settingsService';
+import { storageGetSync, storageGetJSONSync, storageSetSync, storageSetJSONSync } from '@/utils/storage';
 import { useOptionalVoiceFormContext } from '@/contexts/VoiceFormContext';
 import { useQueryClient } from '@tanstack/react-query';
 
@@ -126,8 +127,8 @@ export const ElectricianVoiceAssistant: React.FC<ElectricianVoiceAssistantProps>
 
   // Initialize position on mount
   useEffect(() => {
-    const savedPos = localStorage.getItem('electrician-voice-position');
-    const wasDocked = localStorage.getItem('electrician-voice-docked') === 'true';
+    const savedPos = storageGetSync('electrician-voice-position');
+    const wasDocked = storageGetSync('electrician-voice-docked') === 'true';
 
     if (wasDocked) {
       setIsDocked(true);
@@ -144,9 +145,9 @@ export const ElectricianVoiceAssistant: React.FC<ElectricianVoiceAssistantProps>
   // Save position when it changes
   useEffect(() => {
     if (!isDocked && (position.x !== 0 || position.y !== 0)) {
-      localStorage.setItem('electrician-voice-position', JSON.stringify(position));
+      storageSetJSONSync('electrician-voice-position', position);
     }
-    localStorage.setItem('electrician-voice-docked', isDocked.toString());
+    storageSetSync('electrician-voice-docked', isDocked.toString());
   }, [position, isDocked]);
 
   // Load electrician-specific agent ID (falls back to default)

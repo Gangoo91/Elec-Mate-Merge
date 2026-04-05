@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { Copy, Check, User, Zap } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useHaptic } from '@/hooks/useHaptic';
+import { copyToClipboard } from '@/utils/clipboard';
 
 interface MessageBubbleProps {
   role: 'user' | 'assistant';
@@ -37,7 +38,7 @@ export const MessageBubble = memo(function MessageBubble({
 
   const handleCopy = useCallback(async () => {
     try {
-      await navigator.clipboard.writeText(content);
+      await copyToClipboard(content);
       setIsCopied(true);
       haptic.success();
       setTimeout(() => setIsCopied(false), 2000);

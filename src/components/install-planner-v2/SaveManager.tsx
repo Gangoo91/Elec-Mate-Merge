@@ -2,6 +2,8 @@ import { Button } from '@/components/ui/button';
 import { Save, FolderOpen } from 'lucide-react';
 import { InstallPlanDataV2 } from './types';
 import { useToast } from '@/hooks/use-toast';
+import { useHaptic } from '@/hooks/useHaptic';
+import { storageSetJSONSync, storageGetJSONSync } from '@/utils/storage';
 
 interface SaveManagerProps {
   planData: InstallPlanDataV2;
@@ -10,48 +12,34 @@ interface SaveManagerProps {
 
 export const SaveManager = ({ planData, onLoad }: SaveManagerProps) => {
   const { toast } = useToast();
+  const haptic = useHaptic();
 
   const handleSave = () => {
-    try {
-      const dataToSave = {
-        ...planData,
-        savedAt: new Date().toISOString(),
-      };
-      localStorage.setItem('install-planner-v2', JSON.stringify(dataToSave));
-      toast({
-        title: 'Saved',
-        description: 'Your plan has been saved successfully',
-      });
-    } catch (error) {
-      toast({
-        title: 'Error',
-        description: 'Failed to save plan',
-        variant: 'destructive',
-      });
-    }
+    haptic.success();
+    const dataToSave = {
+      ...planData,
+      savedAt: new Date().toISOString(),
+    };
+    storageSetJSONSync('install-planner-v2', dataToSave);
+    toast({
+      title: 'Saved',
+      description: 'Your plan has been saved successfully',
+    });
   };
 
   const handleLoad = () => {
-    try {
-      const saved = localStorage.getItem('install-planner-v2');
-      if (saved) {
-        const data = JSON.parse(saved);
-        onLoad(data);
-        toast({
-          title: 'Loaded',
-          description: 'Your saved plan has been loaded',
-        });
-      } else {
-        toast({
-          title: 'No saved data',
-          description: 'No previously saved plan found',
-        });
-      }
-    } catch (error) {
+    haptic.medium();
+    const data = storageGetJSONSync<InstallPlanDataV2 | null>('install-planner-v2', null);
+    if (data) {
+      onLoad(data);
       toast({
-        title: 'Error',
-        description: 'Failed to load plan',
-        variant: 'destructive',
+        title: 'Loaded',
+        description: 'Your saved plan has been loaded',
+      });
+    } else {
+      toast({
+        title: 'No saved data',
+        description: 'No previously saved plan found',
       });
     }
   };

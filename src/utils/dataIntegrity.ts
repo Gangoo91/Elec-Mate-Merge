@@ -6,6 +6,7 @@
  */
 
 import { supabase } from '@/integrations/supabase/client';
+import { storageSetJSONSync, storageGetSync, storageSetSync, storageRemoveSync, storageGetJSONSync } from '@/utils/storage';
 
 // Minimum expected fields for each report type
 const MINIMUM_FIELDS: Record<string, string[]> = {
@@ -129,7 +130,7 @@ export function saveToLocalStorageBackup(reportType: string, reportId: string, d
       reportType,
       reportId,
     };
-    localStorage.setItem(key, JSON.stringify(backup));
+    storageSetJSONSync(key, backup);
     console.log('[DataIntegrity] Saved to localStorage backup:', key);
     return true;
   } catch (error) {
@@ -147,10 +148,9 @@ export function loadFromLocalStorageBackup(
 ): { data: any; savedAt: string } | null {
   try {
     const key = getBackupKey(reportType, reportId);
-    const stored = localStorage.getItem(key);
-    if (!stored) return null;
+    const backup = storageGetJSONSync<any>(key, null);
+    if (!backup) return null;
 
-    const backup = JSON.parse(stored);
     console.log('[DataIntegrity] Found localStorage backup from:', backup.savedAt);
     return { data: backup.data, savedAt: backup.savedAt };
   } catch (error) {
@@ -163,12 +163,8 @@ export function loadFromLocalStorageBackup(
  * Clear localStorage backup (after successful cloud sync)
  */
 export function clearLocalStorageBackup(reportType: string, reportId: string): void {
-  try {
-    const key = getBackupKey(reportType, reportId);
-    localStorage.removeItem(key);
-  } catch (error) {
-    // Ignore cleanup errors
-  }
+  const key = getBackupKey(reportType, reportId);
+  storageRemoveSync(key);
 }
 
 /**
@@ -191,9 +187,8 @@ export function listAllBackups(): Array<{
     for (let i = 0; i < localStorage.length; i++) {
       const key = localStorage.key(i);
       if (key?.startsWith('elecmate_backup_')) {
-        const stored = localStorage.getItem(key);
-        if (stored) {
-          const backup = JSON.parse(stored);
+        const backup = storageGetJSONSync<any>(key, null);
+        if (backup) {
           const fieldCount = Object.keys(backup.data || {}).filter(
             (k) => !k.startsWith('_')
           ).length;
@@ -338,24 +333,16 @@ export function logIntegrityEvent(
   console.log('[DataIntegrity Event]', logEntry);
 
   // Store recent events for debugging
-  try {
-    const eventsKey = 'elecmate_integrity_events';
-    const existing = JSON.parse(localStorage.getItem(eventsKey) || '[]');
-    existing.unshift(logEntry);
-    // Keep last 50 events
-    localStorage.setItem(eventsKey, JSON.stringify(existing.slice(0, 50)));
-  } catch (e) {
-    // Ignore storage errors
-  }
+  const eventsKey = 'elecmate_integrity_events';
+  const existing = storageGetJSONSync<any[]>(eventsKey, []);
+  existing.unshift(logEntry);
+  // Keep last 50 events
+  storageSetJSONSync(eventsKey, existing.slice(0, 50));
 }
 
 /**
  * Get recent integrity events for debugging
  */
 export function getRecentIntegrityEvents(): any[] {
-  try {
-    return JSON.parse(localStorage.getItem('elecmate_integrity_events') || '[]');
-  } catch {
-    return [];
-  }
+  return storageGetJSONSync<any[]>('elecmate_integrity_events', []);
 }

@@ -42,11 +42,8 @@ const PremiumCategoryCard = ({
 
       {/* Main Content */}
       <div className="relative z-10 p-5 sm:p-6 flex flex-col h-full">
-        {/* Header: Icon + Category Name */}
-        <div className="flex items-start gap-3 sm:gap-4 mb-4 sm:mb-5">
-          <div className={`category-icon-container ${style.iconBg} border`}>
-            <IconComponent className="icon-float-on-hover h-8 w-8 sm:h-10 sm:w-10 text-white" />
-          </div>
+        {/* Header: Category Name */}
+        <div className="mb-4 sm:mb-5">
           <div className="flex-1 min-w-0">
             <h3 className="text-lg sm:text-xl font-bold text-white leading-tight mb-1">
               {category.name}

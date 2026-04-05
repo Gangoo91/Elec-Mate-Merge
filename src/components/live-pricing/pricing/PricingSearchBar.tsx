@@ -20,6 +20,8 @@ import {
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
+import { getCurrentPosition } from '@/utils/geolocation';
+import { storageGetJSONSync, storageSetJSONSync } from '@/utils/storage';
 
 interface PricingSearchBarProps {
   onSearch: (postcode: string, jobType?: string) => void;
@@ -163,14 +165,7 @@ const PricingSearchBar = ({
   const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
-    const saved = localStorage.getItem('pricing-recent-searches-v2');
-    if (saved) {
-      try {
-        setRecentSearches(JSON.parse(saved).slice(0, 5));
-      } catch {
-        setRecentSearches([]);
-      }
-    }
+    setRecentSearches(storageGetJSONSync<{ postcode: string; jobType?: string }[]>('pricing-recent-searches-v2', []).slice(0, 5));
   }, []);
 
   // Generate suggestions based on input
@@ -188,7 +183,7 @@ const PricingSearchBar = ({
     const newSearch = { postcode: pc, jobType };
     const updated = [newSearch, ...recentSearches.filter((s) => s.postcode !== pc)].slice(0, 5);
     setRecentSearches(updated);
-    localStorage.setItem('pricing-recent-searches-v2', JSON.stringify(updated));
+    storageSetJSONSync('pricing-recent-searches-v2', updated);
   };
 
   const handleSearch = () => {
@@ -210,34 +205,27 @@ const PricingSearchBar = ({
     }, 100);
   };
 
-  const handleLocationDetect = () => {
-    if (!navigator.geolocation) return;
-
+  const handleLocationDetect = async () => {
     setIsLocating(true);
-    navigator.geolocation.getCurrentPosition(
-      async (position) => {
-        try {
-          const { latitude, longitude } = position.coords;
-          const response = await fetch(
-            `https://api.postcodes.io/postcodes?lon=${longitude}&lat=${latitude}&limit=1`
-          );
-          const data = await response.json();
-          if (data.result?.[0]?.postcode) {
-            const pc = data.result[0].postcode;
-            setPostcode(pc);
-            // Auto-search when location is detected
-            saveSearch(pc, selectedJobType || undefined);
-            onSearch(pc, selectedJobType || undefined);
-          }
-        } catch (error) {
-          console.error('Error getting postcode from location:', error);
-        } finally {
-          setIsLocating(false);
-        }
-      },
-      () => setIsLocating(false),
-      { enableHighAccuracy: true, timeout: 10000 }
-    );
+    try {
+      const position = await getCurrentPosition({ enableHighAccuracy: true, timeout: 10000 });
+      const { latitude, longitude } = position;
+      const response = await fetch(
+        `https://api.postcodes.io/postcodes?lon=${longitude}&lat=${latitude}&limit=1`
+      );
+      const data = await response.json();
+      if (data.result?.[0]?.postcode) {
+        const pc = data.result[0].postcode;
+        setPostcode(pc);
+        // Auto-search when location is detected
+        saveSearch(pc, selectedJobType || undefined);
+        onSearch(pc, selectedJobType || undefined);
+      }
+    } catch (error) {
+      console.error('Error getting postcode from location:', error);
+    } finally {
+      setIsLocating(false);
+    }
   };
 
   const selectedJob = jobTypes.find((j) => j.id === selectedJobType);

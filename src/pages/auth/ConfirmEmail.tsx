@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { useNavigate, useSearchParams, Link } from 'react-router-dom';
 import { supabase } from '@/integrations/supabase/client';
+import { storageGetSync, storageRemoveSync } from '@/utils/storage';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import {
@@ -92,9 +93,9 @@ const ConfirmEmail = () => {
 
         // Auto-redirect to dashboard after 5s (extended from 3.5s)
         redirectTimeoutRef.current = setTimeout(() => {
-          // Clear localStorage items
-          localStorage.removeItem('elec-mate-pending-email');
-          localStorage.removeItem('elec-mate-pending-name');
+          // Clear storage items
+          storageRemoveSync('elec-mate-pending-email');
+          storageRemoveSync('elec-mate-pending-name');
           navigate('/dashboard');
         }, 5000);
       } catch (err: any) {
@@ -113,18 +114,18 @@ const ConfirmEmail = () => {
     if (redirectTimeoutRef.current) {
       clearTimeout(redirectTimeoutRef.current);
     }
-    // Clear localStorage items
-    localStorage.removeItem('elec-mate-pending-email');
-    localStorage.removeItem('elec-mate-pending-name');
+    // Clear storage items
+    storageRemoveSync('elec-mate-pending-email');
+    storageRemoveSync('elec-mate-pending-name');
     navigate('/dashboard');
   };
 
   const runPostConfirmationTasks = async (userId: string, email: string) => {
     try {
       // 1. Get stored onboarding data (with safe JSON parse)
-      const onboardingDataRaw = localStorage.getItem('elec-mate-onboarding');
-      const pendingElecIdRaw = localStorage.getItem('elec-mate-pending-elecid');
-      const fullName = localStorage.getItem('elec-mate-pending-name') || '';
+      const onboardingDataRaw = storageGetSync('elec-mate-onboarding');
+      const pendingElecIdRaw = storageGetSync('elec-mate-pending-elecid');
+      const fullName = storageGetSync('elec-mate-pending-name') || '';
 
       // 2. Apply onboarding data to profile (with safe JSON.parse)
       if (onboardingDataRaw) {
@@ -133,7 +134,7 @@ const ConfirmEmail = () => {
           parsed = JSON.parse(onboardingDataRaw);
         } catch (parseError) {
           console.error('Corrupted onboarding data, clearing:', parseError);
-          localStorage.removeItem('elec-mate-onboarding');
+          storageRemoveSync('elec-mate-onboarding');
         }
 
         if (parsed) {
@@ -150,7 +151,7 @@ const ConfirmEmail = () => {
               .eq('id', userId);
 
             console.log('Profile updated with onboarding data');
-            localStorage.removeItem('elec-mate-onboarding');
+            storageRemoveSync('elec-mate-onboarding');
           } catch (updateError) {
             console.error('Error updating profile:', updateError);
           }
@@ -164,7 +165,7 @@ const ConfirmEmail = () => {
           elecIdData = JSON.parse(pendingElecIdRaw);
         } catch (parseError) {
           console.error('Corrupted elec-id data, clearing:', parseError);
-          localStorage.removeItem('elec-mate-pending-elecid');
+          storageRemoveSync('elec-mate-pending-elecid');
         }
 
         if (elecIdData?.createElecId) {
@@ -183,7 +184,7 @@ const ConfirmEmail = () => {
             console.error('Error generating Elec-ID:', elecIdError);
           }
         }
-        localStorage.removeItem('elec-mate-pending-elecid');
+        storageRemoveSync('elec-mate-pending-elecid');
       }
 
       // 4. Send welcome email (non-blocking)
@@ -210,8 +211,8 @@ const ConfirmEmail = () => {
     // Prevent resend if cooldown is active
     if (resendCooldown > 0) return;
 
-    const email = localStorage.getItem('elec-mate-pending-email');
-    const fullName = localStorage.getItem('elec-mate-pending-name');
+    const email = storageGetSync('elec-mate-pending-email');
+    const fullName = storageGetSync('elec-mate-pending-name');
 
     if (!email) {
       setErrorMessage('Please sign up again to receive a new confirmation email.');

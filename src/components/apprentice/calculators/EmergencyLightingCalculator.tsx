@@ -1,3 +1,4 @@
+import { copyToClipboard } from '@/utils/clipboard';
 import { useState, useCallback } from 'react';
 import { Copy, Check, ChevronDown } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
@@ -154,10 +155,13 @@ const EmergencyLightingCalculator = () => {
       `Recommended: ${result.recommendedSystem}`,
       `Status: ${result.complianceStatus}`,
     ].join('\n');
-    navigator.clipboard.writeText(text);
-    setCopied(true);
-    toast({ title: 'Copied to clipboard' });
-    setTimeout(() => setCopied(false), 2000);
+    copyToClipboard(text).then((ok) => {
+      if (ok) {
+        setCopied(true);
+        toast({ title: 'Copied to clipboard' });
+        setTimeout(() => setCopied(false), 2000);
+      }
+    });
   };
 
   const isValid = parseFloat(floorArea) > 0;

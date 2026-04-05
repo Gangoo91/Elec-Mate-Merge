@@ -42,6 +42,7 @@ import {
   ELEC_MATE_SYSTEM_PROMPT,
   type VoiceTool,
 } from '@/config/voiceToolsRegistry';
+import { copyToClipboard as clipboardCopy } from '@/utils/clipboard';
 
 const SETTINGS_KEY = 'elevenlabs_agent_id';
 const API_KEY_SETTINGS_KEY = 'elevenlabs_api_key';
@@ -434,8 +435,8 @@ const VoiceSettingsPanel: React.FC = () => {
     }
   };
 
-  const copyToClipboard = (text: string, label: string) => {
-    navigator.clipboard.writeText(text);
+  const copyToClipboard = async (text: string, label: string) => {
+    await clipboardCopy(text);
     toast({
       title: 'Copied',
       description: `${label} copied to clipboard`,
@@ -450,7 +451,7 @@ const VoiceSettingsPanel: React.FC = () => {
   if (isLoading) {
     return (
       <Card>
-        <CardContent className="py-8 text-center text-muted-foreground">
+        <CardContent className="py-8 text-center text-white/60">
           Loading settings...
         </CardContent>
       </Card>
@@ -518,7 +519,7 @@ const VoiceSettingsPanel: React.FC = () => {
                 </Button>
               )}
             </div>
-            <p className="text-xs text-muted-foreground">
+            <p className="text-xs text-white/60">
               Get your API key from{' '}
               <a
                 href="https://elevenlabs.io/app/settings/api-keys"
@@ -540,7 +541,7 @@ const VoiceSettingsPanel: React.FC = () => {
                 <CloudUpload className="h-5 w-5 text-elec-yellow" />
                 Automatic Tool Sync
               </h4>
-              <p className="text-sm text-muted-foreground mt-1">
+              <p className="text-sm text-white/60 mt-1">
                 Push all {totalTools} tools to ElevenLabs with one click
               </p>
             </div>
@@ -590,19 +591,19 @@ const VoiceSettingsPanel: React.FC = () => {
               <div className="mt-2 grid grid-cols-4 gap-2 text-center text-xs">
                 <div className="bg-green-500/20 rounded p-2">
                   <div className="font-bold text-green-400">{syncResult.created}</div>
-                  <div className="text-muted-foreground">Created</div>
+                  <div className="text-white/60">Created</div>
                 </div>
                 <div className="bg-blue-500/20 rounded p-2">
                   <div className="font-bold text-blue-400">{syncResult.skipped}</div>
-                  <div className="text-muted-foreground">Existed</div>
+                  <div className="text-white/60">Existed</div>
                 </div>
                 <div className="bg-red-500/20 rounded p-2">
                   <div className="font-bold text-red-400">{syncResult.failed}</div>
-                  <div className="text-muted-foreground">Failed</div>
+                  <div className="text-white/60">Failed</div>
                 </div>
                 <div className="bg-elec-yellow/20 rounded p-2">
                   <div className="font-bold text-elec-yellow">{syncResult.totalAssigned}</div>
-                  <div className="text-muted-foreground">Total</div>
+                  <div className="text-white/60">Total</div>
                 </div>
               </div>
               {syncResult.firstError && (
@@ -612,7 +613,7 @@ const VoiceSettingsPanel: React.FC = () => {
                 </div>
               )}
               {syncResult.systemPromptUpdated && (
-                <p className="text-xs text-muted-foreground mt-2">System prompt was also updated</p>
+                <p className="text-xs text-white/60 mt-2">System prompt was also updated</p>
               )}
             </div>
           )}
@@ -637,7 +638,7 @@ const VoiceSettingsPanel: React.FC = () => {
           </div>
           <Progress value={progressPercent} className="h-2" />
           <div className="flex items-center justify-between text-sm">
-            <span className="text-muted-foreground">{Math.round(progressPercent)}% complete</span>
+            <span className="text-white/60">{Math.round(progressPercent)}% complete</span>
             <div className="flex items-center gap-2">
               <Button
                 variant="outline"
@@ -691,7 +692,7 @@ const VoiceSettingsPanel: React.FC = () => {
               Export Everything
             </Button>
           </div>
-          <p className="text-xs text-muted-foreground">
+          <p className="text-xs text-white/60">
             Copy to ElevenLabs: System prompt → paste in System Prompt field, then use the Setup
             Wizard to add each tool
           </p>
@@ -699,7 +700,7 @@ const VoiceSettingsPanel: React.FC = () => {
 
         <div className="rounded-lg border p-4 bg-muted/30">
           <h4 className="font-medium mb-2">Quick Setup Guide</h4>
-          <ol className="text-sm text-muted-foreground space-y-1 list-decimal list-inside">
+          <ol className="text-sm text-white/60 space-y-1 list-decimal list-inside">
             <li>
               Create an agent at{' '}
               <a
@@ -741,7 +742,7 @@ const VoiceSettingsPanel: React.FC = () => {
         {/* Navigation Reference Card */}
         <div className="rounded-lg border p-4">
           <h4 className="font-medium mb-2">Navigation Sections ({NAVIGATION_SECTIONS.length})</h4>
-          <p className="text-xs text-muted-foreground mb-2">
+          <p className="text-xs text-white/60 mb-2">
             Voice can navigate to any of these sections using aliases:
           </p>
           <div className="text-xs font-mono bg-muted p-2 rounded max-h-24 overflow-y-auto">
@@ -766,7 +767,7 @@ const VoiceSettingsPanel: React.FC = () => {
           {/* Search and Filter */}
           <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2">
             <div className="flex items-center gap-2 flex-1 w-full">
-              <Search className="h-4 w-4 text-muted-foreground" />
+              <Search className="h-4 w-4 text-white/60" />
               <Input
                 placeholder="Search tools..."
                 value={searchQuery}
@@ -800,7 +801,7 @@ const VoiceSettingsPanel: React.FC = () => {
           </div>
 
           {/* Showing X of Y indicator */}
-          <div className="flex items-center justify-between text-sm text-muted-foreground border-b pb-2">
+          <div className="flex items-center justify-between text-sm text-white/60 border-b pb-2">
             <span>
               Showing {filteredTools.length} of {totalTools} tools
             </span>
@@ -832,7 +833,7 @@ const VoiceSettingsPanel: React.FC = () => {
                 />
               ))}
               {filteredTools.length === 0 && (
-                <div className="text-center text-muted-foreground py-8">
+                <div className="text-center text-white/60 py-8">
                   No tools match your search/filter criteria
                 </div>
               )}

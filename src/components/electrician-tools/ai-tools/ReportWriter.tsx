@@ -13,6 +13,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
 import GeneratedReportDisplay from './GeneratedReportDisplay';
+import { copyToClipboard } from '@/utils/clipboard';
 
 // Form imports
 import { EICRForm, type EICRFormData } from './forms/EICRForm';
@@ -321,8 +322,8 @@ Please generate a professional RCD test certificate following BS 7671:2018 stand
     }
   };
 
-  const copyToClipboard = () => {
-    navigator.clipboard.writeText(generatedReport);
+  const handleCopyToClipboard = () => {
+    copyToClipboard(generatedReport);
     setCopied(true);
     toast({
       title: 'Copied to clipboard',
@@ -408,7 +409,7 @@ Please generate a professional RCD test certificate following BS 7671:2018 stand
               <GeneratedReportDisplay
                 report={generatedReport}
                 template={selectedTemplate}
-                onCopy={copyToClipboard}
+                onCopy={handleCopyToClipboard}
               />
             )}
           </div>

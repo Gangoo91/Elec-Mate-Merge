@@ -1,3 +1,4 @@
+import { copyToClipboard } from '@/utils/clipboard';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -77,7 +78,7 @@ const NewsDetail = ({ article, isOpen, onClose }: NewsDetailProps) => {
       }
     } else {
       // Fallback: copy to clipboard
-      navigator.clipboard.writeText(window.location.href);
+      copyToClipboard(window.location.href);
     }
   };
 

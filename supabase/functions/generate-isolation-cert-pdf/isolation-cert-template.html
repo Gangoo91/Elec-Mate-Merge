@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Electrical Isolation Certificate</title>
+    <style>
+        :root {
+            --accent-color: #f59e0b;
+            --accent-light: #f59e0b33;
+            --accent-dark: #b45309;
+        }
+
+        @page { size: A4; margin: 3mm 3mm 4mm 3mm; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-size: 8.5px; line-height: 1.4; color: #1a1a1a; background: #fff;
+            -webkit-print-color-adjust: exact; print-color-adjust: exact;
+        }
+
+        .doc-header {
+            background: linear-gradient(180deg, #0a1628 0%, #152238 100%);
+            color: #fff; padding: 10px 12px; margin-bottom: 2px; border-radius: 2px;
+            position: relative; overflow: hidden;
+        }
+        .doc-header::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: var(--accent-color); }
+        .doc-header-content { display: flex; justify-content: space-between; align-items: center; }
+        .doc-title-section { flex: 1; }
+        .doc-title { font-size: 16px; font-weight: 700; letter-spacing: 0.5px; margin-bottom: 2px; }
+        .doc-subtitle { font-size: 7.5px; font-weight: 400; opacity: 0.85; letter-spacing: 0.3px; }
+        .doc-meta { text-align: right; }
+        .cert-number { font-size: 11px; font-weight: 700; color: var(--accent-color); letter-spacing: 0.5px; }
+        .page-number { font-size: 8px; opacity: 0.7; margin-top: 2px; }
+        .company-logo img { max-height: 45px; max-width: 120px; object-fit: contain; }
+        .company-brand { display: flex; align-items: center; gap: 10px; margin-right: 12px; }
+        .company-brand-info { display: flex; flex-direction: column; }
+        .company-brand-name { font-size: 11px; font-weight: 700; color: #fff; letter-spacing: 0.3px; }
+        .company-brand-tagline { font-size: 7px; color: rgba(255,255,255,0.7); font-style: italic; }
+        .company-brand-reg { font-size: 7px; color: var(--accent-color); margin-top: 1px; }
+        .scheme-logo img { max-height: 36px; max-width: 80px; object-fit: contain; }
+
+        .section { margin-bottom: 4px; }
+        .section-title {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            color: #fff; font-size: 9px; font-weight: 600; text-transform: uppercase;
+            letter-spacing: 0.8px; padding: 4px 8px; margin-bottom: 3px;
+            border-left: 3px solid var(--accent-color);
+        }
+        .form-grid { display: table; width: 100%; border-collapse: collapse; margin-bottom: 2px; }
+        .form-row { display: table-row; }
+        .form-label {
+            display: table-cell; font-size: 7.5px; font-weight: 600; color: #475569;
+            padding: 4px 6px; width: 130px; vertical-align: middle; background: #f8fafc; border: 1px solid #e2e8f0;
+        }
+        .form-value {
+            display: table-cell; font-size: 8.5px; color: #1e293b;
+            padding: 4px 6px; vertical-align: middle; border: 1px solid #e2e8f0; background: #fff;
+        }
+        .inline-form { display: flex; flex-wrap: wrap; gap: 4px; padding: 4px 6px; background: #fafbfc; border: 1px solid #e2e8f0; border-radius: 2px; }
+        .inline-group { display: flex; align-items: center; gap: 3px; }
+        .inline-label { font-size: 7.5px; font-weight: 600; color: #64748b; white-space: nowrap; }
+        .inline-value { font-size: 8px; color: #1e293b; padding: 3px 5px; background: #fff; border: 1px solid #cbd5e1; border-radius: 2px; min-width: 50px; min-height: 18px; }
+        .inline-value.wide { min-width: 100px; flex: 1; }
+
+        .checkbox-item { display: flex; align-items: center; gap: 3px; margin-bottom: 2px; }
+        .checkbox-box {
+            width: 10px; height: 10px; border: 1px solid #64748b;
+            display: inline-flex; align-items: center; justify-content: center;
+            font-size: 8px; font-weight: bold;
+        }
+        .checkbox-box.checked { background: var(--accent-color); color: #fff; }
+
+        .signature-grid { display: flex; gap: 6px; margin-top: 2px; }
+        .signature-box { flex: 1; border: 1px solid #cbd5e1; border-radius: 2px; overflow: hidden; }
+        .signature-box-header {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            color: #fff; font-size: 7.5px; font-weight: 600; padding: 3px 8px;
+            border-bottom: 2px solid var(--accent-color);
+        }
+        .signature-box-body { padding: 4px 6px; background: #fafbfc; }
+        .sig-field { display: flex; align-items: center; margin-bottom: 3px; gap: 4px; }
+        .sig-field:last-child { margin-bottom: 0; }
+        .sig-field-label { font-size: 7px; font-weight: 600; color: #64748b; min-width: 70px; flex-shrink: 0; }
+        .sig-field-value { flex: 1; font-size: 8px; color: #1e293b; padding: 3px 5px; background: #fff; border: 1px solid #e2e8f0; border-radius: 1px; min-height: 18px; }
+        .sig-field-value img { max-height: 30px; }
+
+        .info-box {
+            background: #fffbeb; border: 1px solid #fcd34d; border-left: 3px solid var(--accent-color);
+            border-radius: 2px; padding: 4px 8px; margin: 4px 0; font-size: 7.5px; color: #92400e;
+        }
+        .info-box strong { color: #78350f; }
+
+        .status-badge {
+            display: inline-block; padding: 2px 8px; border-radius: 2px;
+            font-size: 7px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.3px;
+        }
+        .status-badge.active { background: #fef3c7; color: #92400e; border: 1px solid #fcd34d; }
+        .status-badge.complete { background: #dcfce7; color: #166534; border: 1px solid #86efac; }
+
+        .photo-grid { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 4px; }
+        .photo-item { width: 80px; height: 80px; border: 1px solid #e2e8f0; border-radius: 2px; overflow: hidden; }
+        .photo-item img { width: 100%; height: 100%; object-fit: cover; }
+
+        .footer { margin-top: 8px; padding-top: 6px; border-top: 2px solid var(--accent-color); display: flex; justify-content: space-between; font-size: 7px; color: #64748b; }
+        .footer-left { line-height: 1.5; }
+        .footer-right { text-align: right; }
+
+        .page-break { page-break-before: always; }
+        .avoid-break { page-break-inside: avoid; }
+
+        .front-sheet { min-height: 100vh; display: flex; flex-direction: column; }
+        .front-banner { background: var(--accent-color); color: #fff; text-align: center; padding: 16px 20px; margin: 8px 0; border-radius: 3px; }
+        .front-banner h1 { font-size: 26px; font-weight: 900; letter-spacing: 2px; text-transform: uppercase; }
+        .front-banner p { font-size: 12px; font-weight: 600; margin-top: 4px; letter-spacing: 0.5px; }
+
+        .front-details-card { border: 2px solid var(--accent-color); border-radius: 4px; overflow: hidden; margin: 6px 0; }
+        .front-details-header { background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); color: #fff; font-size: 10px; font-weight: 600; padding: 6px 12px; border-bottom: 2px solid var(--accent-color); text-transform: uppercase; letter-spacing: 0.5px; }
+        .front-details-body { padding: 10px 12px; background: #fff; }
+        .front-field { display: flex; margin-bottom: 6px; gap: 8px; }
+        .front-field:last-child { margin-bottom: 0; }
+        .front-field-label { font-size: 9px; font-weight: 600; color: #64748b; min-width: 110px; flex-shrink: 0; }
+        .front-field-value { font-size: 10px; font-weight: 600; color: #0f172a; }
+
+        .front-method-grid { display: flex; flex-wrap: wrap; gap: 6px; margin: 6px 0; }
+        .front-method-badge { padding: 4px 10px; border-radius: 3px; font-size: 8px; font-weight: 700; }
+        .front-method-badge.active { background: #fef3c7; color: #92400e; border: 1px solid #fcd34d; }
+        .front-method-badge.inactive { background: #f1f5f9; color: #94a3b8; border: 1px solid #e2e8f0; }
+
+        .front-warning-box { background: #0f172a; color: #fff; text-align: center; padding: 10px 16px; border-radius: 3px; margin: 8px 0; border: 2px solid var(--accent-color); }
+        .front-warning-box p { font-size: 11px; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase; }
+        .front-warning-box .sub { font-size: 8px; font-weight: 400; margin-top: 3px; color: var(--accent-color); text-transform: none; }
+    </style>
+</head>
+<body>
+
+<!-- ============================================ -->
+<!-- PAGE 1: FRONT SHEET                          -->
+<!-- ============================================ -->
+
+<div class="front-sheet">
+    <div class="doc-header">
+        <div class="doc-header-content">
+            <div class="company-brand">
+                {% if company_logo %}
+                <div class="company-logo"><img src="{{ company_logo }}" alt="Company Logo" /></div>
+                {% endif %}
+                <div class="company-brand-info">
+                    <div class="company-brand-name">{{ company_name }}</div>
+                    {% if company_tagline %}<div class="company-brand-tagline">{{ company_tagline }}</div>{% endif %}
+                    {% if registration_scheme %}<div class="company-brand-reg">{{ registration_scheme }}: {{ registration_number }}</div>{% endif %}
+                </div>
+                {% if registration_scheme_logo %}<div class="scheme-logo"><img src="{{ registration_scheme_logo }}" alt="{{ registration_scheme }}" /></div>{% endif %}
+            </div>
+            <div class="doc-title-section">
+                <div class="doc-title">ELECTRICAL ISOLATION CERTIFICATE</div>
+                <div class="doc-subtitle">Issued in accordance with BS 7671:2018+A3:2024 and GS 38 Safe Isolation Procedure</div>
+            </div>
+            <div class="doc-meta">
+                <div class="cert-number">{{ reference_number }}</div>
+                <div class="page-number">Page 1</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Status Banner -->
+    <div class="front-banner">
+        {% if work_completed %}
+        <h1 style="background: #22c55e;">DE-ISOLATED</h1>
+        <p>Work Completed — Circuit Handed Back</p>
+        {% else %}
+        <h1>CIRCUIT ISOLATED</h1>
+        <p>Do Not Re-Energise Without Authorisation</p>
+        {% endif %}
+    </div>
+
+    <!-- What This Certificate Means -->
+    <div class="info-box" style="margin: 6px 0; font-size: 8.5px; line-height: 1.6;">
+        <strong>What does this certificate mean?</strong> This certificate confirms that the electrical circuit or equipment identified below has been safely isolated from all sources of electrical supply, tested and proven dead in accordance with the GS 38 safe isolation procedure, and is safe to work on. The circuit must not be re-energised until authorised by the person named on this certificate.
+    </div>
+
+    <!-- Key Details -->
+    <div class="front-details-card">
+        <div class="front-details-header">Isolation Details</div>
+        <div class="front-details-body">
+            <div class="front-field">
+                <div class="front-field-label">Reference</div>
+                <div class="front-field-value">{{ reference_number }}</div>
+            </div>
+            <div class="front-field">
+                <div class="front-field-label">Date & Time</div>
+                <div class="front-field-value">{{ date_isolated }} at {{ time_isolated }}</div>
+            </div>
+            <div class="front-field">
+                <div class="front-field-label">Site</div>
+                <div class="front-field-value" style="font-size: 11px;">{{ site_name }}{% if site_address %} — {{ site_address }}{% endif %}</div>
+            </div>
+            <div class="front-field">
+                <div class="front-field-label">Equipment</div>
+                <div class="front-field-value" style="font-size: 11px;">{{ equipment_description }}</div>
+            </div>
+            <div class="front-field">
+                <div class="front-field-label">Circuit</div>
+                <div class="front-field-value">{{ circuit_reference }}</div>
+            </div>
+            <div class="front-field">
+                <div class="front-field-label">Point of Isolation</div>
+                <div class="front-field-value">{{ isolation_points }}</div>
+            </div>
+            <div class="front-field">
+                <div class="front-field-label">Lock / Tag No.</div>
+                <div class="front-field-value">{{ lock_tag_number }}</div>
+            </div>
+            <div class="front-field">
+                <div class="front-field-label">Isolated By</div>
+                <div class="front-field-value">{{ person_isolating_name }}, {{ contractor_company }}</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Method Summary -->
+    <div style="margin: 6px 0;">
+        <div style="font-size: 8px; font-weight: 600; color: #64748b; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px;">Method of Isolation</div>
+        <div class="front-method-grid">
+            <span class="front-method-badge {% if method_mcb_off %}active{% else %}inactive{% endif %}">MCB / RCBO Off</span>
+            <span class="front-method-badge {% if method_fuse_removed %}active{% else %}inactive{% endif %}">Fuse Removed</span>
+            <span class="front-method-badge {% if method_isolator_locked %}active{% else %}inactive{% endif %}">Isolator Locked</span>
+            <span class="front-method-badge {% if method_supply_disconnected %}active{% else %}inactive{% endif %}">Supply Disconnected</span>
+            {% if method_other %}<span class="front-method-badge active">{{ method_other_description }}</span>{% endif %}
+        </div>
+    </div>
+
+    <!-- Confirmed Dead Badge -->
+    <div style="margin: 6px 0; display: flex; gap: 8px; align-items: center;">
+        <span class="status-badge {% if confirmed_dead %}complete{% else %}active{% endif %}">
+            {% if confirmed_dead %}Confirmed Dead — Safe to Work{% else %}Awaiting Confirmation{% endif %}
+        </span>
+        {% if warning_notices_posted %}
+        <span class="status-badge active">Warning Notices Posted</span>
+        {% endif %}
+    </div>
+
+    <!-- Warning -->
+    <div class="front-warning-box">
+        <p>Do Not Re-Energise This Circuit</p>
+        <div class="sub">This circuit must remain isolated until all work is completed, all persons are clear, and the person authorising re-energisation has signed the de-isolation section of this certificate.</div>
+    </div>
+
+    <div style="flex: 1;"></div>
+
+    <!-- Footer -->
+    <div class="footer">
+        <div class="footer-left">
+            <strong>{{ company_name }}</strong><br>
+            {{ company_address }}<br>
+            {% if company_phone %}Tel: {{ company_phone }}{% endif %}
+            {% if company_email %} | {{ company_email }}{% endif %}
+        </div>
+        <div class="footer-right">
+            {% if registration_scheme %}<strong>{{ registration_scheme }}</strong><br>Reg No: {{ registration_number }}<br>{% endif %}
+            <span style="color: #94a3b8;">BS 7671:2018+A3:2024 | GS 38</span>
+        </div>
+    </div>
+    <div style="text-align: center; margin-top: 8px;">
+        <span style="font-size: 8px; color: #94a3b8; letter-spacing: 0.3px;">Powered by <strong style="color: #64748b;">Elec-Mate</strong></span>
+    </div>
+</div>
+
+<!-- ============================================ -->
+<!-- PAGE 2: FULL DETAILS                         -->
+<!-- ============================================ -->
+
+<div class="page-break"></div>
+
+<div class="doc-header">
+    <div class="doc-header-content">
+        <div class="company-brand">
+            {% if company_logo %}<div class="company-logo"><img src="{{ company_logo }}" alt="Company Logo" /></div>{% endif %}
+            <div class="company-brand-info"><div class="company-brand-name">{{ company_name }}</div></div>
+        </div>
+        <div class="doc-title-section">
+            <div class="doc-title">ELECTRICAL ISOLATION CERTIFICATE</div>
+            <div class="doc-subtitle">Full Details</div>
+        </div>
+        <div class="doc-meta">
+            <div class="cert-number">{{ reference_number }}</div>
+            <div class="page-number">Page 2</div>
+        </div>
+    </div>
+</div>
+
+<!-- SECTION A: ISSUED BY -->
+<div class="section">
+    <div class="section-title">Section A: Issued By</div>
+    <div class="form-grid">
+        <div class="form-row">
+            <div class="form-label">Name</div>
+            <div class="form-value">{{ contractor_name }}</div>
+            <div class="form-label">Company</div>
+            <div class="form-value">{{ contractor_company }}</div>
+        </div>
+        <div class="form-row">
+            <div class="form-label">Telephone</div>
+            <div class="form-value">{{ contractor_phone }}</div>
+            <div class="form-label">Email</div>
+            <div class="form-value">{{ contractor_email }}</div>
+        </div>
+        <div class="form-row">
+            <div class="form-label">Scheme</div>
+            <div class="form-value">{{ registration_scheme }}</div>
+            <div class="form-label">Registration No.</div>
+            <div class="form-value">{{ registration_number }}</div>
+        </div>
+    </div>
+</div>
+
+<!-- SECTION B: SITE DETAILS -->
+<div class="section">
+    <div class="section-title">Section B: Site Details</div>
+    <div class="form-grid">
+        <div class="form-row">
+            <div class="form-label">Site Name</div>
+            <div class="form-value">{{ site_name }}</div>
+            <div class="form-label">Contact on Site</div>
+            <div class="form-value">{{ site_contact_name }}</div>
+        </div>
+        <div class="form-row">
+            <div class="form-label">Site Address</div>
+            <div class="form-value" colspan="3">{{ site_address }}</div>
+        </div>
+        <div class="form-row">
+            <div class="form-label">Contact Phone</div>
+            <div class="form-value" colspan="3">{{ site_contact_phone }}</div>
+        </div>
+    </div>
+</div>
+
+<!-- SECTION C: EQUIPMENT & CIRCUIT -->
+<div class="section">
+    <div class="section-title">Section C: Equipment & Circuit</div>
+    <div class="form-grid">
+        <div class="form-row">
+            <div class="form-label">Equipment</div>
+            <div class="form-value" style="font-weight: 600;" colspan="3">{{ equipment_description }}</div>
+        </div>
+        <div class="form-row">
+            <div class="form-label">Circuit Reference</div>
+            <div class="form-value">{{ circuit_reference }}</div>
+            <div class="form-label">DB Reference</div>
+            <div class="form-value">{{ distribution_board_ref }}</div>
+        </div>
+        <div class="form-row">
+            <div class="form-label">Location</div>
+            <div class="form-value" colspan="3">{{ location_within_installation }}</div>
+        </div>
+    </div>
+</div>
+
+<!-- SECTION D: ISOLATION DETAILS -->
+<div class="section">
+    <div class="section-title">Section D: Isolation Details</div>
+    <div class="form-grid">
+        <div class="form-row">
+            <div class="form-label">Point(s) of Isolation</div>
+            <div class="form-value" colspan="3">{{ isolation_points }}</div>
+        </div>
+        <div class="form-row">
+            <div class="form-label">Lock / Tag Number</div>
+            <div class="form-value" colspan="3">{{ lock_tag_number }}</div>
+        </div>
+    </div>
+    <div class="inline-form" style="margin-top: 2px;">
+        <div class="inline-group"><span class="inline-label">Method:</span></div>
+        <div class="checkbox-item"><span class="checkbox-box {% if method_mcb_off %}checked{% endif %}">{% if method_mcb_off %}&#10003;{% endif %}</span><label>MCB/RCBO Off</label></div>
+        <div class="checkbox-item"><span class="checkbox-box {% if method_fuse_removed %}checked{% endif %}">{% if method_fuse_removed %}&#10003;{% endif %}</span><label>Fuse Removed</label></div>
+        <div class="checkbox-item"><span class="checkbox-box {% if method_isolator_locked %}checked{% endif %}">{% if method_isolator_locked %}&#10003;{% endif %}</span><label>Isolator Locked</label></div>
+        <div class="checkbox-item"><span class="checkbox-box {% if method_supply_disconnected %}checked{% endif %}">{% if method_supply_disconnected %}&#10003;{% endif %}</span><label>Supply Disconnected</label></div>
+        {% if method_other %}<div class="checkbox-item"><span class="checkbox-box checked">&#10003;</span><label>{{ method_other_description }}</label></div>{% endif %}
+    </div>
+    <div class="inline-form" style="margin-top: 2px;">
+        <div class="checkbox-item"><span class="checkbox-box {% if warning_notices_posted %}checked{% endif %}">{% if warning_notices_posted %}&#10003;{% endif %}</span><label>Warning notices posted at isolation point</label></div>
+    </div>
+</div>
+
+<!-- SECTION E: PURPOSE OF WORK -->
+{% if purpose_of_work != "" %}
+<div class="section">
+    <div class="section-title">Section E: Purpose of Work</div>
+    <div class="form-grid">
+        <div class="form-row">
+            <div class="form-label">Work Description</div>
+            <div class="form-value" style="line-height: 1.5;" colspan="3">{{ purpose_of_work }}</div>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+<!-- SECTION F: AFFECTED SYSTEMS -->
+{% if affected_fire_alarm or affected_emergency_lighting or affected_security or affected_it or affected_lifts or affected_other %}
+<div class="section">
+    <div class="section-title">Section F: Affected Systems</div>
+    <div class="info-box">
+        <strong>Warning:</strong> The following systems may be affected by this isolation and should be managed accordingly.
+    </div>
+    <div class="inline-form">
+        {% if affected_fire_alarm %}<div class="checkbox-item"><span class="checkbox-box checked">&#10003;</span><label>Fire Alarm</label></div>{% endif %}
+        {% if affected_emergency_lighting %}<div class="checkbox-item"><span class="checkbox-box checked">&#10003;</span><label>Emergency Lighting</label></div>{% endif %}
+        {% if affected_security %}<div class="checkbox-item"><span class="checkbox-box checked">&#10003;</span><label>Security / CCTV</label></div>{% endif %}
+        {% if affected_it %}<div class="checkbox-item"><span class="checkbox-box checked">&#10003;</span><label>IT / Data / Comms</label></div>{% endif %}
+        {% if affected_lifts %}<div class="checkbox-item"><span class="checkbox-box checked">&#10003;</span><label>Lifts</label></div>{% endif %}
+        {% if affected_other %}<div class="checkbox-item"><span class="checkbox-box checked">&#10003;</span><label>{{ affected_other_description }}</label></div>{% endif %}
+    </div>
+</div>
+{% endif %}
+
+<!-- SECTION G: PROVING DEAD — GS 38 -->
+<div class="section avoid-break">
+    <div class="section-title">Section G: Proving Dead — GS 38 Safe Isolation Procedure</div>
+    <div class="form-grid">
+        <div class="form-row">
+            <div class="form-label">Tester Make</div>
+            <div class="form-value">{{ tester_make }}</div>
+            <div class="form-label">Model</div>
+            <div class="form-value">{{ tester_model }}</div>
+        </div>
+        <div class="form-row">
+            <div class="form-label">Tester Serial No.</div>
+            <div class="form-value" colspan="3">{{ tester_serial_number }}</div>
+        </div>
+        <div class="form-row">
+            <div class="form-label">Proving Unit Make</div>
+            <div class="form-value">{{ proving_unit_make }}</div>
+            <div class="form-label">Model</div>
+            <div class="form-value">{{ proving_unit_model }}</div>
+        </div>
+    </div>
+    <div class="inline-form" style="margin-top: 2px;">
+        <div class="checkbox-item"><span class="checkbox-box {% if prove_test_prove_confirmed %}checked{% endif %}">{% if prove_test_prove_confirmed %}&#10003;{% endif %}</span><label>Prove — Test — Prove procedure completed</label></div>
+        <div class="checkbox-item"><span class="checkbox-box {% if confirmed_dead %}checked{% endif %}">{% if confirmed_dead %}&#10003;{% endif %}</span><label style="font-weight: 600;">Confirmed dead — safe to work</label></div>
+    </div>
+</div>
+
+<!-- SECTION H: ISOLATION SIGN-ON -->
+<div class="section avoid-break">
+    <div class="section-title">Section H: Isolation</div>
+    <div class="inline-form" style="margin-bottom: 4px;">
+        <div class="inline-group"><span class="inline-label">Date:</span><span class="inline-value">{{ date_isolated }}</span></div>
+        <div class="inline-group"><span class="inline-label">Time:</span><span class="inline-value">{{ time_isolated }}</span></div>
+    </div>
+    <div class="signature-grid">
+        <div class="signature-box">
+            <div class="signature-box-header">Person Isolating</div>
+            <div class="signature-box-body">
+                <div class="sig-field"><span class="sig-field-label">Name</span><span class="sig-field-value" style="font-weight: 600;">{{ person_isolating_name }}</span></div>
+                <div class="sig-field"><span class="sig-field-label">Signature</span><span class="sig-field-value" style="min-height: 35px;">{% if person_isolating_signature %}<img src="{{ person_isolating_signature }}" style="max-height: 30px;" />{% endif %}</span></div>
+            </div>
+        </div>
+        <div class="signature-box">
+            <div class="signature-box-header">Person Receiving Isolation</div>
+            <div class="signature-box-body">
+                <div class="sig-field"><span class="sig-field-label">Name</span><span class="sig-field-value">{{ person_receiving_name }}</span></div>
+                <div class="sig-field"><span class="sig-field-label">Position</span><span class="sig-field-value">{{ person_receiving_position }}</span></div>
+                <div class="sig-field"><span class="sig-field-label">Signature</span><span class="sig-field-value" style="min-height: 35px;">{% if person_receiving_signature %}<img src="{{ person_receiving_signature }}" style="max-height: 30px;" />{% endif %}</span></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- SECTION I: DE-ISOLATION / HANDBACK -->
+<div class="section avoid-break">
+    <div class="section-title">Section I: De-Isolation / Handback</div>
+    {% if date_deisolated != "" %}
+    <div class="inline-form" style="margin-bottom: 4px;">
+        <div class="inline-group"><span class="inline-label">Date:</span><span class="inline-value">{{ date_deisolated }}</span></div>
+        <div class="inline-group"><span class="inline-label">Time:</span><span class="inline-value">{{ time_deisolated }}</span></div>
+    </div>
+    <div class="inline-form" style="margin-bottom: 4px;">
+        <div class="checkbox-item"><span class="checkbox-box {% if work_completed %}checked{% endif %}">{% if work_completed %}&#10003;{% endif %}</span><label>All work completed</label></div>
+        <div class="checkbox-item"><span class="checkbox-box {% if all_persons_clear %}checked{% endif %}">{% if all_persons_clear %}&#10003;{% endif %}</span><label>All persons clear of equipment</label></div>
+    </div>
+    <div class="signature-grid">
+        <div class="signature-box">
+            <div class="signature-box-header">Person De-Isolating</div>
+            <div class="signature-box-body">
+                <div class="sig-field"><span class="sig-field-label">Name</span><span class="sig-field-value">{{ person_deisolating_name }}</span></div>
+                <div class="sig-field"><span class="sig-field-label">Signature</span><span class="sig-field-value" style="min-height: 35px;">{% if person_deisolating_signature %}<img src="{{ person_deisolating_signature }}" style="max-height: 30px;" />{% endif %}</span></div>
+            </div>
+        </div>
+        <div class="signature-box">
+            <div class="signature-box-header">Person Authorising Re-Energisation</div>
+            <div class="signature-box-body">
+                <div class="sig-field"><span class="sig-field-label">Name</span><span class="sig-field-value">{{ person_authorising_name }}</span></div>
+                <div class="sig-field"><span class="sig-field-label">Signature</span><span class="sig-field-value" style="min-height: 35px;">{% if person_authorising_signature %}<img src="{{ person_authorising_signature }}" style="max-height: 30px;" />{% endif %}</span></div>
+            </div>
+        </div>
+    </div>
+    {% else %}
+    <div class="info-box">
+        <strong>Circuit remains isolated.</strong> This section will be completed when the work is finished and the circuit is handed back for re-energisation.
+    </div>
+    {% endif %}
+</div>
+
+<!-- SECTION J: PHOTO EVIDENCE -->
+{% if photos.size > 0 %}
+<div class="section">
+    <div class="section-title">Section J: Photographic Evidence</div>
+    <div class="photo-grid">
+        {% for photo in photos %}
+        <div class="photo-item"><img src="{{ photo }}" alt="Evidence {{ forloop.index }}" /></div>
+        {% endfor %}
+    </div>
+</div>
+{% endif %}
+
+<!-- SECTION K: NOTES -->
+{% if notes != "" %}
+<div class="section">
+    <div class="section-title">Section K: Additional Notes</div>
+    <div class="form-grid">
+        <div class="form-row">
+            <div class="form-value" style="line-height: 1.5; min-height: 30px;">{{ notes }}</div>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+<!-- Footer -->
+<div class="footer">
+    <div class="footer-left">
+        <strong>{{ company_name }}</strong><br>
+        {{ company_address }}<br>
+        {% if company_phone %}Tel: {{ company_phone }}{% endif %}
+        {% if company_email %} | {{ company_email }}{% endif %}
+    </div>
+    <div class="footer-right">
+        {% if registration_scheme %}<strong>{{ registration_scheme }}</strong><br>Reg No: {{ registration_number }}<br>{% endif %}
+        <span style="color: #94a3b8;">BS 7671:2018+A3:2024 | GS 38 | Electrical Isolation Certificate</span>
+    </div>
+</div>
+<div style="text-align: center; margin-top: 8px;">
+    <span style="font-size: 8px; color: #94a3b8; letter-spacing: 0.3px;">Powered by <strong style="color: #64748b;">Elec-Mate</strong></span>
+</div>
+
+</body>
+</html>

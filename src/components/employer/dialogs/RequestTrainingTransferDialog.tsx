@@ -106,7 +106,7 @@ export const RequestTrainingTransferDialog = ({
             <Shield className="h-5 w-5 text-elec-yellow flex-shrink-0 mt-0.5" />
             <div className="text-sm">
               <p className="font-medium text-foreground">Your Training, Your Records</p>
-              <p className="text-muted-foreground mt-1">
+              <p className="text-white/60 mt-1">
                 Under GDPR and data protection law, you have the right to request copies of training
                 records completed during your employment. These belong to you.
               </p>
@@ -126,7 +126,7 @@ export const RequestTrainingTransferDialog = ({
 
             <div className="space-y-2 max-h-48 overflow-y-auto border border-border rounded-lg p-2">
               {trainingRecords.length === 0 ? (
-                <p className="text-sm text-muted-foreground text-center py-4">
+                <p className="text-sm text-white/60 text-center py-4">
                   No training records available to request
                 </p>
               ) : (
@@ -146,7 +146,7 @@ export const RequestTrainingTransferDialog = ({
                     />
                     <div className="flex-1 min-w-0">
                       <p className="text-sm font-medium truncate">{record.name}</p>
-                      <p className="text-xs text-muted-foreground flex items-center gap-2">
+                      <p className="text-xs text-white/60 flex items-center gap-2">
                         <Building className="h-3 w-3" />
                         {record.provider}
                         <span>•</span>
@@ -163,7 +163,7 @@ export const RequestTrainingTransferDialog = ({
                 ))
               )}
             </div>
-            <p className="text-xs text-muted-foreground">
+            <p className="text-xs text-white/60">
               <AlertCircle className="h-3 w-3 inline mr-1" />
               Records without certificates are marked with a warning icon
             </p>

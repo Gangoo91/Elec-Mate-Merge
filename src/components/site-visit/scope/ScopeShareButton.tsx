@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { copyToClipboard } from '@/utils/clipboard';
 import { Send, Copy, Check, Loader2, Mail, MessageSquare } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -101,7 +102,7 @@ export const ScopeShareButton = ({ visit, assumptions }: ScopeShareButtonProps) 
 
   const handleCopy = async () => {
     if (!shareUrl) return;
-    await navigator.clipboard.writeText(shareUrl);
+    await copyToClipboard(shareUrl);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
     toast({ title: 'Link copied to clipboard' });

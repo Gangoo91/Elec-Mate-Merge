@@ -28,6 +28,7 @@ import {
   Zap,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { openExternalUrl } from '@/utils/open-external-url';
 import {
   BusinessPageLayout,
   SectionNav,
@@ -772,7 +773,7 @@ const BusinessApprentices = () => {
                   variant="outline"
                   className="w-full justify-start border-white/20 text-left h-auto p-3 hover:border-yellow-400/40"
                   onClick={() =>
-                    window.open('https://apprenticeshipsupport.apprenticeships.gov.uk', '_blank')
+                    openExternalUrl('https://apprenticeshipsupport.apprenticeships.gov.uk')
                   }
                 >
                   <ExternalLink className="h-4 w-4 mr-3 text-yellow-400 flex-shrink-0" />
@@ -787,7 +788,7 @@ const BusinessApprentices = () => {
                   variant="outline"
                   className="w-full justify-start border-white/20 text-left h-auto p-3 hover:border-yellow-400/40"
                   onClick={() =>
-                    window.open('https://www.citb.co.uk/apprentices/support', '_blank')
+                    openExternalUrl('https://www.citb.co.uk/apprentices/support')
                   }
                 >
                   <ExternalLink className="h-4 w-4 mr-3 text-yellow-400 flex-shrink-0" />

@@ -6,7 +6,8 @@ import { Button } from '@/components/ui/button';
 import WalkthroughSlide from '@/components/onboarding/WalkthroughSlide';
 import type { TestimonialData, ScreenshotItem } from '@/components/onboarding/WalkthroughSlide';
 import { Zap, Sparkles, ArrowRight, ShieldCheck, ChevronLeft } from 'lucide-react';
-import { useHaptics } from '@/hooks/useHaptics';
+import { useHaptic } from '@/hooks/useHaptic';
+import { storageSetSync } from '@/utils/storage';
 
 const WALKTHROUGH_KEY = 'walkthrough_completed';
 const SLIDE_DURATION_DEFAULT = 5000; // 5 seconds per slide
@@ -160,7 +161,7 @@ const Walkthrough = () => {
   const lastTimeRef = useRef(Date.now());
   const navigate = useNavigate();
   const isLastSlide = currentSlide === slides.length - 1;
-  const { tap } = useHaptics();
+  const { light } = useHaptic();
 
   useEffect(() => {
     setIsMobile(window.innerWidth < 768);
@@ -220,15 +221,15 @@ const Walkthrough = () => {
       lastTimeRef.current = Date.now();
       setDirection(1);
       setCurrentSlide((prev) => prev + 1);
-      tap();
+      light();
     }
-  }, [elapsed, currentSlide, tap]);
+  }, [elapsed, currentSlide, light]);
 
   const slideDur = SLIDE_DURATIONS[currentSlide] ?? SLIDE_DURATION_DEFAULT;
   const progress = Math.min(elapsed / slideDur, 1);
 
   const completeWalkthrough = useCallback(() => {
-    localStorage.setItem(WALKTHROUGH_KEY, 'true');
+    storageSetSync(WALKTHROUGH_KEY, 'true');
   }, []);
 
   const handleGetStarted = useCallback(() => {
@@ -246,27 +247,27 @@ const Walkthrough = () => {
       setDirection(1);
       setCurrentSlide((prev) => prev + 1);
       setHasInteracted(true);
-      tap();
+      light();
     }
-  }, [currentSlide, tap]);
+  }, [currentSlide, light]);
 
   const goPrev = useCallback(() => {
     if (currentSlide > 0) {
       setDirection(-1);
       setCurrentSlide((prev) => prev - 1);
       setHasInteracted(true);
-      tap();
+      light();
     }
-  }, [currentSlide, tap]);
+  }, [currentSlide, light]);
 
   const goToSlide = useCallback(
     (i: number) => {
       setDirection(i > currentSlide ? 1 : -1);
       setCurrentSlide(i);
       setHasInteracted(true);
-      tap();
+      light();
     },
-    [currentSlide, tap]
+    [currentSlide, light]
   );
 
   const swipeHandlers = useSwipeable({

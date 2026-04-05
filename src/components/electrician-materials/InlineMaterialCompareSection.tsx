@@ -3,6 +3,7 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Scale, ChevronDown, ChevronUp, X, Check, ExternalLink } from 'lucide-react';
 import { MaterialItem } from '@/hooks/useToolsForMaterials';
+import { openExternalUrl } from '@/utils/open-external-url';
 
 interface InlineMaterialCompareSectionProps {
   items: MaterialItem[];
@@ -171,7 +172,7 @@ const CompareCard = ({ item, onRemove, productUrl }: CompareCardProps) => {
         <Button
           size="sm"
           className="w-full rounded-lg"
-          onClick={() => window.open(productUrl, '_blank')}
+          onClick={() => openExternalUrl(productUrl)}
         >
           <ExternalLink className="h-4 w-4 mr-2" />
           View at {item.supplier?.split(' ')[0] || 'Supplier'}

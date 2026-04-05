@@ -25,7 +25,7 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/comp
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { cn } from '@/lib/utils';
 import { useIsMobile } from '@/hooks/use-mobile';
-import { useHaptics } from '@/hooks/useHaptics';
+import { useHaptic } from '@/hooks/useHaptic';
 
 export interface CertificateActionsBarProps {
   canGenerate: boolean;
@@ -55,27 +55,27 @@ export const CertificateActionsBar: React.FC<CertificateActionsBarProps> = ({
   className,
 }) => {
   const isMobile = useIsMobile();
-  const haptics = useHaptics();
+  const haptic = useHaptic();
   const [showSuccess, setShowSuccess] = useState(false);
   const [isDevToolsOpen, setIsDevToolsOpen] = useState(false);
 
   const handleGenerate = () => {
-    haptics.tap();
+    haptic.light();
     onGenerate();
   };
 
   const handleEmail = () => {
-    haptics.tap();
+    haptic.light();
     onEmail();
   };
 
   const handleSave = () => {
-    haptics.tap();
+    haptic.light();
     onSaveDraft();
   };
 
   const handleCopyJson = () => {
-    haptics.tap();
+    haptic.light();
     onCopyJson?.();
   };
 
@@ -83,11 +83,11 @@ export const CertificateActionsBar: React.FC<CertificateActionsBarProps> = ({
   React.useEffect(() => {
     if (isComplete && !showSuccess) {
       setShowSuccess(true);
-      haptics.success();
+      haptic.success();
       const timer = setTimeout(() => setShowSuccess(false), 3000);
       return () => clearTimeout(timer);
     }
-  }, [isComplete, showSuccess, haptics]);
+  }, [isComplete, showSuccess, haptic]);
 
   // Mobile: Fixed bottom bar
   if (isMobile) {

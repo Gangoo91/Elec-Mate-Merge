@@ -28,6 +28,7 @@ import { CVData, CVFormat, defaultCVData } from './types';
 import { generateCVPDFByFormat } from './pdfGenerators';
 import { CVTemplateShowcase, CVTemplateId } from './premium/CVTemplateShowcase';
 import { toast } from '@/hooks/use-toast';
+import { storageSetJSONSync, storageGetJSONSync } from '@/utils/storage';
 
 const CVBuilder = () => {
   const [cvData, setCVData] = useState<CVData>(defaultCVData);
@@ -37,7 +38,7 @@ const CVBuilder = () => {
   const [selectedTemplate, setSelectedTemplate] = useState<CVTemplateId>('classic');
 
   const handleSave = () => {
-    localStorage.setItem('cvData', JSON.stringify(cvData));
+    storageSetJSONSync('cvData', cvData);
     toast({
       title: 'CV Saved',
       description: 'Your CV has been saved locally.',
@@ -45,9 +46,9 @@ const CVBuilder = () => {
   };
 
   const handleLoad = () => {
-    const saved = localStorage.getItem('cvData');
+    const saved = storageGetJSONSync<CVData | null>('cvData', null);
     if (saved) {
-      setCVData(JSON.parse(saved));
+      setCVData(saved);
       toast({
         title: 'CV Loaded',
         description: 'Your saved CV has been loaded.',

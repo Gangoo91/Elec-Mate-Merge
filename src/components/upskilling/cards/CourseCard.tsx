@@ -69,7 +69,7 @@ export const CourseCard: React.FC<CourseCardProps> = ({
   to,
   title,
   description,
-  icon: Icon,
+  icon: _Icon,
   level,
   duration,
   index = 0,
@@ -99,18 +99,8 @@ export const CourseCard: React.FC<CourseCardProps> = ({
       />
 
       <div className="relative z-10 p-3.5 sm:p-4 flex flex-col h-full min-h-[150px] sm:min-h-[170px]">
-        {/* Top row — Icon + badge */}
-        <div className="flex items-start justify-between mb-2.5">
-          <div
-            className={cn(
-              'p-2 sm:p-2.5 rounded-xl',
-              accent.iconBg,
-              accent.iconColor,
-              'transition-all duration-200 group-hover:scale-110'
-            )}
-          >
-            <Icon className="h-4 w-4 sm:h-5 sm:w-5" strokeWidth={1.8} />
-          </div>
+        {/* Top row — badge */}
+        <div className="flex items-start justify-end mb-2.5">
           {comingSoon ? (
             <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-500/10 text-amber-400 border border-amber-500/20 uppercase">
               Soon

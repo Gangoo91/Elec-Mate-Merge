@@ -1,3 +1,5 @@
+import { storageGetJSONSync, storageSetJSONSync, storageRemoveSync } from '@/utils/storage';
+
 export interface CPDEntry {
   id: string;
   date: string;
@@ -50,9 +52,9 @@ class CPDDataService {
 
   // CPD Entries Management
   getEntries(): CPDEntry[] {
-    const stored = localStorage.getItem(this.STORAGE_KEY);
+    const stored = storageGetJSONSync<CPDEntry[] | null>(this.STORAGE_KEY, null);
     if (!stored) return this.getDefaultEntries();
-    return JSON.parse(stored);
+    return stored;
   }
 
   saveEntry(entry: Omit<CPDEntry, 'id' | 'createdAt' | 'updatedAt'>): CPDEntry {
@@ -91,14 +93,14 @@ class CPDDataService {
   }
 
   private saveEntries(entries: CPDEntry[]): void {
-    localStorage.setItem(this.STORAGE_KEY, JSON.stringify(entries));
+    storageSetJSONSync(this.STORAGE_KEY, entries);
   }
 
   // Goals Management
   getGoals(): CPDGoal[] {
-    const stored = localStorage.getItem(this.GOALS_KEY);
+    const stored = storageGetJSONSync<CPDGoal[] | null>(this.GOALS_KEY, null);
     if (!stored) return this.getDefaultGoals();
-    return JSON.parse(stored);
+    return stored;
   }
 
   saveGoal(goal: Omit<CPDGoal, 'id' | 'createdAt'>): CPDGoal {
@@ -132,7 +134,7 @@ class CPDDataService {
   }
 
   private saveGoals(goals: CPDGoal[]): void {
-    localStorage.setItem(this.GOALS_KEY, JSON.stringify(goals));
+    storageSetJSONSync(this.GOALS_KEY, goals);
   }
 
   // Statistics and Analytics

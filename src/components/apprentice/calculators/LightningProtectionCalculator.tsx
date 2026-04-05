@@ -1,3 +1,4 @@
+import { copyToClipboard } from '@/utils/clipboard';
 import { useState, useCallback } from 'react';
 import { Copy, Check, ChevronDown } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
@@ -176,10 +177,13 @@ const LightningProtectionCalculator = () => {
     if (result.costEstimate.max > 0) {
       text += `\nEstimated Cost: \u00A3${result.costEstimate.min.toLocaleString()} \u2013 \u00A3${result.costEstimate.max.toLocaleString()}`;
     }
-    navigator.clipboard.writeText(text);
-    setCopied(true);
-    toast({ title: 'Copied to clipboard' });
-    setTimeout(() => setCopied(false), 2000);
+    copyToClipboard(text).then((ok) => {
+      if (ok) {
+        setCopied(true);
+        toast({ title: 'Copied to clipboard' });
+        setTimeout(() => setCopied(false), 2000);
+      }
+    });
   };
 
   return (

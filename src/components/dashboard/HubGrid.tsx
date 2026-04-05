@@ -1,18 +1,16 @@
 import { useNavigate } from 'react-router-dom';
 import { Card } from '@/components/ui/card';
-import { GraduationCap, Zap, Briefcase, ChevronRight } from 'lucide-react';
+import { ChevronRight } from 'lucide-react';
 
 interface HubCardProps {
   title: string;
   subtitle: string;
   description: string;
-  icon: React.ReactNode;
   path: string;
   iconColor: string;
-  iconBg: string;
 }
 
-function HubCard({ title, subtitle, description, icon, path, iconColor, iconBg }: HubCardProps) {
+function HubCard({ title, subtitle, description, path, iconColor }: HubCardProps) {
   const navigate = useNavigate();
 
   return (
@@ -25,18 +23,8 @@ function HubCard({ title, subtitle, description, icon, path, iconColor, iconBg }
       onClick={() => navigate(path)}
     >
       <div className="p-4 sm:p-5 flex flex-col h-full min-h-[140px] sm:min-h-[160px]">
-        {/* Top row - Icon and badge */}
-        <div className="flex items-start justify-between mb-3">
-          <div
-            className={`
-            p-2.5 sm:p-3 rounded-xl
-            ${iconBg} ${iconColor}
-            transition-transform duration-200
-            group-hover:scale-105
-          `}
-          >
-            {icon}
-          </div>
+        {/* Top row - badge */}
+        <div className="flex items-start justify-end mb-3">
           <span className="text-[10px] sm:text-xs font-medium text-white uppercase tracking-wider px-2 py-1 rounded-md bg-white/[0.04]">
             {subtitle}
           </span>
@@ -80,28 +68,22 @@ export function HubGrid() {
       title: 'Apprentice Hub',
       subtitle: 'Training',
       description: 'Track your journey, log training hours, and build your portfolio.',
-      icon: <GraduationCap className="h-5 w-5 sm:h-6 sm:w-6" />,
       path: '/apprentice',
       iconColor: 'text-blue-400',
-      iconBg: 'bg-blue-500/10',
     },
     {
       title: 'Electrical Hub',
       subtitle: 'Tools',
       description: 'Inspection tools, certificates, pricing, and AI assistants.',
-      icon: <Zap className="h-5 w-5 sm:h-6 sm:w-6" />,
       path: '/electrician',
       iconColor: 'text-elec-yellow',
-      iconBg: 'bg-elec-yellow/10',
     },
     {
       title: 'Employer Hub',
       subtitle: 'Manage',
       description: 'Employees, jobs, timesheets, and business management.',
-      icon: <Briefcase className="h-5 w-5 sm:h-6 sm:w-6" />,
       path: '/employer',
       iconColor: 'text-purple-400',
-      iconBg: 'bg-purple-500/10',
     },
   ];
 

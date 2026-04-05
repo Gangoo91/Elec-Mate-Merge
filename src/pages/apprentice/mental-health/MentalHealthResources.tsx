@@ -2,6 +2,7 @@ import MentalHealthPageLayout from '@/components/mental-health/MentalHealthPageL
 import { BookOpen, ExternalLink } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
+import { openExternalUrl } from '@/utils/open-external-url';
 
 const MentalHealthResources = () => {
   const resources = [
@@ -98,7 +99,7 @@ const MentalHealthResources = () => {
                     variant="outline"
                     size="sm"
                     className="w-full border-blue-500/30 text-white hover:bg-blue-500/10"
-                    onClick={() => window.open(resource.url, '_blank')}
+                    onClick={() => openExternalUrl(resource.url)}
                   >
                     Visit Resource
                     <ExternalLink className="ml-2 h-3 w-3" />

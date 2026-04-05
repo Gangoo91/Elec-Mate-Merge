@@ -69,10 +69,10 @@ export function ActivityFeed({
                 </div>
                 <div className="flex-1 min-w-0">
                   <p className="text-sm font-medium text-foreground truncate">{activity.title}</p>
-                  <p className="text-xs text-muted-foreground truncate">{activity.description}</p>
+                  <p className="text-xs text-white/60 truncate">{activity.description}</p>
                 </div>
                 <div className="text-right shrink-0">
-                  <p className="text-[10px] sm:text-xs text-muted-foreground whitespace-nowrap">
+                  <p className="text-[10px] sm:text-xs text-white/60 whitespace-nowrap">
                     {activity.time}
                   </p>
                 </div>
@@ -83,7 +83,7 @@ export function ActivityFeed({
 
         {activities.length === 0 && (
           <div className="text-center py-6">
-            <p className="text-sm text-muted-foreground">No recent activity</p>
+            <p className="text-sm text-white/60">No recent activity</p>
           </div>
         )}
       </CardContent>

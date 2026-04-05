@@ -1,4 +1,5 @@
 import { useState, useCallback } from 'react';
+import { copyToClipboard } from '@/utils/clipboard';
 import { Copy, Check, ChevronDown, CheckCircle, XCircle } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { cn } from '@/lib/utils';
@@ -330,7 +331,7 @@ const SolarArrayCalculator = () => {
       `Area Efficiency: ${result.areaEfficiency.toFixed(1)}%`,
       `All Compliance Checks: ${Object.values(result.complianceChecks).every((v) => v) ? 'PASS' : 'ISSUES FOUND'}`,
     ].join('\n');
-    navigator.clipboard.writeText(text);
+    copyToClipboard(text);
     setCopied(true);
     toast({ title: 'Copied to clipboard' });
     setTimeout(() => setCopied(false), 2000);

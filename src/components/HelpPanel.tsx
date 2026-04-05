@@ -2,90 +2,66 @@ import React, { useState } from 'react';
 import {
   Sheet,
   SheetContent,
-  SheetDescription,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger,
 } from '@/components/ui/sheet';
-import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import {
-  HelpCircle,
-  Search,
-  Book,
-  ExternalLink,
-  Rocket,
-  Shield,
-  Zap,
-  FileCheck,
-  BookOpen,
-  Lightbulb,
-  AlertTriangle,
-  CheckCircle2,
-  Clock,
-  ListChecks,
-  User,
-  Briefcase,
-  Calendar,
-  Camera,
-  Database,
-  Save,
-  Cable,
-  PenTool,
-  Brain,
-  Users,
-} from 'lucide-react';
-import { Separator } from '@/components/ui/separator';
-import { useIsMobile } from '@/hooks/use-mobile';
+import { Search, ChevronDown, ChevronUp, ArrowLeft } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
-const helpArticles = [
+interface HelpArticle {
+  title: string;
+  badge?: string;
+  badgeColor?: string;
+  estimatedTime?: string;
+  tags: string[];
+  content: string;
+  steps?: string[];
+  tips?: string[];
+}
+
+interface HelpCategory {
+  category: string;
+  items: HelpArticle[];
+}
+
+const helpArticles: HelpCategory[] = [
   {
     category: 'Getting Started',
-    icon: Rocket,
-    color: 'from-blue-500/10 to-cyan-500/5',
-    borderColor: 'border-blue-500/30',
-    iconColor: 'text-blue-400',
     items: [
       {
         title: 'Setting Up Your Inspector Profile',
-        icon: User,
-        badge: 'Essential - Start Here',
+        badge: 'Start Here',
+        badgeColor: 'bg-blue-500/15 text-blue-400',
         estimatedTime: '5-10 minutes',
         tags: ['profile', 'setup', 'beginner', 'essential'],
-        content:
-          'Your inspector profile is required for professional certificates and legally compliant reports:',
+        content: 'Your inspector profile is required for professional certificates and legally compliant reports.',
         steps: [
-          'Navigate to Settings (gear icon, top right) or Profile section',
-          'Add personal details: Full name, qualifications, certifications',
-          'Upload professional photo (optional but recommended for credibility)',
-          'Complete company details: Business name, registration number, address',
+          'Navigate to Settings or Profile section from the main menu',
+          'Add personal details: full name, qualifications, certifications',
+          'Upload professional photo (optional but recommended)',
+          'Complete company details: business name, registration number, address',
           'Upload company logo for branded certificates',
-          'Select your qualifications from checkboxes (City & Guilds, NVQ, etc.)',
+          'Select qualifications (City & Guilds, NVQ, etc.)',
           'Enter registration scheme details (NICEIC, NAPIT, ELECSA, etc.)',
           'Add insurance information including policy number and expiry',
-          'Create your digital signature (draw or generate)',
-          'Review completion percentage - aim for 100%',
+          'Create your digital signature (draw or generate from typed name)',
+          'Review completion percentage — aim for 100%',
         ],
         tips: [
           'Profile data auto-populates in all certificates',
           'Digital signature can be drawn on touchscreen or generated from typed name',
-          'Keep insurance details current - system alerts before expiry',
-          'Multiple signature profiles supported for different scenarios',
+          'Keep insurance details current — the system alerts before expiry',
         ],
       },
       {
         title: 'Creating Your Digital Signature',
-        icon: PenTool,
         badge: 'Required',
+        badgeColor: 'bg-amber-500/15 text-amber-400',
         estimatedTime: '2-3 minutes',
         tags: ['signature', 'setup', 'essential'],
-        content: 'Legal requirement for certificate validation:',
+        content: 'Legal requirement for certificate validation.',
         steps: [
           'In Inspector Profile, scroll to "Digital Signature" section',
-          'Choose between two methods: Draw (use finger/stylus) or Generate (type name, choose font)',
+          'Choose between Draw (use finger/stylus) or Generate (type name, choose font)',
           'Preview signature before saving',
           'Click "Save Signature" to store in profile',
           'Multiple signatures can be saved for different purposes',
@@ -94,526 +70,789 @@ const helpArticles = [
         tips: [
           'Draw method works best on tablets with stylus',
           'Generated signatures look professional and consistent',
-          'Can edit/replace signature anytime without affecting old certificates',
           'Signature data stored securely offline using IndexedDB',
         ],
       },
       {
-        title: 'Creating Your First EICR',
-        icon: FileCheck,
-        badge: 'Essential',
-        estimatedTime: '5-10 minutes',
-        tags: ['eicr', 'certificate', 'beginner'],
-        content: 'Start your electrical installation condition report efficiently:',
+        title: 'Navigating the I&T Dashboard',
+        badge: 'Overview',
+        badgeColor: 'bg-elec-yellow/15 text-elec-yellow',
+        tags: ['dashboard', 'navigation', 'overview'],
+        content: 'The Inspection & Testing dashboard is your central hub for all certification work.',
         steps: [
-          'Navigate to EICR from the home screen',
-          'Fill in client details including property address and contact information',
-          'Complete supply characteristics (earthing arrangement, Ze, supply type)',
-          'Work through each tab sequentially: Details → Schedule → Testing → Inspector',
-          'Save regularly using Ctrl+S or the Save button',
-          'The system auto-saves every 30 seconds to prevent data loss',
+          'KPI Strip at the top shows: In Progress, Part P Due, Expiring, and Completed counts',
+          'Tap any KPI to jump to the relevant section',
+          'New Certificate button opens the certificate type selector',
+          'Certificates section has the core 3: EICR, EIC, and Minor Works',
+          'Specialist Certificates section: Fire Alarm, Emergency Lighting, EV Charging, Solar PV, PAT Testing',
+          'Your Work section shows recent certificates and designed circuits',
+          'Compliance section monitors Part P notifications and certificate expiry',
+          'Resources section links to I&T Hub, Circuit Designer, Customers, and My Reports',
+        ],
+      },
+    ],
+  },
+  {
+    category: 'Core Certificates',
+    items: [
+      {
+        title: 'EICR — Electrical Installation Condition Report',
+        badge: 'BS 7671',
+        badgeColor: 'bg-blue-500/15 text-blue-400',
+        estimatedTime: '30-90 minutes',
+        tags: ['eicr', 'certificate', 'inspection', 'periodic'],
+        content: 'The EICR is used for periodic inspection and testing of existing electrical installations.',
+        steps: [
+          'Select EICR from the Certificates section on the dashboard',
+          'Fill in client details: name, address, contact information',
+          'Complete supply characteristics: earthing arrangement, Ze, supply type',
+          'Work through each section: Details, Supply, Observations, Schedule of Inspections, Schedule of Tests, Inspector',
+          'Use AI Board Scanning to auto-detect circuits from photos',
+          'Add observations with classifications (C1, C2, C3, or Satisfactory)',
+          'Complete all test results in the Schedule of Tests',
+          'Add inspector and reviewer signatures',
+          'Generate PDF for client delivery',
         ],
         tips: [
-          'Complete required fields marked with * before moving to the next tab',
-          'Use Tab key to navigate quickly between fields',
-          'The system validates entries against BS 7671 requirements automatically',
+          'Auto-save runs every 10 seconds — your work is always protected',
+          'Cloud sync with 30-second debounce keeps everything backed up',
+          'Use the Scribble to Table feature to parse handwritten notes into circuit data',
+          'AI Photo Analysis validates your classification decisions with BS 7671 references',
         ],
       },
       {
-        title: 'Using AI Board Scanning',
-        icon: Brain,
-        badge: 'AI-Powered',
-        estimatedTime: '2-3 minutes',
-        tags: ['AI', 'photo', 'scanner', 'time-saver'],
-        content: 'Automatically detect circuits using AI-powered board scanning:',
+        title: 'EIC — Electrical Installation Certificate',
+        badge: 'BS 7671',
+        badgeColor: 'bg-emerald-500/15 text-emerald-400',
+        estimatedTime: '20-60 minutes',
+        tags: ['eic', 'certificate', 'installation', 'new'],
+        content: 'The EIC certifies that a new electrical installation complies with BS 7671.',
         steps: [
-          'Navigate to the Testing tab',
-          'Click "Scan Electrical Board" button',
-          'Take clear, well-lit photos of the consumer unit from multiple angles',
-          'Ensure all MCB/RCBO labels are visible and in focus',
-          'AI detects: MCB/RCBO types and ratings (6A-63A), circuit descriptions, manufacturer/model',
-          'AI can detect busbar arrangement, connections, and missing/damaged devices',
-          'Review detected circuits and make any necessary corrections',
-          'Confirm and import circuits into your EICR',
+          'Select EIC from the Certificates section',
+          'Complete client and installation details',
+          'Enter design information: earthing system, protective devices',
+          'Fill in supply characteristics and earthing arrangements',
+          'Complete the schedule of inspections',
+          'Enter all test results: continuity, insulation resistance, Zs, RCD',
+          'Add observations and comments',
+          'Sign off with designer, installer, and inspector signatures',
+          'Generate PDF certificate',
         ],
         tips: [
-          'Take photos in good lighting for best results',
-          'Capture close-ups of any unclear labels',
-          'Double-check detected ratings match physical installation',
-          'Supports both new and older consumer unit layouts',
-          'Confidence scores shown for each detection - manual override always available',
-          'Combine with Scribble to Table for fastest data entry workflow',
+          'Use Circuit Designer to pre-populate circuit schedules',
+          'Designed circuits from the Circuit Designer can be imported directly',
+          'N/A fields can be toggled globally or per-field',
+          'Position presets simplify the Inspected By / Authorised By sections',
+        ],
+      },
+      {
+        title: 'Minor Works Certificate',
+        badge: 'BS 7671',
+        badgeColor: 'bg-orange-500/15 text-orange-400',
+        estimatedTime: '10-20 minutes',
+        tags: ['minor-works', 'certificate', 'additions', 'alterations'],
+        content: 'For additions and alterations to an existing installation that do not require a full EIC.',
+        steps: [
+          'Select Minor Works from the Certificates section',
+          'Complete Part 1: Description of minor works',
+          'Fill in Part 2: Installation details and method of protection',
+          'Enter Part 3: Circuit details (conductor sizes, protective devices)',
+          'Complete Part 4: Test results',
+          'Add Part 5: Declaration with signature',
+          'Generate PDF certificate',
+        ],
+        tips: [
+          'Common for socket additions, lighting changes, and consumer unit upgrades',
+          'Quicker to complete than a full EIC',
+          'Auto-save protects your work throughout',
+        ],
+      },
+    ],
+  },
+  {
+    category: 'Specialist Certificates',
+    items: [
+      {
+        title: 'Fire Alarm Certificate',
+        badge: 'BS 5839',
+        badgeColor: 'bg-red-500/15 text-red-400',
+        estimatedTime: '20-40 minutes',
+        tags: ['fire-alarm', 'certificate', 'specialist', 'BS5839'],
+        content: 'Certification for fire detection and alarm systems to BS 5839.',
+        steps: [
+          'Select Fire Alarm from Specialist Certificates',
+          'Complete system details: category (L1-L5, M, P1-P2), zones, panel type',
+          'Enter installation details: cable types, device positions, circuit information',
+          'Fill in system design section: detection coverage, sounder coverage',
+          'Complete the test schedule: detector tests, sounder levels, battery backup',
+          'Add commissioning data and test results',
+          'Complete declarations with installer and commissioner signatures',
+          'Generate PDF certificate',
+        ],
+        tips: [
+          'Panel autocomplete helps with common panel makes and models',
+          'Pre-fill from previous certificates for the same site',
+          'System categories (L1-L5, M, P1-P2) are explained in the form',
+        ],
+      },
+      {
+        title: 'Emergency Lighting Certificate',
+        badge: 'BS 5266',
+        badgeColor: 'bg-amber-500/15 text-amber-400',
+        estimatedTime: '15-30 minutes',
+        tags: ['emergency-lighting', 'certificate', 'specialist', 'BS5266'],
+        content: 'Certification for emergency lighting systems to BS 5266.',
+        steps: [
+          'Select Emergency Lighting from Specialist Certificates',
+          'Enter system details: type (maintained/non-maintained/sustained), duration',
+          'Complete luminaire schedule: location, type, rating, battery condition',
+          'Fill in test results: functional test, duration test, photometric test',
+          'Record battery condition and charge times',
+          'Add test dates and next test due dates',
+          'Complete declarations with tester signature',
+          'Generate PDF certificate',
+        ],
+        tips: [
+          'Monthly functional tests and annual duration tests are required by BS 5266',
+          'Record all luminaire positions for consistent re-testing',
+          'Status calculation uses tester signature + test date for completion',
+        ],
+      },
+      {
+        title: 'EV Charging Certificate',
+        badge: 'IET CoP',
+        badgeColor: 'bg-emerald-500/15 text-emerald-400',
+        estimatedTime: '15-30 minutes',
+        tags: ['ev-charging', 'certificate', 'specialist', 'electric-vehicle'],
+        content: 'Certification for electric vehicle charging point installations per IET Code of Practice.',
+        steps: [
+          'Select EV Charging from Specialist Certificates',
+          'Enter charge point details: make, model, type (Mode 2/3/4), rated current',
+          'Complete supply details: supply type, available capacity, earthing arrangement',
+          'Fill in installation details: cable type, route, protection',
+          'Enter test results: continuity, insulation resistance, Zs, RCD',
+          'Complete declarations with installer signature',
+          'Generate PDF certificate',
+        ],
+        tips: [
+          'PME earthing requires special consideration — the form guides you through this',
+          'Record DNO notification details where applicable',
+          'Test results section mirrors standard electrical test requirements',
+        ],
+      },
+      {
+        title: 'Solar PV Certificate',
+        badge: 'MCS',
+        badgeColor: 'bg-yellow-500/15 text-yellow-400',
+        estimatedTime: '20-40 minutes',
+        tags: ['solar-pv', 'certificate', 'specialist', 'photovoltaic', 'MCS'],
+        content: 'Certification for photovoltaic system installations to MCS standards.',
+        steps: [
+          'Select Solar PV from Specialist Certificates',
+          'Enter system design: panel type, quantity, orientation, tilt angle, kWp',
+          'Complete inverter details: make, model, rating, type (string/micro/hybrid)',
+          'Fill in grid connection details: G98/G99 notification, export limiting',
+          'Enter test results: string Voc, Isc, insulation resistance, earth continuity',
+          'Complete AC side test results: Zs, RCD, polarity',
+          'Add commissioning data and performance readings',
+          'Complete declarations and generate PDF',
+        ],
+        tips: [
+          'Panel and inverter autocomplete helps with common makes and models',
+          'Record string configurations for future maintenance reference',
+          'Include photos of installation, labels, and meter readings',
+        ],
+      },
+      {
+        title: 'PAT Testing Certificate',
+        badge: 'IET CoP',
+        badgeColor: 'bg-cyan-500/15 text-cyan-400',
+        estimatedTime: '10-30 minutes',
+        tags: ['pat-testing', 'certificate', 'specialist', 'portable-appliance'],
+        content: 'Portable appliance testing records per IET Code of Practice.',
+        steps: [
+          'Select PAT Testing from Specialist Certificates',
+          'Enter site and client details',
+          'Add appliances: description, location, class (I/II/III), visual inspection',
+          'Record test results per appliance: earth continuity, insulation resistance, leakage',
+          'Mark each appliance as Pass or Fail',
+          'Add labels/asset numbers for tracking',
+          'Complete declaration with tester signature',
+          'Generate PDF certificate with full appliance schedule',
+        ],
+        tips: [
+          'Class I appliances require earth continuity testing',
+          'Class II appliances (double insulated) — earth test not applicable',
+          'Risk-based approach determines re-test intervals',
+          'Use AI Appliance Identification to auto-fill description, make, model, and class from a photo',
+          'Use the barcode/serial scanner to capture asset numbers via camera OCR',
         ],
       },
     ],
   },
   {
     category: 'AI Features',
-    icon: Brain,
-    color: 'from-violet-500/10 to-purple-500/5',
-    borderColor: 'border-violet-500/30',
-    iconColor: 'text-violet-400',
     items: [
+      {
+        title: 'AI Board Scanning',
+        badge: 'AI-Powered',
+        badgeColor: 'bg-violet-500/15 text-violet-400',
+        estimatedTime: '2-3 minutes',
+        tags: ['AI', 'board', 'scanner', 'circuits', 'consumer-unit'],
+        content: 'Automatically detect circuits from consumer unit photos using AI. Supports multi-photo capture and three-phase boards.',
+        steps: [
+          'Navigate to the Schedule of Tests in your EICR or EIC',
+          'Tap "Scan Electrical Board"',
+          'Take clear, well-lit photos of the consumer unit from multiple angles',
+          'Ensure all MCB/RCBO labels are visible and in focus',
+          'AI detects: MCB/RCBO types and ratings, circuit descriptions, manufacturer/model',
+          'Real-time progress: uploading, detecting, reading, verifying, complete',
+          'Review detected circuits in the AI Results Preview — edit any fields inline',
+          'Confidence indicators shown per circuit (high/medium/low)',
+          'Reverse circuit order if needed',
+          'Confirm and import circuits into your schedule of tests',
+        ],
+        tips: [
+          'Good lighting dramatically improves detection accuracy',
+          'Supports three-phase board detection with Way/Phase numbering',
+          'Re-scan option available if results are not satisfactory',
+          'Board summary shows make, model, main switch, ways, and SPD status',
+          'Combine with Scribble to Table for fastest data entry',
+        ],
+      },
       {
         title: 'AI Photo Analysis & Fault Detection',
-        icon: Camera,
         badge: 'AI-Powered',
+        badgeColor: 'bg-violet-500/15 text-violet-400',
         estimatedTime: '3-5 minutes per defect',
-        tags: ['AI', 'photo', 'analysis', 'classification', 'fault', 'defect'],
-        content:
-          'Validates inspector decisions, suggests classifications, provides BS7671 references automatically:',
+        tags: ['AI', 'photo', 'analysis', 'classification', 'fault'],
+        content: 'Validates your decisions, suggests classifications, and provides BS 7671 references.',
         steps: [
-          'Take photo of any defect, fault, or installation concern on site',
-          'Upload photo to an observation in your EICR/EIC form',
-          'Click "Analyse with AI" button on the uploaded photo',
-          'AI provides: Suggested classification (C1/C2/C3), detailed safety concern explanation',
-          'AI also provides: Specific BS7671 regulation references, recommended remedial actions',
-          'AI gives: Photo quality feedback (lighting, focus, angle)',
-          'Review AI suggestions carefully - you maintain final decision authority',
-          'Accept or modify suggestions before saving to your certificate',
-          'AI explanation can be included in observation notes for client clarity',
+          'Take a photo of any defect or installation concern',
+          'Upload to an observation in your certificate',
+          'Tap "Analyse with AI"',
+          'AI provides: suggested classification (C1/C2/C3), safety concern explanation',
+          'AI also provides: specific BS 7671 regulation references, recommended remedial actions',
+          'Review suggestions — you maintain final decision authority',
+          'Accept or modify before saving to your certificate',
         ],
         tips: [
-          'AI is a decision-support tool, not a replacement for inspector judgement and experience',
-          'Take multiple angles for complex defects to improve analysis accuracy',
-          'Good lighting dramatically improves AI detection accuracy',
-          'AI learns common installation types and improves over time',
-          'Excellent for training junior inspectors on classification rationale and reasoning',
-          'Works offline once photos are captured - analysis queued until online',
-          'Confidence scores indicate AI certainty - lower scores warrant manual review',
+          'AI is a decision-support tool, not a replacement for inspector judgement',
+          'Take multiple angles for complex defects',
+          'Excellent for training junior inspectors on classification rationale',
         ],
       },
       {
-        title: 'Scribble to Table - Text Circuit Parser',
-        icon: PenTool,
-        badge: 'AI Time-Saver',
+        title: 'Scribble to Table — Circuit Parser',
+        badge: 'AI-Powered',
+        badgeColor: 'bg-violet-500/15 text-violet-400',
         estimatedTime: '2-4 minutes',
-        tags: ['AI', 'scribble', 'text', 'parser', 'time-saver', 'handwriting', 'circuits'],
-        content:
-          'Convert handwritten notes or typed circuit lists into structured test data instantly using AI parsing:',
+        tags: ['AI', 'scribble', 'parser', 'circuits', 'handwriting'],
+        content: 'Convert handwritten notes or typed lists into structured circuit data using AI.',
         steps: [
-          'Access "Scribble to Table" from Schedule of Testing page (mobile: menu button, desktop: toolbar)',
-          'Write or paste circuit details in natural language or structured format',
-          'Supported formats: "C1 Kitchen Lights 1.5mm 10A Type B", "Circuit 2: Downstairs Sockets, 2.5mm², 32A, Type B MCB", or "C3 - Cooker - 6.0/2.5 - 40A - RCBO"',
-          'Click "Parse Circuits" button to analyse your text with AI',
-          'AI automatically extracts: Circuit number, description, cable sizes (live/CPC), device type, and rating',
-          'Review detected circuits in the preview table',
-          'Edit any incorrect detections before importing (click cells to edit)',
-          'Click "Add X Circuits to Table" to import all circuits at once',
+          'Access "Scribble to Table" from the Schedule of Testing page',
+          'Write or paste circuit details in any format',
+          'Supported: "C1 Kitchen Lights 1.5mm 10A Type B" or "Circuit 2: Downstairs Sockets, 2.5mm, 32A"',
+          'Tap "Parse Circuits" to analyse with AI',
+          'AI extracts: circuit number, description, cable sizes, device type, rating',
+          'Review and edit detected circuits in the preview table',
+          'Tap "Add Circuits to Table" to import all at once',
         ],
         tips: [
-          'Works with handwritten notes - take photo and paste OCR text',
-          'Flexible format recognition - natural language fully supported',
-          'Can handle mixed formats in the same input block',
+          'Flexible format recognition — natural language fully supported',
           'Paste directly from spreadsheets, emails, or site notes',
           'Saves 5-10 minutes per certificate vs manual entry',
-          'Confidence indicator shows parsing accuracy per field',
-          'Perfect for converting existing paper records to digital format',
-          'Combine with AI Board Scanner for complete automation workflow',
+        ],
+      },
+      {
+        title: 'AI Enhance Observation',
+        badge: 'AI-Powered',
+        badgeColor: 'bg-violet-500/15 text-violet-400',
+        estimatedTime: '1-2 minutes',
+        tags: ['AI', 'observation', 'enhance', 'EICR', 'classification'],
+        content: 'AI-powered enhancement of electrical defect observations in your EICR. Improves descriptions, suggests classifications, and references BS 7671 regulations.',
+        steps: [
+          'Write an observation in your EICR with a description, location, and classification code',
+          'Tap "Enhance with AI" on the observation',
+          'AI searches BS 7671 regulations relevant to your observation',
+          'AI suggests: improved classification (C1/C2/C3/FI), enhanced description, client-friendly explanation',
+          'AI provides: recommended remedial actions with specific regulation references',
+          'Confidence scores shown for each suggestion',
+          'Review and accept or modify before saving',
+        ],
+        tips: [
+          'Three progress steps: searching regulations, analysing, complete',
+          'Regulation references include section numbers for credibility',
+          'Use for consistent, professional observation language across all your reports',
+        ],
+      },
+      {
+        title: 'AI Remedial Cost Estimator',
+        badge: 'AI-Powered',
+        badgeColor: 'bg-violet-500/15 text-violet-400',
+        estimatedTime: '2-3 minutes',
+        tags: ['AI', 'estimator', 'cost', 'remedial', 'quote', 'EICR'],
+        content: 'Automatically generate remedial work cost estimates from your EICR defect observations.',
+        steps: [
+          'Complete your EICR observations with classifications and descriptions',
+          'Tap "AI Estimator" to generate a remedial cost breakdown',
+          'AI analyses all defects and generates: scope of works summary, materials list with prices, labour breakdown',
+          'Review the estimate — all quantities and prices are editable',
+          'Costs broken down by category for clear presentation',
+          'Use as a basis for quoting remedial work to the client',
+        ],
+        tips: [
+          'Progress steps: authenticating, searching pricing data, generating estimate, complete',
+          'Pricing data sourced from trade supplier databases',
+          'Edit any line item before sending to the client',
+        ],
+      },
+      {
+        title: 'AI Photo Analysis & QA',
+        badge: 'AI-Powered',
+        badgeColor: 'bg-violet-500/15 text-violet-400',
+        estimatedTime: '1-2 minutes per photo',
+        tags: ['AI', 'photo', 'analysis', 'QA', 'classification', 'inspection'],
+        content: 'Per-photo AI quality assurance in the inspection photo gallery. Validates your classification decisions with confidence scoring.',
+        steps: [
+          'Upload photos to an observation in your EICR',
+          'In the photo gallery, tap "Scan Photo" on any image',
+          'Confirm in the dialog that you want AI analysis (inspector retains final authority)',
+          'AI provides: classification agreement/disagreement with your decision',
+          'Shows confidence percentage and relevant BS 7671 regulations',
+          'Brief feedback summary with expandable full analysis view',
+          'Results saved with the photo for reference',
+        ],
+        tips: [
+          'AI acts as a second opinion — you maintain final authority',
+          'Take multiple angles for complex defects to improve accuracy',
+          'Excellent training tool for junior inspectors',
+        ],
+      },
+      {
+        title: 'Test Results Photo Capture (OCR)',
+        badge: 'AI-Powered',
+        badgeColor: 'bg-violet-500/15 text-violet-400',
+        estimatedTime: '2-3 minutes',
+        tags: ['AI', 'OCR', 'test-results', 'photo', 'handwriting'],
+        content: 'Capture photos of handwritten or printed test result sheets and extract data using AI OCR.',
+        steps: [
+          'In the Schedule of Tests, tap the test results photo capture option',
+          'Take up to 3 photos of test result sheets',
+          'Images are compressed and sent for AI parsing',
+          'AI extracts: circuit information, test values, and readings',
+          'Review extracted data in structured format',
+          'Accept results to populate the schedule of tests',
+        ],
+        tips: [
+          'Clear, well-lit photos produce the best OCR results',
+          'Works with both handwritten and printed test sheets',
+          'Combine with Board Scanner for complete automation',
+        ],
+      },
+      {
+        title: 'Serial Number / Barcode Scanner',
+        badge: 'AI OCR',
+        badgeColor: 'bg-violet-500/15 text-violet-400',
+        estimatedTime: '30 seconds',
+        tags: ['AI', 'OCR', 'serial', 'barcode', 'scanner', 'fire-alarm', 'PAT'],
+        content: 'Camera-based OCR scanning for serial numbers and barcodes. Used in Fire Alarm and PAT Testing certificates.',
+        steps: [
+          'In Fire Alarm: tap the scan button in Installation Details to scan panel serial numbers',
+          'In PAT Testing: tap the barcode icon next to the Asset No. field',
+          'Camera opens with a guide overlay — point at the serial number or barcode',
+          'Toggle torch/flashlight for low-light conditions',
+          'Switch between front and rear cameras if needed',
+          'AI extracts the text using Gemini Flash OCR',
+          'Confirm the extracted result or retake the photo',
+          'Serial/asset number is auto-filled into the form',
+        ],
+        tips: [
+          'Good focus on the label is critical — use torch in dark panels',
+          'Works with printed labels, engraved serial numbers, and barcodes',
+          'In PAT Testing, the scanned photo is also added to the appliance gallery',
+        ],
+      },
+      {
+        title: 'AI Appliance Identification (PAT)',
+        badge: 'AI-Powered',
+        badgeColor: 'bg-violet-500/15 text-violet-400',
+        estimatedTime: '30 seconds',
+        tags: ['AI', 'PAT', 'appliance', 'identification', 'photo'],
+        content: 'Take a photo of any portable appliance and AI auto-fills its details in PAT Testing.',
+        steps: [
+          'In a PAT Test Sheet, tap the AI identify button',
+          'Take a photo of the appliance (rating plate or whole appliance)',
+          'AI identifies: description, make, model, appliance class (I/II/III), and category',
+          'Fields are auto-populated in the form',
+          'Photo is added to the appliance gallery',
+          'Review and edit any auto-filled values',
+        ],
+        tips: [
+          'Capture the rating plate for best accuracy on make/model',
+          'Works for common domestic and commercial appliances',
+          'Dramatically speeds up large PAT testing jobs',
         ],
       },
     ],
   },
   {
-    category: 'Customer Management',
-    icon: Users,
-    color: 'from-cyan-500/10 to-blue-500/5',
-    borderColor: 'border-cyan-500/30',
-    iconColor: 'text-cyan-400',
-    items: [
-      {
-        title: 'Customer Management System',
-        icon: Briefcase,
-        badge: 'Business Tool',
-        estimatedTime: '2-3 minutes per customer',
-        tags: ['customer', 'crm', 'business'],
-        content: 'Track clients, properties, and certificate history in one place:',
-        steps: [
-          'Navigate to "Customers" from main menu',
-          'Click "Add New Customer"',
-          'Enter customer details: Name, email, phone, address',
-          'Add property details (can be multiple per customer)',
-          'Link existing certificates or create new ones',
-          'Set up certificate expiry reminders',
-          'View customer history and previous reports',
-          'Export customer data for invoicing/CRM',
-        ],
-        tips: [
-          'Customers auto-populate in certificate forms',
-          'Search by name, address, or certificate number',
-          'Track certificate status: Draft, Issued, Expired',
-          'Bulk operations supported for reminders',
-        ],
-      },
-      {
-        title: 'Certificate Expiry Tracking',
-        icon: Calendar,
-        badge: 'Recurring Revenue',
-        estimatedTime: '1-2 minutes setup',
-        tags: ['expiry', 'reminder', 'business', 'certificate'],
-        content: 'Never miss re-inspection opportunities, automate follow-ups:',
-        steps: [
-          'Access "Certificate Expiry" from dashboard or menu',
-          'View colour-coded timeline: Red (Expired), Orange (30-60 days), Yellow (60-90 days), Green (>90 days)',
-          'Filter by customer, property, or certificate type',
-          'Mark certificates as: Contacted, Booked, or Completed',
-          'Export expiry lists for mail merge/email campaigns',
-          'Set up automatic reminder notifications',
-          'Link directly to new certificate creation from expiry list',
-        ],
-        tips: [
-          'Batch update multiple certificates at once',
-          'Track response rates to optimise follow-up timing',
-          'Dashboard widget shows upcoming expirations',
-        ],
-      },
-    ],
-  },
-  {
-    category: 'Inspection Process',
-    icon: Shield,
-    color: 'from-green-500/10 to-emerald-500/5',
-    borderColor: 'border-green-500/30',
-    iconColor: 'text-green-400',
+    category: 'Testing Procedures',
     items: [
       {
         title: 'Understanding Classifications',
-        icon: AlertTriangle,
         badge: 'Critical',
+        badgeColor: 'bg-red-500/15 text-red-400',
         tags: ['classification', 'C1', 'C2', 'C3', 'safety'],
-        content: 'BS 7671 defines four classification codes for observations:',
+        content: 'BS 7671 defines four classification codes for observations.',
         steps: [
-          'C1 (Danger Present): Immediate risk to safety, requires urgent remedial action. Examples: exposed live parts, missing earth connections',
+          'C1 (Danger Present): Immediate risk to safety — requires urgent remedial action. Examples: exposed live parts, missing earth connections',
           'C2 (Potentially Dangerous): Not immediately dangerous but requires urgent improvement. Examples: inadequate bonding, loose connections',
           'C3 (Improvement Recommended): Does not meet current standards but not dangerous. Examples: lack of RCD protection, old wiring',
           'Satisfactory: Meets BS 7671 requirements and is in good condition',
           'N/A: Not applicable to this installation',
         ],
         tips: [
-          'Always provide detailed observations for C1, C2, and C3 classifications',
+          'Always provide detailed observations for C1, C2, and C3',
           'Reference specific BS 7671 regulations in observations',
           'Use AI Photo Analysis to validate your classification decisions',
         ],
       },
       {
-        title: 'Schedule of Inspections',
-        icon: ListChecks,
-        badge: 'Essential',
-        estimatedTime: '20-40 minutes',
-        tags: ['inspection', 'schedule', 'checklist'],
-        content: 'Complete the comprehensive inspection checklist:',
-        steps: [
-          'Work through each inspection item systematically',
-          'Mark status as Satisfactory, C1, C2, C3, or N/A',
-          'Add observations for any defects or non-compliances',
-          'Include photographs where relevant',
-          'Reference applicable BS 7671 regulations',
-          'Use the search function to quickly find specific items',
-        ],
-        tips: [
-          "Complete all sections - don't skip items",
-          'Be thorough in observations - they must be clear and actionable',
-          'Include location details for each observation',
-        ],
-      },
-      {
-        title: 'Adding Observations',
-        icon: BookOpen,
-        badge: 'Important',
-        tags: ['observation', 'defect', 'documentation'],
-        content: 'Document defects and non-compliances effectively:',
-        steps: [
-          'Click "Add Observation" when a defect is found',
-          'Select appropriate classification (C1, C2, or C3)',
-          'Write clear, concise description of the defect',
-          'Include specific location (e.g., "Kitchen ring circuit, socket outlet near sink")',
-          'Reference relevant BS 7671 regulation (e.g., "411.3.3 - RCD protection required")',
-          'Add recommended remedial action',
-          'Attach photos and use AI analysis for validation',
-        ],
-        tips: [
-          'Be specific - avoid vague descriptions',
-          'Use technical but understandable language',
-          'Always include regulation references for credibility',
-          'AI Photo Analysis can suggest classifications and provide regulation references',
-        ],
-      },
-    ],
-  },
-  {
-    category: 'Testing',
-    icon: Zap,
-    color: 'from-amber-500/10 to-yellow-500/5',
-    borderColor: 'border-amber-500/30',
-    iconColor: 'text-amber-400',
-    items: [
-      {
-        title: 'Test Methods Explained',
-        icon: BookOpen,
-        badge: 'Essential',
-        tags: ['testing', 'method', 'BS7671'],
-        content: 'BS 7671 Regulation 612.3 defines three test methods:',
-        steps: [
-          'Method 1: Tests the whole installation with all main switches closed and all circuit breakers on. Quickest method but limited information.',
-          'Method 2: Tests by sub-circuit with individual circuit breakers. Provides more detailed results per circuit.',
-          'Method 3: Tests by individual circuit with all others disconnected. Most accurate and detailed method.',
-          'Choose method based on installation size and report requirements',
-          'Method 3 is recommended for comprehensive EICRs',
-        ],
-        tips: [
-          'Record test method used in your report',
-          'Method 3 provides best fault-finding capability',
-          'Consider installation size when selecting method',
-        ],
-      },
-      {
         title: 'Insulation Resistance Testing',
-        icon: Zap,
-        badge: 'Critical',
+        badge: 'BS 7671 612.3',
+        badgeColor: 'bg-amber-500/15 text-amber-400',
         tags: ['testing', 'insulation', 'resistance'],
-        content: 'Test insulation resistance according to BS 7671 Section 612.3:',
+        content: 'Test insulation resistance to BS 7671 Section 612.3.',
         steps: [
           'Test voltage: 500V DC for LV installations (250V for SELV/PELV)',
-          'Minimum acceptable values: 1.0MΩ for SELV/PELV, 1.0MΩ for up to 500V, 1.0MΩ for over 500V',
+          'Minimum acceptable: 1.0 MOhm',
           'Test between live conductors and earth',
           'Test between live conductors (line-to-neutral)',
           'Disconnect sensitive equipment before testing',
           'Record all readings on the schedule of test results',
         ],
         tips: [
-          'Values below 2MΩ warrant investigation',
+          'Values below 2 MOhm warrant investigation',
           'Moisture can significantly reduce readings',
           'Ensure all switches and control devices are closed during test',
         ],
       },
       {
         title: 'Earth Fault Loop Impedance (Zs)',
-        icon: Zap,
-        badge: 'Critical',
+        badge: 'BS 7671 612.6',
+        badgeColor: 'bg-amber-500/15 text-amber-400',
         tags: ['testing', 'Zs', 'impedance', 'earth'],
-        content: 'Measure and verify Zs values for each circuit:',
+        content: 'Measure and verify Zs values for each circuit.',
         steps: [
-          'Measure at furthest point of each circuit',
+          'Measure at the furthest point of each circuit',
           'Compare measured value against maximum Zs for protective device',
           'Apply correction factors for conductor temperature',
           'Zs = Ze + (R1 + R2) for verification',
-          'System will automatically validate against BS 7671 Table 41.3',
-          'Values exceeding limits indicate inadequate earth fault protection',
+          'System validates automatically against BS 7671 Table 41.3',
           'Use the Zs Calculator tool for instant compliance checking',
         ],
         tips: [
           'Test at socket outlets using plug-in tester',
-          'Verify using measured Ze and R1+R2 values',
           'High Zs values may require circuit investigation or device upgrade',
           'Zs Calculator provides temperature correction and safety margin analysis',
         ],
       },
       {
         title: 'RCD Testing Requirements',
-        icon: Shield,
-        badge: 'Essential',
+        badge: 'BS 7671 612.13',
+        badgeColor: 'bg-amber-500/15 text-amber-400',
         tags: ['testing', 'RCD', 'safety'],
-        content: 'Test RCDs according to BS 7671 Regulation 612.13:',
+        content: 'Test RCDs to BS 7671 Regulation 612.13.',
         steps: [
-          'Test at rated tripping current (IΔn): Should trip between 140-280ms at 30mA',
-          'Test at 5× rated current: Should trip within 40ms',
-          'Test at 50% of rated current: Should NOT trip',
+          'Test at rated tripping current (I delta n): should trip between 140-280ms at 30mA',
+          'Test at 5x rated current: should trip within 40ms',
+          'Test at 50% of rated current: should NOT trip',
           'Test both positive and negative half cycles',
           'Record all trip times',
           'Check mechanical operation using test button',
         ],
         tips: [
           'RCDs must trip within specified times or be replaced',
-          'Always test mechanical test button monthly',
-          '30mA RCDs required for socket outlets and bathrooms',
+          'Monthly mechanical test button checks are required',
+          '30mA RCDs required for socket outlets up to 32A and bathrooms',
+        ],
+      },
+      {
+        title: 'Test Methods Explained',
+        badge: 'BS 7671 612.3',
+        badgeColor: 'bg-amber-500/15 text-amber-400',
+        tags: ['testing', 'method', 'BS7671'],
+        content: 'BS 7671 defines three test methods for earth fault loop impedance.',
+        steps: [
+          'Method 1: Tests whole installation with all switches closed. Quickest but limited information',
+          'Method 2: Tests by sub-circuit with individual circuit breakers. More detailed per circuit',
+          'Method 3: Tests by individual circuit with all others disconnected. Most accurate method',
+          'Choose method based on installation size and report requirements',
+          'Method 3 recommended for comprehensive EICRs',
+        ],
+      },
+    ],
+  },
+  {
+    category: 'Compliance & Part P',
+    items: [
+      {
+        title: 'Part P Building Regulations',
+        badge: 'Legal Requirement',
+        badgeColor: 'bg-red-500/15 text-red-400',
+        tags: ['part-p', 'building-regulations', 'notification', 'compliance'],
+        content: 'Part P of the Building Regulations requires notification of certain electrical work to Building Control.',
+        steps: [
+          'Notifiable work includes: new circuits, consumer unit changes, work in bathrooms/kitchens (special locations)',
+          'Non-notifiable work: like-for-like replacements, adding sockets to existing circuits (outside special locations)',
+          'Submit notification within 30 days of completion',
+          'Track notification status on the I&T dashboard — the KPI strip shows Part P Due count',
+          'Overdue notifications are flagged in red',
+          'Manage all notifications in the Part P Notifications section',
+        ],
+        tips: [
+          'Part P applies to England and Wales — Scotland and NI have different requirements',
+          'Competent person schemes (NICEIC, NAPIT, etc.) allow self-certification',
+          'Keep records of all notifications for at least 6 years',
+        ],
+      },
+      {
+        title: 'Certificate Expiry Tracking',
+        badge: 'Business Tool',
+        badgeColor: 'bg-emerald-500/15 text-emerald-400',
+        estimatedTime: '1-2 minutes setup',
+        tags: ['expiry', 'reminder', 'business', 'certificate'],
+        content: 'Never miss re-inspection opportunities. Track and manage certificate expiries.',
+        steps: [
+          'Access Certificate Expiry from the dashboard Compliance section or main menu',
+          'Colour-coded timeline: Red (Expired), Orange (30-60 days), Yellow (60-90 days), Green (90+ days)',
+          'Filter by customer, property, or certificate type',
+          'Mark certificates as: Contacted, Booked, or Completed',
+          'Dashboard KPI strip shows expiring count at a glance',
+          'Tap the Expiring KPI to jump straight to the expiry list',
+        ],
+        tips: [
+          'Dashboard Compliance section shows the compliance score card',
+          'Batch update multiple certificates at once',
+          'Use expiry tracking to generate recurring revenue from re-inspections',
+        ],
+      },
+      {
+        title: 'Compliance Score Card',
+        badge: 'Dashboard Feature',
+        badgeColor: 'bg-elec-yellow/15 text-elec-yellow',
+        tags: ['compliance', 'score', 'dashboard'],
+        content: 'The Compliance section on the I&T dashboard shows your overall compliance health.',
+        steps: [
+          'All Clear (green): No compliance issues — no overdue Part P, no expired certs',
+          'Needs Attention (amber): Items due soon — pending Part P or certs expiring within 90 days',
+          'Action Required (red): Overdue Part P notifications or expired certificates',
+          'Issue chips show specific counts: Part P overdue, Part P pending, expired certs, expiring soon',
+          'Part P Notifications and Expiring Certificates cards below show detailed lists',
         ],
       },
     ],
   },
   {
     category: 'Tools & Calculators',
-    icon: Zap,
-    color: 'from-orange-500/10 to-red-500/5',
-    borderColor: 'border-orange-500/30',
-    iconColor: 'text-orange-400',
     items: [
       {
-        title: 'Zs Calculator - Professional Edition',
-        icon: Zap,
-        badge: 'BS7671 Validated',
+        title: 'Zs Calculator',
+        badge: 'BS 7671 Validated',
+        badgeColor: 'bg-emerald-500/15 text-emerald-400',
         estimatedTime: '2-3 minutes',
         tags: ['calculator', 'Zs', 'compliance', 'tool'],
-        content: 'Instant compliance checking, temperature correction, safety margin analysis:',
+        content: 'Instant compliance checking with temperature correction and safety margin analysis.',
         steps: [
           'Input: Ze, R1, R2 (or combined R1+R2)',
-          'Device Selection: MCB Type B/C/D, RCBO, Fuse (all BS7671 ratings)',
-          'Automatic Calculations: Total Zs, temperature-corrected values (70°C copper)',
-          'Maximum permitted Zs from BS7671 Table 41.3',
+          'Select device: MCB Type B/C/D, RCBO, Fuse (all BS 7671 ratings)',
+          'Automatic calculations: total Zs, temperature-corrected values',
+          'Maximum permitted Zs from BS 7671 Table 41.3',
           'Safety margin percentage calculation',
-          'Compliance Status: Pass/Fail with colour coding',
-          'Regulation References: Direct links to BS7671 clauses',
-          'Practical Guidance: Troubleshooting high Zs readings',
+          'Compliance status: Pass/Fail with colour coding',
         ],
         tips: [
           'Save calculations for later reference',
-          'Compare multiple circuits side-by-side',
-          'Export results to PDF for client reports',
           'Mobile-optimised for on-site use',
-          'Tabs: Calculator, Results, Guidance, Regulations, Settings',
+          'Temperature correction uses 70 degrees C copper standard',
         ],
       },
       {
         title: 'Cable Capacity Calculator',
-        icon: Cable,
         badge: 'Design Tool',
+        badgeColor: 'bg-blue-500/15 text-blue-400',
         estimatedTime: '3-5 minutes',
         tags: ['calculator', 'cable', 'design', 'capacity'],
-        content: 'Ensure cables are correctly sized for load and voltage drop compliance:',
+        content: 'Ensure cables are correctly sized for load and voltage drop compliance.',
         steps: [
-          'Input circuit parameters: Load current (A), circuit length (m)',
-          'Select installation method from BS7671 Table 4D5',
+          'Input circuit parameters: load current (A), circuit length (m)',
+          'Select installation method from BS 7671 Table 4D5',
           'Enter ambient temperature and grouping factors',
-          'Calculates: Minimum cable size (mm²), current carrying capacity',
-          'Voltage drop (V and %), BS7671 compliance status',
+          'Calculates: minimum cable size, current carrying capacity',
+          'Voltage drop (V and %), BS 7671 compliance status',
           'Derating factors applied automatically',
-          'Multiple installation methods supported',
         ],
         tips: [
           'Compare different cable sizes for cost optimisation',
           'Consider future load increases in design',
-          'Check voltage drop especially for long runs',
-          'Export sizing calculations for design documentation',
-          'Tabs: Calculator, Analysis, Guide, Compliance, Examples',
+          'Check voltage drop especially for long cable runs',
         ],
       },
       {
-        title: 'Learning Hub & BS7671 Reference',
-        icon: BookOpen,
+        title: 'Circuit Designer',
+        badge: 'AI-Powered',
+        badgeColor: 'bg-violet-500/15 text-violet-400',
+        tags: ['circuit', 'designer', 'AI', 'design'],
+        content: 'AI-powered circuit design that generates schedules and imports into EIC certificates.',
+        steps: [
+          'Access Circuit Designer from the Resources section on the I&T dashboard',
+          'Describe the installation requirements',
+          'AI generates circuit schedules with protective devices, cable sizes, and ratings',
+          'Review and edit the generated design',
+          'Save the design — it appears in the Designed Circuits section on your dashboard',
+          'Import directly into an EIC certificate when ready',
+        ],
+        tips: [
+          'Pending designs can be imported into EIC forms at any time',
+          'Completed designs are archived with their certificate link',
+          'Delete or archive old designs from the dashboard',
+        ],
+      },
+      {
+        title: 'I&T Learning Hub',
         badge: 'Knowledge Base',
+        badgeColor: 'bg-elec-yellow/15 text-elec-yellow',
         tags: ['learning', 'BS7671', 'training', 'reference'],
-        content: 'On-demand training, regulation lookup, testing procedures:',
+        content: 'On-demand training, regulation lookup, and testing procedures.',
         steps: [
-          'BS7671 Regulations: Searchable database with explanations',
-          'Testing Procedures: Continuity, insulation resistance, Zs, RCD, polarity',
-          'Fault Finding: Diagnostic flowcharts for common issues',
-          'Quiz Mode: Test your knowledge, track progress',
-          'Interactive Diagrams: Visual guides to test methods',
-          'Access via main menu "Learning Hub" or tools section',
+          'Access from the Resources section on the I&T dashboard',
+          'BS 7671 Regulations: searchable database with explanations',
+          'Testing Procedures: continuity, insulation resistance, Zs, RCD, polarity',
+          'Fault Finding: diagnostic flowcharts for common issues',
+          'Interactive diagrams and visual guides to test methods',
         ],
         tips: [
-          'Bookmark frequently-referenced regulations',
           'Use AI Regulation Search for natural language queries',
-          'Complete quizzes to earn CPD tracking (future feature)',
-          'Download procedures for offline reference',
+          'Bookmark frequently-referenced regulations',
+          'Available offline once loaded',
         ],
       },
     ],
   },
   {
-    category: 'Advanced Features',
-    icon: Database,
-    color: 'from-slate-500/10 to-gray-500/5',
-    borderColor: 'border-slate-500/30',
-    iconColor: 'text-slate-400',
+    category: 'Customer Management',
     items: [
       {
-        title: 'Offline Mode & Data Sync',
-        icon: Database,
-        badge: 'Pro Feature',
-        tags: ['offline', 'sync', 'storage', 'cloud'],
-        content: 'Work anywhere without internet, automatic cloud backup:',
+        title: 'Customer Records',
+        badge: 'Business Tool',
+        badgeColor: 'bg-cyan-500/15 text-cyan-400',
+        estimatedTime: '2-3 minutes per customer',
+        tags: ['customer', 'crm', 'business'],
+        content: 'Track clients, properties, and certificate history in one place.',
         steps: [
-          'All data automatically stored locally using IndexedDB (50MB+ capacity)',
-          'Create certificates, take photos, add observations - all offline',
-          'Data syncs to cloud when connection restored',
-          'Conflict resolution handles simultaneous edits',
-          'Manual sync trigger available in settings',
-          "What's stored offline: Form drafts, photos, profiles, signatures, customer database",
-          'Also stored: Regulation reference library, calculator history',
+          'Access Customers from the Resources section on the I&T dashboard',
+          'Add new customer: name, email, phone, address',
+          'Add property details (multiple per customer)',
+          'Link existing certificates or create new ones',
+          'View customer history and previous reports',
+          'Set up certificate expiry reminders per customer',
         ],
         tips: [
-          'Green cloud icon = synced, orange = pending, red = sync failed',
-          'Large photos may take time to sync on slow connections',
-          'Check sync status before closing app on-site',
-          'Manual "Clear All Data" available in settings (use with caution)',
+          'Customers auto-populate in certificate forms',
+          'Search by name, address, or certificate number',
+          'Track certificate status: Draft, In Progress, Completed',
         ],
       },
+    ],
+  },
+  {
+    category: 'Data & Storage',
+    items: [
       {
-        title: 'Auto-Save & Data Recovery',
-        icon: Save,
-        badge: 'Safety Net',
-        tags: ['auto-save', 'recovery', 'backup'],
-        content: 'Never lose work due to crashes, low battery, or accidental closure:',
+        title: 'Auto-Save & Cloud Sync',
+        badge: 'Built-In',
+        badgeColor: 'bg-emerald-500/15 text-emerald-400',
+        tags: ['auto-save', 'sync', 'cloud', 'backup'],
+        content: 'Never lose work. Auto-save runs continuously with cloud backup.',
         steps: [
-          'Auto-save every 30 seconds (configurable in settings)',
-          'Draft recovery on app restart',
-          'Version history shows previous saves',
-          'Manual save: Ctrl+S (or Save button)',
-          '"Unsaved changes" warning before navigation',
-          'Settings: Enable/disable auto-save, change interval (15s, 30s, 60s, 120s)',
-          'View storage usage and clear old drafts',
+          'Local auto-save with 2-second debounce using localStorage',
+          'Cloud sync with network-aware debounce to Supabase (30-second backup interval)',
+          'Emergency save on page close (beforeunload)',
+          'Draft recovery: unsaved drafts banner appears on dashboard if you have auto-drafts',
+          'Tap the banner to see all drafts and choose one to continue',
+          'Delete individual drafts or clear all from the drafts sheet',
         ],
         tips: [
-          'Yellow indicator shows unsaved changes',
-          'Green checkmark confirms save completed',
-          'Drafts persist until manually deleted or certificate completed',
+          'The dashboard shows "X unsaved drafts" if you have auto-saved work',
           'Each certificate type has separate draft storage',
+          'Drafts persist until manually deleted or certificate completed',
+        ],
+      },
+      {
+        title: 'Offline Mode',
+        tags: ['offline', 'storage'],
+        content: 'Work anywhere without internet. All data stored locally.',
+        steps: [
+          'All form data stored locally using localStorage and IndexedDB',
+          'Create certificates, fill forms, add observations — all offline',
+          'Data syncs to cloud when connection is restored',
+          'Photos stored locally until upload completes',
+        ],
+        tips: [
+          'Check sync status before closing the app on-site',
+          'Large photos may take time to sync on slow connections',
+        ],
+      },
+      {
+        title: 'My Reports — Certificate Management',
+        tags: ['reports', 'certificates', 'management'],
+        content: 'View, filter, and manage all your certificates in one place.',
+        steps: [
+          'Access My Reports from the Resources section or the KPI strip',
+          'Filter by certificate type, status, or date range',
+          'Search by client name or address',
+          'Open any certificate to continue editing',
+          'View completion status and sync status',
+          'Certificates show: type badge, status badge, client name, address, last updated time',
         ],
       },
     ],
   },
   {
-    category: 'Regulations & Reference',
-    icon: Book,
-    color: 'from-purple-500/10 to-pink-500/5',
-    borderColor: 'border-purple-500/30',
-    iconColor: 'text-purple-400',
+    category: 'Regulations Reference',
     items: [
       {
-        title: 'BS 7671 Parts Overview',
-        icon: BookOpen,
+        title: 'BS 7671 Structure Overview',
         badge: 'Reference',
+        badgeColor: 'bg-purple-500/15 text-purple-400',
         tags: ['BS7671', 'regulations', 'reference'],
-        content: 'Quick reference to BS 7671 (IET Wiring Regulations) structure:',
+        content: 'Quick reference to BS 7671 (IET Wiring Regulations) structure.',
         steps: [
           'Part 1: Scope, Object and Fundamental Principles',
           'Part 2: Definitions',
           'Part 3: Assessment of General Characteristics',
           'Part 4: Protection for Safety (earthing, bonding, fault protection)',
           'Part 5: Selection and Erection of Equipment',
-          'Part 6: Inspection and Testing (your primary reference for EICRs)',
+          'Part 6: Inspection and Testing — your primary reference for EICRs',
           'Part 7: Special Installations or Locations (bathrooms, swimming pools, etc.)',
         ],
       },
       {
         title: 'Common Regulation References',
-        icon: FileCheck,
         badge: 'Quick Ref',
+        badgeColor: 'bg-purple-500/15 text-purple-400',
         tags: ['regulations', 'reference', 'quick'],
-        content: 'Frequently used BS 7671 regulations:',
+        content: 'Frequently used BS 7671 regulations.',
         steps: [
-          '411.3.3: RCD protection for socket outlets rated up to 20A',
+          '411.3.3: RCD protection for socket outlets rated up to 32A',
           '415.2: Supplementary equipotential bonding requirements',
           '531.2: RCD selection and ratings',
           '543.1: Protective conductor sizes',
           '612.3: Insulation resistance test requirements',
           '612.6: Earth fault loop impedance requirements',
+          '612.13: RCD testing requirements',
           '701: Bathrooms and shower rooms special requirements',
-        ],
-      },
-      {
-        title: 'Using AI Regulation Search',
-        icon: Search,
-        badge: 'Tool',
-        tags: ['AI', 'search', 'regulations', 'tool'],
-        content: 'Find BS 7671 regulations quickly using AI:',
-        steps: [
-          'Access AI Regulation Search from the Tools menu',
-          'Describe your query in plain English',
-          'Example: "RCD requirements for bathroom"',
-          'AI will find relevant regulations and explain them',
-          'Copy regulation references into your observations',
-          'Use for quick lookup during inspections',
         ],
       },
     ],
@@ -621,17 +860,16 @@ const helpArticles = [
 ];
 
 const quickReference = [
-  { title: 'RCD Trip Times (30mA)', value: '140-280ms at 1×IΔn, <40ms at 5×IΔn' },
-  { title: 'Min. Insulation Resistance', value: '≥1.0MΩ at 500V DC' },
-  { title: 'Earth Electrode (TT)', value: 'RA × Ia ≤ 50V (typically ≤200Ω)' },
-  { title: 'Main Bonding Conductor', value: 'Min. 6mm² (10mm² for PME)' },
+  { title: 'RCD Trip Times (30mA)', value: '140-280ms at 1x, <40ms at 5x' },
+  { title: 'Min. Insulation Resistance', value: '1.0 MOhm at 500V DC' },
+  { title: 'Earth Electrode (TT)', value: 'RA x Ia <= 50V (typically <=200 Ohm)' },
+  { title: 'Main Bonding Conductor', value: 'Min. 6mm sq (10mm sq for PME)' },
   { title: 'Test Voltages', value: '500V for LV, 250V for SELV/PELV' },
-  { title: 'Minimum Profile Completion', value: '80% for valid certificates' },
-  { title: 'Photo Storage (Offline)', value: 'Up to 50MB per certificate' },
-  { title: 'Auto-save Interval', value: 'Every 30 seconds (configurable)' },
+  { title: 'Max Zs Safety Margin', value: '20% or more recommended' },
+  { title: 'Auto-save Interval', value: 'Every 10 seconds (localStorage)' },
+  { title: 'Cloud Sync', value: '30-second debounce to Supabase' },
   { title: 'Certificate Expiry Warning', value: '90 days before expiration' },
-  { title: 'Signature Pad Resolution', value: 'Vector format (SVG), scalable' },
-  { title: 'Max Zs Safety Margin', value: '≥20% recommended for reliability' },
+  { title: 'Part P Notification Deadline', value: '30 days after completion' },
 ];
 
 interface HelpPanelProps {
@@ -640,13 +878,22 @@ interface HelpPanelProps {
 }
 
 const HelpPanel = ({ open, onOpenChange }: HelpPanelProps) => {
-  const isMobile = useIsMobile();
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+  const [expandedArticles, setExpandedArticles] = useState<Set<string>>(new Set());
   const [internalOpen, setInternalOpen] = useState(false);
 
   const isOpen = open !== undefined ? open : internalOpen;
   const setIsOpen = onOpenChange || setInternalOpen;
+
+  const toggleArticle = (key: string) => {
+    setExpandedArticles((prev) => {
+      const next = new Set(prev);
+      if (next.has(key)) next.delete(key);
+      else next.add(key);
+      return next;
+    });
+  };
 
   const filteredArticles = helpArticles
     .map((category) => ({
@@ -655,12 +902,8 @@ const HelpPanel = ({ open, onOpenChange }: HelpPanelProps) => {
         (item) =>
           item.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
           item.content.toLowerCase().includes(searchQuery.toLowerCase()) ||
-          (item.steps?.some((step) => step.toLowerCase().includes(searchQuery.toLowerCase())) ??
-            false) ||
-          ((item as any).tags?.some((tag: string) =>
-            tag.toLowerCase().includes(searchQuery.toLowerCase())
-          ) ??
-            false)
+          item.steps?.some((step) => step.toLowerCase().includes(searchQuery.toLowerCase())) ||
+          item.tags?.some((tag) => tag.toLowerCase().includes(searchQuery.toLowerCase()))
       ),
     }))
     .filter((category) =>
@@ -671,351 +914,241 @@ const HelpPanel = ({ open, onOpenChange }: HelpPanelProps) => {
 
   return (
     <Sheet open={isOpen} onOpenChange={setIsOpen}>
-      <SheetContent className="w-full sm:max-w-2xl overflow-y-auto bg-gradient-to-b from-neutral-900 to-neutral-950">
-        <SheetHeader className={cn('space-y-3', isMobile && 'space-y-2')}>
-          <SheetTitle
-            className={cn('flex items-center gap-3', isMobile ? 'text-lg gap-2' : 'text-2xl')}
-          >
-            <div
-              className={cn(
-                'rounded-xl bg-gradient-to-br from-blue-500/20 to-cyan-500/20 border border-blue-500/30 flex items-center justify-center',
-                isMobile ? 'w-8 h-8' : 'w-10 h-10'
-              )}
-            >
-              <Book className={cn(isMobile ? 'h-4 w-4' : 'h-5 w-5', 'text-blue-400')} />
+      <SheetContent
+        side="bottom"
+        className="h-[92vh] p-0 rounded-t-2xl overflow-hidden bg-background border-white/[0.06]"
+      >
+        <div className="flex flex-col h-full">
+          {/* Compact sticky header — title + search only */}
+          <div className="flex-shrink-0 border-b border-white/[0.06] px-4 pt-3 pb-3">
+            <div className="flex items-center gap-3">
+              <button
+                onClick={() => setIsOpen(false)}
+                className="h-11 w-11 rounded-xl flex items-center justify-center text-white hover:bg-white/10 touch-manipulation active:scale-[0.98] transition-all -ml-1"
+              >
+                <ArrowLeft className="h-5 w-5" />
+              </button>
+              <h2 className="text-base font-semibold text-white flex-1">Help & Documentation</h2>
             </div>
-            Help & Documentation
-          </SheetTitle>
-          <SheetDescription className={cn(isMobile ? 'text-sm' : 'text-base')}>
-            Comprehensive guides for BS 7671 compliant electrical inspections
-          </SheetDescription>
-        </SheetHeader>
 
-        <div className={cn('space-y-6 mt-6', isMobile && 'space-y-4')}>
-          {/* Search Section */}
-          <div className={cn('space-y-3', isMobile && 'space-y-2')}>
-            <div className="relative">
+            {/* Search */}
+            <div className="relative mt-2">
               {!searchQuery && (
-                <Search
-                  className={cn(
-                    'absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground pointer-events-none',
-                    isMobile ? 'h-3.5 w-3.5' : 'h-4 w-4'
-                  )}
-                />
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white pointer-events-none" />
               )}
               <Input
-                placeholder={isMobile ? 'Search help...' : 'Search help articles or regulations...'}
+                placeholder="Search help..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className={cn(
-                  'bg-card/50 border-border',
-                  isMobile && 'h-10 text-sm',
+                  'h-11 text-base touch-manipulation bg-white/[0.06] border-white/[0.08] text-white placeholder:text-white',
+                  'focus:border-elec-yellow focus:ring-elec-yellow',
                   !searchQuery && 'pl-10'
                 )}
               />
             </div>
+
+            {/* Search results count */}
             {searchQuery && (
-              <p
-                className={cn(
-                  'text-xs text-muted-foreground flex items-center gap-2',
-                  isMobile && 'text-[10px]'
-                )}
-              >
-                <CheckCircle2 className={cn(isMobile ? 'h-2.5 w-2.5' : 'h-3 w-3')} />
-                Found {resultCount} article{resultCount !== 1 ? 's' : ''} matching "{searchQuery}"
+              <p className="text-xs text-white mt-2">
+                {resultCount} result{resultCount !== 1 ? 's' : ''} for "{searchQuery}"
               </p>
             )}
+          </div>
+
+          {/* Scrollable content — category filters scroll with content */}
+          <div className="flex-1 overflow-y-auto px-4 py-4 space-y-5">
+            {/* Category filter pills — inside scroll area */}
             {!searchQuery && (
-              <div className="flex flex-wrap gap-2 overflow-x-auto">
-                <Button
-                  variant="outline"
-                  size="sm"
+              <div className="flex gap-2 overflow-x-auto pb-1 -mx-4 px-4 scrollbar-hide">
+                <button
                   onClick={() => setSelectedCategory(null)}
                   className={cn(
-                    selectedCategory === null ? 'bg-blue-500/20 border-blue-500/50' : '',
-                    isMobile && 'min-h-[44px] text-xs whitespace-nowrap'
+                    'h-9 px-3 text-xs font-medium rounded-lg touch-manipulation transition-all whitespace-nowrap flex-shrink-0',
+                    selectedCategory === null
+                      ? 'bg-elec-yellow/12 text-elec-yellow border border-elec-yellow/20'
+                      : 'bg-white/[0.06] text-white border border-white/[0.08]'
                   )}
                 >
-                  {isMobile ? 'All' : 'All Categories'}
-                </Button>
+                  All
+                </button>
                 {helpArticles.map((cat) => (
-                  <Button
+                  <button
                     key={cat.category}
-                    variant="outline"
-                    size="sm"
                     onClick={() => setSelectedCategory(cat.category)}
                     className={cn(
-                      selectedCategory === cat.category ? 'bg-blue-500/20 border-blue-500/50' : '',
-                      isMobile && 'min-h-[44px] text-xs whitespace-nowrap'
+                      'h-9 px-3 text-xs font-medium rounded-lg touch-manipulation transition-all whitespace-nowrap flex-shrink-0',
+                      selectedCategory === cat.category
+                        ? 'bg-elec-yellow/12 text-elec-yellow border border-elec-yellow/20'
+                        : 'bg-white/[0.06] text-white border border-white/[0.08]'
                     )}
                   >
                     {cat.category}
-                  </Button>
+                  </button>
                 ))}
               </div>
             )}
-          </div>
 
-          {/* Help Articles */}
-          <div className={cn('space-y-4', isMobile && 'space-y-3')}>
+            <div className="space-y-6">
             {filteredArticles.length > 0 ? (
-              filteredArticles.map((category, idx) => (
-                <Card
-                  key={idx}
-                  className={`bg-gradient-to-br ${category.color} ${category.borderColor} border overflow-hidden`}
-                >
-                  <CardHeader className={cn('pb-3', isMobile && 'p-3 pb-2')}>
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-3">
+              filteredArticles.map((category) => (
+                <div key={category.category} className="space-y-3">
+                  {/* Category header */}
+                  <div className="flex items-center gap-2.5">
+                    <h3 className="text-xs font-medium text-white uppercase tracking-wider">
+                      {category.category}
+                    </h3>
+                    <span className="text-[10px] font-semibold px-2 py-0.5 rounded bg-white/[0.06] text-white">
+                      {category.items.length}
+                    </span>
+                  </div>
+
+                  {/* Articles */}
+                  <div className="space-y-2">
+                    {category.items.map((item, idx) => {
+                      const key = `${category.category}-${idx}`;
+                      const isExpanded = expandedArticles.has(key) || !!searchQuery;
+
+                      return (
                         <div
-                          className={cn(
-                            `rounded-lg bg-gradient-to-br ${category.color} border ${category.borderColor} flex items-center justify-center`,
-                            isMobile ? 'w-8 h-8' : 'w-10 h-10'
-                          )}
+                          key={key}
+                          className="rounded-2xl bg-white/[0.04] border border-white/[0.06] overflow-hidden"
                         >
-                          <category.icon
-                            className={cn(isMobile ? 'h-4 w-4' : 'h-5 w-5', category.iconColor)}
-                          />
-                        </div>
-                        <CardTitle className={cn(isMobile ? 'text-base' : 'text-lg')}>
-                          {category.category}
-                        </CardTitle>
-                      </div>
-                      <Badge
-                        variant="secondary"
-                        className={cn('text-xs', isMobile && 'px-1.5 py-0.5 text-[10px]')}
-                      >
-                        {category.items.length} article{category.items.length !== 1 ? 's' : ''}
-                      </Badge>
-                    </div>
-                  </CardHeader>
-                  <CardContent className={cn('space-y-4', isMobile && 'space-y-3 p-3 pt-0')}>
-                    {category.items.map((item, itemIdx) => (
-                      <div
-                        key={itemIdx}
-                        className={cn(
-                          'space-y-3 p-4 rounded-lg bg-card/50 border border-border/50',
-                          isMobile && 'p-3 space-y-2'
-                        )}
-                      >
-                        <div className="flex items-start justify-between gap-3">
-                          <div className="flex items-start gap-3 flex-1">
-                            <item.icon
-                              className={cn(
-                                `${category.iconColor} flex-shrink-0 mt-0.5`,
-                                isMobile ? 'h-4 w-4' : 'h-5 w-5'
-                              )}
-                            />
-                            <div className="space-y-1 flex-1">
-                              <div className="flex items-center gap-2 flex-wrap">
-                                <h4
-                                  className={cn('font-semibold', isMobile ? 'text-xs' : 'text-sm')}
-                                >
+                          {/* Article header — tappable */}
+                          <button
+                            onClick={() => toggleArticle(key)}
+                            className="w-full flex items-center gap-3 p-4 text-left touch-manipulation active:bg-white/[0.06] transition-colors"
+                          >
+                            <div className="flex-1 min-w-0">
+                              <div className="flex items-center gap-2 flex-wrap mb-1">
+                                <span className="text-sm font-semibold text-white">
                                   {item.title}
-                                </h4>
+                                </span>
+                              </div>
+                              <div className="flex items-center gap-2 flex-wrap">
                                 {item.badge && (
-                                  <Badge
-                                    variant="outline"
+                                  <span
                                     className={cn(
-                                      'text-xs',
-                                      isMobile && 'px-1.5 py-0.5 text-[10px]'
+                                      'text-[10px] font-bold px-2 py-0.5 rounded',
+                                      item.badgeColor || 'bg-white/[0.06] text-white'
                                     )}
                                   >
                                     {item.badge}
-                                  </Badge>
+                                  </span>
                                 )}
-                                {'estimatedTime' in item && (item as any).estimatedTime && (
-                                  <span
-                                    className={cn(
-                                      'text-xs text-muted-foreground flex items-center gap-1',
-                                      isMobile && 'text-[10px]'
-                                    )}
-                                  >
-                                    <Clock className={cn(isMobile ? 'h-2.5 w-2.5' : 'h-3 w-3')} />
-                                    {(item as any).estimatedTime}
+                                {item.estimatedTime && (
+                                  <span className="text-[10px] text-white">
+                                    {item.estimatedTime}
                                   </span>
                                 )}
                               </div>
-                              <p
-                                className={cn(
-                                  'text-sm text-muted-foreground leading-relaxed',
-                                  isMobile && 'text-xs'
-                                )}
-                              >
+                            </div>
+                            {isExpanded ? (
+                              <ChevronUp className="h-4 w-4 text-white flex-shrink-0" />
+                            ) : (
+                              <ChevronDown className="h-4 w-4 text-white flex-shrink-0" />
+                            )}
+                          </button>
+
+                          {/* Expanded content */}
+                          {isExpanded && (
+                            <div className="px-4 pb-4 space-y-3">
+                              <p className="text-sm text-white leading-relaxed">
                                 {item.content}
                               </p>
+
+                              {item.steps && item.steps.length > 0 && (
+                                <div className="space-y-2">
+                                  <p className="text-[11px] font-medium text-elec-yellow uppercase tracking-wider">
+                                    Steps
+                                  </p>
+                                  <ol className="space-y-1.5">
+                                    {item.steps.map((step, stepIdx) => (
+                                      <li key={stepIdx} className="flex gap-3 text-sm text-white leading-relaxed">
+                                        <span className="text-[11px] font-bold text-elec-yellow flex-shrink-0 w-5 mt-0.5">
+                                          {stepIdx + 1}.
+                                        </span>
+                                        <span>{step}</span>
+                                      </li>
+                                    ))}
+                                  </ol>
+                                </div>
+                              )}
+
+                              {item.tips && item.tips.length > 0 && (
+                                <div className="space-y-2 mt-2">
+                                  <p className="text-[11px] font-medium text-amber-400 uppercase tracking-wider">
+                                    Tips
+                                  </p>
+                                  <ul className="space-y-1.5">
+                                    {item.tips.map((tip, tipIdx) => (
+                                      <li key={tipIdx} className="flex gap-2 text-sm text-white leading-relaxed">
+                                        <span className="text-amber-400 flex-shrink-0">-</span>
+                                        <span>{tip}</span>
+                                      </li>
+                                    ))}
+                                  </ul>
+                                </div>
+                              )}
                             </div>
-                          </div>
+                          )}
                         </div>
-                        {item.steps && (
-                          <div className={cn('space-y-2 ml-8', isMobile && 'ml-5')}>
-                            <p
-                              className={cn(
-                                'text-xs font-medium text-muted-foreground uppercase tracking-wide',
-                                isMobile && 'text-[10px]'
-                              )}
-                            >
-                              Step-by-step:
-                            </p>
-                            <ol className={cn('space-y-2', isMobile && 'space-y-1.5')}>
-                              {item.steps.map((step, stepIdx) => (
-                                <li
-                                  key={stepIdx}
-                                  className={cn(
-                                    'text-sm text-muted-foreground flex gap-3',
-                                    isMobile && 'text-xs gap-2'
-                                  )}
-                                >
-                                  <span
-                                    className={cn(
-                                      'text-xs font-bold text-blue-400 flex-shrink-0 w-5',
-                                      isMobile && 'text-[10px] w-4'
-                                    )}
-                                  >
-                                    {stepIdx + 1}.
-                                  </span>
-                                  <span className="leading-relaxed">{step}</span>
-                                </li>
-                              ))}
-                            </ol>
-                          </div>
-                        )}
-                        {'tips' in item && (item as any).tips && (
-                          <div className={cn('space-y-2 ml-8', isMobile && 'ml-5')}>
-                            <p
-                              className={cn(
-                                'text-xs font-medium text-amber-400 uppercase tracking-wide flex items-center gap-1',
-                                isMobile && 'text-[10px]'
-                              )}
-                            >
-                              <Lightbulb className={cn(isMobile ? 'h-2.5 w-2.5' : 'h-3 w-3')} />
-                              Pro Tips:
-                            </p>
-                            <ul className={cn('space-y-1.5', isMobile && 'space-y-1')}>
-                              {(item as any).tips.map((tip: string, tipIdx: number) => (
-                                <li
-                                  key={tipIdx}
-                                  className={cn(
-                                    'text-xs text-muted-foreground flex gap-2 leading-relaxed',
-                                    isMobile && 'text-[10px]'
-                                  )}
-                                >
-                                  <span className="text-amber-400">•</span>
-                                  {tip}
-                                </li>
-                              ))}
-                            </ul>
-                          </div>
-                        )}
-                      </div>
-                    ))}
-                  </CardContent>
-                </Card>
+                      );
+                    })}
+                  </div>
+                </div>
               ))
             ) : (
-              <Card className="bg-card/50 border-border">
-                <CardContent
-                  className={cn(
-                    'text-center py-12 text-muted-foreground space-y-2',
-                    isMobile && 'py-8'
-                  )}
+              <div className="flex flex-col items-center justify-center py-16 space-y-3">
+                <p className="text-sm font-medium text-white">No results for "{searchQuery}"</p>
+                <p className="text-xs text-white">Try a different search term</p>
+                <button
+                  onClick={() => {
+                    setSearchQuery('');
+                    setSelectedCategory(null);
+                  }}
+                  className="h-11 px-4 text-sm font-medium text-elec-yellow bg-elec-yellow/10 border border-elec-yellow/20 rounded-xl touch-manipulation active:scale-[0.98] transition-all"
                 >
-                  <Search
-                    className={cn('mx-auto opacity-50', isMobile ? 'h-8 w-8' : 'h-12 w-12')}
-                  />
-                  <p className={cn('font-medium', isMobile ? 'text-xs' : 'text-sm')}>
-                    No articles found matching "{searchQuery}"
-                  </p>
-                  <p className={cn(isMobile ? 'text-[10px]' : 'text-xs')}>
-                    Try a different search term or browse all categories
-                  </p>
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={() => {
-                      setSearchQuery('');
-                      setSelectedCategory(null);
-                    }}
-                    className={cn('mt-3', isMobile && 'min-h-[44px] text-xs')}
-                  >
-                    Clear Search
-                  </Button>
-                </CardContent>
-              </Card>
+                  Clear Search
+                </button>
+              </div>
             )}
-          </div>
 
-          <Separator className="bg-muted" />
-
-          {/* Quick Reference */}
-          <Card className="bg-gradient-to-br from-emerald-500/10 to-teal-500/5 border-emerald-500/30">
-            <CardHeader className={cn(isMobile && 'p-3')}>
-              <div className="flex items-center gap-3">
-                <div
-                  className={cn(
-                    'rounded-lg bg-gradient-to-br from-emerald-500/20 to-teal-500/20 border border-emerald-500/30 flex items-center justify-center',
-                    isMobile ? 'w-8 h-8' : 'w-10 h-10'
-                  )}
-                >
-                  <BookOpen className={cn(isMobile ? 'h-4 w-4' : 'h-5 w-5', 'text-emerald-400')} />
-                </div>
-                <CardTitle className={cn(isMobile ? 'text-base' : 'text-lg')}>
+            {/* Quick Reference */}
+            <div className="space-y-3">
+              <div className="flex items-center gap-2.5">
+                <div className="w-2 h-2 rounded-full bg-emerald-400" />
+                <h3 className="text-xs font-medium text-white uppercase tracking-wider">
                   Quick Reference Values
-                </CardTitle>
+                </h3>
               </div>
-              <CardDescription className={cn(isMobile && 'text-xs')}>
-                Common BS 7671 test limits and requirements
-              </CardDescription>
-            </CardHeader>
-            <CardContent className={cn(isMobile && 'p-3 pt-0')}>
-              <div className={cn('grid gap-2', isMobile && 'grid-cols-1')}>
-                {quickReference.map((ref, idx) => (
-                  <div
-                    key={idx}
-                    className={cn(
-                      'p-3 rounded-lg bg-card/50 border border-border/50',
-                      isMobile && 'p-2'
-                    )}
-                  >
-                    <p
-                      className={cn(
-                        'font-medium text-muted-foreground mb-1',
-                        isMobile ? 'text-[10px]' : 'text-xs'
-                      )}
+              <div className="rounded-2xl bg-emerald-500/8 border border-emerald-500/20 p-4">
+                <p className="text-xs text-white mb-3">
+                  Common BS 7671 test limits and requirements
+                </p>
+                <div className="space-y-2">
+                  {quickReference.map((ref, idx) => (
+                    <div
+                      key={idx}
+                      className="flex items-start justify-between gap-3 py-2 border-b border-white/[0.04] last:border-0 last:pb-0"
                     >
-                      {ref.title}
-                    </p>
-                    <p
-                      className={cn(
-                        'font-semibold text-emerald-400',
-                        isMobile ? 'text-xs' : 'text-sm'
-                      )}
-                    >
-                      {ref.value}
-                    </p>
-                  </div>
-                ))}
+                      <span className="text-xs text-white flex-shrink-0">{ref.title}</span>
+                      <span className="text-xs font-semibold text-emerald-400 text-right">
+                        {ref.value}
+                      </span>
+                    </div>
+                  ))}
+                </div>
               </div>
-            </CardContent>
-          </Card>
+            </div>
 
-          {/* Footer Note */}
-          <div
-            className={cn(
-              'bg-gradient-to-r from-blue-500/10 to-cyan-500/10 p-4 rounded-lg border border-blue-500/30',
-              isMobile && 'p-3'
-            )}
-          >
-            <p
-              className={cn(
-                'text-xs text-muted-foreground leading-relaxed',
-                isMobile && 'text-[10px]'
-              )}
-            >
-              <strong className="text-blue-400">Need more help?</strong> All tools and features are
-              designed to comply with BS 7671:2018+A2:2022 requirements. For complex scenarios, use
-              the AI Regulation Search or consult the full regulations.
-            </p>
+            {/* Footer */}
+            <div className="rounded-2xl bg-white/[0.04] border border-white/[0.06] p-4">
+              <p className="text-xs text-white leading-relaxed">
+                All tools and features are designed to comply with BS 7671:2018+A2:2022 requirements. For complex scenarios, use the AI Regulation Search or consult the full regulations.
+              </p>
+            </div>
+            </div>
           </div>
         </div>
       </SheetContent>

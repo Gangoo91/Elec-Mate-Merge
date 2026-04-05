@@ -4,6 +4,7 @@
  */
 
 import { useState, useRef } from 'react';
+import { openExternalUrl } from '@/utils/open-external-url';
 import { motion } from 'framer-motion';
 import { Drawer, DrawerContent, DrawerClose } from '@/components/ui/drawer';
 import { Button } from '@/components/ui/button';
@@ -442,7 +443,7 @@ const ProgrammeDetailSheet = ({
               className="flex-1 h-12 border-white/15 hover:bg-white/10 text-white hover:text-white rounded-xl touch-manipulation font-medium"
               onClick={() => {
                 if (programme.courseUrl) {
-                  window.open(programme.courseUrl, '_blank');
+                  openExternalUrl(programme.courseUrl);
                 }
               }}
             >
@@ -452,7 +453,7 @@ const ProgrammeDetailSheet = ({
               className="flex-1 h-12 bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90 rounded-xl touch-manipulation font-semibold shadow-lg shadow-elec-yellow/15"
               onClick={() => {
                 if (programme.courseUrl) {
-                  window.open(programme.courseUrl, '_blank');
+                  openExternalUrl(programme.courseUrl);
                 }
               }}
             >

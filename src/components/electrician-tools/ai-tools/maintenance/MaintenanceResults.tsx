@@ -1,4 +1,5 @@
 import { saveOrSharePdf } from '@/utils/save-or-share-pdf';
+import { copyToClipboard } from '@/utils/clipboard';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import {
@@ -131,7 +132,7 @@ export const MaintenanceResults = ({ results, onReset }: MaintenanceResultsProps
       `Age: ${results.ageYears} years\n\n` +
       `TASKS:\n${(results.schedule || []).map((t, i) => `${i + 1}. [${t.interval}] ${t.task} (${t.priority})`).join('\n')}\n\n` +
       `RECOMMENDATIONS:\n${(results.recommendations || []).join('\n')}`;
-    navigator.clipboard.writeText(text);
+    copyToClipboard(text);
     toast.success('Schedule copied to clipboard');
   };
 

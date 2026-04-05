@@ -16,6 +16,7 @@ import { useIsMobile } from '@/hooks/use-mobile';
 import { Camera, Upload, Loader2, MapPin, X, Image as ImageIcon } from 'lucide-react';
 import { useUploadJobPhoto, type PhotoCategory } from '@/hooks/useJobPhotos';
 import { useJobs } from '@/hooks/useJobs';
+import { getCurrentPosition } from '@/utils/geolocation';
 
 const CATEGORIES: { value: PhotoCategory; label: string; color: string }[] = [
   { value: 'Before', label: 'Before', color: 'bg-blue-500' },
@@ -73,24 +74,17 @@ export function UploadPhotoSheet({ open, onOpenChange }: UploadPhotoSheetProps) 
     reader.readAsDataURL(file);
   };
 
-  const handleGetLocation = () => {
-    if (!navigator.geolocation) {
-      return;
-    }
-
+  const handleGetLocation = async () => {
     setGettingLocation(true);
-    navigator.geolocation.getCurrentPosition(
-      async (position) => {
-        const { latitude, longitude } = position.coords;
-        setLocation({ lat: latitude, lng: longitude });
-        setUseLocation(true);
-        setGettingLocation(false);
-      },
-      () => {
-        setGettingLocation(false);
-      },
-      { enableHighAccuracy: true }
-    );
+    try {
+      const position = await getCurrentPosition({ enableHighAccuracy: true });
+      setLocation({ lat: position.latitude, lng: position.longitude });
+      setUseLocation(true);
+    } catch {
+      // Location unavailable — silently continue
+    } finally {
+      setGettingLocation(false);
+    }
   };
 
   const handleUpload = async () => {
@@ -172,9 +166,9 @@ export function UploadPhotoSheet({ open, onOpenChange }: UploadPhotoSheetProps) 
                 className="border-2 border-dashed border-muted-foreground/30 rounded-xl p-8 text-center cursor-pointer hover:border-elec-yellow/50 active:bg-muted/30 transition-all touch-manipulation"
                 onClick={() => fileInputRef.current?.click()}
               >
-                <ImageIcon className="h-12 w-12 text-muted-foreground/40 mx-auto mb-3" />
-                <p className="text-sm text-muted-foreground mb-1">Tap to select a photo</p>
-                <p className="text-xs text-muted-foreground/60">or use your camera</p>
+                <ImageIcon className="h-12 w-12 text-white/60/40 mx-auto mb-3" />
+                <p className="text-sm text-white/60 mb-1">Tap to select a photo</p>
+                <p className="text-xs text-white/60/60">or use your camera</p>
               </div>
             )}
           </div>

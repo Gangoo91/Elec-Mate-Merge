@@ -42,17 +42,17 @@ export function EmployeeCard({
           </Avatar>
           <div className="flex-1 min-w-0">
             <h4 className="font-semibold text-foreground truncate">{name}</h4>
-            <p className="text-sm text-muted-foreground truncate">{role}</p>
+            <p className="text-sm text-white/60 truncate">{role}</p>
           </div>
           <StatusBadge status={status} />
         </div>
         <div className="mt-4 pt-4 border-t border-border flex justify-between text-sm">
           <div>
-            <span className="text-muted-foreground">Certs: </span>
+            <span className="text-white/60">Certs: </span>
             <span className="font-medium text-elec-yellow">{certifications}</span>
           </div>
           <div>
-            <span className="text-muted-foreground">Jobs: </span>
+            <span className="text-white/60">Jobs: </span>
             <span className="font-medium text-elec-yellow">{activeJobs}</span>
           </div>
         </div>

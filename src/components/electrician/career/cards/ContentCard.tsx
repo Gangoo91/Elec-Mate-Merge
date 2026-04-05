@@ -83,7 +83,7 @@ const itemVariants = {
 const ContentCard = ({
   title,
   description,
-  icon: Icon,
+  icon: _Icon,
   badge,
   stats,
   color = 'yellow',
@@ -110,11 +110,7 @@ const ContentCard = ({
       {/* Header Row */}
       <div className="flex items-start justify-between gap-3 mb-3">
         <div className="flex items-start gap-3 flex-1 min-w-0">
-          {Icon && (
-            <div className={cn('p-2 rounded-lg flex-shrink-0', colors.iconBg)}>
-              <Icon className={cn('h-5 w-5', colors.icon)} />
-            </div>
-          )}
+          <div className={cn('w-2 h-2 rounded-full flex-shrink-0 mt-1.5', colors.icon.replace('text-', 'bg-'))} />
           <div className="flex-1 min-w-0">
             <h4 className="font-semibold text-white text-sm leading-tight mb-1 line-clamp-2">
               {title}

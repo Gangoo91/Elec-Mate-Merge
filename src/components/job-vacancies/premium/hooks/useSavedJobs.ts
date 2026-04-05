@@ -5,6 +5,7 @@
 
 import { useState, useEffect, useCallback } from 'react';
 import type { UnifiedJob } from '@/hooks/job-vacancies/useUnifiedJobSearch';
+import { storageGetJSONSync, storageSetJSONSync } from '@/utils/storage';
 
 const STORAGE_KEY = 'elecmate-saved-jobs';
 
@@ -17,29 +18,17 @@ export const useSavedJobs = () => {
   const [savedJobs, setSavedJobs] = useState<SavedJobEntry[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
-  // Load saved jobs from localStorage on mount
+  // Load saved jobs from storage on mount
   useEffect(() => {
-    try {
-      const stored = localStorage.getItem(STORAGE_KEY);
-      if (stored) {
-        const parsed = JSON.parse(stored);
-        setSavedJobs(parsed);
-      }
-    } catch (error) {
-      console.error('Error loading saved jobs:', error);
-    } finally {
-      setIsLoading(false);
-    }
+    const stored = storageGetJSONSync<SavedJobEntry[]>(STORAGE_KEY, []);
+    setSavedJobs(stored);
+    setIsLoading(false);
   }, []);
 
-  // Persist to localStorage whenever savedJobs changes
+  // Persist to storage whenever savedJobs changes
   useEffect(() => {
     if (!isLoading) {
-      try {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(savedJobs));
-      } catch (error) {
-        console.error('Error saving jobs:', error);
-      }
+      storageSetJSONSync(STORAGE_KEY, savedJobs);
     }
   }, [savedJobs, isLoading]);
 

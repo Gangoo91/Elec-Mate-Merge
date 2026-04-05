@@ -1,3 +1,4 @@
+import { copyToClipboard } from '@/utils/clipboard';
 import { useState, useCallback } from 'react';
 import { Copy, Check, ChevronDown, CheckCircle, XCircle } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
@@ -87,10 +88,13 @@ const SelectivityCalculator = () => {
       '',
       `Cascade Protection: ${result.cascadeProtection.eligible ? result.cascadeProtection.cascadeRating : 'Not applicable'}`,
     ].join('\n');
-    navigator.clipboard.writeText(text);
-    setCopied(true);
-    toast({ title: 'Results copied to clipboard' });
-    setTimeout(() => setCopied(false), 2000);
+    copyToClipboard(text).then((ok) => {
+      if (ok) {
+        setCopied(true);
+        toast({ title: 'Results copied to clipboard' });
+        setTimeout(() => setCopied(false), 2000);
+      }
+    });
   }, [result, toast]);
 
   const calculate = useCallback(() => {

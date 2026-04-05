@@ -1,3 +1,4 @@
+import { openExternalUrl } from '@/utils/open-external-url';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -489,9 +490,8 @@ const RetentionTab = () => {
                   variant="outline"
                   className="w-full justify-start border-green-500/30 text-left h-auto p-3"
                   onClick={() =>
-                    window.open(
-                      'https://www.cipd.co.uk/knowledge/fundamentals/people/employee-retention',
-                      '_blank'
+                    openExternalUrl(
+                      'https://www.cipd.co.uk/knowledge/fundamentals/people/employee-retention'
                     )
                   }
                 >
@@ -505,7 +505,7 @@ const RetentionTab = () => {
                   variant="outline"
                   className="w-full justify-start border-blue-500/30 text-left h-auto p-3"
                   onClick={() =>
-                    window.open('https://www.gov.uk/browse/employing-people', '_blank')
+                    openExternalUrl('https://www.gov.uk/browse/employing-people')
                   }
                 >
                   <Users className="h-4 w-4 mr-3 text-blue-400 flex-shrink-0" />
@@ -517,7 +517,7 @@ const RetentionTab = () => {
                 <Button
                   variant="outline"
                   className="w-full justify-start border-purple-500/30 text-left h-auto p-3"
-                  onClick={() => window.open('https://www.glassdoor.co.uk/employers/', '_blank')}
+                  onClick={() => openExternalUrl('https://www.glassdoor.co.uk/employers/')}
                 >
                   <Trophy className="h-4 w-4 mr-3 text-purple-400 flex-shrink-0" />
                   <div className={`${isMobile ? 'text-xs' : 'text-sm'} text-foreground`}>

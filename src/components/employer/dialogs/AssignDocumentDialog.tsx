@@ -130,7 +130,7 @@ export function AssignDocumentDialog({ employee, open, onOpenChange }: AssignDoc
           </div>
           <div className="min-w-0">
             <p className="font-medium truncate">{employee.name}</p>
-            <p className="text-sm text-muted-foreground">{employee.role}</p>
+            <p className="text-sm text-white/60">{employee.role}</p>
           </div>
         </div>
 
@@ -163,7 +163,7 @@ export function AssignDocumentDialog({ employee, open, onOpenChange }: AssignDoc
                               className={`h-4 w-4 ${
                                 selectedDocType === doc.id
                                   ? 'text-warning'
-                                  : 'text-muted-foreground'
+                                  : 'text-white/60'
                               }`}
                             />
                           </div>
@@ -174,7 +174,7 @@ export function AssignDocumentDialog({ employee, open, onOpenChange }: AssignDoc
                                 <Check className="h-4 w-4 text-warning flex-shrink-0" />
                               )}
                             </div>
-                            <p className="text-xs text-muted-foreground">{doc.description}</p>
+                            <p className="text-xs text-white/60">{doc.description}</p>
                           </div>
                         </div>
                       </CardContent>
@@ -200,7 +200,7 @@ export function AssignDocumentDialog({ employee, open, onOpenChange }: AssignDoc
           <div className="space-y-2">
             <Label htmlFor="dueDate">Due Date *</Label>
             <div className="relative">
-              <Calendar className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+              <Calendar className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white/60" />
               <Input
                 id="dueDate"
                 type="date"

@@ -16,6 +16,7 @@ export function ActivityTracker() {
   const sessionStartTime = useRef<number | null>(null);
   const heartbeatInterval = useRef<NodeJS.Timeout | null>(null);
   const sessionId = useRef<string | null>(null);
+  const currentPath = useRef(location.pathname);
 
   // Track page views
   useEffect(() => {
@@ -23,6 +24,9 @@ export function ActivityTracker() {
 
     const key = `${user.id}-${location.pathname}`;
     const now = Date.now();
+
+    // Always update the current path ref for heartbeats
+    currentPath.current = location.pathname;
 
     // Debounce rapid page views
     if (lastPageView[key] && now - lastPageView[key] < PAGE_VIEW_DEBOUNCE_MS) {
@@ -81,7 +85,7 @@ export function ActivityTracker() {
         await supabase.from('user_events').insert({
           user_id: user.id,
           event_type: 'session_heartbeat',
-          page_path: location.pathname,
+          page_path: currentPath.current,
           event_data: {
             session_id: sessionId.current,
             duration_seconds: durationSeconds,

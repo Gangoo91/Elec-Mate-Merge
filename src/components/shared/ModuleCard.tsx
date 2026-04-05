@@ -115,15 +115,6 @@ export function ModuleCard({
         <div className="flex items-start justify-between gap-3">
           <div className="min-w-0 flex-1">
             <div className="flex items-center gap-2 mb-1.5">
-              {/* Icon container */}
-              <div
-                className={cn(
-                  'p-1.5 rounded-lg bg-gradient-to-br border border-white/10',
-                  colors.iconBg
-                )}
-              >
-                {icon || <BookOpen className="h-4 w-4 text-white" />}
-              </div>
               {category && (
                 <Badge
                   variant="outline"

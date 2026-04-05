@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useNavigate, useLocation } from 'react-router-dom';
 import { supabase } from '@/integrations/supabase/client';
+import { trackFeatureUse } from '@/components/ActivityTracker';
 import { Helmet } from 'react-helmet';
 import { CheckCircle, X, ClipboardCheck } from 'lucide-react';
 import { InvoiceWizard } from '@/components/electrician/invoice-builder/InvoiceWizard';
@@ -61,6 +62,9 @@ const InvoiceBuilderCreate = () => {
 
   const handleInvoiceGenerated = async (invoiceId: string) => {
     fetchInvoices();
+    supabase.auth.getUser().then(({ data: { user } }) => {
+      if (user) trackFeatureUse(user.id, 'invoice_created', {});
+    });
     // If launched from Time Tracker, mark the session as invoiced
     if (timeSessionId && invoiceId) {
       await supabase

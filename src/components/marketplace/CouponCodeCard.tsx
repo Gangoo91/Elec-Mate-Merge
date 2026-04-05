@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button';
 import { useMarketplaceCoupons, MarketplaceCoupon } from '@/hooks/useMarketplaceDeals';
 import { SupplierBadge } from './SearchResultCard';
 import { cn } from '@/lib/utils';
+import { copyToClipboard } from '@/utils/clipboard';
 import { toast } from 'sonner';
 
 interface CouponCodeCardProps {
@@ -19,7 +20,7 @@ export function CouponCodeCard({ coupon, className }: CouponCodeCardProps) {
 
   const handleCopy = async () => {
     try {
-      await navigator.clipboard.writeText(coupon.code);
+      await copyToClipboard(coupon.code);
       setCopied(true);
       toast.success('Coupon code copied!');
 

@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
+import { storageGetSync, storageSetSync, storageGetJSONSync, storageSetJSONSync } from '@/utils/storage';
 import {
   moodService,
   journalService,
@@ -48,10 +49,10 @@ export const useMentalHealthSync = (options: UseMentalHealthSyncOptions = { auto
     if (user && options.autoSync && !isSynced) {
       // Check if we have local data that needs syncing
       const hasLocalData =
-        localStorage.getItem('elec-mate-mood-history') ||
-        localStorage.getItem('wellbeing-journal') ||
-        localStorage.getItem('sleep-tracker') ||
-        localStorage.getItem('personal-safety-plan');
+        storageGetSync('elec-mate-mood-history') ||
+        storageGetSync('wellbeing-journal') ||
+        storageGetSync('sleep-tracker') ||
+        storageGetSync('personal-safety-plan');
 
       if (hasLocalData) {
         // Delay sync to avoid blocking UI
@@ -81,7 +82,7 @@ export const useMoodData = () => {
       setIsLoading(true);
       try {
         const cloudData = await moodService.getAll();
-        const local = localStorage.getItem('elec-mate-mood-history');
+        const local = storageGetSync('elec-mate-mood-history');
         const localData = local ? JSON.parse(local) : [];
 
         // If cloud is empty but we have local data, sync it to cloud
@@ -98,21 +99,21 @@ export const useMoodData = () => {
         } else if (cloudData.length > 0) {
           // Use cloud data and update localStorage as backup
           setMoodHistory(cloudData);
-          localStorage.setItem('elec-mate-mood-history', JSON.stringify(cloudData));
+          storageSetJSONSync('elec-mate-mood-history', cloudData);
         } else {
           setMoodHistory([]);
         }
       } catch (err) {
         console.error('Error loading mood data:', err);
         // Fall back to localStorage
-        const local = localStorage.getItem('elec-mate-mood-history');
+        const local = storageGetSync('elec-mate-mood-history');
         if (local) setMoodHistory(JSON.parse(local));
       } finally {
         setIsLoading(false);
       }
     } else {
       // Not logged in, use localStorage
-      const local = localStorage.getItem('elec-mate-mood-history');
+      const local = storageGetSync('elec-mate-mood-history');
       if (local) setMoodHistory(JSON.parse(local));
     }
   }, [user]);
@@ -130,7 +131,7 @@ export const useMoodData = () => {
           .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
           .slice(0, 90);
         // Save to localStorage as backup
-        localStorage.setItem('elec-mate-mood-history', JSON.stringify(updated));
+        storageSetJSONSync('elec-mate-mood-history', updated);
         return updated;
       });
 
@@ -162,7 +163,7 @@ export const useJournalData = () => {
       setIsLoading(true);
       try {
         const cloudData = await journalService.getAll();
-        const local = localStorage.getItem('wellbeing-journal');
+        const local = storageGetSync('wellbeing-journal');
         const localData = local ? JSON.parse(local) : [];
 
         // If cloud is empty but we have local data, sync it to cloud
@@ -179,19 +180,19 @@ export const useJournalData = () => {
         } else if (cloudData.length > 0) {
           // Use cloud data and update localStorage as backup
           setEntries(cloudData);
-          localStorage.setItem('wellbeing-journal', JSON.stringify(cloudData));
+          storageSetJSONSync('wellbeing-journal', cloudData);
         } else {
           setEntries([]);
         }
       } catch (err) {
         console.error('Error loading journal data:', err);
-        const local = localStorage.getItem('wellbeing-journal');
+        const local = storageGetSync('wellbeing-journal');
         if (local) setEntries(JSON.parse(local));
       } finally {
         setIsLoading(false);
       }
     } else {
-      const local = localStorage.getItem('wellbeing-journal');
+      const local = storageGetSync('wellbeing-journal');
       if (local) setEntries(JSON.parse(local));
     }
   }, [user]);
@@ -206,7 +207,7 @@ export const useJournalData = () => {
 
       setEntries((prev) => {
         const updated = [newEntry, ...prev];
-        localStorage.setItem('wellbeing-journal', JSON.stringify(updated));
+        storageSetJSONSync('wellbeing-journal', updated);
         return updated;
       });
 
@@ -232,7 +233,7 @@ export const useJournalData = () => {
     async (id: string) => {
       setEntries((prev) => {
         const updated = prev.filter((e) => e.id !== id);
-        localStorage.setItem('wellbeing-journal', JSON.stringify(updated));
+        storageSetJSONSync('wellbeing-journal', updated);
         return updated;
       });
 
@@ -261,7 +262,7 @@ export const useSleepData = () => {
       setIsLoading(true);
       try {
         const cloudData = await sleepService.getAll();
-        const local = localStorage.getItem('sleep-tracker');
+        const local = storageGetSync('sleep-tracker');
         const localData = local ? JSON.parse(local) : [];
 
         // If cloud is empty but we have local data, sync it to cloud
@@ -278,19 +279,19 @@ export const useSleepData = () => {
         } else if (cloudData.length > 0) {
           // Use cloud data and update localStorage as backup
           setEntries(cloudData);
-          localStorage.setItem('sleep-tracker', JSON.stringify(cloudData));
+          storageSetJSONSync('sleep-tracker', cloudData);
         } else {
           setEntries([]);
         }
       } catch (err) {
         console.error('Error loading sleep data:', err);
-        const local = localStorage.getItem('sleep-tracker');
+        const local = storageGetSync('sleep-tracker');
         if (local) setEntries(JSON.parse(local));
       } finally {
         setIsLoading(false);
       }
     } else {
-      const local = localStorage.getItem('sleep-tracker');
+      const local = storageGetSync('sleep-tracker');
       if (local) setEntries(JSON.parse(local));
     }
   }, [user]);
@@ -310,7 +311,7 @@ export const useSleepData = () => {
         } else {
           updated = [entry, ...prev];
         }
-        localStorage.setItem('sleep-tracker', JSON.stringify(updated));
+        storageSetJSONSync('sleep-tracker', updated);
         return updated;
       });
 
@@ -343,18 +344,18 @@ export const useSafetyPlan = () => {
         if (data) {
           setPlan(data);
         } else {
-          const local = localStorage.getItem('personal-safety-plan');
+          const local = storageGetSync('personal-safety-plan');
           if (local) setPlan(JSON.parse(local));
         }
       } catch (err) {
         console.error('Error loading safety plan:', err);
-        const local = localStorage.getItem('personal-safety-plan');
+        const local = storageGetSync('personal-safety-plan');
         if (local) setPlan(JSON.parse(local));
       } finally {
         setIsLoading(false);
       }
     } else {
-      const local = localStorage.getItem('personal-safety-plan');
+      const local = storageGetSync('personal-safety-plan');
       if (local) setPlan(JSON.parse(local));
     }
   }, [user]);
@@ -366,7 +367,7 @@ export const useSafetyPlan = () => {
   const savePlan = useCallback(
     async (updatedPlan: SafetyPlan) => {
       setPlan(updatedPlan);
-      localStorage.setItem('personal-safety-plan', JSON.stringify(updatedPlan));
+      storageSetJSONSync('personal-safety-plan', updatedPlan);
 
       if (user) {
         try {
@@ -408,7 +409,7 @@ export const useGroundingProgress = () => {
           setCompleted(data.exercises_completed || []);
         } else {
           // Fall back to localStorage
-          const local = localStorage.getItem('grounding-completed-today');
+          const local = storageGetSync('grounding-completed-today');
           if (local) {
             const parsed = JSON.parse(local);
             if (parsed.date === today) {
@@ -418,7 +419,7 @@ export const useGroundingProgress = () => {
         }
       } catch (err) {
         console.error('Error loading grounding progress:', err);
-        const local = localStorage.getItem('grounding-completed-today');
+        const local = storageGetSync('grounding-completed-today');
         if (local) {
           const parsed = JSON.parse(local);
           if (parsed.date === today) {
@@ -429,7 +430,7 @@ export const useGroundingProgress = () => {
         setIsLoading(false);
       }
     } else {
-      const local = localStorage.getItem('grounding-completed-today');
+      const local = storageGetSync('grounding-completed-today');
       if (local) {
         const parsed = JSON.parse(local);
         if (parsed.date === today) {
@@ -447,13 +448,10 @@ export const useGroundingProgress = () => {
     async (exerciseId: string) => {
       const newCompleted = [...completed, exerciseId];
       setCompleted(newCompleted);
-      localStorage.setItem(
-        'grounding-completed-today',
-        JSON.stringify({
+      storageSetJSONSync('grounding-completed-today', {
           date: today,
           exercises: newCompleted,
-        })
-      );
+        });
 
       if (user) {
         try {

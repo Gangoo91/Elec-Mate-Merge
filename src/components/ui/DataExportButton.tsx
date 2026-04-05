@@ -9,6 +9,7 @@ import { Download, Loader2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { listAllBackups } from '@/utils/dataIntegrity';
 import { useToast } from '@/hooks/use-toast';
+import { useHaptic } from '@/hooks/useHaptic';
 import { cn } from '@/lib/utils';
 
 interface DataExportButtonProps {
@@ -22,6 +23,7 @@ export const DataExportButton: React.FC<DataExportButtonProps> = ({
 }) => {
   const [isExporting, setIsExporting] = useState(false);
   const { toast } = useToast();
+  const haptic = useHaptic();
 
   const handleExport = async () => {
     setIsExporting(true);
@@ -81,12 +83,14 @@ export const DataExportButton: React.FC<DataExportButtonProps> = ({
       document.body.removeChild(link);
       URL.revokeObjectURL(url);
 
+      haptic.success();
       toast({
         title: 'Data exported',
         description: `${backups.length} backup${backups.length !== 1 ? 's' : ''} exported to ${filename}`,
       });
     } catch (error) {
       console.error('Export failed:', error);
+      haptic.error();
       toast({
         title: 'Export failed',
         description: 'Could not export data. Please try again.',

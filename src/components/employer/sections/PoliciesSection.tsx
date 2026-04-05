@@ -100,7 +100,7 @@ export function PoliciesSection() {
       case 'Legal':
         return 'text-info';
       default:
-        return 'text-muted-foreground';
+        return 'text-white/60';
     }
   };
 
@@ -136,7 +136,7 @@ export function PoliciesSection() {
       {/* Search */}
       <div className="relative">
         {!searchQuery && (
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none" />
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white/60 pointer-events-none" />
         )}
         <Input
           placeholder="Search policies..."
@@ -206,7 +206,7 @@ export function PoliciesSection() {
                           <p className="font-medium text-foreground text-sm truncate">
                             {policy.name}
                           </p>
-                          <p className="text-xs text-muted-foreground">
+                          <p className="text-xs text-white/60">
                             {policy.company_name || 'No company set'}
                           </p>
                         </div>
@@ -224,7 +224,7 @@ export function PoliciesSection() {
                         >
                           {policy.status}
                         </Badge>
-                        <ChevronRight className="h-4 w-4 text-muted-foreground" />
+                        <ChevronRight className="h-4 w-4 text-white/60" />
                       </div>
                     </div>
                   </CardContent>
@@ -245,7 +245,7 @@ export function PoliciesSection() {
               </div>
               <div>
                 <h3 className="font-medium text-foreground mb-1">Pre-Written Policies</h3>
-                <p className="text-sm text-muted-foreground">
+                <p className="text-sm text-white/60">
                   Browse the templates below and click <strong>Adopt</strong> to add them to your
                   company policies. You can customise them with your company name.
                 </p>
@@ -281,7 +281,7 @@ export function PoliciesSection() {
                           <p className="font-medium text-foreground text-sm truncate">
                             {template.name}
                           </p>
-                          <p className="text-xs text-muted-foreground">v{template.version}</p>
+                          <p className="text-xs text-white/60">v{template.version}</p>
                         </div>
                       </div>
                       <div className="flex items-center gap-2">
@@ -293,7 +293,7 @@ export function PoliciesSection() {
                         ) : (
                           <Badge variant="outline">View</Badge>
                         )}
-                        <ChevronRight className="h-4 w-4 text-muted-foreground" />
+                        <ChevronRight className="h-4 w-4 text-white/60" />
                       </div>
                     </div>
                   </CardContent>
@@ -330,7 +330,7 @@ export function PoliciesSection() {
                           <p className="font-medium text-foreground text-sm truncate">
                             {template.name}
                           </p>
-                          <p className="text-xs text-muted-foreground">v{template.version}</p>
+                          <p className="text-xs text-white/60">v{template.version}</p>
                         </div>
                       </div>
                       <div className="flex items-center gap-2">
@@ -342,7 +342,7 @@ export function PoliciesSection() {
                         ) : (
                           <Badge variant="outline">View</Badge>
                         )}
-                        <ChevronRight className="h-4 w-4 text-muted-foreground" />
+                        <ChevronRight className="h-4 w-4 text-white/60" />
                       </div>
                     </div>
                   </CardContent>
@@ -379,7 +379,7 @@ export function PoliciesSection() {
                           <p className="font-medium text-foreground text-sm truncate">
                             {template.name}
                           </p>
-                          <p className="text-xs text-muted-foreground">v{template.version}</p>
+                          <p className="text-xs text-white/60">v{template.version}</p>
                         </div>
                       </div>
                       <div className="flex items-center gap-2">
@@ -391,7 +391,7 @@ export function PoliciesSection() {
                         ) : (
                           <Badge variant="outline">View</Badge>
                         )}
-                        <ChevronRight className="h-4 w-4 text-muted-foreground" />
+                        <ChevronRight className="h-4 w-4 text-white/60" />
                       </div>
                     </div>
                   </CardContent>
@@ -406,9 +406,9 @@ export function PoliciesSection() {
       {filteredTemplates.length === 0 && filteredUserPolicies.length === 0 && (
         <Card className="border-dashed">
           <CardContent className="p-8 text-center">
-            <FileText className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
+            <FileText className="h-12 w-12 text-white/60 mx-auto mb-4" />
             <h3 className="font-medium text-foreground mb-2">No policies found</h3>
-            <p className="text-sm text-muted-foreground">Try adjusting your search query</p>
+            <p className="text-sm text-white/60">Try adjusting your search query</p>
           </CardContent>
         </Card>
       )}

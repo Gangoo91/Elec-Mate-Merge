@@ -30,6 +30,7 @@ import {
 } from 'lucide-react';
 import { storeConsent } from '@/services/consentService';
 import { supabase } from '@/integrations/supabase/client';
+import { storageSetSync, storageGetSync, storageRemoveSync } from '@/utils/storage';
 import { cn } from '@/lib/utils';
 import { addBreadcrumb } from '@/lib/sentry';
 import { isPasswordBreached } from '@/utils/passwordCheck';
@@ -232,7 +233,7 @@ const SignUp = () => {
   useEffect(() => {
     const code = searchParams.get('offer');
     if (code) {
-      localStorage.setItem('elec-mate-offer-code', code);
+      storageSetSync('elec-mate-offer-code', code);
       setOfferCode(code);
     }
   }, [searchParams]);
@@ -240,10 +241,10 @@ const SignUp = () => {
   useEffect(() => {
     const ref = searchParams.get('ref');
     if (ref) {
-      localStorage.setItem('elec-mate-referral-code', ref);
+      storageSetSync('elec-mate-referral-code', ref);
       setReferralCode(ref);
     } else {
-      const stored = localStorage.getItem('elec-mate-referral-code');
+      const stored = storageGetSync('elec-mate-referral-code');
       if (stored) setReferralCode(stored);
     }
   }, [searchParams]);
@@ -347,14 +348,14 @@ const SignUp = () => {
       const userId = data?.user?.id;
 
       if (userId) {
-        localStorage.setItem('elec-mate-profile-role', profile.role);
+        storageSetSync('elec-mate-profile-role', profile.role);
         const saveRole = async (retries = 3): Promise<boolean> => {
           const payload: Record<string, unknown> = {
             role: profile.role,
             onboarding_completed: false,
             updated_at: new Date().toISOString(),
           };
-          const storedRef = localStorage.getItem('elec-mate-referral-code');
+          const storedRef = storageGetSync('elec-mate-referral-code');
           if (storedRef) {
             try {
               const { data: refData } = await supabase
@@ -410,11 +411,11 @@ const SignUp = () => {
 
       const rp = ROLE_TO_PRICE[profile.role];
       if (rp) {
-        localStorage.setItem('elec-mate-checkout-planId', rp.planId);
-        localStorage.setItem('elec-mate-checkout-priceId', rp.priceId);
+        storageSetSync('elec-mate-checkout-planId', rp.planId);
+        storageSetSync('elec-mate-checkout-priceId', rp.priceId);
       }
-      localStorage.removeItem('elec-mate-offer-code');
-      localStorage.removeItem('elec-mate-onboarding-data');
+      storageRemoveSync('elec-mate-offer-code');
+      storageRemoveSync('elec-mate-onboarding-data');
       navigate('/checkout-trial');
     } catch (err: unknown) {
       setError(err instanceof Error ? err.message : 'An error occurred');

@@ -3,6 +3,7 @@ import { Button } from '@/components/ui/button';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
 import { openExternalUrl } from '@/utils/open-external-url';
+import { useHaptic } from '@/hooks/useHaptic';
 import { motion } from 'framer-motion';
 import {
   CreditCard,
@@ -45,6 +46,7 @@ const StripeConnectSetup: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [connecting, setConnecting] = useState(false);
   const [disconnecting, setDisconnecting] = useState(false);
+  const haptic = useHaptic();
 
   useEffect(() => {
     checkStatus();
@@ -52,9 +54,12 @@ const StripeConnectSetup: React.FC = () => {
     // Re-check status when window regains focus (after returning from Stripe)
     const handleFocus = () => checkStatus();
     window.addEventListener('focus', handleFocus);
+    // On native, appStateChange fires reliably when app resumes from background
+    window.addEventListener('capacitor:resume', handleFocus);
 
     return () => {
       window.removeEventListener('focus', handleFocus);
+      window.removeEventListener('capacitor:resume', handleFocus);
     };
   }, []);
 
@@ -400,7 +405,7 @@ const StripeConnectSetup: React.FC = () => {
                   <AlertDialogFooter>
                     <AlertDialogCancel>Cancel</AlertDialogCancel>
                     <AlertDialogAction
-                      onClick={handleDisconnect}
+                      onClick={() => { haptic.heavy(); handleDisconnect(); }}
                       className="bg-red-500 hover:bg-red-600"
                     >
                       Disconnect
@@ -482,7 +487,7 @@ const StripeConnectSetup: React.FC = () => {
                   <AlertDialogFooter>
                     <AlertDialogCancel>Cancel</AlertDialogCancel>
                     <AlertDialogAction
-                      onClick={handleDisconnect}
+                      onClick={() => { haptic.heavy(); handleDisconnect(); }}
                       className="bg-red-500 hover:bg-red-600"
                     >
                       Disconnect
@@ -570,7 +575,7 @@ const StripeConnectSetup: React.FC = () => {
                 <AlertDialogFooter>
                   <AlertDialogCancel>Cancel</AlertDialogCancel>
                   <AlertDialogAction
-                    onClick={handleDisconnect}
+                    onClick={() => { haptic.heavy(); handleDisconnect(); }}
                     className="bg-red-500 hover:bg-red-600"
                   >
                     Disconnect

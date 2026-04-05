@@ -1,3 +1,4 @@
+import { openExternalUrl } from '@/utils/open-external-url';
 import { Badge } from '@/components/ui/badge';
 import { Calendar, Eye, Clock, ExternalLink } from 'lucide-react';
 import { format } from 'date-fns';
@@ -113,7 +114,7 @@ const NewsGrid = ({ articles, excludeId }: NewsGridProps) => {
           variants={itemVariants}
           whileHover={{ y: -4 }}
           whileTap={{ scale: 0.98 }}
-          onClick={() => window.open(article.external_url, '_blank', 'noopener,noreferrer')}
+          onClick={() => openExternalUrl(article.external_url)}
           className="group cursor-pointer"
         >
           <div className="relative h-[260px] sm:h-[280px] rounded-xl overflow-hidden">

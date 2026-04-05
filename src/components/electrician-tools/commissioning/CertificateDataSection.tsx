@@ -3,6 +3,7 @@ import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { FileText, Copy, Download } from 'lucide-react';
 import { toast } from 'sonner';
+import { copyToClipboard } from '@/utils/clipboard';
 import type { CommissioningProgressData } from '@/hooks/useCommissioningProgress';
 
 interface CertificateDataSectionProps {
@@ -112,7 +113,7 @@ export const CertificateDataSection = ({
   const recommendations = generateRecommendations();
   const nextInspectionDate = calculateNextInspectionDate();
 
-  const copyCertificateData = () => {
+  const copyCertificateData = async () => {
     const markdown = `# ELECTRICAL INSTALLATION CERTIFICATE - SCHEDULE OF TEST RESULTS
 
 **Project:** ${projectName}
@@ -145,7 +146,7 @@ ${recommendations.map((rec, i) => `${i + 1}. ${rec}`).join('\n')}
 *Data exported: ${new Date().toISOString()}*
 `;
 
-    navigator.clipboard.writeText(markdown);
+    await copyToClipboard(markdown);
     toast.success('Certificate data copied!', {
       description: 'Paste into your certification software or document',
     });

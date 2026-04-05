@@ -9,14 +9,16 @@ interface VersionInfo {
 }
 
 /**
- * Create a new version of a report
+ * Create a new version of a report.
+ * Note: The reports table uses `edit_version` (not `version`) and has no
+ * `parent_report_id` or `is_latest_version` columns. Versioning is tracked
+ * by certificate_number suffix (-V2, -V3 etc) and edit_version integer.
  */
 export const createNewVersion = async (
   originalReportId: string,
   userId: string
 ): Promise<{ success: boolean; reportId?: string; error?: any }> => {
   try {
-    // Fetch original report
     const { data: originalReport, error: fetchError } = await supabase
       .from('reports')
       .select('*')
@@ -25,14 +27,12 @@ export const createNewVersion = async (
 
     if (fetchError) throw fetchError;
 
-    // Calculate new version number
-    const newVersion = (originalReport.version || 1) + 1;
-
-    // Generate new certificate number with version suffix
+    const newVersion = (originalReport.edit_version || 1) + 1;
     const baseCertNumber = originalReport.certificate_number.split('-V')[0];
     const newCertNumber = `${baseCertNumber}-V${newVersion}`;
+    const baseReportId = originalReport.report_id?.replace(/-V\d+$/, '') || originalReport.report_id;
+    const newReportId = `${baseReportId}-V${newVersion}`;
 
-    // Create new report version
     const { data: newReport, error: createError } = await supabase
       .from('reports')
       .insert({
@@ -40,12 +40,10 @@ export const createNewVersion = async (
         customer_id: originalReport.customer_id,
         report_type: originalReport.report_type,
         certificate_number: newCertNumber,
-        report_id: originalReport.report_id,
+        report_id: newReportId,
         data: originalReport.data,
         status: 'draft',
-        version: newVersion,
-        parent_report_id: originalReport.parent_report_id || originalReport.id,
-        is_latest_version: true,
+        edit_version: newVersion,
         inspection_date: originalReport.inspection_date,
         client_name: originalReport.client_name,
         installation_address: originalReport.installation_address,
@@ -56,14 +54,6 @@ export const createNewVersion = async (
       .single();
 
     if (createError) throw createError;
-
-    // Mark all previous versions as not latest
-    const parentId = originalReport.parent_report_id || originalReport.id;
-    await supabase
-      .from('reports')
-      .update({ is_latest_version: false })
-      .or(`id.eq.${parentId},parent_report_id.eq.${parentId}`)
-      .neq('id', newReport.id);
 
     return {
       success: true,
@@ -79,30 +69,26 @@ export const createNewVersion = async (
 };
 
 /**
- * Get all versions of a report
+ * Get all versions of a report — returns just the current report
+ * since there are no parent_report_id links in the DB.
  */
 export const getVersionHistory = async (reportId: string): Promise<VersionInfo[]> => {
   try {
-    // Get the report to find parent
-    const { data: report, error: reportError } = await supabase
+    const { data: report, error } = await supabase
       .from('reports')
-      .select('id, parent_report_id')
+      .select('id, edit_version, certificate_number, created_at')
       .eq('id', reportId)
       .single();
 
-    if (reportError) throw reportError;
+    if (error) throw error;
 
-    // Fetch all versions (including parent and siblings)
-    const parentId = report.parent_report_id || report.id;
-    const { data: versions, error: versionsError } = await supabase
-      .from('reports')
-      .select('id, version, certificate_number, created_at, is_latest_version')
-      .or(`id.eq.${parentId},parent_report_id.eq.${parentId}`)
-      .order('version', { ascending: true });
-
-    if (versionsError) throw versionsError;
-
-    return versions || [];
+    return [{
+      id: report.id,
+      version: report.edit_version || 1,
+      certificate_number: report.certificate_number,
+      created_at: report.created_at,
+      is_latest_version: true,
+    }];
   } catch (error) {
     console.error('Error fetching version history:', error);
     return [];
@@ -110,34 +96,10 @@ export const getVersionHistory = async (reportId: string): Promise<VersionInfo[]
 };
 
 /**
- * Get the latest version of a report
+ * Get the latest version of a report — returns the report itself
  */
 export const getLatestVersion = async (reportId: string): Promise<string | null> => {
-  try {
-    const { data: report, error: reportError } = await supabase
-      .from('reports')
-      .select('id, parent_report_id')
-      .eq('id', reportId)
-      .single();
-
-    if (reportError) throw reportError;
-
-    const parentId = report.parent_report_id || report.id;
-
-    const { data: latestVersion, error: versionError } = await supabase
-      .from('reports')
-      .select('id')
-      .or(`id.eq.${parentId},parent_report_id.eq.${parentId}`)
-      .eq('is_latest_version', true)
-      .single();
-
-    if (versionError) throw versionError;
-
-    return latestVersion?.id || null;
-  } catch (error) {
-    console.error('Error fetching latest version:', error);
-    return null;
-  }
+  return reportId;
 };
 
 /**
@@ -147,13 +109,13 @@ export const getVersionNumber = async (reportId: string): Promise<number> => {
   try {
     const { data, error } = await supabase
       .from('reports')
-      .select('version')
+      .select('edit_version')
       .eq('id', reportId)
       .single();
 
     if (error) throw error;
 
-    return data?.version || 1;
+    return data?.edit_version || 1;
   } catch (error) {
     console.error('Error fetching version number:', error);
     return 1;
@@ -161,21 +123,8 @@ export const getVersionNumber = async (reportId: string): Promise<number> => {
 };
 
 /**
- * Check if report is the latest version
+ * Check if report is the latest version — always true since no version chains
  */
-export const isLatestVersion = async (reportId: string): Promise<boolean> => {
-  try {
-    const { data, error } = await supabase
-      .from('reports')
-      .select('is_latest_version')
-      .eq('id', reportId)
-      .single();
-
-    if (error) throw error;
-
-    return data?.is_latest_version ?? true;
-  } catch (error) {
-    console.error('Error checking version status:', error);
-    return true;
-  }
+export const isLatestVersion = async (_reportId: string): Promise<boolean> => {
+  return true;
 };

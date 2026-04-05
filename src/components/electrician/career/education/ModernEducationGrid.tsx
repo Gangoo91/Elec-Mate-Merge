@@ -1,3 +1,4 @@
+import { openExternalUrl } from '@/utils/open-external-url';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import {
@@ -235,7 +236,7 @@ const ModernEducationGrid = ({
                   className="h-8 px-3 text-elec-yellow hover:bg-elec-yellow/10 hover:text-elec-yellow group/btn"
                   onClick={(e) => {
                     e.stopPropagation();
-                    window.open(programme.courseUrl, '_blank');
+                    openExternalUrl(programme.courseUrl);
                   }}
                 >
                   <span className="text-xs">View</span>

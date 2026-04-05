@@ -15,6 +15,7 @@ import { CookieConsent } from '@/components/CookieConsent';
 import { useNativeApp, useNativePushNotifications } from '@/hooks/useNativeApp';
 import { ActivityTracker } from '@/components/ActivityTracker';
 import { InAppBrowserDetector } from '@/components/InAppBrowserDetector';
+import { AppUpdatePrompt } from '@/components/app-update/AppUpdatePrompt';
 import { lazy, Suspense } from 'react';
 import { Capacitor } from '@capacitor/core';
 
@@ -45,6 +46,8 @@ function App() {
           <ThemeProvider forcedTheme="dark">
             <NotificationProvider>
               <NativeAppInit>
+                {/* Native app version check — force/optional update prompts */}
+                <AppUpdatePrompt />
                 {/* Activity tracking - logs user events to Supabase */}
                 <ActivityTracker />
                 {/* Analytics providers load async - don't block render */}

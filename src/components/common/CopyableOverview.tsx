@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Copy, CheckCircle } from 'lucide-react';
+import { copyToClipboard } from '@/utils/clipboard';
 import { toast } from '@/hooks/use-toast';
 
 const CopyableOverview = () => {
@@ -134,24 +135,22 @@ const CopyableOverview = () => {
 - Business features: 10% complete
 - Overall project: ~45% complete`;
 
-  const handleCopy = () => {
-    navigator.clipboard
-      .writeText(overview)
-      .then(() => {
-        setCopied(true);
-        toast({
-          title: 'Copied to clipboard',
-          description: 'You can now paste the overview anywhere you need it.',
-        });
-        setTimeout(() => setCopied(false), 3000);
-      })
-      .catch((err) => {
-        toast({
-          variant: 'destructive',
-          title: 'Failed to copy',
-          description: 'Please try again or copy manually.',
-        });
+  const handleCopy = async () => {
+    const ok = await copyToClipboard(overview);
+    if (ok) {
+      setCopied(true);
+      toast({
+        title: 'Copied to clipboard',
+        description: 'You can now paste the overview anywhere you need it.',
       });
+      setTimeout(() => setCopied(false), 3000);
+    } else {
+      toast({
+        variant: 'destructive',
+        title: 'Failed to copy',
+        description: 'Please try again or copy manually.',
+      });
+    }
   };
 
   return (

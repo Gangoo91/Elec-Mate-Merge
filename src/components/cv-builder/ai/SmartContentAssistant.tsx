@@ -6,6 +6,7 @@ import { Badge } from '@/components/ui/badge';
 import { Wand2, Loader2, Copy, RefreshCw, CheckCircle } from 'lucide-react';
 import { AIService } from './AIService';
 import { toast } from '@/hooks/use-toast';
+import { copyToClipboard } from '@/utils/clipboard';
 
 interface SmartContentAssistantProps {
   type: 'professional_summary' | 'job_description' | 'skills' | 'achievements';
@@ -137,8 +138,8 @@ export const SmartContentAssistant: React.FC<SmartContentAssistantProps> = ({
     });
   };
 
-  const handleCopy = () => {
-    navigator.clipboard.writeText(generatedContent);
+  const handleCopy = async () => {
+    await copyToClipboard(generatedContent);
     toast({
       title: 'Copied to Clipboard',
       description: 'Content has been copied to your clipboard.',

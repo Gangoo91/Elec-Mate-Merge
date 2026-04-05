@@ -3,6 +3,7 @@ import { Search, X, Clock, Zap, HardHat, AlertTriangle, Building2, Flame } from 
 import { cn } from '@/lib/utils';
 import { HazardCardV2 } from './HazardCardV2';
 import type { EnhancedRiskConsequence } from '@/data/hazards';
+import { storageGetJSONSync, storageSetJSONSync, storageRemoveSync } from '@/utils/storage';
 
 interface HazardSearchOverlayProps {
   open: boolean;
@@ -53,14 +54,7 @@ export const HazardSearchOverlay: React.FC<HazardSearchOverlayProps> = ({
 
   // Load recent searches from localStorage
   useEffect(() => {
-    try {
-      const saved = localStorage.getItem(RECENT_SEARCHES_KEY);
-      if (saved) {
-        setRecentSearches(JSON.parse(saved));
-      }
-    } catch (e) {
-      // Ignore localStorage errors
-    }
+    setRecentSearches(storageGetJSONSync<string[]>(RECENT_SEARCHES_KEY, []));
   }, []);
 
   // Focus input when opened
@@ -98,11 +92,7 @@ export const HazardSearchOverlay: React.FC<HazardSearchOverlayProps> = ({
 
     const updated = [term, ...recentSearches.filter((s) => s !== term)].slice(0, MAX_RECENT);
     setRecentSearches(updated);
-    try {
-      localStorage.setItem(RECENT_SEARCHES_KEY, JSON.stringify(updated));
-    } catch (e) {
-      // Ignore localStorage errors
-    }
+    storageSetJSONSync(RECENT_SEARCHES_KEY, updated);
   };
 
   // Handle selecting a hazard
@@ -115,11 +105,7 @@ export const HazardSearchOverlay: React.FC<HazardSearchOverlayProps> = ({
   // Clear recent searches
   const clearRecent = () => {
     setRecentSearches([]);
-    try {
-      localStorage.removeItem(RECENT_SEARCHES_KEY);
-    } catch (e) {
-      // Ignore
-    }
+    storageRemoveSync(RECENT_SEARCHES_KEY);
   };
 
   return (

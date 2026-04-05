@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { openExternalUrl } from '@/utils/open-external-url';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -28,6 +29,7 @@ import {
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
 import ProfessionalBodySelector from './ProfessionalBodySelector';
+import { useHaptic } from '@/hooks/useHaptic';
 
 interface ProfessionalBodyManagerProps {
   onClose?: () => void;
@@ -43,6 +45,7 @@ const ProfessionalBodyManager: React.FC<ProfessionalBodyManagerProps> = ({ onClo
   );
   const [deleting, setDeleting] = useState(false);
   const { toast } = useToast();
+  const haptic = useHaptic();
 
   useEffect(() => {
     loadMemberships();
@@ -80,6 +83,7 @@ const ProfessionalBodyManager: React.FC<ProfessionalBodyManagerProps> = ({ onClo
 
   const handleDeleteMembership = async () => {
     if (!membershipToDelete) return;
+    haptic.heavy();
 
     setDeleting(true);
     try {
@@ -296,7 +300,7 @@ const ProfessionalBodyManager: React.FC<ProfessionalBodyManagerProps> = ({ onClo
                         variant="outline"
                         size="sm"
                         onClick={() =>
-                          window.open(membership.professional_body?.website_url, '_blank')
+                          openExternalUrl(membership.professional_body?.website_url || '')
                         }
                         className="border-elec-yellow/20 text-elec-yellow hover:bg-elec-yellow hover:text-elec-dark"
                       >

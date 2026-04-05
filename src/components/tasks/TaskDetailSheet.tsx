@@ -31,6 +31,7 @@ import {
 } from '@/components/ui/alert-dialog';
 import type { SparkTask } from '@/hooks/useSparkTasks';
 import { useTaskPhotos, type TaskPhoto } from '@/hooks/useTaskPhotos';
+import { useHaptic } from '@/hooks/useHaptic';
 import { cn } from '@/lib/utils';
 
 interface TaskDetailSheetProps {
@@ -107,6 +108,7 @@ export function TaskDetailSheet({
   const [photoToDelete, setPhotoToDelete] = useState<TaskPhoto | null>(null);
   const [uploadError, setUploadError] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const haptic = useHaptic();
 
   const { photos, isLoading: photosLoading, isUploading, fetchPhotos, uploadPhoto, deletePhoto } =
     useTaskPhotos(task?.id || '');
@@ -401,7 +403,7 @@ export function TaskDetailSheet({
               <div className="space-y-2 pt-1 pb-2">
                 {task.status === 'open' ? (
                   <Button
-                    onClick={() => handleAction(() => onMarkDone(task.id))}
+                    onClick={() => { haptic.success(); handleAction(() => onMarkDone(task.id)); }}
                     disabled={actionLoading}
                     className="w-full h-11 bg-gradient-to-r from-green-500 to-emerald-600 text-white font-bold rounded-xl touch-manipulation active:scale-[0.98]"
                   >
@@ -489,7 +491,7 @@ export function TaskDetailSheet({
           <AlertDialogFooter>
             <AlertDialogCancel className="h-11 touch-manipulation">Cancel</AlertDialogCancel>
             <AlertDialogAction
-              onClick={handleConfirmDeletePhoto}
+              onClick={() => { haptic.heavy(); handleConfirmDeletePhoto(); }}
               className="h-11 bg-red-500 hover:bg-red-600 text-white touch-manipulation"
             >
               Delete
@@ -510,10 +512,10 @@ export function TaskDetailSheet({
           <AlertDialogFooter>
             <AlertDialogCancel className="h-11 touch-manipulation">Cancel</AlertDialogCancel>
             <AlertDialogAction
-              onClick={() => handleAction(async () => {
+              onClick={() => { haptic.heavy(); handleAction(async () => {
                 await onDelete(task.id);
                 setShowDeleteConfirm(false);
-              })}
+              }); }}
               className="h-11 bg-red-500 hover:bg-red-600 text-white touch-manipulation"
             >
               Delete

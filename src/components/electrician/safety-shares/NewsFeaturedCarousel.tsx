@@ -1,3 +1,4 @@
+import { openExternalUrl } from '@/utils/open-external-url';
 import { format } from 'date-fns';
 import { Clock, Eye, ExternalLink, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
@@ -114,7 +115,7 @@ const NewsFeaturedCarousel = ({ articles, className }: NewsFeaturedCarouselProps
                 transition={{ delay: index * 0.05, duration: 0.3 }}
                 whileHover={{ y: -6 }}
                 whileTap={{ scale: 0.98 }}
-                onClick={() => window.open(article.external_url, '_blank')}
+                onClick={() => openExternalUrl(article.external_url)}
                 className="relative h-[280px] sm:h-[320px] rounded-2xl overflow-hidden cursor-pointer group"
               >
                 {/* Background Image */}

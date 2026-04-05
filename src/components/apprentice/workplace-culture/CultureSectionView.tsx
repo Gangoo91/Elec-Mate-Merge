@@ -1,4 +1,5 @@
 import { useState, useMemo } from 'react';
+import { storageGetJSONSync, storageSetJSONSync } from '@/utils/storage';
 import { Card, CardContent } from '@/components/ui/card';
 import {
   ArrowLeft,
@@ -100,18 +101,12 @@ const CultureSectionView = ({ section, progress, onBack }: CultureSectionViewPro
 
   // ── Checked items for professional checklists ─────────
   const [checkedItems, setCheckedItems] = useState<Record<string, Set<number>>>(() => {
-    try {
-      const raw = localStorage.getItem('workplace-culture-checklists');
-      if (!raw) return {};
-      const parsed = JSON.parse(raw);
-      const result: Record<string, Set<number>> = {};
-      for (const [key, val] of Object.entries(parsed)) {
-        result[key] = new Set(val as number[]);
-      }
-      return result;
-    } catch {
-      return {};
+    const parsed = storageGetJSONSync<Record<string, number[]>>('workplace-culture-checklists', {});
+    const result: Record<string, Set<number>> = {};
+    for (const [key, val] of Object.entries(parsed)) {
+      result[key] = new Set(val);
     }
+    return result;
   });
 
   const toggleChecked = (tipId: string, index: number) => {
@@ -129,7 +124,7 @@ const CultureSectionView = ({ section, progress, onBack }: CultureSectionViewPro
       for (const [key, val] of Object.entries(next)) {
         serialisable[key] = [...val];
       }
-      localStorage.setItem('workplace-culture-checklists', JSON.stringify(serialisable));
+      storageSetJSONSync('workplace-culture-checklists', serialisable);
       return next;
     });
   };

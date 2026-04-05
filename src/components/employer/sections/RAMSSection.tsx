@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { copyToClipboard } from '@/utils/clipboard';
 import { cn } from '@/lib/utils';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -58,7 +59,7 @@ interface RAMSSectionProps {
 }
 
 const STATUS_OPTIONS: { value: RAMSStatus; label: string; color: string }[] = [
-  { value: 'draft', label: 'Draft', color: 'bg-muted/50 text-muted-foreground' },
+  { value: 'draft', label: 'Draft', color: 'bg-muted/50 text-white/60' },
   { value: 'submitted', label: 'Submitted', color: 'bg-warning/20 text-warning' },
   { value: 'approved', label: 'Approved', color: 'bg-success/20 text-success' },
   { value: 'rejected', label: 'Rejected', color: 'bg-destructive/20 text-destructive' },
@@ -162,7 +163,7 @@ export function RAMSSection({ onNavigate }: RAMSSectionProps) {
 
   const getStatusColor = (status: RAMSStatus) => {
     return (
-      STATUS_OPTIONS.find((s) => s.value === status)?.color || 'bg-muted/50 text-muted-foreground'
+      STATUS_OPTIONS.find((s) => s.value === status)?.color || 'bg-muted/50 text-white/60'
     );
   };
 
@@ -219,7 +220,7 @@ export function RAMSSection({ onNavigate }: RAMSSectionProps) {
               </div>
               <div className="flex-1">
                 <h3 className="font-semibold text-foreground mb-1">AI RAMS Generator</h3>
-                <p className="text-sm text-muted-foreground mb-3">
+                <p className="text-sm text-white/60 mb-3">
                   Generate comprehensive risk assessments with AI. Describe your job and get a
                   complete RAMS document in seconds.
                 </p>
@@ -280,7 +281,7 @@ export function RAMSSection({ onNavigate }: RAMSSectionProps) {
       <div className="flex flex-col sm:flex-row gap-3">
         <div className="relative flex-1">
           {!searchQuery && (
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none" />
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white/60 pointer-events-none" />
           )}
           <Input
             placeholder="Search RAMS..."
@@ -320,8 +321,8 @@ export function RAMSSection({ onNavigate }: RAMSSectionProps) {
         {filteredDocuments.length === 0 ? (
           <Card className="border-dashed">
             <CardContent className="p-8 text-center">
-              <FileText className="h-12 w-12 text-muted-foreground/40 mx-auto mb-4" />
-              <p className="text-muted-foreground">No RAMS documents found</p>
+              <FileText className="h-12 w-12 text-white/60/40 mx-auto mb-4" />
+              <p className="text-white/60">No RAMS documents found</p>
               <Button variant="outline" className="mt-4" onClick={() => setShowCreateSheet(true)}>
                 <Plus className="h-4 w-4 mr-2" />
                 Create First RAMS
@@ -346,10 +347,10 @@ export function RAMSSection({ onNavigate }: RAMSSectionProps) {
                         <p className="font-medium text-foreground text-sm md:text-base truncate">
                           {doc.project_name}
                         </p>
-                        <p className="text-xs text-muted-foreground truncate">
+                        <p className="text-xs text-white/60 truncate">
                           {doc.location} • v{doc.version}
                         </p>
-                        <div className="flex items-center gap-2 mt-1 text-xs text-muted-foreground">
+                        <div className="flex items-center gap-2 mt-1 text-xs text-white/60">
                           <Calendar className="h-3 w-3" />
                           {format(new Date(doc.updated_at), 'dd MMM yyyy')}
                           <span className="mx-1">•</span>
@@ -362,7 +363,7 @@ export function RAMSSection({ onNavigate }: RAMSSectionProps) {
                       <Badge className={`text-xs ${getStatusColor(doc.status as RAMSStatus)}`}>
                         {doc.status}
                       </Badge>
-                      <ChevronRight className="h-4 w-4 text-muted-foreground" />
+                      <ChevronRight className="h-4 w-4 text-white/60" />
                     </div>
                   </div>
                 </CardContent>
@@ -395,7 +396,7 @@ export function RAMSSection({ onNavigate }: RAMSSectionProps) {
               <div className="space-y-2">
                 <Label>Location</Label>
                 <div className="relative">
-                  <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                  <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white/60" />
                   <Input
                     value={formData.location}
                     onChange={(e) => setFormData((prev) => ({ ...prev, location: e.target.value }))}
@@ -555,14 +556,14 @@ export function RAMSSection({ onNavigate }: RAMSSectionProps) {
 
                 <div className="grid grid-cols-2 gap-4">
                   <div>
-                    <Label className="text-muted-foreground">Location</Label>
+                    <Label className="text-white/60">Location</Label>
                     <p className="mt-1 flex items-center gap-2">
                       <MapPin className="h-4 w-4" />
                       {selectedRAMS.location}
                     </p>
                   </div>
                   <div>
-                    <Label className="text-muted-foreground">Assessment Date</Label>
+                    <Label className="text-white/60">Assessment Date</Label>
                     <p className="mt-1 flex items-center gap-2">
                       <Calendar className="h-4 w-4" />
                       {selectedRAMS.date}
@@ -572,14 +573,14 @@ export function RAMSSection({ onNavigate }: RAMSSectionProps) {
 
                 {selectedRAMS.contractor && (
                   <div>
-                    <Label className="text-muted-foreground">Contractor</Label>
+                    <Label className="text-white/60">Contractor</Label>
                     <p className="mt-1">{selectedRAMS.contractor}</p>
                   </div>
                 )}
 
                 {selectedRAMS.activities && selectedRAMS.activities.length > 0 && (
                   <div>
-                    <Label className="text-muted-foreground">Work Activities</Label>
+                    <Label className="text-white/60">Work Activities</Label>
                     <div className="flex flex-wrap gap-2 mt-2">
                       {selectedRAMS.activities.map((activity, index) => (
                         <Badge key={index} variant="secondary">
@@ -592,7 +593,7 @@ export function RAMSSection({ onNavigate }: RAMSSectionProps) {
 
                 {selectedRAMS.risks && selectedRAMS.risks.length > 0 && (
                   <div>
-                    <Label className="text-muted-foreground">
+                    <Label className="text-white/60">
                       Risk Assessment ({selectedRAMS.risks.length} hazards)
                     </Label>
                     <div className="mt-2 space-y-2">
@@ -615,7 +616,7 @@ export function RAMSSection({ onNavigate }: RAMSSectionProps) {
                         </div>
                       ))}
                       {selectedRAMS.risks.length > 3 && (
-                        <p className="text-sm text-muted-foreground">
+                        <p className="text-sm text-white/60">
                           + {selectedRAMS.risks.length - 3} more hazards
                         </p>
                       )}
@@ -625,7 +626,7 @@ export function RAMSSection({ onNavigate }: RAMSSectionProps) {
 
                 {selectedRAMS.required_ppe && selectedRAMS.required_ppe.length > 0 && (
                   <div>
-                    <Label className="text-muted-foreground">Required PPE</Label>
+                    <Label className="text-white/60">Required PPE</Label>
                     <div className="flex flex-wrap gap-2 mt-2">
                       {selectedRAMS.required_ppe.map((ppe, index) => (
                         <Badge key={index} variant="outline">
@@ -649,8 +650,8 @@ export function RAMSSection({ onNavigate }: RAMSSectionProps) {
                   <Button
                     variant="outline"
                     className="flex-1"
-                    onClick={() => {
-                      navigator.clipboard.writeText(window.location.href);
+                    onClick={async () => {
+                      await copyToClipboard(window.location.href);
                     }}
                   >
                     <Copy className="h-4 w-4 mr-2" />
@@ -660,7 +661,7 @@ export function RAMSSection({ onNavigate }: RAMSSectionProps) {
 
                 {/* Status Actions */}
                 <div className="border-t pt-4">
-                  <Label className="text-muted-foreground mb-2 block">Update Status</Label>
+                  <Label className="text-white/60 mb-2 block">Update Status</Label>
                   <div className="flex flex-wrap gap-2">
                     {STATUS_OPTIONS.filter((s) => s.value !== selectedRAMS.status).map((option) => (
                       <Button

@@ -11,6 +11,7 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { Separator } from '@/components/ui/separator';
+import { openExternalUrl } from '@/utils/open-external-url';
 import {
   Search,
   MapPin,
@@ -239,7 +240,7 @@ const SimpleJobSearch = () => {
 
   const handleApply = (jobId: string, url: string) => {
     setSelectedJob(jobId);
-    window.open(url, '_blank', 'noopener,noreferrer');
+    openExternalUrl(url);
 
     toast({
       title: 'Application Opened',

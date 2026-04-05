@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { openExternalUrl } from '@/utils/open-external-url';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -524,7 +525,7 @@ const ElectricianAccreditationDetailView = ({
               <motion.div variants={itemVariants}>
                 {accreditation.website && (
                   <Button
-                    onClick={() => window.open(accreditation.website, '_blank')}
+                    onClick={() => openExternalUrl(accreditation.website)}
                     className="w-full bg-elec-yellow text-black hover:bg-elec-yellow/90 h-12 text-base font-medium"
                   >
                     <ExternalLink className="mr-2 h-5 w-5" />
@@ -541,7 +542,7 @@ const ElectricianAccreditationDetailView = ({
       {accreditation.website && (
         <div className="fixed bottom-0 left-0 right-0 p-4 bg-elec-dark/95 backdrop-blur-lg border-t border-white/10 sm:hidden z-50">
           <Button
-            onClick={() => window.open(accreditation.website, '_blank')}
+            onClick={() => openExternalUrl(accreditation.website)}
             className="w-full bg-elec-yellow text-black hover:bg-elec-yellow/90 h-12"
           >
             <ExternalLink className="mr-2 h-4 w-4" />

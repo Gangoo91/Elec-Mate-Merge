@@ -21,6 +21,7 @@ import { supabase } from '@/integrations/supabase/client';
 import { useRAMSJobPolling } from '@/hooks/useRAMSJobPolling';
 import { useRAMSNotifications } from '@/hooks/useRAMSNotifications';
 import { toast } from '@/hooks/use-toast';
+import { storageGetSync, storageSetSync, storageRemoveSync, storageGetJSONSync } from '@/utils/storage';
 
 const EXPECTED_TOTAL_SECONDS = 180; // 3 minutes visual countdown
 const RAMS_LOCAL_DRAFT_KEY = 'rams-local-draft';
@@ -247,7 +248,7 @@ export const AIRAMSGenerator: React.FC<AIRAMSGeneratorProps> = ({ onBack }) => {
         timestamp: Date.now(),
         projectName: ramsData.projectName || 'Untitled',
       };
-      localStorage.setItem(RAMS_LOCAL_DRAFT_KEY, JSON.stringify(draft));
+      storageSetSync(RAMS_LOCAL_DRAFT_KEY, JSON.stringify(draft));
     } catch (e) {
       console.warn('Failed to save RAMS draft to localStorage:', e);
     }
@@ -256,16 +257,15 @@ export const AIRAMSGenerator: React.FC<AIRAMSGeneratorProps> = ({ onBack }) => {
   // === Improvement 2: Draft recovery on mount ===
   useEffect(() => {
     try {
-      const savedDraft = localStorage.getItem(RAMS_LOCAL_DRAFT_KEY);
-      if (!savedDraft) return;
-      const draft = JSON.parse(savedDraft);
+      const draft = storageGetJSONSync<any>(RAMS_LOCAL_DRAFT_KEY, null);
+      if (!draft) return;
       const ageHours = (Date.now() - draft.timestamp) / (1000 * 60 * 60);
       // Offer recovery if draft is <24h old and we're not already viewing results
       if (ageHours < 24 && !showResults && !currentJobId && draft.ramsData) {
         setRecoveredDraft(draft);
         setShowDraftRecovery(true);
       } else if (ageHours >= 24) {
-        localStorage.removeItem(RAMS_LOCAL_DRAFT_KEY);
+        storageRemoveSync(RAMS_LOCAL_DRAFT_KEY);
       }
     } catch (e) {
       console.warn('Failed to read RAMS draft from localStorage:', e);
@@ -277,20 +277,16 @@ export const AIRAMSGenerator: React.FC<AIRAMSGeneratorProps> = ({ onBack }) => {
   useEffect(() => {
     if (!ramsData || !currentJobId) return;
     const handleBeforeUnload = () => {
-      try {
-        localStorage.setItem(
-          RAMS_LOCAL_DRAFT_KEY,
-          JSON.stringify({
-            ramsData,
-            methodData,
-            jobId: currentJobId,
-            timestamp: Date.now(),
-            projectName: ramsData.projectName || 'Untitled',
-          })
-        );
-      } catch {
-        // localStorage is synchronous — best effort
-      }
+      storageSetSync(
+        RAMS_LOCAL_DRAFT_KEY,
+        JSON.stringify({
+          ramsData,
+          methodData,
+          jobId: currentJobId,
+          timestamp: Date.now(),
+          projectName: ramsData.projectName || 'Untitled',
+        })
+      );
     };
     window.addEventListener('beforeunload', handleBeforeUnload);
     return () => window.removeEventListener('beforeunload', handleBeforeUnload);
@@ -339,7 +335,7 @@ export const AIRAMSGenerator: React.FC<AIRAMSGeneratorProps> = ({ onBack }) => {
   const handleDismissDraft = () => {
     setShowDraftRecovery(false);
     setRecoveredDraft(null);
-    localStorage.removeItem(RAMS_LOCAL_DRAFT_KEY);
+    storageRemoveSync(RAMS_LOCAL_DRAFT_KEY);
   };
 
   const handleGenerate = async (
@@ -458,7 +454,7 @@ export const AIRAMSGenerator: React.FC<AIRAMSGeneratorProps> = ({ onBack }) => {
   const handleStartOver = () => {
     // Clear session flag and localStorage draft
     sessionStorage.removeItem('rams-generation-active');
-    localStorage.removeItem(RAMS_LOCAL_DRAFT_KEY);
+    storageRemoveSync(RAMS_LOCAL_DRAFT_KEY);
 
     setCurrentJobId(null);
     setShowResults(false);
@@ -558,20 +554,16 @@ export const AIRAMSGenerator: React.FC<AIRAMSGeneratorProps> = ({ onBack }) => {
   const handleBack = useCallback(async () => {
     // Save to localStorage immediately
     if (ramsData && currentJobId) {
-      try {
-        localStorage.setItem(
-          RAMS_LOCAL_DRAFT_KEY,
-          JSON.stringify({
-            ramsData,
-            methodData,
-            jobId: currentJobId,
-            timestamp: Date.now(),
-            projectName: ramsData.projectName || 'Untitled',
-          })
-        );
-      } catch {
-        // Best effort
-      }
+      storageSetSync(
+        RAMS_LOCAL_DRAFT_KEY,
+        JSON.stringify({
+          ramsData,
+          methodData,
+          jobId: currentJobId,
+          timestamp: Date.now(),
+          projectName: ramsData.projectName || 'Untitled',
+        })
+      );
       // Quick cloud save (1 retry, shorter timeout)
       if (saveStatus !== 'saved') {
         await saveToCloudWithRetry(true, 1);

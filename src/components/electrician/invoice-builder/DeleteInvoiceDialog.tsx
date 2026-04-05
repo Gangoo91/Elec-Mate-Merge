@@ -9,6 +9,7 @@ import {
   AlertDialogTitle,
 } from '@/components/ui/alert-dialog';
 import { Quote } from '@/types/quote';
+import { useHaptic } from '@/hooks/useHaptic';
 
 interface DeleteInvoiceDialogProps {
   open: boolean;
@@ -25,6 +26,7 @@ export const DeleteInvoiceDialog = ({
   onConfirm,
   isDeleting,
 }: DeleteInvoiceDialogProps) => {
+  const haptic = useHaptic();
   const formatCurrency = (amount: number) =>
     new Intl.NumberFormat('en-GB', { style: 'currency', currency: 'GBP' }).format(amount);
 
@@ -56,7 +58,7 @@ export const DeleteInvoiceDialog = ({
         <AlertDialogFooter>
           <AlertDialogCancel disabled={isDeleting}>Cancel</AlertDialogCancel>
           <AlertDialogAction
-            onClick={onConfirm}
+            onClick={() => { haptic.heavy(); onConfirm(); }}
             disabled={isDeleting}
             className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
           >

@@ -24,6 +24,8 @@ import {
 import { ImportedContextBanner } from '@/components/electrician-tools/shared/ImportedContextBanner';
 import { AnimatePresence } from 'framer-motion';
 import { useAuth } from '@/contexts/AuthContext';
+import { trackFeatureUse } from '@/components/ActivityTracker';
+import { storageGetSync } from '@/utils/storage';
 
 // Generate user-scoped storage key for business settings
 const getStorageKey = (userId?: string) =>
@@ -158,10 +160,10 @@ const CostEngineerInterface = () => {
 
   // Load business settings from localStorage on mount or when user changes
   useEffect(() => {
-    const saved = localStorage.getItem(storageKey);
-    if (saved) {
+    const raw = storageGetSync(storageKey);
+    if (raw) {
       try {
-        const parsed = JSON.parse(saved);
+        const parsed = JSON.parse(raw);
         setBusinessSettings(parsed);
         setHasConfiguredSettings(true);
       } catch (e) {
@@ -290,6 +292,7 @@ const CostEngineerInterface = () => {
 
       // Set job ID to start polling
       setJobId(data.jobId);
+      trackFeatureUse(user?.id || '', 'ai_cost_engineer', { jobId: data.jobId });
 
       // Link customer to job if selected
       if (customerId && data.jobId) {

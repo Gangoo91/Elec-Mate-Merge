@@ -9,6 +9,7 @@ import { useState, useEffect, useCallback } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/contexts/AuthContext';
 import { toast } from 'sonner';
+import { copyToClipboard } from '@/utils/clipboard';
 
 export interface PortfolioShare {
   id: string;
@@ -205,7 +206,7 @@ export function usePortfolioSharing() {
     async (token: string): Promise<boolean> => {
       const url = getShareUrl(token);
       try {
-        await navigator.clipboard.writeText(url);
+        await copyToClipboard(url);
         toast.success('Link copied to clipboard!');
         return true;
       } catch (err) {

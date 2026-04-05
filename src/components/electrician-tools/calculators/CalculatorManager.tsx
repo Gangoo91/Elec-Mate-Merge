@@ -28,6 +28,8 @@ import {
 } from 'lucide-react';
 import { toast } from '@/hooks/use-toast';
 import { cn } from '@/lib/utils';
+import { storageGetJSONSync, storageSetJSONSync } from '@/utils/storage';
+import { useHaptic } from '@/hooks/useHaptic';
 
 interface CalculatorItem {
   id: string;
@@ -54,6 +56,7 @@ const CalculatorManager: React.FC<CalculatorManagerProps> = ({
   currentCalculator,
   onCalculatorSelect,
 }) => {
+  const haptic = useHaptic();
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
@@ -63,21 +66,21 @@ const CalculatorManager: React.FC<CalculatorManagerProps> = ({
 
   // Load user preferences
   useEffect(() => {
-    const savedFavourites = localStorage.getItem('calculator-favourites');
-    const savedRecent = localStorage.getItem('calculator-recent');
+    const savedFavourites = storageGetJSONSync<string[]>('calculator-favourites', []);
+    const savedRecent = storageGetJSONSync<string[]>('calculator-recent', []);
 
-    if (savedFavourites) {
-      setFavourites(JSON.parse(savedFavourites));
+    if (savedFavourites.length > 0) {
+      setFavourites(savedFavourites);
     }
-    if (savedRecent) {
-      setRecentCalculators(JSON.parse(savedRecent));
+    if (savedRecent.length > 0) {
+      setRecentCalculators(savedRecent);
     }
   }, []);
 
   // Save preferences
   const saveFavourites = (newFavourites: string[]) => {
     setFavourites(newFavourites);
-    localStorage.setItem('calculator-favourites', JSON.stringify(newFavourites));
+    storageSetJSONSync('calculator-favourites', newFavourites);
   };
 
   const saveRecent = (calculatorId: string) => {
@@ -86,10 +89,11 @@ const CalculatorManager: React.FC<CalculatorManagerProps> = ({
       ...recentCalculators.filter((id) => id !== calculatorId),
     ].slice(0, 10);
     setRecentCalculators(updatedRecent);
-    localStorage.setItem('calculator-recent', JSON.stringify(updatedRecent));
+    storageSetJSONSync('calculator-recent', updatedRecent);
   };
 
   const toggleFavourite = (calculatorId: string) => {
+    haptic.selection();
     const newFavourites = favourites.includes(calculatorId)
       ? favourites.filter((id) => id !== calculatorId)
       : [...favourites, calculatorId];
@@ -102,6 +106,7 @@ const CalculatorManager: React.FC<CalculatorManagerProps> = ({
   };
 
   const handleCalculatorSelect = (calculatorId: string) => {
+    haptic.light();
     saveRecent(calculatorId);
     onCalculatorSelect(calculatorId);
   };

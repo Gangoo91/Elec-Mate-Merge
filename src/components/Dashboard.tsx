@@ -1,24 +1,149 @@
-import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { ArrowLeft, Zap, HelpCircle } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { useNavigate, Link } from 'react-router-dom';
+import { ArrowLeft, Zap, HelpCircle, ChevronRight, Plus } from 'lucide-react';
+import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
-import CertificateTypeGrid from './dashboard/CertificateTypeGrid';
-import RecoverUnsavedWork from './dashboard/RecoverUnsavedWork';
-import RecentCertificatesCard from './dashboard/RecentCertificatesCard';
-import { PendingNotificationsCard } from './dashboard/PendingNotificationsCard';
-import { ExpiringCertificatesCard } from './dashboard/ExpiringCertificatesCard';
-import { DesignedCircuitsCard } from './dashboard/DesignedCircuitsCard';
 import DashboardStatsBar from './dashboard/DashboardStatsBar';
+import ComplianceScoreCard from './dashboard/ComplianceScoreCard';
 import HeroCTA from './dashboard/HeroCTA';
+import RecoverUnsavedWork from './dashboard/RecoverUnsavedWork';
 import HelpPanel from './HelpPanel';
 import { useNotifications } from '@/hooks/useNotifications';
 import { useExpiryReminders } from '@/hooks/useExpiryReminders';
-import { filterByTimeRange } from '@/utils/expiryHelper';
+import { filterByTimeRange, getExpiryUrgency } from '@/utils/expiryHelper';
 import { getDaysUntilDeadline } from '@/utils/notificationHelper';
 import { supabase } from '@/integrations/supabase/client';
 import { useQuery } from '@tanstack/react-query';
 import { reportCloud } from '@/utils/reportCloud';
+import { useDesignedCircuits } from '@/hooks/useDesignedCircuits';
+import { cn } from '@/lib/utils';
 
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: { opacity: 1, transition: { staggerChildren: 0.04 } },
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 8 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.25 } },
+};
+
+// --- Hub Card ---
+interface HubCardProps {
+  title: string;
+  description: string;
+  liveSubtitle?: string;
+  accentColor: string;
+  href?: string;
+  onClick?: () => void;
+}
+
+const HubCard = ({ title, description, liveSubtitle, accentColor, href, onClick }: HubCardProps) => {
+  const subtitle = liveSubtitle || description;
+  const isAlert = liveSubtitle?.includes('overdue') || liveSubtitle?.includes('expired');
+
+  const content = (
+    <div
+      className={cn(
+        'group relative overflow-hidden h-full',
+        'card-surface-interactive',
+        'active:scale-[0.98] transition-all duration-200'
+      )}
+    >
+      <div
+        className={cn(
+          'absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r opacity-30 group-hover:opacity-80 transition-opacity duration-200',
+          accentColor
+        )}
+      />
+      <div className="relative z-10 flex flex-col h-full p-4">
+        <h3 className="text-[15px] font-semibold text-white leading-tight group-hover:text-elec-yellow transition-colors">
+          {title}
+        </h3>
+        <p className={cn(
+          'mt-1 text-[12px] leading-tight line-clamp-1',
+          isAlert ? 'text-red-400 font-semibold' : 'text-white'
+        )}>
+          {subtitle}
+        </p>
+        <div className="flex-grow min-h-[12px]" />
+        <div className="flex items-center justify-between">
+          <span className="text-[11px] font-medium text-elec-yellow">Open</span>
+          <div className="w-6 h-6 rounded-full bg-white/[0.05] border border-elec-yellow/20 flex items-center justify-center group-hover:bg-elec-yellow group-hover:border-elec-yellow transition-all duration-200">
+            <ChevronRight className="w-3.5 h-3.5 text-white group-hover:text-black group-hover:translate-x-0.5 transition-all" />
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+
+  const className = "block w-full h-full text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-elec-yellow/50 rounded-2xl touch-manipulation";
+
+  if (onClick) {
+    return (
+      <motion.div variants={itemVariants} className="h-full">
+        <button type="button" onClick={onClick} className={className}>{content}</button>
+      </motion.div>
+    );
+  }
+
+  return (
+    <motion.div variants={itemVariants} className="h-full">
+      <Link to={href || '#'} className={className}>{content}</Link>
+    </motion.div>
+  );
+};
+
+// --- Continue Card ---
+interface ContinueCardProps {
+  reportType: string;
+  clientName: string;
+  address: string;
+  onClick: () => void;
+}
+
+const getTypeLabel = (type: string) => {
+  const labels: Record<string, string> = {
+    eicr: 'EICR', eic: 'EIC', 'minor-works': 'MW', 'fire-alarm': 'FIRE',
+    'ev-charging': 'EV', 'emergency-lighting': 'EM LTG', 'pat-testing': 'PAT', 'solar-pv': 'SOLAR',
+  };
+  return labels[type] || type.toUpperCase().slice(0, 5);
+};
+
+const ContinueCard = ({ reportType, clientName, address, onClick }: ContinueCardProps) => (
+  <motion.div variants={itemVariants}>
+    <button
+      onClick={onClick}
+      className="block w-full text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-elec-yellow/50 rounded-2xl touch-manipulation"
+    >
+      <div className="group relative overflow-hidden card-surface-interactive active:scale-[0.98] transition-all duration-200">
+        <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-blue-500 via-blue-400 to-cyan-400 opacity-40 group-hover:opacity-100 transition-opacity duration-200" />
+        <div className="relative z-10 flex items-center gap-3.5 p-4">
+          <div className="flex-1 min-w-0">
+            <div className="flex items-center gap-2 mb-1">
+              <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-blue-500/15 text-blue-400">
+                {getTypeLabel(reportType)}
+              </span>
+              <span className="text-[10px] font-semibold px-2 py-0.5 rounded bg-amber-500/15 text-amber-400">
+                In Progress
+              </span>
+            </div>
+            <h4 className="text-sm font-semibold text-white truncate">{clientName || 'Untitled'}</h4>
+            <p className="text-[12px] text-white truncate mt-0.5">{address || 'No address'}</p>
+          </div>
+          <div className="flex flex-col items-center gap-1 flex-shrink-0">
+            <span className="text-[10px] font-medium text-elec-yellow">Continue</span>
+            <div className="w-7 h-7 rounded-full bg-elec-yellow/10 border border-elec-yellow/20 flex items-center justify-center group-hover:bg-elec-yellow group-hover:border-elec-yellow transition-all duration-200">
+              <ChevronRight className="w-4 h-4 text-elec-yellow group-hover:text-black group-hover:translate-x-0.5 transition-all" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </button>
+  </motion.div>
+);
+
+// --- Main Dashboard ---
 const Dashboard = ({
   onNavigate,
 }: {
@@ -32,23 +157,43 @@ const Dashboard = ({
     supabase.auth.getUser().then(({ data: { user } }) => setUser(user));
   }, []);
 
-  // Stats data — react-query deduplicates these with child component queries
+  // Data queries
   const { notifications = [] } = useNotifications();
   const { reminders = [] } = useExpiryReminders();
+  const { data: designedCircuits } = useDesignedCircuits();
 
-  const { data: reportsData } = useQuery({
+  // Labels & Warnings saved docs count
+  const { data: savedDocsCount = 0 } = useQuery({
+    queryKey: ['labels-warnings-count', user?.id],
+    queryFn: async () => {
+      if (!user) return 0;
+      const { count } = await supabase
+        .from('reports')
+        .select('*', { count: 'exact', head: true })
+        .eq('user_id', user.id)
+        .in('report_type', ['danger-notice', 'isolation-cert', 'permit-to-work', 'warning-labels', 'safe-isolation'])
+        .is('deleted_at', null);
+      return count || 0;
+    },
+    enabled: !!user,
+    staleTime: 30 * 1000,
+  });
+
+  const { data: reportsData, isLoading } = useQuery({
     queryKey: ['recent-certificates', user?.id],
     queryFn: async () => {
       if (!user) return { reports: [], totalCount: 0, hasMore: false };
-      return await reportCloud.getUserReports(user.id, { limit: 5 });
+      return await reportCloud.getUserReports(user.id, { limit: 50 });
     },
     enabled: !!user,
     staleTime: 10 * 1000,
   });
 
-  const inProgressCount =
-    reportsData?.reports?.filter((r) => r.status === 'in-progress' || r.status === 'draft')
-      .length ?? 0;
+  // Stats
+  const reports = reportsData?.reports ?? [];
+  const inProgressCount = reports.filter((r) => r.status === 'in-progress' || r.status === 'draft').length;
+  const completedCount = reports.filter((r) => r.status === 'completed').length;
+  const totalCount = reportsData?.totalCount ?? reports.length;
 
   const partPPending = notifications.filter(
     (n) => n.notification_status !== 'submitted' && n.notification_status !== 'cancelled'
@@ -57,100 +202,198 @@ const Dashboard = ({
   const overduePartP = partPPending.some(
     (n) => n.submission_deadline && getDaysUntilDeadline(n.submission_deadline) < 0
   );
+  const partPOverdueCount = partPPending.filter(
+    (n) => n.submission_deadline && getDaysUntilDeadline(n.submission_deadline) < 0
+  ).length;
 
-  const expiringCount = filterByTimeRange(reminders, '90').length;
+  const expiringReminders = filterByTimeRange(reminders, '90');
+  const expiringCount = expiringReminders.length;
+  const expiredCertsCount = reminders.filter(
+    (r) => getExpiryUrgency(r.expiry_date) === 'expired'
+  ).length;
 
-  const handleNavigate = (section: string, reportId?: string, reportType?: string) => {
-    onNavigate(section, reportId, reportType);
-  };
+  const pendingDesigns = (designedCircuits || []).filter(
+    (d) => d.status === 'pending' || d.status === 'in-progress'
+  ).length;
+
+  // Most recent in-progress cert for "Continue" card
+  const recentDraft = reports.find((r) => r.status === 'in-progress' || r.status === 'draft');
 
   const handleStatClick = (stat: 'in-progress' | 'part-p' | 'expiring') => {
     switch (stat) {
-      case 'in-progress':
-        onNavigate('my-reports');
-        break;
-      case 'part-p':
-        onNavigate('notifications');
-        break;
-      case 'expiring':
-        navigate('/certificate-expiry');
-        break;
+      case 'in-progress': onNavigate('my-reports'); break;
+      case 'part-p': onNavigate('notifications'); break;
+      case 'expiring': navigate('/certificate-expiry'); break;
     }
   };
 
+  const handleContinue = () => {
+    if (recentDraft) {
+      onNavigate(recentDraft.report_type, recentDraft.report_id, recentDraft.report_type);
+    }
+  };
+
+  // Live subtitles for hub cards
+  const partPSubtitle = overduePartP
+    ? `${partPOverdueCount} overdue`
+    : partPDueCount > 0
+      ? `${partPDueCount} pending`
+      : 'All clear';
+
+  const expiringSubtitle = expiredCertsCount > 0
+    ? `${expiredCertsCount} expired`
+    : expiringCount > 0
+      ? `${expiringCount} expiring`
+      : 'All clear';
+
   return (
     <>
-      <div className="min-h-screen bg-background text-foreground">
-        {/* Header */}
-        <header className="sticky top-0 z-50 w-full border-b border-white/[0.06] bg-background/95 backdrop-blur">
-          <div className="px-4 sm:px-6 max-w-6xl mx-auto">
-            <div className="flex h-14 items-center">
+      <div className="-mt-3 sm:-mt-4 md:-mt-6 bg-background pb-24">
+        {/* Sticky Header */}
+        <div className="sticky top-0 z-50 bg-background/95 backdrop-blur-sm border-b border-white/[0.06]">
+          <div className="px-4 py-2">
+            <div className="flex items-center gap-3 h-11">
               <Button
                 variant="ghost"
-                size="sm"
+                size="icon"
                 onClick={() => navigate('/electrician')}
-                className="text-white hover:text-foreground -ml-2 mr-3 h-11 w-11 p-0 touch-manipulation"
+                className="text-white hover:text-white hover:bg-white/10 rounded-xl h-11 w-11 touch-manipulation active:scale-[0.98]"
               >
                 <ArrowLeft className="h-5 w-5" />
               </Button>
-
-              <div className="flex items-center gap-3 flex-1">
-                <div className="p-2 rounded-xl bg-elec-yellow/12">
-                  <Zap className="h-5 w-5 text-elec-yellow" />
+              <div className="flex items-center gap-2.5">
+                <div className="p-1.5 rounded-lg bg-elec-yellow/10 border border-elec-yellow/20">
+                  <Zap className="h-4 w-4 text-elec-yellow" />
                 </div>
-                <h1 className="font-bold text-white text-lg">Inspection & Testing</h1>
+                <h1 className="text-base font-semibold text-white">Inspection & Testing</h1>
               </div>
-
+              <div className="flex-1" />
               <Button
                 variant="ghost"
                 size="icon"
                 onClick={() => setIsHelpOpen(true)}
-                className="h-11 w-11 text-white hover:text-foreground touch-manipulation"
+                className="text-white hover:text-white hover:bg-white/10 rounded-xl h-11 w-11 touch-manipulation active:scale-[0.98]"
               >
                 <HelpCircle className="h-5 w-5" />
               </Button>
             </div>
           </div>
-        </header>
+        </div>
 
         {/* Main Content */}
-        <main className="px-4 sm:px-6 py-6 pb-24 sm:pb-8 max-w-6xl mx-auto space-y-6">
-          {/* Stats Bar */}
-          <DashboardStatsBar
-            inProgressCount={inProgressCount}
-            partPDueCount={partPDueCount}
-            expiringCount={expiringCount}
-            overduePartP={overduePartP}
-            onStatClick={handleStatClick}
-          />
+        <motion.main
+          variants={containerVariants}
+          initial="hidden"
+          animate="visible"
+          className="px-4 py-4 space-y-5"
+        >
+          {/* KPI Strip */}
+          <motion.div variants={itemVariants}>
+            <DashboardStatsBar
+              inProgressCount={inProgressCount}
+              partPDueCount={partPDueCount}
+              expiringCount={expiringCount}
+              completedCount={completedCount}
+              overduePartP={overduePartP}
+              isLoading={isLoading}
+              onStatClick={handleStatClick}
+            />
+          </motion.div>
 
-          {/* Hero CTA */}
-          <HeroCTA />
+          {/* Compliance Score */}
+          <motion.div variants={itemVariants}>
+            <ComplianceScoreCard
+              partPOverdue={partPOverdueCount}
+              partPPending={partPDueCount - partPOverdueCount}
+              expiredCerts={expiredCertsCount}
+              expiringSoon={expiringCount - expiredCertsCount}
+            />
+          </motion.div>
+
+          {/* New Certificate CTA */}
+          <motion.div variants={itemVariants}>
+            <HeroCTA />
+          </motion.div>
 
           {/* Recover Unsaved Work */}
-          <RecoverUnsavedWork onNavigate={handleNavigate} />
+          <RecoverUnsavedWork onNavigate={onNavigate} />
 
-          {/* Certificate Types */}
-          <CertificateTypeGrid onNavigate={handleNavigate} />
+          {/* Continue where you left off */}
+          {recentDraft && (
+            <ContinueCard
+              reportType={recentDraft.report_type}
+              clientName={recentDraft.client_name}
+              address={recentDraft.installation_address}
+              onClick={handleContinue}
+            />
+          )}
 
-          {/* Divider */}
-          <div className="h-px bg-white/[0.06]" />
-
-          {/* Desktop 2-column layout / Mobile single column */}
-          <div className="lg:grid lg:grid-cols-5 lg:gap-8 space-y-6 lg:space-y-0">
-            {/* Left column (3/5) */}
-            <div className="lg:col-span-3 space-y-8">
-              <RecentCertificatesCard onNavigate={handleNavigate} />
-              <DesignedCircuitsCard onNavigate={handleNavigate} />
+          {/* Hub Card Grid */}
+          <motion.section variants={itemVariants} className="space-y-3">
+            <div className="grid grid-cols-2 gap-3 auto-rows-fr">
+              <HubCard
+                title="Certificates"
+                description="EICR, EIC, Minor Works"
+                liveSubtitle={inProgressCount > 0 ? `${inProgressCount} in progress` : 'EICR, EIC, Minor Works'}
+                accentColor="from-blue-500 via-blue-400 to-cyan-400"
+                onClick={() => onNavigate('certificates')}
+              />
+              <HubCard
+                title="Specialist"
+                description="5 certificate types"
+                accentColor="from-red-500 via-rose-400 to-pink-400"
+                onClick={() => onNavigate('specialist')}
+              />
+              <HubCard
+                title="My Reports"
+                description="All certificates"
+                liveSubtitle={totalCount > 0 ? `${totalCount} certificates` : 'All certificates'}
+                accentColor="from-emerald-500 via-emerald-400 to-green-400"
+                onClick={() => onNavigate('my-reports')}
+              />
+              <HubCard
+                title="Part P"
+                description="Building regulations"
+                liveSubtitle={partPSubtitle}
+                accentColor="from-amber-500 via-amber-400 to-yellow-400"
+                onClick={() => onNavigate('notifications')}
+              />
+              <HubCard
+                title="Expiring Certs"
+                description="Expiry tracking"
+                liveSubtitle={expiringSubtitle}
+                accentColor="from-orange-500 via-amber-400 to-yellow-400"
+                href="/certificate-expiry"
+              />
+              <HubCard
+                title="Customers"
+                description="Clients & properties"
+                accentColor="from-violet-500 via-purple-400 to-indigo-400"
+                href="/customers"
+              />
+              <HubCard
+                title="Circuit Designer"
+                description="AI-powered design"
+                liveSubtitle={pendingDesigns > 0 ? `${pendingDesigns} pending` : 'AI-powered design'}
+                accentColor="from-cyan-500 via-cyan-400 to-blue-400"
+                href="/electrician/circuit-designer"
+              />
+              <HubCard
+                title="Labels & Warnings"
+                description="Notices, permits & labels"
+                liveSubtitle={savedDocsCount > 0 ? `${savedDocsCount} document${savedDocsCount !== 1 ? 's' : ''}` : 'Notices, permits & labels'}
+                accentColor="from-red-500 via-orange-400 to-amber-400"
+                onClick={() => onNavigate('labels-warnings')}
+              />
+              <HubCard
+                title="I&T Hub"
+                description="BS 7671 guidance"
+                accentColor="from-elec-yellow via-amber-400 to-orange-400"
+                onClick={() => onNavigate('learning-hub')}
+              />
             </div>
-
-            {/* Right column (2/5) */}
-            <div className="lg:col-span-2 space-y-8">
-              <PendingNotificationsCard onNavigate={onNavigate} />
-              <ExpiringCertificatesCard />
-            </div>
-          </div>
-        </main>
+          </motion.section>
+        </motion.main>
       </div>
 
       <HelpPanel open={isHelpOpen} onOpenChange={setIsHelpOpen} />

@@ -1,4 +1,5 @@
 import React from 'react';
+import { openExternalUrl } from '@/utils/open-external-url';
 import { Button } from '@/components/ui/button';
 import { ExternalLink, Mic, Globe } from 'lucide-react';
 import { Podcast } from './PodcastData';
@@ -82,7 +83,7 @@ const PodcastCard = ({ podcast }: PodcastCardProps) => {
   const colors = categoryColors[podcast.category] || categoryColors['general-mental-health'];
 
   const openLink = (url: string) => {
-    window.open(url, '_blank', 'noopener,noreferrer');
+    openExternalUrl(url);
   };
 
   const hasLinks =

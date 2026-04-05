@@ -169,7 +169,7 @@ export const PhotoComments = ({
           <div className="flex-1 min-w-0">
             <div className="flex items-center gap-2">
               <span className="font-medium text-sm">{comment.authorName}</span>
-              <span className="text-xs text-muted-foreground">
+              <span className="text-xs text-white/60">
                 {formatTimestamp(comment.timestamp)}
               </span>
             </div>
@@ -202,7 +202,7 @@ export const PhotoComments = ({
             <div className="flex items-center gap-2 mt-1 opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity">
               <button
                 onClick={() => handleReply(comment.id)}
-                className="text-xs text-muted-foreground hover:text-foreground flex items-center gap-1"
+                className="text-xs text-white/60 hover:text-foreground flex items-center gap-1"
               >
                 <Reply className="h-3 w-3" />
                 Reply
@@ -210,7 +210,7 @@ export const PhotoComments = ({
 
               <Popover>
                 <PopoverTrigger asChild>
-                  <button className="text-xs text-muted-foreground hover:text-foreground">
+                  <button className="text-xs text-white/60 hover:text-foreground">
                     <Smile className="h-3 w-3" />
                   </button>
                 </PopoverTrigger>
@@ -232,7 +232,7 @@ export const PhotoComments = ({
               {isOwn && (
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
-                    <button className="text-xs text-muted-foreground hover:text-foreground">
+                    <button className="text-xs text-white/60 hover:text-foreground">
                       <MoreHorizontal className="h-3 w-3" />
                     </button>
                   </DropdownMenuTrigger>
@@ -267,7 +267,7 @@ export const PhotoComments = ({
       <ScrollArea className="flex-1 pr-4">
         <div className="space-y-4">
           {rootComments.length === 0 ? (
-            <div className="text-center py-8 text-muted-foreground">
+            <div className="text-center py-8 text-white/60">
               <p className="text-sm">No comments yet</p>
               <p className="text-xs mt-1">Be the first to comment</p>
             </div>
@@ -280,12 +280,12 @@ export const PhotoComments = ({
       {/* Reply indicator */}
       {replyingTo && (
         <div className="flex items-center justify-between px-3 py-2 bg-muted/50 border-t border-border/50">
-          <span className="text-xs text-muted-foreground">
+          <span className="text-xs text-white/60">
             Replying to {comments.find((c) => c.id === replyingTo)?.authorName}
           </span>
           <button
             onClick={cancelReply}
-            className="text-xs text-muted-foreground hover:text-foreground"
+            className="text-xs text-white/60 hover:text-foreground"
           >
             Cancel
           </button>
@@ -306,7 +306,7 @@ export const PhotoComments = ({
             <button
               type="button"
               onClick={() => setShowMentions(!showMentions)}
-              className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
+              className="absolute right-3 top-1/2 -translate-y-1/2 text-white/60 hover:text-foreground"
             >
               <AtSign className="h-4 w-4" />
             </button>
@@ -315,7 +315,7 @@ export const PhotoComments = ({
             {showMentions && (
               <div className="absolute bottom-full left-0 right-0 mb-1 bg-popover border border-border rounded-lg shadow-lg max-h-48 overflow-y-auto">
                 {filteredEmployees.length === 0 ? (
-                  <div className="p-3 text-sm text-muted-foreground">No team members found</div>
+                  <div className="p-3 text-sm text-white/60">No team members found</div>
                 ) : (
                   filteredEmployees.map((emp) => (
                     <button

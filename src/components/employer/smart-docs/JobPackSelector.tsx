@@ -104,7 +104,7 @@ export function JobPackSelector({
         <Button
           variant="outline"
           size="sm"
-          className="w-full border-dashed border-elec-yellow/30 text-muted-foreground hover:text-elec-yellow"
+          className="w-full border-dashed border-elec-yellow/30 text-white/60 hover:text-elec-yellow"
           onClick={onCreateNew}
         >
           <Plus className="h-4 w-4 mr-2" />
@@ -120,7 +120,7 @@ export function JobPackSelector({
               <div>
                 <h4 className="font-medium text-foreground">{selectedJobPack.title}</h4>
                 {selectedJobPack.client && (
-                  <p className="text-sm text-muted-foreground">{selectedJobPack.client}</p>
+                  <p className="text-sm text-white/60">{selectedJobPack.client}</p>
                 )}
               </div>
               <Badge
@@ -139,7 +139,7 @@ export function JobPackSelector({
 
             {/* Location */}
             {selectedJobPack.location && (
-              <div className="flex items-center gap-2 text-sm text-muted-foreground">
+              <div className="flex items-center gap-2 text-sm text-white/60">
                 <MapPin className="h-4 w-4" />
                 <span className="truncate">{selectedJobPack.location}</span>
               </div>
@@ -147,7 +147,7 @@ export function JobPackSelector({
 
             {/* Scope Preview */}
             {selectedJobPack.scope && (
-              <div className="flex items-start gap-2 text-sm text-muted-foreground">
+              <div className="flex items-start gap-2 text-sm text-white/60">
                 <FileText className="h-4 w-4 mt-0.5 shrink-0" />
                 <span className="line-clamp-2">{selectedJobPack.scope}</span>
               </div>
@@ -155,7 +155,7 @@ export function JobPackSelector({
 
             {/* Document Status */}
             <div className="pt-2 border-t border-elec-yellow/10">
-              <p className="text-xs text-muted-foreground mb-2">Document Status</p>
+              <p className="text-xs text-white/60 mb-2">Document Status</p>
               <div className="flex flex-wrap gap-2">
                 {getDocumentStatus(selectedJobPack).map((status, idx) => (
                   <Badge
@@ -164,7 +164,7 @@ export function JobPackSelector({
                     className={`text-xs ${
                       status.complete
                         ? 'bg-success/20 text-success'
-                        : 'bg-muted text-muted-foreground'
+                        : 'bg-muted text-white/60'
                     }`}
                   >
                     {status.complete ? (
@@ -181,7 +181,7 @@ export function JobPackSelector({
             {/* Hazards if available */}
             {selectedJobPack.hazards && selectedJobPack.hazards.length > 0 && (
               <div className="pt-2 border-t border-elec-yellow/10">
-                <p className="text-xs text-muted-foreground mb-2">Identified Hazards</p>
+                <p className="text-xs text-white/60 mb-2">Identified Hazards</p>
                 <div className="flex flex-wrap gap-1">
                   {selectedJobPack.hazards.slice(0, 5).map((hazard, idx) => (
                     <Badge key={idx} variant="outline" className="text-xs">

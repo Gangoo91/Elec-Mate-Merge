@@ -1,5 +1,6 @@
 import { useState, useMemo, useCallback } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
+import { storageSetJSONSync } from '@/utils/storage';
 import {
   ArrowLeft,
   BookOpen,
@@ -420,7 +421,7 @@ export default function PriceBook() {
       sourceLabel: 'Price Book',
       materials: [{ id: crypto.randomUUID(), description: name, category: 'materials' as const, quantity: 1, unitPrice: price, totalPrice: price, unit, notes: '' }],
     };
-    localStorage.setItem(sessionId, JSON.stringify({ materialsData: data }));
+    storageSetJSONSync(sessionId, { materialsData: data });
     navigate(`/electrician/quote-builder/create?materialsSessionId=${sessionId}`);
   };
 
@@ -431,7 +432,7 @@ export default function PriceBook() {
       sourceLabel: bundle.name,
       materials: bundle.items.map((i) => ({ id: crypto.randomUUID(), description: i.name, category: i.category as 'materials' | 'labour', quantity: i.quantity, unitPrice: i.unitPrice, totalPrice: i.quantity * i.unitPrice, unit: i.unit, notes: '' })),
     };
-    localStorage.setItem(sessionId, JSON.stringify({ materialsData: data }));
+    storageSetJSONSync(sessionId, { materialsData: data });
     navigate(`/electrician/quote-builder/create?materialsSessionId=${sessionId}`);
   };
 

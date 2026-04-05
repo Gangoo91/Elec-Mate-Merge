@@ -1,3 +1,4 @@
+import { openExternalUrl } from '@/utils/open-external-url';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -334,7 +335,7 @@ const ResourcesLibrary = () => {
                       variant="outline"
                       size="sm"
                       className="w-full h-11 border-blue-500/30 text-white hover:bg-blue-500/10 touch-manipulation active:scale-[0.98] transition-all"
-                      onClick={() => window.open(resource.url, '_blank')}
+                      onClick={() => openExternalUrl(resource.url)}
                     >
                       <ExternalLink className="h-4 w-4 mr-2" />
                       Visit Resource

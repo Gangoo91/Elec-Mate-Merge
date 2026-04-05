@@ -23,6 +23,7 @@ import { getSetting } from '@/services/settingsService';
 import { useOptionalVoiceFormContext } from '@/contexts/VoiceFormContext';
 import { useQueryClient } from '@tanstack/react-query';
 import { Badge } from '@/components/ui/badge';
+import { openExternalUrl } from '@/utils/open-external-url';
 interface VoiceAssistantV2Props {
   onNavigate?: (section: string) => void;
   currentSection?: string;
@@ -1057,7 +1058,7 @@ export const VoiceAssistantV2: React.FC<VoiceAssistantV2Props> = ({
       initiate_call: async ({ phoneNumber }: { phoneNumber: string }) => {
         // Clean phone number
         const cleaned = phoneNumber.replace(/\s+/g, '');
-        window.open(`tel:${cleaned}`, '_self');
+        openExternalUrl(`tel:${cleaned}`);
         toast({ title: 'Calling...', description: phoneNumber });
         return `Initiating call to ${phoneNumber}`;
       },

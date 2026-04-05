@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
+import { storageGetJSONSync } from '@/utils/storage';
 import { SmartBackButton } from '@/components/ui/smart-back-button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -118,9 +119,8 @@ const MentalHealthContent = () => {
   // Get journal entries count
   const [journalCount, setJournalCount] = useState(0);
   useEffect(() => {
-    const saved = localStorage.getItem('wellbeing-journal');
-    if (saved) {
-      const entries = JSON.parse(saved);
+    const entries = storageGetJSONSync<any[]>('wellbeing-journal', []);
+    if (entries.length > 0) {
       setJournalCount(entries.length);
     }
   }, []);

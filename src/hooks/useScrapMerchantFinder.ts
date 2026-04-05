@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
+import { openExternalUrl } from '@/utils/open-external-url';
 
 export interface ScrapMerchant {
   id: number;
@@ -106,14 +107,12 @@ export const useScrapMerchantFinder = () => {
 
   const openDirections = (merchant: ScrapMerchant) => {
     if (merchant.location) {
-      window.open(
-        `https://www.google.com/maps/dir/?api=1&destination=${merchant.location.lat},${merchant.location.lng}`,
-        '_blank'
+      openExternalUrl(
+        `https://www.google.com/maps/dir/?api=1&destination=${merchant.location.lat},${merchant.location.lng}`
       );
     } else {
-      window.open(
-        `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(merchant.name + ' ' + merchant.address)}`,
-        '_blank'
+      openExternalUrl(
+        `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(merchant.name + ' ' + merchant.address)}`
       );
     }
   };

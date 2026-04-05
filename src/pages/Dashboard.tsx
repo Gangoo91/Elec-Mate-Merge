@@ -20,6 +20,7 @@ import WelcomeModal from '@/components/onboarding/WelcomeModal';
 import { DesignedCircuitsCard } from '@/components/dashboard/DesignedCircuitsCard';
 import { useAuth } from '@/contexts/AuthContext';
 import useSEO from '@/hooks/useSEO';
+import { storageGetSync } from '@/utils/storage';
 
 const sectionVariants = {
   hidden: { opacity: 0, y: 16 },
@@ -58,7 +59,7 @@ const Dashboard = () => {
   useEffect(() => {
     if (!isLoading && profile && !profile.onboarding_completed) {
       // Also check localStorage as fallback (in case profile update was slow)
-      if (localStorage.getItem('elec-mate-onboarding-done')) return;
+      if (storageGetSync('elec-mate-onboarding-done')) return;
       const timer = setTimeout(() => setShowWelcome(true), 500);
       return () => clearTimeout(timer);
     }

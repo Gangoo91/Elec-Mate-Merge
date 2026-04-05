@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { openExternalUrl } from '@/utils/open-external-url';
 import {
   Search,
   MapPin,
@@ -106,7 +107,7 @@ export function TenderOpportunitiesSection({ onStartTender }: TenderOpportunitie
       <div className="p-4 border-b border-border bg-card/50 flex-shrink-0">
         <div className="flex gap-2 mb-3">
           <div className="relative flex-1">
-            <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+            <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white/60" />
             <Input
               placeholder="Enter postcode (e.g. B15 2TT)"
               value={searchPostcode}
@@ -130,7 +131,7 @@ export function TenderOpportunitiesSection({ onStartTender }: TenderOpportunitie
 
         {/* Radius Selector */}
         <div className="flex items-center gap-2 flex-wrap">
-          <span className="text-sm text-muted-foreground">Within:</span>
+          <span className="text-sm text-white/60">Within:</span>
           {[10, 25, 50, 100].map((miles) => (
             <Button
               key={miles}
@@ -196,9 +197,9 @@ export function TenderOpportunitiesSection({ onStartTender }: TenderOpportunitie
           <TabsContent value="search" className="m-0 p-4 min-h-full">
             {!activePostcode ? (
               <div className="text-center py-12">
-                <MapPin className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
+                <MapPin className="h-12 w-12 text-white/60 mx-auto mb-4" />
                 <h3 className="text-lg font-medium mb-2">Find Electrical Contracts Near You</h3>
-                <p className="text-muted-foreground max-w-sm mx-auto">
+                <p className="text-white/60 max-w-sm mx-auto">
                   Enter your postcode to discover live tender opportunities from councils, NHS,
                   housing associations and more.
                 </p>
@@ -211,13 +212,13 @@ export function TenderOpportunitiesSection({ onStartTender }: TenderOpportunitie
               <div className="text-center py-12">
                 <AlertCircle className="h-12 w-12 text-red-400 mx-auto mb-4" />
                 <h3 className="text-lg font-medium mb-2">Search Failed</h3>
-                <p className="text-muted-foreground">{(searchQuery.error as Error).message}</p>
+                <p className="text-white/60">{(searchQuery.error as Error).message}</p>
               </div>
             ) : opportunities.length === 0 ? (
               <div className="text-center py-12">
-                <Search className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
+                <Search className="h-12 w-12 text-white/60 mx-auto mb-4" />
                 <h3 className="text-lg font-medium mb-2">No Opportunities Found</h3>
-                <p className="text-muted-foreground max-w-sm mx-auto">
+                <p className="text-white/60 max-w-sm mx-auto">
                   Try expanding your search radius or adjusting filters. New opportunities are added
                   daily.
                 </p>
@@ -227,12 +228,12 @@ export function TenderOpportunitiesSection({ onStartTender }: TenderOpportunitie
                 {/* Stats Bar */}
                 {stats && (
                   <div className="flex items-center gap-4 mb-4 text-sm">
-                    <span className="text-muted-foreground">
+                    <span className="text-white/60">
                       <span className="font-medium text-foreground">{stats.total}</span>{' '}
                       opportunities
                     </span>
                     {stats.avg_value > 0 && (
-                      <span className="text-muted-foreground">
+                      <span className="text-white/60">
                         Avg:{' '}
                         <span className="font-medium text-foreground">
                           £{stats.avg_value.toLocaleString()}
@@ -267,9 +268,9 @@ export function TenderOpportunitiesSection({ onStartTender }: TenderOpportunitie
               </div>
             ) : (savedQuery.data?.length || 0) === 0 ? (
               <div className="text-center py-12">
-                <Bookmark className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
+                <Bookmark className="h-12 w-12 text-white/60 mx-auto mb-4" />
                 <h3 className="text-lg font-medium mb-2">No Saved Opportunities</h3>
-                <p className="text-muted-foreground max-w-sm mx-auto">
+                <p className="text-white/60 max-w-sm mx-auto">
                   Save opportunities you're interested in to track them here.
                 </p>
               </div>
@@ -293,7 +294,7 @@ export function TenderOpportunitiesSection({ onStartTender }: TenderOpportunitie
           <TabsContent value="sources" className="m-0 p-4 min-h-full">
             <div className="mb-4">
               <h3 className="font-medium mb-1">20 Integrated Tender Sources</h3>
-              <p className="text-sm text-muted-foreground">
+              <p className="text-sm text-white/60">
                 We aggregate opportunities from government, housing, NHS, education, and
                 construction platforms.
               </p>
@@ -326,11 +327,11 @@ export function TenderOpportunitiesSection({ onStartTender }: TenderOpportunitie
                             <div className="w-2 h-2 rounded-full bg-green-500" title="Active" />
                           )}
                         </div>
-                        <p className="text-sm text-muted-foreground line-clamp-2">
+                        <p className="text-sm text-white/60 line-clamp-2">
                           {source.description}
                         </p>
                         {source.last_sync_at && (
-                          <p className="text-xs text-muted-foreground mt-2">
+                          <p className="text-xs text-white/60 mt-2">
                             Last sync: {new Date(source.last_sync_at).toLocaleDateString('en-GB')} (
                             {source.last_sync_count} opportunities)
                           </p>
@@ -341,7 +342,7 @@ export function TenderOpportunitiesSection({ onStartTender }: TenderOpportunitie
                           <Button
                             variant="ghost"
                             size="sm"
-                            onClick={() => window.open(source.website_url!, '_blank')}
+                            onClick={() => openExternalUrl(source.website_url!)}
                           >
                             <ExternalLink className="h-4 w-4" />
                           </Button>
@@ -380,7 +381,7 @@ export function TenderOpportunitiesSection({ onStartTender }: TenderOpportunitie
               <label className="text-sm font-medium mb-2 block">Contract Value</label>
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="text-xs text-muted-foreground">Min (£)</label>
+                  <label className="text-xs text-white/60">Min (£)</label>
                   <Input
                     type="number"
                     placeholder="0"
@@ -392,7 +393,7 @@ export function TenderOpportunitiesSection({ onStartTender }: TenderOpportunitie
                   />
                 </div>
                 <div>
-                  <label className="text-xs text-muted-foreground">Max (£)</label>
+                  <label className="text-xs text-white/60">Max (£)</label>
                   <Input
                     type="number"
                     placeholder="No limit"
@@ -512,12 +513,12 @@ function OpportunityCard({
               <Zap className="h-4 w-4 text-elec-yellow mt-1 flex-shrink-0" />
               <div className="min-w-0">
                 <h4 className="font-medium text-sm line-clamp-2">{opportunity.title}</h4>
-                <p className="text-xs text-muted-foreground truncate">{opportunity.client_name}</p>
+                <p className="text-xs text-white/60 truncate">{opportunity.client_name}</p>
               </div>
             </div>
 
             {/* Location and Key Info */}
-            <div className="flex items-center gap-3 text-xs text-muted-foreground mb-2 flex-wrap">
+            <div className="flex items-center gap-3 text-xs text-white/60 mb-2 flex-wrap">
               {opportunity.location_text && (
                 <span className="flex items-center gap-1">
                   <MapPin className="h-3 w-3" />
@@ -543,7 +544,7 @@ function OpportunityCard({
             {/* Scope Preview */}
             {hasScope && (
               <div className="mb-2 p-2 rounded bg-card/30 border border-border/50">
-                <p className="text-xs text-muted-foreground line-clamp-2">{scopePreview}</p>
+                <p className="text-xs text-white/60 line-clamp-2">{scopePreview}</p>
               </div>
             )}
 
@@ -590,7 +591,7 @@ function OpportunityCard({
                 <Bookmark className="h-5 w-5" />
               )}
             </Button>
-            <ChevronRight className="h-4 w-4 text-muted-foreground mr-2" />
+            <ChevronRight className="h-4 w-4 text-white/60 mr-2" />
           </div>
         </div>
       </CardContent>

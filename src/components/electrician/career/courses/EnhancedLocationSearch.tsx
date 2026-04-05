@@ -6,6 +6,7 @@ import { Badge } from '@/components/ui/badge';
 import { MapPin, Search, Loader2, Navigation, X } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { cn } from '@/lib/utils';
+import { getCurrentPosition } from '@/utils/geolocation';
 
 interface EnhancedLocationSearchProps {
   onLocationSelect: (location: string, coordinates?: google.maps.LatLngLiteral) => void;
@@ -116,66 +117,45 @@ const EnhancedLocationSearch: React.FC<EnhancedLocationSearchProps> = ({
     }
   };
 
-  const handleCurrentLocation = () => {
-    if (!navigator.geolocation) {
-      toast({
-        title: 'Geolocation not supported',
-        description: "Your browser doesn't support location services.",
-        variant: 'destructive',
-      });
-      return;
-    }
-
+  const handleCurrentLocation = async () => {
     setIsGettingLocation(true);
 
-    navigator.geolocation.getCurrentPosition(
-      async (position) => {
-        try {
-          const { latitude, longitude } = position.coords;
-          const geocoder = new window.google.maps.Geocoder();
+    try {
+      const position = await getCurrentPosition({ timeout: 10000, enableHighAccuracy: true });
+      const { latitude, longitude } = position;
+      const geocoder = new window.google.maps.Geocoder();
 
-          const results = await new Promise<google.maps.GeocoderResult[]>((resolve, reject) => {
-            geocoder.geocode({ location: { lat: latitude, lng: longitude } }, (results, status) => {
-              if (status === 'OK' && results) {
-                resolve(results);
-              } else {
-                reject(new Error(`Reverse geocoding failed: ${status}`));
-              }
-            });
-          });
-
-          if (results.length > 0) {
-            const locationName = results[0].formatted_address;
-            onLocationSelect(locationName, { lat: latitude, lng: longitude });
-            setSearchInput(locationName);
-
-            toast({
-              title: 'Current location found',
-              description: `Searching for courses near ${locationName}`,
-              variant: 'success',
-            });
+      const results = await new Promise<google.maps.GeocoderResult[]>((resolve, reject) => {
+        geocoder.geocode({ location: { lat: latitude, lng: longitude } }, (results, status) => {
+          if (status === 'OK' && results) {
+            resolve(results);
+          } else {
+            reject(new Error(`Reverse geocoding failed: ${status}`));
           }
-        } catch (error) {
-          console.error('Reverse geocoding error:', error);
-          toast({
-            title: 'Location error',
-            description: 'Unable to determine your exact location.',
-            variant: 'destructive',
-          });
-        } finally {
-          setIsGettingLocation(false);
-        }
-      },
-      (error) => {
-        setIsGettingLocation(false);
-        toast({
-          title: 'Location access denied',
-          description: 'Please allow location access or enter a location manually.',
-          variant: 'destructive',
         });
-      },
-      { timeout: 10000, enableHighAccuracy: true }
-    );
+      });
+
+      if (results.length > 0) {
+        const locationName = results[0].formatted_address;
+        onLocationSelect(locationName, { lat: latitude, lng: longitude });
+        setSearchInput(locationName);
+
+        toast({
+          title: 'Current location found',
+          description: `Searching for courses near ${locationName}`,
+          variant: 'success',
+        });
+      }
+    } catch (error) {
+      console.error('Location error:', error);
+      toast({
+        title: 'Location access denied',
+        description: 'Please allow location access or enter a location manually.',
+        variant: 'destructive',
+      });
+    } finally {
+      setIsGettingLocation(false);
+    }
   };
 
   const handleClearLocation = () => {

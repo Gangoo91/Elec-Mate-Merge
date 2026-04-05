@@ -2,8 +2,10 @@ import { useState } from 'react';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
+import { copyToClipboard } from '@/utils/clipboard';
 import { type Briefing } from '@/hooks/useBriefings';
 import { generateBriefingQRData } from '@/hooks/useBriefingSignatures';
+import { storageGetSync, storageSetSync } from '@/utils/storage';
 
 // Teams webhook card format
 interface TeamsAdaptiveCard {
@@ -170,7 +172,7 @@ export function useCopyBriefingLink() {
   const copyLink = async (briefingId: string) => {
     const link = generateBriefingQRData(briefingId);
     try {
-      await navigator.clipboard.writeText(link);
+      await copyToClipboard(link);
       setCopied(true);
       toast({
         title: 'Link copied',
@@ -210,7 +212,7 @@ export function useShareBriefing() {
       }
     } else {
       // Fallback to clipboard
-      await navigator.clipboard.writeText(signOffUrl);
+      await copyToClipboard(signOffUrl);
       toast({
         title: 'Link copied',
         description: 'Share not available - link copied to clipboard instead.',
@@ -238,7 +240,7 @@ export function useSaveTeamsWebhook() {
       // Store in user metadata or a settings table
       // For now, we'll use the profile table if it has a webhooks field
       // Otherwise store in localStorage as a simple solution
-      localStorage.setItem('teams_webhook_url', webhookUrl);
+      storageSetSync('teams_webhook_url', webhookUrl);
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['teams-webhook'] });
@@ -264,7 +266,7 @@ export function useTeamsWebhook() {
   return useQuery({
     queryKey: ['teams-webhook'],
     queryFn: async (): Promise<string | null> => {
-      return localStorage.getItem('teams_webhook_url');
+      return storageGetSync('teams_webhook_url');
     },
   });
 }

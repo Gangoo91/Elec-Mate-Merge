@@ -3,6 +3,7 @@ import { Card } from '@/components/ui/card';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from '@/hooks/use-toast';
+import { trackFeatureUse } from '@/components/ActivityTracker';
 import { SearchInterface } from './price-comparison/SearchInterface';
 import { ProductCard, PriceComparisonItem } from './price-comparison/ProductCard';
 import { PriceStats, PriceComparisonResult } from './price-comparison/PriceStats';
@@ -127,6 +128,9 @@ const MaterialPriceComparison = ({
         };
 
         setComparisonResult(result);
+        supabase.auth.getUser().then(({ data: { user } }) => {
+          if (user) trackFeatureUse(user.id, 'material_search', { query: searchQuery });
+        });
         toast({
           title: 'Search Complete',
           description: `Found ${sortedProducts.length} products`,

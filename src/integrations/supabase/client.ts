@@ -31,11 +31,11 @@ export const supabase = createClient<Database>(SUPABASE_URL, SUPABASE_PUBLISHABL
       const headers = new Headers(options.headers || {});
       headers.set('x-request-id', requestId);
 
-      // Set 6-minute timeout for edge functions to prevent premature client timeouts
+      // Set 10-minute timeout to cover long-running edge functions (some take 8+ mins)
       return fetch(url, {
         ...options,
         headers,
-        signal: AbortSignal.timeout(360000), // 360 seconds = 6 minutes
+        signal: AbortSignal.timeout(600000), // 600 seconds = 10 minutes
       });
     },
   },

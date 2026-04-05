@@ -1,3 +1,4 @@
+import { copyToClipboard } from '@/utils/clipboard';
 import { useState, useCallback } from 'react';
 import {
   Copy,
@@ -161,10 +162,13 @@ const PhaseRotationCalculator = () => {
     if (!result) return;
     let text = `Phase Rotation Analysis\nSequence: ${result.sequence}\nRotation: ${result.rotationDirection}\nConfidence: ${result.confidence}\nMotor Direction: ${result.motorDirection}`;
     if (result.balanceStatus) text += `\nBalance: ${result.balanceStatus}`;
-    navigator.clipboard.writeText(text);
-    setCopied(true);
-    toast({ title: 'Copied to clipboard' });
-    setTimeout(() => setCopied(false), 2000);
+    copyToClipboard(text).then((ok) => {
+      if (ok) {
+        setCopied(true);
+        toast({ title: 'Copied to clipboard' });
+        setTimeout(() => setCopied(false), 2000);
+      }
+    });
   };
 
   return (

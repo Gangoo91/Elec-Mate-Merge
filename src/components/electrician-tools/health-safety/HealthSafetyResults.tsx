@@ -8,6 +8,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Copy, Download, RotateCcw, Edit2, Save, X, Shield, AlertTriangle } from 'lucide-react';
 import { toast } from 'sonner';
 import { openOrDownloadPdf } from '@/utils/pdf-download';
+import { copyToClipboard } from '@/utils/clipboard';
 import { RiskSummaryStats } from './results/RiskSummaryStats';
 import { EnhancedHazardCard } from './results/EnhancedHazardCard';
 import { PPERequirementsGrid } from './results/PPERequirementsGrid';
@@ -139,7 +140,7 @@ export const HealthSafetyResults = ({ data, onStartOver }: HealthSafetyResultsPr
   };
 
   const handleCopy = () => {
-    navigator.clipboard.writeText(JSON.stringify(editableData, null, 2));
+    copyToClipboard(JSON.stringify(editableData, null, 2));
     toast.success('Copied to clipboard');
   };
 

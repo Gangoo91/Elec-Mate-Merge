@@ -1,3 +1,4 @@
+import { copyToClipboard } from '@/utils/clipboard';
 import { Button } from '@/components/ui/button';
 import { Share2, Copy, Check } from 'lucide-react';
 import { useState } from 'react';
@@ -85,13 +86,12 @@ export const WhatsAppShareButton = ({
     const link = await generateShareLink();
     if (!link) return;
 
-    try {
-      await navigator.clipboard.writeText(link);
+    const ok = await copyToClipboard(link);
+    if (ok) {
       setCopied(true);
       toast.success('Link copied to clipboard');
-
       setTimeout(() => setCopied(false), 2000);
-    } catch (error) {
+    } else {
       toast.error('Failed to copy link');
     }
   };

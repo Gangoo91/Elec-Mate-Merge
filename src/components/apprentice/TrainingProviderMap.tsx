@@ -6,6 +6,7 @@ import { Search, MapPin, X, ExternalLink, Phone } from 'lucide-react';
 import { ApiErrorDisplay } from '../electrician-pricing/merchant-finder/ApiErrorDisplay';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { toast } from 'sonner';
+import { getCurrentPosition } from '@/utils/geolocation';
 
 interface TrainingProvider {
   id: string;
@@ -61,38 +62,35 @@ const TrainingProviderMap: React.FC<TrainingProviderMapProps> = ({ onClose }) =>
         console.log('Map initialized successfully');
 
         // Try to get user's location for better initial positioning
-        if (navigator.geolocation) {
-          navigator.geolocation.getCurrentPosition(
-            (position) => {
-              const userLocation = {
-                lat: position.coords.latitude,
-                lng: position.coords.longitude,
-              };
+        getCurrentPosition({ enableHighAccuracy: true, timeout: 10000, maximumAge: 60000 })
+          .then((position) => {
+            const userLocation = {
+              lat: position.latitude,
+              lng: position.longitude,
+            };
 
-              if (googleMapRef.current) {
-                googleMapRef.current.setCenter(userLocation);
-                googleMapRef.current.setZoom(10);
+            if (googleMapRef.current) {
+              googleMapRef.current.setCenter(userLocation);
+              googleMapRef.current.setZoom(10);
 
-                // Create a marker for user's location
-                new window.google.maps.Marker({
-                  position: userLocation,
-                  map: googleMapRef.current,
-                  icon: {
-                    url: 'https://maps.google.com/mapfiles/ms/icons/blue-dot.png',
-                    scaledSize: new window.google.maps.Size(24, 24),
-                  },
-                  title: 'Your approximate location',
-                });
-              }
-            },
-            (error) => {
-              console.log('Geolocation error:', error);
-              toast.error('Location access denied', {
-                description: 'Using default UK map view',
+              // Create a marker for user's location
+              new window.google.maps.Marker({
+                position: userLocation,
+                map: googleMapRef.current,
+                icon: {
+                  url: 'https://maps.google.com/mapfiles/ms/icons/blue-dot.png',
+                  scaledSize: new window.google.maps.Size(24, 24),
+                },
+                title: 'Your approximate location',
               });
             }
-          );
-        }
+          })
+          .catch((error) => {
+            console.log('Geolocation error:', error);
+            toast.error('Location access denied', {
+              description: 'Using default UK map view',
+            });
+          });
       } catch (error) {
         console.error('Error initializing Google Maps:', error);
         setApiError(

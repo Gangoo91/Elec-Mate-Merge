@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { openExternalUrl } from '@/utils/open-external-url';
 import { Calendar, Clock, MapPin, ExternalLink, ChevronDown } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
@@ -23,7 +24,7 @@ const EventsList = ({ events, defaultExpanded = true }: EventsListProps) => {
 
   const handleRegister = (event: Event) => {
     if (event.url) {
-      window.open(event.url, '_blank', 'noopener,noreferrer');
+      openExternalUrl(event.url);
     } else {
       toast.success(`You've registered for: ${event.name}`);
     }

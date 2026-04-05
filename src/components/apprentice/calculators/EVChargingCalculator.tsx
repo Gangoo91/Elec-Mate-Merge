@@ -1,4 +1,5 @@
 import { useState, useCallback } from 'react';
+import { copyToClipboard } from '@/utils/clipboard';
 import { Car, Copy, Check, Info, AlertTriangle, CheckCircle, Zap, ChevronDown } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
@@ -149,7 +150,7 @@ const EVChargingCalculator = () => {
       `Zs: ${results.actualZs.toFixed(2)}Ω (Max: ${results.maxZs}Ω)`,
       `Status: ${results.installationCompliant ? 'COMPLIANT' : 'ISSUES FOUND'}`,
     ].join('\n');
-    navigator.clipboard.writeText(text);
+    copyToClipboard(text);
     setCopied(true);
     toast({ title: 'Copied to clipboard' });
     setTimeout(() => setCopied(false), 2000);

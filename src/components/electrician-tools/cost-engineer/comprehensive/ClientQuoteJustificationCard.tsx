@@ -18,6 +18,7 @@ import { useState } from 'react';
 import { toast } from '@/hooks/use-toast';
 import { formatCurrency } from '@/lib/format';
 import { MARKET_RATES_2025 } from '@/lib/constants/pricing-2025';
+import { copyToClipboard } from '@/utils/clipboard';
 
 interface ClientQuoteJustificationCardProps {
   materialsNet: number;
@@ -65,8 +66,8 @@ const ClientQuoteJustificationCard = ({
     setExpandedSections(newExpanded);
   };
 
-  const copyToClipboard = (text: string, label: string) => {
-    navigator.clipboard.writeText(text);
+  const handleCopyToClipboard = (text: string, label: string) => {
+    copyToClipboard(text);
     toast({
       title: 'Copied to clipboard',
       description: `${label} copied successfully`,
@@ -124,7 +125,7 @@ This is transparent, competitive pricing that covers all costs while ensuring sa
             <Button
               size="sm"
               variant="outline"
-              onClick={() => copyToClipboard(valueProposition, 'Value proposition')}
+              onClick={() => handleCopyToClipboard(valueProposition, 'Value proposition')}
               className="shrink-0"
             >
               <Copy className="h-3 w-3" />
@@ -264,7 +265,7 @@ This is transparent, competitive pricing that covers all costs while ensuring sa
                       size="sm"
                       variant="ghost"
                       onClick={() =>
-                        copyToClipboard(
+                        handleCopyToClipboard(
                           `I understand it might seem high at first glance. Let me break down exactly what's included:\n\nMaterials: ${formatCurrency(materialsTotal)}\n- Quality materials from trusted suppliers at trade prices\n- Materials cost ${formatCurrency(materialsNet)}, plus ${materialsMarkup.toFixed(0)}% to cover waste, collection, and warranty\n- Industry standard markup: 15-25% (we're at ${materialsMarkup.toFixed(0)}%)\n\nLabour: ${formatCurrency(labourTotal)} (${Math.round(labourHours)} hours)\n- Qualified electrician: ${formatCurrency(labourRate)}/hour\n- UK market rate: £${marketRate.min}-${marketRate.max}/hour (competitive)\n- ${region} regional adjustment: ${regionalMultiplier}x\n\nBusiness Costs: ${formatCurrency(overheads)}\n- Van, tools, insurance, certifications\n- ${formatCurrency(dailyOverheadRate)}/day × ${jobDays} days\n\nThis reflects professional work that will last 20+ years and keep your family safe.`,
                           "Response to 'too expensive'"
                         )
@@ -401,7 +402,7 @@ This is transparent, competitive pricing that covers all costs while ensuring sa
                     size="sm"
                     variant="ghost"
                     onClick={() =>
-                      copyToClipboard(
+                      handleCopyToClipboard(
                         "Lower quotes often cut corners. Questions to ask:\n\n⚠️ Are they:\n- 18th Edition qualified?\n- Fully insured (£2M)?\n- Providing BS 7671 certification?\n- Using quality UK materials?\n\n✓ Our quote includes:\n- Qualified, insured electrician\n- Quality materials with warranties\n- Full compliance and certification\n- 12-month guarantee\n- No hidden extras\n\n❌ Budget quotes may:\n- Use unqualified labour\n- Source cheap materials\n- Skip proper testing\n- Add extras later\n\nYour safety isn't worth the risk.",
                         'Cheaper quote response'
                       )
@@ -543,7 +544,7 @@ This is transparent, competitive pricing that covers all costs while ensuring sa
                     size="sm"
                     variant="ghost"
                     onClick={() =>
-                      copyToClipboard(
+                      handleCopyToClipboard(
                         `This price is already fair:\n\nBreak-even: ${formatCurrency(breakEven)}\n(Materials ${formatCurrency(materialsTotal)} + Labour ${formatCurrency(labourTotal)} + Overheads ${formatCurrency(overheads)} + Contingency ${formatCurrency(contingency)})\n\nQuote: ${formatCurrency(recommendedPrice)}\nProfit: ${formatCurrency(profit)} (${margin.toFixed(1)}% margin)\n\nThis ${margin.toFixed(1)}% is my business income for living, tools, and training.\n\nIndustry margins:\n• Budget: 10-15%\n• Professional: 20-30%\n• Specialist: 30-40%\n\nWhat I CAN do:\n• Phase the work\n• Adjust scope\n• Offer payment terms\n\nWhat I can't do:\n• Work below break-even\n• Cut corners on safety\n• Use substandard materials`,
                         'Discount response'
                       )
@@ -669,7 +670,7 @@ This is transparent, competitive pricing that covers all costs while ensuring sa
                     size="sm"
                     variant="ghost"
                     onClick={() =>
-                      copyToClipboard(
+                      handleCopyToClipboard(
                         `Client-supplied materials rarely work well:\n\n❌ Issues:\n• No warranty if faulty\n• No guarantee they're correct\n• Delays with wrong/missing items\n• Risk of non-compliant materials\n\nMaterials breakdown:\nNet: ${formatCurrency(materialsNet)}\nMarkup: ${formatCurrency(markupAmount)} (${materialsMarkup.toFixed(0)}%)\n\nThe ${materialsMarkup.toFixed(0)}% covers:\n• Expertise selecting correct items\n• Trade supplier access\n• Warranty handling\n• Waste (5-10%)\n• Collection time\n\n✓ Trade pricing benefit:\nI get 25-40% off retail - you'd pay MORE buying retail yourself.\n\nRecommendation: Keep materials included for warranty and to avoid delays.`,
                         'Supply materials response'
                       )
@@ -825,7 +826,7 @@ This is transparent, competitive pricing that covers all costs while ensuring sa
                     size="sm"
                     variant="ghost"
                     onClick={() =>
-                      copyToClipboard(
+                      handleCopyToClipboard(
                         `Labour breakdown:\n${formatCurrency(labourTotal)} (${Math.round(labourHours)} hours @ ${formatCurrency(labourRate)}/hour)\n\n✓ What this covers:\n• Years of training\n• 18th Edition qualified\n• NICEIC membership (£450-520/yr)\n• Training (£400/yr)\n• Insurance (£850/yr)\n• Experience and expertise\n• Legal compliance\n\nUK Market Rates 2025:\n• Apprentice: £12-18/hr\n• Improver: £18-25/hr\n• Qualified: £${marketRate.min}-${marketRate.max}/hr ← You're here\n• Experienced: £${marketRate.max + 5}-${marketRate.max + 10}/hr\n• Specialist: £${marketRate.max + 15}-${marketRate.max + 30}/hr\n\nMy rate: ${formatCurrency(labourRate)}/hr (competitive)\n\nCompare trades:\n• Plumber: £40-80/hr\n• Gas: £50-90/hr\n• Builder: £35-60/hr\n• Electrician: £${marketRate.min}-${marketRate.max}/hr ← Best value\n\nYou're paying for knowledge, safety, and expertise.`,
                         'Labour costs response'
                       )
@@ -942,7 +943,7 @@ This is transparent, competitive pricing that covers all costs while ensuring sa
                     size="sm"
                     variant="ghost"
                     onClick={() =>
-                      copyToClipboard(
+                      handleCopyToClipboard(
                         "I run a legitimate, registered business.\n\n❌ Cash-in-hand issues:\n• Illegal tax evasion (£20k fines)\n• Voids building insurance\n• No legal recourse\n• Can't provide certification\n• Risk professional registration\n\n✓ Proper invoice benefits:\n• Legal proof of work\n• Building Control notification\n• EIC certificate\n• Insurance maintained\n• Warranty protection\n• Legal rights\n• Tax-deductible (if rental)\n\nVAT-registered businesses MUST charge VAT by law. This protects you with proper documentation and certification.",
                         'Cash discount response'
                       )
@@ -1315,7 +1316,7 @@ This is transparent, competitive pricing that covers all costs while ensuring sa
                   size="sm"
                   variant="ghost"
                   onClick={() =>
-                    copyToClipboard(
+                    handleCopyToClipboard(
                       "Quote Comparison Checklist:\n\n□ Qualifications\n  - 18th Edition certified?\n  - NICEIC/NAPIT registered?\n  - Years of experience?\n\n□ Insurance\n  - Public liability (£2M min)?\n  - Professional indemnity?\n  - Proof available?\n\n□ Materials\n  - Supplier specified?\n  - Brand names listed?\n  - Warranties included?\n\n□ Certification\n  - EIC provided?\n  - Building Control notification?\n  - Test certificates?\n\n□ Pricing\n  - Itemized breakdown?\n  - Materials + labour separated?\n  - VAT clearly shown?\n  - Payment terms defined?\n\n□ Guarantees\n  - Workmanship guarantee?\n  - What's covered?\n  - Insurance-backed?\n\n🚨 Red Flags:\n- Cash only, no invoice\n- No qualifications\n- Too cheap\n- Vague pricing\n- No insurance\n- Pressure tactics\n- No written quote\n- Full upfront payment\n\n✅ This Quote: All boxes ticked ✓",
                       'Comparison checklist'
                     )

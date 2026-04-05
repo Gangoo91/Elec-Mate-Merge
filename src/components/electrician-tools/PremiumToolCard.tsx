@@ -1,3 +1,4 @@
+import { openExternalUrl } from '@/utils/open-external-url';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import {
@@ -254,7 +255,7 @@ const PremiumToolCard = ({
             className="btn-buy-now h-11 touch-manipulation active:scale-[0.98]"
             onClick={(e) => {
               e.stopPropagation();
-              window.open(getProductUrl(), '_blank');
+              openExternalUrl(getProductUrl());
             }}
           >
             <ShoppingCart className="h-4 w-4 mr-2" />

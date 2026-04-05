@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Copy, Check, Tag, Truck, BadgePercent } from 'lucide-react';
 import { MarketplaceCoupon } from '@/hooks/useMarketplaceSearch';
 import { cn } from '@/lib/utils';
+import { copyToClipboard } from '@/utils/clipboard';
 import { useToast } from '@/hooks/use-toast';
 
 interface CouponCardProps {
@@ -14,7 +15,7 @@ export function CouponCard({ coupon }: CouponCardProps) {
 
   const handleCopy = async () => {
     try {
-      await navigator.clipboard.writeText(coupon.code);
+      await copyToClipboard(coupon.code);
       setCopied(true);
       toast({
         title: 'Code copied!',

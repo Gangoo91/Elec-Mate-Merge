@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { openExternalUrl } from '@/utils/open-external-url';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import {
@@ -262,7 +263,7 @@ const CrisisResourcesTab = () => {
                   <Button
                     className="flex-1 bg-purple-500 hover:bg-purple-600"
                     onClick={() =>
-                      window.open('https://andysmanclub.co.uk/find-your-nearest-group/', '_blank')
+                      openExternalUrl('https://andysmanclub.co.uk/find-your-nearest-group/')
                     }
                   >
                     <MapPin className="h-4 w-4 mr-2" />
@@ -294,7 +295,7 @@ const CrisisResourcesTab = () => {
                 <div className="flex gap-2">
                   <Button
                     className="flex-1 bg-blue-500 hover:bg-blue-600"
-                    onClick={() => window.open('https://www.thecalmzone.net/', '_blank')}
+                    onClick={() => openExternalUrl('https://www.thecalmzone.net/')}
                   >
                     <Globe className="h-4 w-4 mr-2" />
                     Visit Site
@@ -323,7 +324,7 @@ const CrisisResourcesTab = () => {
                 </p>
                 <Button
                   className="w-full bg-amber-500 hover:bg-amber-600 text-black"
-                  onClick={() => window.open('https://www.matesinmind.org/', '_blank')}
+                  onClick={() => openExternalUrl('https://www.matesinmind.org/')}
                 >
                   <ExternalLink className="h-4 w-4 mr-2" />
                   Learn More

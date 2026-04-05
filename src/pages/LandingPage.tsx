@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link, Navigate } from 'react-router-dom';
+import { storageGetSync } from '@/utils/storage';
 import { Helmet } from 'react-helmet';
 import { supabase } from '@/integrations/supabase/client';
 import {
@@ -52,7 +53,7 @@ const LandingPage = () => {
   // Redirect first-time visitors to walkthrough (before they've signed in)
   // Skip redirect for search engine bots so Google can index the landing page
   const isBot = /bot|crawl|spider|googlebot|bingbot|yandex|baidu/i.test(navigator.userAgent);
-  if (!user && !isBot && !localStorage.getItem('walkthrough_completed')) {
+  if (!user && !isBot && !storageGetSync('walkthrough_completed')) {
     return <Navigate to="/walkthrough" replace />;
   }
 

@@ -2,6 +2,7 @@ import { useState, useCallback } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 import { transformScopeToQuoteItems } from '@/utils/scopeToQuoteTransformer';
+import { storageSetJSONSync } from '@/utils/storage';
 import type {
   SiteVisit,
   SiteVisitRoom,
@@ -726,7 +727,7 @@ export function useSiteVisitStorage(): UseSiteVisitStorageReturn {
       },
     };
 
-    localStorage.setItem(sessionId, JSON.stringify(siteVisitData));
+    storageSetJSONSync(sessionId, siteVisitData);
     return sessionId;
   }, []);
 

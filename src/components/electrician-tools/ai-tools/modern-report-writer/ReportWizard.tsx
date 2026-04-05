@@ -37,14 +37,12 @@ const validateClientDetails = (data: Record<string, any>) => {
     'installationDescription',
   ];
   const isValid = requiredFields.every((field) => data[field]?.trim());
-  console.log('Client validation:', { data, requiredFields, isValid });
   return isValid;
 };
 
 const validateInspectionDetails = (data: Record<string, any>) => {
   const requiredFields = ['extentOfInspection', 'overallAssessment'];
   const isValid = requiredFields.every((field) => data[field]?.trim());
-  console.log('Inspection validation:', { data, requiredFields, isValid });
   return isValid;
 };
 
@@ -93,27 +91,14 @@ const ReportWizard = () => {
       title: 'Review & Generate',
       description: 'Final review and generation',
       isCompleted: false,
-      isAccessible: true, // Force accessible for debugging - both validations are passing anyway
+      isAccessible: !!wizardData.template
+        && validateClientDetails(wizardData.clientDetails)
+        && validateInspectionDetails(wizardData.inspectionDetails),
     },
   ];
 
   const currentStepIndex = steps.findIndex((step) => step.id === currentStep);
   const progress = ((currentStepIndex + 1) / steps.length) * 100;
-
-  // Debug logging for wizard state
-  console.log('Wizard Debug:', {
-    currentStep,
-    wizardData: {
-      template: wizardData.template?.name,
-      clientDetails: Object.keys(wizardData.clientDetails),
-      inspectionDetails: Object.keys(wizardData.inspectionDetails),
-    },
-    steps: steps.map((s) => ({
-      id: s.id,
-      isCompleted: s.isCompleted,
-      isAccessible: s.isAccessible,
-    })),
-  });
 
   // Auto-save functionality
   useEffect(() => {
@@ -130,29 +115,20 @@ const ReportWizard = () => {
   }, [wizardData, setWizardData]);
 
   const updateWizardData = (section: keyof WizardData, data: any) => {
-    console.log('Updating wizard data:', { section, data });
     setWizardData((prev) => {
       const newData = {
         ...prev,
         [section]: data,
         lastSaved: new Date().toISOString(),
       };
-      console.log('New wizard data state:', newData);
       return newData;
     });
   };
 
   const goToStep = (stepId: WizardStep) => {
     const step = steps.find((s) => s.id === stepId);
-    console.log('Attempting to go to step:', {
-      stepId,
-      step: step ? { id: step.id, isAccessible: step.isAccessible } : 'not found',
-    });
     if (step?.isAccessible) {
-      console.log('Step is accessible, navigating to:', stepId);
       setCurrentStep(stepId);
-    } else {
-      console.log('Step is not accessible:', stepId);
     }
   };
 

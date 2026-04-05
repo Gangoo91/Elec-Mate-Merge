@@ -2,6 +2,7 @@ import { Button } from '@/components/ui/button';
 import { MapPin, Phone, ExternalLink } from 'lucide-react';
 import { StarRating } from './StarRating';
 import { ScrapMerchant } from '@/hooks/useScrapMerchantFinder';
+import { openExternalUrl } from '@/utils/open-external-url';
 
 interface MerchantCardProps {
   merchant: ScrapMerchant;
@@ -51,7 +52,7 @@ export const MerchantCard = ({ merchant, openDirections }: MerchantCardProps) =>
           variant="outline"
           className="flex items-center justify-center gap-1 w-full"
           disabled={merchant.phone === 'Not available'}
-          onClick={() => window.open(`tel:${merchant.phone}`, '_blank')}
+          onClick={() => openExternalUrl(`tel:${merchant.phone}`)}
         >
           <Phone className="h-3 w-3" />
           <span>{merchant.phone === 'Not available' ? 'No Phone' : merchant.phone}</span>

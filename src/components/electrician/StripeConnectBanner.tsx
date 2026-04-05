@@ -4,6 +4,7 @@ import { CreditCard, X, ArrowRight, Loader2 } from 'lucide-react';
 import { toast } from 'sonner';
 import { cn } from '@/lib/utils';
 import { openExternalUrl } from '@/utils/open-external-url';
+import { storageGetSync, storageSetSync } from '@/utils/storage';
 
 interface StripeConnectBannerProps {
   className?: string;
@@ -22,7 +23,7 @@ const StripeConnectBanner: React.FC<StripeConnectBannerProps> = ({ className, re
 
   const checkStatus = async () => {
     // Check if user dismissed the banner
-    const dismissed = localStorage.getItem('stripe_connect_banner_dismissed');
+    const dismissed = storageGetSync('stripe_connect_banner_dismissed');
     if (dismissed) {
       setStatus('dismissed');
       return;
@@ -160,7 +161,7 @@ const StripeConnectBanner: React.FC<StripeConnectBannerProps> = ({ className, re
   const handleConnect = handleConnectOAuth; // Default to OAuth for existing accounts
 
   const handleDismiss = () => {
-    localStorage.setItem('stripe_connect_banner_dismissed', 'true');
+    storageSetSync('stripe_connect_banner_dismissed', 'true');
     setStatus('dismissed');
   };
 

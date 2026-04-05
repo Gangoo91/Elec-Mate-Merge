@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { copyToClipboard } from '@/utils/clipboard';
 import { Check, Copy } from 'lucide-react';
 import { toast } from 'sonner';
 
@@ -12,9 +13,9 @@ const CodeBlock = ({ code, language }: { code: string; language?: string }) => {
   const [copied, setCopied] = useState(false);
 
   const handleCopy = async () => {
-    await navigator.clipboard.writeText(code);
+    const ok = await copyToClipboard(code);
     setCopied(true);
-    toast.success('Copied to clipboard');
+    if (ok) toast.success('Copied to clipboard');
     setTimeout(() => setCopied(false), 2000);
   };
 

@@ -5,11 +5,13 @@
  * Mirrors SupervisorVerificationQRSheet with all share channels from the start.
  */
 
+import { copyToClipboard } from '@/utils/clipboard';
 import { useState } from 'react';
 import { shareContent } from '@/utils/share';
 import { QRCodeSVG } from 'qrcode.react';
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
 import { Button } from '@/components/ui/button';
+import { openExternalUrl } from '@/utils/open-external-url';
 import {
   ShieldCheck,
   Copy,
@@ -47,15 +49,15 @@ export function TimeEntryVerificationQRSheet({
   const isVerified = !!verification?.verified_at;
 
   const handleCopyLink = async () => {
-    try {
-      await navigator.clipboard.writeText(verificationUrl);
+    const ok = await copyToClipboard(verificationUrl);
+    if (ok) {
       setCopied(true);
       toast({
         title: 'Link copied',
         description: 'Verification link copied to clipboard',
       });
       setTimeout(() => setCopied(false), 2000);
-    } catch {
+    } else {
       toast({
         title: 'Copy failed',
         description: 'Could not copy to clipboard',
@@ -111,7 +113,7 @@ export function TimeEntryVerificationQRSheet({
     const body = encodeURIComponent(
       `Hi,\n\nCould you please verify my off-the-job training hours?\n\n${verificationUrl}\n\nIt only takes 15 seconds — no account needed.\n\nThank you!`
     );
-    window.open(`mailto:?subject=${subject}&body=${body}`, '_self');
+    openExternalUrl(`mailto:?subject=${subject}&body=${body}`);
   };
 
   const handleWhatsApp = async () => {
@@ -344,7 +346,7 @@ export function TimeEntryVerificationQRSheet({
                   variant="ghost"
                   size="sm"
                   className="h-11 touch-manipulation text-white"
-                  onClick={() => window.open(verificationUrl, '_blank')}
+                  onClick={() => openExternalUrl(verificationUrl)}
                 >
                   <ExternalLink className="h-4 w-4 mr-1.5" />
                   Open

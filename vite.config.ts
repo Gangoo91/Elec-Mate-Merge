@@ -181,6 +181,9 @@ export default defineConfig(({ mode }) => ({
       '@': path.resolve(__dirname, './src'),
     },
   },
+  esbuild: {
+    drop: ['console'],
+  },
   build: {
     sourcemap: false,
     minify: 'esbuild',

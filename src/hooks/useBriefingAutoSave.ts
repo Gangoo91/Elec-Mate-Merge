@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { useToast } from '@/hooks/use-toast';
+import { storageGetSync, storageSetSync, storageRemoveSync, storageGetJSONSync, storageSetJSONSync } from '@/utils/storage';
 
 const AUTO_SAVE_KEY = 'briefing_auto_save';
 const AUTO_SAVE_INTERVAL = 30000; // 30 seconds
@@ -22,17 +23,16 @@ export const useBriefingAutoSave = (formData: any, step: number, isEditing: bool
     if (isEditing) return null; // Don't load auto-save for editing
 
     try {
-      const saved = localStorage.getItem(AUTO_SAVE_KEY);
-      if (!saved) return null;
+      const data = storageGetJSONSync<AutoSaveData | null>(AUTO_SAVE_KEY, null);
+      if (!data) return null;
 
-      const data = JSON.parse(saved) as AutoSaveData;
       const ageInMinutes = (Date.now() - data.timestamp) / 1000 / 60;
 
       // Only return if less than 24 hours old
       if (ageInMinutes < 1440) {
         return data;
       } else {
-        localStorage.removeItem(AUTO_SAVE_KEY);
+        storageRemoveSync(AUTO_SAVE_KEY);
         return null;
       }
     } catch (error) {
@@ -50,7 +50,7 @@ export const useBriefingAutoSave = (formData: any, step: number, isEditing: bool
         step,
       };
 
-      localStorage.setItem(AUTO_SAVE_KEY, JSON.stringify(dataToSave));
+      storageSetJSONSync(AUTO_SAVE_KEY, dataToSave);
       setLastSaved(new Date());
       setHasUnsavedChanges(false);
 
@@ -67,7 +67,7 @@ export const useBriefingAutoSave = (formData: any, step: number, isEditing: bool
 
   // Clear saved data
   const clearSavedData = () => {
-    localStorage.removeItem(AUTO_SAVE_KEY);
+    storageRemoveSync(AUTO_SAVE_KEY);
     setLastSaved(null);
     setHasUnsavedChanges(false);
   };

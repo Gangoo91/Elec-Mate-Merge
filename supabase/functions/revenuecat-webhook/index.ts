@@ -89,7 +89,7 @@ serve(async (req) => {
       });
     }
 
-    const { type, app_user_id, store, product_id, expiration_at_ms } = event;
+    const { type, app_user_id, store, product_id, expiration_at_ms, period_type } = event;
 
     console.log(
       `RevenueCat event: ${type} for user ${app_user_id}, store: ${store}, product: ${product_id}`
@@ -112,18 +112,44 @@ serve(async (req) => {
     // See: https://www.revenuecat.com/docs/integrations/webhooks/event-types-and-fields
     const activeEvents = ['INITIAL_PURCHASE', 'RENEWAL', 'PRODUCT_CHANGE', 'UNCANCELLATION'];
 
-    const inactiveEvents = ['CANCELLATION', 'EXPIRATION', 'BILLING_ISSUE', 'SUBSCRIPTION_PAUSED'];
+    const inactiveEvents = ['EXPIRATION', 'BILLING_ISSUE', 'SUBSCRIPTION_PAUSED'];
 
     let subscribed: boolean | null = null;
     let subscriptionTier: string | null = null;
     let subscriptionEnd: string | null = null;
+    let isTrialCancelled: boolean | null = null;
+    // period_type from RevenueCat: "TRIAL", "INTRO", or "NORMAL"
+    const isTrial = period_type === 'TRIAL';
 
-    if (activeEvents.includes(type)) {
+    if (type === 'CANCELLATION') {
+      // CANCELLATION during trial = user turned off auto-renewal but still has access until trial_end
+      // CANCELLATION on paid = immediate loss of access at period end
+      subscriptionEnd = expiration_at_ms ? new Date(expiration_at_ms).toISOString() : null;
+      if (isTrial && expiration_at_ms && expiration_at_ms > Date.now()) {
+        // Trial cancelled but not expired yet — keep access, mark as cancelled trial
+        subscribed = true;
+        isTrialCancelled = true;
+        subscriptionTier = resolveTierFromProduct(product_id, store);
+        console.log(`Trial cancellation — still has access until ${subscriptionEnd}`);
+      } else {
+        // Paid cancellation or expired trial cancellation — revoke access
+        subscribed = false;
+        isTrialCancelled = false;
+      }
+    } else if (type === 'UNCANCELLATION') {
+      // User re-enabled auto-renewal
       subscribed = true;
+      isTrialCancelled = false;
+      subscriptionTier = resolveTierFromProduct(product_id, store);
+      subscriptionEnd = expiration_at_ms ? new Date(expiration_at_ms).toISOString() : null;
+    } else if (activeEvents.includes(type)) {
+      subscribed = true;
+      isTrialCancelled = false;
       subscriptionTier = resolveTierFromProduct(product_id, store);
       subscriptionEnd = expiration_at_ms ? new Date(expiration_at_ms).toISOString() : null;
     } else if (inactiveEvents.includes(type)) {
       subscribed = false;
+      isTrialCancelled = false;
       subscriptionEnd = expiration_at_ms ? new Date(expiration_at_ms).toISOString() : null;
     }
 
@@ -145,12 +171,21 @@ serve(async (req) => {
         subscription_source: subscriptionSource,
       };
 
+      if (isTrialCancelled !== null) {
+        updateData.is_trial_cancelled = isTrialCancelled;
+      }
+
       if (subscribed) {
         updateData.onboarding_completed = true;
         updateData.business_ai_enabled = isBusinessAiTier;
+        // Track trial state
+        updateData.is_trial = isTrial;
+        updateData.trial_end = isTrial && subscriptionEnd ? subscriptionEnd : null;
       } else {
-        // Inactive event — disable Business AI
+        // Inactive event — disable Business AI, clear trial
         updateData.business_ai_enabled = false;
+        updateData.is_trial = false;
+        updateData.trial_end = null;
       }
 
       if (subscriptionTier) {
@@ -223,7 +258,7 @@ serve(async (req) => {
       }
 
       console.log(
-        `Updated profile ${app_user_id}: subscribed=${subscribed}, tier=${subscriptionTier}, business_ai=${isBusinessAiTier}`
+        `Updated profile ${app_user_id}: subscribed=${subscribed}, tier=${subscriptionTier}, business_ai=${isBusinessAiTier}, is_trial=${isTrial}`
       );
     } else {
       console.log(`Unhandled event type: ${type}`);

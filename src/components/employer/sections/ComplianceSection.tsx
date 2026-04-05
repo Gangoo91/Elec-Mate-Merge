@@ -150,7 +150,7 @@ export function ComplianceSection() {
     return (
       <div className="flex flex-col items-center justify-center py-12 space-y-4">
         <AlertTriangle className="h-12 w-12 text-destructive" />
-        <p className="text-muted-foreground">Failed to load compliance documents</p>
+        <p className="text-white/60">Failed to load compliance documents</p>
         <Button onClick={() => refetch()} variant="outline" className="gap-2">
           <RefreshCw className="h-4 w-4" />
           Retry
@@ -310,7 +310,7 @@ export function ComplianceSection() {
           {/* Search */}
           <div className="relative">
             {!searchQuery && (
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none" />
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white/60 pointer-events-none" />
             )}
             <Input
               placeholder="Search compliance documents..."
@@ -348,9 +348,9 @@ export function ComplianceSection() {
             ) : filteredDocuments.length === 0 ? (
               <Card className="bg-elec-gray border-border">
                 <CardContent className="p-8 text-center">
-                  <FileText className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
+                  <FileText className="h-12 w-12 text-white/60 mx-auto mb-4" />
                   <h3 className="text-lg font-semibold text-foreground mb-2">No Documents</h3>
-                  <p className="text-muted-foreground mb-4">
+                  <p className="text-white/60 mb-4">
                     Add your first compliance document to get started.
                   </p>
                   <Button onClick={() => setShowNewDoc(true)} className="gap-2">
@@ -397,7 +397,7 @@ export function ComplianceSection() {
                               <p className="font-medium text-foreground text-sm md:text-base">
                                 {doc.title}
                               </p>
-                              <div className="flex flex-wrap items-center gap-2 text-xs text-muted-foreground mt-1">
+                              <div className="flex flex-wrap items-center gap-2 text-xs text-white/60 mt-1">
                                 {doc.category && (
                                   <Badge variant="outline" className="text-xs">
                                     {doc.category}
@@ -406,7 +406,7 @@ export function ComplianceSection() {
                                 {doc.document_type && <span>{doc.document_type}</span>}
                               </div>
                               {doc.signatures_required > 0 && (
-                                <p className="text-xs text-muted-foreground mt-1">
+                                <p className="text-xs text-white/60 mt-1">
                                   {doc.signatures_collected}/{doc.signatures_required} signatures
                                   collected
                                 </p>
@@ -482,7 +482,7 @@ export function ComplianceSection() {
                   <Download className="h-5 w-5 text-info" />
                   <div>
                     <p className="font-medium text-foreground text-sm">Export All Evidence</p>
-                    <p className="text-xs text-muted-foreground">
+                    <p className="text-xs text-white/60">
                       Download complete compliance pack
                     </p>
                   </div>
@@ -493,7 +493,7 @@ export function ComplianceSection() {
                   <FileText className="h-5 w-5 text-info" />
                   <div>
                     <p className="font-medium text-foreground text-sm">Generate Audit Report</p>
-                    <p className="text-xs text-muted-foreground">Create compliance summary</p>
+                    <p className="text-xs text-white/60">Create compliance summary</p>
                   </div>
                 </CardContent>
               </Card>

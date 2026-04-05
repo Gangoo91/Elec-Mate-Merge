@@ -3,6 +3,7 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Search, MapPin, Phone, ExternalLink } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
+import { openExternalUrl } from '@/utils/open-external-url';
 
 const CompactScrapMerchantFinder = () => {
   const {
@@ -29,12 +30,12 @@ const CompactScrapMerchantFinder = () => {
     if (merchant.location && merchant.location.lat && merchant.location.lng) {
       const url = `https://www.google.com/maps/dir/?api=1&destination=${merchant.location.lat},${merchant.location.lng}`;
       console.log('Opening URL:', url);
-      window.open(url, '_blank', 'noopener,noreferrer');
+      openExternalUrl(url);
     } else if (merchant.address && merchant.name) {
       const query = encodeURIComponent(`${merchant.name} ${merchant.address}`);
       const url = `https://www.google.com/maps/search/?api=1&query=${query}`;
       console.log('Opening fallback URL:', url);
-      window.open(url, '_blank', 'noopener,noreferrer');
+      openExternalUrl(url);
     } else {
       console.error('No location data available for merchant:', merchant);
       alert('Sorry, location data is not available for this merchant.');

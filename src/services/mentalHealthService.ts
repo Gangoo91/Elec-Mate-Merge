@@ -1,4 +1,5 @@
 import { supabase } from '@/integrations/supabase/client';
+import { storageGetJSONSync } from '@/utils/storage';
 
 // Types
 export interface MoodEntry {
@@ -369,9 +370,8 @@ export const syncFromLocalStorage = async () => {
 
   try {
     // Sync mood history
-    const moodHistory = localStorage.getItem('elec-mate-mood-history');
-    if (moodHistory) {
-      const entries = JSON.parse(moodHistory);
+    const entries = storageGetJSONSync<any[]>('elec-mate-mood-history', []);
+    if (entries.length > 0) {
       for (const entry of entries) {
         await moodService.upsert({
           date: entry.date,
@@ -382,10 +382,9 @@ export const syncFromLocalStorage = async () => {
     }
 
     // Sync journal entries
-    const journalEntries = localStorage.getItem('wellbeing-journal');
-    if (journalEntries) {
-      const entries = JSON.parse(journalEntries);
-      for (const entry of entries) {
+    const journalEntries = storageGetJSONSync<any[]>('wellbeing-journal', []);
+    if (journalEntries.length > 0) {
+      for (const entry of journalEntries) {
         await journalService.create({
           date: entry.date,
           time: entry.time,
@@ -401,10 +400,9 @@ export const syncFromLocalStorage = async () => {
     }
 
     // Sync sleep entries
-    const sleepEntries = localStorage.getItem('sleep-tracker');
-    if (sleepEntries) {
-      const entries = JSON.parse(sleepEntries);
-      for (const entry of entries) {
+    const sleepEntries = storageGetJSONSync<any[]>('sleep-tracker', []);
+    if (sleepEntries.length > 0) {
+      for (const entry of sleepEntries) {
         await sleepService.upsert({
           date: entry.date,
           bed_time: entry.bedTime,
@@ -417,9 +415,8 @@ export const syncFromLocalStorage = async () => {
     }
 
     // Sync safety plan
-    const safetyPlan = localStorage.getItem('personal-safety-plan');
-    if (safetyPlan) {
-      const plan = JSON.parse(safetyPlan);
+    const plan = storageGetJSONSync<any | null>('personal-safety-plan', null);
+    if (plan) {
       await safetyPlanService.upsert({
         warning_signs: plan.warningSigns || [],
         coping_strategies: plan.copingStrategies || [],

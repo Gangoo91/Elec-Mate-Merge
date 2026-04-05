@@ -1,6 +1,7 @@
 import React, { useState, useRef } from 'react';
 import { Capacitor } from '@capacitor/core';
 import { Camera as CapCamera, CameraResultType, CameraSource } from '@capacitor/camera';
+import { getCurrentPosition } from '@/utils/geolocation';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -374,23 +375,13 @@ const SiteLogForm = ({ entryId, onComplete }: { entryId: string; onComplete?: ()
     onComplete?.();
   };
 
-  const getCurrentLocation = (): Promise<{ lat: number; lng: number } | null> => {
-    return new Promise((resolve) => {
-      if (!navigator.geolocation) {
-        resolve(null);
-        return;
-      }
-
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          resolve({
-            lat: position.coords.latitude,
-            lng: position.coords.longitude,
-          });
-        },
-        () => resolve(null)
-      );
-    });
+  const getCurrentLocation = async (): Promise<{ lat: number; lng: number } | null> => {
+    try {
+      const position = await getCurrentPosition();
+      return { lat: position.latitude, lng: position.longitude };
+    } catch {
+      return null;
+    }
   };
 
   return (

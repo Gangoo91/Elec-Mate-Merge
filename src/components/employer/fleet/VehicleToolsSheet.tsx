@@ -138,7 +138,7 @@ export function VehicleToolsSheet({ open, onOpenChange, vehicle }: VehicleToolsS
                 </div>
                 <div>
                   <SheetTitle className="text-left">Tool Inventory</SheetTitle>
-                  <p className="text-xs text-muted-foreground mt-0.5">
+                  <p className="text-xs text-white/60 mt-0.5">
                     {vehicle.registration} - {vehicle.make} {vehicle.model}
                   </p>
                 </div>
@@ -159,13 +159,13 @@ export function VehicleToolsSheet({ open, onOpenChange, vehicle }: VehicleToolsS
             <div className="grid grid-cols-4 gap-2 p-4 border-b border-border">
               <div className="text-center">
                 <p className="text-lg font-bold text-foreground">{stats.totalCount}</p>
-                <p className="text-xs text-muted-foreground">Tools</p>
+                <p className="text-xs text-white/60">Tools</p>
               </div>
               <div className="text-center">
                 <p className="text-lg font-bold text-foreground">
                   £{stats.totalValue.toLocaleString()}
                 </p>
-                <p className="text-xs text-muted-foreground">Value</p>
+                <p className="text-xs text-white/60">Value</p>
               </div>
               <div className="text-center">
                 <p
@@ -176,7 +176,7 @@ export function VehicleToolsSheet({ open, onOpenChange, vehicle }: VehicleToolsS
                 >
                   {stats.calibrationDue}
                 </p>
-                <p className="text-xs text-muted-foreground">Cal Due</p>
+                <p className="text-xs text-white/60">Cal Due</p>
               </div>
               <div className="text-center">
                 <p
@@ -187,7 +187,7 @@ export function VehicleToolsSheet({ open, onOpenChange, vehicle }: VehicleToolsS
                 >
                   {stats.needsRepair}
                 </p>
-                <p className="text-xs text-muted-foreground">Repairs</p>
+                <p className="text-xs text-white/60">Repairs</p>
               </div>
             </div>
           )}
@@ -210,7 +210,7 @@ export function VehicleToolsSheet({ open, onOpenChange, vehicle }: VehicleToolsS
                 <div className="flex gap-2 mb-4">
                   <div className="relative flex-1">
                     {!search && (
-                      <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none" />
+                      <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white/60 pointer-events-none" />
                     )}
                     <Input
                       placeholder="Search tools..."
@@ -246,12 +246,12 @@ export function VehicleToolsSheet({ open, onOpenChange, vehicle }: VehicleToolsS
                 {/* Tool List */}
                 {isLoading ? (
                   <div className="flex items-center justify-center py-12">
-                    <Loader2 className="h-8 w-8 animate-spin text-muted-foreground" />
+                    <Loader2 className="h-8 w-8 animate-spin text-white/60" />
                   </div>
                 ) : filteredTools.length === 0 ? (
                   <div className="text-center py-12">
-                    <Package className="h-16 w-16 text-muted-foreground mx-auto mb-4 opacity-50" />
-                    <p className="text-sm text-muted-foreground">
+                    <Package className="h-16 w-16 text-white/60 mx-auto mb-4 opacity-50" />
+                    <p className="text-sm text-white/60">
                       {tools.length === 0 ? 'No tools added yet' : 'No matching tools'}
                     </p>
                   </div>
@@ -266,7 +266,7 @@ export function VehicleToolsSheet({ open, onOpenChange, vehicle }: VehicleToolsS
                           <div className="flex-1 min-w-0">
                             <h4 className="font-semibold text-foreground text-base">{tool.name}</h4>
                             {(tool.make || tool.model) && (
-                              <p className="text-sm text-muted-foreground">
+                              <p className="text-sm text-white/60">
                                 {[tool.make, tool.model].filter(Boolean).join(' ')}
                               </p>
                             )}
@@ -310,7 +310,7 @@ export function VehicleToolsSheet({ open, onOpenChange, vehicle }: VehicleToolsS
                         </div>
 
                         {tool.serial_number && (
-                          <p className="text-sm text-muted-foreground mb-1">
+                          <p className="text-sm text-white/60 mb-1">
                             S/N: {tool.serial_number}
                           </p>
                         )}
@@ -328,7 +328,7 @@ export function VehicleToolsSheet({ open, onOpenChange, vehicle }: VehicleToolsS
                                           .toISOString()
                                           .split('T')[0]
                                       ? 'bg-orange-500/10 text-orange-400'
-                                      : 'bg-muted/50 text-muted-foreground'
+                                      : 'bg-muted/50 text-white/60'
                                 )}
                               >
                                 Cal: {new Date(tool.calibration_due).toLocaleDateString('en-GB')}
@@ -345,7 +345,7 @@ export function VehicleToolsSheet({ open, onOpenChange, vehicle }: VehicleToolsS
                                           .toISOString()
                                           .split('T')[0]
                                       ? 'bg-orange-500/10 text-orange-400'
-                                      : 'bg-muted/50 text-muted-foreground'
+                                      : 'bg-muted/50 text-white/60'
                                 )}
                               >
                                 PAT: {new Date(tool.pat_test_due).toLocaleDateString('en-GB')}

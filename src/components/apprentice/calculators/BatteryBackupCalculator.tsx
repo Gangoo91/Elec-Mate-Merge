@@ -1,3 +1,4 @@
+import { copyToClipboard } from '@/utils/clipboard';
 import { useState } from 'react';
 import { Battery, ChevronDown, AlertTriangle, Plus, X, Clock, Copy, Check } from 'lucide-react';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
@@ -159,10 +160,13 @@ const BatteryBackupCalculator = () => {
       `Total Load: ${results.averagePower.toFixed(0)} W`,
       `Assessment: ${runtimeStatus}`,
     ].join('\n');
-    navigator.clipboard.writeText(text);
-    setCopied(true);
-    toast({ title: 'Copied to clipboard' });
-    setTimeout(() => setCopied(false), 2000);
+    copyToClipboard(text).then((ok) => {
+      if (ok) {
+        setCopied(true);
+        toast({ title: 'Copied to clipboard' });
+        setTimeout(() => setCopied(false), 2000);
+      }
+    });
   };
 
   const getTotalLoadWatts = () => loads.reduce((sum, load) => sum + load.watts, 0);

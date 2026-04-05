@@ -22,6 +22,7 @@ import {
   Smartphone,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { getCurrentPosition } from '@/utils/geolocation';
 import {
   useBriefingAttendees,
   useSignOffAttendee,
@@ -67,20 +68,17 @@ export function DigitalSignOff({ open, onOpenChange, briefing, onComplete }: Dig
   const requestLocation = useCallback(() => {
     if (!captureLocation) return;
 
-    if ('geolocation' in navigator) {
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          setLocation({
-            lat: position.coords.latitude,
-            lng: position.coords.longitude,
-          });
-        },
-        () => {
-          // Location denied or unavailable - continue without it
-          setLocation(null);
-        }
-      );
-    }
+    getCurrentPosition()
+      .then((position) => {
+        setLocation({
+          lat: position.latitude,
+          lng: position.longitude,
+        });
+      })
+      .catch(() => {
+        // Location denied or unavailable - continue without it
+        setLocation(null);
+      });
   }, [captureLocation]);
 
   // Handle selecting attendee to sign
@@ -200,7 +198,7 @@ export function DigitalSignOff({ open, onOpenChange, briefing, onComplete }: Dig
                         ? 'Add Guest'
                         : 'Attendance Sign-Off'}
                   </SheetTitle>
-                  <p className="text-xs text-muted-foreground mt-0.5 line-clamp-1">
+                  <p className="text-xs text-white/60 mt-0.5 line-clamp-1">
                     {briefing.title}
                   </p>
                 </div>
@@ -233,11 +231,11 @@ export function DigitalSignOff({ open, onOpenChange, briefing, onComplete }: Dig
                     <p className="text-2xl font-bold text-foreground">
                       {signed}/{attendees.length}
                     </p>
-                    <p className="text-sm text-muted-foreground">Signed</p>
+                    <p className="text-sm text-white/60">Signed</p>
                   </div>
                   <div className="text-right">
                     <p className="text-2xl font-bold text-foreground">{completionRate}%</p>
-                    <p className="text-sm text-muted-foreground">Complete</p>
+                    <p className="text-sm text-white/60">Complete</p>
                   </div>
                 </div>
 
@@ -268,7 +266,7 @@ export function DigitalSignOff({ open, onOpenChange, briefing, onComplete }: Dig
                   {/* Pending Section */}
                   {pending > 0 && (
                     <div className="mb-4">
-                      <p className="text-xs font-medium text-muted-foreground mb-2 flex items-center gap-1">
+                      <p className="text-xs font-medium text-white/60 mb-2 flex items-center gap-1">
                         <Clock className="h-3 w-3" />
                         Pending ({pending})
                       </p>
@@ -291,13 +289,13 @@ export function DigitalSignOff({ open, onOpenChange, briefing, onComplete }: Dig
                                     {attendee.employee?.name || attendee.guest_name || 'Unknown'}
                                   </p>
                                   {attendee.guest_company && (
-                                    <p className="text-xs text-muted-foreground">
+                                    <p className="text-xs text-white/60">
                                       {attendee.guest_company}
                                     </p>
                                   )}
                                 </div>
                               </div>
-                              <ChevronRight className="h-4 w-4 text-muted-foreground" />
+                              <ChevronRight className="h-4 w-4 text-white/60" />
                             </Button>
                           ))}
                       </div>
@@ -307,7 +305,7 @@ export function DigitalSignOff({ open, onOpenChange, briefing, onComplete }: Dig
                   {/* Signed Section */}
                   {signed > 0 && (
                     <div>
-                      <p className="text-xs font-medium text-muted-foreground mb-2 flex items-center gap-1">
+                      <p className="text-xs font-medium text-white/60 mb-2 flex items-center gap-1">
                         <CheckCircle2 className="h-3 w-3 text-green-400" />
                         Signed ({signed})
                       </p>
@@ -327,7 +325,7 @@ export function DigitalSignOff({ open, onOpenChange, briefing, onComplete }: Dig
                                   <p className="font-medium text-sm text-foreground">
                                     {attendee.employee?.name || attendee.guest_name || 'Unknown'}
                                   </p>
-                                  <p className="text-xs text-muted-foreground">
+                                  <p className="text-xs text-white/60">
                                     Signed{' '}
                                     {attendee.acknowledged_at
                                       ? format(new Date(attendee.acknowledged_at), 'HH:mm')
@@ -352,9 +350,9 @@ export function DigitalSignOff({ open, onOpenChange, briefing, onComplete }: Dig
                   {/* Empty State */}
                   {attendees.length === 0 && (
                     <div className="text-center py-8">
-                      <Users className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
+                      <Users className="h-12 w-12 text-white/60 mx-auto mb-4" />
                       <h3 className="font-medium text-foreground mb-2">No Attendees</h3>
-                      <p className="text-sm text-muted-foreground mb-4">
+                      <p className="text-sm text-white/60 mb-4">
                         Add team members or guests to begin sign-off
                       </p>
                     </div>
@@ -380,12 +378,12 @@ export function DigitalSignOff({ open, onOpenChange, briefing, onComplete }: Dig
               {/* Signing For */}
               <div className="p-4 border-b border-border">
                 <div className="p-4 rounded-xl bg-blue-500/10 border border-blue-500/20">
-                  <p className="text-xs text-muted-foreground mb-1">Signing for</p>
+                  <p className="text-xs text-white/60 mb-1">Signing for</p>
                   <p className="text-lg font-semibold text-foreground">
                     {selectedAttendee.employee?.name || selectedAttendee.guest_name || 'Unknown'}
                   </p>
                   {selectedAttendee.guest_company && (
-                    <p className="text-sm text-muted-foreground flex items-center gap-1 mt-1">
+                    <p className="text-sm text-white/60 flex items-center gap-1 mt-1">
                       <Building2 className="h-3 w-3" />
                       {selectedAttendee.guest_company}
                     </p>
@@ -393,7 +391,7 @@ export function DigitalSignOff({ open, onOpenChange, briefing, onComplete }: Dig
                 </div>
 
                 {/* Location & Device Info */}
-                <div className="flex items-center gap-3 mt-3 text-xs text-muted-foreground">
+                <div className="flex items-center gap-3 mt-3 text-xs text-white/60">
                   {location && (
                     <span className="flex items-center gap-1">
                       <MapPin className="h-3 w-3 text-green-400" />
@@ -420,7 +418,7 @@ export function DigitalSignOff({ open, onOpenChange, briefing, onComplete }: Dig
                 />
 
                 {(signOff.isPending || uploadSignature.isPending) && (
-                  <div className="flex items-center justify-center gap-2 mt-4 text-sm text-muted-foreground">
+                  <div className="flex items-center justify-center gap-2 mt-4 text-sm text-white/60">
                     <Loader2 className="h-4 w-4 animate-spin" />
                     Saving signature...
                   </div>

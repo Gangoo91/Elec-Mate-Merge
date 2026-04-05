@@ -5,6 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { toast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
+import { openExternalUrl } from '@/utils/open-external-url';
 import {
   Search,
   Brain,
@@ -118,7 +119,7 @@ const IntelligentJobSearch: React.FC = () => {
   };
 
   const handleApply = (job: IntelligentJobResult) => {
-    window.open(job.external_url, '_blank');
+    openExternalUrl(job.external_url);
     toast({
       title: 'Application Started',
       description: `Opening ${job.source} job listing for ${job.title}`,

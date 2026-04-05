@@ -175,7 +175,6 @@ function PremiumHubCard({
   isPrimary?: boolean;
 }) {
   const navigate = useNavigate();
-  const Icon = hub.icon;
   const stat = hub.getStat(data);
 
   return (
@@ -209,19 +208,8 @@ function PremiumHubCard({
 
       {/* Content */}
       <div className="relative z-10 p-4 sm:p-5 flex flex-col h-full min-h-[160px] sm:min-h-[180px]">
-        {/* Top row - Icon and badge */}
-        <div className="flex items-start justify-between mb-3">
-          <div
-            className={cn(
-              'p-2.5 sm:p-3 rounded-xl',
-              hub.iconBg,
-              hub.iconColor,
-              'transition-all duration-200',
-              'group-hover:scale-110'
-            )}
-          >
-            <Icon className="h-5 w-5 sm:h-6 sm:w-6" />
-          </div>
+        {/* Top row - badge */}
+        <div className="flex items-start justify-end mb-3">
           <span
             className={cn(
               'text-[10px] sm:text-xs font-medium',

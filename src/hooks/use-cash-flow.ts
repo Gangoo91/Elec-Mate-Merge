@@ -1,4 +1,5 @@
 import { useState, useMemo, useCallback } from 'react';
+import { copyToClipboard } from '@/utils/clipboard';
 
 export interface IncomeStream {
   id: string;
@@ -484,7 +485,7 @@ ${monthlyProjections
   )
   .join('\n')}`;
 
-    navigator.clipboard.writeText(summary);
+    copyToClipboard(summary);
   }, [monthlyProjections, financialMetrics]);
 
   return {

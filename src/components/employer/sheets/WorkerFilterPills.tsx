@@ -31,7 +31,7 @@ export function WorkerFilterPills({
                 'touch-manipulation active:scale-95',
                 isActive
                   ? 'bg-elec-yellow text-elec-yellow-foreground shadow-md'
-                  : 'bg-muted text-muted-foreground hover:bg-muted/80'
+                  : 'bg-muted text-white/60 hover:bg-muted/80'
               )}
             >
               {filter}

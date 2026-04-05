@@ -9,6 +9,7 @@ import {
 } from '@/types/cpd-enhanced';
 import { supabase } from '@/integrations/supabase/client';
 import { professionalBodyService } from '@/services/professionalBodyService';
+import { storageGetJSONSync, storageSetJSONSync } from '@/utils/storage';
 
 export interface CPDComplianceStats {
   compliance_percentage: number;
@@ -221,8 +222,7 @@ class EnhancedCPDService {
 
   // Smart Reminders
   getActiveReminders(): CPDReminder[] {
-    const stored = localStorage.getItem(this.REMINDERS_KEY);
-    const reminders: CPDReminder[] = stored ? JSON.parse(stored) : [];
+    const reminders = storageGetJSONSync<CPDReminder[]>(this.REMINDERS_KEY, []);
 
     // Generate dynamic reminders
     const dynamicReminders = this.generateDynamicReminders();
@@ -274,15 +274,14 @@ class EnhancedCPDService {
   }
 
   dismissReminder(id: string): void {
-    const stored = localStorage.getItem(this.REMINDERS_KEY);
-    const reminders: CPDReminder[] = stored ? JSON.parse(stored) : [];
+    const reminders = storageGetJSONSync<CPDReminder[]>(this.REMINDERS_KEY, []);
 
     const index = reminders.findIndex((r) => r.id === id);
     if (index >= 0) {
       reminders[index].dismissed = true;
     }
 
-    localStorage.setItem(this.REMINDERS_KEY, JSON.stringify(reminders));
+    storageSetJSONSync(this.REMINDERS_KEY, reminders);
   }
 
   // Enhanced Entry Management

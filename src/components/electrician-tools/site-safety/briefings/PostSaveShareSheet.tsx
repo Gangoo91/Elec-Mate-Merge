@@ -23,6 +23,7 @@ import { IOSInput } from '@/components/ui/ios-input';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 import { openExternalUrl } from '@/utils/open-external-url';
+import { copyToClipboard } from '@/utils/clipboard';
 
 interface PostSaveShareSheetProps {
   briefingId: string;
@@ -108,7 +109,7 @@ export function PostSaveShareSheet({
     if (!url) return;
 
     try {
-      await navigator.clipboard.writeText(url);
+      await copyToClipboard(url);
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
       toast({ title: 'Link copied', description: 'Signing link copied to clipboard' });
@@ -205,7 +206,7 @@ export function PostSaveShareSheet({
       const body = encodeURIComponent(
         `Hi,\n\nPlease sign the following team briefing: "${briefingName}"\n\nClick here to sign: ${url}\n\nThank you.`
       );
-      window.open(`mailto:${emailTo}?subject=${subject}&body=${body}`, '_self');
+      openExternalUrl(`mailto:${emailTo}?subject=${subject}&body=${body}`);
       toast({ title: 'Email client opened', description: 'Send the signing link from your email' });
     } finally {
       setSendingEmail(false);

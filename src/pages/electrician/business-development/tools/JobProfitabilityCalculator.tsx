@@ -32,6 +32,9 @@ import {
   CALCULATOR_CONFIG,
 } from '@/components/calculators/shared';
 import { useToast } from '@/hooks/use-toast';
+import { useHaptic } from '@/hooks/useHaptic';
+import { copyToClipboard } from '@/utils/clipboard';
+import { storageGetJSONSync, storageSetJSONSync } from '@/utils/storage';
 import type { Worker } from '@/components/electrician/business-development/job-profitability/WorkerManager';
 import {
   labourHoursOptions,
@@ -89,6 +92,7 @@ interface ValidationErrors {
 const JobProfitabilityCalculator = () => {
   const config = CALCULATOR_CONFIG['business'];
   const { toast } = useToast();
+  const haptic = useHaptic();
 
   const [inputs, setInputs] = useState<JobInputs>({
     materialCost: 0,
@@ -138,10 +142,10 @@ const JobProfitabilityCalculator = () => {
 
   // Load history from localStorage on mount
   useEffect(() => {
-    const savedHistory = localStorage.getItem('job-profitability-history');
-    if (savedHistory) {
+    const rawHistory = storageGetJSONSync<any[]>('job-profitability-history', []);
+    if (rawHistory.length > 0) {
       try {
-        const parsedHistory = JSON.parse(savedHistory).map((item: any) => ({
+        const parsedHistory = rawHistory.map((item: any) => ({
           ...item,
           timestamp: new Date(item.timestamp),
         }));
@@ -219,6 +223,7 @@ const JobProfitabilityCalculator = () => {
 
   const calculateProfitability = () => {
     if (!validateInputs()) {
+      haptic.warning();
       toast({
         title: 'Validation Error',
         description: 'Please correct the highlighted errors before calculating.',
@@ -227,6 +232,7 @@ const JobProfitabilityCalculator = () => {
       return;
     }
 
+    haptic.light();
     setCalculated(true);
 
     const vatAmount = vatRegistered ? (inputs.quoteAmount * vatRate) / 100 : 0;
@@ -267,7 +273,7 @@ const JobProfitabilityCalculator = () => {
 
     const updatedHistory = [newHistoryItem, ...history.slice(0, 9)];
     setHistory(updatedHistory);
-    localStorage.setItem('job-profitability-history', JSON.stringify(updatedHistory));
+    storageSetJSONSync('job-profitability-history', updatedHistory);
 
     toast({
       title: 'Calculation Complete',
@@ -382,7 +388,7 @@ const JobProfitabilityCalculator = () => {
         url: window.location.href,
       });
     } else {
-      navigator.clipboard.writeText(
+      copyToClipboard(
         `Job Profitability Analysis\n` +
           `Job Type: ${shareData.jobType}\n` +
           `Quote: £${shareData.quoteAmount}\n` +

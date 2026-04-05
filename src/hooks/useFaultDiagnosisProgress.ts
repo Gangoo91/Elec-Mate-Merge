@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { storageGetJSONSync, storageSetJSONSync, storageRemoveSync } from '@/utils/storage';
 
 interface FaultProgressState {
   completedSteps: string[];
@@ -9,29 +10,20 @@ export const useFaultDiagnosisProgress = (faultId?: string) => {
   const storageKey = faultId ? `fault-progress-${faultId}` : 'fault-progress-current';
 
   const [completedSteps, setCompletedSteps] = useState<Set<string>>(() => {
-    try {
-      const saved = localStorage.getItem(storageKey);
-      if (saved) {
-        const parsed = JSON.parse(saved);
-        return new Set(Array.isArray(parsed.completedSteps) ? parsed.completedSteps : []);
-      }
-    } catch (error) {
-      console.error('Failed to load fault progress:', error);
+    const parsed = storageGetJSONSync<FaultProgressState | null>(storageKey, null);
+    if (parsed && Array.isArray(parsed.completedSteps)) {
+      return new Set(parsed.completedSteps);
     }
     return new Set();
   });
 
-  // Save to localStorage whenever completedSteps changes
+  // Save to storage whenever completedSteps changes
   useEffect(() => {
-    try {
-      const state: FaultProgressState = {
-        completedSteps: Array.from(completedSteps),
-        lastUpdated: new Date().toISOString(),
-      };
-      localStorage.setItem(storageKey, JSON.stringify(state));
-    } catch (error) {
-      console.error('Failed to save fault progress:', error);
-    }
+    const state: FaultProgressState = {
+      completedSteps: Array.from(completedSteps),
+      lastUpdated: new Date().toISOString(),
+    };
+    storageSetJSONSync(storageKey, state);
   }, [completedSteps, storageKey]);
 
   const toggleStepComplete = (stepId: string, completed: boolean) => {
@@ -52,11 +44,7 @@ export const useFaultDiagnosisProgress = (faultId?: string) => {
 
   const clearProgress = () => {
     setCompletedSteps(new Set());
-    try {
-      localStorage.removeItem(storageKey);
-    } catch (error) {
-      console.error('Failed to clear fault progress:', error);
-    }
+    storageRemoveSync(storageKey);
   };
 
   const getCompletionStats = (totalSteps: number) => {

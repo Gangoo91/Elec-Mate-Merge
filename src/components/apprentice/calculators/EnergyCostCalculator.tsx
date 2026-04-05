@@ -1,3 +1,4 @@
+import { copyToClipboard } from '@/utils/clipboard';
 import { useState, useEffect, useMemo, useCallback } from 'react';
 import {
   Plus,
@@ -34,6 +35,7 @@ import {
   type AppliancePreset,
 } from '@/data/presets';
 import { useToast } from '@/hooks/use-toast';
+import { storageGetSync, storageSetSync, storageGetJSONSync, storageSetJSONSync } from '@/utils/storage';
 
 const CAT = 'power' as const;
 const config = CALCULATOR_CONFIG[CAT];
@@ -229,20 +231,14 @@ const EnergyCostCalculator = () => {
   const [showReference, setShowReference] = useState(false);
   const [result, setResult] = useState<CalculationResult | null>(null);
 
-  // ── localStorage persistence ──
+  // ── Storage persistence ──
   useEffect(() => {
-    const savedAppliances = localStorage.getItem('energyCost.appliances');
-    const savedEnvironment = localStorage.getItem('energyCost.environment');
-    const savedCategory = localStorage.getItem('energyCost.category');
-
-    if (savedAppliances) {
-      try {
-        setAppliances(JSON.parse(savedAppliances));
-      } catch (error) {
-        console.error('Failed to load saved appliances:', error);
-      }
+    const savedAppliances = storageGetJSONSync<Appliance[]>('energyCost.appliances', []);
+    if (savedAppliances.length > 0) {
+      setAppliances(savedAppliances);
     }
 
+    const savedEnvironment = storageGetSync('energyCost.environment');
     if (
       savedEnvironment &&
       (savedEnvironment === 'domestic' ||
@@ -252,21 +248,22 @@ const EnergyCostCalculator = () => {
       setEnvironment(savedEnvironment as Environment);
     }
 
+    const savedCategory = storageGetSync('energyCost.category');
     if (savedCategory) {
       setSelectedCategory(savedCategory);
     }
   }, []);
 
   useEffect(() => {
-    localStorage.setItem('energyCost.appliances', JSON.stringify(appliances));
+    storageSetJSONSync('energyCost.appliances', appliances);
   }, [appliances]);
 
   useEffect(() => {
-    localStorage.setItem('energyCost.environment', environment);
+    storageSetSync('energyCost.environment', environment);
   }, [environment]);
 
   useEffect(() => {
-    localStorage.setItem('energyCost.category', selectedCategory);
+    storageSetSync('energyCost.category', selectedCategory);
   }, [selectedCategory]);
 
   useEffect(() => {
@@ -423,10 +420,13 @@ const EnergyCostCalculator = () => {
       `Annual kWh: ${result.yearlyKWh.toFixed(0)}`,
       `Annual CO₂: ${result.yearlyCO2.toFixed(0)} kg`,
     ].join('\n');
-    navigator.clipboard.writeText(text);
-    setCopied(true);
-    toast({ title: 'Copied to clipboard' });
-    setTimeout(() => setCopied(false), 2000);
+    copyToClipboard(text).then((ok) => {
+      if (ok) {
+        setCopied(true);
+        toast({ title: 'Copied to clipboard' });
+        setTimeout(() => setCopied(false), 2000);
+      }
+    });
   };
 
   // ── Derived data ──

@@ -19,6 +19,7 @@ import { useState, useEffect, useCallback, useRef } from 'react';
 import { createClient } from '@supabase/supabase-js';
 import { useAuth } from '@/contexts/AuthContext';
 import { SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY } from '@/integrations/supabase/client';
+import { storageGetJSONSync, storageSetJSONSync } from '@/utils/storage';
 
 // Untyped client for am2_scores — table not yet in generated Database type.
 // Replace with the typed `supabase` import after regenerating types.
@@ -77,19 +78,14 @@ const COMPONENT_WEIGHTS: Record<string, { weight: number; label: string }> = {
 
 const STORAGE_KEY = (userId: string) => `am2-scores-${userId}`;
 
-/** Read scores from localStorage */
+/** Read scores from storage */
 function readLocalScores(userId: string): ScoreMap {
-  try {
-    const stored = localStorage.getItem(STORAGE_KEY(userId));
-    return stored ? JSON.parse(stored) : {};
-  } catch {
-    return {};
-  }
+  return storageGetJSONSync<ScoreMap>(STORAGE_KEY(userId), {});
 }
 
-/** Write scores to localStorage */
+/** Write scores to storage */
 function writeLocalScores(userId: string, scores: ScoreMap) {
-  localStorage.setItem(STORAGE_KEY(userId), JSON.stringify(scores));
+  storageSetJSONSync(STORAGE_KEY(userId), scores);
 }
 
 /** Fetch scores from Supabase am2_scores table */

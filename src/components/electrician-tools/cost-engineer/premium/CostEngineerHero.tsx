@@ -19,87 +19,30 @@ export function CostEngineerHero({
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 20 }}
+      initial={{ opacity: 0, y: 16 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5 }}
-      className="relative overflow-hidden rounded-2xl"
+      transition={{ type: 'spring', stiffness: 300, damping: 24 }}
+      className="relative overflow-hidden glass-premium rounded-2xl glow-yellow"
     >
-      {/* Subtle animated gradient orb */}
-      <motion.div
-        className="absolute -top-20 -right-20 w-60 h-60 bg-elec-yellow/10 rounded-full blur-3xl"
-        animate={{ scale: [1, 1.1, 1], opacity: [0.2, 0.3, 0.2] }}
-        transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}
-      />
+      {/* Gradient top accent */}
+      <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-elec-yellow via-amber-400 to-elec-yellow" />
+      {/* Blur orb */}
+      <div className="absolute top-0 right-0 w-40 h-40 bg-elec-yellow/[0.04] rounded-full blur-3xl -translate-y-1/2 translate-x-1/4 pointer-events-none" />
 
-      {/* Hero content */}
-      <div className="relative z-10 p-5 bg-gradient-to-br from-white/[0.06] to-white/[0.02] backdrop-blur-xl border border-white/10 rounded-2xl">
-        <div className="flex items-start justify-between gap-4">
-          <div className="flex-1">
-            {/* Icon */}
-            <motion.div
-              initial={{ scale: 0 }}
-              animate={{ scale: 1 }}
-              transition={{ type: 'spring', stiffness: 200, delay: 0.1 }}
-              className="mb-3"
-            >
-              <div className="relative inline-flex">
-                <div className="p-2.5 rounded-xl bg-elec-yellow/15 border border-elec-yellow/20">
-                  <Calculator className="h-6 w-6 text-elec-yellow" />
-                </div>
-                <motion.div
-                  className="absolute -top-1 -right-1"
-                  animate={{ rotate: [0, 10, -10, 0] }}
-                  transition={{ duration: 3, repeat: Infinity }}
-                >
-                  <Sparkles className="h-3 w-3 text-elec-yellow/70" />
-                </motion.div>
-              </div>
-            </motion.div>
-
-            <motion.h1
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.2 }}
-              className="text-xl font-bold text-white mb-1"
-            >
-              AI Cost Engineer
-            </motion.h1>
-            <motion.p
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.3 }}
-              className="text-white text-sm"
-            >
-              UK trade pricing database
-            </motion.p>
+      <div className="relative z-10 p-5">
+        {/* Title row */}
+        <div className="flex items-center gap-4">
+          <div className="p-3 rounded-xl bg-elec-yellow/10 border border-elec-yellow/20 flex-shrink-0">
+            <Calculator className="h-7 w-7 text-elec-yellow" />
           </div>
-
-          {/* Settings button - no animation */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 0.3 }}
-          >
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={onOpenSettings}
-              className="h-9 px-3 border border-white/10 bg-white/5 hover:bg-white/10 text-white hover:text-white"
-            >
-              <Settings className="h-4 w-4 mr-1.5" />
-              <span className="text-sm">Settings</span>
-              {hasConfiguredSettings && <Check className="h-3 w-3 ml-1.5 text-emerald-400" />}
-            </Button>
-          </motion.div>
+          <div className="flex-1 min-w-0">
+            <h1 className="text-xl font-bold text-white tracking-tight">AI Cost Engineer</h1>
+            <p className="text-sm text-white">UK trade pricing database</p>
+          </div>
         </div>
 
-        {/* Business settings summary - compact */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.4 }}
-          className="mt-4 pt-3 border-t border-white/5"
-        >
+        {/* Stats + Settings row */}
+        <div className="mt-4 pt-3 border-t border-white/[0.06] flex items-center justify-between">
           <div className="flex items-center gap-4 text-xs">
             <div className="flex items-center gap-1.5">
               <div className="w-1.5 h-1.5 rounded-full bg-elec-yellow/60" />
@@ -112,7 +55,18 @@ export function CostEngineerHero({
               <span className="text-white font-medium">{targetMargin}%</span>
             </div>
           </div>
-        </motion.div>
+
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={onOpenSettings}
+            className="h-8 px-2.5 border border-white/[0.10] bg-white/[0.05] hover:bg-white/[0.10] text-white hover:text-white rounded-lg text-xs"
+          >
+            <Settings className="h-3.5 w-3.5 mr-1" />
+            Settings
+            {hasConfiguredSettings && <Check className="h-3 w-3 ml-1 text-emerald-400" />}
+          </Button>
+        </div>
       </div>
     </motion.div>
   );

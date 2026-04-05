@@ -5,6 +5,7 @@ import { Badge } from '@/components/ui/badge';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { History, RotateCcw, Trash2, Star, StarOff, Clock } from 'lucide-react';
 import { format } from 'date-fns';
+import { storageGetJSONSync, storageSetJSONSync, storageRemoveSync } from '@/utils/storage';
 
 interface CalculationEntry {
   id: string;
@@ -33,9 +34,8 @@ const CalculationHistory: React.FC<CalculationHistoryProps> = ({
   }, [calculatorType]);
 
   const loadHistory = () => {
-    const savedHistory = localStorage.getItem(`calc_history_${calculatorType}`);
-    if (savedHistory) {
-      const parsed = JSON.parse(savedHistory);
+    const parsed = storageGetJSONSync<any[]>(`calc_history_${calculatorType}`, []);
+    if (parsed.length > 0) {
       setHistory(
         parsed.map((entry: any) => ({
           ...entry,
@@ -59,7 +59,7 @@ const CalculationHistory: React.FC<CalculationHistoryProps> = ({
     const updatedHistory = [newEntry, ...history.slice(0, 19)]; // Keep last 20
     setHistory(updatedHistory);
 
-    localStorage.setItem(`calc_history_${calculatorType}`, JSON.stringify(updatedHistory));
+    storageSetJSONSync(`calc_history_${calculatorType}`, updatedHistory);
   };
 
   const toggleBookmark = (id: string) => {
@@ -67,12 +67,12 @@ const CalculationHistory: React.FC<CalculationHistoryProps> = ({
       entry.id === id ? { ...entry, isBookmarked: !entry.isBookmarked } : entry
     );
     setHistory(updatedHistory);
-    localStorage.setItem(`calc_history_${calculatorType}`, JSON.stringify(updatedHistory));
+    storageSetJSONSync(`calc_history_${calculatorType}`, updatedHistory);
   };
 
   const clearHistory = () => {
     setHistory([]);
-    localStorage.removeItem(`calc_history_${calculatorType}`);
+    storageRemoveSync(`calc_history_${calculatorType}`);
   };
 
   const displayedHistory = showAll ? history : history.slice(0, 5);

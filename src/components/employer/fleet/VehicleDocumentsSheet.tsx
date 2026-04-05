@@ -1,4 +1,5 @@
 import { useState, useRef } from 'react';
+import { openExternalUrl } from '@/utils/open-external-url';
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -131,7 +132,7 @@ export function VehicleDocumentsSheet({ open, onOpenChange, vehicle }: VehicleDo
                 </div>
                 <div>
                   <SheetTitle className="text-left">Vehicle Documents</SheetTitle>
-                  <p className="text-xs text-muted-foreground mt-0.5">
+                  <p className="text-xs text-white/60 mt-0.5">
                     {vehicle.registration} - {vehicle.make} {vehicle.model}
                   </p>
                 </div>
@@ -190,8 +191,8 @@ export function VehicleDocumentsSheet({ open, onOpenChange, vehicle }: VehicleDo
                       </>
                     ) : (
                       <>
-                        <Upload className="h-8 w-8 text-muted-foreground" />
-                        <span className="text-sm text-muted-foreground">Tap to select file</span>
+                        <Upload className="h-8 w-8 text-white/60" />
+                        <span className="text-sm text-white/60">Tap to select file</span>
                       </>
                     )}
                   </Button>
@@ -301,13 +302,13 @@ export function VehicleDocumentsSheet({ open, onOpenChange, vehicle }: VehicleDo
                 {/* Document List */}
                 {isLoading ? (
                   <div className="flex items-center justify-center py-12">
-                    <Loader2 className="h-8 w-8 animate-spin text-muted-foreground" />
+                    <Loader2 className="h-8 w-8 animate-spin text-white/60" />
                   </div>
                 ) : documents.length === 0 ? (
                   <div className="text-center py-12">
-                    <FileText className="h-16 w-16 text-muted-foreground mx-auto mb-4 opacity-50" />
-                    <p className="text-sm text-muted-foreground">No documents uploaded</p>
-                    <p className="text-xs text-muted-foreground mt-1">
+                    <FileText className="h-16 w-16 text-white/60 mx-auto mb-4 opacity-50" />
+                    <p className="text-sm text-white/60">No documents uploaded</p>
+                    <p className="text-xs text-white/60 mt-1">
                       Upload MOT, insurance, V5 and more
                     </p>
                   </div>
@@ -332,7 +333,7 @@ export function VehicleDocumentsSheet({ open, onOpenChange, vehicle }: VehicleDo
                               <h4 className="font-semibold text-foreground text-base truncate">
                                 {doc.name}
                               </h4>
-                              <p className="text-sm text-muted-foreground">
+                              <p className="text-sm text-white/60">
                                 {DOCUMENT_TYPES.find((t) => t.value === doc.document_type)?.label}
                               </p>
                             </div>
@@ -341,7 +342,7 @@ export function VehicleDocumentsSheet({ open, onOpenChange, vehicle }: VehicleDo
                                 variant="ghost"
                                 size="icon"
                                 className="h-11 w-11 touch-manipulation"
-                                onClick={() => window.open(doc.file_url, '_blank')}
+                                onClick={() => openExternalUrl(doc.file_url)}
                               >
                                 <ExternalLink className="h-5 w-5" />
                               </Button>
@@ -372,14 +373,14 @@ export function VehicleDocumentsSheet({ open, onOpenChange, vehicle }: VehicleDo
 
                           {doc.expiry_date && (
                             <div className="flex items-center gap-2 mt-3 text-sm">
-                              <Calendar className="h-4 w-4 text-muted-foreground" />
+                              <Calendar className="h-4 w-4 text-white/60" />
                               <span
                                 className={cn(
                                   expiryStatus === 'expired'
                                     ? 'text-red-400'
                                     : expiryStatus === 'expiring-soon'
                                       ? 'text-orange-400'
-                                      : 'text-muted-foreground'
+                                      : 'text-white/60'
                                 )}
                               >
                                 Expires: {new Date(doc.expiry_date).toLocaleDateString('en-GB')}

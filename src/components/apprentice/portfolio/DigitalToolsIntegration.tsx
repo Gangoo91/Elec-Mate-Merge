@@ -2,6 +2,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { ExternalLink, Smartphone, Cloud, Camera, FileText, Video } from 'lucide-react';
+import { openExternalUrl } from '@/utils/open-external-url';
 
 interface DigitalTool {
   name: string;
@@ -82,7 +83,7 @@ const DigitalToolsIntegration = () => {
   };
 
   const handleLearnMore = (url: string) => {
-    window.open(url, '_blank', 'noopener,noreferrer');
+    openExternalUrl(url);
   };
 
   return (

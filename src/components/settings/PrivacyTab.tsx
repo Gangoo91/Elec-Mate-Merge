@@ -1,5 +1,6 @@
 // ELE-400, ELE-403, ELE-405, ELE-406, ELE-407, ELE-408, ELE-491
 import React, { useState, useEffect, useCallback } from 'react';
+import { storageGetJSONSync, storageSetJSONSync } from '@/utils/storage';
 import { Button } from '@/components/ui/button';
 import { Switch } from '@/components/ui/switch';
 import { Input } from '@/components/ui/input';
@@ -105,13 +106,9 @@ const PrivacyTab = () => {
           return;
         }
       }
-      const saved = localStorage.getItem(COOKIE_PREFERENCES_KEY);
+      const saved = storageGetJSONSync<CookiePreferences | null>(COOKIE_PREFERENCES_KEY, null);
       if (saved) {
-        try {
-          setCookiePrefs(JSON.parse(saved));
-        } catch {
-          /* ignore */
-        }
+        setCookiePrefs(saved);
       }
     };
     loadPrefs();
@@ -137,7 +134,7 @@ const PrivacyTab = () => {
       if (key === 'essential') return;
       const newPrefs = { ...cookiePrefs, [key]: !cookiePrefs[key] };
       setCookiePrefs(newPrefs);
-      localStorage.setItem(COOKIE_PREFERENCES_KEY, JSON.stringify(newPrefs));
+      storageSetJSONSync(COOKIE_PREFERENCES_KEY, newPrefs);
       window.dispatchEvent(new CustomEvent('cookieConsentUpdated', { detail: newPrefs }));
       // Persist to Supabase for cross-device consistency (silently falls back to localStorage if unavailable)
       if (userId) {

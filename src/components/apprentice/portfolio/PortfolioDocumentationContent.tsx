@@ -1,5 +1,6 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
+import { openExternalUrl } from '@/utils/open-external-url';
 import {
   BookOpen,
   FileText,
@@ -159,7 +160,7 @@ const PortfolioDocumentationContent = () => {
                         variant="outline"
                         size="sm"
                         className="border-elec-yellow/30 text-xs"
-                        onClick={() => window.open(resource.url, '_blank')}
+                        onClick={() => openExternalUrl(resource.url)}
                       >
                         <ExternalLink className="h-3 w-3 mr-1" />
                         View Resource
@@ -169,7 +170,7 @@ const PortfolioDocumentationContent = () => {
                           variant="outline"
                           size="sm"
                           className="border-elec-yellow/30 text-xs"
-                          onClick={() => window.open(resource.url, '_blank')}
+                          onClick={() => openExternalUrl(resource.url)}
                         >
                           <Download className="h-3 w-3 mr-1" />
                           Access Templates
@@ -214,7 +215,7 @@ const PortfolioDocumentationContent = () => {
                         variant="outline"
                         size="sm"
                         className="border-elec-yellow/30 text-xs"
-                        onClick={() => window.open(resource.url, '_blank')}
+                        onClick={() => openExternalUrl(resource.url)}
                       >
                         <ExternalLink className="h-3 w-3 mr-1" />
                         View Resource
@@ -224,7 +225,7 @@ const PortfolioDocumentationContent = () => {
                           variant="outline"
                           size="sm"
                           className="border-elec-yellow/30 text-xs"
-                          onClick={() => window.open(resource.url, '_blank')}
+                          onClick={() => openExternalUrl(resource.url)}
                         >
                           <Download className="h-3 w-3 mr-1" />
                           Access Templates

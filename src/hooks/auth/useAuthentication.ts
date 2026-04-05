@@ -1,5 +1,6 @@
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/components/ui/use-toast';
+import { storageGetSync, storageRemoveSync } from '@/utils/storage';
 import { logger, generateRequestId } from '@/utils/logger';
 import {
   captureError,
@@ -66,7 +67,7 @@ export function useAuthentication() {
       // Check for pending onboarding data and apply ONLY if onboarding not completed
       // This prevents race conditions with ConfirmEmail which is authoritative for initial setup
       if (data?.user) {
-        const onboardingData = localStorage.getItem('elec-mate-onboarding');
+        const onboardingData = storageGetSync('elec-mate-onboarding');
         if (onboardingData) {
           try {
             // First check if onboarding is already completed
@@ -95,12 +96,12 @@ export function useAuthentication() {
               console.log('Profile updated with onboarding data');
             }
 
-            // Clear the localStorage regardless (to prevent stale data)
-            localStorage.removeItem('elec-mate-onboarding');
+            // Clear storage regardless (to prevent stale data)
+            storageRemoveSync('elec-mate-onboarding');
           } catch (parseError) {
             console.error('Error applying onboarding data:', parseError);
             // Still try to clear potentially corrupted data
-            localStorage.removeItem('elec-mate-onboarding');
+            storageRemoveSync('elec-mate-onboarding');
           }
         }
       }

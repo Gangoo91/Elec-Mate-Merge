@@ -2,6 +2,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Smartphone, Clock, Brain, Target, ExternalLink } from 'lucide-react';
+import { openExternalUrl } from '@/utils/open-external-url';
 
 const ProductivityToolsTab = () => {
   const mobileApps = [
@@ -193,7 +194,7 @@ const ProductivityToolsTab = () => {
                     variant="outline"
                     size="sm"
                     className="w-full border-elec-yellow/20 hover:bg-elec-yellow/10"
-                    onClick={() => window.open(tool.url, '_blank')}
+                    onClick={() => openExternalUrl(tool.url)}
                   >
                     Visit Site
                     <ExternalLink className="ml-2 h-3 w-3" />

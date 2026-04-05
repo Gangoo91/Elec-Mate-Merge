@@ -18,6 +18,7 @@ import { MarkdownViewer } from '@/components/ui/MarkdownViewer';
 import { useToast } from '@/hooks/use-toast';
 import html2pdf from 'html2pdf.js';
 import PDFDownloadButton from './PDFDownloadButton';
+import { copyToClipboard } from '@/utils/clipboard';
 
 interface GeneratedReportDisplayProps {
   report: string;
@@ -45,7 +46,7 @@ const GeneratedReportDisplay: React.FC<GeneratedReportDisplayProps> = ({
 
   const handleCopy = async () => {
     try {
-      await navigator.clipboard.writeText(report);
+      await copyToClipboard(report);
       setCopied(true);
       onCopy?.();
       toast({

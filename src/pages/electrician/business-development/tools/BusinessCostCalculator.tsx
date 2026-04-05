@@ -7,6 +7,7 @@ import { useToast } from '@/hooks/use-toast';
 import { Calculator, Building, Download, Lightbulb, TrendingUp } from 'lucide-react';
 import { Helmet } from 'react-helmet';
 import WhyThisMatters from '@/components/common/WhyThisMatters';
+import { storageGetJSONSync, storageSetJSONSync } from '@/utils/storage';
 
 // Enhanced components
 import BusinessTypeSelector from '@/components/business-calculator/BusinessTypeSelector';
@@ -103,8 +104,8 @@ const BusinessCostCalculator = () => {
       monthlyInputs,
       totals: { totalStartup, totalMonthly, yearOneTotal },
     };
-    const existing = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
-    localStorage.setItem(STORAGE_KEY, JSON.stringify([payload, ...existing].slice(0, 20)));
+    const existing = storageGetJSONSync<any[]>(STORAGE_KEY, []);
+    storageSetJSONSync(STORAGE_KEY, [payload, ...existing].slice(0, 20));
 
     toast({
       title: 'Calculation Complete',

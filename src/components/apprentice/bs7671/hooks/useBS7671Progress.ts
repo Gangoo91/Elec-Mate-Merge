@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback, useMemo } from 'react';
+import { storageGetJSONSync, storageSetJSONSync, storageRemoveSync } from '@/utils/storage';
 
 export interface BS7671TestProgress {
   completedSteps: number[];
@@ -14,29 +15,17 @@ interface BS7671ProgressState {
 const STORAGE_KEY = 'elec-mate-bs7671-progress';
 
 const getInitialState = (): BS7671ProgressState => {
-  try {
-    const saved = localStorage.getItem(STORAGE_KEY);
-    if (saved) {
-      return JSON.parse(saved);
-    }
-  } catch (error) {
-    console.error('Failed to load BS 7671 progress:', error);
-  }
-  return {
+  return storageGetJSONSync<BS7671ProgressState>(STORAGE_KEY, {
     completedTests: {},
     lastUpdated: new Date().toISOString(),
-  };
+  });
 };
 
 export const useBS7671Progress = () => {
   const [state, setState] = useState<BS7671ProgressState>(getInitialState);
 
   useEffect(() => {
-    try {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
-    } catch (error) {
-      console.error('Failed to save BS 7671 progress:', error);
-    }
+    storageSetJSONSync(STORAGE_KEY, state);
   }, [state]);
 
   const markStepComplete = useCallback((testId: string, stepIndex: number) => {
@@ -95,11 +84,7 @@ export const useBS7671Progress = () => {
       lastUpdated: new Date().toISOString(),
     };
     setState(fresh);
-    try {
-      localStorage.removeItem(STORAGE_KEY);
-    } catch (error) {
-      console.error('Failed to clear BS 7671 progress:', error);
-    }
+    storageRemoveSync(STORAGE_KEY);
   }, []);
 
   const isStepComplete = useCallback(

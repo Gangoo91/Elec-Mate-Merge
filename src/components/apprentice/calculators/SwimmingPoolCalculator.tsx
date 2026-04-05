@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { copyToClipboard } from '@/utils/clipboard';
 import { Copy, Check, CheckCircle, AlertTriangle, ChevronDown } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { cn } from '@/lib/utils';
@@ -91,7 +92,7 @@ const SwimmingPoolCalculator = () => {
     });
     text += `\nBonding: ${result.bondingRequirements.join('; ')}`;
     text += `\nBS 7671 Section 702: ${result.regulatoryCompliance.bs7671Section702 ? 'Compliant' : 'Issues found'}`;
-    navigator.clipboard.writeText(text);
+    copyToClipboard(text);
     setCopied(true);
     toast({ title: 'Copied to clipboard' });
     setTimeout(() => setCopied(false), 2000);

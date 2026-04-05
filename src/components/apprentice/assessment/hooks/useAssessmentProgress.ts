@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback, useMemo } from 'react';
+import { storageGetJSONSync, storageSetJSONSync, storageRemoveSync } from '@/utils/storage';
 
 export interface SavedRiskAssessment {
   id: string;
@@ -21,30 +22,18 @@ interface AssessmentProgressState {
 const STORAGE_KEY = 'elec-mate-assessment-progress';
 
 const getInitialState = (): AssessmentProgressState => {
-  try {
-    const saved = localStorage.getItem(STORAGE_KEY);
-    if (saved) {
-      return JSON.parse(saved);
-    }
-  } catch (error) {
-    console.error('Failed to load assessment progress:', error);
-  }
-  return {
+  return storageGetJSONSync<AssessmentProgressState>(STORAGE_KEY, {
     checklists: {},
     riskAssessments: [],
     lastUpdated: new Date().toISOString(),
-  };
+  });
 };
 
 export const useAssessmentProgress = () => {
   const [state, setState] = useState<AssessmentProgressState>(getInitialState);
 
   useEffect(() => {
-    try {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
-    } catch (error) {
-      console.error('Failed to save assessment progress:', error);
-    }
+    storageSetJSONSync(STORAGE_KEY, state);
   }, [state]);
 
   const toggleCheckItem = useCallback((id: string) => {
@@ -106,11 +95,7 @@ export const useAssessmentProgress = () => {
       lastUpdated: new Date().toISOString(),
     };
     setState(fresh);
-    try {
-      localStorage.removeItem(STORAGE_KEY);
-    } catch (error) {
-      console.error('Failed to clear assessment progress:', error);
-    }
+    storageRemoveSync(STORAGE_KEY);
   }, []);
 
   const isChecked = useCallback(

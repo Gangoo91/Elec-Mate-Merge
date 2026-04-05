@@ -6,6 +6,7 @@ import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { ClipboardCheck, TrendingUp, TrendingDown } from 'lucide-react';
 import { useState } from 'react';
 import { MobileButton } from '@/components/ui/mobile-button';
+import { storageGetJSONSync, storageSetJSONSync } from '@/utils/storage';
 
 interface PostJobReviewCardProps {
   estimatedCost: number;
@@ -54,9 +55,9 @@ const PostJobReviewCard = ({
     };
 
     // Save to localStorage
-    const existingReviews = JSON.parse(localStorage.getItem('job-reviews') || '[]');
+    const existingReviews = storageGetJSONSync<any[]>('job-reviews', []);
     existingReviews.push(review);
-    localStorage.setItem('job-reviews', JSON.stringify(existingReviews));
+    storageSetJSONSync('job-reviews', existingReviews);
 
     alert('Review saved successfully!');
   };

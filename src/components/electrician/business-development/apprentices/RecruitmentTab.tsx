@@ -1,3 +1,4 @@
+import { openExternalUrl } from '@/utils/open-external-url';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -613,7 +614,7 @@ const RecruitmentTab = () => {
                   variant="outline"
                   className="w-full justify-start border-green-500/30 text-left h-auto p-3"
                   onClick={() =>
-                    window.open('https://www.findapprenticeship.service.gov.uk/employers', '_blank')
+                    openExternalUrl('https://www.findapprenticeship.service.gov.uk/employers')
                   }
                 >
                   <Search className="h-4 w-4 mr-3 text-green-400 flex-shrink-0" />
@@ -634,7 +635,7 @@ const RecruitmentTab = () => {
                 <Button
                   variant="outline"
                   className="w-full justify-start border-blue-500/30 text-left h-auto p-3"
-                  onClick={() => window.open('https://www.citb.co.uk/', '_blank')}
+                  onClick={() => openExternalUrl('https://www.citb.co.uk/')}
                 >
                   <Award className="h-4 w-4 mr-3 text-blue-400 flex-shrink-0" />
                   <div className="text-left flex-1 min-w-0">
@@ -655,7 +656,7 @@ const RecruitmentTab = () => {
                   variant="outline"
                   className="w-full justify-start border-purple-500/30 text-left h-auto p-3"
                   onClick={() =>
-                    window.open('https://www.apprenticeships.gov.uk/employers', '_blank')
+                    openExternalUrl('https://www.apprenticeships.gov.uk/employers')
                   }
                 >
                   <Brain className="h-4 w-4 mr-3 text-purple-400 flex-shrink-0" />

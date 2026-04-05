@@ -594,7 +594,7 @@ export function VoiceCommandCheatSheet() {
           </div>
           <div>
             <CardTitle className="text-lg">Voice Command Reference</CardTitle>
-            <p className="text-sm text-muted-foreground mt-1">
+            <p className="text-sm text-white/60 mt-1">
               {totalCommands} commands across {COMMAND_DATA.length} categories
             </p>
           </div>
@@ -604,7 +604,7 @@ export function VoiceCommandCheatSheet() {
         {/* Search */}
         <div className="relative">
           {!searchQuery && (
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none" />
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white/60 pointer-events-none" />
           )}
           <Input
             placeholder="Search commands or phrases..."
@@ -638,9 +638,9 @@ export function VoiceCommandCheatSheet() {
                       </Badge>
                     </div>
                     {isOpen || searchQuery.length > 0 ? (
-                      <ChevronDown className="h-4 w-4 text-muted-foreground" />
+                      <ChevronDown className="h-4 w-4 text-white/60" />
                     ) : (
-                      <ChevronRight className="h-4 w-4 text-muted-foreground" />
+                      <ChevronRight className="h-4 w-4 text-white/60" />
                     )}
                   </CollapsibleTrigger>
 
@@ -652,7 +652,7 @@ export function VoiceCommandCheatSheet() {
                             <code className="text-xs font-mono bg-muted px-1.5 py-0.5 rounded text-elec-yellow">
                               {cmd.name}
                             </code>
-                            <span className="text-sm text-muted-foreground">{cmd.description}</span>
+                            <span className="text-sm text-white/60">{cmd.description}</span>
                           </div>
                           <div className="flex flex-wrap gap-1.5">
                             {cmd.examples.map((example, idx) => (
@@ -673,7 +673,7 @@ export function VoiceCommandCheatSheet() {
             })}
 
             {filteredData.length === 0 && (
-              <div className="text-center py-8 text-muted-foreground">
+              <div className="text-center py-8 text-white/60">
                 <Search className="h-8 w-8 mx-auto mb-2 opacity-50" />
                 <p className="text-sm">No commands match "{searchQuery}"</p>
               </div>

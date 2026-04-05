@@ -118,8 +118,8 @@ const typeConfig = {
 const priorityColors = {
   high: 'bg-destructive text-destructive-foreground',
   urgent: 'bg-destructive text-destructive-foreground',
-  normal: 'bg-muted text-muted-foreground',
-  low: 'bg-muted text-muted-foreground',
+  normal: 'bg-muted text-white/60',
+  low: 'bg-muted text-white/60',
 };
 
 // Message templates
@@ -621,7 +621,7 @@ export const CommunicationsSection = () => {
 
               {/* Preview - two lines */}
               <p
-                className={`text-sm mt-1 line-clamp-2 leading-relaxed ${!isRead ? 'text-foreground/70' : 'text-muted-foreground'}`}
+                className={`text-sm mt-1 line-clamp-2 leading-relaxed ${!isRead ? 'text-foreground/70' : 'text-white/60'}`}
               >
                 {comm.content}
               </p>
@@ -647,7 +647,7 @@ export const CommunicationsSection = () => {
                     </Badge>
                   )}
                 </div>
-                <div className="flex items-center gap-2 text-xs text-muted-foreground flex-shrink-0">
+                <div className="flex items-center gap-2 text-xs text-white/60 flex-shrink-0">
                   <span>{formatTime(comm.created_at)}</span>
                 </div>
               </div>
@@ -668,7 +668,7 @@ export const CommunicationsSection = () => {
                   Sign
                 </Button>
               ) : (
-                <ChevronRight className="h-5 w-5 text-muted-foreground/50" />
+                <ChevronRight className="h-5 w-5 text-white/60/50" />
               )}
             </div>
           </div>
@@ -721,7 +721,7 @@ export const CommunicationsSection = () => {
                 <h2 className="text-lg font-bold text-foreground mt-1 leading-tight">
                   {selectedMessage.title}
                 </h2>
-                <div className="flex items-center gap-2 mt-1.5 text-sm text-muted-foreground">
+                <div className="flex items-center gap-2 mt-1.5 text-sm text-white/60">
                   <span>
                     {format(new Date(selectedMessage.created_at), "dd MMM yyyy 'at' HH:mm")}
                   </span>
@@ -749,7 +749,7 @@ export const CommunicationsSection = () => {
                       </div>
                       <div className="flex-1">
                         <p className="text-sm font-semibold">Acknowledgement Required</p>
-                        <p className="text-xs text-muted-foreground mt-1">
+                        <p className="text-xs text-white/60 mt-1">
                           Confirm you've read and understood this.
                         </p>
                         <Button
@@ -773,7 +773,7 @@ export const CommunicationsSection = () => {
 
               {/* Target info */}
               <div className="flex items-center gap-3 p-3.5 rounded-xl bg-muted/30 border border-border">
-                <Users className="h-4 w-4 text-muted-foreground" />
+                <Users className="h-4 w-4 text-white/60" />
                 <span className="text-sm">
                   Sent to:{' '}
                   <span className="font-medium">
@@ -791,10 +791,10 @@ export const CommunicationsSection = () => {
                 <div className="space-y-3">
                   <div className="flex items-center justify-between">
                     <h4 className="text-sm font-semibold text-foreground flex items-center gap-2">
-                      <Eye className="h-4 w-4 text-muted-foreground" />
+                      <Eye className="h-4 w-4 text-white/60" />
                       Recipients ({recipients.length})
                     </h4>
-                    <div className="flex items-center gap-3 text-xs text-muted-foreground">
+                    <div className="flex items-center gap-3 text-xs text-white/60">
                       <span className="flex items-center gap-1">
                         <div className="w-2 h-2 rounded-full bg-success" />
                         {recipients.filter((r) => r.read_at).length} read
@@ -820,7 +820,7 @@ export const CommunicationsSection = () => {
                                 className="w-8 h-8 rounded-full object-cover"
                               />
                             ) : (
-                              <User className="h-4 w-4 text-muted-foreground" />
+                              <User className="h-4 w-4 text-white/60" />
                             )}
                           </div>
                           <span className="text-sm font-medium">
@@ -841,16 +841,16 @@ export const CommunicationsSection = () => {
                               variant="outline"
                               className="text-[10px] py-0 h-5 px-1.5 bg-success/10 text-success border-success/30 gap-0.5"
                             >
-                              <Check className="h-2.5 w-2.5" />
+                              <CheckCheck className="h-2.5 w-2.5" />
                               Read
                             </Badge>
                           ) : (
                             <Badge
                               variant="outline"
-                              className="text-[10px] py-0 h-5 px-1.5 bg-muted text-muted-foreground gap-0.5"
+                              className="text-[10px] py-0 h-5 px-1.5 bg-muted text-white/60 gap-0.5"
                             >
-                              <Clock className="h-2.5 w-2.5" />
-                              Pending
+                              <Check className="h-2.5 w-2.5" />
+                              Sent
                             </Badge>
                           )}
                         </div>
@@ -943,7 +943,7 @@ export const CommunicationsSection = () => {
           <div className="p-4 space-y-5">
             {/* Template carousel */}
             <div className="space-y-2">
-              <Label className="text-xs text-muted-foreground">Quick Start</Label>
+              <Label className="text-xs text-white/60">Quick Start</Label>
               <div className="flex gap-2 overflow-x-auto hide-scrollbar pb-1 -mx-4 px-4">
                 {templates.map((template) => {
                   const Icon = template.icon;
@@ -999,7 +999,7 @@ export const CommunicationsSection = () => {
             <div className="space-y-2">
               <div className="flex items-center justify-between">
                 <Label>Message</Label>
-                <span className="text-xs text-muted-foreground">{messageContent.length}/500</span>
+                <span className="text-xs text-white/60">{messageContent.length}/500</span>
               </div>
               <Textarea
                 placeholder="Write your message..."
@@ -1045,7 +1045,7 @@ export const CommunicationsSection = () => {
               {recipientMode === 'specific' && (
                 <div className="max-h-[140px] overflow-y-auto border border-border rounded-xl p-2 space-y-1">
                   {employees.length === 0 ? (
-                    <p className="text-sm text-muted-foreground text-center py-4">
+                    <p className="text-sm text-white/60 text-center py-4">
                       No employees found
                     </p>
                   ) : (
@@ -1082,7 +1082,7 @@ export const CommunicationsSection = () => {
 
             {/* Options */}
             <div className="space-y-3">
-              <Label className="text-xs text-muted-foreground">Options</Label>
+              <Label className="text-xs text-white/60">Options</Label>
 
               <div className="flex items-center justify-between p-4 rounded-xl bg-muted/30 border border-border">
                 <div className="flex items-center gap-3">
@@ -1215,7 +1215,7 @@ export const CommunicationsSection = () => {
         <div className="p-4 space-y-4">
           {/* Original message preview */}
           <div className="p-3 rounded-xl bg-muted/30 border border-border">
-            <p className="text-xs text-muted-foreground mb-1">Replying to:</p>
+            <p className="text-xs text-white/60 mb-1">Replying to:</p>
             <p className="text-sm text-foreground line-clamp-2">{selectedMessage?.content}</p>
           </div>
 
@@ -1244,7 +1244,7 @@ export const CommunicationsSection = () => {
       <div className="flex flex-col items-center justify-center py-16 px-4">
         <div className="relative">
           <div className="w-20 h-20 rounded-3xl bg-muted/50 flex items-center justify-center">
-            <Icon className="h-10 w-10 text-muted-foreground" />
+            <Icon className="h-10 w-10 text-white/60" />
           </div>
           {activeTab === 'safety' && (
             <div className="absolute -top-1 -right-1 w-6 h-6 rounded-full bg-success flex items-center justify-center">
@@ -1253,7 +1253,7 @@ export const CommunicationsSection = () => {
           )}
         </div>
         <h3 className="font-bold text-foreground text-lg mt-5">{state.title}</h3>
-        <p className="text-sm text-muted-foreground text-center mt-1 max-w-[200px]">
+        <p className="text-sm text-white/60 text-center mt-1 max-w-[200px]">
           {state.message}
         </p>
         <Button className="mt-5 gap-2 rounded-xl" onClick={() => setShowCompose(true)}>
@@ -1268,7 +1268,7 @@ export const CommunicationsSection = () => {
   if (isLoading) {
     return (
       <div className="flex items-center justify-center py-16">
-        <Loader2 className="h-8 w-8 animate-spin text-muted-foreground" />
+        <Loader2 className="h-8 w-8 animate-spin text-white/60" />
       </div>
     );
   }
@@ -1283,7 +1283,7 @@ export const CommunicationsSection = () => {
           </div>
           <div>
             <h1 className="text-lg font-bold text-foreground">Messages</h1>
-            <p className="text-xs text-muted-foreground">{displayStats.unread} unread</p>
+            <p className="text-xs text-white/60">{displayStats.unread} unread</p>
           </div>
         </div>
 
@@ -1333,7 +1333,7 @@ export const CommunicationsSection = () => {
         <div className="flex gap-2 animate-fade-in">
           <div className="relative flex-1">
             {!searchQuery && (
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none" />
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white/60 pointer-events-none" />
             )}
             <Input
               placeholder="Search messages..."
@@ -1412,10 +1412,10 @@ export const CommunicationsSection = () => {
                 }`}
               >
                 <Icon
-                  className={`h-5 w-5 ${isActive ? 'text-elec-yellow' : 'text-muted-foreground'}`}
+                  className={`h-5 w-5 ${isActive ? 'text-elec-yellow' : 'text-white/60'}`}
                 />
                 <span
-                  className={`text-[11px] mt-1 ${isActive ? 'font-semibold text-foreground' : 'text-muted-foreground'}`}
+                  className={`text-[11px] mt-1 ${isActive ? 'font-semibold text-foreground' : 'text-white/60'}`}
                 >
                   {tab.label}
                 </span>
@@ -1441,7 +1441,7 @@ export const CommunicationsSection = () => {
               <div className="space-y-2">
                 <button
                   onClick={() => setPinnedCollapsed(!pinnedCollapsed)}
-                  className="flex items-center gap-2 text-xs text-muted-foreground px-1 w-full"
+                  className="flex items-center gap-2 text-xs text-white/60 px-1 w-full"
                 >
                   <Pin className="h-3 w-3 text-elec-yellow" />
                   <span className="font-medium">Pinned ({groupedMessages.pinned.length})</span>
@@ -1466,10 +1466,10 @@ export const CommunicationsSection = () => {
             {groupedMessages.groups.map((group) => (
               <div key={group.label} className="space-y-2">
                 <div className="sticky top-0 z-10 bg-background/95 backdrop-blur-sm py-1.5 px-1 -mx-1">
-                  <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                  <div className="flex items-center gap-2 text-xs text-white/60">
                     <Clock className="h-3 w-3" />
                     <span className="font-medium">{group.label}</span>
-                    <span className="text-muted-foreground/50">({group.messages.length})</span>
+                    <span className="text-white/60/50">({group.messages.length})</span>
                   </div>
                 </div>
                 <div className="space-y-2">

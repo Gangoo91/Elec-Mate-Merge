@@ -28,7 +28,9 @@ import { TemplateSelector } from './TemplateSelector';
 import { useCreateVacancy, useUpdateVacancy } from '@/hooks/useVacancies';
 import { saveVacancyAsTemplate } from '@/services/vacancyService';
 import { toast } from '@/hooks/use-toast';
+import { useHaptic } from '@/hooks/useHaptic';
 import { cn } from '@/lib/utils';
+import { storageGetSync, storageSetSync, storageRemoveSync, storageGetJSONSync } from '@/utils/storage';
 
 const DRAFT_STORAGE_KEY = 'vacancy-form-draft';
 
@@ -48,6 +50,7 @@ export function VacancyFormWizard({
   onSuccess,
 }: VacancyFormWizardProps) {
   const isMobile = useIsMobile();
+  const haptic = useHaptic();
   const [currentStep, setCurrentStep] = useState(0);
   const [showTemplates, setShowTemplates] = useState(false);
   const [lastSaved, setLastSaved] = useState<Date | null>(null);
@@ -74,14 +77,9 @@ export function VacancyFormWizard({
   // Load draft from localStorage on mount
   useEffect(() => {
     if (!editData && !duplicateData) {
-      const savedDraft = localStorage.getItem(DRAFT_STORAGE_KEY);
-      if (savedDraft) {
-        try {
-          const draft = JSON.parse(savedDraft);
-          reset({ ...defaultVacancyValues, ...draft });
-        } catch (e) {
-          console.error('Failed to parse draft:', e);
-        }
+      const draft = storageGetJSONSync<Partial<VacancyFormData> | null>(DRAFT_STORAGE_KEY, null);
+      if (draft) {
+        reset({ ...defaultVacancyValues, ...draft });
       }
     }
   }, [editData, duplicateData, reset]);
@@ -92,7 +90,7 @@ export function VacancyFormWizard({
       const interval = setInterval(() => {
         setIsSavingDraft(true);
         const values = methods.getValues();
-        localStorage.setItem(DRAFT_STORAGE_KEY, JSON.stringify(values));
+        storageSetSync(DRAFT_STORAGE_KEY, JSON.stringify(values));
         setLastSaved(new Date());
         // Brief delay to show the saving indicator
         setTimeout(() => setIsSavingDraft(false), 500);
@@ -112,7 +110,7 @@ export function VacancyFormWizard({
 
   // Clear draft when form is submitted successfully
   const clearDraft = useCallback(() => {
-    localStorage.removeItem(DRAFT_STORAGE_KEY);
+    storageRemoveSync(DRAFT_STORAGE_KEY);
   }, []);
 
   // Handle step navigation
@@ -153,9 +151,11 @@ export function VacancyFormWizard({
     try {
       if (isEditing && editData?.id) {
         await updateVacancy.mutateAsync({ id: editData.id, updates: data });
+        haptic.success();
         toast({ title: 'Vacancy updated', description: 'Your job vacancy has been updated.' });
       } else {
         await createVacancy.mutateAsync(data as any);
+        haptic.success();
         toast({ title: 'Vacancy published', description: 'Your job vacancy is now live!' });
         clearDraft();
       }
@@ -164,6 +164,7 @@ export function VacancyFormWizard({
       reset(defaultVacancyValues);
       setCurrentStep(0);
     } catch (error) {
+      haptic.error();
       toast({
         title: 'Error',
         description: 'Failed to save vacancy. Please try again.',
@@ -176,7 +177,7 @@ export function VacancyFormWizard({
   const handleSaveDraft = () => {
     setIsSavingDraft(true);
     const values = methods.getValues();
-    localStorage.setItem(DRAFT_STORAGE_KEY, JSON.stringify(values));
+    storageSetSync(DRAFT_STORAGE_KEY, JSON.stringify(values));
     setLastSaved(new Date());
     setTimeout(() => setIsSavingDraft(false), 500);
     toast({ title: 'Draft saved', description: 'Your vacancy has been saved as a draft.' });
@@ -280,7 +281,7 @@ export function VacancyFormWizard({
                       {isEditing ? 'Edit Vacancy' : 'Post Job Vacancy'}
                     </span>
                     <div className="flex items-center gap-2">
-                      <p className="text-xs text-muted-foreground font-normal">
+                      <p className="text-xs text-white/60 font-normal">
                         {currentStepData.title} - {currentStepData.description}
                       </p>
                       {/* Draft save indicator */}
@@ -291,7 +292,7 @@ export function VacancyFormWizard({
                             isSavingDraft
                               ? 'text-elec-yellow animate-pulse'
                               : lastSaved
-                                ? 'text-muted-foreground'
+                                ? 'text-white/60'
                                 : 'text-transparent'
                           )}
                         >
@@ -351,7 +352,7 @@ export function VacancyFormWizard({
                         ? 'text-elec-yellow font-medium'
                         : index < currentStep
                           ? 'text-elec-yellow/60 hover:text-elec-yellow/80'
-                          : 'text-muted-foreground'
+                          : 'text-white/60'
                     )}
                   >
                     {step.title}

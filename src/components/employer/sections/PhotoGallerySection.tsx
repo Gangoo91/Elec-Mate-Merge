@@ -389,7 +389,7 @@ export function PhotoGallerySection() {
               onClick={() => handlePhotoClick(index)}
             >
               <div className="relative aspect-square bg-gradient-to-br from-muted/50 to-muted/30 flex items-center justify-center">
-                <Camera className="h-8 w-8 text-muted-foreground/40" />
+                <Camera className="h-8 w-8 text-white/60/40" />
 
                 {/* Category dot indicator - subtle */}
                 <div
@@ -422,7 +422,7 @@ export function PhotoGallerySection() {
               {!isMobile && (
                 <CardContent className="p-2">
                   <p className="text-xs font-medium truncate text-foreground">{photo.jobTitle}</p>
-                  <p className="text-[10px] text-muted-foreground truncate">{photo.uploadedBy}</p>
+                  <p className="text-[10px] text-white/60 truncate">{photo.uploadedBy}</p>
                 </CardContent>
               )}
             </Card>
@@ -441,7 +441,7 @@ export function PhotoGallerySection() {
             >
               <CardContent className="p-3 flex items-center gap-3">
                 <div className="h-14 w-14 rounded-lg bg-gradient-to-br from-muted/50 to-muted/30 flex items-center justify-center flex-shrink-0 relative">
-                  <Camera className="h-6 w-6 text-muted-foreground/40" />
+                  <Camera className="h-6 w-6 text-white/60/40" />
                   <div
                     className={cn(
                       'absolute top-1 left-1 h-2 w-2 rounded-full',
@@ -466,8 +466,8 @@ export function PhotoGallerySection() {
                       {photo.category}
                     </Badge>
                   </div>
-                  <p className="text-xs text-muted-foreground truncate">{photo.notes}</p>
-                  <div className="flex items-center gap-3 mt-1 text-[10px] text-muted-foreground">
+                  <p className="text-xs text-white/60 truncate">{photo.notes}</p>
+                  <div className="flex items-center gap-3 mt-1 text-[10px] text-white/60">
                     <span className="flex items-center gap-1">
                       <User className="h-2.5 w-2.5" />
                       {photo.uploadedBy}
@@ -501,9 +501,9 @@ export function PhotoGallerySection() {
       {filteredPhotos.length === 0 && (viewMode === 'grid' || viewMode === 'list') && (
         <Card className="bg-elec-gray/50 border-border/30">
           <CardContent className="p-12 text-center">
-            <Camera className="h-12 w-12 mx-auto text-muted-foreground/30 mb-4" />
-            <p className="text-muted-foreground font-medium">No photos found</p>
-            <p className="text-xs text-muted-foreground/60 mt-1">Try adjusting your filters</p>
+            <Camera className="h-12 w-12 mx-auto text-white/60/30 mb-4" />
+            <p className="text-white/60 font-medium">No photos found</p>
+            <p className="text-xs text-white/60/60 mt-1">Try adjusting your filters</p>
           </CardContent>
         </Card>
       )}

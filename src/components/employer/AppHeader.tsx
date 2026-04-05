@@ -58,7 +58,7 @@ export function AppHeader({
           {title ? (
             <div className="min-w-0">
               <h1 className="text-base sm:text-lg font-bold text-foreground truncate">{title}</h1>
-              {subtitle && <p className="text-xs text-muted-foreground truncate">{subtitle}</p>}
+              {subtitle && <p className="text-xs text-white/60 truncate">{subtitle}</p>}
             </div>
           ) : (
             <div className="flex items-center gap-2">
@@ -68,7 +68,7 @@ export function AppHeader({
               <div className="flex items-center min-w-0">
                 <span className="text-lg sm:text-xl font-bold text-elec-yellow">Elec</span>
                 <span className="text-lg sm:text-xl font-bold text-foreground">-Mate</span>
-                <span className="text-xs sm:text-sm font-medium text-muted-foreground ml-2 hidden sm:inline">
+                <span className="text-xs sm:text-sm font-medium text-white/60 ml-2 hidden sm:inline">
                   for Business
                 </span>
               </div>
@@ -83,7 +83,7 @@ export function AppHeader({
               variant="ghost"
               size="icon"
               onClick={onSearch}
-              className="h-10 w-10 text-muted-foreground hover:text-foreground hover:bg-muted/50 active:scale-95 transition-all"
+              className="h-10 w-10 text-white/60 hover:text-foreground hover:bg-muted/50 active:scale-95 transition-all"
             >
               <Search className="h-5 w-5" />
             </Button>

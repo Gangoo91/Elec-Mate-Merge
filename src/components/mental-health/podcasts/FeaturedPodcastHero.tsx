@@ -1,4 +1,5 @@
 import React from 'react';
+import { openExternalUrl } from '@/utils/open-external-url';
 import { Star, Mic, ExternalLink } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Podcast } from './PodcastData';
@@ -34,7 +35,7 @@ interface FeaturedPodcastHeroProps {
 
 const FeaturedPodcastHero = ({ podcast }: FeaturedPodcastHeroProps) => {
   const openLink = (url: string) => {
-    window.open(url, '_blank', 'noopener,noreferrer');
+    openExternalUrl(url);
   };
 
   return (

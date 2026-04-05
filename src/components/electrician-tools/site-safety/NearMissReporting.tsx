@@ -62,6 +62,7 @@ import { useShowMore } from '@/hooks/useShowMore';
 import { NearMissReport, Witness } from './types';
 import { RiskMatrix } from './common/RiskMatrix';
 import { SignaturePad } from './common/SignaturePad';
+import { storageGetSync, storageRemoveSync } from '@/utils/storage';
 import { SaveAsTemplateSheet } from './common/SaveAsTemplateSheet';
 import { LoadTemplateSheet } from './common/LoadTemplateSheet';
 import { NEAR_MISS_STANDARD_TEMPLATES } from '@/data/site-safety/near-miss-templates';
@@ -328,7 +329,7 @@ export const NearMissReporting: React.FC = () => {
 
   // Check for escalation from Safety Observations
   useEffect(() => {
-    const escalation = localStorage.getItem('escalate-to-near-miss');
+    const escalation = storageGetSync('escalate-to-near-miss');
     if (escalation) {
       try {
         const data = JSON.parse(escalation);
@@ -342,9 +343,9 @@ export const NearMissReporting: React.FC = () => {
           location: data.location || prev.location,
         }));
         setShowForm(true);
-        localStorage.removeItem('escalate-to-near-miss');
+        storageRemoveSync('escalate-to-near-miss');
       } catch {
-        localStorage.removeItem('escalate-to-near-miss');
+        storageRemoveSync('escalate-to-near-miss');
       }
     }
   }, []);

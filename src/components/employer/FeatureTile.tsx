@@ -67,11 +67,11 @@ export function FeatureTile({
                 )}
               </div>
               {description && (
-                <p className="text-xs text-muted-foreground truncate mt-0.5">{description}</p>
+                <p className="text-xs text-white/60 truncate mt-0.5">{description}</p>
               )}
             </div>
             {showArrow && (
-              <ChevronRight className="h-4 w-4 text-muted-foreground/50 group-hover:text-elec-yellow/70 transition-colors shrink-0" />
+              <ChevronRight className="h-4 w-4 text-white/60/50 group-hover:text-elec-yellow/70 transition-colors shrink-0" />
             )}
           </div>
         </CardContent>
@@ -106,10 +106,10 @@ export function FeatureTile({
               {title}
             </h3>
             {description && (
-              <p className="text-xs sm:text-sm text-muted-foreground line-clamp-2">{description}</p>
+              <p className="text-xs sm:text-sm text-white/60 line-clamp-2">{description}</p>
             )}
           </div>
-          <ChevronRight className="h-4 w-4 sm:h-5 sm:w-5 text-muted-foreground/40 group-hover:text-elec-yellow/60 transition-colors mt-0.5 shrink-0" />
+          <ChevronRight className="h-4 w-4 sm:h-5 sm:w-5 text-white/60/40 group-hover:text-elec-yellow/60 transition-colors mt-0.5 shrink-0" />
         </div>
       </CardContent>
     </Card>

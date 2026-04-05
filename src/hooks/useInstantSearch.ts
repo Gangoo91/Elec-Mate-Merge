@@ -1,6 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { useState, useEffect } from 'react';
 import { supabase } from '@/integrations/supabase/client';
+import { storageGetJSONSync, storageSetJSONSync, storageRemoveSync } from '@/utils/storage';
 
 /**
  * Instant Search Result
@@ -85,15 +86,8 @@ export function useRecentSearches(maxItems: number = 5) {
   const [searches, setSearches] = useState<string[]>([]);
 
   useEffect(() => {
-    const stored = localStorage.getItem('marketplace-recent-searches');
-    if (stored) {
-      try {
-        const parsed = JSON.parse(stored);
-        setSearches(Array.isArray(parsed) ? parsed.slice(0, maxItems) : []);
-      } catch {
-        setSearches([]);
-      }
-    }
+    const parsed = storageGetJSONSync<string[]>('marketplace-recent-searches', []);
+    setSearches(Array.isArray(parsed) ? parsed.slice(0, maxItems) : []);
   }, [maxItems]);
 
   const addSearch = (query: string) => {
@@ -102,12 +96,12 @@ export function useRecentSearches(maxItems: number = 5) {
 
     const updated = [trimmed, ...searches.filter((s) => s !== trimmed)].slice(0, maxItems);
     setSearches(updated);
-    localStorage.setItem('marketplace-recent-searches', JSON.stringify(updated));
+    storageSetJSONSync('marketplace-recent-searches', updated);
   };
 
   const clearSearches = () => {
     setSearches([]);
-    localStorage.removeItem('marketplace-recent-searches');
+    storageRemoveSync('marketplace-recent-searches');
   };
 
   return { searches, addSearch, clearSearches };

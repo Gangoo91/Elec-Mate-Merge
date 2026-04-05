@@ -50,7 +50,7 @@ export function MobileDataCard({
             {leftIcon && <div className="flex-shrink-0">{leftIcon}</div>}
             <div className="min-w-0 flex-1">
               <h4 className="font-semibold text-foreground text-sm truncate">{title}</h4>
-              {subtitle && <p className="text-xs text-muted-foreground truncate">{subtitle}</p>}
+              {subtitle && <p className="text-xs text-white/60 truncate">{subtitle}</p>}
             </div>
           </div>
           {status && (
@@ -67,7 +67,7 @@ export function MobileDataCard({
         <div className="grid grid-cols-2 gap-x-4 gap-y-2">
           {fields.map((field, index) => (
             <div key={index} className={cn('min-w-0', field.fullWidth && 'col-span-2')}>
-              <p className="text-[10px] text-muted-foreground uppercase tracking-wide">
+              <p className="text-[10px] text-white/60 uppercase tracking-wide">
                 {field.label}
               </p>
               <div className="text-sm text-foreground truncate">{field.value}</div>

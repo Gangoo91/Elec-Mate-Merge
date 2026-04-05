@@ -2,6 +2,7 @@ import { useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useMaterialsLists } from '@/hooks/useMaterialsLists';
 import { useToast } from '@/hooks/use-toast';
+import { storageSetJSONSync } from '@/utils/storage';
 import type { SurveyAnalysisResult } from '@/types/surveyAnalysis';
 import type { SiteVisit } from '@/types/siteVisit';
 
@@ -69,7 +70,7 @@ export function useSurveyMaterialsActions() {
           },
         }),
       };
-      localStorage.setItem(materialsSessionId, JSON.stringify({ materialsData }));
+      storageSetJSONSync(materialsSessionId, { materialsData });
       navigate(`/electrician/quote-builder/create?materialsSessionId=${materialsSessionId}`);
     },
     [navigate]

@@ -3,6 +3,7 @@ import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/contexts/AuthContext';
 import { userKey } from '@/lib/userStorage';
+import { storageGetSync, storageSetSync, storageGetJSONSync, storageSetJSONSync } from '@/utils/storage';
 
 interface UseQuizCompletionProps {
   courseSlug?: string;
@@ -17,8 +18,8 @@ export const useQuizCompletion = ({ courseSlug, unitCode }: UseQuizCompletionPro
   const handleQuizComplete = useCallback(
     async (score: number, totalQuestions: number, timeSpent: number) => {
       try {
-        // Mark quiz as completed in localStorage (user-scoped)
-        localStorage.setItem(userKey(uid, `unit_${unitCode}_quiz_completed`), 'true');
+        // Mark quiz as completed (user-scoped)
+        storageSetSync(userKey(uid, `unit_${unitCode}_quiz_completed`), 'true');
 
         // Calculate time taken and minutes for display
         const minutesTaken = Math.ceil(timeSpent / 60);
@@ -26,18 +27,16 @@ export const useQuizCompletion = ({ courseSlug, unitCode }: UseQuizCompletionPro
 
         // Add to off-the-job training record
         if (courseSlug) {
-          // Update the localStorage for today's time (user-scoped)
+          // Update today's time (user-scoped)
           const existingTime = parseInt(
-            localStorage.getItem(userKey(uid, `course_${courseSlug}_todayTime`)) || '0'
+            storageGetSync(userKey(uid, `course_${courseSlug}_todayTime`)) || '0'
           );
           const newTime = existingTime + timeSpent;
-          localStorage.setItem(userKey(uid, `course_${courseSlug}_todayTime`), newTime.toString());
+          storageSetSync(userKey(uid, `course_${courseSlug}_todayTime`), newTime.toString());
         }
 
-        // Record quiz attempt in localStorage (user-scoped)
-        const attempts = JSON.parse(
-          localStorage.getItem(userKey(uid, `unit_${unitCode}_quiz_attempts`)) || '[]'
-        );
+        // Record quiz attempt (user-scoped)
+        const attempts = storageGetJSONSync<any[]>(userKey(uid, `unit_${unitCode}_quiz_attempts`), []);
         attempts.push({
           date: new Date().toISOString(),
           score,
@@ -45,10 +44,7 @@ export const useQuizCompletion = ({ courseSlug, unitCode }: UseQuizCompletionPro
           timeTaken: timeSpent,
           percentage,
         });
-        localStorage.setItem(
-          userKey(uid, `unit_${unitCode}_quiz_attempts`),
-          JSON.stringify(attempts)
-        );
+        storageSetJSONSync(userKey(uid, `unit_${unitCode}_quiz_attempts`), attempts);
 
         if (user) {
           const { error } = await supabase.from('quiz_attempts').insert({
@@ -62,7 +58,7 @@ export const useQuizCompletion = ({ courseSlug, unitCode }: UseQuizCompletionPro
 
           if (error) {
             console.error('Error saving quiz attempt to Supabase:', error);
-            // Still show success toast as we've saved to localStorage
+            // Still show success toast as we've saved locally
             toast({
               title: 'Quiz Results Saved Locally',
               description: `You scored ${score} out of ${totalQuestions}. ${minutesTaken} minutes has been added to your off-the-job training.`,
@@ -97,7 +93,7 @@ export const useQuizCompletion = ({ courseSlug, unitCode }: UseQuizCompletionPro
 
   const checkQuizCompletion = useCallback(() => {
     if (unitCode) {
-      return localStorage.getItem(userKey(uid, `unit_${unitCode}_quiz_completed`)) === 'true';
+      return storageGetSync(userKey(uid, `unit_${unitCode}_quiz_completed`)) === 'true';
     }
     return false;
   }, [unitCode, uid]);

@@ -1,0 +1,993 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Electrical Danger Notification</title>
+    <style>
+        :root {
+            --accent-color: #dc2626;
+            --accent-light: #dc262633;
+            --accent-dark: #991b1b;
+        }
+
+        @page {
+            size: A4;
+            margin: 3mm 3mm 4mm 3mm;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-size: 8.5px;
+            line-height: 1.4;
+            color: #1a1a1a;
+            background: #fff;
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
+        }
+
+        /* === SHARED STYLES (from EV cert template) === */
+
+        .doc-header {
+            background: linear-gradient(180deg, #0a1628 0%, #152238 100%);
+            color: #fff;
+            padding: 10px 12px;
+            margin-bottom: 2px;
+            border-radius: 2px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .doc-header::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 3px;
+            background: var(--accent-color);
+        }
+
+        .doc-header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .doc-title-section { flex: 1; }
+
+        .doc-title {
+            font-size: 16px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            margin-bottom: 2px;
+        }
+
+        .doc-subtitle {
+            font-size: 7.5px;
+            font-weight: 400;
+            opacity: 0.85;
+            letter-spacing: 0.3px;
+        }
+
+        .doc-meta { text-align: right; }
+
+        .cert-number {
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--accent-color);
+            letter-spacing: 0.5px;
+        }
+
+        .page-number {
+            font-size: 8px;
+            opacity: 0.7;
+            margin-top: 2px;
+        }
+
+        .company-logo img {
+            max-height: 45px;
+            max-width: 120px;
+            object-fit: contain;
+        }
+
+        .company-brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-right: 12px;
+        }
+
+        .company-brand-info { display: flex; flex-direction: column; }
+
+        .company-brand-name {
+            font-size: 11px;
+            font-weight: 700;
+            color: #fff;
+            letter-spacing: 0.3px;
+        }
+
+        .company-brand-tagline {
+            font-size: 7px;
+            color: rgba(255,255,255,0.7);
+            font-style: italic;
+        }
+
+        .company-brand-reg {
+            font-size: 7px;
+            color: var(--accent-color);
+            margin-top: 1px;
+        }
+
+        .scheme-logo img {
+            max-height: 36px;
+            max-width: 80px;
+            object-fit: contain;
+        }
+
+        .section { margin-bottom: 4px; }
+
+        .section-title {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            color: #fff;
+            font-size: 9px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            padding: 4px 8px;
+            margin-bottom: 3px;
+            border-left: 3px solid var(--accent-color);
+        }
+
+        .form-grid {
+            display: table;
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 2px;
+        }
+
+        .form-row { display: table-row; }
+
+        .form-label {
+            display: table-cell;
+            font-size: 7.5px;
+            font-weight: 600;
+            color: #475569;
+            padding: 4px 6px;
+            width: 120px;
+            vertical-align: middle;
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+        }
+
+        .form-value {
+            display: table-cell;
+            font-size: 8.5px;
+            color: #1e293b;
+            padding: 4px 6px;
+            vertical-align: middle;
+            border: 1px solid #e2e8f0;
+            background: #fff;
+        }
+
+        .inline-form {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 4px;
+            padding: 4px 6px;
+            background: #fafbfc;
+            border: 1px solid #e2e8f0;
+            border-radius: 2px;
+        }
+
+        .inline-group {
+            display: flex;
+            align-items: center;
+            gap: 3px;
+        }
+
+        .inline-label {
+            font-size: 7.5px;
+            font-weight: 600;
+            color: #64748b;
+            white-space: nowrap;
+        }
+
+        .inline-value {
+            font-size: 8px;
+            color: #1e293b;
+            padding: 3px 5px;
+            background: #fff;
+            border: 1px solid #cbd5e1;
+            border-radius: 2px;
+            min-width: 50px;
+            min-height: 18px;
+            line-height: 1.3;
+        }
+
+        .inline-value.wide { min-width: 100px; flex: 1; }
+
+        .checkbox-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            gap: 3px;
+        }
+
+        .checkbox-box {
+            width: 10px;
+            height: 10px;
+            border: 1px solid #64748b;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 8px;
+            font-weight: bold;
+        }
+
+        .checkbox-box.checked {
+            background: var(--accent-color);
+            color: #fff;
+        }
+
+        .signature-grid {
+            display: flex;
+            gap: 6px;
+            margin-top: 2px;
+        }
+
+        .signature-box {
+            flex: 1;
+            border: 1px solid #cbd5e1;
+            border-radius: 2px;
+            overflow: hidden;
+        }
+
+        .signature-box-header {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            color: #fff;
+            font-size: 7.5px;
+            font-weight: 600;
+            padding: 3px 8px;
+            border-bottom: 2px solid var(--accent-color);
+        }
+
+        .signature-box-body { padding: 4px 6px; background: #fafbfc; }
+
+        .sig-field {
+            display: flex;
+            align-items: center;
+            margin-bottom: 3px;
+            gap: 4px;
+        }
+
+        .sig-field:last-child { margin-bottom: 0; }
+
+        .sig-field-label {
+            font-size: 7px;
+            font-weight: 600;
+            color: #64748b;
+            min-width: 70px;
+            flex-shrink: 0;
+        }
+
+        .sig-field-value {
+            flex: 1;
+            font-size: 8px;
+            color: #1e293b;
+            padding: 3px 5px;
+            background: #fff;
+            border: 1px solid #e2e8f0;
+            border-radius: 1px;
+            min-height: 18px;
+        }
+
+        .sig-field-value.signature {
+            min-height: 35px;
+            display: flex;
+            align-items: center;
+        }
+
+        .sig-field-value img { max-height: 30px; }
+
+        .declaration-box {
+            background: #fef2f2;
+            border: 1px solid #fca5a5;
+            border-left: 3px solid var(--accent-color);
+            border-radius: 2px;
+            padding: 6px 10px;
+            margin-bottom: 4px;
+        }
+
+        .declaration-text {
+            font-size: 7.5px;
+            color: #991b1b;
+            line-height: 1.5;
+            text-align: justify;
+        }
+
+        .declaration-text strong { color: #7f1d1d; }
+
+        .info-box {
+            background: #fef2f2;
+            border: 1px solid #fca5a5;
+            border-left: 3px solid var(--accent-color);
+            border-radius: 2px;
+            padding: 4px 8px;
+            margin: 4px 0;
+            font-size: 7.5px;
+            color: #991b1b;
+        }
+
+        .info-box strong { color: #7f1d1d; }
+
+        .footer {
+            margin-top: 8px;
+            padding-top: 6px;
+            border-top: 2px solid var(--accent-color);
+            display: flex;
+            justify-content: space-between;
+            font-size: 7px;
+            color: #64748b;
+        }
+
+        .footer-left { line-height: 1.5; }
+        .footer-right { text-align: right; }
+
+        .page-break { page-break-before: always; }
+        .avoid-break { page-break-inside: avoid; }
+
+        .photo-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 4px;
+            margin-top: 4px;
+        }
+
+        .photo-item {
+            width: 80px;
+            height: 80px;
+            border: 1px solid #e2e8f0;
+            border-radius: 2px;
+            overflow: hidden;
+        }
+
+        .photo-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* === FRONT SHEET SPECIFIC === */
+
+        .front-sheet {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .front-danger-banner {
+            background: var(--accent-color);
+            color: #fff;
+            text-align: center;
+            padding: 16px 20px;
+            margin: 8px 0;
+            border-radius: 3px;
+        }
+
+        .front-danger-banner h1 {
+            font-size: 28px;
+            font-weight: 900;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .front-danger-banner p {
+            font-size: 12px;
+            font-weight: 600;
+            margin-top: 4px;
+            letter-spacing: 0.5px;
+        }
+
+        .front-details-card {
+            border: 2px solid var(--accent-color);
+            border-radius: 4px;
+            overflow: hidden;
+            margin: 6px 0;
+        }
+
+        .front-details-header {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            color: #fff;
+            font-size: 10px;
+            font-weight: 600;
+            padding: 6px 12px;
+            border-bottom: 2px solid var(--accent-color);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .front-details-body {
+            padding: 10px 12px;
+            background: #fff;
+        }
+
+        .front-field {
+            display: flex;
+            margin-bottom: 6px;
+            gap: 8px;
+        }
+
+        .front-field:last-child { margin-bottom: 0; }
+
+        .front-field-label {
+            font-size: 9px;
+            font-weight: 600;
+            color: #64748b;
+            min-width: 100px;
+            flex-shrink: 0;
+        }
+
+        .front-field-value {
+            font-size: 10px;
+            font-weight: 600;
+            color: #0f172a;
+        }
+
+        .front-eicr-badge {
+            display: inline-block;
+            background: #dbeafe;
+            color: #1e40af;
+            font-size: 9px;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 3px;
+            border: 1px solid #93c5fd;
+            margin: 4px 0;
+        }
+
+        .front-danger-summary {
+            background: #fef2f2;
+            border: 2px solid var(--accent-color);
+            border-radius: 4px;
+            padding: 10px 12px;
+            margin: 6px 0;
+        }
+
+        .front-danger-item {
+            margin-bottom: 8px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #fca5a5;
+        }
+
+        .front-danger-item:last-child {
+            margin-bottom: 0;
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+
+        .front-danger-number {
+            font-size: 8px;
+            font-weight: 700;
+            color: var(--accent-color);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 2px;
+        }
+
+        .front-danger-desc {
+            font-size: 10px;
+            font-weight: 600;
+            color: #0f172a;
+            line-height: 1.4;
+        }
+
+        .front-danger-location {
+            font-size: 8px;
+            color: #64748b;
+            margin-top: 2px;
+        }
+
+        .front-urgent-box {
+            background: var(--accent-color);
+            color: #fff;
+            text-align: center;
+            padding: 10px 16px;
+            border-radius: 3px;
+            margin: 8px 0;
+        }
+
+        .front-urgent-box p {
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        .front-urgent-box .sub {
+            font-size: 8px;
+            font-weight: 400;
+            margin-top: 3px;
+            opacity: 0.9;
+            text-transform: none;
+        }
+
+        .danger-type-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-top: 4px;
+        }
+
+        .danger-type-badge {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 2px;
+            font-size: 7.5px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+
+        .danger-type-badge.active {
+            background: #fee2e2;
+            color: #991b1b;
+            border: 1px solid #fca5a5;
+        }
+
+        .danger-type-badge.inactive {
+            background: #f1f5f9;
+            color: #94a3b8;
+            border: 1px solid #e2e8f0;
+        }
+    </style>
+</head>
+<body>
+
+<!-- ============================================ -->
+<!-- PAGE 1: FRONT SHEET                          -->
+<!-- ============================================ -->
+
+<div class="front-sheet">
+    <!-- Header -->
+    <div class="doc-header">
+        <div class="doc-header-content">
+            <div class="company-brand">
+                {% if company_logo %}
+                <div class="company-logo">
+                    <img src="{{ company_logo }}" alt="Company Logo" />
+                </div>
+                {% endif %}
+                <div class="company-brand-info">
+                    <div class="company-brand-name">{{ company_name }}</div>
+                    {% if company_tagline %}
+                    <div class="company-brand-tagline">{{ company_tagline }}</div>
+                    {% endif %}
+                    {% if registration_scheme %}
+                    <div class="company-brand-reg">{{ registration_scheme }}: {{ registration_number }}</div>
+                    {% endif %}
+                </div>
+                {% if registration_scheme_logo %}
+                <div class="scheme-logo">
+                    <img src="{{ registration_scheme_logo }}" alt="{{ registration_scheme }}" />
+                </div>
+                {% endif %}
+            </div>
+
+            <div class="doc-title-section">
+                <div class="doc-title">ELECTRICAL DANGER NOTIFICATION</div>
+                <div class="doc-subtitle">Issued in accordance with BS 7671:2018+A3:2024</div>
+            </div>
+
+            <div class="doc-meta">
+                <div class="cert-number">{{ reference_number }}</div>
+                <div class="page-number">Page 1</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- C1 DANGER BANNER -->
+    <div class="front-danger-banner">
+        <h1>DANGER PRESENT</h1>
+        <p>Classification C1 — Immediate Remedial Action Required</p>
+    </div>
+
+    <!-- What This Notice Means -->
+    <div class="info-box" style="margin: 6px 0; font-size: 8.5px; line-height: 1.6;">
+        <strong>What does this notice mean?</strong> During an inspection of the electrical installation at the address below, a condition has been found that poses an immediate risk of injury. This notice formally records the danger and confirms that you, the responsible person, have been informed. You must arrange for a qualified electrician to carry out the remedial work described below without delay.
+    </div>
+
+    <!-- Key Details -->
+    <div class="front-details-card">
+        <div class="front-details-header">Notice Details</div>
+        <div class="front-details-body">
+            <div class="front-field">
+                <div class="front-field-label">Reference</div>
+                <div class="front-field-value">{{ reference_number }}</div>
+            </div>
+            <div class="front-field">
+                <div class="front-field-label">Date & Time</div>
+                <div class="front-field-value">{{ date }} at {{ time }}</div>
+            </div>
+            <div class="front-field">
+                <div class="front-field-label">Issued To</div>
+                <div class="front-field-value" style="font-size: 11px;">{{ client_name }}{% if client_position %} ({{ client_position }}){% endif %}</div>
+            </div>
+            <div class="front-field">
+                <div class="front-field-label">Property Address</div>
+                <div class="front-field-value" style="font-size: 11px;">{{ installation_address }}</div>
+            </div>
+            <div class="front-field">
+                <div class="front-field-label">Issued By</div>
+                <div class="front-field-value">{{ contractor_name }}, {{ contractor_company }}</div>
+            </div>
+            {% if registration_scheme %}
+            <div class="front-field">
+                <div class="front-field-label">Registration</div>
+                <div class="front-field-value">{{ registration_scheme }} — {{ registration_number }}</div>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Linked EICR -->
+    {% if linked_eicr_cert_number != "" %}
+    <div style="margin: 6px 0;">
+        <span class="front-eicr-badge">This notice relates to EICR: {{ linked_eicr_cert_number }}</span>
+    </div>
+    {% endif %}
+
+    <!-- Danger Summary -->
+    <div class="front-danger-summary">
+        <div style="font-size: 10px; font-weight: 700; color: #991b1b; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px;">
+            {% if dangers.size > 1 %}{{ dangers.size }} Dangerous Conditions Found{% else %}Dangerous Condition Found{% endif %}
+        </div>
+        {% for danger in dangers %}
+        <div class="front-danger-item">
+            {% if dangers.size > 1 %}
+            <div class="front-danger-number">Condition {{ forloop.index }} of {{ dangers.size }}</div>
+            {% endif %}
+            <div class="front-danger-desc">{{ danger.description }}</div>
+            {% if danger.location != "" %}
+            <div class="front-danger-location">Location: {{ danger.location }}</div>
+            {% endif %}
+            {% if danger.remedial_action_required != "" %}
+            <div style="font-size: 9px; font-weight: 600; color: #991b1b; margin-top: 3px;">Action required: {{ danger.remedial_action_required }}</div>
+            {% endif %}
+        </div>
+        {% endfor %}
+    </div>
+
+    <!-- URGENT Warning -->
+    <div class="front-urgent-box">
+        <p>Do Not Ignore This Notice</p>
+        <div class="sub">The electrical danger described above poses a real and immediate risk of injury. As the person responsible for this installation, you have a legal duty to ensure that appropriate remedial action is taken without delay. If the affected circuit has been isolated, do not attempt to restore the supply until the work has been completed by a qualified electrician.</div>
+    </div>
+
+    <!-- Footer -->
+    <div style="flex: 1;"></div>
+    <div class="footer">
+        <div class="footer-left">
+            <strong>{{ company_name }}</strong><br>
+            {{ company_address }}<br>
+            {% if company_phone %}Tel: {{ company_phone }}{% endif %}
+            {% if company_email %} | {{ company_email }}{% endif %}
+        </div>
+        <div class="footer-right">
+            {% if registration_scheme %}
+            <strong>{{ registration_scheme }}</strong><br>
+            Reg No: {{ registration_number }}<br>
+            {% endif %}
+            <span style="color: #94a3b8;">BS 7671:2018+A3:2024</span>
+        </div>
+    </div>
+    <div style="text-align: center; margin-top: 8px;">
+        <span style="font-size: 8px; color: #94a3b8; letter-spacing: 0.3px;">Powered by <strong style="color: #64748b;">Elec-Mate</strong></span>
+    </div>
+</div>
+
+<!-- ============================================ -->
+<!-- PAGE 2+: FULL DETAILS                        -->
+<!-- ============================================ -->
+
+<div class="page-break"></div>
+
+<!-- Header (repeated) -->
+<div class="doc-header">
+    <div class="doc-header-content">
+        <div class="company-brand">
+            {% if company_logo %}
+            <div class="company-logo">
+                <img src="{{ company_logo }}" alt="Company Logo" />
+            </div>
+            {% endif %}
+            <div class="company-brand-info">
+                <div class="company-brand-name">{{ company_name }}</div>
+            </div>
+        </div>
+        <div class="doc-title-section">
+            <div class="doc-title">ELECTRICAL DANGER NOTIFICATION</div>
+            <div class="doc-subtitle">Full Details</div>
+        </div>
+        <div class="doc-meta">
+            <div class="cert-number">{{ reference_number }}</div>
+            <div class="page-number">Page 2</div>
+        </div>
+    </div>
+</div>
+
+<!-- SECTION A: CONTRACTOR DETAILS -->
+<div class="section">
+    <div class="section-title">Section A: Contractor / Installer Details</div>
+    <div class="form-grid">
+        <div class="form-row">
+            <div class="form-label">Name</div>
+            <div class="form-value">{{ contractor_name }}</div>
+            <div class="form-label">Company</div>
+            <div class="form-value">{{ contractor_company }}</div>
+        </div>
+        <div class="form-row">
+            <div class="form-label">Address</div>
+            <div class="form-value" colspan="3">{{ contractor_address }}</div>
+        </div>
+        <div class="form-row">
+            <div class="form-label">Telephone</div>
+            <div class="form-value">{{ contractor_phone }}</div>
+            <div class="form-label">Email</div>
+            <div class="form-value">{{ contractor_email }}</div>
+        </div>
+        <div class="form-row">
+            <div class="form-label">Scheme</div>
+            <div class="form-value">{{ registration_scheme }}</div>
+            <div class="form-label">Registration No.</div>
+            <div class="form-value">{{ registration_number }}</div>
+        </div>
+    </div>
+</div>
+
+<!-- SECTION B: CLIENT DETAILS -->
+<div class="section">
+    <div class="section-title">Section B: Client / Responsible Person</div>
+    <div class="form-grid">
+        <div class="form-row">
+            <div class="form-label">Name</div>
+            <div class="form-value">{{ client_name }}</div>
+            <div class="form-label">Position</div>
+            <div class="form-value">{{ client_position }}</div>
+        </div>
+        <div class="form-row">
+            <div class="form-label">Address</div>
+            <div class="form-value" colspan="3">{{ client_address }}</div>
+        </div>
+        <div class="form-row">
+            <div class="form-label">Telephone</div>
+            <div class="form-value">{{ client_phone }}</div>
+            <div class="form-label">Email</div>
+            <div class="form-value">{{ client_email }}</div>
+        </div>
+    </div>
+</div>
+
+<!-- SECTION C: INSTALLATION ADDRESS -->
+<div class="section">
+    <div class="section-title">Section C: Installation Address</div>
+    <div class="form-grid">
+        <div class="form-row">
+            <div class="form-label">Address</div>
+            <div class="form-value" colspan="3">
+                {% if installation_address_different %}
+                    {{ installation_address }}{% if installation_postcode %}, {{ installation_postcode }}{% endif %}
+                {% else %}
+                    As client address above
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- SECTION D: DANGEROUS CONDITIONS (repeats per danger) -->
+{% for danger in dangers %}
+<div class="section avoid-break">
+    <div class="section-title">Section D{% if dangers.size > 1 %}.{{ forloop.index }}{% endif %}: Dangerous Condition{% if dangers.size > 1 %} — {{ forloop.index }} of {{ dangers.size }}{% endif %}</div>
+
+    <div class="form-grid">
+        <div class="form-row">
+            <div class="form-label">What was found</div>
+            <div class="form-value" style="font-weight: 600; font-size: 9px; line-height: 1.5;" colspan="3">{{ danger.description }}</div>
+        </div>
+        <div class="form-row">
+            <div class="form-label">Where in the installation</div>
+            <div class="form-value">{{ danger.location }}</div>
+            <div class="form-label">Regulation reference</div>
+            <div class="form-value">{{ danger.regulation_ref }}</div>
+        </div>
+    </div>
+
+    <!-- Type of Danger -->
+    <div class="inline-form" style="margin-top: 2px;">
+        <div class="inline-group">
+            <span class="inline-label">Nature of the risk:</span>
+        </div>
+        <div class="danger-type-grid">
+            <span class="danger-type-badge {% if danger.risk_of_fire %}active{% else %}inactive{% endif %}">Risk of Fire</span>
+            <span class="danger-type-badge {% if danger.risk_of_electric_shock %}active{% else %}inactive{% endif %}">Risk of Electric Shock</span>
+            <span class="danger-type-badge {% if danger.risk_of_burns %}active{% else %}inactive{% endif %}">Risk of Burns</span>
+            <span class="danger-type-badge {% if danger.risk_of_injury %}active{% else %}inactive{% endif %}">Risk of Injury</span>
+            {% if danger.risk_other %}
+            <span class="danger-type-badge active">{{ danger.risk_other_description }}</span>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Action Taken -->
+    <div class="form-grid" style="margin-top: 2px;">
+        <div class="form-row">
+            <div class="form-label">What we did on site</div>
+            <div class="form-value" style="line-height: 1.5;" colspan="3">{{ danger.immediate_action_taken }}</div>
+        </div>
+        {% if danger.circuit_isolated %}
+        <div class="form-row">
+            <div class="form-label">Circuit isolated</div>
+            <div class="form-value" colspan="3">Yes — {{ danger.isolation_details }}</div>
+        </div>
+        {% endif %}
+        <div class="form-row">
+            <div class="form-label" style="background: #fef2f2; color: #991b1b; font-weight: 700;">What must be done</div>
+            <div class="form-value" style="font-weight: 600; color: #991b1b; font-size: 9px; line-height: 1.5;" colspan="3">{{ danger.remedial_action_required }}</div>
+        </div>
+    </div>
+
+    <!-- Photos -->
+    {% if danger.photos.size > 0 %}
+    <div style="margin-top: 4px;">
+        <div style="font-size: 7.5px; font-weight: 600; color: #64748b; margin-bottom: 3px; text-transform: uppercase; letter-spacing: 0.5px;">Photographic Evidence</div>
+        <div class="photo-grid">
+            {% for photo in danger.photos %}
+            <div class="photo-item">
+                <img src="{{ photo }}" alt="Evidence {{ forloop.index }}" />
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+</div>
+{% endfor %}
+
+<!-- SECTION E: CONTRACTOR DECLARATION -->
+<div class="section avoid-break">
+    <div class="section-title">Section E: Contractor Declaration</div>
+    <div class="declaration-box">
+        <div class="declaration-text">
+            <strong>Declaration:</strong> {{ declaration_text }}
+        </div>
+    </div>
+    <div class="signature-grid">
+        <div class="signature-box" style="flex: 2;">
+            <div class="signature-box-header">Contractor</div>
+            <div class="signature-box-body">
+                <div class="sig-field">
+                    <span class="sig-field-label">Name</span>
+                    <span class="sig-field-value" style="font-weight: 600;">{{ contractor_name }}</span>
+                </div>
+                <div class="sig-field">
+                    <span class="sig-field-label">Company</span>
+                    <span class="sig-field-value">{{ contractor_company }}</span>
+                </div>
+                <div class="sig-field">
+                    <span class="sig-field-label">Date</span>
+                    <span class="sig-field-value">{{ date }}</span>
+                </div>
+            </div>
+        </div>
+        <div class="signature-box" style="flex: 1;">
+            <div class="signature-box-header">Signature</div>
+            <div class="signature-box-body" style="min-height: 60px; display: flex; align-items: center; justify-content: center;">
+                {% if contractor_signature %}
+                <img src="{{ contractor_signature }}" style="max-height: 50px; max-width: 100%;" />
+                {% else %}
+                <div style="width: 100%; border-bottom: 1px solid #64748b; margin: 20px 10px;"></div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- SECTION F: CLIENT ACKNOWLEDGEMENT -->
+<div class="section avoid-break">
+    <div class="section-title">Section F: Client Acknowledgement</div>
+    <div class="declaration-box" style="background: #f0fdf4; border-color: #86efac; border-left-color: #22c55e;">
+        <div class="declaration-text" style="color: #166534;">
+            <strong style="color: #14532d;">Acknowledgement:</strong> {{ acknowledgement_text }}
+        </div>
+    </div>
+
+    {% if client_refused_to_sign %}
+    <div class="info-box">
+        <strong>The client/responsible person declined to sign this notice.</strong> A witness has signed below to confirm that this notice was presented, the dangerous condition was explained, and the client was advised of the need for urgent remedial action.
+    </div>
+    <div class="signature-grid">
+        <div class="signature-box">
+            <div class="signature-box-header">Witness</div>
+            <div class="signature-box-body">
+                <div class="sig-field">
+                    <span class="sig-field-label">Name</span>
+                    <span class="sig-field-value">{{ witness_name }}</span>
+                </div>
+                <div class="sig-field">
+                    <span class="sig-field-label">Date</span>
+                    <span class="sig-field-value">{{ date }}</span>
+                </div>
+            </div>
+        </div>
+        <div class="signature-box">
+            <div class="signature-box-header">Witness Signature</div>
+            <div class="signature-box-body" style="min-height: 60px; display: flex; align-items: center; justify-content: center;">
+                {% if witness_signature %}
+                <img src="{{ witness_signature }}" style="max-height: 50px; max-width: 100%;" />
+                {% else %}
+                <div style="width: 100%; border-bottom: 1px solid #64748b; margin: 20px 10px;"></div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    {% else %}
+    <div class="signature-grid">
+        <div class="signature-box" style="flex: 2;">
+            <div class="signature-box-header">Client / Responsible Person</div>
+            <div class="signature-box-body">
+                <div class="sig-field">
+                    <span class="sig-field-label">Name</span>
+                    <span class="sig-field-value">{{ client_name }}</span>
+                </div>
+                <div class="sig-field">
+                    <span class="sig-field-label">Position</span>
+                    <span class="sig-field-value">{{ client_position }}</span>
+                </div>
+                <div class="sig-field">
+                    <span class="sig-field-label">Date</span>
+                    <span class="sig-field-value">{{ date }}</span>
+                </div>
+            </div>
+        </div>
+        <div class="signature-box" style="flex: 1;">
+            <div class="signature-box-header">Client Signature</div>
+            <div class="signature-box-body" style="min-height: 60px; display: flex; align-items: center; justify-content: center;">
+                {% if client_signature %}
+                <img src="{{ client_signature }}" style="max-height: 50px; max-width: 100%;" />
+                {% else %}
+                <div style="width: 100%; border-bottom: 1px solid #64748b; margin: 20px 10px;"></div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    {% endif %}
+</div>
+
+<!-- Footer -->
+<div class="footer">
+    <div class="footer-left">
+        <strong>{{ company_name }}</strong><br>
+        {{ company_address }}<br>
+        {% if company_phone %}Tel: {{ company_phone }}{% endif %}
+        {% if company_email %} | {{ company_email }}{% endif %}
+    </div>
+    <div class="footer-right">
+        {% if registration_scheme %}
+        <strong>{{ registration_scheme }}</strong><br>
+        Reg No: {{ registration_number }}<br>
+        {% endif %}
+        <span style="color: #94a3b8;">BS 7671:2018+A3:2024 | Electrical Danger Notification</span>
+    </div>
+</div>
+<div style="text-align: center; margin-top: 8px;">
+    <span style="font-size: 8px; color: #94a3b8; letter-spacing: 0.3px;">Powered by <strong style="color: #64748b;">Elec-Mate</strong></span>
+</div>
+
+</body>
+</html>

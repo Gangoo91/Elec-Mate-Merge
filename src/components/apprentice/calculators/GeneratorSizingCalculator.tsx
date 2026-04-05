@@ -1,4 +1,5 @@
 import { useState, useMemo, useCallback } from 'react';
+import { copyToClipboard } from '@/utils/clipboard';
 import { Zap, Plus, Trash2, Copy, Check, ChevronDown } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { cn } from '@/lib/utils';
@@ -269,7 +270,7 @@ const GeneratorSizingCalculator = () => {
     text += `\nPeak Starting: ${result.peakStartingKVA.toFixed(1)} kVA`;
     text += `\nTransfer Switch: ${result.transferSwitchRating}A`;
     text += `\nFuel: ${result.fuelConsumptionPerHour.toFixed(1)} L/hr (${fuelType})`;
-    navigator.clipboard.writeText(text);
+    copyToClipboard(text);
     setCopied(true);
     toast({ title: 'Copied to clipboard' });
     setTimeout(() => setCopied(false), 2000);

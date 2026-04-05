@@ -6,6 +6,7 @@ import { Progress } from '@/components/ui/progress';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { toast } from 'sonner';
+import { copyToClipboard as clipboardCopy } from '@/utils/clipboard';
 
 interface ToolParameter {
   name: string;
@@ -54,7 +55,7 @@ export function ElevenLabsSetupWizard({
 
   const copyToClipboard = async (text: string, fieldName: string) => {
     try {
-      await navigator.clipboard.writeText(text);
+      await clipboardCopy(text);
       setCopiedField(fieldName);
       toast.success('Copied!');
       setTimeout(() => setCopiedField(null), 2000);
@@ -75,7 +76,7 @@ export function ElevenLabsSetupWizard({
     mono?: boolean;
   }) => (
     <div className="space-y-1">
-      <label className="text-xs font-medium text-muted-foreground uppercase tracking-wide">
+      <label className="text-xs font-medium text-white/60 uppercase tracking-wide">
         {label}
       </label>
       <div className="flex items-start gap-2 bg-muted/50 rounded-md p-3 border border-border">
@@ -160,7 +161,7 @@ export function ElevenLabsSetupWizard({
             </Button>
             <div>
               <h2 className="text-lg font-semibold">ElevenLabs Setup Wizard</h2>
-              <p className="text-sm text-muted-foreground">
+              <p className="text-sm text-white/60">
                 Tool {currentIndex + 1} of {tools.length}
               </p>
             </div>
@@ -170,7 +171,7 @@ export function ElevenLabsSetupWizard({
               <div className="text-sm font-medium text-green-400">
                 {configuredTools.size} configured
               </div>
-              <div className="text-xs text-muted-foreground">
+              <div className="text-xs text-white/60">
                 {tools.length - configuredTools.size} remaining
               </div>
             </div>
@@ -265,7 +266,7 @@ export function ElevenLabsSetupWizard({
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
-                <p className="text-sm text-muted-foreground">
+                <p className="text-sm text-white/60">
                   Click "Add param" in ElevenLabs for each parameter below:
                 </p>
 
@@ -282,11 +283,11 @@ export function ElevenLabsSetupWizard({
                     <div className="grid gap-3">
                       <div className="grid grid-cols-2 gap-4 text-sm">
                         <div className="space-y-1">
-                          <span className="text-muted-foreground">Data type:</span>
+                          <span className="text-white/60">Data type:</span>
                           <div className="font-medium">{getDataType(param.type)}</div>
                         </div>
                         <div className="space-y-1">
-                          <span className="text-muted-foreground">Required:</span>
+                          <span className="text-white/60">Required:</span>
                           <div className={param.required ? 'text-red-400 font-medium' : ''}>
                             {param.required ? 'Yes ✓ Check this' : 'No'}
                           </div>
@@ -301,7 +302,7 @@ export function ElevenLabsSetupWizard({
                       />
 
                       <div className="space-y-1">
-                        <label className="text-xs font-medium text-muted-foreground uppercase tracking-wide">
+                        <label className="text-xs font-medium text-white/60 uppercase tracking-wide">
                           Value Type
                         </label>
                         <div className="bg-muted/50 rounded-md p-3 border border-border text-sm">
@@ -318,7 +319,7 @@ export function ElevenLabsSetupWizard({
                       {param.enum && param.enum.length > 0 && (
                         <div className="space-y-2">
                           <div className="flex items-center justify-between">
-                            <label className="text-xs font-medium text-muted-foreground uppercase tracking-wide">
+                            <label className="text-xs font-medium text-white/60 uppercase tracking-wide">
                               Enum Values ({param.enum.length}) - Add each one
                             </label>
                             <Button
@@ -376,13 +377,13 @@ export function ElevenLabsSetupWizard({
             <CardContent>
               <div className="bg-muted/30 rounded-lg p-4 space-y-2 border border-border">
                 <div className="flex items-center justify-between text-sm">
-                  <span className="text-muted-foreground">Wait for response:</span>
+                  <span className="text-white/60">Wait for response:</span>
                   <span className="font-medium">
                     {currentTool.waitForResponse ? 'Yes ✓ Check this' : 'No (leave unchecked)'}
                   </span>
                 </div>
                 <div className="flex items-center justify-between text-sm">
-                  <span className="text-muted-foreground">Disable interruptions:</span>
+                  <span className="text-white/60">Disable interruptions:</span>
                   <span className="font-medium">
                     {currentTool.disableInterruptions ? 'Yes ✓ Check this' : 'No (leave unchecked)'}
                   </span>

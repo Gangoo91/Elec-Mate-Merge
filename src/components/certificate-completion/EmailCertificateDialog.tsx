@@ -39,7 +39,7 @@ import { Badge } from '@/components/ui/badge';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { cn } from '@/lib/utils';
 import { useIsMobile } from '@/hooks/use-mobile';
-import { useHaptics } from '@/hooks/useHaptics';
+import { useHaptic } from '@/hooks/useHaptic';
 
 export interface EmailCertificateDialogProps {
   open: boolean;
@@ -78,7 +78,7 @@ export const EmailCertificateDialog: React.FC<EmailCertificateDialogProps> = ({
   isLoading = false,
 }) => {
   const isMobile = useIsMobile();
-  const haptics = useHaptics();
+  const haptic = useHaptic();
 
   const [recipient, setRecipient] = useState(clientEmail || '');
   const [showCc, setShowCc] = useState(false);
@@ -102,12 +102,12 @@ export const EmailCertificateDialog: React.FC<EmailCertificateDialogProps> = ({
 
   const handleSend = async () => {
     if (!isValidEmail(recipient)) {
-      haptics.error();
+      haptic.error();
       setErrorMessage('Please enter a valid email address');
       return;
     }
 
-    haptics.tap();
+    haptic.light();
     setSendStatus('sending');
     setErrorMessage('');
 
@@ -122,7 +122,7 @@ export const EmailCertificateDialog: React.FC<EmailCertificateDialogProps> = ({
         customMessage || undefined
       );
 
-      haptics.success();
+      haptic.success();
       setSendStatus('success');
 
       // Close after success
@@ -130,14 +130,14 @@ export const EmailCertificateDialog: React.FC<EmailCertificateDialogProps> = ({
         onOpenChange(false);
       }, 2000);
     } catch (error) {
-      haptics.error();
+      haptic.error();
       setSendStatus('error');
       setErrorMessage(error instanceof Error ? error.message : 'Failed to send email');
     }
   };
 
   const handleUseClientEmail = () => {
-    haptics.tap();
+    haptic.light();
     if (clientEmail) {
       setRecipient(clientEmail);
     }

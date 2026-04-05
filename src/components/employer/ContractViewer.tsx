@@ -51,6 +51,7 @@ import { useEmployees } from '@/hooks/useEmployees';
 import { downloadContractPDF } from '@/utils/contract-pdf';
 import { useToast } from '@/hooks/use-toast';
 import { sanitizeHtmlSafe } from '@/utils/inputSanitization';
+import { storageGetSync, storageSetSync, storageRemoveSync } from '@/utils/storage';
 import {
   Select,
   SelectContent,
@@ -119,7 +120,7 @@ export function ContractViewer({
     onUpdate: ({ editor }) => {
       setHasChanges(true);
       if (draftKey) {
-        localStorage.setItem(draftKey, editor.getHTML());
+        storageSetSync(draftKey, editor.getHTML());
       }
     },
     editorProps: {
@@ -146,7 +147,7 @@ export function ContractViewer({
     if (editor && content) {
       // Check for draft
       if (draftKey && isEditing) {
-        const draft = localStorage.getItem(draftKey);
+        const draft = storageGetSync(draftKey);
         if (draft && draft !== content) {
           const useDraft = window.confirm(
             'You have unsaved changes from a previous session. Restore them?'
@@ -156,7 +157,7 @@ export function ContractViewer({
             setHasChanges(true);
             return;
           } else {
-            localStorage.removeItem(draftKey);
+            storageRemoveSync(draftKey);
           }
         }
       }
@@ -253,7 +254,7 @@ export function ContractViewer({
       });
 
       if (draftKey) {
-        localStorage.removeItem(draftKey);
+        storageRemoveSync(draftKey);
       }
       setHasChanges(false);
       setIsEditing(false);
@@ -273,7 +274,7 @@ export function ContractViewer({
       if (!confirmCancel) return;
     }
     if (draftKey) {
-      localStorage.removeItem(draftKey);
+      storageRemoveSync(draftKey);
     }
     if (editor) {
       editor.commands.setContent(content);
@@ -288,7 +289,7 @@ export function ContractViewer({
       if (!confirmClose) return;
     }
     if (draftKey) {
-      localStorage.removeItem(draftKey);
+      storageRemoveSync(draftKey);
     }
     onOpenChange(false);
   }, [isEditing, hasChanges, draftKey, onOpenChange]);
@@ -304,7 +305,7 @@ export function ContractViewer({
       case 'HR Letters':
         return 'bg-success/10 text-success';
       default:
-        return 'bg-muted text-muted-foreground';
+        return 'bg-muted text-white/60';
     }
   };
 
@@ -369,7 +370,7 @@ export function ContractViewer({
                       {category}
                     </Badge>
                     {template?.version && (
-                      <span className="text-xs text-muted-foreground">v{template.version}</span>
+                      <span className="text-xs text-white/60">v{template.version}</span>
                     )}
                     {userContract && (
                       <Badge
@@ -408,7 +409,7 @@ export function ContractViewer({
             <div className="space-y-4">
               <div className="p-4 rounded-lg bg-info/10 border border-info/20">
                 <h3 className="font-medium text-foreground mb-2">Use This Template</h3>
-                <p className="text-sm text-muted-foreground">
+                <p className="text-sm text-white/60">
                   Fill in the details below to personalise this contract. Placeholders like [Company
                   Name] will be replaced with your values.
                 </p>
@@ -517,7 +518,7 @@ export function ContractViewer({
               {/* Summary if available */}
               {template?.summary && !isEditing && (
                 <div className="p-4 rounded-lg bg-muted/50 border">
-                  <p className="text-sm text-muted-foreground">{template.summary}</p>
+                  <p className="text-sm text-white/60">{template.summary}</p>
                 </div>
               )}
 
@@ -614,13 +615,13 @@ export function ContractViewer({
                   <div className="grid grid-cols-2 gap-4 text-sm">
                     {userContract.party_name && (
                       <div>
-                        <span className="text-muted-foreground">Party:</span>
+                        <span className="text-white/60">Party:</span>
                         <p className="font-medium">{userContract.party_name}</p>
                       </div>
                     )}
                     {userContract.adopted_at && (
                       <div>
-                        <span className="text-muted-foreground">Created:</span>
+                        <span className="text-white/60">Created:</span>
                         <p className="font-medium">
                           {new Date(userContract.adopted_at).toLocaleDateString('en-GB')}
                         </p>
@@ -628,7 +629,7 @@ export function ContractViewer({
                     )}
                     {userContract.start_date && (
                       <div>
-                        <span className="text-muted-foreground">Start Date:</span>
+                        <span className="text-white/60">Start Date:</span>
                         <p className="font-medium">
                           {new Date(userContract.start_date).toLocaleDateString('en-GB')}
                         </p>
@@ -636,7 +637,7 @@ export function ContractViewer({
                     )}
                     {userContract.employee?.name && (
                       <div>
-                        <span className="text-muted-foreground">Employee:</span>
+                        <span className="text-white/60">Employee:</span>
                         <p className="font-medium">{userContract.employee.name}</p>
                       </div>
                     )}

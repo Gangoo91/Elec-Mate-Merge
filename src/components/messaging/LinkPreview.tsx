@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { cn } from '@/lib/utils';
 import { ExternalLink, Link as LinkIcon, X } from 'lucide-react';
 import { Skeleton } from '@/components/ui/skeleton';
+import { openExternalUrl } from '@/utils/open-external-url';
 
 interface LinkPreviewData {
   url: string;
@@ -79,7 +80,7 @@ export function LinkPreview({ url, className, onRemove }: LinkPreviewProps) {
           src={url}
           alt="Linked image"
           className="rounded-lg max-h-[200px] object-cover cursor-pointer hover:opacity-90 transition-opacity"
-          onClick={() => window.open(url, '_blank')}
+          onClick={() => openExternalUrl(url)}
         />
         {onRemove && (
           <button

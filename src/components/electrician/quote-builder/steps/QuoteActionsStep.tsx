@@ -1,4 +1,6 @@
+import { copyToClipboard } from '@/utils/clipboard';
 import { useState } from 'react';
+import { openExternalUrl } from '@/utils/open-external-url';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -51,12 +53,14 @@ const QuoteActionsStep = ({ quote, onQuoteUpdate }: QuoteActionsStepProps) => {
       const link = `${window.location.origin}/public-quote/${token}`;
       setPublicLink(link);
 
-      await navigator.clipboard.writeText(link);
-      toast({
-        title: 'Public link copied',
-        description: 'The shareable quote link has been copied to your clipboard',
-        variant: 'success',
-      });
+      const ok = await copyToClipboard(link);
+      if (ok) {
+        toast({
+          title: 'Public link copied',
+          description: 'The shareable quote link has been copied to your clipboard',
+          variant: 'success',
+        });
+      }
     } catch (error) {
       console.error('Error creating public link:', error);
       toast({
@@ -183,7 +187,7 @@ const QuoteActionsStep = ({ quote, onQuoteUpdate }: QuoteActionsStepProps) => {
               disabled={!publicLink}
               variant="outline"
               className="w-full justify-start"
-              onClick={() => window.open(`/quote/${publicLink.split('/').pop()}`, '_blank')}
+              onClick={() => openExternalUrl(`/quote/${publicLink.split('/').pop()}`)}
             >
               <FileSignature className="h-4 w-4 mr-2" />
               Preview Public Quote

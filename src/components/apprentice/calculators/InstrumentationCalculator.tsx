@@ -1,4 +1,5 @@
 import { useState, useMemo, useCallback } from 'react';
+import { copyToClipboard } from '@/utils/clipboard';
 import { Copy, Check, ChevronDown, AlertTriangle, CheckCircle } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { cn } from '@/lib/utils';
@@ -204,7 +205,7 @@ const InstrumentationCalculator = () => {
         ? [`Supply Margin: ${formatNum(result.supplyMargin, 1)}V`]
         : []),
     ].join('\n');
-    navigator.clipboard.writeText(text);
+    copyToClipboard(text);
     setCopied(true);
     toast({ title: 'Copied to clipboard' });
     setTimeout(() => setCopied(false), 2000);

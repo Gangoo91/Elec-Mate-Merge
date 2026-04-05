@@ -14,7 +14,7 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { Users, Building2, MapPin, UserPlus, History } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useIsMobile } from '@/hooks/use-mobile';
-import { useHaptics } from '@/hooks/useHaptics';
+import { useHaptic } from '@/hooks/useHaptic';
 import ClientSelector from '@/components/ClientSelector';
 import { Customer } from '@/hooks/inspection/useCustomers';
 import { useMultiFieldSync } from '@/hooks/useFieldSync';
@@ -105,7 +105,7 @@ type ClientSectionFields = {
  */
 const ClientDetailsSectionInner = ({ formData, onUpdate }: ClientDetailsSectionProps) => {
   const isMobile = useIsMobile();
-  const haptics = useHaptics();
+  const haptic = useHaptic();
   const [clientType, setClientType] = useState<'new' | 'existing'>('new');
 
   // Extract only the fields this section cares about
@@ -145,7 +145,7 @@ const ClientDetailsSectionInner = ({ formData, onUpdate }: ClientDetailsSectionP
 
   const handleSameAddressToggle = useCallback(
     (checked: boolean) => {
-      haptics.tap();
+      haptic.light();
       const updates: Partial<ClientSectionFields> = {
         sameAsClientAddress: checked ? 'true' : 'false',
       };
@@ -155,13 +155,13 @@ const ClientDetailsSectionInner = ({ formData, onUpdate }: ClientDetailsSectionP
       setValues(updates);
       flush(); // Immediately commit toggle changes
     },
-    [haptics, localValues.clientAddress, setValues, flush]
+    [haptic, localValues.clientAddress, setValues, flush]
   );
 
   const handleSelectCustomer = useCallback(
     (customer: Customer | null) => {
       if (customer) {
-        haptics.success();
+        haptic.success();
         const updates: Partial<ClientSectionFields> = {
           clientName: customer.name || '',
           clientEmail: customer.email || '',
@@ -175,7 +175,7 @@ const ClientDetailsSectionInner = ({ formData, onUpdate }: ClientDetailsSectionP
         flush(); // Immediately commit customer selection
       }
     },
-    [haptics, localValues.sameAsClientAddress, setValues, flush]
+    [haptic, localValues.sameAsClientAddress, setValues, flush]
   );
 
   return (
@@ -196,7 +196,7 @@ const ClientDetailsSectionInner = ({ formData, onUpdate }: ClientDetailsSectionP
                 : 'border-border/50'
             )}
             onClick={() => {
-              haptics.tap();
+              haptic.light();
               setClientType('new');
             }}
           >
@@ -213,7 +213,7 @@ const ClientDetailsSectionInner = ({ formData, onUpdate }: ClientDetailsSectionP
                 : 'border-border/50'
             )}
             onClick={() => {
-              haptics.tap();
+              haptic.light();
               setClientType('existing');
             }}
           >
@@ -343,7 +343,7 @@ const ClientDetailsSectionInner = ({ formData, onUpdate }: ClientDetailsSectionP
               <Select
                 value={localValues.description || ''}
                 onValueChange={(value) => {
-                  haptics.tap();
+                  haptic.light();
                   handleFieldChange('description', value);
                   flush();
                 }}
@@ -372,7 +372,7 @@ const ClientDetailsSectionInner = ({ formData, onUpdate }: ClientDetailsSectionP
               <Select
                 value={localValues.installationType || ''}
                 onValueChange={(value) => {
-                  haptics.tap();
+                  haptic.light();
                   handleFieldChange('installationType', value);
                   flush();
                 }}
@@ -436,7 +436,7 @@ const ClientDetailsSectionInner = ({ formData, onUpdate }: ClientDetailsSectionP
                   key={option.value}
                   type="button"
                   onClick={() => {
-                    haptics.tap();
+                    haptic.light();
                     // Toggle off if already selected
                     if (localValues.lastInspectionType === option.value) {
                       setValues({ lastInspectionType: '', dateOfLastInspection: '' });
@@ -482,7 +482,7 @@ const ClientDetailsSectionInner = ({ formData, onUpdate }: ClientDetailsSectionP
                   key={option.value}
                   type="button"
                   onClick={() => {
-                    haptics.tap();
+                    haptic.light();
                     // Toggle off if already selected
                     if (localValues.evidenceOfAlterations === option.value) {
                       setValues({
@@ -546,7 +546,7 @@ const ClientDetailsSectionInner = ({ formData, onUpdate }: ClientDetailsSectionP
                   key={option.value}
                   type="button"
                   onClick={() => {
-                    haptics.tap();
+                    haptic.light();
                     handleFieldChange(
                       'installationRecordsAvailable',
                       localValues.installationRecordsAvailable === option.value ? '' : option.value

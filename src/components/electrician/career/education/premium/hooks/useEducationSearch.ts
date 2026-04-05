@@ -4,6 +4,7 @@
 
 import { useState, useEffect, useCallback, useMemo } from 'react';
 import type { LiveEducationData } from '@/hooks/useLiveEducationData';
+import { storageGetJSONSync, storageSetJSONSync, storageRemoveSync } from '@/utils/storage';
 
 const RECENT_SEARCHES_KEY = 'elecmate_education_recent_searches';
 const MAX_RECENT_SEARCHES = 5;
@@ -40,14 +41,7 @@ export const useEducationSearch = (programmes: LiveEducationData[], debounceMs: 
 
   // Load recent searches from localStorage
   useEffect(() => {
-    try {
-      const stored = localStorage.getItem(RECENT_SEARCHES_KEY);
-      if (stored) {
-        setRecentSearches(JSON.parse(stored));
-      }
-    } catch (error) {
-      console.error('Failed to load recent searches:', error);
-    }
+    setRecentSearches(storageGetJSONSync<string[]>(RECENT_SEARCHES_KEY, []));
   }, []);
 
   // Debounce search term
@@ -69,11 +63,7 @@ export const useEducationSearch = (programmes: LiveEducationData[], debounceMs: 
       const filtered = prev.filter((s) => s.toLowerCase() !== term.toLowerCase());
       const updated = [term, ...filtered].slice(0, MAX_RECENT_SEARCHES);
 
-      try {
-        localStorage.setItem(RECENT_SEARCHES_KEY, JSON.stringify(updated));
-      } catch (error) {
-        console.error('Failed to save recent searches:', error);
-      }
+      storageSetJSONSync(RECENT_SEARCHES_KEY, updated);
 
       return updated;
     });
@@ -82,7 +72,7 @@ export const useEducationSearch = (programmes: LiveEducationData[], debounceMs: 
   // Clear recent searches
   const clearRecentSearches = useCallback(() => {
     setRecentSearches([]);
-    localStorage.removeItem(RECENT_SEARCHES_KEY);
+    storageRemoveSync(RECENT_SEARCHES_KEY);
   }, []);
 
   // Apply search and filters

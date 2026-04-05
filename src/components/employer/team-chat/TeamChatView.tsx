@@ -109,7 +109,7 @@ export function TeamChatView({ channel, dmConversation, open, onOpenChange }: Te
       return {
         name: channel.name,
         subtitle: channel.description || `${members.length} members`,
-        icon: <Hash className="h-5 w-5 text-muted-foreground" />,
+        icon: <Hash className="h-5 w-5 text-white/60" />,
         avatar: null,
       };
     }
@@ -156,7 +156,7 @@ export function TeamChatView({ channel, dmConversation, open, onOpenChange }: Te
 
           <div className="flex-1 min-w-0">
             <p className="font-semibold truncate">{headerInfo.name}</p>
-            <p className="text-sm text-muted-foreground truncate">{headerInfo.subtitle}</p>
+            <p className="text-sm text-white/60 truncate">{headerInfo.subtitle}</p>
           </div>
 
           <DropdownMenu>
@@ -199,8 +199,8 @@ export function TeamChatView({ channel, dmConversation, open, onOpenChange }: Te
           ) : messages.length === 0 ? (
             <div className="flex-1 flex items-center justify-center h-full">
               <div className="text-center">
-                <p className="text-muted-foreground">No messages yet</p>
-                <p className="text-xs text-muted-foreground mt-1">Be the first to say something!</p>
+                <p className="text-white/60">No messages yet</p>
+                <p className="text-xs text-white/60 mt-1">Be the first to say something!</p>
               </div>
             </div>
           ) : (
@@ -227,7 +227,7 @@ export function TeamChatView({ channel, dmConversation, open, onOpenChange }: Te
                     <p className="text-sm whitespace-pre-wrap break-words">{msg.content}</p>
                     <p
                       className={`text-[10px] mt-1 ${
-                        isOwn ? 'text-black/60' : 'text-muted-foreground'
+                        isOwn ? 'text-black/60' : 'text-white/60'
                       }`}
                     >
                       {new Date(msg.sent_at).toLocaleTimeString([], {

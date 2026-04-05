@@ -272,7 +272,7 @@ export function SettingsSection() {
     <div className="space-y-6 animate-fade-in pb-safe">
       <div>
         <h1 className="text-2xl font-bold text-foreground">Settings</h1>
-        <p className="text-muted-foreground text-sm">
+        <p className="text-white/60 text-sm">
           Company settings, permissions, and integrations
         </p>
       </div>
@@ -334,7 +334,7 @@ export function SettingsSection() {
                           className="max-w-full max-h-full object-contain p-2"
                         />
                       ) : (
-                        <div className="flex flex-col items-center gap-2 text-muted-foreground">
+                        <div className="flex flex-col items-center gap-2 text-white/60">
                           <ImageIcon className="h-8 w-8" />
                           <span className="text-xs">No logo</span>
                         </div>
@@ -364,7 +364,7 @@ export function SettingsSection() {
                       <Upload className="h-4 w-4 mr-2" />
                       {uploadingLogo ? 'Uploading...' : 'Upload Logo'}
                     </Button>
-                    <p className="text-xs text-muted-foreground">
+                    <p className="text-xs text-white/60">
                       PNG, JPG or SVG. Max 20MB. Recommended: 400x200px
                     </p>
                   </div>
@@ -377,7 +377,7 @@ export function SettingsSection() {
                 <div className={`grid ${isMobile ? 'grid-cols-1' : 'grid-cols-2'} gap-4`}>
                   {/* Primary Colour */}
                   <div className="space-y-2">
-                    <Label className="text-sm text-muted-foreground">Primary Colour</Label>
+                    <Label className="text-sm text-white/60">Primary Colour</Label>
                     <div className="flex items-center gap-3">
                       <div className="relative">
                         <input
@@ -409,7 +409,7 @@ export function SettingsSection() {
 
                   {/* Secondary Colour */}
                   <div className="space-y-2">
-                    <Label className="text-sm text-muted-foreground">Secondary Colour</Label>
+                    <Label className="text-sm text-white/60">Secondary Colour</Label>
                     <div className="flex items-center gap-3">
                       <div className="relative">
                         <input
@@ -442,7 +442,7 @@ export function SettingsSection() {
 
                 {/* Live Preview */}
                 <div className="mt-4 p-4 rounded-xl border border-border/50 bg-muted/20">
-                  <Label className="text-xs text-muted-foreground mb-3 block">Preview</Label>
+                  <Label className="text-xs text-white/60 mb-3 block">Preview</Label>
                   <div className="flex items-center gap-3">
                     <div
                       className="h-10 flex-1 rounded-lg flex items-center justify-center text-sm font-medium"
@@ -493,7 +493,7 @@ export function SettingsSection() {
             <CardContent className="space-y-6">
               {loadingCompany ? (
                 <div className="flex items-center justify-center py-8">
-                  <Loader2 className="h-6 w-6 animate-spin text-muted-foreground" />
+                  <Loader2 className="h-6 w-6 animate-spin text-white/60" />
                 </div>
               ) : (
                 <>
@@ -670,7 +670,7 @@ export function SettingsSection() {
                   />
                 </div>
               </div>
-              <p className="text-sm text-muted-foreground">
+              <p className="text-sm text-white/60">
                 These details will appear on invoices sent to clients. The invoice number will be
                 suggested as the payment reference.
               </p>
@@ -721,7 +721,7 @@ export function SettingsSection() {
                   onChange={(e) => setNotificationEmail(e.target.value)}
                   className="h-12"
                 />
-                <p className="text-xs text-muted-foreground">
+                <p className="text-xs text-white/60">
                   You'll receive notifications here when clients accept or decline quotes
                 </p>
               </div>
@@ -762,12 +762,12 @@ export function SettingsSection() {
             <CardContent>
               {teamLoading ? (
                 <div className="flex items-center justify-center py-8">
-                  <Loader2 className="h-6 w-6 animate-spin text-muted-foreground" />
+                  <Loader2 className="h-6 w-6 animate-spin text-white/60" />
                 </div>
               ) : teamMembers.length === 0 ? (
                 <div className="text-center py-8">
-                  <Users className="h-12 w-12 text-muted-foreground/30 mx-auto mb-3" />
-                  <p className="text-muted-foreground mb-4">No team members yet</p>
+                  <Users className="h-12 w-12 text-white/60/30 mx-auto mb-3" />
+                  <p className="text-white/60 mb-4">No team members yet</p>
                   <Button onClick={() => setShowInviteDialog(true)}>
                     <Plus className="h-4 w-4 mr-2" />
                     Invite Team Member
@@ -792,7 +792,7 @@ export function SettingsSection() {
                         </Avatar>
                         <div>
                           <p className="font-medium">{member.name || member.email}</p>
-                          <p className="text-sm text-muted-foreground">{member.email}</p>
+                          <p className="text-sm text-white/60">{member.email}</p>
                         </div>
                       </div>
                       <div className={`flex items-center gap-3 ${isMobile ? 'ml-16' : ''}`}>
@@ -892,7 +892,7 @@ export function SettingsSection() {
                         <label htmlFor={perm.id} className="font-medium text-sm cursor-pointer">
                           {perm.name}
                         </label>
-                        <p className="text-xs text-muted-foreground">{perm.description}</p>
+                        <p className="text-xs text-white/60">{perm.description}</p>
                       </div>
                     </div>
                   </div>
@@ -944,7 +944,7 @@ export function SettingsSection() {
                           </Badge>
                         )}
                       </div>
-                      <p className="text-sm text-muted-foreground mt-0.5">
+                      <p className="text-sm text-white/60 mt-0.5">
                         {integration.description}
                       </p>
                     </div>
@@ -1047,7 +1047,7 @@ export function SettingsSection() {
                   >
                     <div className="flex-1 pr-4">
                       <p className="font-medium">{item.label}</p>
-                      <p className="text-sm text-muted-foreground">{item.description}</p>
+                      <p className="text-sm text-white/60">{item.description}</p>
                     </div>
                     <Switch
                       checked={notifications[item.key as keyof typeof notifications]}
@@ -1097,7 +1097,7 @@ export function SettingsSection() {
                   >
                     <div className="flex-1 pr-4">
                       <p className="font-medium">{item.label}</p>
-                      <p className="text-sm text-muted-foreground">{item.description}</p>
+                      <p className="text-sm text-white/60">{item.description}</p>
                     </div>
                     <Switch defaultChecked={item.defaultChecked} />
                   </div>

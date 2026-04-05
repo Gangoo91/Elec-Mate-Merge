@@ -13,6 +13,7 @@ import {
   Cable,
 } from 'lucide-react';
 import { MaterialItem } from '@/hooks/useToolsForMaterials';
+import { openExternalUrl } from '@/utils/open-external-url';
 
 interface PremiumMaterialCardProps {
   item: MaterialItem;
@@ -300,7 +301,7 @@ const PremiumMaterialCard = ({
               size="sm"
               onClick={(e) => {
                 e.stopPropagation();
-                window.open(getProductUrl(), '_blank');
+                openExternalUrl(getProductUrl());
               }}
               className="flex-1 h-11 rounded-xl bg-primary hover:bg-primary/90 font-semibold touch-manipulation active:scale-[0.98]"
             >

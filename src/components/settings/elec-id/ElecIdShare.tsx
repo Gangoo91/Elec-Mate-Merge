@@ -1,4 +1,6 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
+import { copyToClipboard } from '@/utils/clipboard';
+import { openExternalUrl } from '@/utils/open-external-url';
 import { shareContent } from '@/utils/share';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -163,8 +165,8 @@ const ElecIdShare = () => {
     { value: 'never', label: 'Never expires' },
   ];
 
-  const handleCopyLink = (url: string) => {
-    navigator.clipboard.writeText(url);
+  const handleCopyLink = async (url: string) => {
+    await copyToClipboard(url);
     addNotification({
       title: 'Link Copied',
       message: 'Share link copied to clipboard',
@@ -679,7 +681,7 @@ const ElecIdShare = () => {
                       <Copy className="h-4 w-4 text-white" />
                     </button>
                     <button
-                      onClick={() => window.open(link.url, '_blank')}
+                      onClick={() => openExternalUrl(link.url)}
                       className="p-2 rounded-lg hover:bg-white/[0.08] touch-manipulation active:scale-[0.95]"
                     >
                       <ExternalLink className="h-4 w-4 text-white" />

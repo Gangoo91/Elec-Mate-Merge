@@ -33,6 +33,7 @@ import { cn } from '@/lib/utils';
 import { useUpdatePolicy, type UserPolicy } from '@/hooks/usePolicies';
 import { sanitizeHtmlSafe } from '@/utils/inputSanitization';
 import { useToast } from '@/hooks/use-toast';
+import { storageGetSync, storageSetSync, storageRemoveSync } from '@/utils/storage';
 
 interface PolicyEditorProps {
   open: boolean;
@@ -70,7 +71,7 @@ export function PolicyEditor({ open, onOpenChange, policy, onSaved }: PolicyEdit
     onUpdate: ({ editor }) => {
       setHasChanges(true);
       // Auto-save draft
-      localStorage.setItem(draftKey, editor.getHTML());
+      storageSetSync(draftKey, editor.getHTML());
     },
     editorProps: {
       attributes: {
@@ -90,7 +91,7 @@ export function PolicyEditor({ open, onOpenChange, policy, onSaved }: PolicyEdit
   // Load draft on mount
   useEffect(() => {
     if (editor) {
-      const draft = localStorage.getItem(draftKey);
+      const draft = storageGetSync(draftKey);
       if (draft && draft !== policy.content) {
         // Ask user if they want to restore draft
         const useDraft = window.confirm(
@@ -100,7 +101,7 @@ export function PolicyEditor({ open, onOpenChange, policy, onSaved }: PolicyEdit
           editor.commands.setContent(draft);
           setHasChanges(true);
         } else {
-          localStorage.removeItem(draftKey);
+          storageRemoveSync(draftKey);
           editor.commands.setContent(policy.content);
         }
       } else {
@@ -117,7 +118,7 @@ export function PolicyEditor({ open, onOpenChange, policy, onSaved }: PolicyEdit
       );
       if (!confirmClose) return;
     }
-    localStorage.removeItem(draftKey);
+    storageRemoveSync(draftKey);
     onOpenChange(false);
   }, [hasChanges, draftKey, onOpenChange]);
 
@@ -135,7 +136,7 @@ export function PolicyEditor({ open, onOpenChange, policy, onSaved }: PolicyEdit
       });
 
       // Clear draft
-      localStorage.removeItem(draftKey);
+      storageRemoveSync(draftKey);
       setHasChanges(false);
 
       toast({
@@ -196,7 +197,7 @@ export function PolicyEditor({ open, onOpenChange, policy, onSaved }: PolicyEdit
                 </div>
                 <div>
                   <span className="text-lg font-semibold">Edit Policy</span>
-                  <p className="text-xs text-muted-foreground font-normal line-clamp-1">
+                  <p className="text-xs text-white/60 font-normal line-clamp-1">
                     {policy.name}
                   </p>
                 </div>
@@ -341,7 +342,7 @@ export function PolicyEditor({ open, onOpenChange, policy, onSaved }: PolicyEdit
           </div>
 
           {/* Stats */}
-          <div className="flex justify-between text-xs text-muted-foreground mt-2">
+          <div className="flex justify-between text-xs text-white/60 mt-2">
             <span>Use headings to structure your policy. Changes auto-save as draft.</span>
             <span>{characterCount} characters</span>
           </div>

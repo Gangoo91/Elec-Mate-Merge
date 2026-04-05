@@ -1,3 +1,4 @@
+import { copyToClipboard } from '@/utils/clipboard';
 import { useState, useCallback } from 'react';
 import { Copy, Check, ChevronDown } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
@@ -197,10 +198,13 @@ const ResistorColourCodeCalculator = () => {
       `Range: ${formatResistance(calculateToleranceRange(result.resistance, result.tolerance).min)} to ${formatResistance(calculateToleranceRange(result.resistance, result.tolerance).max)}`,
       `Bands: ${band1} / ${band2} / ${band3} / ${band4}`,
     ].join('\n');
-    navigator.clipboard.writeText(text);
-    setCopied(true);
-    toast({ title: 'Copied to clipboard' });
-    setTimeout(() => setCopied(false), 2000);
+    copyToClipboard(text).then((ok) => {
+      if (ok) {
+        setCopied(true);
+        toast({ title: 'Copied to clipboard' });
+        setTimeout(() => setCopied(false), 2000);
+      }
+    });
   };
 
   const hasValidInputs = () => band1 && band2 && band3 && band4;

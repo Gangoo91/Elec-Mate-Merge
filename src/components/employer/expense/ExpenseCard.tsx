@@ -159,7 +159,7 @@ export function ExpenseCard({
                 <p className="font-semibold text-foreground truncate">
                   {expense.employees?.name || 'Unknown'}
                 </p>
-                <p className="text-sm text-muted-foreground line-clamp-1">{expense.description}</p>
+                <p className="text-sm text-white/60 line-clamp-1">{expense.description}</p>
               </div>
               <div className="text-right shrink-0">
                 <p className="text-lg font-bold text-foreground">
@@ -187,7 +187,7 @@ export function ExpenseCard({
 
               {/* Receipt Indicator */}
               {expense.receipt_url && (
-                <Badge variant="outline" className="text-xs bg-muted/50 text-muted-foreground">
+                <Badge variant="outline" className="text-xs bg-muted/50 text-white/60">
                   <Receipt className="h-3 w-3 mr-1" />
                   Receipt
                 </Badge>
@@ -195,7 +195,7 @@ export function ExpenseCard({
 
               {/* Job Link */}
               {expense.job_id && (
-                <Badge variant="outline" className="text-xs bg-muted/50 text-muted-foreground">
+                <Badge variant="outline" className="text-xs bg-muted/50 text-white/60">
                   <Briefcase className="h-3 w-3 mr-1" />
                   Linked
                 </Badge>
@@ -204,10 +204,10 @@ export function ExpenseCard({
 
             {/* Time & Actions Row */}
             <div className="flex items-center justify-between mt-3">
-              <p className="text-xs text-muted-foreground">
+              <p className="text-xs text-white/60">
                 {formatDistanceToNow(new Date(expense.submitted_date), { addSuffix: true })}
               </p>
-              {onClick && <ChevronRight className="h-4 w-4 text-muted-foreground" />}
+              {onClick && <ChevronRight className="h-4 w-4 text-white/60" />}
             </div>
 
             {/* Rejection Reason */}

@@ -25,7 +25,7 @@ const defaultIcons: Record<EmptyStateType, LucideIcon> = {
 };
 
 const defaultColors: Record<EmptyStateType, string> = {
-  'no-data': 'text-muted-foreground bg-muted/30',
+  'no-data': 'text-white/60 bg-muted/30',
   'no-results': 'text-info bg-info/10',
   error: 'text-destructive bg-destructive/10',
   custom: 'text-elec-yellow bg-elec-yellow/10',
@@ -59,7 +59,7 @@ export function MobileEmptyState({
 
       <h3 className="text-base font-semibold text-foreground mb-1">{title}</h3>
 
-      {description && <p className="text-sm text-muted-foreground max-w-xs mb-4">{description}</p>}
+      {description && <p className="text-sm text-white/60 max-w-xs mb-4">{description}</p>}
 
       {(actionLabel || secondaryActionLabel) && (
         <div className="flex flex-col sm:flex-row gap-2 w-full max-w-xs">
@@ -105,8 +105,8 @@ export function InlineEmptyState({
         className
       )}
     >
-      <Icon className="h-5 w-5 text-muted-foreground shrink-0" />
-      <span className="text-sm text-muted-foreground">{message}</span>
+      <Icon className="h-5 w-5 text-white/60 shrink-0" />
+      <span className="text-sm text-white/60">{message}</span>
       {actionLabel && onAction && (
         <Button variant="link" size="sm" onClick={onAction} className="h-auto p-0 text-sm">
           {actionLabel}

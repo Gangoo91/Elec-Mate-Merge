@@ -1,12 +1,77 @@
-import { motion } from 'framer-motion';
-import { Activity, Bell, Calendar, CheckCircle2 } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+import { Skeleton } from '@/components/ui/skeleton';
+import { CheckCircle2 } from 'lucide-react';
 import { cn } from '@/lib/utils';
+
+interface KPICardProps {
+  label: string;
+  value: string | number;
+  href?: string;
+  highlight: 'green' | 'amber' | 'red' | 'orange' | 'neutral';
+  isLoading?: boolean;
+  onClick?: () => void;
+}
+
+const highlightClasses: Record<KPICardProps['highlight'], string> = {
+  green: 'border-emerald-500/30 bg-emerald-500/10',
+  amber: 'border-amber-500/30 bg-amber-500/10',
+  red: 'border-red-500/30 bg-red-500/10',
+  orange: 'border-orange-500/30 bg-orange-500/10',
+  neutral: 'border-white/10 bg-white/5',
+};
+
+const valueColourClasses: Record<KPICardProps['highlight'], string> = {
+  green: 'text-emerald-400',
+  amber: 'text-amber-400',
+  red: 'text-red-400',
+  orange: 'text-orange-400',
+  neutral: 'text-white',
+};
+
+function KPICard({ label, value, href, highlight, isLoading, onClick }: KPICardProps) {
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    if (onClick) {
+      onClick();
+    } else if (href) {
+      navigate(href);
+    }
+  };
+
+  return (
+    <button
+      onClick={handleClick}
+      className={cn(
+        'flex flex-col items-start justify-center rounded-xl border px-3 py-2 h-14',
+        'touch-manipulation active:scale-[0.97] transition-all',
+        highlightClasses[highlight]
+      )}
+    >
+      {isLoading ? (
+        <>
+          <Skeleton className="h-3 w-16 mb-1.5" />
+          <Skeleton className="h-5 w-12" />
+        </>
+      ) : (
+        <>
+          <span className="text-[11px] font-medium text-white leading-tight">{label}</span>
+          <span className={cn('text-base font-bold leading-tight', valueColourClasses[highlight])}>
+            {value}
+          </span>
+        </>
+      )}
+    </button>
+  );
+}
 
 interface DashboardStatsBarProps {
   inProgressCount: number;
   partPDueCount: number;
   expiringCount: number;
+  completedCount: number;
   overduePartP?: boolean;
+  isLoading?: boolean;
   onStatClick?: (stat: 'in-progress' | 'part-p' | 'expiring') => void;
 }
 
@@ -14,92 +79,56 @@ const DashboardStatsBar = ({
   inProgressCount,
   partPDueCount,
   expiringCount,
+  completedCount,
   overduePartP = false,
+  isLoading = false,
   onStatClick,
 }: DashboardStatsBarProps) => {
   const allClear = inProgressCount === 0 && partPDueCount === 0 && expiringCount === 0;
 
-  if (allClear) {
+  if (allClear && !isLoading) {
     return (
-      <motion.div
-        initial={{ opacity: 0, y: -6 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.25 }}
-      >
-        <div className="p-4 rounded-2xl bg-green-500/15 border border-green-500/20 flex items-center gap-3">
-          <CheckCircle2 className="h-5 w-5 text-green-400" />
-          <div>
-            <p className="text-sm font-semibold text-white">All Clear</p>
-            <p className="text-xs text-green-400">No outstanding items</p>
-          </div>
+      <div className="p-4 rounded-xl bg-emerald-500/10 border border-emerald-500/30 flex items-center gap-3">
+        <CheckCircle2 className="h-5 w-5 text-emerald-400" />
+        <div>
+          <p className="text-sm font-semibold text-white">All Clear</p>
+          <p className="text-xs text-emerald-400">No outstanding items</p>
         </div>
-      </motion.div>
+      </div>
     );
   }
 
-  const allStats = [
-    {
-      key: 'in-progress' as const,
-      label: 'In Progress',
-      count: inProgressCount,
-      icon: Activity,
-      dotColor: 'bg-blue-400',
-      labelColor: 'text-blue-400',
-      bg: 'bg-blue-500/15',
-      border: 'border-blue-500/20',
-    },
-    {
-      key: 'part-p' as const,
-      label: 'Part P Due',
-      count: partPDueCount,
-      icon: Bell,
-      dotColor: overduePartP ? 'bg-red-400' : 'bg-amber-400',
-      labelColor: overduePartP ? 'text-red-400' : 'text-amber-400',
-      bg: overduePartP ? 'bg-red-500/15' : 'bg-amber-500/15',
-      border: overduePartP ? 'border-red-500/20' : 'border-amber-500/20',
-    },
-    {
-      key: 'expiring' as const,
-      label: 'Expiring',
-      count: expiringCount,
-      icon: Calendar,
-      dotColor: 'bg-orange-400',
-      labelColor: 'text-orange-400',
-      bg: 'bg-orange-500/15',
-      border: 'border-orange-500/20',
-    },
-  ];
-
-  const stats = allStats;
-
   return (
-    <motion.div
-      initial={{ opacity: 0, y: -6 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.25 }}
-      className="grid grid-cols-3 gap-2 sm:gap-3"
-    >
-      {stats.map((stat) => (
-        <button
-          key={stat.key}
-          onClick={() => onStatClick?.(stat.key)}
-          className={cn(
-            'p-3 sm:p-4 rounded-2xl text-left touch-manipulation transition-all active:scale-[0.97]',
-            stat.bg,
-            'border',
-            stat.border
-          )}
-        >
-          <div className="flex items-center gap-1.5 mb-1">
-            <div className={cn('w-2 h-2 rounded-full', stat.dotColor)} />
-            <span className="text-xl sm:text-2xl font-bold text-white">{stat.count}</span>
-          </div>
-          <span className={cn('text-[11px] sm:text-xs font-medium', stat.labelColor)}>
-            {stat.label}
-          </span>
-        </button>
-      ))}
-    </motion.div>
+    <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+      <KPICard
+        label="In Progress"
+        value={inProgressCount}
+        highlight={inProgressCount > 0 ? 'amber' : 'neutral'}
+        isLoading={isLoading}
+        onClick={() => onStatClick?.('in-progress')}
+      />
+      <KPICard
+        label="Part P Due"
+        value={partPDueCount}
+        highlight={overduePartP ? 'red' : partPDueCount > 0 ? 'amber' : 'neutral'}
+        isLoading={isLoading}
+        onClick={() => onStatClick?.('part-p')}
+      />
+      <KPICard
+        label="Expiring"
+        value={expiringCount}
+        highlight={expiringCount > 0 ? 'orange' : 'neutral'}
+        isLoading={isLoading}
+        onClick={() => onStatClick?.('expiring')}
+      />
+      <KPICard
+        label="Completed"
+        value={completedCount}
+        highlight={completedCount > 0 ? 'green' : 'neutral'}
+        isLoading={isLoading}
+        onClick={() => onStatClick?.('in-progress')}
+      />
+    </div>
   );
 };
 

@@ -211,7 +211,7 @@ export function CreateSupplierDialog({ open, onOpenChange }: CreateSupplierDialo
                 <div className="space-y-2">
                   <Label>Credit Limit</Label>
                   <div className="relative">
-                    <span className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground">
+                    <span className="absolute left-3 top-1/2 -translate-y-1/2 text-white/60">
                       £
                     </span>
                     <Input
@@ -235,7 +235,7 @@ export function CreateSupplierDialog({ open, onOpenChange }: CreateSupplierDialo
                       min={0}
                       max={100}
                     />
-                    <span className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground">
+                    <span className="absolute right-3 top-1/2 -translate-y-1/2 text-white/60">
                       %
                     </span>
                   </div>

@@ -1,4 +1,5 @@
 import { useState, useMemo } from 'react';
+import { copyToClipboard } from '@/utils/clipboard';
 import { ChevronDown, AlertTriangle, Copy, Check } from 'lucide-react';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { cn } from '@/lib/utils';
@@ -207,7 +208,7 @@ const MotorStartingCurrentCalculator = () => {
       `Recommended cable: ${result.recommendedCableSize}`,
       `Status: ${result.complianceStatus}`,
     ].join('\n');
-    navigator.clipboard.writeText(text);
+    copyToClipboard(text);
     setCopied(true);
     toast({ title: 'Copied to clipboard' });
     setTimeout(() => setCopied(false), 2000);

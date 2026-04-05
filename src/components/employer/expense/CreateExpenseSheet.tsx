@@ -194,7 +194,7 @@ export function CreateExpenseSheet({
                 </>
               )}
             </SheetTitle>
-            <span className="text-sm text-muted-foreground">
+            <span className="text-sm text-white/60">
               {step} of {totalSteps}
             </span>
           </div>
@@ -245,7 +245,7 @@ export function CreateExpenseSheet({
               <div className="space-y-2">
                 <Label>Amount</Label>
                 <div className="relative">
-                  <span className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground font-medium">
+                  <span className="absolute left-3 top-1/2 -translate-y-1/2 text-white/60 font-medium">
                     £
                   </span>
                   <Input
@@ -299,13 +299,13 @@ export function CreateExpenseSheet({
                         <Icon
                           className={cn(
                             'h-5 w-5',
-                            isSelected ? 'text-elec-yellow' : 'text-muted-foreground'
+                            isSelected ? 'text-elec-yellow' : 'text-white/60'
                           )}
                         />
                         <span
                           className={cn(
                             'text-sm font-medium',
-                            isSelected ? 'text-foreground' : 'text-muted-foreground'
+                            isSelected ? 'text-foreground' : 'text-white/60'
                           )}
                         >
                           {label}
@@ -346,10 +346,10 @@ export function CreateExpenseSheet({
             <div className="space-y-4">
               <div className="text-center py-8">
                 <div className="inline-flex p-4 rounded-full bg-muted mb-4">
-                  <Receipt className="h-8 w-8 text-muted-foreground" />
+                  <Receipt className="h-8 w-8 text-white/60" />
                 </div>
                 <h3 className="font-semibold mb-2">Add Receipt</h3>
-                <p className="text-sm text-muted-foreground mb-6">
+                <p className="text-sm text-white/60 mb-6">
                   Upload a photo of the receipt for this expense
                 </p>
 
@@ -364,7 +364,7 @@ export function CreateExpenseSheet({
                   </Button>
                 </div>
 
-                <p className="text-xs text-muted-foreground mt-4">
+                <p className="text-xs text-white/60 mt-4">
                   Supported formats: JPG, PNG, PDF (max 5MB)
                 </p>
               </div>
@@ -378,7 +378,7 @@ export function CreateExpenseSheet({
                     </div>
                     <div className="flex-1">
                       <p className="font-medium">Receipt uploaded</p>
-                      <p className="text-sm text-muted-foreground">receipt.jpg</p>
+                      <p className="text-sm text-white/60">receipt.jpg</p>
                     </div>
                     <Button
                       variant="ghost"
@@ -398,7 +398,7 @@ export function CreateExpenseSheet({
             <div className="space-y-4">
               <Card className="p-4 bg-gradient-to-br from-elec-yellow/10 to-transparent border-elec-yellow/30">
                 <div className="text-center mb-4">
-                  <p className="text-sm text-muted-foreground">Total Amount</p>
+                  <p className="text-sm text-white/60">Total Amount</p>
                   <p className="text-3xl font-bold text-foreground">
                     {formatCurrency(values.amount)}
                   </p>
@@ -408,31 +408,31 @@ export function CreateExpenseSheet({
                   {/* Only show Employee row in admin mode */}
                   {!employeeMode && (
                     <div className="flex justify-between py-2 border-b border-border/50">
-                      <span className="text-muted-foreground">Employee</span>
+                      <span className="text-white/60">Employee</span>
                       <span className="font-medium">{selectedEmployee?.name || '-'}</span>
                     </div>
                   )}
                   <div className="flex justify-between py-2 border-b border-border/50">
-                    <span className="text-muted-foreground">Category</span>
+                    <span className="text-white/60">Category</span>
                     <span className="font-medium flex items-center gap-1">
                       <CategoryIcon className="h-4 w-4" />
                       {values.category || '-'}
                     </span>
                   </div>
                   <div className="flex justify-between py-2 border-b border-border/50">
-                    <span className="text-muted-foreground">Description</span>
+                    <span className="text-white/60">Description</span>
                     <span className="font-medium text-right max-w-[200px] truncate">
                       {values.description || '-'}
                     </span>
                   </div>
                   {selectedJob && (
                     <div className="flex justify-between py-2 border-b border-border/50">
-                      <span className="text-muted-foreground">Linked Job</span>
+                      <span className="text-white/60">Linked Job</span>
                       <span className="font-medium">{selectedJob.title}</span>
                     </div>
                   )}
                   <div className="flex justify-between py-2">
-                    <span className="text-muted-foreground">Receipt</span>
+                    <span className="text-white/60">Receipt</span>
                     <span className="font-medium">
                       {values.receipt_url ? 'Attached' : 'Not attached'}
                     </span>
@@ -454,14 +454,14 @@ export function CreateExpenseSheet({
                         {values.receipt_url ? (
                           <Check className="h-5 w-5 text-green-500" />
                         ) : (
-                          <Receipt className="h-5 w-5 text-muted-foreground" />
+                          <Receipt className="h-5 w-5 text-white/60" />
                         )}
                       </div>
                       <div>
                         <p className="font-medium text-sm">
                           {values.receipt_url ? 'Receipt attached' : 'Add receipt (optional)'}
                         </p>
-                        <p className="text-xs text-muted-foreground">
+                        <p className="text-xs text-white/60">
                           {values.receipt_url ? 'Tap to remove' : 'Photo or file upload'}
                         </p>
                       </div>

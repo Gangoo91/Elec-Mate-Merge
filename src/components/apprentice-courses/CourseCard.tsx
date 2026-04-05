@@ -23,7 +23,7 @@ interface CourseCardProps {
 export function CourseCard({
   title,
   description,
-  icon: Icon,
+  icon: _Icon,
   href,
   number,
   comingSoon,
@@ -40,27 +40,6 @@ export function CourseCard({
           : 'active:scale-[0.98] hover:border-elec-yellow/30 hover:from-white/[0.10] hover:to-white/[0.04]'
       )}
     >
-      {/* Icon with glow */}
-      <div className="relative flex-shrink-0 self-start mt-1">
-        <div
-          className={cn(
-            'absolute inset-0 rounded-xl blur-xl',
-            comingSoon ? 'bg-elec-yellow/5' : 'bg-elec-yellow/20'
-          )}
-        />
-        <div
-          className={cn(
-            'relative w-12 h-12 rounded-xl flex items-center justify-center',
-            'bg-gradient-to-br from-elec-yellow/20 to-amber-600/10',
-            'border border-elec-yellow/20'
-          )}
-        >
-          <Icon
-            className={cn('h-6 w-6', comingSoon ? 'text-elec-yellow/40' : 'text-elec-yellow')}
-          />
-        </div>
-      </div>
-
       {/* Content */}
       <div className="flex-1 min-w-0 self-start">
         {/* Module number */}

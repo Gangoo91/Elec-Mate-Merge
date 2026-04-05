@@ -11,6 +11,7 @@ import { ScrollArea } from '@/components/ui/scroll-area';
 import { ParsedCostAnalysis } from '@/utils/cost-analysis-parser';
 import { toast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
+import { copyToClipboard } from '@/utils/clipboard';
 import { useState } from 'react';
 import { Copy, Download, Eye, ArrowRight, Send, RefreshCw } from 'lucide-react';
 import { openOrDownloadPdf } from '@/utils/pdf-download';
@@ -58,7 +59,7 @@ const CostAnalysisResults = ({
   };
 
   const handleCopyToClipboard = () => {
-    navigator.clipboard.writeText(analysis.rawText);
+    copyToClipboard(analysis.rawText);
     toast({
       title: 'Copied to clipboard',
       description: 'Cost analysis has been copied to your clipboard',

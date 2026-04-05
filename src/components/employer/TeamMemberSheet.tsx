@@ -126,7 +126,7 @@ export function TeamMemberSheet({
             <h2 className="text-xl md:text-2xl font-bold text-foreground truncate">
               {employee.name}
             </h2>
-            <p className="text-sm md:text-base text-muted-foreground">{employee.role}</p>
+            <p className="text-sm md:text-base text-white/60">{employee.role}</p>
             <div className="flex items-center gap-1.5 mt-2 flex-wrap">
               <Badge className={`text-xs ${roleColors[employee.teamRole]}`}>
                 {employee.teamRole}
@@ -221,9 +221,9 @@ export function TeamMemberSheet({
                   </div>
                   <div className="flex-1">
                     <p className="font-medium text-foreground">{employee.phone}</p>
-                    <p className="text-xs text-muted-foreground">Mobile</p>
+                    <p className="text-xs text-white/60">Mobile</p>
                   </div>
-                  <ChevronRight className="h-5 w-5 text-muted-foreground" />
+                  <ChevronRight className="h-5 w-5 text-white/60" />
                 </button>
 
                 <button
@@ -235,16 +235,16 @@ export function TeamMemberSheet({
                   </div>
                   <div className="flex-1 min-w-0">
                     <p className="font-medium text-foreground truncate">{employee.email}</p>
-                    <p className="text-xs text-muted-foreground">Email</p>
+                    <p className="text-xs text-white/60">Email</p>
                   </div>
-                  <ChevronRight className="h-5 w-5 text-muted-foreground" />
+                  <ChevronRight className="h-5 w-5 text-white/60" />
                 </button>
               </div>
 
               {/* Emergency Contact */}
               {employee.emergencyContact && (
                 <div className="space-y-2">
-                  <h4 className="text-sm font-medium text-muted-foreground flex items-center gap-2">
+                  <h4 className="text-sm font-medium text-white/60 flex items-center gap-2">
                     <AlertCircle className="h-4 w-4 text-destructive" />
                     Emergency Contact
                   </h4>
@@ -257,11 +257,11 @@ export function TeamMemberSheet({
                     </div>
                     <div className="flex-1">
                       <p className="font-medium">{employee.emergencyContact.name}</p>
-                      <p className="text-xs text-muted-foreground">
+                      <p className="text-xs text-white/60">
                         {employee.emergencyContact.relationship} • {employee.emergencyContact.phone}
                       </p>
                     </div>
-                    <ChevronRight className="h-5 w-5 text-muted-foreground" />
+                    <ChevronRight className="h-5 w-5 text-white/60" />
                   </button>
                 </div>
               )}
@@ -271,11 +271,11 @@ export function TeamMemberSheet({
                 <div className="grid grid-cols-2 gap-3">
                   <div className="p-4 rounded-xl bg-elec-gray border border-border text-center">
                     <p className="text-2xl font-bold text-elec-yellow">£{employee.dayRate}</p>
-                    <p className="text-xs text-muted-foreground">Day Rate</p>
+                    <p className="text-xs text-white/60">Day Rate</p>
                   </div>
                   <div className="p-4 rounded-xl bg-elec-gray border border-border text-center">
                     <p className="text-2xl font-bold text-elec-yellow">£{employee.hourlyRate}</p>
-                    <p className="text-xs text-muted-foreground">Hourly Rate</p>
+                    <p className="text-xs text-white/60">Hourly Rate</p>
                   </div>
                 </div>
               )}
@@ -283,7 +283,7 @@ export function TeamMemberSheet({
               {/* Skills */}
               {employee.skills.length > 0 && (
                 <div className="space-y-2">
-                  <h4 className="text-sm font-medium text-muted-foreground flex items-center gap-2">
+                  <h4 className="text-sm font-medium text-white/60 flex items-center gap-2">
                     <Zap className="h-4 w-4 text-warning" />
                     Skills
                   </h4>
@@ -299,7 +299,7 @@ export function TeamMemberSheet({
 
               {/* Rating */}
               <div className="space-y-2">
-                <h4 className="text-sm font-medium text-muted-foreground">Performance Rating</h4>
+                <h4 className="text-sm font-medium text-white/60">Performance Rating</h4>
                 <div className="flex items-center gap-1">
                   {[1, 2, 3, 4, 5].map((star) => (
                     <button
@@ -311,11 +311,11 @@ export function TeamMemberSheet({
                       className="p-1"
                     >
                       <Star
-                        className={`h-7 w-7 transition-colors ${star <= employee.rating ? 'text-warning fill-warning' : 'text-muted-foreground/30 hover:text-warning/50'}`}
+                        className={`h-7 w-7 transition-colors ${star <= employee.rating ? 'text-warning fill-warning' : 'text-white/60/30 hover:text-warning/50'}`}
                       />
                     </button>
                   ))}
-                  <span className="text-sm text-muted-foreground ml-2">{employee.rating} / 5</span>
+                  <span className="text-sm text-white/60 ml-2">{employee.rating} / 5</span>
                 </div>
               </div>
             </TabsContent>
@@ -341,7 +341,7 @@ export function TeamMemberSheet({
                       </div>
                       <div className="flex-1 min-w-0">
                         <p className="font-medium text-foreground truncate">{a.jobTitle}</p>
-                        <p className="text-xs text-muted-foreground flex items-center gap-1">
+                        <p className="text-xs text-white/60 flex items-center gap-1">
                           <MapPin className="h-3 w-3" />
                           {a.jobLocation}
                         </p>
@@ -349,7 +349,7 @@ export function TeamMemberSheet({
                       <Button
                         size="icon"
                         variant="ghost"
-                        className="h-8 w-8 text-muted-foreground hover:text-destructive"
+                        className="h-8 w-8 text-white/60 hover:text-destructive"
                         onClick={() => {
                           removeEmployeeFromJob(a.id);
                           toast({ title: 'Removed from Job' });
@@ -362,8 +362,8 @@ export function TeamMemberSheet({
                 </div>
               ) : (
                 <div className="text-center py-8">
-                  <Briefcase className="h-10 w-10 text-muted-foreground/30 mx-auto mb-2" />
-                  <p className="text-sm text-muted-foreground">No active assignments</p>
+                  <Briefcase className="h-10 w-10 text-white/60/30 mx-auto mb-2" />
+                  <p className="text-sm text-white/60">No active assignments</p>
                 </div>
               )}
             </TabsContent>
@@ -391,7 +391,7 @@ export function TeamMemberSheet({
                           <p className="font-medium text-foreground">
                             {elecIdProfile.elec_id_number}
                           </p>
-                          <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                          <div className="flex items-center gap-2 text-xs text-white/60">
                             <span className="capitalize">{elecIdProfile.ecs_card_type} Card</span>
                             {elecIdProfile.is_verified && (
                               <Badge
@@ -415,9 +415,9 @@ export function TeamMemberSheet({
                     onClick={() => setCreateElecIdOpen(true)}
                     className="w-full p-4 rounded-xl border-2 border-dashed border-muted-foreground/30 hover:border-elec-yellow/50 hover:bg-elec-yellow/5 transition-colors text-center"
                   >
-                    <IdCard className="h-8 w-8 text-muted-foreground/50 mx-auto mb-2" />
-                    <p className="text-sm font-medium text-muted-foreground">No Elec-ID Profile</p>
-                    <p className="text-xs text-muted-foreground/70">Click to set up digital ID</p>
+                    <IdCard className="h-8 w-8 text-white/60/50 mx-auto mb-2" />
+                    <p className="text-sm font-medium text-white/60">No Elec-ID Profile</p>
+                    <p className="text-xs text-white/60/70">Click to set up digital ID</p>
                   </button>
                 )}
               </div>
@@ -435,7 +435,7 @@ export function TeamMemberSheet({
                         <div className="flex items-start justify-between">
                           <div className="min-w-0 flex-1">
                             <p className="font-medium text-foreground truncate">{cert.name}</p>
-                            <p className="text-xs text-muted-foreground">{cert.issuer}</p>
+                            <p className="text-xs text-white/60">{cert.issuer}</p>
                           </div>
                           <Badge
                             variant="outline"
@@ -453,8 +453,8 @@ export function TeamMemberSheet({
                   </div>
                 ) : (
                   <div className="text-center py-6">
-                    <Award className="h-8 w-8 text-muted-foreground/30 mx-auto mb-2" />
-                    <p className="text-sm text-muted-foreground">No certifications on file</p>
+                    <Award className="h-8 w-8 text-white/60/30 mx-auto mb-2" />
+                    <p className="text-sm text-white/60">No certifications on file</p>
                   </div>
                 )}
               </div>
@@ -483,20 +483,20 @@ export function TeamMemberSheet({
                           <Badge variant="secondary" className="text-xs">
                             {note.type}
                           </Badge>
-                          <span className="text-xs text-muted-foreground">
+                          <span className="text-xs text-white/60">
                             {new Date(note.createdAt).toLocaleDateString('en-GB')}
                           </span>
                         </div>
                         <p className="text-sm">{note.content}</p>
-                        <p className="text-xs text-muted-foreground mt-1">— {note.authorName}</p>
+                        <p className="text-xs text-white/60 mt-1">— {note.authorName}</p>
                       </CardContent>
                     </Card>
                   ))}
                 </div>
               ) : (
                 <div className="text-center py-8">
-                  <StickyNote className="h-10 w-10 text-muted-foreground/30 mx-auto mb-2" />
-                  <p className="text-sm text-muted-foreground">No notes yet</p>
+                  <StickyNote className="h-10 w-10 text-white/60/30 mx-auto mb-2" />
+                  <p className="text-sm text-white/60">No notes yet</p>
                 </div>
               )}
             </TabsContent>

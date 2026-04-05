@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { openExternalUrl } from '@/utils/open-external-url';
 import { format } from 'date-fns';
 import {
   DollarSign,
@@ -253,7 +254,7 @@ const ToolsFeaturedCarousel = ({ className }: ToolsFeaturedCarouselProps) => {
                             tool.productUrl ||
                             tool.view_product_url ||
                             `https://www.screwfix.com/search/${encodeURIComponent(tool.name)}`;
-                          window.open(url, '_blank');
+                          openExternalUrl(url);
                         }}
                       >
                         <span className="text-xs">Buy Now</span>

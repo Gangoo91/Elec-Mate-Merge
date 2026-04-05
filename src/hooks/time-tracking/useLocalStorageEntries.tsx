@@ -1,7 +1,10 @@
 import { TimeEntry } from '@/types/time-tracking';
+import { storageGetSync, storageGetJSONSync } from '@/utils/storage';
 
 export const useLocalStorageEntries = () => {
-  // Load course time entries from localStorage
+  // Load course time entries from storage
+  // NOTE: Object.keys(localStorage) only works on web; on native, the cache
+  // is used via storageGetSync but there is no sync key-enumeration API yet.
   const loadCourseEntriesFromLocalStorage = (): TimeEntry[] => {
     const loadedCourseEntries: TimeEntry[] = [];
 
@@ -13,7 +16,7 @@ export const useLocalStorageEntries = () => {
           .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
           .join(' ');
 
-        const timeValue = parseInt(localStorage.getItem(key) || '0');
+        const timeValue = parseInt(storageGetSync(key) || '0');
         if (timeValue > 0) {
           loadedCourseEntries.push({
             id: `course-${Date.now()}-${Math.random().toString(36).substr(2, 5)}`,
@@ -30,32 +33,28 @@ export const useLocalStorageEntries = () => {
     return loadedCourseEntries;
   };
 
-  // Load quiz attempts from localStorage
+  // Load quiz attempts from storage
   const loadQuizEntriesFromLocalStorage = (): TimeEntry[] => {
     const loadedQuizEntries: TimeEntry[] = [];
 
     Object.keys(localStorage).forEach((key) => {
       if (key.includes('_quiz_attempts')) {
-        try {
-          const unitCode = key.split('_quiz_attempts')[0].replace('unit_', '');
-          const attempts = JSON.parse(localStorage.getItem(key) || '[]');
+        const unitCode = key.split('_quiz_attempts')[0].replace('unit_', '');
+        const attempts = storageGetJSONSync<any[]>(key, []);
 
-          attempts.forEach((attempt: any, index: number) => {
-            loadedQuizEntries.push({
-              id: `quiz-${unitCode}-${index}`,
-              date: new Date(attempt.date).toISOString().split('T')[0],
-              duration: Math.ceil(attempt.timeTaken / 60), // convert seconds to minutes
-              activity: `Quiz: Unit ${unitCode}`,
-              notes: `Assessment Score: ${attempt.score}/${attempt.totalQuestions} (${attempt.percentage}%)`,
-              isAutomatic: true,
-              isQuiz: true,
-              score: attempt.score,
-              totalQuestions: attempt.totalQuestions,
-            });
+        attempts.forEach((attempt: any, index: number) => {
+          loadedQuizEntries.push({
+            id: `quiz-${unitCode}-${index}`,
+            date: new Date(attempt.date).toISOString().split('T')[0],
+            duration: Math.ceil(attempt.timeTaken / 60), // convert seconds to minutes
+            activity: `Quiz: Unit ${unitCode}`,
+            notes: `Assessment Score: ${attempt.score}/${attempt.totalQuestions} (${attempt.percentage}%)`,
+            isAutomatic: true,
+            isQuiz: true,
+            score: attempt.score,
+            totalQuestions: attempt.totalQuestions,
           });
-        } catch (e) {
-          console.error('Error parsing quiz attempts:', e);
-        }
+        });
       }
     });
 

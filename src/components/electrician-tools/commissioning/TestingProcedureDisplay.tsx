@@ -4,6 +4,7 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { toast } from '@/hooks/use-toast';
+import { copyToClipboard } from '@/utils/clipboard';
 import { CalculationBreakdown } from './CalculationBreakdown';
 import { TestSequenceValidator } from './TestSequenceValidator';
 import { InstrumentSetupPanel } from './testing-results/InstrumentSetupPanel';
@@ -22,7 +23,7 @@ const TestingProcedureDisplay = ({ procedure }: TestingProcedureDisplayProps) =>
     setCheckedItems((prev) => ({ ...prev, [id]: checked }));
   };
 
-  const copyTestProcedure = (test: any) => {
+  const copyTestProcedure = async (test: any) => {
     const markdown = `# ${test.testName}
 **Regulation**: ${test.regulation}
 
@@ -37,7 +38,7 @@ ${test.acceptanceCriteria}
 ${test.calculation ? `\n## Calculation\n${test.calculation}` : ''}
 ${test.troubleshooting ? `\n## Troubleshooting\n${test.troubleshooting.map((t: string) => `- ${t}`).join('\n')}` : ''}`;
 
-    navigator.clipboard.writeText(markdown);
+    await copyToClipboard(markdown);
     toast({
       title: 'Test procedure copied',
       description: 'Paste into your notes app',

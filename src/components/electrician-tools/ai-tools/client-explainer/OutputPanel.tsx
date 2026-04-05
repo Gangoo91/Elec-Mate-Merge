@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { openExternalUrl } from '@/utils/open-external-url';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
@@ -18,6 +19,7 @@ import { generateProfessionalElectricalPDF } from '@/utils/professional-electric
 import { motion } from 'framer-motion';
 import { cn } from '@/lib/utils';
 import DOMPurify from 'dompurify';
+import { copyToClipboard } from '@/utils/clipboard';
 
 interface OutputPanelProps {
   content: string;
@@ -93,7 +95,7 @@ const OutputPanel = ({ content, settings }: OutputPanelProps) => {
 
   const handleCopy = async () => {
     try {
-      await navigator.clipboard.writeText(content);
+      await copyToClipboard(content);
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
       toast({
@@ -176,13 +178,13 @@ ${content}
     const body = encodeURIComponent(
       `Dear Client,\n\nPlease find below the explanation of the electrical work findings:\n\n${content}\n\nBest regards,\nYour Electrician`
     );
-    window.open(`mailto:?subject=${subject}&body=${body}`);
+    openExternalUrl(`mailto:?subject=${subject}&body=${body}`);
   };
 
   const handleSMSTemplate = () => {
     const smsContent = content.length > 160 ? content.substring(0, 157) + '...' : content;
     const smsBody = encodeURIComponent(`Hi, regarding your electrical work: ${smsContent}`);
-    window.open(`sms:?body=${smsBody}`);
+    openExternalUrl(`sms:?body=${smsBody}`);
   };
 
   const formatForEmail = (content: string) => {

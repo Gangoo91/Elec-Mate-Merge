@@ -55,6 +55,7 @@ import { useAM2Readiness } from '@/hooks/am2/useAM2Readiness';
 import { useAuth } from '@/contexts/AuthContext';
 import { saveAM2Session } from '@/hooks/am2/saveAM2Session';
 import { useMultimeterSounds } from '@/hooks/am2/useMultimeterSounds';
+import { storageGetJSONSync, storageSetJSONSync } from '@/utils/storage';
 
 // ── Types ────────────────────────────────────────────────────
 
@@ -93,11 +94,7 @@ interface SessionRecord {
 }
 
 function loadHistory(): SessionRecord[] {
-  try {
-    return JSON.parse(localStorage.getItem(HISTORY_KEY) || '[]');
-  } catch {
-    return [];
-  }
+  return storageGetJSONSync<SessionRecord[]>(HISTORY_KEY, []);
 }
 
 function saveSessionRecord(record: SessionRecord) {
@@ -105,7 +102,7 @@ function saveSessionRecord(record: SessionRecord) {
   history.push(record);
   // Keep last 50 sessions
   if (history.length > 50) history.splice(0, history.length - 50);
-  localStorage.setItem(HISTORY_KEY, JSON.stringify(history));
+  storageSetJSONSync(HISTORY_KEY, history);
 }
 
 // ── Hint generation ──────────────────────────────────────────

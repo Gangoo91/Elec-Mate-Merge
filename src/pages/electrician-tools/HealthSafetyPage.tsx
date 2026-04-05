@@ -8,9 +8,9 @@ const HealthSafetyPage = () => {
   const fromAgentSelector = location.state?.fromAgentSelector;
 
   return (
-    <div className="-mt-3 sm:-mt-4 md:-mt-6 bg-background">
+    <div className="bg-background min-h-screen">
       {/* Sticky Header */}
-      <div className="sticky top-0 z-50 bg-background/95 backdrop-blur-sm border-b border-white/10 ">
+      <div className="sticky top-0 z-50 bg-background/95 backdrop-blur-xl border-b border-white/[0.06]">
         <div className="px-4 py-2">
           <button
             onClick={() =>
@@ -26,15 +26,24 @@ const HealthSafetyPage = () => {
         </div>
       </div>
 
-      <main className="px-4 py-4 space-y-5">
-        {/* Hero Header */}
-        <div className="flex items-center gap-3">
-          <div className="p-3 rounded-xl bg-gradient-to-br from-orange-500/20 to-red-500/10 border border-orange-500/20">
-            <Shield className="h-6 w-6 text-orange-400" />
-          </div>
-          <div>
-            <h1 className="text-xl font-bold text-white">Health & Safety</h1>
-            <p className="text-sm text-white">Risk assessments & RAMS documentation</p>
+      <main className="px-4 py-5 space-y-5 max-w-3xl mx-auto">
+        {/* Premium Hero */}
+        <div className="relative overflow-hidden glass-premium rounded-2xl">
+          {/* Gradient top accent */}
+          <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-orange-500 via-amber-400 to-red-500" />
+          {/* Blur orb */}
+          <div className="absolute top-0 right-0 w-40 h-40 bg-orange-500/[0.04] rounded-full blur-3xl -translate-y-1/2 translate-x-1/4 pointer-events-none" />
+
+          <div className="relative z-10 p-5">
+            <div className="flex items-center gap-4">
+              <div className="p-3 rounded-xl bg-orange-500/10 border border-orange-500/20">
+                <Shield className="h-7 w-7 text-orange-400" />
+              </div>
+              <div>
+                <h1 className="text-xl font-bold text-white tracking-tight">Health & Safety</h1>
+                <p className="text-sm text-white">AI-powered risk assessments & RAMS</p>
+              </div>
+            </div>
           </div>
         </div>
 

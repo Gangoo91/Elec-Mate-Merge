@@ -19,6 +19,7 @@ import {
   Shield,
   Building2,
 } from 'lucide-react';
+import { openExternalUrl } from '@/utils/open-external-url';
 
 // Premium components
 import JobsHeroCard from './JobsHeroCard';
@@ -263,7 +264,7 @@ const PremiumJobsHub = () => {
       setIsApplyDialogOpen(true);
     } else if (job.url) {
       // External job - open URL
-      window.open(job.url, '_blank', 'noopener,noreferrer');
+      openExternalUrl(job.url);
     }
   };
 
@@ -635,7 +636,7 @@ const PremiumJobsHub = () => {
         onClose={() => setIsDetailOpen(false)}
         onApply={(job) => {
           if (job.external_url) {
-            window.open(job.external_url, '_blank', 'noopener,noreferrer');
+            openExternalUrl(job.external_url);
           }
         }}
         onSave={handleSaveJob}

@@ -319,7 +319,7 @@ export function JobBoardSection() {
       <div className="flex flex-col gap-3">
         <div>
           <h1 className="text-xl md:text-2xl font-bold text-foreground">Live Job Board</h1>
-          <p className="text-sm text-muted-foreground">
+          <p className="text-sm text-white/60">
             Drag jobs between stages to update their status
           </p>
         </div>
@@ -327,7 +327,7 @@ export function JobBoardSection() {
         <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
           <div className="relative flex-1">
             {!searchQuery && (
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none" />
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white/60 pointer-events-none" />
             )}
             <Input
               placeholder="Search jobs..."
@@ -378,7 +378,7 @@ export function JobBoardSection() {
                     />
                     <label
                       htmlFor="hide-completed"
-                      className="text-sm text-muted-foreground cursor-pointer"
+                      className="text-sm text-white/60 cursor-pointer"
                     >
                       Hide completed jobs
                     </label>
@@ -479,7 +479,7 @@ export function JobBoardSection() {
                         {getJobsForStage(stage.id).length}
                       </Badge>
                     </div>
-                    <p className="text-sm text-muted-foreground mt-1">
+                    <p className="text-sm text-white/60 mt-1">
                       £{(getStageValue(stage.id) / 1000).toFixed(0)}k value
                     </p>
                   </div>
@@ -522,16 +522,16 @@ export function JobBoardSection() {
 
                                 <div>
                                   <h4 className="font-medium text-foreground">{job.title}</h4>
-                                  <p className="text-sm text-muted-foreground">{job.client}</p>
+                                  <p className="text-sm text-white/60">{job.client}</p>
                                 </div>
 
-                                <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                                <div className="flex items-center gap-2 text-xs text-white/60">
                                   <MapPin className="h-3 w-3" />
                                   <span>{job.location.split(',')[0]}</span>
                                 </div>
 
                                 <div className="flex items-center justify-between text-xs">
-                                  <div className="flex items-center gap-1 text-muted-foreground">
+                                  <div className="flex items-center gap-1 text-white/60">
                                     <Calendar className="h-3 w-3" />
                                     <span>{job.end_date || 'No end date'}</span>
                                   </div>
@@ -544,7 +544,7 @@ export function JobBoardSection() {
                                 {/* Checklist Progress */}
                                 {checklistData && checklistData.total > 0 && (
                                   <div className="flex items-center gap-2 text-xs">
-                                    <CheckSquare className="h-3 w-3 text-muted-foreground" />
+                                    <CheckSquare className="h-3 w-3 text-white/60" />
                                     <JobChecklistProgress
                                       completed={checklistData.completed}
                                       total={checklistData.total}
@@ -566,7 +566,7 @@ export function JobBoardSection() {
                                 {job.progress > 0 && job.stage !== 'Complete' && (
                                   <div className="space-y-1">
                                     <div className="flex justify-between text-xs">
-                                      <span className="text-muted-foreground">Progress</span>
+                                      <span className="text-white/60">Progress</span>
                                       <span className="text-elec-yellow">{job.progress}%</span>
                                     </div>
                                     <div className="h-1.5 bg-muted rounded-full overflow-hidden">
@@ -638,7 +638,7 @@ export function JobBoardSection() {
                         onClick={() => setQuickAddStage(stage.id)}
                         className="w-full border-2 border-dashed border-border rounded-lg p-3 text-center hover:border-elec-yellow/50 hover:bg-elec-yellow/5 transition-colors group"
                       >
-                        <div className="flex items-center justify-center gap-2 text-sm text-muted-foreground group-hover:text-elec-yellow">
+                        <div className="flex items-center justify-center gap-2 text-sm text-white/60 group-hover:text-elec-yellow">
                           <Plus className="h-4 w-4" />
                           Add Job
                         </div>
@@ -691,7 +691,7 @@ export function JobBoardSection() {
                             </div>
                           )}
                         </div>
-                        <p className="text-xs md:text-sm text-muted-foreground">{job.client}</p>
+                        <p className="text-xs md:text-sm text-white/60">{job.client}</p>
                       </div>
                     </div>
                     <div className="flex items-center justify-between md:justify-end gap-4 md:gap-6">
@@ -699,9 +699,9 @@ export function JobBoardSection() {
                         <p className="text-sm font-medium text-foreground">
                           £{(job.value || 0).toLocaleString()}
                         </p>
-                        <p className="text-xs text-muted-foreground">{job.progress}% complete</p>
+                        <p className="text-xs text-white/60">{job.progress}% complete</p>
                       </div>
-                      <ChevronRight className="h-5 w-5 text-muted-foreground" />
+                      <ChevronRight className="h-5 w-5 text-white/60" />
                     </div>
                   </div>
                 </CardContent>

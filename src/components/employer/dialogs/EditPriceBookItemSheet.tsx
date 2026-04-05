@@ -137,7 +137,7 @@ export function EditPriceBookItemSheet({
             <div className="space-y-2">
               <Label htmlFor="buyPrice">Buy Price</Label>
               <div className="relative">
-                <span className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground">
+                <span className="absolute left-3 top-1/2 -translate-y-1/2 text-white/60">
                   £
                 </span>
                 <Input
@@ -153,7 +153,7 @@ export function EditPriceBookItemSheet({
             <div className="space-y-2">
               <Label htmlFor="sellPrice">Sell Price</Label>
               <div className="relative">
-                <span className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground">
+                <span className="absolute left-3 top-1/2 -translate-y-1/2 text-white/60">
                   £
                 </span>
                 <Input
@@ -169,7 +169,7 @@ export function EditPriceBookItemSheet({
           </div>
 
           {buyPrice && sellPrice && (
-            <p className="text-sm text-muted-foreground">Markup: {markup}%</p>
+            <p className="text-sm text-white/60">Markup: {markup}%</p>
           )}
 
           <div className="grid grid-cols-2 gap-3">

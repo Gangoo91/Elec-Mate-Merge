@@ -13,6 +13,7 @@ import { supplierData, SupplierInfo } from '@/data/electrician/supplierData';
 import { productsBySupplier, MaterialItem } from '@/data/electrician/productData';
 import { Card, CardContent } from '@/components/ui/card';
 import { supabase } from '@/integrations/supabase/client';
+import { storageGetSync, storageSetSync } from '@/utils/storage';
 
 const SupplierMaterials = () => {
   const { supplierSlug } = useParams<{ supplierSlug: string }>();
@@ -33,7 +34,7 @@ const SupplierMaterials = () => {
       setSupplierInfo(supplierData[supplierKey as keyof typeof supplierData] || null);
 
       // Check if user is already subscribed to notifications (would use localStorage or backend in production)
-      const storedNotifyState = localStorage.getItem(`notify-${supplierKey}`);
+      const storedNotifyState = storageGetSync(`notify-${supplierKey}`);
       setIsNotifying(storedNotifyState === 'true');
     }
   }, [supplierSlug]);
@@ -61,7 +62,7 @@ const SupplierMaterials = () => {
 
     const newState = !isNotifying;
     setIsNotifying(newState);
-    localStorage.setItem(`notify-${supplierSlug.toLowerCase()}`, String(newState));
+    storageSetSync(`notify-${supplierSlug.toLowerCase()}`, String(newState));
 
     toast({
       title: newState ? 'Notifications Enabled' : 'Notifications Disabled',

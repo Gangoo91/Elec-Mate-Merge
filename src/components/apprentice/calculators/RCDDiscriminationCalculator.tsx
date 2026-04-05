@@ -1,3 +1,4 @@
+import { copyToClipboard } from '@/utils/clipboard';
 import { useState, useCallback } from 'react';
 import { Checkbox } from '@/components/ui/checkbox';
 import {
@@ -303,10 +304,13 @@ const RCDDiscriminationCalculator = () => {
     text += `\nCurrent Ratio: ${result.currentRatio.toFixed(1)}:1 (upstream ${result.upstreamRating}mA / downstream ${result.downstreamRating}mA)`;
     text += `\nTime Difference: ${result.timeDifference}ms`;
     text += `\nRisk Level: ${result.riskLevel.toUpperCase()}`;
-    navigator.clipboard.writeText(text);
-    setCopied(true);
-    toast({ title: 'Copied to clipboard' });
-    setTimeout(() => setCopied(false), 2000);
+    copyToClipboard(text).then((ok) => {
+      if (ok) {
+        setCopied(true);
+        toast({ title: 'Copied to clipboard' });
+        setTimeout(() => setCopied(false), 2000);
+      }
+    });
   };
 
   const getRiskColor = (level: string) => {

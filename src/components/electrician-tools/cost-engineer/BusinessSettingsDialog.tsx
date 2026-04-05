@@ -13,6 +13,7 @@ import { MobileInput } from '@/components/ui/mobile-input';
 import { Settings, Save, AlertCircle } from 'lucide-react';
 import { toast } from 'sonner';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { storageGetSync, storageSetJSONSync } from '@/utils/storage';
 
 export interface BusinessSettings {
   monthlyOverheads: {
@@ -103,10 +104,10 @@ export function BusinessSettingsDialog({
   const storageKey = getStorageKey(userId);
 
   useEffect(() => {
-    const saved = localStorage.getItem(storageKey);
-    if (saved) {
+    const raw = storageGetSync(storageKey);
+    if (raw) {
       try {
-        const parsed = JSON.parse(saved);
+        const parsed = JSON.parse(raw);
         setSettings(parsed);
         setHasConfigured(true);
         onSettingsChange?.(parsed);
@@ -121,7 +122,7 @@ export function BusinessSettingsDialog({
   }, [storageKey]);
 
   const handleSave = () => {
-    localStorage.setItem(storageKey, JSON.stringify(settings));
+    storageSetJSONSync(storageKey, settings);
     setHasConfigured(true);
     onSettingsChange?.(settings);
     setOpen(false);

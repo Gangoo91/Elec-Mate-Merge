@@ -11,6 +11,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
+import { openExternalUrl } from '@/utils/open-external-url';
 import {
   Table,
   TableBody,
@@ -72,7 +73,7 @@ const CourseDetailsModal = ({ course, onClose }: CourseDetailsModalProps) => {
     if (!course.external_url) return;
 
     // Open provider's website directly — contact details are on their site
-    window.open(course.external_url, '_blank', 'noopener,noreferrer');
+    openExternalUrl(course.external_url);
     toast({
       title: 'Opening Provider Website',
       description: 'Contact details are available on the provider\'s website.',
@@ -90,7 +91,7 @@ const CourseDetailsModal = ({ course, onClose }: CourseDetailsModalProps) => {
     }
 
     try {
-      window.open(course.external_url, '_blank');
+      openExternalUrl(course.external_url);
     } catch (error) {
       toast({
         title: 'Error Opening URL',

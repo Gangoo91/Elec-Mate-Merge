@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { copyToClipboard } from '@/utils/clipboard';
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -45,7 +46,7 @@ export function ViewInvoiceSheet({ open, onOpenChange, invoice }: ViewInvoiceShe
 
   const getStatusBadge = (status: string) => {
     const styles: Record<string, string> = {
-      Draft: 'bg-muted text-muted-foreground',
+      Draft: 'bg-muted text-white/60',
       Pending: 'bg-warning/20 text-warning',
       Sent: 'bg-blue-500/20 text-blue-400',
       Paid: 'bg-success/20 text-success',
@@ -70,7 +71,7 @@ export function ViewInvoiceSheet({ open, onOpenChange, invoice }: ViewInvoiceShe
 
   const handleCopyLink = async () => {
     if (invoiceLink) {
-      await navigator.clipboard.writeText(invoiceLink);
+      await copyToClipboard(invoiceLink);
       toast.success('Invoice link copied to clipboard');
     }
   };
@@ -115,7 +116,7 @@ export function ViewInvoiceSheet({ open, onOpenChange, invoice }: ViewInvoiceShe
                   <SheetTitle className="text-lg font-semibold">
                     {invoice.invoice_number}
                   </SheetTitle>
-                  <p className="text-sm text-muted-foreground">{invoice.client}</p>
+                  <p className="text-sm text-white/60">{invoice.client}</p>
                 </div>
               </div>
               {getStatusBadge(invoice.status)}
@@ -166,7 +167,7 @@ export function ViewInvoiceSheet({ open, onOpenChange, invoice }: ViewInvoiceShe
                       </span>
                     </div>
                     {invoice.paid_date && (
-                      <p className="text-sm text-muted-foreground mt-1">
+                      <p className="text-sm text-white/60 mt-1">
                         Paid on {new Date(invoice.paid_date).toLocaleDateString('en-GB')}
                       </p>
                     )}
@@ -196,15 +197,15 @@ export function ViewInvoiceSheet({ open, onOpenChange, invoice }: ViewInvoiceShe
                 <CardContent className="p-4 space-y-3">
                   {invoice.project && (
                     <div>
-                      <span className="text-sm text-muted-foreground">Project</span>
+                      <span className="text-sm text-white/60">Project</span>
                       <p className="font-medium">{invoice.project}</p>
                     </div>
                   )}
                   <div className="grid grid-cols-2 gap-4 text-sm">
                     <div className="flex items-center gap-2">
-                      <Calendar className="h-4 w-4 text-muted-foreground" />
+                      <Calendar className="h-4 w-4 text-white/60" />
                       <div>
-                        <span className="text-muted-foreground">Created</span>
+                        <span className="text-white/60">Created</span>
                         <p className="font-medium">
                           {new Date(invoice.created_at).toLocaleDateString('en-GB')}
                         </p>
@@ -212,9 +213,9 @@ export function ViewInvoiceSheet({ open, onOpenChange, invoice }: ViewInvoiceShe
                     </div>
                     {invoice.due_date && (
                       <div className="flex items-center gap-2">
-                        <Clock className="h-4 w-4 text-muted-foreground" />
+                        <Clock className="h-4 w-4 text-white/60" />
                         <div>
-                          <span className="text-muted-foreground">Due Date</span>
+                          <span className="text-white/60">Due Date</span>
                           <p className={`font-medium ${isOverdue ? 'text-destructive' : ''}`}>
                             {new Date(invoice.due_date).toLocaleDateString('en-GB')}
                           </p>
@@ -238,7 +239,7 @@ export function ViewInvoiceSheet({ open, onOpenChange, invoice }: ViewInvoiceShe
                         >
                           <div className="min-w-0 flex-1">
                             <p className="font-medium text-sm truncate">{item.description}</p>
-                            <p className="text-xs text-muted-foreground">
+                            <p className="text-xs text-white/60">
                               {item.quantity} {item.unit} × £{item.unitPrice?.toFixed(2)}
                             </p>
                           </div>
@@ -268,7 +269,7 @@ export function ViewInvoiceSheet({ open, onOpenChange, invoice }: ViewInvoiceShe
                   <h3 className="font-semibold text-sm">Payment Details / Notes</h3>
                   <Card className="bg-muted/30">
                     <CardContent className="p-3">
-                      <p className="text-sm text-muted-foreground whitespace-pre-wrap">
+                      <p className="text-sm text-white/60 whitespace-pre-wrap">
                         {invoice.notes}
                       </p>
                     </CardContent>

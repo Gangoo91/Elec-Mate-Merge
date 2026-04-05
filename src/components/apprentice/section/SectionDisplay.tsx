@@ -1,5 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import { storageGetSync } from '@/utils/storage';
 import { Button } from '@/components/ui/button';
 import { CheckCircle, ArrowLeft, Book, ChevronRight } from 'lucide-react';
 import SectionSubsectionCard from '@/components/apprentice/SectionSubsectionCard';
@@ -68,7 +69,7 @@ const SectionDisplay = ({
   // Check which subsections have been completed
   const isSubsectionCompleted = (subsectionId: string) => {
     const storageKey = `completion_hs_${sectionId}_${subsectionId}`;
-    return localStorage.getItem(storageKey) === 'true';
+    return storageGetSync(storageKey) === 'true';
   };
 
   return (

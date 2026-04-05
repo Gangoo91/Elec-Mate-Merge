@@ -1,26 +1,25 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
+import { storageGetJSONSync, storageSetJSONSync } from '@/utils/storage';
 
 export function useLocalStorage<T>(key: string, initialValue: T) {
-  // Get from local storage then parse stored json or return initialValue
+  // Get from storage (sync read from in-memory cache on native, localStorage on web)
   const [storedValue, setStoredValue] = useState<T>(() => {
     try {
-      const item = window.localStorage.getItem(key);
-      return item ? JSON.parse(item) : initialValue;
+      return storageGetJSONSync(key, initialValue);
     } catch (error) {
-      console.warn(`Error reading localStorage key "${key}":`, error);
+      console.warn(`Error reading storage key "${key}":`, error);
       return initialValue;
     }
   });
 
-  // Return a wrapped version of useState's setter function that persists the new value to localStorage
+  // Wrapped setter that persists to Capacitor Preferences (native) or localStorage (web)
   const setValue = (value: T | ((val: T) => T)) => {
     try {
-      // Allow value to be a function so we have the same API as useState
       const valueToStore = value instanceof Function ? value(storedValue) : value;
       setStoredValue(valueToStore);
-      window.localStorage.setItem(key, JSON.stringify(valueToStore));
+      storageSetJSONSync(key, valueToStore);
     } catch (error) {
-      console.warn(`Error setting localStorage key "${key}":`, error);
+      console.warn(`Error setting storage key "${key}":`, error);
     }
   };
 

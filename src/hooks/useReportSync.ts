@@ -9,6 +9,7 @@ import { useToast } from '@/hooks/use-toast';
 import { reportCloud, VersionConflict, ReportType } from '@/utils/reportCloud';
 import { draftStorage } from '@/utils/draftStorage';
 import { syncQueue, SyncOperation } from '@/utils/syncQueue';
+import { trackFeatureUse } from '@/components/ActivityTracker';
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
@@ -730,6 +731,7 @@ export const useReportSync = ({
             title: 'Saved',
             description: 'Your report has been saved.',
           });
+          trackFeatureUse(userId || '', 'certificate_saved', { reportType, reportId: savedReportId });
         }
 
         isSyncingRef.current = false;

@@ -13,6 +13,7 @@ import {
   ProjectDetailsData,
 } from '@/components/install-planner/ProjectDetailsForm';
 import { openOrDownloadPdf } from '@/utils/pdf-download';
+import { storageSetJSONSync, storageGetJSONSync } from '@/utils/storage';
 
 interface Message {
   role: 'user' | 'assistant';
@@ -132,18 +133,14 @@ const InstallPlannerResults = () => {
 
   // Save to localStorage
   useEffect(() => {
-    localStorage.setItem('installPlanner_projectDetails', JSON.stringify(projectDetails));
+    storageSetJSONSync('installPlanner_projectDetails', projectDetails);
   }, [projectDetails]);
 
   // Load from localStorage on mount
   useEffect(() => {
-    const saved = localStorage.getItem('installPlanner_projectDetails');
+    const saved = storageGetJSONSync<ProjectDetailsData | null>('installPlanner_projectDetails', null);
     if (saved) {
-      try {
-        setProjectDetails(JSON.parse(saved));
-      } catch (e) {
-        console.error('Failed to parse saved project details', e);
-      }
+      setProjectDetails(saved);
     }
   }, []);
 

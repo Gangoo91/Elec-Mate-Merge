@@ -4,6 +4,7 @@
  */
 
 import { useState, useRef } from 'react';
+import { copyToClipboard } from '@/utils/clipboard';
 import { shareContent } from '@/utils/share';
 import { openExternalUrl } from '@/utils/open-external-url';
 import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
@@ -207,7 +208,7 @@ const JobDetailSheet = ({
       title: job.title,
       text: `Check out this job: ${job.title} at ${job.company}`,
       url: job.url || window.location.href,
-      onFallback: () => { if (job.url) navigator.clipboard.writeText(job.url); },
+      onFallback: () => { if (job.url) copyToClipboard(job.url); },
     });
   };
 

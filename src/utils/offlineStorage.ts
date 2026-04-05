@@ -1,4 +1,5 @@
 import { openDB, DBSchema, IDBPDatabase } from 'idb';
+import { storageGetSync } from '@/utils/storage';
 
 // Database schema definition
 interface ElecMateDB extends DBSchema {
@@ -234,7 +235,7 @@ class OfflineStorageManager {
       // Migrate form drafts
       const formDraftKeys = ['minorWorksForm_draft', 'eic-auto-save'];
       for (const key of formDraftKeys) {
-        const data = localStorage.getItem(key);
+        const data = storageGetSync(key);
         if (data) {
           try {
             const parsed = JSON.parse(data);
@@ -248,7 +249,7 @@ class OfflineStorageManager {
       }
 
       // Migrate inspector profiles
-      const inspectorProfiles = localStorage.getItem('inspector_profiles');
+      const inspectorProfiles = storageGetSync('inspector_profiles');
       if (inspectorProfiles) {
         try {
           const profiles = JSON.parse(inspectorProfiles);
@@ -262,7 +263,7 @@ class OfflineStorageManager {
       }
 
       // Migrate signature profiles
-      const signatureProfiles = localStorage.getItem('signature_profiles');
+      const signatureProfiles = storageGetSync('signature_profiles');
       if (signatureProfiles) {
         try {
           const profiles = JSON.parse(signatureProfiles);
@@ -284,7 +285,7 @@ class OfflineStorageManager {
       ];
 
       for (const key of prefsToMigrate) {
-        const value = localStorage.getItem(key);
+        const value = storageGetSync(key);
         if (value) {
           try {
             const parsed =

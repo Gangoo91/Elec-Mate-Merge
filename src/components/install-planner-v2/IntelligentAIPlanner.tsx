@@ -48,6 +48,7 @@ import { ConfirmationDialog } from '@/components/ui/confirmation-dialog';
 import { DesignAlternatives } from './DesignAlternatives';
 import { AgentChatErrorBoundary } from './AgentChatErrorBoundary';
 import { AgentHealthBanner } from './AgentHealthBanner';
+import { trackFeatureUse } from '@/components/ActivityTracker';
 
 import { v4 as uuidv4 } from 'uuid';
 
@@ -1213,6 +1214,9 @@ export const IntelligentAIPlanner = ({
     console.log(`👤 User selected agent: ${agentId}`);
     setCurrentAgent(agentId);
     setConsultationStarted(true);
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      if (session?.user) trackFeatureUse(session.user.id, 'ai_install_planner', {});
+    });
 
     // Show welcome message from selected agent
     const welcomeMessage =

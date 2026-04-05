@@ -141,9 +141,9 @@ export const PhotoMapView = ({
   if (!apiKey) {
     return (
       <div className="flex flex-col items-center justify-center h-[calc(100vh-200px)] bg-muted/20 rounded-lg border border-border/30">
-        <MapPin className="h-12 w-12 text-muted-foreground/30 mb-4" />
+        <MapPin className="h-12 w-12 text-white/60/30 mb-4" />
         <h3 className="text-lg font-medium mb-2">Google Maps API Key Required</h3>
-        <p className="text-sm text-muted-foreground text-center max-w-md px-4">
+        <p className="text-sm text-white/60 text-center max-w-md px-4">
           Add your Google Maps API key in Settings to view photos on the map.
         </p>
       </div>
@@ -155,7 +155,7 @@ export const PhotoMapView = ({
       <div className="flex flex-col items-center justify-center h-[calc(100vh-200px)] bg-muted/20 rounded-lg border border-border/30">
         <MapPin className="h-12 w-12 text-destructive/50 mb-4" />
         <h3 className="text-lg font-medium mb-2">Failed to load map</h3>
-        <p className="text-sm text-muted-foreground">There was an error loading Google Maps.</p>
+        <p className="text-sm text-white/60">There was an error loading Google Maps.</p>
       </div>
     );
   }
@@ -163,7 +163,7 @@ export const PhotoMapView = ({
   if (!isLoaded) {
     return (
       <div className="flex items-center justify-center h-[calc(100vh-200px)] bg-muted/20 rounded-lg border border-border/30">
-        <div className="animate-pulse text-muted-foreground">Loading map...</div>
+        <div className="animate-pulse text-white/60">Loading map...</div>
       </div>
     );
   }
@@ -211,7 +211,7 @@ export const PhotoMapView = ({
               <div className="space-y-2">
                 {/* Photo thumbnail */}
                 <div className="w-full h-20 rounded-md overflow-hidden bg-gradient-to-br from-muted/50 to-muted/30 flex items-center justify-center">
-                  <Camera className="h-6 w-6 text-muted-foreground/40" />
+                  <Camera className="h-6 w-6 text-white/60/40" />
                 </div>
 
                 {/* Info */}
@@ -230,7 +230,7 @@ export const PhotoMapView = ({
                     {selectedPhoto.category}
                   </Badge>
                   {selectedPhoto.location && (
-                    <p className="text-[10px] text-muted-foreground mt-1 flex items-center gap-1 line-clamp-1">
+                    <p className="text-[10px] text-white/60 mt-1 flex items-center gap-1 line-clamp-1">
                       <MapPin className="h-3 w-3 flex-shrink-0" />
                       {selectedPhoto.location}
                     </p>
@@ -274,9 +274,9 @@ export const PhotoMapView = ({
       {photosWithLocation.length === 0 && (
         <div className="absolute inset-0 flex items-center justify-center bg-background/80">
           <div className="text-center px-4">
-            <MapPin className="h-12 w-12 text-muted-foreground/30 mx-auto mb-4" />
+            <MapPin className="h-12 w-12 text-white/60/30 mx-auto mb-4" />
             <h3 className="text-lg font-medium">No geotagged photos</h3>
-            <p className="text-sm text-muted-foreground">
+            <p className="text-sm text-white/60">
               Photos with location data will appear on the map
             </p>
           </div>

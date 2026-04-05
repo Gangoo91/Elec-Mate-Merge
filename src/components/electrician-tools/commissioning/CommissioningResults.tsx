@@ -13,6 +13,7 @@ import { Zap, Save, Trash2, Clock, XCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { useCommissioningProgress } from '@/hooks/useCommissioningProgress';
+import { copyToClipboard } from '@/utils/clipboard';
 import type { CommissioningResponse } from '@/types/commissioning-response';
 import { saveOrSharePdf } from '@/utils/save-or-share-pdf';
 
@@ -99,7 +100,7 @@ const CommissioningResults = ({
       });
     }
 
-    navigator.clipboard.writeText(markdown);
+    copyToClipboard(markdown);
     toast.success('Testing checklist copied!', {
       description: 'Paste into notes app for on-site use',
     });

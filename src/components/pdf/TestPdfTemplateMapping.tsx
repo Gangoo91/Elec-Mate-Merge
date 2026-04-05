@@ -5,6 +5,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Badge } from '@/components/ui/badge';
 import { Copy, TestTube } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
+import { copyToClipboard as clipboardCopy } from '@/utils/clipboard';
 import { supabase } from '@/integrations/supabase/client';
 
 interface TestPdfTemplateMappingProps {
@@ -259,8 +260,8 @@ const TestPdfTemplateMapping: React.FC<TestPdfTemplateMappingProps> = ({ formDat
     };
   };
 
-  const copyToClipboard = () => {
-    navigator.clipboard.writeText(testPayload);
+  const copyToClipboard = async () => {
+    await clipboardCopy(testPayload);
     toast({
       title: 'Copied to Clipboard',
       description: 'Test payload has been copied to your clipboard',

@@ -19,6 +19,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { RadialGauge, EICRCodeGrid, ExpandableSection } from './results';
 import { cn } from '@/lib/utils';
 import ErrorAnalysisCard from './ErrorAnalysisCard';
+import { copyToClipboard } from '@/utils/clipboard';
 
 interface BoundingBox {
   x: number;
@@ -205,7 +206,7 @@ ${recommendations.map((rec) => `• ${rec.action} (${rec.priority})`).join('\n')
 
 This analysis is for guidance only and must be verified by a qualified electrician.`;
 
-    navigator.clipboard.writeText(summaryText);
+    copyToClipboard(summaryText);
     toast({
       title: 'Copied to clipboard',
       description: 'Analysis summary ready to paste',

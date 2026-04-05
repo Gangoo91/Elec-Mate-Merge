@@ -1,4 +1,5 @@
 import { useState, useRef } from 'react';
+import { openExternalUrl } from '@/utils/open-external-url';
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -114,7 +115,7 @@ export function ViewTenderSheet({
       Submitted: 'bg-blue-500/20 text-blue-400',
       Won: 'bg-success/20 text-success',
       Lost: 'bg-destructive/20 text-destructive',
-      Withdrawn: 'bg-muted text-muted-foreground',
+      Withdrawn: 'bg-muted text-white/60',
     };
     return <Badge className={styles[status] || ''}>{status}</Badge>;
   };
@@ -204,7 +205,7 @@ export function ViewTenderSheet({
   };
 
   const handleDownloadDocument = (doc: TenderDocument) => {
-    window.open(doc.url, '_blank');
+    openExternalUrl(doc.url);
   };
 
   const handleConvert = () => {
@@ -243,7 +244,7 @@ export function ViewTenderSheet({
                     <SheetTitle className="text-lg font-semibold">
                       {tender.tender_number || tender.title}
                     </SheetTitle>
-                    <p className="text-sm text-muted-foreground">{tender.client}</p>
+                    <p className="text-sm text-white/60">{tender.client}</p>
                   </div>
                 </div>
                 {getStatusBadge(tender.status)}
@@ -262,7 +263,7 @@ export function ViewTenderSheet({
                         <div>
                           <p className="font-semibold text-success">Tender Won!</p>
                           {tender.result_date && (
-                            <p className="text-sm text-muted-foreground">
+                            <p className="text-sm text-white/60">
                               Won on {format(new Date(tender.result_date), 'd MMM yyyy')}
                             </p>
                           )}
@@ -281,7 +282,7 @@ export function ViewTenderSheet({
                         <div>
                           <p className="font-semibold text-destructive">Tender Lost</p>
                           {tender.result_date && (
-                            <p className="text-sm text-muted-foreground">
+                            <p className="text-sm text-white/60">
                               Result received {format(new Date(tender.result_date), 'd MMM yyyy')}
                             </p>
                           )}
@@ -318,7 +319,7 @@ export function ViewTenderSheet({
                               ? 'bg-success text-success-foreground'
                               : isCurrent
                                 ? 'bg-elec-yellow text-elec-yellow-foreground'
-                                : 'bg-muted text-muted-foreground'
+                                : 'bg-muted text-white/60'
                         }`}
                         >
                           {isComplete ? <Check className="h-4 w-4" /> : idx + 1}
@@ -337,7 +338,7 @@ export function ViewTenderSheet({
                 <Card className="bg-elec-yellow/10 border-elec-yellow/20">
                   <CardContent className="p-4">
                     <div className="flex items-center justify-between">
-                      <span className="text-muted-foreground">Tender Value</span>
+                      <span className="text-white/60">Tender Value</span>
                       <span className="text-2xl font-bold text-elec-yellow">
                         £{Number(tender.value).toLocaleString()}
                       </span>
@@ -354,7 +355,7 @@ export function ViewTenderSheet({
 
                     {tender.description && (
                       <div>
-                        <span className="text-sm text-muted-foreground">Description</span>
+                        <span className="text-sm text-white/60">Description</span>
                         <p className="font-medium whitespace-pre-line">{tender.description}</p>
                       </div>
                     )}
@@ -362,15 +363,15 @@ export function ViewTenderSheet({
                     <div className="grid grid-cols-2 gap-4 text-sm">
                       {tender.category && (
                         <div>
-                          <span className="text-muted-foreground">Category</span>
+                          <span className="text-white/60">Category</span>
                           <p className="font-medium">{tender.category}</p>
                         </div>
                       )}
                       {tender.deadline && (
                         <div className="flex items-center gap-2">
-                          <Calendar className="h-4 w-4 text-muted-foreground" />
+                          <Calendar className="h-4 w-4 text-white/60" />
                           <div>
-                            <span className="text-muted-foreground">Deadline</span>
+                            <span className="text-white/60">Deadline</span>
                             <p
                               className={`font-medium ${new Date(tender.deadline) < new Date() ? 'text-destructive' : ''}`}
                             >
@@ -381,9 +382,9 @@ export function ViewTenderSheet({
                       )}
                       {tender.submission_date && (
                         <div className="flex items-center gap-2">
-                          <Send className="h-4 w-4 text-muted-foreground" />
+                          <Send className="h-4 w-4 text-white/60" />
                           <div>
-                            <span className="text-muted-foreground">Submitted</span>
+                            <span className="text-white/60">Submitted</span>
                             <p className="font-medium">
                               {format(new Date(tender.submission_date), 'd MMM yyyy')}
                             </p>
@@ -391,9 +392,9 @@ export function ViewTenderSheet({
                         </div>
                       )}
                       <div className="flex items-center gap-2">
-                        <Clock className="h-4 w-4 text-muted-foreground" />
+                        <Clock className="h-4 w-4 text-white/60" />
                         <div>
-                          <span className="text-muted-foreground">Created</span>
+                          <span className="text-white/60">Created</span>
                           <p className="font-medium">
                             {format(new Date(tender.created_at), 'd MMM yyyy')}
                           </p>
@@ -470,7 +471,7 @@ export function ViewTenderSheet({
                     </div>
 
                     {documents.length === 0 ? (
-                      <div className="text-center py-6 text-muted-foreground">
+                      <div className="text-center py-6 text-white/60">
                         <FileIcon className="h-8 w-8 mx-auto mb-2 opacity-50" />
                         <p className="text-sm">No documents uploaded</p>
                         <p className="text-xs">Upload tender specs, drawings, BOQs</p>
@@ -483,7 +484,7 @@ export function ViewTenderSheet({
                             className="flex items-center justify-between p-2 bg-background rounded-lg"
                           >
                             <div className="flex items-center gap-2 min-w-0 flex-1">
-                              <FileIcon className="h-4 w-4 text-muted-foreground shrink-0" />
+                              <FileIcon className="h-4 w-4 text-white/60 shrink-0" />
                               <span className="text-sm truncate">{doc.name}</span>
                             </div>
                             <div className="flex gap-1 shrink-0">
@@ -516,7 +517,7 @@ export function ViewTenderSheet({
                   <Card className="bg-muted/30">
                     <CardContent className="p-4">
                       <h3 className="font-semibold text-sm mb-2">Notes</h3>
-                      <p className="text-sm text-muted-foreground whitespace-pre-wrap">
+                      <p className="text-sm text-white/60 whitespace-pre-wrap">
                         {tender.notes}
                       </p>
                     </CardContent>
@@ -767,7 +768,7 @@ export function ViewTenderSheet({
             </DialogTitle>
           </DialogHeader>
           <div className="py-4">
-            <p className="text-muted-foreground">
+            <p className="text-white/60">
               {resultAction === 'Won'
                 ? `Congratulations! You're marking "${tender.title}" as won. This will record today as the result date.`
                 : `You're marking "${tender.title}" as lost. This will record today as the result date.`}

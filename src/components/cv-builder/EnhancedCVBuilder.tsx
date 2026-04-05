@@ -9,6 +9,7 @@ import { SmartCVWizard } from './ai/SmartCVWizard';
 import { CVData, defaultCVData } from './types';
 import { generateCVPDF } from './pdfGenerator';
 import { toast } from '@/hooks/use-toast';
+import { storageGetJSONSync, storageSetJSONSync } from '@/utils/storage';
 
 const EnhancedCVBuilder = () => {
   const [cvData, setCVData] = useState<CVData>(defaultCVData);
@@ -18,14 +19,9 @@ const EnhancedCVBuilder = () => {
 
   // Load existing CV data if available
   useEffect(() => {
-    const savedCV = localStorage.getItem('cvData');
-    if (savedCV) {
-      try {
-        const parsedCV = JSON.parse(savedCV);
-        setCVData(parsedCV);
-      } catch (error) {
-        console.error('Error loading saved CV:', error);
-      }
+    const parsedCV = storageGetJSONSync<CVData | null>('cvData', null);
+    if (parsedCV) {
+      setCVData(parsedCV);
     }
   }, []);
 
@@ -39,7 +35,7 @@ const EnhancedCVBuilder = () => {
       return;
     }
 
-    localStorage.setItem('cvData', JSON.stringify(cvData));
+    storageSetJSONSync('cvData', cvData);
     toast({
       title: 'CV Saved',
       description: 'Your CV has been saved locally.',
@@ -47,22 +43,13 @@ const EnhancedCVBuilder = () => {
   };
 
   const handleLoad = () => {
-    const saved = localStorage.getItem('cvData');
-    if (saved) {
-      try {
-        const parsedCV = JSON.parse(saved);
-        setCVData(parsedCV);
-        toast({
-          title: 'CV Loaded',
-          description: 'Your saved CV has been loaded.',
-        });
-      } catch (error) {
-        toast({
-          title: 'Load Failed',
-          description: 'Error loading saved CV data.',
-          variant: 'destructive',
-        });
-      }
+    const parsedCV = storageGetJSONSync<CVData | null>('cvData', null);
+    if (parsedCV) {
+      setCVData(parsedCV);
+      toast({
+        title: 'CV Loaded',
+        description: 'Your saved CV has been loaded.',
+      });
     } else {
       toast({
         title: 'No Saved CV',
@@ -104,8 +91,8 @@ const EnhancedCVBuilder = () => {
     setCVData(generatedCV);
     setShowWizard(false);
 
-    // Save to localStorage
-    localStorage.setItem('cvData', JSON.stringify(generatedCV));
+    // Save to storage
+    storageSetJSONSync('cvData', generatedCV);
 
     toast({
       title: 'CV Generated Successfully',

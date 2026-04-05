@@ -8,35 +8,26 @@ const InstallationSpecialistPage = () => {
   const navigate = useNavigate();
   const fromAgentSelector = location.state?.fromAgentSelector;
 
-  // Extract designer context (Phase 3: sessionStorage support)
   const [designerContext, setDesignerContext] = React.useState<any>(null);
 
   React.useEffect(() => {
     const params = new URLSearchParams(location.search);
-
-    // Check for session ID first (new method)
     const sessionId = params.get('sessionId');
     if (sessionId) {
       const storedContext = sessionStorage.getItem(sessionId);
       if (storedContext) {
         try {
-          const parsed = JSON.parse(storedContext);
-          setDesignerContext(parsed);
-          console.log('Loaded designer context from sessionStorage:', parsed);
-          // Clean up after retrieval
+          setDesignerContext(JSON.parse(storedContext));
           sessionStorage.removeItem(sessionId);
         } catch (err) {
           console.error('Failed to parse sessionStorage context:', err);
         }
       }
     } else {
-      // Fallback to old URL param method (backward compatibility)
       const contextParam = params.get('designContext');
       if (contextParam) {
         try {
-          const decoded = JSON.parse(decodeURIComponent(contextParam));
-          setDesignerContext(decoded);
-          console.log('Loaded designer context from URL:', decoded);
+          setDesignerContext(JSON.parse(decodeURIComponent(contextParam)));
         } catch (err) {
           console.error('Failed to parse URL designContext:', err);
         }
@@ -45,10 +36,10 @@ const InstallationSpecialistPage = () => {
   }, [location]);
 
   return (
-    <div className="-mt-3 sm:-mt-4 md:-mt-6 bg-background">
+    <div className="bg-background min-h-screen">
       {/* Sticky Header */}
-      <div className="sticky top-0 z-50 bg-background/95 backdrop-blur-sm border-b border-white/10 ">
-        <div className="px-4 py-2">
+      <div className="sticky top-0 z-50 bg-background/95 backdrop-blur-xl border-b border-white/[0.06]">
+        <div className="px-4 py-2 max-w-3xl mx-auto">
           <button
             onClick={() =>
               navigate(fromAgentSelector ? '/electrician/agent-selector' : '/electrician')
@@ -63,15 +54,22 @@ const InstallationSpecialistPage = () => {
         </div>
       </div>
 
-      <main className="px-4 py-4 space-y-5">
-        {/* Hero Header */}
-        <div className="flex items-center gap-3">
-          <div className="p-3 rounded-xl bg-gradient-to-br from-blue-500/20 to-blue-500/10 border border-blue-500/20">
-            <Wrench className="h-6 w-6 text-blue-400" />
-          </div>
-          <div>
-            <h1 className="text-xl font-bold text-white">Installation Specialist</h1>
-            <p className="text-sm text-white">Step-by-step installation guidance</p>
+      <main className="px-4 py-5 space-y-5 max-w-3xl mx-auto">
+        {/* Premium Hero */}
+        <div className="relative overflow-hidden glass-premium rounded-2xl">
+          <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-blue-500 via-blue-400 to-cyan-400" />
+          <div className="absolute top-0 right-0 w-40 h-40 bg-blue-500/[0.04] rounded-full blur-3xl -translate-y-1/2 translate-x-1/4 pointer-events-none" />
+
+          <div className="relative z-10 p-5">
+            <div className="flex items-center gap-4">
+              <div className="p-3 rounded-xl bg-blue-500/10 border border-blue-500/20 flex-shrink-0">
+                <Wrench className="h-7 w-7 text-blue-400" />
+              </div>
+              <div>
+                <h1 className="text-xl font-bold text-white tracking-tight">Installation Specialist</h1>
+                <p className="text-sm text-white">Step-by-step method statements & guidance</p>
+              </div>
+            </div>
           </div>
         </div>
 

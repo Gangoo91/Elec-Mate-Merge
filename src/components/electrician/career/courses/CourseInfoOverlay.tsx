@@ -1,4 +1,5 @@
 import React from 'react';
+import { openExternalUrl } from '@/utils/open-external-url';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -40,7 +41,7 @@ const CourseInfoOverlay: React.FC<CourseInfoOverlayProps> = ({
 
   const handleViewDetails = () => {
     if (selectedCourse.external_url) {
-      window.open(selectedCourse.external_url, '_blank');
+      openExternalUrl(selectedCourse.external_url);
     }
   };
 

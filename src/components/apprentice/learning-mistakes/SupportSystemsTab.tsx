@@ -2,6 +2,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Users, Phone, MessageCircle, ExternalLink, Heart } from 'lucide-react';
+import { openExternalUrl } from '@/utils/open-external-url';
 
 const SupportSystemsTab = () => {
   const supportContacts = [
@@ -166,7 +167,7 @@ const SupportSystemsTab = () => {
                     size="sm"
                     variant="outline"
                     className="border-red-500/30 hover:bg-red-500/10 text-red-300 text-xs"
-                    onClick={() => window.open(`https://${resource.website}`, '_blank')}
+                    onClick={() => openExternalUrl(`https://${resource.website}`)}
                   >
                     <ExternalLink className="h-3 w-3 mr-1" />
                     {resource.website}

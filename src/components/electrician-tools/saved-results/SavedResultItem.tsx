@@ -38,13 +38,13 @@ interface SavedResultItemProps {
   onDelete?: (id: string, agentType: AgentType) => Promise<boolean>;
 }
 
-// Per-agent accent colours
+// Per-agent accent colours — matching the redesigned agent pages
 const AGENT_COLOURS: Record<AgentType, string> = {
   'circuit-designer': 'blue-500',
-  'cost-engineer': 'green-500',
-  'health-safety': 'red-500',
-  installer: 'orange-500',
-  maintenance: 'slate-400',
+  'cost-engineer': 'yellow-500',
+  'health-safety': 'orange-500',
+  installer: 'blue-400',
+  maintenance: 'emerald-500',
 };
 
 // Agent styling configuration
@@ -213,17 +213,11 @@ export const SavedResultItem: React.FC<SavedResultItemProps> = ({ result, onClos
       border: 'border-blue-500/20',
       leftBar: 'bg-blue-500',
     },
-    'green-500': {
-      bgLight: 'bg-green-500/10',
-      text: 'text-green-400',
-      border: 'border-green-500/20',
-      leftBar: 'bg-green-500',
-    },
-    'red-500': {
-      bgLight: 'bg-red-500/10',
-      text: 'text-red-400',
-      border: 'border-red-500/20',
-      leftBar: 'bg-red-500',
+    'yellow-500': {
+      bgLight: 'bg-elec-yellow/10',
+      text: 'text-elec-yellow',
+      border: 'border-elec-yellow/20',
+      leftBar: 'bg-elec-yellow',
     },
     'orange-500': {
       bgLight: 'bg-orange-500/10',
@@ -231,11 +225,17 @@ export const SavedResultItem: React.FC<SavedResultItemProps> = ({ result, onClos
       border: 'border-orange-500/20',
       leftBar: 'bg-orange-500',
     },
-    'slate-400': {
-      bgLight: 'bg-slate-400/10',
-      text: 'text-slate-300',
-      border: 'border-slate-400/20',
-      leftBar: 'bg-slate-400',
+    'blue-400': {
+      bgLight: 'bg-blue-400/10',
+      text: 'text-blue-300',
+      border: 'border-blue-400/20',
+      leftBar: 'bg-blue-400',
+    },
+    'emerald-500': {
+      bgLight: 'bg-emerald-500/10',
+      text: 'text-emerald-400',
+      border: 'border-emerald-500/20',
+      leftBar: 'bg-emerald-500',
     },
   };
   const cc = colourMap[agentColour] || colourMap['blue-500'];
@@ -244,21 +244,10 @@ export const SavedResultItem: React.FC<SavedResultItemProps> = ({ result, onClos
     <motion.div
       initial={{ opacity: 0, y: 4 }}
       animate={{ opacity: 1, y: 0 }}
-      className="flex items-center gap-3 p-3 rounded-xl bg-white/[0.15] ring-1 ring-white/[0.15] active:bg-white/[0.15] transition-colors"
+      className="flex items-center gap-3 p-3 rounded-xl bg-white/[0.03] border border-white/[0.08] transition-colors"
     >
       {/* Coloured left accent */}
       <div className={cn('w-1 self-stretch rounded-full -ml-1', cc.leftBar, 'opacity-50')} />
-
-      {/* Agent Icon */}
-      <div
-        className={cn(
-          'flex-shrink-0 w-10 h-10 rounded-lg flex items-center justify-center ring-1',
-          cc.bgLight,
-          cc.border
-        )}
-      >
-        <IconComponent className={cn('h-5 w-5', cc.text)} />
-      </div>
 
       {/* Content */}
       <button onClick={handleViewResults} className="flex-1 min-w-0 text-left touch-manipulation">

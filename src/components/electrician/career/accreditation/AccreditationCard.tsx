@@ -1,3 +1,4 @@
+import { openExternalUrl } from '@/utils/open-external-url';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import {
@@ -191,7 +192,7 @@ const AccreditationCard = ({ accreditation, onViewDetails }: AccreditationCardPr
                 className="h-8 px-2 text-elec-yellow hover:bg-elec-yellow/10 hover:text-elec-yellow"
                 onClick={(e) => {
                   e.stopPropagation();
-                  window.open(accreditation.website, '_blank');
+                  openExternalUrl(accreditation.website);
                 }}
                 aria-label={`Visit ${accreditation.accreditationBody} website`}
               >

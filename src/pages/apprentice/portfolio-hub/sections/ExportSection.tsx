@@ -28,6 +28,7 @@ import { usePortfolioExportData } from '@/hooks/portfolio/usePortfolioExportData
 import { StructuredPortfolioExportService } from '@/services/structuredPortfolioExportService';
 import { useAuth } from '@/contexts/AuthContext';
 import { toast } from 'sonner';
+import { openExternalUrl } from '@/utils/open-external-url';
 import PortfolioExportDialog from '@/components/apprentice/portfolio/PortfolioExportDialog';
 
 /**
@@ -375,7 +376,7 @@ export function ExportSection() {
                         variant="outline"
                         size="icon"
                         className="shrink-0 border-border h-11 w-11 touch-manipulation"
-                        onClick={() => window.open(getShareUrl(share.token), '_blank')}
+                        onClick={() => openExternalUrl(getShareUrl(share.token))}
                         disabled={isExpired || false}
                       >
                         <ExternalLink className="h-4 w-4" />

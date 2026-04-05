@@ -27,6 +27,7 @@ import {
   Video,
   BookMarked,
   ShieldAlert,
+  ChevronRight,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
@@ -242,74 +243,41 @@ interface PrimaryToolCardProps {
   description: string;
   icon: typeof BookOpen;
   link: string;
-  badges?: string[];
   accent?: 'yellow' | 'purple' | 'cyan';
 }
 
 function PrimaryToolCard({
   title,
   description,
-  icon: Icon,
+  icon: _Icon,
   link,
-  badges,
-  accent = 'yellow',
 }: PrimaryToolCardProps) {
-  const iconBg =
-    accent === 'purple'
-      ? 'bg-purple-500/10'
-      : accent === 'cyan'
-        ? 'bg-cyan-500/10'
-        : 'bg-elec-yellow/10';
-  const iconColor =
-    accent === 'purple'
-      ? 'text-purple-400'
-      : accent === 'cyan'
-        ? 'text-cyan-400'
-        : 'text-elec-yellow';
-  const activeBg =
-    accent === 'purple'
-      ? 'group-active:bg-purple-500/20'
-      : accent === 'cyan'
-        ? 'group-active:bg-cyan-500/20'
-        : 'group-active:bg-elec-yellow/20';
-
   return (
-    <Link to={link} className="block group touch-manipulation active:opacity-90">
+    <Link to={link} className="block group touch-manipulation">
       <motion.div
-        whileTap={{ scale: 0.96 }}
+        whileTap={{ scale: 0.98 }}
         transition={{ type: 'spring', stiffness: 400, damping: 25 }}
-        className="glass-premium rounded-xl h-full min-h-[110px] active:bg-white/[0.02]"
+        className="relative overflow-hidden card-surface-interactive rounded-xl h-full min-h-[130px] active:scale-[0.98] transition-all duration-200"
       >
-        <div className="p-4 flex flex-col items-center justify-center text-center h-full">
-          <div
-            className={cn('p-2.5 rounded-xl mb-2.5 transition-colors', iconBg, activeBg)}
-          >
-            <Icon className={cn('h-6 w-6', iconColor)} />
-          </div>
-          <h3 className="text-sm font-semibold text-white mb-0.5 group-active:text-elec-yellow transition-colors">
+        {/* Top accent line */}
+        <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-elec-yellow via-amber-400 to-orange-400 opacity-30 group-hover:opacity-80 transition-opacity duration-200" />
+
+        <div className="relative z-10 flex flex-col h-full p-3.5 sm:p-4">
+          <h3 className="text-[13px] sm:text-sm font-semibold text-white leading-tight group-hover:text-elec-yellow transition-colors">
             {title}
           </h3>
-          <p className="text-xs text-white leading-relaxed line-clamp-2">{description}</p>
-          {badges && (
-            <div className="flex flex-wrap justify-center gap-1.5 mt-2">
-              {badges.map((badge, i) => (
-                <Badge
-                  key={i}
-                  variant="outline"
-                  className={cn(
-                    'text-[10px]',
-                    accent === 'purple'
-                      ? 'bg-purple-500/10 border-purple-500/30 text-purple-400'
-                      : accent === 'cyan'
-                        ? 'bg-cyan-500/10 border-cyan-500/30 text-cyan-400'
-                        : 'bg-elec-yellow/10 border-elec-yellow/30 text-elec-yellow'
-                  )}
-                >
-                  {badge}
-                </Badge>
-              ))}
+          <p className="mt-0.5 text-[11px] sm:text-[12px] text-white leading-tight line-clamp-2">
+            {description}
+          </p>
+
+          <div className="flex-grow" />
+
+          <div className="mt-2 flex items-center justify-between">
+            <span className="text-[11px] sm:text-xs font-medium text-elec-yellow">Open</span>
+            <div className="w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-white/[0.05] border border-elec-yellow/20 flex items-center justify-center group-hover:bg-elec-yellow group-hover:border-elec-yellow transition-all duration-200">
+              <ChevronRight className="w-3.5 h-3.5 text-white group-hover:text-black group-hover:translate-x-0.5 transition-all" />
             </div>
-          )}
+          </div>
         </div>
       </motion.div>
     </Link>
@@ -326,22 +294,33 @@ interface CompactToolCardProps {
   link: string;
 }
 
-function CompactToolCard({ title, description, icon: Icon, link }: CompactToolCardProps) {
+function CompactToolCard({ title, description, icon: _Icon, link }: CompactToolCardProps) {
   return (
-    <Link to={link} className="block group touch-manipulation active:opacity-90">
+    <Link to={link} className="block group touch-manipulation">
       <motion.div
-        whileTap={{ scale: 0.96 }}
+        whileTap={{ scale: 0.98 }}
         transition={{ type: 'spring', stiffness: 400, damping: 25 }}
-        className="glass-premium rounded-xl h-full min-h-[110px] active:bg-white/[0.02]"
+        className="relative overflow-hidden card-surface-interactive rounded-xl h-full min-h-[110px] active:scale-[0.98] transition-all duration-200"
       >
-        <div className="p-4 flex flex-col items-center justify-center text-center h-full">
-          <div className="p-2 rounded-lg bg-elec-yellow/10 mb-2 group-active:bg-elec-yellow/20 transition-colors">
-            <Icon className="h-5 w-5 text-elec-yellow" />
-          </div>
-          <h3 className="text-sm font-semibold text-white mb-0.5 group-active:text-elec-yellow transition-colors">
+        {/* Top accent line */}
+        <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-elec-yellow via-amber-400 to-orange-400 opacity-30 group-hover:opacity-80 transition-opacity duration-200" />
+
+        <div className="relative z-10 flex flex-col h-full p-3.5 sm:p-4">
+          <h3 className="text-[13px] sm:text-sm font-semibold text-white leading-tight group-hover:text-elec-yellow transition-colors">
             {title}
           </h3>
-          <p className="text-xs text-white line-clamp-2 hidden sm:block">{description}</p>
+          <p className="mt-0.5 text-[11px] sm:text-[12px] text-white leading-tight line-clamp-1">
+            {description}
+          </p>
+
+          <div className="flex-grow" />
+
+          <div className="mt-2 flex items-center justify-between">
+            <span className="text-[11px] sm:text-xs font-medium text-elec-yellow">Open</span>
+            <div className="w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-white/[0.05] border border-elec-yellow/20 flex items-center justify-center group-hover:bg-elec-yellow group-hover:border-elec-yellow transition-all duration-200">
+              <ChevronRight className="w-3.5 h-3.5 text-white group-hover:text-black group-hover:translate-x-0.5 transition-all" />
+            </div>
+          </div>
         </div>
       </motion.div>
     </Link>
@@ -465,14 +444,12 @@ const ApprenticeHub = () => {
               description="Level 2 & 3 courses, practice questions, and exam prep"
               icon={BookOpen}
               link="/study-centre/apprentice"
-              badges={['2,000+ Questions', 'AM2 Prep']}
             />
             <PrimaryToolCard
               title="Inspection & Testing"
               description="Master I&T with comprehensive guides, quizzes, and BS 7671 regulations"
               icon={ClipboardCheck}
               link="/apprentice/inspection-testing-hub"
-              badges={['8 Topics', 'Exam Ready']}
             />
           </div>
         </motion.section>
@@ -485,7 +462,6 @@ const ApprenticeHub = () => {
             description="Track evidence, assessment criteria, OJT hours, and build your apprenticeship portfolio"
             icon={FileText}
             link="/apprentice/hub"
-            badges={['Evidence', 'AC Mapping', 'OJT Hours']}
           />
         </motion.section>
 

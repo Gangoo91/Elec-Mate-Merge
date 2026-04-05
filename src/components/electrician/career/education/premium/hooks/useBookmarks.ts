@@ -5,6 +5,7 @@
 
 import { useState, useEffect, useCallback } from 'react';
 import type { LiveEducationData } from '@/hooks/useLiveEducationData';
+import { storageGetJSONSync, storageSetJSONSync, storageRemoveSync } from '@/utils/storage';
 
 const STORAGE_KEY = 'elecmate_education_bookmarks';
 
@@ -19,30 +20,20 @@ export const useBookmarks = () => {
 
   // Load bookmarks from localStorage on mount
   useEffect(() => {
-    try {
-      const stored = localStorage.getItem(STORAGE_KEY);
-      if (stored) {
-        const parsed: BookmarkData[] = JSON.parse(stored);
-        setBookmarkIds(parsed.map((b) => b.id));
-      }
-    } catch (error) {
-      console.error('Failed to load bookmarks:', error);
-    } finally {
-      setIsLoaded(true);
+    const parsed = storageGetJSONSync<BookmarkData[]>(STORAGE_KEY, []);
+    if (parsed.length > 0) {
+      setBookmarkIds(parsed.map((b) => b.id));
     }
+    setIsLoaded(true);
   }, []);
 
   // Save to localStorage whenever bookmarks change
   const saveToStorage = useCallback((ids: string[]) => {
-    try {
-      const data: BookmarkData[] = ids.map((id) => ({
-        id,
-        savedAt: new Date().toISOString(),
-      }));
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
-    } catch (error) {
-      console.error('Failed to save bookmarks:', error);
-    }
+    const data: BookmarkData[] = ids.map((id) => ({
+      id,
+      savedAt: new Date().toISOString(),
+    }));
+    storageSetJSONSync(STORAGE_KEY, data);
   }, []);
 
   // Check if a programme is bookmarked
@@ -101,7 +92,7 @@ export const useBookmarks = () => {
   // Clear all bookmarks
   const clearAllBookmarks = useCallback(() => {
     setBookmarkIds([]);
-    localStorage.removeItem(STORAGE_KEY);
+    storageRemoveSync(STORAGE_KEY);
   }, []);
 
   // Get bookmarked programmes from a list

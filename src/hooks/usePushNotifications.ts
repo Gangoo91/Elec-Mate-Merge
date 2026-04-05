@@ -2,6 +2,7 @@ import { useState, useEffect, useCallback } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
 import { toast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
+import { storageGetJSONSync, storageSetJSONSync } from '@/utils/storage';
 import {
   isPushSupported,
   getPermissionStatus,
@@ -316,12 +317,8 @@ const PREFERENCES_KEY = 'elecmate_notification_preferences';
 export function useNotificationPreferences() {
   const { user } = useAuth();
   const [preferences, setPreferences] = useState<NotificationPreferences>(() => {
-    try {
-      const stored = localStorage.getItem(PREFERENCES_KEY);
-      return stored ? { ...DEFAULT_PREFERENCES, ...JSON.parse(stored) } : DEFAULT_PREFERENCES;
-    } catch {
-      return DEFAULT_PREFERENCES;
-    }
+    const stored = storageGetJSONSync<Partial<NotificationPreferences> | null>(PREFERENCES_KEY, null);
+    return stored ? { ...DEFAULT_PREFERENCES, ...stored } : DEFAULT_PREFERENCES;
   });
   const [isLoading, setIsLoading] = useState(false);
 
@@ -348,7 +345,7 @@ export function useNotificationPreferences() {
           }
           const merged = { ...DEFAULT_PREFERENCES, ...fromDb };
           setPreferences(merged);
-          localStorage.setItem(PREFERENCES_KEY, JSON.stringify(merged));
+          storageSetJSONSync(PREFERENCES_KEY, merged);
         }
       } catch (err) {
         console.error('[NotifPrefs] Failed to load from Supabase:', err);
@@ -364,7 +361,7 @@ export function useNotificationPreferences() {
     async (category: NotificationCategory, enabled: boolean) => {
       setPreferences((prev) => {
         const updated = { ...prev, [category]: enabled };
-        localStorage.setItem(PREFERENCES_KEY, JSON.stringify(updated));
+        storageSetJSONSync(PREFERENCES_KEY, updated);
         return updated;
       });
 
@@ -389,7 +386,7 @@ export function useNotificationPreferences() {
 
   const resetPreferences = useCallback(async () => {
     setPreferences(DEFAULT_PREFERENCES);
-    localStorage.setItem(PREFERENCES_KEY, JSON.stringify(DEFAULT_PREFERENCES));
+    storageSetJSONSync(PREFERENCES_KEY, DEFAULT_PREFERENCES);
 
     if (!user?.id) return;
 
@@ -439,12 +436,8 @@ const DEFAULT_QUIET_HOURS: QuietHoursPrefs = {
 export function useQuietHours() {
   const { user } = useAuth();
   const [prefs, setPrefs] = useState<QuietHoursPrefs>(() => {
-    try {
-      const stored = localStorage.getItem(QUIET_HOURS_KEY);
-      return stored ? { ...DEFAULT_QUIET_HOURS, ...JSON.parse(stored) } : DEFAULT_QUIET_HOURS;
-    } catch {
-      return DEFAULT_QUIET_HOURS;
-    }
+    const stored = storageGetJSONSync<Partial<QuietHoursPrefs> | null>(QUIET_HOURS_KEY, null);
+    return stored ? { ...DEFAULT_QUIET_HOURS, ...stored } : DEFAULT_QUIET_HOURS;
   });
   const [isLoading, setIsLoading] = useState(false);
 
@@ -464,7 +457,7 @@ export function useQuietHours() {
         if (data) {
           setPrefs((prev) => {
             const updated = { ...prev, enabled: data.enabled };
-            localStorage.setItem(QUIET_HOURS_KEY, JSON.stringify(updated));
+            storageSetJSONSync(QUIET_HOURS_KEY, updated);
             return updated;
           });
         }
@@ -481,7 +474,7 @@ export function useQuietHours() {
     async (updates: Partial<QuietHoursPrefs>) => {
       setPrefs((prev) => {
         const updated = { ...prev, ...updates };
-        localStorage.setItem(QUIET_HOURS_KEY, JSON.stringify(updated));
+        storageSetJSONSync(QUIET_HOURS_KEY, updated);
         return updated;
       });
 

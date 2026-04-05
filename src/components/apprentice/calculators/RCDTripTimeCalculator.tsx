@@ -1,3 +1,4 @@
+import { copyToClipboard } from '@/utils/clipboard';
 import { useState, useCallback } from 'react';
 import { Copy, Check, CheckCircle, XCircle, AlertTriangle, ChevronDown } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
@@ -141,10 +142,13 @@ const RCDTripTimeCalculator = () => {
         text += `\nSafety Margin: ${result.safetyMargin.toFixed(0)}%`;
       }
     }
-    navigator.clipboard.writeText(text);
-    setCopied(true);
-    toast({ title: 'Copied to clipboard' });
-    setTimeout(() => setCopied(false), 2000);
+    copyToClipboard(text).then((ok) => {
+      if (ok) {
+        setCopied(true);
+        toast({ title: 'Copied to clipboard' });
+        setTimeout(() => setCopied(false), 2000);
+      }
+    });
   };
 
   const canCalculate = rcdRating && testCurrent;

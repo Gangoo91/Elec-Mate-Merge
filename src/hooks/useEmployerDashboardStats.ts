@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import { supabase } from '@/integrations/supabase/client';
+import { useAuth } from '@/contexts/AuthContext';
 import { addDays, isAfter, isBefore } from 'date-fns';
 
 export interface EmployerDashboardStats {
@@ -61,6 +62,7 @@ const DEFAULT_STATS: EmployerDashboardStats = {
 };
 
 export function useEmployerDashboardStats(): UseEmployerDashboardStatsReturn {
+  const { user } = useAuth();
   const [stats, setStats] = useState<EmployerDashboardStats>(DEFAULT_STATS);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -105,10 +107,10 @@ export function useEmployerDashboardStats(): UseEmployerDashboardStatsReturn {
           .select('id, name, expiry_date, status, employee_id')
           .not('expiry_date', 'is', null),
 
-        // Available talent in talent pool
+        // Available talent in talent pool (join to get employer_id for exclusion)
         supabase
           .from('employer_elec_id_profiles')
-          .select('id')
+          .select('id, employer_employees!inner ( employer_id )')
           .eq('opt_out', false)
           .eq('available_for_hire', true)
           .in('profile_visibility', ['public', 'employers_only']),
@@ -141,8 +143,11 @@ export function useEmployerDashboardStats(): UseEmployerDashboardStatsReturn {
         return isBefore(expiryDate, sixtyDaysFromNow);
       });
 
-      // Process talent pool
-      const availableTalent = talentPoolResult.data?.length || 0;
+      // Process talent pool — exclude the current employer's own employees
+      const talentPoolData = talentPoolResult.data || [];
+      const availableTalent = user
+        ? talentPoolData.filter((p: any) => p.employer_employees?.employer_id !== user.id).length
+        : talentPoolData.length;
 
       // Process expenses
       const pendingExpenses = expensesResult.data?.length || 0;
@@ -232,7 +237,7 @@ export function useEmployerDashboardStats(): UseEmployerDashboardStatsReturn {
       clearTimeout(timeoutId);
       setIsLoading(false);
     }
-  }, []);
+  }, [user]);
 
   // Initial fetch
   useEffect(() => {

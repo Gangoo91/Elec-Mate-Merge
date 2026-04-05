@@ -14,6 +14,8 @@ import {
   Building2,
   AlertTriangle,
   CheckCircle2,
+  Smartphone,
+  Timer,
 } from 'lucide-react';
 import { format, subDays, startOfDay } from 'date-fns';
 import { useState, useCallback } from 'react';
@@ -107,9 +109,34 @@ export default function AdminRevenue() {
     },
   });
 
+  // Fetch RevenueCat stats
+  const { data: rcStats } = useQuery<{
+    subscribersBySource: Record<string, number>;
+    tiersBySource: Record<string, Record<string, number>>;
+    revenuecat: { mrr: number; revenue: number; activeSubscriptions: number; activeTrials: number };
+  }>({
+    queryKey: ['admin-revenuecat-stats'],
+    refetchInterval: 60000,
+    staleTime: 30000,
+    queryFn: async () => {
+      const {
+        data: { session },
+      } = await supabase.auth.getSession();
+      if (!session) throw new Error('Not authenticated');
+      const { data, error } = await supabase.functions.invoke('admin-revenuecat-stats', {
+        headers: { Authorization: `Bearer ${session.access_token}` },
+      });
+      if (error) throw error;
+      return data;
+    },
+  });
+
   const handleRefresh = useCallback(async () => {
     setIsRefreshing(true);
-    await queryClient.invalidateQueries({ queryKey: ['admin-stripe-live-stats'] });
+    await Promise.all([
+      queryClient.invalidateQueries({ queryKey: ['admin-stripe-live-stats'] }),
+      queryClient.invalidateQueries({ queryKey: ['admin-revenuecat-stats'] }),
+    ]);
     setTimeout(() => setIsRefreshing(false), 500);
   }, [queryClient]);
 
@@ -196,9 +223,15 @@ export default function AdminRevenue() {
     );
   }
 
-  const mrr = stripeStats?.stripe.mrr || 0;
+  const stripeMrr = stripeStats?.stripe.mrr || 0;
+  const rcMrr = rcStats?.revenuecat?.mrr || 0;
+  const mrr = stripeMrr + rcMrr;
   const arr = mrr * 12;
-  const totalSubs = stripeStats?.stripe.activeSubscriptions || 0;
+  // Count only genuinely active trials (exclude cancelled)
+  const rcActiveTrials = ((rcStats as any)?.trialUsers || []).filter((t: any) => !t.is_cancelled).length;
+  const rcCancelledTrials = ((rcStats as any)?.trialUsers || []).filter((t: any) => t.is_cancelled).length;
+  const rcActiveSubs = rcStats?.revenuecat?.activeSubscriptions || 0;
+  const totalSubs = (stripeStats?.stripe.activeSubscriptions || 0) + (rcStats?.subscribersBySource?.app_store || 0) + (rcStats?.subscribersBySource?.play_store || 0);
   const arpu = totalSubs > 0 ? mrr / totalSubs : 0;
   const churned = stripeStats?.stripe.canceledLast30Days || 0;
   const churnRate = totalSubs > 0 ? (churned / (totalSubs + churned)) * 100 : 0;
@@ -256,7 +289,7 @@ export default function AdminRevenue() {
               </div>
               <h3 className="text-lg font-semibold text-white mb-1">No active subscriptions</h3>
               <p className="text-sm text-white">
-                Subscription data from Stripe will appear here once users subscribe.
+                Subscription data from Stripe and RevenueCat will appear here once users subscribe.
               </p>
             </div>
           </motion.div>
@@ -282,7 +315,7 @@ export default function AdminRevenue() {
                   <p className="text-sm font-medium text-white">Monthly Recurring Revenue</p>
                   <p className="text-xs text-white">
                     {stripeStats
-                      ? `All Sources \u2022 ${new Date(stripeStats.generatedAt).toLocaleTimeString()}`
+                      ? `Stripe + RevenueCat \u2022 ${new Date(stripeStats.generatedAt).toLocaleTimeString()}`
                       : 'Loading live data...'}
                   </p>
                 </div>
@@ -320,10 +353,14 @@ export default function AdminRevenue() {
             />
 
             {/* Sub-stat boxes */}
-            <div className="grid grid-cols-3 gap-2 mt-4">
+            <div className="grid grid-cols-4 gap-2 mt-4">
               <div className="bg-white/[0.04] rounded-xl p-3 text-center">
                 <AnimatedCounter value={totalSubs} className="text-lg font-bold text-white" />
-                <p className="text-xs text-white uppercase mt-0.5">Active Subs</p>
+                <p className="text-xs text-white uppercase mt-0.5">Active</p>
+              </div>
+              <div className="bg-white/[0.04] rounded-xl p-3 text-center">
+                <p className="text-lg font-bold text-orange-400">{rcActiveTrials + (stripeStats?.stripe.trialingSubscriptions || 0)}</p>
+                <p className="text-xs text-white uppercase mt-0.5">Trials</p>
               </div>
               <div className="bg-white/[0.04] rounded-xl p-3 text-center">
                 <AnimatedCounter
@@ -440,47 +477,119 @@ export default function AdminRevenue() {
             Mobile App (RevenueCat)
           </p>
           <div className="space-y-2">
-            {[
-              {
-                name: 'Apprentice',
-                price: '£6.99/mo',
-                icon: GraduationCap,
-                text: 'text-cyan-400',
-                bg: 'bg-cyan-500/15',
-                bar: 'bg-cyan-500',
-              },
-              {
-                name: 'Electrician',
-                price: '£14.99/mo',
-                icon: Zap,
-                text: 'text-blue-400',
-                bg: 'bg-blue-500/15',
-                bar: 'bg-blue-500',
-              },
-            ].map((t) => (
-              <div
-                key={t.name}
-                className="glass-premium rounded-xl overflow-hidden flex items-center gap-3 p-3.5"
-              >
-                <div className={cn('w-1 self-stretch rounded-full opacity-60', t.bar)} />
-                <div
-                  className={cn(
-                    'w-10 h-10 rounded-xl flex items-center justify-center shrink-0',
-                    t.bg
-                  )}
-                >
-                  <t.icon className={cn('h-5 w-5', t.text)} />
+            {(() => {
+              const appStoreTiers = rcStats?.tiersBySource?.app_store || {};
+              const tierConfigs: Array<{
+                key: string;
+                name: string;
+                price: string;
+                icon: typeof GraduationCap;
+                text: string;
+                bg: string;
+                bar: string;
+              }> = [
+                {
+                  key: 'apprentice',
+                  name: 'Apprentice',
+                  price: '£6.99/mo',
+                  icon: GraduationCap,
+                  text: 'text-cyan-400',
+                  bg: 'bg-cyan-500/15',
+                  bar: 'bg-cyan-500',
+                },
+                {
+                  key: 'electrician',
+                  name: 'Electrician',
+                  price: '£14.99/mo',
+                  icon: Zap,
+                  text: 'text-blue-400',
+                  bg: 'bg-blue-500/15',
+                  bar: 'bg-blue-500',
+                },
+                {
+                  key: 'business_ai',
+                  name: 'Mate',
+                  price: '£29.99/mo',
+                  icon: Crown,
+                  text: 'text-yellow-400',
+                  bg: 'bg-yellow-500/15',
+                  bar: 'bg-yellow-500',
+                },
+                {
+                  key: 'employer',
+                  name: 'Employer',
+                  price: '£49.99/mo',
+                  icon: Building2,
+                  text: 'text-purple-400',
+                  bg: 'bg-purple-500/15',
+                  bar: 'bg-purple-500',
+                },
+              ];
+
+              return tierConfigs.map((t) => {
+                const count = (appStoreTiers[t.key] || 0) + (appStoreTiers[`${t.key}_yearly`] || 0);
+                return (
+                  <div
+                    key={t.key}
+                    className="glass-premium rounded-xl overflow-hidden flex items-center gap-3 p-3.5"
+                  >
+                    <div className={cn('w-1 self-stretch rounded-full opacity-60', t.bar)} />
+                    <div
+                      className={cn(
+                        'w-10 h-10 rounded-xl flex items-center justify-center shrink-0',
+                        t.bg
+                      )}
+                    >
+                      <t.icon className={cn('h-5 w-5', t.text)} />
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <p className="text-[14px] font-semibold text-white">{t.name}</p>
+                      <p className="text-[11px] text-white">
+                        {count > 0 ? `${count} subscriber${count !== 1 ? 's' : ''}` : 'No subscribers yet'}
+                      </p>
+                    </div>
+                    <div className="text-right shrink-0">
+                      <p className={cn('text-2xl font-bold', t.text)}>{count}</p>
+                      <p className={cn('text-[10px] font-medium', t.text)}>{t.price}</p>
+                    </div>
+                  </div>
+                );
+              });
+            })()}
+            {/* Trials summary */}
+            {rcActiveTrials > 0 && (
+              <div className="glass-premium rounded-xl overflow-hidden flex items-center gap-3 p-3.5">
+                <div className="w-1 self-stretch rounded-full opacity-60 bg-orange-500" />
+                <div className="w-10 h-10 rounded-xl flex items-center justify-center shrink-0 bg-orange-500/15">
+                  <Timer className="h-5 w-5 text-orange-400" />
                 </div>
                 <div className="flex-1 min-w-0">
-                  <p className="text-[14px] font-semibold text-white">{t.name}</p>
-                  <p className="text-[11px] text-white">£0.00/mo</p>
+                  <p className="text-[14px] font-semibold text-white">Active Trials</p>
+                  <p className="text-[11px] text-white">Free trial period</p>
                 </div>
                 <div className="text-right shrink-0">
-                  <p className={cn('text-2xl font-bold', t.text)}>0</p>
-                  <p className={cn('text-[10px] font-medium', t.text)}>{t.price}</p>
+                  <p className="text-2xl font-bold text-orange-400">{rcActiveTrials}</p>
+                  <p className="text-[10px] font-medium text-orange-400">trialing</p>
                 </div>
               </div>
-            ))}
+            )}
+            {/* RC MRR summary */}
+            {rcMrr > 0 && (
+              <div className="glass-premium rounded-xl overflow-hidden flex items-center gap-3 p-3.5 ring-1 ring-emerald-500/20">
+                <div className="w-1 self-stretch rounded-full opacity-60 bg-emerald-500" />
+                <div className="w-10 h-10 rounded-xl flex items-center justify-center shrink-0 bg-emerald-500/15">
+                  <Smartphone className="h-5 w-5 text-emerald-400" />
+                </div>
+                <div className="flex-1 min-w-0">
+                  <p className="text-[14px] font-semibold text-emerald-400">Mobile MRR</p>
+                  <p className="text-[11px] text-white">RevenueCat · App Store + Play Store</p>
+                </div>
+                <div className="text-right shrink-0">
+                  <p className="text-2xl font-bold text-emerald-400">£{rcMrr.toFixed(2)}</p>
+                  <p className="text-[10px] font-medium text-white">/month</p>
+                </div>
+              </div>
+            )}
           </div>
         </motion.section>
 
@@ -656,35 +765,40 @@ export default function AdminRevenue() {
                       </div>
                     );
                   })}
-              {/* RevenueCat Mobile App prices */}
-              {[
-                { price: '£6.99/month', label: 'Apprentice' },
-                { price: '£14.99/month', label: 'Electrician' },
-                { price: '£69.99/year', label: 'Apprentice Yearly' },
-                { price: '£149.99/year', label: 'Electrician Yearly' },
-              ].map((rc) => (
-                <div key={rc.price} className="flex items-center gap-3">
-                  <div className="w-1 h-6 rounded-full bg-green-500 opacity-60" />
-                  <div className="flex-1">
-                    <div className="flex justify-between text-sm mb-1">
-                      <div className="flex items-center gap-2">
-                        <span className="text-white">{rc.price}</span>
-                        <Badge className="bg-green-500/15 text-green-400 border-0 text-[9px]">
-                          RevenueCat
-                        </Badge>
-                        <span className="text-[10px] text-white">{rc.label}</span>
+              {/* RevenueCat Mobile App tier breakdown */}
+              {(() => {
+                const appStoreTiers = rcStats?.tiersBySource?.app_store || {};
+                const entries = Object.entries(appStoreTiers);
+                if (entries.length === 0) return null;
+                const totalRC = entries.reduce((sum, [, c]) => sum + c, 0);
+                return entries
+                  .sort(([, a], [, b]) => b - a)
+                  .map(([tier, count]) => {
+                    const percentage = totalRC > 0 ? (count / totalRC) * 100 : 0;
+                    return (
+                      <div key={`rc-${tier}`} className="flex items-center gap-3">
+                        <div className="w-1 h-6 rounded-full bg-blue-500 opacity-60" />
+                        <div className="flex-1">
+                          <div className="flex justify-between text-sm mb-1">
+                            <div className="flex items-center gap-2">
+                              <span className="text-white capitalize">{tier.replace('_', ' ')}</span>
+                              <Badge className="bg-blue-500/15 text-blue-400 border-0 text-[9px]">
+                                App Store
+                              </Badge>
+                            </div>
+                            <span className="font-medium text-white">{count}</span>
+                          </div>
+                          <div className="h-1.5 bg-white/[0.06] rounded-full overflow-hidden">
+                            <div
+                              className="h-full bg-gradient-to-r from-blue-500 to-blue-400 rounded-full transition-all"
+                              style={{ width: `${percentage}%` }}
+                            />
+                          </div>
+                        </div>
                       </div>
-                      <span className="font-medium text-white">0</span>
-                    </div>
-                    <div className="h-1.5 bg-white/[0.06] rounded-full overflow-hidden">
-                      <div
-                        className="h-full bg-gradient-to-r from-green-500 to-green-400 rounded-full"
-                        style={{ width: '0%' }}
-                      />
-                    </div>
-                  </div>
-                </div>
-              ))}
+                    );
+                  });
+              })()}
             </div>
           </div>
         </motion.div>

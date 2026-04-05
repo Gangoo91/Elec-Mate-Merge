@@ -25,6 +25,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { copyToClipboard } from '@/utils/clipboard';
 
 interface AIFeedbackGeneratorProps {
   studentName?: string;
@@ -329,8 +330,8 @@ export function AIFeedbackGenerator({
     }, 1500);
   };
 
-  const copyToClipboard = async () => {
-    await navigator.clipboard.writeText(generatedFeedback);
+  const handleCopyToClipboard = async () => {
+    await copyToClipboard(generatedFeedback);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
@@ -478,7 +479,7 @@ export function AIFeedbackGenerator({
                 <Button
                   variant="outline"
                   size="sm"
-                  onClick={copyToClipboard}
+                  onClick={handleCopyToClipboard}
                   className="gap-1"
                 >
                   {copied ? (

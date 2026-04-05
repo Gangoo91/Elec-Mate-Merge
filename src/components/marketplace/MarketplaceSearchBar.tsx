@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { Input } from '@/components/ui/input';
 import { useInstantSearch, useRecentSearches, InstantSearchResult } from '@/hooks/useInstantSearch';
 import { cn } from '@/lib/utils';
+import { openExternalUrl } from '@/utils/open-external-url';
 
 interface MarketplaceSearchBarProps {
   initialQuery?: string;
@@ -58,7 +59,7 @@ export function MarketplaceSearchBar({
   const handleProductClick = (product: InstantSearchResult) => {
     addSearch(product.name);
     setIsOpen(false);
-    window.open(product.product_url, '_blank');
+    openExternalUrl(product.product_url);
   };
 
   // Handle keyboard navigation

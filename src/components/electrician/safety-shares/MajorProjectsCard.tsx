@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { openExternalUrl } from '@/utils/open-external-url';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -345,7 +346,7 @@ const MajorProjectsCard = () => {
       trackProjectView(project.id);
     }
 
-    window.open(projectUrl, '_blank', 'noopener,noreferrer');
+    openExternalUrl(projectUrl);
   };
 
   const getProjectUrl = (project: MajorProject): string => {

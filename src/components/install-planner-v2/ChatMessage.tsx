@@ -1,4 +1,5 @@
 import { MobileGestureHandler } from '@/components/ui/mobile-gesture-handler';
+import { copyToClipboard } from '@/utils/clipboard';
 import { toast } from 'sonner';
 import { Copy, ThumbsUp } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -25,16 +26,16 @@ export const ChatMessage = ({ message, onCopy }: ChatMessageProps) => {
   const isUser = message.role === 'user';
   const agent = message.agentName ? AGENT_INFO[message.agentName] : null;
 
-  const handleLongPress = () => {
-    if (navigator.clipboard && message.content) {
-      navigator.clipboard.writeText(message.content);
+  const handleLongPress = async () => {
+    if (message.content) {
+      await copyToClipboard(message.content);
       toast.success('Copied to clipboard');
     }
   };
 
-  const handleCopy = () => {
-    if (navigator.clipboard && message.content) {
-      navigator.clipboard.writeText(message.content);
+  const handleCopy = async () => {
+    if (message.content) {
+      await copyToClipboard(message.content);
       toast.success('Copied to clipboard');
       onCopy?.();
     }

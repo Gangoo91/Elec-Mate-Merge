@@ -15,7 +15,7 @@ import { Label } from '@/components/ui/label';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Badge } from '@/components/ui/badge';
 import { cn } from '@/lib/utils';
-import { useHaptics } from '@/hooks/useHaptics';
+import { useHaptic } from '@/hooks/useHaptic';
 import SignatureInput from '@/components/signature/SignatureInput';
 
 export interface SignatureData {
@@ -49,7 +49,7 @@ export const QuickSignatureFlow: React.FC<QuickSignatureFlowProps> = ({
   inspectorName,
   companyName,
 }) => {
-  const haptics = useHaptics();
+  const haptic = useHaptic();
 
   // Current step
   const [currentStep, setCurrentStep] = useState<Step>('inspected');
@@ -108,7 +108,7 @@ export const QuickSignatureFlow: React.FC<QuickSignatureFlowProps> = ({
   // Handle next step
   const handleNext = useCallback(() => {
     if (currentStep === 'inspected' && isInspectedValid) {
-      haptics.tap();
+      haptic.light();
       setCurrentStep('authorised');
 
       // Auto-fill authorised if same as inspected is checked
@@ -119,18 +119,18 @@ export const QuickSignatureFlow: React.FC<QuickSignatureFlowProps> = ({
         });
       }
     }
-  }, [currentStep, isInspectedValid, sameAsInspected, inspectedBy, haptics]);
+  }, [currentStep, isInspectedValid, sameAsInspected, inspectedBy, haptic]);
 
   // Handle back
   const handleBack = useCallback(() => {
-    haptics.tap();
+    haptic.light();
     setCurrentStep('inspected');
-  }, [haptics]);
+  }, [haptic]);
 
   // Handle complete
   const handleComplete = useCallback(() => {
     if (isInspectedValid && isAuthorisedValid) {
-      haptics.success();
+      haptic.success();
       onComplete(inspectedBy, authorisedBy);
       onOpenChange(false);
     }
@@ -141,7 +141,7 @@ export const QuickSignatureFlow: React.FC<QuickSignatureFlowProps> = ({
     authorisedBy,
     onComplete,
     onOpenChange,
-    haptics,
+    haptic,
   ]);
 
   // Handle same as inspected
@@ -149,37 +149,37 @@ export const QuickSignatureFlow: React.FC<QuickSignatureFlowProps> = ({
     (checked: boolean) => {
       setSameAsInspected(checked);
       if (checked) {
-        haptics.tap();
+        haptic.light();
         setAuthorisedBy({
           ...inspectedBy,
           date: new Date().toISOString().split('T')[0],
         });
       }
     },
-    [inspectedBy, haptics]
+    [inspectedBy, haptic]
   );
 
   // Use saved signature
   const handleUseSavedSignature = useCallback(() => {
     if (savedSignature) {
-      haptics.tap();
+      haptic.light();
       if (currentStep === 'inspected') {
         setInspectedBy((prev) => ({ ...prev, signature: savedSignature }));
       } else {
         setAuthorisedBy((prev) => ({ ...prev, signature: savedSignature }));
       }
     }
-  }, [savedSignature, currentStep, haptics]);
+  }, [savedSignature, currentStep, haptic]);
 
   // Clear signature
   const handleClearSignature = useCallback(() => {
-    haptics.tap();
+    haptic.light();
     if (currentStep === 'inspected') {
       setInspectedBy((prev) => ({ ...prev, signature: '' }));
     } else {
       setAuthorisedBy((prev) => ({ ...prev, signature: '' }));
     }
-  }, [currentStep, haptics]);
+  }, [currentStep, haptic]);
 
   const steps = [
     { id: 'inspected', label: 'Inspected By', icon: User },

@@ -33,7 +33,7 @@ export function StudyCentreCard({
   title,
   subtitle,
   description,
-  icon: Icon,
+  icon: _Icon,
   path,
   accentGradient,
   iconColor,
@@ -82,19 +82,8 @@ export function StudyCentreCard({
 
       {/* Content */}
       <div className="relative z-10 p-4 sm:p-5 lg:p-6 flex flex-col h-full min-h-[160px] sm:min-h-[180px] lg:min-h-[200px]">
-        {/* Top row - Icon and badge */}
-        <div className="flex items-start justify-between mb-3">
-          <div
-            className={cn(
-              'p-2.5 sm:p-3 rounded-xl',
-              iconBg,
-              iconColor,
-              'transition-all duration-200',
-              'group-hover:scale-110'
-            )}
-          >
-            <Icon className="h-5 w-5 sm:h-6 sm:w-6" />
-          </div>
+        {/* Top row - badge */}
+        <div className="flex items-start justify-end mb-3">
           <span
             className={cn(
               'text-[10px] sm:text-xs font-medium',

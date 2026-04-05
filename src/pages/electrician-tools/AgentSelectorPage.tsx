@@ -1,14 +1,4 @@
- 
-import {
-  ArrowLeft,
-  ArrowRight,
-  Zap,
-  Calculator,
-  Wrench,
-  Shield,
-  Settings,
-  Sparkles,
-} from 'lucide-react';
+import { ArrowLeft, ChevronRight, Sparkles } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { SavedResultsCard } from '@/components/electrician-tools/saved-results';
@@ -19,112 +9,82 @@ const containerVariants = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
-    transition: { staggerChildren: 0.04, delayChildren: 0.05 },
+    transition: { staggerChildren: 0.05, delayChildren: 0.05 },
   },
 };
 
 const itemVariants = {
-  hidden: { opacity: 0, y: 10 },
+  hidden: { opacity: 0, y: 12 },
   visible: {
     opacity: 1,
     y: 0,
-    transition: { duration: 0.25, ease: 'easeOut' },
+    transition: { type: 'spring', stiffness: 300, damping: 24 },
   },
 };
 
 interface Agent {
   id: string;
   name: string;
-  icon: React.ComponentType<{ className?: string }>;
   description: string;
   expertise: string[];
-  colour: string; // Tailwind colour name (without prefix)
+  gradient: string;
+  textColour: string;
+  pillBg: string;
+  glowColour: string;
 }
 
 const AGENTS: Agent[] = [
   {
     id: 'designer',
     name: 'Circuit Designer',
-    icon: Zap,
     description: 'BS 7671 compliant circuit design and cable sizing',
     expertise: ['Circuit calculations', 'Cable sizing', 'CU layouts', 'Voltage drop'],
-    colour: 'blue-500',
+    gradient: 'from-blue-500 via-blue-400 to-cyan-400',
+    textColour: 'text-blue-400',
+    pillBg: 'bg-blue-500/10',
+    glowColour: 'rgba(96,165,250,0.2)',
   },
   {
     id: 'cost-engineer',
     name: 'Cost Engineer',
-    icon: Calculator,
     description: 'Full project quotes with materials, labour and timescales',
     expertise: ['Material pricing', 'Labour estimates', 'Timescales', 'Quotes'],
-    colour: 'green-500',
+    gradient: 'from-elec-yellow via-amber-400 to-elec-yellow',
+    textColour: 'text-elec-yellow',
+    pillBg: 'bg-elec-yellow/10',
+    glowColour: 'rgba(250,204,21,0.2)',
   },
   {
     id: 'installer',
     name: 'Installation Specialist',
-    icon: Wrench,
     description: 'Step-by-step installation methods and practical guidance',
     expertise: ['Methods', 'Practical tips', 'Tool selection', 'Best practices'],
-    colour: 'orange-500',
+    gradient: 'from-blue-400 via-blue-300 to-cyan-300',
+    textColour: 'text-blue-300',
+    pillBg: 'bg-blue-400/10',
+    glowColour: 'rgba(147,197,253,0.2)',
   },
   {
     id: 'maintenance',
     name: 'Maintenance Specialist',
-    icon: Settings,
     description: 'Periodic inspections, preventive maintenance & fault diagnosis',
     expertise: ['Inspections', 'Fault diagnosis', 'Servicing', 'Preventive'],
-    colour: 'slate-400',
+    gradient: 'from-emerald-500 via-teal-400 to-emerald-500',
+    textColour: 'text-emerald-400',
+    pillBg: 'bg-emerald-500/10',
+    glowColour: 'rgba(52,211,153,0.2)',
   },
   {
     id: 'health-safety',
     name: 'Health & Safety',
-    icon: Shield,
     description: 'Risk assessments, PPE requirements and safety procedures',
     expertise: ['RAMS', 'Risk assessments', 'PPE', 'Emergency procedures'],
-    colour: 'red-500',
+    gradient: 'from-orange-500 via-amber-400 to-red-500',
+    textColour: 'text-orange-400',
+    pillBg: 'bg-orange-500/10',
+    glowColour: 'rgba(251,146,60,0.2)',
   },
 ];
-
-// Map colour names to Tailwind classes (can't use dynamic class names)
-const COLOUR_CLASSES: Record<
-  string,
-  { bg: string; bgLight: string; text: string; border: string; ring: string }
-> = {
-  'blue-500': {
-    bg: 'bg-blue-500',
-    bgLight: 'bg-blue-500/10',
-    text: 'text-blue-400',
-    border: 'border-blue-500/20',
-    ring: 'ring-blue-500/15',
-  },
-  'green-500': {
-    bg: 'bg-green-500',
-    bgLight: 'bg-green-500/10',
-    text: 'text-green-400',
-    border: 'border-green-500/20',
-    ring: 'ring-green-500/15',
-  },
-  'orange-500': {
-    bg: 'bg-orange-500',
-    bgLight: 'bg-orange-500/10',
-    text: 'text-orange-400',
-    border: 'border-orange-500/20',
-    ring: 'ring-orange-500/15',
-  },
-  'slate-400': {
-    bg: 'bg-slate-400',
-    bgLight: 'bg-slate-400/10',
-    text: 'text-slate-300',
-    border: 'border-slate-400/20',
-    ring: 'ring-slate-400/15',
-  },
-  'red-500': {
-    bg: 'bg-red-500',
-    bgLight: 'bg-red-500/10',
-    text: 'text-red-400',
-    border: 'border-red-500/20',
-    ring: 'ring-red-500/15',
-  },
-};
 
 const AgentSelectorPage = () => {
   const navigate = useNavigate();
@@ -153,13 +113,13 @@ const AgentSelectorPage = () => {
   };
 
   return (
-    <div className="-mt-3 sm:-mt-4 md:-mt-6 bg-background pb-24">
+    <div className="bg-background min-h-screen pb-8">
       {/* Sticky Header */}
-      <div className="sticky top-0 z-50 bg-background/95 backdrop-blur-sm border-b border-white/10">
-        <div className="px-4 py-2">
+      <div className="sticky top-0 z-50 bg-background/95 backdrop-blur-xl border-b border-white/[0.06]">
+        <div className="px-4 py-2 max-w-3xl mx-auto">
           <button
             onClick={() => navigate('/electrician')}
-            className="flex items-center gap-2 text-white active:opacity-70 active:scale-[0.98] transition-all touch-manipulation h-11 -ml-2 px-2 rounded-lg"
+            className="flex items-center gap-2 text-white active:scale-[0.98] transition-all touch-manipulation h-11 -ml-2 px-2 rounded-lg"
           >
             <ArrowLeft className="h-5 w-5" />
             <span className="text-sm font-medium">Electrician Hub</span>
@@ -171,30 +131,30 @@ const AgentSelectorPage = () => {
         variants={containerVariants}
         initial="hidden"
         animate="visible"
-        className="px-4 py-5 space-y-6"
+        className="px-4 py-5 space-y-6 max-w-3xl mx-auto"
       >
         {/* Hero */}
-        <motion.div variants={itemVariants} className="text-center py-4">
-          <motion.div
-            animate={{ scale: [1, 1.05, 1], opacity: [0.8, 1, 0.8] }}
-            transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
-            className="w-16 h-16 rounded-2xl bg-elec-yellow/10 ring-2 ring-elec-yellow/20 flex items-center justify-center mx-auto mb-4"
-          >
-            <Sparkles className="h-8 w-8 text-elec-yellow" />
-          </motion.div>
-          <h1 className="text-[24px] font-bold text-white tracking-tight mb-1">
-            <span className="text-elec-yellow">AI</span> Design Consultation
-          </h1>
-          <p className="text-[13px] text-white">Your specialist team, always on call</p>
-          {totalCount > 0 && (
-            <div className="inline-flex items-center gap-1.5 mt-3 px-3 py-1 rounded-full bg-white/[0.04] ring-1 ring-white/[0.06]">
-              <span className="relative flex h-1.5 w-1.5">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75" />
-                <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-green-400" />
-              </span>
-              <span className="text-[11px] text-white">{totalCount} consultations completed</span>
+        <motion.div variants={itemVariants}>
+          <div className="relative overflow-hidden glass-premium rounded-2xl glow-yellow">
+            <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-elec-yellow via-amber-400 to-elec-yellow" />
+            <div className="absolute top-0 right-0 w-40 h-40 bg-elec-yellow/[0.04] rounded-full blur-3xl -translate-y-1/2 translate-x-1/4 pointer-events-none" />
+
+            <div className="relative z-10 p-6 text-center">
+              <h1 className="text-2xl font-bold text-white tracking-tight mb-1">
+                <span className="text-elec-yellow">AI</span> Design Consultation
+              </h1>
+              <p className="text-sm text-white">Your specialist team, always on call</p>
+              {totalCount > 0 && (
+                <div className="inline-flex items-center gap-1.5 mt-3 px-3 py-1 rounded-full bg-white/[0.04] ring-1 ring-white/[0.06]">
+                  <span className="relative flex h-1.5 w-1.5">
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75" />
+                    <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-green-400" />
+                  </span>
+                  <span className="text-[11px] text-white">{totalCount} consultations completed</span>
+                </div>
+              )}
             </div>
-          )}
+          </div>
         </motion.div>
 
         {/* Saved Results */}
@@ -204,99 +164,59 @@ const AgentSelectorPage = () => {
 
         {/* AI Team */}
         <motion.section variants={itemVariants} className="space-y-3">
-          <div className="flex items-center gap-2.5">
-            <h2 className="text-[15px] font-bold text-white">Your AI Team</h2>
-            <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[10px] font-semibold bg-green-500/10 text-green-400 ring-1 ring-green-500/15">
-              <span className="relative flex h-1.5 w-1.5">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75" />
-                <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-green-400" />
-              </span>
-              {AGENTS.length} ready
-            </span>
-          </div>
+          <h2 className="text-xs font-medium text-white uppercase tracking-wider px-0.5">
+            Your AI Team
+          </h2>
 
-          <motion.div variants={containerVariants} className="space-y-2.5">
-            {AGENTS.map((agent) => {
-              const IconComponent = agent.icon;
-              const c = COLOUR_CLASSES[agent.colour];
-
-              return (
-                <motion.button
-                  key={agent.id}
-                  variants={itemVariants}
-                  whileTap={{ scale: 0.98 }}
-                  onClick={() => handleAgentSelect(agent.id)}
-                  className="w-full text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-elec-yellow/50 rounded-xl touch-manipulation"
+          <motion.div variants={containerVariants} className="space-y-3">
+            {AGENTS.map((agent) => (
+              <motion.button
+                key={agent.id}
+                variants={itemVariants}
+                whileTap={{ scale: 0.98 }}
+                onClick={() => handleAgentSelect(agent.id)}
+                className="w-full text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-elec-yellow/50 rounded-2xl touch-manipulation group"
+              >
+                <div
+                  className="relative glass-premium rounded-2xl overflow-hidden transition-all duration-200 group-hover:border-white/20"
+                  style={{ '--glow': agent.glowColour } as React.CSSProperties}
                 >
-                  <div
-                    className={cn(
-                      'rounded-xl overflow-hidden',
-                      'bg-white/[0.10] ring-1 ring-white/[0.15]',
-                      'active:bg-white/[0.18]',
-                      'transition-all duration-150',
-                      'group'
-                    )}
-                  >
-                    <div className="flex items-center gap-3.5 p-4">
-                      {/* Coloured accent bar */}
-                      <div
-                        className={cn('w-1 self-stretch rounded-full -ml-1', c.bg, 'opacity-60')}
-                      />
+                  {/* Coloured accent line */}
+                  <div className={cn('absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r opacity-50 group-hover:opacity-80 transition-opacity', agent.gradient)} />
 
-                      {/* Icon with agent colour */}
-                      <div
-                        className={cn(
-                          'flex-shrink-0 w-12 h-12 rounded-xl flex items-center justify-center ring-1',
-                          c.bgLight,
-                          c.ring,
-                          'group-active:ring-2 transition-all'
-                        )}
-                      >
-                        <IconComponent className={cn('h-5.5 w-5.5', c.text)} />
-                      </div>
-
-                      {/* Text */}
-                      <div className="flex-1 min-w-0">
-                        <h3 className="text-[15px] font-semibold text-white tracking-tight mb-1">
-                          {agent.name}
-                        </h3>
-                        <p className="text-[12px] text-white leading-relaxed line-clamp-1">
-                          {agent.description}
-                        </p>
-                        {/* Expertise tags */}
-                        <div className="flex flex-wrap gap-1 mt-2">
-                          {agent.expertise.map((tag) => (
-                            <span
-                              key={tag}
-                              className={cn(
-                                'text-[10px] font-medium px-1.5 py-0.5 rounded',
-                                c.bgLight,
-                                c.text
-                              )}
-                            >
-                              {tag}
-                            </span>
-                          ))}
-                        </div>
-                      </div>
-
-                      {/* CTA */}
-                      <div
-                        className={cn(
-                          'flex-shrink-0 w-9 h-9 rounded-lg flex items-center justify-center',
-                          c.bgLight,
-                          'ring-1',
-                          c.ring,
-                          'group-active:ring-2 transition-all'
-                        )}
-                      >
-                        <ArrowRight className={cn('h-4 w-4', c.text)} />
+                  <div className="flex items-center gap-4 p-4">
+                    <div className="flex-1 min-w-0">
+                      <h3 className="text-[15px] font-semibold text-white tracking-tight mb-1">
+                        {agent.name}
+                      </h3>
+                      <p className="text-[13px] text-white leading-relaxed mb-2.5">
+                        {agent.description}
+                      </p>
+                      {/* Expertise tags — text only, no icons */}
+                      <div className="flex flex-wrap gap-1.5">
+                        {agent.expertise.map((tag) => (
+                          <span
+                            key={tag}
+                            className={cn(
+                              'text-[10px] font-medium px-2 py-0.5 rounded-md',
+                              agent.pillBg,
+                              agent.textColour
+                            )}
+                          >
+                            {tag}
+                          </span>
+                        ))}
                       </div>
                     </div>
+
+                    {/* Arrow */}
+                    <div className="flex-shrink-0 w-9 h-9 rounded-xl flex items-center justify-center bg-white/[0.05] border border-white/[0.08] group-hover:bg-white/[0.10] transition-all">
+                      <ChevronRight className="h-4 w-4 text-white group-hover:translate-x-0.5 transition-transform" />
+                    </div>
                   </div>
-                </motion.button>
-              );
-            })}
+                </div>
+              </motion.button>
+            ))}
           </motion.div>
         </motion.section>
       </motion.main>

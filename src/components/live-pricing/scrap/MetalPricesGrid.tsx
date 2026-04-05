@@ -1,3 +1,4 @@
+import { copyToClipboard } from '@/utils/clipboard';
 import { useState } from 'react';
 import {
   RefreshCw,
@@ -245,9 +246,11 @@ const MetalPricesGrid = ({ className }: { className?: string }) => {
         });
       } else {
         // Fallback to clipboard
-        await navigator.clipboard.writeText(shareText);
-        setShareSuccess(true);
-        setTimeout(() => setShareSuccess(false), 2000);
+        const ok = await copyToClipboard(shareText);
+        if (ok) {
+          setShareSuccess(true);
+          setTimeout(() => setShareSuccess(false), 2000);
+        }
       }
     } catch (err) {
       // User cancelled or error - silently fail

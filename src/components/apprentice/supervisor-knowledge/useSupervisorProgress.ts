@@ -1,4 +1,5 @@
 import { useState, useCallback } from 'react';
+import { storageGetJSONSync, storageSetJSONSync } from '@/utils/storage';
 
 const PREFIX = 'supervisor-knowledge-';
 
@@ -9,38 +10,24 @@ interface QuizResult {
 }
 
 function loadSet(key: string): Set<string> {
-  try {
-    const raw = localStorage.getItem(PREFIX + key);
-    return raw ? new Set(JSON.parse(raw)) : new Set();
-  } catch {
-    return new Set();
-  }
+  const arr = storageGetJSONSync<string[]>(PREFIX + key, []);
+  return new Set(arr);
 }
 
 function saveSet(key: string, set: Set<string>) {
-  localStorage.setItem(PREFIX + key, JSON.stringify([...set]));
+  storageSetJSONSync(PREFIX + key, [...set]);
 }
 
 function loadArray(key: string): string[] {
-  try {
-    const raw = localStorage.getItem(PREFIX + key);
-    return raw ? JSON.parse(raw) : [];
-  } catch {
-    return [];
-  }
+  return storageGetJSONSync<string[]>(PREFIX + key, []);
 }
 
 function saveArray(key: string, arr: string[]) {
-  localStorage.setItem(PREFIX + key, JSON.stringify(arr));
+  storageSetJSONSync(PREFIX + key, arr);
 }
 
 function loadQuizResult(): QuizResult | null {
-  try {
-    const raw = localStorage.getItem(PREFIX + 'quiz-result');
-    return raw ? JSON.parse(raw) : null;
-  } catch {
-    return null;
-  }
+  return storageGetJSONSync<QuizResult | null>(PREFIX + 'quiz-result', null);
 }
 
 export function useSupervisorProgress() {
@@ -100,7 +87,7 @@ export function useSupervisorProgress() {
 
   const saveQuizResult = useCallback((score: number, total: number) => {
     const result: QuizResult = { score, total, date: new Date().toISOString() };
-    localStorage.setItem(PREFIX + 'quiz-result', JSON.stringify(result));
+    storageSetJSONSync(PREFIX + 'quiz-result', result);
     setQuizResult(result);
   }, []);
 

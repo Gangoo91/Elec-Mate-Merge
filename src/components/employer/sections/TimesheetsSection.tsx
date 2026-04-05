@@ -500,7 +500,7 @@ export const TimesheetsSection = () => {
               <div className="flex items-start justify-between gap-2">
                 <div className="min-w-0">
                   <h4 className="font-semibold text-foreground truncate">{ts.employeeName}</h4>
-                  <p className="text-sm text-muted-foreground truncate flex items-center gap-1.5">
+                  <p className="text-sm text-white/60 truncate flex items-center gap-1.5">
                     <Briefcase className="h-3.5 w-3.5 flex-shrink-0" />
                     {ts.jobTitle}
                   </p>
@@ -524,7 +524,7 @@ export const TimesheetsSection = () => {
           <div className="mb-4 p-3 bg-surface rounded-lg">
             <div className="flex items-center justify-between mb-2">
               <div className="flex items-center gap-2">
-                <Clock className="h-4 w-4 text-muted-foreground" />
+                <Clock className="h-4 w-4 text-white/60" />
                 <span className="text-sm font-medium">{ts.clockIn}</span>
               </div>
               <div className="text-lg font-bold text-elec-yellow">{ts.totalHours}h</div>
@@ -546,12 +546,12 @@ export const TimesheetsSection = () => {
           {/* Info row */}
           <div className="flex items-center justify-between mb-4">
             <div className="flex items-center gap-2 text-sm">
-              <Calendar className="h-4 w-4 text-muted-foreground" />
+              <Calendar className="h-4 w-4 text-white/60" />
               <span className="text-foreground">{format(parseISO(ts.date), 'EEE, d MMM')}</span>
             </div>
             <div className="text-right">
               <span className="text-lg font-bold text-foreground">£{labourCost.toFixed(0)}</span>
-              <span className="text-xs text-muted-foreground ml-1">@ £{hourlyRate}/hr</span>
+              <span className="text-xs text-white/60 ml-1">@ £{hourlyRate}/hr</span>
             </div>
           </div>
 
@@ -599,7 +599,7 @@ export const TimesheetsSection = () => {
             </div>
             <div>
               <h1 className="text-lg font-bold text-foreground">Timesheets</h1>
-              <p className="text-xs text-muted-foreground hidden sm:block">
+              <p className="text-xs text-white/60 hidden sm:block">
                 Track, approve, export
               </p>
             </div>
@@ -644,7 +644,7 @@ export const TimesheetsSection = () => {
                           <div>
                             <p className="font-medium text-foreground">{provider.name}</p>
                             {isConnected && conn?.lastSync && (
-                              <p className="text-xs text-muted-foreground">
+                              <p className="text-xs text-white/60">
                                 Last sync: {format(parseISO(conn.lastSync), 'dd/MM HH:mm')}
                               </p>
                             )}
@@ -701,7 +701,7 @@ export const TimesheetsSection = () => {
 
                   <div className="pt-3 border-t border-border">
                     <div className="flex items-center justify-between text-sm">
-                      <span className="text-muted-foreground">Ready to export:</span>
+                      <span className="text-white/60">Ready to export:</span>
                       <span className="font-medium text-foreground">
                         {approvedHours.toFixed(1)} hrs • £{approvedLabourCost.toLocaleString()}
                       </span>
@@ -719,7 +719,7 @@ export const TimesheetsSection = () => {
             <ChevronLeft className="h-4 w-4" />
           </Button>
           <div className="flex items-center gap-2">
-            <Calendar className="h-4 w-4 text-muted-foreground" />
+            <Calendar className="h-4 w-4 text-white/60" />
             <span className="text-sm font-medium">{weekLabel}</span>
           </div>
           <div className="flex items-center gap-1">
@@ -753,7 +753,7 @@ export const TimesheetsSection = () => {
                     <div className="absolute inset-0 rounded-full border-2 border-success animate-pulse" />
                   </div>
                   <div>
-                    <p className="text-sm text-muted-foreground">On the Clock</p>
+                    <p className="text-sm text-white/60">On the Clock</p>
                     <p className="text-3xl font-mono font-bold text-success tracking-wide">
                       {duration}
                     </p>
@@ -766,7 +766,7 @@ export const TimesheetsSection = () => {
               </div>
 
               <div className="flex items-center gap-2 p-2 bg-surface rounded-lg">
-                <Briefcase className="h-4 w-4 text-muted-foreground" />
+                <Briefcase className="h-4 w-4 text-white/60" />
                 <span className="text-sm text-foreground truncate">
                   {clockState?.jobTitle || 'Unknown Job'}
                 </span>
@@ -805,7 +805,7 @@ export const TimesheetsSection = () => {
                     .map((emp) => (
                       <SelectItem key={emp.id} value={emp.id}>
                         <div className="flex items-center gap-2">
-                          <User className="h-4 w-4 text-muted-foreground" />
+                          <User className="h-4 w-4 text-white/60" />
                           {emp.name}
                         </div>
                       </SelectItem>
@@ -820,7 +820,7 @@ export const TimesheetsSection = () => {
                   {activeJobs.map((job) => (
                     <SelectItem key={job.id} value={job.id}>
                       <div className="flex items-center gap-2">
-                        <Briefcase className="h-4 w-4 text-muted-foreground" />
+                        <Briefcase className="h-4 w-4 text-white/60" />
                         {job.title}
                       </div>
                     </SelectItem>
@@ -842,7 +842,7 @@ export const TimesheetsSection = () => {
           <CardContent className="p-3">
             <div className="flex items-center gap-2 mb-1">
               <Clock className="h-4 w-4 text-elec-yellow" />
-              <span className="text-xs text-muted-foreground">Hours</span>
+              <span className="text-xs text-white/60">Hours</span>
             </div>
             <div className="flex items-baseline gap-2">
               <span className="text-2xl font-bold text-foreground">{totalHours.toFixed(1)}</span>
@@ -855,7 +855,7 @@ export const TimesheetsSection = () => {
           <CardContent className="p-3">
             <div className="flex items-center gap-2 mb-1">
               <PoundSterling className="h-4 w-4 text-elec-yellow" />
-              <span className="text-xs text-muted-foreground">Labour Cost</span>
+              <span className="text-xs text-white/60">Labour Cost</span>
             </div>
             <div className="flex items-baseline gap-2">
               <span className="text-2xl font-bold text-foreground">
@@ -869,7 +869,7 @@ export const TimesheetsSection = () => {
           <CardContent className="p-3">
             <div className="flex items-center gap-2 mb-1">
               <CheckCircle2 className="h-4 w-4 text-success" />
-              <span className="text-xs text-muted-foreground">Approved</span>
+              <span className="text-xs text-white/60">Approved</span>
             </div>
             <span className="text-2xl font-bold text-success">
               {weekTimesheets.filter((t) => t.status === 'Approved').length}
@@ -881,7 +881,7 @@ export const TimesheetsSection = () => {
           <CardContent className="p-3">
             <div className="flex items-center gap-2 mb-1">
               <AlertCircle className="h-4 w-4 text-warning" />
-              <span className="text-xs text-muted-foreground">Pending</span>
+              <span className="text-xs text-white/60">Pending</span>
             </div>
             <span className="text-2xl font-bold text-warning">{pendingCount}</span>
           </CardContent>
@@ -912,7 +912,7 @@ export const TimesheetsSection = () => {
                 <span
                   className={cn(
                     'text-xs font-medium mb-1',
-                    isSelected ? 'text-elec-dark' : 'text-muted-foreground'
+                    isSelected ? 'text-elec-dark' : 'text-white/60'
                   )}
                 >
                   {DAYS_OF_WEEK[idx]}
@@ -983,11 +983,11 @@ export const TimesheetsSection = () => {
       <div className="flex justify-center gap-4">
         <div className="flex items-center gap-1.5">
           <div className="w-3 h-3 rounded bg-success" />
-          <span className="text-xs text-muted-foreground">Approved</span>
+          <span className="text-xs text-white/60">Approved</span>
         </div>
         <div className="flex items-center gap-1.5">
           <div className="w-3 h-3 rounded bg-warning" />
-          <span className="text-xs text-muted-foreground">Pending</span>
+          <span className="text-xs text-white/60">Pending</span>
         </div>
       </div>
 
@@ -1013,7 +1013,7 @@ export const TimesheetsSection = () => {
           <div className="flex gap-2">
             <div className="relative flex-1">
               {!searchQuery && (
-                <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none" />
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white/60 pointer-events-none" />
               )}
               <Input
                 placeholder="Search..."
@@ -1034,7 +1034,7 @@ export const TimesheetsSection = () => {
                 </SheetHeader>
                 <div className="space-y-4 py-4">
                   <div>
-                    <label className="text-sm text-muted-foreground mb-2 block">Worker</label>
+                    <label className="text-sm text-white/60 mb-2 block">Worker</label>
                     <Select value={filterEmployee} onValueChange={setFilterEmployee}>
                       <SelectTrigger className="w-full bg-surface">
                         <SelectValue placeholder="All workers" />
@@ -1050,7 +1050,7 @@ export const TimesheetsSection = () => {
                     </Select>
                   </div>
                   <div>
-                    <label className="text-sm text-muted-foreground mb-2 block">Status</label>
+                    <label className="text-sm text-white/60 mb-2 block">Status</label>
                     <Select value={filterStatus} onValueChange={setFilterStatus}>
                       <SelectTrigger className="w-full bg-surface">
                         <SelectValue placeholder="All statuses" />
@@ -1159,9 +1159,9 @@ export const TimesheetsSection = () => {
               {filteredTimesheets.length === 0 ? (
                 <Card className="bg-elec-gray border-border">
                   <CardContent className="p-8 text-center">
-                    <CalendarDays className="h-12 w-12 text-muted-foreground mx-auto mb-3" />
+                    <CalendarDays className="h-12 w-12 text-white/60 mx-auto mb-3" />
                     <p className="text-foreground font-medium mb-1">No timesheets found</p>
-                    <p className="text-sm text-muted-foreground">
+                    <p className="text-sm text-white/60">
                       {selectedDay
                         ? `No entries for ${format(selectedDay, 'EEEE, d MMMM')}`
                         : 'No entries for this week'}
@@ -1201,7 +1201,7 @@ export const TimesheetsSection = () => {
                     {filteredTimesheets.length === 0 ? (
                       <TableRow>
                         <TableCell colSpan={isSelectMode ? 8 : 7} className="text-center py-8">
-                          <p className="text-muted-foreground">No timesheets found</p>
+                          <p className="text-white/60">No timesheets found</p>
                         </TableCell>
                       </TableRow>
                     ) : (
@@ -1233,7 +1233,7 @@ export const TimesheetsSection = () => {
                             </TableCell>
                             <TableCell>
                               <div className="flex items-center gap-2">
-                                <Briefcase className="h-4 w-4 text-muted-foreground" />
+                                <Briefcase className="h-4 w-4 text-white/60" />
                                 <span className="truncate max-w-[140px]">{ts.jobTitle}</span>
                               </div>
                             </TableCell>
@@ -1242,7 +1242,7 @@ export const TimesheetsSection = () => {
                               <span className="font-mono">
                                 {ts.clockIn}-{ts.clockOut}
                               </span>
-                              <span className="text-muted-foreground ml-1">({ts.totalHours}h)</span>
+                              <span className="text-white/60 ml-1">({ts.totalHours}h)</span>
                             </TableCell>
                             <TableCell>
                               <span className="font-medium">£{labourCost.toFixed(0)}</span>
@@ -1298,8 +1298,8 @@ export const TimesheetsSection = () => {
           {employeeBreakdown.length === 0 ? (
             <Card className="bg-elec-gray border-border">
               <CardContent className="p-8 text-center">
-                <Users className="h-12 w-12 text-muted-foreground mx-auto mb-3" />
-                <p className="text-muted-foreground">No worker entries this week</p>
+                <Users className="h-12 w-12 text-white/60 mx-auto mb-3" />
+                <p className="text-white/60">No worker entries this week</p>
               </CardContent>
             </Card>
           ) : (
@@ -1313,7 +1313,7 @@ export const TimesheetsSection = () => {
                       </div>
                       <div>
                         <p className="font-medium text-foreground">{emp.name}</p>
-                        <p className="text-sm text-muted-foreground">
+                        <p className="text-sm text-white/60">
                           {emp.entries} {emp.entries === 1 ? 'entry' : 'entries'} this week
                         </p>
                       </div>
@@ -1342,13 +1342,13 @@ export const TimesheetsSection = () => {
               <div className="grid grid-cols-2 gap-4">
                 <div>
                   <p className="text-2xl font-bold text-foreground">{weekTimesheets.length}</p>
-                  <p className="text-xs text-muted-foreground">Total Entries</p>
+                  <p className="text-xs text-white/60">Total Entries</p>
                 </div>
                 <div>
                   <p className="text-2xl font-bold text-elec-yellow">
                     £{totalLabourCost.toLocaleString()}
                   </p>
-                  <p className="text-xs text-muted-foreground">Labour Spend</p>
+                  <p className="text-xs text-white/60">Labour Spend</p>
                 </div>
               </div>
             </CardContent>

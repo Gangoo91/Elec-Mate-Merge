@@ -10,6 +10,7 @@ import { Button } from '@/components/ui/button';
 import { Gift, X } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
 import ReferralShareSheet from './ReferralShareSheet';
+import { storageGetSync, storageSetSync } from '@/utils/storage';
 
 const ReferralBanner: React.FC = () => {
   const { profile } = useAuth();
@@ -27,10 +28,10 @@ const ReferralBanner: React.FC = () => {
 
   // Check localStorage for dismissal
   const dismissKey = 'elec-mate-referral-banner-dismissed';
-  if (typeof window !== 'undefined' && localStorage.getItem(dismissKey)) return null;
+  if (typeof window !== 'undefined' && storageGetSync(dismissKey)) return null;
 
   const handleDismiss = () => {
-    localStorage.setItem(dismissKey, 'true');
+    storageSetSync(dismissKey, 'true');
     setDismissed(true);
   };
 

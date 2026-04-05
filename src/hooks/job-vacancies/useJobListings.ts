@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from '@/hooks/use-toast';
+import { openExternalUrl } from '@/utils/open-external-url';
 import { JobListing } from '@/pages/electrician/JobVacancies';
 
 export const useJobListings = () => {
@@ -56,7 +57,7 @@ export const useJobListings = () => {
   const handleApply = (jobId: string, url: string) => {
     setSelectedJob(jobId);
     // Open external application URL in new tab
-    window.open(url, '_blank');
+    openExternalUrl(url);
     toast({
       title: 'Application Started',
       description: "You've been redirected to the employer's application page.",

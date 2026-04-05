@@ -11,6 +11,7 @@ import {
   type UserProfessionalMembership,
 } from '@/services/professionalBodyService';
 import { useToast } from '@/hooks/use-toast';
+import { storageGetJSONSync, storageSetJSONSync } from '@/utils/storage';
 
 export interface CPDGoal {
   id: string;
@@ -71,10 +72,10 @@ export const useUnifiedCPD = () => {
       const userPortfolios = await enhancedCPDService.getPortfolios(user.id);
       setPortfolios(userPortfolios);
 
-      // Load goals from localStorage for now (can be migrated to DB later)
-      const storedGoals = localStorage.getItem(`cpd_goals_${user.id}`);
-      if (storedGoals) {
-        setGoals(JSON.parse(storedGoals));
+      // Load goals from storage for now (can be migrated to DB later)
+      const storedGoals = storageGetJSONSync<CPDGoal[]>(`cpd_goals_${user.id}`, []);
+      if (storedGoals.length > 0) {
+        setGoals(storedGoals);
       }
     } catch (error) {
       console.error('Error refreshing CPD data:', error);
@@ -215,7 +216,7 @@ export const useUnifiedCPD = () => {
 
     const updatedGoals = [...goals, newGoal];
     setGoals(updatedGoals);
-    localStorage.setItem(`cpd_goals_${user.id}`, JSON.stringify(updatedGoals));
+    storageSetJSONSync(`cpd_goals_${user.id}`, updatedGoals);
 
     toast({
       title: 'CPD goal created',
@@ -231,7 +232,7 @@ export const useUnifiedCPD = () => {
     const updatedGoals = goals.map((goal) => (goal.id === id ? { ...goal, ...updates } : goal));
 
     setGoals(updatedGoals);
-    localStorage.setItem(`cpd_goals_${user.id}`, JSON.stringify(updatedGoals));
+    storageSetJSONSync(`cpd_goals_${user.id}`, updatedGoals);
 
     toast({
       title: 'CPD goal updated',
@@ -246,7 +247,7 @@ export const useUnifiedCPD = () => {
 
     const updatedGoals = goals.filter((goal) => goal.id !== id);
     setGoals(updatedGoals);
-    localStorage.setItem(`cpd_goals_${user.id}`, JSON.stringify(updatedGoals));
+    storageSetJSONSync(`cpd_goals_${user.id}`, updatedGoals);
 
     toast({
       title: 'CPD goal deleted',

@@ -1,5 +1,6 @@
 import { useState, useCallback, useEffect } from 'react';
 import type { CalendarView } from '@/types/calendar';
+import { storageGetJSONSync, storageSetJSONSync } from '@/utils/storage';
 
 const STORAGE_KEY = 'elec-mate-calendar-settings';
 
@@ -18,15 +19,7 @@ const DEFAULT_SETTINGS: CalendarSettings = {
 };
 
 function loadSettings(): CalendarSettings {
-  try {
-    const stored = localStorage.getItem(STORAGE_KEY);
-    if (stored) {
-      return { ...DEFAULT_SETTINGS, ...JSON.parse(stored) };
-    }
-  } catch {
-    // Ignore parse errors
-  }
-  return DEFAULT_SETTINGS;
+  return { ...DEFAULT_SETTINGS, ...storageGetJSONSync<Partial<CalendarSettings>>(STORAGE_KEY, {}) };
 }
 
 export function useCalendarSettings() {
@@ -34,7 +27,7 @@ export function useCalendarSettings() {
 
   // Persist to localStorage on change
   useEffect(() => {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(settings));
+    storageSetJSONSync(STORAGE_KEY, settings);
   }, [settings]);
 
   const updateSettings = useCallback((updates: Partial<CalendarSettings>) => {

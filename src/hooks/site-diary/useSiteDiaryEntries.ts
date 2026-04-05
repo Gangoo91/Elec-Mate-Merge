@@ -10,6 +10,7 @@ import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/contexts/AuthContext';
 import { toast } from 'sonner';
 import { useLearningXP } from '@/hooks/useLearningXP';
+import { storageGetJSONSync, storageSetJSONSync } from '@/utils/storage';
 
 export interface SiteDiaryEntry {
   id: string;
@@ -58,20 +59,20 @@ export function useSiteDiaryEntries() {
 
         if (data && data.length > 0) {
           setEntries(data as SiteDiaryEntry[]);
-          localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+          storageSetJSONSync(STORAGE_KEY, data);
         } else {
           // Try local fallback
-          const local = localStorage.getItem(STORAGE_KEY);
-          if (local) setEntries(JSON.parse(local));
+          const local = storageGetJSONSync<SiteDiaryEntry[]>(STORAGE_KEY, []);
+          if (local.length > 0) setEntries(local);
         }
       } else {
-        const local = localStorage.getItem(STORAGE_KEY);
-        if (local) setEntries(JSON.parse(local));
+        const local = storageGetJSONSync<SiteDiaryEntry[]>(STORAGE_KEY, []);
+        if (local.length > 0) setEntries(local);
       }
     } catch {
-      // Fallback to localStorage
-      const local = localStorage.getItem(STORAGE_KEY);
-      if (local) setEntries(JSON.parse(local));
+      // Fallback to storage
+      const local = storageGetJSONSync<SiteDiaryEntry[]>(STORAGE_KEY, []);
+      if (local.length > 0) setEntries(local);
     } finally {
       setIsLoading(false);
     }
@@ -134,7 +135,7 @@ export function useSiteDiaryEntries() {
 
         const newEntry = data as SiteDiaryEntry;
         setEntries((prev) => [newEntry, ...prev]);
-        localStorage.setItem(STORAGE_KEY, JSON.stringify([newEntry, ...entries]));
+        storageSetJSONSync(STORAGE_KEY, [newEntry, ...entries]);
 
         const hoursMsg =
           hours_spent && hours_spent > 0 ? ` + ${hours_spent}h OJT logged` : '';

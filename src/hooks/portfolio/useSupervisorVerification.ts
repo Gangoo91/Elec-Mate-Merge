@@ -9,6 +9,7 @@ import { useState, useEffect, useCallback } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/contexts/AuthContext';
 import { toast } from 'sonner';
+import { copyToClipboard } from '@/utils/clipboard';
 
 export interface SupervisorVerification {
   id: string;
@@ -174,7 +175,7 @@ export function useSupervisorVerification() {
     async (token: string): Promise<boolean> => {
       const url = getVerificationUrl(token);
       try {
-        await navigator.clipboard.writeText(url);
+        await copyToClipboard(url);
         toast.success('Verification link copied!');
         return true;
       } catch {

@@ -1,3 +1,4 @@
+import { copyToClipboard } from '@/utils/clipboard';
 import React, { useState, useMemo } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -114,11 +115,14 @@ const CourseBookmarkManager = ({ courses, onViewDetails }: CourseBookmarkManager
         text: shareText,
       });
     } else {
-      navigator.clipboard.writeText(shareText);
-      toast({
-        title: 'Copied to clipboard',
-        description: 'Course list has been copied to your clipboard.',
-        variant: 'success',
+      copyToClipboard(shareText).then((ok) => {
+        if (ok) {
+          toast({
+            title: 'Copied to clipboard',
+            description: 'Course list has been copied to your clipboard.',
+            variant: 'success',
+          });
+        }
       });
     }
   };

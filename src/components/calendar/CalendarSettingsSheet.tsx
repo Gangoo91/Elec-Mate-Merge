@@ -1,3 +1,4 @@
+import { copyToClipboard } from '@/utils/clipboard';
 import { useState, useCallback } from 'react';
 import {
   Sheet,
@@ -99,12 +100,12 @@ const CalendarSettingsSheet = ({
 
   const handleCopyFeedUrl = useCallback(async () => {
     if (!feedUrl) return;
-    try {
-      await navigator.clipboard.writeText(feedUrl);
+    const ok = await copyToClipboard(feedUrl);
+    if (ok) {
       setCopied(true);
       toast({ title: 'Link copied — now paste it in your calendar app' });
       setTimeout(() => setCopied(false), 3000);
-    } catch {
+    } else {
       toast({ title: 'Failed to copy', variant: 'destructive' });
     }
   }, [feedUrl, toast]);

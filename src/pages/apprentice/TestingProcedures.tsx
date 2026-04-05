@@ -8,6 +8,7 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { toast } from 'sonner';
+import { storageGetSync, storageSetSync } from '@/utils/storage';
 import TestingHeader from '@/components/apprentice/testing-procedures/TestingHeader';
 import TestingResources from '@/components/apprentice/testing-procedures/TestingResources';
 import R1R2TestingTab from '@/components/apprentice/testing-procedures/testing-tabs/R1R2Testing/R1R2TestingTab';
@@ -32,7 +33,7 @@ const TestingProcedures = () => {
 
   // Track active tab for persistence
   useEffect(() => {
-    const savedTab = localStorage.getItem('lastTestingTab');
+    const savedTab = storageGetSync('lastTestingTab');
     if (savedTab) {
       setLastVisited(savedTab);
     }
@@ -40,7 +41,7 @@ const TestingProcedures = () => {
 
   const handleTabChange = (value: string) => {
     setActiveTab(value);
-    localStorage.setItem('lastTestingTab', value);
+    storageSetSync('lastTestingTab', value);
 
     // Show toast when switching tabs
     toast.success(`Switched to ${getTabName(value)} procedure`, {

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { storageGetSync } from '@/utils/storage';
 import { Button } from '@/components/ui/button';
 import { Book, CheckCircle, FileText, Award } from 'lucide-react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -30,7 +31,7 @@ const ElectricalTheorySection: React.FC<ElectricalTheorySectionProps> = ({
   // Check which subsections have been completed
   const getCompletionStatus = (subsectionId: string) => {
     const storageKey = `completion_elec_1_${subsectionId}`;
-    return localStorage.getItem(storageKey) === 'true';
+    return storageGetSync(storageKey) === 'true';
   };
 
   return (

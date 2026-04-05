@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
+import { storageGetJSONSync, storageSetJSONSync } from '@/utils/storage';
 
-// A tiny localStorage-backed state hook
+// A tiny persistent state hook backed by Capacitor Preferences (native) or localStorage (web)
 export function usePersistentState<T>(key: string, initial: T) {
   const [state, setState] = useState<T>(() => {
     try {
-      const raw = localStorage.getItem(key);
-      return raw ? (JSON.parse(raw) as T) : initial;
+      return storageGetJSONSync(key, initial);
     } catch {
       return initial;
     }
@@ -13,7 +13,7 @@ export function usePersistentState<T>(key: string, initial: T) {
 
   useEffect(() => {
     try {
-      localStorage.setItem(key, JSON.stringify(state));
+      storageSetJSONSync(key, state);
     } catch {
       // ignore write errors
     }

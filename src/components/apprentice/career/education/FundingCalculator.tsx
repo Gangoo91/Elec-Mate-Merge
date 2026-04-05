@@ -5,6 +5,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
 import { Progress } from '@/components/ui/progress';
+import { openExternalUrl } from '@/utils/open-external-url';
 import {
   Calculator,
   ArrowLeft,
@@ -235,7 +236,7 @@ const FundingCalculator = () => {
           {OFFICIAL_LINKS.map((link) => (
             <button
               key={link.label}
-              onClick={() => window.open(link.url, '_blank', 'noopener,noreferrer')}
+              onClick={() => openExternalUrl(link.url)}
               className="flex items-center gap-1.5 px-3 py-2.5 bg-white/5 border border-white/10 rounded-lg text-xs text-white hover:bg-white/10 transition-colors touch-manipulation active:scale-[0.98] text-left"
             >
               <ExternalLink className="h-3 w-3 flex-shrink-0" />

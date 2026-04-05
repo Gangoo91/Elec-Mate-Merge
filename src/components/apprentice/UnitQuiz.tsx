@@ -7,6 +7,8 @@ import QuizControls from './quiz/QuizControls';
 import QuizResults from './quiz/QuizResults';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/components/ui/use-toast';
+import { useHaptic } from '@/hooks/useHaptic';
+import { storageGetJSONSync, storageSetJSONSync } from '@/utils/storage';
 
 const UnitQuiz = ({
   unitCode,
@@ -18,6 +20,7 @@ const UnitQuiz = ({
   isSubmitted = false,
 }: QuizProps) => {
   const { toast } = useToast();
+  const haptic = useHaptic();
   const [activeQuestion, setActiveQuestion] = useState(0);
   const [selectedAnswer, setSelectedAnswer] = useState<number | null>(null);
   const [quizQuestions, setQuizQuestions] = useState<QuizQuestion[]>([]);
@@ -66,7 +69,10 @@ const UnitQuiz = ({
 
     // Check if answer is correct
     if (selectedIndex === quizQuestions[activeQuestion]?.correctAnswer) {
+      haptic.success();
       setScore((prev) => prev + 1);
+    } else {
+      haptic.error();
     }
   };
 
@@ -89,6 +95,7 @@ const UnitQuiz = ({
   };
 
   const handleSubmitQuiz = () => {
+    haptic.heavy();
     setQuizCompleted(true);
     handleQuizCompletion(score, quizQuestions.length);
   };
@@ -154,35 +161,25 @@ const UnitQuiz = ({
   ) => {
     const storageKey = `unit_${unitCode}_quiz_attempts`;
 
-    try {
-      // Get existing attempts
-      const existingAttemptsJson = localStorage.getItem(storageKey);
-      const existingAttempts = existingAttemptsJson ? JSON.parse(existingAttemptsJson) : [];
+    // Get existing attempts
+    const existingAttempts = storageGetJSONSync<any[]>(storageKey, []);
 
-      // Add new attempt
-      existingAttempts.push({
-        date: new Date().toISOString(),
-        score,
-        totalQuestions,
-        percentage,
-        timeTaken,
-      });
+    // Add new attempt
+    existingAttempts.push({
+      date: new Date().toISOString(),
+      score,
+      totalQuestions,
+      percentage,
+      timeTaken,
+    });
 
-      // Save back to localStorage
-      localStorage.setItem(storageKey, JSON.stringify(existingAttempts));
+    // Save back to storage
+    storageSetJSONSync(storageKey, existingAttempts);
 
-      toast({
-        title: 'Quiz result saved locally',
-        description: 'Your result has been saved on this device.',
-      });
-    } catch (e) {
-      console.error('Error saving quiz attempt to localStorage:', e);
-      toast({
-        title: 'Could not save quiz result',
-        description: 'Please try again later.',
-        variant: 'destructive',
-      });
-    }
+    toast({
+      title: 'Quiz result saved locally',
+      description: 'Your result has been saved on this device.',
+    });
   };
 
   const handleRetryQuiz = () => {

@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { storageSetSync } from '@/utils/storage';
 import { Dialog, DialogContent } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { useAuth } from '@/contexts/AuthContext';
@@ -106,12 +107,12 @@ const WelcomeModal = ({ isOpen, onClose }: WelcomeModalProps) => {
     setIsCompleting(true);
     try {
       await updateProfile(user.id, { onboarding_completed: true });
-      localStorage.setItem('elec-mate-onboarding-done', 'true');
+      storageSetSync('elec-mate-onboarding-done', 'true');
       onClose();
       navigate(content.ctaPath);
     } catch (error) {
       console.error('Error completing onboarding:', error);
-      localStorage.setItem('elec-mate-onboarding-done', 'true');
+      storageSetSync('elec-mate-onboarding-done', 'true');
       onClose();
     } finally {
       setIsCompleting(false);
@@ -119,7 +120,7 @@ const WelcomeModal = ({ isOpen, onClose }: WelcomeModalProps) => {
   };
 
   const handleSkip = async () => {
-    localStorage.setItem('elec-mate-onboarding-done', 'true');
+    storageSetSync('elec-mate-onboarding-done', 'true');
     if (!user) {
       onClose();
       return;

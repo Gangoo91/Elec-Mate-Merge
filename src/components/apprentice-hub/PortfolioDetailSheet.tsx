@@ -63,6 +63,7 @@ import {
   Sparkles,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { copyToClipboard } from '@/utils/clipboard';
 import { usePortfolioComments } from '@/hooks/portfolio/usePortfolioComments';
 import { usePortfolioSharing } from '@/hooks/portfolio/usePortfolioSharing';
 import { usePortfolioData } from '@/hooks/portfolio/usePortfolioData';
@@ -311,7 +312,7 @@ export function PortfolioDetailSheet({
 
   const handleCopyLink = async () => {
     try {
-      await navigator.clipboard.writeText(shareUrl);
+      await copyToClipboard(shareUrl);
       setCopied(true);
       toast({
         title: 'Link copied',

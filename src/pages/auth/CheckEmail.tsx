@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { supabase } from '@/integrations/supabase/client';
+import { storageGetSync } from '@/utils/storage';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Loader2, Zap, Mail, CheckCircle2, RefreshCw } from 'lucide-react';
@@ -15,9 +16,9 @@ const CheckEmail = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Get email from localStorage (set during signup)
-    const storedEmail = localStorage.getItem('elec-mate-pending-email');
-    const storedName = localStorage.getItem('elec-mate-pending-name');
+    // Get email from storage (set during signup)
+    const storedEmail = storageGetSync('elec-mate-pending-email');
+    const storedName = storageGetSync('elec-mate-pending-name');
 
     if (!storedEmail) {
       // No pending email, redirect to signup

@@ -5,6 +5,7 @@
 
 import { useState, useMemo, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { copyToClipboard } from '@/utils/clipboard';
 import {
   Search,
   Sparkles,
@@ -463,7 +464,7 @@ export function AIILPGeneratorSection({ onNavigate }: AIILPGeneratorSectionProps
           `  ${i + 1}. [${t.category.toUpperCase()}] ${t.description}\n     Success criteria: ${t.successCriteria}\n     Target date: ${fmtDate(new Date(t.targetDate))}`
       ),
     ];
-    navigator.clipboard.writeText(lines.join('\n')).then(() => {
+    copyToClipboard(lines.join('\n')).then(() => {
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
     });

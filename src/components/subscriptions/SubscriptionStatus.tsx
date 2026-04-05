@@ -5,6 +5,7 @@ import { useState } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/components/ui/use-toast';
 import { Capacitor } from '@capacitor/core';
+import { openExternalUrl } from '@/utils/open-external-url';
 
 // Helper function to calculate days remaining in trial
 const getDaysRemaining = (trialEndsAt: Date | null): number => {
@@ -33,7 +34,7 @@ const SubscriptionStatus = () => {
           platform === 'ios'
             ? 'https://apps.apple.com/account/subscriptions'
             : 'https://play.google.com/store/account/subscriptions';
-        window.open(url, '_blank');
+        openExternalUrl(url);
         return;
       }
 

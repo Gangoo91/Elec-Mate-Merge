@@ -15,6 +15,7 @@ import {
 } from 'lucide-react';
 import { useState, useRef, useEffect } from 'react';
 import { supabase } from '@/integrations/supabase/client';
+import { storageGetSync, storageRemoveSync } from '@/utils/storage';
 import { useToast } from '@/components/ui/use-toast';
 import { useAuth } from '@/contexts/AuthContext';
 import { stripePriceData, PlanDetails } from '@/data/stripePrices';
@@ -60,7 +61,7 @@ const PlansList = ({ billing }: PlansListProps) => {
       addBreadcrumb('Checkout started', 'payment', { planId, priceId });
 
       // Check for stored offer code from signup
-      const offerCode = localStorage.getItem('elec-mate-offer-code');
+      const offerCode = storageGetSync('elec-mate-offer-code');
 
       const { data, error } = await supabase.functions.invoke('create-checkout', {
         body: { priceId, mode: 'subscription', planId, offerCode },
@@ -71,7 +72,7 @@ const PlansList = ({ billing }: PlansListProps) => {
       if (data?.url) {
         // Clear offer code after successful checkout creation
         if (offerCode) {
-          localStorage.removeItem('elec-mate-offer-code');
+          storageRemoveSync('elec-mate-offer-code');
         }
 
         trackMilestone('Checkout Session Created', { planId, hasOfferCode: !!offerCode });

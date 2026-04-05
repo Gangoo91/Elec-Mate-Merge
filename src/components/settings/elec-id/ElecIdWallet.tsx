@@ -9,6 +9,7 @@
 
 import { useState } from 'react';
 import { Capacitor } from '@capacitor/core';
+import { openExternalUrl } from '@/utils/open-external-url';
 import { Filesystem, Directory } from '@capacitor/filesystem';
 import { Share } from '@capacitor/share';
 import { supabase } from '@/integrations/supabase/client';
@@ -145,13 +146,7 @@ export default function ElecIdWallet({ elecIdNumber }: ElecIdWalletProps) {
       const { saveUrl } = data as { saveUrl: string };
       if (!saveUrl) throw new Error('No save URL returned');
 
-      if (isNative) {
-        // Use Capacitor Browser for in-app Google OAuth / save flow
-        const { Browser } = await import('@capacitor/browser');
-        await Browser.open({ url: saveUrl });
-      } else {
-        window.open(saveUrl, '_blank', 'noopener,noreferrer');
-      }
+      await openExternalUrl(saveUrl);
     } catch (err) {
       const msg = err instanceof Error ? err.message : 'Failed to generate pass';
       console.error('[ElecIdWallet] Google error:', err);

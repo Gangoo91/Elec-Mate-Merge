@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { useTimeEntries } from '@/hooks/time-tracking/useTimeEntries';
 import { useNotifications } from '@/components/notifications/NotificationProvider';
+import { storageGetJSONSync, storageSetJSONSync } from '@/utils/storage';
 
 // Define milestone thresholds in minutes
 const MILESTONES = [
@@ -64,10 +65,10 @@ export const useTrackMilestones = () => {
         });
 
         // Store this milestone as achieved
-        const achievedMilestones = JSON.parse(localStorage.getItem('achievedMilestones') || '[]');
+        const achievedMilestones = storageGetJSONSync<number[]>('achievedMilestones', []);
         if (!achievedMilestones.includes(milestone.minutes)) {
           achievedMilestones.push(milestone.minutes);
-          localStorage.setItem('achievedMilestones', JSON.stringify(achievedMilestones));
+          storageSetJSONSync('achievedMilestones', achievedMilestones);
         }
       }
     });

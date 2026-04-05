@@ -1,6 +1,7 @@
 import { useNavigate, useLocation } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import { motion } from 'framer-motion';
+import { storageGetJSONSync, storageRemoveSync } from '@/utils/storage';
 import {
   CheckCircle,
   ArrowLeft,
@@ -13,6 +14,7 @@ import { QuoteWizard } from '@/components/electrician/quote-builder/QuoteWizard'
 import { useQuoteStorage } from '@/hooks/useQuoteStorage';
 import { useState, useEffect } from 'react';
 import { VoiceFormProvider } from '@/contexts/VoiceFormContext';
+import { useHaptic } from '@/hooks/useHaptic';
 import { Button } from '@/components/ui/button';
 import { supabase } from '@/integrations/supabase/client';
 import {
@@ -73,6 +75,7 @@ type MaterialsContext = {
 const QuoteBuilderCreate = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  const haptic = useHaptic();
   const { refreshQuotes } = useQuoteStorage();
   const [costContext, setCostContext] = useState<Record<string, unknown> | null>(null);
   const [certificateContext, setCertificateContext] = useState<CertificateContext | null>(null);
@@ -97,38 +100,34 @@ const QuoteBuilderCreate = () => {
     const materialsSessionId = params.get('materialsSessionId');
 
     if (costSessionId) {
-      const storedContext = localStorage.getItem(costSessionId);
-      if (storedContext) {
-        const parsed = JSON.parse(storedContext);
+      const parsed = storageGetJSONSync<any>(costSessionId, null);
+      if (parsed) {
         setCostContext(parsed.costData);
-        localStorage.removeItem(costSessionId);
+        storageRemoveSync(costSessionId);
       }
     }
 
     if (certificateSessionId) {
-      const storedContext = localStorage.getItem(certificateSessionId);
-      if (storedContext) {
-        const parsed = JSON.parse(storedContext);
+      const parsed = storageGetJSONSync<any>(certificateSessionId, null);
+      if (parsed) {
         setCertificateContext(parsed.certificateData);
-        localStorage.removeItem(certificateSessionId);
+        storageRemoveSync(certificateSessionId);
       }
     }
 
     if (siteVisitSessionId) {
-      const storedContext = localStorage.getItem(siteVisitSessionId);
-      if (storedContext) {
-        const parsed = JSON.parse(storedContext);
+      const parsed = storageGetJSONSync<any>(siteVisitSessionId, null);
+      if (parsed) {
         setSiteVisitContext(parsed.siteVisitData);
-        localStorage.removeItem(siteVisitSessionId);
+        storageRemoveSync(siteVisitSessionId);
       }
     }
 
     if (materialsSessionId) {
-      const storedContext = localStorage.getItem(materialsSessionId);
-      if (storedContext) {
-        const parsed = JSON.parse(storedContext);
+      const parsed = storageGetJSONSync<any>(materialsSessionId, null);
+      if (parsed) {
         setMaterialsContext(parsed.materialsData);
-        localStorage.removeItem(materialsSessionId);
+        storageRemoveSync(materialsSessionId);
       }
     }
 
@@ -184,6 +183,7 @@ const QuoteBuilderCreate = () => {
   }, [location]);
 
   const handleQuoteGenerated = () => {
+    haptic.success();
     refreshQuotes();
     if (projectId) {
       navigate(`/electrician/projects/${projectId}`);

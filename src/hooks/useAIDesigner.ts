@@ -3,6 +3,7 @@ import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
 import { DesignInputs, InstallationDesign } from '@/types/installation-design';
 import { ensureCalculations } from '@/lib/calculators/bs7671-calculations';
+import { storageGetJSONSync, storageSetJSONSync, storageRemoveSync } from '@/utils/storage';
 
 // Fix 3: Client-side timeout increased to 360s to prevent premature reconnection
 const CLIENT_TIMEOUT_MS = 360000; // 360s (6m) - extra buffer for validation + formatting
@@ -36,17 +37,16 @@ export const useAIDesigner = () => {
   const [startTime, setStartTime] = useState<number>(0);
   const [progress, setProgress] = useState<DesignProgress | null>(() => {
     // Restore progress from localStorage on mount
-    const savedProgress = localStorage.getItem('designer-progress');
-    return savedProgress ? JSON.parse(savedProgress) : null;
+    return storageGetJSONSync<DesignProgress | null>('designer-progress', null);
   });
 
   // Persist progress to localStorage
   const setProgressWithPersistence = (newProgress: DesignProgress | null) => {
     setProgress(newProgress);
     if (newProgress) {
-      localStorage.setItem('designer-progress', JSON.stringify(newProgress));
+      storageSetJSONSync('designer-progress', newProgress);
     } else {
-      localStorage.removeItem('designer-progress');
+      storageRemoveSync('designer-progress');
     }
   };
   const [retryMessage, setRetryMessage] = useState('');

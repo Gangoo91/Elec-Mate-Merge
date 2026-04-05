@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { Project } from '@/types/project';
+import { storageGetJSONSync, storageSetJSONSync } from '@/utils/storage';
 
 export const useProjects = () => {
   const [projects, setProjects] = useState<Project[]>([]);
@@ -10,10 +11,7 @@ export const useProjects = () => {
     // Load projects from localStorage on initial load
     const loadProjects = () => {
       try {
-        const storedProjects = localStorage.getItem('electrician-projects');
-        if (storedProjects) {
-          setProjects(JSON.parse(storedProjects));
-        }
+        setProjects(storageGetJSONSync<Project[]>('electrician-projects', []));
       } catch (error) {
         console.error('Error loading projects:', error);
       } finally {
@@ -24,10 +22,10 @@ export const useProjects = () => {
     loadProjects();
   }, []);
 
-  // Save projects to localStorage whenever the projects state changes
+  // Save projects to storage whenever the projects state changes
   useEffect(() => {
     if (!loading) {
-      localStorage.setItem('electrician-projects', JSON.stringify(projects));
+      storageSetJSONSync('electrician-projects', projects);
     }
   }, [projects, loading]);
 

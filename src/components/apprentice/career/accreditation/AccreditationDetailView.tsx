@@ -15,6 +15,7 @@ import {
   RefreshCw,
   Star,
 } from 'lucide-react';
+import { openExternalUrl } from '@/utils/open-external-url';
 import { AccreditationOption } from './enhancedAccreditationData';
 
 interface AccreditationDetailViewProps {
@@ -974,7 +975,7 @@ const AccreditationDetailView = ({ accreditation, onBack }: AccreditationDetailV
         {accreditation.website !== 'Various providers' && (
           <Button
             className="h-11 bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90 touch-manipulation active:scale-95 transition-all"
-            onClick={() => window.open(accreditation.website, '_blank')}
+            onClick={() => openExternalUrl(accreditation.website)}
           >
             <ExternalLink className="mr-2 h-4 w-4" />
             Visit Provider Website

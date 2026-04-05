@@ -1,4 +1,5 @@
 import React from 'react';
+import { openExternalUrl } from '@/utils/open-external-url';
 import { MapPin, Star, Phone, Globe, Clock, X, Navigation } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
@@ -73,14 +74,14 @@ const ProviderInfoOverlay: React.FC<ProviderInfoOverlayProps> = ({
 
   const handleViewWebsite = () => {
     if (selectedProvider.website) {
-      window.open(selectedProvider.website, '_blank', 'noopener,noreferrer');
+      openExternalUrl(selectedProvider.website);
     }
   };
 
   const handleGetDirections = () => {
     const { lat, lng } = selectedProvider.location;
     const url = `https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}&destination_place_id=${selectedProvider.place_id}`;
-    window.open(url, '_blank', 'noopener,noreferrer');
+    openExternalUrl(url);
   };
 
   const handleCall = () => {

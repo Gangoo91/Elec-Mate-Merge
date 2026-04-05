@@ -21,6 +21,7 @@ import {
 } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from '@/hooks/use-toast';
+import { getCurrentPosition } from '@/utils/geolocation';
 import SignaturePad from '@/components/forms/SignaturePad';
 import { format } from 'date-fns';
 import { cn } from '@/lib/utils';
@@ -165,10 +166,8 @@ const BriefingSignOff = () => {
       // Get location if available
       let location: { lat?: number; lng?: number } = {};
       try {
-        const pos = await new Promise<GeolocationPosition>((resolve, reject) => {
-          navigator.geolocation.getCurrentPosition(resolve, reject, { timeout: 5000 });
-        });
-        location = { lat: pos.coords.latitude, lng: pos.coords.longitude };
+        const pos = await getCurrentPosition({ timeout: 5000 });
+        location = { lat: pos.latitude, lng: pos.longitude };
       } catch {
         // Location not available - continue without it
       }

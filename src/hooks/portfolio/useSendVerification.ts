@@ -13,6 +13,7 @@ import { useState, useCallback } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/contexts/AuthContext';
 import { toast } from 'sonner';
+import { copyToClipboard } from '@/utils/clipboard';
 
 type VerificationType = 'portfolio' | 'time_entry';
 
@@ -62,7 +63,7 @@ async function triggerShare(url: string, title: string): Promise<void> {
 
   // Final fallback: clipboard copy
   try {
-    await navigator.clipboard.writeText(url);
+    await copyToClipboard(url);
     toast.success('Verification link copied to clipboard');
   } catch {
     toast.error('Could not copy link — please copy manually');

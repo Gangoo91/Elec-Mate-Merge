@@ -1,3 +1,4 @@
+import { copyToClipboard } from '@/utils/clipboard';
 import { useState, useCallback } from 'react';
 import { Copy, Check, ChevronDown } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
@@ -112,12 +113,12 @@ const TouchStepVoltageCalculator = () => {
       `Result: ${result.passOrFail.toUpperCase()}`,
     ];
 
-    try {
-      await navigator.clipboard.writeText(lines.join('\n'));
+    const ok = await copyToClipboard(lines.join('\n'));
+    if (ok) {
       setCopied(true);
       toast({ title: 'Copied to clipboard' });
       setTimeout(() => setCopied(false), 2000);
-    } catch {
+    } else {
       toast({ title: 'Failed to copy', variant: 'destructive' });
     }
   }, [result, toast]);

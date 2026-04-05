@@ -1,4 +1,6 @@
 import { useState, useEffect } from 'react';
+import { copyToClipboard } from '@/utils/clipboard';
+import { openExternalUrl } from '@/utils/open-external-url';
 import {
   Dialog,
   DialogContent,
@@ -60,8 +62,8 @@ export const ShareElecIDDialog = ({ open, onOpenChange, profile }: ShareElecIDDi
 
   const displayLink = shareLink || `https://elec-id.app/profile/${profile.elec_id_number}`;
 
-  const handleCopyLink = () => {
-    navigator.clipboard.writeText(displayLink);
+  const handleCopyLink = async () => {
+    await copyToClipboard(displayLink);
     toast({
       title: 'Link Copied',
       description: 'Share link has been copied to clipboard.',
@@ -83,7 +85,7 @@ export const ShareElecIDDialog = ({ open, onOpenChange, profile }: ShareElecIDDi
     const body = encodeURIComponent(
       `Please find the Elec-ID credentials for ${profile.employee?.name || 'the worker'}:\n\n${displayLink}`
     );
-    window.open(`mailto:${recipientEmail}?subject=${subject}&body=${body}`);
+    openExternalUrl(`mailto:${recipientEmail}?subject=${subject}&body=${body}`);
 
     toast({
       title: 'Profile Shared',

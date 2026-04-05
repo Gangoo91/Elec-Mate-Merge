@@ -1,4 +1,5 @@
 import { useState, useCallback, useMemo } from 'react';
+import { openExternalUrl } from '@/utils/open-external-url';
 import { Sheet, SheetContent } from '@/components/ui/sheet';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
@@ -7,6 +8,7 @@ import { usePhotoShare, PhotoShareLink } from '@/hooks/usePhotoShare';
 import { PHOTO_TYPES } from '@/hooks/usePhotoProjects';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from '@/hooks/use-toast';
+import { copyToClipboard } from '@/utils/clipboard';
 import {
   Mail,
   MessageCircle,
@@ -183,7 +185,7 @@ export default function ShareProjectSheet({
         const normalisedPhone = normaliseUkPhone(phoneNumber.trim());
         const text = `Here are ${filteredPhotos.length} photos from ${projectReference}: ${shareUrl}`;
         const waUrl = `https://wa.me/${normalisedPhone.replace('+', '')}?text=${encodeURIComponent(text)}`;
-        window.open(waUrl, '_blank');
+        openExternalUrl(waUrl);
       }
     } catch {
       toast({
@@ -230,7 +232,7 @@ export default function ShareProjectSheet({
     async (token: string) => {
       const url = getShareUrl(token);
       try {
-        await navigator.clipboard.writeText(url);
+        await copyToClipboard(url);
         setCopied(true);
         toast({ title: 'Link copied to clipboard' });
         setTimeout(() => setCopied(false), 2000);

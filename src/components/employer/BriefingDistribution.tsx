@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { openExternalUrl } from '@/utils/open-external-url';
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -71,7 +72,7 @@ export function BriefingDistribution({
   };
 
   const handleOpenLink = () => {
-    window.open(signOffUrl, '_blank');
+    openExternalUrl(signOffUrl);
   };
 
   return (
@@ -87,7 +88,7 @@ export function BriefingDistribution({
                 </div>
                 <div>
                   <SheetTitle className="text-left">Share Briefing</SheetTitle>
-                  <p className="text-xs text-muted-foreground mt-0.5 line-clamp-1">
+                  <p className="text-xs text-white/60 mt-0.5 line-clamp-1">
                     {briefing.title}
                   </p>
                 </div>
@@ -107,7 +108,7 @@ export function BriefingDistribution({
           <div className="p-4 space-y-4">
             {/* Link Display */}
             <div className="p-3 rounded-lg bg-muted/50 border border-border">
-              <p className="text-xs text-muted-foreground mb-1">Sign-off Link</p>
+              <p className="text-xs text-white/60 mb-1">Sign-off Link</p>
               <p className="text-sm text-foreground font-mono break-all">{signOffUrl}</p>
             </div>
 
@@ -171,7 +172,7 @@ export function BriefingDistribution({
               {showWebhookConfig ? (
                 <div className="space-y-3">
                   <div>
-                    <Label className="text-xs text-muted-foreground">
+                    <Label className="text-xs text-white/60">
                       Teams Incoming Webhook URL
                     </Label>
                     <Input
@@ -180,7 +181,7 @@ export function BriefingDistribution({
                       placeholder="https://outlook.office.com/webhook/..."
                       className="h-11 mt-1 text-sm touch-manipulation"
                     />
-                    <p className="text-xs text-muted-foreground mt-1">
+                    <p className="text-xs text-white/60 mt-1">
                       Create an Incoming Webhook connector in your Teams channel
                     </p>
                   </div>
@@ -256,7 +257,7 @@ export function BriefingDistribution({
                     <Button
                       variant="ghost"
                       onClick={() => setShowWebhookConfig(true)}
-                      className="w-full h-11 text-xs text-muted-foreground touch-manipulation"
+                      className="w-full h-11 text-xs text-white/60 touch-manipulation"
                     >
                       <Settings className="h-3 w-3 mr-1" />
                       Update Webhook URL
@@ -268,7 +269,7 @@ export function BriefingDistribution({
 
             {/* Instructions */}
             <div className="p-3 rounded-lg bg-blue-500/10 border border-blue-500/20">
-              <p className="text-xs text-muted-foreground">
+              <p className="text-xs text-white/60">
                 <strong className="text-foreground">How to distribute:</strong> Share the link or QR
                 code with your team. They can scan it with their phone camera to sign off on the
                 briefing instantly.

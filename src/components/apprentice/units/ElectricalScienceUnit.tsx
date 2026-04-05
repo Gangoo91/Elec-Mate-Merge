@@ -3,6 +3,7 @@ import SectionBox from '@/components/apprentice/SectionBox';
 import { useParams } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
 import { userKey } from '@/lib/userStorage';
+import { storageGetSync } from '@/utils/storage';
 
 interface ElectricalScienceUnitProps {
   unitCode: string;
@@ -16,7 +17,7 @@ const ElectricalScienceUnit = ({ unitCode, onResourceClick }: ElectricalScienceU
 
   // Load completion status (user-scoped)
   useEffect(() => {
-    const storedQuizStatus = localStorage.getItem(
+    const storedQuizStatus = storageGetSync(
       userKey(user?.id, `unit_${unitCode}_quiz_completed`)
     );
     if (storedQuizStatus === 'true') {

@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
+import { storageGetJSONSync, storageSetJSONSync, storageRemoveSync } from '@/utils/storage';
 
 export interface TestProgress {
   stepId: string;
@@ -34,35 +35,29 @@ export const useCommissioningProgress = (
   const [progress, setProgress] = useState<CommissioningProgressData | null>(null);
   const [hasExistingSession, setHasExistingSession] = useState(false);
 
-  // Load progress from localStorage on mount
+  // Load progress from storage on mount
   useEffect(() => {
-    const stored = localStorage.getItem(STORAGE_KEY);
-    if (stored) {
-      try {
-        const data = JSON.parse(stored) as CommissioningProgressData;
-
-        // Validate and fix data structure to prevent crashes
-        if (!Array.isArray(data.testResults)) {
-          console.warn('Invalid testResults array, resetting to empty array');
-          data.testResults = [];
-        }
-        if (!Array.isArray(data.visualChecks)) {
-          console.warn('Invalid visualChecks array, resetting to empty array');
-          data.visualChecks = [];
-        }
-
-        setProgress(data);
-        setHasExistingSession(true);
-      } catch (error) {
-        console.error('Failed to parse stored progress:', error);
+    const data = storageGetJSONSync<CommissioningProgressData | null>(STORAGE_KEY, null);
+    if (data) {
+      // Validate and fix data structure to prevent crashes
+      if (!Array.isArray(data.testResults)) {
+        console.warn('Invalid testResults array, resetting to empty array');
+        data.testResults = [];
       }
+      if (!Array.isArray(data.visualChecks)) {
+        console.warn('Invalid visualChecks array, resetting to empty array');
+        data.visualChecks = [];
+      }
+
+      setProgress(data);
+      setHasExistingSession(true);
     }
   }, []);
 
   // Auto-save progress whenever it changes
   useEffect(() => {
     if (progress) {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(progress));
+      storageSetJSONSync(STORAGE_KEY, progress);
     }
   }, [progress]);
 
@@ -147,7 +142,7 @@ export const useCommissioningProgress = (
   }, []);
 
   const clearProgress = useCallback(() => {
-    localStorage.removeItem(STORAGE_KEY);
+    storageRemoveSync(STORAGE_KEY);
     setProgress(null);
     setHasExistingSession(false);
   }, []);

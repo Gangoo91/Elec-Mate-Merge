@@ -1,3 +1,4 @@
+import { openExternalUrl } from '@/utils/open-external-url';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -150,7 +151,7 @@ const NewsHero = ({ article }: NewsHeroProps) => {
                 <Button
                   size="lg"
                   className="bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90 font-semibold px-8 shadow-lg"
-                  onClick={() => window.open(article.external_url, '_blank', 'noopener,noreferrer')}
+                  onClick={() => openExternalUrl(article.external_url)}
                   aria-label="Visit original article"
                 >
                   <ExternalLink className="h-5 w-5 mr-2" />

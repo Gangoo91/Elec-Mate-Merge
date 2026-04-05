@@ -102,7 +102,7 @@ export const PhotoTimeline = ({
 
   if (photos.length === 0) {
     return (
-      <div className="flex flex-col items-center justify-center py-16 text-muted-foreground">
+      <div className="flex flex-col items-center justify-center py-16 text-white/60">
         <Camera className="h-12 w-12 mb-4 opacity-30" />
         <p className="text-lg font-medium">No photos yet</p>
         <p className="text-sm opacity-60">Photos will appear here in chronological order</p>
@@ -134,9 +134,9 @@ export const PhotoTimeline = ({
                   </Badge>
                 </div>
                 {expanded ? (
-                  <ChevronUp className="h-4 w-4 text-muted-foreground" />
+                  <ChevronUp className="h-4 w-4 text-white/60" />
                 ) : (
-                  <ChevronDown className="h-4 w-4 text-muted-foreground" />
+                  <ChevronDown className="h-4 w-4 text-white/60" />
                 )}
               </button>
 
@@ -164,7 +164,7 @@ export const PhotoTimeline = ({
                           <div className="flex gap-3 p-3">
                             {/* Photo thumbnail */}
                             <div className="relative w-16 h-16 flex-shrink-0 rounded-md overflow-hidden bg-gradient-to-br from-muted/50 to-muted/30 flex items-center justify-center">
-                              <Camera className="h-6 w-6 text-muted-foreground/40" />
+                              <Camera className="h-6 w-6 text-white/60/40" />
                             </div>
 
                             {/* Photo details */}
@@ -174,17 +174,17 @@ export const PhotoTimeline = ({
                                   <h4 className="font-medium text-foreground text-sm truncate">
                                     {photo.jobTitle}
                                   </h4>
-                                  <span className="inline-block text-[10px] px-1.5 py-0.5 rounded capitalize mt-0.5 bg-muted/50 text-muted-foreground">
+                                  <span className="inline-block text-[10px] px-1.5 py-0.5 rounded capitalize mt-0.5 bg-muted/50 text-white/60">
                                     {photo.category}
                                   </span>
                                 </div>
-                                <span className="text-[10px] text-muted-foreground flex items-center gap-1 flex-shrink-0">
+                                <span className="text-[10px] text-white/60 flex items-center gap-1 flex-shrink-0">
                                   <Clock className="h-3 w-3" />
                                   {formatTime(photo.timestamp)}
                                 </span>
                               </div>
 
-                              <div className="mt-1.5 flex items-center gap-3 text-[10px] text-muted-foreground">
+                              <div className="mt-1.5 flex items-center gap-3 text-[10px] text-white/60">
                                 <span className="flex items-center gap-1">
                                   <Avatar className="h-3.5 w-3.5">
                                     <AvatarFallback className="text-[6px] bg-elec-yellow/20 text-elec-yellow">

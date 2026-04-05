@@ -26,6 +26,7 @@ import { cn } from '@/lib/utils';
 import { useUpdateBriefingContent, type Briefing } from '@/hooks/useBriefings';
 import { sanitizeHtmlSafe } from '@/utils/inputSanitization';
 import { useToast } from '@/hooks/use-toast';
+import { storageGetSync, storageSetSync, storageRemoveSync } from '@/utils/storage';
 
 interface BriefingEditorProps {
   open: boolean;
@@ -62,7 +63,7 @@ export function BriefingEditor({ open, onOpenChange, briefing, onSaved }: Briefi
     onUpdate: ({ editor }) => {
       setHasChanges(true);
       // Auto-save draft
-      localStorage.setItem(draftKey, editor.getHTML());
+      storageSetSync(draftKey, editor.getHTML());
     },
     editorProps: {
       attributes: {
@@ -84,7 +85,7 @@ export function BriefingEditor({ open, onOpenChange, briefing, onSaved }: Briefi
   // Load draft on mount
   useEffect(() => {
     if (editor) {
-      const draft = localStorage.getItem(draftKey);
+      const draft = storageGetSync(draftKey);
       if (draft && draft !== briefing.content) {
         // Ask user if they want to restore draft
         const useDraft = window.confirm(
@@ -94,7 +95,7 @@ export function BriefingEditor({ open, onOpenChange, briefing, onSaved }: Briefi
           editor.commands.setContent(draft);
           setHasChanges(true);
         } else {
-          localStorage.removeItem(draftKey);
+          storageRemoveSync(draftKey);
           editor.commands.setContent(briefing.content || '');
         }
       } else {
@@ -111,7 +112,7 @@ export function BriefingEditor({ open, onOpenChange, briefing, onSaved }: Briefi
       );
       if (!confirmClose) return;
     }
-    localStorage.removeItem(draftKey);
+    storageRemoveSync(draftKey);
     onOpenChange(false);
   }, [hasChanges, draftKey, onOpenChange]);
 
@@ -129,7 +130,7 @@ export function BriefingEditor({ open, onOpenChange, briefing, onSaved }: Briefi
       });
 
       // Clear draft
-      localStorage.removeItem(draftKey);
+      storageRemoveSync(draftKey);
       setHasChanges(false);
 
       toast({
@@ -350,7 +351,7 @@ export function BriefingEditor({ open, onOpenChange, briefing, onSaved }: Briefi
             </div>
 
             {/* Help text */}
-            <div className="flex justify-between text-xs text-muted-foreground mt-2">
+            <div className="flex justify-between text-xs text-white/60 mt-2">
               <span>Use headings to structure your briefing. Changes auto-save as draft.</span>
             </div>
 

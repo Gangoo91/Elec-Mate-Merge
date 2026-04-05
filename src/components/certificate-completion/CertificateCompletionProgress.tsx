@@ -19,7 +19,7 @@ import {
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useIsMobile } from '@/hooks/use-mobile';
-import { useHaptics } from '@/hooks/useHaptics';
+import { useHaptic } from '@/hooks/useHaptic';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 
 export interface CompletionStep {
@@ -84,12 +84,12 @@ export const CertificateCompletionProgress: React.FC<CertificateCompletionProgre
   onStepClick,
 }) => {
   const isMobile = useIsMobile();
-  const haptics = useHaptics();
+  const haptic = useHaptic();
   const [expandedStep, setExpandedStep] = React.useState<string | null>(null);
 
   const handleStepClick = (step: CompletionStep) => {
     if (step.missingItems && step.missingItems.length > 0) {
-      haptics.tap();
+      haptic.light();
       setExpandedStep(expandedStep === step.id ? null : step.id);
     }
     onStepClick?.(step.id);

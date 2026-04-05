@@ -8,6 +8,8 @@ import { useToast } from '@/components/ui/use-toast';
 import { Progress } from '@/components/ui/progress';
 import { useAuth } from '@/contexts/AuthContext';
 import { userKey } from '@/lib/userStorage';
+import { useHaptic } from '@/hooks/useHaptic';
+import { storageGetSync, storageSetSync, storageGetJSONSync, storageSetJSONSync } from '@/utils/storage';
 
 interface QuizContentProps {
   effectiveCourseSlug: string;
@@ -25,6 +27,7 @@ const QuizContent = ({
   const navigate = useNavigate();
   const { toast } = useToast();
   const { user } = useAuth();
+  const haptic = useHaptic();
   const [quizStarted, setQuizStarted] = useState(false);
   const [quizSubmitted, setQuizSubmitted] = useState(false);
   const [timeRemaining, setTimeRemaining] = useState<number>(30 * 60); // 30 minutes in seconds
@@ -68,6 +71,7 @@ const QuizContent = ({
   }, [quizStarted, quizSubmitted, toast]);
 
   const handleStartQuiz = () => {
+    haptic.medium();
     setQuizStarted(true);
     toast({
       title: 'Quiz Started',
@@ -76,6 +80,7 @@ const QuizContent = ({
   };
 
   const handleQuizComplete = (score: number, totalQuestions: number) => {
+    haptic.success();
     // Mark quiz as completed
     markAsComplete();
 
@@ -87,18 +92,16 @@ const QuizContent = ({
     try {
       const uid = user?.id;
       const existingTime = parseInt(
-        localStorage.getItem(userKey(uid, `course_${effectiveCourseSlug}_todayTime`)) || '0'
+        storageGetSync(userKey(uid, `course_${effectiveCourseSlug}_todayTime`)) || '0'
       );
       const newTime = existingTime + timeTaken;
-      localStorage.setItem(
+      storageSetSync(
         userKey(uid, `course_${effectiveCourseSlug}_todayTime`),
         newTime.toString()
       );
 
-      // Record quiz attempt in localStorage (user-scoped)
-      const attempts = JSON.parse(
-        localStorage.getItem(userKey(uid, `unit_${unitCode}_quiz_attempts`)) || '[]'
-      );
+      // Record quiz attempt in storage (user-scoped)
+      const attempts = storageGetJSONSync<any[]>(userKey(uid, `unit_${unitCode}_quiz_attempts`), []);
       attempts.push({
         date: new Date().toISOString(),
         score,
@@ -106,9 +109,9 @@ const QuizContent = ({
         timeTaken,
         percentage: Math.round((score / totalQuestions) * 100),
       });
-      localStorage.setItem(
+      storageSetJSONSync(
         userKey(uid, `unit_${unitCode}_quiz_attempts`),
-        JSON.stringify(attempts)
+        attempts
       );
     } catch (error) {
       console.error('Error saving quiz result:', error);

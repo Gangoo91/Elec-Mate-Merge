@@ -193,7 +193,7 @@ export function VariationOrderDetailSheet({
                 {variationOrder.status}
               </Badge>
             </div>
-            {jobTitle && <p className="text-sm text-muted-foreground">{jobTitle}</p>}
+            {jobTitle && <p className="text-sm text-white/60">{jobTitle}</p>}
           </SheetHeader>
 
           {/* Content */}
@@ -206,10 +206,10 @@ export function VariationOrderDetailSheet({
               )}
             >
               <div className="text-center">
-                <p className="text-sm text-muted-foreground mb-1">Value</p>
+                <p className="text-sm text-white/60 mb-1">Value</p>
                 {isEditing ? (
                   <div className="relative max-w-[200px] mx-auto">
-                    <PoundSterling className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
+                    <PoundSterling className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-white/60" />
                     <Input
                       type="number"
                       step="1"
@@ -231,7 +231,7 @@ export function VariationOrderDetailSheet({
             <Card className="p-4 space-y-4">
               {/* Description */}
               <div>
-                <Label className="text-xs text-muted-foreground">Description</Label>
+                <Label className="text-xs text-white/60">Description</Label>
                 {isEditing ? (
                   <Textarea
                     className="mt-1 min-h-[100px]"
@@ -246,7 +246,7 @@ export function VariationOrderDetailSheet({
 
               {/* Created Date */}
               <div className="flex items-center justify-between py-2 border-t border-border/50">
-                <span className="text-sm text-muted-foreground flex items-center gap-1">
+                <span className="text-sm text-white/60 flex items-center gap-1">
                   <Calendar className="h-3 w-3" />
                   Created
                 </span>
@@ -257,7 +257,7 @@ export function VariationOrderDetailSheet({
 
               {/* Job Link */}
               <div className="flex items-center justify-between py-2 border-t border-border/50">
-                <span className="text-sm text-muted-foreground flex items-center gap-1">
+                <span className="text-sm text-white/60 flex items-center gap-1">
                   <Building2 className="h-3 w-3" />
                   Job
                 </span>
@@ -266,7 +266,7 @@ export function VariationOrderDetailSheet({
 
               {/* Notes */}
               <div className="pt-2 border-t border-border/50">
-                <Label className="text-xs text-muted-foreground">Notes</Label>
+                <Label className="text-xs text-white/60">Notes</Label>
                 {isEditing ? (
                   <Textarea
                     className="mt-1 min-h-[80px]"
@@ -275,11 +275,11 @@ export function VariationOrderDetailSheet({
                     placeholder="Additional notes..."
                   />
                 ) : variationOrder.notes ? (
-                  <p className="mt-1 text-sm text-muted-foreground whitespace-pre-wrap">
+                  <p className="mt-1 text-sm text-white/60 whitespace-pre-wrap">
                     {variationOrder.notes}
                   </p>
                 ) : (
-                  <p className="mt-1 text-sm text-muted-foreground italic">No notes</p>
+                  <p className="mt-1 text-sm text-white/60 italic">No notes</p>
                 )}
               </div>
             </Card>
@@ -287,7 +287,7 @@ export function VariationOrderDetailSheet({
             {/* Approval Info */}
             {variationOrder.approved_by && (
               <Card className="p-4">
-                <Label className="text-xs text-muted-foreground mb-3 block">Approval Details</Label>
+                <Label className="text-xs text-white/60 mb-3 block">Approval Details</Label>
                 <div className="flex items-start gap-3">
                   <div
                     className={cn(
@@ -307,7 +307,7 @@ export function VariationOrderDetailSheet({
                       {variationOrder.approved_by}
                     </p>
                     {variationOrder.approved_date && (
-                      <p className="text-xs text-muted-foreground">
+                      <p className="text-xs text-white/60">
                         {format(new Date(variationOrder.approved_date), 'dd MMM yyyy')}
                       </p>
                     )}
@@ -323,7 +323,7 @@ export function VariationOrderDetailSheet({
                   <AlertCircle className="h-4 w-4 text-amber-500 mt-0.5" />
                   <div className="text-sm">
                     <p className="font-medium text-amber-500">Pending Approval</p>
-                    <p className="text-muted-foreground">
+                    <p className="text-white/60">
                       Approving this variation will add{' '}
                       {formatCurrency(Number(variationOrder.value))} to the job budget.
                     </p>

@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Crown, TrendingDown, Star, ExternalLink, Plus } from 'lucide-react';
 import { MobileButton } from '@/components/ui/mobile-button';
 import { useIsMobile } from '@/hooks/use-mobile';
+import { openExternalUrl } from '@/utils/open-external-url';
 
 export interface PriceComparisonItem {
   id: number;
@@ -208,7 +209,7 @@ export const ProductCard = ({
               <Button
                 size="sm"
                 variant="outline"
-                onClick={() => window.open(product.productUrl, '_blank')}
+                onClick={() => openExternalUrl(product.productUrl)}
                 className="border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10 h-8 w-8 p-0"
               >
                 <ExternalLink className="h-3 w-3" />
@@ -335,7 +336,7 @@ export const ProductCard = ({
                 <Button
                   size="sm"
                   variant="outline"
-                  onClick={() => window.open(product.productUrl, '_blank')}
+                  onClick={() => openExternalUrl(product.productUrl)}
                   className="border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10 h-8 w-8 p-0"
                 >
                   <ExternalLink className="h-3 w-3" />

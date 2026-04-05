@@ -15,20 +15,12 @@ import {
   SheetDescription,
 } from '@/components/ui/sheet';
 import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
 import { useToast } from '@/hooks/use-toast';
 import { supabase, SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY } from '@/integrations/supabase/client';
-import { Download, Edit, Loader2, FileText, AlertCircle, AlertTriangle, X } from 'lucide-react';
+import { Download, Edit, Loader2, FileText, AlertCircle, AlertTriangle } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { optimizeForPdfGeneration, formatSizeWarning } from '@/utils/pdfDataOptimizer';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
-import { format } from 'date-fns';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -277,23 +269,20 @@ export const ReportPdfViewer = ({ reportId, open, onOpenChange }: ReportPdfViewe
         setReport(reportData);
         setCurrentVersion({
           id: reportData.id,
-          version: reportData.version || 1,
+          version: reportData.edit_version || 1,
           created_at: reportData.created_at,
           certificate_number: reportData.certificate_number,
-          is_latest_version: reportData.is_latest_version ?? true,
+          is_latest_version: true,
         });
 
-        // Fetch all versions if this report has a parent or children
-        const parentId = reportData.parent_report_id || reportData.id;
-        const { data: versionData } = await supabase
-          .from('reports')
-          .select('id, version, created_at, certificate_number, is_latest_version')
-          .or(`id.eq.${parentId},parent_report_id.eq.${parentId}`)
-          .order('version', { ascending: true });
-
-        if (versionData) {
-          setVersions(versionData);
-        }
+        // Single version — versioning columns don't exist on reports table
+        setVersions([{
+          id: reportData.id,
+          version: reportData.edit_version || 1,
+          created_at: reportData.created_at,
+          certificate_number: reportData.certificate_number,
+          is_latest_version: true,
+        }]);
 
         // Smart PDF retrieval - check validity before using cached URL
         const validUrl = await getValidPdfUrl(reportData);
@@ -525,13 +514,18 @@ export const ReportPdfViewer = ({ reportId, open, onOpenChange }: ReportPdfViewe
 
   const navigateToForm = () => {
     const reportType = report.report_type.toLowerCase();
-    navigate('/', {
-      state: {
-        reportId: report.id,
-        section: reportType,
-        reportType: reportType,
-      },
-    });
+    // Dedicated route types navigate to their own routes
+    const dedicatedRouteTypes = ['ev-charging', 'fire-alarm', 'emergency-lighting', 'pat-testing', 'solar-pv'];
+    if (dedicatedRouteTypes.includes(reportType)) {
+      navigate(`/electrician/inspection-testing/${reportType}/${report.report_id || report.id}`);
+    } else {
+      // Legacy types use section-based routing via query params
+      const params = new URLSearchParams();
+      params.set('section', reportType);
+      params.set('reportId', report.report_id || report.id);
+      params.set('reportType', reportType);
+      navigate(`/electrician/inspection-testing?${params.toString()}`);
+    }
     onOpenChange(false);
   };
 
@@ -543,8 +537,12 @@ export const ReportPdfViewer = ({ reportId, open, onOpenChange }: ReportPdfViewe
       if (!user) throw new Error('Not authenticated');
 
       // Create new version
-      const newVersion = report.version + 1;
-      const newCertNumber = `${report.certificate_number.split('-V')[0]}-V${newVersion}`;
+      const currentEditVersion = report.edit_version || 1;
+      const newEditVersion = currentEditVersion + 1;
+      const newCertNumber = `${report.certificate_number.split('-V')[0]}-V${newEditVersion}`;
+      // Generate a new report_id with incremented version
+      const baseReportId = report.report_id?.replace(/-V\d+$/, '') || report.report_id;
+      const newReportId = `${baseReportId}-V${newEditVersion}`;
 
       const { data: newReport, error } = await supabase
         .from('reports')
@@ -553,12 +551,10 @@ export const ReportPdfViewer = ({ reportId, open, onOpenChange }: ReportPdfViewe
           customer_id: report.customer_id,
           report_type: report.report_type,
           certificate_number: newCertNumber,
-          report_id: report.report_id,
+          report_id: newReportId,
           data: report.data,
           status: 'draft',
-          version: newVersion,
-          parent_report_id: report.parent_report_id || report.id,
-          is_latest_version: true,
+          edit_version: newEditVersion,
           inspection_date: report.inspection_date,
           client_name: report.client_name,
           installation_address: report.installation_address,
@@ -569,22 +565,18 @@ export const ReportPdfViewer = ({ reportId, open, onOpenChange }: ReportPdfViewe
 
       if (error) throw error;
 
-      // Mark old version as not latest
-      await supabase.from('reports').update({ is_latest_version: false }).eq('id', report.id);
-
       toast({
         title: 'New Version Created',
         description: `Version ${newVersion} created successfully`,
       });
 
       // Navigate to edit new version
-      navigate('/', {
-        state: {
-          reportId: newReport.id,
-          section: report.report_type.toLowerCase(),
-          reportType: report.report_type.toLowerCase(),
-        },
-      });
+      const reportType = report.report_type.toLowerCase();
+      const params = new URLSearchParams();
+      params.set('section', reportType);
+      params.set('reportId', newReport.report_id || newReport.id);
+      params.set('reportType', reportType);
+      navigate(`/electrician/inspection-testing?${params.toString()}`);
       onOpenChange(false);
     } catch (error) {
       console.error('Error creating version:', error);
@@ -640,14 +632,14 @@ export const ReportPdfViewer = ({ reportId, open, onOpenChange }: ReportPdfViewe
 
   // Shared content for both mobile and desktop
   const renderPdfContent = () => (
-    <div className="flex-1 overflow-auto bg-muted/50 relative">
+    <div className="flex-1 overflow-auto bg-background relative">
       <div className="h-full flex flex-col">
         {/* Size Warning Alert */}
         {sizeWarning && (
           <Alert variant="default" className="m-4 mb-0">
             <AlertTriangle className="h-4 w-4" />
-            <AlertTitle>Data Size Warning</AlertTitle>
-            <AlertDescription className="text-xs whitespace-pre-line mt-2">
+            <AlertTitle className="text-white">Data Size Warning</AlertTitle>
+            <AlertDescription className="text-xs text-white whitespace-pre-line mt-2">
               {sizeWarning}
             </AlertDescription>
           </Alert>
@@ -657,17 +649,9 @@ export const ReportPdfViewer = ({ reportId, open, onOpenChange }: ReportPdfViewe
         {generationError && (
           <Alert variant="destructive" className="m-4 mb-0">
             <AlertCircle className="h-4 w-4" />
-            <AlertTitle>PDF Generation Failed</AlertTitle>
-            <AlertDescription className="text-xs mt-2">
+            <AlertTitle className="text-white">PDF Generation Failed</AlertTitle>
+            <AlertDescription className="text-xs text-white mt-2">
               {generationError}
-              <br />
-              <br />
-              <strong>Common causes:</strong>
-              <ul className="list-disc list-inside mt-1">
-                <li>Data size exceeds 1MB limit (check for large embedded images)</li>
-                <li>Network timeout or edge function error</li>
-                <li>Invalid data format</li>
-              </ul>
             </AlertDescription>
           </Alert>
         )}
@@ -676,20 +660,25 @@ export const ReportPdfViewer = ({ reportId, open, onOpenChange }: ReportPdfViewe
         <div className="flex-1 relative">
           {isGenerating || isLoadingPreview ? (
             <div className="absolute inset-0 flex flex-col items-center justify-center p-6">
-              <Loader2 className="h-12 w-12 animate-spin text-primary mb-4" />
-              <p className="text-muted-foreground">
+              <Loader2 className="h-10 w-10 animate-spin text-elec-yellow mb-4" />
+              <p className="text-sm font-medium text-white">
                 {isGenerating ? 'Generating PDF...' : 'Loading preview...'}
               </p>
-              <p className="text-xs text-muted-foreground mt-2">This may take a moment</p>
+              <p className="text-xs text-white mt-1">This may take a moment</p>
             </div>
           ) : blobUrl ? (
             isMobile ? (
               <div className="absolute inset-0 flex flex-col items-center justify-center p-6">
-                <FileText className="h-16 w-16 text-primary mb-4" />
-                <p className="text-center mb-4 text-muted-foreground">
-                  PDF preview not available on mobile
+                <div className="p-4 rounded-2xl bg-elec-yellow/10 border border-elec-yellow/20 mb-5">
+                  <FileText className="h-10 w-10 text-elec-yellow" />
+                </div>
+                <p className="text-sm font-medium text-white text-center mb-1">
+                  PDF Ready
                 </p>
-                <Button onClick={handleDownload} className="h-12 px-6 touch-manipulation">
+                <p className="text-xs text-white text-center mb-5">
+                  Tap below to view or share
+                </p>
+                <Button onClick={handleDownload} className="h-12 px-8 rounded-xl bg-elec-yellow text-black font-semibold hover:bg-yellow-400 touch-manipulation active:scale-[0.98]">
                   <Download className="h-5 w-5 mr-2" />
                   Open PDF
                 </Button>
@@ -704,22 +693,22 @@ export const ReportPdfViewer = ({ reportId, open, onOpenChange }: ReportPdfViewe
             )
           ) : pdfUrl && !blobUrl ? (
             <div className="absolute inset-0 flex flex-col items-center justify-center p-6">
-              <AlertCircle className="h-12 w-12 text-amber-500 mb-4" />
-              <p className="text-muted-foreground mb-2">Preview unavailable</p>
+              <div className="p-4 rounded-2xl bg-amber-500/10 border border-amber-500/20 mb-5">
+                <AlertCircle className="h-10 w-10 text-amber-400" />
+              </div>
+              <p className="text-sm font-medium text-white mb-1">Preview unavailable</p>
               {previewError && (
-                <p className="text-xs text-red-400 mb-4 max-w-md text-center">
-                  Error: {previewError}
-                </p>
+                <p className="text-xs text-red-400 mb-4 max-w-md text-center">{previewError}</p>
               )}
-              <Button onClick={handleDownload} className="h-11 touch-manipulation">
+              <Button onClick={handleDownload} className="h-12 px-6 rounded-xl bg-elec-yellow text-black font-semibold hover:bg-yellow-400 touch-manipulation active:scale-[0.98]">
                 <Download className="h-4 w-4 mr-2" />
-                Download PDF Instead
+                Download PDF
               </Button>
               <Button
                 variant="outline"
                 onClick={() => report && generatePdf(report)}
                 disabled={isGenerating}
-                className="h-11 touch-manipulation mt-2"
+                className="h-11 rounded-xl touch-manipulation mt-2 text-white border-white/[0.08]"
               >
                 <Loader2 className={cn('h-4 w-4 mr-2', isGenerating && 'animate-spin')} />
                 Regenerate PDF
@@ -727,15 +716,17 @@ export const ReportPdfViewer = ({ reportId, open, onOpenChange }: ReportPdfViewe
             </div>
           ) : !generationError && !pdfUrl ? (
             <div className="absolute inset-0 flex flex-col items-center justify-center p-6">
-              <AlertCircle className="h-12 w-12 text-muted-foreground mb-4" />
-              <p className="text-muted-foreground mb-2">No PDF generated yet</p>
-              <p className="text-xs text-muted-foreground mb-4">
+              <div className="p-4 rounded-2xl bg-white/[0.06] border border-white/[0.08] mb-5">
+                <FileText className="h-10 w-10 text-white" />
+              </div>
+              <p className="text-sm font-medium text-white mb-1">No PDF generated yet</p>
+              <p className="text-xs text-white mb-5">
                 Generate a PDF from the certificate form first
               </p>
               <Button
                 onClick={() => report && generatePdf(report)}
                 disabled={!report || isGenerating}
-                className="h-11 touch-manipulation"
+                className="h-12 px-6 rounded-xl bg-elec-yellow text-black font-semibold hover:bg-yellow-400 touch-manipulation active:scale-[0.98]"
               >
                 {isGenerating ? (
                   <>
@@ -745,7 +736,7 @@ export const ReportPdfViewer = ({ reportId, open, onOpenChange }: ReportPdfViewe
                 ) : (
                   <>
                     <FileText className="h-4 w-4 mr-2" />
-                    Generate PDF Now
+                    Generate PDF
                   </>
                 )}
               </Button>
@@ -761,22 +752,19 @@ export const ReportPdfViewer = ({ reportId, open, onOpenChange }: ReportPdfViewe
       {/* Mobile: Bottom Sheet */}
       {isMobile && (
         <Sheet open={open} onOpenChange={onOpenChange}>
-          <SheetContent side="bottom" className="h-[75vh] p-0 rounded-t-2xl flex flex-col">
-            <SheetHeader className="px-4 pt-4 pb-3 border-b flex-shrink-0">
+          <SheetContent side="bottom" className="h-[80vh] p-0 rounded-t-2xl flex flex-col bg-background">
+            <SheetHeader className="px-4 pt-4 pb-3 border-b border-white/[0.06] flex-shrink-0">
               <SheetDescription className="sr-only">
-                View and manage certificate PDF versions
+                View and manage certificate PDF
               </SheetDescription>
               <div className="flex items-center justify-between gap-2">
-                <div className="flex items-center gap-2 min-w-0 flex-1">
-                  <FileText className="h-5 w-5 text-primary flex-shrink-0" />
-                  <SheetTitle className="text-base font-semibold truncate">
+                <div className="flex items-center gap-2.5 min-w-0 flex-1">
+                  <div className="p-1.5 rounded-lg bg-elec-yellow/10 border border-elec-yellow/20 flex-shrink-0">
+                    <FileText className="h-4 w-4 text-elec-yellow" />
+                  </div>
+                  <SheetTitle className="text-sm font-semibold text-white truncate">
                     {report?.certificate_number || 'Loading...'}
                   </SheetTitle>
-                  {currentVersion?.is_latest_version && (
-                    <Badge variant="default" className="text-xs">
-                      Latest
-                    </Badge>
-                  )}
                 </div>
                 <div className="flex items-center gap-1 flex-shrink-0">
                   {pdfUrl && (
@@ -785,7 +773,7 @@ export const ReportPdfViewer = ({ reportId, open, onOpenChange }: ReportPdfViewe
                       size="icon"
                       onClick={() => generatePdf(report)}
                       disabled={isGenerating}
-                      className="h-10 w-10 touch-manipulation"
+                      className="h-10 w-10 touch-manipulation rounded-xl hover:bg-white/10 text-white"
                       title="Regenerate PDF"
                     >
                       <Loader2 className={cn('h-4 w-4', isGenerating && 'animate-spin')} />
@@ -796,16 +784,15 @@ export const ReportPdfViewer = ({ reportId, open, onOpenChange }: ReportPdfViewe
                     size="icon"
                     onClick={handleEdit}
                     disabled={isGenerating}
-                    className="h-10 w-10 touch-manipulation"
+                    className="h-10 w-10 touch-manipulation rounded-xl hover:bg-white/10 text-white"
                   >
                     <Edit className="h-4 w-4" />
                   </Button>
                   <Button
-                    variant="default"
                     size="icon"
                     onClick={handleDownload}
                     disabled={!pdfUrl || isGenerating}
-                    className="h-10 w-10 touch-manipulation"
+                    className="h-10 w-10 touch-manipulation rounded-xl bg-elec-yellow text-black hover:bg-yellow-400"
                   >
                     <Download className="h-4 w-4" />
                   </Button>
@@ -820,50 +807,19 @@ export const ReportPdfViewer = ({ reportId, open, onOpenChange }: ReportPdfViewe
       {/* Desktop: Dialog */}
       {!isMobile && (
         <Dialog open={open} onOpenChange={onOpenChange}>
-          <DialogContent className="max-w-4xl h-[80vh] flex flex-col p-0">
-            <DialogHeader className="px-6 pt-6 pb-4 border-b">
+          <DialogContent className="max-w-4xl h-[80vh] flex flex-col p-0 bg-background border-white/[0.08]">
+            <DialogHeader className="px-6 pt-6 pb-4 border-b border-white/[0.06]">
               <DialogDescription className="sr-only">
-                View and manage certificate PDF versions
+                View and manage certificate PDF
               </DialogDescription>
               <div className="flex items-center justify-between gap-4">
                 <div className="flex items-center gap-3 min-w-0 flex-1">
-                  <FileText className="h-5 w-5 text-primary flex-shrink-0" />
-                  <DialogTitle className="text-lg sm:text-xl truncate">
+                  <div className="p-1.5 rounded-lg bg-elec-yellow/10 border border-elec-yellow/20 flex-shrink-0">
+                    <FileText className="h-4 w-4 text-elec-yellow" />
+                  </div>
+                  <DialogTitle className="text-base font-semibold text-white truncate">
                     {report?.certificate_number || 'Loading...'}
                   </DialogTitle>
-                  {currentVersion && (
-                    <>
-                      {versions.length > 1 && (
-                        <DropdownMenu>
-                          <DropdownMenuTrigger asChild>
-                            <Button variant="outline" size="sm" className="flex-shrink-0">
-                              V{currentVersion.version} ▼
-                            </Button>
-                          </DropdownMenuTrigger>
-                          <DropdownMenuContent align="end">
-                            {versions.map((version) => (
-                              <DropdownMenuItem
-                                key={version.id}
-                                onClick={() => handleVersionChange(version.id)}
-                                className="flex items-center justify-between gap-4"
-                              >
-                                <span>V{version.version}</span>
-                                <span className="text-xs text-muted-foreground">
-                                  {format(new Date(version.created_at), 'dd/MM/yyyy')}
-                                </span>
-                                {version.is_latest_version && (
-                                  <Badge variant="default" className="ml-2">
-                                    Latest
-                                  </Badge>
-                                )}
-                              </DropdownMenuItem>
-                            ))}
-                          </DropdownMenuContent>
-                        </DropdownMenu>
-                      )}
-                      {currentVersion.is_latest_version && <Badge variant="default">Latest</Badge>}
-                    </>
-                  )}
                 </div>
                 <div className="flex items-center gap-2 flex-shrink-0">
                   {pdfUrl && (
@@ -873,19 +829,20 @@ export const ReportPdfViewer = ({ reportId, open, onOpenChange }: ReportPdfViewe
                       onClick={() => generatePdf(report)}
                       disabled={isGenerating}
                       title="Regenerate PDF"
+                      className="text-white hover:bg-white/10 rounded-xl"
                     >
                       <Loader2 className={cn('h-4 w-4', isGenerating && 'animate-spin')} />
                     </Button>
                   )}
-                  <Button variant="outline" size="sm" onClick={handleEdit} disabled={isGenerating}>
+                  <Button variant="outline" size="sm" onClick={handleEdit} disabled={isGenerating} className="rounded-xl text-white border-white/[0.08] hover:bg-white/10">
                     <Edit className="h-4 w-4 mr-2" />
                     Edit
                   </Button>
                   <Button
-                    variant="outline"
                     size="sm"
                     onClick={handleDownload}
                     disabled={!pdfUrl || isGenerating}
+                    className="rounded-xl bg-elec-yellow text-black font-semibold hover:bg-yellow-400"
                   >
                     <Download className="h-4 w-4 mr-2" />
                     Download
@@ -900,28 +857,28 @@ export const ReportPdfViewer = ({ reportId, open, onOpenChange }: ReportPdfViewe
 
       {/* Edit Dialog - Create New Version */}
       <AlertDialog open={showEditDialog} onOpenChange={setShowEditDialog}>
-        <AlertDialogContent>
+        <AlertDialogContent className="bg-background border-white/[0.08]">
           <AlertDialogHeader>
-            <AlertDialogTitle>Edit Previous Version?</AlertDialogTitle>
-            <AlertDialogDescription>
+            <AlertDialogTitle className="text-white">Edit Previous Version?</AlertDialogTitle>
+            <AlertDialogDescription className="text-white">
               You're viewing version {currentVersion?.version}. Would you like to:
-              <ul className="list-disc list-inside mt-4 space-y-2">
+              <ul className="list-disc list-inside mt-4 space-y-2 text-white">
                 <li>
-                  <strong>Edit Current Version</strong> - Modify V{currentVersion?.version} directly
+                  <strong>Edit Current Version</strong> — Modify V{currentVersion?.version} directly
                 </li>
                 <li>
-                  <strong>Create New Version</strong> - Create V{(currentVersion?.version || 0) + 1}{' '}
+                  <strong>Create New Version</strong> — Create V{(currentVersion?.version || 0) + 1}{' '}
                   based on this version
                 </li>
               </ul>
             </AlertDialogDescription>
           </AlertDialogHeader>
-          <AlertDialogFooter>
-            <AlertDialogCancel>Cancel</AlertDialogCancel>
-            <Button variant="outline" onClick={navigateToForm}>
+          <AlertDialogFooter className="gap-2 sm:gap-0">
+            <AlertDialogCancel className="rounded-xl text-white border-white/[0.08] hover:bg-white/10">Cancel</AlertDialogCancel>
+            <Button variant="outline" onClick={navigateToForm} className="rounded-xl text-white border-white/[0.08] hover:bg-white/10">
               Edit V{currentVersion?.version}
             </Button>
-            <AlertDialogAction onClick={handleCreateNewVersion}>
+            <AlertDialogAction onClick={handleCreateNewVersion} className="rounded-xl bg-elec-yellow text-black font-semibold hover:bg-yellow-400">
               Create V{(currentVersion?.version || 0) + 1}
             </AlertDialogAction>
           </AlertDialogFooter>

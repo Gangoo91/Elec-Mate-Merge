@@ -1,3 +1,4 @@
+import { openExternalUrl } from '@/utils/open-external-url';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetClose, SheetTitle } from '@/components/ui/sheet';
@@ -86,7 +87,7 @@ const ModernCoursesDetailsModal = ({
 
   const handleExternalLink = () => {
     if (courseUrl) {
-      window.open(courseUrl, '_blank', 'noopener,noreferrer');
+      openExternalUrl(courseUrl);
     }
   };
 

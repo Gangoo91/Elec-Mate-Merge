@@ -10,6 +10,7 @@ import { useMemo, useState } from 'react';
 import { ChevronDown, ChevronUp, TrendingUp, TrendingDown, Minus, Flame } from 'lucide-react';
 import type { SiteDiaryEntry } from '@/hooks/site-diary/useSiteDiaryEntries';
 import { useDiaryStreak } from '@/hooks/site-diary/useDiaryStreak';
+import { storageGetSync, storageSetSync } from '@/utils/storage';
 
 const COLLAPSE_KEY = 'elec-mate-diary-weekly-collapsed';
 
@@ -32,21 +33,13 @@ export function DiaryWeeklySummary({
   const { currentStreak, milestones, nextMilestone, daysToNextMilestone, streakMessage } =
     useDiaryStreak(entries);
   const [collapsed, setCollapsed] = useState(() => {
-    try {
-      return localStorage.getItem(COLLAPSE_KEY) === 'true';
-    } catch {
-      return false;
-    }
+    return storageGetSync(COLLAPSE_KEY) === 'true';
   });
 
   const toggleCollapsed = () => {
     const next = !collapsed;
     setCollapsed(next);
-    try {
-      localStorage.setItem(COLLAPSE_KEY, String(next));
-    } catch {
-      /* ignore */
-    }
+    storageSetSync(COLLAPSE_KEY, String(next));
   };
 
   const { thisWeek, lastWeek } = useMemo(() => {

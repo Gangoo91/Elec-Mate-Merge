@@ -1,4 +1,5 @@
 import { useState, useEffect, useMemo, useRef, useCallback } from 'react';
+import { storageGetJSONSync, storageSetJSONSync, storageRemoveSync } from '@/utils/storage';
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
@@ -40,14 +41,9 @@ export function SmartSearchSheet({
   const inputRef = useRef<HTMLInputElement>(null);
   const [recentSearches, setRecentSearches] = useState<RecentSearch[]>([]);
 
-  // Load recent searches from localStorage
+  // Load recent searches from storage
   useEffect(() => {
-    try {
-      const stored = localStorage.getItem(RECENT_SEARCHES_KEY);
-      if (stored) setRecentSearches(JSON.parse(stored));
-    } catch {
-      // ignore
-    }
+    setRecentSearches(storageGetJSONSync<RecentSearch[]>(RECENT_SEARCHES_KEY, []));
   }, []);
 
   // Focus input when sheet opens
@@ -66,14 +62,14 @@ export function SmartSearchSheet({
         ...recentSearches.filter((r) => r.query !== searchQuery.trim()),
       ].slice(0, MAX_RECENT);
       setRecentSearches(updated);
-      localStorage.setItem(RECENT_SEARCHES_KEY, JSON.stringify(updated));
+      storageSetJSONSync(RECENT_SEARCHES_KEY, updated);
     },
     [recentSearches]
   );
 
   const clearRecentSearches = () => {
     setRecentSearches([]);
-    localStorage.removeItem(RECENT_SEARCHES_KEY);
+    storageRemoveSync(RECENT_SEARCHES_KEY);
   };
 
   const results = useMemo(() => {

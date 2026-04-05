@@ -24,6 +24,7 @@ import { useSwipeable } from 'react-swipeable';
 import { format } from 'date-fns';
 import { toast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
+import { copyToClipboard } from '@/utils/clipboard';
 import ThumbnailStrip from './ThumbnailStrip';
 import AnnotationCanvas from './AnnotationCanvas';
 
@@ -129,7 +130,7 @@ export default function PhotoViewer({
       }
     } else {
       // Fallback - copy URL
-      navigator.clipboard.writeText(photo.file_url);
+      copyToClipboard(photo.file_url);
     }
   }, [photo]);
 

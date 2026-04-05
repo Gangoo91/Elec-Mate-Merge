@@ -49,7 +49,7 @@ export function GoogleMapsApiKeyInput({
             <MapPin className="h-6 w-6 text-elec-yellow" />
           </div>
           <h3 className="font-semibold text-lg">{title}</h3>
-          <p className="text-sm text-muted-foreground">{description}</p>
+          <p className="text-sm text-white/60">{description}</p>
         </div>
 
         <div className="space-y-3">

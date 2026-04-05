@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { getHealthSafetySectionById, getSubsectionById } from '@/data/healthAndSafety/index';
 import type { Subsection } from '@/data/healthAndSafety/types';
+import { storageGetSync, storageSetSync } from '@/utils/storage';
 
 interface UseSubsectionContentProps {
   courseSlug?: string;
@@ -52,7 +53,7 @@ export function useSubsectionContent({
 
           // Check completion status
           const storageKey = `completion_hs_${sectionId}_${subsectionId}`;
-          const storedCompletion = localStorage.getItem(storageKey);
+          const storedCompletion = storageGetSync(storageKey);
           setIsCompleted(storedCompletion === 'true');
           console.log('Checking completion status:', storageKey, storedCompletion);
         } else {
@@ -76,7 +77,7 @@ export function useSubsectionContent({
   const markAsComplete = () => {
     if (sectionId && subsectionId) {
       const storageKey = `completion_hs_${sectionId}_${subsectionId}`;
-      localStorage.setItem(storageKey, 'true');
+      storageSetSync(storageKey, 'true');
       setIsCompleted(true);
       console.log('Marked as complete:', storageKey);
     }

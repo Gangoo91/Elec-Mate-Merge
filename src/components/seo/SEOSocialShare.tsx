@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Link2, Check, Mail } from 'lucide-react';
+import { copyToClipboard } from '@/utils/clipboard';
 
 interface SEOSocialShareProps {
   url: string;
@@ -14,7 +15,7 @@ export function SEOSocialShare({ url, title }: SEOSocialShareProps) {
 
   const copyLink = async () => {
     try {
-      await navigator.clipboard.writeText(fullUrl);
+      await copyToClipboard(fullUrl);
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
     } catch {

@@ -12,6 +12,7 @@ import {
   Info,
   ArrowRight,
 } from 'lucide-react';
+import { openExternalUrl } from '@/utils/open-external-url';
 import AccreditationSearchForm, {
   AccreditationSearchFilters,
 } from './accreditation/AccreditationSearchForm';
@@ -274,7 +275,7 @@ const EnhancedProfessionalAccreditation = () => {
                 <Button
                   variant="ghost"
                   size="sm"
-                  onClick={() => window.open('https://www.theiet.org', '_blank')}
+                  onClick={() => openExternalUrl('https://www.theiet.org')}
                 >
                   <ExternalLink className="h-3 w-3" />
                 </Button>
@@ -284,7 +285,7 @@ const EnhancedProfessionalAccreditation = () => {
                 <Button
                   variant="ghost"
                   size="sm"
-                  onClick={() => window.open('https://www.eca.co.uk', '_blank')}
+                  onClick={() => openExternalUrl('https://www.eca.co.uk')}
                 >
                   <ExternalLink className="h-3 w-3" />
                 </Button>
@@ -294,7 +295,7 @@ const EnhancedProfessionalAccreditation = () => {
                 <Button
                   variant="ghost"
                   size="sm"
-                  onClick={() => window.open('https://www.niceic.com', '_blank')}
+                  onClick={() => openExternalUrl('https://www.niceic.com')}
                 >
                   <ExternalLink className="h-3 w-3" />
                 </Button>
@@ -310,7 +311,7 @@ const EnhancedProfessionalAccreditation = () => {
                 <Button
                   variant="ghost"
                   size="sm"
-                  onClick={() => window.open('https://www.citb.co.uk', '_blank')}
+                  onClick={() => openExternalUrl('https://www.citb.co.uk')}
                 >
                   <ExternalLink className="h-3 w-3" />
                 </Button>
@@ -320,7 +321,7 @@ const EnhancedProfessionalAccreditation = () => {
                 <Button
                   variant="ghost"
                   size="sm"
-                  onClick={() => window.open('https://www.iosh.com', '_blank')}
+                  onClick={() => openExternalUrl('https://www.iosh.com')}
                 >
                   <ExternalLink className="h-3 w-3" />
                 </Button>

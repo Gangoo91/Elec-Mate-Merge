@@ -1,3 +1,4 @@
+import { openExternalUrl } from '@/utils/open-external-url';
 import {
   ExternalLink,
   MapPin,
@@ -108,16 +109,16 @@ const ModernEducationDetailsModal = ({
   const handleVisitProvider = () => {
     // For now, search for the institution online since institutionUrl isn't in the data structure
     const searchUrl = `https://www.google.com/search?q=${encodeURIComponent(programme.institution + ' official website')}`;
-    window.open(searchUrl, '_blank', 'noopener,noreferrer');
+    openExternalUrl(searchUrl);
   };
 
   const handleApplyNow = () => {
     if (programme.courseUrl) {
-      window.open(programme.courseUrl, '_blank', 'noopener,noreferrer');
+      openExternalUrl(programme.courseUrl);
     } else {
       // Fallback to institution search
       const searchUrl = `https://www.google.com/search?q=${encodeURIComponent(programme.title + ' ' + programme.institution + ' apply')}`;
-      window.open(searchUrl, '_blank', 'noopener,noreferrer');
+      openExternalUrl(searchUrl);
     }
   };
 

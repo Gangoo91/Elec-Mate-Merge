@@ -12,6 +12,7 @@ import { useSwipeable } from '@/hooks/use-swipeable';
 import { format } from 'date-fns';
 import { MapPin, Trash2, Share2, Pin, Calendar, AlertTriangle, X } from 'lucide-react';
 import { MobileSelectPicker } from '@/components/ui/mobile-select-picker';
+import { copyToClipboard } from '@/utils/clipboard';
 
 interface Annotation {
   x: number;
@@ -157,7 +158,7 @@ export default function PhotoDetailSheet({
         // User cancelled
       }
     } else {
-      navigator.clipboard.writeText(photo.file_url);
+      await copyToClipboard(photo.file_url);
     }
   }, [photo]);
 

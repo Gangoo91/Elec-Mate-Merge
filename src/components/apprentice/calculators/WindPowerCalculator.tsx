@@ -1,4 +1,5 @@
 import { useState, useCallback } from 'react';
+import { copyToClipboard } from '@/utils/clipboard';
 import {
   Wind,
   Copy,
@@ -419,7 +420,7 @@ export function WindPowerCalculator() {
       `Payback: ${result.paybackPeriod.toFixed(1)} years`,
       `CO₂ Savings: ${result.co2Savings.toFixed(0)} kg/yr`,
     ].join('\n');
-    navigator.clipboard.writeText(text);
+    copyToClipboard(text);
     setCopied(true);
     toast({ title: 'Copied to clipboard' });
     setTimeout(() => setCopied(false), 2000);

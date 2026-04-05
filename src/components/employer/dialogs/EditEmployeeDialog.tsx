@@ -279,7 +279,7 @@ export function EditEmployeeDialog({ employee, open, onOpenChange }: EditEmploye
                 <div className="relative">
                   <Avatar className="h-28 w-28 border-4 border-background shadow-lg">
                     <AvatarImage src={photoUrl || undefined} alt={employee.name} />
-                    <AvatarFallback className="bg-muted text-muted-foreground text-3xl">
+                    <AvatarFallback className="bg-muted text-white/60 text-3xl">
                       {employee.avatar_initials}
                     </AvatarFallback>
                   </Avatar>
@@ -316,7 +316,7 @@ export function EditEmployeeDialog({ employee, open, onOpenChange }: EditEmploye
                     Elec-ID: {elecIdProfile.elec_id_number}
                   </Badge>
                 ) : (
-                  <Badge variant="outline" className="text-muted-foreground px-3 py-1.5">
+                  <Badge variant="outline" className="text-white/60 px-3 py-1.5">
                     No Elec-ID Profile
                   </Badge>
                 )}
@@ -546,7 +546,7 @@ export function EditEmployeeDialog({ employee, open, onOpenChange }: EditEmploye
                       </>
                     )}
                     {calculateEquivalent() && (
-                      <p className="text-sm text-muted-foreground">{calculateEquivalent()}</p>
+                      <p className="text-sm text-white/60">{calculateEquivalent()}</p>
                     )}
                   </div>
                 </div>

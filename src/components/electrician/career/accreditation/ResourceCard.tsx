@@ -1,3 +1,4 @@
+import { openExternalUrl } from '@/utils/open-external-url';
 import { Button } from '@/components/ui/button';
 import { ExternalLink } from 'lucide-react';
 
@@ -10,7 +11,7 @@ interface ResourceCardProps {
 
 const ResourceCard = ({ title, description, url, isMobile = false }: ResourceCardProps) => {
   const handleClick = () => {
-    window.open(url, '_blank', 'noopener,noreferrer');
+    openExternalUrl(url);
   };
 
   return (

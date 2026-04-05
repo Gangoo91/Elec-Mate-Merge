@@ -108,7 +108,7 @@ export function TalentMapView({
     return (
       <Card className="bg-elec-gray border-border">
         <CardContent className="p-6 text-center">
-          <p className="text-muted-foreground">Loading map...</p>
+          <p className="text-white/60">Loading map...</p>
         </CardContent>
       </Card>
     );
@@ -137,7 +137,7 @@ export function TalentMapView({
             step={5}
             className="w-full"
           />
-          <div className="flex justify-between text-xs text-muted-foreground mt-2">
+          <div className="flex justify-between text-xs text-white/60 mt-2">
             <span>5mi</span>
             <span>25mi</span>
             <span>50mi</span>
@@ -307,13 +307,13 @@ export function TalentMapView({
                     <CheckCircle className="h-4 w-4 text-green-500 shrink-0" />
                   )}
                 </div>
-                <p className="text-sm text-muted-foreground">{selectedMarker.ecsCardType}</p>
+                <p className="text-sm text-white/60">{selectedMarker.ecsCardType}</p>
                 <div className="flex items-center gap-3 mt-1 text-sm">
                   <span className="flex items-center gap-1">
                     <Star className="h-3.5 w-3.5 text-yellow-500 fill-yellow-500" />
                     {selectedMarker.rating}
                   </span>
-                  <span className="flex items-center gap-1 text-muted-foreground">
+                  <span className="flex items-center gap-1 text-white/60">
                     <MapPin className="h-3.5 w-3.5" />
                     {selectedMarker.coordinates
                       ? calculateDistance(
@@ -326,7 +326,7 @@ export function TalentMapView({
                     mi
                   </span>
                   <span
-                    className={`${selectedMarker.availability === 'Immediate' ? 'text-green-500' : 'text-muted-foreground'}`}
+                    className={`${selectedMarker.availability === 'Immediate' ? 'text-green-500' : 'text-white/60'}`}
                   >
                     {selectedMarker.availability}
                   </span>
@@ -335,7 +335,7 @@ export function TalentMapView({
 
               <div className="text-right">
                 <p className="font-bold text-lg">£{selectedMarker.dayRate}</p>
-                <p className="text-xs text-muted-foreground">/day</p>
+                <p className="text-xs text-white/60">/day</p>
               </div>
 
               <Button
@@ -359,7 +359,7 @@ export function TalentMapView({
       )}
 
       {/* Stats */}
-      <div className="flex items-center justify-center gap-4 text-sm text-muted-foreground">
+      <div className="flex items-center justify-center gap-4 text-sm text-white/60">
         <span>
           {filteredElectricians.length} sparks within {radius[0]} miles
         </span>

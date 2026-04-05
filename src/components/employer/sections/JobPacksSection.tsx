@@ -39,7 +39,7 @@ import { cn } from '@/lib/utils';
 type StatusTab = 'all' | 'Draft' | 'In Progress' | 'Complete';
 
 const statusConfig = {
-  Draft: { color: 'bg-muted text-muted-foreground border-muted', icon: Clock, accent: 'muted' },
+  Draft: { color: 'bg-muted text-white/60 border-muted', icon: Clock, accent: 'muted' },
   'In Progress': { color: 'bg-info/20 text-info border-info/30', icon: Zap, accent: 'info' },
   Complete: {
     color: 'bg-success/20 text-success border-success/30',
@@ -197,7 +197,7 @@ export const JobPacksSection = () => {
               <Package className="h-5 w-5 sm:h-6 sm:w-6 text-elec-yellow shrink-0" />
               <span className="truncate">Job Packs</span>
             </h1>
-            <p className="text-muted-foreground text-xs sm:text-sm mt-0.5">
+            <p className="text-white/60 text-xs sm:text-sm mt-0.5">
               Manage jobs, documents & workers
             </p>
           </div>
@@ -237,7 +237,7 @@ export const JobPacksSection = () => {
       {/* Search */}
       <div className="relative">
         {!searchQuery && (
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none" />
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white/60 pointer-events-none" />
         )}
         <Input
           placeholder="Search job packs..."
@@ -329,7 +329,7 @@ export const JobPacksSection = () => {
               >
                 <div className="min-w-0 flex-1">
                   <p className="font-medium text-foreground text-sm truncate">{job.title}</p>
-                  <p className="text-xs text-muted-foreground truncate">{job.client}</p>
+                  <p className="text-xs text-white/60 truncate">{job.client}</p>
                 </div>
                 <Button
                   size="sm"
@@ -357,7 +357,7 @@ export const JobPacksSection = () => {
               <h3 className="text-lg font-semibold text-foreground mb-2">
                 {activeTab === 'all' ? 'No job packs yet' : `No ${activeTab.toLowerCase()} packs`}
               </h3>
-              <p className="text-muted-foreground text-sm mb-4 max-w-sm mx-auto">
+              <p className="text-white/60 text-sm mb-4 max-w-sm mx-auto">
                 Job packs bundle jobs with auto-generated RAMS, method statements, and briefing
                 packs.
               </p>
@@ -400,7 +400,7 @@ export const JobPacksSection = () => {
                     <h3 className="font-semibold text-foreground text-base truncate">
                       {jobPack.title}
                     </h3>
-                    <div className="flex items-center gap-2 text-sm text-muted-foreground mt-0.5">
+                    <div className="flex items-center gap-2 text-sm text-white/60 mt-0.5">
                       <span className="truncate">{jobPack.client}</span>
                       <span>•</span>
                       <span className="flex items-center gap-1 shrink-0">
@@ -444,7 +444,7 @@ export const JobPacksSection = () => {
                         'flex items-center gap-1 text-xs font-medium px-2 py-1 rounded-md',
                         jobPack.rams_generated
                           ? 'bg-success/20 text-success'
-                          : 'bg-muted text-muted-foreground'
+                          : 'bg-muted text-white/60'
                       )}
                     >
                       <FileText className="h-3 w-3" />
@@ -455,7 +455,7 @@ export const JobPacksSection = () => {
                         'flex items-center gap-1 text-xs font-medium px-2 py-1 rounded-md',
                         jobPack.method_statement_generated
                           ? 'bg-success/20 text-success'
-                          : 'bg-muted text-muted-foreground'
+                          : 'bg-muted text-white/60'
                       )}
                     >
                       <ClipboardList className="h-3 w-3" />
@@ -466,14 +466,14 @@ export const JobPacksSection = () => {
                         'flex items-center gap-1 text-xs font-medium px-2 py-1 rounded-md',
                         jobPack.briefing_pack_generated
                           ? 'bg-success/20 text-success'
-                          : 'bg-muted text-muted-foreground'
+                          : 'bg-muted text-white/60'
                       )}
                     >
                       <BookOpen className="h-3 w-3" />
                       Brief
                     </div>
                   </div>
-                  <span className="text-xs text-muted-foreground ml-auto">{docProgress}/3</span>
+                  <span className="text-xs text-white/60 ml-auto">{docProgress}/3</span>
                 </div>
 
                 {/* Footer: Workers + Actions */}
@@ -496,19 +496,19 @@ export const JobPacksSection = () => {
                           ))}
                           {assignedEmployees.length > 3 && (
                             <div className="w-7 h-7 rounded-full bg-muted border-2 border-card flex items-center justify-center">
-                              <span className="text-[10px] font-medium text-muted-foreground">
+                              <span className="text-[10px] font-medium text-white/60">
                                 +{assignedEmployees.length - 3}
                               </span>
                             </div>
                           )}
                         </div>
-                        <span className="text-xs text-muted-foreground">
+                        <span className="text-xs text-white/60">
                           {assignedEmployees.length} worker
                           {assignedEmployees.length !== 1 ? 's' : ''}
                         </span>
                       </>
                     ) : (
-                      <span className="text-xs text-muted-foreground flex items-center gap-1">
+                      <span className="text-xs text-white/60 flex items-center gap-1">
                         <Users className="h-3.5 w-3.5" />
                         No workers assigned
                       </span>
@@ -564,7 +564,7 @@ export const JobPacksSection = () => {
 
                 {/* Value if present */}
                 {jobPack.estimated_value && (
-                  <div className="flex items-center justify-end gap-1 mt-2 text-xs text-muted-foreground">
+                  <div className="flex items-center justify-end gap-1 mt-2 text-xs text-white/60">
                     <PoundSterling className="h-3 w-3" />
                     {jobPack.estimated_value.toLocaleString()}
                   </div>

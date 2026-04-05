@@ -3,6 +3,7 @@ import { getHealthSafetySectionById } from '@/data/healthAndSafety/index';
 import { electricalTheorySections } from '@/data/electricalTheory';
 import { legislationSection } from '@/data/electricalTheory/section1-legislation';
 import type { SectionData } from '@/data/courseTypes';
+import { storageGetSync, storageSetSync } from '@/utils/storage';
 
 interface UseSectionContentDataProps {
   courseSlug: string;
@@ -56,7 +57,7 @@ export const useSectionContentData = ({
 
       // Check completion status
       const storageKey = `completion_${isElectricalTheory ? 'elec' : 'hs'}_section_${sectionId}`;
-      const storedCompletion = localStorage.getItem(storageKey);
+      const storedCompletion = storageGetSync(storageKey);
       setIsCompleted(storedCompletion === 'true');
     }
   }, [sectionId, unitSlug, isQuizRoute, isElectricalTheory]);
@@ -66,7 +67,7 @@ export const useSectionContentData = ({
     if (!sectionId) return;
 
     const storageKey = `completion_${isElectricalTheory ? 'elec' : 'hs'}_section_${sectionId}`;
-    localStorage.setItem(storageKey, 'true');
+    storageSetSync(storageKey, 'true');
     setIsCompleted(true);
     console.log(`Section ${sectionId} marked as complete with key: ${storageKey}`);
   };

@@ -3,6 +3,7 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { AlertTriangle, RefreshCw, Mail } from 'lucide-react';
 import { toast } from '@/hooks/use-toast';
+import { copyToClipboard } from '@/utils/clipboard';
 
 interface ErrorAnalysisCardProps {
   onRetry: () => void;
@@ -11,7 +12,7 @@ interface ErrorAnalysisCardProps {
 
 const ErrorAnalysisCard = ({ onRetry, possibleCauses = [] }: ErrorAnalysisCardProps) => {
   const handleContactSupport = () => {
-    navigator.clipboard.writeText('support@example.com');
+    copyToClipboard('support@example.com');
     toast({
       title: 'Email copied',
       description: 'Support email copied to clipboard',

@@ -24,7 +24,7 @@ export function StatCard({
       <CardContent className="p-4 sm:p-6">
         <div className="flex items-center justify-between gap-2">
           <div className="space-y-1 sm:space-y-2 min-w-0">
-            <p className="text-xs sm:text-sm text-muted-foreground truncate">{title}</p>
+            <p className="text-xs sm:text-sm text-white/60 truncate">{title}</p>
             <p className="text-xl sm:text-3xl font-bold text-foreground">{value}</p>
             {change && (
               <p
@@ -32,7 +32,7 @@ export function StatCard({
                   'text-xs sm:text-sm font-medium',
                   changeType === 'positive' && 'text-success',
                   changeType === 'negative' && 'text-destructive',
-                  changeType === 'neutral' && 'text-muted-foreground'
+                  changeType === 'neutral' && 'text-white/60'
                 )}
               >
                 {change}

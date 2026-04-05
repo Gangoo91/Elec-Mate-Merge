@@ -1,4 +1,5 @@
 import { useState, useCallback } from 'react';
+import { getCurrentPosition } from '@/utils/geolocation';
 
 interface Coordinates {
   lat: number;
@@ -20,24 +21,17 @@ export function useAutoLocation(): UseAutoLocationReturn {
   const [error, setError] = useState<string | null>(null);
 
   const requestLocation = useCallback(async (): Promise<string | null> => {
-    if (!navigator.geolocation) {
-      setError('Geolocation not supported');
-      return null;
-    }
-
     setIsLocating(true);
     setError(null);
 
     try {
-      const position = await new Promise<GeolocationPosition>((resolve, reject) => {
-        navigator.geolocation.getCurrentPosition(resolve, reject, {
-          enableHighAccuracy: true,
-          timeout: 10000,
-          maximumAge: 60000,
-        });
+      const position = await getCurrentPosition({
+        enableHighAccuracy: true,
+        timeout: 10000,
+        maximumAge: 60000,
       });
 
-      const { latitude, longitude } = position.coords;
+      const { latitude, longitude } = position;
       setCoordinates({ lat: latitude, lng: longitude });
 
       // Reverse geocode using free Nominatim API

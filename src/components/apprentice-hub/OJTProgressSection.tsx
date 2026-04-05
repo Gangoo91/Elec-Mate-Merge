@@ -65,6 +65,8 @@ import { useOJTGoals } from '@/hooks/time-tracking/useOJTGoals';
 import { useOJTAssessments } from '@/hooks/time-tracking/useOJTAssessments';
 import { useOJTInsights } from '@/hooks/time-tracking/useOJTInsights';
 import { useToast } from '@/hooks/use-toast';
+import { storageGetSync, storageSetSync } from '@/utils/storage';
+import { copyToClipboard } from '@/utils/clipboard';
 import { TimeEntry } from '@/types/time-tracking';
 import TimeEntryCard from '@/components/apprentice/time-tracking/TimeEntryCard';
 
@@ -293,13 +295,13 @@ export function OJTProgressSection() {
   // Milestone celebrations
   useEffect(() => {
     if (yearlyHours <= 0) return;
-    const lastCelebrated = parseInt(localStorage.getItem('ojt_last_milestone') || '0', 10);
+    const lastCelebrated = parseInt(storageGetSync('ojt_last_milestone') || '0', 10);
     const milestoneValues = [50, 100, 150, 200, 250, 300, 350, 400];
     const reached = milestoneValues.filter((m) => yearlyHours >= m);
     const currentMilestone = reached.length > 0 ? reached[reached.length - 1] : 0;
 
     if (currentMilestone > lastCelebrated) {
-      localStorage.setItem('ojt_last_milestone', currentMilestone.toString());
+      storageSetSync('ojt_last_milestone', currentMilestone.toString());
       toast({
         title: `${currentMilestone}h Milestone Reached!`,
         description: `You've logged ${currentMilestone} hours of off-the-job training!`,
@@ -449,7 +451,7 @@ export function OJTProgressSection() {
           text,
         });
       } else {
-        await navigator.clipboard.writeText(text);
+        await copyToClipboard(text);
         toast({
           title: 'Copied to clipboard',
           description: 'Share this with your supervisor',

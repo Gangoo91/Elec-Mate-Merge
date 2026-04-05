@@ -10,6 +10,7 @@ import {
 import { Copy, Clock, ChevronDown, Calculator } from 'lucide-react';
 import { toast } from '@/hooks/use-toast';
 import { cn } from '@/lib/utils';
+import { copyToClipboard } from '@/utils/clipboard';
 import { ExpectedReadingsCard } from './ExpectedReadingsCard';
 import { InstrumentSetupPanel } from './InstrumentSetupPanel';
 import { TroubleshootingPanel } from './TroubleshootingPanel';
@@ -47,7 +48,7 @@ ${test.acceptanceCriteria}
 ${test.calculation ? `\n## Calculation\n${JSON.stringify(test.calculation, null, 2)}` : ''}
 ${test.troubleshooting ? `\n## Troubleshooting\n${test.troubleshooting.map((t) => `- ${t}`).join('\n')}` : ''}`;
 
-    navigator.clipboard.writeText(markdown);
+    copyToClipboard(markdown);
     toast({
       title: 'Test procedure copied',
       description: 'Paste into your notes app',

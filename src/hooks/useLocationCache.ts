@@ -1,4 +1,5 @@
 import { useState, useCallback } from 'react';
+import { storageGetSync, storageSetJSONSync, storageRemoveSync, storageGetJSONSync } from '@/utils/storage';
 
 interface CachedLocation {
   coordinates: { lat: number; lng: number };
@@ -33,26 +34,18 @@ export function useLocationCache() {
     location: string,
     type: 'forward' | 'reverse' = 'forward'
   ): CachedLocation | null => {
-    try {
-      const cacheKey = getCacheKey(location, type);
-      const cached = localStorage.getItem(cacheKey);
+    const cacheKey = getCacheKey(location, type);
+    const data = storageGetJSONSync<CachedLocation | null>(cacheKey, null);
 
-      if (!cached) return null;
+    if (!data) return null;
 
-      const data: CachedLocation = JSON.parse(cached);
-      const now = Date.now();
-
-      // Check if cache has expired
-      if (now > data.timestamp + data.ttl) {
-        localStorage.removeItem(cacheKey);
-        return null;
-      }
-
-      return data;
-    } catch (error) {
-      console.warn('Error reading from location cache:', error);
+    // Check if cache has expired
+    if (Date.now() > data.timestamp + data.ttl) {
+      storageRemoveSync(cacheKey);
       return null;
     }
+
+    return data;
   };
 
   const setCache = (
@@ -61,20 +54,16 @@ export function useLocationCache() {
     options: LocationCacheOptions = {},
     type: 'forward' | 'reverse' = 'forward'
   ): void => {
-    try {
-      const cacheKey = getCacheKey(location, type);
-      const ttl = options.ttl || 30 * 24 * 60 * 60 * 1000; // 30 days default
+    const cacheKey = getCacheKey(location, type);
+    const ttl = options.ttl || 30 * 24 * 60 * 60 * 1000; // 30 days default
 
-      const cacheEntry: CachedLocation = {
-        ...data,
-        timestamp: Date.now(),
-        ttl,
-      };
+    const cacheEntry: CachedLocation = {
+      ...data,
+      timestamp: Date.now(),
+      ttl,
+    };
 
-      localStorage.setItem(cacheKey, JSON.stringify(cacheEntry));
-    } catch (error) {
-      console.warn('Error writing to location cache:', error);
-    }
+    storageSetJSONSync(cacheKey, cacheEntry);
   };
 
   const clearCache = useCallback((pattern?: string) => {

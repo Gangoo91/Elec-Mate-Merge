@@ -2,6 +2,7 @@ import { useState, useEffect, useCallback } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/contexts/AuthContext';
+import { storageGetJSONSync, storageSetJSONSync } from '@/utils/storage';
 import { X, Info, AlertTriangle, CheckCircle, Megaphone } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { AnimatePresence, motion } from 'framer-motion';
@@ -46,23 +47,14 @@ const typeStyles = {
   },
 };
 
-// Helper to get dismissed IDs from localStorage
+// Helper to get dismissed IDs from storage
 function getLocalDismissed(): string[] {
-  try {
-    const stored = localStorage.getItem(DISMISSED_STORAGE_KEY);
-    return stored ? JSON.parse(stored) : [];
-  } catch {
-    return [];
-  }
+  return storageGetJSONSync<string[]>(DISMISSED_STORAGE_KEY, []);
 }
 
-// Helper to save dismissed ID to localStorage
+// Helper to save dismissed ID to storage
 function saveLocalDismissed(ids: string[]) {
-  try {
-    localStorage.setItem(DISMISSED_STORAGE_KEY, JSON.stringify(ids));
-  } catch {
-    // Ignore storage errors
-  }
+  storageSetJSONSync(DISMISSED_STORAGE_KEY, ids);
 }
 
 export default function AnnouncementBanner() {

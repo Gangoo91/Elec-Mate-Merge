@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import { supabase } from '@/integrations/supabase/client';
+import { storageGetJSONSync, storageSetJSONSync } from '@/utils/storage';
 
 export interface PriceBookSettings {
   /** Default markup % applied when calculating sell price from cost price */
@@ -27,14 +28,9 @@ export function usePriceBookSettings() {
     supabase.auth.getUser().then(({ data: { user } }) => {
       if (!user) return;
       setUserId(user.id);
-      try {
-        const raw = localStorage.getItem(getStorageKey(user.id));
-        if (raw) {
-          const parsed = JSON.parse(raw) as Partial<PriceBookSettings>;
-          setSettings((prev) => ({ ...prev, ...parsed }));
-        }
-      } catch {
-        // ignore parse errors — use defaults
+      const parsed = storageGetJSONSync<Partial<PriceBookSettings> | null>(getStorageKey(user.id), null);
+      if (parsed) {
+        setSettings((prev) => ({ ...prev, ...parsed }));
       }
     });
   }, []);
@@ -43,7 +39,7 @@ export function usePriceBookSettings() {
     (percent: number) => {
       const next = { globalMarkupPercent: Math.max(0, Math.min(500, percent)) };
       setSettings(next);
-      if (userId) localStorage.setItem(getStorageKey(userId), JSON.stringify(next));
+      if (userId) storageSetJSONSync(getStorageKey(userId), next);
     },
     [userId]
   );

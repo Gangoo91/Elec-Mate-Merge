@@ -103,9 +103,9 @@ export function TeamChatList({ employerId, onSelectChannel, onSelectDM }: TeamCh
           ) : channels.length === 0 ? (
             <Card className="border-dashed">
               <CardContent className="p-6 text-center">
-                <Users className="h-10 w-10 text-muted-foreground mx-auto mb-3" />
+                <Users className="h-10 w-10 text-white/60 mx-auto mb-3" />
                 <p className="font-medium">No channels yet</p>
-                <p className="text-sm text-muted-foreground mt-1">
+                <p className="text-sm text-white/60 mt-1">
                   Create a channel to start team conversations
                 </p>
               </CardContent>
@@ -121,9 +121,9 @@ export function TeamChatList({ employerId, onSelectChannel, onSelectDM }: TeamCh
                   <div className="flex items-center gap-3">
                     <div className="h-10 w-10 rounded-lg bg-muted flex items-center justify-center shrink-0">
                       {channel.is_private ? (
-                        <Lock className="h-5 w-5 text-muted-foreground" />
+                        <Lock className="h-5 w-5 text-white/60" />
                       ) : (
-                        <Hash className="h-5 w-5 text-muted-foreground" />
+                        <Hash className="h-5 w-5 text-white/60" />
                       )}
                     </div>
                     <div className="flex-1 min-w-0">
@@ -135,7 +135,7 @@ export function TeamChatList({ employerId, onSelectChannel, onSelectDM }: TeamCh
                           </Badge>
                         )}
                       </div>
-                      <p className="text-sm text-muted-foreground truncate">
+                      <p className="text-sm text-white/60 truncate">
                         {channel.description || 'No description'}
                       </p>
                     </div>
@@ -157,9 +157,9 @@ export function TeamChatList({ employerId, onSelectChannel, onSelectDM }: TeamCh
           ) : dms.length === 0 ? (
             <Card className="border-dashed">
               <CardContent className="p-6 text-center">
-                <MessageSquare className="h-10 w-10 text-muted-foreground mx-auto mb-3" />
+                <MessageSquare className="h-10 w-10 text-white/60 mx-auto mb-3" />
                 <p className="font-medium">No direct messages</p>
-                <p className="text-sm text-muted-foreground mt-1">
+                <p className="text-sm text-white/60 mt-1">
                   Start a conversation with a team member
                 </p>
               </CardContent>
@@ -186,7 +186,7 @@ export function TeamChatList({ employerId, onSelectChannel, onSelectDM }: TeamCh
                         <div className="flex items-center justify-between gap-2">
                           <p className="font-medium truncate">Team Member</p>
                           {dm.last_message_at && (
-                            <span className="text-xs text-muted-foreground shrink-0">
+                            <span className="text-xs text-white/60 shrink-0">
                               {formatDistanceToNow(new Date(dm.last_message_at), {
                                 addSuffix: false,
                               })}
@@ -194,7 +194,7 @@ export function TeamChatList({ employerId, onSelectChannel, onSelectDM }: TeamCh
                           )}
                         </div>
                         <div className="flex items-center justify-between gap-2">
-                          <p className="text-sm text-muted-foreground truncate">
+                          <p className="text-sm text-white/60 truncate">
                             {dm.last_message_preview || 'No messages yet'}
                           </p>
                           {unreadCount > 0 && (
@@ -224,7 +224,7 @@ export function TeamChatList({ employerId, onSelectChannel, onSelectDM }: TeamCh
             <div className="space-y-2">
               <Label htmlFor="channel-name">Channel Name</Label>
               <div className="relative">
-                <Hash className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                <Hash className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white/60" />
                 <Input
                   id="channel-name"
                   value={newChannelName}
@@ -267,7 +267,7 @@ export function TeamChatList({ employerId, onSelectChannel, onSelectDM }: TeamCh
               </Button>
             </div>
 
-            <p className="text-xs text-muted-foreground">
+            <p className="text-xs text-white/60">
               {newChannelPrivate
                 ? 'Only invited members can see and join this channel.'
                 : 'Anyone in the team can see and join this channel.'}

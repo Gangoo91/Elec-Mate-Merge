@@ -1,3 +1,4 @@
+import { copyToClipboard } from '@/utils/clipboard';
 import { useState } from 'react';
 import { Plus, Trash2, Copy, Check, ChevronDown } from 'lucide-react';
 import {
@@ -105,9 +106,12 @@ const TimeMaterialsCalculator = () => {
           (m) => `  ${m.name}: ${m.quantity} × ${fmt(m.unitCost)} = ${fmt(m.quantity * m.unitCost)}`
         ),
     ];
-    navigator.clipboard.writeText(lines.join('\n'));
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
+    copyToClipboard(lines.join('\n')).then((ok) => {
+      if (ok) {
+        setCopied(true);
+        setTimeout(() => setCopied(false), 2000);
+      }
+    });
   };
 
   return (

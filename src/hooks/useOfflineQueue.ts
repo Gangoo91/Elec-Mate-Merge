@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
 import { useQueryClient } from '@tanstack/react-query';
 import { toast } from '@/hooks/use-toast';
+import { storageGetJSONSync, storageSetJSONSync, storageRemoveSync } from '@/utils/storage';
 
 interface QueuedMessage {
   id: string;
@@ -28,25 +29,14 @@ export function useOfflineQueue() {
   const processingRef = useRef(false);
   const queryClient = useQueryClient();
 
-  // Load queue from localStorage on mount
+  // Load queue from storage on mount
   useEffect(() => {
-    try {
-      const stored = localStorage.getItem(STORAGE_KEY);
-      if (stored) {
-        setQueue(JSON.parse(stored));
-      }
-    } catch (error) {
-      console.error('Error loading offline queue:', error);
-    }
+    setQueue(storageGetJSONSync<QueuedMessage[]>(STORAGE_KEY, []));
   }, []);
 
-  // Save queue to localStorage when it changes
+  // Save queue to storage when it changes
   useEffect(() => {
-    try {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(queue));
-    } catch (error) {
-      console.error('Error saving offline queue:', error);
-    }
+    storageSetJSONSync(STORAGE_KEY, queue);
   }, [queue]);
 
   // Track online status
@@ -192,7 +182,7 @@ export function useOfflineQueue() {
    */
   const clearQueue = useCallback(() => {
     setQueue([]);
-    localStorage.removeItem(STORAGE_KEY);
+    storageRemoveSync(STORAGE_KEY);
   }, []);
 
   /**

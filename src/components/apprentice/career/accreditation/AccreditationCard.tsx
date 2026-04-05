@@ -13,6 +13,7 @@ import {
 } from 'lucide-react';
 import { AccreditationOption } from './enhancedAccreditationData';
 import { isValidUrl } from '@/utils/urlUtils';
+import { openExternalUrl } from '@/utils/open-external-url';
 
 interface AccreditationCardProps {
   accreditation: AccreditationOption;
@@ -140,7 +141,7 @@ const AccreditationCard = ({ accreditation, onViewDetails }: AccreditationCardPr
               variant="outline"
               size="sm"
               className="h-10 border-elec-yellow/30 hover:bg-elec-yellow/10 px-3 touch-manipulation active:scale-95 transition-all"
-              onClick={() => window.open(accreditation.website, '_blank')}
+              onClick={() => openExternalUrl(accreditation.website)}
             >
               <ExternalLink className="h-4 w-4 text-elec-yellow" />
             </Button>

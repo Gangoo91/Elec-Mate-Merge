@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Trophy } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { storageGetJSONSync } from '@/utils/storage';
 
 interface MilestonesDisplayProps {
   className?: string;
@@ -11,8 +12,8 @@ export const MilestonesDisplay = ({ className }: MilestonesDisplayProps) => {
   const [achievedMilestones, setAchievedMilestones] = useState<number[]>([]);
 
   useEffect(() => {
-    // Load achieved milestones from localStorage
-    const storedMilestones = JSON.parse(localStorage.getItem('achievedMilestones') || '[]');
+    // Load achieved milestones from storage
+    const storedMilestones = storageGetJSONSync<number[]>('achievedMilestones', []);
     setAchievedMilestones(storedMilestones);
   }, []);
 

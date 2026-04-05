@@ -18,6 +18,7 @@ import { SmartBackButton } from '@/components/ui/smart-back-button';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { cn } from '@/lib/utils';
 import { useToast } from '@/hooks/use-toast';
+import { storageGetJSONSync, storageSetJSONSync } from '@/utils/storage';
 import {
   CalculatorCard,
   CalculatorInput,
@@ -191,14 +192,14 @@ const EquipmentROICalculator = () => {
   };
 
   const saveScenario = () => {
-    const existing = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+    const existing = storageGetJSONSync<any[]>(STORAGE_KEY, []);
     const payload = {
       id: crypto.randomUUID(),
       createdAt: new Date().toISOString(),
       inputs,
       results,
     };
-    localStorage.setItem(STORAGE_KEY, JSON.stringify([payload, ...existing].slice(0, 20)));
+    storageSetJSONSync(STORAGE_KEY, [payload, ...existing].slice(0, 20));
     toast({
       title: 'Scenario saved',
       description: 'Saved locally on this device.',

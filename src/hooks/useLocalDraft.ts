@@ -1,4 +1,5 @@
 import { useEffect, useRef, useCallback, useState } from 'react';
+import { storageSetJSONSync, storageRemoveSync, storageGetJSONSync } from '@/utils/storage';
 
 interface UseLocalDraftOptions<T> {
   /** Unique key for this draft (e.g. 'coshh-draft', 'permit-draft') */
@@ -47,28 +48,20 @@ export function useLocalDraft<T>({
 
   const storageKey = `safety-draft-${key}`;
 
-  // Write to localStorage
+  // Write to storage
   const saveDraft = useCallback(() => {
     if (!enabled) return;
-    try {
-      const envelope: DraftEnvelope<T> = {
-        data: dataRef.current,
-        timestamp: Date.now(),
-      };
-      localStorage.setItem(storageKey, JSON.stringify(envelope));
-      setStatus('saved');
-    } catch {
-      // localStorage full or unavailable — best effort
-    }
+    const envelope: DraftEnvelope<T> = {
+      data: dataRef.current,
+      timestamp: Date.now(),
+    };
+    storageSetJSONSync(storageKey, envelope);
+    setStatus('saved');
   }, [storageKey, enabled]);
 
   // Clear draft (call on successful submit)
   const clearDraft = useCallback(() => {
-    try {
-      localStorage.removeItem(storageKey);
-    } catch {
-      // noop
-    }
+    storageRemoveSync(storageKey);
     setStatus('idle');
     setRecoveredData(null);
   }, [storageKey]);
@@ -82,20 +75,14 @@ export function useLocalDraft<T>({
   // Recover draft on mount
   useEffect(() => {
     if (!enabled) return;
-    try {
-      const raw = localStorage.getItem(storageKey);
-      if (!raw) return;
-      const envelope: DraftEnvelope<T> = JSON.parse(raw);
-      const ageHours = (Date.now() - envelope.timestamp) / (1000 * 60 * 60);
-      if (ageHours < maxAgeHours && envelope.data) {
-        setRecoveredData(envelope.data);
-        setStatus('recovered');
-      } else {
-        localStorage.removeItem(storageKey);
-      }
-    } catch {
-      // Corrupt data — discard
-      localStorage.removeItem(storageKey);
+    const envelope = storageGetJSONSync<DraftEnvelope<T> | null>(storageKey, null);
+    if (!envelope) return;
+    const ageHours = (Date.now() - envelope.timestamp) / (1000 * 60 * 60);
+    if (ageHours < maxAgeHours && envelope.data) {
+      setRecoveredData(envelope.data);
+      setStatus('recovered');
+    } else {
+      storageRemoveSync(storageKey);
     }
     // Only run on mount
     // eslint-disable-next-line react-hooks/exhaustive-deps

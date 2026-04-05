@@ -34,7 +34,7 @@ const getNotificationIcon = (type: string) => {
     case 'message':
       return <MessageSquare className="h-4 w-4 text-info" />;
     default:
-      return <Bell className="h-4 w-4 text-muted-foreground" />;
+      return <Bell className="h-4 w-4 text-white/60" />;
   }
 };
 
@@ -87,11 +87,11 @@ export function NotificationBell() {
 
         <ScrollArea className="max-h-[400px]">
           {isLoading ? (
-            <div className="p-4 text-center text-muted-foreground text-sm">Loading...</div>
+            <div className="p-4 text-center text-white/60 text-sm">Loading...</div>
           ) : notifications.length === 0 ? (
             <div className="p-8 text-center">
-              <Bell className="h-8 w-8 mx-auto mb-2 text-muted-foreground/50" />
-              <p className="text-sm text-muted-foreground">No notifications yet</p>
+              <Bell className="h-8 w-8 mx-auto mb-2 text-white/60/50" />
+              <p className="text-sm text-white/60">No notifications yet</p>
             </div>
           ) : (
             <div className="divide-y">
@@ -124,10 +124,10 @@ export function NotificationBell() {
                           <div className="h-2 w-2 rounded-full bg-elec-yellow shrink-0 mt-1" />
                         )}
                       </div>
-                      <p className="text-xs text-muted-foreground mt-1 line-clamp-2">
+                      <p className="text-xs text-white/60 mt-1 line-clamp-2">
                         {notification.message}
                       </p>
-                      <p className="text-xs text-muted-foreground/70 mt-1.5">
+                      <p className="text-xs text-white/60/70 mt-1.5">
                         {formatDistanceToNow(new Date(notification.created_at), {
                           addSuffix: true,
                         })}

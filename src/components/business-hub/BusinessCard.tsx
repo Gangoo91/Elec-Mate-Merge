@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import { ChevronRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
+
 interface BusinessCardProps {
   title: string;
   description: string;
@@ -34,7 +35,7 @@ const itemVariants = {
 const BusinessCard = ({
   title,
   description,
-  icon: Icon,
+  icon: _Icon,
   href,
   onClick,
   comingSoon = false,
@@ -74,24 +75,12 @@ const BusinessCard = ({
 
       {/* Content */}
       <div className={cn('relative z-10 flex flex-col h-full', isHero ? 'p-4 sm:p-5' : 'p-3.5 sm:p-4')}>
-        {/* Top row — Icon + badge */}
-        <div className="flex items-start justify-between mb-2.5">
-          <div
-            className={cn(
-              'rounded-xl flex items-center justify-center',
-              iconBg,
-              iconColor,
-              'transition-all duration-200 group-hover:scale-110',
-              isHero ? 'p-2.5 sm:p-3' : 'p-2 sm:p-2.5'
-            )}
-          >
-            <Icon className={cn(isHero ? 'h-5 w-5 sm:h-6 sm:w-6' : 'h-4.5 w-4.5 sm:h-5 sm:w-5')} />
-            {/* Overdue dot */}
-            {isOverdue && (
-              <span className="absolute -top-0.5 -right-0.5 w-2.5 h-2.5 rounded-full bg-red-500 border-2 border-[hsl(0,0%,12%)] animate-pulse" />
-            )}
+        {/* Overdue indicator */}
+        {isOverdue && (
+          <div className="mb-2">
+            <span className="w-2.5 h-2.5 rounded-full bg-red-500 animate-pulse inline-block" />
           </div>
-        </div>
+        )}
 
         {/* Title */}
         <h3

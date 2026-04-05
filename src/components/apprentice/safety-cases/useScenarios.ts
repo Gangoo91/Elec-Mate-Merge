@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback, useMemo } from 'react';
 import { useToast } from '@/hooks/use-toast';
 import { SafetyScenario, safetyScenarios } from './safetyScenarios';
+import { storageGetJSONSync, storageSetJSONSync } from '@/utils/storage';
 
 const STORAGE_KEY = 'elec-mate-safety-progress';
 
@@ -32,31 +33,21 @@ const defaultProgress: ProgressData = {
 };
 
 function loadProgress(): ProgressData {
-  try {
-    const raw = localStorage.getItem(STORAGE_KEY);
-    if (!raw) return defaultProgress;
-    const parsed = JSON.parse(raw) as ProgressData;
-    // Validate streak — reset if last completion was more than 1 day ago
-    if (parsed.lastCompletedDate) {
-      const last = new Date(parsed.lastCompletedDate);
-      const now = new Date();
-      const diffDays = Math.floor((now.getTime() - last.getTime()) / (1000 * 60 * 60 * 24));
-      if (diffDays > 1) {
-        parsed.currentStreak = 0;
-      }
+  const parsed = storageGetJSONSync<ProgressData>(STORAGE_KEY, defaultProgress);
+  // Validate streak — reset if last completion was more than 1 day ago
+  if (parsed.lastCompletedDate) {
+    const last = new Date(parsed.lastCompletedDate);
+    const now = new Date();
+    const diffDays = Math.floor((now.getTime() - last.getTime()) / (1000 * 60 * 60 * 24));
+    if (diffDays > 1) {
+      parsed.currentStreak = 0;
     }
-    return parsed;
-  } catch {
-    return defaultProgress;
   }
+  return parsed;
 }
 
 function saveProgress(data: ProgressData) {
-  try {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
-  } catch {
-    // Storage full or unavailable — fail silently
-  }
+  storageSetJSONSync(STORAGE_KEY, data);
 }
 
 export type DifficultyFilter = 'All' | 'Beginner' | 'Intermediate' | 'Advanced';

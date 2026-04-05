@@ -31,7 +31,7 @@ const noteTypes: {
     value: 'General',
     label: 'General Note',
     icon: <FileText className="h-4 w-4" />,
-    color: 'text-muted-foreground',
+    color: 'text-white/60',
   },
   {
     value: 'Performance',
@@ -101,7 +101,7 @@ export function AddNoteDialog({ employee, open, onOpenChange }: AddNoteDialogPro
             </div>
             <div className="min-w-0">
               <p className="font-medium truncate">{employee.name}</p>
-              <p className="text-sm text-muted-foreground">{employee.role}</p>
+              <p className="text-sm text-white/60">{employee.role}</p>
             </div>
           </div>
 

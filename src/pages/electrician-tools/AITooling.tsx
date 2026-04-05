@@ -1,4 +1,4 @@
-import { Brain, ArrowLeft, ArrowRight, Camera, FileText, Lightbulb } from 'lucide-react';
+import { Brain, ArrowLeft, ArrowRight, Camera, FileText, Lightbulb, Sparkles } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { Link, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
@@ -94,6 +94,33 @@ const AITooling = () => {
                     <h2 className="text-base font-bold text-white">Quick Capture</h2>
                     <p className="text-sm text-white mt-0.5">
                       Photograph any component for instant identification
+                    </p>
+                  </div>
+                  <div className="flex-shrink-0 w-10 h-10 rounded-full bg-white/10 flex items-center justify-center group-active:bg-white/15 transition-colors">
+                    <ArrowRight className="h-5 w-5 text-white" />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </Link>
+        </motion.div>
+
+        {/* AI Room Builder Card */}
+        <motion.div variants={itemVariants}>
+          <Link
+            to="/electrician/business/room-planner?ai=true"
+            className="block focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500/50 rounded-2xl touch-manipulation"
+          >
+            <div className="relative overflow-hidden bg-gradient-to-br from-indigo-500/15 to-violet-500/15 border border-indigo-500/20 rounded-2xl group active:scale-[0.98] transition-all">
+              <div className="p-5">
+                <div className="flex items-center gap-4">
+                  <div className="flex-shrink-0 w-14 h-14 rounded-2xl flex items-center justify-center bg-gradient-to-br from-indigo-400 to-violet-600 shadow-lg shadow-indigo-500/20">
+                    <Sparkles className="h-7 w-7 text-white" />
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <h2 className="text-base font-bold text-white">AI Room Builder</h2>
+                    <p className="text-sm text-white mt-0.5">
+                      Describe a room and generate a BS 7671 wiring diagram
                     </p>
                   </div>
                   <div className="flex-shrink-0 w-10 h-10 rounded-full bg-white/10 flex items-center justify-center group-active:bg-white/15 transition-colors">

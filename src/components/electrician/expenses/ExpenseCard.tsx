@@ -13,7 +13,7 @@ import {
   Loader2,
 } from 'lucide-react';
 import { useMobileEnhanced } from '@/hooks/use-mobile-enhanced';
-import { useHaptics } from '@/hooks/useHaptics';
+import { useHaptic } from '@/hooks/useHaptic';
 import { Expense, getCategoryConfig } from '@/types/expense';
 import { Badge } from '@/components/ui/badge';
 import { cn } from '@/lib/utils';
@@ -71,7 +71,7 @@ export function ExpenseCard({
   delay = 0,
 }: ExpenseCardProps) {
   const { isMobile, touchSupport } = useMobileEnhanced();
-  const haptics = useHaptics();
+  const haptic = useHaptic();
   const controls = useAnimation();
   const [swipeOffset, setSwipeOffset] = useState(0);
   const [isDragging, setIsDragging] = useState(false);
@@ -113,10 +113,10 @@ export function ExpenseCard({
     // Haptic feedback when crossing thresholds
     if (!hasTriggeredHaptic.current) {
       if (offset < DELETE_THRESHOLD) {
-        haptics.warning(); // Warning haptic for delete
+        haptic.warning(); // Warning haptic for delete
         hasTriggeredHaptic.current = true;
       } else if (offset > EDIT_THRESHOLD && onEdit) {
-        haptics.tap(); // Light tap for edit
+        haptic.light(); // Light tap for edit
         hasTriggeredHaptic.current = true;
       }
     }
@@ -129,11 +129,11 @@ export function ExpenseCard({
     if (isTouchEvent.current || enableSwipe) {
       if (info.offset.x < DELETE_THRESHOLD) {
         // Swipe left - delete
-        haptics.impact();
+        haptic.heavy();
         onDelete();
       } else if (info.offset.x > EDIT_THRESHOLD && onEdit) {
         // Swipe right - edit
-        haptics.success();
+        haptic.success();
         onEdit();
       }
     }

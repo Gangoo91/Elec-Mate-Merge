@@ -21,6 +21,7 @@ import {
 import { useState } from 'react';
 import { TimeEntryDialog } from './TimeEntryDialog';
 import { useToast } from '@/components/ui/use-toast';
+import { storageSetSync } from '@/utils/storage';
 
 interface LogbookHeaderProps {
   filterMonth: string;
@@ -65,9 +66,9 @@ const LogbookHeader = ({
         variant: 'destructive',
       });
 
-      // After deleting, store in localStorage that we've deleted the entries
-      localStorage.setItem('entries_cleared', 'true');
-      localStorage.setItem('entries_cleared_timestamp', Date.now().toString());
+      // After deleting, store that we've deleted the entries
+      storageSetSync('entries_cleared', 'true');
+      storageSetSync('entries_cleared_timestamp', Date.now().toString());
     }
   };
 

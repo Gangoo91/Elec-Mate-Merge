@@ -9,6 +9,7 @@
 
 import { Capacitor } from '@capacitor/core';
 import { Share } from '@capacitor/share';
+import { copyToClipboard } from '@/utils/clipboard';
 
 export interface ShareOptions {
   title?: string;
@@ -33,13 +34,9 @@ export async function shareContent({ title, text, url, onFallback }: ShareOption
     }
 
     // Last resort: copy URL to clipboard
-    if (url && navigator.clipboard) {
-      try {
-        await navigator.clipboard.writeText(url);
-        return;
-      } catch {
-        // iOS WKWebView may deny — fall through to fallback
-      }
+    if (url) {
+      const ok = await copyToClipboard(url);
+      if (ok) return;
     }
 
     // Nothing available — call caller's fallback

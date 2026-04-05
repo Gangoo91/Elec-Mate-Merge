@@ -3,6 +3,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import { FileText } from 'lucide-react';
 import { useState, useEffect } from 'react';
+import { storageGetJSONSync, storageSetJSONSync } from '@/utils/storage';
 
 interface JobNotesCardProps {
   projectName?: string;
@@ -15,9 +16,8 @@ const JobNotesCard = ({ projectName }: JobNotesCardProps) => {
   // Load from localStorage on mount
   useEffect(() => {
     if (projectName) {
-      const stored = localStorage.getItem(`job-notes-${projectName}`);
-      if (stored) {
-        const notes = JSON.parse(stored);
+      const notes = storageGetJSONSync<any>(`job-notes-${projectName}`, null);
+      if (notes) {
         setSiteObservations(notes.siteObservations || '');
         setPipelineNotes(notes.pipelineNotes || '');
       }
@@ -27,14 +27,11 @@ const JobNotesCard = ({ projectName }: JobNotesCardProps) => {
   // Save to localStorage on change
   const handleSave = () => {
     if (projectName) {
-      localStorage.setItem(
-        `job-notes-${projectName}`,
-        JSON.stringify({
-          siteObservations,
-          pipelineNotes,
-          updatedAt: new Date().toISOString(),
-        })
-      );
+      storageSetJSONSync(`job-notes-${projectName}`, {
+        siteObservations,
+        pipelineNotes,
+        updatedAt: new Date().toISOString(),
+      });
     }
   };
 

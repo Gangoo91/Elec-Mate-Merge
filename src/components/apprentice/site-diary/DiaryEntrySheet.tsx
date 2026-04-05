@@ -30,7 +30,9 @@ import {
 } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
+import { useHaptic } from '@/hooks/useHaptic';
 import type { NewDiaryEntry, SiteDiaryEntry } from '@/hooks/site-diary/useSiteDiaryEntries';
+import { storageGetJSONSync, storageSetJSONSync } from '@/utils/storage';
 
 const TASK_CACHE_KEY = 'elec-mate-diary-recent-tasks';
 
@@ -75,6 +77,7 @@ export function DiaryEntrySheet({
   qualificationUnits,
 }: DiaryEntrySheetProps) {
   const isEditing = !!existingEntry;
+  const haptic = useHaptic();
   const today = new Date().toISOString().split('T')[0];
   const [date, setDate] = useState(initialDate || today);
   const [siteName, setSiteName] = useState('');
@@ -95,12 +98,7 @@ export function DiaryEntrySheet({
 
   // Load recent tasks from cache for suggestions
   const recentTasks = useMemo(() => {
-    try {
-      const stored = localStorage.getItem(TASK_CACHE_KEY);
-      return stored ? (JSON.parse(stored) as string[]) : [];
-    } catch {
-      return [];
-    }
+    return storageGetJSONSync<string[]>(TASK_CACHE_KEY, []);
   }, []);
 
   // Quick-task suggestions: recent tasks not already added
@@ -143,15 +141,10 @@ export function DiaryEntrySheet({
       setTaskInput('');
 
       // Cache the task for future suggestions
-      try {
-        const stored = localStorage.getItem(TASK_CACHE_KEY);
-        const cached: string[] = stored ? JSON.parse(stored) : [];
-        if (!cached.includes(trimmed)) {
-          const updated = [trimmed, ...cached].slice(0, 20);
-          localStorage.setItem(TASK_CACHE_KEY, JSON.stringify(updated));
-        }
-      } catch {
-        // Ignore cache errors
+      const cached = storageGetJSONSync<string[]>(TASK_CACHE_KEY, []);
+      if (!cached.includes(trimmed)) {
+        const updated = [trimmed, ...cached].slice(0, 20);
+        storageSetJSONSync(TASK_CACHE_KEY, updated);
       }
     }
   }, [taskInput, tasks]);
@@ -214,6 +207,7 @@ export function DiaryEntrySheet({
 
   const handleSave = async () => {
     if (!siteName.trim()) return;
+    haptic.success();
     setIsSaving(true);
 
     const parsedHours = hoursSpent ? parseFloat(hoursSpent) : null;

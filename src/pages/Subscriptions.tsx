@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import {
   ArrowLeft,
   Lock,
@@ -34,6 +34,9 @@ import { supabase } from '@/integrations/supabase/client';
 import { stripePriceData, nativePriceData, PlanDetails } from '@/data/stripePrices';
 import { cn } from '@/lib/utils';
 import { capturePaymentError, trackMilestone, addBreadcrumb } from '@/lib/sentry';
+import { trackFeatureUse } from '@/components/ActivityTracker';
+import { openExternalUrl } from '@/utils/open-external-url';
+import { storageGetSync, storageRemoveSync } from '@/utils/storage';
 
 // ─── Plan name mapping ────────────────────────────────────────────────────────
 const PLAN_DISPLAY_NAMES: Record<string, string> = {
@@ -115,6 +118,11 @@ const Subscriptions = () => {
   const planColours = PLAN_COLOURS[planDisplayName] || PLAN_COLOURS['Electrician Pro'];
   const PlanIconComponent = getPlanIcon(planDisplayName);
 
+  // Track viewing pricing page
+  useEffect(() => {
+    trackFeatureUse(user?.id || '', 'viewed_pricing', {});
+  }, []);
+
   // ── Trial helpers ─────────────────────────────────────────────────────────
   const getDaysRemaining = (): number => {
     if (!trialEndsAt) return 0;
@@ -144,7 +152,7 @@ const Subscriptions = () => {
           platform === 'ios'
             ? 'https://apps.apple.com/account/subscriptions'
             : 'https://play.google.com/store/account/subscriptions';
-        window.open(url, '_blank');
+        openExternalUrl(url);
         return;
       }
 
@@ -161,8 +169,7 @@ const Subscriptions = () => {
       }
 
       if (data?.url) {
-        const w = window.open(data.url, '_blank');
-        if (!w || w.closed) setTimeout(() => (window.location.href = data.url), 500);
+        openExternalUrl(data.url);
       } else {
         throw new Error('No portal URL returned');
       }
@@ -196,7 +203,7 @@ const Subscriptions = () => {
       setIsLoading((prev) => ({ ...prev, [planId]: true }));
       addBreadcrumb('Checkout started', 'payment', { planId, priceId });
 
-      const offerCode = localStorage.getItem('elec-mate-offer-code');
+      const offerCode = storageGetSync('elec-mate-offer-code');
       const { data, error } = await supabase.functions.invoke('create-checkout', {
         body: { priceId, mode: 'subscription', planId, offerCode },
       });
@@ -204,7 +211,7 @@ const Subscriptions = () => {
       if (error) throw new Error(error.message);
 
       if (data?.url) {
-        if (offerCode) localStorage.removeItem('elec-mate-offer-code');
+        if (offerCode) storageRemoveSync('elec-mate-offer-code');
         trackMilestone('Checkout Session Created', { planId, hasOfferCode: !!offerCode });
         toast({
           title: 'Redirecting to checkout',
@@ -212,8 +219,7 @@ const Subscriptions = () => {
             ? 'Your discount will be applied automatically.'
             : 'Opening secure Stripe checkout page.',
         });
-        const w = window.open(data.url, '_blank');
-        if (!w || w.closed) setTimeout(() => (window.location.href = data.url), 1000);
+        openExternalUrl(data.url);
       } else {
         throw new Error('No checkout URL returned');
       }

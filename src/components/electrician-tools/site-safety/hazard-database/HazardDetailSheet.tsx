@@ -23,6 +23,7 @@ import { cn } from '@/lib/utils';
 import { RiskBadge } from './RiskBar';
 import type { EnhancedRiskConsequence } from '@/data/hazards';
 import { useToast } from '@/hooks/use-toast';
+import { copyToClipboard } from '@/utils/clipboard';
 
 interface HazardDetailSheetProps {
   hazard: EnhancedRiskConsequence | null;
@@ -146,7 +147,7 @@ ${hazard.bs7671References?.length ? `\nBS7671 REFERENCES: ${hazard.bs7671Referen
     `.trim();
 
     try {
-      await navigator.clipboard.writeText(text);
+      await copyToClipboard(text);
       setCopied(true);
       toast({
         title: 'Copied to clipboard',

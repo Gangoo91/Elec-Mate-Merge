@@ -24,6 +24,7 @@ import {
   AlertTriangle,
   Share2,
   Timer,
+  PenTool,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { BusinessCard, BusinessKPIStrip } from '@/components/business-hub';
@@ -284,6 +285,15 @@ const BusinessHub = () => {
               iconColor="text-orange-400"
               iconBg="bg-orange-500/10 border border-orange-500/20"
               liveSubtitle={snagCounts.open > 0 ? `${snagCounts.open} open` : 'All clear'}
+            />
+            <BusinessCard
+              title="Room Planner"
+              description="Electrical floor plans"
+              icon={PenTool}
+              href="/electrician/business/room-planner"
+              accentColor="from-indigo-500 via-violet-400 to-purple-400"
+              iconColor="text-indigo-400"
+              iconBg="bg-indigo-500/10 border border-indigo-500/20"
             />
           </div>
         </motion.section>

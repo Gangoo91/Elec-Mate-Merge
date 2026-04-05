@@ -3,8 +3,7 @@ import { NotificationCard } from './NotificationCard';
 import { NotificationFilters } from './NotificationFilters';
 import { Notification, NotificationStatus } from '@/hooks/useNotifications';
 import { getDaysUntilDeadline } from '@/utils/notificationHelper';
-import { Bell, FileCheck, ClipboardList, CheckCircle2, Zap } from 'lucide-react';
-import { Card, CardContent } from '@/components/ui/card';
+import { FileCheck, ClipboardList, CheckCircle2 } from 'lucide-react';
 
 interface NotificationsListProps {
   notifications: Notification[];
@@ -29,11 +28,9 @@ export const NotificationsList = ({
   const [statusFilter, setStatusFilter] = useState<NotificationStatus | 'all'>('all');
   const [reportTypeFilter, setReportTypeFilter] = useState('all');
 
-  // Filter and sort notifications
   const filteredNotifications = useMemo(() => {
     let filtered = notifications;
 
-    // Apply search filter
     if (searchQuery) {
       const query = searchQuery.toLowerCase();
       filtered = filtered.filter(
@@ -45,34 +42,25 @@ export const NotificationsList = ({
       );
     }
 
-    // Apply status filter
     if (statusFilter !== 'all') {
       filtered = filtered.filter((n) => n.notification_status === statusFilter);
     }
 
-    // Apply report type filter
     if (reportTypeFilter !== 'all') {
       filtered = filtered.filter((n) => n.reports?.report_type === reportTypeFilter);
     }
 
-    // Sort by deadline (overdue first, then by date)
     return filtered.sort((a, b) => {
       if (!a.submission_deadline) return 1;
       if (!b.submission_deadline) return -1;
-
       const daysA = getDaysUntilDeadline(a.submission_deadline);
       const daysB = getDaysUntilDeadline(b.submission_deadline);
-
-      // Overdue items first
       if (daysA < 0 && daysB >= 0) return -1;
       if (daysB < 0 && daysA >= 0) return 1;
-
-      // Then by urgency
       return daysA - daysB;
     });
   }, [notifications, searchQuery, statusFilter, reportTypeFilter]);
 
-  // Group by status
   const groupedNotifications = useMemo(() => {
     const groups = {
       overdue: [] as Notification[],
@@ -84,17 +72,11 @@ export const NotificationsList = ({
     };
 
     filteredNotifications.forEach((notification) => {
-      // Check if overdue
-      if (
-        notification.submission_deadline &&
-        getDaysUntilDeadline(notification.submission_deadline) < 0
-      ) {
+      if (notification.submission_deadline && getDaysUntilDeadline(notification.submission_deadline) < 0) {
         groups.overdue.push(notification);
       } else {
         const status = notification.notification_status;
-        if (status in groups) {
-          groups[status].push(notification);
-        }
+        if (status in groups) groups[status].push(notification);
       }
     });
 
@@ -107,190 +89,103 @@ export const NotificationsList = ({
     setReportTypeFilter('all');
   };
 
+  // ── Empty state ──
   if (notifications.length === 0) {
     return (
-      <Card className="border-border/50 bg-gradient-to-br from-card/80 to-card/40">
-        <CardContent className="py-10">
-          {/* Animated Icon */}
-          <div className="flex justify-center mb-6">
-            <div className="relative">
-              <div className="w-20 h-20 rounded-full bg-gradient-to-br from-primary/20 to-primary/5 flex items-center justify-center">
-                <Bell className="w-10 h-10 text-primary/60" />
-              </div>
-              <div className="absolute -top-1 -right-1 w-6 h-6 rounded-full bg-green-500/20 flex items-center justify-center">
-                <CheckCircle2 className="w-4 h-4 text-green-500" />
-              </div>
-            </div>
-          </div>
-
-          <h3 className="text-xl font-bold text-center mb-2">All Clear!</h3>
-          <p className="text-muted-foreground text-center text-sm mb-8 max-w-sm mx-auto">
-            No Part P notifications pending. When you complete notifiable electrical work, it will
-            appear here.
+      <div className="card-surface p-6 sm:p-8">
+        <div className="text-center mb-8">
+          <p className="text-lg font-semibold text-white mb-1">All Clear</p>
+          <p className="text-[13px] text-white max-w-sm mx-auto">
+            No Part P notifications pending. When you complete notifiable work, it will appear here.
           </p>
+        </div>
 
-          {/* How it works */}
-          <div className="max-w-md mx-auto">
-            <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wide text-center mb-4">
-              How Part P Tracking Works
-            </p>
-            <div className="space-y-3">
-              <div className="flex items-center gap-3 p-3 bg-card/50 rounded-xl border border-border/50">
-                <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
-                  <ClipboardList className="w-4 h-4 text-primary" />
+        <p className="text-xs font-medium text-white uppercase tracking-wider text-center mb-4">
+          How Part P Tracking Works
+        </p>
+
+        <div className="space-y-2 max-w-md mx-auto">
+          {[
+            { icon: ClipboardList, title: 'Create EIC or Minor Works', desc: 'Tick "Part P notification required"', accent: 'from-elec-yellow via-amber-400 to-orange-400', iconColor: 'text-elec-yellow', iconBg: 'bg-elec-yellow/10 border border-elec-yellow/20' },
+            { icon: FileCheck, title: 'Generate Certificate', desc: 'Notification auto-created with 30-day deadline', accent: 'from-blue-500 via-blue-400 to-cyan-400', iconColor: 'text-blue-400', iconBg: 'bg-blue-500/10 border border-blue-500/20' },
+            { icon: CheckCircle2, title: 'Submit to Scheme / Building Control', desc: 'Track submissions and stay compliant', accent: 'from-emerald-500 via-green-400 to-teal-400', iconColor: 'text-emerald-400', iconBg: 'bg-emerald-500/10 border border-emerald-500/20' },
+          ].map(({ icon: Icon, title, desc, iconColor, iconBg, accent }) => (
+            <div key={title} className="relative overflow-hidden card-surface">
+              <div className={`absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r ${accent} opacity-30`} />
+              <div className="flex items-center gap-3 p-3.5">
+                <div className={`p-2 rounded-xl flex-shrink-0 ${iconBg}`}>
+                  <Icon className={`w-4 h-4 ${iconColor}`} />
                 </div>
-                <div className="flex-1">
-                  <p className="text-sm font-medium">Create EIC or Minor Works</p>
-                  <p className="text-xs text-muted-foreground">
-                    Tick "Part P notification required"
-                  </p>
-                </div>
-              </div>
-              <div className="flex items-center gap-3 p-3 bg-card/50 rounded-xl border border-border/50">
-                <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
-                  <FileCheck className="w-4 h-4 text-primary" />
-                </div>
-                <div className="flex-1">
-                  <p className="text-sm font-medium">Generate Certificate</p>
-                  <p className="text-xs text-muted-foreground">
-                    Notification auto-created with 30-day deadline
-                  </p>
-                </div>
-              </div>
-              <div className="flex items-center gap-3 p-3 bg-card/50 rounded-xl border border-border/50">
-                <div className="w-8 h-8 rounded-lg bg-green-500/10 flex items-center justify-center flex-shrink-0">
-                  <Zap className="w-4 h-4 text-green-500" />
-                </div>
-                <div className="flex-1">
-                  <p className="text-sm font-medium">Submit to Scheme/Building Control</p>
-                  <p className="text-xs text-muted-foreground">
-                    Track submissions & stay compliant
-                  </p>
+                <div>
+                  <p className="text-sm font-medium text-white">{title}</p>
+                  <p className="text-xs text-white">{desc}</p>
                 </div>
               </div>
             </div>
-          </div>
-        </CardContent>
-      </Card>
+          ))}
+        </div>
+      </div>
     );
   }
 
-  return (
-    <div className="space-y-6">
-      {/* Filters */}
-      <NotificationFilters
-        searchQuery={searchQuery}
-        onSearchChange={setSearchQuery}
-        statusFilter={statusFilter}
-        onStatusFilterChange={setStatusFilter}
-        reportTypeFilter={reportTypeFilter}
-        onReportTypeFilterChange={setReportTypeFilter}
-        onClearFilters={handleClearFilters}
-      />
+  // ── Group renderer ──
+  const renderGroup = (title: string, items: Notification[], color?: string) => {
+    if (items.length === 0) return null;
+    return (
+      <div>
+        <h3 className={`text-xs font-medium uppercase tracking-wider mb-3 px-0.5 ${color || 'text-white'}`}>
+          {title} ({items.length})
+        </h3>
+        <div className="space-y-3">
+          {items.map((notification) => (
+            <NotificationCard
+              key={notification.id}
+              notification={notification}
+              onUpdate={onUpdate}
+              onDelete={onDelete}
+              onViewDetails={onViewDetails}
+              onViewCertificate={onViewCertificate}
+              showNiceic={showNiceic}
+              showNapit={showNapit}
+            />
+          ))}
+        </div>
+      </div>
+    );
+  };
 
-      {/* Results count */}
-      <div className="text-sm text-muted-foreground">
-        Showing {filteredNotifications.length} of {notifications.length} notification
-        {notifications.length === 1 ? '' : 's'}
+  return (
+    <div className="space-y-5">
+      {/* Filters */}
+      <div className="card-surface p-4 space-y-3">
+        <NotificationFilters
+          searchQuery={searchQuery}
+          onSearchChange={setSearchQuery}
+          statusFilter={statusFilter}
+          onStatusFilterChange={setStatusFilter}
+          reportTypeFilter={reportTypeFilter}
+          onReportTypeFilterChange={setReportTypeFilter}
+          onClearFilters={handleClearFilters}
+        />
+        <p className="text-[11px] text-white px-0.5">
+          Showing {filteredNotifications.length} of {notifications.length} notification{notifications.length === 1 ? '' : 's'}
+        </p>
       </div>
 
-      {/* Grouped Lists */}
+      {/* Results */}
       {filteredNotifications.length === 0 ? (
-        <div className="text-center py-12">
-          <p className="text-muted-foreground">No notifications match your filters.</p>
-          <button onClick={handleClearFilters} className="text-primary hover:underline mt-2">
+        <div className="card-surface p-8 text-center">
+          <p className="text-white mb-2">No notifications match your filters.</p>
+          <button onClick={handleClearFilters} className="text-elec-yellow hover:underline text-sm touch-manipulation">
             Clear filters
           </button>
         </div>
       ) : (
-        <div className="space-y-8">
-          {groupedNotifications.overdue.length > 0 && (
-            <div>
-              <h3 className="text-lg font-semibold text-red-500 mb-3">
-                Overdue ({groupedNotifications.overdue.length})
-              </h3>
-              <div className="space-y-3">
-                {groupedNotifications.overdue.map((notification) => (
-                  <NotificationCard
-                    key={notification.id}
-                    notification={notification}
-                    onUpdate={onUpdate}
-                    onDelete={onDelete}
-                    onViewDetails={onViewDetails}
-                    onViewCertificate={onViewCertificate}
-                    showNiceic={showNiceic}
-                    showNapit={showNapit}
-                  />
-                ))}
-              </div>
-            </div>
-          )}
-
-          {groupedNotifications.pending.length > 0 && (
-            <div>
-              <h3 className="text-lg font-semibold mb-3">
-                Pending ({groupedNotifications.pending.length})
-              </h3>
-              <div className="space-y-3">
-                {groupedNotifications.pending.map((notification) => (
-                  <NotificationCard
-                    key={notification.id}
-                    notification={notification}
-                    onUpdate={onUpdate}
-                    onDelete={onDelete}
-                    onViewDetails={onViewDetails}
-                    onViewCertificate={onViewCertificate}
-                    showNiceic={showNiceic}
-                    showNapit={showNapit}
-                  />
-                ))}
-              </div>
-            </div>
-          )}
-
-          {groupedNotifications['in-progress'].length > 0 && (
-            <div>
-              <h3 className="text-lg font-semibold mb-3">
-                In Progress ({groupedNotifications['in-progress'].length})
-              </h3>
-              <div className="space-y-3">
-                {groupedNotifications['in-progress'].map((notification) => (
-                  <NotificationCard
-                    key={notification.id}
-                    notification={notification}
-                    onUpdate={onUpdate}
-                    onDelete={onDelete}
-                    onViewDetails={onViewDetails}
-                    onViewCertificate={onViewCertificate}
-                    showNiceic={showNiceic}
-                    showNapit={showNapit}
-                  />
-                ))}
-              </div>
-            </div>
-          )}
-
-          {groupedNotifications.submitted.length > 0 && (
-            <div>
-              <h3 className="text-lg font-semibold mb-3">
-                Submitted ({groupedNotifications.submitted.length})
-              </h3>
-              <div className="space-y-3">
-                {groupedNotifications.submitted.map((notification) => (
-                  <NotificationCard
-                    key={notification.id}
-                    notification={notification}
-                    onUpdate={onUpdate}
-                    onDelete={onDelete}
-                    onViewDetails={onViewDetails}
-                    onViewCertificate={onViewCertificate}
-                    showNiceic={showNiceic}
-                    showNapit={showNapit}
-                  />
-                ))}
-              </div>
-            </div>
-          )}
+        <div className="space-y-6">
+          {renderGroup('Overdue', groupedNotifications.overdue, 'text-red-400')}
+          {renderGroup('Pending', groupedNotifications.pending)}
+          {renderGroup('In Progress', groupedNotifications['in-progress'])}
+          {renderGroup('Submitted', groupedNotifications.submitted, 'text-emerald-400')}
         </div>
       )}
     </div>

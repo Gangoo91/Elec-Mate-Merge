@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { openExternalUrl } from '@/utils/open-external-url';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -285,7 +286,7 @@ export function ExpiryAlerts({
                         className="flex-1 h-10 bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90"
                         onClick={(e) => {
                           e.stopPropagation();
-                          window.open(doc.renewalUrl, '_blank');
+                          openExternalUrl(doc.renewalUrl);
                         }}
                       >
                         <Calendar className="h-4 w-4 mr-2" />

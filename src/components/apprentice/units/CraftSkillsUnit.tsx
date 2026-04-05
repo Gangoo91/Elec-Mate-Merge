@@ -4,6 +4,7 @@ import { craftSkillsContent } from '@/data/craftSkills/index';
 import { useParams } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
 import { userKey } from '@/lib/userStorage';
+import { storageGetSync } from '@/utils/storage';
 
 interface CraftSkillsUnitProps {
   unitCode: string;
@@ -17,7 +18,7 @@ const CraftSkillsUnit = ({ unitCode, onResourceClick }: CraftSkillsUnitProps) =>
 
   // Load completion status (user-scoped)
   useEffect(() => {
-    const storedQuizStatus = localStorage.getItem(
+    const storedQuizStatus = storageGetSync(
       userKey(user?.id, `unit_${unitCode}_quiz_completed`)
     );
     if (storedQuizStatus === 'true') {

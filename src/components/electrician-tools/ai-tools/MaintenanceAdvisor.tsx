@@ -27,6 +27,7 @@ import {
 } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
+import { copyToClipboard } from '@/utils/clipboard';
 import ReactMarkdown from 'react-markdown';
 import {
   generateMaintenanceSchedulePDF,
@@ -177,7 +178,7 @@ export const MaintenanceAdvisor = () => {
       `TASKS:\n${schedule.schedule.map((t, i) => `${i + 1}. [${t.interval}] ${t.task} (${t.priority})`).join('\n')}\n\n` +
       `RECOMMENDATIONS:\n${schedule.recommendations.join('\n')}`;
 
-    navigator.clipboard.writeText(text);
+    copyToClipboard(text);
     toast.success('Schedule copied to clipboard');
   };
 

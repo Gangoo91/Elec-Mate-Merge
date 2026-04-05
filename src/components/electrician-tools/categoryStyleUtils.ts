@@ -17,6 +17,7 @@ export interface CategoryStyle {
   glowColor: string;
   borderHover: string;
   iconBg: string;
+
   icon: LucideIcon;
   gradient: string;
 }

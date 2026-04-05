@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import { useMoodData } from '@/hooks/useMentalHealthSync';
+import { storageGetJSONSync, storageSetJSONSync, storageGetSync, storageSetSync } from '@/utils/storage';
 
 interface MoodEntry {
   date: string;
@@ -54,54 +55,50 @@ export const MentalHealthProvider: React.FC<MentalHealthProviderProps> = ({ chil
   const [weeklyReflection, setWeeklyReflection] = useState('');
   const [favoriteResources, setFavoriteResources] = useState<string[]>([]);
 
-  // Load other data from localStorage on mount
+  // Load other data from storage on mount
   useEffect(() => {
-    const storedReminders = localStorage.getItem('elec-mate-selfcare-reminders');
-    if (storedReminders) {
-      setReminders(JSON.parse(storedReminders));
+    const storedReminders = storageGetJSONSync<SelfCareReminder[]>('elec-mate-selfcare-reminders', []);
+    if (storedReminders.length > 0) {
+      setReminders(storedReminders);
     }
 
-    const storedCheckIn = localStorage.getItem('elec-mate-daily-checkin');
+    const storedCheckIn = storageGetJSONSync<{ date: string; checked: boolean } | null>('elec-mate-daily-checkin', null);
     if (storedCheckIn) {
-      const { date, checked } = JSON.parse(storedCheckIn);
       const today = new Date().toISOString().split('T')[0];
-      if (date === today) {
-        setDailyCheckIn(checked);
+      if (storedCheckIn.date === today) {
+        setDailyCheckIn(storedCheckIn.checked);
       }
     }
 
-    const storedReflection = localStorage.getItem('elec-mate-weekly-reflection');
+    const storedReflection = storageGetSync('elec-mate-weekly-reflection');
     if (storedReflection) {
       setWeeklyReflection(storedReflection);
     }
 
-    const storedFavorites = localStorage.getItem('elec-mate-favorite-resources');
-    if (storedFavorites) {
-      setFavoriteResources(JSON.parse(storedFavorites));
+    const storedFavorites = storageGetJSONSync<string[]>('elec-mate-favorite-resources', []);
+    if (storedFavorites.length > 0) {
+      setFavoriteResources(storedFavorites);
     }
   }, []);
 
-  // Save reminders to localStorage
+  // Save reminders to storage
   useEffect(() => {
     if (reminders.length > 0) {
-      localStorage.setItem('elec-mate-selfcare-reminders', JSON.stringify(reminders));
+      storageSetJSONSync('elec-mate-selfcare-reminders', reminders);
     }
   }, [reminders]);
 
   useEffect(() => {
     const today = new Date().toISOString().split('T')[0];
-    localStorage.setItem(
-      'elec-mate-daily-checkin',
-      JSON.stringify({ date: today, checked: dailyCheckIn })
-    );
+    storageSetJSONSync('elec-mate-daily-checkin', { date: today, checked: dailyCheckIn });
   }, [dailyCheckIn]);
 
   useEffect(() => {
-    localStorage.setItem('elec-mate-weekly-reflection', weeklyReflection);
+    storageSetSync('elec-mate-weekly-reflection', weeklyReflection);
   }, [weeklyReflection]);
 
   useEffect(() => {
-    localStorage.setItem('elec-mate-favorite-resources', JSON.stringify(favoriteResources));
+    storageSetJSONSync('elec-mate-favorite-resources', favoriteResources);
   }, [favoriteResources]);
 
   const toggleFavoriteResource = (resourceId: string) => {

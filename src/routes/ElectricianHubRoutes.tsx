@@ -33,6 +33,7 @@ const LivePricingHub = lazy(() => import('@/pages/electrician/LivePricingHub'));
 const ElectricalHub = lazy(() => import('@/pages/ElectricalHub'));
 const CareerProgression = lazy(() => import('@/pages/electrician/CareerProgression'));
 const BusinessHub = lazy(() => import('@/pages/electrician/BusinessHub'));
+const DiagramBuilderPage = lazy(() => import('@/pages/electrician-tools/ai-tools/DiagramBuilderPage'));
 const BusinessDevelopment = lazy(() => import('@/pages/electrician/BusinessDevelopment'));
 const BusinessCustomers = lazy(
   () => import('@/pages/electrician/business-development/BusinessCustomers')
@@ -449,6 +450,14 @@ const ElectricianHubRoutes = () => (
       element={
         <LazyRoute>
           <BusinessHub />
+        </LazyRoute>
+      }
+    />
+    <Route
+      path="business/room-planner"
+      element={
+        <LazyRoute>
+          <DiagramBuilderPage />
         </LazyRoute>
       }
     />

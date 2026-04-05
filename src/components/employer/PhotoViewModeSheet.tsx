@@ -110,14 +110,14 @@ export function PhotoViewModeSheet({
                     'h-12 w-12 rounded-lg flex items-center justify-center',
                     isActive && !isCompare
                       ? 'bg-elec-yellow text-elec-dark'
-                      : 'bg-muted text-muted-foreground'
+                      : 'bg-muted text-white/60'
                   )}
                 >
                   {option.icon}
                 </div>
                 <div className="flex-1">
                   <div className="font-medium text-foreground">{option.label}</div>
-                  <div className="text-sm text-muted-foreground">{option.description}</div>
+                  <div className="text-sm text-white/60">{option.description}</div>
                 </div>
                 {isActive && !isCompare && (
                   <div className="h-6 w-6 rounded-full bg-elec-yellow flex items-center justify-center">

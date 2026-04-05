@@ -25,6 +25,7 @@ import { useSafetyPDFExport } from '@/hooks/useSafetyPDFExport';
 import { AuditTimeline } from '../common/AuditTimeline';
 import { SafetyDocumentShare } from '../common/SafetyDocumentShare';
 import { CorrectiveActionsPanel } from '../common/CorrectiveActionsPanel';
+import { storageSetJSONSync } from '@/utils/storage';
 
 const STATUS_CONFIG: Record<
   string,
@@ -346,7 +347,7 @@ export function ObservationDetailSheet({
                             : 'low',
                       source_observation_id: observation.id,
                     };
-                    localStorage.setItem('escalate-to-near-miss', JSON.stringify(escalationData));
+                    storageSetJSONSync('escalate-to-near-miss', escalationData);
                     onClose();
                     window.dispatchEvent(
                       new CustomEvent('navigate-safety-tool', { detail: 'near-miss' })

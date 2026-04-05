@@ -1,3 +1,4 @@
+import { copyToClipboard } from '@/utils/clipboard';
 import { useState, useEffect, useCallback } from 'react';
 import { Copy, Check, ChevronDown, AlertTriangle, Shield } from 'lucide-react';
 import { Slider } from '@/components/ui/slider';
@@ -179,10 +180,13 @@ const ArcFlashCalculator = () => {
       `BS 7671: ${result.bs7671DisconnectionCheck}`,
       `Method: ${result.calculationMethod}`,
     ].join('\n');
-    navigator.clipboard.writeText(text);
-    setCopied(true);
-    toast({ title: 'Copied to clipboard' });
-    setTimeout(() => setCopied(false), 2000);
+    copyToClipboard(text).then((ok) => {
+      if (ok) {
+        setCopied(true);
+        toast({ title: 'Copied to clipboard' });
+        setTimeout(() => setCopied(false), 2000);
+      }
+    });
   };
 
   const canCalculate = faultCurrent && clearingTime && workingDistance;

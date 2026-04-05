@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button';
 import { MapPin, Compass } from 'lucide-react';
 import { toast } from '@/hooks/use-toast';
 import { cn } from '@/lib/utils';
+import { getCurrentPosition } from '@/utils/geolocation';
 
 interface UserLocationInputProps {
   userLocation: string | null;
@@ -23,7 +24,7 @@ const UserLocationInput: React.FC<UserLocationInputProps> = ({
   const [inputValue, setInputValue] = useState(userLocation || '');
   const [isLocating, setIsLocating] = useState(false);
 
-  const handleUseCurrentLocation = () => {
+  const handleUseCurrentLocation = async () => {
     if (!window.google?.maps) {
       toast({
         title: 'Maps Not Ready',
@@ -35,66 +36,54 @@ const UserLocationInput: React.FC<UserLocationInputProps> = ({
 
     setIsLocating(true);
 
-    if (!navigator.geolocation) {
-      toast({
-        title: 'Not Available',
-        description: 'Geolocation is not supported by your browser',
-        variant: 'destructive',
-      });
-      setIsLocating(false);
-      return;
-    }
+    try {
+      const position = await getCurrentPosition({ enableHighAccuracy: true, timeout: 10000 });
+      const { latitude, longitude } = position;
 
-    navigator.geolocation.getCurrentPosition(
-      (position) => {
-        const { latitude, longitude } = position.coords;
+      // Reverse geocode to get postcode
+      const geocoder = new window.google.maps.Geocoder();
+      geocoder.geocode({ location: { lat: latitude, lng: longitude } }, (results, status) => {
+        setIsLocating(false);
 
-        // Reverse geocode to get postcode
-        const geocoder = new window.google.maps.Geocoder();
-        geocoder.geocode({ location: { lat: latitude, lng: longitude } }, (results, status) => {
-          setIsLocating(false);
+        if (status === 'OK' && results && results[0]) {
+          // Extract postcode from address components
+          const postcodeComponent = results[0].address_components.find((component) =>
+            component.types.includes('postal_code')
+          );
 
-          if (status === 'OK' && results && results[0]) {
-            // Extract postcode from address components
-            const postcodeComponent = results[0].address_components.find((component) =>
-              component.types.includes('postal_code')
-            );
+          const postcode = postcodeComponent ? postcodeComponent.short_name : '';
+          const locality = results[0].formatted_address.split(',')[0];
 
-            const postcode = postcodeComponent ? postcodeComponent.short_name : '';
-            const locality = results[0].formatted_address.split(',')[0];
-
-            if (postcode) {
-              setInputValue(`${locality}, ${postcode}`);
-              setUserLocation(`${locality}, ${postcode}`);
-              onLocationConfirmed();
-            } else {
-              toast({
-                title: 'Location Found',
-                description: `Using: ${locality}`,
-              });
-              setInputValue(locality);
-              setUserLocation(locality);
-              onLocationConfirmed();
-            }
+          if (postcode) {
+            setInputValue(`${locality}, ${postcode}`);
+            setUserLocation(`${locality}, ${postcode}`);
+            onLocationConfirmed();
           } else {
             toast({
-              title: 'Location Error',
-              description: 'Could not determine your location',
-              variant: 'destructive',
+              title: 'Location Found',
+              description: `Using: ${locality}`,
             });
+            setInputValue(locality);
+            setUserLocation(locality);
+            onLocationConfirmed();
           }
-        });
-      },
-      (error) => {
-        setIsLocating(false);
-        console.error('Geolocation error:', error);
-        toast({
-          title: 'Location Error',
-          description: error.message || 'Failed to get your location',
-          variant: 'destructive',
-        });
-      }
-    );
+        } else {
+          toast({
+            title: 'Location Error',
+            description: 'Could not determine your location',
+            variant: 'destructive',
+          });
+        }
+      });
+    } catch (error: any) {
+      setIsLocating(false);
+      console.error('Geolocation error:', error);
+      toast({
+        title: 'Location Error',
+        description: error.message || 'Failed to get your location',
+        variant: 'destructive',
+      });
+    }
   };
 
   const handleSubmit = (e: React.FormEvent) => {

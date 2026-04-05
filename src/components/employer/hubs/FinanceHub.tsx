@@ -12,8 +12,8 @@ import {
   PenTool,
   Package,
   AlertTriangle,
-  Loader2,
 } from 'lucide-react';
+import { HubSkeleton } from '@/components/employer/skeletons';
 import {
   useQuotes,
   useInvoices,
@@ -82,7 +82,7 @@ export function FinanceHub({ onNavigate }: FinanceHubProps) {
         totalOverdueInvoices > 0
           ? 'border-destructive/50 hover:border-destructive/80'
           : 'border-muted/30 hover:border-muted/50',
-      textClass: totalOverdueInvoices > 0 ? 'text-destructive' : 'text-muted-foreground',
+      textClass: totalOverdueInvoices > 0 ? 'text-destructive' : 'text-white/60',
       section: 'quotes' as Section,
       pulse: totalOverdueInvoices > 0,
     },
@@ -96,17 +96,13 @@ export function FinanceHub({ onNavigate }: FinanceHubProps) {
         pendingExpenses.length > 0
           ? 'border-warning/50 hover:border-warning/80'
           : 'border-muted/30 hover:border-muted/50',
-      textClass: pendingExpenses.length > 0 ? 'text-warning' : 'text-muted-foreground',
+      textClass: pendingExpenses.length > 0 ? 'text-warning' : 'text-white/60',
       section: 'expenses' as Section,
     },
   ];
 
   if (isLoading) {
-    return (
-      <div className="flex items-center justify-center py-20">
-        <Loader2 className="h-8 w-8 animate-spin text-elec-yellow" />
-      </div>
-    );
+    return <HubSkeleton statCount={4} cardCount={3} columns={2} />;
   }
 
   return (

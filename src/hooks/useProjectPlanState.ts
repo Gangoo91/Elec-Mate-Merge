@@ -1,5 +1,6 @@
 import { useState, useCallback, useEffect } from 'react';
 import { v4 as uuidv4 } from 'uuid';
+import { storageGetJSONSync, storageSetJSONSync, storageRemoveSync } from '@/utils/storage';
 import {
   EditableProjectPlan,
   ProjectPhase,
@@ -21,16 +22,10 @@ export const useProjectPlanState = ({
   autoSaveToLocalStorage = true,
 }: UseProjectPlanStateProps = {}) => {
   const [plan, setPlan] = useState<EditableProjectPlan>(() => {
-    // Try to load from localStorage first
+    // Try to load from storage first
     if (autoSaveToLocalStorage) {
-      const saved = localStorage.getItem('draft-project-plan');
-      if (saved) {
-        try {
-          return JSON.parse(saved);
-        } catch (e) {
-          console.error('Failed to parse saved plan', e);
-        }
-      }
+      const saved = storageGetJSONSync<EditableProjectPlan | null>('draft-project-plan', null);
+      if (saved) return saved;
     }
 
     // Otherwise use initial plan or defaults
@@ -54,10 +49,10 @@ export const useProjectPlanState = ({
   const [historyIndex, setHistoryIndex] = useState<number>(-1);
   const [isDirty, setIsDirty] = useState(false);
 
-  // Auto-save to localStorage
+  // Auto-save to storage
   useEffect(() => {
     if (autoSaveToLocalStorage && plan) {
-      localStorage.setItem('draft-project-plan', JSON.stringify(plan));
+      storageSetJSONSync('draft-project-plan', plan);
     }
   }, [plan, autoSaveToLocalStorage]);
 
@@ -377,7 +372,7 @@ export const useProjectPlanState = ({
   // Clear draft
   const clearDraft = useCallback(() => {
     if (autoSaveToLocalStorage) {
-      localStorage.removeItem('draft-project-plan');
+      storageRemoveSync('draft-project-plan');
     }
     setIsDirty(false);
   }, [autoSaveToLocalStorage]);

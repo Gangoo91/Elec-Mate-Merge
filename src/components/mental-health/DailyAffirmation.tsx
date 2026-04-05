@@ -3,6 +3,8 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Quote, RefreshCw, Heart, Share2 } from 'lucide-react';
 import { toast } from 'sonner';
+import { copyToClipboard } from '@/utils/clipboard';
+import { storageGetJSONSync, storageSetJSONSync } from '@/utils/storage';
 
 const affirmations = [
   {
@@ -102,11 +104,8 @@ const DailyAffirmation = () => {
     setCurrentAffirmation(affirmations[index]);
 
     // Check if user liked this affirmation
-    const liked = localStorage.getItem('elec-mate-liked-affirmations');
-    if (liked) {
-      const likedList = JSON.parse(liked);
-      setIsLiked(likedList.includes(affirmations[index].text));
-    }
+    const likedList = storageGetJSONSync<string[]>('elec-mate-liked-affirmations', []);
+    setIsLiked(likedList.includes(affirmations[index].text));
   }, []);
 
   const handleRefresh = () => {
@@ -117,19 +116,13 @@ const DailyAffirmation = () => {
       setIsRefreshing(false);
 
       // Check if this one is liked
-      const liked = localStorage.getItem('elec-mate-liked-affirmations');
-      if (liked) {
-        const likedList = JSON.parse(liked);
-        setIsLiked(likedList.includes(affirmations[randomIndex].text));
-      } else {
-        setIsLiked(false);
-      }
+      const likedList = storageGetJSONSync<string[]>('elec-mate-liked-affirmations', []);
+      setIsLiked(likedList.includes(affirmations[randomIndex].text));
     }, 300);
   };
 
   const handleLike = () => {
-    const liked = localStorage.getItem('elec-mate-liked-affirmations');
-    let likedList = liked ? JSON.parse(liked) : [];
+    let likedList = storageGetJSONSync<string[]>('elec-mate-liked-affirmations', []);
 
     if (isLiked) {
       likedList = likedList.filter((t: string) => t !== currentAffirmation.text);
@@ -137,7 +130,7 @@ const DailyAffirmation = () => {
       likedList.push(currentAffirmation.text);
     }
 
-    localStorage.setItem('elec-mate-liked-affirmations', JSON.stringify(likedList));
+    storageSetJSONSync('elec-mate-liked-affirmations', likedList);
     setIsLiked(!isLiked);
   };
 
@@ -154,7 +147,7 @@ const DailyAffirmation = () => {
       }
     } else {
       // Fallback: copy to clipboard
-      await navigator.clipboard.writeText(shareText);
+      await copyToClipboard(shareText);
       toast.success('Copied to clipboard!');
     }
   };

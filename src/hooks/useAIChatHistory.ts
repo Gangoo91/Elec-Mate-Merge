@@ -1,5 +1,6 @@
 import { useState, useCallback, useRef, useEffect } from 'react';
 import { supabase } from '@/integrations/supabase/client';
+import { storageGetSync, storageSetSync, storageRemoveSync } from '@/utils/storage';
 
 interface Message {
   role: 'user' | 'assistant';
@@ -67,10 +68,10 @@ export function useAIChatHistory() {
   const saveToLocalStorage = useCallback((messages: Message[]) => {
     try {
       if (messages.length === 0) {
-        localStorage.removeItem(STORAGE_KEY);
+        storageRemoveSync(STORAGE_KEY);
         return;
       }
-      localStorage.setItem(
+      storageSetSync(
         STORAGE_KEY,
         JSON.stringify({ messages, timestamp: new Date().toISOString() })
       );
@@ -82,13 +83,13 @@ export function useAIChatHistory() {
   // Load from localStorage (fallback for offline/unauthenticated)
   const loadFromLocalStorage = useCallback((): Message[] => {
     try {
-      const stored = localStorage.getItem(STORAGE_KEY);
+      const stored = storageGetSync(STORAGE_KEY);
       if (!stored) return [];
 
       const { messages, timestamp } = JSON.parse(stored);
       const hoursSinceStored = (Date.now() - new Date(timestamp).getTime()) / (1000 * 60 * 60);
       if (hoursSinceStored > STORAGE_EXPIRY_HOURS) {
-        localStorage.removeItem(STORAGE_KEY);
+        storageRemoveSync(STORAGE_KEY);
         return [];
       }
 
@@ -283,7 +284,7 @@ export function useAIChatHistory() {
   // Start a fresh session
   const startNewSession = useCallback(() => {
     setCurrentSessionId(null);
-    localStorage.removeItem(STORAGE_KEY);
+    storageRemoveSync(STORAGE_KEY);
   }, []);
 
   // Clean up timer on unmount

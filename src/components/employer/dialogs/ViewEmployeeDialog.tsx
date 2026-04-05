@@ -119,7 +119,7 @@ export function ViewEmployeeDialog({
               <ResponsiveDialogTitle className="text-lg font-bold truncate pr-2">
                 {employee.name}
               </ResponsiveDialogTitle>
-              <p className="text-sm text-muted-foreground">{employee.role}</p>
+              <p className="text-sm text-white/60">{employee.role}</p>
               <div className="flex items-center gap-1.5 mt-2 flex-wrap">
                 <StatusBadge status={employee.status} />
                 <Badge className={`text-xs ${roleColors[employee.teamRole]}`}>
@@ -223,9 +223,9 @@ export function ViewEmployeeDialog({
                         </div>
                         <div className="flex-1">
                           <p className="text-sm font-medium">{employee.phone}</p>
-                          <p className="text-xs text-muted-foreground">Mobile</p>
+                          <p className="text-xs text-white/60">Mobile</p>
                         </div>
-                        <ChevronRight className="h-4 w-4 text-muted-foreground" />
+                        <ChevronRight className="h-4 w-4 text-white/60" />
                       </button>
                       <button
                         onClick={handleEmail}
@@ -236,9 +236,9 @@ export function ViewEmployeeDialog({
                         </div>
                         <div className="flex-1">
                           <p className="text-sm font-medium truncate">{employee.email}</p>
-                          <p className="text-xs text-muted-foreground">Email</p>
+                          <p className="text-xs text-white/60">Email</p>
                         </div>
-                        <ChevronRight className="h-4 w-4 text-muted-foreground" />
+                        <ChevronRight className="h-4 w-4 text-white/60" />
                       </button>
                     </CardContent>
                   </Card>
@@ -262,12 +262,12 @@ export function ViewEmployeeDialog({
                           </div>
                           <div className="flex-1">
                             <p className="text-sm font-medium">{employee.emergencyContact.name}</p>
-                            <p className="text-xs text-muted-foreground">
+                            <p className="text-xs text-white/60">
                               {employee.emergencyContact.relationship} •{' '}
                               {employee.emergencyContact.phone}
                             </p>
                           </div>
-                          <ChevronRight className="h-4 w-4 text-muted-foreground" />
+                          <ChevronRight className="h-4 w-4 text-white/60" />
                         </button>
                       </CardContent>
                     </Card>
@@ -285,7 +285,7 @@ export function ViewEmployeeDialog({
                       <Card className="border-border/50">
                         <CardContent className="p-3 text-center">
                           <p className="text-2xl font-bold text-elec-yellow">£{employee.dayRate}</p>
-                          <p className="text-xs text-muted-foreground">Day Rate</p>
+                          <p className="text-xs text-white/60">Day Rate</p>
                         </CardContent>
                       </Card>
                       <Card className="border-border/50">
@@ -293,7 +293,7 @@ export function ViewEmployeeDialog({
                           <p className="text-2xl font-bold text-elec-yellow">
                             £{employee.hourlyRate}
                           </p>
-                          <p className="text-xs text-muted-foreground">Hourly Rate</p>
+                          <p className="text-xs text-white/60">Hourly Rate</p>
                         </CardContent>
                       </Card>
                     </div>
@@ -330,11 +330,11 @@ export function ViewEmployeeDialog({
                         }}
                       >
                         <Star
-                          className={`h-6 w-6 cursor-pointer transition-all touch-manipulation ${star <= employee.rating ? 'text-warning fill-warning' : 'text-muted-foreground hover:text-warning/50'}`}
+                          className={`h-6 w-6 cursor-pointer transition-all touch-manipulation ${star <= employee.rating ? 'text-warning fill-warning' : 'text-white/60 hover:text-warning/50'}`}
                         />
                       </button>
                     ))}
-                    <span className="text-sm text-muted-foreground ml-2">
+                    <span className="text-sm text-white/60 ml-2">
                       {employee.rating} / 5
                     </span>
                   </div>
@@ -364,7 +364,7 @@ export function ViewEmployeeDialog({
                         <CardContent className="p-3 flex items-start justify-between gap-2">
                           <div>
                             <p className="font-medium text-sm">{a.jobTitle}</p>
-                            <p className="text-xs text-muted-foreground flex items-center gap-1">
+                            <p className="text-xs text-white/60 flex items-center gap-1">
                               <MapPin className="h-3 w-3" />
                               {a.jobLocation}
                             </p>
@@ -372,7 +372,7 @@ export function ViewEmployeeDialog({
                           <Button
                             size="icon"
                             variant="ghost"
-                            className="h-9 w-9 sm:h-6 sm:w-6 text-muted-foreground hover:text-destructive"
+                            className="h-9 w-9 sm:h-6 sm:w-6 text-white/60 hover:text-destructive"
                             onClick={() => {
                               removeEmployeeFromJob(a.id);
                               toast({ title: 'Removed from Job' });
@@ -387,8 +387,8 @@ export function ViewEmployeeDialog({
                 ) : (
                   <Card className="border-dashed">
                     <CardContent className="p-6 text-center">
-                      <Briefcase className="h-8 w-8 text-muted-foreground mx-auto mb-2" />
-                      <p className="text-sm text-muted-foreground">No active assignments</p>
+                      <Briefcase className="h-8 w-8 text-white/60 mx-auto mb-2" />
+                      <p className="text-sm text-white/60">No active assignments</p>
                     </CardContent>
                   </Card>
                 )}
@@ -408,7 +408,7 @@ export function ViewEmployeeDialog({
                           <div className="flex items-start justify-between">
                             <div>
                               <p className="font-medium text-sm truncate">{cert.name}</p>
-                              <p className="text-xs text-muted-foreground">{cert.issuer}</p>
+                              <p className="text-xs text-white/60">{cert.issuer}</p>
                             </div>
                             <Badge
                               variant="outline"
@@ -428,8 +428,8 @@ export function ViewEmployeeDialog({
                 ) : (
                   <Card className="border-dashed">
                     <CardContent className="p-6 text-center">
-                      <Award className="h-8 w-8 text-muted-foreground mx-auto mb-2" />
-                      <p className="text-sm text-muted-foreground">No certifications</p>
+                      <Award className="h-8 w-8 text-white/60 mx-auto mb-2" />
+                      <p className="text-sm text-white/60">No certifications</p>
                     </CardContent>
                   </Card>
                 )}
@@ -458,12 +458,12 @@ export function ViewEmployeeDialog({
                             <Badge variant="secondary" className="text-xs">
                               {note.type}
                             </Badge>
-                            <span className="text-xs text-muted-foreground">
+                            <span className="text-xs text-white/60">
                               {new Date(note.createdAt).toLocaleDateString('en-GB')}
                             </span>
                           </div>
                           <p className="text-sm">{note.content}</p>
-                          <p className="text-xs text-muted-foreground mt-1">— {note.authorName}</p>
+                          <p className="text-xs text-white/60 mt-1">— {note.authorName}</p>
                         </CardContent>
                       </Card>
                     ))}
@@ -471,8 +471,8 @@ export function ViewEmployeeDialog({
                 ) : (
                   <Card className="border-dashed">
                     <CardContent className="p-6 text-center">
-                      <StickyNote className="h-8 w-8 text-muted-foreground mx-auto mb-2" />
-                      <p className="text-sm text-muted-foreground">No notes yet</p>
+                      <StickyNote className="h-8 w-8 text-white/60 mx-auto mb-2" />
+                      <p className="text-sm text-white/60">No notes yet</p>
                     </CardContent>
                   </Card>
                 )}

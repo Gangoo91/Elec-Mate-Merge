@@ -1,4 +1,5 @@
 import { useState, useCallback } from 'react';
+import { copyToClipboard } from '@/utils/clipboard';
 import { Copy, Check, ChevronDown, Settings } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { cn } from '@/lib/utils';
@@ -163,7 +164,7 @@ const TransformerCalculator = () => {
       `Inrush Current: ${(result.inrushCurrent / 1000).toFixed(1)} kA for ${result.inrushDuration}s`,
     ];
 
-    navigator.clipboard.writeText(lines.join('\n'));
+    copyToClipboard(lines.join('\n'));
     setCopied(true);
     toast({ title: 'Copied to clipboard' });
     setTimeout(() => setCopied(false), 2000);

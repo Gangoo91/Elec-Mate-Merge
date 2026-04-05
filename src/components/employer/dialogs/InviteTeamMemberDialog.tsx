@@ -86,7 +86,7 @@ export function InviteTeamMemberDialog({
               <div className="space-y-2">
                 <Label htmlFor="email">Email Address *</Label>
                 <div className="relative">
-                  <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                  <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white/60" />
                   <Input
                     id="email"
                     type="email"
@@ -121,7 +121,7 @@ export function InviteTeamMemberDialog({
                       <SelectItem key={r.value} value={r.value}>
                         <div>
                           <span className="font-medium">{r.label}</span>
-                          <span className="text-xs text-muted-foreground ml-2">
+                          <span className="text-xs text-white/60 ml-2">
                             {r.description}
                           </span>
                         </div>

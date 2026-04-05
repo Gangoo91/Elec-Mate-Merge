@@ -6,6 +6,7 @@ import { ChevronDown, Brain, BookOpen, Loader2, FileText } from 'lucide-react';
 import { useMemo, memo, useState } from 'react';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { toast } from 'sonner';
+import { copyToClipboard } from '@/utils/clipboard';
 import { AgentFeedbackButtons } from './AgentFeedbackButtons';
 import {
   CircuitSpecCard,
@@ -452,8 +453,8 @@ export const AgentResponseRenderer = memo(
                               variant="ghost"
                               size="sm"
                               className="h-6 px-2 text-xs flex-shrink-0"
-                              onClick={() => {
-                                navigator.clipboard.writeText(
+                              onClick={async () => {
+                                await copyToClipboard(
                                   `${source.number} - ${source.section}\n${source.excerpt}`
                                 );
                                 toast.success('Copied to clipboard');

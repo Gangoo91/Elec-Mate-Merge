@@ -3,6 +3,7 @@ import { BellRing, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { usePushNotifications } from '@/hooks/usePushNotifications';
 import { useAuth } from '@/contexts/AuthContext';
+import { storageGetSync, storageSetSync } from '@/utils/storage';
 
 interface PushNotificationPromptProps {
   /** When to show the prompt. Default shows after 1 second */
@@ -28,7 +29,7 @@ const PushNotificationPrompt: React.FC<PushNotificationPromptProps> = ({
 
   useEffect(() => {
     // Permanently dismissed or already enabled
-    if (localStorage.getItem(DISMISS_KEY)) {
+    if (storageGetSync(DISMISS_KEY)) {
       setDismissed(true);
       return;
     }
@@ -44,7 +45,7 @@ const PushNotificationPrompt: React.FC<PushNotificationPromptProps> = ({
   }, [isSupported, isSubscribed, user, delay, dismissed]);
 
   const handleDismiss = () => {
-    localStorage.setItem(DISMISS_KEY, '1');
+    storageSetSync(DISMISS_KEY, '1');
     setDismissed(true);
     setVisible(false);
   };
@@ -53,7 +54,7 @@ const PushNotificationPrompt: React.FC<PushNotificationPromptProps> = ({
     try {
       const success = await subscribe();
       if (success) {
-        localStorage.setItem(DISMISS_KEY, '1');
+        storageSetSync(DISMISS_KEY, '1');
         setVisible(false);
       } else {
         handleDismiss();

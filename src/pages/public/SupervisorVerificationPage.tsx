@@ -31,6 +31,7 @@ import {
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY } from '@/integrations/supabase/client';
+import { getCurrentPosition } from '@/utils/geolocation';
 
 // Separate client for public verification — uses anon key, no auth session
 const anonClient = createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY);
@@ -100,19 +101,17 @@ const SupervisorVerificationPage = () => {
 
   // Request geolocation (non-blocking)
   useEffect(() => {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        (pos) =>
-          setGeo({
-            lat: pos.coords.latitude,
-            lng: pos.coords.longitude,
-            acc: pos.coords.accuracy,
-          }),
-        () => {
-          /* ignore denial */
-        }
-      );
-    }
+    getCurrentPosition()
+      .then((pos) =>
+        setGeo({
+          lat: pos.latitude,
+          lng: pos.longitude,
+          acc: pos.accuracy,
+        })
+      )
+      .catch(() => {
+        /* ignore denial */
+      });
   }, []);
 
   // Init canvas when data loads

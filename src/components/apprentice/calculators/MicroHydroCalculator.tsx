@@ -1,3 +1,4 @@
+import { copyToClipboard } from '@/utils/clipboard';
 import { useState, useCallback, useMemo } from 'react';
 import { Copy, Check, ChevronDown, AlertTriangle } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
@@ -287,10 +288,13 @@ const MicroHydroCalculator = () => {
       `Annual Revenue: £${Math.round(result.annualRevenue).toLocaleString()}`,
       `Payback: ${result.paybackPeriod.toFixed(1)} years`,
     ].join('\n');
-    navigator.clipboard.writeText(text);
-    setCopied(true);
-    toast({ title: 'Copied to clipboard' });
-    setTimeout(() => setCopied(false), 2000);
+    copyToClipboard(text).then((ok) => {
+      if (ok) {
+        setCopied(true);
+        toast({ title: 'Copied to clipboard' });
+        setTimeout(() => setCopied(false), 2000);
+      }
+    });
   };
 
   return (

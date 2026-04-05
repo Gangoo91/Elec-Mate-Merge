@@ -11,6 +11,7 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import JobPagination from './JobPagination';
+import { openExternalUrl } from '@/utils/open-external-url';
 import {
   Search,
   MapPin,
@@ -216,7 +217,7 @@ const UnifiedJobSearch = () => {
   };
 
   const handleApply = (jobId: string, url: string) => {
-    window.open(url, '_blank', 'noopener,noreferrer');
+    openExternalUrl(url);
 
     toast({
       title: 'Application Opened',

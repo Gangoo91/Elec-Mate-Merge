@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button';
 import { toast } from 'sonner';
 import { supabase } from '@/integrations/supabase/client';
 import { Upload, Check } from 'lucide-react';
+import { storageSetJSONSync } from '@/utils/storage';
 
 interface ClientDetails {
   clientName: string;
@@ -116,7 +117,7 @@ export const ProjectDetailsForm = ({ projectId, onDetailsSaved }: ProjectDetails
 
     // Save to localStorage
     const storageKey = `elecmate_project_details_${projectId || 'temp'}`;
-    localStorage.setItem(storageKey, JSON.stringify({ clientDetails, companyDetails }));
+    storageSetJSONSync(storageKey, { clientDetails, companyDetails });
 
     setIsSaved(true);
     onDetailsSaved(clientDetails, companyDetails);

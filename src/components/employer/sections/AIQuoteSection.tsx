@@ -274,13 +274,13 @@ export function AIQuoteSection({ onNavigate }: AIQuoteSectionProps) {
                   className="p-3 rounded-lg bg-elec-dark/50 border border-elec-yellow/10 space-y-2"
                 >
                   <div className="flex items-center justify-between">
-                    <span className="text-xs text-muted-foreground">Item {index + 1}</span>
+                    <span className="text-xs text-white/60">Item {index + 1}</span>
                     {lineItems.length > 1 && (
                       <Button
                         variant="ghost"
                         size="sm"
                         onClick={() => removeLineItem(item.id)}
-                        className="h-6 w-6 p-0 text-muted-foreground hover:text-destructive"
+                        className="h-6 w-6 p-0 text-white/60 hover:text-destructive"
                         disabled={isGenerating}
                       >
                         <Trash2 className="h-3 w-3" />
@@ -338,11 +338,11 @@ export function AIQuoteSection({ onNavigate }: AIQuoteSectionProps) {
             </CardHeader>
             <CardContent className="space-y-3">
               <div className="flex justify-between text-sm">
-                <span className="text-muted-foreground">Subtotal</span>
+                <span className="text-white/60">Subtotal</span>
                 <span className="text-foreground">£{subtotal.toFixed(2)}</span>
               </div>
               <div className="flex justify-between text-sm">
-                <span className="text-muted-foreground">VAT (20%)</span>
+                <span className="text-white/60">VAT (20%)</span>
                 <span className="text-foreground">£{vat.toFixed(2)}</span>
               </div>
               <div className="flex justify-between text-lg font-bold pt-2 border-t border-elec-yellow/10">
@@ -374,7 +374,7 @@ export function AIQuoteSection({ onNavigate }: AIQuoteSectionProps) {
             <Card className="border-info/20 bg-info/5">
               <CardContent className="p-4">
                 <Progress value={progress} className="h-2" />
-                <p className="text-xs text-muted-foreground mt-2 text-center">
+                <p className="text-xs text-white/60 mt-2 text-center">
                   Generating professional quote...
                 </p>
               </CardContent>
@@ -388,7 +388,7 @@ export function AIQuoteSection({ onNavigate }: AIQuoteSectionProps) {
                   <AlertTriangle className="h-4 w-4 text-destructive mt-0.5" />
                   <div>
                     <p className="text-sm text-foreground">Generation Failed</p>
-                    <p className="text-xs text-muted-foreground">{error}</p>
+                    <p className="text-xs text-white/60">{error}</p>
                     <Button variant="outline" size="sm" className="mt-2" onClick={handleReset}>
                       <RefreshCw className="h-3 w-3 mr-1" />
                       Retry

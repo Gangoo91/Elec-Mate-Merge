@@ -115,13 +115,13 @@ export function JobTemplatesSheet({ open, onOpenChange }: JobTemplatesSheetProps
 
         {isLoading ? (
           <div className="flex items-center justify-center py-12">
-            <Loader2 className="h-6 w-6 animate-spin text-muted-foreground" />
+            <Loader2 className="h-6 w-6 animate-spin text-white/60" />
           </div>
         ) : templates.length === 0 ? (
           <div className="text-center py-12">
-            <LayoutTemplate className="h-12 w-12 mx-auto mb-3 text-muted-foreground/30" />
-            <p className="text-muted-foreground">No templates yet</p>
-            <p className="text-sm text-muted-foreground/70 mt-1">
+            <LayoutTemplate className="h-12 w-12 mx-auto mb-3 text-white/60/30" />
+            <p className="text-white/60">No templates yet</p>
+            <p className="text-sm text-white/60/70 mt-1">
               Right-click a job and select "Save as Template"
             </p>
           </div>
@@ -133,8 +133,8 @@ export function JobTemplatesSheet({ open, onOpenChange }: JobTemplatesSheetProps
                   <div className="flex items-start justify-between gap-3">
                     <div className="min-w-0 flex-1">
                       <h4 className="font-medium text-foreground truncate">{template.title}</h4>
-                      <p className="text-sm text-muted-foreground">{template.client}</p>
-                      <div className="flex items-center gap-1.5 mt-1 text-xs text-muted-foreground">
+                      <p className="text-sm text-white/60">{template.client}</p>
+                      <div className="flex items-center gap-1.5 mt-1 text-xs text-white/60">
                         <MapPin className="h-3 w-3" />
                         <span className="truncate">{template.location}</span>
                       </div>

@@ -61,7 +61,7 @@ interface CategoryCardProps {
 function CategoryCard({
   title,
   description,
-  icon: Icon,
+  icon: _Icon,
   courseCount,
   tags,
   accentGradient,
@@ -92,18 +92,8 @@ function CategoryCard({
       />
 
       <div className="relative z-10 p-4 sm:p-5 flex flex-col h-full min-h-[180px]">
-        {/* Top row — Icon + badges */}
-        <div className="flex items-start justify-between mb-3">
-          <div
-            className={cn(
-              'p-2.5 sm:p-3 rounded-xl',
-              iconBg,
-              iconColor,
-              'transition-all duration-200 group-hover:scale-110'
-            )}
-          >
-            <Icon className="h-5 w-5 sm:h-6 sm:w-6" />
-          </div>
+        {/* Top row — badges */}
+        <div className="flex items-start justify-end mb-3">
           <div className="flex items-center gap-1.5">
             {badge && (
               <div className="flex items-center gap-1 px-2 py-0.5 rounded-full bg-elec-yellow/10 border border-elec-yellow/20">

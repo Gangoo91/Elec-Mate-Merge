@@ -1,6 +1,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
+import { openExternalUrl } from '@/utils/open-external-url';
 import {
   ExternalLink,
   Plus,
@@ -353,7 +354,7 @@ const MaterialCard: React.FC<MaterialCardProps> = ({
               size="sm"
               onClick={(e) => {
                 e.stopPropagation();
-                window.open(getProductUrl(), '_blank');
+                openExternalUrl(getProductUrl());
               }}
               className="flex-1 rounded-xl bg-primary text-primary-foreground hover:bg-primary/90 font-semibold shadow-md hover:shadow-lg hover:scale-105 transition-all h-10 text-sm"
             >

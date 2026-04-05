@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useUniversalPortfolio, UniversalActivityData } from './useUniversalPortfolio';
 import { useTimeEntries } from '@/hooks/time-tracking/useTimeEntries';
+import { storageGetSync, storageSetSync, storageGetJSONSync, storageSetJSONSync } from '@/utils/storage';
 
 export const useAutoPortfolioIntegration = () => {
   const { createUniversalPortfolioEntry, convertTimeEntryToUniversal } = useUniversalPortfolio();
@@ -13,7 +14,7 @@ export const useAutoPortfolioIntegration = () => {
     if (!autoSyncEnabled) return;
 
     const syncNewActivities = async () => {
-      const syncTimestamp = localStorage.getItem('portfolio_last_sync');
+      const syncTimestamp = storageGetSync('portfolio_last_sync');
       const newTimeEntries = timeEntries.filter((entry) => {
         if (!syncTimestamp) return true;
         return new Date(entry.date).getTime() > new Date(syncTimestamp).getTime();
@@ -22,9 +23,7 @@ export const useAutoPortfolioIntegration = () => {
       // Process new time entries
       for (const timeEntry of newTimeEntries) {
         // Skip if already processed
-        const processedEntries = JSON.parse(
-          localStorage.getItem('processed_portfolio_entries') || '[]'
-        );
+        const processedEntries = storageGetJSONSync<string[]>('processed_portfolio_entries', []);
         if (processedEntries.includes(timeEntry.id)) continue;
 
         try {
@@ -36,7 +35,7 @@ export const useAutoPortfolioIntegration = () => {
 
           // Mark as processed
           processedEntries.push(timeEntry.id);
-          localStorage.setItem('processed_portfolio_entries', JSON.stringify(processedEntries));
+          storageSetJSONSync('processed_portfolio_entries', processedEntries);
         } catch (error) {
           console.error('Failed to auto-sync activity:', error);
         }
@@ -44,7 +43,7 @@ export const useAutoPortfolioIntegration = () => {
 
       // Update sync timestamp
       const currentTimestamp = new Date().toISOString();
-      localStorage.setItem('portfolio_last_sync', currentTimestamp);
+      storageSetSync('portfolio_last_sync', currentTimestamp);
       setLastSyncTimestamp(currentTimestamp);
     };
 

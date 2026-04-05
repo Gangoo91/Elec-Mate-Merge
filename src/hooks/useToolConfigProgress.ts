@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
+import { storageGetJSONSync, storageSetJSONSync, storageRemoveSync } from '@/utils/storage';
 
 const STORAGE_KEY = 'elecmate-tool-config-progress';
 
@@ -11,33 +12,21 @@ export function useToolConfigProgress() {
   const [configuredTools, setConfiguredTools] = useState<Set<string>>(new Set());
   const [lastToolIndex, setLastToolIndex] = useState(0);
 
-  // Load from localStorage on mount
+  // Load from storage on mount
   useEffect(() => {
-    try {
-      const stored = localStorage.getItem(STORAGE_KEY);
-      if (stored) {
-        const parsed = JSON.parse(stored);
-        setConfiguredTools(new Set(parsed.configuredTools || []));
-        setLastToolIndex(parsed.lastToolIndex || 0);
-      }
-    } catch (e) {
-      console.error('Failed to load tool config progress:', e);
+    const parsed = storageGetJSONSync<{ configuredTools?: string[]; lastToolIndex?: number } | null>(STORAGE_KEY, null);
+    if (parsed) {
+      setConfiguredTools(new Set(parsed.configuredTools || []));
+      setLastToolIndex(parsed.lastToolIndex || 0);
     }
   }, []);
 
-  // Save to localStorage whenever state changes
+  // Save to storage whenever state changes
   const saveProgress = useCallback((tools: Set<string>, index: number) => {
-    try {
-      localStorage.setItem(
-        STORAGE_KEY,
-        JSON.stringify({
-          configuredTools: Array.from(tools),
-          lastToolIndex: index,
-        })
-      );
-    } catch (e) {
-      console.error('Failed to save tool config progress:', e);
-    }
+    storageSetJSONSync(STORAGE_KEY, {
+      configuredTools: Array.from(tools),
+      lastToolIndex: index,
+    });
   }, []);
 
   const markToolConfigured = useCallback(
@@ -102,7 +91,7 @@ export function useToolConfigProgress() {
   const resetProgress = useCallback(() => {
     setConfiguredTools(new Set());
     setLastToolIndex(0);
-    localStorage.removeItem(STORAGE_KEY);
+    storageRemoveSync(STORAGE_KEY);
   }, []);
 
   return {

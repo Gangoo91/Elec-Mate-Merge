@@ -9,7 +9,12 @@ export type ReportType =
   | 'fire-alarm'
   | 'emergency-lighting'
   | 'pat-testing'
-  | 'solar-pv';
+  | 'solar-pv'
+  | 'danger-notice'
+  | 'isolation-cert'
+  | 'permit-to-work'
+  | 'warning-labels'
+  | 'safe-isolation';
 
 export interface CloudReport {
   id: string;
@@ -143,6 +148,12 @@ export const reportCloud = {
         // PAT Testing specific
         if (reportType === 'pat-testing' && data.testerSignature && data.testDate)
           return 'completed';
+        // Labels & Warnings types
+        if (reportType === 'danger-notice' && data.contractorSignature) return 'completed';
+        if (reportType === 'isolation-cert' && data.personIsolatingSignature) return 'completed';
+        if (reportType === 'permit-to-work' && data.authorisedBySignature) return 'completed';
+        if (reportType === 'safe-isolation' && data.personSignature) return 'completed';
+        if (reportType === 'warning-labels') return 'completed';
         // Check for any meaningful data entry (works for all report types)
         const hasContent =
           data.clientName ||

@@ -208,7 +208,7 @@ export function BriefingPhotoUpload({
                 </div>
                 <div>
                   <SheetTitle className="text-left">Photo Evidence</SheetTitle>
-                  <p className="text-xs text-muted-foreground mt-0.5">
+                  <p className="text-xs text-white/60 mt-0.5">
                     Capture attendance or site photos
                   </p>
                 </div>
@@ -320,9 +320,9 @@ export function BriefingPhotoUpload({
               </div>
             ) : (
               <div className="text-center py-12">
-                <Image className="h-16 w-16 text-muted-foreground mx-auto mb-4 opacity-50" />
-                <p className="text-sm text-muted-foreground">No photos added yet</p>
-                <p className="text-xs text-muted-foreground mt-1">
+                <Image className="h-16 w-16 text-white/60 mx-auto mb-4 opacity-50" />
+                <p className="text-sm text-white/60">No photos added yet</p>
+                <p className="text-xs text-white/60 mt-1">
                   Take or upload photos to document attendance
                 </p>
               </div>
@@ -331,7 +331,7 @@ export function BriefingPhotoUpload({
             {/* Instructions */}
             <div className="p-4 mt-6 rounded-xl bg-blue-500/10 border border-blue-500/20">
               <h4 className="font-medium text-foreground mb-2 text-sm">Photo Tips</h4>
-              <ul className="text-xs text-muted-foreground space-y-1">
+              <ul className="text-xs text-white/60 space-y-1">
                 <li>• Capture the group at the start of the briefing</li>
                 <li>• Include any hazardous areas discussed</li>
                 <li>• Document site conditions or equipment</li>

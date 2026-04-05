@@ -12,7 +12,7 @@ interface ConversationListItemProps {
 }
 
 const tierConfig: Record<string, { color: string; bg: string; icon: typeof Shield }> = {
-  basic: { color: 'text-muted-foreground', bg: 'bg-muted', icon: Shield },
+  basic: { color: 'text-white/60', bg: 'bg-muted', icon: Shield },
   verified: { color: 'text-blue-500', bg: 'bg-blue-100 dark:bg-blue-900/30', icon: Shield },
   premium: { color: 'text-elec-yellow', bg: 'bg-yellow-100 dark:bg-yellow-900/30', icon: Award },
 };
@@ -84,13 +84,13 @@ export function ConversationListItem({
                 {name}
               </h3>
               {lastMessageTime && (
-                <span className="text-xs text-muted-foreground shrink-0">{lastMessageTime}</span>
+                <span className="text-xs text-white/60 shrink-0">{lastMessageTime}</span>
               )}
             </div>
 
             {/* Vacancy context */}
             {conversation.vacancy && (
-              <div className="flex items-center gap-1 mt-0.5 text-sm text-muted-foreground">
+              <div className="flex items-center gap-1 mt-0.5 text-sm text-white/60">
                 <Briefcase className="h-3 w-3" />
                 <span className="truncate">Re: {conversation.vacancy.title}</span>
               </div>
@@ -99,7 +99,7 @@ export function ConversationListItem({
             {/* Last message preview */}
             {conversation.last_message_preview && (
               <p
-                className={`text-sm mt-1 truncate ${hasUnread ? 'text-foreground font-medium' : 'text-muted-foreground'}`}
+                className={`text-sm mt-1 truncate ${hasUnread ? 'text-foreground font-medium' : 'text-white/60'}`}
               >
                 {conversation.last_message_preview}
               </p>
@@ -152,7 +152,7 @@ export function ConversationListItem({
               </button>
             )}
             <MessageSquare
-              className={`h-5 w-5 ${hasUnread ? 'text-elec-yellow' : 'text-muted-foreground'}`}
+              className={`h-5 w-5 ${hasUnread ? 'text-elec-yellow' : 'text-white/60'}`}
             />
           </div>
         </div>

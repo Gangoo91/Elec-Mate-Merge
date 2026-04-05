@@ -1,4 +1,5 @@
 import { useMemo, useState, useCallback } from 'react';
+import { copyToClipboard } from '@/utils/clipboard';
 import { Copy, Check, CheckCircle, AlertTriangle, ChevronDown, Zap } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { cn } from '@/lib/utils';
@@ -222,7 +223,7 @@ const AdiabaticCalculator = () => {
     text += `\nDisconnection Time: ${result.disconnectionTime} s`;
     text += `\nk Factor: ${result.k} (${result.material} @ ${result.maxTemp}°C)`;
     text += `\nSafety Margin: ${result.safetyMargin.toFixed(1)}%`;
-    navigator.clipboard.writeText(text);
+    copyToClipboard(text);
     setCopied(true);
     toast({ title: 'Copied to clipboard' });
     setTimeout(() => setCopied(false), 2000);

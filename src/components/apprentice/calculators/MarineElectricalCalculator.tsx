@@ -1,3 +1,4 @@
+import { copyToClipboard } from '@/utils/clipboard';
 import { useState, useCallback } from 'react';
 import { Copy, Check, CheckCircle, AlertTriangle, ChevronDown } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
@@ -251,10 +252,13 @@ const MarineElectricalCalculator = () => {
     text += `\nVoltage Drop: ${results.actualVoltageDropPercentage.toFixed(1)}%`;
     text += `\nInverter: ${results.recommendedInverterSize} W (${results.inverterType})`;
     text += `\nEnergy Balance: ${results.energyBalance > 0 ? '+' : ''}${results.energyBalance.toFixed(0)} Ah/day`;
-    navigator.clipboard.writeText(text);
-    setCopied(true);
-    toast({ title: 'Copied to clipboard' });
-    setTimeout(() => setCopied(false), 2000);
+    copyToClipboard(text).then((ok) => {
+      if (ok) {
+        setCopied(true);
+        toast({ title: 'Copied to clipboard' });
+        setTimeout(() => setCopied(false), 2000);
+      }
+    });
   };
 
   const getComplianceStatus = (): { status: 'pass' | 'warning' | 'fail'; label: string } => {

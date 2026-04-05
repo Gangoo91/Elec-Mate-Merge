@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { openExternalUrl } from '@/utils/open-external-url';
 import { motion } from 'framer-motion';
 import {
   ArrowLeft,
@@ -42,7 +43,7 @@ export function SafetyResourceLibrary({ onBack }: SafetyResourceLibraryProps) {
 
   const handleDownload = (resource: SafetyResource) => {
     if (resource.file_url) {
-      window.open(resource.file_url, '_blank');
+      openExternalUrl(resource.file_url);
     }
   };
 

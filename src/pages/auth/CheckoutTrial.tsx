@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { storageGetSync, storageRemoveSync } from '@/utils/storage';
 import { useAuth } from '@/contexts/AuthContext';
 import { supabase } from '@/integrations/supabase/client';
 import { Button } from '@/components/ui/button';
@@ -59,7 +60,7 @@ const CheckoutTrial = () => {
   } = useRevenueCat(user?.id);
 
   // Determine plan from profile role or localStorage fallback
-  const role = profile?.role || localStorage.getItem('elec-mate-profile-role') || 'electrician';
+  const role = profile?.role || storageGetSync('elec-mate-profile-role') || 'electrician';
   const priceInfo = ROLE_TO_PRICE[role] || ROLE_TO_PRICE.electrician;
 
   // Whether native payment options are ready
@@ -127,8 +128,8 @@ const CheckoutTrial = () => {
     setError(null);
 
     try {
-      const offerCode = localStorage.getItem('elec-mate-offer-code');
-      const referralCode = localStorage.getItem('elec-mate-referral-code');
+      const offerCode = storageGetSync('elec-mate-offer-code');
+      const referralCode = storageGetSync('elec-mate-referral-code');
 
       const { data, error: fnError } = await supabase.functions.invoke('create-checkout', {
         body: {
@@ -143,8 +144,8 @@ const CheckoutTrial = () => {
       if (fnError) throw new Error(fnError.message);
 
       if (data?.url) {
-        if (offerCode) localStorage.removeItem('elec-mate-offer-code');
-        if (referralCode) localStorage.removeItem('elec-mate-referral-code');
+        if (offerCode) storageRemoveSync('elec-mate-offer-code');
+        if (referralCode) storageRemoveSync('elec-mate-referral-code');
         window.location.href = data.url;
       } else {
         throw new Error('No checkout URL returned');
@@ -239,9 +240,9 @@ const CheckoutTrial = () => {
 
   const handleSignOut = async () => {
     if (retryTimerRef.current) clearTimeout(retryTimerRef.current);
-    localStorage.removeItem('elec-mate-checkout-planId');
-    localStorage.removeItem('elec-mate-checkout-priceId');
-    localStorage.removeItem('elec-mate-profile-role');
+    storageRemoveSync('elec-mate-checkout-planId');
+    storageRemoveSync('elec-mate-checkout-priceId');
+    storageRemoveSync('elec-mate-profile-role');
     await signOut();
     window.location.replace('/');
   };

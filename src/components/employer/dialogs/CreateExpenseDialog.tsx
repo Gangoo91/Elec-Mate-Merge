@@ -186,7 +186,7 @@ export function CreateExpenseDialog({ open, onOpenChange }: CreateExpenseDialogP
               <div className="space-y-2">
                 <Label>Amount *</Label>
                 <div className="relative">
-                  <span className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground">
+                  <span className="absolute left-3 top-1/2 -translate-y-1/2 text-white/60">
                     £
                   </span>
                   <Input
@@ -236,8 +236,8 @@ export function CreateExpenseDialog({ open, onOpenChange }: CreateExpenseDialogP
               {/* Receipt Upload Placeholder */}
               <Card className="bg-muted/30 border-dashed">
                 <CardContent className="p-4 flex flex-col items-center gap-2">
-                  <Receipt className="h-8 w-8 text-muted-foreground" />
-                  <p className="text-sm text-muted-foreground text-center">
+                  <Receipt className="h-8 w-8 text-white/60" />
+                  <p className="text-sm text-white/60 text-center">
                     Receipt upload coming soon
                   </p>
                 </CardContent>

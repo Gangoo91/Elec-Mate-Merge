@@ -28,6 +28,7 @@ import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/component
 import ReactMarkdown from 'react-markdown';
 import { Badge } from '@/components/ui/badge';
 import { EnhancedAgentResponse } from '@/components/agent-response/EnhancedAgentResponse';
+import { copyToClipboard } from '@/utils/clipboard';
 
 const CircuitDesigner = () => {
   const [prompt, setPrompt] = useState('');
@@ -165,9 +166,9 @@ Please provide exhaustive detail for materials - include everything from the sma
     }
   };
 
-  const copyToClipboard = async () => {
+  const handleCopyToClipboard = async () => {
     try {
-      await navigator.clipboard.writeText(analysisResult);
+      await copyToClipboard(analysisResult);
       toast({
         title: 'Copied!',
         description: 'Report copied to clipboard successfully.',
@@ -353,7 +354,7 @@ Please provide exhaustive detail for materials - include everything from the sma
                       <Button
                         variant="outline"
                         className="border-green-500/30 text-green-400 hover:bg-green-500/20 h-12 sm:h-14 rounded-xl touch-manipulation min-h-[44px]"
-                        onClick={copyToClipboard}
+                        onClick={handleCopyToClipboard}
                       >
                         <Copy className="h-4 w-4 sm:mr-2" />
                         <span className="hidden sm:inline">Copy</span>
@@ -496,7 +497,7 @@ Please provide exhaustive detail for materials - include everything from the sma
                     <Button
                       variant="outline"
                       size="sm"
-                      onClick={copyToClipboard}
+                      onClick={handleCopyToClipboard}
                       className="border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/20 rounded-lg h-10 sm:h-auto touch-manipulation min-h-[44px]"
                     >
                       <Copy className="h-4 w-4 sm:mr-2" />

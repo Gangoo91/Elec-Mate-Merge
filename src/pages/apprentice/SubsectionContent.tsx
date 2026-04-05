@@ -5,6 +5,7 @@ import SubsectionLearningContent from '@/components/apprentice/subsection/Subsec
 import { useSubsectionContent } from '@/hooks/useSubsectionContent';
 import { Card, CardContent } from '@/components/ui/card';
 import { CheckCircle, Book } from 'lucide-react';
+import { storageGetSync, storageSetSync } from '@/utils/storage';
 
 const SubsectionContent = () => {
   const {
@@ -66,7 +67,7 @@ const SubsectionContent = () => {
     if (sectionId && subsectionId) {
       const prefix = isElectricalTheory ? 'elec' : 'hs';
       const storageKey = `completion_${prefix}_${sectionId}_${subsectionId}`;
-      const storedCompletion = localStorage.getItem(storageKey);
+      const storedCompletion = storageGetSync(storageKey);
       setIsCompleted(storedCompletion === 'true');
       console.log('Checking completion status:', storageKey, storedCompletion);
     }
@@ -76,7 +77,7 @@ const SubsectionContent = () => {
     if (sectionId && subsectionId) {
       const prefix = isElectricalTheory ? 'elec' : 'hs';
       const storageKey = `completion_${prefix}_${sectionId}_${subsectionId}`;
-      localStorage.setItem(storageKey, 'true');
+      storageSetSync(storageKey, 'true');
       setIsCompleted(true);
       console.log('Marked as complete:', storageKey);
     }

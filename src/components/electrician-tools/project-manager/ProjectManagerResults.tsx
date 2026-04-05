@@ -12,6 +12,7 @@ import { useProjectPlanState } from '@/hooks/useProjectPlanState';
 import { EditableProjectPlan } from '@/types/projectPlan';
 import { v4 as uuidv4 } from 'uuid';
 import { openOrDownloadPdf } from '@/utils/pdf-download';
+import { copyToClipboard } from '@/utils/clipboard';
 
 interface ProjectManagerResultsProps {
   results: any;
@@ -129,7 +130,7 @@ const ProjectManagerResults = ({
 
   const handleCopy = () => {
     const exportData = exportState();
-    navigator.clipboard.writeText(exportData);
+    copyToClipboard(exportData);
     toast.success('Copied to clipboard', {
       description: 'Editable project plan copied as JSON',
     });

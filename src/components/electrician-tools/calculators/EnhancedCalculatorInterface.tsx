@@ -32,6 +32,7 @@ import {
 import { toast } from '@/hooks/use-toast';
 import CalculatorDataManager from './CalculatorDataManager';
 import CalculatorEducationalContent from './CalculatorEducationalContent';
+import { copyToClipboard } from '@/utils/clipboard';
 
 interface CalculationStep {
   id: string;
@@ -394,7 +395,7 @@ const EnhancedCalculatorInterface: React.FC<EnhancedCalculatorInterfaceProps> = 
                       <Button
                         variant="outline"
                         onClick={() => {
-                          navigator.clipboard.writeText(JSON.stringify(outputs, null, 2));
+                          copyToClipboard(JSON.stringify(outputs, null, 2));
                           toast({ title: 'Results copied to clipboard' });
                         }}
                       >

@@ -1,3 +1,4 @@
+import { copyToClipboard } from '@/utils/clipboard';
 import { format, isToday } from 'date-fns';
 import { Settings, ChevronLeft, ChevronRight, Plus, Share2 } from 'lucide-react';
 import { cn } from '@/lib/utils';
@@ -67,8 +68,8 @@ const CalendarHeader = ({
         // User cancelled share — not an error
       }
     } else {
-      await navigator.clipboard.writeText(url);
-      toast({ title: 'Booking link copied to clipboard' });
+      const ok = await copyToClipboard(url);
+      if (ok) toast({ title: 'Booking link copied to clipboard' });
     }
   };
 

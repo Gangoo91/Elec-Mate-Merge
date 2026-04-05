@@ -6,6 +6,7 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Drawer } from 'vaul';
+import { storageGetJSONSync, storageSetJSONSync } from '@/utils/storage';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -65,23 +66,14 @@ interface RecentSearch {
   timestamp: number;
 }
 
-// Load recent searches from localStorage
+// Load recent searches from storage
 const loadRecentSearches = (): RecentSearch[] => {
-  try {
-    const stored = localStorage.getItem(RECENT_SEARCHES_KEY);
-    return stored ? JSON.parse(stored) : [];
-  } catch {
-    return [];
-  }
+  return storageGetJSONSync<RecentSearch[]>(RECENT_SEARCHES_KEY, []);
 };
 
-// Save recent searches to localStorage
+// Save recent searches to storage
 const saveRecentSearches = (searches: RecentSearch[]) => {
-  try {
-    localStorage.setItem(RECENT_SEARCHES_KEY, JSON.stringify(searches));
-  } catch {
-    // Ignore storage errors
-  }
+  storageSetJSONSync(RECENT_SEARCHES_KEY, searches);
 };
 
 const JobSearchSheet = ({

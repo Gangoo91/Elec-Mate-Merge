@@ -3,6 +3,8 @@
  * with pre-filled client data and certificate attachment support.
  */
 
+import { storageSetJSONSync } from '@/utils/storage';
+
 // Extract UK postcode from address string
 function extractPostcode(address: string): { address: string; postcode: string } {
   if (!address) return { address: '', postcode: '' };
@@ -114,7 +116,7 @@ export function createQuoteFromCertificate(data: CertificateClientData): string 
     };
   }
 
-  localStorage.setItem(sessionId, JSON.stringify({ certificateData: quoteData }));
+  storageSetJSONSync(sessionId, { certificateData: quoteData });
 
   return `/electrician/quote-builder/create?certificateSessionId=${sessionId}`;
 }
@@ -164,7 +166,7 @@ export function createInvoiceFromCertificate(data: CertificateClientData): strin
     };
   }
 
-  localStorage.setItem(sessionId, JSON.stringify({ certificateData: invoiceData }));
+  storageSetJSONSync(sessionId, { certificateData: invoiceData });
 
   return `/electrician/invoice-builder/create?certificateSessionId=${sessionId}`;
 }

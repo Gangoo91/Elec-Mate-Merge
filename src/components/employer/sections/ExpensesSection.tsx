@@ -290,7 +290,7 @@ export function ExpensesSection({ mode, currentEmployeeId }: ExpensesSectionProp
           <div className="flex gap-2">
             <div className="relative flex-1">
               {!searchQuery && (
-                <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none" />
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white/60 pointer-events-none" />
               )}
               <Input
                 placeholder="Search expenses..."
@@ -345,9 +345,9 @@ export function ExpensesSection({ mode, currentEmployeeId }: ExpensesSectionProp
           {sortedExpenses.length === 0 ? (
             <Card className="bg-card border-border">
               <CardContent className="py-12 text-center">
-                <Receipt className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
+                <Receipt className="h-12 w-12 text-white/60 mx-auto mb-4" />
                 <h3 className="font-semibold mb-2">No expenses found</h3>
-                <p className="text-sm text-muted-foreground mb-4">
+                <p className="text-sm text-white/60 mb-4">
                   {searchQuery || activeFilterCount > 0
                     ? 'Try adjusting your search or filters'
                     : 'No expense claims have been submitted yet'}

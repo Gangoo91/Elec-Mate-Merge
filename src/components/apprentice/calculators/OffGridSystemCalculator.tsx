@@ -1,4 +1,5 @@
 import { useState, useCallback } from 'react';
+import { copyToClipboard } from '@/utils/clipboard';
 import {
   Sun,
   Battery,
@@ -164,7 +165,7 @@ export function OffGridSystemCalculator() {
       `System Cost: £${result.systemCost.toFixed(0)}`,
       `Rating: ${result.systemRating}`,
     ].join('\n');
-    navigator.clipboard.writeText(text);
+    copyToClipboard(text);
     setCopied(true);
     toast({ title: 'Copied to clipboard' });
     setTimeout(() => setCopied(false), 2000);

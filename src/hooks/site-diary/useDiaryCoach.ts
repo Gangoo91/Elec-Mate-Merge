@@ -8,6 +8,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import type { SiteDiaryEntry } from './useSiteDiaryEntries';
+import { storageGetJSONSync, storageSetJSONSync, storageRemoveSync } from '@/utils/storage';
 
 const CACHE_KEY = 'elec-mate-diary-coach';
 const CACHE_TTL_MS = 24 * 60 * 60 * 1000; // 24 hours
@@ -54,17 +55,12 @@ export function useDiaryCoach(entries: SiteDiaryEntry[], qualificationCode?: str
 
   // Load from cache on mount
   useEffect(() => {
-    try {
-      const cached = localStorage.getItem(CACHE_KEY);
-      if (cached) {
-        const parsed: CachedInsight = JSON.parse(cached);
-        const age = Date.now() - new Date(parsed.generatedAt).getTime();
-        if (age < CACHE_TTL_MS) {
-          setInsight(parsed.insight);
-        }
+    const parsed = storageGetJSONSync<CachedInsight | null>(CACHE_KEY, null);
+    if (parsed) {
+      const age = Date.now() - new Date(parsed.generatedAt).getTime();
+      if (age < CACHE_TTL_MS) {
+        setInsight(parsed.insight);
       }
-    } catch {
-      // Ignore cache errors
     }
   }, []);
 
@@ -74,18 +70,13 @@ export function useDiaryCoach(entries: SiteDiaryEntry[], qualificationCode?: str
 
       // Check cache age unless forcing refresh
       if (!force) {
-        try {
-          const cached = localStorage.getItem(CACHE_KEY);
-          if (cached) {
-            const parsed: CachedInsight = JSON.parse(cached);
-            const age = Date.now() - new Date(parsed.generatedAt).getTime();
-            if (age < CACHE_TTL_MS && parsed.entryHash === computeEntryHash(entries)) {
-              setInsight(parsed.insight);
-              return;
-            }
+        const parsed = storageGetJSONSync<CachedInsight | null>(CACHE_KEY, null);
+        if (parsed) {
+          const age = Date.now() - new Date(parsed.generatedAt).getTime();
+          if (age < CACHE_TTL_MS && parsed.entryHash === computeEntryHash(entries)) {
+            setInsight(parsed.insight);
+            return;
           }
-        } catch {
-          // Continue to fetch
         }
       }
 
@@ -93,7 +84,7 @@ export function useDiaryCoach(entries: SiteDiaryEntry[], qualificationCode?: str
       setError(null);
       if (force) {
         setInsight(null);
-        localStorage.removeItem(CACHE_KEY);
+        storageRemoveSync(CACHE_KEY);
       }
 
       try {
@@ -155,16 +146,12 @@ export function useDiaryCoach(entries: SiteDiaryEntry[], qualificationCode?: str
         setInsight(result.insight);
 
         // Cache it
-        try {
-          const cached: CachedInsight = {
-            insight: result.insight,
-            generatedAt: result.generatedAt || new Date().toISOString(),
-            entryHash: computeEntryHash(entries),
-          };
-          localStorage.setItem(CACHE_KEY, JSON.stringify(cached));
-        } catch {
-          // Ignore cache write errors
-        }
+        const cached: CachedInsight = {
+          insight: result.insight,
+          generatedAt: result.generatedAt || new Date().toISOString(),
+          entryHash: computeEntryHash(entries),
+        };
+        storageSetJSONSync(CACHE_KEY, cached);
       } catch (err) {
         console.error('[useDiaryCoach] Error:', err);
         setError(err instanceof Error ? err.message : 'Unknown error');

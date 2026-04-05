@@ -23,6 +23,7 @@ import ElectricalTheoryUnit from '@/components/apprentice/units/ElectricalTheory
 import InstallationMethodsUnit from '@/components/apprentice/units/InstallationMethodsUnit';
 import { useAuth } from '@/contexts/AuthContext';
 import { userKey } from '@/lib/userStorage';
+import { storageGetSync } from '@/utils/storage';
 
 const UnitContent = () => {
   const { unitId } = useParams();
@@ -40,11 +41,11 @@ const UnitContent = () => {
   const isInstallationMethodsUnit = unitId === 'elec2-05a';
   const unitCode = unitData?.code || '';
 
-  // Load any completed sections and quiz status from localStorage (user-scoped)
+  // Load any completed sections and quiz status from storage (user-scoped)
   useEffect(() => {
     if (unitId && unitData?.code) {
       const code = unitData.code;
-      const storedQuizStatus = localStorage.getItem(
+      const storedQuizStatus = storageGetSync(
         userKey(user?.id, `unit_${code}_quiz_completed`)
       );
       if (storedQuizStatus === 'true') {

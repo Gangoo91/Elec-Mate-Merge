@@ -4,6 +4,8 @@ import { useAuth } from '@/contexts/AuthContext';
 import { useQueryClient } from '@tanstack/react-query';
 import { toast } from '@/hooks/use-toast';
 import { v4 as uuidv4 } from 'uuid';
+import { getCurrentPosition } from '@/utils/geolocation';
+import { storageGetJSONSync, storageSetJSONSync, storageRemoveSync } from '@/utils/storage';
 
 export interface UploadProgress {
   status: 'idle' | 'compressing' | 'uploading' | 'saving' | 'complete' | 'error' | 'offline';
@@ -184,41 +186,29 @@ export function useSafetyPhotoUpload() {
   }, []);
 
   // Get current location
-  const getCurrentLocation = useCallback((): Promise<{ lat: number; lng: number } | null> => {
-    return new Promise((resolve) => {
-      if (!navigator.geolocation) {
-        resolve(null);
-        return;
-      }
-
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          resolve({
-            lat: position.coords.latitude,
-            lng: position.coords.longitude,
-          });
-        },
-        () => resolve(null),
-        { enableHighAccuracy: true, timeout: 5000, maximumAge: 60000 }
-      );
-    });
+  const getCurrentLocation = useCallback(async (): Promise<{ lat: number; lng: number } | null> => {
+    try {
+      const position = await getCurrentPosition({
+        enableHighAccuracy: true,
+        timeout: 5000,
+        maximumAge: 60000,
+      });
+      return { lat: position.latitude, lng: position.longitude };
+    } catch {
+      return null;
+    }
   }, []);
 
   // Reverse geocode GPS coordinates to a UK-friendly address string
   // Uses Nominatim with localStorage cache (30-day TTL)
   const reverseGeocode = useCallback(async (lat: number, lng: number): Promise<string | null> => {
     const cacheKey = `geo_cache_reverse_${lat.toFixed(5)}_${lng.toFixed(5)}`;
-    try {
-      const cached = localStorage.getItem(cacheKey);
-      if (cached) {
-        const entry = JSON.parse(cached);
-        if (Date.now() < entry.ts + 30 * 24 * 60 * 60 * 1000) {
-          return entry.address;
-        }
-        localStorage.removeItem(cacheKey);
+    const cached = storageGetJSONSync<{ address: string; ts: number } | null>(cacheKey, null);
+    if (cached) {
+      if (Date.now() < cached.ts + 30 * 24 * 60 * 60 * 1000) {
+        return cached.address;
       }
-    } catch {
-      /* ignore cache errors */
+      storageRemoveSync(cacheKey);
     }
 
     try {
@@ -250,11 +240,7 @@ export function useSafetyPhotoUpload() {
       const formatted = parts.length > 0 ? parts.join(', ') : data.display_name || null;
 
       if (formatted) {
-        try {
-          localStorage.setItem(cacheKey, JSON.stringify({ address: formatted, ts: Date.now() }));
-        } catch {
-          /* storage full — ignore */
-        }
+        storageSetJSONSync(cacheKey, { address: formatted, ts: Date.now() });
       }
 
       return formatted;

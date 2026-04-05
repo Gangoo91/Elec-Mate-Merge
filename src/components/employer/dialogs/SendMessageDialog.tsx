@@ -113,7 +113,7 @@ export function SendMessageDialog({ employee, open, onOpenChange }: SendMessageD
             </div>
             <div className="min-w-0 flex-1">
               <p className="font-medium truncate">{employee.name}</p>
-              <p className="text-sm text-muted-foreground">{employee.phone}</p>
+              <p className="text-sm text-white/60">{employee.phone}</p>
             </div>
             <Badge variant="outline" className="text-xs">
               To
@@ -174,7 +174,7 @@ export function SendMessageDialog({ employee, open, onOpenChange }: SendMessageD
 
             {/* Quick Messages */}
             <div className="space-y-2">
-              <Label className="text-xs text-muted-foreground">Quick Messages</Label>
+              <Label className="text-xs text-white/60">Quick Messages</Label>
               <div className="flex flex-wrap gap-1.5">
                 {QUICK_MESSAGES.map((quickMsg, idx) => (
                   <Badge
@@ -200,7 +200,7 @@ export function SendMessageDialog({ employee, open, onOpenChange }: SendMessageD
                 rows={4}
                 className="resize-none"
               />
-              <div className="flex items-center justify-between text-xs text-muted-foreground">
+              <div className="flex items-center justify-between text-xs text-white/60">
                 <button className="flex items-center gap-1 hover:text-foreground transition-colors">
                   <Paperclip className="h-3 w-3" />
                   Attach file

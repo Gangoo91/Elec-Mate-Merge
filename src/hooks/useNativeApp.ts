@@ -8,6 +8,7 @@ import { App } from '@capacitor/app';
 import { PushNotifications } from '@capacitor/push-notifications';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
+import { openExternalUrl } from '@/utils/open-external-url';
 
 /**
  * Hook to initialize native app features when running in Capacitor
@@ -18,6 +19,42 @@ export function useNativeApp() {
   const navigate = useNavigate();
   const navigateRef = useRef(navigate);
   navigateRef.current = navigate;
+
+  // Global click handler that intercepts external links on native and routes
+  // them through openExternalUrl() (Capacitor Browser / system handler).
+  const handleExternalLinkClick = useCallback((e: Event) => {
+    const target = (e.target as Element)?.closest?.('a');
+    if (!target) return;
+
+    const href = target.getAttribute('href');
+    if (!href) return;
+
+    // Only intercept external URLs and app-protocol links
+    const isExternal =
+      href.startsWith('http://') ||
+      href.startsWith('https://') ||
+      href.startsWith('tel:') ||
+      href.startsWith('mailto:');
+
+    if (!isExternal) return;
+
+    // Don't intercept internal links to our own domain used for SPA routing
+    try {
+      const url = new URL(href, window.location.origin);
+      if (
+        (url.protocol === 'http:' || url.protocol === 'https:') &&
+        url.host === window.location.host
+      ) {
+        return; // Internal SPA link — let React Router handle it
+      }
+    } catch {
+      // Malformed URL — let it fall through
+    }
+
+    e.preventDefault();
+    e.stopPropagation();
+    openExternalUrl(href);
+  }, []);
 
   // Initialize native features on mount
   useEffect(() => {
@@ -65,6 +102,15 @@ export function useNativeApp() {
             supabase.auth.refreshSession().catch(() => {
               // Non-critical — session may already be valid
             });
+
+            // Dispatch a custom event so OAuth components can detect app resume
+            // reliably (window 'focus' events are unreliable on native)
+            window.dispatchEvent(new CustomEvent('capacitor:resume'));
+
+            // Clear delivered notifications + badge when app comes to foreground
+            PushNotifications.removeAllDeliveredNotifications().catch(() => {
+              // Non-critical
+            });
           }
         });
 
@@ -93,6 +139,11 @@ export function useNativeApp() {
           }
         });
 
+        // Global external link interceptor — catches all <a> clicks with
+        // external href and routes them through Capacitor Browser instead of
+        // letting the WebView navigate away or open inconsistently.
+        document.addEventListener('click', handleExternalLinkClick, true);
+
         console.log('Native app initialized');
       } catch (error) {
         console.error('Native init error:', error);
@@ -106,6 +157,7 @@ export function useNativeApp() {
       if (isNative) {
         Keyboard.removeAllListeners();
         App.removeAllListeners();
+        document.removeEventListener('click', handleExternalLinkClick, true);
       }
     };
   }, [isNative]);

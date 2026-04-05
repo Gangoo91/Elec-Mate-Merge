@@ -24,6 +24,7 @@ import { useState, useCallback } from 'react';
 import { Capacitor } from '@capacitor/core';
 import { Preferences } from '@capacitor/preferences';
 import { InAppReview } from '@capacitor-community/in-app-review';
+import { storageGetJSONSync, storageSetJSONSync } from '@/utils/storage';
 
 const STORAGE_KEY = 'elec_mate_app_review';
 const MIN_ACTIONS_BEFORE_PROMPT = 3;
@@ -47,16 +48,13 @@ const DEFAULT_STATE: ReviewState = {
 
 async function getState(): Promise<ReviewState> {
   try {
-    let raw: string | null = null;
-
     if (Capacitor.isNativePlatform()) {
       const { value } = await Preferences.get({ key: STORAGE_KEY });
-      raw = value;
+      if (value) return { ...DEFAULT_STATE, ...JSON.parse(value) };
     } else {
-      raw = localStorage.getItem(STORAGE_KEY);
+      const stored = storageGetJSONSync<ReviewState | null>(STORAGE_KEY, null);
+      if (stored) return { ...DEFAULT_STATE, ...stored };
     }
-
-    if (raw) return { ...DEFAULT_STATE, ...JSON.parse(raw) };
   } catch {
     // ignore parse/storage errors
   }
@@ -64,15 +62,14 @@ async function getState(): Promise<ReviewState> {
 }
 
 async function saveState(state: ReviewState): Promise<void> {
-  try {
-    const json = JSON.stringify(state);
-    if (Capacitor.isNativePlatform()) {
-      await Preferences.set({ key: STORAGE_KEY, value: json });
-    } else {
-      localStorage.setItem(STORAGE_KEY, json);
+  if (Capacitor.isNativePlatform()) {
+    try {
+      await Preferences.set({ key: STORAGE_KEY, value: JSON.stringify(state) });
+    } catch {
+      // ignore storage errors
     }
-  } catch {
-    // ignore storage errors
+  } else {
+    storageSetJSONSync(STORAGE_KEY, state);
   }
 }
 

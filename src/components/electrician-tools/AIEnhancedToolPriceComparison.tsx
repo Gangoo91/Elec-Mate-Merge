@@ -1,4 +1,5 @@
 import { useState, useEffect, useMemo } from 'react';
+import { openExternalUrl } from '@/utils/open-external-url';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -696,7 +697,7 @@ const AIEnhancedToolPriceComparison = ({
                               variant="outline"
                               size="sm"
                               className="flex-1 text-xs"
-                              onClick={() => window.open(tool.productUrl, '_blank')}
+                              onClick={() => openExternalUrl(tool.productUrl)}
                             >
                               View Product
                             </Button>

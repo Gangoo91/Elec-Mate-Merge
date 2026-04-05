@@ -88,9 +88,12 @@ if (!rootElement) {
 // is imported immediately.
 const bootstrap = async () => {
   if (Capacitor.isNativePlatform()) {
-    const { primeAuthCache } = await import('./integrations/supabase/capacitorStorage');
-    await primeAuthCache();
-    console.log('[Elec-Mate] Auth cache primed from Capacitor Preferences');
+    const [{ primeAuthCache }, { primeStorageCache }] = await Promise.all([
+      import('./integrations/supabase/capacitorStorage'),
+      import('./utils/storage'),
+    ]);
+    await Promise.all([primeAuthCache(), primeStorageCache()]);
+    console.log('[Elec-Mate] Auth + storage caches primed from Capacitor Preferences');
   }
 
   // Dynamic import so createClient() runs AFTER the cache is primed

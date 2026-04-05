@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import { supabase } from '@/integrations/supabase/client';
+import { storageGetJSONSync, storageSetJSONSync } from '@/utils/storage';
 
 export interface BundleLineItem {
   id: string;
@@ -27,16 +28,11 @@ function getStorageKey(userId: string) {
 }
 
 function loadBundles(userId: string): PriceBookBundle[] {
-  try {
-    const raw = localStorage.getItem(getStorageKey(userId));
-    return raw ? (JSON.parse(raw) as PriceBookBundle[]) : [];
-  } catch {
-    return [];
-  }
+  return storageGetJSONSync<PriceBookBundle[]>(getStorageKey(userId), []);
 }
 
 function saveBundles(userId: string, bundles: PriceBookBundle[]) {
-  localStorage.setItem(getStorageKey(userId), JSON.stringify(bundles));
+  storageSetJSONSync(getStorageKey(userId), bundles);
 }
 
 /**

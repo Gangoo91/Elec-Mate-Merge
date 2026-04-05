@@ -33,7 +33,7 @@ export function ComplianceDashboard({ onCategoryClick }: ComplianceDashboardProp
 
   // Calculate score colour
   const scoreColour = useMemo(() => {
-    if (!scoreData) return 'text-muted-foreground';
+    if (!scoreData) return 'text-white/60';
     if (scoreData.score >= 90) return 'text-green-400';
     if (scoreData.score >= 70) return 'text-amber-400';
     return 'text-red-400';
@@ -86,7 +86,7 @@ export function ComplianceDashboard({ onCategoryClick }: ComplianceDashboardProp
                     <span className={cn('text-2xl md:text-3xl font-bold', scoreColour)}>
                       {scoreData?.score || 0}
                     </span>
-                    <span className="text-xs text-muted-foreground block">%</span>
+                    <span className="text-xs text-white/60 block">%</span>
                   </div>
                 </div>
                 <div
@@ -110,7 +110,7 @@ export function ComplianceDashboard({ onCategoryClick }: ComplianceDashboardProp
               </div>
               <div>
                 <h3 className="text-lg font-semibold text-foreground">Compliance Score</h3>
-                <p className="text-sm text-muted-foreground">
+                <p className="text-sm text-white/60">
                   {scoreData?.message || 'Loading...'}
                 </p>
               </div>
@@ -162,10 +162,10 @@ export function ComplianceDashboard({ onCategoryClick }: ComplianceDashboardProp
               <div className="p-2 rounded-lg bg-blue-500/10">
                 <Users className="h-4 w-4 text-blue-400" />
               </div>
-              <ChevronRight className="h-4 w-4 text-muted-foreground" />
+              <ChevronRight className="h-4 w-4 text-white/60" />
             </div>
             <p className="text-2xl font-bold text-foreground">{qualificationStats?.total || 0}</p>
-            <p className="text-xs text-muted-foreground">Employee Qualifications</p>
+            <p className="text-xs text-white/60">Employee Qualifications</p>
             {(qualificationStats?.expiring || 0) > 0 && (
               <Badge variant="outline" className="mt-2 text-xs border-amber-500/50 text-amber-400">
                 {qualificationStats?.expiring} expiring
@@ -184,12 +184,12 @@ export function ComplianceDashboard({ onCategoryClick }: ComplianceDashboardProp
               <div className="p-2 rounded-lg bg-green-500/10">
                 <Shield className="h-4 w-4 text-green-400" />
               </div>
-              <ChevronRight className="h-4 w-4 text-muted-foreground" />
+              <ChevronRight className="h-4 w-4 text-white/60" />
             </div>
             <p className="text-2xl font-bold text-foreground">
               {businessStats?.byCategory?.insurance || 0}
             </p>
-            <p className="text-xs text-muted-foreground">Insurance Policies</p>
+            <p className="text-xs text-white/60">Insurance Policies</p>
           </CardContent>
         </Card>
 
@@ -203,12 +203,12 @@ export function ComplianceDashboard({ onCategoryClick }: ComplianceDashboardProp
               <div className="p-2 rounded-lg bg-purple-500/10">
                 <Award className="h-4 w-4 text-purple-400" />
               </div>
-              <ChevronRight className="h-4 w-4 text-muted-foreground" />
+              <ChevronRight className="h-4 w-4 text-white/60" />
             </div>
             <p className="text-2xl font-bold text-foreground">
               {businessStats?.byCategory?.memberships || 0}
             </p>
-            <p className="text-xs text-muted-foreground">Memberships</p>
+            <p className="text-xs text-white/60">Memberships</p>
           </CardContent>
         </Card>
 
@@ -222,12 +222,12 @@ export function ComplianceDashboard({ onCategoryClick }: ComplianceDashboardProp
               <div className="p-2 rounded-lg bg-cyan-500/10">
                 <Car className="h-4 w-4 text-cyan-400" />
               </div>
-              <ChevronRight className="h-4 w-4 text-muted-foreground" />
+              <ChevronRight className="h-4 w-4 text-white/60" />
             </div>
             <p className="text-2xl font-bold text-foreground">
               {businessStats?.byCategory?.vehicles || 0}
             </p>
-            <p className="text-xs text-muted-foreground">Vehicle Documents</p>
+            <p className="text-xs text-white/60">Vehicle Documents</p>
           </CardContent>
         </Card>
       </div>

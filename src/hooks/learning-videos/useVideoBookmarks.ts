@@ -8,6 +8,7 @@
 import { useState, useCallback, useEffect } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/contexts/AuthContext';
+import { storageGetSync, storageSetSync, storageGetJSONSync, storageSetJSONSync } from '@/utils/storage';
 
 const BASE_BOOKMARK_KEY = 'elec-mate-video-bookmarks';
 const BASE_WATCHED_KEY = 'elec-mate-videos-watched';
@@ -43,36 +44,22 @@ export function useVideoBookmarks() {
     setKeys(userKeys);
 
     if (!uid) {
-      // Not logged in – fall back to localStorage only
-      try {
-        const stored = localStorage.getItem(userKeys.bookmarkKey);
-        if (stored) setBookmarks(JSON.parse(stored));
-      } catch {
-        /* ignore */
-      }
-      try {
-        const stored = localStorage.getItem(userKeys.watchedKey);
-        if (stored) setWatchedIds(JSON.parse(stored));
-      } catch {
-        /* ignore */
-      }
+      // Not logged in -- fall back to storage only
+      setBookmarks(storageGetJSONSync<VideoBookmark[]>(userKeys.bookmarkKey, []));
+      setWatchedIds(storageGetJSONSync<string[]>(userKeys.watchedKey, []));
       return;
     }
 
-    // Migrate old global localStorage data to user-specific keys
-    try {
-      const oldBookmarks = localStorage.getItem(BASE_BOOKMARK_KEY);
-      const newBookmarks = localStorage.getItem(userKeys.bookmarkKey);
-      if (oldBookmarks && !newBookmarks) {
-        localStorage.setItem(userKeys.bookmarkKey, oldBookmarks);
-      }
-      const oldWatched = localStorage.getItem(BASE_WATCHED_KEY);
-      const newWatched = localStorage.getItem(userKeys.watchedKey);
-      if (oldWatched && !newWatched) {
-        localStorage.setItem(userKeys.watchedKey, oldWatched);
-      }
-    } catch {
-      /* ignore */
+    // Migrate old global storage data to user-specific keys
+    const oldBookmarks = storageGetSync(BASE_BOOKMARK_KEY);
+    const newBookmarks = storageGetSync(userKeys.bookmarkKey);
+    if (oldBookmarks && !newBookmarks) {
+      storageSetSync(userKeys.bookmarkKey, oldBookmarks);
+    }
+    const oldWatched = storageGetSync(BASE_WATCHED_KEY);
+    const newWatched = storageGetSync(userKeys.watchedKey);
+    if (oldWatched && !newWatched) {
+      storageSetSync(userKeys.watchedKey, oldWatched);
     }
 
     // Fetch from Supabase
@@ -89,7 +76,7 @@ export function useVideoBookmarks() {
         if (watchesRes.data) {
           const ids = (watchesRes.data as any[]).map((r: any) => r.video_id as string);
           setWatchedIds(ids);
-          localStorage.setItem(userKeys.watchedKey, JSON.stringify(ids));
+          storageSetJSONSync(userKeys.watchedKey, ids);
         }
 
         if (bookmarksRes.data) {
@@ -100,22 +87,12 @@ export function useVideoBookmarks() {
             bookmarkedAt: r.bookmarked_at as string,
           }));
           setBookmarks(bms);
-          localStorage.setItem(userKeys.bookmarkKey, JSON.stringify(bms));
+          storageSetJSONSync(userKeys.bookmarkKey, bms);
         }
       } catch {
-        // Fall back to localStorage on network error
-        try {
-          const stored = localStorage.getItem(userKeys.bookmarkKey);
-          if (stored) setBookmarks(JSON.parse(stored));
-        } catch {
-          /* ignore */
-        }
-        try {
-          const stored = localStorage.getItem(userKeys.watchedKey);
-          if (stored) setWatchedIds(JSON.parse(stored));
-        } catch {
-          /* ignore */
-        }
+        // Fall back to storage on network error
+        setBookmarks(storageGetJSONSync<VideoBookmark[]>(userKeys.bookmarkKey, []));
+        setWatchedIds(storageGetJSONSync<string[]>(userKeys.watchedKey, []));
       }
     };
 
@@ -149,7 +126,7 @@ export function useVideoBookmarks() {
         ];
       }
       setBookmarks(updated);
-      localStorage.setItem(keys.bookmarkKey, JSON.stringify(updated));
+      storageSetJSONSync(keys.bookmarkKey, updated);
 
       // Persist to Supabase
       if (user) {
@@ -187,7 +164,7 @@ export function useVideoBookmarks() {
       // Optimistic local update
       const updated = [...watchedIds, videoId];
       setWatchedIds(updated);
-      localStorage.setItem(keys.watchedKey, JSON.stringify(updated));
+      storageSetJSONSync(keys.watchedKey, updated);
 
       // Persist to Supabase
       if (user) {

@@ -8,6 +8,7 @@
 import { useState, useCallback } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
+import { storageGetJSONSync, storageSetJSONSync } from '@/utils/storage';
 
 export interface ACValidation {
   acCode: string;
@@ -57,15 +58,10 @@ export function useEvidenceValidator() {
       // Check cache first
       if (options.portfolioItemId) {
         const cacheKey = getCacheKey(options.portfolioItemId);
-        try {
-          const cached = localStorage.getItem(cacheKey);
-          if (cached) {
-            const parsed = JSON.parse(cached);
-            setResult(parsed);
-            return parsed;
-          }
-        } catch {
-          /* ignore cache miss */
+        const parsed = storageGetJSONSync<EvidenceValidationResult | null>(cacheKey, null);
+        if (parsed) {
+          setResult(parsed);
+          return parsed;
         }
       }
 
@@ -111,11 +107,7 @@ export function useEvidenceValidator() {
         // Cache result
         if (options.portfolioItemId) {
           const cacheKey = getCacheKey(options.portfolioItemId);
-          try {
-            localStorage.setItem(cacheKey, JSON.stringify(validationResult));
-          } catch {
-            /* storage full */
-          }
+          storageSetJSONSync(cacheKey, validationResult);
         }
 
         toast.success('Evidence validation complete');

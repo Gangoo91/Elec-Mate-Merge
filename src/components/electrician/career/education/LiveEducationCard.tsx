@@ -1,3 +1,4 @@
+import { openExternalUrl } from '@/utils/open-external-url';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -202,7 +203,7 @@ const LiveEducationCard = ({ option, onViewDetails }: LiveEducationCardProps) =>
               className="px-2 hover:bg-elec-yellow/10"
               onClick={(e) => {
                 e.stopPropagation();
-                window.open(option.courseUrl, '_blank');
+                openExternalUrl(option.courseUrl);
               }}
             >
               <ExternalLink className="h-3 w-3" />

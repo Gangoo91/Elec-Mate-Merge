@@ -18,6 +18,7 @@ import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
 import { openExternalUrl } from '@/utils/open-external-url';
 import { useSafetyPDFExport } from '@/hooks/useSafetyPDFExport';
+import { copyToClipboard } from '@/utils/clipboard';
 
 type PDFType =
   | 'permit'
@@ -91,7 +92,7 @@ export function SafetyDocumentShare({
       const body = encodeURIComponent(
         `Hi,\n\nPlease find the attached safety document: "${documentTitle}"\n\nGenerated via Elec-Mate.`
       );
-      window.open(`mailto:?subject=${subject}&body=${body}`, '_self');
+      openExternalUrl(`mailto:?subject=${subject}&body=${body}`);
     }
   };
 
@@ -115,7 +116,7 @@ export function SafetyDocumentShare({
 
   const handleCopyTitle = async () => {
     try {
-      await navigator.clipboard.writeText(documentTitle);
+      await copyToClipboard(documentTitle);
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
       toast({ title: 'Copied', description: 'Document title copied to clipboard' });

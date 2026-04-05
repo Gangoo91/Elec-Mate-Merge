@@ -1,3 +1,4 @@
+import { openExternalUrl } from '@/utils/open-external-url';
 import {
   ResponsiveDialog,
   ResponsiveDialogContent,
@@ -244,7 +245,7 @@ const ToolDetailModal = ({
 
         <ResponsiveDialogFooter className="flex-col sm:flex-row gap-2">
           <Button
-            onClick={() => window.open(getProductUrl(), '_blank')}
+            onClick={() => openExternalUrl(getProductUrl())}
             className="flex-1 h-11 touch-manipulation bg-elec-yellow text-background hover:bg-elec-yellow/90"
           >
             <ExternalLink className="w-4 h-4 mr-2" />

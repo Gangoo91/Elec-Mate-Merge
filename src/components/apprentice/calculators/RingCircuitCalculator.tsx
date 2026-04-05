@@ -1,3 +1,4 @@
+import { copyToClipboard } from '@/utils/clipboard';
 import { useState, useCallback } from 'react';
 import { Copy, Check, CheckCircle, AlertTriangle, ChevronDown } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
@@ -253,10 +254,13 @@ const RingCircuitCalculator = () => {
   const handleCopy = () => {
     if (!result) return;
     const text = `Ring Circuit Test Results\nR1: ${result.r1.toFixed(3)} Ω\nRn: ${result.rn.toFixed(3)} Ω\nR2: ${result.r2.toFixed(3)} Ω\nR1+R2: ${result.r1PlusR2.toFixed(3)} Ω\nStatus: ${result.overallPass ? 'PASS' : 'FAIL'}`;
-    navigator.clipboard.writeText(text);
-    setCopied(true);
-    toast({ title: 'Copied to clipboard' });
-    setTimeout(() => setCopied(false), 2000);
+    copyToClipboard(text).then((ok) => {
+      if (ok) {
+        setCopied(true);
+        toast({ title: 'Copied to clipboard' });
+        setTimeout(() => setCopied(false), 2000);
+      }
+    });
   };
 
   return (

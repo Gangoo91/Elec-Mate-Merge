@@ -1,3 +1,4 @@
+import { copyToClipboard } from '@/utils/clipboard';
 import { useState, useCallback } from 'react';
 import {
   Battery,
@@ -423,10 +424,13 @@ const BatteryStorageCalculator = () => {
       `System Cost: £${Math.round(result.costBreakdown.total)}`,
       `Cost/kWh: £${result.costPerKwhStored.toFixed(0)}`,
     ].join('\n');
-    navigator.clipboard.writeText(text);
-    setCopied(true);
-    toast({ title: 'Copied to clipboard' });
-    setTimeout(() => setCopied(false), 2000);
+    copyToClipboard(text).then((ok) => {
+      if (ok) {
+        setCopied(true);
+        toast({ title: 'Copied to clipboard' });
+        setTimeout(() => setCopied(false), 2000);
+      }
+    });
   };
 
   const hasValidInputs =

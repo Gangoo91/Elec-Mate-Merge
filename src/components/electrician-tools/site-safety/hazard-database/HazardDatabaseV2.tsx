@@ -10,6 +10,7 @@ import { HazardDetailSheet } from './HazardDetailSheet';
 import { BookmarksSheet } from './BookmarksSheet';
 import { enhancedRiskDatabase } from '@/data/enhanced-hazard-database';
 import type { EnhancedRiskConsequence } from '@/data/hazards';
+import { storageGetJSONSync, storageSetJSONSync } from '@/utils/storage';
 
 const BOOKMARKS_KEY = 'hazard-bookmarks';
 
@@ -26,24 +27,16 @@ export const HazardDatabaseV2: React.FC = () => {
 
   // Load bookmarks from localStorage
   useEffect(() => {
-    try {
-      const saved = localStorage.getItem(BOOKMARKS_KEY);
-      if (saved) {
-        setBookmarks(new Set(JSON.parse(saved)));
-      }
-    } catch (e) {
-      // Ignore localStorage errors
+    const saved = storageGetJSONSync<string[]>(BOOKMARKS_KEY, []);
+    if (saved.length > 0) {
+      setBookmarks(new Set(saved));
     }
   }, []);
 
   // Save bookmarks to localStorage
   const saveBookmarks = useCallback((newBookmarks: Set<string>) => {
     setBookmarks(newBookmarks);
-    try {
-      localStorage.setItem(BOOKMARKS_KEY, JSON.stringify([...newBookmarks]));
-    } catch (e) {
-      // Ignore localStorage errors
-    }
+    storageSetJSONSync(BOOKMARKS_KEY, [...newBookmarks]);
   }, []);
 
   // Toggle bookmark

@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { copyToClipboard } from '@/utils/clipboard';
 import { shareContent } from '@/utils/share';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
@@ -48,13 +49,13 @@ const SiteAssessmentSummary = ({ progress }: SiteAssessmentSummaryProps) => {
       title: 'Site Assessment Report',
       text,
       onFallback: async () => {
-        try {
-          await navigator.clipboard.writeText(text);
+        const ok = await copyToClipboard(text);
+        if (ok) {
           toast({
             title: 'Copied to clipboard',
             description: 'Assessment report copied. You can paste it anywhere.',
           });
-        } catch {
+        } else {
           toast({
             title: 'Could not copy',
             description: 'Please use the download button instead.',

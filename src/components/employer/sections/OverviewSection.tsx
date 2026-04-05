@@ -139,7 +139,7 @@ export function OverviewSection({ onNavigate }: OverviewSectionProps) {
         expiringCerts > 0
           ? 'border-warning/50 hover:border-warning/80'
           : 'border-muted/30 hover:border-muted/50',
-      textClass: expiringCerts > 0 ? 'text-warning' : 'text-muted-foreground',
+      textClass: expiringCerts > 0 ? 'text-warning' : 'text-white/60',
       section: 'elecid' as Section,
       pulse: expiringCerts > 0,
     },
@@ -237,7 +237,7 @@ export function OverviewSection({ onNavigate }: OverviewSectionProps) {
       <div>
         <div className="flex items-center justify-between mb-3">
           <h2 className="text-xs font-medium text-white uppercase tracking-wider">Your Hubs</h2>
-          <TrendingUp className="h-4 w-4 text-muted-foreground" />
+          <TrendingUp className="h-4 w-4 text-white/60" />
         </div>
         <div className="grid grid-cols-2 gap-3">
           <BusinessCard
@@ -307,18 +307,18 @@ export function OverviewSection({ onNavigate }: OverviewSectionProps) {
                   AI Powered
                 </Badge>
               </h3>
-              <p className="text-sm text-muted-foreground mt-0.5">
+              <p className="text-sm text-white/60 mt-0.5">
                 Generate RAMS, designs & quotes instantly
               </p>
             </div>
           </div>
-          <ChevronRight className="h-5 w-5 text-muted-foreground group-hover:text-purple-400 group-hover:translate-x-1 transition-all duration-300" />
+          <ChevronRight className="h-5 w-5 text-white/60 group-hover:text-purple-400 group-hover:translate-x-1 transition-all duration-300" />
         </CardContent>
       </Card>
 
       {/* Loading indicator - subtle, non-blocking */}
       {isLoading && (
-        <div className="flex items-center justify-center gap-2 py-2 text-muted-foreground">
+        <div className="flex items-center justify-center gap-2 py-2 text-white/60">
           <Loader2 className="h-4 w-4 animate-spin text-elec-yellow" />
           <span className="text-xs">Syncing...</span>
         </div>

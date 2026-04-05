@@ -38,6 +38,7 @@ import {
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
+import { copyToClipboard } from '@/utils/clipboard';
 import { getQualificationLabel, getJobTitleLabel } from '@/data/uk-electrician-constants';
 
 // ─── Helpers ────────────────────────────────────────────────────────────────
@@ -220,14 +221,14 @@ export default function PublicElecIdView() {
 
   const copyElecId = () => {
     if (data?.profile?.elec_id_number) {
-      navigator.clipboard.writeText(data.profile.elec_id_number);
+      copyToClipboard(data.profile.elec_id_number);
       setCopiedId(true);
       setTimeout(() => setCopiedId(false), 2000);
     }
   };
 
   const copyLink = () => {
-    navigator.clipboard.writeText(window.location.href);
+    copyToClipboard(window.location.href);
     setCopiedLink(true);
     setTimeout(() => setCopiedLink(false), 2000);
   };

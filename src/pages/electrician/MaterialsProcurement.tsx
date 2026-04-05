@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { storageSetJSONSync } from '@/utils/storage';
 import {
   ArrowLeft,
   Zap,
@@ -147,7 +148,7 @@ export default function MaterialsProcurement() {
           notes: item.best_supplier ? `Best price: ${item.best_supplier}` : undefined,
         })),
     };
-    localStorage.setItem(materialsSessionId, JSON.stringify({ materialsData }));
+    storageSetJSONSync(materialsSessionId, { materialsData });
     navigate(`/electrician/quote-builder/create?materialsSessionId=${materialsSessionId}`);
   };
 

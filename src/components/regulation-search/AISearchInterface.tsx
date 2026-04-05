@@ -1,4 +1,5 @@
 import React, { useState, useMemo, useEffect, useRef } from 'react';
+import { storageGetJSONSync, storageSetJSONSync } from '@/utils/storage';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -53,10 +54,7 @@ const AISearchInterface = ({ onRegulationSelect }: AISearchInterfaceProps) => {
 
   // Load search history
   useEffect(() => {
-    const history = localStorage.getItem('regulation-search-history');
-    if (history) {
-      setSearchHistory(JSON.parse(history));
-    }
+    setSearchHistory(storageGetJSONSync<string[]>('regulation-search-history', []));
   }, []);
 
   // Keyboard shortcut (Cmd/Ctrl+K) removed - shortcuts disabled
@@ -217,7 +215,7 @@ const AISearchInterface = ({ onRegulationSelect }: AISearchInterfaceProps) => {
     // Save to search history
     const newHistory = [query, ...searchHistory.filter((h) => h !== query)].slice(0, 5);
     setSearchHistory(newHistory);
-    localStorage.setItem('regulation-search-history', JSON.stringify(newHistory));
+    storageSetJSONSync('regulation-search-history', newHistory);
 
     try {
       const { data, error } = await supabase.functions.invoke('ai-regulation-search', {

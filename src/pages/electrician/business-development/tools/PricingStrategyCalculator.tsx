@@ -30,6 +30,7 @@ import {
   CALCULATOR_CONFIG,
 } from '@/components/calculators/shared';
 import { ResponsiveContainer, BarChart, Bar, XAxis, YAxis, Tooltip, CartesianGrid } from 'recharts';
+import { storageGetJSONSync, storageSetJSONSync } from '@/utils/storage';
 
 interface PricingInputs {
   materialsCost: number;
@@ -139,7 +140,7 @@ const PricingStrategyCalculator = () => {
   };
 
   const saveScenario = () => {
-    const existing = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+    const existing = storageGetJSONSync<any[]>(STORAGE_KEY, []);
     const payload = {
       id: crypto.randomUUID(),
       createdAt: new Date().toISOString(),
@@ -147,7 +148,7 @@ const PricingStrategyCalculator = () => {
       vat: { vatRegistered, vatRate },
       result,
     };
-    localStorage.setItem(STORAGE_KEY, JSON.stringify([payload, ...existing].slice(0, 20)));
+    storageSetJSONSync(STORAGE_KEY, [payload, ...existing].slice(0, 20));
     toast({
       title: 'Scenario saved',
       description: 'Saved locally on this device.',

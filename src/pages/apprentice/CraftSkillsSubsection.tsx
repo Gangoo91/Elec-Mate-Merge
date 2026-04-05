@@ -11,6 +11,7 @@ import {
 } from '@/components/ui/accordion';
 import { Button } from '@/components/ui/button';
 import { SmartBackButton } from '@/components/ui/smart-back-button';
+import { storageGetSync, storageSetSync } from '@/utils/storage';
 
 const CraftSkillsSubsection = () => {
   const { courseSlug, unitSlug, sectionId, subsectionId } = useParams();
@@ -40,7 +41,7 @@ const CraftSkillsSubsection = () => {
 
           // Check local storage for completion status
           const storageKey = `completion_craft_${sectionId}_${subsectionId}`;
-          const storedCompletion = localStorage.getItem(storageKey);
+          const storedCompletion = storageGetSync(storageKey);
           setIsCompleted(storedCompletion === 'true');
         }
       }
@@ -50,7 +51,7 @@ const CraftSkillsSubsection = () => {
   const markAsComplete = () => {
     if (sectionId && subsectionId) {
       const storageKey = `completion_craft_${sectionId}_${subsectionId}`;
-      localStorage.setItem(storageKey, 'true');
+      storageSetSync(storageKey, 'true');
       setIsCompleted(true);
     }
   };

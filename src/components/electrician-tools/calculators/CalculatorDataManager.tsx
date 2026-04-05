@@ -23,6 +23,8 @@ import {
   AlertCircle,
 } from 'lucide-react';
 import { toast } from '@/hooks/use-toast';
+import { storageGetJSONSync, storageSetJSONSync, storageRemoveSync } from '@/utils/storage';
+import { copyToClipboard } from '@/utils/clipboard';
 
 interface CalculationResult {
   id: string;
@@ -63,21 +65,21 @@ const CalculatorDataManager: React.FC<CalculatorDataManagerProps> = ({
   }, []);
 
   const loadDataFromStorage = () => {
-    const history = localStorage.getItem('calculator-history');
-    const saved = localStorage.getItem('saved-calculations');
+    const history = storageGetJSONSync<any[]>('calculator-history', []);
+    const saved = storageGetJSONSync<any[]>('saved-calculations', []);
 
-    if (history) {
+    if (history.length > 0) {
       setCalculationHistory(
-        JSON.parse(history).map((item: any) => ({
+        history.map((item: any) => ({
           ...item,
           timestamp: new Date(item.timestamp),
         }))
       );
     }
 
-    if (saved) {
+    if (saved.length > 0) {
       setSavedCalculations(
-        JSON.parse(saved).map((item: any) => ({
+        saved.map((item: any) => ({
           ...item,
           createdAt: new Date(item.createdAt),
           lastModified: new Date(item.lastModified),
@@ -89,7 +91,7 @@ const CalculatorDataManager: React.FC<CalculatorDataManagerProps> = ({
   const saveToHistory = (calculation: CalculationResult) => {
     const newHistory = [calculation, ...calculationHistory].slice(0, 100); // Keep last 100
     setCalculationHistory(newHistory);
-    localStorage.setItem('calculator-history', JSON.stringify(newHistory));
+    storageSetJSONSync('calculator-history', newHistory);
   };
 
   const saveCalculation = (name: string, tags: string[] = []) => {
@@ -107,7 +109,7 @@ const CalculatorDataManager: React.FC<CalculatorDataManagerProps> = ({
 
     const newSaved = [saved, ...savedCalculations];
     setSavedCalculations(newSaved);
-    localStorage.setItem('saved-calculations', JSON.stringify(newSaved));
+    storageSetJSONSync('saved-calculations', newSaved);
 
     toast({
       title: 'Calculation Saved',
@@ -118,7 +120,7 @@ const CalculatorDataManager: React.FC<CalculatorDataManagerProps> = ({
   const deleteFromHistory = (id: string) => {
     const newHistory = calculationHistory.filter((calc) => calc.id !== id);
     setCalculationHistory(newHistory);
-    localStorage.setItem('calculator-history', JSON.stringify(newHistory));
+    storageSetJSONSync('calculator-history', newHistory);
 
     toast({
       title: 'Deleted from History',
@@ -129,7 +131,7 @@ const CalculatorDataManager: React.FC<CalculatorDataManagerProps> = ({
   const deleteSavedCalculation = (id: string) => {
     const newSaved = savedCalculations.filter((calc) => calc.id !== id);
     setSavedCalculations(newSaved);
-    localStorage.setItem('saved-calculations', JSON.stringify(newSaved));
+    storageSetJSONSync('saved-calculations', newSaved);
 
     toast({
       title: 'Calculation Deleted',
@@ -211,7 +213,7 @@ const CalculatorDataManager: React.FC<CalculatorDataManagerProps> = ({
               timestamp: new Date(item.timestamp),
             }))
           );
-          localStorage.setItem('calculator-history', JSON.stringify(data.history));
+          storageSetJSONSync('calculator-history', data.history);
         }
 
         if (data.saved) {
@@ -222,7 +224,7 @@ const CalculatorDataManager: React.FC<CalculatorDataManagerProps> = ({
               lastModified: new Date(item.lastModified),
             }))
           );
-          localStorage.setItem('saved-calculations', JSON.stringify(data.saved));
+          storageSetJSONSync('saved-calculations', data.saved);
         }
 
         toast({
@@ -243,8 +245,8 @@ const CalculatorDataManager: React.FC<CalculatorDataManagerProps> = ({
   const clearAllData = () => {
     setCalculationHistory([]);
     setSavedCalculations([]);
-    localStorage.removeItem('calculator-history');
-    localStorage.removeItem('saved-calculations');
+    storageRemoveSync('calculator-history');
+    storageRemoveSync('saved-calculations');
 
     toast({
       title: 'Data Cleared',
@@ -261,7 +263,7 @@ const CalculatorDataManager: React.FC<CalculatorDataManagerProps> = ({
 
     const shareUrl = `${window.location.origin}${window.location.pathname}?shared=${btoa(JSON.stringify(shareData))}`;
 
-    navigator.clipboard.writeText(shareUrl).then(() => {
+    copyToClipboard(shareUrl).then(() => {
       toast({
         title: 'Share Link Copied',
         description: 'Calculation share link copied to clipboard.',

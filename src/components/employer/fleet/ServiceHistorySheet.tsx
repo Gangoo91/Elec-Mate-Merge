@@ -98,7 +98,7 @@ export function ServiceHistorySheet({ open, onOpenChange, vehicle }: ServiceHist
                 </div>
                 <div>
                   <SheetTitle className="text-left">Service History</SheetTitle>
-                  <p className="text-xs text-muted-foreground mt-0.5">
+                  <p className="text-xs text-white/60 mt-0.5">
                     {vehicle.registration} - {vehicle.make} {vehicle.model}
                   </p>
                 </div>
@@ -119,13 +119,13 @@ export function ServiceHistorySheet({ open, onOpenChange, vehicle }: ServiceHist
             <div className="grid grid-cols-3 gap-2 p-4 border-b border-border">
               <div className="text-center">
                 <p className="text-lg font-bold text-foreground">{stats.totalServices}</p>
-                <p className="text-xs text-muted-foreground">Services</p>
+                <p className="text-xs text-white/60">Services</p>
               </div>
               <div className="text-center">
                 <p className="text-lg font-bold text-foreground">
                   £{stats.yearCosts.toLocaleString()}
                 </p>
-                <p className="text-xs text-muted-foreground">This Year</p>
+                <p className="text-xs text-white/60">This Year</p>
               </div>
               <div className="text-center">
                 {stats.nextServiceDue ? (
@@ -136,12 +136,12 @@ export function ServiceHistorySheet({ open, onOpenChange, vehicle }: ServiceHist
                         month: 'short',
                       })}
                     </p>
-                    <p className="text-xs text-muted-foreground">Next Due</p>
+                    <p className="text-xs text-white/60">Next Due</p>
                   </>
                 ) : (
                   <>
-                    <p className="text-lg font-bold text-muted-foreground">—</p>
-                    <p className="text-xs text-muted-foreground">Next Due</p>
+                    <p className="text-lg font-bold text-white/60">—</p>
+                    <p className="text-xs text-white/60">Next Due</p>
                   </>
                 )}
               </div>
@@ -156,7 +156,7 @@ export function ServiceHistorySheet({ open, onOpenChange, vehicle }: ServiceHist
                 'flex-1 py-4 text-base font-medium transition-colors touch-manipulation min-h-[52px]',
                 viewMode === 'history'
                   ? 'text-purple-400 border-b-2 border-purple-400'
-                  : 'text-muted-foreground'
+                  : 'text-white/60'
               )}
             >
               History
@@ -167,7 +167,7 @@ export function ServiceHistorySheet({ open, onOpenChange, vehicle }: ServiceHist
                 'flex-1 py-4 text-base font-medium transition-colors touch-manipulation min-h-[52px]',
                 viewMode === 'costs'
                   ? 'text-purple-400 border-b-2 border-purple-400'
-                  : 'text-muted-foreground'
+                  : 'text-white/60'
               )}
             >
               Cost Analysis
@@ -199,13 +199,13 @@ export function ServiceHistorySheet({ open, onOpenChange, vehicle }: ServiceHist
                 {/* Service List */}
                 {isLoading ? (
                   <div className="flex items-center justify-center py-12">
-                    <Loader2 className="h-8 w-8 animate-spin text-muted-foreground" />
+                    <Loader2 className="h-8 w-8 animate-spin text-white/60" />
                   </div>
                 ) : services.length === 0 ? (
                   <div className="text-center py-12">
-                    <Settings className="h-16 w-16 text-muted-foreground mx-auto mb-4 opacity-50" />
-                    <p className="text-sm text-muted-foreground">No services recorded</p>
-                    <p className="text-xs text-muted-foreground mt-1">
+                    <Settings className="h-16 w-16 text-white/60 mx-auto mb-4 opacity-50" />
+                    <p className="text-sm text-white/60">No services recorded</p>
+                    <p className="text-xs text-white/60 mt-1">
                       Log services, MOTs, and repairs
                     </p>
                   </div>
@@ -247,17 +247,17 @@ export function ServiceHistorySheet({ open, onOpenChange, vehicle }: ServiceHist
                         </div>
 
                         {service.provider && (
-                          <p className="text-sm text-muted-foreground">{service.provider}</p>
+                          <p className="text-sm text-white/60">{service.provider}</p>
                         )}
 
                         {service.mileage && (
-                          <p className="text-sm text-muted-foreground">
+                          <p className="text-sm text-white/60">
                             Mileage: {service.mileage.toLocaleString()}
                           </p>
                         )}
 
                         {service.description && (
-                          <p className="text-sm text-muted-foreground mt-2">
+                          <p className="text-sm text-white/60 mt-2">
                             {service.description}
                           </p>
                         )}
@@ -433,7 +433,7 @@ function CostAnalysisView({ costs }: { costs: ReturnType<typeof useCostAnalysis>
   if (!costs) {
     return (
       <div className="flex items-center justify-center py-12">
-        <Loader2 className="h-8 w-8 animate-spin text-muted-foreground" />
+        <Loader2 className="h-8 w-8 animate-spin text-white/60" />
       </div>
     );
   }
@@ -445,10 +445,10 @@ function CostAnalysisView({ costs }: { costs: ReturnType<typeof useCostAnalysis>
         <div className="p-4 rounded-xl bg-purple-500/10 border border-purple-500/20">
           <div className="flex items-center gap-2 mb-2">
             <PoundSterling className="h-5 w-5 text-purple-400" />
-            <span className="text-sm text-muted-foreground">Total Costs</span>
+            <span className="text-sm text-white/60">Total Costs</span>
           </div>
           <p className="text-2xl font-bold text-foreground">£{costs.totalCost.toLocaleString()}</p>
-          <div className="flex flex-col gap-1 mt-2 text-sm text-muted-foreground">
+          <div className="flex flex-col gap-1 mt-2 text-sm text-white/60">
             <span>Services: £{costs.totalServiceCost.toLocaleString()}</span>
             <span>Fuel: £{costs.totalFuelCost.toLocaleString()}</span>
           </div>
@@ -457,12 +457,12 @@ function CostAnalysisView({ costs }: { costs: ReturnType<typeof useCostAnalysis>
         <div className="p-4 rounded-xl bg-blue-500/10 border border-blue-500/20">
           <div className="flex items-center gap-2 mb-2">
             <TrendingUp className="h-5 w-5 text-blue-400" />
-            <span className="text-sm text-muted-foreground">Cost per Mile</span>
+            <span className="text-sm text-white/60">Cost per Mile</span>
           </div>
           <p className="text-2xl font-bold text-foreground">
             {costs.costPerMile > 0 ? `${costs.costPerMile.toFixed(2)}p` : '—'}
           </p>
-          <p className="text-sm text-muted-foreground mt-2">
+          <p className="text-sm text-white/60 mt-2">
             {costs.milesDriven.toLocaleString()} miles tracked
           </p>
         </div>
@@ -471,8 +471,8 @@ function CostAnalysisView({ costs }: { costs: ReturnType<typeof useCostAnalysis>
       {/* Current Mileage */}
       <div className="p-4 rounded-xl border border-border bg-card/50">
         <div className="flex items-center gap-2 mb-1">
-          <Gauge className="h-5 w-5 text-muted-foreground" />
-          <span className="text-sm text-muted-foreground">Current Mileage</span>
+          <Gauge className="h-5 w-5 text-white/60" />
+          <span className="text-sm text-white/60">Current Mileage</span>
         </div>
         <p className="text-xl font-bold text-foreground">
           {costs.currentMileage?.toLocaleString() || '—'} miles
@@ -489,7 +489,7 @@ function CostAnalysisView({ costs }: { costs: ReturnType<typeof useCostAnalysis>
 
             return (
               <div key={index} className="flex items-center gap-3">
-                <span className="text-sm text-muted-foreground w-16">{month.month}</span>
+                <span className="text-sm text-white/60 w-16">{month.month}</span>
                 <div className="flex-1 h-8 bg-muted/30 rounded-lg overflow-hidden">
                   <div
                     className="h-full bg-purple-500/50 transition-all"

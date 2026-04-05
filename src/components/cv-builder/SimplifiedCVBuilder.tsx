@@ -7,6 +7,7 @@ import { SmartCVWizard } from './ai/SmartCVWizard';
 import { CVData, defaultCVData } from './types';
 import { generateCVPDF } from './pdfGenerator';
 import { toast } from '@/hooks/use-toast';
+import { storageSetJSONSync, storageGetJSONSync, storageRemoveSync } from '@/utils/storage';
 
 const SimplifiedCVBuilder = () => {
   const [cvData, setCVData] = useState<CVData>(defaultCVData);
@@ -19,8 +20,8 @@ const SimplifiedCVBuilder = () => {
     setHasGeneratedCV(true);
     setShowPreview(true);
 
-    // Save to localStorage
-    localStorage.setItem('cvData', JSON.stringify(generatedCVData));
+    // Save to storage
+    storageSetJSONSync('cvData', generatedCVData);
 
     toast({
       title: 'CV Generated Successfully',
@@ -66,7 +67,7 @@ const SimplifiedCVBuilder = () => {
       return;
     }
 
-    localStorage.setItem('cvData', JSON.stringify(cvData));
+    storageSetJSONSync('cvData', cvData);
     toast({
       title: 'CV Saved',
       description: 'Your CV has been saved locally.',
@@ -77,20 +78,15 @@ const SimplifiedCVBuilder = () => {
     setCVData(defaultCVData);
     setHasGeneratedCV(false);
     setShowPreview(false);
-    localStorage.removeItem('cvData');
+    storageRemoveSync('cvData');
   };
 
   // Load existing CV data if available
   React.useEffect(() => {
-    const savedCV = localStorage.getItem('cvData');
-    if (savedCV) {
-      try {
-        const parsedCV = JSON.parse(savedCV);
-        setCVData(parsedCV);
-        setHasGeneratedCV(true);
-      } catch (error) {
-        console.error('Error loading saved CV:', error);
-      }
+    const parsedCV = storageGetJSONSync<CVData | null>('cvData', null);
+    if (parsedCV) {
+      setCVData(parsedCV);
+      setHasGeneratedCV(true);
     }
   }, []);
 

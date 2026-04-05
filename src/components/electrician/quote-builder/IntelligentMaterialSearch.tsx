@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
+import { openExternalUrl } from '@/utils/open-external-url';
 import { Card } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
@@ -540,7 +541,7 @@ export const IntelligentMaterialSearch = ({ onAddToQuote }: IntelligentMaterialS
                         variant="outline"
                         size="sm"
                         className="h-9 px-3 touch-manipulation"
-                        onClick={() => window.open(material.productUrl, '_blank')}
+                        onClick={() => openExternalUrl(material.productUrl)}
                       >
                         <ExternalLink className="h-3 w-3" />
                       </Button>

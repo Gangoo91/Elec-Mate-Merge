@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Link, useNavigate, useSearchParams } from 'react-router-dom';
+import { storageSetJSONSync } from '@/utils/storage';
 import {
   ArrowLeft,
   Plus,
@@ -146,7 +147,7 @@ export default function MaterialsLists() {
           .join(' | '),
       })),
     };
-    localStorage.setItem(materialsSessionId, JSON.stringify({ materialsData }));
+    storageSetJSONSync(materialsSessionId, { materialsData });
     navigate(`/electrician/quote-builder/create?materialsSessionId=${materialsSessionId}`);
   };
 

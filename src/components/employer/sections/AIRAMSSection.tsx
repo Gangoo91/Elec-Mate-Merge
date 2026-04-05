@@ -299,7 +299,7 @@ export function AIRAMSSection({ onNavigate }: AIRAMSSectionProps) {
                     </Badge>
                   </div>
                   <Progress value={progress} className="h-2" />
-                  <p className="text-sm text-muted-foreground">{currentStep}</p>
+                  <p className="text-sm text-white/60">{currentStep}</p>
                 </div>
               </CardContent>
             </Card>
@@ -313,7 +313,7 @@ export function AIRAMSSection({ onNavigate }: AIRAMSSectionProps) {
                   <AlertTriangle className="h-5 w-5 text-destructive mt-0.5" />
                   <div>
                     <h3 className="font-medium text-foreground">Generation Failed</h3>
-                    <p className="text-sm text-muted-foreground mt-1">{error}</p>
+                    <p className="text-sm text-white/60 mt-1">{error}</p>
                     <Button variant="outline" size="sm" className="mt-3" onClick={handleReset}>
                       <RefreshCw className="h-4 w-4 mr-2" />
                       Try Again
@@ -335,7 +335,7 @@ export function AIRAMSSection({ onNavigate }: AIRAMSSectionProps) {
                     </div>
                     <div>
                       <h3 className="font-medium text-foreground">RAMS Generated!</h3>
-                      <p className="text-sm text-muted-foreground">
+                      <p className="text-sm text-white/60">
                         Risk assessment created successfully
                       </p>
                     </div>
@@ -345,25 +345,25 @@ export function AIRAMSSection({ onNavigate }: AIRAMSSectionProps) {
                     <div className="p-3 rounded-lg bg-elec-dark/50 border border-elec-yellow/10">
                       <div className="grid grid-cols-2 gap-2 text-sm">
                         <div>
-                          <span className="text-muted-foreground">Hazards: </span>
+                          <span className="text-white/60">Hazards: </span>
                           <span className="text-foreground font-medium">
                             {result.ramsData.risks?.length || 0}
                           </span>
                         </div>
                         <div>
-                          <span className="text-muted-foreground">PPE Items: </span>
+                          <span className="text-white/60">PPE Items: </span>
                           <span className="text-foreground font-medium">
                             {result.ramsData.ppeDetails?.length || 0}
                           </span>
                         </div>
                         <div>
-                          <span className="text-muted-foreground">Emergency Procedures: </span>
+                          <span className="text-white/60">Emergency Procedures: </span>
                           <span className="text-foreground font-medium">
                             {result.ramsData.emergencyProcedures?.length || 0}
                           </span>
                         </div>
                         <div>
-                          <span className="text-muted-foreground">Regulations: </span>
+                          <span className="text-white/60">Regulations: </span>
                           <span className="text-foreground font-medium">
                             {result.ramsData.complianceRegulations?.length || 0}
                           </span>
@@ -391,7 +391,7 @@ export function AIRAMSSection({ onNavigate }: AIRAMSSectionProps) {
                   </div>
 
                   {selectedJobPackId && (
-                    <p className="text-xs text-muted-foreground text-center">
+                    <p className="text-xs text-white/60 text-center">
                       ✓ Attached to Job Pack
                     </p>
                   )}
@@ -410,11 +410,11 @@ export function AIRAMSSection({ onNavigate }: AIRAMSSectionProps) {
                   </div>
                   <div>
                     <h3 className="font-medium text-foreground mb-1">AI-Powered RAMS</h3>
-                    <p className="text-sm text-muted-foreground">
+                    <p className="text-sm text-white/60">
                       Our AI analyzes your job description and generates a comprehensive Risk
                       Assessment & Method Statement following HSE guidelines and BS 7671.
                     </p>
-                    <ul className="mt-3 space-y-1 text-sm text-muted-foreground">
+                    <ul className="mt-3 space-y-1 text-sm text-white/60">
                       <li>• 12-25 identified hazards with control measures</li>
                       <li>• PPE requirements with EN/BS standards</li>
                       <li>• Emergency procedures specific to electrical work</li>

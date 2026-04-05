@@ -19,6 +19,7 @@ import { ProcedureStepper } from './ProcedureStepper';
 import { TroubleshootingPanel } from '../../commissioning/testing-results/TroubleshootingPanel';
 import { TestCalculatorWidget } from '../TestCalculatorWidget';
 import { toast } from 'sonner';
+import { copyToClipboard } from '@/utils/clipboard';
 import type { TestProcedure } from '@/types/commissioning-response';
 
 interface TestCardProps {
@@ -80,7 +81,7 @@ export const TestCard = ({
     return unitMatch ? unitMatch[0] : '';
   };
 
-  const copyTestProcedure = () => {
+  const copyTestProcedure = async () => {
     const procedureSteps = Array.isArray(test.procedure)
       ? test.procedure.map((step: string, i: number) => `${i + 1}. ${step}`).join('\n')
       : 'No procedure steps available';
@@ -97,7 +98,7 @@ ${procedureSteps}
 ## Acceptance Criteria
 ${test.acceptanceCriteria || 'Not specified'}`;
 
-    navigator.clipboard.writeText(markdown);
+    await copyToClipboard(markdown);
     toast.success('Test procedure copied!', { description: 'Paste into your notes app' });
   };
 

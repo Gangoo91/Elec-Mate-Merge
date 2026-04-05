@@ -6,6 +6,7 @@ import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import { motion, AnimatePresence } from 'framer-motion';
 import { cn } from '@/lib/utils';
+import { copyToClipboard } from '@/utils/clipboard';
 import { TypingIndicator } from './chat';
 
 interface InspectorMessageProps {
@@ -35,8 +36,8 @@ export const InspectorMessage = memo(
     const isUser = message.role === 'user';
 
     const handleCopy = async () => {
-      if (navigator.clipboard && message.content) {
-        await navigator.clipboard.writeText(message.content);
+      if (message.content) {
+        await copyToClipboard(message.content);
         setCopied(true);
         toast.success('Copied to clipboard');
         setTimeout(() => setCopied(false), 2000);

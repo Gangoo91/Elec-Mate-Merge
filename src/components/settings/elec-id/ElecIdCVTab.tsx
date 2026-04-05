@@ -32,6 +32,7 @@ import { useCVs, usePrimaryCV, UserCV, calculateCVCompleteness } from '@/hooks/u
 import { useElecIdForCV, useCVSyncStatus } from '@/hooks/useCVSync';
 import CVCard from './CVCard';
 import { toast } from '@/hooks/use-toast';
+import { storageSetJSONSync, storageSetSync } from '@/utils/storage';
 
 interface ElecIdCVTabProps {
   onNavigate?: (tabId: string) => void;
@@ -60,9 +61,9 @@ const ElecIdCVTab = ({ onNavigate }: ElecIdCVTabProps) => {
   const handleEditCV = (cv: UserCV) => {
     // For now, store CV data in localStorage and navigate to builder
     // Future: add query param support to CV builder
-    localStorage.setItem('elecmate-cv-draft', JSON.stringify(cv.cv_data));
-    localStorage.setItem('elecmate-cv-template', cv.template_id);
-    localStorage.setItem('elecmate-cv-editing-id', cv.id);
+    storageSetJSONSync('elecmate-cv-draft', cv.cv_data);
+    storageSetSync('elecmate-cv-template', cv.template_id);
+    storageSetSync('elecmate-cv-editing-id', cv.id);
     navigate('/electrician/cv-builder');
   };
 

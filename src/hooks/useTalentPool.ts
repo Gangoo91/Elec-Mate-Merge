@@ -173,7 +173,8 @@ export function useTalentPool(options: UseTalentPoolOptions = {}): UseTalentPool
             phone,
             photo_url,
             hourly_rate,
-            role
+            role,
+            employer_id
           )
         `
         )
@@ -192,8 +193,18 @@ export function useTalentPool(options: UseTalentPoolOptions = {}): UseTalentPool
         return;
       }
 
+      // Exclude the current employer's own employees from the talent pool
+      const filteredProfiles = user
+        ? profiles.filter((p: any) => p.employer_employees?.employer_id !== user.id)
+        : profiles;
+
+      if (filteredProfiles.length === 0) {
+        setWorkers([]);
+        return;
+      }
+
       // Fetch qualifications for all profiles
-      const profileIds = profiles.map((p) => p.id);
+      const profileIds = filteredProfiles.map((p: any) => p.id);
       const { data: qualifications } = await supabase
         .from('employer_elec_id_qualifications')
         .select('profile_id, qualification_name, is_verified')
@@ -265,7 +276,7 @@ export function useTalentPool(options: UseTalentPoolOptions = {}): UseTalentPool
       );
 
       // Transform to TalentPoolWorker format
-      const transformedWorkers: TalentPoolWorker[] = profiles.map((profile: any) => {
+      const transformedWorkers: TalentPoolWorker[] = filteredProfiles.map((profile: any) => {
         const employee = profile.employer_employees;
         const hourlyRate = parseFloat(employee.hourly_rate) || 25;
         const profileQuals = qualsByProfile[profile.id] || [];
@@ -337,7 +348,7 @@ export function useTalentPool(options: UseTalentPoolOptions = {}): UseTalentPool
     } finally {
       setIsLoading(false);
     }
-  }, []);
+  }, [user]);
 
   // Apply client-side filters
   const filteredWorkers = useMemo(() => {

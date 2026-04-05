@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import posthog from 'posthog-js';
 import { Capacitor } from '@capacitor/core';
 import { useAuth } from '@/contexts/AuthContext';
+import { storageGetSync, storageGetJSONSync } from '@/utils/storage';
 
 // Session recording and autocapture are disabled on native (iOS/Android).
 // Apple's App Store guidelines treat passive screen recording as a privacy concern,
@@ -19,15 +20,11 @@ const COOKIE_PREFERENCES_KEY = 'elec-mate-cookie-preferences';
 
 // Check if analytics consent has been given
 function hasAnalyticsConsent(): boolean {
-  const hasConsented = localStorage.getItem(COOKIE_CONSENT_KEY);
+  const hasConsented = storageGetSync(COOKIE_CONSENT_KEY);
   if (!hasConsented) return false;
 
-  try {
-    const preferences = JSON.parse(localStorage.getItem(COOKIE_PREFERENCES_KEY) || '{}');
-    return preferences.analytics === true;
-  } catch {
-    return false;
-  }
+  const preferences = storageGetJSONSync<{ analytics?: boolean }>(COOKIE_PREFERENCES_KEY, {});
+  return preferences.analytics === true;
 }
 
 // Initialize PostHog

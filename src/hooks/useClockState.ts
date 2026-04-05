@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useCreateTimesheet } from './useTimesheets';
 import { toast } from 'sonner';
+import { storageGetJSONSync, storageSetJSONSync, storageRemoveSync } from '@/utils/storage';
 
 interface ClockState {
   employeeId: string;
@@ -19,14 +20,9 @@ export const useClockState = () => {
 
   // Load clock state from localStorage on mount
   useEffect(() => {
-    const stored = localStorage.getItem(CLOCK_STATE_KEY);
-    if (stored) {
-      try {
-        const parsed = JSON.parse(stored) as ClockState;
-        setClockState(parsed);
-      } catch {
-        localStorage.removeItem(CLOCK_STATE_KEY);
-      }
+    const parsed = storageGetJSONSync<ClockState | null>(CLOCK_STATE_KEY, null);
+    if (parsed) {
+      setClockState(parsed);
     }
   }, []);
 
@@ -67,7 +63,7 @@ export const useClockState = () => {
         clockInTime: new Date().toISOString(),
       };
 
-      localStorage.setItem(CLOCK_STATE_KEY, JSON.stringify(newState));
+      storageSetJSONSync(CLOCK_STATE_KEY, newState);
       setClockState(newState);
       toast.success(`Clocked in to ${jobTitle}`);
     },
@@ -105,7 +101,7 @@ export const useClockState = () => {
           approved_at: null,
         });
 
-        localStorage.removeItem(CLOCK_STATE_KEY);
+        storageRemoveSync(CLOCK_STATE_KEY);
         setClockState(null);
         toast.success(`Clocked out. ${totalHours.toFixed(1)} hours logged.`);
         return true;
@@ -119,7 +115,7 @@ export const useClockState = () => {
   );
 
   const cancelClockIn = useCallback(() => {
-    localStorage.removeItem(CLOCK_STATE_KEY);
+    storageRemoveSync(CLOCK_STATE_KEY);
     setClockState(null);
     toast.info('Clock in cancelled');
   }, []);

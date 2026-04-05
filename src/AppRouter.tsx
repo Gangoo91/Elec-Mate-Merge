@@ -1777,9 +1777,11 @@ const AppRouter = () => {
           <Route
             path="employer"
             element={
-              <LazyRoute>
-                <EmployerDashboard />
-              </LazyRoute>
+              <SentryErrorBoundary section="Employer Hub">
+                <LazyRoute>
+                  <EmployerDashboard />
+                </LazyRoute>
+              </SentryErrorBoundary>
             }
           />
 

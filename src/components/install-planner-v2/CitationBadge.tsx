@@ -2,6 +2,7 @@ import { Badge } from '@/components/ui/badge';
 import { BookOpen, ExternalLink } from 'lucide-react';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { Button } from '@/components/ui/button';
+import { openExternalUrl } from '@/utils/open-external-url';
 
 interface Citation {
   source: string;
@@ -56,7 +57,7 @@ export const CitationBadge = ({ citation }: CitationBadgeProps) => {
             variant="link"
             size="sm"
             className="p-0 h-auto text-xs"
-            onClick={() => window.open(`https://electrical.theiet.org/bs-7671/`, '_blank')}
+            onClick={() => openExternalUrl(`https://electrical.theiet.org/bs-7671/`)}
           >
             View Full Regulation <ExternalLink className="h-3 w-3 ml-1" />
           </Button>

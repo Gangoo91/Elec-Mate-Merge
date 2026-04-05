@@ -21,6 +21,7 @@ import { useUnifiedCPD } from '@/hooks/cpd/useUnifiedCPD';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
+import { useHaptic } from '@/hooks/useHaptic';
 
 interface EvidenceFile {
   id: string;
@@ -40,6 +41,7 @@ const EnhancedCPDEntryForm = ({ onSuccess }: EnhancedCPDEntryFormProps = {}) => 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [evidenceFiles, setEvidenceFiles] = useState<EvidenceFile[]>([]);
   const { toast } = useToast();
+  const haptic = useHaptic();
 
   const [formData, setFormData] = useState({
     title: '',
@@ -149,6 +151,7 @@ const EnhancedCPDEntryForm = ({ onSuccess }: EnhancedCPDEntryFormProps = {}) => 
     e.preventDefault();
 
     if (!date || !formData.title || !formData.hours || !formData.category || !formData.type) {
+      haptic.warning();
       return;
     }
 
@@ -202,6 +205,7 @@ const EnhancedCPDEntryForm = ({ onSuccess }: EnhancedCPDEntryFormProps = {}) => 
         setDate(undefined);
         setEvidenceFiles([]);
 
+        haptic.success();
         toast({
           title: 'CPD Entry saved',
           description:
@@ -214,6 +218,7 @@ const EnhancedCPDEntryForm = ({ onSuccess }: EnhancedCPDEntryFormProps = {}) => 
       }
     } catch (error) {
       console.error('Error submitting CPD entry:', error);
+      haptic.error();
       toast({
         title: 'Error saving entry',
         description: 'Please try again later',

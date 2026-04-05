@@ -1,3 +1,4 @@
+import { copyToClipboard } from '@/utils/clipboard';
 import { useState, useMemo, useCallback } from 'react';
 import {
   Copy,
@@ -266,10 +267,13 @@ const EarthFaultLoopCalculator = () => {
     } else {
       text = `TT System Verification\nRA: ${result.raValue} Ω\nIΔn: ${result.iDeltaNValue} A\nRA × IΔn: ${result.product.toFixed(1)} V\nStatus: ${result.compliant ? 'COMPLIANT (≤ 50V)' : 'NON-COMPLIANT (> 50V)'}`;
     }
-    navigator.clipboard.writeText(text);
-    setCopied(true);
-    toast({ title: 'Copied to clipboard' });
-    setTimeout(() => setCopied(false), 2000);
+    copyToClipboard(text).then((ok) => {
+      if (ok) {
+        setCopied(true);
+        toast({ title: 'Copied to clipboard' });
+        setTimeout(() => setCopied(false), 2000);
+      }
+    });
   };
 
   return (

@@ -177,7 +177,7 @@ export function JobsSection() {
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
       {jobList.map(renderJobCard)}
       {jobList.length === 0 && (
-        <div className="col-span-full text-center py-12 text-muted-foreground">
+        <div className="col-span-full text-center py-12 text-white/60">
           <Briefcase className="h-12 w-12 mx-auto mb-4 opacity-50" />
           <p>No jobs found</p>
         </div>
@@ -217,7 +217,7 @@ export function JobsSection() {
           {/* Search */}
           <div className="relative flex-1">
             {!searchQuery && (
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none" />
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white/60 pointer-events-none" />
             )}
             <Input
               placeholder="Search jobs..."
@@ -270,7 +270,7 @@ export function JobsSection() {
                 </div>
               </div>
               <p className="text-3xl font-bold text-foreground tracking-tight">{jobs.length}</p>
-              <p className="text-xs text-muted-foreground font-medium mt-1">Total Jobs</p>
+              <p className="text-xs text-white/60 font-medium mt-1">Total Jobs</p>
             </CardContent>
           </Card>
 
@@ -287,7 +287,7 @@ export function JobsSection() {
                 </span>
               </div>
               <p className="text-3xl font-bold text-success tracking-tight">{activeJobs.length}</p>
-              <p className="text-xs text-muted-foreground font-medium mt-1">Active</p>
+              <p className="text-xs text-white/60 font-medium mt-1">Active</p>
             </CardContent>
           </Card>
 
@@ -311,7 +311,7 @@ export function JobsSection() {
                     : activeValue}
                 </p>
               </div>
-              <p className="text-xs text-muted-foreground font-medium mt-1">Active Value</p>
+              <p className="text-xs text-white/60 font-medium mt-1">Active Value</p>
             </CardContent>
           </Card>
 
@@ -338,7 +338,7 @@ export function JobsSection() {
                     : totalValue}
                 </p>
               </div>
-              <p className="text-xs text-muted-foreground font-medium mt-1">Total Value</p>
+              <p className="text-xs text-white/60 font-medium mt-1">Total Value</p>
             </CardContent>
           </Card>
         </div>

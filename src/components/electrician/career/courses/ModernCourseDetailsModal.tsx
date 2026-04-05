@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { openExternalUrl } from '@/utils/open-external-url';
 import {
   ResponsiveDialog,
   ResponsiveDialogContent,
@@ -51,7 +52,7 @@ const ModernCourseDetailsModal = ({
 
   const handleViewProvider = () => {
     if (course.external_url) {
-      window.open(course.external_url, '_blank');
+      openExternalUrl(course.external_url);
     }
   };
 

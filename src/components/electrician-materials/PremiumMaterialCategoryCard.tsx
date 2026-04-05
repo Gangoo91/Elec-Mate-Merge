@@ -22,7 +22,6 @@ const PremiumMaterialCategoryCard = ({
   isLoading = false,
 }: PremiumMaterialCategoryCardProps) => {
   const style = getMaterialCategoryStyle(category.id);
-  const Icon = style.icon;
 
   return (
     <button
@@ -53,17 +52,6 @@ const PremiumMaterialCategoryCard = ({
 
       {/* Content */}
       <div className="relative p-6 space-y-4">
-        {/* Icon */}
-        <div
-          className={`
-            inline-flex p-4 rounded-2xl border
-            ${style.iconBg}
-            group-hover:scale-110 transition-transform duration-300
-          `}
-        >
-          <Icon className={`h-8 w-8 ${style.textColor}`} />
-        </div>
-
         {/* Title & Description */}
         <div className="space-y-2">
           <h3 className="text-lg font-bold text-white group-hover:text-white transition-colors">

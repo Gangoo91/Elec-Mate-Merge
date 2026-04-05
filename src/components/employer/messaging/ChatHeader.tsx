@@ -18,7 +18,7 @@ interface ChatHeaderProps {
 }
 
 const tierConfig: Record<string, { color: string; bg: string; icon: typeof Shield }> = {
-  basic: { color: 'text-muted-foreground', bg: 'bg-muted', icon: Shield },
+  basic: { color: 'text-white/60', bg: 'bg-muted', icon: Shield },
   verified: { color: 'text-blue-500', bg: 'bg-blue-100 dark:bg-blue-900/30', icon: Shield },
   premium: { color: 'text-elec-yellow', bg: 'bg-yellow-100 dark:bg-yellow-900/30', icon: Award },
 };
@@ -74,7 +74,7 @@ export function ChatHeader({ conversation, onBack, onArchive, onViewProfile }: C
           )}
         </div>
         {conversation.vacancy && (
-          <div className="flex items-center gap-1 text-xs text-muted-foreground">
+          <div className="flex items-center gap-1 text-xs text-white/60">
             <Briefcase className="h-3 w-3" />
             <span className="truncate">Re: {conversation.vacancy.title}</span>
           </div>

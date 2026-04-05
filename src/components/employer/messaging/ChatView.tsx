@@ -237,7 +237,7 @@ export function ChatView({ conversation, open, onOpenChange, onArchived }: ChatV
                   <p className="font-medium text-amber-600 dark:text-amber-400">
                     Awaiting Application
                   </p>
-                  <p className="text-muted-foreground text-xs mt-0.5">
+                  <p className="text-white/60 text-xs mt-0.5">
                     {conversation.electrician_profile?.employee?.name || 'This person'} can reply
                     once they apply to one of your vacancies.
                   </p>

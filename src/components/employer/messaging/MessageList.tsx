@@ -109,8 +109,8 @@ export const MessageList = forwardRef<MessageListRef, MessageListProps>(
       return (
         <div className="flex-1 flex items-center justify-center p-4">
           <div className="text-center">
-            <p className="text-muted-foreground">No messages yet</p>
-            <p className="text-xs text-muted-foreground mt-1">
+            <p className="text-white/60">No messages yet</p>
+            <p className="text-xs text-white/60 mt-1">
               Send a message to start the conversation
             </p>
           </div>

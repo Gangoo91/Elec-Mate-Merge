@@ -1,4 +1,5 @@
 import { useState, useMemo } from 'react';
+import { openExternalUrl } from '@/utils/open-external-url';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -205,7 +206,7 @@ export function QualificationTracker() {
       <div className="flex flex-col sm:flex-row gap-2">
         <div className="relative flex-1">
           {!searchQuery && (
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none" />
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white/60 pointer-events-none" />
           )}
           <Input
             placeholder="Search qualifications..."
@@ -251,9 +252,9 @@ export function QualificationTracker() {
       {Object.keys(groupedByEmployee).length === 0 ? (
         <Card className="border-dashed">
           <CardContent className="p-8 text-center">
-            <Award className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
+            <Award className="h-12 w-12 text-white/60 mx-auto mb-4" />
             <h3 className="font-medium text-foreground mb-2">No qualifications found</h3>
-            <p className="text-sm text-muted-foreground mb-4">
+            <p className="text-sm text-white/60 mb-4">
               {searchQuery || filterType !== 'all' || filterStatus !== 'all'
                 ? 'Try adjusting your filters'
                 : 'Add employee qualifications to track certifications and expiry dates'}
@@ -303,12 +304,12 @@ export function QualificationTracker() {
                       className="flex items-center justify-between p-3 rounded-lg bg-muted/50"
                     >
                       <div className="flex items-center gap-3 min-w-0">
-                        <Shield className="h-4 w-4 text-muted-foreground shrink-0" />
+                        <Shield className="h-4 w-4 text-white/60 shrink-0" />
                         <div className="min-w-0">
                           <p className="font-medium text-sm text-foreground truncate">
                             {qual.qualification_name}
                           </p>
-                          <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                          <div className="flex items-center gap-2 text-xs text-white/60">
                             {qual.certificate_number && <span>#{qual.certificate_number}</span>}
                             {qual.expiry_date && (
                               <span className="flex items-center gap-1">
@@ -326,7 +327,7 @@ export function QualificationTracker() {
                             size="sm"
                             variant="ghost"
                             className="h-8 w-8 p-0"
-                            onClick={() => window.open(qual.file_url, '_blank')}
+                            onClick={() => openExternalUrl(qual.file_url)}
                           >
                             <ExternalLink className="h-3.5 w-3.5" />
                           </Button>

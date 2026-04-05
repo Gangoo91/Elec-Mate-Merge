@@ -39,6 +39,7 @@ import { MobilePDFDownloadSheet } from './MobilePDFDownloadSheet';
 import { MobileBottomActionBar } from './MobileBottomActionBar';
 import { useMobileKeyboard } from '@/hooks/use-mobile-keyboard';
 import { cn } from '@/lib/utils';
+import { copyToClipboard } from '@/utils/clipboard';
 import { SummaryStatsCard } from './results/SummaryStatsCard';
 import { EnhancedRiskCard } from './results/EnhancedRiskCard';
 import { PPEGridView } from './results/PPEGridView';
@@ -687,7 +688,7 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
         : null,
     };
 
-    navigator.clipboard.writeText(JSON.stringify(combinedData, null, 2));
+    copyToClipboard(JSON.stringify(combinedData, null, 2));
     toast({
       title: 'JSON Copied',
       description: 'Combined RAMS data with all fields copied to clipboard',

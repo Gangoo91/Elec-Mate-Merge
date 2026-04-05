@@ -13,6 +13,7 @@ import {
   Shield,
   AlertTriangle,
 } from 'lucide-react';
+import { openExternalUrl } from '@/utils/open-external-url';
 
 interface Resource {
   id: string;
@@ -262,9 +263,9 @@ const ResourcesTab = () => {
 
   const handleResourceClick = (resource: Resource) => {
     if (resource.downloadUrl) {
-      window.open(resource.downloadUrl, '_blank');
+      openExternalUrl(resource.downloadUrl);
     } else if (resource.externalUrl) {
-      window.open(resource.externalUrl, '_blank');
+      openExternalUrl(resource.externalUrl);
     }
   };
 

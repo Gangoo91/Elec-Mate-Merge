@@ -161,7 +161,7 @@ export function InviteToApplyDialog({
             </Avatar>
             <div>
               <p className="font-medium">{electrician.name}</p>
-              <p className="text-sm text-muted-foreground">{electrician.location}</p>
+              <p className="text-sm text-white/60">{electrician.location}</p>
             </div>
           </div>
 
@@ -177,8 +177,8 @@ export function InviteToApplyDialog({
             ) : availableVacancies.length === 0 ? (
               <Card className="border-dashed">
                 <CardContent className="p-4 text-center">
-                  <AlertCircle className="h-8 w-8 text-muted-foreground mx-auto mb-2" />
-                  <p className="text-sm text-muted-foreground">
+                  <AlertCircle className="h-8 w-8 text-white/60 mx-auto mb-2" />
+                  <p className="text-sm text-white/60">
                     {vacancies.length === 0
                       ? 'No active vacancies. Create a job posting first.'
                       : 'This person has been invited to all your active vacancies.'}
@@ -212,7 +212,7 @@ export function InviteToApplyDialog({
                         </div>
                         <div className="flex-1 min-w-0">
                           <p className="font-medium truncate">{vacancy.title}</p>
-                          <div className="flex items-center gap-1 text-sm text-muted-foreground">
+                          <div className="flex items-center gap-1 text-sm text-white/60">
                             <MapPin className="h-3 w-3" />
                             <span className="truncate">{vacancy.location}</span>
                           </div>
@@ -245,7 +245,7 @@ export function InviteToApplyDialog({
 
           {/* Already Invited Info */}
           {alreadyInvited.size > 0 && (
-            <p className="text-xs text-muted-foreground">
+            <p className="text-xs text-white/60">
               {alreadyInvited.size} vacancy invitation{alreadyInvited.size > 1 ? 's' : ''} already
               sent to this person.
             </p>

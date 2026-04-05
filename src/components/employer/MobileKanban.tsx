@@ -254,7 +254,7 @@ export function MobileKanban({
                     {stageItems.length}
                   </Badge>
                 </div>
-                <span className="text-xs text-muted-foreground">
+                <span className="text-xs text-white/60">
                   {stageIndex + 1}/{stages.length}
                 </span>
               </div>
@@ -263,7 +263,7 @@ export function MobileKanban({
               <div className="space-y-2 min-h-[200px]">
                 {stageItems.length === 0 ? (
                   <div className="text-center py-12 border-2 border-dashed border-border rounded-lg">
-                    <p className="text-sm text-muted-foreground">No jobs</p>
+                    <p className="text-sm text-white/60">No jobs</p>
                   </div>
                 ) : (
                   stageItems.map((item) => (
@@ -303,12 +303,12 @@ export function MobileKanban({
                               <h4 className="font-semibold text-sm text-foreground leading-tight line-clamp-2">
                                 {item.title}
                               </h4>
-                              <ChevronRight className="h-4 w-4 text-muted-foreground shrink-0 mt-0.5" />
+                              <ChevronRight className="h-4 w-4 text-white/60 shrink-0 mt-0.5" />
                             </div>
 
                             {/* Client */}
                             {item.subtitle && (
-                              <p className="text-xs text-muted-foreground truncate">
+                              <p className="text-xs text-white/60 truncate">
                                 {item.subtitle}
                               </p>
                             )}
@@ -318,7 +318,7 @@ export function MobileKanban({
                               <div className="flex items-center gap-3">
                                 {/* Checklist progress */}
                                 {item.checklistTotal !== undefined && item.checklistTotal > 0 && (
-                                  <div className="flex items-center gap-1 text-xs text-muted-foreground">
+                                  <div className="flex items-center gap-1 text-xs text-white/60">
                                     <CheckSquare className="h-3.5 w-3.5" />
                                     <span>
                                       {item.checklistCompleted || 0}/{item.checklistTotal}
@@ -350,7 +350,7 @@ export function MobileKanban({
                                   ))}
                                   {item.assignedWorkers.length > 3 && (
                                     <div className="w-6 h-6 rounded-full bg-muted border-2 border-card flex items-center justify-center">
-                                      <span className="text-[10px] font-medium text-muted-foreground">
+                                      <span className="text-[10px] font-medium text-white/60">
                                         +{item.assignedWorkers.length - 3}
                                       </span>
                                     </div>
@@ -413,7 +413,7 @@ export function MobileKanban({
                   onQuickAdd && (
                     <Button
                       variant="ghost"
-                      className="w-full h-10 justify-start gap-2 text-muted-foreground hover:text-foreground"
+                      className="w-full h-10 justify-start gap-2 text-white/60 hover:text-foreground"
                       onClick={() => setQuickAddStage(stage.id)}
                     >
                       <Plus className="h-4 w-4" />

@@ -38,7 +38,7 @@ import {
 import { cn } from '@/lib/utils';
 import type { PortfolioEntry } from '@/types/portfolio';
 import { parseEvidencedACs } from '@/utils/parseEvidencedACs';
-import { useHaptics } from '@/hooks/useHaptics';
+import { useHaptic } from '@/hooks/useHaptic';
 import { useAuth } from '@/contexts/AuthContext';
 import { XPProgressRing } from '@/components/apprentice/XPProgressRing';
 import { useLearningXP } from '@/hooks/useLearningXP';
@@ -121,7 +121,7 @@ function EvidenceThumbnail({ entry }: { entry: PortfolioEntry }) {
 
 export function UnifiedDashboard({ onNavigate, onCapture }: UnifiedDashboardProps) {
   const { user, profile } = useAuth();
-  const haptics = useHaptics();
+  const haptic = useHaptic();
   const xp = useLearningXP();
   const { entries: portfolioEntries } = usePortfolioData();
   const { actionRequiredCount } = usePortfolioComments();
@@ -210,7 +210,7 @@ export function UnifiedDashboard({ onNavigate, onCapture }: UnifiedDashboardProp
   const firstName = rawFirst.charAt(0).toUpperCase() + rawFirst.slice(1).toLowerCase();
 
   const toggleUnit = (unitCode: string) => {
-    haptics.tap();
+    haptic.light();
     const next = new Set(expandedUnits);
     if (next.has(unitCode)) {
       next.delete(unitCode);
@@ -303,7 +303,7 @@ export function UnifiedDashboard({ onNavigate, onCapture }: UnifiedDashboardProp
         <Button
           variant="outline"
           onClick={() => {
-            haptics.tap();
+            haptic.light();
             setShowShareSheet(true);
           }}
           className="h-14 rounded-2xl font-semibold text-sm touch-manipulation active:scale-[0.97] transition-transform border-white/15 bg-white/[0.04]"
@@ -355,7 +355,7 @@ export function UnifiedDashboard({ onNavigate, onCapture }: UnifiedDashboardProp
       {tree.totalACs > 0 && nextAC ? (
         <button
           onClick={() => {
-            haptics.tap();
+            haptic.light();
             onCapture();
           }}
           className="w-full p-4 rounded-2xl bg-gradient-to-r from-elec-yellow/[0.08] to-transparent border border-elec-yellow/20 text-left touch-manipulation active:scale-[0.99] transition-transform"
@@ -518,7 +518,7 @@ export function UnifiedDashboard({ onNavigate, onCapture }: UnifiedDashboardProp
                                   key={ac.acFullRef}
                                   onClick={(e) => {
                                     e.stopPropagation();
-                                    haptics.tap();
+                                    haptic.light();
                                     setSelectedAC({
                                       code: ac.acRef,
                                       text: ac.acText.replace(`${ac.acRef} `, ''),
@@ -697,7 +697,7 @@ export function UnifiedDashboard({ onNavigate, onCapture }: UnifiedDashboardProp
                             </p>
                             <Button
                               onClick={() => {
-                                haptics.tap();
+                                haptic.light();
                                 setShowACEvidence(false);
                                 setSelectedAC(null);
                                 onCapture();
@@ -763,7 +763,7 @@ export function UnifiedDashboard({ onNavigate, onCapture }: UnifiedDashboardProp
                             <Button
                               variant="outline"
                               onClick={() => {
-                                haptics.tap();
+                                haptic.light();
                                 setShowACEvidence(false);
                                 setSelectedAC(null);
                                 onCapture();

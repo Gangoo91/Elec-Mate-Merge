@@ -9,6 +9,7 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import type { SiteDiaryEntry } from './useSiteDiaryEntries';
+import { storageGetJSONSync, storageSetJSONSync } from '@/utils/storage';
 
 export interface DiaryEntryAnalysis {
   evidenceStrength: 'strong' | 'moderate' | 'weak';
@@ -52,18 +53,11 @@ export function useDiaryEntryAnalysis(
       return;
     }
 
-    try {
-      const cached = localStorage.getItem(cacheKey(entryId));
-      if (cached) {
-        const parsed: CachedAnalysis = JSON.parse(cached);
-        if (parsed.entryUpdatedAt === entry.updated_at) {
-          setAnalysis(parsed.analysis);
-          lastFetchedId.current = entryId;
-          return;
-        }
-      }
-    } catch {
-      // Ignore cache read errors
+    const parsed = storageGetJSONSync<CachedAnalysis | null>(cacheKey(entryId), null);
+    if (parsed && parsed.entryUpdatedAt === entry.updated_at) {
+      setAnalysis(parsed.analysis);
+      lastFetchedId.current = entryId;
+      return;
     }
 
     // No valid cache — reset for fresh fetch
@@ -80,18 +74,11 @@ export function useDiaryEntryAnalysis(
 
       // Check cache unless forcing
       if (!force) {
-        try {
-          const cached = localStorage.getItem(cacheKey(entryId));
-          if (cached) {
-            const parsed: CachedAnalysis = JSON.parse(cached);
-            if (parsed.entryUpdatedAt === entry.updated_at) {
-              setAnalysis(parsed.analysis);
-              lastFetchedId.current = entryId;
-              return;
-            }
-          }
-        } catch {
-          // Continue to fetch
+        const parsed = storageGetJSONSync<CachedAnalysis | null>(cacheKey(entryId), null);
+        if (parsed && parsed.entryUpdatedAt === entry.updated_at) {
+          setAnalysis(parsed.analysis);
+          lastFetchedId.current = entryId;
+          return;
         }
       }
 
@@ -136,15 +123,11 @@ export function useDiaryEntryAnalysis(
         lastFetchedId.current = entryId;
 
         // Cache it
-        try {
-          const cached: CachedAnalysis = {
-            analysis: result.analysis,
-            entryUpdatedAt: entry.updated_at,
-          };
-          localStorage.setItem(cacheKey(entryId), JSON.stringify(cached));
-        } catch {
-          // Ignore cache write errors
-        }
+        const cachedData: CachedAnalysis = {
+          analysis: result.analysis,
+          entryUpdatedAt: entry.updated_at,
+        };
+        storageSetJSONSync(cacheKey(entryId), cachedData);
       } catch (err) {
         console.error('[useDiaryEntryAnalysis] Error:', err);
         setError(err instanceof Error ? err.message : 'Unknown error');

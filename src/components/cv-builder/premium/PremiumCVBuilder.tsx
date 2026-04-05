@@ -46,6 +46,7 @@ import { AIService } from '../ai/AIService';
 import { getCurrentUserElecIdForCV, saveCV } from '@/services/elecIdService';
 import { toast } from '@/hooks/use-toast';
 import { pageVariants, stepSlideVariants, listContainerVariants } from './animations/variants';
+import { storageGetSync, storageSetSync, storageGetJSONSync, storageSetJSONSync } from '@/utils/storage';
 
 // Storage key
 const CV_STORAGE_KEY = 'elecmate-cv-draft';
@@ -77,15 +78,11 @@ const PremiumCVBuilder = () => {
 
   // Load draft on mount
   useEffect(() => {
-    const savedCV = localStorage.getItem(CV_STORAGE_KEY);
-    const savedTemplate = localStorage.getItem(TEMPLATE_STORAGE_KEY);
+    const savedCV = storageGetJSONSync<CVData | null>(CV_STORAGE_KEY, null);
+    const savedTemplate = storageGetSync(TEMPLATE_STORAGE_KEY);
 
     if (savedCV) {
-      try {
-        setCvData(JSON.parse(savedCV));
-      } catch (e) {
-        console.error('Error loading CV draft:', e);
-      }
+      setCvData(savedCV);
     }
 
     if (savedTemplate) {
@@ -96,8 +93,8 @@ const PremiumCVBuilder = () => {
   // Auto-save
   useEffect(() => {
     const timer = setTimeout(() => {
-      localStorage.setItem(CV_STORAGE_KEY, JSON.stringify(cvData));
-      localStorage.setItem(TEMPLATE_STORAGE_KEY, template);
+      storageSetJSONSync(CV_STORAGE_KEY, cvData);
+      storageSetSync(TEMPLATE_STORAGE_KEY, template);
     }, 1000);
 
     return () => clearTimeout(timer);

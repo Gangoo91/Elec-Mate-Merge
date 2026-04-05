@@ -17,6 +17,7 @@ import {
 import { cn } from '@/lib/utils';
 import { responsiveBody } from '@/styles/typography-utilities';
 import { useToast } from '@/hooks/use-toast';
+import { copyToClipboard } from '@/utils/clipboard';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -151,8 +152,8 @@ export const OperationCard = ({ operation, onUpdate }: OperationCardProps) => {
     }
   };
 
-  const handleCopyId = () => {
-    navigator.clipboard.writeText(operation.reportId);
+  const handleCopyId = async () => {
+    await copyToClipboard(operation.reportId);
     toast({
       title: 'Copied',
       description: 'Report ID copied to clipboard',

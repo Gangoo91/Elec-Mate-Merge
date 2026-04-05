@@ -30,6 +30,7 @@ import type { StructuredSafetyDocument, DocumentSection } from '@/types/safety-t
 import { SectionRenderer } from './sections/SectionRenderer';
 import { SafetyDocumentShare } from '../common/SafetyDocumentShare';
 import { useToast } from '@/hooks/use-toast';
+import { storageGetSync, storageSetSync, storageRemoveSync } from '@/utils/storage';
 
 const STATUS_OPTIONS = ['Draft', 'Active', 'Review Due', 'Archived'] as const;
 
@@ -122,7 +123,7 @@ export function SafetyTemplateEditor({
     onUpdate: ({ editor: ed }) => {
       if (!isStructured) {
         setHasChanges(true);
-        localStorage.setItem(draftKey, ed.getHTML());
+        storageSetSync(draftKey, ed.getHTML());
       }
     },
     editorProps: {
@@ -143,7 +144,7 @@ export function SafetyTemplateEditor({
   // Draft recovery for legacy editor
   useEffect(() => {
     if (editor && !isStructured) {
-      const draft = localStorage.getItem(draftKey);
+      const draft = storageGetSync(draftKey);
       if (draft && draft !== doc.content) {
         const useDraft = window.confirm(
           'You have unsaved changes from a previous session. Would you like to restore them?'
@@ -152,7 +153,7 @@ export function SafetyTemplateEditor({
           editor.commands.setContent(draft);
           setHasChanges(true);
         } else {
-          localStorage.removeItem(draftKey);
+          storageRemoveSync(draftKey);
           editor.commands.setContent(doc.content);
         }
       } else {
@@ -168,7 +169,7 @@ export function SafetyTemplateEditor({
       );
       if (!confirmClose) return;
     }
-    localStorage.removeItem(draftKey);
+    storageRemoveSync(draftKey);
     onOpenChange(false);
   }, [hasChanges, draftKey, onOpenChange]);
 
@@ -220,7 +221,7 @@ export function SafetyTemplateEditor({
         });
       }
 
-      localStorage.removeItem(draftKey);
+      storageRemoveSync(draftKey);
       setHasChanges(false);
 
       toast({

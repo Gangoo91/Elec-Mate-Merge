@@ -18,7 +18,7 @@ import {
 } from '@/components/ui/sheet';
 import { cn } from '@/lib/utils';
 import { usePortfolioSharing, type PortfolioShare } from '@/hooks/portfolio/usePortfolioSharing';
-import { useHaptics } from '@/hooks/useHaptics';
+import { useHaptic } from '@/hooks/useHaptic';
 
 interface SharePortfolioSheetProps {
   open: boolean;
@@ -46,7 +46,7 @@ function formatExpiry(expiresAt: string | null): string {
 }
 
 export function SharePortfolioSheet({ open, onOpenChange }: SharePortfolioSheetProps) {
-  const haptics = useHaptics();
+  const haptic = useHaptic();
   const { shares, isLoading, createShareLink, revokeShareLink, copyShareLink } =
     usePortfolioSharing();
   const [selectedExpiry, setSelectedExpiry] = useState<ExpiryOption>('7d');
@@ -54,18 +54,18 @@ export function SharePortfolioSheet({ open, onOpenChange }: SharePortfolioSheetP
 
   const handleCreate = async () => {
     setIsCreating(true);
-    haptics.tap();
+    haptic.light();
     await createShareLink({ expiresIn: selectedExpiry });
     setIsCreating(false);
   };
 
   const handleRevoke = async (shareId: string) => {
-    haptics.tap();
+    haptic.light();
     await revokeShareLink(shareId);
   };
 
   const handleCopy = (token: string) => {
-    haptics.tap();
+    haptic.light();
     copyShareLink(token);
   };
 
@@ -90,7 +90,7 @@ export function SharePortfolioSheet({ open, onOpenChange }: SharePortfolioSheetP
                   <button
                     key={opt.value}
                     onClick={() => {
-                      haptics.tap();
+                      haptic.light();
                       setSelectedExpiry(opt.value);
                     }}
                     className={cn(

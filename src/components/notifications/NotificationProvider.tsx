@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
 import { toast } from 'sonner';
 import { supabase } from '@/integrations/supabase/client';
+import { storageRemoveSync } from '@/utils/storage';
 import type { User } from '@supabase/supabase-js';
 
 export type Notification = {
@@ -87,7 +88,7 @@ export const NotificationProvider: React.FC<{ children: React.ReactNode }> = ({ 
     }
 
     // One-time cleanup of old localStorage read tracking
-    localStorage.removeItem(`notif_read_${user.id}`);
+    storageRemoveSync(`notif_read_${user.id}`);
 
     // Fetch last 30 push notifications from the database
     const fetchFromDb = async () => {

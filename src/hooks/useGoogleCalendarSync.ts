@@ -57,9 +57,9 @@ export function useGoogleCalendarSync() {
     refreshStatus();
   }, [refreshStatus]);
 
-  // Listen for focus to detect OAuth redirect return
+  // Listen for focus/resume to detect OAuth redirect return
   useEffect(() => {
-    const handleFocus = () => {
+    const handleResume = () => {
       if (connecting) {
         setTimeout(() => {
           refreshStatus();
@@ -68,8 +68,13 @@ export function useGoogleCalendarSync() {
       }
     };
 
-    window.addEventListener('focus', handleFocus);
-    return () => window.removeEventListener('focus', handleFocus);
+    window.addEventListener('focus', handleResume);
+    // On native, appStateChange fires reliably when app resumes from background
+    window.addEventListener('capacitor:resume', handleResume);
+    return () => {
+      window.removeEventListener('focus', handleResume);
+      window.removeEventListener('capacitor:resume', handleResume);
+    };
   }, [connecting, refreshStatus]);
 
   // Connect Google Calendar (start OAuth flow)

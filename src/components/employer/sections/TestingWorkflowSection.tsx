@@ -84,7 +84,7 @@ const resultColors: Record<TestResult, string> = {
   Pending: 'bg-warning/20 text-warning',
   Pass: 'bg-success/20 text-success',
   Fail: 'bg-destructive/20 text-destructive',
-  'N/A': 'bg-muted text-muted-foreground',
+  'N/A': 'bg-muted text-white/60',
   Limited: 'bg-orange-500/20 text-orange-400',
 };
 
@@ -262,7 +262,7 @@ export function TestingWorkflowSection() {
         <div className="flex items-center justify-between">
           <div>
             <h1 className="text-xl md:text-2xl font-bold text-foreground">Testing & Sign-off</h1>
-            <p className="text-sm text-muted-foreground">
+            <p className="text-sm text-white/60">
               Electrical test results and verification
             </p>
           </div>
@@ -275,7 +275,7 @@ export function TestingWorkflowSection() {
         <div className="flex items-center gap-2">
           <div className="relative flex-1">
             {!searchQuery && (
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none" />
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white/60 pointer-events-none" />
             )}
             <Input
               placeholder="Search tests..."
@@ -320,7 +320,7 @@ export function TestingWorkflowSection() {
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-xl md:text-2xl font-bold text-warning">{stats?.pending || 0}</p>
-                <p className="text-xs md:text-sm text-muted-foreground">Pending</p>
+                <p className="text-xs md:text-sm text-white/60">Pending</p>
               </div>
               <Clock className="h-6 w-6 md:h-8 md:w-8 text-warning opacity-70" />
             </div>
@@ -337,7 +337,7 @@ export function TestingWorkflowSection() {
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-xl md:text-2xl font-bold text-success">{stats?.pass || 0}</p>
-                <p className="text-xs md:text-sm text-muted-foreground">Passed</p>
+                <p className="text-xs md:text-sm text-white/60">Passed</p>
               </div>
               <CheckCircle className="h-6 w-6 md:h-8 md:w-8 text-success opacity-70" />
             </div>
@@ -354,7 +354,7 @@ export function TestingWorkflowSection() {
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-xl md:text-2xl font-bold text-destructive">{stats?.fail || 0}</p>
-                <p className="text-xs md:text-sm text-muted-foreground">Failed</p>
+                <p className="text-xs md:text-sm text-white/60">Failed</p>
               </div>
               <XCircle className="h-6 w-6 md:h-8 md:w-8 text-destructive opacity-70" />
             </div>
@@ -367,7 +367,7 @@ export function TestingWorkflowSection() {
                 <p className="text-xl md:text-2xl font-bold text-elec-yellow">
                   {stats?.passRate || 0}%
                 </p>
-                <p className="text-xs md:text-sm text-muted-foreground">Pass Rate</p>
+                <p className="text-xs md:text-sm text-white/60">Pass Rate</p>
               </div>
               <Award className="h-6 w-6 md:h-8 md:w-8 text-elec-yellow opacity-70" />
             </div>
@@ -383,7 +383,7 @@ export function TestingWorkflowSection() {
             <h3 className="text-base md:text-lg font-semibold text-foreground">
               No test results yet
             </h3>
-            <p className="text-sm text-muted-foreground mt-1 mb-4">
+            <p className="text-sm text-white/60 mt-1 mb-4">
               {resultFilter
                 ? `No ${resultFilter.toLowerCase()} tests`
                 : 'Start recording electrical test results'}
@@ -406,7 +406,7 @@ export function TestingWorkflowSection() {
                   <CardTitle className="text-sm md:text-base">
                     {job?.title || 'Unknown Job'}
                   </CardTitle>
-                  <p className="text-xs text-muted-foreground">{job?.client}</p>
+                  <p className="text-xs text-white/60">{job?.client}</p>
                 </div>
                 <div className="flex gap-1">
                   <Badge className="bg-success/20 text-success text-[10px]">
@@ -460,7 +460,7 @@ export function TestingWorkflowSection() {
                             test.result === 'Fail' && 'text-destructive',
                             test.result === 'Pending' && 'text-warning',
                             (test.result === 'N/A' || test.result === 'Limited') &&
-                              'text-muted-foreground'
+                              'text-white/60'
                           )}
                         />
                       </div>
@@ -481,7 +481,7 @@ export function TestingWorkflowSection() {
                             </Badge>
                           )}
                         </div>
-                        <div className="flex items-center gap-3 mt-1 text-[10px] text-muted-foreground flex-wrap">
+                        <div className="flex items-center gap-3 mt-1 text-[10px] text-white/60 flex-wrap">
                           {test.circuit_ref && <span>Circuit: {test.circuit_ref}</span>}
                           {test.reading && (
                             <span className="font-medium text-foreground">

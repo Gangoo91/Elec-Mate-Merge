@@ -25,6 +25,7 @@ import {
 } from '@/components/ui/select';
 import { cn } from '@/lib/utils';
 import { toast } from 'sonner';
+import { getCurrentPosition } from '@/utils/geolocation';
 import { useWorkerSelfService } from '@/hooks/useWorkerSelfService';
 import { useActiveJobs } from '@/hooks/useJobs';
 import { WorkerStatus } from '@/services/locationService';
@@ -75,15 +76,13 @@ export function StatusSheet({ open, onOpenChange }: StatusSheetProps) {
 
     try {
       // Get GPS location
-      const position = await new Promise<GeolocationPosition>((resolve, reject) => {
-        navigator.geolocation.getCurrentPosition(resolve, reject, {
-          enableHighAccuracy: true,
-          timeout: 10000,
-          maximumAge: 60000,
-        });
+      const position = await getCurrentPosition({
+        enableHighAccuracy: true,
+        timeout: 10000,
+        maximumAge: 60000,
       });
 
-      const { latitude: lat, longitude: lng, accuracy } = position.coords;
+      const { latitude: lat, longitude: lng, accuracy } = position;
 
       await updateLocation.mutateAsync({
         lat,

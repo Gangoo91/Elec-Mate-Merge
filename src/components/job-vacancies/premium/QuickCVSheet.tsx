@@ -38,6 +38,7 @@ import { usePrimaryCV, useCVs, calculateCVCompleteness } from '@/hooks/useCV';
 import { useCVSyncStatus, useElecIdForCV } from '@/hooks/useCVSync';
 import { generateCVPDFByTemplate } from '@/components/cv-builder/pdfGenerators';
 import { toast } from '@/hooks/use-toast';
+import { storageSetJSONSync, storageSetSync } from '@/utils/storage';
 
 interface QuickCVSheetProps {
   isOpen: boolean;
@@ -102,9 +103,9 @@ const QuickCVSheet = ({ isOpen, onClose }: QuickCVSheetProps) => {
 
   const handleEditCV = () => {
     if (cv) {
-      localStorage.setItem('elecmate-cv-draft', JSON.stringify(cv.cv_data));
-      localStorage.setItem('elecmate-cv-template', cv.template_id);
-      localStorage.setItem('elecmate-cv-editing-id', cv.id);
+      storageSetJSONSync('elecmate-cv-draft', cv.cv_data);
+      storageSetSync('elecmate-cv-template', cv.template_id);
+      storageSetSync('elecmate-cv-editing-id', cv.id);
     }
     navigate('/electrician/cv-builder');
     onClose();

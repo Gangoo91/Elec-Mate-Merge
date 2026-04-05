@@ -276,7 +276,7 @@ export function TalentFilterChips({
         </Button>
       )}
 
-      <span className="text-sm text-muted-foreground ml-auto shrink-0">
+      <span className="text-sm text-white/60 ml-auto shrink-0">
         {totalResults} {totalResults === 1 ? 'sparky' : 'sparkies'}
       </span>
     </div>

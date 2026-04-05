@@ -1,4 +1,5 @@
 import { useState, useCallback } from 'react';
+import { copyToClipboard } from '@/utils/clipboard';
 import { Copy, Check, CheckCircle, AlertTriangle, ChevronDown } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { cn } from '@/lib/utils';
@@ -203,7 +204,7 @@ const EarthElectrodeCalculator = () => {
     if (result.rods > 1) {
       text += `\nRods: ${result.rods} at ${result.spacing}m spacing`;
     }
-    navigator.clipboard.writeText(text);
+    copyToClipboard(text);
     setCopied(true);
     toast({ title: 'Copied to clipboard' });
     setTimeout(() => setCopied(false), 2000);

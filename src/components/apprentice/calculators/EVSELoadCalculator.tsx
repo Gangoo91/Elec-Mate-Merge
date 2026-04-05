@@ -1,4 +1,5 @@
 import { useState, useCallback } from 'react';
+import { copyToClipboard } from '@/utils/clipboard';
 import {
   Car,
   Copy,
@@ -190,7 +191,7 @@ const EVSELoadCalculator = () => {
       `Protection: ${result.selectedProtection ?? 'TBD'}`,
       `Headroom: ${result.headroom.toFixed(0)}A`,
     ].join('\n');
-    navigator.clipboard.writeText(text);
+    copyToClipboard(text);
     setCopied(true);
     toast({ title: 'Copied to clipboard' });
     setTimeout(() => setCopied(false), 2000);

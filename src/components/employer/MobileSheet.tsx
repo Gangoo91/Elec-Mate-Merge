@@ -200,7 +200,7 @@ export function MobileFormField({
         {required && <span className="text-destructive">*</span>}
       </label>
       {children}
-      {hint && !error && <p className="text-xs text-muted-foreground">{hint}</p>}
+      {hint && !error && <p className="text-xs text-white/60">{hint}</p>}
       {error && <p className="text-xs text-destructive">{error}</p>}
     </div>
   );

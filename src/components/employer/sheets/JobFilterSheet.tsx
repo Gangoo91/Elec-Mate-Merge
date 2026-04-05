@@ -83,7 +83,7 @@ export function JobFilterSheet({
                 variant="ghost"
                 size="sm"
                 onClick={handleClearAll}
-                className="text-muted-foreground"
+                className="text-white/60"
               >
                 <X className="h-4 w-4 mr-1" />
                 Clear all
@@ -96,7 +96,7 @@ export function JobFilterSheet({
         <div className="space-y-6 pb-6">
           {/* Status Filter */}
           <div className="space-y-3">
-            <Label className="text-sm font-medium text-muted-foreground uppercase tracking-wide">
+            <Label className="text-sm font-medium text-white/60 uppercase tracking-wide">
               Status
             </Label>
             <div className="flex flex-wrap gap-2">
@@ -111,13 +111,13 @@ export function JobFilterSheet({
                       ${
                         isSelected
                           ? 'border-elec-yellow bg-elec-yellow/10 text-foreground'
-                          : 'border-border bg-elec-gray text-muted-foreground hover:border-elec-yellow/50'
+                          : 'border-border bg-elec-gray text-white/60 hover:border-elec-yellow/50'
                       }
                     `}
                   >
                     <div className={`w-2 h-2 rounded-full ${option.colour}`} />
                     <span className="text-sm font-medium">{option.label}</span>
-                    {isSelected && <X className="h-3 w-3 text-muted-foreground" />}
+                    {isSelected && <X className="h-3 w-3 text-white/60" />}
                   </button>
                 );
               })}
@@ -126,7 +126,7 @@ export function JobFilterSheet({
 
           {/* Value Range Filter */}
           <div className="space-y-4">
-            <Label className="text-sm font-medium text-muted-foreground uppercase tracking-wide">
+            <Label className="text-sm font-medium text-white/60 uppercase tracking-wide">
               Value Range
             </Label>
             <div className="px-1">

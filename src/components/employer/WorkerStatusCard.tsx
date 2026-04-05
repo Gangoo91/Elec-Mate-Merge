@@ -16,6 +16,7 @@ import { useActiveJobs } from '@/hooks/useJobs';
 import { WorkerStatus } from '@/services/locationService';
 import { toast } from '@/hooks/use-toast';
 import { motion } from 'framer-motion';
+import { getCurrentPosition } from '@/utils/geolocation';
 
 const STATUS_OPTIONS: {
   value: WorkerStatus;
@@ -43,7 +44,7 @@ export function WorkerStatusCard() {
     return (
       <Card className="bg-elec-gray border-white/10">
         <CardContent className="p-6 flex items-center justify-center">
-          <Loader2 className="h-5 w-5 animate-spin text-muted-foreground" />
+          <Loader2 className="h-5 w-5 animate-spin text-white/60" />
         </CardContent>
       </Card>
     );
@@ -69,15 +70,13 @@ export function WorkerStatusCard() {
 
     try {
       // Get current GPS position
-      const position = await new Promise<GeolocationPosition>((resolve, reject) => {
-        navigator.geolocation.getCurrentPosition(resolve, reject, {
-          enableHighAccuracy: true,
-          timeout: 10000,
-          maximumAge: 60000,
-        });
+      const position = await getCurrentPosition({
+        enableHighAccuracy: true,
+        timeout: 10000,
+        maximumAge: 60000,
       });
 
-      const { latitude: lat, longitude: lng, accuracy } = position.coords;
+      const { latitude: lat, longitude: lng, accuracy } = position;
 
       // Update location
       const result = await updateLocation.mutateAsync({

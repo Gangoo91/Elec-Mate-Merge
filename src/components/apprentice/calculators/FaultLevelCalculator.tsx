@@ -1,3 +1,4 @@
+import { copyToClipboard } from '@/utils/clipboard';
 import { useState, useCallback, useMemo } from 'react';
 import { Copy, Check, ChevronDown, Plus, Trash2 } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
@@ -212,10 +213,13 @@ const FaultLevelCalculator = () => {
       text += `    Breaking capacity: ${point.breakingCapacity} kA\n`;
     }
 
-    navigator.clipboard.writeText(text);
-    setCopied(true);
-    toast({ title: 'Copied to clipboard' });
-    setTimeout(() => setCopied(false), 2000);
+    copyToClipboard(text).then((ok) => {
+      if (ok) {
+        setCopied(true);
+        toast({ title: 'Copied to clipboard' });
+        setTimeout(() => setCopied(false), 2000);
+      }
+    });
   };
 
   // Highest fault level for badge

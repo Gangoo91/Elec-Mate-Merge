@@ -66,11 +66,11 @@ export function JobChecklist({ jobId }: JobChecklistProps) {
         {/* Header with Progress */}
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <ListChecks className="h-4 w-4 text-muted-foreground" />
+            <ListChecks className="h-4 w-4 text-white/60" />
             <span className="text-sm font-medium text-foreground">Checklist</span>
           </div>
           {totalCount > 0 && (
-            <span className="text-xs text-muted-foreground">
+            <span className="text-xs text-white/60">
               {completedCount}/{totalCount}
             </span>
           )}
@@ -96,7 +96,7 @@ export function JobChecklist({ jobId }: JobChecklistProps) {
               <span
                 className={cn(
                   'flex-1 text-sm text-foreground',
-                  item.is_completed && 'line-through text-muted-foreground'
+                  item.is_completed && 'line-through text-white/60'
                 )}
               >
                 {item.title}
@@ -104,7 +104,7 @@ export function JobChecklist({ jobId }: JobChecklistProps) {
               <Button
                 variant="ghost"
                 size="icon"
-                className="h-7 w-7 opacity-100 sm:opacity-0 sm:group-hover:opacity-100 text-muted-foreground hover:text-destructive"
+                className="h-7 w-7 opacity-100 sm:opacity-0 sm:group-hover:opacity-100 text-white/60 hover:text-destructive"
                 onClick={() => handleDelete(item.id)}
               >
                 <Trash2 className="h-3.5 w-3.5" />
@@ -151,7 +151,7 @@ export function JobChecklist({ jobId }: JobChecklistProps) {
           <Button
             variant="ghost"
             size="sm"
-            className="w-full justify-start h-9 text-muted-foreground hover:text-foreground"
+            className="w-full justify-start h-9 text-white/60 hover:text-foreground"
             onClick={() => setIsAddingItem(true)}
           >
             <Plus className="h-4 w-4 mr-2" />
@@ -180,7 +180,7 @@ export function JobChecklistProgress({ completed, total }: { completed: number; 
           style={{ width: `${percent}%` }}
         />
       </div>
-      <span className="text-[10px] text-muted-foreground whitespace-nowrap">
+      <span className="text-[10px] text-white/60 whitespace-nowrap">
         {completed}/{total}
       </span>
     </div>

@@ -85,10 +85,10 @@ export function JobActivityFeed({ jobId }: JobActivityFeedProps) {
       <CardContent className="p-4 space-y-4">
         {/* Header */}
         <div className="flex items-center gap-2">
-          <MessageSquare className="h-4 w-4 text-muted-foreground" />
+          <MessageSquare className="h-4 w-4 text-white/60" />
           <span className="text-sm font-medium text-foreground">Activity</span>
           {comments.length > 0 && (
-            <span className="text-xs text-muted-foreground">({comments.length})</span>
+            <span className="text-xs text-white/60">({comments.length})</span>
           )}
         </div>
 
@@ -110,7 +110,7 @@ export function JobActivityFeed({ jobId }: JobActivityFeedProps) {
               }}
             />
             <div className="flex justify-between items-center">
-              <span className="text-[10px] text-muted-foreground">Cmd+Enter to send</span>
+              <span className="text-[10px] text-white/60">Cmd+Enter to send</span>
               <Button
                 size="sm"
                 className="h-7 gap-1.5"
@@ -143,7 +143,7 @@ export function JobActivityFeed({ jobId }: JobActivityFeedProps) {
                       <span className="text-sm font-medium text-foreground">
                         {comment.author_name}
                       </span>
-                      <span className="text-xs text-muted-foreground ml-2">
+                      <span className="text-xs text-white/60 ml-2">
                         {formatDistanceToNow(new Date(comment.created_at), { addSuffix: true })}
                       </span>
                     </div>
@@ -151,14 +151,14 @@ export function JobActivityFeed({ jobId }: JobActivityFeedProps) {
                       <Button
                         variant="ghost"
                         size="icon"
-                        className="h-6 w-6 opacity-0 group-hover:opacity-100 text-muted-foreground hover:text-destructive"
+                        className="h-6 w-6 opacity-0 group-hover:opacity-100 text-white/60 hover:text-destructive"
                         onClick={() => deleteComment.mutate({ id: comment.id, jobId })}
                       >
                         <Trash2 className="h-3 w-3" />
                       </Button>
                     )}
                   </div>
-                  <p className="text-sm text-muted-foreground mt-0.5 whitespace-pre-wrap">
+                  <p className="text-sm text-white/60 mt-0.5 whitespace-pre-wrap">
                     {comment.content}
                   </p>
                 </div>
@@ -168,7 +168,7 @@ export function JobActivityFeed({ jobId }: JobActivityFeedProps) {
         )}
 
         {comments.length === 0 && (
-          <div className="text-center py-4 text-sm text-muted-foreground">
+          <div className="text-center py-4 text-sm text-white/60">
             No activity yet. Be the first to comment!
           </div>
         )}

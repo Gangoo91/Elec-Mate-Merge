@@ -16,6 +16,7 @@ import {
   Battery,
   RefreshCw,
 } from 'lucide-react';
+import { storageGetJSONSync, storageSetJSONSync } from '@/utils/storage';
 import MoodTracker from '@/components/mental-health/interactive/MoodTracker';
 import SelfCareReminders from '@/components/mental-health/interactive/SelfCareReminders';
 import StressManagementTools from '@/components/mental-health/interactive/StressManagementTools';
@@ -181,12 +182,12 @@ const GratitudeQuickAdd = () => {
   const handleSave = () => {
     const validGratitudes = gratitudes.filter((g) => g.trim() !== '');
     if (validGratitudes.length > 0) {
-      const existing = JSON.parse(localStorage.getItem('gratitudes') || '[]');
+      const existing = storageGetJSONSync<any[]>('gratitudes', []);
       const entry = {
         date: new Date().toISOString().split('T')[0],
         items: validGratitudes,
       };
-      localStorage.setItem('gratitudes', JSON.stringify([...existing, entry]));
+      storageSetJSONSync('gratitudes', [...existing, entry]);
       setSaved(true);
       setTimeout(() => {
         setSaved(false);
@@ -255,13 +256,13 @@ const EnergyLevelCheck = () => {
 
   const handleSave = () => {
     if (selectedEnergy) {
-      const existing = JSON.parse(localStorage.getItem('energyLogs') || '[]');
+      const existing = storageGetJSONSync<any[]>('energyLogs', []);
       const entry = {
         date: new Date().toISOString(),
         level: selectedEnergy,
         notes,
       };
-      localStorage.setItem('energyLogs', JSON.stringify([...existing, entry]));
+      storageSetJSONSync('energyLogs', [...existing, entry]);
       setSaved(true);
       setTimeout(() => {
         setSaved(false);

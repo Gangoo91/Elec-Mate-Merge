@@ -182,7 +182,7 @@ export const QualitySection = () => {
     return (
       <div className="flex flex-col items-center justify-center py-12 space-y-4">
         <AlertCircle className="h-12 w-12 text-destructive" />
-        <p className="text-muted-foreground">Failed to load quality data</p>
+        <p className="text-white/60">Failed to load quality data</p>
         <Button onClick={() => refetch()} variant="outline" className="gap-2">
           <RefreshCw className="h-4 w-4" />
           Retry
@@ -200,7 +200,7 @@ export const QualitySection = () => {
             <ClipboardCheck className="h-6 w-6 text-elec-yellow" />
             Quality Assurance
           </h1>
-          <p className="text-muted-foreground text-sm mt-1">
+          <p className="text-white/60 text-sm mt-1">
             Snag lists, defect tracking, and quality management
           </p>
         </div>
@@ -372,7 +372,7 @@ export const QualitySection = () => {
             ) : (
               <p className="text-2xl font-bold text-foreground">{stats?.snags || 0}</p>
             )}
-            <p className="text-sm text-muted-foreground">Total Snags</p>
+            <p className="text-sm text-white/60">Total Snags</p>
           </CardContent>
         </Card>
         <Card className="bg-elec-gray border-border">
@@ -382,7 +382,7 @@ export const QualitySection = () => {
             ) : (
               <p className="text-2xl font-bold text-warning">{openSnags.length}</p>
             )}
-            <p className="text-sm text-muted-foreground">Open</p>
+            <p className="text-sm text-white/60">Open</p>
           </CardContent>
         </Card>
         <Card className="bg-elec-gray border-border">
@@ -392,7 +392,7 @@ export const QualitySection = () => {
             ) : (
               <p className="text-2xl font-bold text-success">{resolvedSnags.length}</p>
             )}
-            <p className="text-sm text-muted-foreground">Resolved</p>
+            <p className="text-sm text-white/60">Resolved</p>
           </CardContent>
         </Card>
         <Card className="bg-elec-gray border-border">
@@ -402,7 +402,7 @@ export const QualitySection = () => {
             ) : (
               <p className="text-2xl font-bold text-elec-yellow">{stats?.defects || 0}</p>
             )}
-            <p className="text-sm text-muted-foreground">Defects</p>
+            <p className="text-sm text-white/60">Defects</p>
           </CardContent>
         </Card>
       </div>
@@ -410,7 +410,7 @@ export const QualitySection = () => {
       {/* Search */}
       <div className="relative">
         {!searchQuery && (
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none" />
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white/60 pointer-events-none" />
         )}
         <Input
           placeholder="Search snags by title, job, or description..."
@@ -451,7 +451,7 @@ export const QualitySection = () => {
               <CardContent className="p-8 text-center">
                 <CheckCircle2 className="h-12 w-12 text-success mx-auto mb-4" />
                 <h3 className="text-lg font-semibold text-foreground mb-2">All Clear!</h3>
-                <p className="text-muted-foreground">No open snags or defects to resolve.</p>
+                <p className="text-white/60">No open snags or defects to resolve.</p>
               </CardContent>
             </Card>
           ) : (
@@ -466,7 +466,7 @@ export const QualitySection = () => {
                           {issue.severity}
                         </Badge>
                       </div>
-                      <p className="text-sm text-muted-foreground flex items-center gap-2">
+                      <p className="text-sm text-white/60 flex items-center gap-2">
                         <Briefcase className="h-3.5 w-3.5" />
                         {issue.job?.title || 'No job linked'}
                         {issue.job?.client && ` - ${issue.job.client}`}
@@ -476,7 +476,7 @@ export const QualitySection = () => {
                   </div>
 
                   {issue.description && (
-                    <p className="text-sm text-muted-foreground bg-surface p-3 rounded-lg">
+                    <p className="text-sm text-white/60 bg-surface p-3 rounded-lg">
                       {issue.description}
                     </p>
                   )}
@@ -500,7 +500,7 @@ export const QualitySection = () => {
                     </div>
                   )}
 
-                  <div className="flex items-center justify-between text-xs text-muted-foreground">
+                  <div className="flex items-center justify-between text-xs text-white/60">
                     <div className="flex items-center gap-4">
                       {issue.location && (
                         <span className="flex items-center gap-1">
@@ -551,8 +551,8 @@ export const QualitySection = () => {
           ) : resolvedSnags.length === 0 ? (
             <Card className="bg-elec-gray border-border">
               <CardContent className="p-8 text-center">
-                <FileText className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
-                <p className="text-muted-foreground">No resolved snags yet.</p>
+                <FileText className="h-12 w-12 text-white/60 mx-auto mb-4" />
+                <p className="text-white/60">No resolved snags yet.</p>
               </CardContent>
             </Card>
           ) : (
@@ -565,17 +565,17 @@ export const QualitySection = () => {
                         <CheckCircle2 className="h-4 w-4 text-success" />
                         <h3 className="font-semibold text-foreground">{issue.title}</h3>
                       </div>
-                      <p className="text-sm text-muted-foreground flex items-center gap-2">
+                      <p className="text-sm text-white/60 flex items-center gap-2">
                         <Briefcase className="h-3.5 w-3.5" />
                         {issue.job?.title || 'No job linked'}
                       </p>
                       {issue.resolution_notes && (
-                        <p className="text-sm text-muted-foreground mt-2 bg-surface p-2 rounded">
+                        <p className="text-sm text-white/60 mt-2 bg-surface p-2 rounded">
                           {issue.resolution_notes}
                         </p>
                       )}
                     </div>
-                    <div className="text-right text-xs text-muted-foreground">
+                    <div className="text-right text-xs text-white/60">
                       <p>Resolved</p>
                       <p>
                         {issue.resolved_at

@@ -67,16 +67,19 @@ export const useAccountingIntegrations = (): UseAccountingIntegrationsReturn => 
     }
   }, []);
 
-  // Initial fetch and focus listener
+  // Initial fetch and focus/resume listener
   useEffect(() => {
     refreshStatus();
 
     // Re-check when window gains focus (after OAuth redirect)
     const handleFocus = () => refreshStatus();
     window.addEventListener('focus', handleFocus);
+    // On native, appStateChange fires reliably when app resumes from background
+    window.addEventListener('capacitor:resume', handleFocus);
 
     return () => {
       window.removeEventListener('focus', handleFocus);
+      window.removeEventListener('capacitor:resume', handleFocus);
     };
   }, [refreshStatus]);
 

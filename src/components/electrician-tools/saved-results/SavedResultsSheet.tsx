@@ -4,11 +4,6 @@ import {
   Archive,
   ChevronDown,
   ChevronRight,
-  Zap,
-  Calculator,
-  Shield,
-  Wrench,
-  Settings,
   RefreshCw,
   Loader2,
   Sparkles,
@@ -29,17 +24,14 @@ interface SavedResultsSheetProps {
   onClose: () => void;
 }
 
-// Agent group configuration with per-agent colours
 const AGENT_GROUPS: Array<{
   type: AgentType;
-  icon: React.ComponentType<{ className?: string }>;
-  colour: string;
+  gradient: string;
   colourClasses: { bgLight: string; text: string; border: string; dot: string };
 }> = [
   {
     type: 'circuit-designer',
-    icon: Zap,
-    colour: 'blue',
+    gradient: 'from-blue-500 via-blue-400 to-cyan-400',
     colourClasses: {
       bgLight: 'bg-blue-500/10',
       text: 'text-blue-400',
@@ -49,30 +41,17 @@ const AGENT_GROUPS: Array<{
   },
   {
     type: 'cost-engineer',
-    icon: Calculator,
-    colour: 'green',
+    gradient: 'from-elec-yellow via-amber-400 to-elec-yellow',
     colourClasses: {
-      bgLight: 'bg-green-500/10',
-      text: 'text-green-400',
-      border: 'border-green-500/20',
-      dot: 'bg-green-400',
+      bgLight: 'bg-elec-yellow/10',
+      text: 'text-elec-yellow',
+      border: 'border-elec-yellow/20',
+      dot: 'bg-elec-yellow',
     },
   },
   {
     type: 'health-safety',
-    icon: Shield,
-    colour: 'red',
-    colourClasses: {
-      bgLight: 'bg-red-500/10',
-      text: 'text-red-400',
-      border: 'border-red-500/20',
-      dot: 'bg-red-400',
-    },
-  },
-  {
-    type: 'installer',
-    icon: Wrench,
-    colour: 'orange',
+    gradient: 'from-orange-500 via-amber-400 to-red-500',
     colourClasses: {
       bgLight: 'bg-orange-500/10',
       text: 'text-orange-400',
@@ -81,14 +60,23 @@ const AGENT_GROUPS: Array<{
     },
   },
   {
-    type: 'maintenance',
-    icon: Settings,
-    colour: 'slate',
+    type: 'installer',
+    gradient: 'from-blue-400 via-blue-300 to-cyan-300',
     colourClasses: {
-      bgLight: 'bg-slate-400/10',
-      text: 'text-slate-300',
-      border: 'border-slate-400/20',
-      dot: 'bg-slate-400',
+      bgLight: 'bg-blue-400/10',
+      text: 'text-blue-300',
+      border: 'border-blue-400/20',
+      dot: 'bg-blue-300',
+    },
+  },
+  {
+    type: 'maintenance',
+    gradient: 'from-emerald-500 via-teal-400 to-emerald-500',
+    colourClasses: {
+      bgLight: 'bg-emerald-500/10',
+      text: 'text-emerald-400',
+      border: 'border-emerald-500/20',
+      dot: 'bg-emerald-400',
     },
   },
 ];
@@ -143,12 +131,9 @@ export const SavedResultsSheet: React.FC<SavedResultsSheetProps> = ({ open, onCl
           <SheetHeader className="px-5 pt-7 pb-4 border-b border-white/[0.06]">
             <div className="flex items-center justify-between">
               <SheetTitle className="text-[18px] font-bold text-white flex items-center gap-2.5">
-                <div className="w-9 h-9 rounded-lg bg-elec-yellow/10 ring-1 ring-elec-yellow/20 flex items-center justify-center">
-                  <Archive className="h-4.5 w-4.5 text-elec-yellow" />
-                </div>
                 Saved Results
                 {totalCount > 0 && (
-                  <span className="text-[13px] font-normal text-white bg-white/[0.06] px-2 py-0.5 rounded-full">
+                  <span className="text-[13px] font-normal text-white bg-white/[0.06] px-2.5 py-0.5 rounded-full">
                     {totalCount}
                   </span>
                 )}
@@ -157,7 +142,7 @@ export const SavedResultsSheet: React.FC<SavedResultsSheetProps> = ({ open, onCl
               <button
                 onClick={handleRefresh}
                 disabled={isRefreshing || isLoading}
-                className="h-9 w-9 flex items-center justify-center rounded-lg text-white ring-1 ring-white/[0.12] hover:bg-white/[0.06] disabled:opacity-40 transition-colors touch-manipulation"
+                className="h-9 w-9 flex items-center justify-center rounded-xl text-white bg-white/[0.05] border border-white/[0.08] hover:bg-white/[0.10] disabled:opacity-40 transition-colors touch-manipulation"
               >
                 {isRefreshing || isLoading ? (
                   <Loader2 className="h-4 w-4 animate-spin" />
@@ -188,7 +173,7 @@ export const SavedResultsSheet: React.FC<SavedResultsSheetProps> = ({ open, onCl
                 </div>
               ) : (
                 <div className="space-y-3">
-                  {AGENT_GROUPS.map(({ type, icon: Icon, colourClasses: cc }) => {
+                  {AGENT_GROUPS.map(({ type, gradient, colourClasses: cc }) => {
                     const agentResults = groupedResults[type];
                     const count = counts[type];
                     const isExpanded = expandedGroups.has(type);
@@ -198,28 +183,23 @@ export const SavedResultsSheet: React.FC<SavedResultsSheetProps> = ({ open, onCl
                     return (
                       <div
                         key={type}
-                        className="rounded-xl ring-1 ring-white/[0.12] overflow-hidden"
+                        className="relative glass-premium rounded-2xl overflow-hidden"
                       >
+                        {/* Accent line */}
+                        <div className={cn('absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r opacity-50', gradient)} />
+
                         {/* Group Header */}
                         <button
                           onClick={() => toggleGroup(type)}
-                          className="w-full flex items-center gap-3 p-3.5 bg-white/[0.10] active:bg-white/[0.12] transition-colors touch-manipulation"
+                          className="w-full flex items-center gap-3 p-4 transition-colors touch-manipulation"
                         >
-                          <div
-                            className={cn(
-                              'w-9 h-9 rounded-lg flex items-center justify-center ring-1',
-                              cc.bgLight,
-                              cc.border
-                            )}
-                          >
-                            <Icon className={cn('h-4 w-4', cc.text)} />
-                          </div>
+                          <div className={cn('w-1.5 h-1.5 rounded-full', cc.dot)} />
                           <span className="flex-1 text-left text-[14px] font-semibold text-white">
                             {AGENT_LABELS[type]}
                           </span>
                           <span
                             className={cn(
-                              'text-[11px] font-semibold px-2 py-0.5 rounded-full mr-1',
+                              'text-[11px] font-semibold px-2 py-0.5 rounded-md mr-1',
                               cc.bgLight,
                               cc.text
                             )}
@@ -243,7 +223,8 @@ export const SavedResultsSheet: React.FC<SavedResultsSheetProps> = ({ open, onCl
                               transition={{ duration: 0.2, ease: 'easeInOut' }}
                               className="overflow-hidden"
                             >
-                              <div className="p-2 space-y-1.5 border-t border-white/[0.10]">
+                              <div className="px-3 pb-3 space-y-2 border-t border-white/[0.06]">
+                                <div className="pt-2" />
                                 {agentResults.map((result) => (
                                   <SavedResultItem
                                     key={result.id}

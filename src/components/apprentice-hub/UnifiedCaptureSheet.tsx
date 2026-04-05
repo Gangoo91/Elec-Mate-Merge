@@ -53,7 +53,7 @@ import { useStudentQualification } from '@/hooks/useStudentQualification';
 import { useQualificationACs } from '@/hooks/qualification/useQualificationACs';
 import { useToast } from '@/hooks/use-toast';
 import { useAuth } from '@/contexts/AuthContext';
-import { useHaptics } from '@/hooks/useHaptics';
+import { useHaptic } from '@/hooks/useHaptic';
 
 interface UnifiedCaptureSheetProps {
   open: boolean;
@@ -75,7 +75,7 @@ const FALLBACK_CATEGORIES = [
 export function UnifiedCaptureSheet({ open, onOpenChange, onComplete }: UnifiedCaptureSheetProps) {
   const { toast } = useToast();
   const { user } = useAuth();
-  const haptics = useHaptics();
+  const haptic = useHaptic();
   const { addEntry } = usePortfolioData();
   const { addTimeEntry } = useTimeEntries();
   const { analyze, isAnalyzing, result: aiResult } = useAIEvidenceTagger();
@@ -233,7 +233,7 @@ export function UnifiedCaptureSheet({ open, onOpenChange, onComplete }: UnifiedC
 
   // Toggle AC selection
   const toggleAC = (acCode: string) => {
-    haptics.tap();
+    haptic.light();
     setSelectedACs((prev) =>
       prev.includes(acCode) ? prev.filter((c) => c !== acCode) : [...prev, acCode]
     );
@@ -241,7 +241,7 @@ export function UnifiedCaptureSheet({ open, onOpenChange, onComplete }: UnifiedC
 
   // Bulk AC selection helpers
   const selectAllACs = () => {
-    haptics.tap();
+    haptic.light();
     const allCodes =
       aiResult?.matchedCriteria
         ?.filter((ac) => ac.unitCode && ac.acCode)
@@ -250,7 +250,7 @@ export function UnifiedCaptureSheet({ open, onOpenChange, onComplete }: UnifiedC
   };
 
   const selectRecommendedACs = () => {
-    haptics.tap();
+    haptic.light();
     const recommended =
       aiResult?.matchedCriteria
         ?.filter((ac) => ac.confidence >= 80 && ac.unitCode && ac.acCode)
@@ -259,14 +259,14 @@ export function UnifiedCaptureSheet({ open, onOpenChange, onComplete }: UnifiedC
   };
 
   const deselectAllACs = () => {
-    haptics.tap();
+    haptic.light();
     setSelectedACs([]);
   };
 
   // Handle save — optimistic: close immediately, save in background
   const handleSave = async () => {
     if (!title.trim()) {
-      haptics.warning();
+      haptic.warning();
       toast({
         title: 'Title required',
         description: 'Please enter a title for this evidence',
@@ -276,7 +276,7 @@ export function UnifiedCaptureSheet({ open, onOpenChange, onComplete }: UnifiedC
     }
 
     // Haptic success immediately
-    haptics.success();
+    haptic.success();
 
     // Snapshot form values before closing
     const snap = {
@@ -355,7 +355,7 @@ export function UnifiedCaptureSheet({ open, onOpenChange, onComplete }: UnifiedC
       }
     } catch (error) {
       console.error('Save error:', error);
-      haptics.error();
+      haptic.error();
       toast({
         title: 'Error saving evidence',
         description: 'Something went wrong — please try again.',

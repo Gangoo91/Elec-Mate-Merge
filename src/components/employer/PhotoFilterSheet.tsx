@@ -138,7 +138,7 @@ export function PhotoFilterSheet({
           <div className="py-4 space-y-6">
             {/* Categories Section */}
             <div>
-              <h3 className="text-sm font-medium text-muted-foreground mb-3 uppercase tracking-wide">
+              <h3 className="text-sm font-medium text-white/60 mb-3 uppercase tracking-wide">
                 Category
               </h3>
               <div className="flex flex-wrap gap-2">
@@ -153,7 +153,7 @@ export function PhotoFilterSheet({
                         'flex items-center gap-2 px-3 py-2 rounded-lg border transition-all touch-feedback',
                         isSelected
                           ? categoryColors[category]
-                          : 'bg-muted/30 border-border/50 text-muted-foreground hover:bg-muted/50'
+                          : 'bg-muted/30 border-border/50 text-white/60 hover:bg-muted/50'
                       )}
                     >
                       <span>{categoryEmoji[category]}</span>
@@ -172,7 +172,7 @@ export function PhotoFilterSheet({
 
             {/* Status Filters */}
             <div>
-              <h3 className="text-sm font-medium text-muted-foreground mb-3 uppercase tracking-wide">
+              <h3 className="text-sm font-medium text-white/60 mb-3 uppercase tracking-wide">
                 Status
               </h3>
               <div className="grid grid-cols-2 gap-2">
@@ -187,7 +187,7 @@ export function PhotoFilterSheet({
                     'flex items-center gap-2 px-3 py-3 rounded-lg border transition-all touch-feedback',
                     localFilters.showApproved === true
                       ? 'bg-success/20 border-success/30 text-success'
-                      : 'bg-muted/30 border-border/50 text-muted-foreground hover:bg-muted/50'
+                      : 'bg-muted/30 border-border/50 text-white/60 hover:bg-muted/50'
                   )}
                 >
                   <Check className="h-4 w-4" />
@@ -204,7 +204,7 @@ export function PhotoFilterSheet({
                     'flex items-center gap-2 px-3 py-3 rounded-lg border transition-all touch-feedback',
                     localFilters.showShared === true
                       ? 'bg-info/20 border-info/30 text-info'
-                      : 'bg-muted/30 border-border/50 text-muted-foreground hover:bg-muted/50'
+                      : 'bg-muted/30 border-border/50 text-white/60 hover:bg-muted/50'
                   )}
                 >
                   <Eye className="h-4 w-4" />
@@ -215,14 +215,14 @@ export function PhotoFilterSheet({
 
             {/* Jobs Section */}
             <div>
-              <h3 className="text-sm font-medium text-muted-foreground mb-3 uppercase tracking-wide">
+              <h3 className="text-sm font-medium text-white/60 mb-3 uppercase tracking-wide">
                 Job
               </h3>
 
               {jobOptions.length > 5 && (
                 <div className="relative mb-3">
                   {!jobSearch && (
-                    <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none" />
+                    <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white/60 pointer-events-none" />
                   )}
                   <Input
                     placeholder="Search jobs..."

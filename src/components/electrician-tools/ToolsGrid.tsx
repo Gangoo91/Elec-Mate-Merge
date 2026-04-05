@@ -1,3 +1,4 @@
+import { openExternalUrl } from '@/utils/open-external-url';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { DollarSign, Package, Eye, Star, Clock, ExternalLink, ShoppingCart } from 'lucide-react';
@@ -99,7 +100,7 @@ const ToolsGrid = ({ tools, excludeIds = [] }: ToolsGridProps) => {
                   tool.productUrl ||
                   tool.view_product_url ||
                   `https://www.screwfix.com/search/${encodeURIComponent(tool.name)}`;
-                window.open(url, '_blank', 'noopener,noreferrer');
+                openExternalUrl(url);
               }}
             >
               {/* Image */}
@@ -213,7 +214,7 @@ const ToolsGrid = ({ tools, excludeIds = [] }: ToolsGridProps) => {
                         tool.productUrl ||
                         tool.view_product_url ||
                         `https://www.screwfix.com/search/${encodeURIComponent(tool.name)}`;
-                      window.open(url, '_blank', 'noopener,noreferrer');
+                      openExternalUrl(url);
                     }}
                   >
                     <span className="text-xs">View Deal</span>

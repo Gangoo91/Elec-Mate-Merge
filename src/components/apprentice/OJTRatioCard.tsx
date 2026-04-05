@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Clock } from 'lucide-react';
 import { useIsMobile } from '@/hooks/use-mobile';
+import { storageGetSync } from '@/utils/storage';
 
 const OJTRatioCard = () => {
   const [totalOJTTime, setTotalOJTTime] = useState(0);
@@ -15,9 +16,11 @@ const OJTRatioCard = () => {
   useEffect(() => {
     let totalCourseTimeSeconds = 0;
 
+    // NOTE: Object.keys(localStorage) only works on web; on native, the cache
+    // is used via storageGetSync but there is no sync key-enumeration API yet.
     Object.keys(localStorage).forEach((key) => {
       if (key.startsWith('course_') && key.endsWith('_todayTime')) {
-        const timeValue = parseInt(localStorage.getItem(key) || '0');
+        const timeValue = parseInt(storageGetSync(key) || '0');
         totalCourseTimeSeconds += timeValue;
       }
     });

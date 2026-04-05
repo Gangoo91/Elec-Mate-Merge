@@ -10923,6 +10923,9 @@ export type Database = {
           iqa_qualifications: string[] | null;
           is_assessor: boolean | null;
           is_iqa: boolean | null;
+          last_study_at: string | null;
+          last_study_path: string | null;
+          last_study_title: string | null;
           onboarding_completed: boolean | null;
           role: string | null;
           subscribed: boolean | null;
@@ -10943,6 +10946,9 @@ export type Database = {
           iqa_qualifications?: string[] | null;
           is_assessor?: boolean | null;
           is_iqa?: boolean | null;
+          last_study_at?: string | null;
+          last_study_path?: string | null;
+          last_study_title?: string | null;
           onboarding_completed?: boolean | null;
           role?: string | null;
           subscribed?: boolean | null;
@@ -10963,6 +10969,9 @@ export type Database = {
           iqa_qualifications?: string[] | null;
           is_assessor?: boolean | null;
           is_iqa?: boolean | null;
+          last_study_at?: string | null;
+          last_study_path?: string | null;
+          last_study_title?: string | null;
           onboarding_completed?: boolean | null;
           role?: string | null;
           subscribed?: boolean | null;
