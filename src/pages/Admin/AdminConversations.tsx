@@ -27,7 +27,10 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from '@/components/ui/alert-dialog';
+import AdminPageHeader from '@/components/admin/AdminPageHeader';
+import { Skeleton } from '@/components/ui/skeleton';
 import {
+  MessagesSquare,
   MessageSquare,
   Clock,
   Trash2,
@@ -96,6 +99,7 @@ export default function AdminConversations() {
   const {
     data: messages,
     isLoading,
+    isFetching,
     refetch,
   } = useQuery({
     queryKey: ['admin-chat-messages', search, categoryFilter],
@@ -169,6 +173,17 @@ export default function AdminConversations() {
       }}
     >
       <div className="space-y-6 pb-20">
+        <AdminPageHeader
+          title="Conversations"
+          subtitle={`${stats?.total || 0} total messages`}
+          icon={MessagesSquare}
+          iconColor="text-blue-400"
+          iconBg="bg-blue-500/10 border-blue-500/20"
+          accentColor="from-blue-500 via-cyan-400 to-blue-500"
+          onRefresh={() => refetch()}
+          isRefreshing={isFetching}
+        />
+
         {/* Stats Cards */}
         <div className="grid grid-cols-3 gap-3">
           <Card className="bg-gradient-to-br from-blue-500/10 to-blue-600/5 border-blue-500/20">
@@ -245,13 +260,17 @@ export default function AdminConversations() {
 
         {/* Messages List */}
         {isLoading ? (
-          <div className="space-y-2">
-            {[...Array(5)].map((_, i) => (
-              <Card key={i} className="animate-pulse">
-                <CardContent className="pt-4 pb-4">
-                  <div className="h-16 bg-muted rounded" />
-                </CardContent>
-              </Card>
+          <div className="space-y-3 animate-pulse">
+            {[...Array(3)].map((_, i) => (
+              <div key={i} className="rounded-2xl bg-white/[0.03] border border-white/[0.06] p-4 space-y-3">
+                <div className="flex items-center gap-3">
+                  <Skeleton className="w-9 h-9 rounded-lg" />
+                  <div className="space-y-1.5 flex-1">
+                    <Skeleton className="h-4 w-32" />
+                    <Skeleton className="h-3 w-48" />
+                  </div>
+                </div>
+              </div>
             ))}
           </div>
         ) : messages?.length === 0 ? (

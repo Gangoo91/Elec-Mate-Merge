@@ -1,6 +1,7 @@
 import { useState, useMemo, useEffect } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { useSearchParams } from 'react-router-dom';
+import { storageGetJSONSync, storageSetJSONSync, storageRemoveSync } from '@/utils/storage';
 import { supabase } from '@/integrations/supabase/client';
 import { batchedInQuery } from '@/utils/batchedQuery';
 import { Badge } from '@/components/ui/badge';
@@ -44,6 +45,7 @@ import {
   EyeOff,
   MailPlus,
   Download,
+  Plus,
 } from 'lucide-react';
 import {
   format,
@@ -61,7 +63,13 @@ import AdminEmptyState from '@/components/admin/AdminEmptyState';
 import { useAdminUsersBase } from '@/hooks/useAdminUsersBase';
 import { useHaptic } from '@/hooks/useHaptic';
 import PullToRefresh from '@/components/admin/PullToRefresh';
+import AdminPageHeader from '@/components/admin/AdminPageHeader';
 import { toast } from 'sonner';
+import {
+  calculateEngagementScore,
+  getScoreColor,
+  SCORE_COLOR_MAP,
+} from '@/utils/adminUtils';
 
 // ---------------------------------------------------------------------------
 // Types
@@ -97,6 +105,8 @@ interface TrialUser {
   total_seconds_tracked?: number;
   unique_pages_visited?: number;
   active_days?: number;
+  trial_end?: string | null;
+  daily_heatmap?: number[];
 }
 
 interface ActivityItem {
@@ -138,6 +148,7 @@ interface BaseUser {
   created_at: string;
   last_sign_in: string | null;
   email: string | null;
+  trial_end?: string | null;
 }
 
 interface ActivityRow {
@@ -421,6 +432,27 @@ function getStatusText(user: TrialUser): string {
 }
 
 // ---------------------------------------------------------------------------
+// Inline 7-day activity heatmap
+// ---------------------------------------------------------------------------
+
+function ActivityHeatmap({ counts }: { counts: number[] }) {
+  const getColor = (n: number) => {
+    if (n === 0) return 'bg-white/[0.06]';
+    if (n <= 3) return 'bg-green-500/30';
+    if (n <= 10) return 'bg-green-500/60';
+    return 'bg-green-500';
+  };
+
+  return (
+    <div className="flex items-center gap-0.5" title="7-day activity">
+      {counts.map((c, i) => (
+        <div key={i} className={`w-2 h-2 rounded-[2px] ${getColor(c)}`} />
+      ))}
+    </div>
+  );
+}
+
+// ---------------------------------------------------------------------------
 // Component
 // ---------------------------------------------------------------------------
 
@@ -447,12 +479,12 @@ export default function AdminTrials() {
 
   // Track hidden user IDs in local state (persisted via localStorage)
   const [hiddenUserIds, setHiddenUserIds] = useState<Set<string>>(() => {
-    const saved = localStorage.getItem('admin-hidden-trial-users');
-    return saved ? new Set(JSON.parse(saved)) : new Set();
+    const saved = storageGetJSONSync<string[]>('admin-hidden-trial-users', []);
+    return new Set(saved);
   });
 
   // Shared cached edge function call
-  const { data: baseUsers, isLoading: baseLoading, refetch: refetchBase } = useAdminUsersBase();
+  const { data: baseUsers, isLoading: baseLoading, isFetching: baseFetching, refetch: refetchBase } = useAdminUsersBase();
 
   // -------------------------------------------------------------------------
   // Enrichment query (unchanged)
@@ -460,6 +492,7 @@ export default function AdminTrials() {
   const {
     data: trialUsers,
     isLoading: enrichmentLoading,
+    isFetching: enrichmentFetching,
     refetch: refetchEnrichment,
   } = useQuery({
     queryKey: ['admin-trial-users', statusFilter, roleFilter],
@@ -472,7 +505,9 @@ export default function AdminTrials() {
         authDataMap.set(u.id, { last_sign_in: u.last_sign_in, email: u.email });
       });
 
-      const [activityData, quotesData, eicData, studyData, eventSummaryData] = await Promise.all([
+      const sevenDaysAgo = new Date(Date.now() - 7 * 86_400_000).toISOString();
+
+      const [activityData, quotesData, eicData, studyData, eventSummaryData, profilesData, heatmapEventsData] = await Promise.all([
         batchedInQuery(
           'user_activity',
           'user_id',
@@ -483,7 +518,20 @@ export default function AdminTrials() {
         batchedInQuery('eic_schedules', 'user_id', userIds, 'user_id'),
         batchedInQuery('study_sessions', 'user_id', userIds, 'user_id'),
         batchedInQuery('user_activity_summary', 'user_id', userIds, '*'),
+        batchedInQuery('profiles', 'id', userIds, 'id, trial_end'),
+        batchedInQuery<{ user_id: string; created_at: string }>(
+          'user_events',
+          'user_id',
+          userIds,
+          'user_id, created_at',
+          (q: any) => q.gte('created_at', sevenDaysAgo)
+        ),
       ]);
+
+      const trialEndsAtMap = new Map<string, string | null>();
+      profilesData?.forEach((p: { id: string; trial_end: string | null }) => {
+        trialEndsAtMap.set(p.id, p.trial_end);
+      });
 
       const activityMap = new Map<
         string,
@@ -526,6 +574,20 @@ export default function AdminTrials() {
         });
       });
 
+      // Build per-user 7-day heatmap: array of 7 event counts (index 0 = 6 days ago, 6 = today)
+      const heatmapMap = new Map<string, number[]>();
+      const todayStart = startOfDay(new Date());
+      heatmapEventsData?.forEach((ev: { user_id: string; created_at: string }) => {
+        const dayIndex = 6 - Math.floor((todayStart.getTime() - startOfDay(new Date(ev.created_at)).getTime()) / 86_400_000);
+        if (dayIndex < 0 || dayIndex > 6) return;
+        let arr = heatmapMap.get(ev.user_id);
+        if (!arr) {
+          arr = [0, 0, 0, 0, 0, 0, 0];
+          heatmapMap.set(ev.user_id, arr);
+        }
+        arr[dayIndex]++;
+      });
+
       const today = startOfDay(new Date());
       const maxExpiredDate = addDays(today, -MAX_EXPIRED_DAYS);
 
@@ -533,13 +595,15 @@ export default function AdminTrials() {
         .filter((user: BaseUser) => {
           const createdAt = parseISO(user.created_at);
           if (createdAt < FOUNDER_CUTOFF_DATE) return false;
-          const trialEnds = addDays(createdAt, 7);
+          const trialEndsAtRaw = trialEndsAtMap.get(user.id);
+          const trialEnds = trialEndsAtRaw ? parseISO(trialEndsAtRaw) : addDays(createdAt, 7);
           const trialEndsDate = startOfDay(trialEnds);
           return user.subscribed || trialEndsDate >= maxExpiredDate;
         })
         .map((user: BaseUser) => {
           const createdAt = parseISO(user.created_at);
-          const trialEnds = addDays(createdAt, 7);
+          const trialEndsAtRaw = trialEndsAtMap.get(user.id);
+          const trialEnds = trialEndsAtRaw ? parseISO(trialEndsAtRaw) : addDays(createdAt, 7);
           const trialEndsDate = startOfDay(trialEnds);
           const daysRemaining = Math.ceil(
             (trialEndsDate.getTime() - today.getTime()) / (1000 * 60 * 60 * 24)
@@ -613,6 +677,8 @@ export default function AdminTrials() {
             total_seconds_tracked: eventSummary?.total_seconds_tracked || 0,
             unique_pages_visited: eventSummary?.unique_pages_visited || 0,
             active_days: eventSummary?.active_days || 0,
+            trial_end: trialEndsAtRaw || null,
+            daily_heatmap: heatmapMap.get(user.id) || [0, 0, 0, 0, 0, 0, 0],
           } as TrialUser;
         });
     },
@@ -1014,7 +1080,7 @@ export default function AdminTrials() {
   const hideUserMutation = useMutation({
     mutationFn: async (userId: string) => {
       const newHidden = new Set(hiddenUserIds).add(userId);
-      localStorage.setItem('admin-hidden-trial-users', JSON.stringify([...newHidden]));
+      storageSetJSONSync('admin-hidden-trial-users', [...newHidden]);
       return userId;
     },
     onSuccess: (userId) => {
@@ -1026,7 +1092,7 @@ export default function AdminTrials() {
   });
 
   const unhideAllUsers = () => {
-    localStorage.removeItem('admin-hidden-trial-users');
+    storageRemoveSync('admin-hidden-trial-users');
     setHiddenUserIds(new Set());
     toast.success('All hidden users restored');
   };
@@ -1074,6 +1140,81 @@ export default function AdminTrials() {
       toast.error(`Failed to send emails: ${error.message}`);
     },
   });
+
+  const quickExtendMutation = useMutation({
+    mutationFn: async (userId: string) => {
+      // Get current trial_end from the user in our list
+      const user = trialUsers?.find((u) => u.id === userId);
+      const currentEnd = user?.trial_end
+        ? parseISO(user.trial_end)
+        : user?.created_at
+          ? addDays(parseISO(user.created_at), 7)
+          : new Date();
+      const newEnd = addDays(currentEnd < new Date() ? new Date() : currentEnd, 7);
+      const { error } = await supabase
+        .from('profiles')
+        .update({ trial_end: newEnd.toISOString() })
+        .eq('id', userId);
+      if (error) throw error;
+      return { userId, newEnd };
+    },
+    onSuccess: ({ newEnd }) => {
+      haptic.success();
+      toast.success(`Trial extended to ${format(newEnd, 'dd MMM yyyy')}`);
+      queryClient.invalidateQueries({ queryKey: ['admin-trial-users'] });
+      queryClient.invalidateQueries({ queryKey: ['admin-users-base'] });
+    },
+    onError: (error) => {
+      toast.error(`Failed to extend trial: ${(error as Error).message}`);
+    },
+  });
+
+  // -------------------------------------------------------------------------
+  // Conversion funnel stats
+  // -------------------------------------------------------------------------
+  const funnelStats = useMemo(() => {
+    if (!trialUsers) return { started: 0, engaged: 0, featureUsed: 0, subscribed: 0 };
+    const started = trialUsers.length;
+    const engaged = trialUsers.filter(
+      (u) => (u.login_count || 0) > 0 || (u.total_seconds_tracked || 0) > 60
+    ).length;
+    const featureUsed = trialUsers.filter((u) => (u.feature_use_count || 0) > 0).length;
+    const subscribed = trialUsers.filter((u) => u.subscribed).length;
+    return { started, engaged, featureUsed, subscribed };
+  }, [trialUsers]);
+
+  // -------------------------------------------------------------------------
+  // Predicted conversion helper
+  // -------------------------------------------------------------------------
+  const getConversionDot = (user: TrialUser) => {
+    const engScore = calculateEngagementScore({
+      login_count: user.login_count || 0,
+      page_view_count: user.page_view_count || 0,
+      total_seconds_tracked: user.total_seconds_tracked || 0,
+      feature_use_count: user.feature_use_count || 0,
+      active_days: user.active_days || 0,
+      unique_pages_visited: user.unique_pages_visited || 0,
+    });
+    const days = user.days_remaining;
+    const expired = user.trial_status === 'expired';
+
+    let color: 'green' | 'amber' | 'red';
+    if (expired || engScore < 25) {
+      color = 'red';
+    } else if (engScore > 55 && days > 2) {
+      color = 'green';
+    } else {
+      color = 'amber';
+    }
+
+    const dotColors = {
+      green: 'bg-green-400',
+      amber: 'bg-amber-400',
+      red: 'bg-red-400',
+    };
+
+    return <span className={`inline-block w-2 h-2 rounded-full ${dotColors[color]} shrink-0`} />;
+  };
 
   const exportCSV = () => {
     const allFiltered = Object.values(groupedByDay).flat();
@@ -1133,8 +1274,77 @@ export default function AdminTrials() {
       }}
     >
       <div className="space-y-3 sm:space-y-4 pb-20">
+        <AdminPageHeader
+          title="Trials"
+          subtitle="Free trial users & retention tracking"
+          icon={Clock}
+          iconColor="text-orange-400"
+          iconBg="bg-orange-500/10 border-orange-500/20"
+          accentColor="from-orange-500 via-amber-400 to-orange-500"
+          onRefresh={() => refetch()}
+          isRefreshing={baseFetching || enrichmentFetching}
+        />
+
         {/* ================================================================
-            1. HERO STATS — Single Glass Card
+            0. CONVERSION FUNNEL
+        ================================================================ */}
+        {!isLoading && funnelStats.started > 0 && (
+          <motion.section
+            variants={sectionVariants}
+            initial="hidden"
+            animate="visible"
+            custom={0}
+          >
+            <div className="rounded-2xl bg-white/[0.03] border border-white/[0.08] p-4">
+              <p className="text-xs font-semibold text-white uppercase tracking-wide mb-3">Conversion Funnel</p>
+              <div className="flex items-end gap-1">
+                {/* Trial Started */}
+                <div className="flex-1 text-center">
+                  <p className="text-lg font-bold text-blue-400">{funnelStats.started}</p>
+                  <div className="h-2 rounded-l-full bg-blue-500/60 w-full" />
+                  <p className="text-[10px] text-white mt-1">Started</p>
+                  <p className="text-[10px] text-white">100%</p>
+                </div>
+                {/* Connector */}
+                <div className="w-1.5 h-2 bg-white/10 shrink-0 -mb-[calc(0.25rem+10px+0.25rem+10px)]" />
+                {/* Engaged */}
+                <div className="flex-1 text-center">
+                  <p className="text-lg font-bold text-green-400">{funnelStats.engaged}</p>
+                  <div className="h-2 bg-green-500/60 w-full" />
+                  <p className="text-[10px] text-white mt-1">Engaged</p>
+                  <p className="text-[10px] text-white">
+                    {funnelStats.started > 0 ? Math.round((funnelStats.engaged / funnelStats.started) * 100) : 0}%
+                  </p>
+                </div>
+                {/* Connector */}
+                <div className="w-1.5 h-2 bg-white/10 shrink-0 -mb-[calc(0.25rem+10px+0.25rem+10px)]" />
+                {/* Feature Used */}
+                <div className="flex-1 text-center">
+                  <p className="text-lg font-bold text-amber-400">{funnelStats.featureUsed}</p>
+                  <div className="h-2 bg-amber-500/60 w-full" />
+                  <p className="text-[10px] text-white mt-1">Feature Used</p>
+                  <p className="text-[10px] text-white">
+                    {funnelStats.engaged > 0 ? Math.round((funnelStats.featureUsed / funnelStats.engaged) * 100) : 0}%
+                  </p>
+                </div>
+                {/* Connector */}
+                <div className="w-1.5 h-2 bg-white/10 shrink-0 -mb-[calc(0.25rem+10px+0.25rem+10px)]" />
+                {/* Subscribed */}
+                <div className="flex-1 text-center">
+                  <p className="text-lg font-bold text-emerald-400">{funnelStats.subscribed}</p>
+                  <div className="h-2 rounded-r-full bg-emerald-500/60 w-full" />
+                  <p className="text-[10px] text-white mt-1">Subscribed</p>
+                  <p className="text-[10px] text-white">
+                    {funnelStats.featureUsed > 0 ? Math.round((funnelStats.subscribed / funnelStats.featureUsed) * 100) : 0}%
+                  </p>
+                </div>
+              </div>
+            </div>
+          </motion.section>
+        )}
+
+        {/* ================================================================
+            1. HERO STATS ��� Single Glass Card
         ================================================================ */}
         <motion.section
           variants={sectionVariants}
@@ -1436,18 +1646,39 @@ export default function AdminTrials() {
 
                       {/* Name + meta */}
                       <div className="min-w-0 flex-1">
-                        <div className="flex items-center gap-2">
+                        <div className="flex items-center gap-1.5">
                           <p className="font-medium text-sm text-white truncate">
                             {user.full_name || 'Unknown'}
                           </p>
+                          {getConversionDot(user)}
                           {emailedTodayUserIds.has(user.id) && (
                             <CheckCheck className="h-3.5 w-3.5 text-emerald-400 shrink-0" />
                           )}
                         </div>
-                        <p className="text-xs text-white truncate">
-                          {getStatusText(user)} &middot; {relativeTime(user.last_active_date)}
-                        </p>
+                        <div className="flex items-center gap-2">
+                          <p className="text-xs text-white truncate">
+                            {getStatusText(user)} &middot; {relativeTime(user.last_active_date)}
+                          </p>
+                          <ActivityHeatmap counts={user.daily_heatmap || [0, 0, 0, 0, 0, 0, 0]} />
+                        </div>
                       </div>
+
+                      {/* Quick Extend */}
+                      {!user.subscribed && (
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          className="h-8 px-2 rounded-lg text-[10px] font-bold bg-green-500/10 text-green-400 ring-1 ring-green-500/20 touch-manipulation shrink-0 hover:bg-green-500/20"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            quickExtendMutation.mutate(user.id);
+                          }}
+                          disabled={quickExtendMutation.isPending}
+                        >
+                          <Plus className="h-3 w-3 mr-0.5" />
+                          7d
+                        </Button>
+                      )}
 
                       {/* Score */}
                       <div className="text-right shrink-0">

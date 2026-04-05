@@ -43,10 +43,12 @@ import {
   TrendingDown,
   Loader2,
 } from 'lucide-react';
+import { Skeleton } from '@/components/ui/skeleton';
 import { format, formatDistanceToNow } from 'date-fns';
 import { toast } from '@/hooks/use-toast';
 import AdminSearchInput from '@/components/admin/AdminSearchInput';
 import AdminEmptyState from '@/components/admin/AdminEmptyState';
+import AdminPageHeader from '@/components/admin/AdminPageHeader';
 import PullToRefresh from '@/components/admin/PullToRefresh';
 import { useHaptic } from '@/hooks/useHaptic';
 
@@ -208,8 +210,9 @@ export default function AdminPricingModeration() {
       setSelectedSubmission(null);
       toast({ title: 'Price approved', description: 'Submission has been verified.' });
     },
-    onError: () => {
+    onError: (error: Error) => {
       haptic.error();
+      toast({ title: 'Error', description: error.message, variant: 'destructive' });
     },
   });
 
@@ -247,8 +250,9 @@ export default function AdminPricingModeration() {
       setOtherReason('');
       toast({ title: 'Submission deleted' });
     },
-    onError: () => {
+    onError: (error: Error) => {
       haptic.error();
+      toast({ title: 'Error', description: error.message, variant: 'destructive' });
     },
   });
 
@@ -279,8 +283,9 @@ export default function AdminPricingModeration() {
       setSelectedSubmission(null);
       toast({ title: 'Price flagged for review' });
     },
-    onError: () => {
+    onError: (error: Error) => {
       haptic.error();
+      toast({ title: 'Error', description: error.message, variant: 'destructive' });
     },
   });
 
@@ -324,22 +329,16 @@ export default function AdminPricingModeration() {
       }}
     >
       <div className="space-y-4 pb-20">
-        {/* Header */}
-        <div className="flex items-center justify-between">
-          <div>
-            <h2 className="text-lg font-semibold">Pricing Moderation</h2>
-            <p className="text-xs text-muted-foreground">{stats?.pending || 0} pending review</p>
-          </div>
-          <Button
-            variant="outline"
-            size="icon"
-            className="h-11 w-11 touch-manipulation"
-            onClick={() => refetch()}
-            disabled={isFetching}
-          >
-            <RefreshCw className={`h-4 w-4 ${isFetching ? 'animate-spin' : ''}`} />
-          </Button>
-        </div>
+        <AdminPageHeader
+          title="Pricing Moderation"
+          subtitle={`${stats?.pending || 0} pending review`}
+          icon={PoundSterling}
+          iconColor="text-emerald-400"
+          iconBg="bg-emerald-500/10 border-emerald-500/20"
+          accentColor="from-emerald-500 via-green-400 to-emerald-500"
+          onRefresh={() => refetch()}
+          isRefreshing={isFetching}
+        />
 
         {/* Stats Cards */}
         <div className="grid grid-cols-4 gap-2">
@@ -410,13 +409,17 @@ export default function AdminPricingModeration() {
 
         {/* Submissions List */}
         {isLoading ? (
-          <div className="space-y-2">
-            {[...Array(5)].map((_, i) => (
-              <Card key={i} className="animate-pulse">
-                <CardContent className="pt-4 pb-4">
-                  <div className="h-16 bg-muted rounded" />
-                </CardContent>
-              </Card>
+          <div className="space-y-3 animate-pulse">
+            {[...Array(3)].map((_, i) => (
+              <div key={i} className="rounded-2xl bg-white/[0.03] border border-white/[0.06] p-4 space-y-3">
+                <div className="flex items-center gap-3">
+                  <Skeleton className="w-9 h-9 rounded-lg" />
+                  <div className="space-y-1.5 flex-1">
+                    <Skeleton className="h-4 w-32" />
+                    <Skeleton className="h-3 w-48" />
+                  </div>
+                </div>
+              </div>
             ))}
           </div>
         ) : submissions?.length === 0 ? (

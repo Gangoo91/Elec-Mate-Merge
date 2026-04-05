@@ -64,12 +64,14 @@ import {
 } from '@/components/ui/alert-dialog';
 import { formatDistanceToNow, format, differenceInDays } from 'date-fns';
 import { toast } from '@/hooks/use-toast';
-import { getInitials, ROLE_COLORS } from '@/utils/adminUtils';
+import { getInitials, ROLE_COLORS, calculateEngagementScore, getScoreColor, SCORE_COLOR_MAP, formatTimeShort } from '@/utils/adminUtils';
 import MessageUserSheet from '@/components/admin/MessageUserSheet';
+import UserManagementSheet from '@/components/admin/UserManagementSheet';
 import SwipeableAdminRow from '@/components/admin/SwipeableAdminRow';
 import { useAdminUsersBase } from '@/hooks/useAdminUsersBase';
 import { useHaptic } from '@/hooks/useHaptic';
 import PullToRefresh from '@/components/admin/PullToRefresh';
+import AdminPageHeader from '@/components/admin/AdminPageHeader';
 import { motion } from 'framer-motion';
 import { AnimatedCounter } from '@/components/dashboard/AnimatedCounter';
 
@@ -129,10 +131,13 @@ const roleFilters = [
 ];
 
 const quickFilters = [
-  { value: 'all', label: 'All Users' },
-  { value: 'subscribed', label: 'Subscribers' },
-  { value: 'online', label: 'Online Now' },
-  { value: 'recent', label: 'New This Week' },
+  { value: 'all', label: 'All' },
+  { value: 'active_today', label: 'Active Today' },
+  { value: 'trials', label: 'Trials' },
+  { value: 'subscribed', label: 'Subscribed' },
+  { value: 'free', label: 'Free' },
+  { value: 'never_logged_in', label: 'Never Logged In' },
+  { value: 'most_engaged', label: 'Most Engaged' },
 ];
 
 /* ── Animation variants matching AdminDashboard ── */
@@ -181,7 +186,6 @@ export default function AdminUsers() {
   const [showFilters, setShowFilters] = useState(false);
   const [selectedUser, setSelectedUser] = useState<UserProfile | null>(null);
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
-  const [messageSheetOpen, setMessageSheetOpen] = useState(false);
   const [messageUser, setMessageUser] = useState<{
     id: string;
     full_name?: string;
@@ -198,6 +202,7 @@ export default function AdminUsers() {
   const [grantSheetUser, setGrantSheetUser] = useState<UserProfile | null>(null);
   const [grantTier, setGrantTier] = useState('');
   const [grantDuration, setGrantDuration] = useState('7');
+  const [sortBy, setSortBy] = useState<'name' | 'joined' | 'last_active' | 'engagement'>('joined');
 
   useEffect(() => {
     const urlFilter = searchParams.get('filter');
@@ -281,20 +286,29 @@ export default function AdminUsers() {
 
       if (quickFilter !== 'all') {
         const now = new Date();
-        const weekAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
+        const todayStart = new Date(now.getFullYear(), now.getMonth(), now.getDate()).getTime();
 
         switch (quickFilter) {
+          case 'active_today':
+            allUsers = allUsers.filter(
+              (u: UserProfile) => u.last_seen && new Date(u.last_seen).getTime() >= todayStart
+            );
+            break;
+          case 'trials':
+            allUsers = allUsers.filter(
+              (u: UserProfile) => !u.subscribed && !u.free_access_granted
+            );
+            break;
           case 'subscribed':
             allUsers = allUsers.filter((u: UserProfile) => u.subscribed);
             break;
-          case 'online':
-            allUsers = allUsers.filter((u: UserProfile) => u.isOnline);
+          case 'free':
+            allUsers = allUsers.filter((u: UserProfile) => u.free_access_granted);
             break;
-          case 'recent':
-            allUsers = allUsers.filter(
-              (u: UserProfile) => u.created_at && new Date(u.created_at) >= weekAgo
-            );
+          case 'never_logged_in':
+            allUsers = allUsers.filter((u: UserProfile) => !u.last_sign_in && !u.last_seen);
             break;
+          // 'most_engaged' is handled in sortedUsers memo (needs engagementMap from separate query)
         }
       }
 
@@ -308,6 +322,36 @@ export default function AdminUsers() {
     await refetchBase();
     await refetchEnrichment();
   };
+
+  // Engagement score data for visible users
+  const visibleUserIds = useMemo(() => users?.map((u) => u.id) || [], [users]);
+  const { data: engagementData } = useQuery({
+    queryKey: ['admin-users-engagement', visibleUserIds],
+    enabled: visibleUserIds.length > 0,
+    staleTime: 60000,
+    queryFn: async () => {
+      const rows = await batchedInQuery(
+        'user_activity_summary',
+        'user_id',
+        visibleUserIds,
+        'user_id, login_count, page_view_count, total_seconds_tracked, feature_use_count, active_days, unique_pages_visited'
+      );
+      const scoreMap = new Map<string, number>();
+      const rawMap = new Map<string, { login_count: number; page_view_count: number; total_seconds_tracked: number; unique_pages_visited: number }>();
+      for (const row of rows || []) {
+        scoreMap.set(row.user_id, calculateEngagementScore(row));
+        rawMap.set(row.user_id, {
+          login_count: row.login_count || 0,
+          page_view_count: row.page_view_count || 0,
+          total_seconds_tracked: row.total_seconds_tracked || 0,
+          unique_pages_visited: row.unique_pages_visited || 0,
+        });
+      }
+      return { scoreMap, rawMap };
+    },
+  });
+  const engagementMap = engagementData?.scoreMap;
+  const engagementRawMap = engagementData?.rawMap;
 
   const allUsersCount = useMemo(() => {
     return users?.length || 0;
@@ -329,17 +373,53 @@ export default function AdminUsers() {
     [users]
   );
 
-  const totalPages = Math.ceil((users?.length || 0) / itemsPerPage);
-  const paginatedUsers = useMemo(() => {
+  const sortedUsers = useMemo(() => {
     if (!users) return [];
+    let filtered = [...users];
+
+    // Handle most_engaged filter here (needs engagementMap from separate query)
+    if (quickFilter === 'most_engaged') {
+      filtered = filtered.filter((u) => {
+        const score = engagementMap?.get(u.id);
+        return score !== undefined && score > 55;
+      });
+    }
+
+    const sorted = filtered;
+    switch (sortBy) {
+      case 'name':
+        sorted.sort((a, b) => (a.full_name || '').localeCompare(b.full_name || ''));
+        break;
+      case 'joined':
+        sorted.sort(
+          (a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
+        );
+        break;
+      case 'last_active':
+        sorted.sort((a, b) => {
+          const aTime = a.last_seen ? new Date(a.last_seen).getTime() : 0;
+          const bTime = b.last_seen ? new Date(b.last_seen).getTime() : 0;
+          return bTime - aTime;
+        });
+        break;
+      case 'engagement':
+        sorted.sort((a, b) => (engagementMap?.get(b.id) || 0) - (engagementMap?.get(a.id) || 0));
+        break;
+    }
+    return sorted;
+  }, [users, sortBy, engagementMap, quickFilter]);
+
+  const totalPages = Math.ceil((sortedUsers.length || 0) / itemsPerPage);
+  const paginatedUsers = useMemo(() => {
+    if (!sortedUsers.length) return [];
     const start = (currentPage - 1) * itemsPerPage;
-    return users.slice(start, start + itemsPerPage);
-  }, [users, currentPage, itemsPerPage]);
+    return sortedUsers.slice(start, start + itemsPerPage);
+  }, [sortedUsers, currentPage, itemsPerPage]);
 
   useEffect(() => {
     setCurrentPage(1);
     setSelectedIds(new Set());
-  }, [search, roleFilter, quickFilter]);
+  }, [search, roleFilter, quickFilter, sortBy]);
 
   const toggleSelection = useCallback((id: string) => {
     setSelectedIds((prev) => {
@@ -709,6 +789,17 @@ export default function AdminUsers() {
       }}
     >
       <div className="space-y-4 pb-20">
+        <AdminPageHeader
+          title="Users"
+          subtitle="Manage all registered users"
+          icon={Users}
+          iconColor="text-blue-400"
+          iconBg="bg-blue-500/10 border-blue-500/20"
+          accentColor="from-blue-500 via-blue-400 to-cyan-500"
+          onRefresh={() => refetch()}
+          isRefreshing={isFetching}
+        />
+
         {/* ── Hero Stats Card ── */}
         <motion.section
           variants={sectionVariants}
@@ -798,7 +889,7 @@ export default function AdminUsers() {
           </div>
         </motion.section>
 
-        {/* ── Search & Filter Bar ── */}
+        {/* ── Search & Sort & Filter Bar ── */}
         <motion.div
           variants={sectionVariants}
           initial="hidden"
@@ -825,6 +916,17 @@ export default function AdminUsers() {
               </Button>
             )}
           </div>
+          <Select value={sortBy} onValueChange={(v) => setSortBy(v as typeof sortBy)}>
+            <SelectTrigger className="h-13 w-[130px] shrink-0 rounded-2xl bg-card/80 border-border/30 focus:border-yellow-500 focus:ring-yellow-500/20 touch-manipulation text-sm text-white">
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent className="bg-card border-border/50 text-white">
+              <SelectItem value="name">Name</SelectItem>
+              <SelectItem value="joined">Joined</SelectItem>
+              <SelectItem value="last_active">Last Active</SelectItem>
+              <SelectItem value="engagement">Engagement</SelectItem>
+            </SelectContent>
+          </Select>
           <Button
             variant="outline"
             size="icon"
@@ -844,44 +946,38 @@ export default function AdminUsers() {
           </Button>
         </motion.div>
 
-        {/* ── Quick Filters ── */}
+        {/* ── Quick Filter Chips ── */}
         <motion.div
           variants={sectionVariants}
           initial="hidden"
           animate="visible"
           custom={2}
-          className="flex gap-2 overflow-x-auto pb-1 scrollbar-hide -mx-1 px-1"
+          className="flex flex-wrap gap-2"
         >
-          {quickFilters.map((filter) => (
-            <Button
-              key={filter.value}
-              variant={quickFilter === filter.value ? 'default' : 'outline'}
-              size="sm"
-              onClick={() => {
-                setQuickFilter(filter.value);
-                if (filter.value === 'all') {
-                  searchParams.delete('filter');
-                } else {
-                  searchParams.set('filter', filter.value);
-                }
-                setSearchParams(searchParams);
-              }}
-              className={`shrink-0 h-11 px-5 rounded-full touch-manipulation font-semibold transition-all ${
-                quickFilter === filter.value
-                  ? 'bg-gradient-to-r from-amber-500 to-yellow-600 text-white hover:from-amber-600 hover:to-yellow-700 shadow-lg shadow-yellow-500/30 border-0'
-                  : 'bg-card border-border/30 hover:bg-muted hover:border-yellow-500/30'
-              }`}
-            >
-              {filter.label}
-              {filter.value === 'online' && stats.online > 0 && (
-                <span
-                  className={`ml-1.5 text-xs ${quickFilter === filter.value ? 'text-yellow-100' : 'text-white'}`}
-                >
-                  ({stats.online})
-                </span>
-              )}
-            </Button>
-          ))}
+          {quickFilters.map((filter) => {
+            const isActive = quickFilter === filter.value;
+            return (
+              <button
+                key={filter.value}
+                onClick={() => {
+                  setQuickFilter(filter.value);
+                  if (filter.value === 'all') {
+                    searchParams.delete('filter');
+                  } else {
+                    searchParams.set('filter', filter.value);
+                  }
+                  setSearchParams(searchParams);
+                }}
+                className={`h-9 px-3.5 rounded-xl text-[12px] font-semibold touch-manipulation transition-all flex items-center active:scale-[0.97] ${
+                  isActive
+                    ? 'bg-amber-500/20 text-amber-400 ring-1 ring-amber-500/40 shadow-sm shadow-amber-500/10'
+                    : 'bg-white/[0.06] text-white ring-1 ring-white/[0.08]'
+                }`}
+              >
+                {filter.label}
+              </button>
+            );
+          })}
         </motion.div>
 
         {/* ── Role Filters — Collapsible ── */}
@@ -1107,12 +1203,11 @@ export default function AdminUsers() {
                         }`}
                         onClick={() => handleUserClick(user)}
                       >
-                        <div className="p-4 space-y-2.5">
-                          {/* Row 1 — Identity */}
-                          <div className="flex items-center gap-3">
+                        <div className="p-4">
+                          <div className="flex items-start gap-3">
                             {/* Checkbox */}
                             <div
-                              className="shrink-0 min-h-[44px] min-w-[44px] flex items-center justify-center touch-manipulation"
+                              className="shrink-0 min-h-[44px] min-w-[44px] flex items-center justify-center touch-manipulation -ml-1"
                               onClick={(e) => {
                                 e.stopPropagation();
                                 toggleSelection(user.id);
@@ -1124,141 +1219,112 @@ export default function AdminUsers() {
                               />
                             </div>
 
-                            {/* Avatar with online dot */}
-                            <div className="relative shrink-0">
-                              <Avatar className="h-12 w-12 rounded-2xl border-2 border-white/10 shadow-lg">
+                            {/* Avatar with online dot + engagement ring */}
+                            <div className="relative shrink-0 mt-0.5">
+                              <Avatar className="h-11 w-11 rounded-xl border-2 border-white/10">
                                 <AvatarImage src={user.avatar_url || undefined} />
                                 <AvatarFallback
-                                  className={`rounded-2xl text-sm font-bold ${getRoleStyle(user.role).bg} ${getRoleStyle(user.role).text}`}
+                                  className={`rounded-xl text-sm font-bold ${getRoleStyle(user.role).bg} ${getRoleStyle(user.role).text}`}
                                 >
                                   {getInitials(user.full_name)}
                                 </AvatarFallback>
                               </Avatar>
                               {user.isOnline && (
-                                <div className="absolute -bottom-0.5 -right-0.5 w-4 h-4 bg-green-500 rounded-full border-[3px] border-card shadow-lg shadow-green-500/50">
-                                  <div className="absolute inset-0 bg-green-400 rounded-full animate-ping opacity-75" />
-                                </div>
+                                <div className="absolute -bottom-0.5 -right-0.5 w-3.5 h-3.5 bg-green-500 rounded-full border-2 border-card" />
                               )}
+                              {engagementMap?.has(user.id) && (() => {
+                                const score = engagementMap.get(user.id)!;
+                                const color = getScoreColor(score);
+                                const strokeColor = SCORE_COLOR_MAP[color].stroke;
+                                const circumference = Math.PI * 19;
+                                const dashOffset = circumference - (score / 100) * circumference;
+                                return (
+                                  <svg width="22" height="22" viewBox="0 0 24 24" className="absolute -top-1.5 -right-1.5">
+                                    <circle cx="12" cy="12" r="9.5" fill="rgba(0,0,0,0.8)" stroke="rgba(255,255,255,0.1)" strokeWidth="2.5" />
+                                    <circle cx="12" cy="12" r="9.5" fill="none" stroke={strokeColor} strokeWidth="2.5"
+                                      strokeDasharray={circumference} strokeDashoffset={dashOffset} strokeLinecap="round" transform="rotate(-90 12 12)" />
+                                    <text x="12" y="12" textAnchor="middle" dominantBaseline="central" fill={strokeColor} fontSize="7" fontWeight="700">{score}</text>
+                                  </svg>
+                                );
+                              })()}
                             </div>
 
-                            {/* Name + icons */}
-                            <div className="flex-1 min-w-0 flex items-center gap-2">
-                              <p className="font-bold text-[15px] truncate text-white">
-                                {user.full_name || 'No name'}
+                            {/* Content */}
+                            <div className="flex-1 min-w-0">
+                              {/* Line 1 — Full name */}
+                              <div className="flex items-center gap-1.5">
+                                <p className="font-bold text-[15px] text-white truncate">
+                                  {user.full_name || 'No name'}
+                                </p>
+                                {user.subscribed && (
+                                  <div className="shrink-0 w-4.5 h-4.5 rounded-full bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center">
+                                    <Sparkles className="h-2.5 w-2.5 text-white" />
+                                  </div>
+                                )}
+                                {user.admin_role && (
+                                  <div className="shrink-0 w-4.5 h-4.5 rounded-full bg-gradient-to-br from-red-400 to-rose-600 flex items-center justify-center">
+                                    <Shield className="h-2.5 w-2.5 text-white" />
+                                  </div>
+                                )}
+                              </div>
+
+                              {/* Line 2 — Email */}
+                              <p className="text-[13px] text-white truncate mt-0.5">
+                                {user.email || `@${user.username}`}
                               </p>
-                              {user.subscribed && (
-                                <div className="shrink-0 w-5 h-5 rounded-full bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center shadow-sm">
-                                  <Sparkles className="h-3 w-3 text-white" />
-                                </div>
-                              )}
-                              {user.admin_role && (
-                                <div className="shrink-0 w-5 h-5 rounded-full bg-gradient-to-br from-red-400 to-rose-600 flex items-center justify-center shadow-sm">
-                                  <Shield className="h-3 w-3 text-white" />
-                                </div>
-                              )}
+
+                              {/* Line 3 — Badges */}
+                              <div className="flex items-center gap-1.5 mt-1.5 flex-wrap">
+                                <Badge
+                                  className={`text-[10px] px-2 py-0 h-5 font-semibold rounded-full ${getRoleStyle(user.role).bg} ${getRoleStyle(user.role).text} border-0`}
+                                >
+                                  {user.role || 'visitor'}
+                                </Badge>
+                                {user.subscribed && user.stripe_customer_id ? (
+                                  <Badge className="text-[10px] px-2 py-0 h-5 font-semibold rounded-full bg-amber-500/15 text-amber-400 border-0">
+                                    Pro{user.subscription_tier ? ` · ${user.subscription_tier}` : ''}
+                                  </Badge>
+                                ) : user.free_access_granted ? (
+                                  <Badge className="text-[10px] px-2 py-0 h-5 font-semibold rounded-full bg-emerald-500/15 text-emerald-400 border-0">
+                                    Free Access
+                                  </Badge>
+                                ) : user.subscribed ? (
+                                  <Badge className="text-[10px] px-2 py-0 h-5 font-semibold rounded-full bg-amber-500/15 text-amber-400 border-0">
+                                    {user.subscription_tier || 'Subscribed'}
+                                  </Badge>
+                                ) : null}
+                                {user.isOnline ? (
+                                  <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-green-500/15 text-green-400">Online</span>
+                                ) : user.last_seen ? (
+                                  <span className="text-[10px] font-medium text-white">{relativeTime(user.last_seen)}</span>
+                                ) : null}
+                              </div>
+
+                              {/* Line 4 — Engagement stats */}
+                              <div className="flex items-center gap-2 mt-1.5 text-[11px] text-white">
+                                <span>
+                                  {joinedDays !== null
+                                    ? joinedDays === 0 ? 'Joined today' : `Joined ${joinedDays}d ago`
+                                    : 'Joined'}
+                                </span>
+                                {engagementRawMap?.has(user.id) && (() => {
+                                  const raw = engagementRawMap.get(user.id)!;
+                                  return (
+                                    <>
+                                      <span className="text-white/30">·</span>
+                                      <span>{formatTimeShort(raw.total_seconds_tracked)}</span>
+                                      <span className="text-white/30">·</span>
+                                      <span>{raw.unique_pages_visited} pages</span>
+                                      <span className="text-white/30">·</span>
+                                      <span>{raw.login_count} logins</span>
+                                    </>
+                                  );
+                                })()}
+                              </div>
                             </div>
 
-                            {/* Joined X d ago */}
-                            <span className="shrink-0 text-[11px] text-white/70 font-medium whitespace-nowrap">
-                              {joinedDays !== null
-                                ? joinedDays === 0
-                                  ? 'today'
-                                  : `${joinedDays}d ago`
-                                : ''}
-                            </span>
-                          </div>
-
-                          {/* Row 2 — Email + online status */}
-                          <div className="flex items-center justify-between pl-[76px]">
-                            <p className="text-[13px] text-white break-all leading-tight flex-1 mr-3">
-                              {user.email || `@${user.username}`}
-                            </p>
-                            {/* Online status pill */}
-                            <span
-                              className={`shrink-0 text-[11px] font-semibold px-2 py-0.5 rounded-full ${
-                                user.isOnline
-                                  ? 'bg-green-500/15 text-green-400'
-                                  : 'bg-white/[0.06] text-white/70'
-                              }`}
-                            >
-                              {user.isOnline ? 'Online' : relativeTime(user.last_seen)}
-                            </span>
-                          </div>
-
-                          {/* Row 3 — Badges */}
-                          <div className="flex items-center gap-2 flex-wrap pl-[76px]">
-                            {/* Role badge */}
-                            <Badge
-                              className={`text-[11px] px-2.5 py-0.5 h-6 font-semibold rounded-full ${getRoleStyle(user.role).bg} ${getRoleStyle(user.role).text} border-0 shadow-sm`}
-                            >
-                              <Zap className="h-3 w-3 mr-1" />
-                              {user.role || 'visitor'}
-                            </Badge>
-
-                            {/* Subscription badge */}
-                            {user.subscribed && user.stripe_customer_id ? (
-                              <Badge className="text-[11px] px-2.5 py-0.5 h-6 font-semibold rounded-full bg-amber-500/15 text-amber-400 border-0 shadow-sm">
-                                <CreditCard className="h-3 w-3 mr-1" />
-                                Pro
-                                {user.subscription_tier ? ` \u00b7 ${user.subscription_tier}` : ''}
-                              </Badge>
-                            ) : user.free_access_granted ? (
-                              <Badge className="text-[11px] px-2.5 py-0.5 h-6 font-semibold rounded-full bg-emerald-500/15 text-emerald-400 border-0 shadow-sm">
-                                <Gift className="h-3 w-3 mr-1" />
-                                Free Access
-                              </Badge>
-                            ) : user.subscribed ? (
-                              <Badge className="text-[11px] px-2.5 py-0.5 h-6 font-semibold rounded-full bg-amber-500/15 text-amber-400 border-0 shadow-sm">
-                                <Sparkles className="h-3 w-3 mr-1" />
-                                {user.subscription_tier || 'Subscribed'}
-                              </Badge>
-                            ) : null}
-
-                            {/* Elec-ID badge */}
-                            {user.elec_id_profile && (
-                              <Badge
-                                className={`text-[11px] px-2.5 py-0.5 h-6 font-semibold rounded-full border-0 shadow-sm ${
-                                  user.elec_id_profile.is_verified
-                                    ? 'bg-emerald-500/15 text-emerald-400'
-                                    : 'bg-amber-500/15 text-amber-400'
-                                }`}
-                              >
-                                <IdCard className="h-3 w-3 mr-1" />
-                                {user.elec_id_profile.is_verified ? 'Verified' : 'Pending'}
-                                {user.elec_id_profile.ecs_card_type
-                                  ? ` \u00b7 ${user.elec_id_profile.ecs_card_type}`
-                                  : ''}
-                              </Badge>
-                            )}
-                          </div>
-
-                          {/* Row 4 — Metadata footer */}
-                          <div className="flex items-center gap-3 pl-[76px] text-[11px] text-white/60 font-medium">
-                            {user.last_seen && (
-                              <span className="flex items-center gap-1">
-                                <Clock className="h-3 w-3" />
-                                {relativeTime(user.last_seen)}
-                              </span>
-                            )}
-                            <span className="flex items-center gap-1">
-                              {user.onboarding_completed ? (
-                                <>
-                                  <UserCheck className="h-3 w-3 text-green-400" />
-                                  <span className="text-green-400">Onboarded</span>
-                                </>
-                              ) : (
-                                <>
-                                  <XCircle className="h-3 w-3 text-white/40" />
-                                  <span>Not onboarded</span>
-                                </>
-                              )}
-                            </span>
-                            {user.stripe_customer_id && (
-                              <span className="flex items-center gap-1 text-amber-400">
-                                <CreditCard className="h-3 w-3" />
-                                Stripe
-                              </span>
-                            )}
+                            {/* Chevron */}
+                            <ChevronRight className="shrink-0 h-4 w-4 text-white mt-2" />
                           </div>
                         </div>
                       </div>
@@ -1287,296 +1353,61 @@ export default function AdminUsers() {
         )}
 
         {/* ── User Detail Sheet ── */}
-        <Sheet open={!!selectedUser} onOpenChange={() => setSelectedUser(null)}>
-          <SheetContent
-            side="bottom"
-            className="h-[85vh] rounded-t-3xl p-0 border-t border-border/50"
-          >
-            <div className="flex flex-col h-full bg-background">
-              {/* Drag Handle */}
-              <div className="flex justify-center pt-3 pb-2">
-                <div className="w-12 h-1.5 rounded-full bg-white/20" />
-              </div>
-
-              {/* User Header */}
-              <div className="px-6 pb-6 pt-2">
-                <div className="flex items-center gap-4">
-                  <div className="relative">
-                    <Avatar className="h-20 w-20 rounded-3xl border-4 border-muted/50">
-                      <AvatarImage src={selectedUser?.avatar_url || undefined} />
-                      <AvatarFallback
-                        className={`rounded-3xl text-2xl font-bold ${getRoleStyle(selectedUser?.role).bg} ${getRoleStyle(selectedUser?.role).text}`}
-                      >
-                        {getInitials(selectedUser?.full_name || null)}
-                      </AvatarFallback>
-                    </Avatar>
-                    {selectedUser?.isOnline && (
-                      <div className="absolute -bottom-1 -right-1 w-6 h-6 bg-green-500 rounded-full border-4 border-background" />
-                    )}
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <h2 className="text-xl font-bold truncate">
-                      {selectedUser?.full_name || 'No name'}
-                    </h2>
-                    {selectedUser?.email && (
-                      <p className="text-sm text-white flex items-center gap-1.5 truncate">
-                        <Mail className="h-3.5 w-3.5 shrink-0" />
-                        <span className="truncate">{selectedUser.email}</span>
-                        {selectedUser.email_confirmed && (
-                          <UserCheck className="h-3.5 w-3.5 text-green-400 shrink-0" />
-                        )}
-                      </p>
-                    )}
-                    <div className="flex items-center gap-2 mt-2 flex-wrap">
-                      <Badge
-                        className={`${getRoleStyle(selectedUser?.role).bg} ${getRoleStyle(selectedUser?.role).text} border-0`}
-                      >
-                        {selectedUser?.role || 'visitor'}
-                      </Badge>
-                      {selectedUser?.subscribed && (
-                        <Badge className="bg-amber-500/20 text-amber-400 border-0">
-                          <Sparkles className="h-3 w-3 mr-1" />
-                          {selectedUser.subscription_tier || 'Subscribed'}
-                        </Badge>
-                      )}
-                      {selectedUser?.admin_role && (
-                        <Badge className="bg-red-500/20 text-red-400 border-0">
-                          <Shield className="h-3 w-3 mr-1" />
-                          {selectedUser.admin_role === 'super_admin' ? 'Super Admin' : 'Admin'}
-                        </Badge>
-                      )}
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              {/* User Details - Scrollable */}
-              <div className="flex-1 overflow-y-auto px-4 pb-4 space-y-4">
-                {/* Quick Stats */}
-                <div className="grid grid-cols-2 gap-3">
-                  <Card
-                    className={`border-0 ${selectedUser?.isOnline ? 'bg-green-500/10' : 'bg-muted/30'}`}
-                  >
-                    <CardContent className="py-4 text-center">
-                      <div
-                        className={`w-3 h-3 rounded-full mx-auto mb-2 ${selectedUser?.isOnline ? 'bg-green-500 animate-pulse' : 'bg-white/30'}`}
-                      />
-                      <p className="text-sm font-semibold text-white">
-                        {selectedUser?.isOnline ? 'Online' : 'Offline'}
-                      </p>
-                      {selectedUser?.last_seen && (
-                        <p className="text-xs text-white mt-0.5">
-                          {formatDistanceToNow(new Date(selectedUser.last_seen), {
-                            addSuffix: true,
-                          })}
-                        </p>
-                      )}
-                    </CardContent>
-                  </Card>
-                  <Card
-                    className={`border-0 ${selectedUser?.subscribed ? 'bg-amber-500/10' : 'bg-muted/30'}`}
-                  >
-                    <CardContent className="py-4 text-center">
-                      <Sparkles
-                        className={`h-5 w-5 mx-auto mb-2 ${selectedUser?.subscribed ? 'text-amber-400' : 'text-white/30'}`}
-                      />
-                      <p className="text-sm font-semibold text-white">
-                        {selectedUser?.subscribed ? 'Subscribed' : 'Free'}
-                      </p>
-                      {selectedUser?.subscription_tier && (
-                        <p className="text-xs text-white mt-0.5 capitalize">
-                          {selectedUser.subscription_tier}
-                        </p>
-                      )}
-                    </CardContent>
-                  </Card>
-                </div>
-
-                {/* Account Details */}
-                <Card className="border-0 bg-muted/30">
-                  <CardHeader className="pb-2">
-                    <CardTitle className="text-sm flex items-center gap-2 font-semibold">
-                      <User className="h-4 w-4" />
-                      Account Details
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent className="space-y-3">
-                    <div className="flex justify-between items-center">
-                      <span className="text-sm text-white">User ID</span>
-                      <span className="text-xs font-mono text-white">
-                        {selectedUser?.id.slice(0, 8)}...
-                      </span>
-                    </div>
-                    <div className="flex justify-between items-center">
-                      <span className="text-sm text-white">Joined</span>
-                      <span className="text-sm font-medium text-white">
-                        {selectedUser?.created_at &&
-                          format(new Date(selectedUser.created_at), 'dd MMM yyyy')}
-                      </span>
-                    </div>
-                    <div className="flex justify-between items-center">
-                      <span className="text-sm text-white">Onboarding</span>
-                      <Badge
-                        variant="secondary"
-                        className={`text-xs border-0 ${selectedUser?.onboarding_completed ? 'bg-green-500/10 text-green-400' : 'bg-muted text-white'}`}
-                      >
-                        {selectedUser?.onboarding_completed ? 'Complete' : 'Incomplete'}
-                      </Badge>
-                    </div>
-                  </CardContent>
-                </Card>
-
-                {/* Elec-ID Profile */}
-                {selectedUser?.elec_id_profile && (
-                  <Card
-                    className={`border-0 ${selectedUser.elec_id_profile.is_verified ? 'bg-green-500/10' : 'bg-amber-500/10'}`}
-                  >
-                    <CardHeader className="pb-2">
-                      <CardTitle className="text-sm flex items-center gap-2 font-semibold">
-                        <IdCard
-                          className={`h-4 w-4 ${selectedUser.elec_id_profile.is_verified ? 'text-green-400' : 'text-amber-400'}`}
-                        />
-                        Elec-ID Profile
-                        <Badge
-                          variant="secondary"
-                          className={`text-xs px-1.5 py-0 h-5 ml-auto border-0 ${
-                            selectedUser.elec_id_profile.is_verified
-                              ? 'bg-green-500/20 text-green-400'
-                              : 'bg-amber-500/20 text-amber-400'
-                          }`}
-                        >
-                          {selectedUser.elec_id_profile.is_verified ? 'Verified' : 'Pending'}
-                        </Badge>
-                      </CardTitle>
-                    </CardHeader>
-                    <CardContent className="space-y-2">
-                      {selectedUser.elec_id_profile.elec_id_number && (
-                        <div className="flex justify-between items-center">
-                          <span className="text-sm text-white">Elec-ID Number</span>
-                          <span className="text-sm font-mono font-medium text-white">
-                            {selectedUser.elec_id_profile.elec_id_number}
-                          </span>
-                        </div>
-                      )}
-                      {selectedUser.elec_id_profile.ecs_card_type && (
-                        <div className="flex justify-between items-center">
-                          <span className="text-sm text-white">ECS Card</span>
-                          <Badge variant="secondary" className="text-xs border-0">
-                            {selectedUser.elec_id_profile.ecs_card_type}
-                          </Badge>
-                        </div>
-                      )}
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        className="w-full mt-2 h-10 touch-manipulation text-cyan-400 border-cyan-500/30 hover:bg-cyan-500/10 rounded-xl"
-                        onClick={() => (window.location.href = `/admin/elec-ids`)}
-                      >
-                        <IdCard className="h-4 w-4 mr-2" />
-                        View Full Elec-ID Profile
-                      </Button>
-                    </CardContent>
-                  </Card>
-                )}
-              </div>
-
-              {/* Actions Footer */}
-              <div className="p-4 border-t border-border/50 space-y-2 bg-background">
-                {/* Message User */}
+        <UserManagementSheet
+          user={selectedUser ? {
+            id: selectedUser.id,
+            full_name: selectedUser.full_name,
+            email: selectedUser.email || undefined,
+            role: selectedUser.role || undefined,
+            subscribed: selectedUser.subscribed,
+            subscription_tier: selectedUser.subscription_tier || undefined,
+            subscription_end: (selectedUser as Record<string, unknown>).subscription_end as string | undefined,
+            stripe_customer_id: selectedUser.stripe_customer_id || undefined,
+            free_access_granted: selectedUser.free_access_granted,
+            free_access_expires_at: (selectedUser as Record<string, unknown>).free_access_expires_at as string | undefined,
+            free_access_reason: (selectedUser as Record<string, unknown>).free_access_reason as string | undefined,
+            created_at: selectedUser.created_at,
+            last_sign_in: selectedUser.last_sign_in || undefined,
+          } : null}
+          open={!!selectedUser}
+          onOpenChange={(open) => !open && setSelectedUser(null)}
+          extraActions={
+            isSuperAdmin && selectedUser?.admin_role !== 'super_admin' ? (
+              <div className="flex gap-2">
                 <Button
                   variant="outline"
-                  className="w-full h-12 touch-manipulation rounded-xl border-blue-500/30 text-blue-400 hover:bg-blue-500/10"
-                  onClick={() => setMessageSheetOpen(true)}
+                  className={`flex-1 h-11 touch-manipulation rounded-xl ${
+                    selectedUser?.admin_role
+                      ? 'border-red-500/30 text-red-400 hover:bg-red-500/10'
+                      : 'border-orange-500/30 text-orange-400 hover:bg-orange-500/10'
+                  }`}
+                  onClick={() =>
+                    selectedUser &&
+                    grantAdminMutation.mutate({
+                      userId: selectedUser.id,
+                      role: selectedUser.admin_role ? null : 'admin',
+                    })
+                  }
+                  disabled={grantAdminMutation.isPending}
                 >
-                  <MessageSquare className="h-5 w-5 mr-2" />
-                  Message User
+                  {selectedUser?.admin_role ? (
+                    <><ShieldOff className="h-4 w-4 mr-2" />Remove Admin</>
+                  ) : (
+                    <><Shield className="h-4 w-4 mr-2" />Make Admin</>
+                  )}
                 </Button>
-
-                {/* Subscription Actions */}
-                {selectedUser?.free_access_granted ||
-                (selectedUser?.subscribed && !selectedUser?.stripe_customer_id) ? (
-                  <div className="flex gap-2 w-full">
-                    <Button
-                      className="flex-1 h-12 touch-manipulation rounded-xl bg-gradient-to-r from-emerald-500 to-green-600 hover:from-emerald-600 hover:to-green-700 shadow-lg shadow-emerald-500/20"
-                      onClick={() => selectedUser && openGrantSheet(selectedUser)}
-                    >
-                      <Gift className="h-5 w-5 mr-2" />
-                      Manage Access
-                    </Button>
-                    <Button
-                      variant="destructive"
-                      className="h-12 touch-manipulation rounded-xl px-4"
-                      onClick={() =>
-                        selectedUser && revokeSubscriptionMutation.mutate(selectedUser.id)
-                      }
-                      disabled={revokeSubscriptionMutation.isPending}
-                    >
-                      {revokeSubscriptionMutation.isPending ? (
-                        <Loader2 className="h-5 w-5 animate-spin" />
-                      ) : (
-                        <XCircle className="h-5 w-5" />
-                      )}
-                    </Button>
-                  </div>
-                ) : !selectedUser?.subscribed ? (
-                  <Button
-                    className="w-full h-12 touch-manipulation rounded-xl bg-gradient-to-r from-emerald-500 to-green-600 hover:from-emerald-600 hover:to-green-700 shadow-lg shadow-emerald-500/20"
-                    onClick={() => selectedUser && openGrantSheet(selectedUser)}
-                  >
-                    <Gift className="h-5 w-5 mr-2" />
-                    Grant Free Access
-                  </Button>
-                ) : (
-                  <p className="w-full text-center text-sm text-white py-3">
-                    Subscription managed via Stripe
-                  </p>
-                )}
-
-                {/* Admin Controls */}
-                {isSuperAdmin && selectedUser?.admin_role !== 'super_admin' && (
-                  <div className="flex gap-2">
-                    <Button
-                      variant="outline"
-                      className={`flex-1 h-11 touch-manipulation rounded-xl ${
-                        selectedUser?.admin_role
-                          ? 'border-red-500/30 text-red-400 hover:bg-red-500/10'
-                          : 'border-orange-500/30 text-orange-400 hover:bg-orange-500/10'
-                      }`}
-                      onClick={() =>
-                        selectedUser &&
-                        grantAdminMutation.mutate({
-                          userId: selectedUser.id,
-                          role: selectedUser.admin_role ? null : 'admin',
-                        })
-                      }
-                      disabled={grantAdminMutation.isPending}
-                    >
-                      {selectedUser?.admin_role ? (
-                        <>
-                          <ShieldOff className="h-4 w-4 mr-2" />
-                          Remove Admin
-                        </>
-                      ) : (
-                        <>
-                          <Shield className="h-4 w-4 mr-2" />
-                          Make Admin
-                        </>
-                      )}
-                    </Button>
-                    <Button
-                      variant="ghost"
-                      size="icon"
-                      className="h-11 w-11 touch-manipulation rounded-xl text-red-400 hover:text-red-500 hover:bg-red-500/10"
-                      onClick={() => setDeleteDialogOpen(true)}
-                    >
-                      <Trash2 className="h-5 w-5" />
-                    </Button>
-                  </div>
-                )}
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="h-11 w-11 touch-manipulation rounded-xl text-red-400 hover:text-red-500 hover:bg-red-500/10"
+                  onClick={() => setDeleteDialogOpen(true)}
+                >
+                  <Trash2 className="h-5 w-5" />
+                </Button>
               </div>
-            </div>
-          </SheetContent>
-        </Sheet>
+            ) : undefined
+          }
+        />
 
         {/* Delete Confirmation Dialog */}
         <AlertDialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>
@@ -1604,22 +1435,6 @@ export default function AdminUsers() {
             </AlertDialogFooter>
           </AlertDialogContent>
         </AlertDialog>
-
-        {/* Message User Sheet (from detail panel) */}
-        <MessageUserSheet
-          open={messageSheetOpen}
-          onOpenChange={setMessageSheetOpen}
-          user={
-            selectedUser
-              ? {
-                  id: selectedUser.id,
-                  full_name: selectedUser.full_name || undefined,
-                  email: selectedUser.email || undefined,
-                  role: selectedUser.role || undefined,
-                }
-              : null
-          }
-        />
 
         {/* Message User Sheet (from swipe action) */}
         <MessageUserSheet

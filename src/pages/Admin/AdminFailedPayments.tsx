@@ -16,10 +16,14 @@ import {
   ExternalLink,
   Loader2,
   Send,
+  ArrowRight,
+  XCircle,
 } from 'lucide-react';
 import { format, formatDistanceToNow } from 'date-fns';
+import { Skeleton } from '@/components/ui/skeleton';
 import AdminSearchInput from '@/components/admin/AdminSearchInput';
 import AdminEmptyState from '@/components/admin/AdminEmptyState';
+import AdminPageHeader from '@/components/admin/AdminPageHeader';
 import PullToRefresh from '@/components/admin/PullToRefresh';
 import { useHaptic } from '@/hooks/useHaptic';
 import { toast } from 'sonner';
@@ -124,6 +128,7 @@ export default function AdminFailedPayments() {
     data: records,
     isLoading,
     refetch,
+    isFetching,
   } = useQuery({
     queryKey: ['admin-failed-payments'],
     queryFn: async () => {
@@ -289,13 +294,17 @@ export default function AdminFailedPayments() {
   const pipeline = useMemo(() => {
     const all = records ?? [];
     const unresolved = all.filter((r) => !r.resolved);
+    const recoveredRecords = all.filter((r) => r.resolved);
     return {
-      email1: unresolved.filter((r) => r.emails_sent >= 1).length,
-      email2: unresolved.filter((r) => r.emails_sent >= 2).length,
-      email3: unresolved.filter((r) => r.emails_sent >= 3).length,
-      recovered: all.filter((r) => r.resolved).length,
+      pending: unresolved.filter((r) => r.emails_sent === 0).length,
+      email1: unresolved.filter((r) => r.emails_sent === 1).length,
+      email2: unresolved.filter((r) => r.emails_sent === 2).length,
+      email3: unresolved.filter((r) => r.emails_sent === 3).length,
+      recovered: recoveredRecords.length,
+      lost: 0, // placeholder for future lost status
       total: all.length,
       totalOutstanding: unresolved.reduce((sum, r) => sum + (r.amount_due || 0), 0),
+      recoveredAmount: recoveredRecords.reduce((sum, r) => sum + (r.amount_due || 0), 0),
     };
   }, [records]);
 
@@ -387,9 +396,39 @@ export default function AdminFailedPayments() {
       }}
     >
       <div className="space-y-6 pb-20">
+        <AdminPageHeader
+          title="Failed Payments"
+          subtitle="Monitor and resolve failed payment attempts"
+          icon={AlertTriangle}
+          iconColor="text-red-400"
+          iconBg="bg-red-500/10 border-red-500/20"
+          accentColor="from-red-500 via-rose-400 to-red-500"
+          onRefresh={() => refetch()}
+          isRefreshing={isFetching}
+        />
+
+        {/* Recovery Metrics Strip */}
+        <div className="grid grid-cols-3 gap-2">
+          <div className="rounded-xl border border-red-500/30 bg-red-500/10 px-3 py-2 h-14 touch-manipulation flex flex-col justify-center">
+            <p className="text-[10px] font-medium text-white">At Risk</p>
+            <p className="text-sm font-bold text-red-400">
+              {new Intl.NumberFormat('en-GB', { style: 'currency', currency: 'GBP' }).format(pipeline.totalOutstanding / 100)}
+            </p>
+          </div>
+          <div className="rounded-xl border border-green-500/30 bg-green-500/10 px-3 py-2 h-14 touch-manipulation flex flex-col justify-center">
+            <p className="text-[10px] font-medium text-white">Recovery Rate</p>
+            <p className="text-sm font-bold text-green-400">{recoveryRate}%</p>
+          </div>
+          <div className="rounded-xl border border-emerald-500/30 bg-emerald-500/10 px-3 py-2 h-14 touch-manipulation flex flex-col justify-center">
+            <p className="text-[10px] font-medium text-white">Recovered</p>
+            <p className="text-sm font-bold text-emerald-400">
+              {new Intl.NumberFormat('en-GB', { style: 'currency', currency: 'GBP' }).format(pipeline.recoveredAmount / 100)}
+            </p>
+          </div>
+        </div>
+
         {/* Header */}
         <div className="flex items-center justify-between">
-          <h1 className="text-xl font-bold text-white">Failed Payments</h1>
           <div className="flex items-center gap-2">
             <Button
               variant="outline"
@@ -495,47 +534,35 @@ export default function AdminFailedPayments() {
           </Card>
         </div>
 
-        {/* Dunning Pipeline */}
+        {/* Dunning Stage Pipeline */}
         {(records?.length ?? 0) > 0 && (
           <Card>
             <CardHeader className="pb-2">
               <CardTitle className="text-sm text-white">Dunning Pipeline</CardTitle>
             </CardHeader>
-            <CardContent className="space-y-3">
-              {[
-                { label: 'Email 1', count: pipeline.email1, colour: 'bg-amber-500' },
-                { label: 'Email 2', count: pipeline.email2, colour: 'bg-orange-500' },
-                { label: 'Email 3', count: pipeline.email3, colour: 'bg-red-500' },
-                { label: 'Recovered', count: pipeline.recovered, colour: 'bg-green-500' },
-              ].map((bar) => {
-                const maxCount = Math.max(pipeline.email1, pipeline.recovered, 1);
-                const width = Math.max((bar.count / maxCount) * 100, bar.count > 0 ? 8 : 0);
-                return (
-                  <div key={bar.label} className="flex items-center gap-3">
-                    <span className="text-xs text-white w-20 shrink-0">{bar.label}</span>
-                    <div className="flex-1 h-5 bg-muted/30 rounded-full overflow-hidden">
-                      <div
-                        className={`h-full ${bar.colour} rounded-full transition-all duration-500`}
-                        style={{ width: `${width}%` }}
-                      />
+            <CardContent>
+              <div className="flex items-center justify-between overflow-x-auto gap-1">
+                {[
+                  { label: 'Pending', count: pipeline.pending, bg: 'bg-yellow-500/20', text: 'text-yellow-400', border: 'border-yellow-500/40', icon: <AlertTriangle className="h-3 w-3" /> },
+                  { label: 'Email 1', count: pipeline.email1, bg: 'bg-amber-500/20', text: 'text-amber-400', border: 'border-amber-500/40', icon: <Mail className="h-3 w-3" /> },
+                  { label: 'Email 2', count: pipeline.email2, bg: 'bg-orange-500/20', text: 'text-orange-400', border: 'border-orange-500/40', icon: <Mail className="h-3 w-3" /> },
+                  { label: 'Final', count: pipeline.email3, bg: 'bg-red-500/20', text: 'text-red-400', border: 'border-red-500/40', icon: <MailWarning className="h-3 w-3" /> },
+                  { label: 'Recovered', count: pipeline.recovered, bg: 'bg-green-500/20', text: 'text-green-400', border: 'border-green-500/40', icon: <CheckCircle className="h-3 w-3" /> },
+                  { label: 'Lost', count: pipeline.lost, bg: 'bg-zinc-500/20', text: 'text-zinc-400', border: 'border-zinc-500/40', icon: <XCircle className="h-3 w-3" /> },
+                ].map((stage, idx, arr) => (
+                  <div key={stage.label} className="flex items-center gap-1 shrink-0">
+                    <div className={`flex flex-col items-center gap-1 px-2 py-2 rounded-lg border ${stage.border} ${stage.bg} ${stage.count > 0 ? 'opacity-100' : 'opacity-40'}`}>
+                      <div className={`${stage.text} flex items-center gap-1`}>
+                        {stage.icon}
+                        <span className="text-lg font-bold leading-none">{stage.count}</span>
+                      </div>
+                      <span className="text-[9px] font-medium text-white whitespace-nowrap">{stage.label}</span>
                     </div>
-                    <span className="text-xs font-mono text-white w-8 text-right">{bar.count}</span>
+                    {idx < arr.length - 1 && (
+                      <ArrowRight className="h-3 w-3 text-white/30 shrink-0" />
+                    )}
                   </div>
-                );
-              })}
-              <div className="flex items-center justify-between pt-2 border-t border-border">
-                <span className="text-xs text-white">
-                  Recovery Rate: <strong>{recoveryRate}%</strong>
-                </span>
-                <span className="text-xs text-white">
-                  Outstanding:{' '}
-                  <strong>
-                    {new Intl.NumberFormat('en-GB', {
-                      style: 'currency',
-                      currency: 'GBP',
-                    }).format(pipeline.totalOutstanding / 100)}
-                  </strong>
-                </span>
+                ))}
               </div>
             </CardContent>
           </Card>
@@ -550,13 +577,17 @@ export default function AdminFailedPayments() {
 
         {/* Records List */}
         {isLoading ? (
-          <div className="space-y-2">
-            {[...Array(5)].map((_, i) => (
-              <Card key={i} className="animate-pulse">
-                <CardContent className="pt-4 pb-4">
-                  <div className="h-14 bg-muted rounded" />
-                </CardContent>
-              </Card>
+          <div className="space-y-3 animate-pulse">
+            {[...Array(3)].map((_, i) => (
+              <div key={i} className="rounded-2xl bg-white/[0.03] border border-white/[0.06] p-4 space-y-3">
+                <div className="flex items-center gap-3">
+                  <Skeleton className="w-9 h-9 rounded-lg" />
+                  <div className="space-y-1.5 flex-1">
+                    <Skeleton className="h-4 w-32" />
+                    <Skeleton className="h-3 w-48" />
+                  </div>
+                </div>
+              </div>
             ))}
           </div>
         ) : filtered.length === 0 ? (
@@ -656,6 +687,24 @@ export default function AdminFailedPayments() {
                         >
                           {record.emails_sent}/3
                         </Badge>
+                        {!record.resolved && record.emails_sent < 3 && (
+                          <button
+                            className="h-8 px-2 rounded-lg text-[10px] font-bold bg-amber-500/10 text-amber-400 ring-1 ring-amber-500/20 touch-manipulation flex items-center gap-1 active:scale-95 transition-transform"
+                            disabled={sendNextMutation.isPending}
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              haptic.medium();
+                              sendNextMutation.mutate(record.id);
+                            }}
+                          >
+                            {sendNextMutation.isPending ? (
+                              <Loader2 className="h-3 w-3 animate-spin" />
+                            ) : (
+                              <Send className="h-3 w-3" />
+                            )}
+                            Send
+                          </button>
+                        )}
                         <ChevronRight className="h-5 w-5 text-white" />
                       </div>
                     </div>

@@ -13,10 +13,12 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
+import { Skeleton } from '@/components/ui/skeleton';
 import AdminSearchInput from '@/components/admin/AdminSearchInput';
 import AdminEmptyState from '@/components/admin/AdminEmptyState';
 import PullToRefresh from '@/components/admin/PullToRefresh';
-import { Ticket, User, Send, RefreshCw, ChevronRight, Loader2, CheckCircle } from 'lucide-react';
+import AdminPageHeader from '@/components/admin/AdminPageHeader';
+import { Ticket, User, Send, RefreshCw, ChevronRight, Loader2, CheckCircle, LifeBuoy } from 'lucide-react';
 import { format, formatDistanceToNow } from 'date-fns';
 import { toast } from '@/hooks/use-toast';
 import { useHaptic } from '@/hooks/useHaptic';
@@ -74,22 +76,59 @@ interface TicketResponse {
   profiles?: { full_name: string };
 }
 
+const PRIORITY_LANES = [
+  { key: 'urgent', label: 'Urgent', activeBg: 'bg-red-500/20 text-red-400 ring-1 ring-red-500/30', icon: '!' },
+  { key: 'open', label: 'Open', activeBg: 'bg-amber-500/20 text-amber-400 ring-1 ring-amber-500/30', icon: null },
+  { key: 'waiting', label: 'Waiting', activeBg: 'bg-blue-500/20 text-blue-400 ring-1 ring-blue-500/30', icon: null },
+  { key: 'resolved', label: 'Resolved', activeBg: 'bg-green-500/20 text-green-400 ring-1 ring-green-500/30', icon: null },
+  { key: 'all', label: 'All', activeBg: 'bg-white/10 text-white ring-1 ring-white/20', icon: null },
+] as const;
+
+const QUICK_REPLIES = [
+  { label: 'Looking into this', text: 'Thanks for reaching out. We\'re looking into this and will get back to you shortly.' },
+  { label: 'Fixed', text: 'This has been resolved. Please let us know if you experience any further issues.' },
+  { label: 'More details', text: 'Could you share a bit more detail so we can help? Screenshots or steps to reproduce would be useful.' },
+] as const;
+
+function getTimeBadge(createdAt: string, status: string) {
+  const age = formatDistanceToNow(new Date(createdAt), { addSuffix: false });
+  const hoursAgo = (Date.now() - new Date(createdAt).getTime()) / (1000 * 60 * 60);
+  const isOpen = status === 'open' || status === 'in_progress';
+
+  let className = 'bg-white/[0.06] text-white';
+  if (isOpen && hoursAgo > 24) {
+    className = 'bg-red-500/15 text-red-400';
+  } else if (isOpen && hoursAgo > 4) {
+    className = 'bg-amber-500/15 text-amber-400';
+  }
+
+  return (
+    <Badge className={`${className} text-[10px] px-1.5 py-0`}>
+      {age}
+    </Badge>
+  );
+}
+
 export default function AdminSupport() {
   const { profile } = useAuth();
   const queryClient = useQueryClient();
   const haptic = useHaptic();
   const [search, setSearch] = useState('');
-  const [statusFilter, setStatusFilter] = useState('all');
+  const [activeLane, setActiveLane] = useState<string>('all');
   const [selectedTicket, setSelectedTicket] = useState<SupportTicket | null>(null);
   const [replyMessage, setReplyMessage] = useState('');
+
+  // Derive the DB status filter from active lane
+  const statusFilter = activeLane === 'urgent' || activeLane === 'all' ? 'all' : activeLane;
 
   // Fetch tickets
   const {
     data: tickets,
     isLoading,
+    isFetching,
     refetch,
   } = useQuery({
-    queryKey: ['admin-support-tickets', search, statusFilter],
+    queryKey: ['admin-support-tickets', search, activeLane],
     queryFn: async () => {
       let query = supabase
         .from('support_tickets')
@@ -104,6 +143,15 @@ export default function AdminSupport() {
       if (error) throw error;
 
       let filtered = data as SupportTicket[];
+
+      // Urgent = open tickets older than 24h
+      if (activeLane === 'urgent') {
+        const twentyFourHoursAgo = Date.now() - 24 * 60 * 60 * 1000;
+        filtered = filtered.filter(
+          (t) => t.status === 'open' && new Date(t.created_at).getTime() < twentyFourHoursAgo
+        );
+      }
+
       if (search) {
         const s = search.toLowerCase();
         filtered = filtered.filter(
@@ -145,6 +193,10 @@ export default function AdminSupport() {
       queryClient.invalidateQueries({ queryKey: ['admin-support-tickets'] });
       toast({ title: 'Status updated' });
     },
+    onError: (error: Error) => {
+      haptic.error();
+      toast({ title: 'Error', description: error.message, variant: 'destructive' });
+    },
   });
 
   // Reply to ticket
@@ -171,6 +223,10 @@ export default function AdminSupport() {
       queryClient.invalidateQueries({ queryKey: ['admin-support-tickets'] });
       setReplyMessage('');
       toast({ title: 'Reply sent' });
+    },
+    onError: (error: Error) => {
+      haptic.error();
+      toast({ title: 'Error', description: error.message, variant: 'destructive' });
     },
   });
 
@@ -212,6 +268,17 @@ export default function AdminSupport() {
       }}
     >
       <div className="space-y-4 pb-20">
+        <AdminPageHeader
+          title="Support"
+          subtitle="User support tickets"
+          icon={LifeBuoy}
+          iconColor="text-blue-400"
+          iconBg="bg-blue-500/10 border-blue-500/20"
+          accentColor="from-blue-500 via-cyan-400 to-blue-500"
+          onRefresh={() => refetch()}
+          isRefreshing={isFetching}
+        />
+
         {/* Stats */}
         <motion.section variants={sectionVariants} initial="hidden" animate="visible" custom={0}>
           <motion.div
@@ -256,8 +323,27 @@ export default function AdminSupport() {
           </motion.div>
         </motion.section>
 
-        {/* Filters */}
+        {/* Priority Lane Tabs */}
         <motion.section variants={sectionVariants} initial="hidden" animate="visible" custom={1}>
+          <div className="flex gap-2 overflow-x-auto no-scrollbar pb-1">
+            {PRIORITY_LANES.map((lane) => (
+              <button
+                key={lane.key}
+                onClick={() => { haptic.light(); setActiveLane(lane.key); }}
+                className={`h-8 px-3 rounded-full text-xs font-medium touch-manipulation transition-all whitespace-nowrap shrink-0 ${
+                  activeLane === lane.key
+                    ? lane.activeBg
+                    : 'bg-white/[0.04] text-white ring-1 ring-white/[0.06]'
+                }`}
+              >
+                {lane.label}
+              </button>
+            ))}
+          </div>
+        </motion.section>
+
+        {/* Search */}
+        <motion.section variants={sectionVariants} initial="hidden" animate="visible" custom={1.5}>
           <div className="glass-premium rounded-2xl overflow-hidden p-4">
             <div className="flex gap-3">
               <AdminSearchInput
@@ -266,19 +352,6 @@ export default function AdminSupport() {
                 placeholder="Search tickets..."
                 className="flex-1"
               />
-              <Select value={statusFilter} onValueChange={setStatusFilter}>
-                <SelectTrigger className="w-[120px] h-11 touch-manipulation">
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="all">All</SelectItem>
-                  <SelectItem value="open">Open</SelectItem>
-                  <SelectItem value="in_progress">In Progress</SelectItem>
-                  <SelectItem value="waiting">Waiting</SelectItem>
-                  <SelectItem value="resolved">Resolved</SelectItem>
-                  <SelectItem value="closed">Closed</SelectItem>
-                </SelectContent>
-              </Select>
               <Button
                 variant="outline"
                 size="icon"
@@ -293,9 +366,17 @@ export default function AdminSupport() {
 
         {/* Tickets List */}
         {isLoading ? (
-          <div className="glass-premium rounded-2xl overflow-hidden p-4 space-y-2">
-            {[...Array(5)].map((_, i) => (
-              <div key={i} className="h-16 bg-white/[0.06] animate-pulse rounded-lg" />
+          <div className="space-y-3 animate-pulse">
+            {[...Array(3)].map((_, i) => (
+              <div key={i} className="rounded-2xl bg-white/[0.03] border border-white/[0.06] p-4 space-y-3">
+                <div className="flex items-center gap-3">
+                  <Skeleton className="w-9 h-9 rounded-lg" />
+                  <div className="space-y-1.5 flex-1">
+                    <Skeleton className="h-4 w-32" />
+                    <Skeleton className="h-3 w-48" />
+                  </div>
+                </div>
+              </div>
             ))}
           </div>
         ) : tickets?.length === 0 ? (
@@ -321,12 +402,13 @@ export default function AdminSupport() {
                   >
                     <div className="flex items-center justify-between gap-3">
                       <div className="min-w-0 flex-1">
-                        <div className="flex items-center gap-2 mb-1">
+                        <div className="flex items-center gap-2 mb-1 flex-wrap">
                           <p className="font-medium text-sm truncate !text-white">
                             {ticket.subject}
                           </p>
                           {getStatusBadge(ticket.status)}
                           {getPriorityBadge(ticket.priority)}
+                          {getTimeBadge(ticket.created_at, ticket.status)}
                         </div>
                         <p className="text-xs !text-white line-clamp-1">{ticket.description}</p>
                         <div className="flex items-center gap-3 mt-2 text-xs !text-white">
@@ -420,6 +502,17 @@ export default function AdminSupport() {
 
               {/* Reply Form */}
               <SheetFooter className="p-4 border-t border-white/[0.06]">
+                <div className="flex gap-2 flex-wrap mb-2">
+                  {QUICK_REPLIES.map((qr) => (
+                    <button
+                      key={qr.label}
+                      onClick={() => setReplyMessage(qr.text)}
+                      className="h-8 px-2 rounded-lg text-[10px] font-medium bg-white/[0.04] text-white ring-1 ring-white/[0.06] touch-manipulation transition-all active:scale-95"
+                    >
+                      {qr.label}
+                    </button>
+                  ))}
+                </div>
                 <div className="flex gap-2 w-full">
                   <Textarea
                     value={replyMessage}

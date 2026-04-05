@@ -15,6 +15,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
+import AdminPageHeader from '@/components/admin/AdminPageHeader';
+import { Skeleton } from '@/components/ui/skeleton';
 import {
   Mail,
   RefreshCw,
@@ -201,24 +203,16 @@ export default function AdminEmailLogs() {
       }}
     >
       <div className="space-y-4 pb-20">
-        {/* Header */}
-        <motion.section variants={sectionVariants} initial="hidden" animate="visible" custom={0}>
-          <div className="flex items-center justify-between">
-            <div>
-              <h2 className="text-2xl font-bold !text-white">Email Logs</h2>
-              <p className="text-xs !text-white">{emails?.length || 0} emails tracked</p>
-            </div>
-            <Button
-              variant="outline"
-              size="icon"
-              className="h-11 w-11 touch-manipulation"
-              onClick={() => refetch()}
-              disabled={isFetching}
-            >
-              <RefreshCw className={`h-4 w-4 ${isFetching ? 'animate-spin' : ''}`} />
-            </Button>
-          </div>
-        </motion.section>
+        <AdminPageHeader
+          title="Email Logs"
+          subtitle={`${emails?.length || 0} emails tracked`}
+          icon={Mail}
+          iconColor="text-blue-400"
+          iconBg="bg-blue-500/10 border-blue-500/20"
+          accentColor="from-blue-500 via-blue-400 to-cyan-500"
+          onRefresh={() => refetch()}
+          isRefreshing={isFetching}
+        />
 
         {/* Stats */}
         <motion.section variants={sectionVariants} initial="hidden" animate="visible" custom={1}>
@@ -304,9 +298,17 @@ export default function AdminEmailLogs() {
 
         {/* Email List */}
         {isLoading ? (
-          <div className="glass-premium rounded-2xl overflow-hidden p-4 space-y-2">
-            {[...Array(10)].map((_, i) => (
-              <div key={i} className="h-14 bg-white/[0.06] animate-pulse rounded-lg" />
+          <div className="space-y-3 animate-pulse">
+            {[...Array(3)].map((_, i) => (
+              <div key={i} className="rounded-2xl bg-white/[0.03] border border-white/[0.06] p-4 space-y-3">
+                <div className="flex items-center gap-3">
+                  <Skeleton className="w-9 h-9 rounded-lg" />
+                  <div className="space-y-1.5 flex-1">
+                    <Skeleton className="h-4 w-32" />
+                    <Skeleton className="h-3 w-48" />
+                  </div>
+                </div>
+              </div>
             ))}
           </div>
         ) : emails?.length === 0 ? (

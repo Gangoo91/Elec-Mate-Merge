@@ -19,8 +19,10 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from '@/components/ui/alert-dialog';
+import { Skeleton } from '@/components/ui/skeleton';
 import AdminSearchInput from '@/components/admin/AdminSearchInput';
 import AdminEmptyState from '@/components/admin/AdminEmptyState';
+import AdminPageHeader from '@/components/admin/AdminPageHeader';
 import PullToRefresh from '@/components/admin/PullToRefresh';
 import { useHaptic } from '@/hooks/useHaptic';
 import {
@@ -92,6 +94,7 @@ export default function AdminFeatureFlags() {
   const {
     data: flags,
     isLoading,
+    isFetching,
     refetch,
   } = useQuery({
     queryKey: ['admin-feature-flags'],
@@ -142,8 +145,9 @@ export default function AdminFeatureFlags() {
       queryClient.invalidateQueries({ queryKey: ['admin-feature-flags'] });
       toast({ title: 'Flag updated' });
     },
-    onError: () => {
+    onError: (error: Error) => {
       haptic.error();
+      toast({ title: 'Error', description: error.message, variant: 'destructive' });
     },
   });
 
@@ -165,8 +169,9 @@ export default function AdminFeatureFlags() {
       setEditFlag(null);
       toast({ title: 'Flag updated' });
     },
-    onError: () => {
+    onError: (error: Error) => {
       haptic.error();
+      toast({ title: 'Error', description: error.message, variant: 'destructive' });
     },
   });
 
@@ -185,8 +190,9 @@ export default function AdminFeatureFlags() {
       setDeleteId(null);
       toast({ title: 'Flag deleted' });
     },
-    onError: () => {
+    onError: (error: Error) => {
       haptic.error();
+      toast({ title: 'Error', description: error.message, variant: 'destructive' });
     },
   });
 
@@ -205,36 +211,27 @@ export default function AdminFeatureFlags() {
       }}
     >
       <div className="space-y-4 pb-20">
-        {/* Header */}
-        <motion.section variants={sectionVariants} initial="hidden" animate="visible" custom={0}>
-          <div className="flex items-center justify-between">
-            <div>
-              <h2 className="text-2xl font-bold !text-white">Feature Flags</h2>
-              <p className="text-xs !text-white">
-                {enabledCount} of {flags?.length || 0} enabled
-              </p>
-            </div>
-            <div className="flex gap-2">
+        <AdminPageHeader
+          title="Feature Flags"
+          subtitle={`${enabledCount} of ${flags?.length || 0} enabled`}
+          icon={ToggleLeft}
+          iconColor="text-violet-400"
+          iconBg="bg-violet-500/10 border-violet-500/20"
+          accentColor="from-violet-500 via-purple-400 to-violet-500"
+          onRefresh={() => refetch()}
+          isRefreshing={isFetching}
+          actions={
+            isSuperAdmin ? (
               <Button
-                variant="outline"
-                size="icon"
-                className="h-11 w-11 touch-manipulation"
-                onClick={() => refetch()}
+                className="h-11 gap-2 touch-manipulation"
+                onClick={() => setCreateOpen(true)}
               >
-                <RefreshCw className="h-4 w-4" />
+                <Plus className="h-4 w-4" />
+                Add Flag
               </Button>
-              {isSuperAdmin && (
-                <Button
-                  className="h-11 gap-2 touch-manipulation"
-                  onClick={() => setCreateOpen(true)}
-                >
-                  <Plus className="h-4 w-4" />
-                  Add Flag
-                </Button>
-              )}
-            </div>
-          </div>
-        </motion.section>
+            ) : undefined
+          }
+        />
 
         {/* Search */}
         <motion.section variants={sectionVariants} initial="hidden" animate="visible" custom={1}>
@@ -243,9 +240,17 @@ export default function AdminFeatureFlags() {
 
         {/* Flags List */}
         {isLoading ? (
-          <div className="glass-premium rounded-2xl overflow-hidden p-4 space-y-2">
-            {[...Array(5)].map((_, i) => (
-              <div key={i} className="h-16 bg-white/[0.06] animate-pulse rounded-lg" />
+          <div className="glass-premium rounded-2xl overflow-hidden p-4 space-y-3 animate-pulse">
+            {[...Array(3)].map((_, i) => (
+              <div key={i} className="rounded-2xl bg-white/[0.03] border border-white/[0.06] p-4 space-y-3">
+                <div className="flex items-center gap-3">
+                  <Skeleton className="w-9 h-9 rounded-lg" />
+                  <div className="space-y-1.5 flex-1">
+                    <Skeleton className="h-4 w-32" />
+                    <Skeleton className="h-3 w-48" />
+                  </div>
+                </div>
+              </div>
             ))}
           </div>
         ) : filteredFlags?.length === 0 ? (

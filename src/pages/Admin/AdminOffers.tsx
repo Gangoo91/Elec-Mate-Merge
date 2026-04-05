@@ -29,6 +29,7 @@ import {
 import AdminEmptyState from '@/components/admin/AdminEmptyState';
 import PullToRefresh from '@/components/admin/PullToRefresh';
 import { useHaptic } from '@/hooks/useHaptic';
+import AdminPageHeader from '@/components/admin/AdminPageHeader';
 import {
   Plus,
   Copy,
@@ -46,7 +47,9 @@ import {
 } from 'lucide-react';
 import { format, formatDistanceToNow } from 'date-fns';
 import { toast } from '@/hooks/use-toast';
+import { copyToClipboard } from '@/utils/clipboard';
 import { cn } from '@/lib/utils';
+import { Skeleton } from '@/components/ui/skeleton';
 
 interface Offer {
   id: string;
@@ -102,7 +105,7 @@ export default function AdminOffers() {
   const isSuperAdmin = profile?.admin_role === 'super_admin';
 
   // Fetch offers via edge function to bypass RLS
-  const { data: offers, isLoading } = useQuery({
+  const { data: offers, isLoading, isFetching, refetch } = useQuery({
     queryKey: ['admin-offers'],
     queryFn: async () => {
       const { data, error } = await supabase.functions.invoke('admin-manage-offers', {
@@ -278,9 +281,9 @@ export default function AdminOffers() {
     },
   });
 
-  const copyToClipboard = (code: string) => {
+  const handleCopyToClipboard = (code: string) => {
     const url = `${window.location.origin}/auth/signup?offer=${code}`;
-    navigator.clipboard.writeText(url);
+    copyToClipboard(url);
     setCopiedCode(code);
     setTimeout(() => setCopiedCode(null), 2000);
     toast({
@@ -330,32 +333,39 @@ export default function AdminOffers() {
       }}
     >
       <div className="space-y-6 pb-20">
-        {/* Header with Create Button */}
-        <div className="flex items-center justify-between">
-          <div>
-            <h2 className="text-lg font-semibold">Promo Offers</h2>
-            <p className="text-sm text-muted-foreground">
-              Create and manage promotional pricing links
-            </p>
-          </div>
-          <Button
-            className="gap-2 bg-gradient-to-r from-red-500 to-orange-500 hover:from-red-600 hover:to-orange-600 h-11 touch-manipulation"
-            onClick={() => setCreateOpen(true)}
-          >
-            <Plus className="h-4 w-4" />
-            Create Offer
-          </Button>
-        </div>
+        <AdminPageHeader
+          title="Promo Offers"
+          subtitle="Create and manage promotional pricing links"
+          icon={Gift}
+          iconColor="text-violet-400"
+          iconBg="bg-violet-500/10 border-violet-500/20"
+          accentColor="from-violet-500 via-purple-400 to-violet-500"
+          onRefresh={() => refetch()}
+          isRefreshing={isFetching}
+          actions={
+            <Button
+              className="gap-2 bg-gradient-to-r from-red-500 to-orange-500 hover:from-red-600 hover:to-orange-600 h-11 touch-manipulation"
+              onClick={() => setCreateOpen(true)}
+            >
+              <Plus className="h-4 w-4" />
+              Create Offer
+            </Button>
+          }
+        />
 
         {/* Offers List */}
         {isLoading ? (
-          <div className="grid gap-4">
+          <div className="space-y-3 animate-pulse">
             {[...Array(3)].map((_, i) => (
-              <Card key={i} className="animate-pulse">
-                <CardContent className="pt-6">
-                  <div className="h-20 bg-muted rounded" />
-                </CardContent>
-              </Card>
+              <div key={i} className="rounded-2xl bg-white/[0.03] border border-white/[0.06] p-4 space-y-3">
+                <div className="flex items-center gap-3">
+                  <Skeleton className="w-9 h-9 rounded-lg" />
+                  <div className="space-y-1.5 flex-1">
+                    <Skeleton className="h-4 w-32" />
+                    <Skeleton className="h-3 w-48" />
+                  </div>
+                </div>
+              </div>
             ))}
           </div>
         ) : offers?.length === 0 ? (
@@ -416,7 +426,7 @@ export default function AdminOffers() {
                           variant="ghost"
                           size="sm"
                           className="h-7 gap-1"
-                          onClick={() => copyToClipboard(offer.code)}
+                          onClick={() => handleCopyToClipboard(offer.code)}
                         >
                           {copiedCode === offer.code ? (
                             <Check className="h-3 w-3 text-green-500" />

@@ -15,7 +15,9 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from '@/components/ui/alert-dialog';
+import { Skeleton } from '@/components/ui/skeleton';
 import AdminEmptyState from '@/components/admin/AdminEmptyState';
+import AdminPageHeader from '@/components/admin/AdminPageHeader';
 import PullToRefresh from '@/components/admin/PullToRefresh';
 import {
   RefreshCw,
@@ -31,6 +33,7 @@ import {
   Smartphone,
   Eye,
   FileText,
+  AlertCircle,
 } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { format, formatDistanceToNow, parseISO } from 'date-fns';
@@ -104,6 +107,7 @@ export default function AdminIncompleteSignup() {
   const {
     data: eligibleUsers,
     isLoading: usersLoading,
+    isFetching,
     refetch,
   } = useQuery<IncompleteUser[]>({
     queryKey: ['admin-incomplete-eligible'],
@@ -250,26 +254,16 @@ export default function AdminIncompleteSignup() {
   return (
     <PullToRefresh onRefresh={async () => { await refetch(); }}>
       <div className="space-y-4 pb-20">
-        {/* Header */}
-        <div className="flex items-center justify-between">
-          <div>
-            <h2 className="text-lg font-semibold flex items-center gap-2">
-              <Smartphone className="h-5 w-5 text-amber-400" />
-              Incomplete Signups
-            </h2>
-            <p className="text-sm text-white">
-              {stats?.totalAbandoned || 108} people who bailed before completing signup
-            </p>
-          </div>
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={refreshAll}
-            className="gap-2 h-11 touch-manipulation"
-          >
-            <RefreshCw className="h-4 w-4" />
-          </Button>
-        </div>
+        <AdminPageHeader
+          title="Incomplete Signups"
+          subtitle={`${stats?.totalAbandoned || 108} people who bailed before completing signup`}
+          icon={AlertCircle}
+          iconColor="text-orange-400"
+          iconBg="bg-orange-500/10 border-orange-500/20"
+          accentColor="from-orange-500 via-amber-400 to-orange-500"
+          onRefresh={refreshAll}
+          isRefreshing={isFetching}
+        />
 
         {/* Send Controls */}
         <Card className="border-amber-500/30 bg-gradient-to-br from-amber-500/5 to-orange-500/5">
@@ -438,9 +432,17 @@ export default function AdminIncompleteSignup() {
           </CardHeader>
           <CardContent className="pt-0 pb-4 px-3">
             {usersLoading ? (
-              <div className="space-y-2">
-                {[1, 2, 3].map((i) => (
-                  <div key={i} className="h-14 bg-muted/50 rounded-lg animate-pulse" />
+              <div className="space-y-3 animate-pulse">
+                {[...Array(3)].map((_, i) => (
+                  <div key={i} className="rounded-2xl bg-white/[0.03] border border-white/[0.06] p-4 space-y-3">
+                    <div className="flex items-center gap-3">
+                      <Skeleton className="w-9 h-9 rounded-lg" />
+                      <div className="space-y-1.5 flex-1">
+                        <Skeleton className="h-4 w-32" />
+                        <Skeleton className="h-3 w-48" />
+                      </div>
+                    </div>
+                  </div>
                 ))}
               </div>
             ) : !eligibleUsers || eligibleUsers.length === 0 ? (
@@ -486,9 +488,17 @@ export default function AdminIncompleteSignup() {
           </CardHeader>
           <CardContent className="pt-0 pb-4 px-3">
             {sentLoading ? (
-              <div className="space-y-2">
-                {[1, 2, 3].map((i) => (
-                  <div key={i} className="h-14 bg-muted/50 rounded-lg animate-pulse" />
+              <div className="space-y-3 animate-pulse">
+                {[...Array(3)].map((_, i) => (
+                  <div key={i} className="rounded-2xl bg-white/[0.03] border border-white/[0.06] p-4 space-y-3">
+                    <div className="flex items-center gap-3">
+                      <Skeleton className="w-9 h-9 rounded-lg" />
+                      <div className="space-y-1.5 flex-1">
+                        <Skeleton className="h-4 w-32" />
+                        <Skeleton className="h-3 w-48" />
+                      </div>
+                    </div>
+                  </div>
                 ))}
               </div>
             ) : !sentUsers || sentUsers.length === 0 ? (

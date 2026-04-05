@@ -14,6 +14,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from '@/components/ui/alert-dialog';
+import AdminPageHeader from '@/components/admin/AdminPageHeader';
 import PullToRefresh from '@/components/admin/PullToRefresh';
 import {
   RefreshCw,
@@ -24,6 +25,7 @@ import {
   Smartphone,
   Eye,
   FileText,
+  Rocket,
 } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
@@ -52,7 +54,7 @@ export default function AdminEarlyAccess() {
   };
 
   // Stats
-  const { data: stats, refetch } = useQuery<EAStats>({
+  const { data: stats, isFetching, refetch } = useQuery<EAStats>({
     queryKey: ['ea-stats'],
     queryFn: async () => {
       const { data, error } = await supabase.functions.invoke('send-early-access-invite', {
@@ -174,26 +176,16 @@ export default function AdminEarlyAccess() {
   return (
     <PullToRefresh onRefresh={async () => { await refetch(); }}>
       <div className="space-y-4 pb-20">
-        {/* Header */}
-        <div className="flex items-center justify-between">
-          <div>
-            <h2 className="text-lg font-semibold flex items-center gap-2">
-              <Smartphone className="h-5 w-5 text-amber-400" />
-              Early Access
-            </h2>
-            <p className="text-sm text-white">
-              {stats?.total || 0} early signups who never created an account
-            </p>
-          </div>
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={refreshAll}
-            className="gap-2 h-11 touch-manipulation"
-          >
-            <RefreshCw className="h-4 w-4" />
-          </Button>
-        </div>
+        <AdminPageHeader
+          title="Early Access"
+          subtitle={`${stats?.total || 0} early signups who never created an account`}
+          icon={Rocket}
+          iconColor="text-violet-400"
+          iconBg="bg-violet-500/10 border-violet-500/20"
+          accentColor="from-violet-500 via-purple-400 to-violet-500"
+          onRefresh={refreshAll}
+          isRefreshing={isFetching}
+        />
 
         {/* Send Controls */}
         <Card className="border-amber-500/30 bg-gradient-to-br from-amber-500/5 to-orange-500/5">

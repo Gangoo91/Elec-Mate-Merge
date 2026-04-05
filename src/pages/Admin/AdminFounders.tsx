@@ -41,6 +41,7 @@ import {
 } from 'lucide-react';
 import { formatDistanceToNow } from 'date-fns';
 import { toast } from '@/hooks/use-toast';
+import AdminPageHeader from '@/components/admin/AdminPageHeader';
 import PullToRefresh from '@/components/admin/PullToRefresh';
 import { useHaptic } from '@/hooks/useHaptic';
 
@@ -87,6 +88,7 @@ export default function AdminFounders() {
   const {
     data: status,
     isLoading,
+    isFetching,
     refetch,
   } = useQuery<CampaignStatus>({
     queryKey: ['founder-final-push-status'],
@@ -306,6 +308,17 @@ export default function AdminFounders() {
       }}
     >
       <div className="space-y-4 pb-20">
+        <AdminPageHeader
+          title="Founders Campaign"
+          subtitle="Final push campaign for founding members"
+          icon={Crown}
+          iconColor="text-amber-400"
+          iconBg="bg-amber-500/10 border-amber-500/20"
+          accentColor="from-amber-500 via-yellow-400 to-amber-500"
+          onRefresh={() => refetch()}
+          isRefreshing={isFetching}
+        />
+
         {/* Hero Card - Final Push Campaign */}
         <Card className="relative overflow-hidden border-0 bg-gradient-to-br from-yellow-500 via-amber-500 to-orange-500">
           <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-white/20 via-transparent to-transparent" />

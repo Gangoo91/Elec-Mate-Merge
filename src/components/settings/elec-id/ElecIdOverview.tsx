@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useState, useEffect, useCallback, useRef } from 'react';
+import { copyToClipboard } from '@/utils/clipboard';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
@@ -129,8 +130,12 @@ const ElecIdOverview = ({ onNavigate }: ElecIdOverviewProps) => {
   const copyElecId = async () => {
     const id = elecIdProfile?.elec_id_number || 'EM-XXXXXX';
     try {
-      await navigator.clipboard.writeText(id);
-      toast({ title: 'Copied!', description: 'Elec-ID copied to clipboard' });
+      const ok = await copyToClipboard(id);
+      if (ok) {
+        toast({ title: 'Copied!', description: 'Elec-ID copied to clipboard' });
+      } else {
+        toast({ title: 'Your Elec-ID', description: id });
+      }
     } catch {
       toast({ title: 'Your Elec-ID', description: id });
     }
@@ -1322,13 +1327,9 @@ const ElecIdOverview = ({ onNavigate }: ElecIdOverviewProps) => {
               </div>
               <button
                 onClick={async () => {
-                  try {
-                    await navigator.clipboard.writeText(
-                      `https://elec-mate.com/verify/${elecIdProfile.elec_id_number}`
-                    );
-                  } catch {
-                    // iOS WKWebView fallback — still show copied state
-                  }
+                  await copyToClipboard(
+                    `https://elec-mate.com/verify/${elecIdProfile.elec_id_number}`
+                  );
                   setCopiedLink(true);
                   setTimeout(() => setCopiedLink(false), 2000);
                 }}

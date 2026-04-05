@@ -56,3 +56,54 @@ export const getRoleColor = (role: string | null | undefined) =>
  * Default role color for unknown/missing roles
  */
 export const DEFAULT_ROLE_COLOR = ROLE_COLORS.visitor;
+
+/* ── Engagement scoring ─────────────────────────────────────── */
+
+export interface EngagementData {
+  login_count: number;
+  page_view_count: number;
+  total_seconds_tracked: number;
+  feature_use_count: number;
+  active_days: number;
+  unique_pages_visited: number;
+}
+
+/**
+ * Calculate a 0-100 engagement score from activity summary data.
+ *
+ * Breakdown (max 100):
+ *   Time     — 1pt per min, cap 30
+ *   Features — 5pts per feature use, cap 25
+ *   Logins   — 4pts per login, cap 20
+ *   Pages    — 0.5pt per unique page, cap 15
+ *   Days     — 3pts per active day, cap 10
+ */
+export const calculateEngagementScore = (e: EngagementData | null | undefined): number => {
+  if (!e) return 0;
+  const time = Math.min(30, (e.total_seconds_tracked / 60) * 1);
+  const features = Math.min(25, e.feature_use_count * 5);
+  const logins = Math.min(20, e.login_count * 4);
+  const pages = Math.min(15, e.unique_pages_visited * 0.5);
+  const days = Math.min(10, e.active_days * 3);
+  return Math.round(time + features + logins + pages + days);
+};
+
+/** Red < 25, Amber 25-55, Green > 55 */
+export const getScoreColor = (score: number): 'red' | 'amber' | 'green' =>
+  score < 25 ? 'red' : score <= 55 ? 'amber' : 'green';
+
+export const SCORE_COLOR_MAP = {
+  red: { stroke: '#ef4444', text: 'text-red-400', bg: 'bg-red-500/15' },
+  amber: { stroke: '#f59e0b', text: 'text-amber-400', bg: 'bg-amber-500/15' },
+  green: { stroke: '#22c55e', text: 'text-green-400', bg: 'bg-green-500/15' },
+} as const;
+
+/** Compact time format: "12m", "2h", "1h 30m" */
+export const formatTimeShort = (seconds: number): string => {
+  if (!seconds || seconds === 0) return '0m';
+  if (seconds < 60) return `${seconds}s`;
+  if (seconds < 3600) return `${Math.round(seconds / 60)}m`;
+  const h = Math.floor(seconds / 3600);
+  const m = Math.round((seconds % 3600) / 60);
+  return m > 0 ? `${h}h ${m}m` : `${h}h`;
+};

@@ -32,6 +32,7 @@ import { useHaptic } from '@/hooks/useHaptic';
 import { cn } from '@/lib/utils';
 import { motion, AnimatePresence } from 'framer-motion';
 import PullToRefresh from '@/components/admin/PullToRefresh';
+import AdminPageHeader from '@/components/admin/AdminPageHeader';
 import MessageUserSheet from '@/components/admin/MessageUserSheet';
 import { AnimatedCounter } from '@/components/dashboard/AnimatedCounter';
 
@@ -279,6 +280,9 @@ export default function AdminUserMessages() {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['admin-user-messages'] });
     },
+    onError: (error: Error) => {
+      toast({ title: 'Error', description: error.message, variant: 'destructive' });
+    },
   });
 
   // Send reply
@@ -376,22 +380,16 @@ export default function AdminUserMessages() {
       }}
     >
       <div className="pb-20">
-        {/* ── Compact Header Row ── */}
-        <motion.div
-          initial={{ opacity: 0, y: -8 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.3 }}
-          className="flex items-center justify-between mb-4"
-        >
-          <div className="flex items-center gap-3">
-            <h1 className="text-2xl font-bold !text-white">Messages</h1>
-            {totalUnread > 0 && (
-              <span className="flex h-6 min-w-6 items-center justify-center rounded-full bg-amber-500 px-2 text-xs font-bold text-black shadow-lg shadow-amber-500/30">
-                {totalUnread}
-              </span>
-            )}
-          </div>
-          <div className="flex items-center gap-2">
+        <AdminPageHeader
+          title="Messages"
+          subtitle={totalUnread > 0 ? `${totalUnread} unread` : 'User conversations'}
+          icon={MessageSquare}
+          iconColor="text-amber-400"
+          iconBg="bg-amber-500/10 border-amber-500/20"
+          accentColor="from-amber-500 via-yellow-400 to-amber-500"
+          onRefresh={() => refetch()}
+          isRefreshing={isFetching}
+          actions={
             <Button
               onClick={() => setComposeOpen(true)}
               size="icon"
@@ -399,17 +397,8 @@ export default function AdminUserMessages() {
             >
               <PenSquare className="h-4.5 w-4.5" />
             </Button>
-            <Button
-              variant="ghost"
-              size="icon"
-              className="h-11 w-11 rounded-xl bg-white/[0.06] hover:bg-white/10 !text-white touch-manipulation border border-white/[0.08]"
-              onClick={() => refetch()}
-              disabled={isFetching}
-            >
-              <RefreshCw className={cn('h-4 w-4', isFetching && 'animate-spin')} />
-            </Button>
-          </div>
-        </motion.div>
+          }
+        />
 
         {/* ── Search Bar ── */}
         <motion.div

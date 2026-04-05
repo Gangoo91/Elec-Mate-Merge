@@ -3,7 +3,9 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from '@/hooks/use-toast';
 import { formatDistanceToNow, parseISO, format, differenceInDays } from 'date-fns';
+import { Skeleton } from '@/components/ui/skeleton';
 import PullToRefresh from '@/components/admin/PullToRefresh';
+import AdminPageHeader from '@/components/admin/AdminPageHeader';
 import AdminSearchInput from '@/components/admin/AdminSearchInput';
 import AdminEmptyState from '@/components/admin/AdminEmptyState';
 import { useHaptic } from '@/hooks/useHaptic';
@@ -88,7 +90,7 @@ export default function AdminApprenticeCampaigns() {
   const campaignType = 'trial_winback' as const;
 
   // ─── Queries ────────────────────────────────────────────
-  const { data: stats, isLoading: statsLoading } = useQuery({
+  const { data: stats, isLoading: statsLoading, isFetching: statsFetching, refetch } = useQuery({
     queryKey: ['apprentice-campaign-stats', campaignType],
     queryFn: async () => {
       const { data, error } = await supabase.functions.invoke('send-apprentice-campaign', {
@@ -303,18 +305,16 @@ export default function AdminApprenticeCampaigns() {
       }}
     >
       <div className="space-y-4 pb-20">
-        {/* Header */}
-        <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-amber-500 to-orange-500 flex items-center justify-center">
-            <Gift className="h-5 w-5 text-white" />
-          </div>
-          <div>
-            <h2 className="text-lg font-bold">Apprentice Win-Back</h2>
-            <p className="text-xs text-white">
-              Re-engage lapsed trial apprentices with targeted emails
-            </p>
-          </div>
-        </div>
+        <AdminPageHeader
+          title="Apprentice Win-Back"
+          subtitle="Re-engage lapsed trial apprentices with targeted emails"
+          icon={GraduationCap}
+          iconColor="text-purple-400"
+          iconBg="bg-purple-500/10 border-purple-500/20"
+          accentColor="from-purple-500 via-violet-400 to-purple-500"
+          onRefresh={() => refetch()}
+          isRefreshing={statsFetching}
+        />
 
         {/* Hero Stats Row */}
         <div className="grid grid-cols-4 gap-2">
@@ -581,9 +581,17 @@ export default function AdminApprenticeCampaigns() {
 
             {/* User rows */}
             {usersLoading ? (
-              <div className="space-y-2">
-                {[1, 2, 3].map((i) => (
-                  <div key={i} className="h-16 bg-muted/50 rounded-lg animate-pulse" />
+              <div className="space-y-3 animate-pulse">
+                {[...Array(3)].map((_, i) => (
+                  <div key={i} className="rounded-2xl bg-white/[0.03] border border-white/[0.06] p-4 space-y-3">
+                    <div className="flex items-center gap-3">
+                      <Skeleton className="w-9 h-9 rounded-lg" />
+                      <div className="space-y-1.5 flex-1">
+                        <Skeleton className="h-4 w-32" />
+                        <Skeleton className="h-3 w-48" />
+                      </div>
+                    </div>
+                  </div>
                 ))}
               </div>
             ) : filteredUsers.length === 0 ? (
@@ -672,16 +680,25 @@ export default function AdminApprenticeCampaigns() {
 
               <div className="flex-1 overflow-y-auto p-4">
                 {sentLoading ? (
-                  <div className="space-y-2">
-                    {[1, 2, 3].map((i) => (
-                      <div key={i} className="h-16 bg-muted/50 rounded-lg animate-pulse" />
+                  <div className="space-y-3 animate-pulse">
+                    {[...Array(3)].map((_, i) => (
+                      <div key={i} className="rounded-2xl bg-white/[0.03] border border-white/[0.06] p-4 space-y-3">
+                        <div className="flex items-center gap-3">
+                          <Skeleton className="w-9 h-9 rounded-lg" />
+                          <div className="space-y-1.5 flex-1">
+                            <Skeleton className="h-4 w-32" />
+                            <Skeleton className="h-3 w-48" />
+                          </div>
+                        </div>
+                      </div>
                     ))}
                   </div>
                 ) : !sentUsers || sentUsers.length === 0 ? (
-                  <div className="text-center py-8">
-                    <Mail className="h-10 w-10 text-white mx-auto mb-3 opacity-50" />
-                    <p className="text-sm text-white">No win-back emails sent yet</p>
-                  </div>
+                  <AdminEmptyState
+                    icon={Mail}
+                    title="No emails sent yet"
+                    description="Send the win-back email to see results here."
+                  />
                 ) : (
                   <div className="space-y-2">
                     {sentUsers.map((user) => (

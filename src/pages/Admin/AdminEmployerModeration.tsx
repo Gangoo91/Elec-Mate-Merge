@@ -38,10 +38,12 @@ import {
   Flag,
   Loader2,
 } from 'lucide-react';
+import { Skeleton } from '@/components/ui/skeleton';
 import { format, formatDistanceToNow } from 'date-fns';
 import { toast } from '@/hooks/use-toast';
 import AdminSearchInput from '@/components/admin/AdminSearchInput';
 import AdminEmptyState from '@/components/admin/AdminEmptyState';
+import AdminPageHeader from '@/components/admin/AdminPageHeader';
 import PullToRefresh from '@/components/admin/PullToRefresh';
 import { useHaptic } from '@/hooks/useHaptic';
 
@@ -227,22 +229,16 @@ export default function AdminEmployerModeration() {
       }}
     >
       <div className="space-y-4 pb-20">
-        {/* Header */}
-        <div className="flex items-center justify-between">
-          <div>
-            <h2 className="text-lg font-semibold">Vacancy Moderation</h2>
-            <p className="text-xs text-muted-foreground">{stats?.pending || 0} pending review</p>
-          </div>
-          <Button
-            variant="outline"
-            size="icon"
-            className="h-11 w-11 touch-manipulation"
-            onClick={() => refetch()}
-            disabled={isFetching}
-          >
-            <RefreshCw className={`h-4 w-4 ${isFetching ? 'animate-spin' : ''}`} />
-          </Button>
-        </div>
+        <AdminPageHeader
+          title="Vacancy Moderation"
+          subtitle={`${stats?.pending || 0} pending review`}
+          icon={Briefcase}
+          iconColor="text-blue-400"
+          iconBg="bg-blue-500/10 border-blue-500/20"
+          accentColor="from-blue-500 via-blue-400 to-cyan-500"
+          onRefresh={() => refetch()}
+          isRefreshing={isFetching}
+        />
 
         {/* Stats Cards */}
         <div className="grid grid-cols-4 gap-2">
@@ -309,13 +305,17 @@ export default function AdminEmployerModeration() {
 
         {/* Vacancy List */}
         {isLoading ? (
-          <div className="space-y-2">
-            {[...Array(5)].map((_, i) => (
-              <Card key={i} className="animate-pulse">
-                <CardContent className="pt-4 pb-4">
-                  <div className="h-16 bg-muted rounded" />
-                </CardContent>
-              </Card>
+          <div className="space-y-3 animate-pulse">
+            {[...Array(3)].map((_, i) => (
+              <div key={i} className="rounded-2xl bg-white/[0.03] border border-white/[0.06] p-4 space-y-3">
+                <div className="flex items-center gap-3">
+                  <Skeleton className="w-9 h-9 rounded-lg" />
+                  <div className="space-y-1.5 flex-1">
+                    <Skeleton className="h-4 w-32" />
+                    <Skeleton className="h-3 w-48" />
+                  </div>
+                </div>
+              </div>
             ))}
           </div>
         ) : vacancies?.length === 0 ? (

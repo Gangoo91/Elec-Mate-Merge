@@ -41,7 +41,13 @@ import {
 } from 'lucide-react';
 import { formatDistanceToNow, format } from 'date-fns';
 import { cn } from '@/lib/utils';
-import { getInitials, getRoleColor } from '@/utils/adminUtils';
+import {
+  getInitials,
+  getRoleColor,
+  calculateEngagementScore,
+  getScoreColor,
+  SCORE_COLOR_MAP,
+} from '@/utils/adminUtils';
 import MessageUserSheet from './MessageUserSheet';
 
 interface UserData {
@@ -74,6 +80,7 @@ interface UserManagementSheetProps {
   user: UserData | null;
   open: boolean;
   onOpenChange: (open: boolean) => void;
+  extraActions?: React.ReactNode;
 }
 
 const tierPricing: Record<string, string> = {
@@ -86,6 +93,7 @@ export default function UserManagementSheet({
   user,
   open,
   onOpenChange,
+  extraActions,
 }: UserManagementSheetProps) {
   const queryClient = useQueryClient();
   const haptic = useHaptic();
@@ -99,25 +107,48 @@ export default function UserManagementSheet({
   const [extendDate, setExtendDate] = useState('');
   const [manageTier, setManageTier] = useState(user?.subscription_tier || '');
 
-  // Fetch user activity data
+  // Fetch user activity data + area breakdown
   const { data: activityData } = useQuery({
     queryKey: ['user-activity', user?.id],
     queryFn: async () => {
       if (!user?.id) return null;
 
-      // Get activity summary
-      const { data: summary } = await supabase
-        .from('user_activity_summary')
-        .select('*')
-        .eq('user_id', user.id)
-        .maybeSingle();
+      const [summaryRes, userActivityRes, areaRes, studyRes, featuresRes, journeyRes] = await Promise.all([
+        supabase.from('user_activity_summary').select('*').eq('user_id', user.id).maybeSingle(),
+        supabase
+          .from('user_activity')
+          .select('points, streak, last_active_date')
+          .eq('user_id', user.id)
+          .maybeSingle(),
+        supabase
+          .from('user_engagement_by_area' as any)
+          .select('*')
+          .eq('user_id', user.id)
+          .order('seconds_in_area', { ascending: false }),
+        supabase
+          .from('user_study_detail' as any)
+          .select('*')
+          .eq('user_id', user.id)
+          .order('seconds_spent', { ascending: false })
+          .limit(10),
+        supabase
+          .from('user_events')
+          .select('event_name, event_data, created_at')
+          .eq('user_id', user.id)
+          .eq('event_type', 'feature_use')
+          .order('created_at', { ascending: false })
+          .limit(20),
+        supabase
+          .from('user_events')
+          .select('event_type, event_name, event_data, page_path, created_at')
+          .eq('user_id', user.id)
+          .in('event_type', ['login', 'feature_use', 'page_view', 'session_start'])
+          .order('created_at', { ascending: false })
+          .limit(50),
+      ]);
 
-      // Get user_activity for points/streak
-      const { data: userActivity } = await supabase
-        .from('user_activity')
-        .select('points, streak, last_active_date')
-        .eq('user_id', user.id)
-        .maybeSingle();
+      const summary = summaryRes.data;
+      const userActivity = userActivityRes.data;
 
       return {
         loginCount: summary?.login_count || 0,
@@ -127,8 +158,39 @@ export default function UserManagementSheet({
         uniquePagesVisited: summary?.unique_pages_visited || 0,
         activeDays: summary?.active_days || 0,
         lastActivity: summary?.last_activity,
+        featuresUsed: summary?.features_used || [],
         points: userActivity?.points || 0,
         streak: userActivity?.streak || 0,
+        areaBreakdown: (areaRes.data || []) as Array<{
+          area: string;
+          page_views: number;
+          unique_pages: number;
+          heartbeats: number;
+          seconds_in_area: number;
+          features_used: number;
+          feature_names: string[] | null;
+          active_days: number;
+        }>,
+        studyDetail: (studyRes.data || []) as Array<{
+          page_path: string;
+          course_level: string;
+          module_slug: string;
+          section_slug: string;
+          views: number;
+          seconds_spent: number;
+        }>,
+        recentFeatures: (featuresRes.data || []) as Array<{
+          event_name: string;
+          event_data: Record<string, any>;
+          created_at: string;
+        }>,
+        journeyEvents: (journeyRes.data || []) as Array<{
+          event_type: string;
+          event_name: string | null;
+          event_data: Record<string, any> | null;
+          page_path: string | null;
+          created_at: string;
+        }>,
       };
     },
     enabled: !!user?.id && open,
@@ -331,204 +393,424 @@ export default function UserManagementSheet({
     queryClient.invalidateQueries({ queryKey: ['admin-users'] });
   };
 
+  const [showAllJourney, setShowAllJourney] = useState(false);
+
   if (!user) return null;
 
   const colors = getRoleColor(user.role);
 
   const isLoading = grantMutation.isPending || revokeMutation.isPending;
 
+  // Compute engagement status
+  const hasActivity = activityData && (activityData.loginCount > 0 || activityData.totalSecondsTracked > 0);
+  const lastLogin = user.last_sign_in;
+  const isHot = (activityData?.totalSecondsTracked || 0) > 300 || (activityData?.featureUseCount || 0) > 2;
+  const statusColor = !lastLogin && !hasActivity ? 'blue' : !hasActivity ? 'amber' : isHot ? 'green' : 'amber';
+  const statusLabel = !lastLogin && !hasActivity ? 'Never logged in' : !hasActivity ? 'Signed up & left' : isHot ? 'Engaged' : 'Low activity';
+
+  // Engagement score
+  const engagementScore = calculateEngagementScore(activityData ? {
+    login_count: activityData.loginCount,
+    page_view_count: activityData.pageViewCount,
+    total_seconds_tracked: activityData.totalSecondsTracked,
+    feature_use_count: activityData.featureUseCount,
+    active_days: activityData.activeDays,
+    unique_pages_visited: activityData.uniquePagesVisited,
+  } : null);
+  const scoreColor = getScoreColor(engagementScore);
+  const { stroke: scoreStroke } = SCORE_COLOR_MAP[scoreColor];
+
+  // Journey timeline — group consecutive page_views on same path within 5min
+  const journeyMilestones = (() => {
+    const events = activityData?.journeyEvents || [];
+    const milestones: Array<{
+      type: string;
+      label: string;
+      timestamp: string;
+      color: string;
+    }> = [];
+
+    const pathLabels: Record<string, string> = {
+      '/dashboard': 'Dashboard',
+      '/study-centre': 'Study Centre',
+      '/certificates': 'Certificates',
+      '/tools': 'AI Tools',
+      '/quotes': 'Quotes & Invoices',
+      '/materials': 'Materials',
+      '/subscription': 'Subscription',
+      '/settings': 'Settings',
+      '/wellbeing': 'Wellbeing',
+      '/electrician-hub': 'Electrician Hub',
+    };
+
+    const featureLabels: Record<string, string> = {
+      quote_saved: 'Saved Quote',
+      invoice_created: 'Created Invoice',
+      ai_cost_engineer: 'AI Cost Engineer',
+      ai_rams_generator: 'Generated RAMS',
+      ai_circuit_designer: 'Circuit Designer',
+      certificate_opened: 'Opened Certificate',
+      certificate_saved: 'Saved Certificate',
+      board_scanner: 'Board Scanner',
+      material_search: 'Materials Search',
+      calculator_used: 'Used Calculator',
+      study_session: 'Study Session',
+    };
+
+    const typeColors: Record<string, string> = {
+      page_view: 'bg-blue-500',
+      feature_use: 'bg-green-500',
+      session_start: 'bg-amber-500',
+      login: 'bg-purple-500',
+    };
+
+    let lastPath: string | null = null;
+    let lastTime: number | null = null;
+
+    for (const ev of events) {
+      // Group consecutive page_views within 5min on same path
+      if (ev.event_type === 'page_view') {
+        const evTime = new Date(ev.created_at).getTime();
+        if (ev.page_path === lastPath && lastTime && evTime > lastTime - 5 * 60 * 1000) {
+          lastTime = evTime;
+          continue;
+        }
+        lastPath = ev.page_path;
+        lastTime = evTime;
+
+        const pathRoot = '/' + (ev.page_path?.replace(/^\//, '').split('/')[0] || '');
+        const label = pathLabels[pathRoot] || ev.page_path?.replace(/^\//, '').split('/')[0]?.replace(/-/g, ' ').replace(/\b\w/g, (c: string) => c.toUpperCase()) || 'Page';
+
+        milestones.push({ type: 'page_view', label: `Viewed ${label}`, timestamp: ev.created_at, color: typeColors.page_view });
+      } else if (ev.event_type === 'feature_use') {
+        lastPath = null;
+        lastTime = null;
+        const label = featureLabels[ev.event_name || ''] || ev.event_name?.replace(/_/g, ' ') || 'Action';
+        milestones.push({ type: 'feature_use', label, timestamp: ev.created_at, color: typeColors.feature_use });
+      } else if (ev.event_type === 'session_start') {
+        lastPath = null;
+        lastTime = null;
+        milestones.push({ type: 'session_start', label: 'Started Session', timestamp: ev.created_at, color: typeColors.session_start });
+      } else if (ev.event_type === 'login') {
+        lastPath = null;
+        lastTime = null;
+        milestones.push({ type: 'login', label: 'Logged In', timestamp: ev.created_at, color: typeColors.login });
+      }
+    }
+    return milestones;
+  })();
+
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent side="bottom" className="h-[85vh] rounded-t-2xl p-0">
-        <div className="flex flex-col h-full">
+      <SheetContent side="bottom" className="h-[90vh] rounded-t-2xl p-0 overflow-hidden">
+        <div className="flex flex-col h-full bg-background">
           {/* Drag Handle */}
-          <div className="flex justify-center pt-3 pb-2">
-            <div className="w-10 h-1 rounded-full bg-muted-foreground/30" />
+          <div className="flex justify-center pt-3 pb-1">
+            <div className="w-10 h-1 rounded-full bg-white/20" />
           </div>
 
-          <SheetHeader className="px-4 pb-4 border-b border-border">
-            <SheetTitle className="text-left">Manage User</SheetTitle>
+          <SheetHeader className="sr-only">
+            <SheetTitle>{user.full_name}</SheetTitle>
           </SheetHeader>
 
-          <div className="flex-1 overflow-y-auto p-4 space-y-4">
-            {/* User Header */}
-            <div className="flex items-center gap-4 p-4 rounded-xl bg-muted/50">
-              <div
-                className={cn(
-                  'w-14 h-14 rounded-xl flex items-center justify-center text-lg font-bold',
-                  colors.bg,
-                  colors.text
-                )}
-              >
-                {getInitials(user.full_name)}
-              </div>
-              <div className="flex-1 min-w-0">
-                <h3 className="font-semibold text-lg truncate">{user.full_name || 'Unknown'}</h3>
+          <div className="flex-1 overflow-y-auto">
+            {/* ── Hero Profile Card ── */}
+            <div className="relative px-5 pt-4 pb-5">
+              <div className="absolute inset-0 bg-gradient-to-b from-white/[0.03] to-transparent" />
+              <div className="relative flex flex-col items-center text-center">
+                {/* Avatar + Engagement Ring */}
+                <div className="relative mb-3">
+                  <div className={cn(
+                    'w-16 h-16 rounded-2xl flex items-center justify-center text-xl font-bold ring-2 ring-white/10',
+                    colors.bg, colors.text
+                  )}>
+                    {getInitials(user.full_name)}
+                  </div>
+                  {/* Score ring overlay — bottom-right */}
+                  {activityData && (
+                    <div className="absolute -bottom-1.5 -right-1.5 bg-background rounded-full p-0.5">
+                      <svg width={28} height={28}>
+                        <circle cx={14} cy={14} r={11.5} fill="none" stroke="rgba(255,255,255,0.08)" strokeWidth={3} />
+                        <circle
+                          cx={14} cy={14} r={11.5} fill="none"
+                          stroke={scoreStroke} strokeWidth={3} strokeLinecap="round"
+                          strokeDasharray={2 * Math.PI * 11.5}
+                          strokeDashoffset={2 * Math.PI * 11.5 - (engagementScore / 100) * 2 * Math.PI * 11.5}
+                          transform="rotate(-90 14 14)"
+                        />
+                        <text x="50%" y="50%" dominantBaseline="central" textAnchor="middle"
+                          fill={scoreStroke} fontSize={9} fontWeight="700">
+                          {engagementScore}
+                        </text>
+                      </svg>
+                    </div>
+                  )}
+                </div>
+
+                {/* Name + Status */}
+                <h3 className="text-lg font-bold text-white">{user.full_name || 'Unknown'}</h3>
+
+                {/* Email — tappable */}
                 {user.email && (
-                  <p className="text-sm text-muted-foreground truncate flex items-center gap-1">
-                    <Mail className="h-3 w-3" />
-                    {user.email}
-                  </p>
+                  <a
+                    href={`mailto:${user.email}`}
+                    className="text-sm text-blue-400 mt-0.5 flex items-center gap-1.5 active:text-blue-300 touch-manipulation"
+                  >
+                    <Mail className="h-3.5 w-3.5" />
+                    <span className="underline underline-offset-2">{user.email}</span>
+                  </a>
                 )}
-                <div className="flex items-center gap-2 mt-1">
+
+                {/* Badges row */}
+                <div className="flex items-center gap-2 mt-2.5">
                   {user.role && (
-                    <Badge className={cn('text-xs capitalize', colors.bg, colors.text)}>
+                    <Badge className={cn('text-[10px] capitalize', colors.bg, colors.text)}>
                       {user.role}
                     </Badge>
                   )}
-                  <span className="text-xs text-muted-foreground">
-                    Joined {formatDistanceToNow(new Date(user.created_at), { addSuffix: true })}
-                  </span>
+                  <Badge className={cn(
+                    'text-[10px]',
+                    user.subscribed ? 'bg-emerald-500/20 text-emerald-400' : 'bg-white/10 text-white'
+                  )}>
+                    {user.subscribed ? (user.subscription_tier || 'Subscribed') : 'Free'}
+                  </Badge>
+                  <Badge className={cn(
+                    'text-[10px]',
+                    statusColor === 'green' ? 'bg-green-500/20 text-green-400' :
+                    statusColor === 'amber' ? 'bg-amber-500/20 text-amber-400' :
+                    'bg-blue-500/20 text-blue-400'
+                  )}>
+                    {statusLabel}
+                  </Badge>
                 </div>
+
+                <p className="text-[11px] text-white mt-1.5">
+                  Joined {formatDistanceToNow(new Date(user.created_at), { addSuffix: true })}
+                  {activityData?.lastActivity && (
+                    <> · Last active {formatDistanceToNow(new Date(activityData.lastActivity), { addSuffix: true })}</>
+                  )}
+                </p>
               </div>
             </div>
 
-            {/* Quick Actions */}
-            <div className="flex gap-2">
-              <Button
-                variant="outline"
-                className="flex-1 h-11 touch-manipulation"
+            {/* ── Quick Actions ── */}
+            <div className="px-4 pb-4 flex gap-2">
+              {user.email && (
+                <a
+                  href={`mailto:${user.email}`}
+                  className="flex-1 h-11 rounded-xl bg-blue-500/10 ring-1 ring-blue-500/20 flex items-center justify-center gap-2 text-blue-400 text-sm font-medium active:bg-blue-500/20 touch-manipulation transition-colors"
+                >
+                  <Mail className="h-4 w-4" />
+                  Email
+                </a>
+              )}
+              <button
+                className="flex-1 h-11 rounded-xl bg-white/[0.06] ring-1 ring-white/10 flex items-center justify-center gap-2 text-white text-sm font-medium active:bg-white/10 touch-manipulation transition-colors"
                 onClick={() => setMessageSheetOpen(true)}
               >
-                <MessageSquare className="h-4 w-4 mr-2" />
-                Message User
-              </Button>
+                <MessageSquare className="h-4 w-4" />
+                Message
+              </button>
               {!user.subscribed && (
-                <Button
-                  variant="outline"
-                  className="flex-1 h-11 touch-manipulation border-yellow-500/30 text-yellow-400 hover:bg-yellow-500/10"
+                <button
+                  className="h-11 px-4 rounded-xl bg-yellow-500/10 ring-1 ring-yellow-500/20 flex items-center justify-center gap-2 text-yellow-400 text-sm font-medium active:bg-yellow-500/20 touch-manipulation transition-colors disabled:opacity-50"
                   onClick={() => sendEmailMutation.mutate()}
                   disabled={sendEmailMutation.isPending}
                 >
                   {sendEmailMutation.isPending ? (
-                    <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                    <Loader2 className="h-4 w-4 animate-spin" />
                   ) : (
-                    <Send className="h-4 w-4 mr-2" />
+                    <Send className="h-4 w-4" />
                   )}
-                  Send Reminder
-                </Button>
+                </button>
               )}
             </div>
 
-            {/* Activity & Engagement */}
-            <div className="rounded-xl border border-border p-4 space-y-3">
-              <h4 className="font-medium flex items-center gap-2">
-                <Activity className="h-4 w-4 text-orange-400" />
-                Activity & Engagement
-              </h4>
-
-              {/* Activity Status Banner */}
-              {(() => {
-                const hasActivity =
-                  activityData &&
-                  (activityData.loginCount > 0 || activityData.totalSecondsTracked > 0);
-                const lastLogin = user.last_sign_in;
-                const neverLoggedIn = !lastLogin && !hasActivity;
-                const signedUpButLeft = lastLogin && !hasActivity;
-
-                if (neverLoggedIn) {
-                  return (
-                    <div className="flex items-center gap-3 p-3 rounded-lg bg-blue-500/10 border border-blue-500/20">
-                      <Snowflake className="h-5 w-5 text-blue-400" />
-                      <div>
-                        <p className="text-sm font-medium text-blue-400">Never Logged In</p>
-                        <p className="text-xs text-muted-foreground">
-                          User hasn't returned since signup
-                        </p>
-                      </div>
-                    </div>
-                  );
-                }
-
-                if (signedUpButLeft) {
-                  return (
-                    <div className="flex items-center gap-3 p-3 rounded-lg bg-amber-500/10 border border-amber-500/20">
-                      <AlertTriangle className="h-5 w-5 text-amber-400" />
-                      <div>
-                        <p className="text-sm font-medium text-amber-400">Signed Up & Left</p>
-                        <p className="text-xs text-muted-foreground">
-                          Last seen: {formatDistanceToNow(new Date(lastLogin), { addSuffix: true })}
-                        </p>
-                      </div>
-                    </div>
-                  );
-                }
-
-                if (hasActivity) {
-                  const isHot =
-                    (activityData?.totalSecondsTracked || 0) > 300 ||
-                    (activityData?.featureUseCount || 0) > 2;
-                  return (
-                    <div
-                      className={cn(
-                        'flex items-center gap-3 p-3 rounded-lg border',
-                        isHot
-                          ? 'bg-green-500/10 border-green-500/20'
-                          : 'bg-amber-500/10 border-amber-500/20'
-                      )}
-                    >
-                      {isHot ? (
-                        <Flame className="h-5 w-5 text-green-400" />
-                      ) : (
-                        <Activity className="h-5 w-5 text-amber-400" />
-                      )}
-                      <div>
-                        <p
-                          className={cn(
-                            'text-sm font-medium',
-                            isHot ? 'text-green-400' : 'text-amber-400'
-                          )}
-                        >
-                          {isHot ? 'Engaged User' : 'Some Activity'}
-                        </p>
-                        <p className="text-xs text-muted-foreground">
-                          {activityData?.lastActivity
-                            ? `Last active: ${formatDistanceToNow(new Date(activityData.lastActivity), { addSuffix: true })}`
-                            : lastLogin
-                              ? `Last login: ${formatDistanceToNow(new Date(lastLogin), { addSuffix: true })}`
-                              : ''}
-                        </p>
-                      </div>
-                    </div>
-                  );
-                }
-
-                return null;
-              })()}
-
-              {/* Activity Stats Grid */}
-              <div className="grid grid-cols-3 gap-3 text-center">
-                <div className="p-3 rounded-lg bg-muted/50">
-                  <Timer className="h-4 w-4 text-teal-400 mx-auto mb-1" />
-                  <p className="text-lg font-bold">
+            {/* ── Stats Grid ── */}
+            <div className="px-4 pb-4">
+              <div className="grid grid-cols-4 gap-2">
+                <div className="text-center p-3 rounded-xl bg-white/[0.04] ring-1 ring-white/[0.06]">
+                  <p className="text-lg font-bold text-white">
                     {formatTimeSpent(activityData?.totalSecondsTracked || 0)}
                   </p>
-                  <p className="text-[10px] text-muted-foreground">Time in App</p>
+                  <p className="text-[10px] text-white mt-0.5">Time</p>
                 </div>
-                <div className="p-3 rounded-lg bg-muted/50">
-                  <Eye className="h-4 w-4 text-sky-400 mx-auto mb-1" />
-                  <p className="text-lg font-bold">{activityData?.uniquePagesVisited || 0}</p>
-                  <p className="text-[10px] text-muted-foreground">Pages Viewed</p>
+                <div className="text-center p-3 rounded-xl bg-white/[0.04] ring-1 ring-white/[0.06]">
+                  <p className="text-lg font-bold text-white">{activityData?.uniquePagesVisited || 0}</p>
+                  <p className="text-[10px] text-white mt-0.5">Pages</p>
                 </div>
-                <div className="p-3 rounded-lg bg-muted/50">
-                  <LogIn className="h-4 w-4 text-cyan-400 mx-auto mb-1" />
-                  <p className="text-lg font-bold">{activityData?.loginCount || 0}</p>
-                  <p className="text-[10px] text-muted-foreground">Logins</p>
+                <div className="text-center p-3 rounded-xl bg-white/[0.04] ring-1 ring-white/[0.06]">
+                  <p className="text-lg font-bold text-white">{activityData?.loginCount || 0}</p>
+                  <p className="text-[10px] text-white mt-0.5">Logins</p>
                 </div>
-              </div>
-
-              {/* Additional Stats */}
-              <div className="grid grid-cols-2 gap-2 text-sm">
-                <div className="flex justify-between items-center py-1">
-                  <span className="text-muted-foreground">Features Used</span>
-                  <span className="font-medium">{activityData?.featureUseCount || 0}</span>
-                </div>
-                <div className="flex justify-between items-center py-1">
-                  <span className="text-muted-foreground">Active Days</span>
-                  <span className="font-medium">{activityData?.activeDays || 0}</span>
+                <div className="text-center p-3 rounded-xl bg-white/[0.04] ring-1 ring-white/[0.06]">
+                  <p className="text-lg font-bold text-white">{activityData?.activeDays || 0}</p>
+                  <p className="text-[10px] text-white mt-0.5">Days</p>
                 </div>
               </div>
             </div>
+
+            <div className="px-4 space-y-3 pb-6">
+
+            {/* Where They Spend Time */}
+            {activityData?.areaBreakdown && activityData.areaBreakdown.length > 0 && (
+              <div className="rounded-xl border border-border p-4 space-y-3">
+                <h4 className="font-medium flex items-center gap-2">
+                  <Eye className="h-4 w-4 text-blue-400" />
+                  Where They Spend Time
+                </h4>
+                <div className="space-y-2">
+                  {activityData.areaBreakdown
+                    .filter((a) => a.page_views > 0)
+                    .map((area) => {
+                      const areaLabels: Record<string, { label: string; color: string }> = {
+                        study_centre: { label: 'Study Centre', color: 'bg-purple-500' },
+                        certificates: { label: 'Certificates', color: 'bg-blue-500' },
+                        tools: { label: 'AI Tools', color: 'bg-cyan-500' },
+                        quotes_invoices: { label: 'Quotes & Invoices', color: 'bg-green-500' },
+                        subscription: { label: 'Subscription', color: 'bg-yellow-500' },
+                        dashboard: { label: 'Dashboard', color: 'bg-amber-500' },
+                        materials: { label: 'Materials', color: 'bg-orange-500' },
+                        electrician_hub: { label: 'Electrician Hub', color: 'bg-teal-500' },
+                        wellbeing: { label: 'Wellbeing', color: 'bg-pink-500' },
+                        settings: { label: 'Settings', color: 'bg-gray-500' },
+                        other: { label: 'Other', color: 'bg-gray-500' },
+                      };
+                      const config = areaLabels[area.area] || { label: area.area, color: 'bg-gray-500' };
+                      const maxViews = Math.max(...activityData.areaBreakdown.map((a) => a.page_views));
+                      const pct = maxViews > 0 ? (area.page_views / maxViews) * 100 : 0;
+
+                      return (
+                        <div key={area.area} className="space-y-1">
+                          <div className="flex items-center justify-between text-sm">
+                            <span className="text-white font-medium">{config.label}</span>
+                            <div className="flex items-center gap-3 text-xs text-muted-foreground">
+                              <span>{area.page_views} pages</span>
+                              {area.seconds_in_area > 0 && (
+                                <span className="font-medium text-white">
+                                  {formatTimeSpent(area.seconds_in_area)}
+                                </span>
+                              )}
+                              {area.features_used > 0 && (
+                                <span className="text-cyan-400">{area.features_used} actions</span>
+                              )}
+                            </div>
+                          </div>
+                          <div className="h-1.5 bg-muted rounded-full overflow-hidden">
+                            <div
+                              className={cn('h-full rounded-full transition-all', config.color)}
+                              style={{ width: `${pct}%` }}
+                            />
+                          </div>
+                        </div>
+                      );
+                    })}
+                </div>
+              </div>
+            )}
+
+            {/* Study Centre Detail */}
+            {activityData?.studyDetail && activityData.studyDetail.length > 0 && (
+              <div className="rounded-xl border border-border p-4 space-y-3">
+                <h4 className="font-medium flex items-center gap-2">
+                  <GraduationCap className="h-4 w-4 text-purple-400" />
+                  Study Centre Activity
+                </h4>
+                <div className="space-y-1.5">
+                  {activityData.studyDetail.slice(0, 8).map((s, i) => {
+                    const moduleName = s.module_slug
+                      ? s.module_slug.replace(/-/g, ' ').replace(/\b\w/g, (c: string) => c.toUpperCase())
+                      : '';
+                    const sectionName = s.section_slug
+                      ? s.section_slug.replace(/-/g, ' ').replace(/\b\w/g, (c: string) => c.toUpperCase())
+                      : '';
+                    return (
+                      <div key={i} className="flex items-center gap-2 p-2 rounded-lg bg-muted/30 text-sm">
+                        <div className="w-1 self-stretch rounded-full bg-purple-500 opacity-60" />
+                        <div className="flex-1 min-w-0">
+                          <p className="text-white truncate font-medium">
+                            {moduleName || s.course_level || 'Study Page'}
+                          </p>
+                          {sectionName && (
+                            <p className="text-xs text-muted-foreground truncate">{sectionName}</p>
+                          )}
+                        </div>
+                        <div className="text-right shrink-0">
+                          <p className="text-xs text-white">{s.views} views</p>
+                          {s.seconds_spent > 0 && (
+                            <p className="text-[10px] text-muted-foreground">
+                              {formatTimeSpent(s.seconds_spent)}
+                            </p>
+                          )}
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
+
+            {/* User Journey Timeline */}
+            {journeyMilestones.length > 0 && (
+              <div className="rounded-xl border border-border p-4 space-y-3">
+                <h4 className="font-medium flex items-center gap-2">
+                  <Activity className="h-4 w-4 text-cyan-400" />
+                  User Journey
+                </h4>
+                <div className="relative pl-4">
+                  {/* Vertical line */}
+                  <div className="absolute left-[7px] top-1 bottom-1 w-px bg-white/10" />
+
+                  <div className="space-y-2">
+                    {(showAllJourney ? journeyMilestones : journeyMilestones.slice(0, 15)).map((m, i) => {
+                      // Compute gap from previous milestone
+                      const prevTime = i > 0 ? new Date(journeyMilestones[i - 1].timestamp).getTime() : null;
+                      const curTime = new Date(m.timestamp).getTime();
+                      const gapMin = prevTime ? Math.round((prevTime - curTime) / 60000) : null;
+                      const showGap = gapMin !== null && gapMin > 10;
+
+                      return (
+                        <div key={i}>
+                          {showGap && (
+                            <div className="flex items-center gap-2 py-1 pl-2">
+                              <span className="text-[10px] text-white">
+                                {gapMin! >= 60 ? `${Math.floor(gapMin! / 60)}h ${gapMin! % 60}m gap` : `${gapMin}m gap`}
+                              </span>
+                            </div>
+                          )}
+                          <div className="flex items-start gap-3 relative">
+                            <div className={cn('w-2.5 h-2.5 rounded-full mt-1.5 shrink-0 -ml-[5px] ring-2 ring-background', m.color)} />
+                            <div className="flex-1 min-w-0">
+                              <p className="text-[13px] text-white font-medium truncate">{m.label}</p>
+                            </div>
+                            <span className="text-[10px] text-white shrink-0 mt-0.5">
+                              {formatDistanceToNow(new Date(m.timestamp), { addSuffix: true }).replace('about ', '')}
+                            </span>
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+
+                  {journeyMilestones.length > 15 && !showAllJourney && (
+                    <button
+                      className="mt-2 text-xs text-blue-400 font-medium touch-manipulation active:text-blue-300"
+                      onClick={() => setShowAllJourney(true)}
+                    >
+                      Show {journeyMilestones.length - 15} more
+                    </button>
+                  )}
+                </div>
+
+                {/* Legend */}
+                <div className="flex items-center gap-3 pt-2 border-t border-white/[0.06]">
+                  <div className="flex items-center gap-1"><div className="w-2 h-2 rounded-full bg-blue-500" /><span className="text-[10px] text-white">Page</span></div>
+                  <div className="flex items-center gap-1"><div className="w-2 h-2 rounded-full bg-green-500" /><span className="text-[10px] text-white">Feature</span></div>
+                  <div className="flex items-center gap-1"><div className="w-2 h-2 rounded-full bg-amber-500" /><span className="text-[10px] text-white">Session</span></div>
+                  <div className="flex items-center gap-1"><div className="w-2 h-2 rounded-full bg-purple-500" /><span className="text-[10px] text-white">Login</span></div>
+                </div>
+              </div>
+            )}
 
             {/* Current Subscription Status */}
             <div className="rounded-xl border border-border p-4 space-y-3">
@@ -752,6 +1034,7 @@ export default function UserManagementSheet({
                 </p>
               </div>
             )}
+            </div>
           </div>
 
           {/* Footer Actions */}
@@ -812,6 +1095,13 @@ export default function UserManagementSheet({
               </p>
             )}
           </SheetFooter>
+
+          {/* Extra actions passed by parent (e.g. admin controls) */}
+          {extraActions && (
+            <div className="p-4 border-t border-border space-y-2">
+              {extraActions}
+            </div>
+          )}
         </div>
       </SheetContent>
 

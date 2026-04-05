@@ -27,6 +27,7 @@ import {
   AlertDialogTitle,
 } from '@/components/ui/alert-dialog';
 import {
+  FileSearch,
   FileCheck,
   RefreshCw,
   ChevronRight,
@@ -64,7 +65,10 @@ import { format, formatDistanceToNow, differenceInMinutes } from 'date-fns';
 import { toast } from '@/hooks/use-toast';
 import { cn } from '@/lib/utils';
 import { useHaptic } from '@/hooks/useHaptic';
+import { Skeleton } from '@/components/ui/skeleton';
 import AdminSearchInput from '@/components/admin/AdminSearchInput';
+import AdminEmptyState from '@/components/admin/AdminEmptyState';
+import AdminPageHeader from '@/components/admin/AdminPageHeader';
 import PullToRefresh from '@/components/admin/PullToRefresh';
 
 interface DocumentRecord {
@@ -566,6 +570,10 @@ export default function AdminDocumentReview() {
         toast({ title: 'Document approved' });
       }
     },
+    onError: (error: Error) => {
+      haptic.error();
+      toast({ title: 'Error', description: error.message, variant: 'destructive' });
+    },
   });
 
   // Load document image when selected
@@ -703,6 +711,17 @@ export default function AdminDocumentReview() {
       }}
     >
       <div className="min-h-screen bg-background pb-20">
+        <AdminPageHeader
+          title="Document Review"
+          subtitle="Review and verify uploaded documents"
+          icon={FileSearch}
+          iconColor="text-purple-400"
+          iconBg="bg-purple-500/10 border-purple-500/20"
+          accentColor="from-purple-500 via-violet-400 to-purple-500"
+          onRefresh={() => refetch()}
+          isRefreshing={isFetching}
+        />
+
         {/* Sticky Header */}
         <div className="sticky top-0 z-20 bg-background/95 backdrop-blur-sm border-b border-white/10">
           <div className="p-4 sm:p-6">
@@ -1025,24 +1044,29 @@ export default function AdminDocumentReview() {
         {/* Document List */}
         <div className="p-4 sm:p-6 space-y-3">
           {isLoading ? (
-            <div className="flex flex-col items-center justify-center py-12 gap-3">
-              <Loader2 className="h-8 w-8 animate-spin text-elec-yellow" />
-              <p className="text-sm text-foreground/60">Loading documents...</p>
+            <div className="space-y-3 animate-pulse">
+              {[...Array(3)].map((_, i) => (
+                <div key={i} className="rounded-2xl bg-white/[0.03] border border-white/[0.06] p-4 space-y-3">
+                  <div className="flex items-center gap-3">
+                    <Skeleton className="w-9 h-9 rounded-lg" />
+                    <div className="space-y-1.5 flex-1">
+                      <Skeleton className="h-4 w-32" />
+                      <Skeleton className="h-3 w-48" />
+                    </div>
+                  </div>
+                </div>
+              ))}
             </div>
           ) : documents?.length === 0 ? (
-            <div className="flex flex-col items-center justify-center py-16 gap-4">
-              <div className="w-16 h-16 rounded-2xl bg-green-500/20 flex items-center justify-center">
-                <CheckCircle2 className="h-8 w-8 text-green-400" />
-              </div>
-              <div className="text-center">
-                <h3 className="text-lg font-semibold text-foreground">All caught up!</h3>
-                <p className="text-sm text-foreground/60 mt-1">
-                  {statusFilter === 'needs_attention'
-                    ? 'No documents need attention right now'
-                    : `No ${statusFilter} documents found`}
-                </p>
-              </div>
-            </div>
+            <AdminEmptyState
+              icon={FileSearch}
+              title="All caught up!"
+              description={
+                statusFilter === 'needs_attention'
+                  ? 'No documents need attention right now'
+                  : `No ${statusFilter} documents found`
+              }
+            />
           ) : (
             <>
               {documents?.map((doc) => {

@@ -9,6 +9,8 @@ import { Badge } from '@/components/ui/badge';
 import { Switch } from '@/components/ui/switch';
 import { Textarea } from '@/components/ui/textarea';
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetFooter } from '@/components/ui/sheet';
+import AdminPageHeader from '@/components/admin/AdminPageHeader';
+import { Skeleton } from '@/components/ui/skeleton';
 import {
   Settings,
   Save,
@@ -74,6 +76,7 @@ export default function AdminSettings() {
   const {
     data: settings,
     isLoading,
+    isFetching,
     refetch,
   } = useQuery({
     queryKey: ['admin-app-settings'],
@@ -138,30 +141,29 @@ export default function AdminSettings() {
       }}
     >
       <div className="space-y-4 pb-20">
-        {/* Header */}
-        <motion.section variants={sectionVariants} initial="hidden" animate="visible" custom={0}>
-          <div className="flex items-center justify-between">
-            <div>
-              <h2 className="text-2xl font-bold !text-white">App Settings</h2>
-              <p className="text-xs !text-white">Global configuration</p>
-            </div>
-            <Button
-              variant="outline"
-              size="icon"
-              className="h-11 w-11 touch-manipulation"
-              onClick={() => refetch()}
-            >
-              <RefreshCw className="h-4 w-4" />
-            </Button>
-          </div>
-        </motion.section>
+        <AdminPageHeader
+          title="App Settings"
+          subtitle="Global configuration"
+          icon={Settings}
+          iconColor="text-white"
+          iconBg="bg-white/10 border-white/20"
+          accentColor="from-white/10 via-white/20 to-white/10"
+          onRefresh={() => refetch()}
+          isRefreshing={isFetching}
+        />
 
         {/* Settings by Category */}
         {isLoading ? (
-          <div className="space-y-4">
+          <div className="space-y-3 animate-pulse">
             {[...Array(3)].map((_, i) => (
-              <div key={i} className="glass-premium rounded-2xl overflow-hidden p-6">
-                <div className="h-32 bg-white/[0.06] animate-pulse rounded-lg" />
+              <div key={i} className="rounded-2xl bg-white/[0.03] border border-white/[0.06] p-4 space-y-3">
+                <div className="flex items-center gap-3">
+                  <Skeleton className="w-9 h-9 rounded-lg" />
+                  <div className="space-y-1.5 flex-1">
+                    <Skeleton className="h-4 w-32" />
+                    <Skeleton className="h-3 w-48" />
+                  </div>
+                </div>
               </div>
             ))}
           </div>

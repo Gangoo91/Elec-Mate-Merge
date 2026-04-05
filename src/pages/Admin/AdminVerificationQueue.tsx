@@ -26,6 +26,7 @@ import {
   AlertDialogTitle,
 } from '@/components/ui/alert-dialog';
 import type { LucideIcon } from 'lucide-react';
+import AdminPageHeader from '@/components/admin/AdminPageHeader';
 import {
   IdCard,
   CheckCircle,
@@ -43,6 +44,7 @@ import {
 import { format, formatDistanceToNow } from 'date-fns';
 import { toast } from '@/hooks/use-toast';
 import { useHaptic } from '@/hooks/useHaptic';
+import { Skeleton } from '@/components/ui/skeleton';
 import AdminSearchInput from '@/components/admin/AdminSearchInput';
 import AdminEmptyState from '@/components/admin/AdminEmptyState';
 import PullToRefresh from '@/components/admin/PullToRefresh';
@@ -76,6 +78,7 @@ export default function AdminVerificationQueue() {
   const {
     data: queue,
     isLoading,
+    isFetching,
     refetch,
   } = useQuery({
     queryKey: ['admin-verification-queue', statusFilter],
@@ -174,6 +177,17 @@ export default function AdminVerificationQueue() {
       }}
     >
       <div className="space-y-4 pb-20">
+        <AdminPageHeader
+          title="Verification Queue"
+          subtitle={`${stats.pending} pending review`}
+          icon={ShieldCheck}
+          iconColor="text-green-400"
+          iconBg="bg-green-500/10 border-green-500/20"
+          accentColor="from-green-500 via-emerald-400 to-green-500"
+          onRefresh={() => refetch()}
+          isRefreshing={isFetching}
+        />
+
         {/* Stats */}
         <div className="grid grid-cols-3 gap-3">
           <Card className="bg-gradient-to-br from-amber-500/10 to-amber-600/5 border-amber-500/20">
@@ -231,13 +245,17 @@ export default function AdminVerificationQueue() {
 
         {/* Queue List */}
         {isLoading ? (
-          <div className="space-y-2">
-            {[...Array(5)].map((_, i) => (
-              <Card key={i} className="animate-pulse">
-                <CardContent className="pt-4 pb-4">
-                  <div className="h-16 bg-muted rounded" />
-                </CardContent>
-              </Card>
+          <div className="space-y-3 animate-pulse">
+            {[...Array(3)].map((_, i) => (
+              <div key={i} className="rounded-2xl bg-white/[0.03] border border-white/[0.06] p-4 space-y-3">
+                <div className="flex items-center gap-3">
+                  <Skeleton className="w-9 h-9 rounded-lg" />
+                  <div className="space-y-1.5 flex-1">
+                    <Skeleton className="h-4 w-32" />
+                    <Skeleton className="h-3 w-48" />
+                  </div>
+                </div>
+              </div>
             ))}
           </div>
         ) : queue?.length === 0 ? (

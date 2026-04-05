@@ -8,8 +8,10 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import { Progress } from '@/components/ui/progress';
+import { Skeleton } from '@/components/ui/skeleton';
 import AdminSearchInput from '@/components/admin/AdminSearchInput';
 import AdminEmptyState from '@/components/admin/AdminEmptyState';
+import AdminPageHeader from '@/components/admin/AdminPageHeader';
 import PullToRefresh from '@/components/admin/PullToRefresh';
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
 import {
@@ -148,16 +150,14 @@ export default function AdminOutreach() {
   return (
     <PullToRefresh onRefresh={async () => {}}>
       <div className="space-y-4 pb-20">
-        {/* Header */}
-        <div className="flex items-center gap-3 mb-2">
-          <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center">
-            <Megaphone className="h-5 w-5 text-white" />
-          </div>
-          <div>
-            <h2 className="text-lg font-bold text-white">Outreach</h2>
-            <p className="text-sm text-white">Cold email campaigns</p>
-          </div>
-        </div>
+        <AdminPageHeader
+          title="Outreach"
+          subtitle="Cold email campaigns"
+          icon={Send}
+          iconColor="text-blue-400"
+          iconBg="bg-blue-500/10 border-blue-500/20"
+          accentColor="from-blue-500 via-cyan-400 to-blue-500"
+        />
 
         {/* Tab Navigation */}
         <div className="flex gap-2">
@@ -291,8 +291,18 @@ function ContactsTab() {
 
       {/* Contact List */}
       {isLoading ? (
-        <div className="flex items-center justify-center py-12">
-          <Loader2 className="h-6 w-6 animate-spin text-purple-400" />
+        <div className="space-y-3 animate-pulse">
+          {[...Array(3)].map((_, i) => (
+            <div key={i} className="rounded-2xl bg-white/[0.03] border border-white/[0.06] p-4 space-y-3">
+              <div className="flex items-center gap-3">
+                <Skeleton className="w-9 h-9 rounded-lg" />
+                <div className="space-y-1.5 flex-1">
+                  <Skeleton className="h-4 w-32" />
+                  <Skeleton className="h-3 w-48" />
+                </div>
+              </div>
+            </div>
+          ))}
         </div>
       ) : contacts.length === 0 ? (
         <AdminEmptyState
@@ -804,8 +814,18 @@ function CampaignsTab() {
 
       {/* Campaign List */}
       {isLoading ? (
-        <div className="flex items-center justify-center py-12">
-          <Loader2 className="h-6 w-6 animate-spin text-purple-400" />
+        <div className="space-y-3 animate-pulse">
+          {[...Array(3)].map((_, i) => (
+            <div key={i} className="rounded-2xl bg-white/[0.03] border border-white/[0.06] p-4 space-y-3">
+              <div className="flex items-center gap-3">
+                <Skeleton className="w-9 h-9 rounded-lg" />
+                <div className="space-y-1.5 flex-1">
+                  <Skeleton className="h-4 w-32" />
+                  <Skeleton className="h-3 w-48" />
+                </div>
+              </div>
+            </div>
+          ))}
         </div>
       ) : campaigns.length === 0 ? (
         <AdminEmptyState

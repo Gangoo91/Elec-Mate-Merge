@@ -23,6 +23,8 @@ import {
 import { formatDistanceToNow } from 'date-fns';
 import { motion } from 'framer-motion';
 import { AnimatedCounter } from '@/components/dashboard/AnimatedCounter';
+import { Skeleton } from '@/components/ui/skeleton';
+import AdminPageHeader from '@/components/admin/AdminPageHeader';
 import PullToRefresh from '@/components/admin/PullToRefresh';
 
 const sectionVariants = {
@@ -49,7 +51,66 @@ interface HealthCheck {
   status: 'healthy' | 'warning' | 'error' | 'checking';
   message: string;
   lastChecked: Date;
+  responseTime?: number;
   details?: Record<string, unknown>;
+}
+
+/** Small SVG uptime ring — 32px, 3px stroke */
+function UptimeRing({ status }: { status: HealthCheck['status'] }) {
+  const pct = status === 'healthy' ? 100 : status === 'warning' ? 75 : status === 'error' ? 0 : 50;
+  const colour =
+    status === 'healthy'
+      ? '#4ade80'
+      : status === 'warning'
+        ? '#fbbf24'
+        : status === 'error'
+          ? '#f87171'
+          : '#60a5fa';
+  const r = 13;
+  const c = 2 * Math.PI * r;
+  const offset = c - (pct / 100) * c;
+
+  return (
+    <svg width={32} height={32} viewBox="0 0 32 32" className="shrink-0">
+      <circle cx={16} cy={16} r={r} fill="none" stroke="rgba(255,255,255,0.08)" strokeWidth={3} />
+      <circle
+        cx={16}
+        cy={16}
+        r={r}
+        fill="none"
+        stroke={colour}
+        strokeWidth={3}
+        strokeLinecap="round"
+        strokeDasharray={c}
+        strokeDashoffset={offset}
+        transform="rotate(-90 16 16)"
+      />
+      <text
+        x={16}
+        y={16}
+        textAnchor="middle"
+        dominantBaseline="central"
+        fill={colour}
+        fontSize={pct === 100 ? 8 : 9}
+        fontWeight={700}
+      >
+        {pct}
+      </text>
+    </svg>
+  );
+}
+
+/** Response-time label with colour coding */
+function LatencyBadge({ ms }: { ms: number | undefined }) {
+  if (ms == null) return null;
+  const colour = ms < 200 ? 'text-green-400' : ms <= 500 ? 'text-amber-400' : 'text-red-400';
+  return <span className={`text-xs font-mono ${colour}`}>{ms.toFixed(0)}ms</span>;
+}
+
+function formatCount(n: number): string {
+  if (n >= 10_000) return `${(n / 1000).toFixed(1)}k`;
+  if (n >= 1_000) return `${(n / 1000).toFixed(1)}k`;
+  return String(n);
 }
 
 export default function AdminSystem() {
@@ -79,6 +140,7 @@ export default function AdminSystem() {
           name: 'Database Connection',
           status: duration < 1000 ? 'healthy' : duration < 3000 ? 'warning' : 'error',
           message: `Response time: ${duration.toFixed(0)}ms`,
+          responseTime: duration,
           lastChecked: now,
           details: { responseTime: duration, totalUsers: count },
         });
@@ -103,6 +165,7 @@ export default function AdminSystem() {
           message: data.session
             ? `Active session - ${duration.toFixed(0)}ms`
             : `No session - ${duration.toFixed(0)}ms`,
+          responseTime: duration,
           lastChecked: now,
           details: { responseTime: duration, hasSession: !!data.session },
         });
@@ -216,18 +279,23 @@ export default function AdminSystem() {
   const { data: dbStats } = useQuery({
     queryKey: ['admin-db-stats'],
     queryFn: async () => {
-      const [profilesRes, messagesRes, offersRes, presenceRes] = await Promise.all([
-        supabase.from('profiles').select('*', { count: 'exact', head: true }),
-        supabase.from('global_chat_messages').select('*', { count: 'exact', head: true }),
-        supabase.from('promo_offers').select('*', { count: 'exact', head: true }),
-        supabase.from('user_presence').select('*', { count: 'exact', head: true }),
-      ]);
+      const [profilesRes, messagesRes, offersRes, presenceRes, reportsRes, eventsRes] =
+        await Promise.all([
+          supabase.from('profiles').select('*', { count: 'exact', head: true }),
+          supabase.from('global_chat_messages').select('*', { count: 'exact', head: true }),
+          supabase.from('promo_offers').select('*', { count: 'exact', head: true }),
+          supabase.from('user_presence').select('*', { count: 'exact', head: true }),
+          supabase.from('reports').select('*', { count: 'exact', head: true }),
+          supabase.from('user_events').select('*', { count: 'exact', head: true }),
+        ]);
 
       return {
         profiles: profilesRes.count || 0,
         messages: messagesRes.count || 0,
         offers: offersRes.count || 0,
         presence: presenceRes.count || 0,
+        reports: reportsRes.count || 0,
+        events: eventsRes.count || 0,
       };
     },
   });
@@ -301,6 +369,17 @@ export default function AdminSystem() {
       }}
     >
       <div className="space-y-4 pb-20">
+        <AdminPageHeader
+          title="System Health"
+          subtitle={`${healthChecks?.length || 0} services monitored`}
+          icon={Server}
+          iconColor="text-green-400"
+          iconBg="bg-green-500/10 border-green-500/20"
+          accentColor="from-green-500 via-emerald-400 to-green-500"
+          onRefresh={() => refetch()}
+          isRefreshing={isFetching}
+        />
+
         {/* Overall Status — compact bar */}
         <motion.section variants={sectionVariants} initial="hidden" animate="visible" custom={0}>
           <div className="glass-premium rounded-2xl overflow-hidden">
@@ -405,6 +484,24 @@ export default function AdminSystem() {
           </motion.div>
         </motion.section>
 
+        {/* Database Row Counts Card */}
+        <motion.section variants={sectionVariants} initial="hidden" animate="visible" custom={1.5}>
+          <div className="glass-premium rounded-2xl overflow-hidden">
+            <div className="h-1 bg-gradient-to-r from-cyan-500 to-blue-400" />
+            <div className="p-4">
+              <h3 className="text-sm font-semibold !text-white flex items-center gap-2 mb-3">
+                <Database className="h-4 w-4 text-cyan-400" />
+                Database
+              </h3>
+              <p className="text-sm !text-white">
+                Profiles: {formatCount(dbStats?.profiles || 0)} &middot; Reports:{' '}
+                {formatCount(dbStats?.reports || 0)} &middot; Events:{' '}
+                {formatCount(dbStats?.events || 0)}
+              </p>
+            </div>
+          </div>
+        </motion.section>
+
         {/* Health Checks List */}
         <motion.section variants={sectionVariants} initial="hidden" animate="visible" custom={2}>
           <div className="glass-premium rounded-2xl overflow-hidden">
@@ -416,9 +513,17 @@ export default function AdminSystem() {
               </h3>
             </div>
             {isLoading ? (
-              <div className="p-4 space-y-2">
-                {[...Array(5)].map((_, i) => (
-                  <div key={i} className="h-16 bg-white/[0.06] animate-pulse rounded-lg" />
+              <div className="p-4 space-y-3 animate-pulse">
+                {[...Array(3)].map((_, i) => (
+                  <div key={i} className="rounded-2xl bg-white/[0.03] border border-white/[0.06] p-4 space-y-3">
+                    <div className="flex items-center gap-3">
+                      <Skeleton className="w-9 h-9 rounded-lg" />
+                      <div className="space-y-1.5 flex-1">
+                        <Skeleton className="h-4 w-32" />
+                        <Skeleton className="h-3 w-48" />
+                      </div>
+                    </div>
+                  </div>
                 ))}
               </div>
             ) : (
@@ -427,7 +532,7 @@ export default function AdminSystem() {
                   <motion.div
                     key={i}
                     variants={listItemVariants}
-                    className={`flex items-center justify-between p-4 touch-manipulation active:bg-white/5 cursor-pointer transition-all ${i > 0 ? 'border-t border-white/[0.04]' : ''}`}
+                    className={`flex items-center justify-between p-4 min-h-[3.5rem] touch-manipulation active:bg-white/5 cursor-pointer transition-all ${i > 0 ? 'border-t border-white/[0.04]' : ''}`}
                     onClick={() => setSelectedCheck(check)}
                   >
                     <div className="flex items-center gap-3">
@@ -444,11 +549,16 @@ export default function AdminSystem() {
                       </div>
                       <div>
                         <p className="font-medium text-sm !text-white">{check.name}</p>
-                        <p className="text-xs !text-white">{check.message}</p>
+                        <div className="flex items-center gap-2">
+                          <p className="text-xs !text-white">{check.message}</p>
+                          {check.responseTime != null && (
+                            <LatencyBadge ms={check.responseTime} />
+                          )}
+                        </div>
                       </div>
                     </div>
                     <div className="flex items-center gap-2">
-                      {getStatusIcon(check.status)}
+                      <UptimeRing status={check.status} />
                       <ChevronRight className="h-4 w-4 !text-white" />
                     </div>
                   </motion.div>

@@ -30,6 +30,7 @@ import {
 } from 'lucide-react';
 import { format, subDays } from 'date-fns';
 import { toast } from '@/hooks/use-toast';
+import AdminPageHeader from '@/components/admin/AdminPageHeader';
 import PullToRefresh from '@/components/admin/PullToRefresh';
 import { useHaptic } from '@/hooks/useHaptic';
 import { motion } from 'framer-motion';
@@ -148,7 +149,7 @@ export default function AdminDataExport() {
   const isSuperAdmin = profile?.admin_role === 'super_admin';
 
   // Get row counts for each table
-  const { data: tableCounts, refetch } = useQuery({
+  const { data: tableCounts, isFetching, refetch } = useQuery({
     queryKey: ['admin-table-counts'],
     queryFn: async () => {
       const counts: Record<string, number> = {};
@@ -265,13 +266,16 @@ export default function AdminDataExport() {
       }}
     >
       <div className="space-y-4 pb-20">
-        {/* Header */}
-        <motion.section variants={sectionVariants} initial="hidden" animate="visible" custom={0}>
-          <div>
-            <h2 className="text-2xl font-bold !text-white">Data Export</h2>
-            <p className="text-xs !text-white">Export platform data for analysis</p>
-          </div>
-        </motion.section>
+        <AdminPageHeader
+          title="Data Export"
+          subtitle="Export platform data for analysis"
+          icon={Download}
+          iconColor="text-blue-400"
+          iconBg="bg-blue-500/10 border-blue-500/20"
+          accentColor="from-blue-500 via-blue-400 to-cyan-500"
+          onRefresh={() => refetch()}
+          isRefreshing={isFetching}
+        />
 
         {!isSuperAdmin && (
           <div className="glass-premium rounded-2xl overflow-hidden border-amber-500/30 p-4">

@@ -16,8 +16,10 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from '@/components/ui/alert-dialog';
+import { Skeleton } from '@/components/ui/skeleton';
 import AdminEmptyState from '@/components/admin/AdminEmptyState';
 import AdminSearchInput from '@/components/admin/AdminSearchInput';
+import AdminPageHeader from '@/components/admin/AdminPageHeader';
 import PullToRefresh from '@/components/admin/PullToRefresh';
 import {
   RefreshCw,
@@ -122,6 +124,7 @@ export default function AdminWinback() {
   const {
     data: eligibleUsers,
     isLoading: usersLoading,
+    isFetching,
     refetch,
   } = useQuery<EligibleUser[]>({
     queryKey: ['admin-winback-eligible'],
@@ -396,32 +399,21 @@ export default function AdminWinback() {
       }}
     >
       <div className="space-y-4 pb-20">
-        {/* Header */}
-        <div className="flex items-center justify-between">
-          <div>
-            <h2 className="text-lg font-semibold flex items-center gap-2">
-              <Smartphone className="h-5 w-5 text-amber-400" />
-              App Store Launch
-            </h2>
-            <p className="text-sm text-white">
-              Announce the App Store launch to lapsed users
-            </p>
-          </div>
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => {
-              refetch();
-              queryClient.invalidateQueries({ queryKey: ['admin-winback-tracking'] });
-              queryClient.invalidateQueries({ queryKey: ['admin-winback-stats'] });
-              queryClient.invalidateQueries({ queryKey: ['admin-winback-sent'] });
-            }}
-            className="gap-2 h-11 touch-manipulation"
-          >
-            <RefreshCw className="h-4 w-4" />
-            <span className="hidden sm:inline">Refresh</span>
-          </Button>
-        </div>
+        <AdminPageHeader
+          title="App Store Launch"
+          subtitle="Announce the App Store launch to lapsed users"
+          icon={RotateCcw}
+          iconColor="text-amber-400"
+          iconBg="bg-amber-500/10 border-amber-500/20"
+          accentColor="from-amber-500 via-yellow-400 to-amber-500"
+          onRefresh={() => {
+            refetch();
+            queryClient.invalidateQueries({ queryKey: ['admin-winback-tracking'] });
+            queryClient.invalidateQueries({ queryKey: ['admin-winback-stats'] });
+            queryClient.invalidateQueries({ queryKey: ['admin-winback-sent'] });
+          }}
+          isRefreshing={isFetching}
+        />
 
         {/* Campaign Controls */}
         <Card className="border-amber-500/30 bg-gradient-to-br from-amber-500/5 to-orange-500/5">
@@ -648,9 +640,17 @@ export default function AdminWinback() {
                 )}
 
                 {usersLoading ? (
-                  <div className="space-y-2">
-                    {[1, 2, 3].map((i) => (
-                      <div key={i} className="h-16 bg-muted/50 rounded-lg animate-pulse" />
+                  <div className="space-y-3 animate-pulse">
+                    {[...Array(3)].map((_, i) => (
+                      <div key={i} className="rounded-2xl bg-white/[0.03] border border-white/[0.06] p-4 space-y-3">
+                        <div className="flex items-center gap-3">
+                          <Skeleton className="w-9 h-9 rounded-lg" />
+                          <div className="space-y-1.5 flex-1">
+                            <Skeleton className="h-4 w-32" />
+                            <Skeleton className="h-3 w-48" />
+                          </div>
+                        </div>
+                      </div>
                     ))}
                   </div>
                 ) : filteredUsers.length === 0 ? (

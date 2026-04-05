@@ -27,6 +27,7 @@ import {
   AlertDialogTitle,
 } from '@/components/ui/alert-dialog';
 import PullToRefresh from '@/components/admin/PullToRefresh';
+import AdminPageHeader from '@/components/admin/AdminPageHeader';
 import {
   Megaphone,
   Plus,
@@ -49,6 +50,7 @@ import {
 import { toast } from '@/hooks/use-toast';
 import { useHaptic } from '@/hooks/useHaptic';
 import { cn } from '@/lib/utils';
+import { Skeleton } from '@/components/ui/skeleton';
 import { motion } from 'framer-motion';
 
 interface Announcement {
@@ -121,6 +123,7 @@ export default function AdminAnnouncements() {
   const {
     data: announcements,
     isLoading,
+    isFetching,
     refetch,
   } = useQuery({
     queryKey: ['admin-announcements'],
@@ -195,8 +198,9 @@ export default function AdminAnnouncements() {
       setEditAnnouncement(null);
       toast({ title: 'Announcement updated' });
     },
-    onError: () => {
+    onError: (error: Error) => {
       haptic.error();
+      toast({ title: 'Error', description: error.message, variant: 'destructive' });
     },
   });
 
@@ -215,8 +219,9 @@ export default function AdminAnnouncements() {
       setDeleteId(null);
       toast({ title: 'Announcement deleted' });
     },
-    onError: () => {
+    onError: (error: Error) => {
       haptic.error();
+      toast({ title: 'Error', description: error.message, variant: 'destructive' });
     },
   });
 
@@ -241,43 +246,37 @@ export default function AdminAnnouncements() {
         await refetch();
       }}
     >
-      <div className="pb-20">
-        {/* ── Header ── */}
-        <motion.div
-          initial={{ opacity: 0, y: -8 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.3 }}
-          className="flex items-center justify-between mb-4"
-        >
-          <div>
-            <h1 className="text-2xl font-bold !text-white">Announcements</h1>
-            <p className="text-sm !text-white mt-0.5">{activeCount} active</p>
-          </div>
-          <Button
-            className="h-11 gap-2 rounded-xl touch-manipulation bg-gradient-to-br from-amber-500 to-yellow-500 hover:from-amber-600 hover:to-yellow-600 text-black font-semibold shadow-lg shadow-amber-500/20 px-4"
-            onClick={() => setCreateOpen(true)}
-          >
-            <Plus className="h-4 w-4" />
-            New
-          </Button>
-        </motion.div>
+      <div className="pb-20 space-y-4">
+        <AdminPageHeader
+          title="Announcements"
+          subtitle={`${activeCount} active`}
+          icon={Megaphone}
+          iconColor="text-amber-400"
+          iconBg="bg-amber-500/10 border-amber-500/20"
+          accentColor="from-amber-500 via-yellow-400 to-amber-500"
+          onRefresh={() => refetch()}
+          isRefreshing={isFetching}
+          actions={
+            <Button
+              className="h-11 gap-2 rounded-xl touch-manipulation bg-gradient-to-br from-amber-500 to-yellow-500 hover:from-amber-600 hover:to-yellow-600 text-black font-semibold shadow-lg shadow-amber-500/20 px-4"
+              onClick={() => setCreateOpen(true)}
+            >
+              <Plus className="h-4 w-4" />
+              New
+            </Button>
+          }
+        />
 
         {/* ── List ── */}
         {isLoading ? (
-          <div className="space-y-3">
+          <div className="space-y-3 animate-pulse">
             {[...Array(3)].map((_, i) => (
-              <div key={i} className="glass-premium rounded-2xl overflow-hidden animate-pulse border-l-2 border-white/10">
-                <div className="p-4 space-y-3">
-                  <div className="flex items-center gap-3">
-                    <div className="h-10 w-10 rounded-xl bg-white/[0.06]" />
-                    <div className="flex-1 space-y-2">
-                      <div className="h-4 w-32 bg-white/[0.06] rounded" />
-                      <div className="h-3 w-full bg-white/[0.06] rounded" />
-                    </div>
-                  </div>
-                  <div className="flex gap-2 pl-[52px]">
-                    <div className="h-6 w-16 bg-white/[0.06] rounded-full" />
-                    <div className="h-6 w-12 bg-white/[0.06] rounded-full" />
+              <div key={i} className="rounded-2xl bg-white/[0.03] border border-white/[0.06] p-4 space-y-3">
+                <div className="flex items-center gap-3">
+                  <Skeleton className="w-9 h-9 rounded-lg" />
+                  <div className="space-y-1.5 flex-1">
+                    <Skeleton className="h-4 w-32" />
+                    <Skeleton className="h-3 w-48" />
                   </div>
                 </div>
               </div>

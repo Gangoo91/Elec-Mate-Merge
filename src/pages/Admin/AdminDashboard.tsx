@@ -2,6 +2,7 @@
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
 import {
   Users,
   TrendingUp,
@@ -15,16 +16,26 @@ import {
   ShoppingCart,
   Eye,
   MessageSquare,
+  Smartphone,
+  Timer,
+  XCircle,
 } from 'lucide-react';
-import { formatDistanceToNow } from 'date-fns';
-import { useState, useCallback } from 'react';
+import { formatDistanceToNow, differenceInDays, parseISO } from 'date-fns';
+import { useState, useCallback, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { cn } from '@/lib/utils';
-import { getInitials, getRoleColor } from '@/utils/adminUtils';
+import {
+  getInitials,
+  getRoleColor,
+  calculateEngagementScore,
+  getScoreColor,
+  SCORE_COLOR_MAP,
+  formatTimeShort,
+  type EngagementData,
+} from '@/utils/adminUtils';
 import { AnimatedCounter } from '@/components/dashboard/AnimatedCounter';
 import UserManagementSheet from '@/components/admin/UserManagementSheet';
-import UserActivitySheet from '@/components/admin/UserActivitySheet';
 import { useAdminUsersBase, AdminUser } from '@/hooks/useAdminUsersBase';
 import PullToRefresh from '@/components/admin/PullToRefresh';
 
@@ -145,11 +156,6 @@ export default function AdminDashboard() {
   const navigate = useNavigate();
   const [isRefreshing, setIsRefreshing] = useState(false);
   const [selectedUser, setSelectedUser] = useState<AdminUser | null>(null);
-  const [selectedOnlineUser, setSelectedOnlineUser] = useState<{
-    userId: string;
-    userName: string;
-    userRole: string;
-  } | null>(null);
   // Shared cached edge function call — reused across admin pages
   const { data: baseUsers } = useAdminUsersBase();
 
@@ -158,6 +164,7 @@ export default function AdminDashboard() {
     await Promise.all([
       queryClient.invalidateQueries({ queryKey: ['admin-dashboard-stats'] }),
       queryClient.invalidateQueries({ queryKey: ['admin-stripe-live-stats'] }),
+      queryClient.invalidateQueries({ queryKey: ['admin-revenuecat-stats'] }),
       queryClient.invalidateQueries({ queryKey: ['admin-online-users'] }),
       queryClient.invalidateQueries({ queryKey: ['admin-users-base'] }),
       queryClient.invalidateQueries({ queryKey: ['admin-pending-counts'] }),
@@ -186,10 +193,31 @@ export default function AdminDashboard() {
     },
   });
 
-  // Source breakdown now comes from admin-stripe-stats (merged)
-  const subscribersBySource = (stripeStats as any)?.subscribersBySource as
-    | Record<string, number>
-    | undefined;
+  const mobileSubsRef = useRef<HTMLDivElement>(null);
+
+  // Fetch RevenueCat stats (App Store + Play Store data)
+  const { data: rcStats } = useQuery<{
+    subscribersBySource: Record<string, number>;
+    tiersBySource: Record<string, Record<string, number>>;
+    revenuecat: { mrr: number; revenue: number; activeSubscriptions: number; activeTrials: number };
+    trialUsers: Array<{ id: string; full_name: string; subscription_tier: string; trial_end: string | null; is_cancelled: boolean; engagement: EngagementData | null }>;
+    paidUsers: Array<{ id: string; full_name: string; subscription_tier: string; engagement: EngagementData | null }>;
+  }>({
+    queryKey: ['admin-revenuecat-stats'],
+    refetchInterval: 60000,
+    staleTime: 30000,
+    queryFn: async () => {
+      const {
+        data: { session },
+      } = await supabase.auth.getSession();
+      if (!session) throw new Error('Not authenticated');
+      const { data, error } = await supabase.functions.invoke('admin-revenuecat-stats', {
+        headers: { Authorization: `Bearer ${session.access_token}` },
+      });
+      if (error) throw error;
+      return data;
+    },
+  });
 
   // Fetch dashboard stats
   const {
@@ -405,11 +433,17 @@ export default function AdminDashboard() {
   }
 
   const stripeMrr = stripeStats?.stripe.mrr || 0;
-  const mrr = stripeMrr;
+  const rcMrr = rcStats?.revenuecat?.mrr || 0;
+  const mrr = stripeMrr + rcMrr;
   const arr = mrr * 12;
   const totalSubs = stripeStats?.stripe.activeSubscriptions || 0;
-  const appStoreSubs = subscribersBySource?.app_store || 0;
-  const playStoreSubs = subscribersBySource?.play_store || 0;
+  const appStoreSubs = rcStats?.subscribersBySource?.app_store || 0;
+  const playStoreSubs = rcStats?.subscribersBySource?.play_store || 0;
+  // Only count genuinely active trials (not cancelled ones)
+  const rcActiveTrials = (rcStats?.trialUsers || []).filter((t) => !t.is_cancelled).length;
+  const rcCancelledTrials = (rcStats?.trialUsers || []).filter((t) => t.is_cancelled).length;
+  const stripeTrials = stripeStats?.stripe.trialingSubscriptions || 0;
+  const totalTrials = rcActiveTrials + stripeTrials;
 
   // Abandoned checkouts: have stripe_customer_id but never subscribed and no free access
   const abandonedCheckouts =
@@ -439,7 +473,60 @@ export default function AdminDashboard() {
       .slice(0, 5);
   })();
 
-  const conversionRate = stats?.totalUsers ? Math.round((totalSubs / stats.totalUsers) * 100) : 0;
+  const allPaying = totalSubs + appStoreSubs + playStoreSubs;
+  const conversionRate = stats?.totalUsers ? Math.round((allPaying / stats.totalUsers) * 100) : 0;
+
+  // ── Trial expiry buckets ──
+  const now = new Date();
+  const in24h = new Date(now.getTime() + 24 * 60 * 60 * 1000);
+  const in48h = new Date(now.getTime() + 48 * 60 * 60 * 1000);
+  const in72h = new Date(now.getTime() + 72 * 60 * 60 * 1000);
+  const activeTrialUsers = (rcStats?.trialUsers || []).filter((t) => !t.is_cancelled && t.trial_end);
+  const expiringToday = activeTrialUsers.filter((t) => parseISO(t.trial_end!) <= in24h).length;
+  const expiringTomorrow = activeTrialUsers.filter((t) => {
+    const end = parseISO(t.trial_end!);
+    return end > in24h && end <= in48h;
+  }).length;
+  const expiringThisWeek = activeTrialUsers.filter((t) => {
+    const end = parseISO(t.trial_end!);
+    return end > in48h && end <= in72h;
+  }).length;
+  const hasExpiringTrials = expiringToday + expiringTomorrow + expiringThisWeek > 0;
+
+  // ── Engagement score ring SVG ──
+  const EngagementRing = ({ score, size = 28 }: { score: number; size?: number }) => {
+    const color = getScoreColor(score);
+    const { stroke } = SCORE_COLOR_MAP[color];
+    const r = (size - 3) / 2;
+    const circ = 2 * Math.PI * r;
+    const offset = circ - (score / 100) * circ;
+    return (
+      <svg width={size} height={size} className="shrink-0">
+        <circle cx={size / 2} cy={size / 2} r={r} fill="none" stroke="rgba(255,255,255,0.08)" strokeWidth={3} />
+        <circle
+          cx={size / 2} cy={size / 2} r={r} fill="none"
+          stroke={stroke} strokeWidth={3} strokeLinecap="round"
+          strokeDasharray={circ} strokeDashoffset={offset}
+          transform={`rotate(-90 ${size / 2} ${size / 2})`}
+        />
+        <text x="50%" y="50%" dominantBaseline="central" textAnchor="middle"
+          fill={stroke} fontSize={size * 0.32} fontWeight="700">
+          {score}
+        </text>
+      </svg>
+    );
+  };
+
+  // ── Sort mobile subscribers by engagement score DESC ──
+  const sortedPaidUsers = [...(rcStats?.paidUsers || [])].sort(
+    (a, b) => calculateEngagementScore(a.engagement) - calculateEngagementScore(b.engagement)
+  ).reverse();
+  const sortedActiveTrials = [...(rcStats?.trialUsers || [])].filter((t) => !t.is_cancelled)
+    .sort((a, b) => calculateEngagementScore(a.engagement) - calculateEngagementScore(b.engagement))
+    .reverse();
+  const sortedCancelledTrials = [...(rcStats?.trialUsers || [])].filter((t) => t.is_cancelled)
+    .sort((a, b) => calculateEngagementScore(a.engagement) - calculateEngagementScore(b.engagement))
+    .reverse();
 
   return (
     <PullToRefresh
@@ -447,19 +534,45 @@ export default function AdminDashboard() {
         await handleRefresh();
       }}
     >
-      <div className="space-y-4 pb-24">
+      <div className="space-y-5 pb-24">
+        {/* ── Trial Expiry Alert ───────────────────────────── */}
+        {hasExpiringTrials && (
+          <motion.section custom={-1} variants={sectionVariants} initial="hidden" animate="visible">
+            <h2 className="text-xs font-medium text-white uppercase tracking-wider px-0.5 mb-3">Alerts</h2>
+            <button
+              className="group w-full relative overflow-hidden card-surface-interactive p-4 flex items-center gap-3 touch-manipulation active:scale-[0.98] transition-all"
+              onClick={() => mobileSubsRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })}
+            >
+              <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-orange-500 via-amber-400 to-orange-500 opacity-60 group-hover:opacity-100 transition-opacity" />
+              <div className="w-10 h-10 rounded-xl bg-orange-500/10 border border-orange-500/20 flex items-center justify-center shrink-0">
+                <Timer className="h-5 w-5 text-orange-400" />
+              </div>
+              <div className="flex-1 text-left">
+                <p className="text-sm font-semibold text-white">Trials Expiring</p>
+                <p className="text-xs text-white mt-0.5">
+                  {expiringToday > 0 && <>{expiringToday} today</>}
+                  {expiringToday > 0 && expiringTomorrow > 0 && ' · '}
+                  {expiringTomorrow > 0 && <>{expiringTomorrow} tomorrow</>}
+                  {(expiringToday > 0 || expiringTomorrow > 0) && expiringThisWeek > 0 && ' · '}
+                  {expiringThisWeek > 0 && <>{expiringThisWeek} this week</>}
+                </p>
+              </div>
+              <ChevronRight className="h-4 w-4 text-orange-400 shrink-0" />
+            </button>
+          </motion.section>
+        )}
+
         {/* ── Revenue Hero ──────────────────────────────────── */}
         <motion.section custom={0} variants={sectionVariants} initial="hidden" animate="visible">
           <div
-            className="relative overflow-hidden rounded-2xl bg-white/[0.03] border border-white/[0.08] touch-manipulation active:scale-[0.99] transition-transform cursor-pointer"
+            className="group relative overflow-hidden rounded-2xl bg-white/[0.03] border border-white/[0.08] touch-manipulation active:scale-[0.98] transition-all cursor-pointer"
             onClick={() => navigate('/admin/revenue')}
           >
             {/* Amber accent line */}
-            <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-transparent via-amber-500 to-transparent" />
+            <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-amber-500 via-amber-400 to-amber-500 opacity-40 group-hover:opacity-80 transition-opacity" />
 
             {/* Warm glow */}
-            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-72 h-40 bg-amber-500/[0.06] rounded-full blur-3xl" />
-            <div className="absolute bottom-0 right-0 w-40 h-40 bg-amber-600/[0.03] rounded-full blur-3xl" />
+            <div className="absolute inset-0 bg-gradient-to-b from-amber-500/[0.04] to-transparent pointer-events-none" />
 
             <div className="relative p-5">
               {/* Header row */}
@@ -554,7 +667,8 @@ export default function AdminDashboard() {
 
         {/* ── Quick Stats ───────────────────────────────────── */}
         <motion.section custom={1} variants={sectionVariants} initial="hidden" animate="visible">
-          <div className="rounded-2xl bg-white/[0.03] border border-white/[0.08] overflow-hidden">
+          <div className="relative rounded-2xl bg-white/[0.03] border border-white/[0.08] overflow-hidden">
+            <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-white/10 via-white/20 to-white/10" />
             <motion.div
               variants={containerVariants}
               initial="hidden"
@@ -567,7 +681,9 @@ export default function AdminDashboard() {
                 className="p-3 sm:p-4 text-center touch-manipulation border-r border-white/[0.06]"
                 onClick={() => navigate('/admin/users')}
               >
-                <Users className="h-4 w-4 text-blue-400 mx-auto mb-1.5" />
+                <div className="w-7 h-7 rounded-lg bg-blue-500/10 border border-blue-500/20 flex items-center justify-center mx-auto mb-1.5">
+                  <Users className="h-3.5 w-3.5 text-blue-400" />
+                </div>
                 <p className="text-xl sm:text-2xl font-bold text-white">
                   <AnimatedCounter value={stats?.totalUsers || 0} />
                 </p>
@@ -580,7 +696,9 @@ export default function AdminDashboard() {
                 className="p-3 sm:p-4 text-center touch-manipulation border-r border-white/[0.06]"
                 onClick={() => navigate('/admin/users?filter=active')}
               >
-                <Activity className="h-4 w-4 text-green-400 mx-auto mb-1.5" />
+                <div className="w-7 h-7 rounded-lg bg-green-500/10 border border-green-500/20 flex items-center justify-center mx-auto mb-1.5">
+                  <Activity className="h-3.5 w-3.5 text-green-400" />
+                </div>
                 <p className="text-xl sm:text-2xl font-bold text-white">
                   <AnimatedCounter value={stats?.activeToday || 0} />
                 </p>
@@ -595,7 +713,9 @@ export default function AdminDashboard() {
                 className="p-3 sm:p-4 text-center touch-manipulation border-r border-white/[0.06]"
                 onClick={() => navigate('/admin/users?filter=today')}
               >
-                <CreditCard className="h-4 w-4 text-amber-400 mx-auto mb-1.5" />
+                <div className="w-7 h-7 rounded-lg bg-amber-500/10 border border-amber-500/20 flex items-center justify-center mx-auto mb-1.5">
+                  <CreditCard className="h-3.5 w-3.5 text-amber-400" />
+                </div>
                 <p className="text-xl sm:text-2xl font-bold text-white">
                   <AnimatedCounter value={stats?.signupsToday || 0} />
                 </p>
@@ -608,10 +728,12 @@ export default function AdminDashboard() {
                 className="p-3 sm:p-4 text-center touch-manipulation"
                 onClick={() => navigate('/admin/users?filter=trial')}
               >
-                <Clock className="h-4 w-4 text-orange-400 mx-auto mb-1.5" />
+                <div className="w-7 h-7 rounded-lg bg-orange-500/10 border border-orange-500/20 flex items-center justify-center mx-auto mb-1.5">
+                  <Clock className="h-3.5 w-3.5 text-orange-400" />
+                </div>
                 <p className="text-xl sm:text-2xl font-bold text-white">
                   <AnimatedCounter
-                    value={stripeStats?.stripe.trialingSubscriptions ?? stats?.trialUsers ?? 0}
+                    value={totalTrials}
                   />
                 </p>
                 <p className="text-[10px] text-white font-medium uppercase tracking-wider">Trial</p>
@@ -630,13 +752,13 @@ export default function AdminDashboard() {
             whileTap={{ scale: 0.98 }}
           >
             <div
-              className="rounded-2xl bg-white/[0.03] border border-orange-500/20 overflow-hidden relative touch-manipulation cursor-pointer"
+              className="group relative rounded-2xl bg-white/[0.03] border border-white/[0.08] overflow-hidden touch-manipulation cursor-pointer active:scale-[0.98] transition-all"
               onClick={() => navigate('/admin/incomplete-signup')}
             >
-              <div className="absolute inset-x-0 top-0 h-px bg-orange-500/40" />
+              <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-orange-500 via-amber-400 to-orange-500 opacity-40 group-hover:opacity-80 transition-opacity" />
               <div className="p-4 flex items-center justify-between">
                 <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-xl bg-orange-500/10 flex items-center justify-center">
+                  <div className="w-10 h-10 rounded-xl bg-orange-500/10 border border-orange-500/20 flex items-center justify-center">
                     <ShoppingCart className="h-5 w-5 text-orange-400" />
                   </div>
                   <div>
@@ -655,16 +777,184 @@ export default function AdminDashboard() {
           </motion.section>
         )}
 
+        {/* ── Mobile Subscribers (App Store / Play Store) ──── */}
+        {(rcStats?.trialUsers?.length || rcStats?.paidUsers?.length) ? (
+          <motion.section custom={2.5} variants={sectionVariants} initial="hidden" animate="visible">
+            <div ref={mobileSubsRef} className="rounded-2xl bg-white/[0.03] border border-white/[0.08] overflow-hidden">
+              {/* Header with accent line */}
+              <div className="relative">
+                <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-blue-500 via-cyan-400 to-blue-500" />
+                <div className="p-4 flex items-center justify-between">
+                  <div className="flex items-center gap-2.5">
+                    <div className="w-8 h-8 rounded-lg bg-blue-500/10 border border-blue-500/20 flex items-center justify-center">
+                      <Smartphone className="h-4 w-4 text-blue-400" />
+                    </div>
+                    <div>
+                      <span className="font-semibold text-sm text-white">Mobile Subscribers</span>
+                      <p className="text-[10px] text-white">App Store &amp; Play Store</p>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-1">
+                    {(rcStats?.paidUsers?.length || 0) > 0 && (
+                      <span className="inline-flex items-center h-5 px-1.5 rounded-md bg-emerald-500/15 text-emerald-400 text-[10px] font-bold">
+                        {rcStats?.paidUsers?.length}
+                      </span>
+                    )}
+                    {rcActiveTrials > 0 && (
+                      <span className="inline-flex items-center h-5 px-1.5 rounded-md bg-blue-500/15 text-blue-400 text-[10px] font-bold">
+                        {rcActiveTrials}
+                      </span>
+                    )}
+                    {rcCancelledTrials > 0 && (
+                      <span className="inline-flex items-center h-5 px-1.5 rounded-md bg-red-500/15 text-red-400 text-[10px] font-bold">
+                        {rcCancelledTrials}
+                      </span>
+                    )}
+                  </div>
+                </div>
+              </div>
+
+              {/* User list */}
+              <div className="px-2 pb-2 space-y-1">
+                {/* Paid users — sorted by engagement */}
+                {sortedPaidUsers.map((u) => {
+                  const matched = baseUsers?.find((bu) => bu.id === u.id);
+                  const score = calculateEngagementScore(u.engagement);
+                  return (
+                    <motion.button
+                      key={u.id}
+                      whileTap={{ scale: 0.98 }}
+                      className="w-full flex items-center gap-3 p-3 rounded-xl bg-emerald-500/[0.06] ring-1 ring-emerald-500/20 active:bg-emerald-500/[0.12] transition-colors touch-manipulation"
+                      onClick={() => {
+                        if (matched) setSelectedUser(matched);
+                      }}
+                    >
+                      <EngagementRing score={score} />
+                      <div className="flex-1 min-w-0 text-left">
+                        <p className="text-[13px] font-semibold text-white truncate">{u.full_name}</p>
+                        <p className="text-[11px] text-white capitalize">{u.subscription_tier?.replace('_', ' ')}</p>
+                        {u.engagement && (
+                          <p className="text-[10px] text-white mt-0.5">
+                            {formatTimeShort(u.engagement.total_seconds_tracked)} · {u.engagement.unique_pages_visited} pages · {u.engagement.login_count} logins
+                          </p>
+                        )}
+                      </div>
+                      <div className="flex items-center gap-2 shrink-0">
+                        <span className="inline-flex items-center h-5 px-2 rounded-md bg-emerald-500/15 text-emerald-400 text-[10px] font-bold">
+                          Paying
+                        </span>
+                        <ChevronRight className="h-3.5 w-3.5 text-white" />
+                      </div>
+                    </motion.button>
+                  );
+                })}
+                {/* Active trials — sorted by engagement */}
+                {sortedActiveTrials.map((t) => {
+                    const daysLeft = t.trial_end ? differenceInDays(parseISO(t.trial_end), new Date()) : null;
+                    const matched = baseUsers?.find((bu) => bu.id === t.id);
+                    const urgency = daysLeft !== null && daysLeft <= 1 ? 'urgent' : daysLeft !== null && daysLeft <= 3 ? 'soon' : 'ok';
+                    const score = calculateEngagementScore(t.engagement);
+                    return (
+                      <motion.button
+                        key={t.id}
+                        whileTap={{ scale: 0.98 }}
+                        className="w-full flex items-center gap-3 p-3 rounded-xl bg-blue-500/[0.04] ring-1 ring-blue-500/10 active:bg-blue-500/[0.10] transition-colors touch-manipulation"
+                        onClick={() => {
+                          if (matched) setSelectedUser(matched);
+                        }}
+                      >
+                        <EngagementRing score={score} />
+                        <div className="flex-1 min-w-0 text-left">
+                          <p className="text-[13px] font-semibold text-white truncate">{t.full_name}</p>
+                          <p className="text-[11px] text-white capitalize">{t.subscription_tier?.replace('_', ' ')}</p>
+                          {t.engagement && (
+                            <p className="text-[10px] text-white mt-0.5">
+                              {formatTimeShort(t.engagement.total_seconds_tracked)} · {t.engagement.unique_pages_visited} pages · {t.engagement.login_count} logins
+                            </p>
+                          )}
+                        </div>
+                        <div className="flex items-center gap-2 shrink-0">
+                          <span className={cn(
+                            'inline-flex items-center h-5 px-2 rounded-md text-[10px] font-bold',
+                            urgency === 'urgent' ? 'bg-red-500/15 text-red-400' :
+                            urgency === 'soon' ? 'bg-orange-500/15 text-orange-400' :
+                            'bg-blue-500/15 text-blue-400'
+                          )}>
+                            {daysLeft !== null ? (daysLeft <= 0 ? 'Today' : `${daysLeft}d`) : 'Trial'}
+                          </span>
+                          <ChevronRight className="h-3.5 w-3.5 text-white" />
+                        </div>
+                      </motion.button>
+                    );
+                  })}
+                {/* Cancelled trials — sorted by engagement */}
+                {sortedCancelledTrials.map((t) => {
+                    const daysLeft = t.trial_end ? differenceInDays(parseISO(t.trial_end), new Date()) : null;
+                    const matched = baseUsers?.find((bu) => bu.id === t.id);
+                    const score = calculateEngagementScore(t.engagement);
+                    return (
+                      <motion.button
+                        key={t.id}
+                        whileTap={{ scale: 0.98 }}
+                        className="w-full flex items-center gap-3 p-3 rounded-xl bg-red-500/[0.03] ring-1 ring-red-500/10 active:bg-red-500/[0.08] transition-colors touch-manipulation"
+                        onClick={() => {
+                          if (matched) setSelectedUser(matched);
+                        }}
+                      >
+                        <EngagementRing score={score} />
+                        <div className="flex-1 min-w-0 text-left">
+                          <p className="text-[13px] font-semibold text-white truncate">{t.full_name}</p>
+                          <p className="text-[11px] text-white capitalize">{t.subscription_tier?.replace('_', ' ')}</p>
+                          {t.engagement && (
+                            <p className="text-[10px] text-white mt-0.5">
+                              {formatTimeShort(t.engagement.total_seconds_tracked)} · {t.engagement.unique_pages_visited} pages · {t.engagement.login_count} logins
+                            </p>
+                          )}
+                        </div>
+                        <div className="flex items-center gap-2 shrink-0">
+                          <span className="inline-flex items-center h-5 px-2 rounded-md bg-red-500/15 text-red-400 text-[10px] font-bold">
+                            Cancelled{daysLeft !== null && daysLeft > 0 ? ` · ${daysLeft}d` : ''}
+                          </span>
+                          <ChevronRight className="h-3.5 w-3.5 text-white" />
+                        </div>
+                      </motion.button>
+                    );
+                  })}
+              </div>
+
+              {/* Legend footer */}
+              <div className="px-4 py-2.5 border-t border-white/[0.04] flex items-center justify-center gap-4">
+                <div className="flex items-center gap-1.5">
+                  <div className="w-2 h-2 rounded-full bg-emerald-400" />
+                  <span className="text-[10px] text-white">Paid</span>
+                </div>
+                <div className="flex items-center gap-1.5">
+                  <div className="w-2 h-2 rounded-full bg-blue-400" />
+                  <span className="text-[10px] text-white">Trial</span>
+                </div>
+                <div className="flex items-center gap-1.5">
+                  <div className="w-2 h-2 rounded-full bg-red-400" />
+                  <span className="text-[10px] text-white">Cancelled</span>
+                </div>
+              </div>
+            </div>
+          </motion.section>
+        ) : null}
+
         {/* ── Growth Row ────────────────────────────────────── */}
         <motion.section custom={3} variants={sectionVariants} initial="hidden" animate="visible">
+          <h2 className="text-xs font-medium text-white uppercase tracking-wider px-0.5 mb-3">Growth</h2>
           <div className="grid grid-cols-2 gap-3">
             <motion.div
               whileTap={{ scale: 0.97 }}
-              className="rounded-2xl bg-white/[0.03] border border-white/[0.08] p-4 touch-manipulation cursor-pointer"
+              className="group relative rounded-2xl bg-white/[0.03] border border-white/[0.08] p-4 overflow-hidden touch-manipulation cursor-pointer active:scale-[0.98] transition-all"
               onClick={() => navigate('/admin/analytics')}
             >
+              <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-green-500 via-emerald-400 to-green-500 opacity-30 group-hover:opacity-80 transition-opacity" />
               <div className="flex items-center justify-between mb-3">
-                <TrendingUp className="h-4 w-4 text-green-400" />
+                <div className="w-7 h-7 rounded-lg bg-green-500/10 border border-green-500/20 flex items-center justify-center">
+                  <TrendingUp className="h-3.5 w-3.5 text-green-400" />
+                </div>
                 <span className="text-[10px] text-white font-semibold uppercase tracking-wider px-2 py-0.5 rounded-full bg-white/[0.04]">
                   7d
                 </span>
@@ -677,11 +967,14 @@ export default function AdminDashboard() {
 
             <motion.div
               whileTap={{ scale: 0.97 }}
-              className="rounded-2xl bg-white/[0.03] border border-white/[0.08] p-4 touch-manipulation cursor-pointer"
+              className="group relative rounded-2xl bg-white/[0.03] border border-white/[0.08] p-4 overflow-hidden touch-manipulation cursor-pointer active:scale-[0.98] transition-all"
               onClick={() => navigate('/admin/analytics')}
             >
+              <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-amber-500 via-yellow-400 to-amber-500 opacity-30 group-hover:opacity-80 transition-opacity" />
               <div className="flex items-center justify-between mb-3">
-                <Zap className="h-4 w-4 text-amber-400" />
+                <div className="w-7 h-7 rounded-lg bg-amber-500/10 border border-amber-500/20 flex items-center justify-center">
+                  <Zap className="h-3.5 w-3.5 text-amber-400" />
+                </div>
                 <span className="text-[10px] text-white font-semibold uppercase tracking-wider px-2 py-0.5 rounded-full bg-white/[0.04]">
                   Rate
                 </span>
@@ -697,7 +990,7 @@ export default function AdminDashboard() {
         {/* ── Section divider ───────────────────────────────── */}
         <div className="flex items-center gap-3 pt-2">
           <div className="h-px flex-1 bg-white/[0.06]" />
-          <span className="text-[10px] text-amber-400 font-semibold uppercase tracking-[0.2em]">
+          <span className="text-[10px] text-white/40 font-semibold uppercase tracking-[0.2em]">
             Activity
           </span>
           <div className="h-px flex-1 bg-white/[0.06]" />
@@ -705,10 +998,13 @@ export default function AdminDashboard() {
 
         {/* ── Live Users ────────────────────────────────────── */}
         <motion.section custom={5} variants={sectionVariants} initial="hidden" animate="visible">
-          <div className="rounded-2xl bg-white/[0.03] border border-white/[0.08] overflow-hidden">
+          <div className="relative rounded-2xl bg-white/[0.03] border border-white/[0.08] overflow-hidden">
+            <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-green-500 via-emerald-400 to-green-500 opacity-40" />
             <div className="p-4 border-b border-white/[0.06] flex items-center justify-between">
               <div className="flex items-center gap-2.5">
-                <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
+                <div className="w-8 h-8 rounded-lg bg-green-500/10 border border-green-500/20 flex items-center justify-center">
+                  <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
+                </div>
                 <span className="font-semibold text-sm text-white">Live Now</span>
                 <span className="text-[11px] text-green-400 font-medium">
                   {liveUserCount} online
@@ -741,13 +1037,10 @@ export default function AdminDashboard() {
                   <motion.button
                     key={activity.user_id}
                     variants={listItemVariants}
-                    onClick={() =>
-                      setSelectedOnlineUser({
-                        userId: activity.user_id,
-                        userName: profile?.full_name || 'Unknown',
-                        userRole: profile?.role || '',
-                      })
-                    }
+                    onClick={() => {
+                      const matched = baseUsers?.find((u) => u.id === activity.user_id);
+                      if (matched) setSelectedUser(matched);
+                    }}
                     className="w-full flex items-center gap-3 p-3 hover:bg-white/[0.03] active:bg-white/[0.06] transition-colors touch-manipulation"
                   >
                     <div
@@ -791,10 +1084,13 @@ export default function AdminDashboard() {
 
         {/* ── Recent Signups ────────────────────────────────── */}
         <motion.section custom={6} variants={sectionVariants} initial="hidden" animate="visible">
-          <div className="rounded-2xl bg-white/[0.03] border border-white/[0.08] overflow-hidden">
+          <div className="relative rounded-2xl bg-white/[0.03] border border-white/[0.08] overflow-hidden">
+            <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-amber-500 via-yellow-400 to-amber-500 opacity-40" />
             <div className="p-4 border-b border-white/[0.06] flex items-center justify-between">
               <div className="flex items-center gap-2.5">
-                <div className="w-1.5 h-1.5 rounded-full bg-amber-400" />
+                <div className="w-8 h-8 rounded-lg bg-amber-500/10 border border-amber-500/20 flex items-center justify-center">
+                  <Users className="h-4 w-4 text-amber-400" />
+                </div>
                 <span className="font-semibold text-sm text-white">Recent Signups</span>
               </div>
               <span className="text-[11px] text-white font-medium">
@@ -853,10 +1149,13 @@ export default function AdminDashboard() {
         {/* ── Recent Subscriptions ──────────────────────────── */}
         {recentSubscriptions.length > 0 && (
           <motion.section custom={7} variants={sectionVariants} initial="hidden" animate="visible">
-            <div className="rounded-2xl bg-white/[0.03] border border-white/[0.08] overflow-hidden">
+            <div className="relative rounded-2xl bg-white/[0.03] border border-white/[0.08] overflow-hidden">
+              <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-emerald-500 via-green-400 to-emerald-500 opacity-40" />
               <div className="p-4 border-b border-white/[0.06] flex items-center justify-between">
                 <div className="flex items-center gap-2.5">
-                  <div className="w-1.5 h-1.5 rounded-full bg-green-500" />
+                  <div className="w-8 h-8 rounded-lg bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center">
+                    <CreditCard className="h-4 w-4 text-emerald-400" />
+                  </div>
                   <span className="font-semibold text-sm text-white">New Subscriptions</span>
                 </div>
                 <span className="text-[11px] text-white font-medium">
@@ -924,7 +1223,7 @@ export default function AdminDashboard() {
           <>
             <div className="flex items-center gap-3 pt-2">
               <div className="h-px flex-1 bg-white/[0.06]" />
-              <span className="text-[10px] text-amber-400 font-semibold uppercase tracking-[0.2em]">
+              <span className="text-[10px] text-white/40 font-semibold uppercase tracking-[0.2em]">
                 Messages
               </span>
               <div className="h-px flex-1 bg-white/[0.06]" />
@@ -936,10 +1235,13 @@ export default function AdminDashboard() {
               initial="hidden"
               animate="visible"
             >
-              <div className="rounded-2xl bg-white/[0.03] border border-white/[0.08] overflow-hidden">
+              <div className="relative rounded-2xl bg-white/[0.03] border border-white/[0.08] overflow-hidden">
+                <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-amber-500 via-yellow-400 to-amber-500 opacity-40" />
                 <div className="p-4 border-b border-white/[0.06] flex items-center justify-between">
                   <div className="flex items-center gap-2.5">
-                    <MessageSquare className="h-4 w-4 text-amber-400" />
+                    <div className="w-8 h-8 rounded-lg bg-amber-500/10 border border-amber-500/20 flex items-center justify-center">
+                      <MessageSquare className="h-4 w-4 text-amber-400" />
+                    </div>
                     <span className="font-semibold text-sm text-white">Support Inbox</span>
                     {unreadSupportCount > 0 && (
                       <span className="text-[10px] font-bold text-black bg-amber-400 rounded-full px-1.5 py-0.5 leading-none">
@@ -1032,13 +1334,6 @@ export default function AdminDashboard() {
           onOpenChange={(open) => !open && setSelectedUser(null)}
         />
 
-        <UserActivitySheet
-          userId={selectedOnlineUser?.userId || null}
-          userName={selectedOnlineUser?.userName || null}
-          userRole={selectedOnlineUser?.userRole || null}
-          open={!!selectedOnlineUser}
-          onOpenChange={(open) => !open && setSelectedOnlineUser(null)}
-        />
       </div>
     </PullToRefresh>
   );
