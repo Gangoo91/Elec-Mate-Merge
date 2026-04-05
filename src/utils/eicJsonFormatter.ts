@@ -18,10 +18,15 @@ import type { EICPayload } from '@/types/eic-payload';
 function normaliseEarthing(raw: string): string {
   if (!raw) return '';
   const map: Record<string, string> = {
-    tncs: 'TN-C-S', 'tn-c-s': 'TN-C-S', 'tnc-s': 'TN-C-S',
-    tns: 'TN-S', 'tn-s': 'TN-S',
-    tnc: 'TN-C', 'tn-c': 'TN-C',
-    tt: 'TT', it: 'IT',
+    tncs: 'TN-C-S',
+    'tn-c-s': 'TN-C-S',
+    'tnc-s': 'TN-C-S',
+    tns: 'TN-S',
+    'tn-s': 'TN-S',
+    tnc: 'TN-C',
+    'tn-c': 'TN-C',
+    tt: 'TT',
+    it: 'IT',
   };
   return map[raw.toLowerCase()] ?? raw;
 }
@@ -38,7 +43,14 @@ function normaliseElectrodeType(raw: string): string {
   if (!raw) return '';
   // Capitalise known abbreviations fully; title-case everything else
   const upper = raw.toUpperCase();
-  if (upper === 'PME' || upper === 'ROD' || upper === 'PLATE' || upper === 'TAPE' || upper === 'PIPE') return upper;
+  if (
+    upper === 'PME' ||
+    upper === 'ROD' ||
+    upper === 'PLATE' ||
+    upper === 'TAPE' ||
+    upper === 'PIPE'
+  )
+    return upper;
   return raw.charAt(0).toUpperCase() + raw.slice(1);
 }
 
@@ -173,7 +185,8 @@ export async function formatEicJson(
 
     installation_details: {
       address: formData.installationAddress || '',
-      same_as_client_address: formData.sameAsClientAddress === true || formData.sameAsClientAddress === 'true',
+      same_as_client_address:
+        formData.sameAsClientAddress === true || formData.sameAsClientAddress === 'true',
       installation_type: formData.installationType || '',
       work_type: formData.workType || formData.installationType || '',
       description: formData.description || '',
@@ -297,7 +310,9 @@ export async function formatEicJson(
 
     earthing_bonding: {
       means_of_earthing: formData.meansOfEarthing || '',
-      earth_electrode_type: formData.earthElectrodeNA ? 'N/A' : normaliseElectrodeType(formData.earthElectrodeType || ''),
+      earth_electrode_type: formData.earthElectrodeNA
+        ? 'N/A'
+        : normaliseElectrodeType(formData.earthElectrodeType || ''),
       earth_electrode_location:
         formData.earthElectrodeNA || formData.earthElectrodeType === 'pme'
           ? 'N/A'
@@ -437,9 +452,10 @@ export async function formatEicJson(
       })) || [],
 
     test_instrument_details: {
-      make_model: (formData.testInstrumentMake === 'Other'
-        ? formData.customTestInstrument
-        : formData.testInstrumentMake) || '',
+      make_model:
+        (formData.testInstrumentMake === 'Other'
+          ? formData.customTestInstrument
+          : formData.testInstrumentMake) || '',
       serial_number: formData.testInstrumentSerial || '',
       calibration_date: formData.calibrationDate || '',
       test_temperature: formData.testTemperature || '',
@@ -490,15 +506,17 @@ export async function formatEicJson(
       risk_assessment_attached: formData.riskAssessmentAttached ?? false,
     },
 
-    designer_2: formData.designer2Name ? {
-      name: formData.designer2Name,
-      company: formData.designer2Company || '',
-      address: formData.designer2Address || '',
-      postcode: formData.designer2Postcode || '',
-      phone: formData.designer2Phone || '',
-      date: formData.designer2Date || '',
-      signature: formData.designer2Signature || '',
-    } : null,
+    designer_2: formData.designer2Name
+      ? {
+          name: formData.designer2Name,
+          company: formData.designer2Company || '',
+          address: formData.designer2Address || '',
+          postcode: formData.designer2Postcode || '',
+          phone: formData.designer2Phone || '',
+          date: formData.designer2Date || '',
+          signature: formData.designer2Signature || '',
+        }
+      : {},
 
     constructor: {
       name: formData.constructorName || '',
@@ -545,10 +563,10 @@ export async function formatEicJson(
         address: formData.inspectedByAddress || '',
         cp_scheme: formData.inspectedByCpSchemeNA
           ? 'N/A'
-          : (formData.inspectedByCpScheme
-            || (companyProfile?.registration_scheme && companyProfile?.registration_number
+          : formData.inspectedByCpScheme ||
+            (companyProfile?.registration_scheme && companyProfile?.registration_number
               ? `${companyProfile.registration_scheme} ${companyProfile.registration_number}`
-              : '')),
+              : ''),
         cp_scheme_na: formData.inspectedByCpSchemeNA ?? false,
         same_as_inspector: formData.eicSameAsInspectedBy ?? false,
       },
@@ -606,10 +624,10 @@ export async function formatEicJson(
 
     // Earthing arrangement per-type booleans (template may use these for checkboxes)
     earthing_tncs: normaliseEarthing(formData.earthingArrangement || '') === 'TN-C-S',
-    earthing_tns:  normaliseEarthing(formData.earthingArrangement || '') === 'TN-S',
-    earthing_tnc:  normaliseEarthing(formData.earthingArrangement || '') === 'TN-C',
-    earthing_tt:   normaliseEarthing(formData.earthingArrangement || '') === 'TT',
-    earthing_it:   normaliseEarthing(formData.earthingArrangement || '') === 'IT',
+    earthing_tns: normaliseEarthing(formData.earthingArrangement || '') === 'TN-S',
+    earthing_tnc: normaliseEarthing(formData.earthingArrangement || '') === 'TN-C',
+    earthing_tt: normaliseEarthing(formData.earthingArrangement || '') === 'TT',
+    earthing_it: normaliseEarthing(formData.earthingArrangement || '') === 'IT',
 
     // Earth electrode flat copies (edge fn debug confirms template reads these at root)
     earth_electrode_type: formData.earthElectrodeNA
@@ -634,7 +652,7 @@ export async function formatEicJson(
     // CP Scheme (flat copies with N/A support)
     inspected_by_cp_scheme: formData.inspectedByCpSchemeNA
       ? 'N/A'
-      : (formData.inspectedByCpScheme || ''),
+      : formData.inspectedByCpScheme || '',
     inspected_by_cp_scheme_na: formData.inspectedByCpSchemeNA ?? false,
   };
 

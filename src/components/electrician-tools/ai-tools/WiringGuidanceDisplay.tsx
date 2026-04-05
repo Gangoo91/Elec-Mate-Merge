@@ -365,7 +365,11 @@ const WiringGuidanceDisplay = ({
       )}
 
       {/* Terminal Diagram */}
-      <TerminalDiagram connections={diagramConnections} title="Terminal Connections" />
+      <TerminalDiagram
+        connections={diagramConnections}
+        title="Terminal Connections"
+        componentName={componentName}
+      />
 
       {/* Pre-Installation Checklist */}
       {preInstallationTasks && preInstallationTasks.length > 0 && (

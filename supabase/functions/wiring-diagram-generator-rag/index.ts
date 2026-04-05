@@ -44,13 +44,25 @@ serve(async (req) => {
   const logger = createLogger(requestId, { function: 'wiring-guidance-generator' });
 
   try {
-    const { component_image_url } = await req.json();
+    const {
+      component_image_url,
+      component_description,
+      property_type,
+      circuit_type,
+      earthing_system,
+      supply_amps,
+    } = await req.json();
 
-    if (!component_image_url) {
-      throw new ValidationError('component_image_url is required');
+    if (!component_image_url && !component_description) {
+      throw new ValidationError('Either component_image_url or component_description is required');
     }
 
-    logger.info('Wiring guidance generator initiated', { component_image_url });
+    logger.info('Wiring guidance generator initiated', {
+      component_image_url: !!component_image_url,
+      component_description: !!component_description,
+      property_type,
+      circuit_type,
+    });
 
     const geminiApiKey = Deno.env.get('GEMINI_API_KEY');
     if (!geminiApiKey) throw new Error('GEMINI_API_KEY not configured');
@@ -59,168 +71,138 @@ serve(async (req) => {
     const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
     const supabase = createClient(supabaseUrl, supabaseKey);
 
-    // Step 1: Identify component from image
-    logger.info('Analyzing component image');
+    // Build extra context from user selections
+    const userContext = [
+      property_type ? `Property: ${property_type}` : '',
+      circuit_type ? `Circuit: ${circuit_type}` : '',
+      earthing_system ? `Earthing: ${earthing_system}` : '',
+      supply_amps ? `Supply: ${supply_amps}A` : '',
+    ]
+      .filter(Boolean)
+      .join(', ');
 
-    // Fetch and convert image to base64
-    let imageBase64: string;
-    let mimeType = 'image/jpeg'; // default
-    let imageSize = 0;
+    // Step 1: Identify component — from image OR text description
+    logger.info('Analyzing component');
 
-    if (component_image_url.startsWith('data:')) {
-      // Already base64
-      const parts = component_image_url.split(',');
-      if (parts.length === 2) {
-        const mimeMatch = parts[0].match(/data:(.*?);base64/);
-        if (mimeMatch) mimeType = mimeMatch[1];
-        imageBase64 = parts[1];
+    let componentDetails: string;
+
+    if (component_image_url) {
+      // Image path: analyse the photo with Gemini Vision
+      // Fetch and convert image to base64
+      let imageBase64: string;
+      let mimeType = 'image/jpeg'; // default
+      let imageSize = 0;
+
+      if (component_image_url.startsWith('data:')) {
+        const parts = component_image_url.split(',');
+        if (parts.length === 2) {
+          const mimeMatch = parts[0].match(/data:(.*?);base64/);
+          if (mimeMatch) mimeType = mimeMatch[1];
+          imageBase64 = parts[1];
+        } else {
+          throw new Error('Invalid data URL format');
+        }
       } else {
-        throw new Error('Invalid data URL format');
+        const imageResponse = await fetch(component_image_url);
+        if (!imageResponse.ok) {
+          throw new Error(`Failed to fetch image: ${imageResponse.status}`);
+        }
+        const contentType = imageResponse.headers.get('content-type');
+        if (contentType) mimeType = contentType;
+        const imageBuffer = await imageResponse.arrayBuffer();
+        imageSize = imageBuffer.byteLength;
+        const maxSize = 20 * 1024 * 1024;
+        if (imageSize > maxSize) {
+          throw new Error(`Image too large: ${(imageSize / 1024 / 1024).toFixed(2)}MB (max 20MB)`);
+        }
+        logger.info('Image fetched', { size: `${(imageSize / 1024).toFixed(2)}KB`, mimeType });
+        const bytes = new Uint8Array(imageBuffer);
+        let binary = '';
+        const chunkSize = 8192;
+        for (let i = 0; i < bytes.length; i += chunkSize) {
+          const chunk = bytes.subarray(i, Math.min(i + chunkSize, bytes.length));
+          binary += String.fromCharCode(...chunk);
+        }
+        imageBase64 = btoa(binary);
       }
-    } else {
-      // Fetch from URL and convert to base64
-      const imageResponse = await fetch(component_image_url);
-      if (!imageResponse.ok) {
-        throw new Error(`Failed to fetch image: ${imageResponse.status}`);
-      }
 
-      // Detect content type
-      const contentType = imageResponse.headers.get('content-type');
-      if (contentType) {
-        mimeType = contentType;
-      }
-
-      const imageBuffer = await imageResponse.arrayBuffer();
-      imageSize = imageBuffer.byteLength;
-
-      // Validate image size (20MB limit)
-      const maxSize = 20 * 1024 * 1024; // 20MB
-      if (imageSize > maxSize) {
-        throw new Error(`Image too large: ${(imageSize / 1024 / 1024).toFixed(2)}MB (max 20MB)`);
-      }
-
-      logger.info('Image fetched', { size: `${(imageSize / 1024).toFixed(2)}KB`, mimeType });
-
-      // Convert to base64 in chunks to avoid stack overflow
-      const bytes = new Uint8Array(imageBuffer);
-      let binary = '';
-      const chunkSize = 8192;
-      for (let i = 0; i < bytes.length; i += chunkSize) {
-        const chunk = bytes.subarray(i, Math.min(i + chunkSize, bytes.length));
-        binary += String.fromCharCode(...chunk);
-      }
-      imageBase64 = btoa(binary);
-    }
-
-    const imageAnalysisData = await withRetry(
-      () =>
-        withTimeout(
-          fetch(
-            `https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key=${geminiApiKey}`,
-            {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/json',
-              },
-              body: JSON.stringify({
-                contents: [
-                  {
-                    role: 'user',
-                    parts: [
-                      {
-                        text: `Identify this electrical component CONCISELY (max 10 bullet points):
+      const imageAnalysisData = await withRetry(
+        () =>
+          withTimeout(
+            fetch(
+              `https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key=${geminiApiKey}`,
+              {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                  contents: [
+                    {
+                      role: 'user',
+                      parts: [
+                        {
+                          text: `Identify this electrical component CONCISELY (max 10 bullet points):
 • Component type (e.g., "Electric Shower", "Consumer Unit", "Socket Outlet")
 • Key ratings (amps/watts/volts)
 • Main terminal labels (L, N, E, COM, L1, L2, etc.)
 • Manufacturer/model if clearly visible
 
 Keep it brief - list facts only, no explanations.`,
-                      },
-                      {
-                        inlineData: {
-                          mimeType: mimeType,
-                          data: imageBase64,
                         },
-                      },
-                    ],
-                  },
-                ],
-                generationConfig: {
-                  maxOutputTokens: 2048,
-                  temperature: 0.2,
-                },
-              }),
-            }
-          ).then(async (res) => {
-            if (!res.ok) {
-              const errorText = await res.text();
-              logger.error('Gemini API error', { status: res.status, error: errorText });
-              throw new Error(`Image analysis failed: ${res.status}`);
-            }
-            return res.json();
-          }),
-          Timeouts.STANDARD,
-          'Image analysis'
-        ),
-      RetryPresets.STANDARD
-    );
-
-    // Log full response for debugging
-    logger.info('Gemini API response', {
-      hasError: !!imageAnalysisData.error,
-      hasCandidates: !!imageAnalysisData.candidates,
-      candidatesLength: imageAnalysisData.candidates?.length,
-      responseKeys: Object.keys(imageAnalysisData),
-    });
-
-    // Validate response structure
-    if (imageAnalysisData.error) {
-      logger.error('Gemini API returned error', { error: imageAnalysisData.error });
-      throw new Error(
-        `Image analysis error: ${imageAnalysisData.error.message || 'Unknown error'}`
+                        { inlineData: { mimeType, data: imageBase64 } },
+                      ],
+                    },
+                  ],
+                  generationConfig: { maxOutputTokens: 2048, temperature: 0.2 },
+                }),
+              }
+            ).then(async (res) => {
+              if (!res.ok) {
+                const errorText = await res.text();
+                logger.error('Gemini API error', { status: res.status, error: errorText });
+                throw new Error(`Image analysis failed: ${res.status}`);
+              }
+              return res.json();
+            }),
+            Timeouts.STANDARD,
+            'Image analysis'
+          ),
+        RetryPresets.STANDARD
       );
-    }
 
-    if (!imageAnalysisData.candidates || imageAnalysisData.candidates.length === 0) {
-      logger.error('No candidates in response', {
-        response: JSON.stringify(imageAnalysisData).substring(0, 500),
-        promptBlockReason: imageAnalysisData.promptFeedback?.blockReason,
-      });
-
-      if (imageAnalysisData.promptFeedback?.blockReason) {
+      if (imageAnalysisData.error) {
         throw new Error(
-          `Image analysis blocked: ${imageAnalysisData.promptFeedback.blockReason}. The image may contain unsafe content or the request was filtered.`
+          `Image analysis error: ${imageAnalysisData.error.message || 'Unknown error'}`
         );
       }
-
-      throw new Error(
-        'No analysis results returned. The image may not contain recognizable electrical components or may be invalid.'
-      );
-    }
-
-    const firstCandidate = imageAnalysisData.candidates[0];
-
-    // Check if response was truncated due to token limits
-    if (firstCandidate?.finishReason === 'MAX_TOKENS') {
-      logger.error('Response truncated - token limit exceeded', {
-        finishReason: firstCandidate.finishReason,
-        candidate: JSON.stringify(firstCandidate).substring(0, 300),
+      if (!imageAnalysisData.candidates || imageAnalysisData.candidates.length === 0) {
+        if (imageAnalysisData.promptFeedback?.blockReason) {
+          throw new Error(
+            `Image analysis blocked: ${imageAnalysisData.promptFeedback.blockReason}`
+          );
+        }
+        throw new Error(
+          'No analysis results returned. The image may not contain recognizable electrical components.'
+        );
+      }
+      const firstCandidate = imageAnalysisData.candidates[0];
+      if (firstCandidate?.finishReason === 'MAX_TOKENS') {
+        throw new Error('Image analysis response was too long. Please try with a simpler image.');
+      }
+      if (!firstCandidate?.content?.parts || firstCandidate.content.parts.length === 0) {
+        throw new Error('Invalid response structure from image analysis');
+      }
+      componentDetails = firstCandidate.content.parts[0].text;
+      logger.info('Component identified from image', {
+        componentDetails: componentDetails.substring(0, 100),
       });
-      throw new Error(
-        'Image analysis response was too long. Please try with a simpler image or contact support.'
-      );
-    }
-
-    if (!firstCandidate?.content?.parts || firstCandidate.content.parts.length === 0) {
-      logger.error('Invalid candidate structure', {
-        candidate: JSON.stringify(firstCandidate).substring(0, 300),
-        finishReason: firstCandidate?.finishReason,
+    } else {
+      // Text path: use description directly, enriched with user context
+      componentDetails =
+        component_description + (userContext ? `\nInstallation context: ${userContext}` : '');
+      logger.info('Component described by user', {
+        componentDetails: componentDetails.substring(0, 100),
       });
-      throw new Error('Invalid response structure from image analysis');
     }
-
-    const componentDetails = firstCandidate.content.parts[0].text;
-    logger.info('Component identified', { componentDetails: componentDetails.substring(0, 100) });
 
     // Step 2: Intelligent component-specific RAG retrieval
     const componentType = componentDetails
@@ -258,8 +240,9 @@ Keep it brief - list facts only, no explanations.`,
             name: 'wiring_regs',
             execute: async () => {
               if (!openAiKey) return { data: [], error: null };
+              const ctxSuffix = circuit_type ? ` ${circuit_type}` : '';
               const results = await retrieveRegulations(
-                `${componentType} wiring requirements: terminal connections, cable colors, protection requirements`,
+                `${componentType}${ctxSuffix} wiring requirements: terminal connections, cable colors, protection requirements`,
                 8,
                 openAiKey
               );
@@ -270,8 +253,9 @@ Keep it brief - list facts only, no explanations.`,
             name: 'safety_regs',
             execute: async () => {
               if (!openAiKey) return { data: [], error: null };
+              const earthCtx = earthing_system ? ` ${earthing_system} earthing` : '';
               const results = await retrieveRegulations(
-                `${componentType} safety requirements: RCD protection, IP ratings, zones, isolation`,
+                `${componentType} safety requirements: RCD protection, IP ratings, zones, isolation${earthCtx}`,
                 5,
                 openAiKey
               );
@@ -282,8 +266,9 @@ Keep it brief - list facts only, no explanations.`,
             name: 'installation_regs',
             execute: async () => {
               if (!openAiKey) return { data: [], error: null };
+              const propCtx = property_type ? ` ${property_type}` : '';
               const results = await retrieveRegulations(
-                `${componentType} installation method: cable sizing, mounting, earthing, bonding`,
+                `${componentType}${propCtx} installation method: cable sizing, mounting, earthing, bonding`,
                 5,
                 openAiKey
               );
@@ -361,6 +346,12 @@ COMMON MISTAKES TO AVOID (examples):
 - Trailing commas → { "a": 1, }  ✗
 - Missing comma → [ {"a":1} {"b":2} ]  ✗  (must be [{"a":1}, {"b":2}])
 - Unclosed brackets → { "a": [1,2]    ✗
+
+TERMINAL LABEL RULES (strictly enforced):
+- "terminal" must be a SHORT identifier (max 6 chars): L, N, E, L1, L2, COM, CU-L, CU-N, WAGO, CONN
+- For connector blocks/wagos, use "WAGO" or "CONN" — NEVER "Connector Block", "Junction" or full words
+- "connection_point" is where the full description goes (full sentence is fine)
+- Examples: L1, L2, COM, N, E, WAGO, CONN, S1, S2
 
 INSTRUCTION DETAIL REQUIREMENTS:
 - Each wiring step instruction must be 2–3 sentences minimum
@@ -547,7 +538,7 @@ Format:
     const guidanceText = guidanceCandidate.content.parts[0].text;
 
     // Extract and repair JSON
-    let jsonMatch = guidanceText.match(/\{[\s\S]*\}/);
+    const jsonMatch = guidanceText.match(/\{[\s\S]*\}/);
     let guidance = null;
 
     try {
@@ -585,32 +576,35 @@ Format:
 
     logger.info('Wiring guidance generated successfully');
 
+    // Wrap in wiring_schematic to match front-end expectations
     return new Response(
       JSON.stringify({
-        component_name: guidance.component_name,
-        component_details: componentDetails,
-        pre_installation_tasks: guidance.pre_installation_tasks || [],
-        board_layout_guide: guidance.board_layout_guide,
-        wiring_sequence_strategy: guidance.wiring_sequence_strategy,
-        practical_tips: guidance.practical_tips || [],
-        common_mistakes: guidance.common_mistakes || [],
-        wiring_scenarios: guidance.wiring_scenarios || [
-          {
-            scenario_id: 'default',
-            scenario_name: 'Standard Installation',
-            use_case: 'Standard BS 7671 compliant installation',
-            complexity: 'simple',
-            recommended: true,
-            wiring_steps: guidance.wiring_steps,
-            terminal_connections: guidance.terminal_connections,
-            safety_warnings: guidance.safety_warnings,
-            required_tests: guidance.required_tests,
+        wiring_schematic: {
+          component_name: guidance.component_name,
+          component_details: componentDetails,
+          pre_installation_tasks: guidance.pre_installation_tasks || [],
+          board_layout_guide: guidance.board_layout_guide,
+          wiring_sequence_strategy: guidance.wiring_sequence_strategy,
+          practical_tips: guidance.practical_tips || [],
+          common_mistakes: guidance.common_mistakes || [],
+          wiring_scenarios: guidance.wiring_scenarios || [
+            {
+              scenario_id: 'default',
+              scenario_name: 'Standard Installation',
+              use_case: 'Standard BS 7671 compliant installation',
+              complexity: 'simple',
+              recommended: true,
+              wiring_steps: guidance.wiring_steps,
+              terminal_connections: guidance.terminal_connections,
+              safety_warnings: guidance.safety_warnings,
+              required_tests: guidance.required_tests,
+            },
+          ],
+          comparison: guidance.comparison,
+          rag_sources: {
+            installation_docs_count: installationDocs.length,
+            regulations_count: regulations.length,
           },
-        ],
-        comparison: guidance.comparison,
-        rag_sources: {
-          installation_docs_count: installationDocs.length,
-          regulations_count: regulations.length,
         },
       }),
       {
