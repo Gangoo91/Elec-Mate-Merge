@@ -264,7 +264,22 @@ export default function LimitationNoticePage() {
     e.target.value = '';
     for (const file of Array.from(files)) {
       const reader = new FileReader();
-      reader.onload = () => { setData((prev) => ({ ...prev, photos: [...prev.photos, reader.result as string] })); };
+      reader.onload = () => {
+        const img = new Image();
+        img.onload = () => {
+          const MAX = 1000;
+          const scale = img.width > MAX ? MAX / img.width : 1;
+          const canvas = document.createElement('canvas');
+          canvas.width = Math.round(img.width * scale);
+          canvas.height = Math.round(img.height * scale);
+          const ctx = canvas.getContext('2d');
+          if (!ctx) return;
+          ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+          const compressed = canvas.toDataURL('image/jpeg', 0.75);
+          setData((prev) => ({ ...prev, photos: [...prev.photos, compressed] }));
+        };
+        img.src = reader.result as string;
+      };
       reader.readAsDataURL(file);
     }
   };
@@ -463,7 +478,7 @@ export default function LimitationNoticePage() {
 
         {/* Photos */}
         <Section title="Photo Evidence" accentColor="from-cyan-500/40 to-blue-400/20">
-          <input ref={photoInputRef} type="file" accept="image/*" capture="environment" multiple className="hidden" onChange={handlePhotoCapture} />
+          <input ref={photoInputRef} type="file" accept="image/*" multiple className="hidden" onChange={handlePhotoCapture} />
           <button onClick={() => photoInputRef.current?.click()} className="w-full h-12 rounded-xl border-2 border-dashed border-white/[0.15] flex items-center justify-center gap-2.5 text-sm text-white touch-manipulation active:scale-[0.98]"><Camera className="h-4 w-4" /> Add Photos</button>
           {data.photos.length > 0 && (
             <div className="grid grid-cols-3 gap-2">

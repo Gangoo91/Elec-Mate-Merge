@@ -1,8 +1,7 @@
 import React from 'react';
 import { Button } from '@/components/ui/button';
-import { ChevronLeft, ChevronRight, CheckCircle2, PoundSterling, Mail } from 'lucide-react';
+import { ChevronLeft, ChevronRight, CheckCircle2, PoundSterling, Mail, Download } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import { useIsMobile } from '@/hooks/use-mobile';
 
 interface FireAlarmTabNavigationProps {
   currentTab: string;
@@ -37,119 +36,92 @@ const FireAlarmTabNavigation: React.FC<FireAlarmTabNavigationProps> = ({
   onOpenEmailDialog,
   canEmail = false,
 }) => {
-  const isMobile = useIsMobile();
   const progress = getProgressPercentage();
   const isLastTab = currentTabIndex === totalTabs - 1;
 
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
-
-  const handleNavigateNext = () => {
-    navigateNext();
-    scrollToTop();
-  };
-
-  const handleNavigatePrevious = () => {
-    navigatePrevious();
-    scrollToTop();
-  };
+  const scrollToTop = () => window.scrollTo({ top: 0, behavior: 'smooth' });
+  const handleNavigateNext = () => { navigateNext(); scrollToTop(); };
+  const handleNavigatePrevious = () => { navigatePrevious(); scrollToTop(); };
 
   return (
-    <div
-      className={cn(
-        'sticky bottom-0 left-0 right-0 bg-[#242428] border-t border-border',
-        isMobile ? 'p-3 mt-2' : 'p-4 sm:p-6 mt-6'
-      )}
-    >
-      <div className={cn(isMobile ? '' : 'max-w-6xl mx-auto')}>
-        {/* Progress bar */}
-        <div className="mb-3">
-          <div className="flex items-center justify-between mb-1">
-            <span className="text-sm text-white">
-              Section {currentTabIndex + 1} of {totalTabs}
-            </span>
-            <span className="text-sm font-medium text-foreground">{progress}% complete</span>
-          </div>
-          <div className="h-2 bg-muted rounded-full overflow-hidden">
-            <div
-              className="h-full bg-red-500 transition-all duration-300"
-              style={{ width: `${progress}%` }}
-            />
-          </div>
-        </div>
-
-        {/* Navigation buttons */}
-        <div className="flex items-center justify-between gap-3">
-          <Button
-            variant="outline"
-            onClick={handleNavigatePrevious}
-            disabled={!canNavigatePrevious}
-            className="h-12 px-6 touch-manipulation active:scale-[0.98] transition-transform"
-          >
-            <ChevronLeft className="h-5 w-5 mr-2" />
-            Previous
-          </Button>
-
+    <div className="sticky bottom-0 left-0 right-0 bg-[#242428] border-t border-border p-3 sm:p-4">
+      {/* Progress bar — Complete badge lives here, not between the buttons */}
+      <div className="mb-3">
+        <div className="flex items-center justify-between mb-1">
+          <span className="text-sm text-white">Section {currentTabIndex + 1} of {totalTabs}</span>
           <div className="flex items-center gap-2">
             {isCurrentTabComplete && (
-              <div className="flex items-center gap-1 text-green-500 text-sm">
-                <CheckCircle2 className="h-4 w-4" />
-                <span className="hidden sm:inline">Section complete</span>
+              <div className="flex items-center gap-1 text-green-500 text-xs">
+                <CheckCircle2 className="h-3.5 w-3.5" />
+                <span>Complete</span>
               </div>
             )}
+            <span className="text-sm font-medium text-white">{progress}% complete</span>
           </div>
-
-          {isLastTab ? (
-            <div className="flex items-center gap-2">
-              {onOpenEmailDialog && (
-                <Button
-                  variant="outline"
-                  size="icon"
-                  onClick={onOpenEmailDialog}
-                  disabled={!canEmail}
-                  className="h-11 w-11 touch-manipulation bg-blue-500/10 border-blue-500/30 hover:bg-blue-500/20 text-blue-400 active:scale-[0.98] transition-transform"
-                  aria-label="Email certificate"
-                >
-                  <Mail className="h-5 w-5" />
-                </Button>
-              )}
-              {onCreateInvoice && (
-                <Button
-                  variant="outline"
-                  size="icon"
-                  onClick={onCreateInvoice}
-                  className="h-11 w-11 touch-manipulation bg-emerald-500/10 border-emerald-500/30 hover:bg-emerald-500/20 text-emerald-400 active:scale-[0.98] transition-transform"
-                  aria-label="Create invoice"
-                >
-                  <PoundSterling className="h-5 w-5" />
-                </Button>
-              )}
-              <Button
-                onClick={onGenerateCertificate}
-                disabled={!canGenerateCertificate}
-                className={cn(
-                  'touch-manipulation bg-green-600 hover:bg-green-700 active:scale-[0.98] transition-transform',
-                  isMobile ? 'h-11 px-4' : 'h-12 px-6'
-                )}
-              >
-                Generate Certificate
-              </Button>
-            </div>
-          ) : (
-            <Button
-              onClick={handleNavigateNext}
-              disabled={!canNavigateNext}
-              className={cn(
-                'touch-manipulation active:scale-[0.98] transition-transform',
-                isMobile ? 'h-11 px-4' : 'h-12 px-6'
-              )}
-            >
-              Next
-              <ChevronRight className="h-5 w-5 ml-2" />
-            </Button>
-          )}
         </div>
+        <div className="h-2 bg-muted rounded-full overflow-hidden">
+          <div className="h-full bg-red-500 transition-all duration-300" style={{ width: `${progress}%` }} />
+        </div>
+      </div>
+
+      {/* Navigation — Previous is fixed-width, Generate fills remaining space */}
+      <div className="flex items-center gap-2">
+        <Button
+          variant="outline"
+          onClick={handleNavigatePrevious}
+          disabled={!canNavigatePrevious}
+          className="shrink-0 h-12 px-4 touch-manipulation active:scale-[0.98] transition-transform"
+        >
+          <ChevronLeft className="h-5 w-5 mr-1 shrink-0" />
+          Previous
+        </Button>
+
+        {isLastTab ? (
+          <>
+            {/* Icon-only action buttons — fixed size, don't shrink */}
+            {onOpenEmailDialog && (
+              <Button
+                variant="outline"
+                size="icon"
+                onClick={onOpenEmailDialog}
+                disabled={!canEmail}
+                className="shrink-0 h-12 w-12 touch-manipulation bg-blue-500/10 border-blue-500/30 hover:bg-blue-500/20 text-blue-400 active:scale-[0.98] transition-transform"
+                aria-label="Email certificate"
+              >
+                <Mail className="h-5 w-5" />
+              </Button>
+            )}
+            {onCreateInvoice && (
+              <Button
+                variant="outline"
+                size="icon"
+                onClick={onCreateInvoice}
+                className="shrink-0 h-12 w-12 touch-manipulation bg-emerald-500/10 border-emerald-500/30 hover:bg-emerald-500/20 text-emerald-400 active:scale-[0.98] transition-transform"
+                aria-label="Create invoice"
+              >
+                <PoundSterling className="h-5 w-5" />
+              </Button>
+            )}
+            {/* Generate fills all remaining space */}
+            <Button
+              onClick={onGenerateCertificate}
+              disabled={!canGenerateCertificate}
+              className="flex-1 h-12 min-w-0 bg-green-600 hover:bg-green-700 touch-manipulation active:scale-[0.98] transition-transform"
+            >
+              <Download className="h-4 w-4 mr-2 shrink-0" />
+              <span className="truncate">Generate Certificate</span>
+            </Button>
+          </>
+        ) : (
+          <Button
+            onClick={handleNavigateNext}
+            disabled={!canNavigateNext}
+            className="flex-1 h-12 touch-manipulation active:scale-[0.98] transition-transform"
+          >
+            Next
+            <ChevronRight className="h-5 w-5 ml-1 shrink-0" />
+          </Button>
+        )}
       </div>
     </div>
   );

@@ -350,7 +350,21 @@ export default function DangerNoticePage() {
     for (const file of Array.from(files)) {
       const reader = new FileReader();
       reader.onload = () => {
-        updateDanger(dangerId, 'photos', [...(data.dangers.find((d) => d.id === dangerId)?.photos || []), reader.result as string]);
+        // Compress to max 1000px wide, JPEG 75% — keeps PDFMonkey payload manageable
+        const img = new Image();
+        img.onload = () => {
+          const MAX = 1000;
+          const scale = img.width > MAX ? MAX / img.width : 1;
+          const canvas = document.createElement('canvas');
+          canvas.width = Math.round(img.width * scale);
+          canvas.height = Math.round(img.height * scale);
+          const ctx = canvas.getContext('2d');
+          if (!ctx) return;
+          ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+          const compressed = canvas.toDataURL('image/jpeg', 0.75);
+          updateDanger(dangerId, 'photos', [...(data.dangers.find((d) => d.id === dangerId)?.photos || []), compressed]);
+        };
+        img.src = reader.result as string;
       };
       reader.readAsDataURL(file);
     }
@@ -585,7 +599,7 @@ export default function DangerNoticePage() {
               <Label className="text-white text-xs">Photo Evidence</Label>
               <input
                 ref={(el) => { photoInputRefs.current[danger.id] = el; }}
-                type="file" accept="image/*" capture="environment" multiple className="hidden"
+                type="file" accept="image/*" multiple className="hidden"
                 onChange={(e) => handlePhotoCapture(danger.id, e)}
               />
               <button
