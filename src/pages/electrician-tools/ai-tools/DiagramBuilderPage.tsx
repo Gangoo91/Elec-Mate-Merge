@@ -37,6 +37,7 @@ import { SymbolCountPanel } from '@/components/electrician-tools/diagram-builder
 import { ExportReviewSheet } from '@/components/electrician-tools/diagram-builder/ExportReviewSheet';
 import { symbolRegistry } from '@/components/electrician-tools/diagram-builder/symbols/symbolRegistry';
 import { useFloorPlanRooms } from '@/hooks/useFloorPlanRooms';
+import { supabase } from '@/integrations/supabase/client';
 import { toast } from '@/hooks/use-toast';
 import { storageSetJSONSync, storageGetJSONSync } from '@/utils/storage';
 import {
@@ -691,10 +692,68 @@ const DiagramBuilderPage = () => {
         open={exportReviewOpen}
         onOpenChange={setExportReviewOpen}
         rooms={rooms}
-        onGeneratePdf={(data) => {
-          // TODO: Send to PDFMonkey edge function
-          console.log('PDF data:', data);
-          toast({ title: 'PDF generation coming soon' });
+        onGeneratePdf={async (data) => {
+          haptic.light();
+          const loadingToast = toast({ title: 'Generating PDF...', description: 'This may take a moment' });
+
+          try {
+            // Build room data with canvas images
+            const roomsPayload = data.rooms.map((room) => ({
+              name: room.name,
+              floor_plan_image: room.thumbnail || '',
+              item_count: room.symbolIds.length,
+              items: (() => {
+                const counts = new Map<string, number>();
+                room.symbolIds.forEach((id) => counts.set(id, (counts.get(id) || 0) + 1));
+                return Array.from(counts.entries()).map(([id, count]) => {
+                  const sym = symbolRegistry.find((s) => s.id === id);
+                  return { name: sym?.name || id, count };
+                });
+              })(),
+            }));
+
+            // Group materials by category
+            const materialsByCategory = Object.entries(
+              data.materialsSchedule.reduce<Record<string, { name: string; count: number }[]>>((acc, item) => {
+                if (!acc[item.category]) acc[item.category] = [];
+                acc[item.category].push({ name: item.name, count: item.count });
+                return acc;
+              }, {})
+            ).map(([name, items]) => ({ name, items }));
+
+            const { data: result, error } = await supabase.functions.invoke('generate-floor-plan-pdf', {
+              body: {
+                property_address: data.property,
+                client_name: data.client,
+                electrician_name: data.electrician,
+                date: data.date,
+                drawing_number: 'EL-001',
+                notes: data.notes,
+                rooms: roomsPayload,
+                materials_by_category: materialsByCategory,
+                total_items: data.totalItems,
+              },
+            });
+
+            if (error) throw error;
+
+            if (result?.success && result?.pdf_url) {
+              haptic.success();
+              toast({ title: 'PDF ready', description: 'Opening...', variant: 'success' });
+
+              // Download/share the PDF on all platforms
+              const { openOrDownloadPdf } = await import('@/utils/pdf-download');
+              await openOrDownloadPdf(result.pdf_url, `floor-plan-${Date.now()}.pdf`);
+              setExportReviewOpen(false);
+            } else if (result?.status === 'processing') {
+              toast({ title: 'PDF generating', description: 'Check back in a moment — the PDF is still being created.' });
+            } else {
+              throw new Error(result?.error || 'PDF generation failed');
+            }
+          } catch (err) {
+            haptic.error();
+            toast({ title: 'PDF failed', description: err instanceof Error ? err.message : 'Could not generate PDF', variant: 'destructive' });
+          }
         }}
       />
 
