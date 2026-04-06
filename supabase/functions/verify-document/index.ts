@@ -180,8 +180,10 @@ serve(async (req) => {
     return new Response(null, { headers: corsHeaders });
   }
 
+  let parsedBody: VerificationRequest | null = null;
   try {
-    const body: VerificationRequest = await req.json();
+    parsedBody = await req.json();
+    const body = parsedBody!;
     const {
       fileUrl,
       documentType,
@@ -478,11 +480,7 @@ Respond with ONLY valid JSON in this exact format:
 
     // Error recovery: mark the document as needs_review + flagged so it doesn't stay stuck
     try {
-      const body = await req
-        .clone()
-        .json()
-        .catch(() => null);
-      const docId = body?.documentId;
+      const docId = parsedBody?.documentId;
       if (docId) {
         const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
         const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;

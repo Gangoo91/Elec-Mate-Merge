@@ -273,7 +273,7 @@ YOUR UNIQUE VALUE: You provide COMPREHENSIVE inspection and testing guidance
 - Functional testing verification
 - Certification requirements (EIC, EICR, MWC)
 
-CURRENT DATE: September 2025
+CURRENT DATE: ${new Date().toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric', timeZone: 'Europe/London' })}
 
 INSPECTION & TESTING KNOWLEDGE DATABASE:
 ${testContext}

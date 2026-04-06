@@ -3,6 +3,7 @@ import { PullToRefresh } from '@/components/ui/pull-to-refresh';
 import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useCustomers, Customer, SortField, SortDirection } from '@/hooks/inspection/useCustomers';
+import { useDebounce } from '@/hooks/useDebounce';
 import { supabase } from '@/integrations/supabase/client';
 import { ReliabilityLevel } from '@/hooks/useCustomerPaymentStats';
 import { CustomerListRow } from '@/components/customers/CustomerListRow';
@@ -49,6 +50,8 @@ export default function CustomersPage() {
   const navigate = useNavigate();
   const [sortField, setSortField] = useState<SortField>('name');
   const [sortDirection, setSortDirection] = useState<SortDirection>('asc');
+  const [searchTerm, setSearchTerm] = useState('');
+  const debouncedSearch = useDebounce(searchTerm, 300);
 
   const {
     customers,
@@ -66,7 +69,7 @@ export default function CustomersPage() {
     deleteCustomer,
     exportCustomers,
     refreshCustomers,
-  } = useCustomers({ sortField, sortDirection });
+  } = useCustomers({ sortField, sortDirection, searchTerm: debouncedSearch });
 
   const [invoiceData, setInvoiceData] = useState<
     { customer_id: string; invoice_status: string | null; invoice_paid_at: string | null; invoice_due_date: string | null }[]
@@ -111,7 +114,6 @@ export default function CustomersPage() {
     return map;
   }, [invoiceData]);
 
-  const [searchTerm, setSearchTerm] = useState('');
   const [showSearch, setShowSearch] = useState(false);
   const [showAddDialog, setShowAddDialog] = useState(false);
   const [showImportDialog, setShowImportDialog] = useState(false);
@@ -119,18 +121,6 @@ export default function CustomersPage() {
   const [deleteConfirmId, setDeleteConfirmId] = useState<string | null>(null);
   const [quickNoteCustomer, setQuickNoteCustomer] = useState<Customer | null>(null);
   const [certificateCustomer, setCertificateCustomer] = useState<Customer | null>(null);
-
-  const filteredCustomers = useMemo(() => {
-    if (!searchTerm.trim()) return customers;
-    const term = searchTerm.toLowerCase();
-    return customers.filter(
-      (c) =>
-        c.name.toLowerCase().includes(term) ||
-        c.email?.toLowerCase().includes(term) ||
-        c.phone?.includes(term) ||
-        c.address?.toLowerCase().includes(term)
-    );
-  }, [customers, searchTerm]);
 
   const handleSaveCustomer = async (data: Omit<Customer, 'id' | 'createdAt' | 'updatedAt'>) => {
     if (editingCustomer) {
@@ -305,7 +295,7 @@ export default function CustomersPage() {
           <div className="flex items-center justify-center py-12">
             <Loader2 className="h-8 w-8 animate-spin text-elec-yellow" />
           </div>
-        ) : filteredCustomers.length === 0 ? (
+        ) : customers.length === 0 ? (
           <motion.div variants={itemVariants} className="text-center py-12">
             <div className="max-w-sm mx-auto space-y-5">
               {searchTerm ? (
@@ -343,7 +333,7 @@ export default function CustomersPage() {
         ) : (
           <motion.div variants={containerVariants} initial="hidden" animate="visible" className="space-y-2">
             <AnimatePresence mode="popLayout">
-              {filteredCustomers.map((customer) => (
+              {customers.map((customer) => (
                 <motion.div key={customer.id} variants={itemVariants} layout exit={{ opacity: 0, scale: 0.95 }}>
                   <CustomerListRow
                     customer={customer}

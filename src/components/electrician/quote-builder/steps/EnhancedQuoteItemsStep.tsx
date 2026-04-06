@@ -48,6 +48,7 @@ import { toast } from '@/hooks/use-toast';
 import { useCompanyProfile } from '@/hooks/useCompanyProfile';
 import { useMaterialsLists, MaterialsListItem } from '@/hooks/useMaterialsLists';
 import { usePriceBookBundles } from '@/hooks/usePriceBookBundles';
+import { usePriceBookSettings } from '@/hooks/usePriceBookSettings';
 import { usePriceList } from '@/hooks/usePriceList';
 import { useInvoiceScanner } from '@/hooks/useInvoiceScanner';
 import { InvoiceScannerSheet } from '@/components/electrician/invoice-builder/InvoiceScannerSheet';
@@ -88,6 +89,9 @@ export const EnhancedQuoteItemsStep = ({
   // Inline item description editing
   const [editingItemId, setEditingItemId] = useState<string | null>(null);
   const [editingDescription, setEditingDescription] = useState('');
+
+  // Global markup from Price Book settings
+  const { calcSellPrice } = usePriceBookSettings();
 
   // Rate card
   const { items: rateCardItems } = usePriceList();
@@ -1157,11 +1161,12 @@ export const EnhancedQuoteItemsStep = ({
                     key={`pb-${p.item.id}`}
                     type="button"
                     onClick={() => {
+                      const costPrice = p.item.estimated_price || 0;
                       onAdd({
                         description: p.item.name,
                         quantity: p.item.quantity || 1,
                         unit: p.item.unit || 'each',
-                        unitPrice: p.item.estimated_price || 0,
+                        unitPrice: Math.round(calcSellPrice(costPrice) * 100) / 100,
                         category: 'materials',
                         notes: p.item.supplier ? `Supplier: ${p.item.supplier}` : undefined,
                       });
@@ -1255,11 +1260,14 @@ export const EnhancedQuoteItemsStep = ({
                       key={item.id}
                       type="button"
                       onClick={() => {
+                        const isMaterial = item.category === 'materials';
                         onAdd({
                           description: item.name,
                           quantity: 1,
                           unit: item.unit,
-                          unitPrice: item.unit_price,
+                          unitPrice: isMaterial
+                            ? Math.round(calcSellPrice(item.unit_price) * 100) / 100
+                            : item.unit_price,
                           category: item.category === 'labour' || item.category === 'call-out'
                             ? 'labour'
                             : item.category === 'materials'
@@ -1375,11 +1383,14 @@ export const EnhancedQuoteItemsStep = ({
                           onClick={() => {
                             let addedCount = 0;
                             bundle.items.forEach((item) => {
+                              const isBundleMaterial = item.category !== 'labour' && item.category !== 'equipment';
                               onAdd({
                                 description: item.name,
                                 quantity: item.quantity,
                                 unit: item.unit,
-                                unitPrice: item.unitPrice,
+                                unitPrice: isBundleMaterial
+                                  ? Math.round(calcSellPrice(item.unitPrice) * 100) / 100
+                                  : item.unitPrice,
                                 category: item.category === 'labour' ? 'labour' : item.category === 'equipment' ? 'equipment' : 'materials',
                               });
                               addedCount++;

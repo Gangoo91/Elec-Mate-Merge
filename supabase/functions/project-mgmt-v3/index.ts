@@ -228,7 +228,7 @@ Use UK standards: BS 7671, Part P, Building Control, HSE guidance
 - Each sentence must end with proper punctuation
 - Remove any stray "?" characters from your output
 
-**CURRENT DATE:** September 2025
+**CURRENT DATE:** ${new Date().toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric', timeZone: 'Europe/London' })}
 
 **PROJECT MANAGEMENT KNOWLEDGE (784 REAL PROJECTS):**
 ${pmContext}

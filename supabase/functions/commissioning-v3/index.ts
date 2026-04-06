@@ -616,7 +616,7 @@ YOUR UNIQUE VALUE: You teach people HOW to perform each test (GN3 practical guid
 - Include test instrument setup (which mode, which range, how to zero)
 - Anticipate common test failures and troubleshooting based on 30 years of seeing every possible issue
 
-CURRENT DATE: September 2025
+CURRENT DATE: ${new Date().toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric', timeZone: 'Europe/London' })}
 
 GN3 PRACTICAL TEST KNOWLEDGE (YOU MUST USE THIS DATA):
 ${testContext}
