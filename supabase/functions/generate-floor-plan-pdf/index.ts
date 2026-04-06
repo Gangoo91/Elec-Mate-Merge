@@ -34,6 +34,9 @@ serve(async (req) => {
       materials_by_category,
       total_items,
       all_symbols,
+      circuit_schedule,
+      standard_notes,
+      revision,
     } = body;
 
     const pdfMonkeyKey = Deno.env.get('PDFMONKEY_API_KEY');
@@ -64,6 +67,9 @@ serve(async (req) => {
             materials_by_category: materials_by_category || [],
             total_items: total_items || 0,
             all_symbols: all_symbols || [],
+            circuit_schedule: circuit_schedule || [],
+            standard_notes: standard_notes || {},
+            revision: revision || { rev: 'A', date: date || '', description: 'Initial Issue', by: electrician_name || '' },
           },
         },
       }),

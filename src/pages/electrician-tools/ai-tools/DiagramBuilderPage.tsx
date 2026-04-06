@@ -35,6 +35,8 @@ import { SavedRoomsStrip } from '@/components/electrician-tools/diagram-builder/
 import { SymbolCountPanel } from '@/components/electrician-tools/diagram-builder/SymbolCountPanel';
 import { ExportReviewSheet } from '@/components/electrician-tools/diagram-builder/ExportReviewSheet';
 import { symbolRegistry } from '@/components/electrician-tools/diagram-builder/symbols/symbolRegistry';
+import { assignCircuits } from '@/utils/circuit-assignment';
+import { STANDARD_NOTES } from '@/utils/standard-electrical-notes';
 import { useFloorPlanRooms } from '@/hooks/useFloorPlanRooms';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from '@/hooks/use-toast';
@@ -756,6 +758,17 @@ const DiagramBuilderPage = () => {
               })
             );
 
+            // Auto-assign circuits from all symbols across all rooms
+            const allSymbolIds = data.rooms.flatMap((room) => room.symbolIds);
+            const { circuitSchedule } = assignCircuits(allSymbolIds);
+
+            const revision = {
+              rev: 'A',
+              date: data.date,
+              description: 'Initial Issue',
+              by: data.electrician,
+            };
+
             const { data: result, error } = await supabase.functions.invoke('generate-floor-plan-pdf', {
               body: {
                 property_address: data.property,
@@ -768,6 +781,9 @@ const DiagramBuilderPage = () => {
                 materials_by_category: materialsByCategory,
                 total_items: data.totalItems,
                 all_symbols: allSymbolsLegend,
+                circuit_schedule: circuitSchedule,
+                standard_notes: STANDARD_NOTES,
+                revision,
               },
             });
 

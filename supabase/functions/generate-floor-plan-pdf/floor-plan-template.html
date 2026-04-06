@@ -152,6 +152,16 @@
                 </div>
             </div>
         </div>
+
+        <div style="margin-top: 16px;">
+          <table style="width: 100%; border-collapse: collapse; border: 1px solid rgba(255,255,255,0.15);">
+            <thead><tr style="background: rgba(255,255,255,0.06);"><th style="padding: 4px 10px; font-size: 8px; color: rgba(255,255,255,0.5); text-transform: uppercase; text-align: left;">Rev</th><th style="padding: 4px 10px; font-size: 8px; color: rgba(255,255,255,0.5); text-transform: uppercase; text-align: left;">Date</th><th style="padding: 4px 10px; font-size: 8px; color: rgba(255,255,255,0.5); text-transform: uppercase; text-align: left;">Description</th><th style="padding: 4px 10px; font-size: 8px; color: rgba(255,255,255,0.5); text-transform: uppercase; text-align: left;">By</th></tr></thead>
+            <tbody>
+              <tr><td style="padding: 4px 10px; font-size: 9px; color: #fff; border-top: 1px solid rgba(255,255,255,0.1);">{{ revision.rev }}</td><td style="padding: 4px 10px; font-size: 9px; color: #fff; border-top: 1px solid rgba(255,255,255,0.1);">{{ revision.date }}</td><td style="padding: 4px 10px; font-size: 9px; color: #fff; border-top: 1px solid rgba(255,255,255,0.1);">{{ revision.description }}</td><td style="padding: 4px 10px; font-size: 9px; color: #fff; border-top: 1px solid rgba(255,255,255,0.1);">{{ revision.by }}</td></tr>
+              <tr><td style="padding: 4px 10px; font-size: 9px; color: rgba(255,255,255,0.3); border-top: 1px solid rgba(255,255,255,0.05);">B</td><td colspan="3" style="padding: 4px 10px; border-top: 1px solid rgba(255,255,255,0.05);"></td></tr>
+            </tbody>
+          </table>
+        </div>
     </div>
 
     <div class="cover-footer">
@@ -225,6 +235,76 @@
         <p>{{ date }}</p>
     </div>
 </div>
+
+<!-- ════════════════════════ CIRCUIT SCHEDULE ════════════════════════ -->
+{% if circuit_schedule.size > 0 %}
+<div class="page" style="padding: 15mm 20mm; page-break-after: always;">
+  <div style="font-size: 22px; font-weight: 800; border-bottom: 3px solid #EAB308; padding-bottom: 8px; margin-bottom: 16px;">Circuit Schedule</div>
+  <table style="width: 100%; border-collapse: collapse;">
+    <thead>
+      <tr style="background: #0f172a; color: #fff;">
+        <th style="padding: 6px 10px; text-align: left; font-size: 9px; text-transform: uppercase;">Ref</th>
+        <th style="padding: 6px 10px; text-align: left; font-size: 9px; text-transform: uppercase;">Circuit</th>
+        <th style="padding: 6px 10px; text-align: left; font-size: 9px; text-transform: uppercase;">Cable</th>
+        <th style="padding: 6px 10px; text-align: left; font-size: 9px; text-transform: uppercase;">Protection</th>
+        <th style="padding: 6px 10px; text-align: left; font-size: 9px; text-transform: uppercase;">RCD</th>
+        <th style="padding: 6px 10px; text-align: right; font-size: 9px; text-transform: uppercase;">Points</th>
+        <th style="padding: 6px 10px; text-align: right; font-size: 9px; text-transform: uppercase;">Load</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for circuit in circuit_schedule %}
+      <tr>
+        <td style="padding: 5px 10px; border-bottom: 1px solid #e2e8f0; font-weight: 700; color: #EAB308;">{{ circuit.circuitRef }}</td>
+        <td style="padding: 5px 10px; border-bottom: 1px solid #e2e8f0;">{{ circuit.circuitName }}</td>
+        <td style="padding: 5px 10px; border-bottom: 1px solid #e2e8f0;">{{ circuit.cableSize }}</td>
+        <td style="padding: 5px 10px; border-bottom: 1px solid #e2e8f0;">{{ circuit.protection }}</td>
+        <td style="padding: 5px 10px; border-bottom: 1px solid #e2e8f0;">{{ circuit.rcd }}</td>
+        <td style="padding: 5px 10px; border-bottom: 1px solid #e2e8f0; text-align: right;">{{ circuit.points }}</td>
+        <td style="padding: 5px 10px; border-bottom: 1px solid #e2e8f0; text-align: right;">{{ circuit.typicalLoad }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endif %}
+
+<!-- ════════════════════════ STANDARD INSTALLATION NOTES ════════════════════════ -->
+{% if standard_notes.mountingHeights %}
+<div class="page" style="padding: 15mm 20mm; page-break-after: always;">
+  <div style="font-size: 22px; font-weight: 800; border-bottom: 3px solid #EAB308; padding-bottom: 8px; margin-bottom: 16px;">Standard Installation Notes</div>
+
+  <div style="margin-bottom: 16px;">
+    <div style="font-size: 11px; font-weight: 700; color: #EAB308; text-transform: uppercase; margin-bottom: 6px;">Mounting Heights</div>
+    <table style="width: 100%; border-collapse: collapse;">
+      <thead><tr style="background: #f8fafc;"><th style="padding: 4px 8px; text-align: left; font-size: 9px;">Item</th><th style="padding: 4px 8px; text-align: left; font-size: 9px;">Height</th><th style="padding: 4px 8px; text-align: left; font-size: 9px;">Notes</th></tr></thead>
+      <tbody>
+        {% for item in standard_notes.mountingHeights %}
+        <tr><td style="padding: 3px 8px; border-bottom: 1px solid #f1f5f9; font-size: 9px;">{{ item.item }}</td><td style="padding: 3px 8px; border-bottom: 1px solid #f1f5f9; font-size: 9px; font-weight: 600;">{{ item.height }}</td><td style="padding: 3px 8px; border-bottom: 1px solid #f1f5f9; font-size: 9px; color: #64748b;">{{ item.notes }}</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  <div style="margin-bottom: 16px;">
+    <div style="font-size: 11px; font-weight: 700; color: #EAB308; text-transform: uppercase; margin-bottom: 6px;">General Notes</div>
+    <ol style="padding-left: 16px; font-size: 9px; color: #334155; line-height: 1.6;">
+      {% for note in standard_notes.generalNotes %}
+      <li style="margin-bottom: 3px;">{{ note }}</li>
+      {% endfor %}
+    </ol>
+  </div>
+
+  <div>
+    <div style="font-size: 11px; font-weight: 700; color: #EAB308; text-transform: uppercase; margin-bottom: 6px;">Abbreviations</div>
+    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px 16px;">
+      {% for item in standard_notes.abbreviations %}
+      <div style="font-size: 8px; padding: 2px 0; border-bottom: 1px solid #f1f5f9;"><strong>{{ item.abbr }}</strong> — {{ item.meaning }}</div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+{% endif %}
 
 <!-- ════════════════════════ APPENDIX: FULL SYMBOL REFERENCE ════════════════════════ -->
 <div class="page appendix-page">
