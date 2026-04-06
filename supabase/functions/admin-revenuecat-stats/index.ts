@@ -104,19 +104,24 @@ Deno.serve(async (req) => {
     const subscriberIds = (subscribers || []).map((s) => s.id);
 
     // Fetch engagement data for all subscribers in one query
-    const engagementMap: Record<string, {
-      login_count: number;
-      page_view_count: number;
-      total_seconds_tracked: number;
-      feature_use_count: number;
-      active_days: number;
-      unique_pages_visited: number;
-    }> = {};
+    const engagementMap: Record<
+      string,
+      {
+        login_count: number;
+        page_view_count: number;
+        total_seconds_tracked: number;
+        feature_use_count: number;
+        active_days: number;
+        unique_pages_visited: number;
+      }
+    > = {};
 
     if (subscriberIds.length > 0) {
       const { data: engagementRows } = await supabaseAdmin
         .from('user_activity_summary')
-        .select('user_id, login_count, page_view_count, total_seconds_tracked, feature_use_count, active_days, unique_pages_visited')
+        .select(
+          'user_id, login_count, page_view_count, total_seconds_tracked, feature_use_count, active_days, unique_pages_visited'
+        )
         .in('user_id', subscriberIds);
 
       for (const row of engagementRows || []) {
@@ -140,7 +145,12 @@ Deno.serve(async (req) => {
       const tier = sub.subscription_tier || 'unknown';
       const engagement = engagementMap[sub.id] || null;
 
-      if (sub.is_trial) {
+      // Check trial status: explicit is_trial flag OR trial_end in the future
+      const trialEnd = sub.trial_end || null;
+      const isOnTrial =
+        sub.is_trial === true || (trialEnd && new Date(trialEnd).getTime() > Date.now());
+
+      if (isOnTrial) {
         // Trialists — separate list, NOT counted as paying subscribers
         trialUsers.push({
           id: sub.id,

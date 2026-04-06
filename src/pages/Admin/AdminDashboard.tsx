@@ -19,6 +19,7 @@ import {
   Smartphone,
   Timer,
   XCircle,
+  ChevronDown,
 } from 'lucide-react';
 import { formatDistanceToNow, differenceInDays, parseISO } from 'date-fns';
 import { useState, useCallback, useRef } from 'react';
@@ -194,14 +195,29 @@ export default function AdminDashboard() {
   });
 
   const mobileSubsRef = useRef<HTMLDivElement>(null);
+  const [showPaid, setShowPaid] = useState(true);
+  const [showTrials, setShowTrials] = useState(true);
+  const [showCancelled, setShowCancelled] = useState(false);
 
   // Fetch RevenueCat stats (App Store + Play Store data)
   const { data: rcStats } = useQuery<{
     subscribersBySource: Record<string, number>;
     tiersBySource: Record<string, Record<string, number>>;
     revenuecat: { mrr: number; revenue: number; activeSubscriptions: number; activeTrials: number };
-    trialUsers: Array<{ id: string; full_name: string; subscription_tier: string; trial_end: string | null; is_cancelled: boolean; engagement: EngagementData | null }>;
-    paidUsers: Array<{ id: string; full_name: string; subscription_tier: string; engagement: EngagementData | null }>;
+    trialUsers: Array<{
+      id: string;
+      full_name: string;
+      subscription_tier: string;
+      trial_end: string | null;
+      is_cancelled: boolean;
+      engagement: EngagementData | null;
+    }>;
+    paidUsers: Array<{
+      id: string;
+      full_name: string;
+      subscription_tier: string;
+      engagement: EngagementData | null;
+    }>;
   }>({
     queryKey: ['admin-revenuecat-stats'],
     refetchInterval: 60000,
@@ -481,7 +497,9 @@ export default function AdminDashboard() {
   const in24h = new Date(now.getTime() + 24 * 60 * 60 * 1000);
   const in48h = new Date(now.getTime() + 48 * 60 * 60 * 1000);
   const in72h = new Date(now.getTime() + 72 * 60 * 60 * 1000);
-  const activeTrialUsers = (rcStats?.trialUsers || []).filter((t) => !t.is_cancelled && t.trial_end);
+  const activeTrialUsers = (rcStats?.trialUsers || []).filter(
+    (t) => !t.is_cancelled && t.trial_end
+  );
   const expiringToday = activeTrialUsers.filter((t) => parseISO(t.trial_end!) <= in24h).length;
   const expiringTomorrow = activeTrialUsers.filter((t) => {
     const end = parseISO(t.trial_end!);
@@ -502,15 +520,35 @@ export default function AdminDashboard() {
     const offset = circ - (score / 100) * circ;
     return (
       <svg width={size} height={size} className="shrink-0">
-        <circle cx={size / 2} cy={size / 2} r={r} fill="none" stroke="rgba(255,255,255,0.08)" strokeWidth={3} />
         <circle
-          cx={size / 2} cy={size / 2} r={r} fill="none"
-          stroke={stroke} strokeWidth={3} strokeLinecap="round"
-          strokeDasharray={circ} strokeDashoffset={offset}
+          cx={size / 2}
+          cy={size / 2}
+          r={r}
+          fill="none"
+          stroke="rgba(255,255,255,0.08)"
+          strokeWidth={3}
+        />
+        <circle
+          cx={size / 2}
+          cy={size / 2}
+          r={r}
+          fill="none"
+          stroke={stroke}
+          strokeWidth={3}
+          strokeLinecap="round"
+          strokeDasharray={circ}
+          strokeDashoffset={offset}
           transform={`rotate(-90 ${size / 2} ${size / 2})`}
         />
-        <text x="50%" y="50%" dominantBaseline="central" textAnchor="middle"
-          fill={stroke} fontSize={size * 0.32} fontWeight="700">
+        <text
+          x="50%"
+          y="50%"
+          dominantBaseline="central"
+          textAnchor="middle"
+          fill={stroke}
+          fontSize={size * 0.32}
+          fontWeight="700"
+        >
           {score}
         </text>
       </svg>
@@ -518,13 +556,15 @@ export default function AdminDashboard() {
   };
 
   // ── Sort mobile subscribers by engagement score DESC ──
-  const sortedPaidUsers = [...(rcStats?.paidUsers || [])].sort(
-    (a, b) => calculateEngagementScore(a.engagement) - calculateEngagementScore(b.engagement)
-  ).reverse();
-  const sortedActiveTrials = [...(rcStats?.trialUsers || [])].filter((t) => !t.is_cancelled)
+  const sortedPaidUsers = [...(rcStats?.paidUsers || [])]
     .sort((a, b) => calculateEngagementScore(a.engagement) - calculateEngagementScore(b.engagement))
     .reverse();
-  const sortedCancelledTrials = [...(rcStats?.trialUsers || [])].filter((t) => t.is_cancelled)
+  const sortedActiveTrials = [...(rcStats?.trialUsers || [])]
+    .filter((t) => !t.is_cancelled)
+    .sort((a, b) => calculateEngagementScore(a.engagement) - calculateEngagementScore(b.engagement))
+    .reverse();
+  const sortedCancelledTrials = [...(rcStats?.trialUsers || [])]
+    .filter((t) => t.is_cancelled)
     .sort((a, b) => calculateEngagementScore(a.engagement) - calculateEngagementScore(b.engagement))
     .reverse();
 
@@ -538,10 +578,14 @@ export default function AdminDashboard() {
         {/* ── Trial Expiry Alert ───────────────────────────── */}
         {hasExpiringTrials && (
           <motion.section custom={-1} variants={sectionVariants} initial="hidden" animate="visible">
-            <h2 className="text-xs font-medium text-white uppercase tracking-wider px-0.5 mb-3">Alerts</h2>
+            <h2 className="text-xs font-medium text-white uppercase tracking-wider px-0.5 mb-3">
+              Alerts
+            </h2>
             <button
               className="group w-full relative overflow-hidden card-surface-interactive p-4 flex items-center gap-3 touch-manipulation active:scale-[0.98] transition-all"
-              onClick={() => mobileSubsRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })}
+              onClick={() =>
+                mobileSubsRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+              }
             >
               <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-orange-500 via-amber-400 to-orange-500 opacity-60 group-hover:opacity-100 transition-opacity" />
               <div className="w-10 h-10 rounded-xl bg-orange-500/10 border border-orange-500/20 flex items-center justify-center shrink-0">
@@ -732,9 +776,7 @@ export default function AdminDashboard() {
                   <Clock className="h-3.5 w-3.5 text-orange-400" />
                 </div>
                 <p className="text-xl sm:text-2xl font-bold text-white">
-                  <AnimatedCounter
-                    value={totalTrials}
-                  />
+                  <AnimatedCounter value={totalTrials} />
                 </p>
                 <p className="text-[10px] text-white font-medium uppercase tracking-wider">Trial</p>
               </motion.button>
@@ -778,9 +820,17 @@ export default function AdminDashboard() {
         )}
 
         {/* ── Mobile Subscribers (App Store / Play Store) ──── */}
-        {(rcStats?.trialUsers?.length || rcStats?.paidUsers?.length) ? (
-          <motion.section custom={2.5} variants={sectionVariants} initial="hidden" animate="visible">
-            <div ref={mobileSubsRef} className="rounded-2xl bg-white/[0.03] border border-white/[0.08] overflow-hidden">
+        {rcStats?.trialUsers?.length || rcStats?.paidUsers?.length ? (
+          <motion.section
+            custom={2.5}
+            variants={sectionVariants}
+            initial="hidden"
+            animate="visible"
+          >
+            <div
+              ref={mobileSubsRef}
+              className="rounded-2xl bg-white/[0.03] border border-white/[0.08] overflow-hidden"
+            >
               {/* Header with accent line */}
               <div className="relative">
                 <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-blue-500 via-cyan-400 to-blue-500" />
@@ -814,45 +864,104 @@ export default function AdminDashboard() {
                 </div>
               </div>
 
-              {/* User list */}
-              <div className="px-2 pb-2 space-y-1">
-                {/* Paid users — sorted by engagement */}
-                {sortedPaidUsers.map((u) => {
-                  const matched = baseUsers?.find((bu) => bu.id === u.id);
-                  const score = calculateEngagementScore(u.engagement);
-                  return (
-                    <motion.button
-                      key={u.id}
-                      whileTap={{ scale: 0.98 }}
-                      className="w-full flex items-center gap-3 p-3 rounded-xl bg-emerald-500/[0.06] ring-1 ring-emerald-500/20 active:bg-emerald-500/[0.12] transition-colors touch-manipulation"
-                      onClick={() => {
-                        if (matched) setSelectedUser(matched);
-                      }}
+              {/* User list — collapsible groups */}
+              <div className="px-2 pb-2 space-y-2">
+                {/* Paid group header */}
+                {sortedPaidUsers.length > 0 && (
+                  <button
+                    onClick={() => setShowPaid(!showPaid)}
+                    className="w-full flex items-center justify-between px-3 py-2 touch-manipulation"
+                  >
+                    <div className="flex items-center gap-2">
+                      <div className="w-2 h-2 rounded-full bg-emerald-400" />
+                      <span className="text-[11px] font-semibold text-white uppercase tracking-wider">
+                        Paid
+                      </span>
+                      <span className="text-[11px] font-bold text-emerald-400">
+                        {sortedPaidUsers.length}
+                      </span>
+                    </div>
+                    <motion.div
+                      animate={{ rotate: showPaid ? 180 : 0 }}
+                      transition={{ duration: 0.2 }}
                     >
-                      <EngagementRing score={score} />
-                      <div className="flex-1 min-w-0 text-left">
-                        <p className="text-[13px] font-semibold text-white truncate">{u.full_name}</p>
-                        <p className="text-[11px] text-white capitalize">{u.subscription_tier?.replace('_', ' ')}</p>
-                        {u.engagement && (
-                          <p className="text-[10px] text-white mt-0.5">
-                            {formatTimeShort(u.engagement.total_seconds_tracked)} · {u.engagement.unique_pages_visited} pages · {u.engagement.login_count} logins
+                      <ChevronDown className="h-3.5 w-3.5 text-white" />
+                    </motion.div>
+                  </button>
+                )}
+                {showPaid &&
+                  sortedPaidUsers.map((u) => {
+                    const matched = baseUsers?.find((bu) => bu.id === u.id);
+                    const score = calculateEngagementScore(u.engagement);
+                    return (
+                      <motion.button
+                        key={u.id}
+                        whileTap={{ scale: 0.98 }}
+                        className="w-full flex items-center gap-3 p-3 rounded-xl bg-emerald-500/[0.06] ring-1 ring-emerald-500/20 active:bg-emerald-500/[0.12] transition-colors touch-manipulation"
+                        onClick={() => {
+                          if (matched) setSelectedUser(matched);
+                        }}
+                      >
+                        <EngagementRing score={score} />
+                        <div className="flex-1 min-w-0 text-left">
+                          <p className="text-[13px] font-semibold text-white truncate">
+                            {u.full_name}
                           </p>
-                        )}
-                      </div>
-                      <div className="flex items-center gap-2 shrink-0">
-                        <span className="inline-flex items-center h-5 px-2 rounded-md bg-emerald-500/15 text-emerald-400 text-[10px] font-bold">
-                          Paying
-                        </span>
-                        <ChevronRight className="h-3.5 w-3.5 text-white" />
-                      </div>
-                    </motion.button>
-                  );
-                })}
-                {/* Active trials — sorted by engagement */}
-                {sortedActiveTrials.map((t) => {
-                    const daysLeft = t.trial_end ? differenceInDays(parseISO(t.trial_end), new Date()) : null;
+                          <p className="text-[11px] text-white capitalize">
+                            {u.subscription_tier?.replace('_', ' ')}
+                          </p>
+                          {u.engagement && (
+                            <p className="text-[10px] text-white mt-0.5">
+                              {formatTimeShort(u.engagement.total_seconds_tracked)} ·{' '}
+                              {u.engagement.unique_pages_visited} pages · {u.engagement.login_count}{' '}
+                              logins
+                            </p>
+                          )}
+                        </div>
+                        <div className="flex items-center gap-2 shrink-0">
+                          <span className="inline-flex items-center h-5 px-2 rounded-md bg-emerald-500/15 text-emerald-400 text-[10px] font-bold">
+                            Paying
+                          </span>
+                          <ChevronRight className="h-3.5 w-3.5 text-white" />
+                        </div>
+                      </motion.button>
+                    );
+                  })}
+                {/* Active trials group header */}
+                {sortedActiveTrials.length > 0 && (
+                  <button
+                    onClick={() => setShowTrials(!showTrials)}
+                    className="w-full flex items-center justify-between px-3 py-2 touch-manipulation"
+                  >
+                    <div className="flex items-center gap-2">
+                      <div className="w-2 h-2 rounded-full bg-blue-400" />
+                      <span className="text-[11px] font-semibold text-white uppercase tracking-wider">
+                        Trials
+                      </span>
+                      <span className="text-[11px] font-bold text-blue-400">
+                        {sortedActiveTrials.length}
+                      </span>
+                    </div>
+                    <motion.div
+                      animate={{ rotate: showTrials ? 180 : 0 }}
+                      transition={{ duration: 0.2 }}
+                    >
+                      <ChevronDown className="h-3.5 w-3.5 text-white" />
+                    </motion.div>
+                  </button>
+                )}
+                {showTrials &&
+                  sortedActiveTrials.map((t) => {
+                    const daysLeft = t.trial_end
+                      ? differenceInDays(parseISO(t.trial_end), new Date())
+                      : null;
                     const matched = baseUsers?.find((bu) => bu.id === t.id);
-                    const urgency = daysLeft !== null && daysLeft <= 1 ? 'urgent' : daysLeft !== null && daysLeft <= 3 ? 'soon' : 'ok';
+                    const urgency =
+                      daysLeft !== null && daysLeft <= 1
+                        ? 'urgent'
+                        : daysLeft !== null && daysLeft <= 3
+                          ? 'soon'
+                          : 'ok';
                     const score = calculateEngagementScore(t.engagement);
                     return (
                       <motion.button
@@ -865,31 +974,70 @@ export default function AdminDashboard() {
                       >
                         <EngagementRing score={score} />
                         <div className="flex-1 min-w-0 text-left">
-                          <p className="text-[13px] font-semibold text-white truncate">{t.full_name}</p>
-                          <p className="text-[11px] text-white capitalize">{t.subscription_tier?.replace('_', ' ')}</p>
+                          <p className="text-[13px] font-semibold text-white truncate">
+                            {t.full_name}
+                          </p>
+                          <p className="text-[11px] text-white capitalize">
+                            {t.subscription_tier?.replace('_', ' ')}
+                          </p>
                           {t.engagement && (
                             <p className="text-[10px] text-white mt-0.5">
-                              {formatTimeShort(t.engagement.total_seconds_tracked)} · {t.engagement.unique_pages_visited} pages · {t.engagement.login_count} logins
+                              {formatTimeShort(t.engagement.total_seconds_tracked)} ·{' '}
+                              {t.engagement.unique_pages_visited} pages · {t.engagement.login_count}{' '}
+                              logins
                             </p>
                           )}
                         </div>
                         <div className="flex items-center gap-2 shrink-0">
-                          <span className={cn(
-                            'inline-flex items-center h-5 px-2 rounded-md text-[10px] font-bold',
-                            urgency === 'urgent' ? 'bg-red-500/15 text-red-400' :
-                            urgency === 'soon' ? 'bg-orange-500/15 text-orange-400' :
-                            'bg-blue-500/15 text-blue-400'
-                          )}>
-                            {daysLeft !== null ? (daysLeft <= 0 ? 'Today' : `${daysLeft}d`) : 'Trial'}
+                          <span
+                            className={cn(
+                              'inline-flex items-center h-5 px-2 rounded-md text-[10px] font-bold',
+                              urgency === 'urgent'
+                                ? 'bg-red-500/15 text-red-400'
+                                : urgency === 'soon'
+                                  ? 'bg-orange-500/15 text-orange-400'
+                                  : 'bg-blue-500/15 text-blue-400'
+                            )}
+                          >
+                            {daysLeft !== null
+                              ? daysLeft <= 0
+                                ? 'Today'
+                                : `${daysLeft}d`
+                              : 'Trial'}
                           </span>
                           <ChevronRight className="h-3.5 w-3.5 text-white" />
                         </div>
                       </motion.button>
                     );
                   })}
-                {/* Cancelled trials — sorted by engagement */}
-                {sortedCancelledTrials.map((t) => {
-                    const daysLeft = t.trial_end ? differenceInDays(parseISO(t.trial_end), new Date()) : null;
+                {/* Cancelled trials group header */}
+                {sortedCancelledTrials.length > 0 && (
+                  <button
+                    onClick={() => setShowCancelled(!showCancelled)}
+                    className="w-full flex items-center justify-between px-3 py-2 touch-manipulation"
+                  >
+                    <div className="flex items-center gap-2">
+                      <div className="w-2 h-2 rounded-full bg-red-400" />
+                      <span className="text-[11px] font-semibold text-white uppercase tracking-wider">
+                        Cancelled
+                      </span>
+                      <span className="text-[11px] font-bold text-red-400">
+                        {sortedCancelledTrials.length}
+                      </span>
+                    </div>
+                    <motion.div
+                      animate={{ rotate: showCancelled ? 180 : 0 }}
+                      transition={{ duration: 0.2 }}
+                    >
+                      <ChevronDown className="h-3.5 w-3.5 text-white" />
+                    </motion.div>
+                  </button>
+                )}
+                {showCancelled &&
+                  sortedCancelledTrials.map((t) => {
+                    const daysLeft = t.trial_end
+                      ? differenceInDays(parseISO(t.trial_end), new Date())
+                      : null;
                     const matched = baseUsers?.find((bu) => bu.id === t.id);
                     const score = calculateEngagementScore(t.engagement);
                     return (
@@ -903,11 +1051,17 @@ export default function AdminDashboard() {
                       >
                         <EngagementRing score={score} />
                         <div className="flex-1 min-w-0 text-left">
-                          <p className="text-[13px] font-semibold text-white truncate">{t.full_name}</p>
-                          <p className="text-[11px] text-white capitalize">{t.subscription_tier?.replace('_', ' ')}</p>
+                          <p className="text-[13px] font-semibold text-white truncate">
+                            {t.full_name}
+                          </p>
+                          <p className="text-[11px] text-white capitalize">
+                            {t.subscription_tier?.replace('_', ' ')}
+                          </p>
                           {t.engagement && (
                             <p className="text-[10px] text-white mt-0.5">
-                              {formatTimeShort(t.engagement.total_seconds_tracked)} · {t.engagement.unique_pages_visited} pages · {t.engagement.login_count} logins
+                              {formatTimeShort(t.engagement.total_seconds_tracked)} ·{' '}
+                              {t.engagement.unique_pages_visited} pages · {t.engagement.login_count}{' '}
+                              logins
                             </p>
                           )}
                         </div>
@@ -943,7 +1097,9 @@ export default function AdminDashboard() {
 
         {/* ── Growth Row ────────────────────────────────────── */}
         <motion.section custom={3} variants={sectionVariants} initial="hidden" animate="visible">
-          <h2 className="text-xs font-medium text-white uppercase tracking-wider px-0.5 mb-3">Growth</h2>
+          <h2 className="text-xs font-medium text-white uppercase tracking-wider px-0.5 mb-3">
+            Growth
+          </h2>
           <div className="grid grid-cols-2 gap-3">
             <motion.div
               whileTap={{ scale: 0.97 }}
@@ -1333,7 +1489,6 @@ export default function AdminDashboard() {
           open={!!selectedUser}
           onOpenChange={(open) => !open && setSelectedUser(null)}
         />
-
       </div>
     </PullToRefresh>
   );
