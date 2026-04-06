@@ -12,13 +12,31 @@
         .page { width: 297mm; min-height: 210mm; position: relative; overflow: hidden; page-break-after: always; }
         .page:last-child { page-break-after: auto; }
 
-        /* ── Cover Page ── */
-        .cover { padding: 20mm 25mm; display: flex; flex-direction: column; }
-        .cover-header { border-bottom: 3px solid var(--accent); padding-bottom: 12px; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center; }
-        .cover-title { font-size: 28px; font-weight: 800; color: var(--dark); }
-        .cover-subtitle { font-size: 12px; color: var(--light); margin-top: 4px; }
-        .cover-logo img { max-height: 45px; max-width: 140px; object-fit: contain; }
+        /* ── Cover Page (dark premium — matches Cost Engineer style) ── */
+        .cover-page { width: 297mm; min-height: 210mm; background: linear-gradient(170deg, #0a0f1a 0%, #0f172a 40%, #1a2332 100%); color: #fff; position: relative; overflow: hidden; page-break-after: always; display: flex; flex-direction: column; }
 
+        .cover-logo-area { padding: 20mm 25mm 0; }
+        .cover-logo-text { font-size: 11px; font-weight: 600; color: var(--accent); text-transform: uppercase; letter-spacing: 2px; }
+        .cover-logo-area img { max-height: 40px; margin-bottom: 4px; }
+
+        .cover-main { flex: 1; padding: 12mm 25mm; display: flex; flex-direction: column; justify-content: center; }
+        .cover-title { margin-bottom: 8px; }
+        .cover-title-light { display: block; font-size: 14px; font-weight: 400; color: rgba(255,255,255,0.5); letter-spacing: 0.5px; margin-bottom: 4px; }
+        .cover-title strong { display: block; font-size: 32px; font-weight: 800; color: #fff; line-height: 1.2; }
+        .cover-subtitle { font-size: 12px; color: rgba(255,255,255,0.6); margin-bottom: 20px; }
+
+        .cover-badge { display: inline-block; background: rgba(234,179,8,0.15); border: 1px solid rgba(234,179,8,0.3); color: var(--accent); font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; padding: 5px 14px; border-radius: 4px; margin-bottom: 20px; }
+
+        .cover-info-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; }
+        .cover-info-item { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 6px; padding: 10px 14px; }
+        .cover-info-label { font-size: 8px; font-weight: 600; color: rgba(255,255,255,0.4); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 3px; }
+        .cover-info-value { font-size: 12px; font-weight: 600; color: #fff; }
+
+        .cover-footer { padding: 0 25mm 15mm; text-align: center; }
+        .cover-footer-badge { display: inline-block; background: rgba(234,179,8,0.1); border: 1px solid rgba(234,179,8,0.2); color: var(--accent); font-size: 9px; font-weight: 600; padding: 4px 16px; border-radius: 20px; margin-bottom: 6px; }
+        .cover-compliance { font-size: 8px; color: rgba(255,255,255,0.35); }
+
+        /* ── Details grid (used on inner pages) ── */
         .details-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px 24px; margin-bottom: 24px; }
         .detail-row { display: flex; align-items: baseline; gap: 8px; padding: 4px 0; border-bottom: 1px solid #f1f5f9; }
         .detail-label { font-size: 9px; font-weight: 700; color: var(--light); text-transform: uppercase; letter-spacing: 0.5px; min-width: 90px; }
@@ -32,8 +50,6 @@
         .notes-section { background: #f8fafc; border: 1px solid var(--border); border-left: 3px solid var(--accent); border-radius: 4px; padding: 10px 14px; margin-bottom: 16px; }
         .notes-title { font-size: 10px; font-weight: 700; color: var(--accent); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px; }
         .notes-text { font-size: 10px; color: var(--mid); white-space: pre-line; }
-
-        .cover-footer { margin-top: auto; text-align: center; font-size: 8px; color: var(--light); border-top: 1px solid var(--border); padding-top: 8px; }
 
         /* ── Room Pages ── */
         .room-page { padding: 12mm 15mm; }
@@ -90,44 +106,57 @@
 <body>
 
 <!-- ════════════════════════ PAGE 1: COVER ════════════════════════ -->
-<div class="page cover">
-    <div class="cover-header">
-        <div>
-            <div class="cover-title">Electrical Installation Floor Plan</div>
-            <div class="cover-subtitle">BS 7671:2018+A3:2024 Compliant</div>
+<div class="cover-page">
+    <div class="cover-logo-area">
+        <div class="cover-logo-text">Electrical Floor Plan</div>
+    </div>
+
+    <div class="cover-main">
+        <div class="cover-title">
+            <span class="cover-title-light">Electrical Installation Layout</span>
+            <strong>{{property_address}}</strong>
         </div>
-        <div class="cover-logo">
-            {{#if company_logo}}<img src="{{company_logo}}" alt="Logo" />{{/if}}
+        <div class="cover-subtitle">Room-by-Room Electrical Floor Plan with Materials Schedule</div>
+
+        <div class="cover-badge">
+            <span>{{total_items}} ELECTRICAL ITEMS ACROSS {{rooms.size}} ROOMS</span>
+        </div>
+
+        <div class="cover-info-grid">
+            <div class="cover-info-item">
+                <div class="cover-info-label">Client</div>
+                <div class="cover-info-value">{{client_name}}</div>
+            </div>
+            <div class="cover-info-item">
+                <div class="cover-info-label">Date</div>
+                <div class="cover-info-value">{{date}}</div>
+            </div>
+            <div class="cover-info-item">
+                <div class="cover-info-label">Drawing No.</div>
+                <div class="cover-info-value">{{drawing_number}}</div>
+            </div>
+            <div class="cover-info-item">
+                <div class="cover-info-label">Electrician</div>
+                <div class="cover-info-value">{{electrician_name}}</div>
+            </div>
+            <div class="cover-info-item">
+                <div class="cover-info-label">Total Items</div>
+                <div class="cover-info-value">{{total_items}}</div>
+            </div>
+            <div class="cover-info-item">
+                <div class="cover-info-label">Rooms</div>
+                <div class="cover-info-value">
+                    {% for room in rooms %}{{room.name}}{% unless forloop.last %}, {% endunless %}{% endfor %}
+                </div>
+            </div>
         </div>
     </div>
-
-    <div class="details-grid">
-        <div class="detail-row"><span class="detail-label">Property</span><span class="detail-value">{{property_address}}</span></div>
-        <div class="detail-row"><span class="detail-label">Client</span><span class="detail-value">{{client_name}}</span></div>
-        <div class="detail-row"><span class="detail-label">Electrician</span><span class="detail-value">{{electrician_name}}</span></div>
-        <div class="detail-row"><span class="detail-label">Date</span><span class="detail-value">{{date}}</span></div>
-        <div class="detail-row"><span class="detail-label">Drawing No.</span><span class="detail-value">{{drawing_number}}</span></div>
-        <div class="detail-row"><span class="detail-label">Total Items</span><span class="detail-value">{{total_items}}</span></div>
-    </div>
-
-    <table class="rooms-table">
-        <thead><tr><th>Room</th><th>Items</th></tr></thead>
-        <tbody>
-            {{#each rooms}}
-            <tr><td>{{this.name}}</td><td>{{this.item_count}}</td></tr>
-            {{/each}}
-        </tbody>
-    </table>
-
-    {{#if notes}}
-    <div class="notes-section">
-        <div class="notes-title">Notes</div>
-        <div class="notes-text">{{notes}}</div>
-    </div>
-    {{/if}}
 
     <div class="cover-footer">
-        BS 7671:2018+A3:2024 &middot; Generated by Elec-Mate Floor Plan Tool &middot; {{date}}
+        <div class="cover-footer-badge">Powered by Elec-Mate Floor Plan Tool</div>
+        <div class="cover-compliance">
+            Compliant with BS 7671:2018+A3:2024 Requirements for Electrical Installations
+        </div>
     </div>
 </div>
 

@@ -147,7 +147,6 @@ const DiagramBuilderPage = () => {
     storageSetJSONSync('diagram-builder-project', projectData);
     toast({
       title: 'Saved',
-      description: 'Diagram saved locally',
       variant: 'success',
     });
   };
