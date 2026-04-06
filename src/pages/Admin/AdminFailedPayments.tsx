@@ -412,7 +412,9 @@ export default function AdminFailedPayments() {
           <div className="rounded-xl border border-red-500/30 bg-red-500/10 px-3 py-2 h-14 touch-manipulation flex flex-col justify-center">
             <p className="text-[10px] font-medium text-white">At Risk</p>
             <p className="text-sm font-bold text-red-400">
-              {new Intl.NumberFormat('en-GB', { style: 'currency', currency: 'GBP' }).format(pipeline.totalOutstanding / 100)}
+              {new Intl.NumberFormat('en-GB', { style: 'currency', currency: 'GBP' }).format(
+                pipeline.totalOutstanding / 100
+              )}
             </p>
           </div>
           <div className="rounded-xl border border-green-500/30 bg-green-500/10 px-3 py-2 h-14 touch-manipulation flex flex-col justify-center">
@@ -422,7 +424,9 @@ export default function AdminFailedPayments() {
           <div className="rounded-xl border border-emerald-500/30 bg-emerald-500/10 px-3 py-2 h-14 touch-manipulation flex flex-col justify-center">
             <p className="text-[10px] font-medium text-white">Recovered</p>
             <p className="text-sm font-bold text-emerald-400">
-              {new Intl.NumberFormat('en-GB', { style: 'currency', currency: 'GBP' }).format(pipeline.recoveredAmount / 100)}
+              {new Intl.NumberFormat('en-GB', { style: 'currency', currency: 'GBP' }).format(
+                pipeline.recoveredAmount / 100
+              )}
             </p>
           </div>
         </div>
@@ -543,20 +547,66 @@ export default function AdminFailedPayments() {
             <CardContent>
               <div className="flex items-center justify-between overflow-x-auto gap-1">
                 {[
-                  { label: 'Pending', count: pipeline.pending, bg: 'bg-yellow-500/20', text: 'text-yellow-400', border: 'border-yellow-500/40', icon: <AlertTriangle className="h-3 w-3" /> },
-                  { label: 'Email 1', count: pipeline.email1, bg: 'bg-amber-500/20', text: 'text-amber-400', border: 'border-amber-500/40', icon: <Mail className="h-3 w-3" /> },
-                  { label: 'Email 2', count: pipeline.email2, bg: 'bg-orange-500/20', text: 'text-orange-400', border: 'border-orange-500/40', icon: <Mail className="h-3 w-3" /> },
-                  { label: 'Final', count: pipeline.email3, bg: 'bg-red-500/20', text: 'text-red-400', border: 'border-red-500/40', icon: <MailWarning className="h-3 w-3" /> },
-                  { label: 'Recovered', count: pipeline.recovered, bg: 'bg-green-500/20', text: 'text-green-400', border: 'border-green-500/40', icon: <CheckCircle className="h-3 w-3" /> },
-                  { label: 'Lost', count: pipeline.lost, bg: 'bg-zinc-500/20', text: 'text-zinc-400', border: 'border-zinc-500/40', icon: <XCircle className="h-3 w-3" /> },
+                  {
+                    label: 'Pending',
+                    count: pipeline.pending,
+                    bg: 'bg-yellow-500/20',
+                    text: 'text-yellow-400',
+                    border: 'border-yellow-500/40',
+                    icon: <AlertTriangle className="h-3 w-3" />,
+                  },
+                  {
+                    label: 'Email 1',
+                    count: pipeline.email1,
+                    bg: 'bg-amber-500/20',
+                    text: 'text-amber-400',
+                    border: 'border-amber-500/40',
+                    icon: <Mail className="h-3 w-3" />,
+                  },
+                  {
+                    label: 'Email 2',
+                    count: pipeline.email2,
+                    bg: 'bg-orange-500/20',
+                    text: 'text-orange-400',
+                    border: 'border-orange-500/40',
+                    icon: <Mail className="h-3 w-3" />,
+                  },
+                  {
+                    label: 'Final',
+                    count: pipeline.email3,
+                    bg: 'bg-red-500/20',
+                    text: 'text-red-400',
+                    border: 'border-red-500/40',
+                    icon: <MailWarning className="h-3 w-3" />,
+                  },
+                  {
+                    label: 'Recovered',
+                    count: pipeline.recovered,
+                    bg: 'bg-green-500/20',
+                    text: 'text-green-400',
+                    border: 'border-green-500/40',
+                    icon: <CheckCircle className="h-3 w-3" />,
+                  },
+                  {
+                    label: 'Lost',
+                    count: pipeline.lost,
+                    bg: 'bg-zinc-500/20',
+                    text: 'text-zinc-400',
+                    border: 'border-zinc-500/40',
+                    icon: <XCircle className="h-3 w-3" />,
+                  },
                 ].map((stage, idx, arr) => (
                   <div key={stage.label} className="flex items-center gap-1 shrink-0">
-                    <div className={`flex flex-col items-center gap-1 px-2 py-2 rounded-lg border ${stage.border} ${stage.bg} ${stage.count > 0 ? 'opacity-100' : 'opacity-40'}`}>
+                    <div
+                      className={`flex flex-col items-center gap-1 px-2 py-2 rounded-lg border ${stage.border} ${stage.bg} ${stage.count > 0 ? 'opacity-100' : 'opacity-40'}`}
+                    >
                       <div className={`${stage.text} flex items-center gap-1`}>
                         {stage.icon}
                         <span className="text-lg font-bold leading-none">{stage.count}</span>
                       </div>
-                      <span className="text-[9px] font-medium text-white whitespace-nowrap">{stage.label}</span>
+                      <span className="text-[9px] font-medium text-white whitespace-nowrap">
+                        {stage.label}
+                      </span>
                     </div>
                     {idx < arr.length - 1 && (
                       <ArrowRight className="h-3 w-3 text-white/30 shrink-0" />
@@ -579,7 +629,10 @@ export default function AdminFailedPayments() {
         {isLoading ? (
           <div className="space-y-3 animate-pulse">
             {[...Array(3)].map((_, i) => (
-              <div key={i} className="rounded-2xl bg-white/[0.03] border border-white/[0.06] p-4 space-y-3">
+              <div
+                key={i}
+                className="rounded-2xl bg-white/[0.03] border border-white/[0.06] p-4 space-y-3"
+              >
                 <div className="flex items-center gap-3">
                   <Skeleton className="w-9 h-9 rounded-lg" />
                   <div className="space-y-1.5 flex-1">
@@ -640,72 +693,74 @@ export default function AdminFailedPayments() {
                   {items.map((record) => (
                     <div
                       key={record.id}
-                      className="p-3 rounded-xl bg-muted/50 active:scale-[0.99] touch-manipulation cursor-pointer transition-transform flex items-center justify-between gap-3"
+                      className="p-4 rounded-xl bg-white/[0.03] ring-1 ring-white/[0.08] active:scale-[0.99] touch-manipulation cursor-pointer transition-transform"
                       onClick={() => {
                         haptic.light();
                         setSelectedRecord(record);
                       }}
                     >
-                      <div className="flex items-center gap-3 min-w-0 flex-1">
-                        <div
-                          className={`w-10 h-10 rounded-xl flex items-center justify-center shrink-0 ${
-                            record.resolved
-                              ? 'bg-gradient-to-br from-green-500/20 to-green-600/20'
-                              : 'bg-gradient-to-br from-red-500/20 to-red-600/20'
-                          }`}
-                        >
-                          {record.resolved ? (
-                            <CheckCircle className="h-5 w-5 text-green-400" />
-                          ) : (
-                            <AlertTriangle className="h-5 w-5 text-red-400" />
-                          )}
-                        </div>
-                        <div className="min-w-0 flex-1">
-                          <p className="font-medium text-white truncate">
+                      {/* Row 1 — Name + Amount */}
+                      <div className="flex items-center justify-between gap-3">
+                        <div className="flex items-center gap-3 min-w-0 flex-1">
+                          <div
+                            className={`w-9 h-9 rounded-lg flex items-center justify-center shrink-0 ${
+                              record.resolved
+                                ? 'bg-green-500/15 text-green-400'
+                                : 'bg-red-500/15 text-red-400'
+                            }`}
+                          >
+                            {record.resolved ? (
+                              <CheckCircle className="h-4 w-4" />
+                            ) : (
+                              <AlertTriangle className="h-4 w-4" />
+                            )}
+                          </div>
+                          <p className="font-semibold text-[15px] text-white truncate">
                             {record.full_name || 'Unknown'}
                           </p>
-                          <div className="flex items-center gap-2 text-xs text-white">
-                            <span>£{(record.amount_due / 100).toFixed(2)}</span>
-                            <span>·</span>
-                            <span>
-                              {formatDistanceToNow(new Date(record.created_at), {
-                                addSuffix: true,
-                              })}
-                            </span>
-                          </div>
                         </div>
+                        <span className="text-[15px] font-bold text-white shrink-0">
+                          £{(record.amount_due / 100).toFixed(2)}
+                        </span>
                       </div>
-                      <div className="flex items-center gap-2 shrink-0">
-                        <Badge
-                          className={`text-xs font-mono ${
-                            record.emails_sent === 3
-                              ? 'bg-red-500/20 text-red-400 border-red-500/30'
-                              : record.emails_sent >= 1
-                                ? 'bg-amber-500/20 text-amber-400 border-amber-500/30'
-                                : 'bg-muted text-white'
-                          }`}
-                        >
-                          {record.emails_sent}/3
-                        </Badge>
-                        {!record.resolved && record.emails_sent < 3 && (
-                          <button
-                            className="h-8 px-2 rounded-lg text-[10px] font-bold bg-amber-500/10 text-amber-400 ring-1 ring-amber-500/20 touch-manipulation flex items-center gap-1 active:scale-95 transition-transform"
-                            disabled={sendNextMutation.isPending}
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              haptic.medium();
-                              sendNextMutation.mutate(record.id);
-                            }}
+
+                      {/* Row 2 — Time + Stage + Send */}
+                      <div className="flex items-center justify-between mt-2.5 pl-12">
+                        <span className="text-xs text-white">
+                          {formatDistanceToNow(new Date(record.created_at), { addSuffix: true })}
+                        </span>
+                        <div className="flex items-center gap-2">
+                          <Badge
+                            className={`text-[10px] font-mono ${
+                              record.emails_sent === 3
+                                ? 'bg-red-500/15 text-red-400 border-red-500/30'
+                                : record.emails_sent >= 1
+                                  ? 'bg-amber-500/15 text-amber-400 border-amber-500/30'
+                                  : 'bg-white/[0.06] text-white'
+                            }`}
                           >
-                            {sendNextMutation.isPending ? (
-                              <Loader2 className="h-3 w-3 animate-spin" />
-                            ) : (
-                              <Send className="h-3 w-3" />
-                            )}
-                            Send
-                          </button>
-                        )}
-                        <ChevronRight className="h-5 w-5 text-white" />
+                            {record.emails_sent}/3
+                          </Badge>
+                          {!record.resolved && record.emails_sent < 3 && (
+                            <button
+                              className="h-8 px-2.5 rounded-lg text-[10px] font-bold bg-amber-500/10 text-amber-400 ring-1 ring-amber-500/20 touch-manipulation flex items-center gap-1 active:scale-95 transition-transform"
+                              disabled={sendNextMutation.isPending}
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                haptic.medium();
+                                sendNextMutation.mutate(record.id);
+                              }}
+                            >
+                              {sendNextMutation.isPending ? (
+                                <Loader2 className="h-3 w-3 animate-spin" />
+                              ) : (
+                                <Send className="h-3 w-3" />
+                              )}
+                              Send
+                            </button>
+                          )}
+                          <ChevronRight className="h-4 w-4 text-white" />
+                        </div>
                       </div>
                     </div>
                   ))}
