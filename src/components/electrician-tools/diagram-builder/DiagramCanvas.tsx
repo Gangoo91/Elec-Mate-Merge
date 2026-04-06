@@ -7,8 +7,8 @@ import { loadSymbolSvg } from './symbols/svgLoader';
 import { ZoomIn, ZoomOut, Maximize2, RotateCw } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
-// Scale: 70px = 1 metre (40% larger than original 50px for better mobile visibility)
-const SCALE = 70;
+// Scale: 52px = 1 metre
+const SCALE = 52;
 const WALL_THICKNESS = 8;
 const SNAP_DISTANCE = 10; // px for wall endpoint snapping
 const AXIS_SNAP_DEGREES = 10; // snap to horizontal/vertical within this angle
@@ -88,6 +88,44 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
       return { x: ex, y: ey };
     };
 
+    // Zoom canvas to fit all non-grid objects with padding
+    const zoomToFit = () => {
+      const canvas = fabricCanvasRef.current;
+      if (!canvas) return;
+
+      const objects = canvas.getObjects().filter((obj) => !(obj as any).isGridLine);
+      if (objects.length === 0) return;
+
+      // Calculate bounding box of all objects
+      let minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity;
+      for (const obj of objects) {
+        const bound = obj.getBoundingRect();
+        if (bound.left < minX) minX = bound.left;
+        if (bound.top < minY) minY = bound.top;
+        if (bound.left + bound.width > maxX) maxX = bound.left + bound.width;
+        if (bound.top + bound.height > maxY) maxY = bound.top + bound.height;
+      }
+
+      const contentWidth = maxX - minX;
+      const contentHeight = maxY - minY;
+      const canvasWidth = canvas.width || 400;
+      const canvasHeight = canvas.height || 600;
+      const padding = 60;
+
+      const zoomX = (canvasWidth - padding * 2) / contentWidth;
+      const zoomY = (canvasHeight - padding * 2) / contentHeight;
+      const zoom = Math.min(zoomX, zoomY, 2); // Don't zoom in more than 2x
+
+      canvas.setZoom(zoom);
+      const vpw = canvasWidth / zoom;
+      const vph = canvasHeight / zoom;
+      const centreX = minX + contentWidth / 2;
+      const centreY = minY + contentHeight / 2;
+      canvas.viewportTransform = [zoom, 0, 0, zoom, canvasWidth / 2 - centreX * zoom, canvasHeight / 2 - centreY * zoom];
+      setZoomLevel(zoom);
+      canvas.renderAll();
+    };
+
     // Expose methods to parent via ref
     useImperativeHandle(ref, () => ({
       getCanvasElement: (): HTMLCanvasElement | null => {
@@ -95,6 +133,16 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
       },
       undo,
       redo,
+      zoomToFit,
+      forceFullRedraw: () => {
+        // Clear rendered IDs + clear all non-grid objects from canvas
+        const canvas = fabricCanvasRef.current;
+        if (!canvas) return;
+        const nonGrid = canvas.getObjects().filter((obj) => !(obj as any).isGridLine);
+        nonGrid.forEach((obj) => canvas.remove(obj));
+        renderedObjectIds.current.clear();
+        canvas.renderAll();
+      },
       renderAIRoom: async (roomData: any) => {
         if (!fabricCanvasRef.current) return;
 
@@ -305,6 +353,9 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
         canvas.add(scaleLabel);
 
         canvas.renderAll();
+
+        // Auto-zoom to fit the generated room on screen
+        setTimeout(() => zoomToFit(), 100);
       },
     }));
 
@@ -466,7 +517,12 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
       const stateIds = new Set(objects.map((o) => o.id));
       const toRemove = canvas.getObjects().filter((fObj) => {
         const customData = (fObj as any).customData;
-        return customData?.id && !stateIds.has(customData.id);
+        if (!customData?.id) return false;
+        // Don't remove wall labels — they're tied to their parent wall
+        if (customData.type === 'wall-label') {
+          return !stateIds.has(customData.parentId);
+        }
+        return !stateIds.has(customData.id);
       });
 
       // Remove deleted objects from canvas
@@ -731,8 +787,9 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
             fill: '#000000',
             stroke: '#000000',
             strokeWidth: 1,
-            selectable: true,
-            hasControls: true,
+            selectable: false,
+            hasControls: false,
+            evented: true,
           });
           (wallRect as any).customData = { id: obj.id, type: 'wall' };
           canvas.add(wallRect);
@@ -745,8 +802,9 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
             fill: '#000000',
             stroke: '#000000',
             strokeWidth: 1,
-            selectable: true,
-            hasControls: true,
+            selectable: false,
+            hasControls: false,
+            evented: true,
           });
           (wallRect as any).customData = { id: obj.id, type: 'wall' };
           canvas.add(wallRect);
@@ -934,7 +992,15 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
           const customData = tapped.customData;
           if (customData?.id) {
             saveState();
+            // Also remove wall label if this is a wall
+            if (customData.type === 'wall') {
+              const labels = canvas.getObjects().filter(
+                (o) => (o as any).customData?.parentId === customData.id
+              );
+              labels.forEach((l) => canvas.remove(l));
+            }
             canvas.remove(e.target);
+            renderedObjectIds.current.delete(customData.id);
             canvas.renderAll();
             onObjectsChange(objects.filter((o) => o.id !== customData.id));
           }

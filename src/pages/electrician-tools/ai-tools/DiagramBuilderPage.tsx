@@ -30,6 +30,9 @@ import { ExportDialog } from '@/components/electrician-tools/diagram-builder/Exp
 import { PropertiesPanel } from '@/components/electrician-tools/diagram-builder/PropertiesPanel';
 import { AIRoomBuilderDialog } from '@/components/electrician-tools/diagram-builder/AIRoomBuilderDialog';
 import { RoomShapePicker } from '@/components/electrician-tools/diagram-builder/RoomShapePicker';
+import { SaveRoomSheet } from '@/components/electrician-tools/diagram-builder/SaveRoomSheet';
+import { SavedRoomsStrip } from '@/components/electrician-tools/diagram-builder/SavedRoomsStrip';
+import { useFloorPlanRooms } from '@/hooks/useFloorPlanRooms';
 import { toast } from '@/hooks/use-toast';
 import { storageSetJSONSync, storageGetJSONSync } from '@/utils/storage';
 import {
@@ -81,6 +84,9 @@ const DiagramBuilderPage = () => {
   const [wallEditLength, setWallEditLength] = useState<number>(0);
   const [exportDialogOpen, setExportDialogOpen] = useState(false);
   const [placingSymbolName, setPlacingSymbolName] = useState<string | null>(null);
+  const [saveSheetOpen, setSaveSheetOpen] = useState(false);
+  const [activeRoomId, setActiveRoomId] = useState<string | null>(null);
+  const { rooms, saveRoom, deleteRoom } = useFloorPlanRooms();
   const canvasRef = useRef<any>(null);
   const [searchParams] = useSearchParams();
   const haptic = useHaptic();
@@ -196,13 +202,10 @@ const DiagramBuilderPage = () => {
       };
     });
 
-    // Clear canvas and re-render with rotated positions
-    const canvas = canvasRef.current;
-    if (canvas) {
-      const fabricCanvas = canvas.getCanvasElement?.()?.parentElement;
-      // Force full re-render by clearing rendered IDs
-    }
+    // Force full re-render with rotated positions
+    canvasRef.current?.forceFullRedraw?.();
     setCanvasObjects(rotated);
+    setTimeout(() => canvasRef.current?.zoomToFit?.(), 300);
     toast({ title: 'Rotated 90°' });
   };
 
@@ -225,6 +228,60 @@ const DiagramBuilderPage = () => {
         variant: 'success',
       });
     }
+  };
+
+  const handleSaveRoom = (name: string) => {
+    const canvasEl = canvasRef.current?.getCanvasElement();
+    let thumbnail = '';
+    if (canvasEl) {
+      const tempCanvas = document.createElement('canvas');
+      tempCanvas.width = 120;
+      tempCanvas.height = 90;
+      const ctx = tempCanvas.getContext('2d');
+      if (ctx) {
+        ctx.fillStyle = '#FFFFFF';
+        ctx.fillRect(0, 0, 120, 90);
+        ctx.drawImage(canvasEl, 0, 0, 120, 90);
+        thumbnail = tempCanvas.toDataURL('image/png', 0.7);
+      }
+    }
+
+    const symbolIds = canvasObjects
+      .filter((o) => o.type === 'symbol' && o.symbolId)
+      .map((o) => o.symbolId!);
+
+    saveRoom({
+      name,
+      thumbnail,
+      canvasState: JSON.stringify(canvasObjects),
+      symbolIds,
+    });
+
+    canvasRef.current?.forceFullRedraw?.();
+    setCanvasObjects([]);
+    setActiveRoomId(null);
+    setSaveSheetOpen(false);
+    haptic.success();
+    toast({ title: `${name} saved`, description: 'Add another room or export PDF' });
+  };
+
+  const handleRoomSelect = (roomId: string) => {
+    const room = rooms.find((r) => r.id === roomId);
+    if (room) {
+      try {
+        const objects = JSON.parse(room.canvasState);
+        canvasRef.current?.forceFullRedraw?.();
+        setCanvasObjects(objects);
+        setActiveRoomId(roomId);
+        setTimeout(() => canvasRef.current?.zoomToFit?.(), 300);
+      } catch { /* ignore parse errors */ }
+    }
+  };
+
+  const handleNewRoom = () => {
+    canvasRef.current?.forceFullRedraw?.();
+    setCanvasObjects([]);
+    setActiveRoomId(null);
   };
 
   // Primary toolbar — the tools electricians need most
@@ -268,7 +325,7 @@ const DiagramBuilderPage = () => {
     if (!wallEditState || !wallEditLength || wallEditLength < 0.5) return;
     haptic.light();
 
-    const SCALE_PX = 70;
+    const SCALE_PX = 52;
     const newLengthPx = wallEditLength * SCALE_PX;
 
     const updatedObjects = canvasObjects.map((obj) => {
@@ -365,13 +422,8 @@ const DiagramBuilderPage = () => {
           {canvasObjects.length > 0 && (
             <Button
               onClick={() => {
-                haptic.success();
-                handleSave();
-                toast({
-                  title: 'Room saved',
-                  description: 'Floor plan saved. You can export or attach to a project.',
-                  variant: 'success',
-                });
+                haptic.light();
+                setSaveSheetOpen(true);
               }}
               className="h-8 px-3 bg-elec-yellow text-black hover:bg-elec-yellow/90 text-xs font-semibold touch-manipulation"
             >
@@ -468,6 +520,17 @@ const DiagramBuilderPage = () => {
         </div>
       </div>
 
+      {/* Saved rooms strip */}
+      {rooms.length > 0 && (
+        <SavedRoomsStrip
+          rooms={rooms}
+          activeRoomId={activeRoomId}
+          onRoomSelect={handleRoomSelect}
+          onNewRoom={handleNewRoom}
+          onDeleteRoom={deleteRoom}
+        />
+      )}
+
       {/* Full-viewport canvas with dark surround */}
       <div className="flex-1 overflow-hidden relative bg-[#1a1a1a] p-1">
         <DiagramCanvas
@@ -532,7 +595,7 @@ const DiagramBuilderPage = () => {
       {/* Scale bar overlay */}
       <div className="absolute bottom-20 left-4 z-20 flex items-center gap-1 bg-black/50 backdrop-blur-sm px-2 py-1 rounded-lg">
         <div className="h-2.5 border-l border-white/70" />
-        <div className="w-[70px] border-t border-white/70" />
+        <div className="w-[52px] border-t border-white/70" />
         <div className="h-2.5 border-l border-white/70" />
         <span className="text-[9px] text-white/70 ml-1 font-medium">1m</span>
       </div>
@@ -585,6 +648,13 @@ const DiagramBuilderPage = () => {
         canvasObjects={canvasObjects}
       />
 
+      {/* Save Room Sheet */}
+      <SaveRoomSheet
+        open={saveSheetOpen}
+        onOpenChange={setSaveSheetOpen}
+        onSave={handleSaveRoom}
+      />
+
       {/* Room Shape Picker Sheet */}
       <RoomShapePicker
         open={shapesSheetOpen}
@@ -592,6 +662,8 @@ const DiagramBuilderPage = () => {
         onShapePlaced={(walls) => {
           haptic.success();
           setCanvasObjects((prev) => [...prev, ...walls]);
+          // Auto-zoom to fit after walls render
+          setTimeout(() => canvasRef.current?.zoomToFit?.(), 200);
         }}
       />
 
