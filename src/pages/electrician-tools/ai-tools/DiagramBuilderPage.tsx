@@ -249,16 +249,33 @@ const DiagramBuilderPage = () => {
   const handleSaveRoom = (name: string) => {
     const canvasEl = canvasRef.current?.getCanvasElement();
     let thumbnail = '';
+    let fullImage = '';
     if (canvasEl) {
-      const tempCanvas = document.createElement('canvas');
-      tempCanvas.width = 120;
-      tempCanvas.height = 90;
-      const ctx = tempCanvas.getContext('2d');
-      if (ctx) {
-        ctx.fillStyle = '#FFFFFF';
-        ctx.fillRect(0, 0, 120, 90);
-        ctx.drawImage(canvasEl, 0, 0, 120, 90);
-        thumbnail = tempCanvas.toDataURL('image/png', 0.7);
+      // High-res image for PDF (3x scale for HD print quality)
+      const scale = 3;
+      const hiResCanvas = document.createElement('canvas');
+      hiResCanvas.width = canvasEl.width * scale;
+      hiResCanvas.height = canvasEl.height * scale;
+      const hiCtx = hiResCanvas.getContext('2d');
+      if (hiCtx) {
+        hiCtx.fillStyle = '#FFFFFF';
+        hiCtx.fillRect(0, 0, hiResCanvas.width, hiResCanvas.height);
+        hiCtx.imageSmoothingEnabled = true;
+        hiCtx.imageSmoothingQuality = 'high';
+        hiCtx.drawImage(canvasEl, 0, 0, hiResCanvas.width, hiResCanvas.height);
+        fullImage = hiResCanvas.toDataURL('image/png', 1.0);
+      }
+
+      // Small thumbnail for the room strip
+      const thumbCanvas = document.createElement('canvas');
+      thumbCanvas.width = 120;
+      thumbCanvas.height = 90;
+      const thumbCtx = thumbCanvas.getContext('2d');
+      if (thumbCtx) {
+        thumbCtx.fillStyle = '#FFFFFF';
+        thumbCtx.fillRect(0, 0, 120, 90);
+        thumbCtx.drawImage(canvasEl, 0, 0, 120, 90);
+        thumbnail = thumbCanvas.toDataURL('image/png', 0.7);
       }
     }
 
@@ -269,6 +286,7 @@ const DiagramBuilderPage = () => {
     saveRoom({
       name,
       thumbnail,
+      fullImage,
       canvasState: JSON.stringify(canvasObjects),
       symbolIds,
     });
@@ -699,7 +717,7 @@ const DiagramBuilderPage = () => {
             // Build room data with canvas images
             const roomsPayload = data.rooms.map((room) => ({
               name: room.name,
-              floor_plan_image: room.thumbnail || '',
+              floor_plan_image: room.fullImage || room.thumbnail || '',
               item_count: room.symbolIds.length,
               items: (() => {
                 const counts = new Map<string, number>();
@@ -720,6 +738,24 @@ const DiagramBuilderPage = () => {
               }, {})
             ).map(([name, items]) => ({ name, items }));
 
+            // Build full symbol legend (all 114 symbols as SVG data URIs)
+            const allSymbolsLegend = await Promise.all(
+              symbolRegistry.map(async (sym) => {
+                try {
+                  const { loadSymbolSvg } = await import('@/components/electrician-tools/diagram-builder/symbols/svgLoader');
+                  const svgContent = await loadSymbolSvg(sym.id);
+                  const b64 = btoa(unescape(encodeURIComponent(svgContent)));
+                  return {
+                    name: sym.name,
+                    category: sym.category.charAt(0).toUpperCase() + sym.category.slice(1),
+                    svg_data_uri: `data:image/svg+xml;base64,${b64}`,
+                  };
+                } catch {
+                  return { name: sym.name, category: sym.category, svg_data_uri: '' };
+                }
+              })
+            );
+
             const { data: result, error } = await supabase.functions.invoke('generate-floor-plan-pdf', {
               body: {
                 property_address: data.property,
@@ -731,6 +767,7 @@ const DiagramBuilderPage = () => {
                 rooms: roomsPayload,
                 materials_by_category: materialsByCategory,
                 total_items: data.totalItems,
+                all_symbols: allSymbolsLegend,
               },
             });
 

@@ -6,7 +6,8 @@ const STORAGE_KEY = 'floor-plan-saved-rooms';
 export interface SavedRoom {
   id: string;
   name: string;
-  thumbnail: string;
+  thumbnail: string;       // small 120x90 for room strip
+  fullImage?: string;      // high-res 2x for PDF export
   canvasState: string;
   photoBase64?: string;
   symbolIds: string[];

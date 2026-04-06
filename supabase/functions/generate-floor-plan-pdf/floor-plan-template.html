@@ -57,8 +57,8 @@
         .room-name { font-size: 22px; font-weight: 800; color: var(--dark); }
         .room-address { font-size: 10px; color: var(--light); }
 
-        .floor-plan-container { text-align: center; margin-bottom: 10px; border: 1px solid var(--border); border-radius: 4px; padding: 6px; background: #fff; }
-        .floor-plan-container img { max-width: 100%; max-height: 130mm; object-fit: contain; }
+        .floor-plan-container { text-align: center; margin-bottom: 8px; border: 1px solid var(--border); border-radius: 4px; padding: 4px; background: #fff; min-height: 140mm; display: flex; align-items: center; justify-content: center; }
+        .floor-plan-container img { max-width: 100%; max-height: 155mm; width: auto; object-fit: contain; }
 
         .room-legend { margin-bottom: 8px; }
         .room-legend-title { font-size: 9px; font-weight: 700; color: var(--accent); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px; }
@@ -90,11 +90,13 @@
         .appendix-page { padding: 15mm 20mm; }
         .appendix-title { font-size: 22px; font-weight: 800; color: var(--dark); border-bottom: 3px solid var(--accent); padding-bottom: 8px; margin-bottom: 16px; }
 
-        .symbol-legend-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-bottom: 24px; }
-        .symbol-card { display: flex; align-items: center; gap: 8px; padding: 4px 8px; border: 1px solid var(--border); border-radius: 4px; }
-        .symbol-preview { width: 24px; height: 24px; flex-shrink: 0; }
+        .symbol-legend-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 4px; margin-bottom: 16px; }
+        .symbol-card { display: flex; align-items: center; gap: 4px; padding: 2px 4px; border: 1px solid var(--border); border-radius: 3px; }
+        .symbol-preview { width: 18px; height: 18px; flex-shrink: 0; }
         .symbol-preview img { width: 100%; height: 100%; }
-        .symbol-label { font-size: 9px; color: var(--mid); }
+        .symbol-label { font-size: 7px; color: var(--mid); line-height: 1.2; }
+
+        .category-header-legend { font-size: 8px; font-weight: 700; color: var(--accent); text-transform: uppercase; letter-spacing: 0.5px; grid-column: 1 / -1; padding: 4px 0 2px; border-bottom: 1px solid var(--accent); margin-top: 4px; }
 
         .signature-section { margin-top: 24px; display: grid; grid-template-columns: 1fr 1fr; gap: 32px; }
         .signature-box { border-top: 1px solid var(--dark); padding-top: 6px; }
@@ -224,9 +226,12 @@
     </div>
 </div>
 
-<!-- ════════════════════════ APPENDIX: LEGEND + SIGNATURES ════════════════════════ -->
+<!-- ════════════════════════ APPENDIX: FULL SYMBOL REFERENCE ════════════════════════ -->
 <div class="page appendix-page">
-    <div class="appendix-title">Symbol Legend &amp; Declaration</div>
+    <div class="appendix-title">Appendix — BS EN 60617 Symbol Reference</div>
+    <p style="font-size: 9px; color: #64748b; margin-bottom: 12px;">
+        114 electrical installation symbols conforming to BS EN 60617 / CIBSE conventions for UK floor plan drawings.
+    </p>
 
     {% if all_symbols %}
     <div class="symbol-legend-grid">
@@ -240,6 +245,23 @@
         {% endfor %}
     </div>
     {% endif %}
+</div>
+
+<!-- ════════════════════════ DECLARATION + SIGNATURES ════════════════════════ -->
+<div class="page appendix-page">
+    <div class="appendix-title">Declaration &amp; Sign-Off</div>
+
+    <div style="margin-bottom: 24px;">
+        <p style="font-size: 10px; color: #334155; line-height: 1.6; margin-bottom: 12px;">
+            I confirm that this electrical floor plan drawing has been prepared in accordance with
+            <strong>BS 7671:2018+A3:2024</strong> (Requirements for Electrical Installations — IET Wiring Regulations).
+            Symbols conform to <strong>BS EN 60617</strong> / CIBSE conventions for UK electrical installation drawings.
+        </p>
+        <p style="font-size: 10px; color: #334155; line-height: 1.6;">
+            This drawing is intended for use as a reference for the electrical installation layout.
+            All work must be carried out by a competent person in accordance with the current edition of BS 7671.
+        </p>
+    </div>
 
     <div class="signature-section">
         <div>
@@ -260,10 +282,9 @@
         </div>
     </div>
 
-    <div class="compliance" style="margin-top: 32px;">
-        <p>This electrical floor plan drawing has been prepared in accordance with BS 7671:2018+A3:2024.</p>
-        <p>Symbols conform to BS EN 60617 / CIBSE conventions for UK electrical installation drawings.</p>
-        <p style="margin-top: 8px;"><strong>Elec-Mate</strong> &middot; Electrical Installation Floor Plan Tool</p>
+    <div class="compliance" style="margin-top: 40px;">
+        <p><strong>Elec-Mate</strong> &middot; Electrical Installation Floor Plan Tool</p>
+        <p style="margin-top: 4px;">BS 7671:2018+A3:2024 &middot; BS EN 60617 &middot; CIBSE TM6</p>
     </div>
 </div>
 

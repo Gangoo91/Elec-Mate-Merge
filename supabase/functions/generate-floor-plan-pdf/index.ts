@@ -33,6 +33,7 @@ serve(async (req) => {
       rooms,
       materials_by_category,
       total_items,
+      all_symbols,
     } = body;
 
     const pdfMonkeyKey = Deno.env.get('PDFMONKEY_API_KEY');
@@ -62,6 +63,7 @@ serve(async (req) => {
             rooms: rooms || [],
             materials_by_category: materials_by_category || [],
             total_items: total_items || 0,
+            all_symbols: all_symbols || [],
           },
         },
       }),
