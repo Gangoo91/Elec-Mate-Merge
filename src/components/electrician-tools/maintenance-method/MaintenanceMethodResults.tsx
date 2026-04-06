@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { MaintenanceMethodData, MaintenanceStep } from '@/types/maintenance-method';
@@ -14,6 +13,8 @@ import {
   Plus,
   ChevronDown,
   ChevronUp,
+  Copy,
+  RotateCcw,
 } from 'lucide-react';
 import { useMobileEnhanced } from '@/hooks/use-mobile-enhanced';
 import { cn } from '@/lib/utils';
@@ -95,179 +96,122 @@ export const MaintenanceMethodResults = ({
   return (
     <div className={cn('space-y-6', isMobile ? 'space-y-4 pb-32' : 'pb-8')}>
       {/* Header */}
-      <Card>
-        <CardHeader className={isMobile ? 'pb-3' : ''}>
-          <div className={cn('flex gap-3', isMobile ? 'flex-col' : 'items-start justify-between')}>
-            <div className="text-left flex-1">
-              <CardTitle
-                className={cn('flex items-center gap-2', isMobile ? 'text-xl' : 'text-2xl')}
-              >
-                <FileText className={cn(isMobile ? 'h-5 w-5' : 'h-6 w-6', 'text-primary')} />
-                Maintenance Instructions
-              </CardTitle>
-              <p
-                className={cn(
-                  'text-foreground mt-1',
-                  isMobile ? 'text-xs line-clamp-2' : 'text-sm'
-                )}
-              >
-                {executiveSummary.equipmentType}
-              </p>
-            </div>
-            {onReset && (
-              <Button
-                onClick={onReset}
-                variant="outline"
-                size={isMobile ? 'default' : 'sm'}
-                className={cn('touch-manipulation', isMobile ? 'w-full h-12' : 'shrink-0')}
-              >
-                <Plus className="h-4 w-4 mr-2" />
-                New Maintenance Method
-              </Button>
-            )}
+      <div className="flex items-start gap-3 justify-between">
+        <div className="flex items-center gap-3">
+          <div className="w-10 h-10 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center flex-shrink-0">
+            <Wrench className="h-5 w-5 text-emerald-400" />
           </div>
-        </CardHeader>
-        <CardContent className="space-y-4">
-          <div className="text-sm text-foreground leading-relaxed text-left">
-            {isMobile && !overviewExpanded ? (
-              <>
-                <p className="line-clamp-4">{maintenanceGuide}</p>
-                {maintenanceGuide.length > 200 && (
-                  <Button
-                    variant="link"
-                    size="sm"
-                    onClick={() => setOverviewExpanded(true)}
-                    className="p-0 h-auto text-elec-yellow mt-2 font-medium"
-                  >
-                    Show more
-                  </Button>
-                )}
-              </>
-            ) : (
-              <>
-                <p>{maintenanceGuide}</p>
-                {isMobile && maintenanceGuide.length > 200 && (
-                  <Button
-                    variant="link"
-                    size="sm"
-                    onClick={() => setOverviewExpanded(false)}
-                    className="p-0 h-auto text-elec-yellow mt-2 font-medium"
-                  >
-                    Show less
-                  </Button>
-                )}
-              </>
-            )}
+          <div>
+            <h1 className="text-lg font-bold text-white">Maintenance Method</h1>
+            <p className="text-sm text-white">Generated maintenance procedure</p>
           </div>
-        </CardContent>
-      </Card>
+        </div>
+        <div className="flex items-center gap-2 flex-shrink-0">
+          <button className="h-9 px-3 rounded-lg bg-white/[0.06] text-white ring-1 ring-white/[0.08] flex items-center gap-1.5 text-sm touch-manipulation active:scale-[0.98] transition-all">
+            <Copy className="h-3.5 w-3.5" />
+            Copy
+          </button>
+          {onReset && (
+            <button
+              onClick={onReset}
+              className="h-9 px-3 rounded-lg bg-white/[0.06] text-white ring-1 ring-white/[0.08] flex items-center gap-1.5 text-sm touch-manipulation active:scale-[0.98] transition-all"
+            >
+              <RotateCcw className="h-3.5 w-3.5" />
+              Start Over
+            </button>
+          )}
+        </div>
+      </div>
+
+      {/* Overview text */}
+      <div className="text-sm text-white leading-relaxed text-left">
+        {isMobile && !overviewExpanded ? (
+          <>
+            <p className="line-clamp-4">{maintenanceGuide}</p>
+            {maintenanceGuide.length > 200 && (
+              <button
+                onClick={() => setOverviewExpanded(true)}
+                className="text-emerald-400 mt-2 font-medium text-sm"
+              >
+                Show more
+              </button>
+            )}
+          </>
+        ) : (
+          <>
+            <p>{maintenanceGuide}</p>
+            {isMobile && maintenanceGuide.length > 200 && (
+              <button
+                onClick={() => setOverviewExpanded(false)}
+                className="text-emerald-400 mt-2 font-medium text-sm"
+              >
+                Show less
+              </button>
+            )}
+          </>
+        )}
+      </div>
 
       {/* Executive Summary */}
-      <Card className="border-elec-yellow/20 bg-gradient-to-br from-elec-card via-elec-card to-elec-card/50">
-        <CardHeader className="border-b border-elec-yellow/20 pb-4">
-          <CardTitle
-            className={cn(
-              'font-bold text-left text-foreground',
-              isMobile ? 'text-lg leading-tight' : 'text-2xl'
-            )}
-          >
-            {executiveSummary.equipmentType}
-          </CardTitle>
-          {!isMobile && <div className="h-1 w-16 bg-elec-yellow rounded-full mt-2"></div>}
-        </CardHeader>
-        <CardContent className="space-y-6 pt-6">
-          {/* Key Information Grid */}
-          <div className="grid gap-4 sm:grid-cols-2 text-left">
-            <div className="flex items-start gap-3 p-3 rounded-lg bg-blue-500/5 border border-blue-500/20">
-              <div className="h-10 w-10 rounded-lg bg-blue-500/20 flex items-center justify-center flex-shrink-0">
-                <Wrench className="h-5 w-5 text-blue-400" />
-              </div>
-              <div className="flex-1">
-                <span className="text-xs font-medium text-foreground/70 uppercase tracking-wide">
-                  Equipment Type
-                </span>
-                <p className="text-sm font-semibold text-foreground mt-0.5">
-                  {executiveSummary.equipmentType}
-                </p>
-              </div>
+      <div>
+        <h2 className="text-xs font-medium text-white uppercase tracking-wider px-0.5 mb-3">
+          Executive Summary
+        </h2>
+        <div className="rounded-xl bg-white/[0.03] border border-white/[0.08] p-4 space-y-4">
+          <h3 className="text-base font-bold text-white">{executiveSummary.equipmentType}</h3>
+
+          {/* Key Information */}
+          <div className="grid gap-3 sm:grid-cols-2 text-left">
+            <div className="space-y-0.5">
+              <span className="text-xs font-medium text-white uppercase tracking-wide">
+                Equipment Type
+              </span>
+              <p className="text-sm text-white">{executiveSummary.equipmentType}</p>
             </div>
 
-            <div className="flex items-start gap-3 p-3 rounded-lg bg-purple-500/5 border border-purple-500/20">
-              <div className="h-10 w-10 rounded-lg bg-purple-500/20 flex items-center justify-center flex-shrink-0">
-                <FileText className="h-5 w-5 text-purple-400" />
-              </div>
-              <div className="flex-1">
-                <span className="text-xs font-medium text-foreground/70 uppercase tracking-wide">
-                  Maintenance Type
-                </span>
-                <p className="text-sm font-semibold text-foreground mt-0.5">
-                  {executiveSummary.maintenanceType}
-                </p>
-              </div>
+            <div className="space-y-0.5">
+              <span className="text-xs font-medium text-white uppercase tracking-wide">
+                Maintenance Type
+              </span>
+              <p className="text-sm text-white">{executiveSummary.maintenanceType}</p>
             </div>
 
-            <div className="flex items-start gap-3 p-3 rounded-lg bg-amber-500/5 border border-amber-500/20">
-              <div className="h-10 w-10 rounded-lg bg-amber-500/20 flex items-center justify-center flex-shrink-0">
-                <Clock className="h-5 w-5 text-amber-400" />
-              </div>
-              <div className="flex-1">
-                <span className="text-xs font-medium text-foreground/70 uppercase tracking-wide">
-                  Frequency
-                </span>
-                <p className="text-sm font-semibold text-foreground mt-0.5">
-                  {executiveSummary.recommendedFrequency}
-                </p>
-              </div>
+            <div className="space-y-0.5">
+              <span className="text-xs font-medium text-white uppercase tracking-wide">
+                Frequency
+              </span>
+              <p className="text-sm text-white">{executiveSummary.recommendedFrequency}</p>
             </div>
 
-            <div className="flex items-start gap-3 p-3 rounded-lg bg-green-500/5 border border-green-500/20">
-              <div className="h-10 w-10 rounded-lg bg-green-500/20 flex items-center justify-center flex-shrink-0">
-                <ShieldAlert className="h-5 w-5 text-green-400" />
-              </div>
-              <div className="flex-1">
-                <span className="text-xs font-medium text-foreground/70 uppercase tracking-wide">
-                  Condition
-                </span>
-                <p className="text-sm font-semibold text-foreground mt-0.5">
-                  {executiveSummary.overallCondition}
-                </p>
-              </div>
+            <div className="space-y-0.5">
+              <span className="text-xs font-medium text-white uppercase tracking-wide">
+                Condition
+              </span>
+              <p className="text-sm text-white">{executiveSummary.overallCondition}</p>
             </div>
 
             {executiveSummary.estimatedAge && (
-              <div className="flex items-start gap-3 p-3 rounded-lg bg-cyan-500/5 border border-cyan-500/20">
-                <div className="h-10 w-10 rounded-lg bg-cyan-500/20 flex items-center justify-center flex-shrink-0">
-                  <Clock className="h-5 w-5 text-cyan-400" />
-                </div>
-                <div className="flex-1">
-                  <span className="text-xs font-medium text-foreground/70 uppercase tracking-wide">
-                    Estimated Age
-                  </span>
-                  <p className="text-sm font-semibold text-foreground mt-0.5">
-                    {executiveSummary.estimatedAge}
-                  </p>
-                </div>
+              <div className="space-y-0.5">
+                <span className="text-xs font-medium text-white uppercase tracking-wide">
+                  Estimated Age
+                </span>
+                <p className="text-sm text-white">{executiveSummary.estimatedAge}</p>
               </div>
             )}
           </div>
 
           {/* Critical Findings */}
           {executiveSummary.criticalFindings && executiveSummary.criticalFindings.length > 0 && (
-            <div className="space-y-3 p-4 rounded-lg bg-destructive/5 border-2 border-destructive/30 text-left">
+            <div className="space-y-2 p-3 rounded-lg bg-destructive/5 border border-destructive/30 text-left">
               <div className="flex items-center gap-2">
-                <div className="h-8 w-8 rounded-lg bg-destructive/20 flex items-center justify-center">
-                  <AlertTriangle className="h-4 w-4 text-destructive" />
-                </div>
-                <span className="text-sm font-bold text-destructive uppercase tracking-wide">
+                <AlertTriangle className="h-4 w-4 text-destructive" />
+                <span className="text-xs font-bold text-destructive uppercase tracking-wide">
                   Critical Findings
                 </span>
               </div>
-              <ul className="space-y-2">
+              <ul className="space-y-1.5">
                 {executiveSummary.criticalFindings.map((finding, idx) => (
-                  <li
-                    key={idx}
-                    className="text-sm text-foreground flex items-start gap-2 bg-background/50 p-2 rounded"
-                  >
+                  <li key={idx} className="text-sm text-white flex items-start gap-2">
                     <span className="text-destructive mt-0.5 font-bold">•</span>
                     <span>{finding}</span>
                   </li>
@@ -275,27 +219,27 @@ export const MaintenanceMethodResults = ({
               </ul>
             </div>
           )}
-        </CardContent>
-      </Card>
+        </div>
+      </div>
 
       {/* Summary Overview */}
-      <Card>
-        <CardHeader className={isMobile ? 'pb-2' : ''}>
-          <CardTitle className="text-lg text-left">Maintenance Overview</CardTitle>
-        </CardHeader>
-        <CardContent className={cn('space-y-4', isMobile && 'space-y-3')}>
+      <div>
+        <h2 className="text-xs font-medium text-white uppercase tracking-wider px-0.5 mb-3">
+          Maintenance Overview
+        </h2>
+        <div className={cn('space-y-4', isMobile && 'space-y-3')}>
           {isMobile ? (
             /* Mobile-optimised compact layout */
             <div className="space-y-3">
               {/* Compact stats row */}
               <div className="flex items-center justify-between gap-3">
                 <div className="flex items-center gap-2">
-                  <div className="h-9 w-9 rounded-lg bg-blue-500/10 flex items-center justify-center">
-                    <FileText className="h-4 w-4 text-blue-400" />
+                  <div className="h-9 w-9 rounded-lg bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center">
+                    <FileText className="h-4 w-4 text-emerald-400" />
                   </div>
                   <div className="text-left">
-                    <p className="text-xl font-bold text-foreground">{summary.totalSteps}</p>
-                    <p className="text-xs text-foreground/70">Steps</p>
+                    <p className="text-xl font-bold text-white">{summary.totalSteps}</p>
+                    <p className="text-xs text-white">Steps</p>
                   </div>
                 </div>
                 <Badge
@@ -314,26 +258,26 @@ export const MaintenanceMethodResults = ({
 
               {/* Expandable duration section */}
               <div
-                className="p-3 rounded-lg bg-purple-500/5 border border-purple-500/20 touch-manipulation cursor-pointer"
+                className="p-3 rounded-lg bg-white/[0.03] border border-white/[0.08] touch-manipulation cursor-pointer"
                 onClick={() => setDurationExpanded(!durationExpanded)}
               >
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
-                    <Clock className="h-4 w-4 text-purple-400" />
-                    <span className="text-sm font-semibold text-foreground">
+                    <Clock className="h-4 w-4 text-emerald-400" />
+                    <span className="text-sm font-semibold text-white">
                       {getShortDuration(summary.estimatedDuration)}
                     </span>
                   </div>
                   <Button variant="ghost" size="sm" className="h-7 w-7 p-0">
                     {durationExpanded ? (
-                      <ChevronUp className="h-4 w-4 text-foreground/70" />
+                      <ChevronUp className="h-4 w-4 text-white" />
                     ) : (
-                      <ChevronDown className="h-4 w-4 text-foreground/70" />
+                      <ChevronDown className="h-4 w-4 text-white" />
                     )}
                   </Button>
                 </div>
                 {durationExpanded && (
-                  <p className="text-xs text-foreground/80 mt-2 leading-relaxed animate-fade-in">
+                  <p className="text-xs text-white mt-2 leading-relaxed animate-fade-in">
                     {summary.estimatedDuration}
                   </p>
                 )}
@@ -343,30 +287,28 @@ export const MaintenanceMethodResults = ({
             /* Desktop layout */
             <div className="grid gap-4 sm:grid-cols-3">
               <div className="flex items-center gap-3">
-                <div className="h-10 w-10 rounded-lg bg-blue-500/10 flex items-center justify-center">
-                  <FileText className="h-5 w-5 text-blue-400" />
+                <div className="h-10 w-10 rounded-lg bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center">
+                  <FileText className="h-5 w-5 text-emerald-400" />
                 </div>
                 <div className="text-left">
-                  <p className="text-2xl font-bold text-foreground">{summary.totalSteps}</p>
-                  <p className="text-xs text-foreground">Total Steps</p>
+                  <p className="text-2xl font-bold text-white">{summary.totalSteps}</p>
+                  <p className="text-xs text-white">Total Steps</p>
                 </div>
               </div>
 
               <div className="flex items-center gap-3">
-                <div className="h-10 w-10 rounded-lg bg-purple-500/10 flex items-center justify-center">
-                  <Clock className="h-5 w-5 text-purple-400" />
+                <div className="h-10 w-10 rounded-lg bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center">
+                  <Clock className="h-5 w-5 text-emerald-400" />
                 </div>
                 <div className="text-left">
-                  <p className="text-lg font-semibold text-foreground">
-                    {summary.estimatedDuration}
-                  </p>
-                  <p className="text-xs text-foreground">Duration</p>
+                  <p className="text-lg font-semibold text-white">{summary.estimatedDuration}</p>
+                  <p className="text-xs text-white">Duration</p>
                 </div>
               </div>
 
               <div className="flex items-center gap-3">
-                <div className="h-10 w-10 rounded-lg bg-amber-500/10 flex items-center justify-center">
-                  <ShieldAlert className="h-5 w-5 text-amber-400" />
+                <div className="h-10 w-10 rounded-lg bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center">
+                  <ShieldAlert className="h-5 w-5 text-emerald-400" />
                 </div>
                 <div className="text-left">
                   <Badge
@@ -380,7 +322,7 @@ export const MaintenanceMethodResults = ({
                   >
                     {summary.overallRiskLevel.toUpperCase()}
                   </Badge>
-                  <p className="text-xs text-foreground mt-1">Risk Level</p>
+                  <p className="text-xs text-white mt-1">Risk Level</p>
                 </div>
               </div>
             </div>
@@ -389,12 +331,12 @@ export const MaintenanceMethodResults = ({
           {summary.toolsRequired && summary.toolsRequired.length > 0 && (
             <div
               className={cn(
-                'space-y-2 pt-2 border-t border-elec-yellow/30 bg-elec-yellow/5 rounded-lg text-left',
+                'space-y-2 rounded-xl bg-white/[0.03] border border-white/[0.08] text-left',
                 isMobile ? 'p-2.5' : 'p-3'
               )}
             >
-              <div className="flex items-center gap-2 text-sm font-medium text-foreground">
-                <Wrench className="h-4 w-4 text-elec-yellow" />
+              <div className="flex items-center gap-2 text-sm font-medium text-white">
+                <Wrench className="h-4 w-4 text-emerald-400" />
                 Required Tools ({summary.toolsRequired.length})
               </div>
               <div className={cn('flex flex-wrap gap-1.5', isMobile ? 'ml-4' : 'ml-6')}>
@@ -403,7 +345,7 @@ export const MaintenanceMethodResults = ({
                     key={idx}
                     variant="secondary"
                     className={cn(
-                      'bg-elec-yellow/20 text-foreground border-elec-yellow/30',
+                      'bg-emerald-500/15 text-white border-emerald-500/30',
                       isMobile && 'text-xs'
                     )}
                   >
@@ -413,25 +355,22 @@ export const MaintenanceMethodResults = ({
               </div>
             </div>
           )}
-        </CardContent>
-      </Card>
+        </div>
+      </div>
 
       {/* Maintenance Steps */}
       <div className="space-y-4">
         <div className="flex items-center justify-between">
-          <h2 className="text-xl font-semibold flex items-center gap-2 text-foreground">
-            <FileText className="h-5 w-5" />
+          <h2 className="text-xs font-medium text-white uppercase tracking-wider px-0.5">
             Detailed Maintenance Steps
           </h2>
-          <Button
+          <button
             onClick={addNewStep}
-            variant="outline"
-            size="sm"
-            className="border-elec-yellow/30 hover:bg-elec-yellow/10"
+            className="h-9 px-3 rounded-lg bg-white/[0.06] text-white ring-1 ring-white/[0.08] flex items-center gap-1.5 text-sm touch-manipulation active:scale-[0.98] transition-all"
           >
-            <Plus className="h-4 w-4 mr-2" />
+            <Plus className="h-3.5 w-3.5" />
             Add Step
-          </Button>
+          </button>
         </div>
         {steps.map((step, index) => (
           <MaintenanceStepCard
@@ -447,21 +386,19 @@ export const MaintenanceMethodResults = ({
 
       {/* Recommendations */}
       {recommendations && recommendations.length > 0 && (
-        <Card>
-          <CardHeader>
-            <CardTitle className="text-lg text-left">Recommendations</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <ul className="space-y-2 text-left">
-              {recommendations.map((rec, idx) => (
-                <li key={idx} className="text-sm text-foreground flex items-start gap-2">
-                  <span className="text-primary mt-0.5">•</span>
-                  <span>{rec}</span>
-                </li>
-              ))}
-            </ul>
-          </CardContent>
-        </Card>
+        <div>
+          <h2 className="text-xs font-medium text-white uppercase tracking-wider px-0.5 mb-3">
+            Recommendations
+          </h2>
+          <ul className="space-y-2 text-left">
+            {recommendations.map((rec, idx) => (
+              <li key={idx} className="text-sm text-white flex items-start gap-2">
+                <span className="text-emerald-400 mt-0.5">•</span>
+                <span>{rec}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
       )}
 
       {/* Sticky Download PDF Button */}
@@ -469,7 +406,7 @@ export const MaintenanceMethodResults = ({
         <StickyGenerateButton>
           <Button
             onClick={onExportPDF}
-            className="w-full h-14 text-lg font-semibold bg-gradient-to-r from-elec-yellow via-elec-yellow to-elec-yellow/90 text-black hover:scale-[1.02] active:scale-95 transition-all"
+            className="w-full h-14 text-lg font-bold bg-gradient-to-r from-emerald-500 to-green-500 text-white hover:scale-[1.02] active:scale-95 transition-all rounded-xl"
           >
             <Download className="h-5 w-5 mr-2" />
             Download PDF

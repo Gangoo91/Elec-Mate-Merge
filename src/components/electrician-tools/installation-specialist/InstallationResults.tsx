@@ -1,7 +1,4 @@
 import { useState, useRef, useEffect } from 'react';
-import { Card, CardContent } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
 import {
   Plus,
   RotateCcw,
@@ -15,7 +12,6 @@ import {
   BookOpen,
   ChevronUp,
 } from 'lucide-react';
-import { cn } from '@/lib/utils';
 import { InstallationStepCard } from './InstallationStepCard';
 import {
   InstallationStep,
@@ -546,85 +542,74 @@ export const InstallationResults = ({
         <ProjectMetadataCard metadata={fullMethodStatement.projectMetadata} />
       )}
 
-      {/* 🚀 Quality Metrics Display */}
+      {/* Quality Metrics Display */}
       {qualityMetrics && (
-        <Card className="border-blue-500/30 bg-gradient-to-br from-blue-500/5 to-background shadow-lg">
-          <CardContent className="p-5">
-            <div className="flex items-center justify-between mb-4">
-              <div className="flex items-center gap-2">
-                <div className="p-2 rounded-lg bg-blue-500/10">
-                  <Database className="h-5 w-5 text-blue-400" />
-                </div>
-                <h4 className="font-bold text-base">Generation Quality</h4>
+        <div className="rounded-xl bg-white/[0.03] border border-white/[0.08] p-4 sm:p-5">
+          <div className="flex items-center justify-between mb-4">
+            <div className="flex items-center gap-2">
+              <div className="p-2 rounded-lg bg-blue-500/10 border border-blue-500/20">
+                <Database className="h-5 w-5 text-blue-400" />
               </div>
-              <Badge
-                variant={
-                  qualityMetrics.overallScore >= 80
-                    ? 'default'
-                    : qualityMetrics.overallScore >= 60
-                      ? 'secondary'
-                      : 'destructive'
-                }
-                className="text-base px-3 py-1 font-bold"
-              >
-                {qualityMetrics.overallScore}/100
-              </Badge>
+              <h2 className="text-xs font-medium text-white uppercase tracking-wider px-0.5">Generation Quality</h2>
+            </div>
+            <span className="inline-flex items-center rounded-lg bg-blue-500/10 border border-blue-500/20 px-3 py-1 text-base font-bold text-blue-400">
+              {qualityMetrics.overallScore}/100
+            </span>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+            <div className="bg-white/[0.04] rounded-lg p-3 border border-white/[0.08]">
+              <div className="flex items-center gap-2 mb-1">
+                <TrendingUp className="h-4 w-4 text-blue-400" />
+                <span className="text-xs text-white font-medium">
+                  RAG Extraction Rate
+                </span>
+              </div>
+              <p className="text-2xl font-bold text-white">
+                {qualityMetrics.ragExtractionRate}%
+              </p>
+              <p className="text-xs text-white mt-1">
+                {qualityMetrics.stepsWithCompleteData}/{steps.length} steps with complete data
+              </p>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-              <div className="bg-muted/30 rounded-lg p-3 border border-border/50">
-                <div className="flex items-center gap-2 mb-1">
-                  <TrendingUp className="h-4 w-4 text-blue-400" />
-                  <span className="text-xs text-muted-foreground font-medium">
-                    RAG Extraction Rate
-                  </span>
-                </div>
-                <p className="text-2xl font-bold text-foreground">
-                  {qualityMetrics.ragExtractionRate}%
-                </p>
-                <p className="text-xs text-muted-foreground mt-1">
-                  {qualityMetrics.stepsWithCompleteData}/{steps.length} steps with complete data
-                </p>
+            <div className="bg-white/[0.04] rounded-lg p-3 border border-white/[0.08]">
+              <div className="flex items-center gap-2 mb-1">
+                <Wrench className="h-4 w-4 text-blue-400" />
+                <span className="text-xs text-white font-medium">
+                  Practical Procedures
+                </span>
               </div>
-
-              <div className="bg-muted/30 rounded-lg p-3 border border-border/50">
-                <div className="flex items-center gap-2 mb-1">
-                  <Wrench className="h-4 w-4 text-blue-400" />
-                  <span className="text-xs text-muted-foreground font-medium">
-                    Practical Procedures
-                  </span>
-                </div>
-                <p className="text-2xl font-bold text-foreground">
-                  {qualityMetrics.ragDataUsed.practicalProcedures}
-                </p>
-                <p className="text-xs text-muted-foreground mt-1">Real-world installation guides</p>
-              </div>
-
-              <div className="bg-muted/30 rounded-lg p-3 border border-border/50">
-                <div className="flex items-center gap-2 mb-1">
-                  <BookOpen className="h-4 w-4 text-blue-400" />
-                  <span className="text-xs text-muted-foreground font-medium">
-                    BS 7671 Regulations
-                  </span>
-                </div>
-                <p className="text-2xl font-bold text-foreground">
-                  {qualityMetrics.ragDataUsed.regulations}
-                </p>
-                <p className="text-xs text-muted-foreground mt-1">
-                  Regulatory references ({qualityMetrics.ragDataUsed.avgRelevance}% avg relevance)
-                </p>
-              </div>
+              <p className="text-2xl font-bold text-white">
+                {qualityMetrics.ragDataUsed.practicalProcedures}
+              </p>
+              <p className="text-xs text-white mt-1">Real-world installation guides</p>
             </div>
 
-            <div className="mt-3 text-xs text-muted-foreground bg-blue-500/5 rounded p-2 border border-blue-500/20">
-              <strong>Quality Indicators:</strong> Based on tools specificity, materials
-              completeness, hazard identification, and description richness extracted from{' '}
-              {qualityMetrics.ragDataUsed.practicalProcedures +
-                qualityMetrics.ragDataUsed.regulations}{' '}
-              knowledge base entries.
+            <div className="bg-white/[0.04] rounded-lg p-3 border border-white/[0.08]">
+              <div className="flex items-center gap-2 mb-1">
+                <BookOpen className="h-4 w-4 text-blue-400" />
+                <span className="text-xs text-white font-medium">
+                  BS 7671 Regulations
+                </span>
+              </div>
+              <p className="text-2xl font-bold text-white">
+                {qualityMetrics.ragDataUsed.regulations}
+              </p>
+              <p className="text-xs text-white mt-1">
+                Regulatory references ({qualityMetrics.ragDataUsed.avgRelevance}% avg relevance)
+              </p>
             </div>
-          </CardContent>
-        </Card>
+          </div>
+
+          <div className="mt-3 text-xs text-white bg-blue-500/5 rounded p-2 border border-blue-500/20">
+            <strong>Quality Indicators:</strong> Based on tools specificity, materials
+            completeness, hazard identification, and description richness extracted from{' '}
+            {qualityMetrics.ragDataUsed.practicalProcedures +
+              qualityMetrics.ragDataUsed.regulations}{' '}
+            knowledge base entries.
+          </div>
+        </div>
       )}
 
       {/* 📊 Detailed RAG Extraction Breakdown */}
@@ -649,17 +634,16 @@ export const InstallationResults = ({
 
       {/* Metadata Call-to-Action */}
       {!projectMetadata?.siteManagerName && (
-        <Card className="relative overflow-hidden p-5 bg-gradient-to-br from-warning/15 via-orange-500/10 to-background border-2 border-warning/50 shadow-lg">
-          <div className="absolute inset-0 animate-pulse bg-gradient-to-r from-warning/5 to-transparent" />
-          <div className="relative flex flex-col sm:flex-row items-center sm:items-start gap-4">
-            <div className="p-3 rounded-xl bg-warning/20 shadow-md">
-              <AlertCircle className="h-6 w-6 text-warning" />
+        <div className="rounded-xl bg-amber-500/10 border border-amber-500/30 p-4 sm:p-5">
+          <div className="flex flex-col sm:flex-row items-center sm:items-start gap-4">
+            <div className="p-3 rounded-xl bg-amber-500/10 border border-amber-500/20">
+              <AlertCircle className="h-6 w-6 text-amber-400" />
             </div>
             <div className="flex-1 w-full text-center sm:text-left">
-              <h4 className="font-bold text-lg text-foreground mb-2">
+              <h4 className="font-bold text-lg text-white mb-2">
                 Complete Project Details for Professional PDF
               </h4>
-              <p className="text-sm text-muted-foreground mb-4 leading-relaxed">
+              <p className="text-sm text-white mb-4 leading-relaxed">
                 Add emergency contacts and site information to generate a comprehensive,
                 regulation-compliant method statement
               </p>
@@ -674,7 +658,7 @@ export const InstallationResults = ({
               </MobileButton>
             </div>
           </div>
-        </Card>
+        </div>
       )}
 
       {/* Project Metadata Form */}
@@ -719,9 +703,9 @@ export const InstallationResults = ({
       {/* Installation Steps */}
       <div id="steps">
         <div className="flex items-center justify-between mb-4">
-          <h3 className="text-lg font-semibold text-foreground">
+          <h2 className="text-xs font-medium text-white uppercase tracking-wider px-0.5">
             Installation Procedure ({steps.length} Steps)
-          </h3>
+          </h2>
           <MobileButton
             onClick={addNewStep}
             variant="outline"
@@ -811,50 +795,34 @@ export const InstallationResults = ({
       />
 
       {/* Action Buttons - Inline at bottom */}
-      <Card className="mt-8">
-        <CardContent className={cn('p-6', isMobile && 'p-4')}>
-          <div className="space-y-3">
-            {/* Primary CTA - Download PDF */}
-            <Button
-              onClick={handleExportPDF}
-              variant="default"
-              disabled={isGeneratingPDF}
-              className={cn(
-                'w-full font-bold transition-all active:scale-95',
-                isMobile ? 'h-14 text-base' : 'h-12 text-sm'
-              )}
-            >
-              <Download className={cn(isMobile ? 'h-6 w-6 mr-2' : 'h-5 w-5 mr-2')} />
-              {isGeneratingPDF ? 'Generating...' : 'Download PDF'}
-            </Button>
+      <div className="mt-8 space-y-3">
+        {/* Primary CTA - Download PDF */}
+        <button
+          onClick={handleExportPDF}
+          disabled={isGeneratingPDF}
+          className="w-full h-14 rounded-xl bg-gradient-to-r from-blue-500 to-cyan-500 text-white font-bold text-base flex items-center justify-center gap-2 touch-manipulation active:scale-95 transition-all disabled:opacity-50"
+        >
+          <Download className="h-5 w-5" />
+          {isGeneratingPDF ? 'Generating...' : 'Download PDF'}
+        </button>
 
-            {/* Secondary Actions */}
-            <div className="flex gap-3">
-              <Button
-                onClick={() => setShowMetadataForm(!showMetadataForm)}
-                variant="outline"
-                className={cn(
-                  'flex-1 font-semibold transition-all active:scale-95',
-                  isMobile ? 'h-12' : 'h-10'
-                )}
-              >
-                {showMetadataForm ? 'Hide' : 'Edit'} Metadata
-              </Button>
-              <Button
-                onClick={onStartOver}
-                variant="outline"
-                className={cn(
-                  'flex-1 font-semibold hover:bg-destructive/10 hover:text-destructive hover:border-destructive/50 transition-all active:scale-95',
-                  isMobile ? 'h-12' : 'h-10'
-                )}
-              >
-                <RotateCcw className={cn(isMobile ? 'h-5 w-5 mr-2' : 'h-4 w-4 mr-2')} />
-                Start Over
-              </Button>
-            </div>
-          </div>
-        </CardContent>
-      </Card>
+        {/* Secondary Actions */}
+        <div className="flex gap-3">
+          <button
+            onClick={() => setShowMetadataForm(!showMetadataForm)}
+            className="flex-1 h-11 rounded-lg bg-white/[0.06] text-white ring-1 ring-white/[0.08] font-semibold text-sm touch-manipulation active:scale-95 transition-all"
+          >
+            {showMetadataForm ? 'Hide' : 'Edit'} Metadata
+          </button>
+          <button
+            onClick={onStartOver}
+            className="flex-1 h-11 rounded-lg bg-white/[0.06] text-white ring-1 ring-white/[0.08] font-semibold text-sm flex items-center justify-center gap-2 touch-manipulation active:scale-95 transition-all"
+          >
+            <RotateCcw className="h-4 w-4" />
+            Start Over
+          </button>
+        </div>
+      </div>
 
       {/* Metadata Form as Bottom Sheet on Mobile */}
       {isMobile ? (
@@ -885,30 +853,32 @@ export const InstallationResults = ({
       )}
       {/* Mobile Bottom Action Bar - Sticky */}
       {isMobile && (
-        <div className="fixed bottom-0 left-0 right-0 bg-background/95 backdrop-blur-sm border-t border-border p-3 z-40 flex gap-2 shadow-lg">
-          <Button
+        <div className="fixed bottom-0 left-0 right-0 bg-background/95 backdrop-blur-sm border-t border-white/[0.06] p-3 z-40 flex gap-2 shadow-lg">
+          <button
             onClick={handleExportPDF}
             disabled={isGeneratingPDF}
-            className="flex-1 bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90 min-h-[48px]"
+            className="flex-1 h-12 rounded-xl bg-gradient-to-r from-blue-500 to-cyan-500 text-white font-bold text-sm flex items-center justify-center gap-2 touch-manipulation active:scale-95 transition-all disabled:opacity-50"
           >
-            <Download className="h-4 w-4 mr-2" />
+            <Download className="h-4 w-4" />
             {isGeneratingPDF ? 'Generating...' : 'Download PDF'}
-          </Button>
-          <Button onClick={addNewStep} variant="outline" className="min-h-[48px]">
+          </button>
+          <button
+            onClick={addNewStep}
+            className="h-12 w-12 rounded-xl bg-white/[0.06] text-white ring-1 ring-white/[0.08] flex items-center justify-center touch-manipulation active:scale-95 transition-all"
+          >
             <Plus className="h-4 w-4" />
-          </Button>
+          </button>
         </div>
       )}
 
       {/* Scroll to Top Button */}
       {showScrollTop && (
-        <Button
+        <button
           onClick={scrollToTop}
-          className="fixed bottom-20 right-4 sm:bottom-6 sm:right-6 rounded-full w-12 h-12 shadow-lg z-40 bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90"
-          size="icon"
+          className="fixed bottom-20 right-4 sm:bottom-6 sm:right-6 rounded-full w-12 h-12 shadow-lg z-40 bg-blue-500 text-white flex items-center justify-center touch-manipulation active:scale-95 transition-all"
         >
           <ChevronUp className="h-5 w-5" />
-        </Button>
+        </button>
       )}
     </div>
   );

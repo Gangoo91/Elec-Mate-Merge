@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -192,7 +191,7 @@ export const MaintenanceStepCard = ({
             const content = trimmed.slice(numMatch[0].length);
             return (
               <div key={idx} className="flex gap-2 text-sm">
-                <span className="text-elec-yellow font-semibold flex-shrink-0 min-w-[1.25rem]">
+                <span className="text-emerald-400 font-semibold flex-shrink-0 min-w-[1.25rem]">
                   {num}.
                 </span>
                 <span>{content}</span>
@@ -206,7 +205,7 @@ export const MaintenanceStepCard = ({
     );
   };
 
-  // Parse and format step content with sections in WHAT → HOW → WHY order
+  // Parse and format step content with sections in WHAT -> HOW -> WHY order
   const formatStepContent = (content: string): React.ReactNode => {
     // Extract sections by looking for WHAT:, HOW:, WHY: labels
     const whatMatch = content.match(/WHAT[:.]\s*([^]*?)(?=(?:HOW|WHY)[:.]\s*|$)/i);
@@ -223,10 +222,10 @@ export const MaintenanceStepCard = ({
       const capitalisedText = text.trim().charAt(0).toUpperCase() + text.trim().slice(1);
       return (
         <div className="space-y-1.5">
-          <span className="text-xs font-bold text-elec-yellow uppercase tracking-wide">
+          <span className="text-xs font-bold text-emerald-400 uppercase tracking-wide">
             {label}
           </span>
-          <div className="text-sm text-foreground pl-0">{formatNumberedItems(capitalisedText)}</div>
+          <div className="text-sm text-white pl-0">{formatNumberedItems(capitalisedText)}</div>
         </div>
       );
     };
@@ -247,43 +246,20 @@ export const MaintenanceStepCard = ({
     items: string[],
     editItems: string[],
     setEditItems: React.Dispatch<React.SetStateAction<string[]>>,
-    color: 'amber' | 'blue' | 'red' | 'yellow' | 'green' | 'purple' | 'cyan' | 'orange'
+    _color: 'amber' | 'blue' | 'red' | 'yellow' | 'green' | 'purple' | 'cyan' | 'orange'
   ) => {
     if (!isEditing && items.length === 0) return null;
 
-    const colorClasses = {
-      amber: 'border-amber-500/30 bg-amber-500/5',
-      blue: 'border-blue-500/30 bg-blue-500/5',
-      red: 'border-destructive/30 bg-destructive/5',
-      yellow: 'border-elec-yellow/30 bg-elec-yellow/5',
-      green: 'border-green-500/30 bg-green-500/5',
-      purple: 'border-purple-500/30 bg-purple-500/5',
-      cyan: 'border-cyan-500/30 bg-cyan-500/5',
-      orange: 'border-orange-500/30 bg-orange-500/5',
-    };
-
-    const headerColorClasses = {
-      amber: 'bg-amber-500/10 text-amber-400',
-      blue: 'bg-blue-500/10 text-blue-400',
-      red: 'bg-destructive/10 text-destructive',
-      yellow: 'bg-elec-yellow/10 text-elec-yellow',
-      green: 'bg-green-500/10 text-green-400',
-      purple: 'bg-purple-500/10 text-purple-400',
-      cyan: 'bg-cyan-500/10 text-cyan-400',
-      orange: 'bg-orange-500/10 text-orange-400',
-    };
-
     return (
-      <div className={cn('border rounded-lg overflow-hidden', colorClasses[color])}>
+      <div className="bg-white/[0.03] border border-white/[0.08] rounded-lg overflow-hidden">
         <button
           onClick={() => toggleSection(key)}
           className={cn(
-            'w-full flex items-center justify-between p-3 transition-colors touch-manipulation',
-            headerColorClasses[color],
+            'w-full flex items-center justify-between p-3 transition-colors touch-manipulation bg-white/[0.03] text-white',
             isMobile && 'min-h-[48px] active:opacity-80'
           )}
         >
-          <div className="flex items-center gap-2 text-sm font-medium">
+          <div className="flex items-center gap-2 text-sm font-medium text-white">
             {icon}
             {title}
             {!isEditing && items.length > 0 && (
@@ -293,9 +269,9 @@ export const MaintenanceStepCard = ({
             )}
           </div>
           {sectionsExpanded[key] ? (
-            <ChevronUp className="h-4 w-4" />
+            <ChevronUp className="h-4 w-4 text-white" />
           ) : (
-            <ChevronDown className="h-4 w-4" />
+            <ChevronDown className="h-4 w-4 text-white" />
           )}
         </button>
 
@@ -317,7 +293,7 @@ export const MaintenanceStepCard = ({
                           value={item}
                           onChange={(e) => updateItem(setEditItems, idx, e.target.value)}
                           placeholder={`Add ${title.toLowerCase()}`}
-                          className="flex-1 bg-background/50"
+                          className="flex-1 bg-white/[0.08]"
                         />
                         <Button
                           onClick={() => removeItem(setEditItems, idx)}
@@ -333,18 +309,18 @@ export const MaintenanceStepCard = ({
                       onClick={() => addItem(setEditItems)}
                       variant="ghost"
                       size="sm"
-                      className="w-full"
+                      className="w-full text-white"
                     >
                       <Plus className="h-4 w-4 mr-2" />
                       Add Item
                     </Button>
                   </>
                 ) : (
-                  <ul className="space-y-1.5 text-foreground text-left">
+                  <ul className="space-y-1.5 text-white text-left">
                     {items.map((item, idx) => (
                       <li key={idx} className="text-sm flex items-start gap-2 text-left">
-                        <span className="text-primary mt-0.5 flex-shrink-0">•</span>
-                        <span className="text-left">{item}</span>
+                        <span className="text-emerald-400 mt-0.5 flex-shrink-0">•</span>
+                        <span className="text-left text-white">{item}</span>
                       </li>
                     ))}
                   </ul>
@@ -358,16 +334,11 @@ export const MaintenanceStepCard = ({
   };
 
   return (
-    <Card className="border-border/50 hover:border-border transition-colors">
-      <CardHeader className="pb-3">
-        <div className="flex items-start gap-4">
-          {/* Step Number Badge */}
-          <div
-            className={cn(
-              'flex-shrink-0 rounded-full bg-elec-yellow flex items-center justify-center font-bold text-black',
-              isMobile ? 'h-16 w-16 text-2xl' : 'h-20 w-20 text-3xl'
-            )}
-          >
+    <div className="rounded-xl bg-white/[0.03] border border-white/[0.08] overflow-hidden">
+      <div className="p-4 pb-3">
+        <div className="flex items-start gap-3">
+          {/* Step Number — simple index */}
+          <div className="text-sm font-bold text-white w-6 text-center flex-shrink-0 pt-0.5">
             {step.stepNumber}
           </div>
 
@@ -382,24 +353,24 @@ export const MaintenanceStepCard = ({
                 />
               </div>
             ) : (
-              <h3 className="text-lg font-semibold text-foreground text-left">{step.title}</h3>
+              <h3 className="text-lg font-semibold text-white text-left">{step.title}</h3>
             )}
           </div>
         </div>
-      </CardHeader>
+      </div>
 
-      <CardContent className="space-y-4">
+      <div className="px-4 pb-4 space-y-4">
         {/* Main Content */}
         <div className="text-left">
           {isEditing ? (
             <Textarea
               value={editedContent}
               onChange={(e) => setEditedContent(e.target.value)}
-              className="min-h-[100px] bg-background/50"
+              className="min-h-[100px] bg-white/[0.08]"
               placeholder="Step description"
             />
           ) : (
-            <div className="text-sm text-foreground leading-relaxed">
+            <div className="text-sm text-white leading-relaxed">
               {formatStepContent(step.content)}
             </div>
           )}
@@ -408,17 +379,17 @@ export const MaintenanceStepCard = ({
         {/* Duration */}
         {(isEditing || step.estimatedDuration) && (
           <div className="flex items-center gap-2 text-sm text-left">
-            <Clock className="h-4 w-4 text-elec-yellow" />
-            <span className="font-medium text-foreground">Duration:</span>
+            <Clock className="h-4 w-4 text-emerald-400" />
+            <span className="font-medium text-white">Duration:</span>
             {isEditing ? (
               <Input
                 value={editedDuration}
                 onChange={(e) => setEditedDuration(e.target.value)}
                 placeholder="e.g., 10-15 minutes"
-                className="flex-1 bg-background/50"
+                className="flex-1 bg-white/[0.08]"
               />
             ) : (
-              <span className="text-foreground">{step.estimatedDuration}</span>
+              <span className="text-white">{step.estimatedDuration}</span>
             )}
           </div>
         )}
@@ -488,13 +459,18 @@ export const MaintenanceStepCard = ({
 
         {/* Action Buttons */}
         {(onUpdate || onDelete || onMoveUp || onMoveDown) && (
-          <div className={cn('pt-4 border-t border-border/50 flex gap-2', isMobile && 'flex-col')}>
+          <div
+            className={cn(
+              'pt-4 border-t border-white/[0.08] flex gap-2',
+              isMobile && 'flex-col'
+            )}
+          >
             {isEditing ? (
               <>
                 <Button
                   onClick={handleSave}
                   className={cn(
-                    'bg-green-600 hover:bg-green-700 text-foreground',
+                    'bg-emerald-500/15 text-emerald-400 ring-1 ring-emerald-500/30 hover:bg-emerald-500/25',
                     isMobile && 'w-full'
                   )}
                 >
@@ -504,7 +480,7 @@ export const MaintenanceStepCard = ({
                 <Button
                   onClick={handleCancel}
                   variant="outline"
-                  className={cn(isMobile && 'w-full')}
+                  className={cn('text-white', isMobile && 'w-full')}
                 >
                   <X className="h-4 w-4 mr-2" />
                   Cancel
@@ -518,7 +494,7 @@ export const MaintenanceStepCard = ({
                     variant="outline"
                     size={isMobile ? 'default' : 'sm'}
                     className={cn(
-                      'touch-manipulation active:scale-[0.98]',
+                      'touch-manipulation active:scale-[0.98] text-white',
                       isMobile && 'w-full min-h-[48px]'
                     )}
                   >
@@ -535,7 +511,7 @@ export const MaintenanceStepCard = ({
                         variant="outline"
                         size={isMobile ? 'default' : 'sm'}
                         className={cn(
-                          'touch-manipulation active:scale-[0.98]',
+                          'touch-manipulation active:scale-[0.98] text-white',
                           isMobile && 'flex-1 min-h-[48px]'
                         )}
                       >
@@ -548,7 +524,7 @@ export const MaintenanceStepCard = ({
                         variant="outline"
                         size={isMobile ? 'default' : 'sm'}
                         className={cn(
-                          'touch-manipulation active:scale-[0.98]',
+                          'touch-manipulation active:scale-[0.98] text-white',
                           isMobile && 'flex-1 min-h-[48px]'
                         )}
                       >
@@ -578,7 +554,7 @@ export const MaintenanceStepCard = ({
                           variant="outline"
                           size={isMobile ? 'default' : 'sm'}
                           className={cn(
-                            'touch-manipulation active:scale-[0.98]',
+                            'touch-manipulation active:scale-[0.98] text-white',
                             isMobile && 'w-full min-h-[48px]'
                           )}
                         >
@@ -605,7 +581,7 @@ export const MaintenanceStepCard = ({
             )}
           </div>
         )}
-      </CardContent>
+      </div>
 
       {/* Mobile Edit Sheet */}
       {onUpdate && (
@@ -617,6 +593,6 @@ export const MaintenanceStepCard = ({
           onDelete={onDelete}
         />
       )}
-    </Card>
+    </div>
   );
 };
