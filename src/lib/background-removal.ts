@@ -7,7 +7,7 @@ const getTransformers = async () => {
     transformersModule = await import('@huggingface/transformers');
     // Configure transformers.js to always download models
     transformersModule.env.allowLocalModels = false;
-    transformersModule.env.useBrowserCache = false;
+    transformersModule.env.useBrowserCache = true;
   }
   return transformersModule;
 };

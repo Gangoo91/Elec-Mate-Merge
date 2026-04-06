@@ -187,7 +187,7 @@ export default defineConfig(({ mode }) => ({
   build: {
     sourcemap: false,
     minify: 'esbuild',
-    chunkSizeWarningLimit: 3000,
+    chunkSizeWarningLimit: 500,
     rollupOptions: {
       output: {
         manualChunks: {
