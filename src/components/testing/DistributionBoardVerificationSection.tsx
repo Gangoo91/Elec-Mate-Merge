@@ -3,6 +3,7 @@ import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { CheckCircle2 } from 'lucide-react';
 
 interface DistributionBoardVerificationData {
@@ -13,6 +14,11 @@ interface DistributionBoardVerificationData {
   confirmedPhaseSequence: boolean;
   spdOperationalStatus: boolean;
   spdNA: boolean;
+  spdType?: string;
+  spdLocation?: string;
+  spdMake?: string;
+  spdModel?: string;
+  spdRatedCurrentKa?: string;
 }
 
 interface DistributionBoardVerificationSectionProps {
@@ -28,74 +34,45 @@ const DistributionBoardVerificationSection: React.FC<DistributionBoardVerificati
     <Card className="bg-gradient-to-r from-elec-gray/10 to-elec-gray/5 border-elec-yellow/30 shadow-lg">
       <CardHeader className="pb-4 bg-elec-gray/5 border-b border-elec-yellow/20">
         <CardTitle className="text-base flex items-center gap-2 text-elec-gray">
-          <CheckCircle2 className="h-5 w-5" />
+          <CheckCircle2 className="h-5 w-5 text-elec-yellow" />
           Distribution Board Verification
         </CardTitle>
       </CardHeader>
-
-      <CardContent className="space-y-6 pt-6">
-        {/* Input Fields - 3 column grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          {/* DB Reference */}
+      <CardContent className="pt-6 space-y-6">
+        {/* DB Reference, Zdb, Ipf */}
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
           <div className="space-y-2">
-            <Label htmlFor="db-reference-verify" className="text-sm text-muted-foreground">
-              DB Reference
-            </Label>
+            <Label className="text-sm font-medium text-foreground">DB Reference</Label>
             <Input
-              id="db-reference-verify"
               value={data.dbReference}
               onChange={(e) => onUpdate('dbReference', e.target.value)}
-              placeholder="e.g. DB1"
-              className="h-10"
+              placeholder="e.g. Main DB"
+              className="h-11 text-base touch-manipulation"
             />
           </div>
-
-          {/* Zdb */}
           <div className="space-y-2">
-            <Label htmlFor="zdb" className="text-sm text-muted-foreground">
-              Z<sub>db</sub> (Ω)
-            </Label>
-            <div className="relative">
-              <Input
-                id="zdb"
-                type="number"
-                step="0.01"
-                value={data.zdb}
-                onChange={(e) => onUpdate('zdb', e.target.value)}
-                placeholder="0.00"
-                className="h-10 pr-8"
-              />
-              <span className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground text-sm">
-                Ω
-              </span>
-            </div>
+            <Label className="text-sm font-medium text-foreground">Zdb (Ω)</Label>
+            <Input
+              value={data.zdb}
+              onChange={(e) => onUpdate('zdb', e.target.value)}
+              placeholder="e.g. 0.25"
+              className="h-11 text-base touch-manipulation"
+            />
           </div>
-
-          {/* Ipf */}
           <div className="space-y-2">
-            <Label htmlFor="ipf" className="text-sm text-muted-foreground">
-              I<sub>pf</sub> (kA)
-            </Label>
-            <div className="relative">
-              <Input
-                id="ipf"
-                type="number"
-                step="0.1"
-                value={data.ipf}
-                onChange={(e) => onUpdate('ipf', e.target.value)}
-                placeholder="0.0"
-                className="h-10 pr-10"
-              />
-              <span className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground text-sm">
-                kA
-              </span>
-            </div>
+            <Label className="text-sm font-medium text-foreground">Ipf (kA)</Label>
+            <Input
+              value={data.ipf}
+              onChange={(e) => onUpdate('ipf', e.target.value)}
+              placeholder="e.g. 1.2"
+              className="h-11 text-base touch-manipulation"
+            />
           </div>
         </div>
 
-        {/* Confirmation Checkboxes - Horizontal */}
+        {/* Polarity & Phase */}
         <div className="space-y-3">
-          <Label className="text-sm font-medium text-foreground">Confirmed</Label>
+          <Label className="text-sm font-medium text-foreground">Verification</Label>
           <div className="flex flex-wrap gap-4 p-3 rounded-lg bg-muted/30">
             <label className="flex items-center gap-2 cursor-pointer">
               <Checkbox
@@ -119,9 +96,9 @@ const DistributionBoardVerificationSection: React.FC<DistributionBoardVerificati
           </div>
         </div>
 
-        {/* SPD Section - Horizontal */}
+        {/* SPD Section */}
         <div className="space-y-3">
-          <Label className="text-sm font-medium text-foreground">SPD Status</Label>
+          <Label className="text-sm font-medium text-foreground">Surge Protection Device (SPD)</Label>
           <div className="flex flex-wrap gap-4 p-3 rounded-lg bg-muted/30">
             <label className="flex items-center gap-2 cursor-pointer">
               <Checkbox
@@ -146,6 +123,71 @@ const DistributionBoardVerificationSection: React.FC<DistributionBoardVerificati
               <span className="text-sm text-foreground">SPD N/A</span>
             </label>
           </div>
+
+          {/* SPD Details — shown when SPD is present (not N/A) */}
+          {!data.spdNA && (
+            <div className="space-y-3 p-3 rounded-lg bg-muted/20 border border-border/50">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div className="space-y-2">
+                  <Label className="text-xs text-muted-foreground">SPD Type</Label>
+                  <Select
+                    value={data.spdType || ''}
+                    onValueChange={(v) => onUpdate('spdType', v)}
+                  >
+                    <SelectTrigger className="h-11 text-base touch-manipulation">
+                      <SelectValue placeholder="Select type..." />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="Type 1">Type 1</SelectItem>
+                      <SelectItem value="Type 2">Type 2</SelectItem>
+                      <SelectItem value="Type 3">Type 3</SelectItem>
+                      <SelectItem value="Type 1+2">Type 1+2 (combined)</SelectItem>
+                      <SelectItem value="Type 2+3">Type 2+3 (combined)</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+                <div className="space-y-2">
+                  <Label className="text-xs text-muted-foreground">Location</Label>
+                  <Input
+                    value={data.spdLocation || ''}
+                    onChange={(e) => onUpdate('spdLocation', e.target.value)}
+                    placeholder="e.g. Main DB"
+                    className="h-11 text-base touch-manipulation"
+                  />
+                </div>
+              </div>
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                <div className="space-y-2">
+                  <Label className="text-xs text-muted-foreground">Make</Label>
+                  <Input
+                    value={data.spdMake || ''}
+                    onChange={(e) => onUpdate('spdMake', e.target.value)}
+                    placeholder="e.g. Hager"
+                    className="h-11 text-base touch-manipulation"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label className="text-xs text-muted-foreground">Model</Label>
+                  <Input
+                    value={data.spdModel || ''}
+                    onChange={(e) => onUpdate('spdModel', e.target.value)}
+                    placeholder="e.g. SPN115"
+                    className="h-11 text-base touch-manipulation"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label className="text-xs text-muted-foreground">Rated Current (kA)</Label>
+                  <Input
+                    value={data.spdRatedCurrentKa || ''}
+                    onChange={(e) => onUpdate('spdRatedCurrentKa', e.target.value)}
+                    placeholder="e.g. 12.5"
+                    className="h-11 text-base touch-manipulation"
+                    inputMode="decimal"
+                  />
+                </div>
+              </div>
+            </div>
+          )}
         </div>
       </CardContent>
     </Card>

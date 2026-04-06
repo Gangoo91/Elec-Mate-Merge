@@ -19,6 +19,7 @@ interface EnhancedTestResultDesktopTableProps {
   onAddCircuit: () => void;
   onBulkFieldUpdate?: (field: keyof TestResult, value: string) => void;
   onScanBoard?: () => void;
+  earthingArrangement?: string;
 }
 
 const EnhancedTestResultDesktopTable: React.FC<EnhancedTestResultDesktopTableProps> = ({
@@ -29,6 +30,7 @@ const EnhancedTestResultDesktopTable: React.FC<EnhancedTestResultDesktopTablePro
   onAddCircuit,
   onBulkFieldUpdate,
   onScanBoard,
+  earthingArrangement,
 }) => {
   const [showRegulationStatus, setShowRegulationStatus] = useState(false);
   const [collapsedGroups, setCollapsedGroups] = useState<Set<string>>(new Set());
@@ -311,6 +313,7 @@ const EnhancedTestResultDesktopTable: React.FC<EnhancedTestResultDesktopTablePro
                         showRegulationStatus={showRegulationStatus}
                         collapsedGroups={collapsedGroups}
                         rowNumber={index + 1}
+                        earthingArrangement={earthingArrangement}
                       />
                     ))}
                   </TableBody>

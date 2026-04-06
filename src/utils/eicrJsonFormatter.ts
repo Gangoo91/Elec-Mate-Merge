@@ -302,6 +302,11 @@ export const formatEICRJson = async (formData: any, reportId: string): Promise<E
       phase_sequence_confirmed: board.confirmedPhaseSequence ?? false,
       spd_operational: board.spdOperationalStatus ?? false,
       spd_na: board.spdNA ?? false,
+      spd_type: board.spdType || '',
+      spd_location: board.spdLocation || '',
+      spd_make: board.spdMake || '',
+      spd_model: board.spdModel || '',
+      spd_rated_current_ka: board.spdRatedCurrentKa || '',
     }));
   };
 
@@ -564,6 +569,11 @@ export const formatEICRJson = async (formData: any, reportId: string): Promise<E
             phase_sequence_confirmed: formData['confirmedPhaseSequence'] ?? false,
             spd_operational: formData['spdOperationalStatus'] ?? false,
             spd_na: formData['spdNA'] ?? false,
+            spd_type: formData['spdType'] || '',
+            spd_location: formData['spdLocation'] || '',
+            spd_make: formData['spdMake'] || '',
+            spd_model: formData['spdModel'] || '',
+            spd_rated_current_ka: formData['spdRatedCurrentKa'] || '',
             main_switch_bs_en: formData['mainSwitchBsEn'] || '',
             main_switch_type: formData['mainSwitchType'] || '',
             main_switch_rating: formData['mainSwitchRating'] || '',
@@ -606,6 +616,11 @@ export const formatEICRJson = async (formData: any, reportId: string): Promise<E
         // SPD details per board
         spd_operational: board.spdOperationalStatus ?? false,
         spd_na: board.spdNA ?? false,
+        spd_type: board.spdType || '',
+        spd_location: board.spdLocation || '',
+        spd_make: board.spdMake || '',
+        spd_model: board.spdModel || '',
+        spd_rated_current_ka: board.spdRatedCurrentKa || '',
         // Main switch for this board
         main_switch_bs_en: board.mainSwitchBsEn || '',
         main_switch_type: board.mainSwitchType || '',
@@ -999,6 +1014,11 @@ export const formatEICRJson = async (formData: any, reportId: string): Promise<E
           mainBoard?.confirmedPhaseSequence ?? getBool('confirmedPhaseSequence'),
         spd_operational_status: mainBoard?.spdOperationalStatus ?? getBool('spdOperationalStatus'),
         spd_na: mainBoard?.spdNA ?? getBool('spdNA'),
+        spd_type: mainBoard?.spdType || get('spdType') || '',
+        spd_location: mainBoard?.spdLocation || get('spdLocation') || '',
+        spd_make: mainBoard?.spdMake || get('spdMake') || '',
+        spd_model: mainBoard?.spdModel || get('spdModel') || '',
+        spd_rated_current_ka: mainBoard?.spdRatedCurrentKa || get('spdRatedCurrentKa') || '',
       };
     })(),
 
@@ -1362,5 +1382,19 @@ export const formatEICRJson = async (formData: any, reportId: string): Promise<E
       const boards = formData['distributionBoards'] || [];
       return Array.isArray(boards) && boards.length > 0 ? boards.length : 1;
     })(),
+
+    // Conditional rendering flags for PDF template (hide blank sections)
+    has_observations: (() => {
+      const obs = formData['observations'] || formData['defects'] || [];
+      return Array.isArray(obs) && obs.length > 0;
+    })(),
+    has_departures: !!(get('designerDepartures') || '').trim(),
+    has_permitted_exceptions: !!(get('permittedExceptions') || '').trim(),
+    has_earth_electrode: !!(get('earthElectrodeType') || get('earthElectrodeResistance') || '').trim(),
+    has_additional_boards: (() => {
+      const boards = formData['distributionBoards'] || [];
+      return Array.isArray(boards) && boards.length > 1;
+    })(),
+    has_limitations: !!(get('limitations') || '').trim(),
   };
 };

@@ -654,6 +654,19 @@ export async function formatEicJson(
       ? 'N/A'
       : formData.inspectedByCpScheme || '',
     inspected_by_cp_scheme_na: formData.inspectedByCpSchemeNA ?? false,
+
+    // Conditional rendering flags for PDF template (hide blank sections)
+    has_observations: (() => {
+      const obs = formData.observations || formData.defects || [];
+      return Array.isArray(obs) && obs.length > 0;
+    })(),
+    has_departures: !!(formData.designerDepartures || '').trim(),
+    has_permitted_exceptions: !!(formData.permittedExceptions || '').trim(),
+    has_earth_electrode: !!(formData.earthElectrodeType || formData.earthElectrodeResistance || '').trim(),
+    has_additional_boards: (() => {
+      const boards = formData.distributionBoards || [];
+      return Array.isArray(boards) && boards.length > 1;
+    })(),
   };
 
   // --- Global "render blank as N/A" post-processing ---

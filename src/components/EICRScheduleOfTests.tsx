@@ -2670,6 +2670,7 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
                     onBulkUpdate={handleBulkUpdate}
                     onAddCircuit={() => addCircuitToBoard(board.id)}
                     onBulkFieldUpdate={handleBulkFieldUpdate}
+                    earthingArrangement={formData.earthingArrangement}
                   />
                 </BoardSection>
               );

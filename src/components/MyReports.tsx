@@ -30,7 +30,7 @@ import { ExportToEICDialog } from '@/components/ExportToEICDialog';
 import { ExportToEICRDialog } from '@/components/ExportToEICRDialog';
 import { Skeleton } from '@/components/ui/skeleton';
 import { useCustomers } from '@/hooks/useCustomers';
-import { linkCustomerToReport } from '@/utils/customerHelper';
+import { linkCustomerToReport, unlinkCustomerFromReport } from '@/utils/customerHelper';
 import { PullToRefresh } from '@/components/ui/pull-to-refresh';
 // SegmentedControl removed - replaced with scrollable filter chips
 import { CertificateCard, CertificateData } from './certificates/CertificateCard';
@@ -413,6 +413,22 @@ const MyReports: React.FC<MyReportsProps> = ({ onBack, onNavigate, onEditReport 
       });
     } finally {
       setIsLinking(false);
+    }
+  };
+
+  const handleUnlinkCustomer = async (reportId: string) => {
+    try {
+      const result = await unlinkCustomerFromReport(reportId);
+      if (result.success) {
+        setAllReports((prev) =>
+          prev.map((r) => r.report_id === reportId ? { ...r, customer_id: null } : r)
+        );
+        toast({ title: 'Customer unlinked', description: 'Certificate is no longer linked to a customer.' });
+      } else {
+        toast({ title: 'Unlink failed', description: 'Failed to unlink customer.', variant: 'destructive' });
+      }
+    } catch {
+      toast({ title: 'Unlink failed', description: 'An unexpected error occurred.', variant: 'destructive' });
     }
   };
 
@@ -1044,6 +1060,12 @@ const MyReports: React.FC<MyReportsProps> = ({ onBack, onNavigate, onEditReport 
             handleLinkCustomer(selectedCertificate.report_id);
           }
         }}
+        onUnlinkCustomer={() => {
+          if (selectedCertificate) {
+            handleUnlinkCustomer(selectedCertificate.report_id);
+            setActionSheetOpen(false);
+          }
+        }}
         onDelete={() => {
           if (selectedCertificate) {
             handleDeleteReport(selectedCertificate.report_id);
@@ -1115,74 +1137,76 @@ const MyReports: React.FC<MyReportsProps> = ({ onBack, onNavigate, onEditReport 
         }}
       />
 
-      {/* Link Customer Dialog */}
-      <Dialog open={linkCustomerDialogOpen} onOpenChange={setLinkCustomerDialogOpen}>
-        <DialogContent className="sm:max-w-md">
-          <DialogHeader>
-            <DialogTitle className="flex items-center gap-2">
-              <Users className="h-5 w-5 text-elec-yellow" />
-              Link to Customer
-            </DialogTitle>
-            <DialogDescription>
+      {/* Link Customer Sheet (bottom sheet for mobile compatibility) */}
+      <Sheet open={linkCustomerDialogOpen} onOpenChange={setLinkCustomerDialogOpen}>
+        <SheetContent side="bottom" className="h-[85vh] p-0 rounded-t-2xl overflow-hidden">
+          <div className="flex flex-col h-full bg-background">
+            <SheetHeader className="px-6 py-4 border-b border-white/[0.06]">
+              <SheetTitle className="flex items-center gap-2">
+                <Users className="h-5 w-5 text-elec-yellow" />
+                Link to Customer
+              </SheetTitle>
               {reportToLink && (
-                <>
+                <p className="text-sm text-white">
                   Link certificate{' '}
-                  <span className="font-mono text-elec-yellow">{reportToLink.report_id}</span> to a
-                  customer
-                </>
+                  <span className="font-mono text-elec-yellow">{reportToLink.report_id}</span> to a customer
+                </p>
               )}
-            </DialogDescription>
-          </DialogHeader>
+            </SheetHeader>
 
-          <Command className="border rounded-lg">
-            <CommandInput
-              placeholder="Search customers..."
-              value={customerSearchQuery}
-              onValueChange={setCustomerSearchQuery}
-            />
-            <CommandList className="max-h-[300px]">
-              <CommandEmpty>
-                <div className="py-6 text-center">
-                  <Users className="h-8 w-8 mx-auto text-white mb-2" />
-                  <p className="text-sm text-white">
-                    {isLoadingCustomers ? 'Loading customers...' : 'No customers found'}
-                  </p>
-                </div>
-              </CommandEmpty>
-              <CommandGroup heading="Your Customers">
-                {filteredCustomers.map((customer) => (
-                  <CommandItem
-                    key={customer.id}
-                    value={customer.name}
-                    onSelect={() => confirmLinkCustomer(customer.id)}
-                    className="cursor-pointer"
-                    disabled={isLinking}
-                  >
-                    <div className="flex items-center gap-2 w-full">
-                      <div className="w-8 h-8 rounded-full bg-elec-yellow/20 flex items-center justify-center flex-shrink-0">
-                        <Users className="h-4 w-4 text-elec-yellow" />
-                      </div>
-                      <div className="flex-1 min-w-0">
-                        <p className="font-medium text-sm truncate">{customer.name}</p>
-                        {customer.address && (
-                          <p className="text-xs text-white truncate">{customer.address}</p>
-                        )}
-                      </div>
+            <div className="flex-1 overflow-hidden">
+              <Command className="h-full border-0">
+                <CommandInput
+                  placeholder="Search customers..."
+                  value={customerSearchQuery}
+                  onValueChange={setCustomerSearchQuery}
+                  className="h-12 text-base"
+                />
+                <CommandList className="flex-1 max-h-none overflow-y-auto">
+                  <CommandEmpty>
+                    <div className="py-6 text-center">
+                      <Users className="h-8 w-8 mx-auto text-white mb-2" />
+                      <p className="text-sm text-white">
+                        {isLoadingCustomers ? 'Loading customers...' : 'No customers found'}
+                      </p>
                     </div>
-                  </CommandItem>
-                ))}
-              </CommandGroup>
-            </CommandList>
-          </Command>
-
-          {isLinking && (
-            <div className="flex items-center justify-center gap-2 py-2">
-              <Loader2 className="h-4 w-4 animate-spin" />
-              <span className="text-sm text-white">Linking...</span>
+                  </CommandEmpty>
+                  <CommandGroup heading="Your Customers">
+                    {filteredCustomers.map((customer) => (
+                      <CommandItem
+                        key={customer.id}
+                        value={customer.name}
+                        onSelect={() => confirmLinkCustomer(customer.id)}
+                        className="cursor-pointer py-3 touch-manipulation"
+                        disabled={isLinking}
+                      >
+                        <div className="flex items-center gap-3 w-full">
+                          <div className="w-10 h-10 rounded-full bg-elec-yellow/20 flex items-center justify-center flex-shrink-0">
+                            <Users className="h-4 w-4 text-elec-yellow" />
+                          </div>
+                          <div className="flex-1 min-w-0">
+                            <p className="font-medium text-sm truncate">{customer.name}</p>
+                            {customer.address && (
+                              <p className="text-xs text-white truncate">{customer.address}</p>
+                            )}
+                          </div>
+                        </div>
+                      </CommandItem>
+                    ))}
+                  </CommandGroup>
+                </CommandList>
+              </Command>
             </div>
-          )}
-        </DialogContent>
-      </Dialog>
+
+            {isLinking && (
+              <div className="flex items-center justify-center gap-2 py-3 border-t border-white/[0.06]">
+                <Loader2 className="h-4 w-4 animate-spin" />
+                <span className="text-sm text-white">Linking...</span>
+              </div>
+            )}
+          </div>
+        </SheetContent>
+      </Sheet>
 
       {/* Export EICR to EIC Dialog */}
       {exportToEICReportId && (

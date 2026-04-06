@@ -425,6 +425,7 @@ const EarthingAndBondingSection: React.FC<EarthingAndBondingSectionProps> = ({
                         <SelectValue placeholder="Select size" />
                       </SelectTrigger>
                       <SelectContent className="max-w-[calc(100vw-2rem)]">
+                        <SelectItem value="none">None / Not required</SelectItem>
                         <SelectItem value="6mm">6mm²</SelectItem>
                         <SelectItem value="10mm">10mm²</SelectItem>
                         <SelectItem value="16mm">16mm²</SelectItem>

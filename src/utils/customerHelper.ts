@@ -82,6 +82,26 @@ export const linkCustomerToReport = async (
 };
 
 /**
+ * Unlink a customer from a report
+ */
+export const unlinkCustomerFromReport = async (
+  reportId: string
+): Promise<{ success: boolean; error?: any }> => {
+  const { error } = await supabase
+    .from('reports')
+    .update({ customer_id: null })
+    .eq('report_id', reportId)
+    .is('deleted_at', null);
+
+  if (error) {
+    console.error('Error unlinking customer from report:', error);
+    return { success: false, error };
+  }
+
+  return { success: true };
+};
+
+/**
  * Check if a report needs customer creation prompt
  * Returns true if:
  * - Has client_name

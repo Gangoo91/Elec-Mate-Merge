@@ -117,6 +117,25 @@ export default function EICCertificate() {
     });
   }, []);
 
+  // Load existing certificate data when opening a saved cert
+  useEffect(() => {
+    if (isNew || !id) return;
+    const loadSavedCert = async () => {
+      try {
+        const { data: { user } } = await supabase.auth.getUser();
+        if (!user) return;
+        const reportData = await reportCloud.getReportData(id, user.id);
+        if (reportData) {
+          setFormData((prev: any) => ({ ...getDefaultFormData(), ...prev, ...(reportData as any) }));
+          setSavedReportId(id);
+        }
+      } catch (err) {
+        console.error('[EIC] Failed to load saved certificate:', err);
+      }
+    };
+    loadSavedCert();
+  }, [id, isNew]);
+
   // Check if company branding is available
   const hasSavedCompanyBranding = !!(
     companyProfile?.company_name ||

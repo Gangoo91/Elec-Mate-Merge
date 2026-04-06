@@ -26,6 +26,7 @@ export interface CertificateActionSheetProps {
   onConvertToEICR?: () => void;
   onExportToEIC?: () => void;
   onLinkCustomer?: () => void;
+  onUnlinkCustomer?: () => void;
   onDelete: () => void;
 }
 
@@ -42,6 +43,7 @@ export const CertificateActionSheet: React.FC<CertificateActionSheetProps> = ({
   onConvertToEICR,
   onExportToEIC,
   onLinkCustomer,
+  onUnlinkCustomer,
   onDelete,
 }) => {
   if (!certificate) return null;
@@ -97,12 +99,28 @@ export const CertificateActionSheet: React.FC<CertificateActionSheetProps> = ({
     });
   }
 
-  // Add link customer option if not already linked
+  // Customer linking actions
   if (!certificate.hasCustomer && onLinkCustomer) {
     actions.push({
       label: 'Link to Customer',
       icon: <Users className="h-5 w-5" />,
       onClick: onLinkCustomer,
+    });
+  }
+
+  if (certificate.hasCustomer && onLinkCustomer) {
+    actions.push({
+      label: 'Change Customer',
+      icon: <Users className="h-5 w-5 text-blue-400" />,
+      onClick: onLinkCustomer,
+    });
+  }
+
+  if (certificate.hasCustomer && onUnlinkCustomer) {
+    actions.push({
+      label: 'Unlink Customer',
+      icon: <Users className="h-5 w-5 text-amber-400" />,
+      onClick: onUnlinkCustomer,
     });
   }
 

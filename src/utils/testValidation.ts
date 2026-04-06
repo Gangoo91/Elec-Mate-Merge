@@ -94,7 +94,7 @@ export interface TestValidationResults {
   functionalTesting: ValidationResult;
 }
 
-export const validateTestResult = (result: TestResult): TestValidationResults => {
+export const validateTestResult = (result: TestResult, earthingArrangement?: string): TestValidationResults => {
   const validation: TestValidationResults = {
     r1r2: validateR1R2(result.r1r2, result.type),
     ringContinuityLive: validateRingContinuity(result.ringContinuityLive),
@@ -103,7 +103,7 @@ export const validateTestResult = (result: TestResult): TestValidationResults =>
     insulationLiveEarth: validateInsulationResistance(result.insulationLiveEarth),
     insulationNeutralEarth: validateInsulationResistance(result.insulationNeutralEarth),
     polarity: validatePolarity(result.polarity),
-    zs: validateZs(result.zs, result.protectiveDevice),
+    zs: validateZs(result.zs, result.protectiveDevice, earthingArrangement),
     rcdTiming: validateRCDTiming(result.rcdRating, result.rcdOneX),
     pfcLiveNeutral: validatePFC(result.pfcLiveNeutral),
     pfcLiveEarth: validatePFC(result.pfcLiveEarth),
@@ -222,7 +222,7 @@ const validatePolarity = (value: string): ValidationResult => {
   return { isValid: false, level: 'warning', message: 'Polarity result unclear - use ✓ or ✗' };
 };
 
-const validateZs = (value: string, protectiveDevice: string): ValidationResult => {
+const validateZs = (value: string, protectiveDevice: string, earthingArrangement?: string): ValidationResult => {
   if (!value || value.trim() === '') {
     return { isValid: false, level: 'warning', message: 'Zs measurement required' };
   }
@@ -232,7 +232,25 @@ const validateZs = (value: string, protectiveDevice: string): ValidationResult =
     return { isValid: false, level: 'fail', message: 'Invalid Zs value format' };
   }
 
-  // Find the protective device in our options
+  // TT systems: Zs limit is based on RCD, not MCB (BS 7671 Table 41.5)
+  // 30mA RCD → max Zs = 1667Ω, 100mA → 500Ω, 300mA → 167Ω
+  if (earthingArrangement === 'TT' || earthingArrangement === 'tt') {
+    const ttMaxZs = 1667; // Default for 30mA RCD (most common)
+    if (numValue <= ttMaxZs) {
+      return {
+        isValid: true,
+        level: 'pass',
+        message: `Zs compliant for TT system with RCD protection (limit: ${ttMaxZs}Ω)`,
+      };
+    }
+    return {
+      isValid: false,
+      level: 'fail',
+      message: `Zs exceeds TT system limit of ${ttMaxZs}Ω — check earth electrode`,
+    };
+  }
+
+  // TN systems: Find the protective device in our options
   const deviceOption = protectiveDeviceOptions.find((option) => option.value === protectiveDevice);
 
   if (deviceOption) {

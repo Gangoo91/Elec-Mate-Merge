@@ -35,6 +35,7 @@ interface EnhancedTestResultDesktopTableRowProps {
   showRegulationStatus?: boolean;
   collapsedGroups: Set<string>;
   rowNumber: number;
+  earthingArrangement?: string;
 }
 
 const EnhancedTestResultDesktopTableRow: React.FC<EnhancedTestResultDesktopTableRowProps> = ({
@@ -45,11 +46,12 @@ const EnhancedTestResultDesktopTableRow: React.FC<EnhancedTestResultDesktopTable
   showRegulationStatus = false,
   collapsedGroups,
   rowNumber,
+  earthingArrangement,
 }) => {
   const [showRegulationWarning, setShowRegulationWarning] = useState(false);
 
   // Validate the test result - memoized to prevent expensive recalculation
-  const validation = useMemo(() => validateTestResult(result), [result]);
+  const validation = useMemo(() => validateTestResult(result, earthingArrangement), [result, earthingArrangement]);
 
   // Get overall compliance status
   const getOverallCompliance = (validation: any): 'error' | 'warning' | 'pass' => {

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import {
   useCustomerActivity,
   ActivityType,
@@ -42,6 +43,7 @@ const activityIcons: Record<ActivityType, React.ReactNode> = {
 };
 
 export const CustomerTimelineTab = ({ customerId }: CustomerTimelineTabProps) => {
+  const navigate = useNavigate();
   const [filterType, setFilterType] = useState<ActivityType | 'all'>('all');
 
   const { activities, isLoading, deleteActivity, isDeleting } = useCustomerActivity(customerId, {
@@ -145,7 +147,15 @@ export const CustomerTimelineTab = ({ customerId }: CustomerTimelineTabProps) =>
                   </div>
 
                   {/* Content */}
-                  <Card className="flex-1">
+                  <Card
+                    className={cn('flex-1', activity.activityType === 'certificate' && activity.metadata?.reportId && 'cursor-pointer hover:bg-white/5 active:scale-[0.99] transition-all touch-manipulation')}
+                    onClick={() => {
+                      if (activity.activityType === 'certificate' && activity.metadata?.reportId) {
+                        const reportType = activity.metadata.reportType || 'eicr';
+                        navigate(`/electrician/inspection-testing/${reportType}/${activity.metadata.reportId}`);
+                      }
+                    }}
+                  >
                     <CardContent className="p-3 sm:p-4">
                       <div className="flex items-start justify-between gap-2">
                         <div className="flex-1 min-w-0">
@@ -183,6 +193,9 @@ export const CustomerTimelineTab = ({ customerId }: CustomerTimelineTabProps) =>
                                 >
                                   {activity.metadata.status}
                                 </Badge>
+                              )}
+                              {activity.metadata.reportId && (
+                                <span className="text-elec-yellow text-[10px] font-medium ml-auto">Open →</span>
                               )}
                             </div>
                           )}

@@ -8,6 +8,6 @@ export const isRingCircuit = (result: TestResult): boolean => {
   return (
     description.includes('ring') ||
     type.includes('ring') ||
-    (result.protectiveDeviceRating === '32' && result.liveSize === '2.5mm')
+    (result.protectiveDeviceRating === '32' && ['2.5mm', '4mm', '6mm'].includes(result.liveSize || ''))
   );
 };

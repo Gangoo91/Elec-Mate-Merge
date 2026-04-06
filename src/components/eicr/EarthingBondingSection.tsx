@@ -187,7 +187,7 @@ const EarthingBondingSectionInner = ({ formData, onUpdate }: EarthingBondingSect
   };
 
   // Conductor size options
-  const conductorSizes = ['6', '10', '16', '25', '35', 'custom'];
+  const conductorSizes = ['none', '6', '10', '16', '25', '35', 'custom'];
   const supplementarySizes = ['2.5', '4', '6', '10', 'not-required', 'custom'];
 
   // Bonding services
@@ -353,7 +353,7 @@ const EarthingBondingSectionInner = ({ formData, onUpdate }: EarthingBondingSect
                   </SelectItem>
                   {conductorSizes.map((size) => (
                     <SelectItem key={size} value={size}>
-                      {size === 'custom' ? 'Other/Custom' : `${size}mm²`}
+                      {size === 'custom' ? 'Other/Custom' : size === 'none' ? 'None / Not required' : `${size}mm²`}
                     </SelectItem>
                   ))}
                 </SelectContent>
@@ -455,7 +455,7 @@ const EarthingBondingSectionInner = ({ formData, onUpdate }: EarthingBondingSect
                   </SelectItem>
                   {conductorSizes.map((size) => (
                     <SelectItem key={size} value={size}>
-                      {size === 'custom' ? 'Other/Custom' : `${size}mm²`}
+                      {size === 'custom' ? 'Other/Custom' : size === 'none' ? 'None / Not required' : `${size}mm²`}
                     </SelectItem>
                   ))}
                 </SelectContent>
