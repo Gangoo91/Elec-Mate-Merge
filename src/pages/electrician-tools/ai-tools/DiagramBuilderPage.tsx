@@ -26,8 +26,7 @@ import { Button } from '@/components/ui/button';
 import { useSearchParams, useNavigate } from 'react-router-dom';
 import { DiagramCanvas } from '@/components/electrician-tools/diagram-builder/DiagramCanvas';
 import { SymbolLibrary } from '@/components/electrician-tools/diagram-builder/SymbolLibrary';
-import { ExportControls } from '@/components/electrician-tools/diagram-builder/ExportControls';
-import { ExportDialog } from '@/components/electrician-tools/diagram-builder/ExportDialog';
+// Old jsPDF export removed — using PDFMonkey via ExportReviewSheet
 import { PropertiesPanel } from '@/components/electrician-tools/diagram-builder/PropertiesPanel';
 import { AIRoomBuilderDialog } from '@/components/electrician-tools/diagram-builder/AIRoomBuilderDialog';
 import { RoomShapePicker } from '@/components/electrician-tools/diagram-builder/RoomShapePicker';
@@ -87,7 +86,7 @@ const DiagramBuilderPage = () => {
     position: { x: number; y: number };
   } | null>(null);
   const [wallEditLength, setWallEditLength] = useState<number>(0);
-  const [exportDialogOpen, setExportDialogOpen] = useState(false);
+  // exportDialogOpen removed — using ExportReviewSheet only
   const [placingSymbolName, setPlacingSymbolName] = useState<string | null>(null);
   const [saveSheetOpen, setSaveSheetOpen] = useState(false);
   const [activeRoomId, setActiveRoomId] = useState<string | null>(null);
@@ -464,16 +463,24 @@ const DiagramBuilderPage = () => {
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end" className="bg-elec-card border-white/10 min-w-[180px]">
-              <ExportControls canvasObjects={canvasObjects} canvasRef={canvasRef} asMenuItems onOpenPdfDialog={() => setExportDialogOpen(true)} />
-              {rooms.length > 0 && (
-                <DropdownMenuItem
-                  onClick={() => setExportReviewOpen(true)}
-                  className="text-white hover:bg-white/10 touch-manipulation"
-                >
-                  <FileText className="h-4 w-4 mr-2" />
-                  Export Floor Plans
-                </DropdownMenuItem>
-              )}
+              <DropdownMenuItem
+                onClick={() => {
+                  if (rooms.length === 0 && canvasObjects.length === 0) {
+                    toast({ title: 'Nothing to export', description: 'Save at least one room first' });
+                    return;
+                  }
+                  // If current canvas has unsaved work, prompt to save first
+                  if (canvasObjects.length > 0 && !rooms.find(r => r.id === activeRoomId)) {
+                    toast({ title: 'Save this room first', description: 'Tap Done to save before exporting' });
+                    return;
+                  }
+                  setExportReviewOpen(true);
+                }}
+                className="text-white hover:bg-white/10 touch-manipulation"
+              >
+                <FileText className="h-4 w-4 mr-2" />
+                Export PDF
+              </DropdownMenuItem>
               <DropdownMenuSeparator className="bg-white/10" />
               <DropdownMenuItem
                 onClick={handleRotateAll}
@@ -670,14 +677,6 @@ const DiagramBuilderPage = () => {
         open={aiDialogOpen}
         onOpenChange={setAiDialogOpen}
         onRoomGenerated={handleRoomGenerated}
-      />
-
-      {/* PDF Export Dialog */}
-      <ExportDialog
-        open={exportDialogOpen}
-        onOpenChange={setExportDialogOpen}
-        canvasRef={canvasRef}
-        canvasObjects={canvasObjects}
       />
 
       {/* Save Room Sheet */}
