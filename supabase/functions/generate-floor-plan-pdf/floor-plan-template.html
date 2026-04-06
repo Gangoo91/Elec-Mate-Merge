@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Electrical Floor Plan</title>
+    <style>
+        :root { --accent: #EAB308; --accent-bg: #fefce8; --dark: #0f172a; --mid: #334155; --light: #64748b; --border: #e2e8f0; }
+        @page { size: A4 landscape; margin: 0; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 10px; line-height: 1.5; color: var(--dark); background: #fff; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+
+        .page { width: 297mm; min-height: 210mm; position: relative; overflow: hidden; page-break-after: always; }
+        .page:last-child { page-break-after: auto; }
+
+        /* ── Cover Page ── */
+        .cover { padding: 20mm 25mm; display: flex; flex-direction: column; }
+        .cover-header { border-bottom: 3px solid var(--accent); padding-bottom: 12px; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center; }
+        .cover-title { font-size: 28px; font-weight: 800; color: var(--dark); }
+        .cover-subtitle { font-size: 12px; color: var(--light); margin-top: 4px; }
+        .cover-logo img { max-height: 45px; max-width: 140px; object-fit: contain; }
+
+        .details-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px 24px; margin-bottom: 24px; }
+        .detail-row { display: flex; align-items: baseline; gap: 8px; padding: 4px 0; border-bottom: 1px solid #f1f5f9; }
+        .detail-label { font-size: 9px; font-weight: 700; color: var(--light); text-transform: uppercase; letter-spacing: 0.5px; min-width: 90px; }
+        .detail-value { font-size: 11px; font-weight: 500; color: var(--dark); }
+
+        .rooms-table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
+        .rooms-table th { background: var(--dark); color: #fff; font-size: 9px; text-transform: uppercase; letter-spacing: 0.5px; padding: 6px 12px; text-align: left; }
+        .rooms-table td { padding: 6px 12px; border-bottom: 1px solid var(--border); font-size: 10px; }
+        .rooms-table tr:nth-child(even) td { background: #f8fafc; }
+
+        .notes-section { background: #f8fafc; border: 1px solid var(--border); border-left: 3px solid var(--accent); border-radius: 4px; padding: 10px 14px; margin-bottom: 16px; }
+        .notes-title { font-size: 10px; font-weight: 700; color: var(--accent); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px; }
+        .notes-text { font-size: 10px; color: var(--mid); white-space: pre-line; }
+
+        .cover-footer { margin-top: auto; text-align: center; font-size: 8px; color: var(--light); border-top: 1px solid var(--border); padding-top: 8px; }
+
+        /* ── Room Pages ── */
+        .room-page { padding: 12mm 15mm; }
+        .room-header { display: flex; justify-content: space-between; align-items: baseline; border-bottom: 2px solid var(--accent); padding-bottom: 6px; margin-bottom: 10px; }
+        .room-name { font-size: 22px; font-weight: 800; color: var(--dark); }
+        .room-address { font-size: 10px; color: var(--light); }
+
+        .floor-plan-container { text-align: center; margin-bottom: 10px; border: 1px solid var(--border); border-radius: 4px; padding: 6px; background: #fff; }
+        .floor-plan-container img { max-width: 100%; max-height: 130mm; object-fit: contain; }
+
+        .room-legend { margin-bottom: 8px; }
+        .room-legend-title { font-size: 9px; font-weight: 700; color: var(--accent); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px; }
+        .legend-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 2px 8px; }
+        .legend-item { display: flex; align-items: center; gap: 4px; font-size: 9px; }
+        .legend-count { font-weight: 800; color: var(--accent); min-width: 18px; }
+        .legend-name { color: var(--mid); }
+
+        .title-block { position: absolute; bottom: 12mm; right: 15mm; border: 1px solid var(--dark); font-size: 8px; }
+        .title-block td { padding: 2px 8px; border: 1px solid var(--border); }
+        .title-block td:first-child { font-weight: 700; color: var(--light); background: #f8fafc; min-width: 60px; }
+
+        /* ── Materials Schedule Page ── */
+        .materials-page { padding: 15mm 20mm; }
+        .materials-title { font-size: 22px; font-weight: 800; color: var(--dark); border-bottom: 3px solid var(--accent); padding-bottom: 8px; margin-bottom: 16px; }
+
+        .category-section { margin-bottom: 12px; }
+        .category-name { font-size: 11px; font-weight: 700; color: var(--accent); text-transform: uppercase; letter-spacing: 0.5px; padding: 4px 0; border-bottom: 1px solid var(--accent); margin-bottom: 4px; }
+        .materials-table { width: 100%; border-collapse: collapse; }
+        .materials-table td { padding: 3px 12px; font-size: 10px; border-bottom: 1px solid #f1f5f9; }
+        .materials-table td:last-child { text-align: right; font-weight: 700; width: 50px; }
+
+        .total-bar { background: var(--dark); color: #fff; font-size: 14px; font-weight: 800; padding: 8px 16px; border-radius: 4px; margin-top: 16px; display: flex; justify-content: space-between; }
+
+        .compliance { margin-top: 20px; text-align: center; font-size: 9px; color: var(--light); }
+        .compliance-ref { font-weight: 700; color: var(--dark); }
+
+        /* ── Legend / Appendix Page ── */
+        .appendix-page { padding: 15mm 20mm; }
+        .appendix-title { font-size: 22px; font-weight: 800; color: var(--dark); border-bottom: 3px solid var(--accent); padding-bottom: 8px; margin-bottom: 16px; }
+
+        .symbol-legend-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-bottom: 24px; }
+        .symbol-card { display: flex; align-items: center; gap: 8px; padding: 4px 8px; border: 1px solid var(--border); border-radius: 4px; }
+        .symbol-preview { width: 24px; height: 24px; flex-shrink: 0; }
+        .symbol-preview img { width: 100%; height: 100%; }
+        .symbol-label { font-size: 9px; color: var(--mid); }
+
+        .signature-section { margin-top: 24px; display: grid; grid-template-columns: 1fr 1fr; gap: 32px; }
+        .signature-box { border-top: 1px solid var(--dark); padding-top: 6px; }
+        .signature-label { font-size: 9px; font-weight: 700; color: var(--light); text-transform: uppercase; }
+        .signature-line { height: 30px; }
+        .signature-date { font-size: 8px; color: var(--light); margin-top: 4px; }
+    </style>
+</head>
+<body>
+
+<!-- ════════════════════════ PAGE 1: COVER ════════════════════════ -->
+<div class="page cover">
+    <div class="cover-header">
+        <div>
+            <div class="cover-title">Electrical Installation Floor Plan</div>
+            <div class="cover-subtitle">BS 7671:2018+A3:2024 Compliant</div>
+        </div>
+        <div class="cover-logo">
+            {{#if company_logo}}<img src="{{company_logo}}" alt="Logo" />{{/if}}
+        </div>
+    </div>
+
+    <div class="details-grid">
+        <div class="detail-row"><span class="detail-label">Property</span><span class="detail-value">{{property_address}}</span></div>
+        <div class="detail-row"><span class="detail-label">Client</span><span class="detail-value">{{client_name}}</span></div>
+        <div class="detail-row"><span class="detail-label">Electrician</span><span class="detail-value">{{electrician_name}}</span></div>
+        <div class="detail-row"><span class="detail-label">Date</span><span class="detail-value">{{date}}</span></div>
+        <div class="detail-row"><span class="detail-label">Drawing No.</span><span class="detail-value">{{drawing_number}}</span></div>
+        <div class="detail-row"><span class="detail-label">Total Items</span><span class="detail-value">{{total_items}}</span></div>
+    </div>
+
+    <table class="rooms-table">
+        <thead><tr><th>Room</th><th>Items</th></tr></thead>
+        <tbody>
+            {{#each rooms}}
+            <tr><td>{{this.name}}</td><td>{{this.item_count}}</td></tr>
+            {{/each}}
+        </tbody>
+    </table>
+
+    {{#if notes}}
+    <div class="notes-section">
+        <div class="notes-title">Notes</div>
+        <div class="notes-text">{{notes}}</div>
+    </div>
+    {{/if}}
+
+    <div class="cover-footer">
+        BS 7671:2018+A3:2024 &middot; Generated by Elec-Mate Floor Plan Tool &middot; {{date}}
+    </div>
+</div>
+
+<!-- ════════════════════════ PAGES 2-N: ROOMS ════════════════════════ -->
+{{#each rooms}}
+<div class="page room-page">
+    <div class="room-header">
+        <span class="room-name">{{this.name}}</span>
+        <span class="room-address">{{../property_address}}</span>
+    </div>
+
+    <div class="floor-plan-container">
+        <img src="{{this.floor_plan_image}}" alt="{{this.name}} floor plan" />
+    </div>
+
+    {{#if this.items.length}}
+    <div class="room-legend">
+        <div class="room-legend-title">Symbols in this room</div>
+        <div class="legend-grid">
+            {{#each this.items}}
+            <div class="legend-item">
+                <span class="legend-count">{{this.count}}&times;</span>
+                <span class="legend-name">{{this.name}}</span>
+            </div>
+            {{/each}}
+        </div>
+    </div>
+    {{/if}}
+
+    <table class="title-block">
+        <tr><td>Project</td><td>{{../property_address}}</td></tr>
+        <tr><td>Room</td><td>{{this.name}}</td></tr>
+        <tr><td>Scale</td><td>Not to scale</td></tr>
+        <tr><td>Date</td><td>{{../date}}</td></tr>
+        <tr><td>Drawn by</td><td>{{../electrician_name}}</td></tr>
+        <tr><td>Dwg No.</td><td>{{../drawing_number}}</td></tr>
+    </table>
+</div>
+{{/each}}
+
+<!-- ════════════════════════ MATERIALS SCHEDULE ════════════════════════ -->
+<div class="page materials-page">
+    <div class="materials-title">Materials Schedule</div>
+
+    {{#each materials_by_category}}
+    <div class="category-section">
+        <div class="category-name">{{this.name}}</div>
+        <table class="materials-table">
+            {{#each this.items}}
+            <tr><td>{{this.name}}</td><td>{{this.count}}</td></tr>
+            {{/each}}
+        </table>
+    </div>
+    {{/each}}
+
+    <div class="total-bar">
+        <span>Total Items</span>
+        <span>{{total_items}}</span>
+    </div>
+
+    <div class="compliance">
+        <p><span class="compliance-ref">BS 7671:2018+A3:2024</span></p>
+        <p>Generated by Elec-Mate Floor Plan Tool</p>
+        <p>{{date}}</p>
+    </div>
+</div>
+
+<!-- ════════════════════════ APPENDIX: LEGEND + SIGNATURES ════════════════════════ -->
+<div class="page appendix-page">
+    <div class="appendix-title">Symbol Legend &amp; Declaration</div>
+
+    <div class="symbol-legend-grid">
+        {{#each all_symbols}}
+        <div class="symbol-card">
+            <div class="symbol-preview">
+                {{#if this.svg_data_uri}}<img src="{{this.svg_data_uri}}" alt="{{this.name}}" />{{/if}}
+            </div>
+            <span class="symbol-label">{{this.name}}</span>
+        </div>
+        {{/each}}
+    </div>
+
+    <div class="signature-section">
+        <div>
+            <div class="signature-line"></div>
+            <div class="signature-box">
+                <div class="signature-label">Electrician Signature</div>
+                <div class="signature-date">Name: {{electrician_name}}</div>
+                <div class="signature-date">Date: {{date}}</div>
+            </div>
+        </div>
+        <div>
+            <div class="signature-line"></div>
+            <div class="signature-box">
+                <div class="signature-label">Client Signature</div>
+                <div class="signature-date">Name: {{client_name}}</div>
+                <div class="signature-date">Date: _______________</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="compliance" style="margin-top: 32px;">
+        <p>This electrical floor plan drawing has been prepared in accordance with BS 7671:2018+A3:2024.</p>
+        <p>Symbols conform to BS EN 60617 / CIBSE conventions for UK electrical installation drawings.</p>
+        <p style="margin-top: 8px;"><strong>Elec-Mate</strong> &middot; Electrical Installation Floor Plan Tool</p>
+    </div>
+</div>
+
+</body>
+</html>
