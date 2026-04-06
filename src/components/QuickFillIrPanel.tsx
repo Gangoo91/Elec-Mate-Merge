@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { ChevronDown, ChevronUp, Zap } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
 import {
   Select,
   SelectContent,
@@ -27,6 +28,7 @@ const insulationResistanceOptions = [
   { value: '>999', label: '>999 MΩ' },
   { value: 'N/A', label: 'N/A' },
   { value: 'LIM', label: 'LIM' },
+  { value: 'other', label: 'Other (type value)' },
 ];
 
 const QuickFillIrPanel: React.FC<QuickFillIrPanelProps> = ({
@@ -38,6 +40,11 @@ const QuickFillIrPanel: React.FC<QuickFillIrPanelProps> = ({
   const [selectedVoltage, setSelectedVoltage] = useState<string>('');
   const [selectedLiveNeutral, setSelectedLiveNeutral] = useState<string>('');
   const [selectedLiveEarth, setSelectedLiveEarth] = useState<string>('');
+  const [customLiveNeutral, setCustomLiveNeutral] = useState<string>('');
+  const [customLiveEarth, setCustomLiveEarth] = useState<string>('');
+
+  const getLiveNeutralValue = () => selectedLiveNeutral === 'other' ? customLiveNeutral : selectedLiveNeutral;
+  const getLiveEarthValue = () => selectedLiveEarth === 'other' ? customLiveEarth : selectedLiveEarth;
 
   return (
     <div className="border border-border rounded-lg bg-card shadow-sm overflow-hidden">
@@ -105,7 +112,7 @@ const QuickFillIrPanel: React.FC<QuickFillIrPanelProps> = ({
                 <SelectTrigger className="flex-1 h-11 text-base touch-manipulation">
                   <SelectValue placeholder="Select..." />
                 </SelectTrigger>
-                <SelectContent className="min-w-[160px]">
+                <SelectContent className="min-w-[180px]">
                   {insulationResistanceOptions.map((option) => (
                     <SelectItem
                       key={option.value}
@@ -118,15 +125,26 @@ const QuickFillIrPanel: React.FC<QuickFillIrPanelProps> = ({
                 </SelectContent>
               </Select>
               <Button
-                onClick={() =>
-                  selectedLiveNeutral && onFillAllInsulationLiveNeutral(selectedLiveNeutral)
-                }
-                disabled={!selectedLiveNeutral}
+                onClick={() => {
+                  const val = getLiveNeutralValue();
+                  if (val) onFillAllInsulationLiveNeutral(val);
+                }}
+                disabled={!getLiveNeutralValue()}
                 className="h-11 px-4 whitespace-nowrap touch-manipulation"
               >
                 Apply to All
               </Button>
             </div>
+            {selectedLiveNeutral === 'other' && (
+              <Input
+                value={customLiveNeutral}
+                onChange={(e) => setCustomLiveNeutral(e.target.value)}
+                placeholder="e.g. 1.2, 0.5, 50"
+                className="h-11 text-base touch-manipulation"
+                type="text"
+                inputMode="decimal"
+              />
+            )}
           </div>
 
           {/* Live-Earth */}
@@ -137,7 +155,7 @@ const QuickFillIrPanel: React.FC<QuickFillIrPanelProps> = ({
                 <SelectTrigger className="flex-1 h-11 text-base touch-manipulation">
                   <SelectValue placeholder="Select..." />
                 </SelectTrigger>
-                <SelectContent className="min-w-[160px]">
+                <SelectContent className="min-w-[180px]">
                   {insulationResistanceOptions.map((option) => (
                     <SelectItem
                       key={option.value}
@@ -150,13 +168,26 @@ const QuickFillIrPanel: React.FC<QuickFillIrPanelProps> = ({
                 </SelectContent>
               </Select>
               <Button
-                onClick={() => selectedLiveEarth && onFillAllInsulationLiveEarth(selectedLiveEarth)}
-                disabled={!selectedLiveEarth}
+                onClick={() => {
+                  const val = getLiveEarthValue();
+                  if (val) onFillAllInsulationLiveEarth(val);
+                }}
+                disabled={!getLiveEarthValue()}
                 className="h-11 px-4 whitespace-nowrap touch-manipulation"
               >
                 Apply to All
               </Button>
             </div>
+            {selectedLiveEarth === 'other' && (
+              <Input
+                value={customLiveEarth}
+                onChange={(e) => setCustomLiveEarth(e.target.value)}
+                placeholder="e.g. 1.2, 0.5, 50"
+                className="h-11 text-base touch-manipulation"
+                type="text"
+                inputMode="decimal"
+              />
+            )}
           </div>
         </div>
       )}

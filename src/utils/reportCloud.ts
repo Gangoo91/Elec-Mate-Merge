@@ -21,7 +21,8 @@ export type ReportType =
   | 'bess'
   | 'lightning-protection'
   | 'g98-commissioning'
-  | 'g99-commissioning';
+  | 'g99-commissioning'
+  | 'smoke-co-alarm';
 
 export interface CloudReport {
   id: string;
@@ -163,6 +164,9 @@ export const reportCloud = {
           return 'completed';
         // G98/G99 commissioning
         if ((reportType === 'g98-commissioning' || reportType === 'g99-commissioning') && data.installerSignature)
+          return 'completed';
+        // Smoke & CO Alarm
+        if (reportType === 'smoke-co-alarm' && data.installerSignature)
           return 'completed';
         // Labels & Warnings types
         if (reportType === 'danger-notice' && data.contractorSignature) return 'completed';

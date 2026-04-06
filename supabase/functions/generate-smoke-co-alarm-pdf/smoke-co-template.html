@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Smoke &amp; CO Alarm Installation Certificate</title>
+    <style>
+        :root { --accent: #dc2626; }
+        @page { size: A4; margin: 3mm 3mm 4mm 3mm; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 8.5px; line-height: 1.4; color: #1a1a1a; background: #fff; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+
+        .doc-header { background: linear-gradient(180deg, #0a1628 0%, #152238 100%); color: #fff; padding: 10px 12px; margin-bottom: 2px; border-radius: 2px; position: relative; overflow: hidden; }
+        .doc-header::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: var(--accent); }
+        .doc-header-content { display: flex; justify-content: space-between; align-items: center; }
+        .doc-title { font-size: 15px; font-weight: 700; letter-spacing: 0.5px; margin-bottom: 2px; }
+        .doc-subtitle { font-size: 7px; font-weight: 400; opacity: 0.85; }
+        .cert-number { font-size: 11px; font-weight: 700; color: var(--accent); }
+        .company-brand { display: flex; align-items: center; gap: 10px; margin-right: 12px; }
+        .company-brand-name { font-size: 11px; font-weight: 700; color: #fff; }
+        .company-logo img { max-height: 45px; max-width: 120px; object-fit: contain; }
+
+        .section { margin-bottom: 8px; }
+        .section-title { background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); color: #fff; font-size: 8.5px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.8px; padding: 5px 8px; margin-bottom: 4px; border-left: 3px solid var(--accent); }
+        .section-title.green { border-left-color: #22c55e; }
+        .section-title.blue { border-left-color: #3b82f6; }
+        .section-title.purple { border-left-color: #8b5cf6; }
+        .section-title.amber { border-left-color: #f59e0b; }
+
+        .form-grid { display: table; width: 100%; border-collapse: collapse; margin-bottom: 4px; }
+        .form-row { display: table-row; }
+        .form-label { display: table-cell; font-size: 7px; font-weight: 600; color: #475569; padding: 4px 6px; width: 110px; vertical-align: middle; background: #f8fafc; border: 1px solid #e2e8f0; }
+        .form-value { display: table-cell; font-size: 8px; color: #1e293b; padding: 4px 6px; vertical-align: middle; border: 1px solid #e2e8f0; background: #fff; }
+
+        .inline-form { display: flex; flex-wrap: wrap; gap: 5px; padding: 6px 8px; background: #fafbfc; border: 1px solid #e2e8f0; border-radius: 2px; margin-bottom: 4px; }
+        .checkbox-item { display: flex; align-items: center; gap: 4px; margin-right: 6px; }
+        .checkbox-box { width: 11px; height: 11px; border: 1.5px solid #64748b; display: inline-flex; align-items: center; justify-content: center; font-size: 8px; font-weight: bold; flex-shrink: 0; }
+        .checkbox-box.checked { background: #22c55e; color: #fff; border-color: #22c55e; }
+        .checkbox-box.checked-amber { background: #f59e0b; color: #fff; border-color: #f59e0b; }
+
+        .badge { display: inline-block; padding: 1px 5px; border-radius: 2px; font-size: 6.5px; font-weight: 700; text-transform: uppercase; }
+        .badge.pass { background: #dcfce7; color: #166534; border: 1px solid #86efac; }
+        .badge.fail { background: #fef2f2; color: #991b1b; border: 1px solid #fca5a5; }
+
+        .alarm-table { width: 100%; border-collapse: collapse; margin: 4px 0; font-size: 7.5px; }
+        .alarm-table th { background: #f1f5f9; font-weight: 600; color: #475569; padding: 4px 4px; border: 1px solid #e2e8f0; text-align: left; font-size: 6.5px; }
+        .alarm-table td { padding: 4px 4px; border: 1px solid #e2e8f0; color: #1e293b; }
+
+        .signature-grid { display: flex; gap: 6px; margin-top: 4px; }
+        .signature-box { flex: 1; border: 1px solid #cbd5e1; border-radius: 2px; overflow: hidden; }
+        .signature-box-header { background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); color: #fff; font-size: 7.5px; font-weight: 600; padding: 3px 8px; border-bottom: 1px solid var(--accent); }
+        .signature-box-body { padding: 4px 6px; background: #fafbfc; }
+        .sig-field { display: flex; align-items: center; margin-bottom: 3px; gap: 4px; }
+        .sig-field:last-child { margin-bottom: 0; }
+        .sig-field-label { font-size: 7px; font-weight: 600; color: #64748b; min-width: 55px; flex-shrink: 0; }
+        .sig-field-value { flex: 1; font-size: 8px; color: #1e293b; padding: 3px 5px; background: #fff; border: 1px solid #e2e8f0; border-radius: 1px; min-height: 18px; }
+        .sig-field-value img { max-height: 30px; }
+
+        .footer { margin-top: 8px; padding-top: 6px; border-top: 2px solid var(--accent); display: flex; justify-content: space-between; font-size: 7px; color: #64748b; }
+        .avoid-break { page-break-inside: avoid; }
+
+        .compliance-box { background: #f0fdf4; border: 1px solid #86efac; border-left: 3px solid #22c55e; border-radius: 2px; padding: 6px 10px; margin: 6px 0; }
+        .compliance-text { font-size: 8px; color: #166534; font-weight: 600; line-height: 1.6; }
+    </style>
+</head>
+<body>
+
+<div class="doc-header">
+    <div class="doc-header-content">
+        <div class="company-brand">
+            {% unless companyLogo == blank %}<div class="company-logo"><img src="{{ companyLogo }}" alt="" /></div>{% endunless %}
+            <div><div class="company-brand-name">{{ companyName }}</div></div>
+        </div>
+        <div style="flex: 1;">
+            <div class="doc-title">SMOKE &amp; CO ALARM INSTALLATION CERTIFICATE</div>
+            <div class="doc-subtitle">BS 5839-6:2019+A1:2020 | Smoke and Carbon Monoxide Alarm (England) Regulations 2015 (as amended 2022)</div>
+        </div>
+        <div style="text-align: right;"><div class="cert-number">{{ referenceNumber }}</div></div>
+    </div>
+</div>
+
+<!-- Compliance Statement -->
+<div class="compliance-box">
+    <div class="compliance-text">
+        This property has been fitted with a smoke and carbon monoxide alarm system
+        {% unless gradeAchieved == blank %} — <strong>Grade {{ gradeAchieved }}</strong>, <strong>Category {{ categoryAchieved }}</strong> per BS 5839-6:2019+A1:2020{% endunless %}.
+        The system has been tested and is fully operational.
+    </div>
+</div>
+
+<!-- Certificate & Property -->
+<div class="section avoid-break">
+    <div class="section-title">Certificate &amp; Property Details</div>
+    <div class="form-grid">
+        <div class="form-row"><div class="form-label">Reference</div><div class="form-value" style="font-weight: 600;">{{ referenceNumber }}</div><div class="form-label">Installation Date</div><div class="form-value">{{ installationDate }}</div></div>
+        <div class="form-row"><div class="form-label">Certificate Type</div><div class="form-value">{{ certificateType }}</div><div class="form-label">Property Type</div><div class="form-value">{{ propertyType }}</div></div>
+        <div class="form-row"><div class="form-label">Property Address</div><div class="form-value" colspan="3">{{ propertyAddress }}</div></div>
+        <div class="form-row"><div class="form-label">Storeys</div><div class="form-value">{{ numberOfStoreys }}</div><div class="form-label">Rooms</div><div class="form-value">{{ numberOfRooms }}</div></div>
+        <div class="form-row"><div class="form-label">Tenure</div><div class="form-value">{{ tenure }}{% unless hmoLicenceNumber == blank %} (HMO: {{ hmoLicenceNumber }}){% endunless %}</div></div>
+        {% if combustionAppliances.size > 0 %}<div class="form-row"><div class="form-label">Combustion Appliances</div><div class="form-value" colspan="3">{{ combustionAppliances | join: ", " }}{% unless combustionApplianceLocations == blank %} — {{ combustionApplianceLocations }}{% endunless %}</div></div>{% endif %}
+    </div>
+</div>
+
+<!-- Landlord / Client -->
+<div class="section avoid-break">
+    <div class="section-title purple">Landlord / Client</div>
+    <div class="form-grid">
+        <div class="form-row"><div class="form-label">Landlord</div><div class="form-value">{{ landlordName }}</div><div class="form-label">Contact</div><div class="form-value">{{ landlordPhone }}{% unless landlordEmail == blank %} | {{ landlordEmail }}{% endunless %}</div></div>
+        {% unless landlordAddress == blank %}<div class="form-row"><div class="form-label">Address</div><div class="form-value" colspan="3">{{ landlordAddress }}</div></div>{% endunless %}
+        {% unless managingAgentName == blank %}<div class="form-row"><div class="form-label">Managing Agent</div><div class="form-value">{{ managingAgentName }}{% unless managingAgentCompany == blank %}, {{ managingAgentCompany }}{% endunless %}</div><div class="form-label">Agent Contact</div><div class="form-value">{{ managingAgentPhone }}{% unless managingAgentEmail == blank %} | {{ managingAgentEmail }}{% endunless %}</div></div>{% endunless %}
+        {% unless tenantName == blank %}<div class="form-row"><div class="form-label">Tenant</div><div class="form-value">{{ tenantName }}</div></div>{% endunless %}
+    </div>
+</div>
+
+<!-- Installer -->
+<div class="section avoid-break">
+    <div class="section-title">Installer</div>
+    <div class="form-grid">
+        <div class="form-row"><div class="form-label">Name</div><div class="form-value">{{ installerName }}</div><div class="form-label">Company</div><div class="form-value">{{ installerCompany }}</div></div>
+        {% unless installerPhone == blank %}<div class="form-row"><div class="form-label">Telephone</div><div class="form-value">{{ installerPhone }}</div><div class="form-label">Email</div><div class="form-value">{{ installerEmail }}</div></div>{% endunless %}
+        <div class="form-row"><div class="form-label">Scheme</div><div class="form-value">{{ registrationScheme }} {{ registrationNumber }}</div><div class="form-label">Competent Person</div><div class="form-value">{% if competentPersonScheme %}Yes{% else %}No{% endif %}</div></div>
+    </div>
+</div>
+
+<!-- System Design -->
+<div class="section avoid-break">
+    <div class="section-title red">System Design</div>
+    <div class="form-grid">
+        <div class="form-row"><div class="form-label">BS 5839-6 Grade</div><div class="form-value" style="font-weight: 600;">Grade {{ gradeAchieved }}</div><div class="form-label">Category</div><div class="form-value" style="font-weight: 600;">{{ categoryAchieved }}</div></div>
+        <div class="form-row"><div class="form-label">Interconnection</div><div class="form-value">{{ interconnectionMethod }}{% unless rfWirelessSystem == blank %} ({{ rfWirelessSystem }}){% endunless %}</div><div class="form-label">Power Supply</div><div class="form-value">{{ powerSupply }}</div></div>
+        {% unless circuitNumber == blank %}<div class="form-row"><div class="form-label">Circuit</div><div class="form-value">No. {{ circuitNumber }}, {{ mcbRating }} MCB{% if rcdProtected %}, RCD protected{% endif %}</div><div class="form-label">Cable</div><div class="form-value">{{ cableType }}</div></div>{% endunless %}
+    </div>
+</div>
+
+<!-- Alarm Schedule -->
+<div class="section">
+    <div class="section-title red">Alarm Schedule ({{ alarms.size }} alarms)</div>
+    <table class="alarm-table">
+        <thead>
+            <tr><th>No.</th><th>Floor</th><th>Room</th><th>Type</th><th>Make / Model</th><th>Serial</th><th>Power</th><th>Link</th><th>Mount</th><th>Mfg Date</th><th>Replace By</th><th>Test</th><th>Mains</th></tr>
+        </thead>
+        <tbody>
+        {% for alarm in alarms %}
+            <tr>
+                <td style="font-weight: 600;">{{ forloop.index }}</td>
+                <td>{{ alarm.floor }}</td>
+                <td>{{ alarm.room }}</td>
+                <td>{{ alarm.alarmType }}</td>
+                <td>{{ alarm.manufacturer }} {{ alarm.model }}</td>
+                <td style="font-size: 6.5px;">{{ alarm.serialNumber }}</td>
+                <td style="font-size: 6.5px;">{{ alarm.powerSource }}</td>
+                <td style="font-size: 6.5px;">{{ alarm.interconnect }}{% unless alarm.wirelessModule == blank %} ({{ alarm.wirelessModule }}){% endunless %}</td>
+                <td style="font-size: 6.5px;">{{ alarm.mounting }}</td>
+                <td>{{ alarm.dateOfManufacture }}</td>
+                <td style="color: #dc2626; font-weight: 600;">{{ alarm.replacementDue }}</td>
+                <td>{% if alarm.functionalTest == 'pass' %}<span class="badge pass">PASS</span>{% elsif alarm.functionalTest == 'fail' %}<span class="badge fail">FAIL</span>{% endif %}</td>
+                <td>{% if alarm.mainsIndicator == 'pass' %}<span class="badge pass">OK</span>{% elsif alarm.mainsIndicator == 'fail' %}<span class="badge fail">FAIL</span>{% else %}—{% endif %}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<!-- System Tests -->
+<div class="section avoid-break">
+    <div class="section-title green">System Tests</div>
+    <div class="form-grid">
+        <div class="form-row"><div class="form-label">Interconnection</div><div class="form-value">{% if interconnectionTest == 'pass' %}<span class="badge pass">PASS</span>{% elsif interconnectionTest == 'fail' %}<span class="badge fail">FAIL</span>{% else %}N/A{% endif %}{% unless interconnectionTriggerAlarm == blank %} — triggered from {{ interconnectionTriggerAlarm }}{% endunless %}</div></div>
+        <div class="form-row"><div class="form-label">Audibility</div><div class="form-value">{% if audibilityTest == 'pass' %}<span class="badge pass">PASS</span>{% elsif audibilityTest == 'fail' %}<span class="badge fail">FAIL</span>{% else %}N/A{% endif %}</div><div class="form-label">Mains Supply</div><div class="form-value">{% if mainsSupplyVerified == 'pass' %}<span class="badge pass">PASS</span>{% elsif mainsSupplyVerified == 'fail' %}<span class="badge fail">FAIL</span>{% else %}N/A{% endif %}</div></div>
+        <div class="form-row"><div class="form-label">Battery Backup</div><div class="form-value">{% if batteryBackupTest == 'pass' %}<span class="badge pass">PASS</span>{% elsif batteryBackupTest == 'fail' %}<span class="badge fail">FAIL</span>{% else %}N/A{% endif %}</div><div class="form-label">RF Signal</div><div class="form-value">{% if rfSignalTest == 'pass' %}<span class="badge pass">PASS</span>{% elsif rfSignalTest == 'fail' %}<span class="badge fail">FAIL</span>{% else %}N/A{% endif %}</div></div>
+    </div>
+</div>
+
+<!-- Compliance -->
+<div class="section avoid-break">
+    <div class="section-title green">Compliance Declaration</div>
+    <div class="inline-form">
+        <div class="checkbox-item"><span class="checkbox-box {% if compliesSmokeCORegs2022 %}checked{% endif %}">{% if compliesSmokeCORegs2022 %}&#10003;{% endif %}</span><label>Smoke &amp; CO Alarm Regs 2015 (as amended 2022)</label></div>
+        <div class="checkbox-item"><span class="checkbox-box {% if compliesBS5839_6 %}checked{% endif %}">{% if compliesBS5839_6 %}&#10003;{% endif %}</span><label>BS 5839-6:2019+A1:2020 — Grade {{ gradeAchieved }}, {{ categoryAchieved }}</label></div>
+        <div class="checkbox-item"><span class="checkbox-box {% if compliesBSEN14604 %}checked{% endif %}">{% if compliesBSEN14604 %}&#10003;{% endif %}</span><label>BS EN 14604 (smoke alarms)</label></div>
+        <div class="checkbox-item"><span class="checkbox-box {% if compliesBSEN50291 %}checked{% endif %}">{% if compliesBSEN50291 %}&#10003;{% endif %}</span><label>BS EN 50291-1:2018 + BSI Kitemark (CO alarms)</label></div>
+        <div class="checkbox-item"><span class="checkbox-box {% if compliesBS7671 %}checked{% endif %}">{% if compliesBS7671 %}&#10003;{% endif %}</span><label>BS 7671:2018+A3:2024 (if hardwired)</label></div>
+    </div>
+    {% unless partPNotification == blank %}
+    <div class="form-grid"><div class="form-row"><div class="form-label">Part P</div><div class="form-value">{{ partPNotification }}</div></div></div>
+    {% endunless %}
+</div>
+
+<!-- Recommendations -->
+{% if selectedRecommendations.size > 0 or observations != blank %}
+<div class="section avoid-break">
+    <div class="section-title amber">Recommendations &amp; Observations</div>
+    {% if selectedRecommendations.size > 0 %}
+    <div style="padding: 4px 8px;">
+        {% for rec in selectedRecommendations %}
+        <div style="font-size: 7.5px; color: #92400e; margin-bottom: 3px; padding-left: 8px; border-left: 2px solid #f59e0b;">{{ rec }}</div>
+        {% endfor %}
+    </div>
+    {% endif %}
+    {% unless observations == blank %}
+    <div class="form-grid"><div class="form-row"><div class="form-value" style="line-height: 1.5;">{{ observations }}</div></div></div>
+    {% endunless %}
+    {% unless nextInspectionDate == blank %}
+    <div class="form-grid"><div class="form-row"><div class="form-label" style="background: #eff6ff; color: #1e40af;">Next Inspection</div><div class="form-value" style="color: #1e40af; font-weight: 600;">{{ nextInspectionDate }}</div></div></div>
+    {% endunless %}
+</div>
+{% endif %}
+
+<!-- Declaration & Signatures -->
+<div class="section avoid-break">
+    <div class="section-title">Declaration &amp; Signatures</div>
+    <div style="background: #fef2f2; border: 1px solid #fca5a5; border-left: 3px solid #dc2626; border-radius: 2px; padding: 5px 8px; margin-bottom: 4px;">
+        <div style="font-size: 7.5px; color: #991b1b; font-style: italic; line-height: 1.5;">I certify that the smoke and carbon monoxide alarm system described in this certificate has been installed in accordance with the applicable standards and regulations. The system has been tested and is fully operational.</div>
+    </div>
+    <div class="signature-grid">
+        <div class="signature-box" style="flex: 2;">
+            <div class="signature-box-header">Installer</div>
+            <div class="signature-box-body">
+                <div class="sig-field"><span class="sig-field-label">Name</span><span class="sig-field-value" style="font-weight: 600;">{{ installerName }}</span></div>
+                <div class="sig-field"><span class="sig-field-label">Company</span><span class="sig-field-value">{{ installerCompany }}</span></div>
+                <div class="sig-field"><span class="sig-field-label">Scheme</span><span class="sig-field-value">{{ registrationScheme }} {{ registrationNumber }}</span></div>
+                <div class="sig-field"><span class="sig-field-label">Date</span><span class="sig-field-value">{{ installerDate }}</span></div>
+            </div>
+        </div>
+        <div class="signature-box" style="flex: 1;">
+            <div class="signature-box-header">Installer Signature</div>
+            <div class="signature-box-body" style="min-height: 60px; display: flex; align-items: center; justify-content: center;">
+                {% if installerSignature %}<img src="{{ installerSignature }}" style="max-height: 50px; max-width: 100%;" />{% else %}<div style="width: 100%; border-bottom: 1px solid #64748b; margin: 20px 10px;"></div>{% endif %}
+            </div>
+        </div>
+    </div>
+    {% unless clientSignature == blank %}
+    <div class="signature-grid" style="margin-top: 4px;">
+        <div class="signature-box" style="flex: 2;">
+            <div class="signature-box-header">Landlord / Client</div>
+            <div class="signature-box-body">
+                <div class="sig-field"><span class="sig-field-label">Name</span><span class="sig-field-value">{{ landlordName }}</span></div>
+                {% unless clientDate == blank %}<div class="sig-field"><span class="sig-field-label">Date</span><span class="sig-field-value">{{ clientDate }}</span></div>{% endunless %}
+            </div>
+        </div>
+        <div class="signature-box" style="flex: 1;">
+            <div class="signature-box-header">Client Signature</div>
+            <div class="signature-box-body" style="min-height: 60px; display: flex; align-items: center; justify-content: center;">
+                <img src="{{ clientSignature }}" style="max-height: 50px; max-width: 100%;" />
+            </div>
+        </div>
+    </div>
+    {% endunless %}
+</div>
+
+{% unless notes == blank %}
+<div class="section">
+    <div class="section-title">Additional Notes</div>
+    <div class="form-grid"><div class="form-row"><div class="form-value" style="line-height: 1.5;">{{ notes }}</div></div></div>
+</div>
+{% endunless %}
+
+<div class="footer">
+    <div><strong>{{ companyName }}</strong><br>{{ companyAddress }}<br>{% unless companyPhone == blank %}Tel: {{ companyPhone }}{% endunless %}{% unless companyEmail == blank %} | {{ companyEmail }}{% endunless %}</div>
+    <div style="text-align: right;"><span style="color: #94a3b8;">BS 5839-6:2019+A1:2020 | Smoke &amp; CO Alarm Installation Certificate</span></div>
+</div>
+<div style="text-align: center; margin-top: 8px;"><span style="font-size: 8px; color: #94a3b8; letter-spacing: 0.3px;">Powered by <strong style="color: #64748b;">Elec-Mate</strong></span></div>
+
+</body>
+</html>

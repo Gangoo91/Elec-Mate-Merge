@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { ArrowLeft, Zap, Loader2, Camera, X } from 'lucide-react';
+import { ArrowLeft, Zap, Loader2, Save } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
@@ -12,8 +12,14 @@ import SignatureInput from '@/components/signature/SignatureInput';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
 import { cn } from '@/lib/utils';
-import { storageGetJSONSync, storageSetJSONSync, storageRemoveSync } from '@/utils/storage';
 import { reportCloud } from '@/utils/reportCloud';
+import { useReportSync } from '@/hooks/useReportSync';
+import { SyncStatusBadge } from '@/components/inspection/SyncStatusBadge';
+import { draftStorage } from '@/utils/draftStorage';
+import {
+  AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent,
+  AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle,
+} from '@/components/ui/alert-dialog';
 
 const containerVariants = { hidden: { opacity: 0 }, visible: { opacity: 1, transition: { staggerChildren: 0.04 } } };
 const itemVariants = { hidden: { opacity: 0, y: 8 }, visible: { opacity: 1, y: 0, transition: { duration: 0.25 } } };
@@ -147,28 +153,50 @@ const TickButton = ({ checked, label, onChange }: { checked: boolean; label: str
 export default function G98CommissioningCertificate() {
   const navigate = useNavigate();
   const { id: editId } = useParams<{ id: string }>();
+  const isNew = editId === 'new' || !editId;
   const [isSaving, setIsSaving] = useState(false);
-  const [existingReportId, setExistingReportId] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(!isNew);
+  const [savedReportId, setSavedReportId] = useState<string | null>(editId !== 'new' ? editId || null : null);
+  const [showRecoveryDialog, setShowRecoveryDialog] = useState(false);
+  const [recoveryDraft, setRecoveryDraft] = useState<{ data: any; lastModified: Date } | null>(null);
 
-  const [data, setData] = useState<G98Data>(() => {
-    const saved = storageGetJSONSync<Partial<G98Data>>(DRAFT_KEY, null);
-    return saved ? { ...defaultData(), ...saved } : defaultData();
+  const [data, setData] = useState<G98Data>(defaultData());
+
+  const {
+    status: syncStatus, saveNow, syncNowImmediate,
+    hasRecoverableDraft, recoverDraft, discardDraft,
+  } = useReportSync({
+    reportId: savedReportId,
+    reportType: 'g98-commissioning' as any,
+    formData: data,
+    enabled: !isLoading,
+    onReportCreated: (newId) => {
+      setSavedReportId(newId);
+      window.history.replaceState(null, '', `/electrician/inspection-testing/g98-commissioning/${newId}`);
+    },
   });
 
+  // Load existing report
   useEffect(() => {
-    if (!editId || editId === 'new') return;
-    supabase.auth.getUser().then(async ({ data: { user } }) => {
-      if (!user) return;
-      const result = await reportCloud.getReportData(editId, user.id);
-      if (result) { setData((prev) => ({ ...prev, ...(result as any) })); setExistingReportId(editId); }
-    });
-  }, [editId]);
+    if (isNew || !editId) { setIsLoading(false); return; }
+    const load = async () => {
+      try {
+        const { data: { user } } = await supabase.auth.getUser();
+        if (!user) { setIsLoading(false); return; }
+        const reportData = await reportCloud.getReportData(editId, user.id);
+        if (reportData) { setData((prev) => ({ ...defaultData(), ...prev, ...(reportData as any) })); setSavedReportId(editId); }
+      } catch (err) { console.error('Failed to load G98:', err); }
+      finally { setIsLoading(false); }
+    };
+    load();
+  }, [editId, isNew]);
 
+  // Draft recovery
   useEffect(() => {
-    if (editId && editId !== 'new') return;
-    const timer = setTimeout(() => { storageSetJSONSync(DRAFT_KEY, data); }, 2000);
-    return () => clearTimeout(timer);
-  }, [data, editId]);
+    if (!isNew || !hasRecoverableDraft) return;
+    const draft = draftStorage.loadDraft('g98-commissioning' as any, null);
+    if (draft) { setRecoveryDraft(draft); setShowRecoveryDialog(true); }
+  }, [isNew, hasRecoverableDraft]);
 
   useEffect(() => {
     if (data.installerName) return;
@@ -192,60 +220,62 @@ export default function G98CommissioningCertificate() {
 
   const update = useCallback((field: keyof G98Data, value: any) => { setData((prev) => ({ ...prev, [field]: value })); }, []);
 
-  const handleSave = async () => {
+  const handleSaveDraft = async () => {
+    setIsSaving(true);
+    try { await saveNow(); toast.success('Draft saved'); }
+    catch { toast.error('Failed to save'); }
+    finally { setIsSaving(false); }
+  };
+
+  const handleGeneratePDF = async () => {
     if (!data.installationAddress) { toast.error('Installation address required'); return; }
     setIsSaving(true);
     try {
+      await syncNowImmediate();
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) { toast.error('Please sign in'); setIsSaving(false); return; }
 
-      if (existingReportId) { await reportCloud.updateReport(existingReportId, user.id, data as any); }
-      else { const result = await reportCloud.createReport(user.id, 'g98-commissioning' as any, data as any); if (!result.success) { toast.error('Failed to save'); setIsSaving(false); return; } }
+      toast.success('Generating PDF...');
+      const reportId = savedReportId || data.referenceNumber;
+      let company: Record<string, any> = {};
+      try { const { data: cpData } = await supabase.rpc('get_my_company_profile'); const cp = Array.isArray(cpData) ? cpData[0] : cpData; if (cp) company = cp; } catch {}
 
-      toast.success('Saved — generating PDF...');
-      const savedReportId = existingReportId || data.referenceNumber;
-      try {
-        let company: Record<string, any> = {};
+      const payload = { ...data, companyName: company.company_name || data.installerCompany, companyAddress: company.company_address || '', companyPhone: company.company_phone || data.installerPhone, companyEmail: company.company_email || data.installerEmail, companyLogo: company.company_logo || '' };
+      const { data: pdfResult, error: pdfError } = await supabase.functions.invoke('generate-g98-commissioning-pdf', { body: { formData: payload } });
+
+      if (pdfError) { toast.error('PDF generation failed'); }
+      else if (pdfResult?.download_url) {
+        let url = pdfResult.download_url;
         try {
-          const { data: cpData } = await supabase.rpc('get_my_company_profile');
-          const cp = Array.isArray(cpData) ? cpData[0] : cpData;
-          if (cp) company = cp;
-        } catch { /* proceed */ }
-
-        const payload = { ...data, companyName: company.company_name || data.installerCompany, companyAddress: company.company_address || '', companyPhone: company.company_phone || data.installerPhone, companyEmail: company.company_email || data.installerEmail, companyLogo: company.company_logo || '' };
-
-        const { data: pdfResult, error: pdfError } = await supabase.functions.invoke('generate-g98-commissioning-pdf', { body: { formData: payload } });
-
-        if (pdfError) { toast.error('Saved but PDF failed'); }
-        else if (pdfResult?.download_url) {
-          let permanentPdfUrl = pdfResult.download_url;
-          try {
-            const { saveCertificatePdf } = await import('@/utils/certificate-pdf-storage');
-            const { permanentUrl, storagePath } = await saveCertificatePdf(pdfResult.download_url, user.id, savedReportId, data.referenceNumber);
-            permanentPdfUrl = permanentUrl;
-            await supabase.from('reports').update({ storage_path: storagePath, pdf_url: permanentPdfUrl, pdf_generated_at: new Date().toISOString() }).eq('report_id', savedReportId);
-          } catch (storageErr) {
-            await supabase.from('reports').update({ pdf_url: permanentPdfUrl, pdf_generated_at: new Date().toISOString() }).eq('report_id', savedReportId);
-          }
-          const { openOrDownloadPdf } = await import('@/utils/pdf-download');
-          await openOrDownloadPdf(permanentPdfUrl, `G98-${data.referenceNumber}.pdf`);
-          toast.success('G98 form generated');
-        }
-      } catch (pdfErr) { toast.error('Saved but PDF failed'); }
-      storageRemoveSync(DRAFT_KEY);
-      navigate(-1);
-    } catch { toast.error('Failed to save'); } finally { setIsSaving(false); }
+          const { saveCertificatePdf } = await import('@/utils/certificate-pdf-storage');
+          const { permanentUrl, storagePath } = await saveCertificatePdf(pdfResult.download_url, user.id, reportId, data.referenceNumber);
+          url = permanentUrl;
+          await supabase.from('reports').update({ storage_path: storagePath, pdf_url: url, pdf_generated_at: new Date().toISOString(), status: 'completed' }).eq('report_id', reportId);
+        } catch { await supabase.from('reports').update({ pdf_url: url, pdf_generated_at: new Date().toISOString(), status: 'completed' }).eq('report_id', reportId); }
+        const { openOrDownloadPdf } = await import('@/utils/pdf-download');
+        await openOrDownloadPdf(url, `G98-${data.referenceNumber}.pdf`);
+        toast.success('G98 form generated');
+      }
+    } catch { toast.error('Failed to generate PDF'); } finally { setIsSaving(false); }
   };
 
   return (
     <div className="-mt-3 sm:-mt-4 md:-mt-6 bg-background pb-24">
       <div className="sticky top-0 z-50 bg-background/95 backdrop-blur-sm border-b border-white/[0.06]">
         <div className="px-4 py-2">
-          <div className="flex items-center gap-3 h-11">
-            <Button variant="ghost" size="icon" onClick={() => navigate(-1)} className="text-white hover:text-white hover:bg-white/10 rounded-xl h-11 w-11 touch-manipulation active:scale-[0.98]"><ArrowLeft className="h-5 w-5" /></Button>
-            <div className="flex items-center gap-2.5">
-              <div className="p-1.5 rounded-lg bg-orange-500/10 border border-orange-500/20"><Zap className="h-4 w-4 text-orange-400" /></div>
-              <h1 className="text-base font-semibold text-white">G98 Commissioning</h1>
+          <div className="flex items-center justify-between h-11">
+            <div className="flex items-center gap-3">
+              <Button variant="ghost" size="icon" onClick={() => navigate(-1)} className="text-white hover:text-white hover:bg-white/10 rounded-xl h-11 w-11 touch-manipulation active:scale-[0.98]"><ArrowLeft className="h-5 w-5" /></Button>
+              <div className="flex items-center gap-2.5">
+                <div className="p-1.5 rounded-lg bg-orange-500/10 border border-orange-500/20"><Zap className="h-4 w-4 text-orange-400" /></div>
+                <h1 className="text-base font-semibold text-white">G98 Commissioning</h1>
+              </div>
+            </div>
+            <div className="flex items-center gap-2">
+              <SyncStatusBadge status={syncStatus} />
+              <Button variant="ghost" size="icon" onClick={handleSaveDraft} disabled={isSaving} className="text-white hover:text-white hover:bg-white/10 rounded-xl h-11 w-11 touch-manipulation">
+                {isSaving ? <Loader2 className="h-4 w-4 animate-spin" /> : <Save className="h-4 w-4" />}
+              </Button>
             </div>
           </div>
         </div>
@@ -434,6 +464,7 @@ export default function G98CommissioningCertificate() {
           <SignatureInput label="Installer Signature" value={data.installerSignature} onChange={(sig) => update('installerSignature', sig || '')} />
           <Field label="Date"><Input type="date" value={data.installerDate} onChange={(e) => update('installerDate', e.target.value)} className={inputCn} /></Field>
           <SignatureInput label="Customer Signature (optional)" value={data.customerSignature} onChange={(sig) => update('customerSignature', sig || '')} />
+          {data.customerSignature && <Field label="Customer Date"><Input type="date" value={data.customerDate} onChange={(e) => update('customerDate', e.target.value)} className={inputCn} /></Field>}
         </Section>
 
         {/* Notes */}
@@ -443,12 +474,23 @@ export default function G98CommissioningCertificate() {
 
         {/* Actions */}
         <motion.div variants={itemVariants} className="flex gap-3 pt-2">
-          <Button variant="outline" className="flex-1 h-12 text-sm font-medium touch-manipulation active:scale-[0.98] border-white/[0.08] text-white hover:bg-white/[0.06]" onClick={() => { storageSetJSONSync(DRAFT_KEY, data); toast.success('Draft saved'); }}>Save Draft</Button>
-          <Button className="flex-1 h-12 text-sm font-medium touch-manipulation active:scale-[0.98] bg-orange-500 text-white hover:bg-orange-600" onClick={handleSave} disabled={isSaving}>
-            {isSaving ? <><Loader2 className="h-4 w-4 animate-spin mr-2" />Saving...</> : existingReportId ? 'Update' : 'Download PDF'}
+          <Button variant="outline" className="flex-1 h-12 text-sm font-medium touch-manipulation active:scale-[0.98] border-white/[0.08] text-white hover:bg-white/[0.06]" onClick={handleSaveDraft}>Save Draft</Button>
+          <Button className="flex-1 h-12 text-sm font-medium touch-manipulation active:scale-[0.98] bg-orange-500 text-white hover:bg-orange-600" onClick={handleGeneratePDF} disabled={isSaving}>
+            {isSaving ? <><Loader2 className="h-4 w-4 animate-spin mr-2" />Generating...</> : 'Download PDF'}
           </Button>
         </motion.div>
       </motion.main>
+
+      {/* Draft recovery dialog */}
+      <AlertDialog open={showRecoveryDialog} onOpenChange={setShowRecoveryDialog}>
+        <AlertDialogContent>
+          <AlertDialogHeader><AlertDialogTitle>Recover Draft?</AlertDialogTitle><AlertDialogDescription>A previous unsaved G98 form was found. Would you like to recover it?</AlertDialogDescription></AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel onClick={() => { discardDraft(); setShowRecoveryDialog(false); }}>Discard</AlertDialogCancel>
+            <AlertDialogAction onClick={() => { if (recoveryDraft) { setData((prev) => ({ ...defaultData(), ...prev, ...recoveryDraft.data })); recoverDraft(); } setShowRecoveryDialog(false); }}>Recover Draft</AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
   );
 }

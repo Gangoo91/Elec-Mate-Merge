@@ -25,6 +25,23 @@ interface CertDef {
 }
 
 const specialistCerts: CertDef[] = [
+  // Electrical
+  {
+    id: 'ev-charging',
+    title: 'EV Charging',
+    description: 'Charge point installation',
+    standard: 'IET CoP',
+    accentColor: 'from-emerald-500 via-teal-400 to-cyan-400',
+    category: 'electrical',
+  },
+  {
+    id: 'pat-testing',
+    title: 'PAT Testing',
+    description: 'Portable appliance testing',
+    standard: 'IET CoP',
+    accentColor: 'from-cyan-500 via-cyan-400 to-blue-400',
+    category: 'electrical',
+  },
   // Renewables & Energy
   {
     id: 'solar-pv',
@@ -35,28 +52,11 @@ const specialistCerts: CertDef[] = [
     category: 'renewables',
   },
   {
-    id: 'ev-charging',
-    title: 'EV Charging',
-    description: 'Charge point installation',
-    standard: 'IET CoP',
-    accentColor: 'from-emerald-500 via-teal-400 to-cyan-400',
-    category: 'electrical',
-  },
-  {
     id: 'bess',
     title: 'Battery Storage',
     description: 'BESS commissioning',
     standard: 'IET CoP',
     accentColor: 'from-green-500 via-emerald-400 to-teal-400',
-    category: 'renewables',
-  },
-  {
-    id: 'pv-bess-combined',
-    title: 'PV + Battery',
-    description: 'Combined system commissioning',
-    standard: 'MCS / IET',
-    accentColor: 'from-amber-500 via-yellow-400 to-green-400',
-    comingSoon: true,
     category: 'renewables',
   },
   {
@@ -98,7 +98,6 @@ const specialistCerts: CertDef[] = [
     description: 'Domestic alarm installation',
     standard: 'BS 5839-6',
     accentColor: 'from-red-500 via-orange-400 to-amber-400',
-    comingSoon: true,
     category: 'fire-safety',
   },
   {
@@ -108,25 +107,6 @@ const specialistCerts: CertDef[] = [
     standard: 'BS EN 62305',
     accentColor: 'from-yellow-500 via-yellow-400 to-amber-400',
     category: 'fire-safety',
-  },
-  // Electrical
-  {
-    id: 'pat-testing',
-    title: 'PAT Testing',
-    description: 'Portable appliance testing',
-    standard: 'IET CoP',
-    accentColor: 'from-cyan-500 via-cyan-400 to-blue-400',
-    category: 'electrical',
-  },
-  // Security
-  {
-    id: 'intruder-alarm',
-    title: 'Intruder Alarm',
-    description: 'Security alarm systems',
-    standard: 'BS EN 50131',
-    accentColor: 'from-violet-500 via-purple-400 to-indigo-400',
-    comingSoon: true,
-    category: 'security',
   },
 ];
 
@@ -168,10 +148,9 @@ const SpecialistSection = ({ onBack }: SpecialistSectionProps) => {
         className="px-4 py-4 space-y-5"
       >
         {[
+          { key: 'electrical', label: 'Electrical' },
           { key: 'renewables', label: 'Renewables & Energy' },
           { key: 'fire-safety', label: 'Fire & Life Safety' },
-          { key: 'electrical', label: 'Electrical' },
-          { key: 'security', label: 'Security Systems' },
         ].map((group) => {
           const certs = specialistCerts.filter((c) => c.category === group.key);
           if (certs.length === 0) return null;

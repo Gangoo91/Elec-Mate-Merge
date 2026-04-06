@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>G99 Commissioning Certificate</title>
+    <style>
+        :root { --accent: #dc2626; }
+        @page { size: A4; margin: 3mm 3mm 4mm 3mm; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 8.5px; line-height: 1.4; color: #1a1a1a; background: #fff; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+
+        .doc-header { background: linear-gradient(180deg, #0a1628 0%, #152238 100%); color: #fff; padding: 10px 12px; margin-bottom: 2px; border-radius: 2px; position: relative; overflow: hidden; }
+        .doc-header::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: var(--accent); }
+        .doc-header-content { display: flex; justify-content: space-between; align-items: center; }
+        .doc-title { font-size: 16px; font-weight: 700; letter-spacing: 0.5px; margin-bottom: 2px; }
+        .doc-subtitle { font-size: 7.5px; font-weight: 400; opacity: 0.85; }
+        .cert-number { font-size: 11px; font-weight: 700; color: var(--accent); }
+        .company-brand { display: flex; align-items: center; gap: 10px; margin-right: 12px; }
+        .company-brand-name { font-size: 11px; font-weight: 700; color: #fff; }
+        .company-logo img { max-height: 45px; max-width: 120px; object-fit: contain; }
+
+        .section { margin-bottom: 8px; }
+        .section-title { background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); color: #fff; font-size: 9px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.8px; padding: 5px 8px; margin-bottom: 4px; border-left: 3px solid var(--accent); }
+        .section-title.green { border-left-color: #22c55e; }
+        .section-title.blue { border-left-color: #3b82f6; }
+        .section-title.purple { border-left-color: #8b5cf6; }
+        .section-title.cyan { border-left-color: #06b6d4; }
+        .section-title.amber { border-left-color: #f59e0b; }
+
+        .form-grid { display: table; width: 100%; border-collapse: collapse; margin-bottom: 4px; }
+        .form-row { display: table-row; }
+        .form-label { display: table-cell; font-size: 7.5px; font-weight: 600; color: #475569; padding: 5px 6px; width: 120px; vertical-align: middle; background: #f8fafc; border: 1px solid #e2e8f0; }
+        .form-value { display: table-cell; font-size: 8.5px; color: #1e293b; padding: 5px 6px; vertical-align: middle; border: 1px solid #e2e8f0; background: #fff; }
+
+        .inline-form { display: flex; flex-wrap: wrap; gap: 5px; padding: 6px 8px; background: #fafbfc; border: 1px solid #e2e8f0; border-radius: 2px; }
+        .checkbox-item { display: flex; align-items: center; gap: 4px; margin-right: 6px; }
+        .checkbox-box { width: 11px; height: 11px; border: 1.5px solid #64748b; display: inline-flex; align-items: center; justify-content: center; font-size: 8px; font-weight: bold; flex-shrink: 0; }
+        .checkbox-box.checked { background: #22c55e; color: #fff; border-color: #22c55e; }
+        .checkbox-box.checked-amber { background: #f59e0b; color: #fff; border-color: #f59e0b; }
+        .checkbox-box.checked-red { background: #dc2626; color: #fff; border-color: #dc2626; }
+
+        .badge { display: inline-block; padding: 2px 6px; border-radius: 2px; font-size: 7px; font-weight: 700; text-transform: uppercase; }
+        .badge.pass { background: #dcfce7; color: #166534; border: 1px solid #86efac; }
+        .badge.fail { background: #fef2f2; color: #991b1b; border: 1px solid #fca5a5; }
+
+        .grid-table { width: 100%; border-collapse: collapse; margin: 4px 0; font-size: 8px; }
+        .grid-table th { background: #f1f5f9; font-weight: 600; color: #475569; padding: 4px 5px; border: 1px solid #e2e8f0; text-align: left; font-size: 7px; }
+        .grid-table td { padding: 4px 5px; border: 1px solid #e2e8f0; color: #1e293b; }
+
+        .signature-grid { display: flex; gap: 6px; margin-top: 4px; }
+        .signature-box { flex: 1; border: 1px solid #cbd5e1; border-radius: 2px; overflow: hidden; }
+        .signature-box-header { background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); color: #fff; font-size: 7.5px; font-weight: 600; padding: 3px 8px; border-bottom: 1px solid var(--accent); }
+        .signature-box-body { padding: 4px 6px; background: #fafbfc; }
+        .sig-field { display: flex; align-items: center; margin-bottom: 3px; gap: 4px; }
+        .sig-field:last-child { margin-bottom: 0; }
+        .sig-field-label { font-size: 7px; font-weight: 600; color: #64748b; min-width: 55px; flex-shrink: 0; }
+        .sig-field-value { flex: 1; font-size: 8px; color: #1e293b; padding: 3px 5px; background: #fff; border: 1px solid #e2e8f0; border-radius: 1px; min-height: 18px; }
+        .sig-field-value img { max-height: 30px; }
+
+        .footer { margin-top: 8px; padding-top: 6px; border-top: 2px solid var(--accent); display: flex; justify-content: space-between; font-size: 7px; color: #64748b; }
+        .avoid-break { page-break-inside: avoid; }
+
+        .stage-banner { text-align: center; padding: 6px 12px; margin: 6px 0; border-radius: 3px; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; }
+        .stage-banner.stage1 { background: #fef2f2; border: 2px solid #dc2626; color: #991b1b; }
+        .stage-banner.stage2 { background: #f0fdf4; border: 2px solid #22c55e; color: #166534; }
+
+        .result-box { text-align: center; padding: 8px; border-radius: 3px; margin: 6px 0; }
+        .result-box.satisfactory { background: #f0fdf4; border: 2px solid #22c55e; }
+        .result-box.unsatisfactory { background: #fef2f2; border: 2px solid #dc2626; }
+        .result-text { font-size: 14px; font-weight: 900; text-transform: uppercase; letter-spacing: 1px; }
+        .result-text.satisfactory { color: #166534; }
+        .result-text.unsatisfactory { color: #991b1b; }
+    </style>
+</head>
+<body>
+
+<div class="doc-header">
+    <div class="doc-header-content">
+        <div class="company-brand">
+            {% unless companyLogo == blank %}<div class="company-logo"><img src="{{ companyLogo }}" alt="" /></div>{% endunless %}
+            <div><div class="company-brand-name">{{ companyName }}</div></div>
+        </div>
+        <div style="flex: 1;">
+            <div class="doc-title">G99 COMMISSIONING CERTIFICATE</div>
+            <div class="doc-subtitle">EREC G99 Issue 5 — Generators >16A per phase | Two-stage application &amp; commissioning</div>
+        </div>
+        <div style="text-align: right;"><div class="cert-number">{{ referenceNumber }}</div></div>
+    </div>
+</div>
+
+<!-- Overall Result -->
+{% unless overallResult == blank %}
+<div class="result-box {% if overallResult == 'satisfactory' %}satisfactory{% else %}unsatisfactory{% endif %}">
+    <div class="result-text {% if overallResult == 'satisfactory' %}satisfactory{% else %}unsatisfactory{% endif %}">{{ overallResult }}</div>
+</div>
+{% endunless %}
+
+<!-- STAGE 1: APPLICATION -->
+<div class="stage-banner stage1">Stage 1 — DNO Application</div>
+
+<div class="section avoid-break">
+    <div class="section-title">DNO Application</div>
+    <div class="form-grid">
+        <div class="form-row"><div class="form-label">DNO</div><div class="form-value" style="font-weight: 600;">{{ dnoName }}</div><div class="form-label">Connection Voltage</div><div class="form-value">{{ connectionVoltage }}</div></div>
+        <div class="form-row"><div class="form-label">Application Date</div><div class="form-value">{{ applicationDate }}</div><div class="form-label">Application Ref</div><div class="form-value">{{ dnoApplicationRef }}</div></div>
+        {% unless proposedCommissioningDate == blank %}<div class="form-row"><div class="form-label">Proposed Commissioning</div><div class="form-value">{{ proposedCommissioningDate }}</div></div>{% endunless %}
+    </div>
+    <div class="inline-form" style="margin-top: 3px;">
+        {% if networkStudyRequired %}<div class="checkbox-item"><span class="checkbox-box checked-amber">&#10003;</span><label>Network study required</label></div>{% endif %}
+        {% if interTripRequired %}<div class="checkbox-item"><span class="checkbox-box checked-amber">&#10003;</span><label>Intertrip required</label></div>{% endif %}
+        <div class="checkbox-item"><span class="checkbox-box {% if dnoApprovalReceived %}checked{% endif %}">{% if dnoApprovalReceived %}&#10003;{% endif %}</span><label>DNO approval received</label></div>
+    </div>
+    {% if dnoApprovalReceived %}
+    <div class="form-grid" style="margin-top: 3px;">
+        <div class="form-row"><div class="form-label">Approval Date</div><div class="form-value">{{ dnoApprovalDate }}</div><div class="form-label">Approval Ref</div><div class="form-value" style="font-weight: 600;">{{ dnoApprovalRef }}</div></div>
+        {% unless dnoSpecialConditions == blank %}<div class="form-row"><div class="form-label">Special Conditions</div><div class="form-value" style="line-height: 1.5;">{{ dnoSpecialConditions }}</div></div>{% endunless %}
+    </div>
+    {% endif %}
+</div>
+
+<!-- Installer -->
+<div class="section avoid-break">
+    <div class="section-title">Installer</div>
+    <div class="form-grid">
+        <div class="form-row"><div class="form-label">Name</div><div class="form-value">{{ installerName }}</div><div class="form-label">Company</div><div class="form-value">{{ installerCompany }}</div></div>
+        {% unless installerPhone == blank %}<div class="form-row"><div class="form-label">Telephone</div><div class="form-value">{{ installerPhone }}</div><div class="form-label">Email</div><div class="form-value">{{ installerEmail }}</div></div>{% endunless %}
+        <div class="form-row"><div class="form-label">MCS Number</div><div class="form-value" style="font-weight: 600;">{{ mcsNumber }}</div><div class="form-label">Scheme</div><div class="form-value">{{ registrationScheme }} {{ registrationNumber }}</div></div>
+    </div>
+</div>
+
+<!-- Site -->
+<div class="section avoid-break">
+    <div class="section-title blue">Site</div>
+    <div class="form-grid">
+        <div class="form-row"><div class="form-label">Installation Address</div><div class="form-value" colspan="3">{{ installationAddress }}</div></div>
+        <div class="form-row"><div class="form-label">MPAN</div><div class="form-value" style="font-family: monospace;">{{ mpan }}</div><div class="form-label">Supply</div><div class="form-value">{{ supplyType }}</div></div>
+        {% unless earthingArrangement == blank %}<div class="form-row"><div class="form-label">Earthing</div><div class="form-value">{{ earthingArrangement }}</div></div>{% endunless %}
+    </div>
+</div>
+
+<!-- Equipment -->
+<div class="section avoid-break">
+    <div class="section-title green">Generating Equipment</div>
+    <div class="form-grid">
+        <div class="form-row"><div class="form-label">Equipment Type</div><div class="form-value" style="font-weight: 600;">{{ equipmentType }}</div><div class="form-label">Phases</div><div class="form-value">{{ numberOfPhases }}-phase</div></div>
+        <div class="form-row"><div class="form-label">Manufacturer</div><div class="form-value">{{ equipmentManufacturer }}</div><div class="form-label">Model</div><div class="form-value">{{ equipmentModel }}</div></div>
+        <div class="form-row"><div class="form-label">Serial Number</div><div class="form-value">{{ equipmentSerial }}</div><div class="form-label">Rated Output</div><div class="form-value" style="font-weight: 600;">{{ ratedOutput }} kW</div></div>
+        <div class="form-row"><div class="form-label">Proposed Export</div><div class="form-value">{{ proposedExportCapacity }} kW</div><div class="form-label">Generating Units</div><div class="form-value">{{ numberOfGeneratingUnits }}</div></div>
+        {% unless typeTestCertRef == blank %}<div class="form-row"><div class="form-label">Type Test Cert</div><div class="form-value">{{ typeTestCertRef }}</div></div>{% endunless %}
+        {% unless inverterManufacturer == blank %}<div class="form-row"><div class="form-label">Inverter</div><div class="form-value">{{ inverterManufacturer }} {{ inverterModel }}</div></div>{% endunless %}
+        {% unless associatedCertRef == blank %}<div class="form-row"><div class="form-label">Associated Cert</div><div class="form-value">{{ associatedCertRef }}</div></div>{% endunless %}
+    </div>
+</div>
+
+<!-- Export -->
+<div class="section avoid-break">
+    <div class="section-title cyan">Export Details</div>
+    <div class="inline-form">
+        <div class="checkbox-item"><span class="checkbox-box {% if exportCapable %}checked{% endif %}">{% if exportCapable %}&#10003;{% endif %}</span><label>Export capable</label></div>
+        {% if exportLimited %}<div class="checkbox-item"><span class="checkbox-box checked-amber">&#10003;</span><label>Export limited: {{ exportLimit }} kW</label></div>{% endif %}
+        {% if exportMeterFitted %}<div class="checkbox-item"><span class="checkbox-box checked">&#10003;</span><label>Export meter: {{ exportMeterSerial }}</label></div>{% endif %}
+    </div>
+    {% unless segSupplier == blank %}<div class="form-grid" style="margin-top: 3px;"><div class="form-row"><div class="form-label">SEG Supplier</div><div class="form-value">{{ segSupplier }}</div></div></div>{% endunless %}
+</div>
+
+<!-- STAGE 2: COMMISSIONING -->
+<div class="stage-banner stage2">Stage 2 — Commissioning</div>
+
+<div class="section avoid-break">
+    <div class="section-title green">Commissioning Details</div>
+    <div class="form-grid">
+        <div class="form-row"><div class="form-label">Commissioning Date</div><div class="form-value" style="font-weight: 600;">{{ commissioningDate }}</div><div class="form-label">Settings Source</div><div class="form-value">{{ settingsSource }}</div></div>
+    </div>
+</div>
+
+<!-- Protection Settings -->
+<div class="section avoid-break">
+    <div class="section-title purple">Grid Protection Settings{% if settingsSource == 'DNO specified' %} (DNO Specified){% endif %}</div>
+    {% if settingsSource == 'DNO specified' %}
+    <div style="background: #fef3c7; border: 1px solid #fcd34d; border-left: 3px solid #f59e0b; border-radius: 2px; padding: 4px 8px; margin-bottom: 4px;">
+        <div style="font-size: 7.5px; color: #92400e; font-weight: 600;">Non-standard settings specified by DNO — values from approval letter</div>
+    </div>
+    {% endif %}
+    <table class="grid-table">
+        <thead><tr><th>Parameter</th><th>Stage 1 Setting</th><th>Stage 1 Time</th><th>Stage 2 Setting</th><th>Stage 2 Time</th></tr></thead>
+        <tbody>
+            <tr><td>Over-voltage</td><td>{{ ovStage1Voltage }}V</td><td>{{ ovStage1Time }}s</td><td>{{ ovStage2Voltage }}V</td><td>{{ ovStage2Time }}s</td></tr>
+            <tr><td>Under-voltage</td><td>{{ uvStage1Voltage }}V</td><td>{{ uvStage1Time }}s</td><td>{{ uvStage2Voltage }}V</td><td>{{ uvStage2Time }}s</td></tr>
+            <tr><td>Over-frequency</td><td>{{ ofStage1Freq }}Hz</td><td>{{ ofStage1Time }}s</td><td>{{ ofStage2Freq }}Hz</td><td>{{ ofStage2Time }}s</td></tr>
+            <tr><td>Under-frequency</td><td>{{ ufStage1Freq }}Hz</td><td>{{ ufStage1Time }}s</td><td>{{ ufStage2Freq }}Hz</td><td>{{ ufStage2Time }}s</td></tr>
+            <tr><td>ROCOF</td><td colspan="2">{{ rocoFRate }} Hz/s</td><td colspan="2">{{ rocoFTime }}s</td></tr>
+            <tr><td>Reconnection Delay</td><td colspan="4">{{ reconnectionDelay }}s minimum</td></tr>
+        </tbody>
+    </table>
+</div>
+
+<!-- Additional G99 Tests -->
+<div class="section avoid-break">
+    <div class="section-title cyan">Additional G99 Tests</div>
+    <div class="form-grid">
+        {% unless powerQualityTHD == blank %}<div class="form-row"><div class="form-label">Power Quality THD</div><div class="form-value">{{ powerQualityTHD }}%</div></div>{% endunless %}
+        {% unless measuredExportKW == blank %}<div class="form-row"><div class="form-label">Measured Export</div><div class="form-value">{{ measuredExportKW }} kW</div><div class="form-label">Grid Voltage</div><div class="form-value">{{ gridVoltageAtConnection }}V</div></div>{% endunless %}
+    </div>
+    <div class="inline-form" style="margin-top: 3px;">
+        <div class="checkbox-item"><span class="checkbox-box {% if reactivePowerVerified %}checked{% endif %}">{% if reactivePowerVerified %}&#10003;{% endif %}</span><label>Reactive power verified</label></div>
+        <div class="checkbox-item"><span class="checkbox-box {% if activePowerControlVerified %}checked{% endif %}">{% if activePowerControlVerified %}&#10003;{% endif %}</span><label>Active power control verified</label></div>
+        <div class="checkbox-item"><span class="checkbox-box {% if frequencyResponseVerified %}checked{% endif %}">{% if frequencyResponseVerified %}&#10003;{% endif %}</span><label>Frequency response verified</label></div>
+        {% unless interTripTested == blank %}<div class="checkbox-item"><span class="checkbox-box {% if interTripTested == 'pass' %}checked{% elsif interTripTested == 'fail' %}checked-red{% endif %}">{% if interTripTested == 'pass' %}&#10003;{% elsif interTripTested == 'fail' %}&#10007;{% endif %}</span><label>Intertrip tested: <span class="badge {% if interTripTested == 'pass' %}pass{% else %}fail{% endif %}">{{ interTripTested }}</span></label></div>{% endunless %}
+    </div>
+</div>
+
+<!-- DNO Witness -->
+{% if dnoWitnessRequired %}
+<div class="section avoid-break">
+    <div class="section-title amber">DNO Witness Test</div>
+    <div class="form-grid">
+        <div class="form-row"><div class="form-label">Witness Required</div><div class="form-value" style="font-weight: 600;">Yes</div></div>
+        {% unless dnoWitnessName == blank %}<div class="form-row"><div class="form-label">Witness Name</div><div class="form-value">{{ dnoWitnessName }}</div><div class="form-label">Witness Date</div><div class="form-value">{{ dnoWitnessDate }}</div></div>{% endunless %}
+    </div>
+</div>
+{% endif %}
+
+<!-- Commissioning Confirmation -->
+<div class="section avoid-break">
+    <div class="section-title green">Commissioning Confirmation</div>
+    <div class="inline-form">
+        <div class="checkbox-item"><span class="checkbox-box {% if antiIslandingConfirmed %}checked{% endif %}">{% if antiIslandingConfirmed %}&#10003;{% endif %}</span><label>Anti-islanding protection confirmed</label></div>
+        <div class="checkbox-item"><span class="checkbox-box {% if protectionSettingsVerified %}checked{% endif %}">{% if protectionSettingsVerified %}&#10003;{% endif %}</span><label>Protection settings verified</label></div>
+        <div class="checkbox-item"><span class="checkbox-box {% if systemOperating %}checked{% endif %}">{% if systemOperating %}&#10003;{% endif %}</span><label>System energised and operating correctly</label></div>
+        <div class="checkbox-item"><span class="checkbox-box {% if labelsApplied %}checked{% endif %}">{% if labelsApplied %}&#10003;{% endif %}</span><label>Labels and warning notices fitted</label></div>
+        <div class="checkbox-item"><span class="checkbox-box {% if customerInformed %}checked{% endif %}">{% if customerInformed %}&#10003;{% endif %}</span><label>Customer informed of operation</label></div>
+    </div>
+</div>
+
+<!-- Declaration -->
+<div class="section avoid-break">
+    <div class="section-title">Declaration</div>
+    <div style="background: #fef2f2; border: 1px solid #fca5a5; border-left: 3px solid #dc2626; border-radius: 2px; padding: 5px 8px; margin-bottom: 4px;">
+        <div style="font-size: 7.5px; color: #991b1b; font-style: italic; line-height: 1.5;">I confirm that the generating equipment described above has been installed and commissioned in accordance with EREC G99. The protection settings have been verified and the system is connected to the distribution network with the approval of the DNO.</div>
+    </div>
+    <div class="signature-grid">
+        <div class="signature-box" style="flex: 2;">
+            <div class="signature-box-header">Installer</div>
+            <div class="signature-box-body">
+                <div class="sig-field"><span class="sig-field-label">Name</span><span class="sig-field-value" style="font-weight: 600;">{{ installerName }}</span></div>
+                <div class="sig-field"><span class="sig-field-label">Company</span><span class="sig-field-value">{{ installerCompany }}</span></div>
+                <div class="sig-field"><span class="sig-field-label">MCS No.</span><span class="sig-field-value">{{ mcsNumber }}</span></div>
+                <div class="sig-field"><span class="sig-field-label">Date</span><span class="sig-field-value">{{ installerDate }}</span></div>
+            </div>
+        </div>
+        <div class="signature-box" style="flex: 1;">
+            <div class="signature-box-header">Installer Signature</div>
+            <div class="signature-box-body" style="min-height: 60px; display: flex; align-items: center; justify-content: center;">
+                {% if installerSignature %}<img src="{{ installerSignature }}" style="max-height: 50px; max-width: 100%;" />{% else %}<div style="width: 100%; border-bottom: 1px solid #64748b; margin: 20px 10px;"></div>{% endif %}
+            </div>
+        </div>
+    </div>
+    {% unless dnoWitnessSignature == blank %}
+    <div class="signature-grid" style="margin-top: 4px;">
+        <div class="signature-box" style="flex: 2;">
+            <div class="signature-box-header">DNO Witness</div>
+            <div class="signature-box-body">
+                <div class="sig-field"><span class="sig-field-label">Name</span><span class="sig-field-value">{{ dnoWitnessName }}</span></div>
+                <div class="sig-field"><span class="sig-field-label">Date</span><span class="sig-field-value">{{ dnoWitnessDate }}</span></div>
+            </div>
+        </div>
+        <div class="signature-box" style="flex: 1;">
+            <div class="signature-box-header">DNO Witness Signature</div>
+            <div class="signature-box-body" style="min-height: 60px; display: flex; align-items: center; justify-content: center;">
+                <img src="{{ dnoWitnessSignature }}" style="max-height: 50px; max-width: 100%;" />
+            </div>
+        </div>
+    </div>
+    {% endunless %}
+    {% unless customerSignature == blank %}
+    <div class="signature-grid" style="margin-top: 4px;">
+        <div class="signature-box" style="flex: 2;">
+            <div class="signature-box-header">Customer</div>
+            <div class="signature-box-body">
+                {% unless customerDate == blank %}<div class="sig-field"><span class="sig-field-label">Date</span><span class="sig-field-value">{{ customerDate }}</span></div>{% endunless %}
+            </div>
+        </div>
+        <div class="signature-box" style="flex: 1;">
+            <div class="signature-box-header">Customer Signature</div>
+            <div class="signature-box-body" style="min-height: 60px; display: flex; align-items: center; justify-content: center;">
+                <img src="{{ customerSignature }}" style="max-height: 50px; max-width: 100%;" />
+            </div>
+        </div>
+    </div>
+    {% endunless %}
+</div>
+
+{% unless notes == blank %}
+<div class="section">
+    <div class="section-title">Additional Notes</div>
+    <div class="form-grid"><div class="form-row"><div class="form-value" style="line-height: 1.5;">{{ notes }}</div></div></div>
+</div>
+{% endunless %}
+
+<div class="footer">
+    <div><strong>{{ companyName }}</strong><br>{{ companyAddress }}<br>{% unless companyPhone == blank %}Tel: {{ companyPhone }}{% endunless %}{% unless companyEmail == blank %} | {{ companyEmail }}{% endunless %}</div>
+    <div style="text-align: right;"><span style="color: #94a3b8;">EREC G99 Issue 5 | DNO Commissioning Certificate</span></div>
+</div>
+<div style="text-align: center; margin-top: 8px;"><span style="font-size: 8px; color: #94a3b8; letter-spacing: 0.3px;">Powered by <strong style="color: #64748b;">Elec-Mate</strong></span></div>
+
+</body>
+</html>

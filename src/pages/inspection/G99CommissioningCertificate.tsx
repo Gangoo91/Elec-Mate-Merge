@@ -7,7 +7,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { ArrowLeft, Zap, Loader2, ChevronLeft, ChevronRight, CheckCircle2 } from 'lucide-react';
+import { ArrowLeft, Zap, Loader2, ChevronLeft, ChevronRight, Save } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
@@ -18,8 +18,11 @@ import SignatureInput from '@/components/signature/SignatureInput';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
 import { cn } from '@/lib/utils';
-import { storageGetJSONSync, storageSetJSONSync, storageRemoveSync } from '@/utils/storage';
 import { reportCloud } from '@/utils/reportCloud';
+import { useReportSync } from '@/hooks/useReportSync';
+import { SyncStatusBadge } from '@/components/inspection/SyncStatusBadge';
+import { draftStorage } from '@/utils/draftStorage';
+import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from '@/components/ui/alert-dialog';
 import { getDefaultG99FormData, UK_DNOS, G99FormData } from '@/types/g99-commissioning';
 import { useG99CommissioningTabs, G99TabValue } from '@/hooks/useG99CommissioningTabs';
 
@@ -56,28 +59,48 @@ const TickButton = ({ checked, label, color = 'emerald', onChange }: { checked: 
 export default function G99CommissioningCertificate() {
   const navigate = useNavigate();
   const { id: editId } = useParams<{ id: string }>();
+  const isNew = editId === 'new' || !editId;
   const [isSaving, setIsSaving] = useState(false);
-  const [existingReportId, setExistingReportId] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(!isNew);
+  const [savedReportId, setSavedReportId] = useState<string | null>(editId !== 'new' ? editId || null : null);
+  const [showRecoveryDialog, setShowRecoveryDialog] = useState(false);
+  const [recoveryDraft, setRecoveryDraft] = useState<{ data: any; lastModified: Date } | null>(null);
 
-  const [data, setData] = useState<G99FormData>(() => {
-    const saved = storageGetJSONSync<Partial<G99FormData>>(DRAFT_KEY, null);
-    return saved ? { ...getDefaultG99FormData(), ...saved } : getDefaultG99FormData();
+  const [data, setData] = useState<G99FormData>(getDefaultG99FormData());
+
+  const {
+    status: syncStatus, saveNow, syncNowImmediate,
+    hasRecoverableDraft, recoverDraft, discardDraft,
+  } = useReportSync({
+    reportId: savedReportId,
+    reportType: 'g99-commissioning' as any,
+    formData: data,
+    enabled: !isLoading,
+    onReportCreated: (newId) => {
+      setSavedReportId(newId);
+      window.history.replaceState(null, '', `/electrician/inspection-testing/g99-commissioning/${newId}`);
+    },
   });
 
   useEffect(() => {
-    if (!editId || editId === 'new') return;
-    supabase.auth.getUser().then(async ({ data: { user } }) => {
-      if (!user) return;
-      const result = await reportCloud.getReportData(editId, user.id);
-      if (result) { setData((prev) => ({ ...prev, ...(result as any) })); setExistingReportId(editId); }
-    });
-  }, [editId]);
+    if (isNew || !editId) { setIsLoading(false); return; }
+    const load = async () => {
+      try {
+        const { data: { user } } = await supabase.auth.getUser();
+        if (!user) { setIsLoading(false); return; }
+        const reportData = await reportCloud.getReportData(editId, user.id);
+        if (reportData) { setData((prev) => ({ ...getDefaultG99FormData(), ...prev, ...(reportData as any) })); setSavedReportId(editId); }
+      } catch (err) { console.error('Failed to load G99:', err); }
+      finally { setIsLoading(false); }
+    };
+    load();
+  }, [editId, isNew]);
 
   useEffect(() => {
-    if (editId && editId !== 'new') return;
-    const timer = setTimeout(() => { storageSetJSONSync(DRAFT_KEY, data); }, 2000);
-    return () => clearTimeout(timer);
-  }, [data, editId]);
+    if (!isNew || !hasRecoverableDraft) return;
+    const draft = draftStorage.loadDraft('g99-commissioning' as any, null);
+    if (draft) { setRecoveryDraft(draft); setShowRecoveryDialog(true); }
+  }, [isNew, hasRecoverableDraft]);
 
   useEffect(() => {
     if (data.installerName) return;
@@ -93,34 +116,35 @@ export default function G99CommissioningCertificate() {
 
   const { currentTab, setCurrentTab, currentTabIndex, totalTabs, canNavigateNext, canNavigatePrevious, navigateNext, navigatePrevious, isCurrentTabComplete, getProgressPercentage } = useG99CommissioningTabs(data);
 
-  const handleSave = async () => {
+  const handleSaveDraft = async () => {
+    setIsSaving(true);
+    try { await saveNow(); toast.success('Draft saved'); }
+    catch { toast.error('Failed to save'); }
+    finally { setIsSaving(false); }
+  };
+
+  const handleGeneratePDF = async () => {
     if (!data.installationAddress) { toast.error('Installation address required'); return; }
     setIsSaving(true);
     try {
+      await syncNowImmediate();
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) { toast.error('Please sign in'); setIsSaving(false); return; }
-      if (existingReportId) { await reportCloud.updateReport(existingReportId, user.id, data as any); }
-      else { const result = await reportCloud.createReport(user.id, 'g99-commissioning' as any, data as any); if (!result.success) { toast.error('Failed to save'); setIsSaving(false); return; } }
 
-      toast.success('Saved — generating PDF...');
-      const savedReportId = existingReportId || data.referenceNumber;
-      try {
-        let company: Record<string, any> = {};
-        try { const { data: cpData } = await supabase.rpc('get_my_company_profile'); const cp = Array.isArray(cpData) ? cpData[0] : cpData; if (cp) company = cp; } catch {}
-        const payload = { ...data, companyName: company.company_name || data.installerCompany, companyAddress: company.company_address || '', companyPhone: company.company_phone || data.installerPhone, companyEmail: company.company_email || data.installerEmail, companyLogo: company.company_logo || '' };
-        const { data: pdfResult, error: pdfError } = await supabase.functions.invoke('generate-g99-commissioning-pdf', { body: { formData: payload } });
-        if (pdfError) { toast.error('Saved but PDF failed'); }
-        else if (pdfResult?.download_url) {
-          let url = pdfResult.download_url;
-          try { const { saveCertificatePdf } = await import('@/utils/certificate-pdf-storage'); const { permanentUrl, storagePath } = await saveCertificatePdf(pdfResult.download_url, user.id, savedReportId, data.referenceNumber); url = permanentUrl; await supabase.from('reports').update({ storage_path: storagePath, pdf_url: url, pdf_generated_at: new Date().toISOString() }).eq('report_id', savedReportId); } catch { await supabase.from('reports').update({ pdf_url: url, pdf_generated_at: new Date().toISOString() }).eq('report_id', savedReportId); }
-          const { openOrDownloadPdf } = await import('@/utils/pdf-download');
-          await openOrDownloadPdf(url, `G99-${data.referenceNumber}.pdf`);
-          toast.success('G99 form generated');
-        }
-      } catch { toast.error('Saved but PDF failed'); }
-      storageRemoveSync(DRAFT_KEY);
-      navigate(-1);
-    } catch { toast.error('Failed to save'); } finally { setIsSaving(false); }
+      let company: Record<string, any> = {};
+      try { const { data: cpData } = await supabase.rpc('get_my_company_profile'); const cp = Array.isArray(cpData) ? cpData[0] : cpData; if (cp) company = cp; } catch {}
+      const payload = { ...data, companyName: company.company_name || data.installerCompany, companyAddress: company.company_address || '', companyPhone: company.company_phone || data.installerPhone, companyEmail: company.company_email || data.installerEmail, companyLogo: company.company_logo || '' };
+      const { data: pdfResult, error: pdfError } = await supabase.functions.invoke('generate-g99-commissioning-pdf', { body: { formData: payload } });
+      if (pdfError) { toast.error('PDF generation failed'); }
+      else if (pdfResult?.download_url) {
+        let url = pdfResult.download_url;
+        const reportId = savedReportId || data.referenceNumber;
+        try { const { saveCertificatePdf } = await import('@/utils/certificate-pdf-storage'); const { permanentUrl, storagePath } = await saveCertificatePdf(pdfResult.download_url, user.id, reportId, data.referenceNumber); url = permanentUrl; await supabase.from('reports').update({ storage_path: storagePath, pdf_url: url, pdf_generated_at: new Date().toISOString(), status: 'completed' }).eq('report_id', reportId); } catch { await supabase.from('reports').update({ pdf_url: url, pdf_generated_at: new Date().toISOString(), status: 'completed' }).eq('report_id', reportId); }
+        const { openOrDownloadPdf } = await import('@/utils/pdf-download');
+        await openOrDownloadPdf(url, `G99-${data.referenceNumber}.pdf`);
+        toast.success('G99 form generated');
+      }
+    } catch { toast.error('Failed to generate PDF'); } finally { setIsSaving(false); }
   };
 
   const progress = getProgressPercentage();
@@ -155,6 +179,10 @@ export default function G99CommissioningCertificate() {
           <Field label="Name"><Input value={data.installerName} onChange={(e) => update('installerName', e.target.value)} className={inputCn} /></Field>
           <Field label="Company"><Input value={data.installerCompany} onChange={(e) => update('installerCompany', e.target.value)} className={inputCn} /></Field>
         </div>
+        <div className="grid grid-cols-2 gap-3">
+          <Field label="Phone"><Input type="tel" value={data.installerPhone} onChange={(e) => update('installerPhone', e.target.value)} className={inputCn} /></Field>
+          <Field label="Email"><Input type="email" value={data.installerEmail} onChange={(e) => update('installerEmail', e.target.value)} className={inputCn} /></Field>
+        </div>
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
           <Field label="MCS No." required><Input value={data.mcsNumber} onChange={(e) => update('mcsNumber', e.target.value)} className={inputCn} /></Field>
           <Field label="Scheme"><Input value={data.registrationScheme} onChange={(e) => update('registrationScheme', e.target.value)} className={inputCn} /></Field>
@@ -162,19 +190,47 @@ export default function G99CommissioningCertificate() {
         </div>
       </Section>
 
-      <Section title="Site & Equipment" accentColor="from-blue-500/40 to-cyan-400/20">
+      <Section title="Site Details" accentColor="from-blue-500/40 to-cyan-400/20">
         <Field label="Installation Address" required><Input value={data.installationAddress} onChange={(e) => update('installationAddress', e.target.value)} className={inputCn} /></Field>
         <Field label="MPAN"><Input value={data.mpan} onChange={(e) => update('mpan', e.target.value)} className={inputCn} placeholder="21-digit" /></Field>
+        <div className="grid grid-cols-2 gap-3">
+          <Field label="Supply Type"><Select value={data.supplyType} onValueChange={(v) => update('supplyType', v)}><SelectTrigger className={selectTriggerCn}><SelectValue /></SelectTrigger><SelectContent className={selectContentCn}><SelectItem value="single-phase">Single-phase</SelectItem><SelectItem value="three-phase">Three-phase</SelectItem></SelectContent></Select></Field>
+          <Field label="Earthing"><Select value={data.earthingArrangement} onValueChange={(v) => update('earthingArrangement', v)}><SelectTrigger className={selectTriggerCn}><SelectValue placeholder="Select..." /></SelectTrigger><SelectContent className={selectContentCn}><SelectItem value="TN-S">TN-S</SelectItem><SelectItem value="TN-C-S">TN-C-S</SelectItem><SelectItem value="TT">TT</SelectItem></SelectContent></Select></Field>
+        </div>
+      </Section>
+
+      <Section title="Generating Equipment" accentColor="from-green-500/40 to-emerald-400/20">
         <Field label="Equipment Type"><Select value={data.equipmentType} onValueChange={(v) => update('equipmentType', v)}><SelectTrigger className={selectTriggerCn}><SelectValue placeholder="Select..." /></SelectTrigger><SelectContent className={selectContentCn}><SelectItem value="Solar PV">Solar PV</SelectItem><SelectItem value="Battery Storage">Battery Storage</SelectItem><SelectItem value="Combined PV+Battery">Combined PV + Battery</SelectItem><SelectItem value="Wind">Wind</SelectItem></SelectContent></Select></Field>
         <div className="grid grid-cols-2 gap-3">
           <Field label="Manufacturer"><Input value={data.equipmentManufacturer} onChange={(e) => update('equipmentManufacturer', e.target.value)} className={inputCn} /></Field>
           <Field label="Model"><Input value={data.equipmentModel} onChange={(e) => update('equipmentModel', e.target.value)} className={inputCn} /></Field>
         </div>
-        <div className="grid grid-cols-2 gap-3">
-          <Field label="Rated Output (kW)" required><Input type="number" step="0.01" value={data.ratedOutput} onChange={(e) => update('ratedOutput', e.target.value)} className={inputCn} placeholder=">3.68 single / >11.04 three" /></Field>
-          <Field label="Proposed Export (kW)"><Input type="number" step="0.01" value={data.proposedExportCapacity} onChange={(e) => update('proposedExportCapacity', e.target.value)} className={inputCn} /></Field>
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+          <Field label="Serial Number"><Input value={data.equipmentSerial} onChange={(e) => update('equipmentSerial', e.target.value)} className={inputCn} /></Field>
+          <Field label="Rated Output (kW)" required><Input type="number" step="0.01" value={data.ratedOutput} onChange={(e) => update('ratedOutput', e.target.value)} className={inputCn} placeholder=">3.68 / >11.04" /></Field>
+          <Field label="Phases"><Select value={data.numberOfPhases} onValueChange={(v) => update('numberOfPhases', v)}><SelectTrigger className={selectTriggerCn}><SelectValue /></SelectTrigger><SelectContent className={selectContentCn}><SelectItem value="1">Single</SelectItem><SelectItem value="3">Three</SelectItem></SelectContent></Select></Field>
         </div>
-        <Field label="No. of Generating Units"><Input type="number" value={data.numberOfGeneratingUnits} onChange={(e) => update('numberOfGeneratingUnits', e.target.value)} className={inputCn} /></Field>
+        <Field label="Type Test Certificate Ref"><Input value={data.typeTestCertRef} onChange={(e) => update('typeTestCertRef', e.target.value)} className={inputCn} placeholder="Manufacturer's G99 type test cert" /></Field>
+        <div className="grid grid-cols-2 gap-3">
+          <Field label="Inverter Manufacturer"><Input value={data.inverterManufacturer} onChange={(e) => update('inverterManufacturer', e.target.value)} className={inputCn} placeholder="If different" /></Field>
+          <Field label="Inverter Model"><Input value={data.inverterModel} onChange={(e) => update('inverterModel', e.target.value)} className={inputCn} /></Field>
+        </div>
+        <div className="grid grid-cols-2 gap-3">
+          <Field label="Proposed Export (kW)"><Input type="number" step="0.01" value={data.proposedExportCapacity} onChange={(e) => update('proposedExportCapacity', e.target.value)} className={inputCn} /></Field>
+          <Field label="No. of Generating Units"><Input type="number" value={data.numberOfGeneratingUnits} onChange={(e) => update('numberOfGeneratingUnits', e.target.value)} className={inputCn} /></Field>
+        </div>
+        <Field label="Associated Cert Ref"><Input value={data.associatedCertRef} onChange={(e) => update('associatedCertRef', e.target.value)} className={inputCn} placeholder="Link to PV/BESS cert" /></Field>
+      </Section>
+
+      <Section title="Export Details" accentColor="from-cyan-500/40 to-blue-400/20">
+        <div className="space-y-2">
+          <div className="flex items-center gap-3"><Checkbox checked={data.exportCapable} onCheckedChange={(v) => update('exportCapable', !!v)} className={checkboxCn} /><Label className="text-sm text-white">Export capable</Label></div>
+          <div className="flex items-center gap-3"><Checkbox checked={data.exportLimited} onCheckedChange={(v) => update('exportLimited', !!v)} className={checkboxCn} /><Label className="text-sm text-white">Export limited by DNO</Label></div>
+          {data.exportLimited && <Field label="Export Limit (kW)"><Input type="number" step="0.01" value={data.exportLimit} onChange={(e) => update('exportLimit', e.target.value)} className={inputCn} /></Field>}
+          <div className="flex items-center gap-3"><Checkbox checked={data.exportMeterFitted} onCheckedChange={(v) => update('exportMeterFitted', !!v)} className={checkboxCn} /><Label className="text-sm text-white">Export meter fitted</Label></div>
+          {data.exportMeterFitted && <Field label="Export Meter Serial"><Input value={data.exportMeterSerial} onChange={(e) => update('exportMeterSerial', e.target.value)} className={inputCn} /></Field>}
+        </div>
+        <Field label="SEG Supplier"><Input value={data.segSupplier} onChange={(e) => update('segSupplier', e.target.value)} className={inputCn} placeholder="e.g. Octopus, British Gas..." /></Field>
       </Section>
     </div>
   );
@@ -264,6 +320,10 @@ export default function G99CommissioningCertificate() {
 
   const renderSignoff = () => (
     <div className="space-y-5">
+      <Section title="Reference" accentColor="from-white/20 to-white/5">
+        <Field label="Reference No."><Input value={data.referenceNumber} onChange={(e) => update('referenceNumber', e.target.value)} className={inputCn} /></Field>
+      </Section>
+
       <Section title="Overall Result" accentColor="from-green-500/40 to-emerald-400/20">
         <div className="flex flex-col gap-2">
           {[{ v: 'satisfactory', l: 'Satisfactory', c: 'bg-green-500 text-white' }, { v: 'unsatisfactory', l: 'Unsatisfactory', c: 'bg-red-500 text-white' }].map(({ v, l, c }) => (
@@ -280,6 +340,7 @@ export default function G99CommissioningCertificate() {
         <Field label="Date"><Input type="date" value={data.installerDate} onChange={(e) => update('installerDate', e.target.value)} className={inputCn} /></Field>
         {data.dnoWitnessRequired && <SignatureInput label="DNO Witness Signature" value={data.dnoWitnessSignature} onChange={(sig) => update('dnoWitnessSignature', sig || '')} />}
         <SignatureInput label="Customer Signature (optional)" value={data.customerSignature} onChange={(sig) => update('customerSignature', sig || '')} />
+        {data.customerSignature && <Field label="Customer Date"><Input type="date" value={data.customerDate} onChange={(e) => update('customerDate', e.target.value)} className={inputCn} /></Field>}
       </Section>
 
       <Section title="Notes" accentColor="from-white/20 to-white/5">
@@ -295,10 +356,18 @@ export default function G99CommissioningCertificate() {
       <div className="sticky top-0 z-50 bg-background/95 backdrop-blur-sm border-b border-white/[0.06]">
         <div className="px-4 py-2">
           <div className="flex items-center gap-3 h-11">
-            <Button variant="ghost" size="icon" onClick={() => navigate(-1)} className="text-white hover:text-white hover:bg-white/10 rounded-xl h-11 w-11 touch-manipulation active:scale-[0.98]"><ArrowLeft className="h-5 w-5" /></Button>
-            <div className="flex items-center gap-2.5">
-              <div className="p-1.5 rounded-lg bg-red-500/10 border border-red-500/20"><Zap className="h-4 w-4 text-red-400" /></div>
-              <h1 className="text-base font-semibold text-white">G99 Commissioning</h1>
+            <div className="flex items-center gap-3">
+              <Button variant="ghost" size="icon" onClick={() => navigate(-1)} className="text-white hover:text-white hover:bg-white/10 rounded-xl h-11 w-11 touch-manipulation active:scale-[0.98]"><ArrowLeft className="h-5 w-5" /></Button>
+              <div className="flex items-center gap-2.5">
+                <div className="p-1.5 rounded-lg bg-red-500/10 border border-red-500/20"><Zap className="h-4 w-4 text-red-400" /></div>
+                <h1 className="text-base font-semibold text-white">G99 Commissioning</h1>
+              </div>
+            </div>
+            <div className="flex items-center gap-2">
+              <SyncStatusBadge status={syncStatus} />
+              <Button variant="ghost" size="icon" onClick={handleSaveDraft} disabled={isSaving} className="text-white hover:text-white hover:bg-white/10 rounded-xl h-11 w-11 touch-manipulation">
+                {isSaving ? <Loader2 className="h-4 w-4 animate-spin" /> : <Save className="h-4 w-4" />}
+              </Button>
             </div>
           </div>
         </div>
@@ -325,14 +394,24 @@ export default function G99CommissioningCertificate() {
         <div className="flex gap-3">
           <Button variant="outline" onClick={navigatePrevious} disabled={!canNavigatePrevious} className="flex-1 h-12 touch-manipulation"><ChevronLeft className="h-4 w-4 mr-1" />Previous</Button>
           {currentTabIndex === totalTabs - 1 ? (
-            <Button onClick={handleSave} disabled={isSaving} className="flex-1 h-12 bg-red-500 hover:bg-red-600 touch-manipulation">
-              {isSaving ? <><Loader2 className="h-4 w-4 animate-spin mr-2" />Saving...</> : 'Download PDF'}
+            <Button onClick={handleGeneratePDF} disabled={isSaving} className="flex-1 h-12 bg-red-500 hover:bg-red-600 touch-manipulation">
+              {isSaving ? <><Loader2 className="h-4 w-4 animate-spin mr-2" />Generating...</> : 'Download PDF'}
             </Button>
           ) : (
             <Button onClick={navigateNext} disabled={!canNavigateNext} className="flex-1 h-12 touch-manipulation">Next<ChevronRight className="h-4 w-4 ml-1" /></Button>
           )}
         </div>
       </div>
+
+      <AlertDialog open={showRecoveryDialog} onOpenChange={setShowRecoveryDialog}>
+        <AlertDialogContent>
+          <AlertDialogHeader><AlertDialogTitle>Recover Draft?</AlertDialogTitle><AlertDialogDescription>A previous unsaved G99 form was found. Would you like to recover it?</AlertDialogDescription></AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel onClick={() => { discardDraft(); setShowRecoveryDialog(false); }}>Discard</AlertDialogCancel>
+            <AlertDialogAction onClick={() => { if (recoveryDraft) { setData((prev) => ({ ...getDefaultG99FormData(), ...prev, ...recoveryDraft.data })); recoverDraft(); } setShowRecoveryDialog(false); }}>Recover Draft</AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
   );
 }

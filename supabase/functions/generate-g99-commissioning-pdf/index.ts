@@ -1,7 +1,7 @@
 import 'jsr:@supabase/functions-js/edge-runtime.d.ts';
 
 const PDFMONKEY_API_KEY = Deno.env.get('PDFMONKEY_API_KEY');
-const TEMPLATE_ID = ''; // Set once template is created in PDF Monkey
+const TEMPLATE_ID = '66F1AA91-1EC8-4180-8B7F-A9525D84C28C';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',

@@ -20,6 +20,8 @@ const PATTestingCertificate = lazy(() => import('@/pages/inspection/PATTestingCe
 const BESSCertificate = lazy(() => import('@/pages/inspection/BESSCertificate'));
 // Lightning Protection Certificate
 const LightningProtectionCertificate = lazy(() => import('@/pages/inspection/LightningProtectionCertificate'));
+// Smoke & CO Alarm
+const SmokeCOAlarmCertificate = lazy(() => import('@/pages/inspection/SmokeCOAlarmCertificate'));
 // G98/G99 Commissioning
 const G98CommissioningCertificate = lazy(() => import('@/pages/inspection/G98CommissioningCertificate'));
 const G99CommissioningCertificate = lazy(() => import('@/pages/inspection/G99CommissioningCertificate'));
@@ -75,6 +77,10 @@ export default function InspectionRoutes() {
         {/* Lightning Protection (BS EN 62305) */}
         <Route path="lightning-protection/new" element={<LightningProtectionCertificate />} />
         <Route path="lightning-protection/:id" element={<LightningProtectionCertificate />} />
+
+        {/* Smoke & CO Alarm */}
+        <Route path="smoke-co-alarm/new" element={<SmokeCOAlarmCertificate />} />
+        <Route path="smoke-co-alarm/:id" element={<SmokeCOAlarmCertificate />} />
 
         {/* G98 Commissioning (EREC G98) */}
         <Route path="g98-commissioning/new" element={<G98CommissioningCertificate />} />

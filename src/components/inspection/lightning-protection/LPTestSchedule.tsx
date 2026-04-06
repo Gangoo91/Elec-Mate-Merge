@@ -1,9 +1,8 @@
-import { useState, useRef } from 'react';
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
+import { useRef, useState } from 'react';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Plus, Trash2, Globe2, ArrowDown, Link, Zap, Thermometer, Gauge, ChevronUp, ChevronDown, CheckCircle2, XCircle, Camera, X } from 'lucide-react';
+import { Plus, Trash2, Camera, X } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useLightningProtectionSmartForm } from '@/hooks/inspection/useLightningProtectionSmartForm';
 import { EarthElectrodeTest, DownConductorTest, BondingTest, SPDCheck, SeparationDistanceCheck, EARTH_RESISTANCE_THRESHOLD, CONTINUITY_THRESHOLD, BONDING_THRESHOLD } from '@/types/lightning-protection';
@@ -13,15 +12,17 @@ const inputSmCn = 'h-9 text-sm touch-manipulation border-white/30 focus:border-y
 const selectTriggerCn = 'h-9 text-sm touch-manipulation bg-elec-gray border-white/30 focus:border-elec-yellow';
 const selectContentCn = 'z-[100] max-w-[calc(100vw-2rem)] bg-elec-gray border-elec-gray text-foreground';
 
-interface SH { title: string; icon: React.ReactNode; isOpen: boolean; color: string; subtitle?: string; count?: number }
-const SectionHeader = ({ title, icon, isOpen, color, subtitle, count }: SH) => (
-  <CollapsibleTrigger className="flex items-center justify-between w-full p-4 hover:bg-white/5 transition-colors rounded-t-xl">
-    <div className="flex items-center gap-3">
-      <div className={`w-10 h-11 rounded-xl flex items-center justify-center bg-${color}/15`}>{icon}</div>
-      <div className="text-left"><h3 className="text-base font-semibold text-foreground flex items-center gap-2">{title}{count !== undefined && <span className="text-[10px] font-bold text-white bg-white/[0.1] px-2 py-0.5 rounded">{count}</span>}</h3>{subtitle && <span className="text-xs text-white">{subtitle}</span>}</div>
+const Section = ({ title, accentColor, count, subtitle, children }: { title: string; accentColor?: string; count?: number; subtitle?: string; children: React.ReactNode }) => (
+  <div className="space-y-4">
+    <div className="border-b border-white/[0.06] pb-1 mb-3">
+      <div className={cn('h-[2px] w-full rounded-full bg-gradient-to-r mb-2', accentColor || 'from-yellow-500 to-amber-400')} />
+      <h2 className="text-xs font-medium text-white uppercase tracking-wider flex items-center gap-2">{title}
+        {count !== undefined && <span className="text-[10px] font-bold text-white bg-white/[0.1] px-2 py-0.5 rounded">{count}</span>}
+        {subtitle && <span className="text-[10px] text-white font-normal">— {subtitle}</span>}
+      </h2>
     </div>
-    {isOpen ? <ChevronUp className="h-5 w-5 text-white" /> : <ChevronDown className="h-5 w-5 text-white" />}
-  </CollapsibleTrigger>
+    {children}
+  </div>
 );
 
 const PassFailBadge = ({ value }: { value: 'pass' | 'fail' | '' }) => {
@@ -32,12 +33,6 @@ const PassFailBadge = ({ value }: { value: 'pass' | 'fail' | '' }) => {
 interface Props { formData: any; onUpdate: (field: string, value: any) => void }
 
 export default function LPTestSchedule({ formData, onUpdate }: Props) {
-  const [condOpen, setCondOpen] = useState(true);
-  const [earthOpen, setEarthOpen] = useState(true);
-  const [dcOpen, setDcOpen] = useState(true);
-  const [bondOpen, setBondOpen] = useState(true);
-  const [spdOpen, setSpdOpen] = useState(false);
-  const [sepOpen, setSepOpen] = useState(false);
 
   const { isEarthResistancePass, isContinuityPass, isBondingPass } = useLightningProtectionSmartForm();
   const testPhotoRef = useRef<HTMLInputElement>(null);
@@ -98,11 +93,9 @@ export default function LPTestSchedule({ formData, onUpdate }: Props) {
       <input ref={testPhotoRef} type="file" accept="image/*" capture="environment" className="hidden" onChange={handleTestPhoto} />
 
       {/* Test Conditions */}
-      <div className="eicr-section-card">
-        <Collapsible open={condOpen} onOpenChange={setCondOpen}>
-          <SectionHeader title="Test Conditions" icon={<Thermometer className="h-5 w-5 text-amber-400" />} isOpen={condOpen} color="amber-500" subtitle="Weather, soil, instrument" />
-          <CollapsibleContent>
-            <div className="p-4 space-y-4">
+      <div>
+        <Section title="Test Conditions" accentColor="from-amber-500/40 to-yellow-400/20" subtitle="Weather, soil, instrument">
+            <div className="space-y-4">
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                 <div className="space-y-2">
                   <Label className="text-xs text-white">Weather</Label>
@@ -152,16 +145,13 @@ export default function LPTestSchedule({ formData, onUpdate }: Props) {
                 <div className="space-y-2"><Label className="text-xs text-white">Cal. Date</Label><Input type="date" value={formData.instrumentCalDate} onChange={(e) => onUpdate('instrumentCalDate', e.target.value)} className={`${inputCn} [color-scheme:dark]`} /></div>
               </div>
             </div>
-          </CollapsibleContent>
-        </Collapsible>
+        </Section>
       </div>
 
       {/* Earth Electrode Tests */}
-      <div className="eicr-section-card">
-        <Collapsible open={earthOpen} onOpenChange={setEarthOpen}>
-          <SectionHeader title="Earth Electrode Resistance" icon={<Globe2 className="h-5 w-5 text-green-400" />} isOpen={earthOpen} color="green-500" subtitle={`≤${EARTH_RESISTANCE_THRESHOLD}Ω threshold`} count={earthTests.length} />
-          <CollapsibleContent>
-            <div className="p-4 space-y-3">
+      <div>
+        <Section title={`Earth Electrode Resistance (≤${EARTH_RESISTANCE_THRESHOLD}Ω)`} accentColor="from-green-500/40 to-emerald-400/20" count={earthTests.length}>
+            <div className="space-y-3">
               {earthTests.map((test) => (
                 <div key={test.id} className="p-3 bg-white/[0.03] rounded-xl border border-white/[0.06] space-y-2">
                   <div className="flex items-center justify-between">
@@ -205,16 +195,13 @@ export default function LPTestSchedule({ formData, onUpdate }: Props) {
                 <Plus className="h-4 w-4" /> Add Earth Electrode
               </button>
             </div>
-          </CollapsibleContent>
-        </Collapsible>
+        </Section>
       </div>
 
       {/* Down Conductor Continuity */}
-      <div className="eicr-section-card">
-        <Collapsible open={dcOpen} onOpenChange={setDcOpen}>
-          <SectionHeader title="Down Conductor Continuity" icon={<ArrowDown className="h-5 w-5 text-blue-400" />} isOpen={dcOpen} color="blue-500" subtitle={`<${CONTINUITY_THRESHOLD}Ω threshold`} count={dcTests.length} />
-          <CollapsibleContent>
-            <div className="p-4 space-y-3">
+      <div>
+        <Section title={`Down Conductor Continuity (<${CONTINUITY_THRESHOLD}Ω)`} accentColor="from-blue-500/40 to-cyan-400/20" count={dcTests.length}>
+            <div className="space-y-3">
               {dcTests.map((test) => (
                 <div key={test.id} className="p-3 bg-white/[0.03] rounded-xl border border-white/[0.06] space-y-2">
                   <div className="flex items-center justify-between">
@@ -248,16 +235,13 @@ export default function LPTestSchedule({ formData, onUpdate }: Props) {
                 <Plus className="h-4 w-4" /> Add Down Conductor
               </button>
             </div>
-          </CollapsibleContent>
-        </Collapsible>
+        </Section>
       </div>
 
       {/* Bonding Tests */}
-      <div className="eicr-section-card">
-        <Collapsible open={bondOpen} onOpenChange={setBondOpen}>
-          <SectionHeader title="Bonding Tests" icon={<Link className="h-5 w-5 text-purple-400" />} isOpen={bondOpen} color="purple-500" subtitle={`≤${BONDING_THRESHOLD}Ω threshold`} count={bondTests.length} />
-          <CollapsibleContent>
-            <div className="p-4 space-y-3">
+      <div>
+        <Section title={`Bonding Tests (≤${BONDING_THRESHOLD}Ω)`} accentColor="from-purple-500/40 to-indigo-400/20" count={bondTests.length}>
+            <div className="space-y-3">
               {bondTests.map((test) => (
                 <div key={test.id} className="p-3 bg-white/[0.03] rounded-xl border border-white/[0.06] space-y-2">
                   <div className="flex items-center justify-between">
@@ -281,16 +265,13 @@ export default function LPTestSchedule({ formData, onUpdate }: Props) {
                 <Plus className="h-4 w-4" /> Add Bonding Test
               </button>
             </div>
-          </CollapsibleContent>
-        </Collapsible>
+        </Section>
       </div>
 
       {/* SPD Checks */}
-      <div className="eicr-section-card">
-        <Collapsible open={spdOpen} onOpenChange={setSpdOpen}>
-          <SectionHeader title="SPD Checks" icon={<Zap className="h-5 w-5 text-cyan-400" />} isOpen={spdOpen} color="cyan-500" count={spdChecks.length} />
-          <CollapsibleContent>
-            <div className="p-4 space-y-3">
+      <div>
+        <Section title="SPD Checks" accentColor="from-cyan-500/40 to-blue-400/20" count={spdChecks.length}>
+            <div className="space-y-3">
               {spdChecks.map((check) => (
                 <div key={check.id} className="p-3 bg-white/[0.03] rounded-xl border border-white/[0.06] space-y-2">
                   <div className="flex items-center justify-between">
@@ -331,16 +312,13 @@ export default function LPTestSchedule({ formData, onUpdate }: Props) {
                 <Plus className="h-4 w-4" /> Add SPD Check
               </button>
             </div>
-          </CollapsibleContent>
-        </Collapsible>
+        </Section>
       </div>
 
       {/* Separation Distance */}
-      <div className="eicr-section-card">
-        <Collapsible open={sepOpen} onOpenChange={setSepOpen}>
-          <SectionHeader title="Separation Distance" icon={<Gauge className="h-5 w-5 text-amber-400" />} isOpen={sepOpen} color="amber-500" subtitle="Optional" count={sepChecks.length} />
-          <CollapsibleContent>
-            <div className="p-4 space-y-3">
+      <div>
+        <Section title="Separation Distance" accentColor="from-amber-500/40 to-yellow-400/20" subtitle="Optional" count={sepChecks.length}>
+            <div className="space-y-3">
               {sepChecks.map((check) => (
                 <div key={check.id} className="p-3 bg-white/[0.03] rounded-xl border border-white/[0.06] space-y-2">
                   <div className="flex items-center justify-between">
@@ -358,8 +336,7 @@ export default function LPTestSchedule({ formData, onUpdate }: Props) {
                 <Plus className="h-4 w-4" /> Add Separation Check
               </button>
             </div>
-          </CollapsibleContent>
-        </Collapsible>
+        </Section>
       </div>
     </div>
   );

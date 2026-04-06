@@ -1,7 +1,7 @@
 import 'jsr:@supabase/functions-js/edge-runtime.d.ts';
 
 const PDFMONKEY_API_KEY = Deno.env.get('PDFMONKEY_API_KEY');
-const TEMPLATE_ID = '3C669DC3-FFCB-4A22-A8BA-A30989BFCC10';
+const TEMPLATE_ID = ''; // Set once template is created in PDF Monkey
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -34,12 +34,12 @@ Deno.serve(async (req: Request) => {
     if (!PDFMONKEY_API_KEY) throw new Error('PDFMONKEY_API_KEY not set');
     const { formData, templateId } = await req.json();
     if (!formData) throw new Error('No form data');
-    console.log('[generate-g98-commissioning-pdf] Ref:', formData.referenceNumber, 'DNO:', formData.dnoName);
+    console.log('[generate-smoke-co-alarm-pdf] Ref:', formData.referenceNumber, 'Grade:', formData.gradeAchieved, 'Cat:', formData.categoryAchieved, 'Alarms:', formData.alarms?.length);
     const doc = await createDoc(formData, templateId);
     const completed = await waitForPDF(doc.id);
     return new Response(JSON.stringify({ success: true, document_id: completed.id, download_url: completed.download_url, preview_url: completed.preview_url }), { headers: { ...corsHeaders, 'Content-Type': 'application/json' } });
   } catch (error) {
-    console.error('[generate-g98-commissioning-pdf] Error:', error);
+    console.error('[generate-smoke-co-alarm-pdf] Error:', error);
     return new Response(JSON.stringify({ success: false, error: error instanceof Error ? error.message : 'Unknown' }), { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } });
   }
 });
