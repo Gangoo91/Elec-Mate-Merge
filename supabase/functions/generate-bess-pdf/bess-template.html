@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>BESS Commissioning Certificate</title>
+    <style>
+        :root { --accent: #059669; --accent-light: #34d399; }
+        @page { size: A4; margin: 3mm 3mm 4mm 3mm; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 8.5px; line-height: 1.4; color: #1a1a1a; background: #fff; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+
+        .doc-header { background: linear-gradient(180deg, #0a1628 0%, #152238 100%); color: #fff; padding: 10px 12px; margin-bottom: 2px; border-radius: 2px; position: relative; overflow: hidden; }
+        .doc-header::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: var(--accent); }
+        .doc-header-content { display: flex; justify-content: space-between; align-items: center; }
+        .doc-title-section { flex: 1; }
+        .doc-title { font-size: 15px; font-weight: 700; letter-spacing: 0.5px; margin-bottom: 2px; }
+        .doc-subtitle { font-size: 7px; font-weight: 400; opacity: 0.85; }
+        .doc-meta { text-align: right; }
+        .cert-number { font-size: 11px; font-weight: 700; color: var(--accent-light); }
+        .page-number { font-size: 8px; opacity: 0.7; margin-top: 2px; }
+        .company-logo img { max-height: 45px; max-width: 120px; object-fit: contain; }
+        .company-brand { display: flex; align-items: center; gap: 10px; margin-right: 12px; }
+        .company-brand-name { font-size: 11px; font-weight: 700; color: #fff; }
+        .company-brand-reg { font-size: 7px; color: var(--accent-light); margin-top: 1px; }
+
+        .section { margin-bottom: 8px; }
+        .section-title { background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); color: #fff; font-size: 8.5px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.8px; padding: 5px 8px; margin-bottom: 4px; border-left: 3px solid var(--accent); }
+        .section-title.amber { border-left-color: #f59e0b; }
+        .section-title.green { border-left-color: #22c55e; }
+        .section-title.red { border-left-color: #dc2626; }
+        .section-title.blue { border-left-color: #3b82f6; }
+        .section-title.purple { border-left-color: #8b5cf6; }
+        .section-title.cyan { border-left-color: #06b6d4; }
+
+        .form-grid { display: table; width: 100%; border-collapse: collapse; margin-bottom: 4px; }
+        .form-row { display: table-row; }
+        .form-label { display: table-cell; font-size: 7px; font-weight: 600; color: #475569; padding: 4px 6px; width: 110px; vertical-align: middle; background: #f8fafc; border: 1px solid #e2e8f0; }
+        .form-value { display: table-cell; font-size: 8px; color: #1e293b; padding: 4px 6px; vertical-align: middle; border: 1px solid #e2e8f0; background: #fff; }
+
+        .inline-form { display: flex; flex-wrap: wrap; gap: 5px; padding: 6px 8px; background: #fafbfc; border: 1px solid #e2e8f0; border-radius: 2px; }
+        .checkbox-item { display: flex; align-items: center; gap: 4px; margin-right: 6px; }
+        .checkbox-box { width: 10px; height: 10px; border: 1.5px solid #64748b; display: inline-flex; align-items: center; justify-content: center; font-size: 7px; font-weight: bold; flex-shrink: 0; }
+        .checkbox-box.checked { background: var(--accent); color: #fff; border-color: var(--accent); }
+        .checkbox-box.checked-green { background: #22c55e; color: #fff; border-color: #22c55e; }
+        .checkbox-box.checked-amber { background: #f59e0b; color: #fff; border-color: #f59e0b; }
+        .checkbox-box.checked-red { background: #dc2626; color: #fff; border-color: #dc2626; }
+        .checkbox-box.checked-blue { background: #3b82f6; color: #fff; border-color: #3b82f6; }
+
+        .badge { display: inline-block; padding: 1px 5px; border-radius: 2px; font-size: 6.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.3px; }
+        .badge.green { background: #dcfce7; color: #166534; border: 1px solid #86efac; }
+        .badge.amber { background: #fef3c7; color: #92400e; border: 1px solid #fcd34d; }
+        .badge.pass { background: #dcfce7; color: #166534; border: 1px solid #86efac; }
+        .badge.fail { background: #fef2f2; color: #991b1b; border: 1px solid #fca5a5; }
+
+        .alert-box { border-radius: 2px; padding: 5px 8px; margin: 3px 0; }
+        .alert-box.green { background: #f0fdf4; border: 1px solid #86efac; border-left: 3px solid #22c55e; }
+        .alert-box.amber { background: #fffbeb; border: 1px solid #fcd34d; border-left: 3px solid #f59e0b; }
+        .alert-box.red { background: #fef2f2; border: 1px solid #fca5a5; border-left: 3px solid #dc2626; }
+
+        .signature-grid { display: flex; gap: 6px; margin-top: 2px; }
+        .signature-box { flex: 1; border: 1px solid #cbd5e1; border-radius: 2px; overflow: hidden; }
+        .signature-box-header { background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); color: #fff; font-size: 7px; font-weight: 600; padding: 3px 8px; border-bottom: 1px solid var(--accent); }
+        .signature-box-body { padding: 4px 6px; background: #fafbfc; }
+        .sig-field { display: flex; align-items: center; margin-bottom: 2px; gap: 4px; }
+        .sig-field:last-child { margin-bottom: 0; }
+        .sig-field-label { font-size: 6.5px; font-weight: 600; color: #64748b; min-width: 55px; flex-shrink: 0; }
+        .sig-field-value { flex: 1; font-size: 7.5px; color: #1e293b; padding: 2px 4px; background: #fff; border: 1px solid #e2e8f0; border-radius: 1px; min-height: 16px; }
+        .sig-field-value img { max-height: 28px; }
+
+        .footer { margin-top: 6px; padding-top: 5px; border-top: 2px solid var(--accent); display: flex; justify-content: space-between; font-size: 6.5px; color: #64748b; }
+        .page-break { page-break-before: always; }
+        .avoid-break { page-break-inside: avoid; }
+
+        /* Front sheet */
+        .front-sheet { min-height: 100vh; display: flex; flex-direction: column; }
+        .front-banner { background: linear-gradient(135deg, #065f46 0%, #059669 50%, #047857 100%); color: #fff; text-align: center; padding: 12px 20px; margin: 6px 0; border-radius: 3px; }
+        .front-banner h1 { font-size: 20px; font-weight: 900; letter-spacing: 1.5px; text-transform: uppercase; }
+        .front-banner p { font-size: 10px; font-weight: 600; margin-top: 3px; opacity: 0.95; }
+
+        .front-details-card { border: 1px solid #e2e8f0; border-radius: 4px; overflow: hidden; margin: 8px 0; }
+        .front-details-header { background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); color: #fff; font-size: 8.5px; font-weight: 600; padding: 4px 10px; text-transform: uppercase; letter-spacing: 0.5px; }
+        .front-details-body { padding: 8px 10px; background: #fff; }
+        .front-field { display: flex; margin-bottom: 6px; gap: 8px; }
+        .front-field:last-child { margin-bottom: 0; }
+        .front-field-label { font-size: 8px; font-weight: 600; color: #64748b; min-width: 100px; flex-shrink: 0; }
+        .front-field-value { font-size: 9px; font-weight: 600; color: #0f172a; }
+
+        .spec-grid { display: flex; gap: 6px; margin: 10px 0; }
+        .spec-card { flex: 1; min-width: 0; border-radius: 3px; padding: 8px 8px; text-align: center; border: 1px solid #e2e8f0; background: #f8fafc; box-sizing: border-box; }
+        .spec-value { font-size: 16px; font-weight: 900; color: #059669; line-height: 1; }
+        .spec-label { font-size: 6.5px; font-weight: 600; color: #64748b; text-transform: uppercase; margin-top: 2px; }
+
+        /* Grid protection table */
+        .grid-table { width: 100%; border-collapse: collapse; margin: 2px 0; font-size: 7.5px; }
+        .grid-table th { background: #f1f5f9; font-weight: 600; color: #475569; padding: 3px 5px; border: 1px solid #e2e8f0; text-align: left; font-size: 7px; }
+        .grid-table td { padding: 3px 5px; border: 1px solid #e2e8f0; color: #1e293b; }
+    </style>
+</head>
+<body>
+
+<!-- ===== PAGE 1: FRONT SHEET ===== -->
+<div class="front-sheet">
+    <div class="doc-header">
+        <div class="doc-header-content">
+            <div class="company-brand">
+                {% unless companyLogo == blank %}<div class="company-logo"><img src="{{ companyLogo }}" alt="Logo" /></div>{% endunless %}
+                <div>
+                    <div class="company-brand-name">{{ companyName }}</div>
+                    {% unless registrationScheme == blank %}<div class="company-brand-reg">{{ registrationScheme }}: {{ registrationNumber }}</div>{% endunless %}
+                </div>
+            </div>
+            <div class="doc-title-section">
+                <div class="doc-title">BESS COMMISSIONING CERTIFICATE</div>
+                <div class="doc-subtitle">Battery Energy Storage System — IET CoP EESS + MCS MIS 3002 + BS 7671:2018+A3:2024</div>
+            </div>
+            <div class="doc-meta">
+                <div class="cert-number">{{ certificateNumber }}</div>
+                <div class="page-number">Page 1</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="front-banner">
+        <h1>Battery Storage Commissioned</h1>
+        <p>Installation tested, commissioned, and safe for use</p>
+    </div>
+
+    <!-- System Specs -->
+    <div class="spec-grid">
+        <div class="spec-card"><div class="spec-value">{{ usableCapacity }}</div><div class="spec-label">kWh Usable</div></div>
+        <div class="spec-card"><div class="spec-value">{{ inverterRatedPower }}</div><div class="spec-label">kW Inverter</div></div>
+        <div class="spec-card"><div class="spec-value">{{ batteryChemistry }}</div><div class="spec-label">Chemistry</div></div>
+        <div class="spec-card"><div class="spec-value">{{ gridConnectionType }}</div><div class="spec-label">DNO</div></div>
+    </div>
+
+    <!-- Key Details -->
+    <div class="front-details-card">
+        <div class="front-details-header">Certificate Details</div>
+        <div class="front-details-body">
+            <div class="front-field"><div class="front-field-label">Certificate No.</div><div class="front-field-value">{{ certificateNumber }}</div></div>
+            <div class="front-field"><div class="front-field-label">Installation Date</div><div class="front-field-value">{{ installationDate }}</div></div>
+            <div class="front-field"><div class="front-field-label">Commissioning Date</div><div class="front-field-value">{{ commissioningDate }}</div></div>
+            <div class="front-field"><div class="front-field-label">Client</div><div class="front-field-value">{{ clientName }}</div></div>
+            {% unless clientTelephone == blank %}<div class="front-field"><div class="front-field-label">Contact</div><div class="front-field-value">{{ clientTelephone }}{% unless clientEmail == blank %} | {{ clientEmail }}{% endunless %}</div></div>{% endunless %}
+            {% unless clientAddress == blank %}<div class="front-field"><div class="front-field-label">Client Address</div><div class="front-field-value">{{ clientAddress }}</div></div>{% endunless %}
+            <div class="front-field"><div class="front-field-label">Installation Address</div><div class="front-field-value">{{ installationAddress }}</div></div>
+            <div class="front-field"><div class="front-field-label">Installation</div><div class="front-field-value">{{ installationType }} — {{ installationLocation }}</div></div>
+            {% unless installerName == blank %}<div class="front-field"><div class="front-field-label">Installer</div><div class="front-field-value">{{ installerName }}{% unless installerCompany == blank %}, {{ installerCompany }}{% endunless %}</div></div>{% endunless %}
+            {% unless installerScheme == blank %}<div class="front-field"><div class="front-field-label">Scheme</div><div class="front-field-value">{{ installerScheme }} — {{ installerSchemeNumber }}</div></div>{% endunless %}
+            {% unless mcsInstallerNumber == blank %}<div class="front-field"><div class="front-field-label">MCS Number</div><div class="front-field-value">{{ mcsInstallerNumber }}</div></div>{% endunless %}
+        </div>
+    </div>
+
+    <!-- System Summary -->
+    <div class="front-details-card">
+        <div class="front-details-header">System Summary</div>
+        <div class="front-details-body">
+            <div class="front-field"><div class="front-field-label">Battery</div><div class="front-field-value">{{ batteryManufacturer }} {{ batteryModel }}</div></div>
+            <div class="front-field"><div class="front-field-label">Inverter</div><div class="front-field-value">{{ inverterManufacturer }} {{ inverterModel }} ({{ inverterType }})</div></div>
+            <div class="front-field"><div class="front-field-label">Capacity</div><div class="front-field-value">{{ usableCapacity }} kWh ({{ numberOfModules }} module{% unless numberOfModules == "1" %}s{% endunless %})</div></div>
+            <div class="front-field"><div class="front-field-label">Coupling</div><div class="front-field-value">{{ couplingType }}-coupled | {{ operatingMode }}</div></div>
+            {% if associatedPV %}<div class="front-field"><div class="front-field-label">Associated PV</div><div class="front-field-value">{{ associatedPVCapacity }} kWp (ref: {{ associatedPVRef }})</div></div>{% endif %}
+            {% unless totalSiteGeneration == blank %}<div class="front-field"><div class="front-field-label">Total Generation</div><div class="front-field-value">{{ totalSiteGeneration }} kW — {{ gridConnectionType }}</div></div>{% endunless %}
+        </div>
+    </div>
+
+    <!-- Test Summary -->
+    <div class="front-details-card">
+        <div class="front-details-header">Commissioning Tests</div>
+        <div class="front-details-body">
+            <div class="inline-form" style="border: none; padding: 0; gap: 3px;">
+                <div class="checkbox-item"><span class="checkbox-box {% if chargeTest == 'pass' %}checked-green{% endif %}">{% if chargeTest == 'pass' %}&#10003;{% endif %}</span><label style="font-size: 7.5px;">Charge test</label></div>
+                <div class="checkbox-item"><span class="checkbox-box {% if dischargeTest == 'pass' %}checked-green{% endif %}">{% if dischargeTest == 'pass' %}&#10003;{% endif %}</span><label style="font-size: 7.5px;">Discharge test</label></div>
+                <div class="checkbox-item"><span class="checkbox-box {% if antiIslandingTest == 'pass' %}checked-green{% endif %}">{% if antiIslandingTest == 'pass' %}&#10003;{% endif %}</span><label style="font-size: 7.5px;">Anti-islanding</label></div>
+                <div class="checkbox-item"><span class="checkbox-box {% if monitoringConfirmed %}checked-green{% endif %}">{% if monitoringConfirmed %}&#10003;{% endif %}</span><label style="font-size: 7.5px;">Monitoring active</label></div>
+                <div class="checkbox-item"><span class="checkbox-box {% if acPolarity == 'correct' %}checked-green{% endif %}">{% if acPolarity == 'correct' %}&#10003;{% endif %}</span><label style="font-size: 7.5px;">AC polarity</label></div>
+                <div class="checkbox-item"><span class="checkbox-box {% if dcPolarityVerified %}checked-green{% endif %}">{% if dcPolarityVerified %}&#10003;{% endif %}</span><label style="font-size: 7.5px;">DC polarity</label></div>
+            </div>
+        </div>
+    </div>
+
+    <div style="flex: 1;"></div>
+    <div class="footer">
+        <div><strong>{{ companyName }}</strong><br>{{ companyAddress }}<br>{% unless companyPhone == blank %}Tel: {{ companyPhone }}{% endunless %}{% unless companyEmail == blank %} | {{ companyEmail }}{% endunless %}</div>
+        <div style="text-align: right;">{% unless registrationScheme == blank %}<strong>{{ registrationScheme }}</strong><br>Reg No: {{ registrationNumber }}<br>{% endunless %}<span style="color: #94a3b8;">BS 7671:2018+A3:2024 | IET CoP EESS | MCS MIS 3002</span></div>
+    </div>
+    <div style="text-align: center; margin-top: 6px;"><span style="font-size: 7px; color: #94a3b8; letter-spacing: 0.3px;">Powered by <strong style="color: #64748b;">Elec-Mate</strong></span></div>
+</div>
+
+<!-- ===== PAGE 2: SYSTEM & ELECTRICAL ===== -->
+<div class="page-break"></div>
+
+<div class="doc-header">
+    <div class="doc-header-content">
+        <div class="company-brand">{% unless companyLogo == blank %}<div class="company-logo"><img src="{{ companyLogo }}" alt="Logo" /></div>{% endunless %}<div><div class="company-brand-name">{{ companyName }}</div></div></div>
+        <div class="doc-title-section"><div class="doc-title">BESS CERTIFICATE</div><div class="doc-subtitle">System Design &amp; Electrical Details</div></div>
+        <div class="doc-meta"><div class="cert-number">{{ certificateNumber }}</div><div class="page-number">Page 2</div></div>
+    </div>
+</div>
+
+<!-- Battery System -->
+<div class="section avoid-break">
+    <div class="section-title green">Section A: Battery System</div>
+    <div class="form-grid">
+        <div class="form-row"><div class="form-label">Manufacturer</div><div class="form-value" style="font-weight: 600;">{{ batteryManufacturer }}</div><div class="form-label">Model</div><div class="form-value">{{ batteryModel }}</div></div>
+        <div class="form-row"><div class="form-label">Serial No(s)</div><div class="form-value" colspan="3">{{ batterySerials }}</div></div>
+        <div class="form-row"><div class="form-label">Chemistry</div><div class="form-value">{{ batteryChemistry }}</div><div class="form-label">Usable Capacity</div><div class="form-value">{{ usableCapacity }} kWh</div></div>
+        <div class="form-row"><div class="form-label">Nominal Voltage</div><div class="form-value">{{ nominalVoltage }} V DC</div><div class="form-label">Modules</div><div class="form-value">{{ numberOfModules }} ({{ configuration }})</div></div>
+        <div class="form-row"><div class="form-label">Max Charge</div><div class="form-value">{{ maxChargeRate }} kW</div><div class="form-label">Max Discharge</div><div class="form-value">{{ maxDischargeRate }} kW</div></div>
+        <div class="form-row"><div class="form-label">DoD / Efficiency</div><div class="form-value">{{ depthOfDischarge }}% / {{ roundTripEfficiency }}%</div><div class="form-label">MCS Product Cert</div><div class="form-value">{{ mcsBatteryProductCert }}</div></div>
+    </div>
+    <div class="inline-form" style="margin-top: 2px;">
+        {% if iec62619Compliant %}<div class="checkbox-item"><span class="checkbox-box checked-green">&#10003;</span><label>IEC 62619 compliant</label></div>{% endif %}
+        {% unless bmsFirmware == blank %}<div class="checkbox-item"><span class="checkbox-box checked">&#10003;</span><label>BMS firmware: {{ bmsFirmware }}</label></div>{% endunless %}
+    </div>
+</div>
+
+<!-- Inverter -->
+<div class="section avoid-break">
+    <div class="section-title blue">Section B: Inverter / Charger</div>
+    <div class="form-grid">
+        <div class="form-row"><div class="form-label">Manufacturer</div><div class="form-value" style="font-weight: 600;">{{ inverterManufacturer }}</div><div class="form-label">Model</div><div class="form-value">{{ inverterModel }}</div></div>
+        <div class="form-row"><div class="form-label">Serial No</div><div class="form-value">{{ inverterSerial }}</div><div class="form-label">Rated Power</div><div class="form-value">{{ inverterRatedPower }} kW</div></div>
+        <div class="form-row"><div class="form-label">Type</div><div class="form-value">{{ inverterType }}</div><div class="form-label">Phases</div><div class="form-value">{{ inverterPhases }}-phase</div></div>
+        <div class="form-row"><div class="form-label">Firmware</div><div class="form-value">{{ inverterFirmware }}</div><div class="form-label">MCS Product Cert</div><div class="form-value">{{ mcsInverterProductCert }}</div></div>
+    </div>
+</div>
+
+<!-- System Config -->
+<div class="section avoid-break">
+    <div class="section-title purple">Section C: System Configuration</div>
+    <div class="form-grid">
+        <div class="form-row"><div class="form-label">Coupling Type</div><div class="form-value">{{ couplingType }}</div><div class="form-label">Operating Mode</div><div class="form-value">{{ operatingMode }}</div></div>
+        {% unless chargeRateLimit == blank %}<div class="form-row"><div class="form-label">Charge Limit</div><div class="form-value">{{ chargeRateLimit }} kW</div><div class="form-label">Discharge Limit</div><div class="form-value">{{ dischargeRateLimit }} kW</div></div>{% endunless %}
+        <div class="form-row"><div class="form-label">DoD Limit</div><div class="form-value">{{ dodLimit }}%</div><div class="form-label">Backup Reserve</div><div class="form-value">{{ backupReserve }}%</div></div>
+    </div>
+    <div class="inline-form" style="margin-top: 2px;">
+        {% if epsEnabled %}<div class="checkbox-item"><span class="checkbox-box checked-green">&#10003;</span><label>EPS/backup enabled</label></div>{% endif %}
+        {% if exportLimited %}<div class="checkbox-item"><span class="checkbox-box checked-amber">&#10003;</span><label>Export limited: {{ exportLimit }} kW</label></div>{% endif %}
+    </div>
+</div>
+
+<!-- DC Circuit -->
+<div class="section avoid-break">
+    <div class="section-title amber">Section D: DC Circuit</div>
+    <div class="form-grid">
+        {% unless dcCableType == blank %}<div class="form-row"><div class="form-label">Cable</div><div class="form-value">{{ dcCableType }} {{ dcCableCSA }}mm² × {{ dcCableLength }}m</div><div class="form-label">Protection</div><div class="form-value">{{ dcProtectionType }} {{ dcProtectionRating }}A</div></div>{% endunless %}
+        {% unless dcIsolatorLocation == blank %}<div class="form-row"><div class="form-label">DC Isolator</div><div class="form-value">{{ dcIsolatorLocation }} ({{ dcIsolatorRating }}A)</div><div class="form-label">Earth Fault</div><div class="form-value">{{ dcEarthFaultMethod }}</div></div>{% endunless %}
+        {% unless dcSPDType == blank %}<div class="form-row"><div class="form-label">DC SPD</div><div class="form-value">{{ dcSPDType }} — {{ dcSPDManufacturer }}</div></div>{% endunless %}
+    </div>
+</div>
+
+<!-- Earthing -->
+<div class="section avoid-break">
+    <div class="section-title red">Section E: Earthing Assessment</div>
+    <div class="form-grid">
+        <div class="form-row"><div class="form-label">Earthing System</div><div class="form-value" style="font-weight: 600;">{{ earthingArrangement }}</div><div class="form-label">DC Earthing</div><div class="form-value">{{ dcEarthingMethod }}</div></div>
+        {% unless earthElectrodeResistance == blank %}<div class="form-row"><div class="form-label">Earth Electrode</div><div class="form-value">{{ earthElectrodeResistance }} Ω</div></div>{% endunless %}
+    </div>
+    <div class="inline-form" style="margin-top: 2px;">
+        <div class="checkbox-item"><span class="checkbox-box {% if pmeRiskAssessment %}checked-green{% endif %}">{% if pmeRiskAssessment %}&#10003;{% endif %}</span><label>PME risk assessment completed (Reg 411.4.2)</label></div>
+    </div>
+</div>
+
+<!-- AC Circuit -->
+<div class="section avoid-break">
+    <div class="section-title">Section F: AC Circuit</div>
+    <div class="form-grid">
+        {% unless acCableType == blank %}<div class="form-row"><div class="form-label">Cable</div><div class="form-value">{{ acCableType }} {{ acCableCSA }}mm² × {{ acCableLength }}m</div><div class="form-label">Protection</div><div class="form-value">{{ acProtectionType }} {{ acProtectionRating }}A curve {{ acProtectionCurve }}</div></div>{% endunless %}
+        {% unless rcdType == blank %}<div class="form-row"><div class="form-label">RCD</div><div class="form-value">{{ rcdType }} {{ rcdRating }}mA</div><div class="form-label">AC Isolator</div><div class="form-value">{{ acIsolatorLocation }}</div></div>{% endunless %}
+        {% unless acSPDType == blank %}<div class="form-row"><div class="form-label">AC SPD</div><div class="form-value">{{ acSPDType }} — {{ acSPDManufacturer }}</div></div>{% endunless %}
+    </div>
+</div>
+
+<!-- Safety -->
+<div class="section avoid-break">
+    <div class="section-title red">Section G: Battery Safety</div>
+    <div class="inline-form">
+        <div class="checkbox-item"><span class="checkbox-box {% if locationSuitable %}checked-green{% endif %}">{% if locationSuitable %}&#10003;{% endif %}</span><label>Location suitable</label></div>
+        {% unless ventilation == blank %}<div class="checkbox-item"><span class="checkbox-box checked">&#10003;</span><label>Ventilation: {{ ventilation }}</label></div>{% endunless %}
+        {% unless fireDetection == blank %}<div class="checkbox-item"><span class="checkbox-box checked">&#10003;</span><label>Fire detection: {{ fireDetection }}</label></div>{% endunless %}
+        {% if warningSignageInstalled %}<div class="checkbox-item"><span class="checkbox-box checked-green">&#10003;</span><label>Warning signage: {{ warningSignageLocations }}</label></div>{% endif %}
+        {% if emergencyShutdownProvided %}<div class="checkbox-item"><span class="checkbox-box checked-green">&#10003;</span><label>Emergency shutdown provided</label></div>{% endif %}
+        {% if fireServiceInfoProvided %}<div class="checkbox-item"><span class="checkbox-box checked-green">&#10003;</span><label>Fire service info provided</label></div>{% endif %}
+    </div>
+    {% unless distanceFromCombustibles == blank %}<div class="form-grid" style="margin-top: 2px;"><div class="form-row"><div class="form-label">Distance from Combustibles</div><div class="form-value">{{ distanceFromCombustibles }}mm</div><div class="form-label">Thermal Management</div><div class="form-value">{{ thermalManagement }}</div></div></div>{% endunless %}
+</div>
+
+<div class="footer">
+    <div><strong>{{ companyName }}</strong></div>
+    <div style="text-align: right;"><span style="color: #94a3b8;">BESS Certificate — Page 2</span></div>
+</div>
+<div style="text-align: center; margin-top: 6px;"><span style="font-size: 7px; color: #94a3b8;">Powered by <strong style="color: #64748b;">Elec-Mate</strong></span></div>
+
+<!-- ===== PAGE 3: TEST RESULTS & SIGN-OFF ===== -->
+<div class="page-break"></div>
+
+<div class="doc-header">
+    <div class="doc-header-content">
+        <div class="company-brand">{% unless companyLogo == blank %}<div class="company-logo"><img src="{{ companyLogo }}" alt="Logo" /></div>{% endunless %}<div><div class="company-brand-name">{{ companyName }}</div></div></div>
+        <div class="doc-title-section"><div class="doc-title">BESS CERTIFICATE</div><div class="doc-subtitle">Test Results, Commissioning &amp; Declarations</div></div>
+        <div class="doc-meta"><div class="cert-number">{{ certificateNumber }}</div><div class="page-number">Page 3</div></div>
+    </div>
+</div>
+
+<!-- AC Tests -->
+<div class="section avoid-break">
+    <div class="section-title">Section H: AC Test Results</div>
+    <div class="form-grid">
+        <div class="form-row"><div class="form-label">Ze</div><div class="form-value">{{ ze }} Ω</div><div class="form-label">Zs</div><div class="form-value">{{ zs }} Ω</div></div>
+        <div class="form-row"><div class="form-label">R1+R2</div><div class="form-value">{{ r1r2 }} Ω</div><div class="form-label">R2</div><div class="form-value">{{ r2 }} Ω</div></div>
+        <div class="form-row"><div class="form-label">AC Insulation Res.</div><div class="form-value">{{ acInsulationResistance }} MΩ</div><div class="form-label">Polarity</div><div class="form-value">{{ acPolarity }}</div></div>
+        <div class="form-row"><div class="form-label">PSCC</div><div class="form-value">{{ pscc }} kA</div></div>
+        <div class="form-row"><div class="form-label">RCD @ Idn</div><div class="form-value">{{ rcdTripTimeIdn }} ms</div><div class="form-label">RCD @ 5×Idn</div><div class="form-value">{{ rcdTripTime5xIdn }} ms</div></div>
+        {% unless testInstrumentMake == blank %}<div class="form-row"><div class="form-label">Test Instrument</div><div class="form-value">{{ testInstrumentMake }} {{ testInstrumentModel }} (S/N: {{ testInstrumentSerial }})</div><div class="form-label">Cal. Date</div><div class="form-value">{{ testInstrumentCalDate }}</div></div>{% endunless %}
+    </div>
+</div>
+
+<!-- DC Tests -->
+<div class="section avoid-break">
+    <div class="section-title green">Section I: DC Test Results</div>
+    <div class="form-grid">
+        <div class="form-row"><div class="form-label">DC Insulation Res.</div><div class="form-value" style="font-weight: 600;">{{ dcInsulationResistance }} MΩ @ {{ dcTestVoltage }}V</div><div class="form-label">DC Polarity</div><div class="form-value">{% if dcPolarityVerified %}Verified &#10003;{% else %}Not verified{% endif %}</div></div>
+        <div class="form-row"><div class="form-label">String Voltage</div><div class="form-value">{{ dcStringVoltage }}V (expected: {{ dcStringVoltageExpected }}V)</div><div class="form-label">SoC at Comm.</div><div class="form-value">{{ batterySoCAtCommissioning }}%</div></div>
+    </div>
+</div>
+
+<!-- Grid Protection Settings -->
+<div class="section avoid-break">
+    <div class="section-title purple">Section J: Grid Protection Settings ({{ gridConnectionType }})</div>
+    <table class="grid-table">
+        <thead><tr><th>Parameter</th><th>Stage 1 Setting</th><th>Stage 1 Time</th><th>Stage 2 Setting</th><th>Stage 2 Time</th></tr></thead>
+        <tbody>
+            <tr><td>Over-voltage</td><td>{{ ovStage1Voltage }}V</td><td>{{ ovStage1Time }}s</td><td>{{ ovStage2Voltage }}V</td><td>{{ ovStage2Time }}s</td></tr>
+            <tr><td>Under-voltage</td><td>{{ uvStage1Voltage }}V</td><td>{{ uvStage1Time }}s</td><td>{{ uvStage2Voltage }}V</td><td>{{ uvStage2Time }}s</td></tr>
+            <tr><td>Over-frequency</td><td>{{ ofStage1Freq }}Hz</td><td>{{ ofStage1Time }}s</td><td>{{ ofStage2Freq }}Hz</td><td>{{ ofStage2Time }}s</td></tr>
+            <tr><td>Under-frequency</td><td>{{ ufStage1Freq }}Hz</td><td>{{ ufStage1Time }}s</td><td>{{ ufStage2Freq }}Hz</td><td>{{ ufStage2Time }}s</td></tr>
+            <tr><td>ROCOF</td><td colspan="2">{{ rocoFRate }} Hz/s</td><td colspan="2">{{ rocoFTime }}s</td></tr>
+            <tr><td>Reconnection Delay</td><td colspan="4">{{ reconnectionDelay }}s</td></tr>
+        </tbody>
+    </table>
+</div>
+
+<!-- DNO -->
+<div class="section avoid-break">
+    <div class="section-title blue">Section K: DNO Details</div>
+    <div class="form-grid">
+        <div class="form-row"><div class="form-label">Connection Type</div><div class="form-value" style="font-weight: 600;">{{ gridConnectionType }}</div><div class="form-label">DNO</div><div class="form-value">{{ dnoName }}</div></div>
+        {% unless dnoReference == blank %}<div class="form-row"><div class="form-label">Reference</div><div class="form-value">{{ dnoReference }}</div><div class="form-label">Date</div><div class="form-value">{{ dnoNotificationDate }}</div></div>{% endunless %}
+        {% unless mpan == blank %}<div class="form-row"><div class="form-label">MPAN</div><div class="form-value" colspan="3">{{ mpan }}</div></div>{% endunless %}
+    </div>
+    <div class="inline-form" style="margin-top: 2px;">
+        {% if exportMeterFitted %}<div class="checkbox-item"><span class="checkbox-box checked-green">&#10003;</span><label>Export meter: {{ exportMeterSerial }}</label></div>{% endif %}
+        {% if smartMeterFitted %}<div class="checkbox-item"><span class="checkbox-box checked-green">&#10003;</span><label>Smart meter: {{ smartMeterSerial }}</label></div>{% endif %}
+        {% if segRegistered %}<div class="checkbox-item"><span class="checkbox-box checked-green">&#10003;</span><label>SEG registered</label></div>{% endif %}
+    </div>
+</div>
+
+<!-- Functional Tests -->
+<div class="section avoid-break">
+    <div class="section-title green">Section L: Functional Tests</div>
+    <div class="form-grid">
+        <div class="form-row"><div class="form-label">Anti-islanding</div><div class="form-value"><span class="badge {% if antiIslandingTest == 'pass' %}pass{% else %}fail{% endif %}">{{ antiIslandingTest }}</span> {% unless antiIslandingMethod == blank %}({{ antiIslandingMethod }}){% endunless %}</div></div>
+        <div class="form-row"><div class="form-label">Charge Test</div><div class="form-value"><span class="badge {% if chargeTest == 'pass' %}pass{% else %}fail{% endif %}">{{ chargeTest }}</span></div><div class="form-label">Discharge Test</div><div class="form-value"><span class="badge {% if dischargeTest == 'pass' %}pass{% else %}fail{% endif %}">{{ dischargeTest }}</span></div></div>
+        {% unless epsTest == blank %}<div class="form-row"><div class="form-label">EPS Switchover</div><div class="form-value"><span class="badge {% if epsTest == 'pass' %}pass{% else %}fail{% endif %}">{{ epsTest }}</span>{% unless epsSwitchoverTime == blank %} ({{ epsSwitchoverTime }}ms){% endunless %}</div></div>{% endunless %}
+    </div>
+    <div class="inline-form" style="margin-top: 2px;">
+        <div class="checkbox-item"><span class="checkbox-box {% if monitoringConfirmed %}checked-green{% endif %}">{% if monitoringConfirmed %}&#10003;{% endif %}</span><label>Monitoring confirmed operational</label></div>
+        <div class="checkbox-item"><span class="checkbox-box {% if portalRegistered %}checked-green{% endif %}">{% if portalRegistered %}&#10003;{% endif %}</span><label>Manufacturer portal registered</label></div>
+        <div class="checkbox-item"><span class="checkbox-box {% if cloudMonitoringWorking %}checked-green{% endif %}">{% if cloudMonitoringWorking %}&#10003;{% endif %}</span><label>Cloud monitoring working</label></div>
+        <div class="checkbox-item"><span class="checkbox-box {% if firmwaresCurrent %}checked-green{% endif %}">{% if firmwaresCurrent %}&#10003;{% endif %}</span><label>Firmware current</label></div>
+    </div>
+    {% unless commModuleType == blank %}
+    <div class="form-grid" style="margin-top: 3px;">
+        <div class="form-row"><div class="form-label">Comm Module</div><div class="form-value">{{ commModuleType }}{% unless commModuleSerial == blank %} — Serial: {{ commModuleSerial }}{% endunless %}</div></div>
+        {% unless manufacturerCommRef == blank %}<div class="form-row"><div class="form-label">Manufacturer Ref</div><div class="form-value">{{ manufacturerCommRef }}</div></div>{% endunless %}
+    </div>
+    {% endunless %}
+</div>
+
+<!-- Customer Handover -->
+<div class="section avoid-break">
+    <div class="section-title cyan">Section M: Customer Handover</div>
+    <div class="inline-form">
+        <div class="checkbox-item"><span class="checkbox-box {% if operatingInstructionsProvided %}checked-blue{% endif %}">{% if operatingInstructionsProvided %}&#10003;{% endif %}</span><label>Operating instructions</label></div>
+        <div class="checkbox-item"><span class="checkbox-box {% if emergencyShutdownExplained %}checked-blue{% endif %}">{% if emergencyShutdownExplained %}&#10003;{% endif %}</span><label>Emergency shutdown explained</label></div>
+        <div class="checkbox-item"><span class="checkbox-box {% if maintenanceScheduleProvided %}checked-blue{% endif %}">{% if maintenanceScheduleProvided %}&#10003;{% endif %}</span><label>Maintenance schedule</label></div>
+        <div class="checkbox-item"><span class="checkbox-box {% if customerAppSetup %}checked-blue{% endif %}">{% if customerAppSetup %}&#10003;{% endif %}</span><label>App/monitoring set up</label></div>
+        <div class="checkbox-item"><span class="checkbox-box {% if dnoNotificationCopyProvided %}checked-blue{% endif %}">{% if dnoNotificationCopyProvided %}&#10003;{% endif %}</span><label>DNO notification copy</label></div>
+        <div class="checkbox-item"><span class="checkbox-box {% if mcsCertificateProvided %}checked-blue{% endif %}">{% if mcsCertificateProvided %}&#10003;{% endif %}</span><label>MCS certificate</label></div>
+        <div class="checkbox-item"><span class="checkbox-box {% if warrantyRegistered %}checked-blue{% endif %}">{% if warrantyRegistered %}&#10003;{% endif %}</span><label>Warranty registered</label></div>
+        {% if buildingControlNotified %}<div class="checkbox-item"><span class="checkbox-box checked-blue">&#10003;</span><label>Building control notified</label></div>{% endif %}
+    </div>
+</div>
+
+<!-- Declaration -->
+<div class="section avoid-break">
+    <div class="section-title">Section N: Declaration</div>
+    <div class="alert-box green" style="margin-bottom: 3px;">
+        <div style="font-size: 7px; color: #166534; font-style: italic; line-height: 1.5;">I hereby certify that the battery energy storage system installation described in this certificate has been designed, installed, inspected, tested, and commissioned in accordance with BS 7671:2018+A3:2024, the IET Code of Practice for Electrical Energy Storage Systems, and the manufacturer's installation instructions. The system is safe for use and complies with the relevant requirements of the Distribution Network Operator.</div>
+    </div>
+    {% unless batteryWarrantyYears == blank %}
+    <div class="form-grid" style="margin-bottom: 4px;">
+        <div class="form-row"><div class="form-label">Battery Warranty</div><div class="form-value">{{ batteryWarrantyYears }} years</div><div class="form-label">Inverter Warranty</div><div class="form-value">{{ inverterWarrantyYears }} years</div></div>
+    </div>
+    {% endunless %}
+    <div class="signature-grid">
+        <div class="signature-box" style="flex: 2;">
+            <div class="signature-box-header">Installer</div>
+            <div class="signature-box-body">
+                <div class="sig-field"><span class="sig-field-label">Name</span><span class="sig-field-value" style="font-weight: 600;">{{ installerName }}</span></div>
+                <div class="sig-field"><span class="sig-field-label">Company</span><span class="sig-field-value">{{ installerCompany }}</span></div>
+                {% unless installerPhone == blank %}<div class="sig-field"><span class="sig-field-label">Contact</span><span class="sig-field-value">{{ installerPhone }}{% unless installerEmail == blank %} | {{ installerEmail }}{% endunless %}</span></div>{% endunless %}
+                {% unless installerScheme == blank %}<div class="sig-field"><span class="sig-field-label">Scheme</span><span class="sig-field-value">{{ installerScheme }} — {{ installerSchemeNumber }}</span></div>{% endunless %}
+                <div class="sig-field"><span class="sig-field-label">MCS No.</span><span class="sig-field-value">{{ mcsInstallerNumber }}</span></div>
+                <div class="sig-field"><span class="sig-field-label">Date</span><span class="sig-field-value">{{ installerDate }}</span></div>
+            </div>
+        </div>
+        <div class="signature-box" style="flex: 1;">
+            <div class="signature-box-header">Installer Signature</div>
+            <div class="signature-box-body" style="min-height: 55px; display: flex; align-items: center; justify-content: center;">
+                {% if installerSignature %}<img src="{{ installerSignature }}" style="max-height: 45px; max-width: 100%;" />{% else %}<div style="width: 100%; border-bottom: 1px solid #64748b; margin: 18px 8px;"></div>{% endif %}
+            </div>
+        </div>
+    </div>
+    {% unless commissionerName == blank %}
+    <div class="signature-grid" style="margin-top: 3px;">
+        <div class="signature-box" style="flex: 2;">
+            <div class="signature-box-header">Commissioner</div>
+            <div class="signature-box-body"><div class="sig-field"><span class="sig-field-label">Name</span><span class="sig-field-value">{{ commissionerName }}</span></div></div>
+        </div>
+        <div class="signature-box" style="flex: 1;">
+            <div class="signature-box-header">Commissioner Signature</div>
+            <div class="signature-box-body" style="min-height: 55px; display: flex; align-items: center; justify-content: center;">
+                {% if commissionerSignature %}<img src="{{ commissionerSignature }}" style="max-height: 45px; max-width: 100%;" />{% endif %}
+            </div>
+        </div>
+    </div>
+    {% endunless %}
+    {% unless clientSignature == blank %}
+    <div class="signature-grid" style="margin-top: 3px;">
+        <div class="signature-box" style="flex: 2;">
+            <div class="signature-box-header">Client Acknowledgement</div>
+            <div class="signature-box-body">
+                <div class="sig-field"><span class="sig-field-label">Name</span><span class="sig-field-value">{{ clientName }}</span></div>
+                {% unless clientDate == blank %}<div class="sig-field"><span class="sig-field-label">Date</span><span class="sig-field-value">{{ clientDate }}</span></div>{% endunless %}
+            </div>
+        </div>
+        <div class="signature-box" style="flex: 1;">
+            <div class="signature-box-header">Client Signature</div>
+            <div class="signature-box-body" style="min-height: 55px; display: flex; align-items: center; justify-content: center;">
+                <img src="{{ clientSignature }}" style="max-height: 45px; max-width: 100%;" />
+            </div>
+        </div>
+    </div>
+    {% endunless %}
+</div>
+
+{% if photos.size > 0 %}
+<div class="section avoid-break">
+    <div class="section-title cyan">Photo Evidence</div>
+    <div style="display: flex; flex-wrap: wrap; gap: 4px; padding: 4px;">
+        {% for photo in photos %}
+        <div style="width: calc(33.33% - 4px); border: 1px solid #e2e8f0; border-radius: 2px; overflow: hidden;">
+            <img src="{{ photo }}" style="width: 100%; height: auto; display: block;" />
+            <div style="font-size: 6px; color: #64748b; text-align: center; padding: 2px;">Photo {{ forloop.index }}</div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endif %}
+
+{% unless additionalNotes == blank %}
+<div class="section">
+    <div class="section-title">Additional Notes</div>
+    <div class="form-grid"><div class="form-row"><div class="form-value" style="line-height: 1.5;">{{ additionalNotes }}</div></div></div>
+</div>
+{% endunless %}
+
+{% unless defectsObservations == blank %}
+<div class="section">
+    <div class="section-title red">Defects / Observations</div>
+    <div class="form-grid"><div class="form-row"><div class="form-value" style="line-height: 1.5; color: #991b1b;">{{ defectsObservations }}</div></div></div>
+</div>
+{% endunless %}
+
+<div class="footer">
+    <div><strong>{{ companyName }}</strong><br>{{ companyAddress }}<br>{% unless companyPhone == blank %}Tel: {{ companyPhone }}{% endunless %}{% unless companyEmail == blank %} | {{ companyEmail }}{% endunless %}</div>
+    <div style="text-align: right;">{% unless registrationScheme == blank %}<strong>{{ registrationScheme }}</strong><br>Reg No: {{ registrationNumber }}<br>{% endunless %}<span style="color: #94a3b8;">BS 7671:2018+A3:2024 | IET CoP EESS | MCS MIS 3002</span></div>
+</div>
+<div style="text-align: center; margin-top: 6px;"><span style="font-size: 7px; color: #94a3b8;">Powered by <strong style="color: #64748b;">Elec-Mate</strong></span></div>
+
+</body>
+</html>

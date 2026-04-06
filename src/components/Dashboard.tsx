@@ -171,7 +171,7 @@ const Dashboard = ({
         .from('reports')
         .select('*', { count: 'exact', head: true })
         .eq('user_id', user.id)
-        .in('report_type', ['danger-notice', 'isolation-cert', 'permit-to-work', 'warning-labels', 'safe-isolation'])
+        .in('report_type', ['danger-notice', 'isolation-cert', 'permit-to-work', 'warning-labels', 'safe-isolation', 'limitation-notice', 'non-compliance-notice', 'completion-notice'])
         .is('deleted_at', null);
       return count || 0;
     },

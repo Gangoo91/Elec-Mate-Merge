@@ -20,22 +20,19 @@ interface CertDef {
   description: string;
   standard: string;
   accentColor: string;
+  comingSoon?: boolean;
+  category: 'electrical' | 'fire-safety' | 'security' | 'renewables';
 }
 
 const specialistCerts: CertDef[] = [
+  // Renewables & Energy
   {
-    id: 'fire-alarm',
-    title: 'Fire Alarm',
-    description: 'Detection & warning systems',
-    standard: 'BS 5839',
-    accentColor: 'from-red-500 via-rose-400 to-pink-400',
-  },
-  {
-    id: 'emergency-lighting',
-    title: 'Emergency Lighting',
-    description: 'Safety illumination systems',
-    standard: 'BS 5266',
-    accentColor: 'from-amber-500 via-amber-400 to-yellow-400',
+    id: 'solar-pv',
+    title: 'Solar PV',
+    description: 'Photovoltaic systems',
+    standard: 'MCS',
+    accentColor: 'from-yellow-500 via-amber-400 to-orange-400',
+    category: 'renewables',
   },
   {
     id: 'ev-charging',
@@ -43,20 +40,93 @@ const specialistCerts: CertDef[] = [
     description: 'Charge point installation',
     standard: 'IET CoP',
     accentColor: 'from-emerald-500 via-teal-400 to-cyan-400',
+    category: 'electrical',
   },
   {
-    id: 'solar-pv',
-    title: 'Solar PV',
-    description: 'Photovoltaic systems',
-    standard: 'MCS',
-    accentColor: 'from-yellow-500 via-amber-400 to-orange-400',
+    id: 'bess',
+    title: 'Battery Storage',
+    description: 'BESS commissioning',
+    standard: 'IET CoP',
+    accentColor: 'from-green-500 via-emerald-400 to-teal-400',
+    category: 'renewables',
   },
+  {
+    id: 'pv-bess-combined',
+    title: 'PV + Battery',
+    description: 'Combined system commissioning',
+    standard: 'MCS / IET',
+    accentColor: 'from-amber-500 via-yellow-400 to-green-400',
+    comingSoon: true,
+    category: 'renewables',
+  },
+  {
+    id: 'g98-commissioning',
+    title: 'G98 Commissioning',
+    description: 'PV up to 16A/phase — DNO form',
+    standard: 'EREC G98',
+    accentColor: 'from-orange-500 via-amber-400 to-yellow-400',
+    category: 'renewables',
+  },
+  {
+    id: 'g99-commissioning',
+    title: 'G99 Commissioning',
+    description: 'Commercial PV/EV >16A/phase',
+    standard: 'EREC G99',
+    accentColor: 'from-orange-500 via-red-400 to-rose-400',
+    category: 'renewables',
+  },
+  // Fire & Life Safety
+  {
+    id: 'fire-alarm',
+    title: 'Fire Alarm',
+    description: 'Detection & warning systems',
+    standard: 'BS 5839',
+    accentColor: 'from-red-500 via-rose-400 to-pink-400',
+    category: 'fire-safety',
+  },
+  {
+    id: 'emergency-lighting',
+    title: 'Emergency Lighting',
+    description: 'Safety illumination systems',
+    standard: 'BS 5266',
+    accentColor: 'from-amber-500 via-amber-400 to-yellow-400',
+    category: 'fire-safety',
+  },
+  {
+    id: 'smoke-co-alarm',
+    title: 'Smoke & CO Alarm',
+    description: 'Domestic alarm installation',
+    standard: 'BS 5839-6',
+    accentColor: 'from-red-500 via-orange-400 to-amber-400',
+    comingSoon: true,
+    category: 'fire-safety',
+  },
+  {
+    id: 'lightning-protection',
+    title: 'Lightning Protection',
+    description: 'LPS test certificate',
+    standard: 'BS EN 62305',
+    accentColor: 'from-yellow-500 via-yellow-400 to-amber-400',
+    category: 'fire-safety',
+  },
+  // Electrical
   {
     id: 'pat-testing',
     title: 'PAT Testing',
     description: 'Portable appliance testing',
     standard: 'IET CoP',
     accentColor: 'from-cyan-500 via-cyan-400 to-blue-400',
+    category: 'electrical',
+  },
+  // Security
+  {
+    id: 'intruder-alarm',
+    title: 'Intruder Alarm',
+    description: 'Security alarm systems',
+    standard: 'BS EN 50131',
+    accentColor: 'from-violet-500 via-purple-400 to-indigo-400',
+    comingSoon: true,
+    category: 'security',
   },
 ];
 
@@ -97,55 +167,76 @@ const SpecialistSection = ({ onBack }: SpecialistSectionProps) => {
         animate="visible"
         className="px-4 py-4 space-y-5"
       >
-        <motion.section variants={itemVariants} className="space-y-3">
-          <h2 className="text-xs font-medium text-white uppercase tracking-wider px-0.5">
-            Create New
-          </h2>
-          <div className="grid grid-cols-2 gap-3 auto-rows-fr">
-            {specialistCerts.map((cert) => (
-              <motion.div key={cert.id} variants={itemVariants} className="h-full">
-                <button
-                  type="button"
-                  onClick={() => navigate(`/electrician/inspection-testing/${cert.id}/new`)}
-                  className="block w-full h-full text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-elec-yellow/50 rounded-2xl touch-manipulation"
-                >
-                  <div
-                    className={cn(
-                      'group relative overflow-hidden h-full',
-                      'card-surface-interactive',
-                      'active:scale-[0.98] transition-all duration-200'
-                    )}
-                  >
-                    <div
+        {[
+          { key: 'renewables', label: 'Renewables & Energy' },
+          { key: 'fire-safety', label: 'Fire & Life Safety' },
+          { key: 'electrical', label: 'Electrical' },
+          { key: 'security', label: 'Security Systems' },
+        ].map((group) => {
+          const certs = specialistCerts.filter((c) => c.category === group.key);
+          if (certs.length === 0) return null;
+          return (
+            <motion.section key={group.key} variants={itemVariants} className="space-y-3">
+              <h2 className="text-xs font-medium text-white uppercase tracking-wider px-0.5">
+                {group.label}
+              </h2>
+              <div className="grid grid-cols-2 gap-3 auto-rows-fr">
+                {certs.map((cert) => (
+                  <motion.div key={cert.id} variants={itemVariants} className="h-full">
+                    <button
+                      type="button"
+                      onClick={() => !cert.comingSoon && navigate(`/electrician/inspection-testing/${cert.id}/new`)}
                       className={cn(
-                        'absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r opacity-40 group-hover:opacity-100 transition-opacity duration-200',
-                        cert.accentColor
+                        'block w-full h-full text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-elec-yellow/50 rounded-2xl touch-manipulation',
+                        cert.comingSoon && 'cursor-default'
                       )}
-                    />
-                    <div className="relative z-10 flex flex-col h-full p-4">
-                      <div className="flex items-center justify-end mb-3">
-                        <span className="text-[10px] font-bold text-white bg-white/[0.06] border border-white/[0.08] px-2 py-0.5 rounded">
-                          {cert.standard}
-                        </span>
-                      </div>
-                      <h3 className="text-[15px] font-semibold text-white leading-tight group-hover:text-elec-yellow transition-colors">
-                        {cert.title}
-                      </h3>
-                      <p className="mt-1 text-[12px] text-white leading-tight">{cert.description}</p>
-                      <div className="flex-grow min-h-[12px]" />
-                      <div className="flex items-center justify-between">
-                        <span className="text-[11px] font-medium text-elec-yellow">Open</span>
-                        <div className="w-6 h-6 rounded-full bg-white/[0.05] border border-elec-yellow/20 flex items-center justify-center group-hover:bg-elec-yellow group-hover:border-elec-yellow transition-all duration-200">
-                          <ChevronRight className="w-3.5 h-3.5 text-white group-hover:text-black group-hover:translate-x-0.5 transition-all" />
+                    >
+                      <div
+                        className={cn(
+                          'group relative overflow-hidden h-full',
+                          'card-surface-interactive',
+                          'active:scale-[0.98] transition-all duration-200',
+                          cert.comingSoon && 'opacity-60'
+                        )}
+                      >
+                        <div
+                          className={cn(
+                            'absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r opacity-40 group-hover:opacity-100 transition-opacity duration-200',
+                            cert.accentColor
+                          )}
+                        />
+                        <div className="relative z-10 flex flex-col h-full p-4">
+                          <div className="flex items-center justify-end mb-3">
+                            <span className="text-[10px] font-bold text-white bg-white/[0.06] border border-white/[0.08] px-2 py-0.5 rounded">
+                              {cert.standard}
+                            </span>
+                          </div>
+                          <h3 className="text-[15px] font-semibold text-white leading-tight group-hover:text-elec-yellow transition-colors">
+                            {cert.title}
+                          </h3>
+                          <p className="mt-1 text-[12px] text-white leading-tight">{cert.description}</p>
+                          <div className="flex-grow min-h-[12px]" />
+                          <div className="flex items-center justify-between">
+                            {cert.comingSoon ? (
+                              <span className="text-[11px] font-medium text-white/40">Coming Soon</span>
+                            ) : (
+                              <span className="text-[11px] font-medium text-elec-yellow">Open</span>
+                            )}
+                            {!cert.comingSoon && (
+                              <div className="w-6 h-6 rounded-full bg-white/[0.05] border border-elec-yellow/20 flex items-center justify-center group-hover:bg-elec-yellow group-hover:border-elec-yellow transition-all duration-200">
+                                <ChevronRight className="w-3.5 h-3.5 text-white group-hover:text-black group-hover:translate-x-0.5 transition-all" />
+                              </div>
+                            )}
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  </div>
-                </button>
-              </motion.div>
-            ))}
-          </div>
-        </motion.section>
+                    </button>
+                  </motion.div>
+                ))}
+              </div>
+            </motion.section>
+          );
+        })}
       </motion.main>
     </div>
   );

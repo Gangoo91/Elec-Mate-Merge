@@ -180,7 +180,7 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
 
         // Redraw grid after clear
         if (gridEnabled) {
-          const gridSize = 20;
+          const gridSize = 10;
           const gw = canvas.width || 1200;
           const gh = canvas.height || 600;
           for (let i = 0; i < gw / gridSize; i++) {
@@ -401,7 +401,7 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
 
       // Draw initial grid immediately
       if (gridEnabled) {
-        const gridSize = 20;
+        const gridSize = 10;
         for (let i = 0; i <= canvasWidth / gridSize; i++) {
           const isMajor = i % 5 === 0;
           canvas.add(new Line([i * gridSize, 0, i * gridSize, canvasHeight], {
@@ -487,7 +487,7 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
       gridObjects.forEach((obj) => canvas.remove(obj));
 
       if (gridEnabled) {
-        const gridSize = 20;
+        const gridSize = 10;
         const width = canvas.width || 1200;
         const height = canvas.height || 600;
 
@@ -570,7 +570,7 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
     // Snap to grid helper
     const snapToGrid = (value: number) => {
       if (!snapEnabled) return value;
-      const gridSize = 20;
+      const gridSize = 10;
       return Math.round(value / gridSize) * gridSize;
     };
 

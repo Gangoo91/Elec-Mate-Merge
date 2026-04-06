@@ -52,6 +52,30 @@ const noticesAndPermits: DocDef[] = [
     accentColor: 'from-orange-500 via-amber-400 to-yellow-400',
     href: '/electrician/inspection-testing/permit-to-work',
   },
+  {
+    id: 'limitation-notice',
+    title: 'Limitation Notice',
+    description: 'Record limitations on inspection',
+    badge: 'BS 7671',
+    accentColor: 'from-blue-500 via-blue-400 to-cyan-400',
+    href: '/electrician/inspection-testing/limitation-notice',
+  },
+  {
+    id: 'non-compliance-notice',
+    title: 'Non-Compliance Notice',
+    description: 'Fire alarm non-compliance',
+    badge: 'BS 5839',
+    accentColor: 'from-red-500 via-orange-400 to-amber-400',
+    href: '/electrician/inspection-testing/non-compliance-notice',
+  },
+  {
+    id: 'completion-notice',
+    title: 'Completion Notice',
+    description: 'Work completion confirmation',
+    badge: 'General',
+    accentColor: 'from-emerald-500 via-emerald-400 to-green-400',
+    href: '/electrician/inspection-testing/completion-notice',
+  },
 ];
 
 const printables: DocDef[] = [
@@ -200,6 +224,9 @@ const DOC_TYPE_LABELS: Record<string, { label: string; color: string }> = {
   'permit-to-work': { label: 'PTW', color: 'bg-orange-500/15 text-orange-400' },
   'warning-labels': { label: 'LABELS', color: 'bg-yellow-500/15 text-yellow-400' },
   'safe-isolation': { label: 'SIP', color: 'bg-emerald-500/15 text-emerald-400' },
+  'limitation-notice': { label: 'LIM', color: 'bg-blue-500/15 text-blue-400' },
+  'non-compliance-notice': { label: 'NCN', color: 'bg-red-500/15 text-red-400' },
+  'completion-notice': { label: 'COMP', color: 'bg-emerald-500/15 text-emerald-400' },
 };
 
 const DOC_TYPE_ROUTES: Record<string, string> = {
@@ -207,6 +234,9 @@ const DOC_TYPE_ROUTES: Record<string, string> = {
   'isolation-cert': 'isolation-certificate',
   'permit-to-work': 'permit-to-work',
   'safe-isolation': 'safe-isolation',
+  'limitation-notice': 'limitation-notice',
+  'non-compliance-notice': 'non-compliance-notice',
+  'completion-notice': 'completion-notice',
 };
 
 const LabelsWarningsSection = ({ onBack }: LabelsWarningsSectionProps) => {
@@ -225,7 +255,7 @@ const LabelsWarningsSection = ({ onBack }: LabelsWarningsSectionProps) => {
         .from('reports')
         .select('report_id, report_type, client_name, installation_address, updated_at, status')
         .eq('user_id', user.id)
-        .in('report_type', ['danger-notice', 'isolation-cert', 'permit-to-work', 'warning-labels', 'safe-isolation'])
+        .in('report_type', ['danger-notice', 'isolation-cert', 'permit-to-work', 'warning-labels', 'safe-isolation', 'limitation-notice', 'non-compliance-notice', 'completion-notice'])
         .is('deleted_at', null)
         .order('updated_at', { ascending: false })
         .limit(10);
@@ -336,6 +366,18 @@ const LabelsWarningsSection = ({ onBack }: LabelsWarningsSectionProps) => {
           </motion.section>
         )}
 
+        {/* Client Documents — top of page */}
+        <motion.section variants={itemVariants} className="space-y-3">
+          <h2 className="text-xs font-medium text-white uppercase tracking-wider px-0.5">
+            Client Documents
+          </h2>
+          <div className="grid grid-cols-2 gap-3 auto-rows-fr">
+            {clientHandouts.map((doc) => (
+              <DocCard key={doc.id} doc={doc} />
+            ))}
+          </div>
+        </motion.section>
+
         {/* Notices & Permits */}
         <motion.section variants={itemVariants} className="space-y-3">
           <h2 className="text-xs font-medium text-white uppercase tracking-wider px-0.5">
@@ -367,18 +409,6 @@ const LabelsWarningsSection = ({ onBack }: LabelsWarningsSectionProps) => {
           </h2>
           <div className="grid grid-cols-2 gap-3 auto-rows-fr">
             {siteRecords.map((doc) => (
-              <DocCard key={doc.id} doc={doc} />
-            ))}
-          </div>
-        </motion.section>
-
-        {/* Client Handouts */}
-        <motion.section variants={itemVariants} className="space-y-3">
-          <h2 className="text-xs font-medium text-white uppercase tracking-wider px-0.5">
-            Client Documents
-          </h2>
-          <div className="grid grid-cols-2 gap-3 auto-rows-fr">
-            {clientHandouts.map((doc) => (
               <DocCard key={doc.id} doc={doc} />
             ))}
           </div>

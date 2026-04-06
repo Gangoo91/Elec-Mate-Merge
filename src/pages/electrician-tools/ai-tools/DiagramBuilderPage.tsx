@@ -35,6 +35,7 @@ import { SaveRoomSheet } from '@/components/electrician-tools/diagram-builder/Sa
 import { SavedRoomsStrip } from '@/components/electrician-tools/diagram-builder/SavedRoomsStrip';
 import { SymbolCountPanel } from '@/components/electrician-tools/diagram-builder/SymbolCountPanel';
 import { ExportReviewSheet } from '@/components/electrician-tools/diagram-builder/ExportReviewSheet';
+import { MyPlansSheet } from '@/components/electrician-tools/diagram-builder/MyPlansSheet';
 import { symbolRegistry } from '@/components/electrician-tools/diagram-builder/symbols/symbolRegistry';
 import { assignCircuits } from '@/utils/circuit-assignment';
 import { STANDARD_NOTES } from '@/utils/standard-electrical-notes';
@@ -94,6 +95,7 @@ const DiagramBuilderPage = () => {
   const [saveSheetOpen, setSaveSheetOpen] = useState(false);
   const [activeRoomId, setActiveRoomId] = useState<string | null>(null);
   const [exportReviewOpen, setExportReviewOpen] = useState(false);
+  const [myPlansOpen, setMyPlansOpen] = useState(false);
   const { rooms, saveRoom, deleteRoom } = useFloorPlanRooms();
   const canvasRef = useRef<any>(null);
   const [searchParams] = useSearchParams();
@@ -456,22 +458,22 @@ const DiagramBuilderPage = () => {
         </div>
 
         <div className="flex items-center gap-1.5">
-          {/* Rotate selected object */}
+          {/* Rotate selected */}
           <button
             onClick={() => { canvasRef.current?.handleRotate?.(); haptic.light(); }}
-            className="h-8 w-8 rounded-lg bg-white/10 flex items-center justify-center touch-manipulation active:scale-90"
+            className="h-8 w-8 rounded-lg bg-white/[0.08] border border-white/[0.1] flex items-center justify-center touch-manipulation active:scale-95"
           >
-            <RotateCw className="h-3.5 w-3.5 text-white" />
+            <RotateCw className="h-3.5 w-3.5 text-white/70" />
           </button>
-          {/* Delete selected object */}
+          {/* Delete selected */}
           <button
             onClick={() => { canvasRef.current?.deleteSelected?.(); haptic.heavy(); }}
-            className="h-8 w-8 rounded-lg bg-red-500/20 flex items-center justify-center touch-manipulation active:scale-90"
+            className="h-8 w-8 rounded-lg bg-white/[0.08] border border-white/[0.1] flex items-center justify-center touch-manipulation active:scale-95"
           >
-            <Trash2 className="h-3.5 w-3.5 text-red-400" />
+            <Trash2 className="h-3.5 w-3.5 text-white/70" />
           </button>
 
-          {/* Done / Save Room button — always visible */}
+          {/* Done / Save Room button */}
           <Button
             onClick={() => {
               if (canvasObjects.length === 0) {
@@ -574,11 +576,18 @@ const DiagramBuilderPage = () => {
               </DropdownMenuItem>
               <DropdownMenuSeparator className="bg-white/10" />
               <DropdownMenuItem
+                onClick={() => setMyPlansOpen(true)}
+                className="text-white hover:bg-white/10 touch-manipulation"
+              >
+                <FolderOpen className="h-4 w-4 mr-2" />
+                My Floor Plans
+              </DropdownMenuItem>
+              <DropdownMenuItem
                 onClick={handleSave}
                 className="text-white hover:bg-white/10 touch-manipulation"
               >
                 <Save className="h-4 w-4 mr-2" />
-                Save
+                Quick Save
               </DropdownMenuItem>
               <DropdownMenuItem
                 onClick={handleLoad}
@@ -648,12 +657,9 @@ const DiagramBuilderPage = () => {
         )}
       </div>
 
-      {/* Floating pill toolbar at bottom centre */}
-      <div
-        className="absolute left-1/2 -translate-x-1/2 z-30 max-w-[calc(100vw-32px)] overflow-x-auto scrollbar-hide rounded-2xl bg-black/85 backdrop-blur-xl border border-white/10 px-1.5 py-1.5 shadow-2xl"
-        style={{ bottom: 16 }}
-      >
-        <div className="flex items-center gap-0.5">
+      {/* Bottom toolbar — docked like native app tab bar */}
+      <div className="shrink-0 bg-[#111] border-t border-white/10 px-2 py-1.5 safe-area-pb">
+        <div className="flex items-center justify-around">
           {toolButtons.map((tool) => {
             const Icon = tool.icon;
             const active = isToolActive(tool.id);
@@ -663,18 +669,18 @@ const DiagramBuilderPage = () => {
                 key={tool.id}
                 onClick={() => handleToolTap(tool.id)}
                 className={cn(
-                  'flex flex-col items-center justify-center rounded-xl transition-all touch-manipulation active:scale-90',
+                  'flex flex-col items-center justify-center transition-all touch-manipulation active:scale-90',
                   active
-                    ? 'bg-elec-yellow text-black min-w-[48px] h-12 px-2'
+                    ? 'text-elec-yellow'
                     : isAction
-                      ? 'text-white/40 hover:text-white/70 h-10 w-10'
-                      : 'text-white/60 hover:text-white active:bg-white/10 min-w-[44px] h-12 px-1'
+                      ? 'text-white/30'
+                      : 'text-white/60'
                 )}
               >
-                <Icon className={cn('h-5 w-5', active && 'h-4.5 w-4.5')} />
-                {active && (
-                  <span className="text-[8px] font-bold mt-0.5 leading-none">{tool.label}</span>
-                )}
+                <Icon className="h-5 w-5" />
+                <span className={cn('text-[9px] mt-0.5 leading-none', active ? 'font-bold' : 'font-medium')}>
+                  {tool.label}
+                </span>
               </button>
             );
           })}
@@ -684,13 +690,7 @@ const DiagramBuilderPage = () => {
       {/* Symbol count panel — floats above scale bar */}
       <SymbolCountPanel counts={symbolCounts} />
 
-      {/* Scale bar overlay */}
-      <div className="absolute bottom-20 left-4 z-20 flex items-center gap-1 bg-black/50 backdrop-blur-sm px-2 py-1 rounded-lg">
-        <div className="h-2.5 border-l border-white/70" />
-        <div className="w-[52px] border-t border-white/70" />
-        <div className="h-2.5 border-l border-white/70" />
-        <span className="text-[9px] text-white/70 ml-1 font-medium">1m</span>
-      </div>
+      {/* Scale bar is rendered by DiagramCanvas — no duplicate needed */}
 
       {/* Symbol placement indicator */}
       {placingSymbolName && (
@@ -725,11 +725,45 @@ const DiagramBuilderPage = () => {
         onClose={() => setSelectedObject(null)}
       />
 
+      {/* My Floor Plans Sheet */}
+      <MyPlansSheet
+        open={myPlansOpen}
+        onOpenChange={setMyPlansOpen}
+        currentRooms={rooms}
+        onLoadPlan={(plan) => {
+          haptic.light();
+          canvasRef.current?.forceFullRedraw?.();
+          // Clear current rooms and load the plan's rooms
+          rooms.forEach((r) => deleteRoom(r.id));
+          plan.rooms.forEach((room) => {
+            saveRoom({
+              name: room.name,
+              thumbnail: room.thumbnail,
+              fullImage: room.fullImage,
+              canvasState: room.canvasState,
+              symbolIds: room.symbolIds,
+            });
+          });
+          setCanvasObjects([]);
+          setActiveRoomId(null);
+          toast({ title: `Loaded: ${plan.name}`, description: `${plan.rooms.length} rooms` });
+        }}
+        onNewPlan={() => {
+          canvasRef.current?.forceFullRedraw?.();
+          rooms.forEach((r) => deleteRoom(r.id));
+          setCanvasObjects([]);
+          setActiveRoomId(null);
+        }}
+      />
+
       {/* AI Room Builder Dialog */}
       <AIRoomBuilderDialog
         open={aiDialogOpen}
         onOpenChange={setAiDialogOpen}
         onRoomGenerated={handleRoomGenerated}
+        canvasObjects={canvasObjects}
+        savedRooms={rooms}
+        onSymbolsAutoPlaced={(symbols) => setCanvasObjects((prev) => [...prev, ...symbols])}
       />
 
       {/* Save Room Sheet */}

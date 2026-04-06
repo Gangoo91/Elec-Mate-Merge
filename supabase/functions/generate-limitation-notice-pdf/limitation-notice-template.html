@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Limitation Notice</title>
+    <style>
+        :root { --accent: #f59e0b; }
+        @page { size: A4; margin: 3mm 3mm 4mm 3mm; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 8.5px; line-height: 1.4; color: #1a1a1a; background: #fff; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+
+        .doc-header { background: linear-gradient(180deg, #0a1628 0%, #152238 100%); color: #fff; padding: 10px 12px; margin-bottom: 2px; border-radius: 2px; position: relative; overflow: hidden; }
+        .doc-header::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: var(--accent); }
+        .doc-header-content { display: flex; justify-content: space-between; align-items: center; }
+        .doc-title-section { flex: 1; }
+        .doc-title { font-size: 16px; font-weight: 700; letter-spacing: 0.5px; margin-bottom: 2px; }
+        .doc-subtitle { font-size: 7.5px; font-weight: 400; opacity: 0.85; }
+        .doc-meta { text-align: right; }
+        .cert-number { font-size: 11px; font-weight: 700; color: var(--accent); }
+        .page-number { font-size: 8px; opacity: 0.7; margin-top: 2px; }
+        .company-logo img { max-height: 45px; max-width: 120px; object-fit: contain; }
+        .company-brand { display: flex; align-items: center; gap: 10px; margin-right: 12px; }
+        .company-brand-name { font-size: 11px; font-weight: 700; color: #fff; }
+        .company-brand-reg { font-size: 7px; color: var(--accent); margin-top: 1px; }
+        .scheme-logo img { max-height: 36px; max-width: 80px; object-fit: contain; }
+
+        .section { margin-bottom: 4px; }
+        .section-title { background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); color: #fff; font-size: 9px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.8px; padding: 4px 8px; margin-bottom: 3px; border-left: 3px solid var(--accent); }
+        .section-title.amber { border-left-color: #f59e0b; }
+        .section-title.green { border-left-color: #22c55e; }
+        .section-title.red { border-left-color: #dc2626; }
+
+        .form-grid { display: table; width: 100%; border-collapse: collapse; margin-bottom: 2px; }
+        .form-row { display: table-row; }
+        .form-label { display: table-cell; font-size: 7.5px; font-weight: 600; color: #475569; padding: 4px 6px; width: 120px; vertical-align: middle; background: #f8fafc; border: 1px solid #e2e8f0; }
+        .form-value { display: table-cell; font-size: 8.5px; color: #1e293b; padding: 4px 6px; vertical-align: middle; border: 1px solid #e2e8f0; background: #fff; }
+
+        .inline-form { display: flex; flex-wrap: wrap; gap: 6px; padding: 6px 8px; background: #fafbfc; border: 1px solid #e2e8f0; border-radius: 2px; }
+        .checkbox-item { display: flex; align-items: center; gap: 4px; margin-bottom: 2px; margin-right: 6px; }
+        .checkbox-box { width: 11px; height: 11px; border: 1.5px solid #64748b; display: inline-flex; align-items: center; justify-content: center; font-size: 8px; font-weight: bold; flex-shrink: 0; }
+        .checkbox-box.checked { background: var(--accent); color: #fff; border-color: var(--accent); }
+        .checkbox-box.checked-amber { background: #f59e0b; color: #fff; border-color: #f59e0b; }
+        .checkbox-box.checked-green { background: #22c55e; color: #fff; border-color: #22c55e; }
+
+        .badge { display: inline-block; padding: 2px 6px; border-radius: 2px; font-size: 7px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.3px; }
+        .badge.blue { background: #f1f5f9; color: #334155; border: 1px solid #cbd5e1; }
+        .badge.amber { background: #fef3c7; color: #92400e; border: 1px solid #fcd34d; }
+        .badge.orange { background: #fef3c7; color: #92400e; border: 1px solid #fcd34d; }
+
+        .info-box { background: #fffbeb; border: 1px solid #fcd34d; border-left: 3px solid #f59e0b; border-radius: 2px; padding: 4px 8px; margin: 4px 0; font-size: 7.5px; color: #92400e; }
+        .info-box strong { color: #78350f; }
+
+        .risk-box { background: #fef2f2; border: 1px solid #fca5a5; border-left: 3px solid #dc2626; border-radius: 2px; padding: 6px 10px; margin: 4px 0; }
+        .risk-text { font-size: 7.5px; color: #991b1b; line-height: 1.5; font-style: italic; }
+
+        .signature-grid { display: flex; gap: 6px; margin-top: 2px; }
+        .signature-box { flex: 1; border: 1px solid #cbd5e1; border-radius: 2px; overflow: hidden; }
+        .signature-box-header { background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); color: #fff; font-size: 7.5px; font-weight: 600; padding: 3px 8px; border-bottom: 1px solid var(--accent); }
+        .signature-box-body { padding: 4px 6px; background: #fafbfc; }
+        .sig-field { display: flex; align-items: center; margin-bottom: 3px; gap: 4px; }
+        .sig-field:last-child { margin-bottom: 0; }
+        .sig-field-label { font-size: 7px; font-weight: 600; color: #64748b; min-width: 60px; flex-shrink: 0; }
+        .sig-field-value { flex: 1; font-size: 8px; color: #1e293b; padding: 3px 5px; background: #fff; border: 1px solid #e2e8f0; border-radius: 1px; min-height: 18px; }
+        .sig-field-value img { max-height: 30px; }
+
+        .footer { margin-top: 8px; padding-top: 6px; border-top: 2px solid var(--accent); display: flex; justify-content: space-between; font-size: 7px; color: #64748b; }
+        .page-break { page-break-before: always; }
+        .avoid-break { page-break-inside: avoid; }
+
+        /* Front sheet */
+        .front-sheet { min-height: 100vh; display: flex; flex-direction: column; }
+        .front-banner { background: var(--accent); color: #fff; text-align: center; padding: 14px 20px; margin: 8px 0; border-radius: 3px; }
+        .front-banner h1 { font-size: 22px; font-weight: 900; letter-spacing: 1.5px; text-transform: uppercase; }
+        .front-banner p { font-size: 11px; font-weight: 600; margin-top: 3px; }
+
+        .front-details-card { border: 1px solid #e2e8f0; border-radius: 4px; overflow: hidden; margin: 4px 0; }
+        .front-details-header { background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); color: #fff; font-size: 9px; font-weight: 600; padding: 5px 12px; border-bottom: 1px solid #1e293b; text-transform: uppercase; letter-spacing: 0.5px; }
+        .front-details-body { padding: 10px 12px; background: #fff; }
+        .front-field { display: flex; margin-bottom: 4px; gap: 8px; }
+        .front-field:last-child { margin-bottom: 0; }
+        .front-field-label { font-size: 9px; font-weight: 600; color: #64748b; min-width: 100px; flex-shrink: 0; }
+        .front-field-value { font-size: 10px; font-weight: 600; color: #0f172a; }
+
+        .front-warning-box { background: #0f172a; color: #fff; text-align: center; padding: 8px 12px; border-radius: 3px; margin: 6px 0; border: 1px solid #1e293b; }
+        .front-warning-box p { font-size: 10px; font-weight: 700; letter-spacing: 0.5px; }
+        .front-warning-box .sub { font-size: 8px; font-weight: 400; margin-top: 3px; color: var(--accent); }
+    </style>
+</head>
+<body>
+
+<!-- ===== PAGE 1: FRONT SHEET ===== -->
+<div class="front-sheet">
+    <div class="doc-header">
+        <div class="doc-header-content">
+            <div class="company-brand">
+                {% if company_logo %}<div class="company-logo"><img src="{{ company_logo }}" alt="Logo" /></div>{% endif %}
+                <div>
+                    <div class="company-brand-name">{{ company_name }}</div>
+                    {% if registration_scheme %}<div class="company-brand-reg">{{ registration_scheme }}: {{ registration_number }}</div>{% endif %}
+                </div>
+                {% if scheme_logo %}<div class="scheme-logo"><img src="{{ scheme_logo }}" alt="Scheme" /></div>{% endif %}
+            </div>
+            <div class="doc-title-section">
+                <div class="doc-title">LIMITATION NOTICE</div>
+                <div class="doc-subtitle">BS 7671 Section D — Extent and Limitations of Inspection and Testing</div>
+            </div>
+            <div class="doc-meta">
+                <div class="cert-number">{{ reference_number }}</div>
+                <div class="page-number">Page 1</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="front-banner">
+        <h1>Limitations Apply</h1>
+        <p>This inspection is subject to the limitations recorded overleaf</p>
+    </div>
+
+    <!-- Key Details -->
+    <div class="front-details-card">
+        <div class="front-details-header">Notice Details</div>
+        <div class="front-details-body">
+            <div class="front-field"><div class="front-field-label">Reference</div><div class="front-field-value">{{ reference_number }}</div></div>
+            <div class="front-field"><div class="front-field-label">Date</div><div class="front-field-value">{{ date }}</div></div>
+            {% if linked_report_ref != "" %}<div class="front-field"><div class="front-field-label">Linked Report</div><div class="front-field-value">{{ linked_report_ref }}</div></div>{% endif %}
+            <div class="front-field"><div class="front-field-label">Client</div><div class="front-field-value">{{ client_name }}</div></div>
+            <div class="front-field"><div class="front-field-label">Address</div><div class="front-field-value">{{ installation_address }}</div></div>
+            <div class="front-field"><div class="front-field-label">Inspector</div><div class="front-field-value">{{ contractor_name }}, {{ contractor_company }}</div></div>
+            {% if agreed_with_name != "" %}<div class="front-field"><div class="front-field-label">Agreed With</div><div class="front-field-value">{{ agreed_with_name }}{% if agreed_with_position %} ({{ agreed_with_position }}){% endif %}</div></div>{% endif %}
+        </div>
+    </div>
+
+    <!-- Extent Summary -->
+    <div class="front-details-card">
+        <div class="front-details-header">Extent of Installation Covered</div>
+        <div class="front-details-body">
+            <div class="inline-form" style="border: none; padding: 0;">
+                <div class="checkbox-item"><span class="checkbox-box {% if extent_consumer_unit %}checked{% endif %}">{% if extent_consumer_unit %}&#10003;{% endif %}</span><label>Consumer unit</label></div>
+                <div class="checkbox-item"><span class="checkbox-box {% if extent_lighting %}checked{% endif %}">{% if extent_lighting %}&#10003;{% endif %}</span><label>Lighting</label></div>
+                <div class="checkbox-item"><span class="checkbox-box {% if extent_sockets %}checked{% endif %}">{% if extent_sockets %}&#10003;{% endif %}</span><label>Sockets</label></div>
+                <div class="checkbox-item"><span class="checkbox-box {% if extent_fixed_equipment %}checked{% endif %}">{% if extent_fixed_equipment %}&#10003;{% endif %}</span><label>Fixed equipment</label></div>
+                <div class="checkbox-item"><span class="checkbox-box {% if extent_external %}checked{% endif %}">{% if extent_external %}&#10003;{% endif %}</span><label>External</label></div>
+                <div class="checkbox-item"><span class="checkbox-box {% if extent_outbuildings %}checked{% endif %}">{% if extent_outbuildings %}&#10003;{% endif %}</span><label>Outbuildings</label></div>
+                <div class="checkbox-item"><span class="checkbox-box {% if extent_fire_alarm %}checked{% endif %}">{% if extent_fire_alarm %}&#10003;{% endif %}</span><label>Fire alarm</label></div>
+                <div class="checkbox-item"><span class="checkbox-box {% if extent_emergency_lighting %}checked{% endif %}">{% if extent_emergency_lighting %}&#10003;{% endif %}</span><label>Emergency lighting</label></div>
+                <div class="checkbox-item"><span class="checkbox-box {% if extent_earthing_bonding %}checked{% endif %}">{% if extent_earthing_bonding %}&#10003;{% endif %}</span><label>Earthing & bonding</label></div>
+                <div class="checkbox-item"><span class="checkbox-box {% if extent_smoke_alarms %}checked{% endif %}">{% if extent_smoke_alarms %}&#10003;{% endif %}</span><label>Smoke/heat/CO alarms</label></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Limitation Summary -->
+    <div class="front-details-card">
+        <div class="front-details-header">Limitations ({{ limitations.size }})</div>
+        <div class="front-details-body">
+            {% for lim in limitations %}
+            <div style="margin-bottom: 6px; padding-bottom: 6px; {% unless forloop.last %}border-bottom: 1px solid #e2e8f0;{% endunless %}">
+                <div style="display: flex; gap: 6px; align-items: center; margin-bottom: 3px;">
+                    <span class="badge {% if lim.type == 'agreed' %}blue{% else %}amber{% endif %}">{{ lim.type }}</span>
+                    <span class="badge {% if lim.code == 'LIM' %}blue{% else %}orange{% endif %}">{{ lim.code }}</span>
+                    <span style="font-size: 9px; font-weight: 600; color: #0f172a;">{{ lim.area }}</span>
+                </div>
+                <div style="font-size: 8px; color: #475569; margin-left: 4px;">{{ lim.reason }}</div>
+                {% if lim.return_visit_condition != "" %}<div style="font-size: 7.5px; color: #3b82f6; margin-top: 2px; margin-left: 4px;">Return visit: {{ lim.return_visit_condition }}</div>{% endif %}
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- Risk Statement -->
+    <div class="risk-box">
+        <div class="risk-text">{{ risk_statement }}</div>
+    </div>
+
+    <!-- Warning -->
+    <div class="front-warning-box">
+        <p>This Report Must Be Read in Conjunction with This Limitation Notice</p>
+        <div class="sub">The associated EICR/EIC cannot provide a complete assessment of the installation where limitations apply.</div>
+    </div>
+
+    <div style="flex: 1;"></div>
+    <div class="footer">
+        <div><strong>{{ company_name }}</strong><br>{{ company_address }}<br>{% if company_phone %}Tel: {{ company_phone }}{% endif %}{% if company_email %} | {{ company_email }}{% endif %}</div>
+        <div style="text-align: right;">{% if registration_scheme %}<strong>{{ registration_scheme }}</strong><br>Reg No: {{ registration_number }}<br>{% endif %}<span style="color: #94a3b8;">BS 7671:2018+A3:2024</span></div>
+    </div>
+    <div style="text-align: center; margin-top: 8px;"><span style="font-size: 8px; color: #94a3b8; letter-spacing: 0.3px;">Powered by <strong style="color: #64748b;">Elec-Mate</strong></span></div>
+</div>
+
+<!-- ===== PAGE 2: FULL DETAILS ===== -->
+<div class="page-break"></div>
+
+<div class="doc-header">
+    <div class="doc-header-content">
+        <div class="company-brand">
+            {% if company_logo %}<div class="company-logo"><img src="{{ company_logo }}" alt="Logo" /></div>{% endif %}
+            <div><div class="company-brand-name">{{ company_name }}</div></div>
+        </div>
+        <div class="doc-title-section"><div class="doc-title">LIMITATION NOTICE</div><div class="doc-subtitle">Full Details</div></div>
+        <div class="doc-meta"><div class="cert-number">{{ reference_number }}</div><div class="page-number">Page 2</div></div>
+    </div>
+</div>
+
+<!-- Section A: Inspector -->
+<div class="section">
+    <div class="section-title">Section A: Inspector / Contractor</div>
+    <div class="form-grid">
+        <div class="form-row"><div class="form-label">Name</div><div class="form-value">{{ contractor_name }}</div><div class="form-label">Company</div><div class="form-value">{{ contractor_company }}</div></div>
+        <div class="form-row"><div class="form-label">Telephone</div><div class="form-value">{{ contractor_phone }}</div><div class="form-label">Email</div><div class="form-value">{{ contractor_email }}</div></div>
+        <div class="form-row"><div class="form-label">Scheme</div><div class="form-value">{{ registration_scheme }}</div><div class="form-label">Registration No.</div><div class="form-value">{{ registration_number }}</div></div>
+    </div>
+</div>
+
+<!-- Section B: Client -->
+<div class="section">
+    <div class="section-title">Section B: Client & Installation</div>
+    <div class="form-grid">
+        <div class="form-row"><div class="form-label">Client Name</div><div class="form-value" colspan="3">{{ client_name }}</div></div>
+        <div class="form-row"><div class="form-label">Installation Address</div><div class="form-value" colspan="3">{{ installation_address }}</div></div>
+        {% if linked_report_ref != "" %}<div class="form-row"><div class="form-label">Linked Report</div><div class="form-value" colspan="3">{{ linked_report_ref }} ({{ linked_report_type }})</div></div>{% endif %}
+    </div>
+</div>
+
+<!-- Section C: Agreed With -->
+<div class="section">
+    <div class="section-title green">Section C: Limitations Agreed With</div>
+    <div class="form-grid">
+        <div class="form-row"><div class="form-label">Agreed With</div><div class="form-value">{{ agreed_with_name }}</div><div class="form-label">Position</div><div class="form-value">{{ agreed_with_position }}</div></div>
+    </div>
+    <div class="inline-form" style="margin-top: 2px;">
+        <div class="checkbox-item"><span class="checkbox-box {% if agreed_before_inspection %}checked-green{% endif %}">{% if agreed_before_inspection %}&#10003;{% endif %}</span><label>Limitations discussed and agreed before inspection commenced</label></div>
+    </div>
+</div>
+
+<!-- Section D: Limitations -->
+{% for lim in limitations %}
+<div class="section avoid-break">
+    <div class="section-title amber">Section D{% if limitations.size > 1 %}.{{ forloop.index }}{% endif %}: Limitation{% if limitations.size > 1 %} — {{ forloop.index }} of {{ limitations.size }}{% endif %}</div>
+    <div class="inline-form" style="margin-bottom: 3px;">
+        <div style="display: flex; gap: 6px; align-items: center;">
+            <span style="font-size: 7.5px; font-weight: 600; color: #64748b;">Type:</span>
+            <span class="badge {% if lim.type == 'agreed' %}blue{% else %}amber{% endif %}">{{ lim.type }}</span>
+            <span style="font-size: 7.5px; font-weight: 600; color: #64748b; margin-left: 8px;">Code:</span>
+            <span class="badge {% if lim.code == 'LIM' %}blue{% else %}orange{% endif %}">{{ lim.code }}</span>
+        </div>
+    </div>
+    <div class="form-grid">
+        <div class="form-row"><div class="form-label">Area / Location</div><div class="form-value" style="font-weight: 600;" colspan="3">{{ lim.area }}</div></div>
+        {% if lim.circuit_ref != "" %}<div class="form-row"><div class="form-label">Circuit / Zone Ref</div><div class="form-value" colspan="3">{{ lim.circuit_ref }}</div></div>{% endif %}
+        <div class="form-row"><div class="form-label">Reason</div><div class="form-value" style="line-height: 1.5;" colspan="3">{{ lim.reason }}</div></div>
+        {% if lim.impact != "" %}<div class="form-row"><div class="form-label">Impact on Report</div><div class="form-value" colspan="3">{{ lim.impact }}</div></div>{% endif %}
+        {% if lim.return_visit_condition != "" %}<div class="form-row"><div class="form-label" style="background: #eff6ff; color: #1e40af;">Return Visit When</div><div class="form-value" style="color: #1e40af;" colspan="3">{{ lim.return_visit_condition }}</div></div>{% endif %}
+    </div>
+</div>
+{% endfor %}
+
+<!-- Section E: Risk Statement -->
+<div class="section avoid-break">
+    <div class="section-title red">Section E: Risk Statement</div>
+    <div class="risk-box">
+        <div class="risk-text">{{ risk_statement }}</div>
+    </div>
+</div>
+
+<!-- Section F: Declaration -->
+<div class="section avoid-break">
+    <div class="section-title">Section F: Declaration</div>
+    <div class="signature-grid">
+        <div class="signature-box" style="flex: 2;">
+            <div class="signature-box-header">Inspector</div>
+            <div class="signature-box-body">
+                <div class="sig-field"><span class="sig-field-label">Name</span><span class="sig-field-value" style="font-weight: 600;">{{ contractor_name }}</span></div>
+                <div class="sig-field"><span class="sig-field-label">Company</span><span class="sig-field-value">{{ contractor_company }}</span></div>
+                <div class="sig-field"><span class="sig-field-label">Date</span><span class="sig-field-value">{{ date }}</span></div>
+            </div>
+        </div>
+        <div class="signature-box" style="flex: 1;">
+            <div class="signature-box-header">Signature</div>
+            <div class="signature-box-body" style="min-height: 60px; display: flex; align-items: center; justify-content: center;">
+                {% if inspector_signature %}<img src="{{ inspector_signature }}" style="max-height: 50px; max-width: 100%;" />{% else %}<div style="width: 100%; border-bottom: 1px solid #64748b; margin: 20px 10px;"></div>{% endif %}
+            </div>
+        </div>
+    </div>
+    {% if client_signature != "" %}
+    <div class="signature-grid" style="margin-top: 4px;">
+        <div class="signature-box" style="flex: 2;">
+            <div class="signature-box-header">Client / Person Ordering Report</div>
+            <div class="signature-box-body">
+                <div class="sig-field"><span class="sig-field-label">Name</span><span class="sig-field-value">{{ agreed_with_name }}</span></div>
+                <div class="sig-field"><span class="sig-field-label">Position</span><span class="sig-field-value">{{ agreed_with_position }}</span></div>
+            </div>
+        </div>
+        <div class="signature-box" style="flex: 1;">
+            <div class="signature-box-header">Signature</div>
+            <div class="signature-box-body" style="min-height: 60px; display: flex; align-items: center; justify-content: center;">
+                <img src="{{ client_signature }}" style="max-height: 50px; max-width: 100%;" />
+            </div>
+        </div>
+    </div>
+    {% endif %}
+</div>
+
+{% if notes != "" %}
+<div class="section">
+    <div class="section-title">Section G: Additional Notes</div>
+    <div class="form-grid"><div class="form-row"><div class="form-value" style="line-height: 1.5; min-height: 20px;">{{ notes }}</div></div></div>
+</div>
+{% endif %}
+
+<!-- Footer -->
+<div class="footer">
+    <div><strong>{{ company_name }}</strong><br>{{ company_address }}<br>{% if company_phone %}Tel: {{ company_phone }}{% endif %}{% if company_email %} | {{ company_email }}{% endif %}</div>
+    <div style="text-align: right;">{% if registration_scheme %}<strong>{{ registration_scheme }}</strong><br>Reg No: {{ registration_number }}<br>{% endif %}<span style="color: #94a3b8;">BS 7671:2018+A3:2024 | Limitation Notice</span></div>
+</div>
+<div style="text-align: center; margin-top: 8px;"><span style="font-size: 8px; color: #94a3b8; letter-spacing: 0.3px;">Powered by <strong style="color: #64748b;">Elec-Mate</strong></span></div>
+
+</body>
+</html>

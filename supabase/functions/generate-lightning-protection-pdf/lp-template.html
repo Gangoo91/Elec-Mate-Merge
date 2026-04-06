@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Lightning Protection Test Certificate</title>
+    <style>
+        :root { --accent: #d97706; --accent-light: #fbbf24; }
+        @page { size: A4; margin: 3mm 3mm 4mm 3mm; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 8px; line-height: 1.4; color: #1a1a1a; background: #fff; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+
+        .doc-header { background: linear-gradient(180deg, #0a1628 0%, #152238 100%); color: #fff; padding: 8px 10px; margin-bottom: 2px; border-radius: 2px; position: relative; overflow: hidden; }
+        .doc-header::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: var(--accent); }
+        .doc-header-content { display: flex; justify-content: space-between; align-items: center; }
+        .doc-title-section { flex: 1; }
+        .doc-title { font-size: 14px; font-weight: 700; letter-spacing: 0.5px; margin-bottom: 1px; }
+        .doc-subtitle { font-size: 7px; font-weight: 400; opacity: 0.85; }
+        .doc-meta { text-align: right; }
+        .cert-number { font-size: 10px; font-weight: 700; color: var(--accent-light); }
+        .page-number { font-size: 7px; opacity: 0.7; margin-top: 1px; }
+        .company-brand { display: flex; align-items: center; gap: 8px; margin-right: 10px; }
+        .company-brand-name { font-size: 10px; font-weight: 700; color: #fff; }
+        .company-logo img { max-height: 40px; max-width: 100px; object-fit: contain; }
+
+        .section { margin-bottom: 8px; }
+        .section-title { background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); color: #fff; font-size: 8px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.8px; padding: 4px 8px; margin-bottom: 3px; border-left: 3px solid var(--accent); }
+        .section-title.green { border-left-color: #22c55e; }
+        .section-title.blue { border-left-color: #3b82f6; }
+        .section-title.red { border-left-color: #dc2626; }
+        .section-title.purple { border-left-color: #8b5cf6; }
+        .section-title.cyan { border-left-color: #06b6d4; }
+
+        .form-grid { display: table; width: 100%; border-collapse: collapse; margin-bottom: 4px; }
+        .form-row { display: table-row; }
+        .form-label { display: table-cell; font-size: 7px; font-weight: 600; color: #475569; padding: 4px 6px; width: 100px; vertical-align: middle; background: #f8fafc; border: 1px solid #e2e8f0; }
+        .form-value { display: table-cell; font-size: 7.5px; color: #1e293b; padding: 4px 6px; vertical-align: middle; border: 1px solid #e2e8f0; background: #fff; }
+
+        .inline-form { display: flex; flex-wrap: wrap; gap: 5px; padding: 6px 8px; background: #fafbfc; border: 1px solid #e2e8f0; border-radius: 2px; }
+        .checkbox-item { display: flex; align-items: center; gap: 3px; margin-right: 5px; }
+        .checkbox-box { width: 10px; height: 10px; border: 1.5px solid #64748b; display: inline-flex; align-items: center; justify-content: center; font-size: 7px; font-weight: bold; flex-shrink: 0; }
+        .checkbox-box.checked { background: var(--accent); color: #fff; border-color: var(--accent); }
+        .checkbox-box.checked-green { background: #22c55e; color: #fff; border-color: #22c55e; }
+        .checkbox-box.checked-red { background: #dc2626; color: #fff; border-color: #dc2626; }
+
+        .badge { display: inline-block; padding: 1px 4px; border-radius: 2px; font-size: 6px; font-weight: 700; text-transform: uppercase; }
+        .badge.pass { background: #dcfce7; color: #166534; border: 1px solid #86efac; }
+        .badge.fail { background: #fef2f2; color: #991b1b; border: 1px solid #fca5a5; }
+        .badge.c1 { background: #fef2f2; color: #991b1b; border: 1px solid #fca5a5; }
+        .badge.c2 { background: #fef3c7; color: #92400e; border: 1px solid #fcd34d; }
+        .badge.c3 { background: #dbeafe; color: #1e40af; border: 1px solid #93c5fd; }
+
+        .test-table { width: 100%; border-collapse: collapse; margin: 2px 0; font-size: 7px; }
+        .test-table th { background: #f1f5f9; font-weight: 600; color: #475569; padding: 4px 5px; border: 1px solid #e2e8f0; text-align: left; font-size: 6.5px; }
+        .test-table td { padding: 4px 5px; border: 1px solid #e2e8f0; color: #1e293b; }
+        .test-table .pass-cell { color: #166534; font-weight: 600; }
+        .test-table .fail-cell { color: #991b1b; font-weight: 600; background: #fef2f2; }
+
+        .signature-grid { display: flex; gap: 5px; margin-top: 2px; }
+        .signature-box { flex: 1; border: 1px solid #cbd5e1; border-radius: 2px; overflow: hidden; }
+        .signature-box-header { background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); color: #fff; font-size: 7px; font-weight: 600; padding: 3px 7px; border-bottom: 1px solid var(--accent); }
+        .signature-box-body { padding: 3px 5px; background: #fafbfc; }
+        .sig-field { display: flex; align-items: center; margin-bottom: 2px; gap: 3px; }
+        .sig-field:last-child { margin-bottom: 0; }
+        .sig-field-label { font-size: 6.5px; font-weight: 600; color: #64748b; min-width: 50px; flex-shrink: 0; }
+        .sig-field-value { flex: 1; font-size: 7px; color: #1e293b; padding: 2px 4px; background: #fff; border: 1px solid #e2e8f0; border-radius: 1px; min-height: 15px; }
+        .sig-field-value img { max-height: 25px; }
+
+        .footer { margin-top: 6px; padding-top: 4px; border-top: 2px solid var(--accent); display: flex; justify-content: space-between; font-size: 6.5px; color: #64748b; }
+        .page-break { page-break-before: always; }
+        .avoid-break { page-break-inside: avoid; }
+
+        .front-sheet { min-height: 100vh; display: flex; flex-direction: column; }
+        .front-banner { background: linear-gradient(135deg, #92400e 0%, #d97706 50%, #b45309 100%); color: #fff; text-align: center; padding: 12px 18px; margin: 6px 0; border-radius: 3px; }
+        .front-banner h1 { font-size: 18px; font-weight: 900; letter-spacing: 1.5px; text-transform: uppercase; }
+        .front-banner p { font-size: 9px; font-weight: 600; margin-top: 2px; opacity: 0.95; }
+        .front-details-card { border: 1px solid #e2e8f0; border-radius: 4px; overflow: hidden; margin: 8px 0; }
+        .front-details-header { background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); color: #fff; font-size: 8px; font-weight: 600; padding: 4px 10px; text-transform: uppercase; letter-spacing: 0.5px; }
+        .front-details-body { padding: 8px 10px; background: #fff; }
+        .front-field { display: flex; margin-bottom: 6px; gap: 8px; }
+        .front-field:last-child { margin-bottom: 0; }
+        .front-field-label { font-size: 8px; font-weight: 600; color: #64748b; min-width: 100px; flex-shrink: 0; }
+        .front-field-value { font-size: 8.5px; font-weight: 600; color: #0f172a; }
+
+        .result-box { text-align: center; padding: 10px; border-radius: 3px; margin: 6px 0; }
+        .result-box.satisfactory { background: #f0fdf4; border: 2px solid #22c55e; }
+        .result-box.unsatisfactory { background: #fef2f2; border: 2px solid #dc2626; }
+        .result-box.with-obs { background: #fffbeb; border: 2px solid #f59e0b; }
+        .result-text { font-size: 14px; font-weight: 900; text-transform: uppercase; letter-spacing: 1px; }
+        .result-text.satisfactory { color: #166534; }
+        .result-text.unsatisfactory { color: #991b1b; }
+        .result-text.with-obs { color: #92400e; }
+
+        .vi-table { width: 100%; border-collapse: collapse; font-size: 7px; margin: 2px 0; }
+        .vi-table th { background: #f1f5f9; font-weight: 600; color: #475569; padding: 2px 4px; border: 1px solid #e2e8f0; font-size: 6.5px; text-align: left; }
+        .vi-table td { padding: 2px 4px; border: 1px solid #e2e8f0; }
+        .vi-cat { background: #f8fafc; font-weight: 600; color: #1e293b; padding: 3px 4px; }
+    </style>
+</head>
+<body>
+
+<!-- PAGE 1: FRONT SHEET -->
+<div class="front-sheet">
+    <div class="doc-header">
+        <div class="doc-header-content">
+            <div class="company-brand">
+                {% unless companyLogo == blank %}<div class="company-logo"><img src="{{ companyLogo }}" alt="" /></div>{% endunless %}
+                <div><div class="company-brand-name">{{ companyName }}</div></div>
+            </div>
+            <div class="doc-title-section">
+                <div class="doc-title">LIGHTNING PROTECTION TEST CERTIFICATE</div>
+                <div class="doc-subtitle">BS EN 62305-3 — Inspection &amp; Testing</div>
+            </div>
+            <div class="doc-meta"><div class="cert-number">{{ certificateNumber }}</div><div class="page-number">Page 1</div></div>
+        </div>
+    </div>
+
+    <div class="front-banner">
+        <h1>LPS {% if overallResult == 'satisfactory' %}Satisfactory{% elsif overallResult == 'unsatisfactory' %}Unsatisfactory{% else %}Inspected{% endif %}</h1>
+        <p>Lightning Protection System — Class {{ lpsClass }} | {{ inspectionType }} inspection</p>
+    </div>
+
+    <!-- Result -->
+    <div class="result-box {% if overallResult == 'satisfactory' %}satisfactory{% elsif overallResult == 'unsatisfactory' %}unsatisfactory{% else %}with-obs{% endif %}">
+        <div class="result-text {% if overallResult == 'satisfactory' %}satisfactory{% elsif overallResult == 'unsatisfactory' %}unsatisfactory{% else %}with-obs{% endif %}">
+            {% if overallResult == 'satisfactory' %}Satisfactory{% elsif overallResult == 'unsatisfactory' %}Unsatisfactory{% elsif overallResult == 'satisfactory-with-observations' %}Satisfactory with Observations{% else %}Pending{% endif %}
+        </div>
+    </div>
+
+    <div class="front-details-card">
+        <div class="front-details-header">Certificate Details</div>
+        <div class="front-details-body">
+            <div class="front-field"><div class="front-field-label">Certificate No.</div><div class="front-field-value">{{ certificateNumber }}</div></div>
+            <div class="front-field"><div class="front-field-label">Inspection Date</div><div class="front-field-value">{{ inspectionDate }}</div></div>
+            <div class="front-field"><div class="front-field-label">Inspection Type</div><div class="front-field-value">{{ inspectionType }}</div></div>
+            <div class="front-field"><div class="front-field-label">LPS Class</div><div class="front-field-value">Class {{ lpsClass }} ({{ lpsType }})</div></div>
+            <div class="front-field"><div class="front-field-label">Standard</div><div class="front-field-value">{{ designStandard }}</div></div>
+            {% unless previousCertRef == blank %}<div class="front-field"><div class="front-field-label">Previous Cert</div><div class="front-field-value">{{ previousCertRef }} ({{ previousCertDate }})</div></div>{% endunless %}
+            <div class="front-field"><div class="front-field-label">Next Complete Test</div><div class="front-field-value" style="color: #d97706; font-weight: 700;">{{ nextInspectionDue }}</div></div>
+            {% unless nextVisualInspectionDue == blank %}<div class="front-field"><div class="front-field-label">Next Visual</div><div class="front-field-value" style="color: #d97706;">{{ nextVisualInspectionDue }}</div></div>{% endunless %}
+        </div>
+    </div>
+
+    <div class="front-details-card">
+        <div class="front-details-header">Site</div>
+        <div class="front-details-body">
+            {% unless siteName == blank %}<div class="front-field"><div class="front-field-label">Site Name</div><div class="front-field-value">{{ siteName }}</div></div>{% endunless %}
+            <div class="front-field"><div class="front-field-label">Address</div><div class="front-field-value">{{ siteAddress }}</div></div>
+            <div class="front-field"><div class="front-field-label">Client</div><div class="front-field-value">{{ clientName }}</div></div>
+            {% unless clientPhone == blank %}<div class="front-field"><div class="front-field-label">Contact</div><div class="front-field-value">{{ clientPhone }}{% unless clientEmail == blank %} | {{ clientEmail }}{% endunless %}</div></div>{% endunless %}
+            {% unless clientAddress == blank %}<div class="front-field"><div class="front-field-label">Client Address</div><div class="front-field-value">{{ clientAddress }}</div></div>{% endunless %}
+            {% unless buildingType == blank %}<div class="front-field"><div class="front-field-label">Building</div><div class="front-field-value">{{ buildingType }}{% unless buildingUse == blank %} ({{ buildingUse }}){% endunless %}{% unless buildingHeight == blank %}, {{ buildingHeight }}m, {{ numberOfFloors }} floors{% endunless %}{% unless constructionType == blank %} — {{ constructionType }}{% endunless %}</div></div>{% endunless %}
+        </div>
+    </div>
+
+    <div class="front-details-card">
+        <div class="front-details-header">Contractor</div>
+        <div class="front-details-body">
+            <div class="front-field"><div class="front-field-label">Tester</div><div class="front-field-value">{{ testerName }}{% unless contractorCompany == blank %}, {{ contractorCompany }}{% endunless %}</div></div>
+            {% unless atlasNumber == blank %}<div class="front-field"><div class="front-field-label">ATLAS No.</div><div class="front-field-value">{{ atlasNumber }}</div></div>{% endunless %}
+            {% unless testerQualifications == blank %}<div class="front-field"><div class="front-field-label">Qualifications</div><div class="front-field-value">{{ testerQualifications }}</div></div>{% endunless %}
+        </div>
+    </div>
+
+    {% if strikeCounterFitted %}
+    <div class="front-details-card">
+        <div class="front-details-header">Strike Counter</div>
+        <div class="front-details-body">
+            <div class="front-field"><div class="front-field-label">Current Reading</div><div class="front-field-value" style="font-size: 12px;">{{ strikeCounterReading }}</div></div>
+            {% unless strikeCounterPreviousReading == blank %}<div class="front-field"><div class="front-field-label">Previous Reading</div><div class="front-field-value">{{ strikeCounterPreviousReading }}</div></div>{% endunless %}
+        </div>
+    </div>
+    {% endif %}
+
+    <div style="flex: 1;"></div>
+    <div class="footer">
+        <div><strong>{{ companyName }}</strong><br>{{ companyAddress }}<br>{% unless companyPhone == blank %}Tel: {{ companyPhone }}{% endunless %}</div>
+        <div style="text-align: right;"><span style="color: #94a3b8;">BS EN 62305-3</span></div>
+    </div>
+    <div style="text-align: center; margin-top: 5px;"><span style="font-size: 7px; color: #94a3b8;">Powered by <strong style="color: #64748b;">Elec-Mate</strong></span></div>
+</div>
+
+<!-- PAGE 2: INSTALLATION & VISUAL -->
+<div class="page-break"></div>
+<div class="doc-header"><div class="doc-header-content"><div class="company-brand">{% unless companyLogo == blank %}<div class="company-logo"><img src="{{ companyLogo }}" alt="" /></div>{% endunless %}<div><div class="company-brand-name">{{ companyName }}</div></div></div><div class="doc-title-section"><div class="doc-title">LPS CERTIFICATE</div><div class="doc-subtitle">Installation Details &amp; Visual Inspection</div></div><div class="doc-meta"><div class="cert-number">{{ certificateNumber }}</div><div class="page-number">Page 2+</div></div></div></div>
+
+<div class="section avoid-break">
+    <div class="section-title">Section A: LPS Installation</div>
+    <div class="form-grid">
+        <div class="form-row"><div class="form-label">LPS Class</div><div class="form-value" style="font-weight: 600;">Class {{ lpsClass }}</div><div class="form-label">LPS Type</div><div class="form-value">{{ lpsType }}</div></div>
+        <div class="form-row"><div class="form-label">Design Standard</div><div class="form-value">{{ designStandard }}</div><div class="form-label">System Age</div><div class="form-value">{{ systemAge }} years</div></div>
+        {% unless originalInstallDate == blank %}<div class="form-row"><div class="form-label">Installed</div><div class="form-value">{{ originalInstallDate }}</div></div>{% endunless %}
+        <div class="form-row"><div class="form-label">Air Termination</div><div class="form-value">{{ airTerminationType }} — {{ airTerminationMaterial }}{% unless meshSize == blank %} (mesh {{ meshSize }}m){% endunless %}{% unless numberOfAirRods == blank %}, {{ numberOfAirRods }} rods{% endunless %}</div></div>
+        <div class="form-row"><div class="form-label">Down Conductors</div><div class="form-value">{{ numberOfDownConductors }}× {{ downConductorMaterial }} {{ downConductorSize }}mm²{% unless downConductorSpacing == blank %}, {{ downConductorSpacing }}m spacing{% endunless %}</div></div>
+        <div class="form-row"><div class="form-label">Earth Termination</div><div class="form-value">{{ numberOfElectrodes }}× {{ electrodeType }} ({{ electrodeMaterial }}){% unless electrodeDepth == blank %}, {{ electrodeDepth }}m deep{% endunless %}</div></div>
+        {% unless bondingBarLocation == blank %}<div class="form-row"><div class="form-label">Bonding Bar</div><div class="form-value">{{ bondingBarLocation }}</div></div>{% endunless %}
+    </div>
+    <div class="inline-form" style="margin-top: 2px;">
+        {% if servicesBonded.electrical %}<div class="checkbox-item"><span class="checkbox-box checked-green">&#10003;</span><label>Electrical</label></div>{% endif %}
+        {% if servicesBonded.gas %}<div class="checkbox-item"><span class="checkbox-box checked-green">&#10003;</span><label>Gas</label></div>{% endif %}
+        {% if servicesBonded.water %}<div class="checkbox-item"><span class="checkbox-box checked-green">&#10003;</span><label>Water</label></div>{% endif %}
+        {% if servicesBonded.telecoms %}<div class="checkbox-item"><span class="checkbox-box checked-green">&#10003;</span><label>Telecoms</label></div>{% endif %}
+        {% if servicesBonded.structuralSteel %}<div class="checkbox-item"><span class="checkbox-box checked-green">&#10003;</span><label>Steel</label></div>{% endif %}
+        {% if servicesBonded.hvac %}<div class="checkbox-item"><span class="checkbox-box checked-green">&#10003;</span><label>HVAC</label></div>{% endif %}
+        {% unless servicesBonded.other == blank %}<div class="checkbox-item"><span class="checkbox-box checked-green">&#10003;</span><label>{{ servicesBonded.other }}</label></div>{% endunless %}
+    </div>
+    {% if spd1Fitted or spd2Fitted or spd3Fitted %}
+    <div class="form-grid" style="margin-top: 2px;">
+        {% if spd1Fitted %}<div class="form-row"><div class="form-label">Type 1 SPD</div><div class="form-value">{{ spd1Make }} {{ spd1Model }} — {{ spd1Location }}</div></div>{% endif %}
+        {% if spd2Fitted %}<div class="form-row"><div class="form-label">Type 2 SPD</div><div class="form-value">{{ spd2Make }} {{ spd2Model }} — {{ spd2Location }}</div></div>{% endif %}
+        {% if spd3Fitted %}<div class="form-row"><div class="form-label">Type 3 SPD</div><div class="form-value">{{ spd3Make }} {{ spd3Model }} — {{ spd3Location }}</div></div>{% endif %}
+    </div>
+    {% endif %}
+</div>
+
+<div class="section">
+    <div class="section-title green">Section B: Visual Inspection</div>
+    <table class="vi-table">
+        <thead><tr><th style="width: 55%;">Item</th><th style="width: 15%;">Result</th><th>Notes</th></tr></thead>
+        <tbody>
+        {% for item in visualInspection %}
+            {% assign prev_cat = '' %}{% if forloop.index > 1 %}{% assign prev_idx = forloop.index | minus: 2 %}{% assign prev_cat = visualInspection[prev_idx].category %}{% endif %}
+            {% if item.category != prev_cat %}<tr><td colspan="3" class="vi-cat">{{ item.category }}</td></tr>{% endif %}
+            <tr>
+                <td>{{ item.description }}</td>
+                <td style="text-align: center;">{% if item.result == 'pass' %}<span class="badge pass">PASS</span>{% elsif item.result == 'fail' %}<span class="badge fail">FAIL</span>{% elsif item.result == 'na' %}N/A{% endif %}</td>
+                <td style="font-size: 6.5px; color: #64748b;">{{ item.note }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<!-- Test Results & Declaration continue below -->
+
+<!-- Conditions -->
+<div class="section avoid-break">
+    <div class="section-title">Section C: Test Conditions</div>
+    <div class="form-grid">
+        <div class="form-row"><div class="form-label">Weather</div><div class="form-value">{{ weatherCondition }}</div><div class="form-label">Soil</div><div class="form-value">{{ soilCondition }}</div></div>
+        <div class="form-row"><div class="form-label">Ambient Temp</div><div class="form-value">{% unless ambientTemp == blank %}{{ ambientTemp }}°C{% endunless %}</div><div class="form-label">Soil Resistivity</div><div class="form-value">{% unless soilResistivity == blank %}{{ soilResistivity }} Ω·m{% endunless %}</div></div>
+        <div class="form-row"><div class="form-label">Instrument</div><div class="form-value">{{ instrumentMake }} {{ instrumentModel }} (S/N: {{ instrumentSerial }})</div><div class="form-label">Cal. Date</div><div class="form-value">{{ instrumentCalDate }}</div></div>
+        {% unless lpsDrawingRef == blank %}<div class="form-row"><div class="form-label">LPS Drawing Ref</div><div class="form-value" style="font-weight: 600;">{{ lpsDrawingRef }}{% if lpsDrawingAttached %} (attached){% endif %}</div></div>{% endunless %}
+    </div>
+    {% if hasTestLimitations %}
+    <div style="background: #fef3c7; border: 1px solid #fcd34d; border-left: 3px solid #f59e0b; border-radius: 2px; padding: 4px 8px; margin-top: 3px;">
+        <div style="font-size: 7px; color: #92400e;"><strong>Test Limitations:</strong> {{ testLimitations }}</div>
+    </div>
+    {% endif %}
+</div>
+
+<!-- Earth Electrode Tests -->
+<div class="section avoid-break">
+    <div class="section-title green">Section D: Earth Electrode Resistance (≤10Ω)</div>
+    {% if earthElectrodeTests.size > 0 %}
+    <table class="test-table">
+        <thead><tr><th>Ref</th><th>Location</th><th>Type</th><th>Method</th><th>Reading (Ω)</th><th>Previous (Ω)</th><th>Result</th><th>Notes</th></tr></thead>
+        <tbody>
+        {% for test in earthElectrodeTests %}
+            {% assign r = test.measuredResistance | plus: 0 %}
+            <tr>
+                <td style="font-weight: 600;">{{ test.reference }}</td>
+                <td>{{ test.location }}</td>
+                <td>{{ test.electrodeType }}</td>
+                <td>{{ test.testMethod }}</td>
+                <td class="{% if r <= 10 %}pass-cell{% else %}fail-cell{% endif %}">{{ test.measuredResistance }}</td>
+                <td style="color: #94a3b8;">{{ test.previousReading }}</td>
+                <td>{% if r <= 10 %}<span class="badge pass">PASS</span>{% elsif test.measuredResistance != blank %}<span class="badge fail">FAIL</span>{% endif %}</td>
+                <td style="font-size: 6px; color: #64748b;">{{ test.notes }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    {% else %}<div style="padding: 4px 8px; font-size: 7px; color: #94a3b8; font-style: italic;">No earth electrode tests recorded</div>{% endif %}
+</div>
+
+<!-- Down Conductor Continuity -->
+<div class="section avoid-break">
+    <div class="section-title blue">Section E: Down Conductor Continuity (&lt;1Ω)</div>
+    {% if downConductorTests.size > 0 %}
+    <table class="test-table">
+        <thead><tr><th>Ref</th><th>Location</th><th>From</th><th>To</th><th>Reading (Ω)</th><th>Previous (Ω)</th><th>Result</th></tr></thead>
+        <tbody>
+        {% for test in downConductorTests %}
+            {% assign r = test.measuredResistance | plus: 0 %}
+            <tr>
+                <td style="font-weight: 600;">{{ test.reference }}</td>
+                <td>{{ test.location }}</td>
+                <td>{{ test.fromPoint }}</td>
+                <td>{{ test.toPoint }}</td>
+                <td class="{% if r < 1 %}pass-cell{% else %}fail-cell{% endif %}">{{ test.measuredResistance }}</td>
+                <td style="color: #94a3b8;">{{ test.previousReading }}</td>
+                <td>{% if r < 1 %}<span class="badge pass">PASS</span>{% elsif test.measuredResistance != blank %}<span class="badge fail">FAIL</span>{% endif %}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    {% else %}<div style="padding: 4px 8px; font-size: 7px; color: #94a3b8; font-style: italic;">No down conductor tests recorded</div>{% endif %}
+</div>
+
+<!-- Bonding Tests -->
+<div class="section avoid-break">
+    <div class="section-title purple">Section F: Bonding (≤0.2Ω)</div>
+    {% if bondingTests.size > 0 %}
+    <table class="test-table">
+        <thead><tr><th>Ref</th><th>Service</th><th>Location</th><th>Size (mm²)</th><th>Reading (Ω)</th><th>Result</th></tr></thead>
+        <tbody>
+        {% for test in bondingTests %}
+            {% assign r = test.measuredResistance | plus: 0 %}
+            <tr>
+                <td style="font-weight: 600;">{{ test.reference }}</td>
+                <td>{{ test.serviceBonded }}</td>
+                <td>{{ test.bondLocation }}</td>
+                <td>{{ test.conductorSize }}</td>
+                <td class="{% if r <= 0.2 %}pass-cell{% else %}fail-cell{% endif %}">{{ test.measuredResistance }}</td>
+                <td>{% if r <= 0.2 %}<span class="badge pass">PASS</span>{% elsif test.measuredResistance != blank %}<span class="badge fail">FAIL</span>{% endif %}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    {% else %}<div style="padding: 4px 8px; font-size: 7px; color: #94a3b8; font-style: italic;">No bonding tests recorded</div>{% endif %}
+</div>
+
+<!-- SPD Checks -->
+<div class="section avoid-break">
+    <div class="section-title cyan">Section G: SPD Checks</div>
+    {% if spdChecks.size > 0 %}
+    <table class="test-table">
+        <thead><tr><th>Ref</th><th>Location</th><th>Type</th><th>Status</th><th>Disconnector</th></tr></thead>
+        <tbody>
+        {% for check in spdChecks %}
+            <tr>
+                <td>{{ check.reference }}</td>
+                <td>{{ check.location }}</td>
+                <td>Type {{ check.spdType }}</td>
+                <td>{% if check.statusIndicator == 'ok' %}<span class="badge pass">OK</span>{% elsif check.statusIndicator == 'fault' %}<span class="badge fail">FAULT</span>{% else %}{{ check.statusIndicator }}{% endif %}</td>
+                <td>{% if check.disconnectorCheck == 'ok' %}OK{% elsif check.disconnectorCheck == 'tripped' %}<span class="badge fail">TRIPPED</span>{% endif %}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    {% else %}<div style="padding: 4px 8px; font-size: 7px; color: #94a3b8; font-style: italic;">No SPD checks recorded</div>{% endif %}
+</div>
+
+<!-- Risk Assessment -->
+<div class="section avoid-break">
+    <div class="section-title red">Section H: Risk Assessment (BS EN 62305-2)</div>
+    {% unless riskAssessmentRef == blank %}
+    <div class="form-grid">
+        <div class="form-row"><div class="form-label">RA Reference</div><div class="form-value">{{ riskAssessmentRef }}</div><div class="form-label">RA Date</div><div class="form-value">{{ riskAssessmentDate }}</div></div>
+        <div class="form-row"><div class="form-label">Required Class</div><div class="form-value">Class {{ requiredLPSClass }}</div><div class="form-label">Actual Class</div><div class="form-value">Class {{ actualLPSClass }}</div></div>
+    </div>
+    <div class="inline-form" style="margin-top: 2px;"><div class="checkbox-item"><span class="checkbox-box {% if riskAssessmentCompliant %}checked-green{% endif %}">{% if riskAssessmentCompliant %}&#10003;{% endif %}</span><label>LPS class meets risk assessment requirements</label></div></div>
+    {% else %}<div style="padding: 4px 8px; font-size: 7px; color: #94a3b8; font-style: italic;">No risk assessment reference recorded</div>{% endunless %}
+</div>
+
+<!-- Observations -->
+<div class="section">
+    <div class="section-title red">Section I: Observations &amp; Defects</div>
+    {% if observations.size > 0 %}
+    <table class="test-table">
+        <thead><tr><th>Ref</th><th>Severity</th><th>Location</th><th>Description</th><th>Action Required</th></tr></thead>
+        <tbody>
+        {% for obs in observations %}
+            <tr>
+                <td style="font-weight: 600;">{{ obs.reference }}</td>
+                <td>{% if obs.severity == 'C1' %}<span class="badge c1">C1</span>{% elsif obs.severity == 'C2' %}<span class="badge c2">C2</span>{% elsif obs.severity == 'C3' %}<span class="badge c3">C3</span>{% endif %}</td>
+                <td>{{ obs.location }}</td>
+                <td>{{ obs.description }}</td>
+                <td style="font-size: 6.5px;">{{ obs.recommendedAction }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    {% else %}<div style="padding: 4px 8px; font-size: 7px; color: #94a3b8; font-style: italic;">No observations or defects recorded</div>{% endif %}
+</div>
+
+<!-- Separation Distance -->
+{% if separationChecks.size > 0 %}
+<div class="section avoid-break">
+    <div class="section-title">Separation Distance Checks</div>
+    <table class="test-table">
+        <thead><tr><th>Location</th><th>Measured (mm)</th><th>Required (mm)</th><th>Result</th></tr></thead>
+        <tbody>
+        {% for check in separationChecks %}
+            {% assign m = check.measuredDistance | plus: 0 %}{% assign req = check.requiredDistance | plus: 0 %}
+            <tr>
+                <td>{{ check.location }}</td>
+                <td>{{ check.measuredDistance }}</td>
+                <td>{{ check.requiredDistance }}</td>
+                <td>{% if m >= req %}<span class="badge pass">PASS</span>{% else %}<span class="badge fail">FAIL</span>{% endif %}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endif %}
+
+<!-- Declaration -->
+<div class="section avoid-break">
+    <div class="section-title">Section J: Declaration</div>
+    <div style="background: #fffbeb; border: 1px solid #fcd34d; border-left: 3px solid #d97706; border-radius: 2px; padding: 4px 7px; margin-bottom: 3px;">
+        <div style="font-size: 7px; color: #92400e; font-style: italic; line-height: 1.5;">I hereby certify that the lightning protection system at the above premises has been inspected and tested in accordance with BS EN 62305-3. The results and observations are recorded in this certificate.</div>
+    </div>
+    <div class="signature-grid">
+        <div class="signature-box" style="flex: 2;">
+            <div class="signature-box-header">Inspector</div>
+            <div class="signature-box-body">
+                <div class="sig-field"><span class="sig-field-label">Name</span><span class="sig-field-value" style="font-weight: 600;">{{ testerName }}</span></div>
+                <div class="sig-field"><span class="sig-field-label">Company</span><span class="sig-field-value">{{ contractorCompany }}</span></div>
+                {% unless atlasNumber == blank %}<div class="sig-field"><span class="sig-field-label">ATLAS</span><span class="sig-field-value">{{ atlasNumber }}</span></div>{% endunless %}
+                <div class="sig-field"><span class="sig-field-label">Date</span><span class="sig-field-value">{{ inspectorDate }}</span></div>
+            </div>
+        </div>
+        <div class="signature-box" style="flex: 1;">
+            <div class="signature-box-header">Inspector Signature</div>
+            <div class="signature-box-body" style="min-height: 50px; display: flex; align-items: center; justify-content: center;">
+                {% if inspectorSignature %}<img src="{{ inspectorSignature }}" style="max-height: 40px; max-width: 100%;" />{% else %}<div style="width: 100%; border-bottom: 1px solid #64748b; margin: 16px 8px;"></div>{% endif %}
+            </div>
+        </div>
+    </div>
+    {% unless reviewerSignature == blank %}
+    <div class="signature-grid" style="margin-top: 3px;">
+        <div class="signature-box" style="flex: 2;"><div class="signature-box-header">Reviewer</div><div class="signature-box-body"><div class="sig-field"><span class="sig-field-label">Name</span><span class="sig-field-value">{{ reviewerName }}</span></div><div class="sig-field"><span class="sig-field-label">Date</span><span class="sig-field-value">{{ reviewerDate }}</span></div></div></div>
+        <div class="signature-box" style="flex: 1;"><div class="signature-box-header">Reviewer Signature</div><div class="signature-box-body" style="min-height: 50px; display: flex; align-items: center; justify-content: center;"><img src="{{ reviewerSignature }}" style="max-height: 40px; max-width: 100%;" /></div></div>
+    </div>
+    {% endunless %}
+    {% unless clientSignature == blank %}
+    <div class="signature-grid" style="margin-top: 3px;">
+        <div class="signature-box" style="flex: 2;"><div class="signature-box-header">Client Acknowledgement</div><div class="signature-box-body"><div class="sig-field"><span class="sig-field-label">Name</span><span class="sig-field-value">{{ clientName }}</span></div>{% unless clientDate == blank %}<div class="sig-field"><span class="sig-field-label">Date</span><span class="sig-field-value">{{ clientDate }}</span></div>{% endunless %}</div></div>
+        <div class="signature-box" style="flex: 1;"><div class="signature-box-header">Client Signature</div><div class="signature-box-body" style="min-height: 50px; display: flex; align-items: center; justify-content: center;"><img src="{{ clientSignature }}" style="max-height: 40px; max-width: 100%;" /></div></div>
+    </div>
+    {% endunless %}
+</div>
+
+{% unless additionalNotes == blank %}
+<div class="section"><div class="section-title">Additional Notes</div><div class="form-grid"><div class="form-row"><div class="form-value" style="line-height: 1.5;">{{ additionalNotes }}</div></div></div></div>
+{% endunless %}
+
+{% if photos.size > 0 %}
+<div class="section avoid-break">
+    <div class="section-title cyan">Photo Evidence</div>
+    <div style="display: flex; flex-wrap: wrap; gap: 3px; padding: 3px;">
+        {% for photo in photos %}
+        <div style="width: calc(33.33% - 3px); border: 1px solid #e2e8f0; border-radius: 2px; overflow: hidden;">
+            <img src="{{ photo }}" style="width: 100%; height: auto; display: block;" />
+            <div style="font-size: 6px; color: #64748b; text-align: center; padding: 1px;">Photo {{ forloop.index }}</div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endif %}
+
+<div class="footer">
+    <div><strong>{{ companyName }}</strong><br>{{ companyAddress }}<br>{% unless companyPhone == blank %}Tel: {{ companyPhone }}{% endunless %}{% unless companyEmail == blank %} | {{ companyEmail }}{% endunless %}</div>
+    <div style="text-align: right;">{% unless registrationScheme == blank %}<strong>{{ registrationScheme }}</strong><br>Reg No: {{ registrationNumber }}<br>{% endunless %}<span style="color: #94a3b8;">BS EN 62305-3 | Lightning Protection Test Certificate</span></div>
+</div>
+<div style="text-align: center; margin-top: 5px;"><span style="font-size: 7px; color: #94a3b8;">Powered by <strong style="color: #64748b;">Elec-Mate</strong></span></div>
+
+</body>
+</html>

@@ -173,7 +173,7 @@ src/pages/study-centre/
 - **Project:** `jtwygbeceundfgnkirof`
 - **URL:** `https://jtwygbeceundfgnkirof.supabase.co`
 - **Contains:** Auth, user profiles, all tables (277), all edge functions (316), RAG data
-- **Users:** 27 registered accounts
+- **Users:** 683+ registered accounts
 - **client.ts points here**
 
 ### Edge Function Deployment

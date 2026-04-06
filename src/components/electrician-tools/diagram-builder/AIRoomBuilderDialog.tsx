@@ -1,12 +1,21 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { Sheet, SheetContent } from '@/components/ui/sheet';
-import { Sparkles, Loader2, ArrowLeft, Mic, ChevronRight } from 'lucide-react';
+import {
+  Sparkles, Loader2, ArrowLeft, Mic, ChevronRight,
+  LayoutGrid, Shield, Zap, Lightbulb, FileText, PoundSterling,
+  AlertTriangle, Info, CheckCircle2,
+} from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
 import { useHaptic } from '@/hooks/useHaptic';
+import { useSpeechToText } from '@/hooks/useSpeechToText';
 import { cn } from '@/lib/utils';
+import type { CanvasObject } from '@/pages/electrician-tools/ai-tools/DiagramBuilderPage';
+import { symbolRegistry } from '@/components/electrician-tools/diagram-builder/symbols/symbolRegistry';
+
+type Mode = 'hub' | 'templates' | 'describe' | 'review' | 'autoplace' | 'suggestions' | 'spec' | 'quote';
 
 const QUICK_TEMPLATES = [
   {
@@ -95,23 +104,141 @@ const QUICK_TEMPLATES = [
   },
 ];
 
+const ROOM_SYMBOL_PACKS: Record<string, { symbolId: string; name: string }[]> = {
+  kitchen: [
+    { symbolId: 'socket-double-13a', name: 'Double Socket' },
+    { symbolId: 'socket-double-13a', name: 'Double Socket' },
+    { symbolId: 'socket-double-13a', name: 'Double Socket' },
+    { symbolId: 'socket-double-13a', name: 'Double Socket' },
+    { symbolId: 'socket-cooker-45a', name: 'Cooker 45A' },
+    { symbolId: 'socket-switched-fused-spur', name: 'Switched Fused Spur' },
+    { symbolId: 'light-ceiling', name: 'Ceiling Light' },
+    { symbolId: 'switch-1way', name: '1-Way Switch' },
+    { symbolId: 'extractor-fan', name: 'Extractor Fan' },
+    { symbolId: 'smoke-detector', name: 'Smoke Detector' },
+  ],
+  bedroom: [
+    { symbolId: 'socket-double-13a', name: 'Double Socket' },
+    { symbolId: 'socket-double-13a', name: 'Double Socket' },
+    { symbolId: 'light-ceiling', name: 'Ceiling Light' },
+    { symbolId: 'switch-2way', name: '2-Way Switch' },
+    { symbolId: 'switch-2way', name: '2-Way Switch' },
+    { symbolId: 'smoke-detector', name: 'Smoke Detector' },
+    { symbolId: 'socket-tv-aerial', name: 'TV Aerial' },
+  ],
+  bathroom: [
+    { symbolId: 'light-downlight', name: 'Downlight' },
+    { symbolId: 'light-downlight', name: 'Downlight' },
+    { symbolId: 'light-downlight', name: 'Downlight' },
+    { symbolId: 'switch-pull-cord', name: 'Pull Cord' },
+    { symbolId: 'socket-shaver', name: 'Shaver Socket' },
+    { symbolId: 'extractor-fan', name: 'Extractor Fan' },
+  ],
+  living: [
+    { symbolId: 'socket-double-13a', name: 'Double Socket' },
+    { symbolId: 'socket-double-13a', name: 'Double Socket' },
+    { symbolId: 'socket-double-13a', name: 'Double Socket' },
+    { symbolId: 'light-ceiling', name: 'Ceiling Light' },
+    { symbolId: 'light-ceiling', name: 'Ceiling Light' },
+    { symbolId: 'switch-dimmer', name: 'Dimmer' },
+    { symbolId: 'socket-tv-aerial', name: 'TV Aerial' },
+    { symbolId: 'socket-data', name: 'Data Socket' },
+    { symbolId: 'smoke-detector', name: 'Smoke Detector' },
+  ],
+  hallway: [
+    { symbolId: 'light-ceiling', name: 'Ceiling Light' },
+    { symbolId: 'switch-2way', name: '2-Way Switch' },
+    { symbolId: 'switch-2way', name: '2-Way Switch' },
+    { symbolId: 'smoke-detector', name: 'Smoke Detector' },
+    { symbolId: 'co-detector', name: 'CO Detector' },
+  ],
+  garage: [
+    { symbolId: 'light-fluorescent', name: 'Fluorescent' },
+    { symbolId: 'socket-double-13a', name: 'Double Socket' },
+    { symbolId: 'socket-double-13a', name: 'Double Socket' },
+    { symbolId: 'socket-outdoor', name: 'Outdoor IP66' },
+    { symbolId: 'switch-1way', name: '1-Way Switch' },
+    { symbolId: 'consumer-unit', name: 'Consumer Unit' },
+    { symbolId: 'smoke-detector', name: 'Smoke Detector' },
+  ],
+};
+
+const modeTitle: Record<Mode, string> = {
+  hub: 'AI Tools',
+  templates: 'Room Templates',
+  describe: 'Describe Room',
+  review: 'Compliance Review',
+  autoplace: 'Auto-Place Symbols',
+  suggestions: 'Smart Suggestions',
+  spec: 'Specification Writer',
+  quote: 'Quote Generator',
+};
+
+const modeSubtitle: Record<Mode, string> = {
+  hub: 'Choose a tool to get started',
+  templates: 'Choose a room type to generate',
+  describe: 'Tell us about the room in your own words',
+  review: 'Check your drawing against BS 7671',
+  autoplace: 'Quick-add typical symbols for a room type',
+  suggestions: 'AI finds what\'s missing or could be better',
+  spec: 'AI generates professional electrical specification',
+  quote: 'Price the job from your floor plan',
+};
+
 interface AIRoomBuilderDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   onRoomGenerated: (roomData: any) => void;
+  canvasObjects?: CanvasObject[];
+  savedRooms?: import('@/hooks/useFloorPlanRooms').SavedRoom[];
+  onSymbolsAutoPlaced?: (symbols: CanvasObject[]) => void;
 }
 
 export const AIRoomBuilderDialog = ({
   open,
   onOpenChange,
   onRoomGenerated,
+  canvasObjects,
+  savedRooms,
+  onSymbolsAutoPlaced,
 }: AIRoomBuilderDialogProps) => {
   const [description, setDescription] = useState('');
   const [isGenerating, setIsGenerating] = useState(false);
-  const [mode, setMode] = useState<'templates' | 'describe'>('templates');
+  const [mode, setMode] = useState<Mode>('hub');
   const [isListening, setIsListening] = useState(false);
+  const [reviewResults, setReviewResults] = useState<{ type: 'warning' | 'info' | 'pass'; message: string }[] | null>(null);
+  const [selectedAutoPlaceRoom, setSelectedAutoPlaceRoom] = useState<string | null>(null);
+  const [suggestionsResult, setSuggestionsResult] = useState<any>(null);
+  const [suggestionsLoading, setSuggestionsLoading] = useState(false);
+  const [specResult, setSpecResult] = useState<any>(null);
+  const [specLoading, setSpecLoading] = useState(false);
+  const [quoteResult, setQuoteResult] = useState<any>(null);
+  const [quoteLoading, setQuoteLoading] = useState(false);
   const haptic = useHaptic();
   const toastIdRef = useRef<string | number | null>(null);
+
+  // Speech-to-text hook (same as site visit voice capture)
+  const speech = useSpeechToText({
+    continuous: true,
+    interimResults: true,
+    lang: 'en-GB',
+    onFinalChunk: (chunk) => {
+      // Append to description as speech is captured
+      setDescription((prev) => (prev ? prev + ' ' + chunk : chunk));
+    },
+  });
+
+  // Reset to hub when dialog opens
+  useEffect(() => {
+    if (open) {
+      setMode('hub');
+      setReviewResults(null);
+      setSuggestionsResult(null);
+      setSpecResult(null);
+      setQuoteResult(null);
+      setSelectedAutoPlaceRoom(null);
+    }
+  }, [open]);
 
   const dismissLoadingToast = () => {
     if (toastIdRef.current) {
@@ -151,28 +278,225 @@ export const AIRoomBuilderDialog = ({
     }
   };
 
-  const handleVoiceInput = () => {
-    if (!('webkitSpeechRecognition' in window)) {
-      toast.error('Voice input not supported');
+  // Voice input now handled by useSpeechToText hook
+
+  // Combine current canvas symbols + all saved rooms' symbols for full analysis
+  const getAllSymbolIds = (): string[] => {
+    const canvasSymbols = (canvasObjects || [])
+      .filter(o => o.type === 'symbol' && o.symbolId)
+      .map(o => o.symbolId!);
+    const savedSymbols = (savedRooms || []).flatMap(r => r.symbolIds || []);
+    return [...canvasSymbols, ...savedSymbols];
+  };
+
+  const getAllSymbolCounts = () => {
+    const allIds = getAllSymbolIds();
+    const counts = new Map<string, { id: string; name: string; count: number }>();
+    allIds.forEach(id => {
+      const existing = counts.get(id);
+      if (existing) existing.count++;
+      else {
+        const sym = symbolRegistry.find(s => s.id === id);
+        counts.set(id, { id, name: sym?.name || id, count: 1 });
+      }
+    });
+    return Array.from(counts.values());
+  };
+
+  const getRoomNames = (): string[] => {
+    return (savedRooms || []).map(r => r.name);
+  };
+
+  // --- Review (client-side) ---
+  const reviewFloorPlan = () => {
+    const symbolIds = getAllSymbolIds();
+    const symbols = symbolIds.map(id => ({ symbolId: id, type: 'symbol' as const }));
+    const items: { type: 'warning' | 'info' | 'pass'; message: string }[] = [];
+
+    if (symbols.length === 0) {
+      items.push({ type: 'warning', message: 'No symbols placed — add electrical symbols first' });
+      setReviewResults(items);
       return;
     }
 
-    const recognition = new (window as any).webkitSpeechRecognition();
-    recognition.lang = 'en-GB';
-    recognition.continuous = false;
+    const has = (pattern: string) => symbolIds.some(id => id.includes(pattern));
+    const count = (pattern: string) => symbolIds.filter(id => id.includes(pattern)).length;
 
-    recognition.onstart = () => setIsListening(true);
-    recognition.onresult = (event: any) => {
-      setDescription(event.results[0][0].transcript);
+    // Smoke/CO
+    if (!has('smoke')) items.push({ type: 'warning', message: 'No smoke detector — Building Regs Part B requires detection in habitable rooms and escape routes' });
+    else items.push({ type: 'pass', message: `Smoke detector present (×${count('smoke')})` });
+
+    // Lights + switches
+    if (count('light-') > 0 && count('switch-') === 0) items.push({ type: 'warning', message: 'Lights without switches — add switches to control the lighting' });
+    if (count('light-') > 12) items.push({ type: 'info', message: `${count('light-')} lighting points — consider splitting into two circuits (L1 + L2)` });
+
+    // Sockets
+    const socketCount = count('socket-') - count('fused') - count('shaver');
+    if (socketCount > 10) items.push({ type: 'info', message: `${socketCount} sockets — consider splitting across two ring finals` });
+
+    // Bathroom checks
+    if (has('shaver') || has('pull-cord')) {
+      if (has('switch-1way') || has('switch-2way') || has('switch-dimmer')) {
+        items.push({ type: 'warning', message: 'Bathroom detected with plate switches — BS 7671 Section 701 requires pull-cord or switches outside the room' });
+      }
+      if (!has('extractor')) items.push({ type: 'info', message: 'Bathroom without extractor fan — Building Regs Part F requires mechanical ventilation' });
+    }
+
+    // Cooker
+    if (has('cooker')) items.push({ type: 'pass', message: 'Cooker circuit identified — dedicated 32A/45A circuit' });
+
+    // EV
+    if (has('ev-charger')) items.push({ type: 'pass', message: 'EV charger — dedicated circuit with Type B RCBO recommended' });
+
+    // CO
+    if (has('co-detector')) items.push({ type: 'pass', message: 'CO detector present' });
+    else items.push({ type: 'info', message: 'No CO detector — required where combustion appliances are present' });
+
+    // SPD
+    if (!has('spd')) items.push({ type: 'info', message: 'No SPD specified — now required for most new installations per BS 7671 AMD2' });
+
+    if (items.filter(i => i.type === 'warning').length === 0) {
+      items.unshift({ type: 'pass', message: 'No critical issues found' });
+    }
+
+    setReviewResults(items);
+  };
+
+  // --- Build symbol summary from canvas ---
+  const buildSymbolSummary = () => {
+    const symbolCounts = new Map<string, { id: string; name: string; count: number }>();
+    getAllSymbolIds().forEach(id => {
+      const existing = symbolCounts.get(id);
+      if (existing) existing.count++;
+      else {
+        const sym = symbolRegistry.find(s => s.id === id);
+        symbolCounts.set(id, { id, name: sym?.name || id, count: 1 });
+      }
+    });
+    return Array.from(symbolCounts.values());
+  };
+
+  // --- Suggestions (API) ---
+  const runSuggestions = async () => {
+    const symbols = buildSymbolSummary();
+    if (symbols.length === 0) {
+      toast.error('No symbols on the canvas — add some symbols first');
+      return;
+    }
+    setSuggestionsLoading(true);
+    setSuggestionsResult(null);
+    try {
+      const { data, error } = await supabase.functions.invoke('floor-plan-ai-suggestions', {
+        body: { room_name: 'Floor Plan', symbols, room_type: 'general' },
+      });
+      if (error) throw error;
+      setSuggestionsResult(data);
       haptic.success();
-    };
-    recognition.onend = () => setIsListening(false);
-    recognition.onerror = () => {
-      toast.error('Voice input failed');
-      setIsListening(false);
-    };
+    } catch (error) {
+      haptic.error();
+      toast.error(error instanceof Error ? error.message : 'Failed to get suggestions');
+    } finally {
+      setSuggestionsLoading(false);
+    }
+  };
 
-    recognition.start();
+  // --- Spec (API) ---
+  const runSpec = async () => {
+    const symbols = buildSymbolSummary();
+    if (symbols.length === 0) {
+      toast.error('No symbols on the canvas — add some symbols first');
+      return;
+    }
+    setSpecLoading(true);
+    setSpecResult(null);
+    try {
+      const { data, error } = await supabase.functions.invoke('floor-plan-ai-spec', {
+        body: { room_name: 'Floor Plan', symbols, room_type: 'general' },
+      });
+      if (error) throw error;
+      setSpecResult(data);
+      haptic.success();
+    } catch (error) {
+      haptic.error();
+      toast.error(error instanceof Error ? error.message : 'Failed to generate specification');
+    } finally {
+      setSpecLoading(false);
+    }
+  };
+
+  // --- Quote (API) ---
+  const runQuote = async () => {
+    const symbols = buildSymbolSummary();
+    if (symbols.length === 0) {
+      toast.error('No symbols on the canvas — add some symbols first');
+      return;
+    }
+    setQuoteLoading(true);
+    setQuoteResult(null);
+    try {
+      const { data, error } = await supabase.functions.invoke('floor-plan-ai-quote', {
+        body: { room_name: 'Floor Plan', symbols, room_type: 'general' },
+      });
+      if (error) throw error;
+      setQuoteResult(data);
+      haptic.success();
+    } catch (error) {
+      haptic.error();
+      toast.error(error instanceof Error ? error.message : 'Failed to generate quote');
+    } finally {
+      setQuoteLoading(false);
+    }
+  };
+
+  // --- Auto-place symbols ---
+  const handleAutoPlace = (roomType: string) => {
+    const pack = ROOM_SYMBOL_PACKS[roomType];
+    if (!pack || !onSymbolsAutoPlaced) return;
+
+    const spacing = 60;
+    const startX = 100;
+    const startY = 100;
+    const perRow = 5;
+
+    const newObjects: CanvasObject[] = pack.map((item, idx) => ({
+      id: `auto-${roomType}-${idx}-${Date.now()}`,
+      type: 'symbol' as const,
+      x: startX + (idx % perRow) * spacing,
+      y: startY + Math.floor(idx / perRow) * spacing,
+      symbolId: item.symbolId,
+      rotation: 0,
+    }));
+
+    onSymbolsAutoPlaced(newObjects);
+    haptic.success();
+    toast.success(`${pack.length} symbols added — drag them into position`);
+    onOpenChange(false);
+  };
+
+  const hubTools = [
+    { id: 'templates' as Mode, icon: LayoutGrid, title: 'Room Templates', desc: '12 room types with standard layouts', color: 'bg-elec-yellow/10 text-elec-yellow' },
+    { id: 'describe' as Mode, icon: Mic, title: 'Describe Room', desc: 'Voice or text — describe your room', color: 'bg-blue-500/10 text-blue-400' },
+    { id: 'autoplace' as Mode, icon: Zap, title: 'Auto-Place Symbols', desc: 'Quick-add typical symbols for a room type', color: 'bg-green-500/10 text-green-400' },
+    { id: 'review' as Mode, icon: Shield, title: 'Compliance Review', desc: 'Check drawing against BS 7671', color: 'bg-orange-500/10 text-orange-400' },
+    { id: 'suggestions' as Mode, icon: Lightbulb, title: 'Smart Suggestions', desc: 'AI finds what\'s missing or could be better', color: 'bg-purple-500/10 text-purple-400' },
+    { id: 'spec' as Mode, icon: FileText, title: 'Write Specification', desc: 'AI generates professional electrical spec', color: 'bg-cyan-500/10 text-cyan-400' },
+    { id: 'quote' as Mode, icon: PoundSterling, title: 'Generate Quote', desc: 'Price the job from your floor plan', color: 'bg-emerald-500/10 text-emerald-400' },
+  ];
+
+  const reviewItemIcon = (type: 'warning' | 'info' | 'pass') => {
+    switch (type) {
+      case 'warning': return <AlertTriangle className="h-4 w-4 text-orange-400 shrink-0 mt-0.5" />;
+      case 'info': return <Info className="h-4 w-4 text-blue-400 shrink-0 mt-0.5" />;
+      case 'pass': return <CheckCircle2 className="h-4 w-4 text-green-400 shrink-0 mt-0.5" />;
+    }
+  };
+
+  const reviewItemBg = (type: 'warning' | 'info' | 'pass') => {
+    switch (type) {
+      case 'warning': return 'bg-orange-500/10 border-orange-500/20';
+      case 'info': return 'bg-blue-500/10 border-blue-500/20';
+      case 'pass': return 'bg-green-500/10 border-green-500/20';
+    }
   };
 
   return (
@@ -182,23 +506,24 @@ export const AIRoomBuilderDialog = ({
           {/* Header */}
           <div className="flex items-center justify-between px-4 py-3 border-b border-white/10">
             <div className="flex items-center gap-3">
-              {mode === 'describe' && (
+              {mode !== 'hub' && (
                 <button
-                  onClick={() => setMode('templates')}
+                  onClick={() => {
+                    setMode('hub');
+                    setReviewResults(null);
+                    setSuggestionsResult(null);
+                    setSpecResult(null);
+                    setQuoteResult(null);
+                    setSelectedAutoPlaceRoom(null);
+                  }}
                   className="h-8 w-8 flex items-center justify-center rounded-lg hover:bg-white/10 touch-manipulation"
                 >
                   <ArrowLeft className="h-4 w-4 text-white" />
                 </button>
               )}
               <div>
-                <h2 className="text-base font-semibold text-white">
-                  {mode === 'templates' ? 'AI Room Builder' : 'Describe Your Room'}
-                </h2>
-                <p className="text-xs text-white/60">
-                  {mode === 'templates'
-                    ? 'Choose a room type or describe your own'
-                    : 'Tell us about the room in your own words'}
-                </p>
+                <h2 className="text-base font-semibold text-white">{modeTitle[mode]}</h2>
+                <p className="text-xs text-white">{modeSubtitle[mode]}</p>
               </div>
             </div>
             <Sparkles className="h-5 w-5 text-elec-yellow" />
@@ -206,9 +531,31 @@ export const AIRoomBuilderDialog = ({
 
           {/* Content */}
           <div className="flex-1 overflow-y-auto">
-            {mode === 'templates' ? (
+            {/* ==================== HUB ==================== */}
+            {mode === 'hub' && (
+              <div className="p-4 space-y-2">
+                {hubTools.map((tool) => (
+                  <button
+                    key={tool.id}
+                    onClick={() => setMode(tool.id)}
+                    className="w-full flex items-center gap-3 p-3 rounded-xl bg-white/[0.03] border border-white/[0.06] touch-manipulation active:scale-[0.98] transition-all"
+                  >
+                    <div className={cn('h-10 w-10 rounded-xl flex items-center justify-center shrink-0', tool.color)}>
+                      <tool.icon className="h-5 w-5" />
+                    </div>
+                    <div className="flex-1 text-left">
+                      <p className="text-sm font-semibold text-white">{tool.title}</p>
+                      <p className="text-xs text-white">{tool.desc}</p>
+                    </div>
+                    <ChevronRight className="h-4 w-4 text-white/30 shrink-0" />
+                  </button>
+                ))}
+              </div>
+            )}
+
+            {/* ==================== TEMPLATES ==================== */}
+            {mode === 'templates' && (
               <div className="p-4 space-y-4">
-                {/* Room templates grid */}
                 <div className="grid grid-cols-2 gap-2">
                   {QUICK_TEMPLATES.map((template) => (
                     <button
@@ -225,65 +572,90 @@ export const AIRoomBuilderDialog = ({
                     >
                       <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-elec-yellow/40 to-amber-400/40" />
                       <p className="text-sm font-semibold text-white">{template.name}</p>
-                      <p className="text-[11px] text-white/50 mt-0.5">{template.dimensions}</p>
+                      <p className="text-[11px] text-white mt-0.5">{template.dimensions}</p>
                       <ChevronRight className="absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white/20" />
                     </button>
                   ))}
                 </div>
-
-                {/* Describe your own */}
-                <div className="pt-2">
-                  <button
-                    onClick={() => setMode('describe')}
-                    className="w-full p-4 rounded-xl bg-elec-yellow/10 border border-elec-yellow/20 hover:bg-elec-yellow/20 active:scale-[0.98] transition-all touch-manipulation text-left"
-                  >
-                    <p className="text-sm font-semibold text-elec-yellow">Describe your own room</p>
-                    <p className="text-xs text-white/50 mt-0.5">
-                      Use natural language or voice input
-                    </p>
-                  </button>
-                </div>
               </div>
-            ) : (
+            )}
+
+            {/* ==================== DESCRIBE ==================== */}
+            {mode === 'describe' && (
               <div className="p-4 space-y-4">
-                {/* Description input */}
-                <div className="relative">
-                  <Textarea
-                    placeholder="e.g. Kitchen, 4m by 3m. Window on the north wall. Door on the east wall. 4 double sockets along the south wall. Cooker point. Light switch by the door."
-                    value={description}
-                    onChange={(e) => setDescription(e.target.value)}
-                    className="min-h-[140px] bg-white/[0.04] border-white/10 text-white placeholder:text-white/30 text-sm touch-manipulation pr-12 focus:border-elec-yellow/40 focus:ring-elec-yellow/20"
-                    disabled={isGenerating}
-                  />
-                  <button
-                    onClick={handleVoiceInput}
-                    disabled={isListening || isGenerating}
-                    className={cn(
-                      'absolute bottom-3 right-3 h-9 w-9 rounded-full flex items-center justify-center touch-manipulation',
-                      isListening
-                        ? 'bg-red-500/20 border border-red-500/40'
-                        : 'bg-white/[0.06] border border-white/10 hover:bg-white/10'
+                {/* Voice recording area */}
+                <div className="bg-white/[0.03] rounded-xl border border-white/[0.06] p-4">
+                  <div className="flex items-center justify-between mb-3">
+                    <p className="text-xs font-medium text-white">
+                      {speech.isListening ? 'Listening...' : 'Tap the microphone to speak'}
+                    </p>
+                    {speech.isListening && (
+                      <div className="flex items-center gap-1.5">
+                        <div className="w-2 h-2 rounded-full bg-red-500 animate-pulse" />
+                        <span className="text-xs text-red-400 font-medium">Recording</span>
+                      </div>
                     )}
-                  >
-                    <Mic className={cn('h-4 w-4', isListening ? 'text-red-400' : 'text-white/60')} />
-                  </button>
+                  </div>
+
+                  {/* Big mic button */}
+                  <div className="flex justify-center mb-4">
+                    <button
+                      onClick={() => {
+                        if (speech.isListening) {
+                          speech.stopListening();
+                          haptic.light();
+                        } else {
+                          speech.resetTranscript();
+                          speech.startListening();
+                          haptic.medium();
+                        }
+                      }}
+                      disabled={isGenerating}
+                      className={cn(
+                        'h-16 w-16 rounded-full flex items-center justify-center touch-manipulation transition-all active:scale-90',
+                        speech.isListening
+                          ? 'bg-red-500 shadow-lg shadow-red-500/30'
+                          : 'bg-elec-yellow shadow-lg shadow-elec-yellow/20'
+                      )}
+                    >
+                      <Mic className={cn('h-7 w-7', speech.isListening ? 'text-white' : 'text-black')} />
+                    </button>
+                  </div>
+
+                  {/* Live transcript */}
+                  {(speech.transcript || speech.interimTranscript) && (
+                    <div className="bg-white/[0.04] rounded-lg p-3 min-h-[60px]">
+                      <p className="text-sm text-white">
+                        {speech.transcript}
+                        {speech.interimTranscript && (
+                          <span className="text-white/50"> {speech.interimTranscript}</span>
+                        )}
+                      </p>
+                    </div>
+                  )}
                 </div>
 
-                {/* Tips */}
+                {/* Text input as fallback */}
+                <Textarea
+                  placeholder="Or type your room description here..."
+                  value={description || speech.transcript}
+                  onChange={(e) => setDescription(e.target.value)}
+                  className="min-h-[80px] bg-white/[0.04] border-white/10 text-white placeholder:text-white/50 text-sm touch-manipulation focus:border-elec-yellow/40 focus:ring-elec-yellow/20"
+                  disabled={isGenerating}
+                />
+
                 <div className="bg-white/[0.03] rounded-xl p-3 border border-white/[0.06]">
-                  <p className="text-xs font-medium text-white/70 mb-2">Tips for best results</p>
-                  <ul className="text-[11px] text-white/50 space-y-1">
-                    <li>Include room dimensions (e.g. 4m by 3m)</li>
-                    <li>Mention where doors and windows are</li>
-                    <li>Say how many sockets and where</li>
-                    <li>Specify lighting type (ceiling, downlights, pendant)</li>
+                  <p className="text-xs font-medium text-white mb-2">Tips</p>
+                  <ul className="text-[11px] text-white space-y-1">
+                    <li>Say the room type and size: "Kitchen, 4 by 3 metres"</li>
+                    <li>Describe walls: "Window on the north wall, door on the east"</li>
+                    <li>List what you need: "6 double sockets, cooker point, ceiling light"</li>
                   </ul>
                 </div>
 
-                {/* Generate button */}
                 <Button
-                  onClick={() => generateRoom(description.trim(), 'Room')}
-                  disabled={isGenerating || !description.trim()}
+                  onClick={() => generateRoom((description || speech.transcript).trim(), 'Room')}
+                  disabled={isGenerating || !(description || speech.transcript).trim()}
                   className="w-full h-12 bg-elec-yellow text-black hover:bg-elec-yellow/90 font-semibold text-sm touch-manipulation"
                 >
                   {isGenerating ? (
@@ -300,6 +672,310 @@ export const AIRoomBuilderDialog = ({
                 </Button>
               </div>
             )}
+
+            {/* ==================== REVIEW ==================== */}
+            {mode === 'review' && (
+              <div className="p-4 space-y-4">
+                {!reviewResults ? (
+                  <>
+                    <div className="bg-white/[0.03] rounded-xl p-4 border border-white/[0.06] text-center">
+                      <Shield className="h-10 w-10 text-orange-400 mx-auto mb-3" />
+                      <p className="text-sm font-semibold text-white mb-1">Compliance Review</p>
+                      <p className="text-xs text-white">
+                        Checks your placed symbols against BS 7671, Building Regs Part B/F, and common installation standards.
+                      </p>
+                    </div>
+                    <Button
+                      onClick={() => { haptic.light(); reviewFloorPlan(); }}
+                      className="w-full h-12 bg-orange-500 text-white hover:bg-orange-600 font-semibold text-sm touch-manipulation"
+                    >
+                      <Shield className="h-4 w-4 mr-2" />
+                      Run Compliance Check
+                    </Button>
+                  </>
+                ) : (
+                  <>
+                    <div className="space-y-2">
+                      {reviewResults.map((item, idx) => (
+                        <div key={idx} className={cn('flex items-start gap-3 p-3 rounded-xl border', reviewItemBg(item.type))}>
+                          {reviewItemIcon(item.type)}
+                          <p className="text-sm text-white">{item.message}</p>
+                        </div>
+                      ))}
+                    </div>
+                    <div className="flex gap-2">
+                      <Button
+                        onClick={() => { setReviewResults(null); reviewFloorPlan(); }}
+                        variant="outline"
+                        className="flex-1 h-11 touch-manipulation border-white/10 text-white hover:bg-white/10"
+                      >
+                        Re-check
+                      </Button>
+                      <Button
+                        onClick={() => setMode('hub')}
+                        className="flex-1 h-11 bg-elec-yellow text-black hover:bg-elec-yellow/90 touch-manipulation"
+                      >
+                        Done
+                      </Button>
+                    </div>
+                  </>
+                )}
+              </div>
+            )}
+
+            {/* ==================== AUTO-PLACE ==================== */}
+            {mode === 'autoplace' && (
+              <div className="p-4 space-y-3">
+                <p className="text-xs text-white mb-2">Select a room type to auto-place its typical symbols onto the canvas.</p>
+                {Object.entries(ROOM_SYMBOL_PACKS).map(([roomType, pack]) => (
+                  <div key={roomType}>
+                    <button
+                      onClick={() => setSelectedAutoPlaceRoom(selectedAutoPlaceRoom === roomType ? null : roomType)}
+                      className="w-full flex items-center justify-between p-3 rounded-xl bg-white/[0.03] border border-white/[0.06] touch-manipulation active:scale-[0.98] transition-all"
+                    >
+                      <div className="flex items-center gap-3">
+                        <div className="h-10 w-10 rounded-xl flex items-center justify-center shrink-0 bg-green-500/10 text-green-400">
+                          <Zap className="h-5 w-5" />
+                        </div>
+                        <div className="text-left">
+                          <p className="text-sm font-semibold text-white capitalize">{roomType}</p>
+                          <p className="text-xs text-white">{pack.length} symbols</p>
+                        </div>
+                      </div>
+                      <ChevronRight className={cn('h-4 w-4 text-white/30 shrink-0 transition-transform', selectedAutoPlaceRoom === roomType && 'rotate-90')} />
+                    </button>
+                    {selectedAutoPlaceRoom === roomType && (
+                      <div className="mt-2 ml-4 space-y-2">
+                        <div className="flex flex-wrap gap-1.5">
+                          {pack.map((item, idx) => (
+                            <span key={idx} className="text-[11px] text-white bg-white/[0.06] px-2 py-1 rounded-lg">
+                              {item.name}
+                            </span>
+                          ))}
+                        </div>
+                        <Button
+                          onClick={() => handleAutoPlace(roomType)}
+                          disabled={!onSymbolsAutoPlaced}
+                          className="w-full h-11 bg-green-600 text-white hover:bg-green-700 font-semibold text-sm touch-manipulation"
+                        >
+                          <Zap className="h-4 w-4 mr-2" />
+                          Place {pack.length} Symbols
+                        </Button>
+                      </div>
+                    )}
+                  </div>
+                ))}
+              </div>
+            )}
+
+            {/* ==================== SUGGESTIONS ==================== */}
+            {mode === 'suggestions' && (
+              <div className="p-4 space-y-4">
+                {!suggestionsResult && !suggestionsLoading && (
+                  <>
+                    <div className="bg-white/[0.03] rounded-xl p-4 border border-white/[0.06] text-center">
+                      <Lightbulb className="h-10 w-10 text-purple-400 mx-auto mb-3" />
+                      <p className="text-sm font-semibold text-white mb-1">Smart Suggestions</p>
+                      <p className="text-xs text-white">
+                        AI analyses your floor plan and suggests missing items, compliance issues, and improvements.
+                      </p>
+                    </div>
+                    <Button
+                      onClick={() => { haptic.light(); runSuggestions(); }}
+                      className="w-full h-12 bg-purple-600 text-white hover:bg-purple-700 font-semibold text-sm touch-manipulation"
+                    >
+                      <Lightbulb className="h-4 w-4 mr-2" />
+                      Analyse Floor Plan
+                    </Button>
+                  </>
+                )}
+                {suggestionsLoading && (
+                  <div className="flex flex-col items-center justify-center py-12">
+                    <Loader2 className="h-8 w-8 text-purple-400 animate-spin mb-3" />
+                    <p className="text-sm font-medium text-white">Analysing your floor plan...</p>
+                    <p className="text-xs text-white mt-1">This may take a few seconds</p>
+                  </div>
+                )}
+                {suggestionsResult && (
+                  <>
+                    {suggestionsResult.suggestions ? (
+                      <div className="space-y-2">
+                        {(Array.isArray(suggestionsResult.suggestions) ? suggestionsResult.suggestions : [suggestionsResult.suggestions]).map((item: any, idx: number) => (
+                          <div key={idx} className="p-3 rounded-xl bg-purple-500/10 border border-purple-500/20">
+                            <p className="text-sm text-white">{typeof item === 'string' ? item : item.message || item.suggestion || JSON.stringify(item)}</p>
+                          </div>
+                        ))}
+                      </div>
+                    ) : (
+                      <div className="p-3 rounded-xl bg-white/[0.03] border border-white/[0.06]">
+                        <p className="text-sm text-white whitespace-pre-wrap">{typeof suggestionsResult === 'string' ? suggestionsResult : JSON.stringify(suggestionsResult, null, 2)}</p>
+                      </div>
+                    )}
+                    <div className="flex gap-2">
+                      <Button
+                        onClick={() => { setSuggestionsResult(null); runSuggestions(); }}
+                        variant="outline"
+                        className="flex-1 h-11 touch-manipulation border-white/10 text-white hover:bg-white/10"
+                      >
+                        Try Again
+                      </Button>
+                      <Button
+                        onClick={() => setMode('hub')}
+                        className="flex-1 h-11 bg-elec-yellow text-black hover:bg-elec-yellow/90 touch-manipulation"
+                      >
+                        Done
+                      </Button>
+                    </div>
+                  </>
+                )}
+              </div>
+            )}
+
+            {/* ==================== SPEC ==================== */}
+            {mode === 'spec' && (
+              <div className="p-4 space-y-4">
+                {!specResult && !specLoading && (
+                  <>
+                    <div className="bg-white/[0.03] rounded-xl p-4 border border-white/[0.06] text-center">
+                      <FileText className="h-10 w-10 text-cyan-400 mx-auto mb-3" />
+                      <p className="text-sm font-semibold text-white mb-1">Specification Writer</p>
+                      <p className="text-xs text-white">
+                        Generates a professional electrical specification from your floor plan symbols.
+                      </p>
+                    </div>
+                    <Button
+                      onClick={() => { haptic.light(); runSpec(); }}
+                      className="w-full h-12 bg-cyan-600 text-white hover:bg-cyan-700 font-semibold text-sm touch-manipulation"
+                    >
+                      <FileText className="h-4 w-4 mr-2" />
+                      Generate Specification
+                    </Button>
+                  </>
+                )}
+                {specLoading && (
+                  <div className="flex flex-col items-center justify-center py-12">
+                    <Loader2 className="h-8 w-8 text-cyan-400 animate-spin mb-3" />
+                    <p className="text-sm font-medium text-white">Writing specification...</p>
+                    <p className="text-xs text-white mt-1">This may take a few seconds</p>
+                  </div>
+                )}
+                {specResult && (
+                  <>
+                    {specResult.specification ? (
+                      <div className="space-y-2">
+                        {(Array.isArray(specResult.specification) ? specResult.specification : [specResult.specification]).map((item: any, idx: number) => (
+                          <div key={idx} className="p-3 rounded-xl bg-cyan-500/10 border border-cyan-500/20">
+                            <p className="text-sm text-white font-semibold mb-1">{idx + 1}.</p>
+                            <p className="text-sm text-white">{typeof item === 'string' ? item : item.text || item.description || JSON.stringify(item)}</p>
+                          </div>
+                        ))}
+                      </div>
+                    ) : (
+                      <div className="p-3 rounded-xl bg-white/[0.03] border border-white/[0.06]">
+                        <p className="text-sm text-white whitespace-pre-wrap">{typeof specResult === 'string' ? specResult : JSON.stringify(specResult, null, 2)}</p>
+                      </div>
+                    )}
+                    <div className="flex gap-2">
+                      <Button
+                        onClick={() => { setSpecResult(null); runSpec(); }}
+                        variant="outline"
+                        className="flex-1 h-11 touch-manipulation border-white/10 text-white hover:bg-white/10"
+                      >
+                        Try Again
+                      </Button>
+                      <Button
+                        onClick={() => setMode('hub')}
+                        className="flex-1 h-11 bg-elec-yellow text-black hover:bg-elec-yellow/90 touch-manipulation"
+                      >
+                        Done
+                      </Button>
+                    </div>
+                  </>
+                )}
+              </div>
+            )}
+
+            {/* ==================== QUOTE ==================== */}
+            {mode === 'quote' && (
+              <div className="p-4 space-y-4">
+                {!quoteResult && !quoteLoading && (
+                  <>
+                    <div className="bg-white/[0.03] rounded-xl p-4 border border-white/[0.06] text-center">
+                      <PoundSterling className="h-10 w-10 text-emerald-400 mx-auto mb-3" />
+                      <p className="text-sm font-semibold text-white mb-1">Quote Generator</p>
+                      <p className="text-xs text-white">
+                        Generates a quote breakdown with materials, labour, and total from your floor plan.
+                      </p>
+                    </div>
+                    <Button
+                      onClick={() => { haptic.light(); runQuote(); }}
+                      className="w-full h-12 bg-emerald-600 text-white hover:bg-emerald-700 font-semibold text-sm touch-manipulation"
+                    >
+                      <PoundSterling className="h-4 w-4 mr-2" />
+                      Generate Quote
+                    </Button>
+                  </>
+                )}
+                {quoteLoading && (
+                  <div className="flex flex-col items-center justify-center py-12">
+                    <Loader2 className="h-8 w-8 text-emerald-400 animate-spin mb-3" />
+                    <p className="text-sm font-medium text-white">Generating quote...</p>
+                    <p className="text-xs text-white mt-1">This may take a few seconds</p>
+                  </div>
+                )}
+                {quoteResult && (
+                  <>
+                    {quoteResult.materials && (
+                      <div className="space-y-3">
+                        <div>
+                          <p className="text-xs font-semibold text-white mb-2">Materials</p>
+                          <div className="space-y-1.5">
+                            {(Array.isArray(quoteResult.materials) ? quoteResult.materials : []).map((item: any, idx: number) => (
+                              <div key={idx} className="flex items-center justify-between p-2.5 rounded-lg bg-emerald-500/10 border border-emerald-500/20">
+                                <p className="text-sm text-white">{item.name || item.item || JSON.stringify(item)}</p>
+                                {item.cost != null && <p className="text-sm font-semibold text-emerald-400 shrink-0 ml-2">{typeof item.cost === 'number' ? `£${item.cost.toFixed(2)}` : item.cost}</p>}
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                        {quoteResult.labour != null && (
+                          <div className="flex items-center justify-between p-3 rounded-xl bg-white/[0.03] border border-white/[0.06]">
+                            <p className="text-sm font-semibold text-white">Labour</p>
+                            <p className="text-sm font-semibold text-white">{typeof quoteResult.labour === 'number' ? `£${quoteResult.labour.toFixed(2)}` : quoteResult.labour}</p>
+                          </div>
+                        )}
+                        {quoteResult.total != null && (
+                          <div className="flex items-center justify-between p-3 rounded-xl bg-emerald-500/20 border border-emerald-500/30">
+                            <p className="text-base font-bold text-white">Total</p>
+                            <p className="text-base font-bold text-emerald-400">{typeof quoteResult.total === 'number' ? `£${quoteResult.total.toFixed(2)}` : quoteResult.total}</p>
+                          </div>
+                        )}
+                      </div>
+                    )}
+                    {!quoteResult.materials && (
+                      <div className="p-3 rounded-xl bg-white/[0.03] border border-white/[0.06]">
+                        <p className="text-sm text-white whitespace-pre-wrap">{typeof quoteResult === 'string' ? quoteResult : JSON.stringify(quoteResult, null, 2)}</p>
+                      </div>
+                    )}
+                    <div className="flex gap-2">
+                      <Button
+                        onClick={() => { setQuoteResult(null); runQuote(); }}
+                        variant="outline"
+                        className="flex-1 h-11 touch-manipulation border-white/10 text-white hover:bg-white/10"
+                      >
+                        Try Again
+                      </Button>
+                      <Button
+                        onClick={() => setMode('hub')}
+                        className="flex-1 h-11 bg-elec-yellow text-black hover:bg-elec-yellow/90 touch-manipulation"
+                      >
+                        Done
+                      </Button>
+                    </div>
+                  </>
+                )}
+              </div>
+            )}
           </div>
 
           {/* Loading overlay */}
@@ -307,7 +983,7 @@ export const AIRoomBuilderDialog = ({
             <div className="absolute inset-0 bg-background/80 backdrop-blur-sm flex flex-col items-center justify-center z-10">
               <Loader2 className="h-8 w-8 text-elec-yellow animate-spin mb-3" />
               <p className="text-sm font-medium text-white">Generating floor plan...</p>
-              <p className="text-xs text-white/50 mt-1">This takes a few seconds</p>
+              <p className="text-xs text-white mt-1">This takes a few seconds</p>
             </div>
           )}
         </div>

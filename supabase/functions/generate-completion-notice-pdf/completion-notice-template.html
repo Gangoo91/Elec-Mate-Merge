@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Completion Notice</title>
+    <style>
+        :root { --accent: #d97706; --accent-light: #fbbf24; }
+        @page { size: A4; margin: 3mm 3mm 4mm 3mm; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 8.5px; line-height: 1.4; color: #1a1a1a; background: #fff; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+
+        .doc-header { background: linear-gradient(180deg, #0a1628 0%, #152238 100%); color: #fff; padding: 10px 12px; margin-bottom: 2px; border-radius: 2px; position: relative; overflow: hidden; }
+        .doc-header::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: var(--accent); }
+        .doc-header-content { display: flex; justify-content: space-between; align-items: center; }
+        .doc-title-section { flex: 1; }
+        .doc-title { font-size: 16px; font-weight: 700; letter-spacing: 0.5px; margin-bottom: 2px; }
+        .doc-subtitle { font-size: 7.5px; font-weight: 400; opacity: 0.85; }
+        .doc-meta { text-align: right; }
+        .cert-number { font-size: 11px; font-weight: 700; color: var(--accent); }
+        .page-number { font-size: 8px; opacity: 0.7; margin-top: 2px; }
+        .company-logo img { max-height: 45px; max-width: 120px; object-fit: contain; }
+        .company-brand { display: flex; align-items: center; gap: 10px; margin-right: 12px; }
+        .company-brand-name { font-size: 11px; font-weight: 700; color: #fff; }
+        .company-brand-reg { font-size: 7px; color: var(--accent); margin-top: 1px; }
+        .scheme-logo img { max-height: 36px; max-width: 80px; object-fit: contain; }
+
+        .section { margin-bottom: 4px; }
+        .section-title { background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); color: #fff; font-size: 9px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.8px; padding: 4px 8px; margin-bottom: 3px; border-left: 3px solid var(--accent); }
+        .section-title.gold { border-left-color: #d97706; }
+        .section-title.green { border-left-color: #22c55e; }
+        .section-title.blue { border-left-color: #3b82f6; }
+        .section-title.amber { border-left-color: #f59e0b; }
+
+        .form-grid { display: table; width: 100%; border-collapse: collapse; margin-bottom: 2px; }
+        .form-row { display: table-row; }
+        .form-label { display: table-cell; font-size: 7.5px; font-weight: 600; color: #475569; padding: 4px 6px; width: 120px; vertical-align: middle; background: #f8fafc; border: 1px solid #e2e8f0; }
+        .form-value { display: table-cell; font-size: 8.5px; color: #1e293b; padding: 4px 6px; vertical-align: middle; border: 1px solid #e2e8f0; background: #fff; }
+
+        .inline-form { display: flex; flex-wrap: wrap; gap: 6px; padding: 6px 8px; background: #fafbfc; border: 1px solid #e2e8f0; border-radius: 2px; }
+        .checkbox-item { display: flex; align-items: center; gap: 4px; margin-bottom: 2px; margin-right: 6px; }
+        .checkbox-box { width: 11px; height: 11px; border: 1.5px solid #64748b; display: inline-flex; align-items: center; justify-content: center; font-size: 8px; font-weight: bold; flex-shrink: 0; }
+        .checkbox-box.checked { background: var(--accent); color: #fff; border-color: var(--accent); }
+        .checkbox-box.checked-green { background: #22c55e; color: #fff; border-color: #22c55e; }
+        .checkbox-box.checked-blue { background: #3b82f6; color: #fff; border-color: #3b82f6; }
+        .checkbox-box.checked-amber { background: #f59e0b; color: #fff; border-color: #f59e0b; }
+
+        .alert-box { border-radius: 2px; padding: 6px 10px; margin: 4px 0; }
+        .alert-box.gold { background: #fffbeb; border: 1px solid #fcd34d; border-left: 3px solid #d97706; }
+        .alert-box.amber { background: #fffbeb; border: 1px solid #fcd34d; border-left: 3px solid #f59e0b; }
+        .alert-box.red { background: #fef2f2; border: 1px solid #fca5a5; border-left: 3px solid #dc2626; }
+        .alert-text { font-size: 7.5px; line-height: 1.5; }
+        .alert-text.gold { color: #92400e; }
+        .alert-text.amber { color: #92400e; }
+
+        .signature-grid { display: flex; gap: 6px; margin-top: 2px; }
+        .signature-box { flex: 1; border: 1px solid #cbd5e1; border-radius: 2px; overflow: hidden; }
+        .signature-box-header { background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); color: #fff; font-size: 7.5px; font-weight: 600; padding: 3px 8px; border-bottom: 1px solid var(--accent); }
+        .signature-box-body { padding: 4px 6px; background: #fafbfc; }
+        .sig-field { display: flex; align-items: center; margin-bottom: 3px; gap: 4px; }
+        .sig-field:last-child { margin-bottom: 0; }
+        .sig-field-label { font-size: 7px; font-weight: 600; color: #64748b; min-width: 60px; flex-shrink: 0; }
+        .sig-field-value { flex: 1; font-size: 8px; color: #1e293b; padding: 3px 5px; background: #fff; border: 1px solid #e2e8f0; border-radius: 1px; min-height: 18px; }
+        .sig-field-value img { max-height: 30px; }
+
+        .footer { margin-top: 8px; padding-top: 6px; border-top: 2px solid var(--accent); display: flex; justify-content: space-between; font-size: 7px; color: #64748b; }
+        .page-break { page-break-before: always; }
+        .avoid-break { page-break-inside: avoid; }
+
+        /* Front sheet */
+        .front-sheet { min-height: 100vh; display: flex; flex-direction: column; }
+        .front-banner { background: linear-gradient(135deg, #92400e 0%, #d97706 50%, #b45309 100%); color: #fff; text-align: center; padding: 14px 20px; margin: 8px 0; border-radius: 3px; }
+        .front-banner h1 { font-size: 22px; font-weight: 900; letter-spacing: 1.5px; text-transform: uppercase; }
+        .front-banner p { font-size: 11px; font-weight: 600; margin-top: 3px; opacity: 0.95; }
+
+        .front-details-card { border: 1px solid #e2e8f0; border-radius: 4px; overflow: hidden; margin: 8px 0; }
+        .front-details-header { background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); color: #fff; font-size: 9px; font-weight: 600; padding: 5px 12px; border-bottom: 1px solid #1e293b; text-transform: uppercase; letter-spacing: 0.5px; }
+        .front-details-body { padding: 10px 12px; background: #fff; }
+        .front-field { display: flex; margin-bottom: 6px; gap: 8px; }
+        .front-field:last-child { margin-bottom: 0; }
+        .front-field-label { font-size: 9px; font-weight: 600; color: #64748b; min-width: 110px; flex-shrink: 0; }
+        .front-field-value { font-size: 10px; font-weight: 600; color: #0f172a; }
+
+        .front-warning-box { background: #0f172a; color: #fff; text-align: center; padding: 10px 14px; border-radius: 3px; margin: 10px 0; border: 1px solid #1e293b; }
+        .front-warning-box p { font-size: 10px; font-weight: 700; letter-spacing: 0.5px; }
+        .front-warning-box .sub { font-size: 8px; font-weight: 400; margin-top: 3px; color: var(--accent-light); }
+
+        .progress-bar { height: 8px; background: #e2e8f0; border-radius: 4px; overflow: hidden; margin: 6px 0; }
+        .progress-fill { height: 100%; background: linear-gradient(90deg, #d97706, #fbbf24); border-radius: 4px; }
+
+        .work-item { display: flex; align-items: center; gap: 6px; padding: 4px 0; border-bottom: 1px solid #f1f5f9; }
+        .work-item:last-child { border-bottom: none; }
+        .work-check { width: 12px; height: 12px; border: 1.5px solid; border-radius: 2px; display: flex; align-items: center; justify-content: center; font-size: 8px; flex-shrink: 0; }
+        .work-check.done { background: #22c55e; border-color: #22c55e; color: #fff; }
+        .work-check.pending { background: #fff; border-color: #cbd5e1; }
+
+        .materials-table { width: 100%; border-collapse: collapse; margin: 2px 0; }
+        .materials-table th { background: #f8fafc; font-size: 7px; font-weight: 600; color: #64748b; text-transform: uppercase; letter-spacing: 0.3px; padding: 4px 6px; border: 1px solid #e2e8f0; text-align: left; }
+        .materials-table td { font-size: 8px; color: #1e293b; padding: 4px 6px; border: 1px solid #e2e8f0; }
+    </style>
+</head>
+<body>
+
+<!-- ===== PAGE 1: FRONT SHEET ===== -->
+<div class="front-sheet">
+    <div class="doc-header">
+        <div class="doc-header-content">
+            <div class="company-brand">
+                {% unless company_logo == blank %}<div class="company-logo"><img src="{{ company_logo }}" alt="Logo" /></div>{% endunless %}
+                <div>
+                    <div class="company-brand-name">{{ company_name }}</div>
+                    {% unless registration_scheme == blank %}<div class="company-brand-reg">{{ registration_scheme }}: {{ registration_number }}</div>{% endunless %}
+                </div>
+                {% unless scheme_logo == blank %}<div class="scheme-logo"><img src="{{ scheme_logo }}" alt="Scheme" /></div>{% endunless %}
+            </div>
+            <div class="doc-title-section">
+                <div class="doc-title">COMPLETION NOTICE</div>
+                <div class="doc-subtitle">Electrical Work Completion &amp; Handover — BS 7671:2018+A3:2024</div>
+            </div>
+            <div class="doc-meta">
+                <div class="cert-number">{{ reference_number }}</div>
+                <div class="page-number">Page 1</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="front-banner">
+        <h1>{% if has_outstanding_work %}Work Substantially Complete{% else %}Work Complete{% endif %}</h1>
+        <p>Electrical installation work completed, tested, and handed over</p>
+    </div>
+
+    <!-- Key Details -->
+    <div class="front-details-card">
+        <div class="front-details-header">Notice Details</div>
+        <div class="front-details-body">
+            <div class="front-field"><div class="front-field-label">Reference</div><div class="front-field-value">{{ reference_number }}</div></div>
+            <div class="front-field"><div class="front-field-label">Date / Time</div><div class="front-field-value">{{ date }}{% unless time == blank %} at {{ time }}{% endunless %}</div></div>
+            {% unless linked_report_ref == blank %}<div class="front-field"><div class="front-field-label">Linked Report</div><div class="front-field-value">{{ linked_report_ref }}</div></div>{% endunless %}
+            {% unless work_order_ref == blank %}<div class="front-field"><div class="front-field-label">Work Order</div><div class="front-field-value">{{ work_order_ref }}</div></div>{% endunless %}
+            <div class="front-field"><div class="front-field-label">Address</div><div class="front-field-value">{{ installation_address }}</div></div>
+            <div class="front-field"><div class="front-field-label">Client</div><div class="front-field-value">{{ client_name }}{% unless client_position == blank %} ({{ client_position }}){% endunless %}</div></div>
+            {% unless contractor_name == blank %}<div class="front-field"><div class="front-field-label">Contractor</div><div class="front-field-value">{{ contractor_name }}{% unless contractor_company == blank %}, {{ contractor_company }}{% endunless %}</div></div>{% endunless %}
+        </div>
+    </div>
+
+    <!-- Work Description -->
+    <div class="front-details-card">
+        <div class="front-details-header">Work Completed</div>
+        <div class="front-details-body">
+            <div style="font-size: 9px; color: #0f172a; line-height: 1.5;">{{ description_of_work }}</div>
+        </div>
+    </div>
+
+    <!-- Progress -->
+    {% if total_items > 0 %}
+    <div class="front-details-card">
+        <div class="front-details-header">Work Items ({{ completed_count }} / {{ total_items }})</div>
+        <div class="front-details-body">
+            <div class="progress-bar"><div class="progress-fill" style="width: {% if total_items > 0 %}{{ completed_count | times: 100 | divided_by: total_items }}{% else %}0{% endif %}%;"></div></div>
+            {% for item in work_items %}
+            <div class="work-item">
+                <div class="work-check {% if item.completed %}done{% else %}pending{% endif %}">{% if item.completed %}&#10003;{% endif %}</div>
+                <div style="flex: 1;">
+                    <span style="font-size: 8.5px; color: #1e293b; {% if item.completed %}{% endif %}">{{ item.description }}</span>
+                    {% unless item.location == blank %}<span style="font-size: 7px; color: #64748b; margin-left: 4px;">— {{ item.location }}</span>{% endunless %}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+
+    <!-- Confirmation Summary -->
+    <div class="front-details-card">
+        <div class="front-details-header">Confirmation</div>
+        <div class="front-details-body">
+            <div class="inline-form" style="border: none; padding: 0; gap: 4px;">
+                <div class="checkbox-item"><span class="checkbox-box {% if all_work_completed %}checked-green{% endif %}">{% if all_work_completed %}&#10003;{% endif %}</span><label style="font-size: 8px;">All work completed</label></div>
+                <div class="checkbox-item"><span class="checkbox-box {% if tested_satisfactory %}checked-green{% endif %}">{% if tested_satisfactory %}&#10003;{% endif %}</span><label style="font-size: 8px;">Tested satisfactory</label></div>
+                <div class="checkbox-item"><span class="checkbox-box {% if area_left_safe %}checked-green{% endif %}">{% if area_left_safe %}&#10003;{% endif %}</span><label style="font-size: 8px;">Area left safe</label></div>
+                <div class="checkbox-item"><span class="checkbox-box {% if client_instructed %}checked-green{% endif %}">{% if client_instructed %}&#10003;{% endif %}</span><label style="font-size: 8px;">Client instructed</label></div>
+                {% if warning_labels_applied %}<div class="checkbox-item"><span class="checkbox-box checked-amber">&#10003;</span><label style="font-size: 8px;">Warning labels applied</label></div>{% endif %}
+                {% if certificate_issued %}<div class="checkbox-item"><span class="checkbox-box checked-amber">&#10003;</span><label style="font-size: 8px;">Certificate issued: {{ certificate_type }}</label></div>{% endif %}
+            </div>
+        </div>
+    </div>
+
+    <!-- Outstanding Work Warning -->
+    {% if has_outstanding_work %}
+    <div class="alert-box" style="background: #fef2f2; border: 1px solid #fca5a5; border-left: 3px solid #dc2626;">
+        <div class="alert-text" style="color: #991b1b;"><strong>Outstanding Work:</strong> {{ outstanding_work_description }}{% unless outstanding_work_reason == blank %} — Reason: {{ outstanding_work_reason }}{% endunless %}</div>
+    </div>
+    {% endif %}
+
+    <!-- Warranty -->
+    {% unless workmanship_warranty_period == blank %}
+    <div class="front-warning-box">
+        <p>Warranty: {{ workmanship_warranty_period }}</p>
+        {% unless manufacturer_warranty_details == blank %}<div class="sub">{{ manufacturer_warranty_details }}</div>{% endunless %}
+    </div>
+    {% endunless %}
+
+    <div style="flex: 1;"></div>
+    <div class="footer">
+        <div><strong>{{ company_name }}</strong><br>{{ company_address }}<br>{% unless company_phone == blank %}Tel: {{ company_phone }}{% endunless %}{% unless company_email == blank %} | {{ company_email }}{% endunless %}</div>
+        <div style="text-align: right;">{% unless registration_scheme == blank %}<strong>{{ registration_scheme }}</strong><br>Reg No: {{ registration_number }}<br>{% endunless %}<span style="color: #94a3b8;">BS 7671:2018+A3:2024</span></div>
+    </div>
+    <div style="text-align: center; margin-top: 8px;"><span style="font-size: 8px; color: #94a3b8; letter-spacing: 0.3px;">Powered by <strong style="color: #64748b;">Elec-Mate</strong></span></div>
+</div>
+
+<!-- ===== PAGE 2: FULL DETAILS ===== -->
+<div class="page-break"></div>
+
+<div class="doc-header">
+    <div class="doc-header-content">
+        <div class="company-brand">
+            {% unless company_logo == blank %}<div class="company-logo"><img src="{{ company_logo }}" alt="Logo" /></div>{% endunless %}
+            <div><div class="company-brand-name">{{ company_name }}</div></div>
+        </div>
+        <div class="doc-title-section"><div class="doc-title">COMPLETION NOTICE</div><div class="doc-subtitle">Full Details</div></div>
+        <div class="doc-meta"><div class="cert-number">{{ reference_number }}</div><div class="page-number">Page 2</div></div>
+    </div>
+</div>
+
+<!-- Section A: Contractor -->
+<div class="section">
+    <div class="section-title gold">Section A: Contractor</div>
+    <div class="form-grid">
+        <div class="form-row"><div class="form-label">Name</div><div class="form-value">{{ contractor_name }}</div><div class="form-label">Company</div><div class="form-value">{{ contractor_company }}</div></div>
+        <div class="form-row"><div class="form-label">Telephone</div><div class="form-value">{{ contractor_phone }}</div><div class="form-label">Email</div><div class="form-value">{{ contractor_email }}</div></div>
+        <div class="form-row"><div class="form-label">Scheme</div><div class="form-value">{{ registration_scheme }}</div><div class="form-label">Registration No.</div><div class="form-value">{{ registration_number }}</div></div>
+    </div>
+</div>
+
+<!-- Section B: Client -->
+<div class="section">
+    <div class="section-title blue">Section B: Client &amp; Installation</div>
+    <div class="form-grid">
+        <div class="form-row"><div class="form-label">Client Name</div><div class="form-value">{{ client_name }}</div><div class="form-label">Position</div><div class="form-value">{{ client_position }}</div></div>
+        {% unless client_phone == blank %}<div class="form-row"><div class="form-label">Telephone</div><div class="form-value">{{ client_phone }}</div><div class="form-label">Email</div><div class="form-value">{{ client_email }}</div></div>{% endunless %}
+        <div class="form-row"><div class="form-label">Installation Address</div><div class="form-value" colspan="3">{{ installation_address }}</div></div>
+        {% unless linked_report_ref == blank %}<div class="form-row"><div class="form-label">Linked Report Ref</div><div class="form-value">{{ linked_report_ref }}</div><div class="form-label">Work Order Ref</div><div class="form-value">{{ work_order_ref }}</div></div>{% endunless %}
+    </div>
+</div>
+
+<!-- Section C: Work Description -->
+<div class="section">
+    <div class="section-title gold">Section C: Description of Work</div>
+    <div class="form-grid"><div class="form-row"><div class="form-value" style="line-height: 1.5; min-height: 30px;">{{ description_of_work }}</div></div></div>
+</div>
+
+<!-- Section D: Work Items -->
+{% if total_items > 0 %}
+<div class="section avoid-break">
+    <div class="section-title green">Section D: Work Items Checklist</div>
+    <div style="padding: 4px 8px; background: #fafbfc; border: 1px solid #e2e8f0; border-radius: 2px;">
+        {% for item in work_items %}
+        <div class="work-item">
+            <div class="work-check {% if item.completed %}done{% else %}pending{% endif %}">{% if item.completed %}&#10003;{% endif %}</div>
+            <div style="font-size: 7.5px; color: #64748b; min-width: 16px;">{{ item.number }}.</div>
+            <div style="flex: 1; font-size: 8.5px; color: #1e293b;">{{ item.description }}</div>
+            {% unless item.location == blank %}<div style="font-size: 7.5px; color: #64748b;">{{ item.location }}</div>{% endunless %}
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endif %}
+
+<!-- Section E: Materials -->
+{% if materials_used.size > 0 %}
+<div class="section avoid-break">
+    <div class="section-title blue">Section E: Key Materials / Components</div>
+    <table class="materials-table">
+        <thead><tr><th>Description</th><th style="width: 50px;">Qty</th><th style="width: 100px;">Manufacturer</th></tr></thead>
+        <tbody>
+            {% for mat in materials_used %}
+            <tr><td>{{ mat.description }}</td><td>{{ mat.quantity }}</td><td>{{ mat.manufacturer }}</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endif %}
+
+<!-- Section F: Outstanding Work -->
+{% if has_outstanding_work %}
+<div class="section avoid-break">
+    <div class="section-title amber">Section F: Outstanding Work</div>
+    <div class="alert-box" style="background: #fef2f2; border: 1px solid #fca5a5; border-left: 3px solid #dc2626;">
+        <div class="alert-text" style="color: #991b1b;">
+            <strong>Outstanding:</strong> {{ outstanding_work_description }}<br>
+            {% unless outstanding_work_reason == blank %}<strong>Reason:</strong> {{ outstanding_work_reason }}{% endunless %}
+        </div>
+    </div>
+</div>
+{% endif %}
+
+<!-- Section G: Confirmation -->
+<div class="section avoid-break">
+    <div class="section-title green">Section {% if has_outstanding_work %}G{% else %}F{% endif %}: Confirmation</div>
+    <div class="inline-form">
+        <div class="checkbox-item"><span class="checkbox-box {% if all_work_completed %}checked-green{% endif %}">{% if all_work_completed %}&#10003;{% endif %}</span><label>All work completed as described</label></div>
+        <div class="checkbox-item"><span class="checkbox-box {% if tested_satisfactory %}checked-green{% endif %}">{% if tested_satisfactory %}&#10003;{% endif %}</span><label>Installation tested and results satisfactory</label></div>
+        <div class="checkbox-item"><span class="checkbox-box {% if area_left_safe %}checked-green{% endif %}">{% if area_left_safe %}&#10003;{% endif %}</span><label>Work area left safe, clean, and tidy</label></div>
+        <div class="checkbox-item"><span class="checkbox-box {% if client_instructed %}checked-green{% endif %}">{% if client_instructed %}&#10003;{% endif %}</span><label>Client instructed on operation of new equipment</label></div>
+        <div class="checkbox-item"><span class="checkbox-box {% if warning_labels_applied %}checked-amber{% endif %}">{% if warning_labels_applied %}&#10003;{% endif %}</span><label>Warning labels and notices applied where required</label></div>
+        <div class="checkbox-item"><span class="checkbox-box {% if certificate_issued %}checked-amber{% endif %}">{% if certificate_issued %}&#10003;{% endif %}</span><label>Certificate issued{% unless certificate_type == blank %}: {{ certificate_type }}{% endunless %}</label></div>
+    </div>
+</div>
+
+<!-- Section H: Client Handover -->
+<div class="section avoid-break">
+    <div class="section-title blue">Client Handover</div>
+    <div class="inline-form">
+        <div class="checkbox-item"><span class="checkbox-box {% if manuals_provided %}checked-blue{% endif %}">{% if manuals_provided %}&#10003;{% endif %}</span><label>Manuals and data sheets provided</label></div>
+        <div class="checkbox-item"><span class="checkbox-box {% if as_built_drawings_provided %}checked-blue{% endif %}">{% if as_built_drawings_provided %}&#10003;{% endif %}</span><label>As-built drawings or circuit charts provided</label></div>
+        <div class="checkbox-item"><span class="checkbox-box {% if spare_keys_provided %}checked-blue{% endif %}">{% if spare_keys_provided %}&#10003;{% endif %}</span><label>Spare keys / access items handed over</label></div>
+        <div class="checkbox-item"><span class="checkbox-box {% if operating_instructions_given %}checked-blue{% endif %}">{% if operating_instructions_given %}&#10003;{% endif %}</span><label>Operating instructions given to client</label></div>
+    </div>
+</div>
+
+<!-- Section I: Warranty -->
+<div class="section avoid-break">
+    <div class="section-title gold">Warranty</div>
+    <div class="form-grid">
+        <div class="form-row"><div class="form-label">Workmanship Warranty</div><div class="form-value" style="font-weight: 600;">{{ workmanship_warranty_period }}</div></div>
+        {% unless manufacturer_warranty_details == blank %}<div class="form-row"><div class="form-label">Manufacturer Warranty</div><div class="form-value">{{ manufacturer_warranty_details }}</div></div>{% endunless %}
+    </div>
+</div>
+
+<!-- Section J: Next Recommended Action -->
+{% unless next_recommended_action == blank %}
+<div class="section avoid-break">
+    <div class="section-title amber">Next Recommended Action</div>
+    <div class="form-grid">
+        <div class="form-row"><div class="form-label">Recommendation</div><div class="form-value" style="font-weight: 600;">{{ next_recommended_action }}</div></div>
+        {% unless next_action_date == blank %}<div class="form-row"><div class="form-label">Recommended By</div><div class="form-value" style="color: #d97706; font-weight: 600;">{{ next_action_date }}</div></div>{% endunless %}
+    </div>
+</div>
+{% endunless %}
+
+<!-- Section K: Declaration -->
+<div class="section avoid-break">
+    <div class="section-title">Declaration</div>
+    <div class="alert-box gold" style="margin-bottom: 4px;">
+        <div class="alert-text gold" style="font-style: italic;">I hereby confirm that the electrical work described in this notice has been completed in accordance with BS 7671:2018+A3:2024 and is safe for continued use. Where applicable, the installation has been tested and the results are satisfactory.</div>
+    </div>
+    <div class="signature-grid">
+        <div class="signature-box" style="flex: 2;">
+            <div class="signature-box-header">Contractor</div>
+            <div class="signature-box-body">
+                <div class="sig-field"><span class="sig-field-label">Name</span><span class="sig-field-value" style="font-weight: 600;">{{ contractor_name }}</span></div>
+                <div class="sig-field"><span class="sig-field-label">Company</span><span class="sig-field-value">{{ contractor_company }}</span></div>
+                <div class="sig-field"><span class="sig-field-label">Date</span><span class="sig-field-value">{{ date }}</span></div>
+            </div>
+        </div>
+        <div class="signature-box" style="flex: 1;">
+            <div class="signature-box-header">Contractor Signature</div>
+            <div class="signature-box-body" style="min-height: 60px; display: flex; align-items: center; justify-content: center;">
+                {% if inspector_signature %}<img src="{{ inspector_signature }}" style="max-height: 50px; max-width: 100%;" />{% else %}<div style="width: 100%; border-bottom: 1px solid #64748b; margin: 20px 10px;"></div>{% endif %}
+            </div>
+        </div>
+    </div>
+    {% if client_refused_to_sign %}
+    <div class="alert-box amber" style="margin-top: 4px;">
+        <div class="alert-text amber"><strong>Note:</strong> Client declined to sign this completion notice.</div>
+    </div>
+    {% elsif client_signature != blank %}
+    <div class="signature-grid" style="margin-top: 4px;">
+        <div class="signature-box" style="flex: 2;">
+            <div class="signature-box-header">Client</div>
+            <div class="signature-box-body">
+                <div class="sig-field"><span class="sig-field-label">Name</span><span class="sig-field-value">{{ client_name }}</span></div>
+                <div class="sig-field"><span class="sig-field-label">Position</span><span class="sig-field-value">{{ client_position }}</span></div>
+            </div>
+        </div>
+        <div class="signature-box" style="flex: 1;">
+            <div class="signature-box-header">Client Signature</div>
+            <div class="signature-box-body" style="min-height: 60px; display: flex; align-items: center; justify-content: center;">
+                <img src="{{ client_signature }}" style="max-height: 50px; max-width: 100%;" />
+            </div>
+        </div>
+    </div>
+    {% endif %}
+</div>
+
+<!-- Photos -->
+{% if photos.size > 0 %}
+<div class="section avoid-break">
+    <div class="section-title blue">Photo Evidence</div>
+    <div style="display: flex; flex-wrap: wrap; gap: 4px; padding: 4px;">
+        {% for photo in photos %}
+        <div style="width: calc(33.33% - 4px); border: 1px solid #e2e8f0; border-radius: 2px; overflow: hidden;">
+            <img src="{{ photo }}" style="width: 100%; height: auto; display: block;" />
+            <div style="font-size: 6.5px; color: #64748b; text-align: center; padding: 2px;">Photo {{ forloop.index }}</div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endif %}
+
+{% unless notes == blank %}
+<div class="section">
+    <div class="section-title">Additional Notes</div>
+    <div class="form-grid"><div class="form-row"><div class="form-value" style="line-height: 1.5; min-height: 20px;">{{ notes }}</div></div></div>
+</div>
+{% endunless %}
+
+<!-- Footer -->
+<div class="footer">
+    <div><strong>{{ company_name }}</strong><br>{{ company_address }}<br>{% unless company_phone == blank %}Tel: {{ company_phone }}{% endunless %}{% unless company_email == blank %} | {{ company_email }}{% endunless %}</div>
+    <div style="text-align: right;">{% unless registration_scheme == blank %}<strong>{{ registration_scheme }}</strong><br>Reg No: {{ registration_number }}<br>{% endunless %}<span style="color: #94a3b8;">BS 7671:2018+A3:2024 | Completion Notice</span></div>
+</div>
+<div style="text-align: center; margin-top: 8px;"><span style="font-size: 8px; color: #94a3b8; letter-spacing: 0.3px;">Powered by <strong style="color: #64748b;">Elec-Mate</strong></span></div>
+
+</body>
+</html>

@@ -27,7 +27,9 @@ import {
   ChevronRight,
   BarChart3,
   Sparkles,
+  type LucideIcon,
 } from 'lucide-react';
+import BusinessCard from '@/components/business-hub/BusinessCard';
 import { RAMSProvider } from '@/components/electrician-tools/site-safety/rams/RAMSContext';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Collapsible, CollapsibleTrigger, CollapsibleContent } from '@/components/ui/collapsible';
@@ -161,50 +163,59 @@ const SafetyResourceLibrary = lazy(() =>
   )
 );
 
-// Animation variants
+// Animation variants (spring-based, matching ElectricalHub)
 const containerVariants = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
-    transition: { staggerChildren: 0.03, delayChildren: 0 },
+    transition: { staggerChildren: 0.04, delayChildren: 0 },
   },
 };
 
 const itemVariants = {
-  hidden: { opacity: 0, y: 8 },
+  hidden: { opacity: 0, y: 12 },
   visible: {
     opacity: 1,
     y: 0,
-    transition: { duration: 0.2, ease: 'easeOut' },
+    transition: { type: 'spring', stiffness: 300, damping: 24 },
   },
 };
 
 // Skeleton loader for lazy components
 const ToolLoader = SectionSkeleton;
 
-// Tool color mapping
-const toolColors: Record<string, string> = {
-  'ai-rams': 'from-orange-400 to-red-500',
-  documents: 'from-amber-400 to-yellow-500',
-  'hazard-database': 'from-blue-400 to-blue-500',
-  'photo-docs': 'from-emerald-400 to-green-500',
-  'team-briefing': 'from-purple-400 to-purple-500',
-  'near-miss': 'from-red-400 to-rose-500',
-  equipment: 'from-cyan-400 to-teal-500',
-  emergency: 'from-pink-400 to-rose-500',
-  'permit-to-work': 'from-amber-400 to-amber-600',
-  coshh: 'from-green-400 to-emerald-500',
-  'inspection-checklists': 'from-indigo-400 to-indigo-600',
-  'accident-book': 'from-red-500 to-rose-600',
-  'safety-templates': 'from-teal-400 to-cyan-500',
-  'safe-isolation': 'from-red-500 to-orange-500',
-  'pre-use-checks': 'from-sky-400 to-blue-500',
-  'safety-observations': 'from-lime-400 to-green-500',
-  'site-diary': 'from-violet-400 to-purple-500',
-  'fire-watch': 'from-orange-500 to-amber-500',
-  'safety-alerts': 'from-rose-400 to-red-500',
-  'safety-resources': 'from-slate-400 to-gray-500',
-};
+// Stats card for the safety dashboard bar
+function SafetyStatCard({ label, value, icon: Icon, variant }: {
+  label: string;
+  value: number;
+  icon: LucideIcon;
+  variant?: 'success' | 'danger';
+}) {
+  const accentColor = variant === 'success' ? 'text-green-500'
+    : variant === 'danger' ? 'text-red-500' : 'text-orange-400';
+  return (
+    <div className="rounded-xl p-3 sm:p-4 bg-white/[0.04] border border-white/[0.06] transition-colors duration-150">
+      <div className="flex flex-col items-start text-left">
+        <div className="flex items-center gap-1.5 mb-1.5">
+          <Icon className={`h-3.5 w-3.5 ${accentColor}`} />
+          <p className="text-[11px] sm:text-xs text-white">{label}</p>
+        </div>
+        <span className={`text-xl sm:text-2xl font-bold tracking-tight ${accentColor}`}>
+          {value}
+        </span>
+      </div>
+    </div>
+  );
+}
+
+// Section header matching ElectricalHub/BusinessHub pattern
+function SectionHeader({ title }: { title: string }) {
+  return (
+    <h2 className="text-xs font-medium text-white uppercase tracking-wider px-0.5">
+      {title}
+    </h2>
+  );
+}
 
 const SiteSafety = () => {
   const [searchParams] = useSearchParams();
@@ -232,179 +243,7 @@ const SiteSafety = () => {
     }
   }, [searchParams]);
 
-  const primaryTools = [
-    {
-      id: 'ai-rams',
-      title: 'RAMS Generator',
-      description: 'Create comprehensive RAMS documentation from your job description',
-      icon: FileText,
-      badge: 'AI',
-    },
-    {
-      id: 'documents',
-      title: 'Documents',
-      description: 'All safety documents in one place',
-      icon: FolderOpen,
-      badge: 'Hub',
-    },
-    {
-      id: 'safety-templates',
-      title: 'Safety Templates',
-      description: 'UK electrical safety document templates',
-      icon: Library,
-      badge: 'New',
-    },
-  ];
-
   const equipmentBadge = dashboardStats.equipmentDue + dashboardStats.equipmentOverdue;
-
-  const safetyTools = [
-    {
-      id: 'hazard-database',
-      title: 'Hazard Database',
-      description: 'Comprehensive electrical hazard information',
-      icon: Shield,
-      badgeCount: 0,
-      badgeUrgent: false,
-    },
-    {
-      id: 'photo-docs',
-      title: 'Photo Documentation',
-      description: 'Document safety conditions on site',
-      icon: Camera,
-      badgeCount: 0,
-      badgeUrgent: false,
-    },
-    {
-      id: 'team-briefing',
-      title: 'Team Briefing',
-      description: 'Pre-work safety briefings & toolbox talks',
-      icon: Users,
-      badgeCount: dashboardStats.upcomingBriefings,
-      badgeUrgent: false,
-    },
-    {
-      id: 'near-miss',
-      title: 'Near Miss Reports',
-      description: 'Report and track safety incidents',
-      icon: AlertTriangle,
-      badgeCount: 0,
-      badgeUrgent: false,
-    },
-    {
-      id: 'equipment',
-      title: 'Equipment Tracker',
-      description: 'Track PPE and safety equipment',
-      icon: Wrench,
-      badgeCount: equipmentBadge,
-      badgeUrgent: dashboardStats.equipmentOverdue > 0,
-    },
-    {
-      id: 'emergency',
-      title: 'Emergency Procedures',
-      description: 'Quick access to emergency protocols',
-      icon: Phone,
-      badgeCount: 0,
-      badgeUrgent: false,
-    },
-    {
-      id: 'safety-observations',
-      title: 'Safety Observations',
-      description: 'Log positive behaviours and improvements',
-      icon: Eye,
-      badgeCount: 0,
-      badgeUrgent: false,
-    },
-    {
-      id: 'site-diary',
-      title: 'Site Diary',
-      description: 'Professional daily log for CDM compliance',
-      icon: CalendarDays,
-      badgeCount: 0,
-      badgeUrgent: false,
-    },
-  ];
-
-  const complianceTools = [
-    {
-      id: 'permit-to-work',
-      title: 'Permit to Work',
-      description: 'Issue and manage work permits with signatures',
-      icon: Lock,
-      badge: 'New',
-      badgeCount: dashboardStats.activePermits,
-      badgeUrgent: false,
-    },
-    {
-      id: 'coshh',
-      title: 'COSHH Assessments',
-      description: 'Chemical substance hazard assessments',
-      icon: FlaskConical,
-      badge: 'New',
-      badgeCount: dashboardStats.coshhOverdueReviews,
-      badgeUrgent: dashboardStats.coshhOverdueReviews > 0,
-    },
-    {
-      id: 'inspection-checklists',
-      title: 'Inspection Checklists',
-      description: 'Standardised safety inspection forms',
-      icon: ClipboardCheck,
-      badge: 'New',
-      badgeCount: 0,
-      badgeUrgent: false,
-    },
-    {
-      id: 'accident-book',
-      title: 'Accident Book',
-      description: 'RIDDOR-compliant incident records',
-      icon: BookOpen,
-      badge: 'New',
-      badgeCount: dashboardStats.accidentCount30Days,
-      badgeUrgent: dashboardStats.accidentCount30Days > 0,
-    },
-    {
-      id: 'safe-isolation',
-      title: 'Safe Isolation (GS38)',
-      description: 'Step-by-step GS38 isolation records',
-      icon: Zap,
-      badge: 'New',
-      badgeCount: 0,
-      badgeUrgent: false,
-    },
-    {
-      id: 'pre-use-checks',
-      title: 'Pre-Use Checks',
-      description: 'PUWER 1998 equipment inspection checklists',
-      icon: ClipboardCheck,
-      badge: 'New',
-      badgeCount: 0,
-      badgeUrgent: false,
-    },
-    {
-      id: 'fire-watch',
-      title: 'Fire Watch',
-      description: 'Hot work fire watch timer and checklist',
-      icon: Flame,
-      badge: 'New',
-      badgeCount: 0,
-      badgeUrgent: false,
-    },
-  ];
-
-  const additionalTools = [
-    {
-      id: 'safety-alerts',
-      title: 'Safety Alerts',
-      description: 'Latest safety alerts and industry notices',
-      icon: Bell,
-    },
-    {
-      id: 'safety-resources',
-      title: 'Safety Resources',
-      description: 'Guidance notes, posters, and HSE publications',
-      icon: FolderArchive,
-    },
-  ];
 
   const renderToolContent = () => {
     switch (activeView) {
@@ -527,179 +366,300 @@ const SiteSafety = () => {
           animate="visible"
           className="px-4 py-4 space-y-6"
         >
-          {/* Hero Header */}
-          <motion.div variants={itemVariants} className="flex items-center gap-3">
-            <div className="p-3 rounded-xl bg-orange-500/10 border border-orange-500/20">
-              <Shield className="h-6 w-6 text-orange-400" />
-            </div>
-            <div>
-              <h1 className="text-xl font-bold text-white">Site Safety & RAMS</h1>
-              <p className="text-sm text-white">Risk assessments & safety compliance</p>
+          {/* Glass Hero Header */}
+          <motion.div variants={itemVariants}>
+            <div className="relative overflow-hidden glass-premium rounded-2xl glow-yellow">
+              <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-orange-400 via-amber-400 to-orange-400" />
+              <div className="absolute top-0 right-0 w-40 sm:w-56 h-40 sm:h-56 bg-orange-400/[0.04] rounded-full blur-3xl -translate-y-1/2 translate-x-1/4 pointer-events-none" />
+              <div className="relative z-10 p-5 sm:p-6">
+                <div className="flex items-center gap-4">
+                  <div className="flex-shrink-0 p-3 rounded-xl bg-orange-500/10 border border-orange-500/20">
+                    <Shield className="h-7 w-7 text-orange-400" />
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <p className="text-sm text-white mb-0.5">Site Safety</p>
+                    <h1 className="text-xl sm:text-2xl font-bold text-orange-400 tracking-tight">
+                      RAMS & Compliance
+                    </h1>
+                  </div>
+                </div>
+              </div>
             </div>
           </motion.div>
 
-          {/* Quick Actions — moved up for immediate access */}
-          <motion.section variants={itemVariants}>
-            <div className="flex gap-2 overflow-x-auto pb-1 -mx-1 px-1 scrollbar-hide">
-              {[
-                { id: 'ai-rams', label: 'New RAMS', icon: FileText },
-                { id: 'team-briefing', label: 'New Briefing', icon: Users },
-                { id: 'near-miss', label: 'Report Near Miss', icon: AlertTriangle },
-                { id: 'photo-docs', label: 'Take Photo', icon: Camera },
-                { id: 'permit-to-work', label: 'New Permit', icon: Lock },
-              ].map((action) => {
-                const Icon = action.icon;
-                return (
-                  <button
-                    key={action.id}
-                    onClick={() => setActiveView(action.id)}
-                    className="flex items-center gap-1.5 px-3.5 py-2 min-h-[40px] rounded-full bg-elec-yellow/10 border border-elec-yellow/20 text-elec-yellow text-xs font-semibold whitespace-nowrap touch-manipulation active:scale-[0.97] active:bg-elec-yellow/20 transition-all flex-shrink-0"
-                  >
-                    <Icon className="h-3.5 w-3.5" />
-                    {action.label}
-                  </button>
-                );
-              })}
-            </div>
-          </motion.section>
-
-          {/* Hero Cards — RAMS Generator + Documents Hub */}
-          <motion.section variants={itemVariants}>
-            <div className="grid grid-cols-2 gap-3">
-              <motion.button
-                variants={itemVariants}
-                whileTap={{ scale: 0.96 }}
-                onClick={() => setActiveView('ai-rams')}
-                className="text-left rounded-xl overflow-hidden touch-manipulation focus:outline-none focus-visible:ring-2 focus-visible:ring-elec-yellow/50"
-              >
-                <div className="relative glass-premium rounded-xl h-[120px] p-4 flex flex-col justify-between active:bg-white/[0.02] transition-colors">
-                  <div className="absolute top-0 right-0 w-24 h-24 bg-elec-yellow/[0.04] rounded-full blur-2xl -translate-y-1/3 translate-x-1/4 pointer-events-none" />
-                  <div className="relative p-2.5 rounded-xl bg-elec-yellow/10 w-fit">
-                    <Sparkles className="h-5 w-5 text-elec-yellow" />
-                  </div>
-                  <div className="relative">
-                    <h3 className="text-sm font-semibold text-white">RAMS Generator</h3>
-                    <p className="text-[11px] text-white mt-0.5">AI-powered risk assessments</p>
-                  </div>
-                </div>
-              </motion.button>
-
-              <motion.button
-                variants={itemVariants}
-                whileTap={{ scale: 0.96 }}
-                onClick={() => setActiveView('documents')}
-                className="text-left rounded-xl overflow-hidden touch-manipulation focus:outline-none focus-visible:ring-2 focus-visible:ring-elec-yellow/50"
-              >
-                <div className="relative glass-premium rounded-xl h-[120px] p-4 flex flex-col justify-between active:bg-white/[0.02] transition-colors">
-                  <div className="absolute top-0 right-0 w-24 h-24 bg-purple-500/[0.04] rounded-full blur-2xl -translate-y-1/3 translate-x-1/4 pointer-events-none" />
-                  <div className="relative p-2.5 rounded-xl bg-purple-500/10 w-fit">
-                    <FolderOpen className="h-5 w-5 text-purple-400" />
-                  </div>
-                  <div className="relative">
-                    <h3 className="text-sm font-semibold text-white">Documents Hub</h3>
-                    <p className="text-[11px] text-white mt-0.5">All safety documents</p>
-                  </div>
-                </div>
-              </motion.button>
-            </div>
-          </motion.section>
-
-          {/* Recent Documents Strip */}
+          {/* Recent Documents */}
           {recentDocuments && recentDocuments.length > 0 && (
-            <motion.section variants={itemVariants} className="space-y-2">
-              <div className="flex items-center justify-between">
-                <h2 className="text-sm font-bold text-white">Recent Documents</h2>
-                <button
-                  onClick={() => setActiveView('documents')}
-                  className="text-[11px] text-elec-yellow font-medium flex items-center gap-0.5 touch-manipulation h-8 px-2 -mr-2 rounded-lg active:opacity-70"
-                >
-                  View all
-                  <ChevronRight className="h-3 w-3" />
-                </button>
-              </div>
-
-              <div className="grid grid-cols-2 gap-2.5">
-                {recentDocuments.slice(0, 2).map((doc) => (
-                  <motion.button
-                    key={`${doc.type}-${doc.id}`}
-                    variants={itemVariants}
-                    whileTap={{ scale: 0.97 }}
-                    onClick={() => setActiveView('documents')}
-                    className="text-left p-3 rounded-xl glass-premium active:bg-white/[0.02] transition-colors touch-manipulation"
-                  >
-                    <Badge
-                      variant="secondary"
-                      className="bg-elec-yellow/15 text-elec-yellow border-elec-yellow/20 text-[9px] font-bold uppercase mb-2"
-                    >
-                      {doc.type}
-                    </Badge>
-                    <p className="text-[13px] font-semibold text-white truncate">{doc.title}</p>
-                    <p className="text-[10px] text-white mt-1">
-                      {(() => {
-                        const d = new Date(doc.date);
-                        const now = new Date();
-                        const diff = Math.floor((now.getTime() - d.getTime()) / 86400000);
-                        if (diff === 0) return 'Today';
-                        if (diff === 1) return 'Yesterday';
-                        if (diff < 7) return `${diff}d ago`;
-                        return d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short' });
-                      })()}
-                    </p>
-                  </motion.button>
-                ))}
-              </div>
+            <motion.section variants={itemVariants} className="space-y-3">
+              <SectionHeader title="Recent Documents" />
+              <motion.div variants={containerVariants} className="grid grid-cols-2 gap-3">
+                {recentDocuments.slice(0, 2).map((doc) => {
+                  const d = new Date(doc.date);
+                  const now = new Date();
+                  const diff = Math.floor((now.getTime() - d.getTime()) / 86400000);
+                  const dateLabel = diff === 0 ? 'Today' : diff === 1 ? 'Yesterday' : diff < 7 ? `${diff}d ago` : d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short' });
+                  return (
+                    <BusinessCard
+                      key={`${doc.type}-${doc.id}`}
+                      title={doc.title}
+                      description={doc.type}
+                      icon={FileText}
+                      onClick={() => setActiveView('documents')}
+                      variant="compact"
+                      accentColor="from-amber-400 via-yellow-400 to-orange-400"
+                      iconColor="text-amber-400"
+                      iconBg="bg-amber-500/10 border border-amber-500/20"
+                      liveSubtitle={dateLabel}
+                    />
+                  );
+                })}
+              </motion.div>
             </motion.section>
           )}
 
-          {/* Compact Tool Grid */}
+          {/* Core Tools */}
           <motion.section variants={itemVariants} className="space-y-3">
-            <div className="flex items-center gap-2.5">
-              <div className="h-1.5 w-1.5 rounded-full bg-elec-yellow" />
-              <h2 className="text-base font-bold text-white">All Tools</h2>
-              <Badge variant="secondary" className="bg-elec-yellow/15 text-elec-yellow border-elec-yellow/20 text-xs">
-                {[...primaryTools.filter(t => t.id !== 'ai-rams' && t.id !== 'documents'), ...complianceTools, ...safetyTools, ...additionalTools].length}
-              </Badge>
-            </div>
-
-            <motion.div variants={containerVariants} className="grid grid-cols-2 gap-2">
-              {[
-                ...primaryTools.filter(t => t.id !== 'ai-rams' && t.id !== 'documents'),
-                ...complianceTools,
-                ...safetyTools,
-                ...additionalTools,
-              ].map((tool) => {
-                const IconComponent = tool.icon;
-                const gradient = toolColors[tool.id] || 'from-gray-400 to-gray-500';
-                const badgeCount = 'badgeCount' in tool ? (tool as { badgeCount: number }).badgeCount : 0;
-                const badgeUrgent = 'badgeUrgent' in tool ? (tool as { badgeUrgent: boolean }).badgeUrgent : false;
-
-                return (
-                  <motion.button
-                    key={tool.id}
-                    variants={itemVariants}
-                    whileTap={{ scale: 0.96 }}
-                    onClick={() => setActiveView(tool.id)}
-                    className="h-14 flex items-center gap-2.5 px-3 rounded-xl glass-premium active:bg-white/[0.02] transition-colors touch-manipulation text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-elec-yellow/50"
-                  >
-                    <div className="relative flex-shrink-0">
-                      <div className={`w-8 h-8 rounded-lg flex items-center justify-center bg-gradient-to-br ${gradient}`}>
-                        <IconComponent className="h-4 w-4 text-white" />
-                      </div>
-                      {badgeCount > 0 && (
-                        <span
-                          className={`absolute -top-1 -right-1 min-w-[16px] h-4 px-0.5 rounded-full flex items-center justify-center text-[9px] font-bold ${
-                            badgeUrgent ? 'bg-red-500 text-white' : 'bg-elec-yellow text-black'
-                          }`}
-                        >
-                          {badgeCount}
-                        </span>
-                      )}
-                    </div>
-                    <span className="text-[13px] font-semibold text-white truncate">{tool.title}</span>
-                  </motion.button>
-                );
-              })}
+            <SectionHeader title="Core Tools" />
+            <motion.div variants={containerVariants} className="grid grid-cols-2 gap-3">
+              <BusinessCard
+                title="RAMS Generator"
+                description="AI-powered risk assessments"
+                icon={Sparkles}
+                onClick={() => setActiveView('ai-rams')}
+                variant="hero"
+                accentColor="from-orange-400 via-red-400 to-rose-500"
+                iconColor="text-orange-400"
+                iconBg="bg-orange-500/10 border border-orange-500/20"
+                badge="AI"
+              />
+              <BusinessCard
+                title="Documents Hub"
+                description="All safety documents in one place"
+                icon={FolderOpen}
+                onClick={() => setActiveView('documents')}
+                variant="hero"
+                accentColor="from-purple-400 via-violet-400 to-indigo-400"
+                iconColor="text-purple-400"
+                iconBg="bg-purple-500/10 border border-purple-500/20"
+              />
+              <div className="col-span-2">
+                <BusinessCard
+                  title="Safety Templates"
+                  description="UK electrical safety document templates"
+                  icon={Library}
+                  onClick={() => setActiveView('safety-templates')}
+                  variant="hero"
+                  accentColor="from-teal-400 via-cyan-400 to-blue-400"
+                  iconColor="text-teal-400"
+                  iconBg="bg-teal-500/10 border border-teal-500/20"
+                  badge="New"
+                />
+              </div>
             </motion.div>
+          </motion.section>
+
+          {/* Safety & Recording */}
+          <motion.section variants={itemVariants} className="space-y-3">
+            <SectionHeader title="Safety & Recording" />
+            <motion.div variants={containerVariants} className="grid grid-cols-2 gap-3">
+              <BusinessCard
+                title="Hazard Database"
+                description="Comprehensive electrical hazard info"
+                icon={Shield}
+                onClick={() => setActiveView('hazard-database')}
+                accentColor="from-blue-400 via-blue-500 to-indigo-400"
+                iconColor="text-blue-400"
+                iconBg="bg-blue-500/10 border border-blue-500/20"
+              />
+              <BusinessCard
+                title="Photo Documentation"
+                description="Document safety conditions on site"
+                icon={Camera}
+                onClick={() => setActiveView('photo-docs')}
+                accentColor="from-emerald-400 via-green-400 to-teal-400"
+                iconColor="text-emerald-400"
+                iconBg="bg-emerald-500/10 border border-emerald-500/20"
+              />
+              <BusinessCard
+                title="Team Briefing"
+                description="Pre-work safety briefings & toolbox talks"
+                icon={Users}
+                onClick={() => setActiveView('team-briefing')}
+                accentColor="from-purple-400 via-violet-400 to-indigo-400"
+                iconColor="text-purple-400"
+                iconBg="bg-purple-500/10 border border-purple-500/20"
+                liveSubtitle={dashboardStats.upcomingBriefings > 0 ? `${dashboardStats.upcomingBriefings} upcoming` : undefined}
+              />
+              <BusinessCard
+                title="Near Miss Reports"
+                description="Report and track safety incidents"
+                icon={AlertTriangle}
+                onClick={() => setActiveView('near-miss')}
+                accentColor="from-red-400 via-rose-400 to-pink-400"
+                iconColor="text-red-400"
+                iconBg="bg-red-500/10 border border-red-500/20"
+              />
+              <BusinessCard
+                title="Safety Observations"
+                description="Log positive behaviours and improvements"
+                icon={Eye}
+                onClick={() => setActiveView('safety-observations')}
+                accentColor="from-lime-400 via-green-400 to-emerald-400"
+                iconColor="text-lime-400"
+                iconBg="bg-lime-500/10 border border-lime-500/20"
+              />
+              <BusinessCard
+                title="Site Diary"
+                description="Professional daily log for CDM compliance"
+                icon={CalendarDays}
+                onClick={() => setActiveView('site-diary')}
+                accentColor="from-violet-400 via-purple-400 to-indigo-400"
+                iconColor="text-violet-400"
+                iconBg="bg-violet-500/10 border border-violet-500/20"
+              />
+            </motion.div>
+          </motion.section>
+
+          {/* Compliance & Permits */}
+          <motion.section variants={itemVariants} className="space-y-3">
+            <SectionHeader title="Compliance & Permits" />
+            <motion.div variants={containerVariants} className="grid grid-cols-2 gap-3">
+              <BusinessCard
+                title="Permit to Work"
+                description="Issue and manage work permits"
+                icon={Lock}
+                onClick={() => setActiveView('permit-to-work')}
+                accentColor="from-amber-400 via-amber-500 to-orange-400"
+                iconColor="text-amber-400"
+                iconBg="bg-amber-500/10 border border-amber-500/20"
+                liveSubtitle={dashboardStats.activePermits > 0 ? `${dashboardStats.activePermits} active` : undefined}
+              />
+              <BusinessCard
+                title="COSHH Assessments"
+                description="Chemical substance hazard assessments"
+                icon={FlaskConical}
+                onClick={() => setActiveView('coshh')}
+                accentColor="from-green-400 via-emerald-400 to-teal-400"
+                iconColor="text-green-400"
+                iconBg="bg-green-500/10 border border-green-500/20"
+                liveSubtitle={dashboardStats.coshhOverdueReviews > 0 ? `${dashboardStats.coshhOverdueReviews} overdue` : undefined}
+              />
+              <BusinessCard
+                title="Inspection Checklists"
+                description="Standardised safety inspection forms"
+                icon={ClipboardCheck}
+                onClick={() => setActiveView('inspection-checklists')}
+                accentColor="from-indigo-400 via-indigo-500 to-blue-400"
+                iconColor="text-indigo-400"
+                iconBg="bg-indigo-500/10 border border-indigo-500/20"
+              />
+              <BusinessCard
+                title="Accident Book"
+                description="RIDDOR-compliant incident records"
+                icon={BookOpen}
+                onClick={() => setActiveView('accident-book')}
+                accentColor="from-red-500 via-rose-500 to-pink-400"
+                iconColor="text-red-400"
+                iconBg="bg-red-500/10 border border-red-500/20"
+                liveSubtitle={dashboardStats.accidentCount30Days > 0 ? `${dashboardStats.accidentCount30Days} this month` : undefined}
+              />
+              <BusinessCard
+                title="Safe Isolation (GS38)"
+                description="Step-by-step GS38 isolation records"
+                icon={Zap}
+                onClick={() => setActiveView('safe-isolation')}
+                accentColor="from-red-400 via-orange-400 to-amber-400"
+                iconColor="text-red-400"
+                iconBg="bg-red-500/10 border border-red-500/20"
+              />
+              <BusinessCard
+                title="Pre-Use Checks"
+                description="PUWER 1998 equipment inspection"
+                icon={ClipboardCheck}
+                onClick={() => setActiveView('pre-use-checks')}
+                accentColor="from-sky-400 via-blue-400 to-indigo-400"
+                iconColor="text-sky-400"
+                iconBg="bg-sky-500/10 border border-sky-500/20"
+              />
+              <div className="col-span-2">
+                <BusinessCard
+                  title="Fire Watch"
+                  description="Hot work fire watch timer and checklist"
+                  icon={Flame}
+                  onClick={() => setActiveView('fire-watch')}
+                  accentColor="from-orange-500 via-amber-400 to-yellow-400"
+                  iconColor="text-orange-400"
+                  iconBg="bg-orange-500/10 border border-orange-500/20"
+                />
+              </div>
+            </motion.div>
+          </motion.section>
+
+          {/* Resources & Equipment */}
+          <motion.section variants={itemVariants} className="space-y-3">
+            <SectionHeader title="Resources & Equipment" />
+            <motion.div variants={containerVariants} className="grid grid-cols-2 gap-3">
+              <BusinessCard
+                title="Equipment Tracker"
+                description="Track PPE and safety equipment"
+                icon={Wrench}
+                onClick={() => setActiveView('equipment')}
+                variant="compact"
+                accentColor="from-cyan-400 via-teal-400 to-emerald-400"
+                iconColor="text-cyan-400"
+                iconBg="bg-cyan-500/10 border border-cyan-500/20"
+                liveSubtitle={equipmentBadge > 0 ? `${equipmentBadge} due` : 'All clear'}
+              />
+              <BusinessCard
+                title="Emergency Procedures"
+                description="Quick access to emergency protocols"
+                icon={Phone}
+                onClick={() => setActiveView('emergency')}
+                variant="compact"
+                accentColor="from-pink-400 via-rose-400 to-red-400"
+                iconColor="text-pink-400"
+                iconBg="bg-pink-500/10 border border-pink-500/20"
+              />
+              <BusinessCard
+                title="Safety Alerts"
+                description="Latest safety alerts and industry notices"
+                icon={Bell}
+                onClick={() => setActiveView('safety-alerts')}
+                variant="compact"
+                accentColor="from-rose-400 via-red-400 to-pink-400"
+                iconColor="text-rose-400"
+                iconBg="bg-rose-500/10 border border-rose-500/20"
+              />
+              <BusinessCard
+                title="Safety Resources"
+                description="Guidance notes, posters, and HSE publications"
+                icon={FolderArchive}
+                onClick={() => setActiveView('safety-resources')}
+                variant="compact"
+                accentColor="from-slate-400 via-gray-400 to-zinc-400"
+                iconColor="text-slate-400"
+                iconBg="bg-slate-500/10 border border-slate-500/20"
+              />
+            </motion.div>
+          </motion.section>
+
+          {/* Stats Bar */}
+          <motion.section variants={itemVariants}>
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+              <SafetyStatCard label="Documents" value={dashboardStats.totalDocuments} icon={FileText} />
+              <SafetyStatCard
+                label="Equipment Due"
+                value={dashboardStats.equipmentDue + dashboardStats.equipmentOverdue}
+                icon={Wrench}
+                variant={dashboardStats.equipmentOverdue > 0 ? 'danger' : 'success'}
+              />
+              <SafetyStatCard
+                label="Safety Score"
+                value={weeklySummary?.safetyScore ?? 0}
+                icon={Shield}
+                variant={(weeklySummary?.safetyScore ?? 0) >= 80 ? 'success' : (weeklySummary?.safetyScore ?? 0) >= 60 ? undefined : 'danger'}
+              />
+              <SafetyStatCard label="Active Permits" value={dashboardStats.activePermits} icon={Lock} />
+            </div>
           </motion.section>
 
           {/* Collapsible Alerts Section */}
