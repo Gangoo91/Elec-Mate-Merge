@@ -147,7 +147,7 @@ export default function BESSTestResults({ formData, onUpdate }: Props) {
           <Field label="Connection Type" required>
             <Select value={formData.gridConnectionType} onValueChange={(v) => onUpdate('gridConnectionType', v)}>
               <SelectTrigger className={selectTriggerCn}><SelectValue placeholder="Select..." /></SelectTrigger>
-              <SelectContent className={selectContentCn}><SelectItem value="G98">G98 (≤16A/phase)</SelectItem><SelectItem value="G99">G99 (>16A/phase)</SelectItem></SelectContent>
+              <SelectContent className={selectContentCn}><SelectItem value="G98">G98 (≤16A/phase)</SelectItem><SelectItem value="G99">G99 ({'>'}16A/phase)</SelectItem></SelectContent>
             </Select>
           </Field>
           <Field label="DNO Name"><Input value={formData.dnoName} onChange={(e) => onUpdate('dnoName', e.target.value)} className={inputCn} placeholder="e.g. UK Power Networks" /></Field>
