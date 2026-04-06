@@ -5,7 +5,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Eye, Check, X, AlertTriangle, AlertCircle, ChevronRight } from 'lucide-react';
 import { InspectionItem as BaseInspectionItem } from '@/data/bs7671ChecklistData';
 import { cn } from '@/lib/utils';
-import { useHaptics } from '@/hooks/useHaptics';
+import { useHaptic } from '@/hooks/useHaptic';
 
 interface InspectionItem {
   id: string;
@@ -50,7 +50,7 @@ const EnhancedInspectionItemCard: React.FC<EnhancedInspectionItemCardProps> = ({
   onOutcomeChange,
   onNavigateToObservations,
 }) => {
-  const haptics = useHaptics();
+  const haptic = useHaptic();
   const [localNotes, setLocalNotes] = useState(inspectionItem?.notes || '');
   const [debounceTimer, setDebounceTimer] = useState<NodeJS.Timeout | null>(null);
   const [swipeOffset, setSwipeOffset] = useState(0);
@@ -95,14 +95,14 @@ const EnhancedInspectionItemCard: React.FC<EnhancedInspectionItemCardProps> = ({
     },
     onSwipedRight: () => {
       if (swipeOffset > 40) {
-        haptics.success();
+        haptic.success();
         onOutcomeChange(sectionItem.id, 'satisfactory');
       }
       setSwipeOffset(0);
     },
     onSwipedLeft: () => {
       if (swipeOffset < -40) {
-        haptics.tap();
+        haptic.light();
         setIsExpanded(true);
       }
       setSwipeOffset(0);
@@ -117,14 +117,14 @@ const EnhancedInspectionItemCard: React.FC<EnhancedInspectionItemCardProps> = ({
   });
 
   const handleOutcomeClick = (outcome: InspectionItem['outcome']) => {
-    haptics.tap();
+    haptic.light();
     if (currentOutcome === outcome) {
       onOutcomeChange(sectionItem.id, '');
     } else {
       onOutcomeChange(sectionItem.id, outcome);
-      if (outcome === 'C1') haptics.warning();
-      else if (outcome === 'C2' || outcome === 'C3') haptics.impact();
-      else if (outcome === 'satisfactory') haptics.success();
+      if (outcome === 'C1') haptic.warning();
+      else if (outcome === 'C2' || outcome === 'C3') haptic.heavy();
+      else if (outcome === 'satisfactory') haptic.success();
     }
   };
 
@@ -195,7 +195,7 @@ const EnhancedInspectionItemCard: React.FC<EnhancedInspectionItemCardProps> = ({
         <button
           type="button"
           onClick={() => {
-            haptics.tap();
+            haptic.light();
             setIsExpanded(!isExpanded);
           }}
           className="w-full p-3 flex items-center gap-3 text-left touch-manipulation"

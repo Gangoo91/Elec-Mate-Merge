@@ -12,7 +12,7 @@ import { EICInspectionItem } from '@/data/bs7671EICChecklistData';
 import { Textarea } from '@/components/ui/textarea';
 import { cn } from '@/lib/utils';
 import { useIsMobile } from '@/hooks/use-mobile';
-import { useHaptics } from '@/hooks/useHaptics';
+import { useHaptic } from '@/hooks/useHaptic';
 
 interface EICInspectionChecklistCardProps {
   inspectionItems: EICInspectionItem[];
@@ -34,13 +34,13 @@ const EICInspectionChecklistCard: React.FC<EICInspectionChecklistCardProps> = ({
   onNavigateToObservations,
 }) => {
   const isMobile = useIsMobile();
-  const haptics = useHaptics();
+  const haptic = useHaptic();
 
   const handleOutcomeChange = (
     id: string,
     outcome: 'satisfactory' | 'not-applicable' | 'limitation'
   ) => {
-    haptics.tap();
+    haptic.light();
     const currentItem = inspectionItems.find((item) => item.id === id);
     if (currentItem?.outcome === outcome) {
       // Toggle off if clicking the same button
@@ -48,11 +48,11 @@ const EICInspectionChecklistCard: React.FC<EICInspectionChecklistCardProps> = ({
     } else {
       onUpdateItem(id, 'outcome', outcome);
       if (outcome === 'satisfactory') {
-        haptics.success();
+        haptic.success();
       }
       // Auto-create observation when LIM is selected
       if (outcome === 'limitation' && currentItem && onAutoCreateObservation) {
-        haptics.impact();
+        haptic.heavy();
         onAutoCreateObservation({
           id: currentItem.id,
           item: currentItem.description,

@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>PAT Testing Explained</title>
+    <style>
+        :root { --accent: #06b6d4; }
+        @page { size: A4; margin: 0; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: Georgia, 'Times New Roman', serif; font-size: 10px; line-height: 1.55; color: #1e293b; background: #fff; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+        h1, h2, h3, .section-bar, .header-title, .header-company-name, .contact-card-name, .contact-card-title, .schedule-table th, .class-label, .class-title, .footer { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; }
+
+        .page { width: 210mm; min-height: 297mm; position: relative; overflow: hidden; }
+        .header { background: linear-gradient(180deg, #0a1628 0%, #152238 100%); color: #fff; padding: 14px 22px 12px; position: relative; }
+        .header::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: var(--accent); }
+        .header-content { display: flex; justify-content: space-between; align-items: center; }
+        .header-title { font-size: 24px; font-weight: 800; }
+        .header-subtitle { font-size: 10px; color: rgba(255,255,255,0.7); margin-top: 3px; font-style: italic; }
+        .header-right { text-align: right; display: flex; align-items: center; gap: 14px; }
+        .header-logo img { max-height: 50px; max-width: 130px; object-fit: contain; }
+        .header-company-name { font-size: 12px; font-weight: 700; color: var(--accent); }
+        .header-company-detail { font-size: 8px; color: rgba(255,255,255,0.6); margin-top: 2px; }
+        .header-scheme img { max-height: 35px; max-width: 70px; object-fit: contain; }
+        .header-sm { padding: 10px 22px 8px; }
+        .header-sm .header-title { font-size: 16px; }
+
+        .content { padding: 14px 22px; }
+        .intro-box { background: #0f172a; border: 1.5px solid #1e293b; border-left: 4px solid var(--accent); border-radius: 5px; padding: 10px 14px; margin-bottom: 12px; }
+        .intro-text { font-size: 10px; color: rgba(255,255,255,0.85); line-height: 1.6; }
+        .intro-text strong { color: #fff; }
+
+        .section { margin-bottom: 10px; }
+        .section-bar { background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); color: #fff; font-size: 9.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; padding: 5px 14px; border-left: 4px solid var(--accent); border-radius: 2px; margin-bottom: 6px; }
+        .section-bar.amber { border-left-color: #f59e0b; }
+        .section-bar.green { border-left-color: #22c55e; }
+        .section-bar.red { border-left-color: #dc2626; }
+        .section-bar.blue { border-left-color: #3b82f6; }
+
+        .bullet-list { padding: 0 0 0 4px; }
+        .bullet-item { display: flex; gap: 8px; margin-bottom: 4px; align-items: flex-start; }
+        .bullet-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); flex-shrink: 0; margin-top: 4px; }
+        .bullet-dot.amber { background: #f59e0b; }
+        .bullet-dot.green { background: #22c55e; }
+        .bullet-dot.red { background: #dc2626; }
+        .bullet-dot.blue { background: #3b82f6; }
+        .bullet-text { font-size: 10px; color: #334155; line-height: 1.55; flex: 1; }
+        .bullet-text strong { color: #0f172a; font-weight: 700; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; }
+
+        .info-box { background: #0f172a; border: 1.5px solid #1e293b; border-left: 4px solid var(--accent); border-radius: 5px; padding: 10px 14px; margin: 6px 0; }
+        .info-title { font-size: 10px; font-weight: 700; color: #fff; margin-bottom: 3px; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; }
+        .info-text { font-size: 9.5px; color: rgba(255,255,255,0.85); line-height: 1.6; }
+
+        .amber-box { background: #0f172a; border: 1.5px solid #1e293b; border-left: 4px solid #f59e0b; border-radius: 5px; padding: 10px 14px; margin: 6px 0; }
+        .amber-title { font-size: 10px; font-weight: 700; color: #fff; margin-bottom: 3px; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; }
+        .amber-text { font-size: 9.5px; color: rgba(255,255,255,0.85); line-height: 1.6; }
+
+        .alert-box { background: #7f1d1d; border: 1.5px solid #991b1b; border-left: 4px solid #dc2626; border-radius: 5px; padding: 10px 14px; margin: 6px 0; }
+        .alert-title { font-size: 10px; font-weight: 800; color: #fff; margin-bottom: 3px; text-transform: uppercase; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; }
+        .alert-text { font-size: 9.5px; color: rgba(255,255,255,0.9); line-height: 1.6; }
+
+        .class-card { border-radius: 5px; padding: 7px 12px; margin-bottom: 5px; display: flex; align-items: center; gap: 10px; }
+        .class-badge { width: 32px; height: 32px; border-radius: 5px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+        .class-label { font-size: 12px; font-weight: 900; color: #fff; }
+        .class-info { flex: 1; }
+        .class-title { font-size: 9.5px; font-weight: 700; color: #fff; margin-bottom: 1px; }
+        .class-desc { font-size: 9px; color: rgba(255,255,255,0.8); line-height: 1.4; }
+
+        .schedule-table { width: 100%; border-collapse: collapse; margin: 6px 0; font-size: 9.5px; }
+        .schedule-table th { background: #0f172a; color: #fff; padding: 5px 8px; text-align: left; font-size: 8.5px; font-weight: 600; }
+        .schedule-table td { padding: 4px 8px; border-bottom: 1px solid #e2e8f0; }
+        .schedule-table tr:nth-child(even) td { background: #f8fafc; }
+
+        .contact-card { background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); border-radius: 6px; padding: 12px 16px; margin-top: 10px; position: relative; overflow: hidden; }
+        .contact-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: var(--accent); }
+        .contact-card-title { font-size: 8px; color: rgba(255,255,255,0.5); text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 4px; }
+        .contact-card-name { font-size: 13px; font-weight: 800; color: #fff; }
+        .contact-card-details { font-size: 9px; color: var(--accent); margin-top: 3px; }
+        .contact-card-address { font-size: 8px; color: rgba(255,255,255,0.5); margin-top: 3px; }
+        .contact-card-reg { font-size: 7.5px; color: rgba(255,255,255,0.4); margin-top: 3px; }
+
+        .footer { position: absolute; bottom: 0; left: 0; right: 0; border-top: 2px solid var(--accent); padding: 6px 22px; display: flex; justify-content: space-between; align-items: center; font-size: 7.5px; color: #94a3b8; }
+        .page-break { page-break-before: always; }
+    </style>
+</head>
+<body>
+
+<!-- ===== PAGE 1 — WHAT IS PAT TESTING ===== -->
+<div class="page">
+    <div class="header">
+        <div class="header-content">
+            <div>
+                <div class="header-title">PAT Testing Explained</div>
+                <div class="header-subtitle">What was tested, what the results mean, and your responsibilities</div>
+            </div>
+            <div class="header-right">
+                {% if company_logo %}<div class="header-logo"><img src="{{ company_logo }}" alt="Logo" /></div>{% endif %}
+                <div>
+                    <div class="header-company-name">{{ company_name }}</div>
+                    {% if company_phone %}<div class="header-company-detail">{{ company_phone }}</div>{% endif %}
+                    {% if registration_scheme %}<div class="header-company-detail">{{ registration_scheme }}: {{ registration_number }}</div>{% endif %}
+                </div>
+                {% if scheme_logo %}<div class="header-scheme"><img src="{{ scheme_logo }}" alt="Scheme" /></div>{% endif %}
+            </div>
+        </div>
+    </div>
+    <div class="content">
+        <div class="intro-box">
+            <div class="intro-text"><strong>{{ company_name }}</strong> has carried out Portable Appliance Testing (PAT) on your electrical equipment in accordance with the <strong>IET Code of Practice for In-Service Inspection and Testing of Electrical Equipment (5th Edition)</strong>. This guide explains what was tested, what the results mean, what the labels on your equipment mean, and what you need to do next.</div>
+        </div>
+
+        <div class="section">
+            <div class="section-bar">What Is PAT Testing?</div>
+            <div class="bullet-list">
+                <div class="bullet-item"><div class="bullet-dot"></div><div class="bullet-text"><strong>PAT testing</strong> is the inspection and testing of portable electrical equipment to ensure it is safe to use. It covers anything with a plug — from kettles and laptops to power tools and industrial machinery</div></div>
+                <div class="bullet-item"><div class="bullet-dot"></div><div class="bullet-text"><strong>It is NOT a single test.</strong> It is a structured process: first a <strong>visual inspection</strong> (checking the plug, cable, and casing for damage), then <strong>electrical tests</strong> using calibrated instruments (earth continuity, insulation resistance, and leakage current)</div></div>
+                <div class="bullet-item"><div class="bullet-dot"></div><div class="bullet-text"><strong>Legal basis:</strong> The Electricity at Work Regulations 1989 require duty holders to maintain electrical equipment in a safe condition. PAT testing is the established method of demonstrating compliance</div></div>
+                <div class="bullet-item"><div class="bullet-dot"></div><div class="bullet-text"><strong>Risk-based approach:</strong> The IET Code of Practice 5th Edition (2020) emphasises that testing frequency should be based on risk — not a one-size-fits-all annual schedule. The type of equipment, how it's used, and the environment determine how often it needs testing</div></div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-bar blue">Equipment Classes — What's the Difference?</div>
+            <div class="class-card" style="background: #2563eb;">
+                <div class="class-badge" style="background: rgba(0,0,0,0.2);"><div class="class-label">I</div></div>
+                <div class="class-info">
+                    <div class="class-title">Class I — Earthed Equipment</div>
+                    <div class="class-desc">Has an earth connection (3-pin plug, metal casing). If a fault occurs, the earth provides a safe path for current. Examples: kettles, irons, washing machines, fridges, microwaves, toasters, most power tools</div>
+                </div>
+            </div>
+            <div class="class-card" style="background: #7c3aed;">
+                <div class="class-badge" style="background: rgba(0,0,0,0.2);"><div class="class-label">II</div></div>
+                <div class="class-info">
+                    <div class="class-title">Class II — Double Insulated</div>
+                    <div class="class-desc">Has two layers of insulation (no earth needed). Often has a square-within-a-square symbol. Examples: phone chargers, laptop chargers, hair dryers, some power tools, desk lamps, radios</div>
+                </div>
+            </div>
+            <div class="class-card" style="background: #0f172a; border: 1px solid #334155;">
+                <div class="class-badge" style="background: rgba(255,255,255,0.1);"><div class="class-label">III</div></div>
+                <div class="class-info">
+                    <div class="class-title">Class III — Extra-Low Voltage (SELV)</div>
+                    <div class="class-desc">Operates below 50V via a separate transformer or power supply. Inherently safe due to low voltage. Examples: USB devices, some LED lighting, battery chargers, doorbells</div>
+                </div>
+            </div>
+            <div class="info-box">
+                <div class="info-title">Why does the class matter?</div>
+                <div class="info-text">Different classes require different tests. <strong>Class I</strong> appliances need earth continuity, insulation resistance, and leakage tests. <strong>Class II</strong> appliances don't have an earth, so only insulation resistance and leakage tests apply. <strong>Class III</strong> appliances typically only need a visual inspection.</div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-bar green">What Tests Were Performed?</div>
+            <div class="bullet-list">
+                <div class="bullet-item"><div class="bullet-dot green"></div><div class="bullet-text"><strong>Visual inspection:</strong> The plug, cable, casing, and connections were checked for damage, wear, correct fuse rating, and signs of overheating. Over <strong>90% of faults</strong> are found during the visual inspection alone</div></div>
+                <div class="bullet-item"><div class="bullet-dot green"></div><div class="bullet-text"><strong>Earth continuity (Class I only):</strong> Confirms the earth conductor is intact from the plug earth pin to any accessible metal parts. A low resistance reading (typically below <strong>0.1Ω</strong> for short leads) confirms a good earth connection</div></div>
+                <div class="bullet-item"><div class="bullet-dot green"></div><div class="bullet-text"><strong>Insulation resistance:</strong> Tests the insulation between live/neutral conductors and earth. A high reading means the insulation is intact. Minimum: <strong>1.0MΩ for Class I, 2.0MΩ for Class II</strong></div></div>
+                <div class="bullet-item"><div class="bullet-dot green"></div><div class="bullet-text"><strong>Protective conductor current (leakage):</strong> Measures how much current leaks to earth during normal operation. Maximum: <strong>5mA</strong> for all classes. High leakage indicates insulation breakdown</div></div>
+                <div class="bullet-item"><div class="bullet-dot green"></div><div class="bullet-text"><strong>Functional check:</strong> The appliance was switched on to confirm it operates correctly and safely — no unusual sounds, smells, or excessive heat</div></div>
+            </div>
+        </div>
+    </div>
+    <div class="footer">
+        <div>{{ company_name }}{% if company_phone %} — {{ company_phone }}{% endif %}</div>
+        <div>Powered by <strong>Elec-Mate</strong></div>
+        <div>Page 1 of 3</div>
+    </div>
+</div>
+
+<!-- ===== PAGE 2 — LABELS, RESULTS & FREQUENCY ===== -->
+<div class="page page-break">
+    <div class="header header-sm">
+        <div class="header-content">
+            <div><div class="header-title">Labels, Results & Testing Frequency</div></div>
+            <div class="header-right">
+                {% if company_logo %}<div class="header-logo"><img src="{{ company_logo }}" alt="Logo" style="max-height:35px;" /></div>{% endif %}
+                <div><div class="header-company-name">{{ company_name }}</div></div>
+            </div>
+        </div>
+    </div>
+    <div class="content">
+        <div class="section">
+            <div class="section-bar">Understanding the Labels on Your Equipment</div>
+            <div class="bullet-list">
+                <div class="bullet-item"><div class="bullet-dot green"></div><div class="bullet-text"><strong>Green "PASS" label:</strong> The appliance passed all visual and electrical tests at the time of testing and is safe for continued use. The label shows the test date, next retest date, asset number, and the tester's details</div></div>
+                <div class="bullet-item"><div class="bullet-dot red"></div><div class="bullet-text"><strong>Red "FAIL" / "DO NOT USE" label:</strong> The appliance failed one or more tests. It must be <strong>immediately removed from service</strong>. Do not use it, do not remove the label, and do not attempt to repair it yourself. It should be repaired by a competent person or disposed of safely</div></div>
+                <div class="bullet-item"><div class="bullet-dot"></div><div class="bullet-text"><strong>Asset number / barcode:</strong> Each appliance is given a unique asset number that links to its full test history in our digital records. This allows us to track every appliance's condition over time and identify deteriorating equipment before it becomes dangerous</div></div>
+                <div class="bullet-item"><div class="bullet-dot"></div><div class="bullet-text"><strong>Retest date:</strong> The label shows when the next test is due. This is based on the risk assessment for that specific type of equipment in your environment — not a generic annual date</div></div>
+            </div>
+            <div class="alert-box">
+                <div class="alert-title">Failed appliance? Do not use it</div>
+                <div class="alert-text">If an appliance has a red FAIL label, it has been identified as potentially dangerous. Using a failed appliance puts employees and visitors at risk and could result in prosecution under the Electricity at Work Regulations 1989. Remove it from service immediately.</div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-bar amber">Recommended Testing Frequency</div>
+            <table class="schedule-table">
+                <thead><tr><th>Environment</th><th>Equipment Type</th><th>Frequency</th></tr></thead>
+                <tbody>
+                    <tr><td><strong>Construction sites</strong></td><td>Portable tools, extension leads</td><td>Every 3 months</td></tr>
+                    <tr><td><strong>Industrial / workshops</strong></td><td>Bench tools, portable machinery</td><td>Every 6 months</td></tr>
+                    <tr><td><strong>Catering / hospitality</strong></td><td>Kitchen appliances, cleaning equipment</td><td>Every 6-12 months</td></tr>
+                    <tr><td><strong>Schools / nurseries</strong></td><td>All portable equipment</td><td>Every 12 months</td></tr>
+                    <tr><td><strong>Hospitals / care homes</strong></td><td>All portable equipment</td><td>Every 12 months</td></tr>
+                    <tr><td><strong>Offices</strong></td><td>IT equipment, desk accessories</td><td>Every 24 months</td></tr>
+                    <tr><td><strong>Hotels / holiday lets</strong></td><td>Guest-accessible appliances</td><td>Every 12 months</td></tr>
+                    <tr><td><strong>Rented properties (HMOs)</strong></td><td>Landlord-supplied appliances</td><td>Every 12 months</td></tr>
+                </tbody>
+            </table>
+            <div class="amber-box">
+                <div class="amber-title">There is no legal "annual" requirement</div>
+                <div class="amber-text">UK law does not specify a fixed testing interval. The IET Code of Practice 5th Edition recommends a <strong>risk-based approach</strong> — frequency depends on equipment type, usage, and environment. The table above is guidance based on industry best practice. Your specific schedule has been set based on our risk assessment of your premises.</div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-bar">What Your PAT Testing Certificate Shows</div>
+            <div class="bullet-list">
+                <div class="bullet-item"><div class="bullet-dot"></div><div class="bullet-text"><strong>Asset register:</strong> A complete list of every appliance tested, including description, location, asset number, class, and serial number where visible</div></div>
+                <div class="bullet-item"><div class="bullet-dot"></div><div class="bullet-text"><strong>Test results:</strong> For each appliance — visual inspection outcome, earth continuity (Ω), insulation resistance (MΩ), leakage (mA), and overall PASS/FAIL result</div></div>
+                <div class="bullet-item"><div class="bullet-dot"></div><div class="bullet-text"><strong>Failed appliances:</strong> Listed separately with the reason for failure and recommended action (repair, replace, or dispose)</div></div>
+                <div class="bullet-item"><div class="bullet-dot"></div><div class="bullet-text"><strong>Next test date:</strong> The recommended date for the next round of testing based on the risk assessment</div></div>
+                <div class="bullet-item"><div class="bullet-dot"></div><div class="bullet-text"><strong>Tester details:</strong> Name, qualifications, and contact details of the person who carried out the testing</div></div>
+            </div>
+        </div>
+    </div>
+    <div class="footer">
+        <div>{{ company_name }}{% if company_phone %} — {{ company_phone }}{% endif %}</div>
+        <div>Powered by <strong>Elec-Mate</strong></div>
+        <div>Page 2 of 3</div>
+    </div>
+</div>
+
+<!-- ===== PAGE 3 — YOUR RESPONSIBILITIES & DAILY SAFETY ===== -->
+<div class="page page-break">
+    <div class="header header-sm">
+        <div class="header-content">
+            <div><div class="header-title">Your Responsibilities & Daily Safety</div></div>
+            <div class="header-right">
+                {% if company_logo %}<div class="header-logo"><img src="{{ company_logo }}" alt="Logo" style="max-height:35px;" /></div>{% endif %}
+                <div><div class="header-company-name">{{ company_name }}</div></div>
+            </div>
+        </div>
+    </div>
+    <div class="content">
+        <div class="section">
+            <div class="section-bar">Your Legal Responsibilities</div>
+            <div class="bullet-list">
+                <div class="bullet-item"><div class="bullet-dot blue"></div><div class="bullet-text"><strong>Electricity at Work Regulations 1989:</strong> As the duty holder (employer, landlord, or person in control of premises), you must ensure all electrical equipment is maintained in a safe condition to prevent danger. PAT testing is the established way to demonstrate this</div></div>
+                <div class="bullet-item"><div class="bullet-dot blue"></div><div class="bullet-text"><strong>Health and Safety at Work Act 1974:</strong> You have a general duty to ensure the health, safety, and welfare of employees and anyone affected by your undertaking — including visitors, contractors, and members of the public</div></div>
+                <div class="bullet-item"><div class="bullet-dot blue"></div><div class="bullet-text"><strong>Provision and Use of Work Equipment Regulations 1998 (PUWER):</strong> Work equipment must be maintained in an efficient state, in efficient working order, and in good repair. This includes portable electrical equipment</div></div>
+                <div class="bullet-item"><div class="bullet-dot blue"></div><div class="bullet-text"><strong>Record keeping:</strong> Keep your PAT testing certificate and asset register for at least the life of the equipment. Insurers, HSE inspectors, and local authorities may request to see them</div></div>
+                <div class="bullet-item"><div class="bullet-dot blue"></div><div class="bullet-text"><strong>Insurance:</strong> Most employers' liability and public liability policies require electrical equipment to be regularly inspected and tested. Failure to maintain PAT records could invalidate a claim</div></div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-bar green">User Checks — What Staff Should Do Daily</div>
+            <div class="info-box" style="border-left-color: #22c55e;">
+                <div class="info-title">Every employee should visually check equipment before each use</div>
+                <div class="info-text">
+                    ✓ Is the plug cracked, scorched, or damaged?<br>
+                    ✓ Is the cable frayed, cut, or taped up?<br>
+                    ✓ Is the outer sheath of the cable secure where it enters the plug and the appliance?<br>
+                    ✓ Is the casing damaged, cracked, or showing burn marks?<br>
+                    ✓ Is the equipment sitting in water or being used with wet hands?<br>
+                    ✓ Does the PAT label show the appliance is within its test date?<br>
+                    ✓ Does the equipment smell of burning, make unusual sounds, or get excessively hot?
+                </div>
+            </div>
+            <div class="alert-box">
+                <div class="alert-title">If any check fails — stop using the appliance</div>
+                <div class="alert-text">Remove it from service, attach a "DO NOT USE" label or note, and report it to your manager or facilities team. Never attempt to repair electrical equipment unless you are competent to do so.</div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-bar amber">Common Causes of Appliance Failure</div>
+            <div class="bullet-list">
+                <div class="bullet-item"><div class="bullet-dot amber"></div><div class="bullet-text"><strong>Cable damage</strong> — the most common failure. Caused by dragging across sharp edges, trapping in doors, running over with wheels, or pulling the cable instead of the plug to disconnect</div></div>
+                <div class="bullet-item"><div class="bullet-dot amber"></div><div class="bullet-text"><strong>Wrong fuse:</strong> A 13A fuse fitted where a 3A fuse is required means the fuse won't blow during a fault — the cable overheats instead. Chargers, lamps, and electronics should have <strong>3A fuses</strong>. Heaters, kettles, and irons need <strong>13A</strong></div></div>
+                <div class="bullet-item"><div class="bullet-dot amber"></div><div class="bullet-text"><strong>Water ingress:</strong> Equipment used in kitchens, bathrooms, or outdoors is exposed to moisture. Even small amounts of water inside an appliance can cause insulation breakdown and electric shock</div></div>
+                <div class="bullet-item"><div class="bullet-dot amber"></div><div class="bullet-text"><strong>Overheating:</strong> Blocked vents, dusty fans, and running equipment beyond its duty cycle. Common with heaters, hair dryers, and power tools used continuously</div></div>
+                <div class="bullet-item"><div class="bullet-dot amber"></div><div class="bullet-text"><strong>Counterfeit equipment:</strong> Cheap imported appliances and chargers that don't meet UK safety standards. The IET 5th Edition specifically highlights this risk. Only buy from reputable suppliers and check for the UKCA or CE mark</div></div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-bar">New Equipment & Personal Items</div>
+            <div class="bullet-list">
+                <div class="bullet-item"><div class="bullet-dot"></div><div class="bullet-text"><strong>New equipment:</strong> Brand new appliances from reputable suppliers do not need PAT testing immediately but should be <strong>visually inspected and added to your asset register</strong> before first use. Formal testing should begin at the next scheduled cycle</div></div>
+                <div class="bullet-item"><div class="bullet-dot"></div><div class="bullet-text"><strong>Personal items brought to work:</strong> Employee-owned phone chargers, fans, heaters, and radios are the duty holder's responsibility while on your premises. They should be included in your PAT testing programme. Consider a policy requiring staff to register personal electrical items</div></div>
+                <div class="bullet-item"><div class="bullet-dot"></div><div class="bullet-text"><strong>Extension leads:</strong> The most commonly failed items. They get damaged, overloaded, and used in unsuitable environments. Include them in testing and replace at the first sign of damage</div></div>
+            </div>
+        </div>
+
+        <div class="contact-card">
+            <div class="contact-card-title">Book your next PAT testing or report a fault</div>
+            <div class="contact-card-name">{{ company_name }}</div>
+            <div class="contact-card-details">
+                {% if company_phone %}{{ company_phone }}{% endif %}
+                {% if company_email %} | {{ company_email }}{% endif %}
+                {% if company_website %} | {{ company_website }}{% endif %}
+            </div>
+            {% if company_address %}<div class="contact-card-address">{{ company_address }}</div>{% endif %}
+            {% if registration_scheme %}<div class="contact-card-reg">{{ registration_scheme }} Registered — No. {{ registration_number }}</div>{% endif %}
+        </div>
+    </div>
+    <div class="footer">
+        <div>{{ company_name }}{% if company_phone %} — {{ company_phone }}{% endif %}</div>
+        <div>Powered by <strong>Elec-Mate</strong></div>
+        <div>Page 3 of 3</div>
+    </div>
+</div>
+
+</body>
+</html>

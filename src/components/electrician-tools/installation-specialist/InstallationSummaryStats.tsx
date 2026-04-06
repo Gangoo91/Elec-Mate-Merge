@@ -1,4 +1,3 @@
-import { Badge } from '@/components/ui/badge';
 import { Wrench, Clock, AlertTriangle, Shield, Hammer } from 'lucide-react';
 
 interface InstallationSummaryStatsProps {
@@ -9,14 +8,14 @@ interface InstallationSummaryStatsProps {
   toolsCount: number;
 }
 
-const getRiskLevelColor = (level: 'low' | 'medium' | 'high') => {
+const getRiskColor = (level: 'low' | 'medium' | 'high') => {
   switch (level) {
     case 'low':
-      return 'bg-success/10 text-success border-success/20';
+      return { border: 'border-green-500/30', bg: 'bg-green-500/10', text: 'text-green-400' };
     case 'medium':
-      return 'bg-warning/10 text-warning border-warning/20';
+      return { border: 'border-amber-500/30', bg: 'bg-amber-500/10', text: 'text-amber-400' };
     case 'high':
-      return 'bg-destructive/10 text-destructive border-destructive/20';
+      return { border: 'border-red-500/30', bg: 'bg-red-500/10', text: 'text-red-400' };
   }
 };
 
@@ -27,58 +26,45 @@ export const InstallationSummaryStats = ({
   hazardsCount,
   toolsCount,
 }: InstallationSummaryStatsProps) => {
+  const risk = getRiskColor(riskLevel);
+
   return (
-    <div className="grid grid-cols-2 sm:grid-cols-5 gap-4">
-      {/* Total Steps */}
-      <div className="bg-blue-500/10 rounded-xl p-4 min-h-[44px]">
-        <div className="flex items-center gap-2 text-muted-foreground mb-1">
-          <Wrench className="h-4 w-4" />
-          <span className="text-xs font-medium">Steps</span>
-        </div>
-        <div className="text-2xl lg:text-3xl font-black text-foreground">{totalSteps}</div>
+    <div className="grid grid-cols-5 sm:grid-cols-5 gap-2">
+      {/* Steps */}
+      <div className="rounded-xl border border-blue-500/30 bg-blue-500/10 px-2 py-2.5 text-center">
+        <Wrench className="h-4 w-4 text-blue-400 mx-auto mb-1" />
+        <div className="text-lg font-bold text-blue-400">{totalSteps}</div>
+        <div className="text-[10px] font-medium text-white">Steps</div>
       </div>
 
       {/* Duration */}
-      <div className="bg-blue-500/10 rounded-xl p-4 min-h-[44px]">
-        <div className="flex items-center gap-2 text-muted-foreground mb-1">
-          <Clock className="h-4 w-4" />
-          <span className="text-xs font-medium">Duration</span>
-        </div>
-        <div
-          className="text-lg lg:text-2xl font-black text-foreground truncate"
-          title={estimatedDuration}
-        >
+      <div className="rounded-xl border border-amber-500/30 bg-amber-500/10 px-2 py-2.5 text-center">
+        <Clock className="h-4 w-4 text-amber-400 mx-auto mb-1" />
+        <div className="text-lg font-bold text-amber-400 truncate" title={estimatedDuration}>
           {estimatedDuration?.split(' ')[0] || 'N/A'}
         </div>
+        <div className="text-[10px] font-medium text-white">Duration</div>
       </div>
 
       {/* Hazards */}
-      <div className="bg-amber-500/10 rounded-xl p-4 min-h-[44px]">
-        <div className="flex items-center gap-2 text-muted-foreground mb-1">
-          <AlertTriangle className="h-4 w-4" />
-          <span className="text-xs font-medium">Hazards</span>
-        </div>
-        <div className="text-2xl lg:text-3xl font-black text-foreground">{hazardsCount}</div>
+      <div className="rounded-xl border border-red-500/30 bg-red-500/10 px-2 py-2.5 text-center">
+        <AlertTriangle className="h-4 w-4 text-red-400 mx-auto mb-1" />
+        <div className="text-lg font-bold text-red-400">{hazardsCount}</div>
+        <div className="text-[10px] font-medium text-white">Hazards</div>
       </div>
 
-      {/* Risk Level */}
-      <div className="bg-purple-500/10 rounded-xl p-4 min-h-[44px]">
-        <div className="flex items-center gap-2 text-muted-foreground mb-1">
-          <Shield className="h-4 w-4" />
-          <span className="text-xs font-medium">Risk</span>
-        </div>
-        <Badge className={`${getRiskLevelColor(riskLevel)} text-sm font-bold uppercase`}>
-          {riskLevel}
-        </Badge>
+      {/* Risk */}
+      <div className={`rounded-xl border ${risk.border} ${risk.bg} px-2 py-2.5 text-center`}>
+        <Shield className="h-4 w-4 mx-auto mb-1" />
+        <div className={`text-lg font-bold ${risk.text} uppercase`}>{riskLevel}</div>
+        <div className="text-[10px] font-medium text-white">Risk</div>
       </div>
 
       {/* Tools */}
-      <div className="bg-green-500/10 rounded-xl p-4 min-h-[44px]">
-        <div className="flex items-center gap-2 text-muted-foreground mb-1">
-          <Hammer className="h-4 w-4" />
-          <span className="text-xs font-medium">Tools</span>
-        </div>
-        <div className="text-2xl lg:text-3xl font-black text-foreground">{toolsCount}</div>
+      <div className="rounded-xl border border-green-500/30 bg-green-500/10 px-2 py-2.5 text-center">
+        <Hammer className="h-4 w-4 text-green-400 mx-auto mb-1" />
+        <div className="text-lg font-bold text-green-400">{toolsCount}</div>
+        <div className="text-[10px] font-medium text-white">Tools</div>
       </div>
     </div>
   );

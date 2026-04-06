@@ -34,6 +34,7 @@ import {
   createInvoiceFromCertificate,
 } from '@/utils/certificateToQuote';
 import { supabase } from '@/integrations/supabase/client';
+import { trackFeatureUse } from '@/components/ActivityTracker';
 import { formatSolarPVJson } from '@/utils/solarPVJsonFormatter';
 import { createNotificationFromCertificate } from '@/utils/notificationHelper';
 
@@ -101,6 +102,13 @@ export default function SolarPVCertificate() {
 
   // Company profile for branding
   const { companyProfile } = useCompanyProfile();
+
+  // Track certificate opened
+  useEffect(() => {
+    supabase.auth.getUser().then(({ data: { user } }) => {
+      if (user) trackFeatureUse(user.id, 'certificate_opened', { type: 'solar-pv' });
+    });
+  }, []);
 
   // Check if company branding is available
   const hasSavedCompanyBranding = !!(

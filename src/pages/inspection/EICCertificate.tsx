@@ -33,6 +33,7 @@ import {
   createInvoiceFromCertificate,
 } from '@/utils/certificateToQuote';
 import { supabase } from '@/integrations/supabase/client';
+import { trackFeatureUse } from '@/components/ActivityTracker';
 
 // Import EIC form components
 import EICFormTabs from '@/components/inspection/eic/EICFormTabs';
@@ -108,6 +109,13 @@ export default function EICCertificate() {
 
   // Company profile for branding
   const { companyProfile } = useCompanyProfile();
+
+  // Track certificate opened
+  useEffect(() => {
+    supabase.auth.getUser().then(({ data: { user } }) => {
+      if (user) trackFeatureUse(user.id, 'certificate_opened', { type: 'eic' });
+    });
+  }, []);
 
   // Check if company branding is available
   const hasSavedCompanyBranding = !!(

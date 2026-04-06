@@ -12,7 +12,7 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { Zap, Info, Link2, Cable, CircuitBoard } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useIsMobile } from '@/hooks/use-mobile';
-import { useHaptics } from '@/hooks/useHaptics';
+import { useHaptic } from '@/hooks/useHaptic';
 
 // Fields managed by this section (for memoization comparison)
 const EARTHING_SECTION_FIELDS = [
@@ -102,7 +102,7 @@ const FormField = ({
  */
 const EarthingBondingSectionInner = ({ formData, onUpdate }: EarthingBondingSectionProps) => {
   const isMobile = useIsMobile();
-  const haptics = useHaptics();
+  const haptic = useHaptic();
 
   const showEarthElectrodeResistance =
     formData.earthElectrodeType &&
@@ -150,7 +150,7 @@ const EarthingBondingSectionInner = ({ formData, onUpdate }: EarthingBondingSect
   }, [formData.mainBondingLocations]);
 
   const handleBondingLocationChange = (service: string, checked: boolean) => {
-    haptics.tap();
+    haptic.light();
     const updatedLocations = new Set(bondingLocations);
 
     if (checked) {
@@ -248,13 +248,13 @@ const EarthingBondingSectionInner = ({ formData, onUpdate }: EarthingBondingSect
               role="button"
               tabIndex={0}
               onClick={() => {
-                haptics.tap();
+                haptic.light();
                 onUpdate(
                   'meansOfEarthingDistributor',
                   formData.meansOfEarthingDistributor === 'true' ? 'false' : 'true'
                 );
               }}
-              onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); haptics.tap(); onUpdate('meansOfEarthingDistributor', formData.meansOfEarthingDistributor === 'true' ? 'false' : 'true'); } }}
+              onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); haptic.light(); onUpdate('meansOfEarthingDistributor', formData.meansOfEarthingDistributor === 'true' ? 'false' : 'true'); } }}
               className={cn(
                 'flex items-center gap-3 p-4 rounded-xl border-2 transition-all touch-manipulation cursor-pointer',
                 formData.meansOfEarthingDistributor === 'true'
@@ -273,13 +273,13 @@ const EarthingBondingSectionInner = ({ formData, onUpdate }: EarthingBondingSect
               role="button"
               tabIndex={0}
               onClick={() => {
-                haptics.tap();
+                haptic.light();
                 onUpdate(
                   'meansOfEarthingElectrode',
                   formData.meansOfEarthingElectrode === 'true' ? 'false' : 'true'
                 );
               }}
-              onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); haptics.tap(); onUpdate('meansOfEarthingElectrode', formData.meansOfEarthingElectrode === 'true' ? 'false' : 'true'); } }}
+              onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); haptic.light(); onUpdate('meansOfEarthingElectrode', formData.meansOfEarthingElectrode === 'true' ? 'false' : 'true'); } }}
               className={cn(
                 'flex items-center gap-3 p-4 rounded-xl border-2 transition-all touch-manipulation cursor-pointer',
                 formData.meansOfEarthingElectrode === 'true'
@@ -318,7 +318,7 @@ const EarthingBondingSectionInner = ({ formData, onUpdate }: EarthingBondingSect
                     key={option.value}
                     type="button"
                     onClick={() => {
-                      haptics.tap();
+                      haptic.light();
                       onUpdate(
                         'mainEarthingConductorType',
                         formData.mainEarthingConductorType === option.value ? '' : option.value
@@ -340,7 +340,7 @@ const EarthingBondingSectionInner = ({ formData, onUpdate }: EarthingBondingSect
               <Select
                 value={formData.mainEarthingConductorSize || ''}
                 onValueChange={(value) => {
-                  haptics.tap();
+                  haptic.light();
                   onUpdate('mainEarthingConductorSize', value === '__clear__' ? '' : value);
                 }}
               >
@@ -376,13 +376,13 @@ const EarthingBondingSectionInner = ({ formData, onUpdate }: EarthingBondingSect
             role="button"
             tabIndex={0}
             onClick={() => {
-              haptics.tap();
+              haptic.light();
               onUpdate(
                 'earthingConductorContinuityVerified',
                 formData.earthingConductorContinuityVerified === 'true' ? 'false' : 'true'
               );
             }}
-            onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); haptics.tap(); onUpdate('earthingConductorContinuityVerified', formData.earthingConductorContinuityVerified === 'true' ? 'false' : 'true'); } }}
+            onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); haptic.light(); onUpdate('earthingConductorContinuityVerified', formData.earthingConductorContinuityVerified === 'true' ? 'false' : 'true'); } }}
             className={cn(
               'w-full flex items-center gap-3 p-4 rounded-xl border-2 transition-all touch-manipulation cursor-pointer',
               formData.earthingConductorContinuityVerified === 'true'
@@ -420,7 +420,7 @@ const EarthingBondingSectionInner = ({ formData, onUpdate }: EarthingBondingSect
                     key={option.value}
                     type="button"
                     onClick={() => {
-                      haptics.tap();
+                      haptic.light();
                       onUpdate(
                         'mainBondingConductorType',
                         formData.mainBondingConductorType === option.value ? '' : option.value
@@ -442,7 +442,7 @@ const EarthingBondingSectionInner = ({ formData, onUpdate }: EarthingBondingSect
               <Select
                 value={formData.mainBondingSize || ''}
                 onValueChange={(value) => {
-                  haptics.tap();
+                  haptic.light();
                   onUpdate('mainBondingSize', value === '__clear__' ? '' : value);
                 }}
               >
@@ -485,7 +485,7 @@ const EarthingBondingSectionInner = ({ formData, onUpdate }: EarthingBondingSect
                   key={option.value}
                   type="button"
                   onClick={() => {
-                    haptics.tap();
+                    haptic.light();
                     onUpdate(
                       'bondingCompliance',
                       formData.bondingCompliance === option.value ? '' : option.value
@@ -512,13 +512,13 @@ const EarthingBondingSectionInner = ({ formData, onUpdate }: EarthingBondingSect
             role="button"
             tabIndex={0}
             onClick={() => {
-              haptics.tap();
+              haptic.light();
               onUpdate(
                 'bondingConductorContinuityVerified',
                 formData.bondingConductorContinuityVerified === 'true' ? 'false' : 'true'
               );
             }}
-            onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); haptics.tap(); onUpdate('bondingConductorContinuityVerified', formData.bondingConductorContinuityVerified === 'true' ? 'false' : 'true'); } }}
+            onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); haptic.light(); onUpdate('bondingConductorContinuityVerified', formData.bondingConductorContinuityVerified === 'true' ? 'false' : 'true'); } }}
             className={cn(
               'w-full flex items-center gap-3 p-4 rounded-xl border-2 transition-all touch-manipulation cursor-pointer',
               formData.bondingConductorContinuityVerified === 'true'
@@ -587,7 +587,7 @@ const EarthingBondingSectionInner = ({ formData, onUpdate }: EarthingBondingSect
             <Select
               value={formData.supplementaryBondingSize || ''}
               onValueChange={(value) => {
-                haptics.tap();
+                haptic.light();
                 onUpdate('supplementaryBondingSize', value === '__clear__' ? '' : value);
               }}
             >
@@ -634,7 +634,7 @@ const EarthingBondingSectionInner = ({ formData, onUpdate }: EarthingBondingSect
                   key={option.value}
                   type="button"
                   onClick={() => {
-                    haptics.tap();
+                    haptic.light();
                     onUpdate(
                       'equipotentialBonding',
                       formData.equipotentialBonding === option.value ? '' : option.value

@@ -11,7 +11,6 @@ import {
   X,
   Plus,
 } from 'lucide-react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
@@ -77,57 +76,33 @@ export const PPERequirementsGrid = ({ ppeItems, onUpdate }: PPERequirementsGridP
   };
 
   return (
-    <Card>
-      <CardHeader>
-        <div className="flex items-center justify-between gap-2">
-          <CardTitle className="flex items-center gap-2">
-            <Shield className="h-5 w-5 text-blue-500" />
-            Required PPE
-          </CardTitle>
-          {isEditing ? (
-            <div className="flex gap-2">
-              <Button
-                size="sm"
-                onClick={handleSave}
-                className={cn(
-                  'bg-green-600 hover:bg-green-700 text-foreground touch-manipulation active:scale-[0.98]',
-                  isMobile && 'min-h-[44px] px-4'
-                )}
-              >
-                <Save className="h-4 w-4 mr-1" />
-                Save
-              </Button>
-              <Button
-                size="sm"
-                variant="outline"
-                onClick={handleCancel}
-                className={cn(
-                  'touch-manipulation active:scale-[0.98]',
-                  isMobile && 'min-h-[44px] px-4'
-                )}
-              >
-                <X className="h-4 w-4 mr-1" />
-                Cancel
-              </Button>
-            </div>
-          ) : (
-            <Button
-              size="sm"
-              variant="outline"
-              onClick={() => setIsEditing(true)}
-              className={cn(
-                'touch-manipulation active:scale-[0.98]',
-                isMobile && 'min-h-[44px] px-4'
-              )}
+    <div className="space-y-3">
+      <div className="flex items-center justify-end">
+        {isEditing ? (
+          <div className="flex gap-2">
+            <button
+              onClick={handleSave}
+              className="h-8 px-3 rounded-lg bg-white/[0.06] text-white ring-1 ring-white/[0.08] text-[11px] font-medium flex items-center gap-1.5 touch-manipulation"
             >
-              <Edit2 className="h-4 w-4 mr-1" />
-              Edit
-            </Button>
-          )}
-        </div>
-      </CardHeader>
-      <CardContent>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+              <Save className="h-3 w-3" /> Save
+            </button>
+            <button
+              onClick={handleCancel}
+              className="h-8 px-3 rounded-lg bg-white/[0.06] text-white ring-1 ring-white/[0.08] text-[11px] font-medium flex items-center gap-1.5 touch-manipulation"
+            >
+              <X className="h-3 w-3" /> Cancel
+            </button>
+          </div>
+        ) : (
+          <button
+            onClick={() => setIsEditing(true)}
+            className="h-8 px-3 rounded-lg bg-white/[0.06] text-white ring-1 ring-white/[0.08] text-[11px] font-medium flex items-center gap-1.5 touch-manipulation"
+          >
+            <Edit2 className="h-3 w-3" /> Edit
+          </button>
+        )}
+      </div>
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
           {localPPE.map((item, idx) => {
             const IconComponent = getPPEIcon(item.ppeType);
             const isMandatory = item.mandatory;
@@ -209,7 +184,7 @@ export const PPERequirementsGrid = ({ ppeItems, onUpdate }: PPERequirementsGridP
                           </Badge>
                         )}
                       </div>
-                      <div className="text-xs text-foreground">
+                      <div className="text-xs text-white">
                         <span className="font-medium">Purpose:</span>{' '}
                         {isEditing ? (
                           <Input
@@ -247,18 +222,17 @@ export const PPERequirementsGrid = ({ ppeItems, onUpdate }: PPERequirementsGridP
           </Button>
         )}
 
-        {/* Safety Note */}
-        <div className="mt-4 p-3 bg-amber-500/10 border border-amber-500/30 rounded-lg">
-          <div className="flex items-start gap-2">
-            <AlertTriangle className="h-4 w-4 text-amber-500 flex-shrink-0 mt-0.5" />
-            <p className="text-xs text-foreground">
-              <span className="font-semibold text-foreground">Safety Note:</span> All mandatory PPE
-              must be worn before commencing work. Ensure all equipment meets the specified
-              standards and is in good condition.
-            </p>
-          </div>
+      {/* Safety Note */}
+      <div className="p-3 bg-amber-500/10 border border-amber-500/30 rounded-lg">
+        <div className="flex items-start gap-2">
+          <AlertTriangle className="h-4 w-4 text-amber-500 flex-shrink-0 mt-0.5" />
+          <p className="text-xs text-white">
+            <span className="font-semibold text-white">Safety Note:</span> All mandatory PPE
+            must be worn before commencing work. Ensure all equipment meets the specified
+            standards and is in good condition.
+          </p>
         </div>
-      </CardContent>
-    </Card>
+      </div>
+    </div>
   );
 };

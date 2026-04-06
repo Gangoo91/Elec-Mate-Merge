@@ -1,6 +1,6 @@
 import React, { useState, useCallback, useMemo, useEffect, useRef, CSSProperties } from 'react';
 import { List } from 'react-window';
-import { useHaptics } from '@/hooks/useHaptics';
+import { useHaptic } from '@/hooks/useHaptic';
 import { TestResult } from '@/types/testResult';
 import { CircuitCard } from './CircuitCard';
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
@@ -310,27 +310,27 @@ const CircuitEditForm: React.FC<CircuitEditFormProps> = ({
   canNavigateNext,
 }) => {
   const [activeTab, setActiveTab] = useState<TabId>('circuit');
-  const haptics = useHaptics();
+  const haptic = useHaptic();
 
   // Haptic feedback on save
   const handleSave = useCallback(() => {
-    haptics.success();
+    haptic.success();
     onSave();
-  }, [haptics, onSave]);
+  }, [haptic, onSave]);
 
   // Haptic feedback on delete
   const handleDelete = useCallback(() => {
-    haptics.impact();
+    haptic.heavy();
     onDelete();
-  }, [haptics, onDelete]);
+  }, [haptic, onDelete]);
 
   // Haptic feedback on tab change
   const handleTabChange = useCallback(
     (tab: TabId) => {
-      haptics.tap();
+      haptic.light();
       setActiveTab(tab);
     },
-    [haptics]
+    [haptic]
   );
 
   const getValue = (field: keyof TestResult) => {
@@ -559,7 +559,7 @@ const QuickValueTile: React.FC<QuickValueTileProps> = ({
   isStatus = false,
   onClick,
 }) => {
-  const haptics = useHaptics();
+  const haptic = useHaptic();
 
   const tileColors = {
     pass: 'bg-green-500/10 border-green-500/30 text-green-400',
@@ -571,14 +571,14 @@ const QuickValueTile: React.FC<QuickValueTileProps> = ({
   const handleClick = useCallback(() => {
     // Provide feedback based on validation status
     if (validation === 'fail') {
-      haptics.error();
+      haptic.error();
     } else if (validation === 'warning') {
-      haptics.warning();
+      haptic.warning();
     } else {
-      haptics.tap();
+      haptic.light();
     }
     onClick?.();
-  }, [haptics, validation, onClick]);
+  }, [haptic, validation, onClick]);
 
   return (
     <button

@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>New Installation Handover Guide</title>
+    <style>
+        :root { --accent: #06b6d4; }
+        @page { size: A4; margin: 0; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: Georgia, 'Times New Roman', serif; font-size: 10px; line-height: 1.55; color: #1e293b; background: #fff; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+        h1, h2, h3, .section-bar, .header-title, .header-company-name, .contact-card-name, .contact-card-title, .footer { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; }
+
+        .page { width: 210mm; min-height: 297mm; position: relative; overflow: hidden; }
+        .header { background: linear-gradient(180deg, #0a1628 0%, #152238 100%); color: #fff; padding: 14px 22px 12px; position: relative; }
+        .header::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: var(--accent); }
+        .header-content { display: flex; justify-content: space-between; align-items: center; }
+        .header-title { font-size: 24px; font-weight: 800; }
+        .header-subtitle { font-size: 10px; color: rgba(255,255,255,0.7); margin-top: 3px; font-style: italic; }
+        .header-right { text-align: right; display: flex; align-items: center; gap: 14px; }
+        .header-logo img { max-height: 50px; max-width: 130px; object-fit: contain; }
+        .header-company-name { font-size: 12px; font-weight: 700; color: var(--accent); }
+        .header-company-detail { font-size: 8px; color: rgba(255,255,255,0.6); margin-top: 2px; }
+        .header-scheme img { max-height: 35px; max-width: 70px; object-fit: contain; }
+        .header-sm { padding: 10px 22px 8px; }
+        .header-sm .header-title { font-size: 16px; }
+
+        .content { padding: 14px 22px; }
+        .intro-box { background: #0f172a; border: 1.5px solid #1e293b; border-left: 4px solid var(--accent); border-radius: 5px; padding: 10px 14px; margin-bottom: 12px; }
+        .intro-text { font-size: 10px; color: rgba(255,255,255,0.85); line-height: 1.6; }
+        .intro-text strong { color: #fff; }
+
+        .section { margin-bottom: 10px; }
+        .section-bar { background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); color: #fff; font-size: 9.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; padding: 5px 14px; border-left: 4px solid var(--accent); border-radius: 2px; margin-bottom: 6px; }
+        .section-bar.amber { border-left-color: #f59e0b; }
+        .section-bar.green { border-left-color: #22c55e; }
+        .section-bar.red { border-left-color: #dc2626; }
+
+        .bullet-list { padding: 0 0 0 4px; }
+        .bullet-item { display: flex; gap: 8px; margin-bottom: 4px; align-items: flex-start; }
+        .bullet-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); flex-shrink: 0; margin-top: 4px; }
+        .bullet-dot.amber { background: #f59e0b; }
+        .bullet-dot.green { background: #22c55e; }
+        .bullet-dot.red { background: #dc2626; }
+        .bullet-text { font-size: 10px; color: #334155; line-height: 1.55; flex: 1; }
+        .bullet-text strong { color: #0f172a; font-weight: 700; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; }
+
+        .numbered-item { display: flex; gap: 8px; margin-bottom: 5px; align-items: flex-start; }
+        .numbered-circle { width: 18px; height: 18px; border-radius: 50%; background: var(--accent); color: #fff; font-size: 9px; font-weight: 800; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; }
+
+        .info-box { background: #0f172a; border: 1.5px solid #1e293b; border-left: 4px solid var(--accent); border-radius: 5px; padding: 10px 14px; margin: 6px 0; }
+        .info-title { font-size: 10px; font-weight: 700; color: #fff; margin-bottom: 3px; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; }
+        .info-text { font-size: 9.5px; color: rgba(255,255,255,0.85); line-height: 1.6; }
+
+        .amber-box { background: #0f172a; border: 1.5px solid #1e293b; border-left: 4px solid #f59e0b; border-radius: 5px; padding: 10px 14px; margin: 6px 0; }
+        .amber-title { font-size: 10px; font-weight: 700; color: #fff; margin-bottom: 3px; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; }
+        .amber-text { font-size: 9.5px; color: rgba(255,255,255,0.85); line-height: 1.6; }
+
+        .alert-box { background: #7f1d1d; border: 1.5px solid #991b1b; border-left: 4px solid #dc2626; border-radius: 5px; padding: 10px 14px; margin: 6px 0; }
+        .alert-title { font-size: 10px; font-weight: 800; color: #fff; margin-bottom: 3px; text-transform: uppercase; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; }
+        .alert-text { font-size: 9.5px; color: rgba(255,255,255,0.9); line-height: 1.6; }
+
+        .schedule-table { width: 100%; border-collapse: collapse; margin: 6px 0; font-size: 9.5px; }
+        .schedule-table th { background: #0f172a; color: #fff; padding: 5px 8px; text-align: left; font-size: 8.5px; font-weight: 600; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; }
+        .schedule-table td { padding: 4px 8px; border-bottom: 1px solid #e2e8f0; }
+        .schedule-table tr:nth-child(even) td { background: #f8fafc; }
+
+        .contact-card { background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); border-radius: 6px; padding: 12px 16px; margin-top: 10px; position: relative; overflow: hidden; }
+        .contact-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: var(--accent); }
+        .contact-card-title { font-size: 8px; color: rgba(255,255,255,0.5); text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 4px; }
+        .contact-card-name { font-size: 13px; font-weight: 800; color: #fff; }
+        .contact-card-details { font-size: 9px; color: var(--accent); margin-top: 3px; }
+        .contact-card-address { font-size: 8px; color: rgba(255,255,255,0.5); margin-top: 3px; }
+        .contact-card-reg { font-size: 7.5px; color: rgba(255,255,255,0.4); margin-top: 3px; }
+
+        .footer { position: absolute; bottom: 0; left: 0; right: 0; border-top: 2px solid var(--accent); padding: 6px 22px; display: flex; justify-content: space-between; align-items: center; font-size: 7.5px; color: #94a3b8; }
+        .page-break { page-break-before: always; }
+    </style>
+</head>
+<body>
+
+<!-- ===== PAGE 1 — YOUR NEW INSTALLATION ===== -->
+<div class="page">
+    <div class="header">
+        <div class="header-content">
+            <div>
+                <div class="header-title">Your New Installation</div>
+                <div class="header-subtitle">A complete guide to your electrical installation from {{ company_name }}</div>
+            </div>
+            <div class="header-right">
+                {% if company_logo %}<div class="header-logo"><img src="{{ company_logo }}" alt="Logo" /></div>{% endif %}
+                <div>
+                    <div class="header-company-name">{{ company_name }}</div>
+                    {% if company_phone %}<div class="header-company-detail">{{ company_phone }}</div>{% endif %}
+                    {% if registration_scheme %}<div class="header-company-detail">{{ registration_scheme }}: {{ registration_number }}</div>{% endif %}
+                </div>
+                {% if scheme_logo %}<div class="header-scheme"><img src="{{ scheme_logo }}" alt="Scheme" /></div>{% endif %}
+            </div>
+        </div>
+    </div>
+    <div class="content">
+        <div class="intro-box">
+            <div class="intro-text">Congratulations on your new electrical installation. This guide from <strong>{{ company_name }}</strong> explains what has been installed, how to operate it safely, what the key components do, and when maintenance is needed. <strong>Keep this document with your certificates</strong> — you'll need it for insurance, property sales, and future electrical work.</div>
+        </div>
+
+        <div class="section">
+            <div class="section-bar">Your Consumer Unit</div>
+            <div class="bullet-list">
+                <div class="bullet-item"><div class="bullet-dot"></div><div class="bullet-text"><strong>Your consumer unit (fuse board)</strong> is the central hub of your electrical system. It distributes power to every circuit and protects you from electrical faults. {% if cu_location %}It is located in the <strong>{{ cu_location }}</strong>{% endif %}</div></div>
+                <div class="bullet-item"><div class="bullet-dot"></div><div class="bullet-text"><strong>Main switch:</strong> The large switch (usually at the top or left) turns off <strong>all electricity</strong> to your home. In an emergency, switch this off first{% if main_switch_rating %} — rated at <strong>{{ main_switch_rating }}</strong>{% endif %}</div></div>
+                <div class="bullet-item"><div class="bullet-dot"></div><div class="bullet-text"><strong>RCDs / RCBOs:</strong> These are your life-saving devices. They detect faults and cut power in milliseconds to prevent electric shock. Your installation has <strong>RCBOs</strong> (individual protection per circuit) — if one trips, only that circuit is affected</div></div>
+                <div class="bullet-item"><div class="bullet-dot"></div><div class="bullet-text"><strong>SPD (Surge Protection Device):</strong> Your consumer unit includes an SPD that protects your home from voltage spikes caused by lightning strikes or grid surges. It protects all your connected electronics — TVs, computers, smart home devices</div></div>
+                <div class="bullet-item"><div class="bullet-dot"></div><div class="bullet-text"><strong>Metal enclosure:</strong> Modern consumer units are housed in a non-combustible metal enclosure as required by BS 7671, providing fire protection</div></div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-bar">Key Isolators — Know Where They Are</div>
+            <div class="bullet-list">
+                <div class="bullet-item"><div class="bullet-dot red"></div><div class="bullet-text"><strong>Main electrical isolator:</strong> Consumer unit main switch — turns off all electricity{% if cu_location %} — <strong>{{ cu_location }}</strong>{% endif %}</div></div>
+                <div class="bullet-item"><div class="bullet-dot red"></div><div class="bullet-text"><strong>Gas emergency control valve:</strong> Turn handle 90° to shut off{% if gas_valve_location %} — <strong>{{ gas_valve_location }}</strong>{% else %} — usually next to the gas meter{% endif %}</div></div>
+                <div class="bullet-item"><div class="bullet-dot red"></div><div class="bullet-text"><strong>Water stopcock:</strong> Turn clockwise to shut off{% if water_stopcock_location %} — <strong>{{ water_stopcock_location }}</strong>{% else %} — usually under the kitchen sink{% endif %}</div></div>
+                <div class="bullet-item"><div class="bullet-dot"></div><div class="bullet-text"><strong>Boiler isolator:</strong> Switched fused connection unit{% if boiler_location %} — <strong>{{ boiler_location }}</strong>{% else %} — usually near the boiler{% endif %}</div></div>
+                {% if immersion_location %}<div class="bullet-item"><div class="bullet-dot"></div><div class="bullet-text"><strong>Immersion heater:</strong> Switched fused connection unit — <strong>{{ immersion_location }}</strong></div></div>{% endif %}
+            </div>
+            <div class="info-box">
+                <div class="info-title">In an emergency</div>
+                <div class="info-text">Make sure everyone in your household knows where these isolators are. Seconds matter in an emergency — knowing where to turn off the gas, water, or electricity could prevent serious harm.</div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-bar green">Testing Your RCDs</div>
+            <div class="numbered-item"><div class="numbered-circle">1</div><div class="bullet-text"><strong>Find the test button</strong> on each RCD/RCBO — marked "T" or "Test"</div></div>
+            <div class="numbered-item"><div class="numbered-circle">2</div><div class="bullet-text"><strong>Press firmly</strong> — the device should trip immediately, cutting power to that circuit</div></div>
+            <div class="numbered-item"><div class="numbered-circle">3</div><div class="bullet-text"><strong>If it does NOT trip</strong> — contact {{ company_name }} on {{ company_phone }} immediately</div></div>
+            <div class="numbered-item"><div class="numbered-circle">4</div><div class="bullet-text"><strong>Reset</strong> by pushing the switch back up. Test every <strong>3 months</strong></div></div>
+        </div>
+
+        <div class="section">
+            <div class="section-bar">What's Included in Your Installation</div>
+            <div class="bullet-list">
+                <div class="bullet-item"><div class="bullet-dot"></div><div class="bullet-text"><strong>All wiring:</strong> Twin and earth cables throughout, correctly sized for each circuit load. LSOH (Low Smoke Zero Halogen) cables used where required</div></div>
+                <div class="bullet-item"><div class="bullet-dot"></div><div class="bullet-text"><strong>Sockets:</strong> All socket outlets are protected by 30mA RCDs as required by BS 7671. Socket circuits are typically rated at 32A</div></div>
+                <div class="bullet-item"><div class="bullet-dot"></div><div class="bullet-text"><strong>Lighting:</strong> LED-compatible dimmer switches where fitted. Lighting circuits typically rated at 6A or 10A</div></div>
+                <div class="bullet-item"><div class="bullet-dot"></div><div class="bullet-text"><strong>Earthing & bonding:</strong> Protective conductors connect your consumer unit to gas, water, and other services — this is your primary safety system</div></div>
+                <div class="bullet-item"><div class="bullet-dot"></div><div class="bullet-text"><strong>Smoke & heat alarms:</strong> Mains-wired with battery backup, interconnected so all alarms sound when one is triggered</div></div>
+            </div>
+        </div>
+    </div>
+    <div class="footer">
+        <div>{{ company_name }}{% if company_phone %} — {{ company_phone }}{% endif %}</div>
+        <div>Powered by <strong>Elec-Mate</strong></div>
+        <div>Page 1 of 4</div>
+    </div>
+</div>
+
+<!-- ===== PAGE 2 — DAILY USE & PRACTICAL GUIDANCE ===== -->
+<div class="page page-break">
+    <div class="header header-sm">
+        <div class="header-content">
+            <div><div class="header-title">Using Your Electrical Installation</div></div>
+            <div class="header-right">
+                {% if company_logo %}<div class="header-logo"><img src="{{ company_logo }}" alt="Logo" style="max-height:35px;" /></div>{% endif %}
+                <div><div class="header-company-name">{{ company_name }}</div></div>
+            </div>
+        </div>
+    </div>
+    <div class="content">
+        <div class="section">
+            <div class="section-bar">Socket Safety — Getting the Most From Your Installation</div>
+            <div class="bullet-list">
+                <div class="bullet-item"><div class="bullet-dot"></div><div class="bullet-text"><strong>One plug per socket.</strong> Your new sockets are rated at 13A (3,120W maximum). Avoid multi-way adapters — if you need more sockets in a location, contact us to add them properly</div></div>
+                <div class="bullet-item"><div class="bullet-dot"></div><div class="bullet-text"><strong>USB sockets:</strong> If USB charging sockets were installed, they provide 5V charging without needing a separate adapter. They are safe to leave energised when not charging a device</div></div>
+                <div class="bullet-item"><div class="bullet-dot"></div><div class="bullet-text"><strong>Outdoor sockets:</strong> Any outdoor sockets are weatherproof (IP66) and individually RCD-protected. Always close the cover when not in use. Use an RCD adapter for any outdoor power tools</div></div>
+                <div class="bullet-item"><div class="bullet-dot"></div><div class="bullet-text"><strong>Kitchen sockets:</strong> Positioned away from the sink and hob for safety. Worktop sockets are for portable appliances only — don't leave heavy appliances permanently connected to worktop outlets</div></div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-bar">Lighting — Tips for Your New System</div>
+            <div class="bullet-list">
+                <div class="bullet-item"><div class="bullet-dot"></div><div class="bullet-text"><strong>LED bulbs:</strong> Your light fittings are designed for LED bulbs. When replacing, match the fitting type (GU10, B22 bayonet, E27 screw, etc.) and wattage. LED equivalents use 80-90% less energy than the old-style bulbs they replace</div></div>
+                <div class="bullet-item"><div class="bullet-dot"></div><div class="bullet-text"><strong>Dimmer switches:</strong> If dimmers are fitted, ensure replacement bulbs are <strong>"dimmable"</strong> — not all LEDs are. Non-dimmable LEDs on a dimmer will flicker or buzz</div></div>
+                <div class="bullet-item"><div class="bullet-dot"></div><div class="bullet-text"><strong>Bathroom lighting:</strong> Bathroom lights are controlled by pull-cord switches or wall switches outside the room. They are rated for wet environments (IP44 or higher). Do not install standard fittings in bathrooms</div></div>
+                <div class="bullet-item"><div class="bullet-dot"></div><div class="bullet-text"><strong>External lighting:</strong> PIR motion sensors are programmed to stay on for a set duration (typically 1-5 minutes). Sensitivity and duration can usually be adjusted — refer to the manufacturer's instructions or ask us</div></div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-bar green">Smoke, Heat & CO Alarms</div>
+            <div class="bullet-list">
+                <div class="bullet-item"><div class="bullet-dot green"></div><div class="bullet-text"><strong>Your alarms are mains-wired with battery backup</strong> and interconnected — when one detects danger, all alarms in the house sound simultaneously</div></div>
+                <div class="bullet-item"><div class="bullet-dot green"></div><div class="bullet-text"><strong>Smoke alarms</strong> are fitted in hallways and landings on every floor. <strong>Heat alarms</strong> are in the kitchen (they respond to temperature, not smoke, so no false alarms from cooking)</div></div>
+                <div class="bullet-item"><div class="bullet-dot green"></div><div class="bullet-text"><strong>Carbon monoxide alarms</strong> (if fitted) are in rooms with gas appliances. CO is odourless — you cannot detect it without an alarm. If it sounds, open windows, leave the property, and call the gas emergency line: <strong>0800 111 999</strong></div></div>
+                <div class="bullet-item"><div class="bullet-dot green"></div><div class="bullet-text"><strong>Test monthly</strong> by pressing and holding the test button until you hear the alarm. <strong>Replace the entire unit every 10 years</strong> — the sensor degrades over time even if the alarm still sounds when tested</div></div>
+            </div>
+            <div class="info-box">
+                <div class="info-title">What do the beeps mean?</div>
+                <div class="info-text"><strong>Continuous loud alarm:</strong> Danger detected — evacuate immediately. <strong>Intermittent chirp every 30-60 seconds:</strong> Low battery — replace the backup battery now. <strong>Three beeps then silence:</strong> End of life — the whole unit needs replacing.</div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-bar">Earthing & Bonding — Your Safety System</div>
+            <div class="bullet-list">
+                <div class="bullet-item"><div class="bullet-dot"></div><div class="bullet-text"><strong>Green and yellow labels</strong> reading "SAFETY ELECTRICAL CONNECTION — DO NOT REMOVE" are fitted to bonding connections on your gas and water pipes. <strong>Never remove, disconnect, or allow a plumber to disconnect these without consulting an electrician first</strong></div></div>
+                <div class="bullet-item"><div class="bullet-dot"></div><div class="bullet-text"><strong>If a plumber works on your gas or water pipes,</strong> they may need to temporarily disconnect bonding. Ensure they reconnect it or contact {{ company_name }} to verify it has been properly reinstated</div></div>
+            </div>
+        </div>
+    </div>
+    <div class="footer">
+        <div>{{ company_name }}{% if company_phone %} — {{ company_phone }}{% endif %}</div>
+        <div>Powered by <strong>Elec-Mate</strong></div>
+        <div>Page 2 of 4</div>
+    </div>
+</div>
+
+<!-- ===== PAGE 3 — MAINTENANCE & FUTURE-PROOFING ===== -->
+<div class="page page-break">
+    <div class="header header-sm">
+        <div class="header-content">
+            <div><div class="header-title">Maintenance & Future-Proofing</div></div>
+            <div class="header-right">
+                {% if company_logo %}<div class="header-logo"><img src="{{ company_logo }}" alt="Logo" style="max-height:35px;" /></div>{% endif %}
+                <div><div class="header-company-name">{{ company_name }}</div></div>
+            </div>
+        </div>
+    </div>
+    <div class="content">
+        <div class="section">
+            <div class="section-bar amber">Maintenance Schedule</div>
+            <table class="schedule-table">
+                <thead><tr><th>Task</th><th>How Often</th><th>Who</th></tr></thead>
+                <tbody>
+                    <tr><td><strong>Test RCDs / RCBOs</strong> — press test button, check it trips</td><td>Every 3 months</td><td>You</td></tr>
+                    <tr><td><strong>Test smoke & heat alarms</strong> — press test button</td><td>Monthly</td><td>You</td></tr>
+                    <tr><td><strong>Replace smoke alarm batteries</strong> (if battery backup type)</td><td>Annually</td><td>You</td></tr>
+                    <tr><td><strong>Replace smoke/heat alarm units</strong> — sensors degrade</td><td>Every 10 years</td><td>Electrician</td></tr>
+                    <tr><td><strong>Visual check</strong> — look for damaged sockets, switches, cable wear</td><td>Every 6 months</td><td>You</td></tr>
+                    <tr><td><strong>EICR (full inspection & test)</strong></td><td>Every 10 years (owner) / 5 years (rented)</td><td>Electrician</td></tr>
+                    <tr><td><strong>Check SPD indicator</strong> — green = OK, red = needs replacing</td><td>Every 6 months</td><td>You</td></tr>
+                    <tr><td><strong>Boiler service</strong> (including electrical connections)</td><td>Annually</td><td>Gas engineer</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="section">
+            <div class="section-bar">Future-Proofing — What's Already in Place</div>
+            <div class="bullet-list">
+                <div class="bullet-item"><div class="bullet-dot green"></div><div class="bullet-text"><strong>EV charger ready:</strong> Your consumer unit has been specified with capacity for a future EV charger circuit. When you get an electric vehicle, adding a charger is straightforward — no consumer unit upgrade needed</div></div>
+                <div class="bullet-item"><div class="bullet-dot green"></div><div class="bullet-text"><strong>Smart home compatible:</strong> All lighting circuits support smart switches and dimmers. Your wiring is compatible with Hive, Nest, Philips Hue, and other smart home systems</div></div>
+                <div class="bullet-item"><div class="bullet-dot green"></div><div class="bullet-text"><strong>Solar PV ready:</strong> Spare ways have been left in your consumer unit for future solar panel and battery storage installations</div></div>
+                <div class="bullet-item"><div class="bullet-dot green"></div><div class="bullet-text"><strong>Type A RCDs:</strong> Your installation uses Type A (or better) RCDs as required for modern electronic equipment — washing machines, dishwashers, EV chargers, and solar inverters</div></div>
+                <div class="bullet-item"><div class="bullet-dot green"></div><div class="bullet-text"><strong>Data/network cabling:</strong> If Cat6 or fibre has been installed, these are future-proof for high-speed internet and home networking</div></div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-bar">Your Certificates & Documents</div>
+            <div class="bullet-list">
+                <div class="bullet-item"><div class="bullet-dot"></div><div class="bullet-text"><strong>EIC (Electrical Installation Certificate)</strong> — certifies your new installation complies with BS 7671:2018+A3:2024. Keep this permanently — you will need it for property sales, insurance, and future inspections</div></div>
+                <div class="bullet-item"><div class="bullet-dot"></div><div class="bullet-text"><strong>Part P Building Regulations notification</strong> — if applicable, your electrician will have notified Building Control. You should receive a Building Regulations Compliance Certificate</div></div>
+                <div class="bullet-item"><div class="bullet-dot"></div><div class="bullet-text"><strong>Test results</strong> — the schedule of test results records every measurement taken during commissioning. These are the baseline for future comparisons</div></div>
+                <div class="bullet-item"><div class="bullet-dot"></div><div class="bullet-text"><strong>Manufacturer warranties</strong> — keep warranty information for the consumer unit, smoke alarms, switches, and any specialist equipment</div></div>
+                <div class="bullet-item"><div class="bullet-dot"></div><div class="bullet-text"><strong>This handover guide</strong> — keep it with your certificates for reference</div></div>
+            </div>
+            <div class="info-box">
+                <div class="info-title">Store your documents safely</div>
+                <div class="info-text">Keep all certificates in a dedicated property file. You'll need them when selling, remortgaging, renting, or making insurance claims. Take photos and store digital copies in the cloud as backup.</div>
+            </div>
+        </div>
+    </div>
+    <div class="footer">
+        <div>{{ company_name }}{% if company_phone %} — {{ company_phone }}{% endif %}</div>
+        <div>Powered by <strong>Elec-Mate</strong></div>
+        <div>Page 3 of 4</div>
+    </div>
+</div>
+
+<!-- ===== PAGE 3 — TROUBLESHOOTING & SAFETY ===== -->
+<div class="page page-break">
+    <div class="header header-sm">
+        <div class="header-content">
+            <div><div class="header-title">Troubleshooting & Safety</div></div>
+            <div class="header-right">
+                {% if company_logo %}<div class="header-logo"><img src="{{ company_logo }}" alt="Logo" style="max-height:35px;" /></div>{% endif %}
+                <div><div class="header-company-name">{{ company_name }}</div></div>
+            </div>
+        </div>
+    </div>
+    <div class="content">
+        <div class="section">
+            <div class="section-bar">When Something Trips</div>
+            <div class="bullet-list">
+                <div class="bullet-item"><div class="bullet-dot"></div><div class="bullet-text"><strong>Single RCBO tripped:</strong> Only one circuit is affected. Unplug everything on that circuit, reset the RCBO. Plug items back one at a time — the one that causes the trip is faulty</div></div>
+                <div class="bullet-item"><div class="bullet-dot"></div><div class="bullet-text"><strong>Main switch tripped:</strong> All power is off. Check with neighbours — if they're also out, it's a supply fault. Call <strong>105</strong> (free, 24/7). If it's just you, try resetting</div></div>
+                <div class="bullet-item"><div class="bullet-dot red"></div><div class="bullet-text"><strong>Keeps tripping:</strong> Do NOT keep resetting. There is an active fault. Call <strong>{{ company_name }} on {{ company_phone }}</strong></div></div>
+                <div class="bullet-item"><div class="bullet-dot"></div><div class="bullet-text"><strong>SPD indicator red:</strong> Your surge protection has absorbed a surge and needs replacing. Not urgent but book it soon — you're unprotected until replaced</div></div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-bar red">Emergency Procedures</div>
+            <div class="alert-box">
+                <div class="alert-title">Electric Shock</div>
+                <div class="alert-text">Do NOT touch the person. Switch off at the consumer unit main switch. If you can't reach it safely, use a dry non-metallic object to separate them from the source. Call <strong>999</strong> immediately.</div>
+            </div>
+            <div class="alert-box">
+                <div class="alert-title">Electrical Fire</div>
+                <div class="alert-text"><strong>Never use water.</strong> Switch off at the consumer unit if safe to do so. Use a CO2 or dry powder extinguisher. If in doubt, get everyone out and call <strong>999</strong>.</div>
+            </div>
+            <div class="alert-box">
+                <div class="alert-title">Burning Smell from Consumer Unit</div>
+                <div class="alert-text">Switch off the main switch immediately. Do not attempt to investigate. Call <strong>{{ company_name }} on {{ company_phone }}</strong> urgently. Do not switch back on until inspected.</div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-bar amber">What You Can Safely Do Yourself</div>
+            <div class="bullet-list">
+                <div class="bullet-item"><div class="bullet-dot green"></div><div class="bullet-text"><strong>Change light bulbs</strong> — switch off at the wall first, let the old bulb cool</div></div>
+                <div class="bullet-item"><div class="bullet-dot green"></div><div class="bullet-text"><strong>Change a fuse in a plug</strong> — 3A for lamps and electronics, 13A for kettles, heaters, irons</div></div>
+                <div class="bullet-item"><div class="bullet-dot green"></div><div class="bullet-text"><strong>Test RCDs and smoke alarms</strong> — press the test buttons as described in this guide</div></div>
+                <div class="bullet-item"><div class="bullet-dot green"></div><div class="bullet-text"><strong>Reset a tripped RCBO</strong> — push the switch back up after identifying and removing the cause</div></div>
+                <div class="bullet-item"><div class="bullet-dot red"></div><div class="bullet-text"><strong>Everything else needs a qualified electrician</strong> — adding sockets, moving switches, bathroom work, outdoor wiring, EV charger installation, replacing the consumer unit</div></div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-bar">Useful Contacts</div>
+            <div class="bullet-list">
+                <div class="bullet-item"><div class="bullet-dot"></div><div class="bullet-text"><strong>Emergency services:</strong> 999</div></div>
+                <div class="bullet-item"><div class="bullet-dot"></div><div class="bullet-text"><strong>Power cuts:</strong> 105 (free, 24/7 — all networks)</div></div>
+                <div class="bullet-item"><div class="bullet-dot"></div><div class="bullet-text"><strong>Gas emergency:</strong> 0800 111 999 (National Gas Emergency Service)</div></div>
+                <div class="bullet-item"><div class="bullet-dot"></div><div class="bullet-text"><strong>Electrical Safety First:</strong> electricalsafetyfirst.org.uk</div></div>
+                <div class="bullet-item"><div class="bullet-dot"></div><div class="bullet-text"><strong>Product safety recalls:</strong> registermyappliance.org.uk</div></div>
+            </div>
+        </div>
+
+        <div class="contact-card">
+            <div class="contact-card-title">Your electrician — for any questions or future work</div>
+            <div class="contact-card-name">{{ company_name }}</div>
+            <div class="contact-card-details">
+                {% if company_phone %}{{ company_phone }}{% endif %}
+                {% if company_email %} | {{ company_email }}{% endif %}
+                {% if company_website %} | {{ company_website }}{% endif %}
+            </div>
+            {% if company_address %}<div class="contact-card-address">{{ company_address }}</div>{% endif %}
+            {% if registration_scheme %}<div class="contact-card-reg">{{ registration_scheme }} Registered — No. {{ registration_number }}</div>{% endif %}
+        </div>
+    </div>
+    <div class="footer">
+        <div>{{ company_name }}{% if company_phone %} — {{ company_phone }}{% endif %}</div>
+        <div>Powered by <strong>Elec-Mate</strong></div>
+        <div>Page 4 of 4</div>
+    </div>
+</div>
+
+</body>
+</html>

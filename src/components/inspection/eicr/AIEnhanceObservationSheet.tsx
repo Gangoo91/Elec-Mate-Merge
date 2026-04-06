@@ -20,6 +20,7 @@ import {
   X,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { copyToClipboard } from '@/utils/clipboard';
 import { useToast } from '@/hooks/use-toast';
 import { useIsMobile } from '@/hooks/use-mobile';
 import type { ObservationSuggestions } from '@/hooks/useEnhanceObservation';
@@ -104,7 +105,7 @@ const AIEnhanceObservationSheet: React.FC<AIEnhanceObservationSheetProps> = ({
 
   const handleCopy = async (text: string, label: string) => {
     try {
-      await navigator.clipboard.writeText(text);
+      await copyToClipboard(text);
       toast({ title: 'Copied', description: `${label} copied to clipboard.` });
     } catch {
       toast({

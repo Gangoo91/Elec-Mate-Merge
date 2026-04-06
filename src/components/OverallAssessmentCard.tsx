@@ -5,7 +5,7 @@ import { CheckCircle, XCircle, AlertCircle, ClipboardCheck, ChevronDown } from '
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { cn } from '@/lib/utils';
 import { useIsMobile } from '@/hooks/use-mobile';
-import { useHaptics } from '@/hooks/useHaptics';
+import { useHaptic } from '@/hooks/useHaptic';
 
 interface OverallAssessmentCardProps {
   formData: any;
@@ -19,21 +19,21 @@ const OverallAssessmentCard = ({
   defaultOpen = true,
 }: OverallAssessmentCardProps) => {
   const isMobile = useIsMobile();
-  const haptics = useHaptics();
+  const haptic = useHaptic();
   const [isOpen, setIsOpen] = React.useState(defaultOpen);
 
   const handleAssessmentChange = (value: string) => {
-    haptics.tap();
+    haptic.light();
     onUpdate('overallAssessment', value);
     if (value === 'unsatisfactory') {
-      haptics.warning();
+      haptic.warning();
     } else {
-      haptics.success();
+      haptic.success();
     }
   };
 
   const handleContinuedUseChange = (value: string) => {
-    haptics.tap();
+    haptic.light();
     onUpdate('satisfactoryForContinuedUse', value);
   };
 
@@ -46,7 +46,7 @@ const OverallAssessmentCard = ({
       <Collapsible
         open={isOpen}
         onOpenChange={(open) => {
-          haptics.tap();
+          haptic.light();
           setIsOpen(open);
         }}
       >

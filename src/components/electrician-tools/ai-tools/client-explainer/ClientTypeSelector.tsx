@@ -13,85 +13,84 @@ const clientTypes = [
     type: 'homeowner' as ClientType,
     label: 'Homeowner',
     icon: Home,
-    description: 'Residential property owner',
-    colors: {
-      active: 'bg-blue-500/10 border-blue-500/40 text-blue-400',
-      icon: 'bg-blue-500/20 text-blue-400',
-    },
+    desc: 'Residential',
+    color: 'blue',
   },
   {
     type: 'business' as ClientType,
     label: 'Business',
     icon: Building,
-    description: 'Commercial property',
-    colors: {
-      active: 'bg-green-500/10 border-green-500/40 text-green-400',
-      icon: 'bg-green-500/20 text-green-400',
-    },
+    desc: 'Commercial',
+    color: 'green',
   },
   {
     type: 'landlord' as ClientType,
     label: 'Landlord',
     icon: Users,
-    description: 'Rental property owner',
-    colors: {
-      active: 'bg-purple-500/10 border-purple-500/40 text-purple-400',
-      icon: 'bg-purple-500/20 text-purple-400',
-    },
+    desc: 'Rental',
+    color: 'purple',
   },
   {
     type: 'contractor' as ClientType,
     label: 'Contractor',
     icon: Briefcase,
-    description: 'Fellow trades professional',
-    colors: {
-      active: 'bg-orange-500/10 border-orange-500/40 text-orange-400',
-      icon: 'bg-orange-500/20 text-orange-400',
-    },
+    desc: 'Trades',
+    color: 'orange',
   },
 ];
 
+const colorMap: Record<string, { selected: string; icon: string; iconSelected: string }> = {
+  blue: {
+    selected: 'bg-blue-500/15 ring-blue-500/40 shadow-blue-500/10',
+    icon: 'bg-white/[0.06] text-white',
+    iconSelected: 'bg-blue-500/20 text-blue-400',
+  },
+  green: {
+    selected: 'bg-green-500/15 ring-green-500/40 shadow-green-500/10',
+    icon: 'bg-white/[0.06] text-white',
+    iconSelected: 'bg-green-500/20 text-green-400',
+  },
+  purple: {
+    selected: 'bg-purple-500/15 ring-purple-500/40 shadow-purple-500/10',
+    icon: 'bg-white/[0.06] text-white',
+    iconSelected: 'bg-purple-500/20 text-purple-400',
+  },
+  orange: {
+    selected: 'bg-orange-500/15 ring-orange-500/40 shadow-orange-500/10',
+    icon: 'bg-white/[0.06] text-white',
+    iconSelected: 'bg-orange-500/20 text-orange-400',
+  },
+};
+
 const ClientTypeSelector = ({ selected, onSelect }: ClientTypeSelectorProps) => {
   return (
-    <div className="grid grid-cols-2 gap-3">
-      {clientTypes.map(({ type, label, icon: Icon, description, colors }) => {
+    <div className="grid grid-cols-2 gap-2.5">
+      {clientTypes.map(({ type, label, icon: Icon, desc, color }) => {
         const isSelected = selected === type;
+        const c = colorMap[color];
 
         return (
           <button
             key={type}
             onClick={() => onSelect(type)}
             className={cn(
-              'relative p-4 rounded-xl border-2 transition-all duration-200',
-              'min-h-[100px] touch-manipulation text-left',
-              'hover:scale-[1.02] active:scale-[0.98]',
+              'flex items-center gap-3 p-3 rounded-xl ring-1 transition-all touch-manipulation active:scale-[0.97]',
               isSelected
-                ? colors.active
-                : 'bg-background/50 border-border/30 hover:border-border/50'
+                ? `${c.selected} shadow-sm`
+                : 'bg-white/[0.03] ring-white/[0.08] active:bg-white/[0.06]'
             )}
           >
-            {/* Selection indicator */}
-            {isSelected && (
-              <div className="absolute top-2 right-2 w-2 h-2 rounded-full bg-current animate-pulse" />
-            )}
-
-            <div className="flex flex-col items-center text-center space-y-3">
-              <div
-                className={cn(
-                  'w-12 h-12 rounded-xl flex items-center justify-center transition-colors',
-                  isSelected ? colors.icon : 'bg-muted/50 text-muted-foreground'
-                )}
-              >
-                <Icon className="h-6 w-6" />
-              </div>
-              <div className="space-y-1">
-                <p
-                  className={cn('font-semibold text-sm', isSelected ? 'text-white' : 'text-white')}
-                >
-                  {label}
-                </p>
-                <p className="text-xs text-white line-clamp-1">{description}</p>
-              </div>
+            <div
+              className={cn(
+                'w-10 h-10 rounded-lg flex items-center justify-center shrink-0 transition-colors',
+                isSelected ? c.iconSelected : c.icon
+              )}
+            >
+              <Icon className="h-5 w-5" />
+            </div>
+            <div className="text-left min-w-0">
+              <p className="text-[13px] font-semibold text-white">{label}</p>
+              <p className="text-[11px] text-white">{desc}</p>
             </div>
           </button>
         );

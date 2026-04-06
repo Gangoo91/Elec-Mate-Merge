@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Fire Alarm System Guide</title>
+    <style>
+        :root { --accent: #ef4444; }
+        @page { size: A4; margin: 0; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: Georgia, 'Times New Roman', serif; font-size: 10px; line-height: 1.55; color: #1e293b; background: #fff; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+        h1, h2, h3, .section-bar, .header-title, .header-company-name, .contact-card-name, .contact-card-title, .cat-label, .cat-title, .schedule-table th, .footer { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; }
+
+        .page { width: 210mm; min-height: 297mm; position: relative; overflow: hidden; }
+        .header { background: linear-gradient(180deg, #0a1628 0%, #152238 100%); color: #fff; padding: 14px 22px 12px; position: relative; }
+        .header::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: var(--accent); }
+        .header-content { display: flex; justify-content: space-between; align-items: center; }
+        .header-title { font-size: 24px; font-weight: 800; }
+        .header-subtitle { font-size: 10px; color: rgba(255,255,255,0.7); margin-top: 3px; font-style: italic; }
+        .header-right { text-align: right; display: flex; align-items: center; gap: 14px; }
+        .header-logo img { max-height: 50px; max-width: 130px; object-fit: contain; }
+        .header-company-name { font-size: 12px; font-weight: 700; color: var(--accent); }
+        .header-company-detail { font-size: 8px; color: rgba(255,255,255,0.6); margin-top: 2px; }
+        .header-scheme img { max-height: 35px; max-width: 70px; object-fit: contain; }
+        .header-sm { padding: 10px 22px 8px; }
+        .header-sm .header-title { font-size: 16px; }
+
+        .content { padding: 14px 22px; }
+        .intro-box { background: #0f172a; border: 1.5px solid #1e293b; border-left: 4px solid var(--accent); border-radius: 5px; padding: 10px 14px; margin-bottom: 12px; }
+        .intro-text { font-size: 10px; color: rgba(255,255,255,0.85); line-height: 1.6; }
+        .intro-text strong { color: #fff; }
+
+        .section { margin-bottom: 10px; }
+        .section-bar { background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); color: #fff; font-size: 9.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; padding: 5px 14px; border-left: 4px solid var(--accent); border-radius: 2px; margin-bottom: 6px; }
+        .section-bar.amber { border-left-color: #f59e0b; }
+        .section-bar.green { border-left-color: #22c55e; }
+        .section-bar.blue { border-left-color: #3b82f6; }
+
+        .bullet-list { padding: 0 0 0 4px; }
+        .bullet-item { display: flex; gap: 8px; margin-bottom: 4px; align-items: flex-start; }
+        .bullet-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); flex-shrink: 0; margin-top: 4px; }
+        .bullet-dot.amber { background: #f59e0b; }
+        .bullet-dot.green { background: #22c55e; }
+        .bullet-dot.blue { background: #3b82f6; }
+        .bullet-text { font-size: 10px; color: #334155; line-height: 1.55; flex: 1; }
+        .bullet-text strong { color: #0f172a; font-weight: 700; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; }
+
+        .info-box { background: #0f172a; border: 1.5px solid #1e293b; border-left: 4px solid var(--accent); border-radius: 5px; padding: 10px 14px; margin: 6px 0; }
+        .info-title { font-size: 10px; font-weight: 700; color: #fff; margin-bottom: 3px; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; }
+        .info-text { font-size: 9.5px; color: rgba(255,255,255,0.85); line-height: 1.6; }
+
+        .amber-box { background: #0f172a; border: 1.5px solid #1e293b; border-left: 4px solid #f59e0b; border-radius: 5px; padding: 10px 14px; margin: 6px 0; }
+        .amber-title { font-size: 10px; font-weight: 700; color: #fff; margin-bottom: 3px; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; }
+        .amber-text { font-size: 9.5px; color: rgba(255,255,255,0.85); line-height: 1.6; }
+
+        .alert-box { background: #7f1d1d; border: 1.5px solid #991b1b; border-left: 4px solid #dc2626; border-radius: 5px; padding: 10px 14px; margin: 6px 0; }
+        .alert-title { font-size: 10px; font-weight: 800; color: #fff; margin-bottom: 3px; text-transform: uppercase; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; }
+        .alert-text { font-size: 9.5px; color: rgba(255,255,255,0.9); line-height: 1.6; }
+
+        /* Category cards */
+        .cat-card { border-radius: 5px; padding: 7px 12px; margin-bottom: 5px; display: flex; align-items: center; gap: 10px; }
+        .cat-badge { width: 32px; height: 32px; border-radius: 5px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+        .cat-label { font-size: 12px; font-weight: 900; color: #fff; }
+        .cat-info { flex: 1; }
+        .cat-title { font-size: 9.5px; font-weight: 700; color: #fff; margin-bottom: 1px; }
+        .cat-desc { font-size: 9px; color: rgba(255,255,255,0.8); line-height: 1.4; }
+
+        .schedule-table { width: 100%; border-collapse: collapse; margin: 6px 0; font-size: 9.5px; }
+        .schedule-table th { background: #0f172a; color: #fff; padding: 5px 8px; text-align: left; font-size: 8.5px; font-weight: 600; }
+        .schedule-table td { padding: 4px 8px; border-bottom: 1px solid #e2e8f0; }
+        .schedule-table tr:nth-child(even) td { background: #f8fafc; }
+
+        .contact-card { background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); border-radius: 6px; padding: 12px 16px; margin-top: 10px; position: relative; overflow: hidden; }
+        .contact-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: var(--accent); }
+        .contact-card-title { font-size: 8px; color: rgba(255,255,255,0.5); text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 4px; }
+        .contact-card-name { font-size: 13px; font-weight: 800; color: #fff; }
+        .contact-card-details { font-size: 9px; color: var(--accent); margin-top: 3px; }
+        .contact-card-address { font-size: 8px; color: rgba(255,255,255,0.5); margin-top: 3px; }
+        .contact-card-reg { font-size: 7.5px; color: rgba(255,255,255,0.4); margin-top: 3px; }
+
+        .footer { position: absolute; bottom: 0; left: 0; right: 0; border-top: 2px solid var(--accent); padding: 6px 22px; display: flex; justify-content: space-between; align-items: center; font-size: 7.5px; color: #94a3b8; }
+        .page-break { page-break-before: always; }
+    </style>
+</head>
+<body>
+
+<!-- ===== PAGE 1 — YOUR FIRE ALARM SYSTEM ===== -->
+<div class="page">
+    <div class="header">
+        <div class="header-content">
+            <div>
+                <div class="header-title">Your Fire Alarm System</div>
+                <div class="header-subtitle">A guide to operating, testing, and maintaining your fire detection system</div>
+            </div>
+            <div class="header-right">
+                {% if company_logo %}<div class="header-logo"><img src="{{ company_logo }}" alt="Logo" /></div>{% endif %}
+                <div>
+                    <div class="header-company-name">{{ company_name }}</div>
+                    {% if company_phone %}<div class="header-company-detail">{{ company_phone }}</div>{% endif %}
+                    {% if registration_scheme %}<div class="header-company-detail">{{ registration_scheme }}: {{ registration_number }}</div>{% endif %}
+                </div>
+                {% if scheme_logo %}<div class="header-scheme"><img src="{{ scheme_logo }}" alt="Scheme" /></div>{% endif %}
+            </div>
+        </div>
+    </div>
+    <div class="content">
+        <div class="intro-box">
+            <div class="intro-text">Your fire alarm system has been installed and maintained by <strong>{{ company_name }}</strong> in accordance with <strong>BS 5839-1:2025</strong>. This guide explains how your system works, what the different signals mean, your legal responsibilities for testing and maintenance, and what to do when the alarm activates. <strong>Share this with all staff and display it near your fire alarm panel.</strong></div>
+        </div>
+
+        <div class="section">
+            <div class="section-bar">How Your System Works</div>
+            <div class="bullet-list">
+                <div class="bullet-item"><div class="bullet-dot"></div><div class="bullet-text"><strong>Fire alarm panel:</strong> The central control unit — usually located near the main entrance. It shows the status of every zone and detector, displays faults, and controls the alarm sounders. It should be accessible 24/7</div></div>
+                <div class="bullet-item"><div class="bullet-dot"></div><div class="bullet-text"><strong>Detectors:</strong> Smoke detectors (optical and ionisation), heat detectors (fixed temperature and rate-of-rise), and multi-sensor detectors are positioned throughout the building based on the fire risk assessment and system category</div></div>
+                <div class="bullet-item"><div class="bullet-dot"></div><div class="bullet-text"><strong>Manual call points (break glass):</strong> Red boxes at exits and on escape routes. Breaking the glass triggers the alarm for the entire building immediately. They are your manual backup if detectors haven't activated</div></div>
+                <div class="bullet-item"><div class="bullet-dot"></div><div class="bullet-text"><strong>Sounders and beacons:</strong> Must achieve minimum <strong>65dB(A)</strong> or 5dB above background noise in all occupied areas. In sleeping areas: minimum <strong>75dB(A) at the bed-head</strong> with all doors closed. Visual beacons are required where ambient noise is high or for hearing-impaired occupants</div></div>
+                <div class="bullet-item"><div class="bullet-dot"></div><div class="bullet-text"><strong>Zones:</strong> Your building is divided into zones so the panel shows exactly <strong>where</strong> the alarm has been triggered. The zone chart (displayed near the panel) maps zone numbers to locations</div></div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-bar blue">System Categories — What's Installed</div>
+            <div class="cat-card" style="background: #dc2626;">
+                <div class="cat-badge" style="background: rgba(0,0,0,0.2);"><div class="cat-label">L1</div></div>
+                <div class="cat-info">
+                    <div class="cat-title">Full Coverage — Life Protection</div>
+                    <div class="cat-desc">Detectors in every room, space, and void. The highest level of protection. Required for care homes, hotels, and sleeping accommodation</div>
+                </div>
+            </div>
+            <div class="cat-card" style="background: #ea580c;">
+                <div class="cat-badge" style="background: rgba(0,0,0,0.2);"><div class="cat-label">L2</div></div>
+                <div class="cat-info">
+                    <div class="cat-title">Extended Coverage — Escape Routes + High-Risk Areas</div>
+                    <div class="cat-desc">Escape routes + rooms opening onto them + high-risk areas. BS 5839-1:2025 now requires sleeping risk rooms to be included. Common in HMOs, schools, offices</div>
+                </div>
+            </div>
+            <div class="cat-card" style="background: #ca8a04;">
+                <div class="cat-badge" style="background: rgba(0,0,0,0.2);"><div class="cat-label">L3</div></div>
+                <div class="cat-info">
+                    <div class="cat-title">Standard Coverage — Escape Routes</div>
+                    <div class="cat-desc">Detectors on escape routes (hallways, corridors, stairwells) to give early warning while people can still escape. Minimum for most domestic properties</div>
+                </div>
+            </div>
+            <div class="cat-card" style="background: #2563eb;">
+                <div class="cat-badge" style="background: rgba(0,0,0,0.2);"><div class="cat-label">P1/P2</div></div>
+                <div class="cat-info">
+                    <div class="cat-title">Property Protection</div>
+                    <div class="cat-desc">P1 = full coverage for property protection. P2 = coverage in defined high-risk areas only. Typically required by insurers for commercial premises</div>
+                </div>
+            </div>
+            <div class="cat-card" style="background: #0f172a; border: 1px solid #334155;">
+                <div class="cat-badge" style="background: rgba(255,255,255,0.1);"><div class="cat-label">M</div></div>
+                <div class="cat-info">
+                    <div class="cat-title">Manual Only — Call Points Only</div>
+                    <div class="cat-desc">Manual call points (break glass) on escape routes only. No automatic detection. Relies on people discovering the fire and activating manually</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-bar">Understanding the Panel Signals</div>
+            <div class="bullet-list">
+                <div class="bullet-item"><div class="bullet-dot green"></div><div class="bullet-text"><strong>Green "Power" light on, no other lights:</strong> System normal — all zones healthy, mains power on, standby batteries charged. This is the state you want to see</div></div>
+                <div class="bullet-item"><div class="bullet-dot red"></div><div class="bullet-text"><strong>Red "Fire" light + continuous alarm:</strong> A detector or call point has been activated. The panel display shows which zone. Follow your fire evacuation procedure immediately</div></div>
+                <div class="bullet-item"><div class="bullet-dot amber"></div><div class="bullet-text"><strong>Amber "Fault" light + intermittent beep:</strong> A fault has been detected — broken wiring, contaminated detector, low battery, or communication failure. The system may still detect fire but reliability is reduced. <strong>Report to {{ company_name }} immediately</strong></div></div>
+                <div class="bullet-item"><div class="bullet-dot amber"></div><div class="bullet-text"><strong>"Disabled" or "Isolated" light:</strong> One or more zones or devices have been manually disabled. This means part of your building has no fire detection. This should only be temporary and must be logged. <strong>Never leave zones isolated overnight</strong></div></div>
+                <div class="bullet-item"><div class="bullet-dot blue"></div><div class="bullet-text"><strong>"Test" light:</strong> The system is in test mode — sounders are silenced during weekly testing. The panel will exit test mode automatically after a set period</div></div>
+            </div>
+        </div>
+    </div>
+    <div class="footer">
+        <div>{{ company_name }}{% if company_phone %} — {{ company_phone }}{% endif %}</div>
+        <div>Powered by <strong>Elec-Mate</strong></div>
+        <div>Page 1 of 4</div>
+    </div>
+</div>
+
+<!-- ===== PAGE 2 — TESTING & MAINTENANCE ===== -->
+<div class="page page-break">
+    <div class="header header-sm">
+        <div class="header-content">
+            <div><div class="header-title">Testing, Maintenance & Your Responsibilities</div></div>
+            <div class="header-right">
+                {% if company_logo %}<div class="header-logo"><img src="{{ company_logo }}" alt="Logo" style="max-height:35px;" /></div>{% endif %}
+                <div><div class="header-company-name">{{ company_name }}</div></div>
+            </div>
+        </div>
+    </div>
+    <div class="content">
+        <div class="section">
+            <div class="section-bar amber">Testing & Maintenance Schedule (BS 5839-1:2025)</div>
+            <table class="schedule-table">
+                <thead><tr><th>Task</th><th>Frequency</th><th>Who</th></tr></thead>
+                <tbody>
+                    <tr><td><strong>Weekly fire alarm test</strong> — activate a different call point each week. Confirm sounders operate. Record in fire log book</td><td>Weekly</td><td>Responsible Person</td></tr>
+                    <tr><td><strong>Check panel for faults/isolations</strong> — no amber lights should be showing</td><td>Daily</td><td>Staff</td></tr>
+                    <tr><td><strong>Visual check of call points and detectors</strong> — not obstructed, painted over, or damaged</td><td>Monthly</td><td>Responsible Person</td></tr>
+                    <tr><td><strong>Test standby batteries</strong> — simulate mains failure to confirm batteries take over</td><td>Every 6 months</td><td>{{ company_name }}</td></tr>
+                    <tr><td><strong>Full service and inspection</strong> — test every detector, check wiring, verify zone chart</td><td>Every 6 months</td><td>{{ company_name }}</td></tr>
+                    <tr><td><strong>Replace standby batteries</strong></td><td>Every 3-5 years</td><td>{{ company_name }}</td></tr>
+                    <tr><td><strong>Replace smoke detector heads</strong> — sensing chambers degrade from dust, oxidation, and contamination regardless of testing</td><td>Every 10 years from manufacture</td><td>{{ company_name }}</td></tr>
+                </tbody>
+            </table>
+            <div class="amber-box">
+                <div class="amber-title">BS 5839-1:2025 Update</div>
+                <div class="amber-text">The latest standard (effective 2025) allows a service window of <strong>5-7 months</strong> between inspections (previously strict 6 months). Servicing within this window is considered compliant. However, servicing more than 7 months after the last visit is non-compliant.</div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-bar green">How to Conduct the Weekly Test</div>
+            <div class="bullet-list">
+                <div class="bullet-item"><div class="bullet-dot green"></div><div class="bullet-text"><strong>Step 1:</strong> Notify everyone in the building that a fire alarm test is about to take place — this prevents unnecessary evacuation</div></div>
+                <div class="bullet-item"><div class="bullet-dot green"></div><div class="bullet-text"><strong>Step 2:</strong> If your system connects to a monitoring centre (ARC), call them first to put the system on test. This prevents a false call-out</div></div>
+                <div class="bullet-item"><div class="bullet-dot green"></div><div class="bullet-text"><strong>Step 3:</strong> Use a different <strong>manual call point (break glass)</strong> each week. Use the test key to activate it — you don't actually break the glass during tests</div></div>
+                <div class="bullet-item"><div class="bullet-dot green"></div><div class="bullet-text"><strong>Step 4:</strong> Confirm all sounders and beacons operate throughout the building. Walk the building if needed</div></div>
+                <div class="bullet-item"><div class="bullet-dot green"></div><div class="bullet-text"><strong>Step 5:</strong> Reset the panel. Reset the call point using the test key. Confirm the panel shows normal (green light only)</div></div>
+                <div class="bullet-item"><div class="bullet-dot green"></div><div class="bullet-text"><strong>Step 6:</strong> Record the test in your <strong>fire alarm log book</strong> — date, time, which call point was tested, result, who conducted the test. This is a legal requirement</div></div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-bar">The Fire Log Book — Your Legal Record</div>
+            <div class="bullet-list">
+                <div class="bullet-item"><div class="bullet-dot"></div><div class="bullet-text"><strong>You must keep a fire log book.</strong> It is a legal requirement under the Regulatory Reform (Fire Safety) Order 2005. The fire service will ask to see it during any inspection</div></div>
+                <div class="bullet-item"><div class="bullet-dot"></div><div class="bullet-text"><strong>Record all weekly tests,</strong> false alarms, genuine activations, faults reported, zones isolated, maintenance visits, and fire drills. Include date, time, details, and who was responsible</div></div>
+                <div class="bullet-item"><div class="bullet-dot"></div><div class="bullet-text"><strong>Keep service records</strong> from {{ company_name }} in the log book. We provide a written report after every service visit detailing what was tested, any faults found, and recommendations</div></div>
+                <div class="bullet-item"><div class="bullet-dot"></div><div class="bullet-text"><strong>False alarms:</strong> Record every false alarm with the cause if known. Repeated false alarms from the same detector may indicate contamination, incorrect positioning, or environmental factors — report to us for investigation</div></div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-bar">Reducing False Alarms</div>
+            <div class="bullet-list">
+                <div class="bullet-item"><div class="bullet-dot"></div><div class="bullet-text"><strong>Cooking:</strong> Kitchens should have heat detectors, not smoke detectors. If your kitchen has a smoke detector and it keeps false-alarming, contact {{ company_name }} to replace it with a heat detector</div></div>
+                <div class="bullet-item"><div class="bullet-dot"></div><div class="bullet-text"><strong>Steam:</strong> Bathrooms, shower rooms, and laundries — steam triggers smoke detectors. Heat detectors should be used instead. Ensure extraction fans are working</div></div>
+                <div class="bullet-item"><div class="bullet-dot"></div><div class="bullet-text"><strong>Dust and construction:</strong> Building work generates dust that contaminates smoke detectors. Isolate zones during works and have detectors cleaned or replaced afterwards</div></div>
+                <div class="bullet-item"><div class="bullet-dot"></div><div class="bullet-text"><strong>Aerosols and vaping:</strong> Hairspray, deodorant, and vape clouds can trigger smoke detectors. Ensure these are not used near detectors — consider relocating detectors if this is a persistent issue</div></div>
+            </div>
+        </div>
+    </div>
+    <div class="footer">
+        <div>{{ company_name }}{% if company_phone %} — {{ company_phone }}{% endif %}</div>
+        <div>Powered by <strong>Elec-Mate</strong></div>
+        <div>Page 2 of 4</div>
+    </div>
+</div>
+
+<!-- ===== PAGE 3 — WHEN THE ALARM SOUNDS & YOUR RESPONSIBILITIES ===== -->
+<div class="page page-break">
+    <div class="header header-sm">
+        <div class="header-content">
+            <div><div class="header-title">When the Alarm Sounds & Legal Duties</div></div>
+            <div class="header-right">
+                {% if company_logo %}<div class="header-logo"><img src="{{ company_logo }}" alt="Logo" style="max-height:35px;" /></div>{% endif %}
+                <div><div class="header-company-name">{{ company_name }}</div></div>
+            </div>
+        </div>
+    </div>
+    <div class="content">
+        <div class="section">
+            <div class="section-bar red">When the Fire Alarm Sounds</div>
+            <div class="alert-box">
+                <div class="alert-title">Always treat every activation as real</div>
+                <div class="alert-text">Even if you suspect a false alarm, follow the full evacuation procedure. Never assume it's a false alarm and ignore it. People die from complacency — not from evacuating unnecessarily.</div>
+            </div>
+            <div class="bullet-list">
+                <div class="bullet-item"><div class="bullet-dot red"></div><div class="bullet-text"><strong>Evacuate immediately</strong> — follow your emergency evacuation procedure. Use the nearest fire exit. Do not use lifts. Close doors behind you</div></div>
+                <div class="bullet-item"><div class="bullet-dot red"></div><div class="bullet-text"><strong>Go to the assembly point</strong> — the designated meeting area outside the building. Fire wardens must account for all staff, visitors, and contractors</div></div>
+                <div class="bullet-item"><div class="bullet-dot red"></div><div class="bullet-text"><strong>Call 999</strong> if the alarm is genuine or if you cannot determine the cause. Give the address and state whether people are still inside</div></div>
+                <div class="bullet-item"><div class="bullet-dot red"></div><div class="bullet-text"><strong>Do not re-enter</strong> the building until the fire service or your fire warden gives the all-clear</div></div>
+                <div class="bullet-item"><div class="bullet-dot"></div><div class="bullet-text"><strong>Investigating the cause:</strong> Only a trained person should investigate after the alarm sounds. Check the panel — it shows which zone activated. If a call point was used, check if it was genuine or accidental. If a detector activated, look for visible signs of fire</div></div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-bar amber">Specific Premises Guidance</div>
+            <div class="bullet-list">
+                <div class="bullet-item"><div class="bullet-dot amber"></div><div class="bullet-text"><strong>Schools and nurseries:</strong> Fire drills must be conducted at least once per term (3 times/year). Staff must know the location of every call point. Children must never be left unsupervised during evacuation. Visitors must be briefed on the fire procedure at sign-in</div></div>
+                <div class="bullet-item"><div class="bullet-dot amber"></div><div class="bullet-text"><strong>Care homes and hospitals:</strong> Progressive horizontal evacuation (moving residents to a safe compartment, not outside) is standard. Staff must know their specific role. PEEP (Personal Emergency Evacuation Plans) required for every resident/patient with mobility issues</div></div>
+                <div class="bullet-item"><div class="bullet-dot amber"></div><div class="bullet-text"><strong>HMOs and shared accommodation:</strong> Common areas must have linked smoke/heat detection (Category L2 minimum). Fire doors on every room opening onto escape routes. Emergency lighting on escape routes and stairwells</div></div>
+                <div class="bullet-item"><div class="bullet-dot amber"></div><div class="bullet-text"><strong>Offices and retail:</strong> Fire wardens should be appointed for each floor or department. Visitor sign-in must be maintained for roll-call purposes. Staff should receive fire safety training annually</div></div>
+                <div class="bullet-item"><div class="bullet-dot amber"></div><div class="bullet-text"><strong>Warehouses and workshops:</strong> High ceilings require beam detectors or aspirating systems — standard point detectors may not be effective. Flammable materials storage needs enhanced detection. Consult {{ company_name }} for specialist design</div></div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-bar blue">Your Legal Responsibilities</div>
+            <div class="bullet-list">
+                <div class="bullet-item"><div class="bullet-dot blue"></div><div class="bullet-text"><strong>The Responsible Person</strong> (usually the employer, building owner, or managing agent) must ensure the fire alarm system is properly maintained, tested weekly, and serviced by a competent company every 6 months</div></div>
+                <div class="bullet-item"><div class="bullet-dot blue"></div><div class="bullet-text"><strong>Fire risk assessment:</strong> Must be carried out and regularly reviewed. The fire alarm system category should match the risk assessment recommendations. If the assessment says L2, you need L2 — not L3</div></div>
+                <div class="bullet-item"><div class="bullet-dot blue"></div><div class="bullet-text"><strong>Regulatory Reform (Fire Safety) Order 2005:</strong> Failure to maintain an adequate fire detection system can result in prosecution, unlimited fines, and imprisonment for the Responsible Person</div></div>
+                <div class="bullet-item"><div class="bullet-dot blue"></div><div class="bullet-text"><strong>Fire Safety (England) Regulations 2022:</strong> Buildings over 11 metres must have annual fire door checks. Responsible Persons must provide fire safety instructions to residents in all multi-occupied residential buildings</div></div>
+                <div class="bullet-item"><div class="bullet-dot blue"></div><div class="bullet-text"><strong>Insurance:</strong> Most commercial insurance policies require a certificated fire alarm system maintained to BS 5839. Failure to maintain your system may invalidate your fire insurance. Provide your insurer with copies of service reports</div></div>
+            </div>
+        </div>
+
+    </div>
+    <div class="footer">
+        <div>{{ company_name }}{% if company_phone %} — {{ company_phone }}{% endif %}</div>
+        <div>Powered by <strong>Elec-Mate</strong></div>
+        <div>Page 3 of 4</div>
+    </div>
+</div>
+
+<!-- ===== PAGE 4 — DETECTOR TYPES, 2025 CHANGES & EMERGENCY LIGHTING ===== -->
+<div class="page page-break">
+    <div class="header header-sm">
+        <div class="header-content">
+            <div><div class="header-title">Detector Types, 2025 Changes & Emergency Lighting</div></div>
+            <div class="header-right">
+                {% if company_logo %}<div class="header-logo"><img src="{{ company_logo }}" alt="Logo" style="max-height:35px;" /></div>{% endif %}
+                <div><div class="header-company-name">{{ company_name }}</div></div>
+            </div>
+        </div>
+    </div>
+    <div class="content">
+        <div class="section">
+            <div class="section-bar">Understanding Your Detectors</div>
+            <div class="bullet-list">
+                <div class="bullet-item"><div class="bullet-dot"></div><div class="bullet-text"><strong>Optical smoke detectors:</strong> Use an infrared LED and sensor inside a chamber. When smoke enters, light scatters onto the sensor and triggers the alarm. Best for slow-burning, smouldering fires (furniture, wiring). Most common type in modern systems</div></div>
+                <div class="bullet-item"><div class="bullet-dot"></div><div class="bullet-text"><strong>Heat detectors (fixed temperature):</strong> Trigger when the temperature reaches a set threshold (typically 58°C). Used in kitchens, boiler rooms, garages — anywhere smoke detectors would false-alarm. They detect fire later than smoke detectors, so are <strong>not suitable for sleeping areas</strong></div></div>
+                <div class="bullet-item"><div class="bullet-dot"></div><div class="bullet-text"><strong>Heat detectors (rate-of-rise):</strong> Trigger when temperature rises rapidly (typically 8-10°C per minute). Faster response than fixed temperature. Used in areas with fluctuating but not rapid temperature changes</div></div>
+                <div class="bullet-item"><div class="bullet-dot"></div><div class="bullet-text"><strong>Multi-sensor detectors:</strong> Combine optical smoke and heat sensing in one unit. The panel analyses both signals to make a more intelligent decision — significantly reducing false alarms while maintaining fast genuine detection. The premium choice for most applications</div></div>
+                <div class="bullet-item"><div class="bullet-dot"></div><div class="bullet-text"><strong>Carbon monoxide (fire) detectors:</strong> Detect CO produced by fires at a very early stage — often before visible smoke. Increasingly used in combination with optical detectors for enhanced early warning</div></div>
+                <div class="bullet-item"><div class="bullet-dot"></div><div class="bullet-text"><strong>Beam detectors:</strong> Used in large open spaces (warehouses, atria, churches) where point detectors on the ceiling would be too high to detect smoke. A transmitter and receiver span the room — smoke breaking the beam triggers the alarm</div></div>
+                <div class="bullet-item"><div class="bullet-dot"></div><div class="bullet-text"><strong>Aspirating systems (VESDA/FAAST):</strong> Actively draws air through a pipe network into a laser-based detection chamber. Extremely early detection — can identify pre-combustion particles before visible smoke develops. Used in data centres, clean rooms, heritage buildings, and high-value areas</div></div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-bar blue">Key Changes in BS 5839-1:2025</div>
+            <div class="bullet-list">
+                <div class="bullet-item"><div class="bullet-dot blue"></div><div class="bullet-text"><strong>Heat detectors banned in sleeping areas:</strong> Smoke or multi-sensor detectors must now be used in all rooms where people sleep — including in L2 and L3 systems. Heat detectors alone are no longer acceptable for sleeping risk</div></div>
+                <div class="bullet-item"><div class="bullet-dot blue"></div><div class="bullet-text"><strong>L4 systems — lift shafts:</strong> New requirement for detection at the top of lift shafts in L4 category systems</div></div>
+                <div class="bullet-item"><div class="bullet-dot blue"></div><div class="bullet-text"><strong>Red cables:</strong> All mains power circuits dedicated to the fire alarm system must now use red-coloured cables and be clearly labelled</div></div>
+                <div class="bullet-item"><div class="bullet-dot blue"></div><div class="bullet-text"><strong>ARC signal timing:</strong> Fire signals must reach the Alarm Receiving Centre within <strong>90 seconds</strong>. Fault signals must be detected within <strong>3 minutes</strong></div></div>
+                <div class="bullet-item"><div class="bullet-dot blue"></div><div class="bullet-text"><strong>Service window:</strong> 6-monthly servicing now has a permitted window of <strong>5-7 months</strong>. Servicing outside this window is non-compliant</div></div>
+                <div class="bullet-item"><div class="bullet-dot blue"></div><div class="bullet-text"><strong>Modifications:</strong> Any modification to an existing system now requires a formal <strong>certificate of extension or modification</strong></div></div>
+                <div class="bullet-item"><div class="bullet-dot blue"></div><div class="bullet-text"><strong>Handover documentation:</strong> Enhanced requirements for documentation provided at handover, including system design rationale, zone charts, and operating instructions</div></div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-bar amber">Emergency Lighting — Often Linked to Fire Alarms</div>
+            <div class="bullet-list">
+                <div class="bullet-item"><div class="bullet-dot amber"></div><div class="bullet-text"><strong>Emergency lighting illuminates escape routes</strong> when the mains power fails. It is a separate system from the fire alarm but equally important — you cannot evacuate safely in the dark</div></div>
+                <div class="bullet-item"><div class="bullet-dot amber"></div><div class="bullet-text"><strong>Testing:</strong> Monthly functional test (briefly interrupt mains to check lights illuminate) and annual <strong>3-hour duration test</strong> (lights must remain on for the full rated duration). Record all tests in the fire log book</div></div>
+                <div class="bullet-item"><div class="bullet-dot amber"></div><div class="bullet-text"><strong>Battery replacement:</strong> Emergency lighting batteries typically last <strong>3-4 years</strong>. If a unit fails its duration test, the battery likely needs replacing</div></div>
+                <div class="bullet-item"><div class="bullet-dot amber"></div><div class="bullet-text"><strong>BS 5266-1:</strong> The standard for emergency lighting. Maintenance and testing requirements are similar to fire alarms — 6-monthly professional servicing is recommended</div></div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-bar green">Useful Contacts & Resources</div>
+            <div class="bullet-list">
+                <div class="bullet-item"><div class="bullet-dot"></div><div class="bullet-text"><strong>Fire emergency:</strong> 999</div></div>
+                <div class="bullet-item"><div class="bullet-dot"></div><div class="bullet-text"><strong>Fire service non-emergency:</strong> Contact your local fire and rescue service for advice, fire risk assessment guidance, and free business fire safety visits</div></div>
+                <div class="bullet-item"><div class="bullet-dot"></div><div class="bullet-text"><strong>Fire Industry Association (FIA):</strong> fia.uk.com — industry body for fire detection and suppression. Guidance documents and approved contractor lists</div></div>
+                <div class="bullet-item"><div class="bullet-dot"></div><div class="bullet-text"><strong>GOV.UK fire safety:</strong> gov.uk/workplace-fire-safety-your-responsibilities — official government guidance for the Responsible Person</div></div>
+                <div class="bullet-item"><div class="bullet-dot"></div><div class="bullet-text"><strong>BS 5839-1:2025:</strong> Available from BSI (bsigroup.com). The definitive standard for fire detection and alarm systems in non-domestic premises</div></div>
+            </div>
+        </div>
+
+        <div class="contact-card">
+            <div class="contact-card-title">Service, repair, or upgrade your fire alarm system</div>
+            <div class="contact-card-name">{{ company_name }}</div>
+            <div class="contact-card-details">
+                {% if company_phone %}{{ company_phone }}{% endif %}
+                {% if company_email %} | {{ company_email }}{% endif %}
+                {% if company_website %} | {{ company_website }}{% endif %}
+            </div>
+            {% if company_address %}<div class="contact-card-address">{{ company_address }}</div>{% endif %}
+            {% if registration_scheme %}<div class="contact-card-reg">{{ registration_scheme }} Registered — No. {{ registration_number }}</div>{% endif %}
+        </div>
+    </div>
+    <div class="footer">
+        <div>{{ company_name }}{% if company_phone %} — {{ company_phone }}{% endif %}</div>
+        <div>Powered by <strong>Elec-Mate</strong></div>
+        <div>Page 3 of 3</div>
+    </div>
+</div>
+
+</body>
+</html>

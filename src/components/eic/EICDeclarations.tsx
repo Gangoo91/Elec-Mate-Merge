@@ -32,7 +32,7 @@ import { useCompanyProfile } from '@/hooks/useCompanyProfile';
 import { useToast } from '@/hooks/use-toast';
 import { cn } from '@/lib/utils';
 import { useIsMobile } from '@/hooks/use-mobile';
-import { useHaptics } from '@/hooks/useHaptics';
+import { useHaptic } from '@/hooks/useHaptic';
 
 interface EICDeclarationsProps {
   formData: any;
@@ -41,7 +41,7 @@ interface EICDeclarationsProps {
 
 const EICDeclarations: React.FC<EICDeclarationsProps> = ({ formData, onUpdate }) => {
   const isMobile = useIsMobile();
-  const haptics = useHaptics();
+  const haptic = useHaptic();
   const { companyProfile } = useCompanyProfile();
   const { toast } = useToast();
   const [isInitialMount, setIsInitialMount] = useState(true);
@@ -53,7 +53,7 @@ const EICDeclarations: React.FC<EICDeclarationsProps> = ({ formData, onUpdate })
   });
 
   const toggleSection = (section: keyof typeof openSections) => {
-    haptics.tap();
+    haptic.light();
     setOpenSections((prev) => ({ ...prev, [section]: !prev[section] }));
   };
 
@@ -143,7 +143,7 @@ const EICDeclarations: React.FC<EICDeclarationsProps> = ({ formData, onUpdate })
       });
       return;
     }
-    haptics.tap();
+    haptic.light();
     loadProfileToSection(section);
     toast({
       title: 'Business Settings Applied',
@@ -176,7 +176,7 @@ const EICDeclarations: React.FC<EICDeclarationsProps> = ({ formData, onUpdate })
         <div className={cn(isMobile && 'px-4')}>
           <Button
             onClick={() => {
-              haptics.tap();
+              haptic.light();
               if (companyProfile) {
                 loadProfileToSection('designer');
                 loadProfileToSection('constructor');

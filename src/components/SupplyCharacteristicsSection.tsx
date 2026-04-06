@@ -13,7 +13,7 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { AlertCircle, Info, Zap, Building2, Plug, Shield, Globe } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useIsMobile } from '@/hooks/use-mobile';
-import { useHaptics } from '@/hooks/useHaptics';
+import { useHaptic } from '@/hooks/useHaptic';
 
 // Fields managed by this section (for memoization comparison)
 const SUPPLY_SECTION_FIELDS = [
@@ -114,11 +114,11 @@ const SupplyCharacteristicsSectionInner = ({
   onUpdate,
 }: SupplyCharacteristicsSectionProps) => {
   const isMobile = useIsMobile();
-  const haptics = useHaptics();
+  const haptic = useHaptic();
 
   // Auto-set common voltage based on phases
   const handlePhasesChange = (value: string) => {
-    haptics.tap();
+    haptic.light();
     // Toggle off if already selected
     if (formData.phases === value) {
       onUpdate('phases', '');
@@ -157,7 +157,7 @@ const SupplyCharacteristicsSectionInner = ({
 
   // Auto-set earthing arrangement when PME is set to Yes
   const handleSupplyPMEChange = (value: string) => {
-    haptics.tap();
+    haptic.light();
     // Toggle off if already selected
     if (formData.supplyPME === value) {
       onUpdate('supplyPME', '');
@@ -174,7 +174,7 @@ const SupplyCharacteristicsSectionInner = ({
 
   // Handle main protective device selection
   const handleMainProtectiveDeviceChange = (value: string) => {
-    haptics.tap();
+    haptic.light();
     if (value === '__clear__') {
       onUpdate('mainProtectiveDevice', '');
       onUpdate('mainProtectiveDeviceCustom', 'false');
@@ -308,7 +308,7 @@ const SupplyCharacteristicsSectionInner = ({
             <Select
               value={formData.dnoName || ''}
               onValueChange={(value) => {
-                haptics.tap();
+                haptic.light();
                 onUpdate('dnoName', value === '__clear__' ? '' : value);
               }}
             >
@@ -358,7 +358,7 @@ const SupplyCharacteristicsSectionInner = ({
                   key={option.value}
                   type="button"
                   onClick={() => {
-                    haptics.tap();
+                    haptic.light();
                     onUpdate(
                       'serviceEntry',
                       formData.serviceEntry === option.value ? '' : option.value
@@ -417,7 +417,7 @@ const SupplyCharacteristicsSectionInner = ({
                     key={option.value}
                     type="button"
                     onClick={() => {
-                      haptics.tap();
+                      haptic.light();
                       onUpdate(
                         'supplyAcDc',
                         formData.supplyAcDc === option.value ? '' : option.value
@@ -439,7 +439,7 @@ const SupplyCharacteristicsSectionInner = ({
               <Select
                 value={formData.conductorConfiguration || ''}
                 onValueChange={(value) => {
-                  haptics.tap();
+                  haptic.light();
                   onUpdate('conductorConfiguration', value === '__clear__' ? '' : value);
                 }}
               >
@@ -469,7 +469,7 @@ const SupplyCharacteristicsSectionInner = ({
                   key={option.value}
                   type="button"
                   onClick={() => {
-                    haptics.tap();
+                    haptic.light();
                     // Toggle off if already selected
                     onUpdate(
                       'supplyVoltage',
@@ -570,7 +570,7 @@ const SupplyCharacteristicsSectionInner = ({
             role="button"
             tabIndex={0}
             onClick={() => {
-              haptics.tap();
+              haptic.light();
               onUpdate(
                 'supplyPolarityConfirmed',
                 formData.supplyPolarityConfirmed === 'true' ? 'false' : 'true'
@@ -579,7 +579,7 @@ const SupplyCharacteristicsSectionInner = ({
             onKeyDown={(e) => {
               if (e.key === 'Enter' || e.key === ' ') {
                 e.preventDefault();
-                haptics.tap();
+                haptic.light();
                 onUpdate(
                   'supplyPolarityConfirmed',
                   formData.supplyPolarityConfirmed === 'true' ? 'false' : 'true'
@@ -634,7 +634,7 @@ const SupplyCharacteristicsSectionInner = ({
           <button
             type="button"
             onClick={() => {
-              haptics.tap();
+              haptic.light();
               if (formData.mainSwitchRating === 'LIM') {
                 // Toggle OFF — just clear mainSwitchRating
                 onUpdate('mainSwitchRating', '');
@@ -726,7 +726,7 @@ const SupplyCharacteristicsSectionInner = ({
                 <Select
                   value={formData.mainSwitchRating || ''}
                   onValueChange={(value) => {
-                    haptics.tap();
+                    haptic.light();
                     onUpdate('mainSwitchRating', value === '__clear__' ? '' : value);
                   }}
                 >
@@ -760,7 +760,7 @@ const SupplyCharacteristicsSectionInner = ({
                 <Select
                   value={formData.breakingCapacity || ''}
                   onValueChange={(value) => {
-                    haptics.tap();
+                    haptic.light();
                     onUpdate('breakingCapacity', value === '__clear__' ? '' : value);
                   }}
                   disabled={formData.mainSwitchRating === 'LIM'}
@@ -803,7 +803,7 @@ const SupplyCharacteristicsSectionInner = ({
               <Select
                 value={formData.mainSwitchPoles || ''}
                 onValueChange={(value) => {
-                  haptics.tap();
+                  haptic.light();
                   onUpdate('mainSwitchPoles', value === '__clear__' ? '' : value);
                 }}
                 disabled={formData.mainSwitchRating === 'LIM'}
@@ -859,7 +859,7 @@ const SupplyCharacteristicsSectionInner = ({
                   key={option.value}
                   type="button"
                   onClick={() => {
-                    haptics.tap();
+                    haptic.light();
                     // Toggle off if already selected
                     onUpdate(
                       'earthingArrangement',
@@ -888,7 +888,7 @@ const SupplyCharacteristicsSectionInner = ({
             <Select
               value={formData.earthElectrodeType || ''}
               onValueChange={(value) => {
-                haptics.tap();
+                haptic.light();
                 onUpdate('earthElectrodeType', value === '__clear__' ? '' : value);
               }}
             >
@@ -926,7 +926,7 @@ const SupplyCharacteristicsSectionInner = ({
                   key={option.value}
                   type="button"
                   onClick={() => {
-                    haptics.tap();
+                    haptic.light();
                     // Toggle off if already selected
                     const newValue = formData.rcdMainSwitch === option.value ? '' : option.value;
                     onUpdate('rcdMainSwitch', newValue);
@@ -954,7 +954,7 @@ const SupplyCharacteristicsSectionInner = ({
                     key={rating}
                     type="button"
                     onClick={() => {
-                      haptics.tap();
+                      haptic.light();
                       // Toggle off if already selected
                       onUpdate('rcdRating', formData.rcdRating === rating ? '' : rating);
                     }}
@@ -980,7 +980,7 @@ const SupplyCharacteristicsSectionInner = ({
                     key={type}
                     type="button"
                     onClick={() => {
-                      haptics.tap();
+                      haptic.light();
                       onUpdate('rcdType', formData.rcdType === `Type ${type}` ? '' : `Type ${type}`);
                     }}
                     className={cn(
@@ -1003,7 +1003,7 @@ const SupplyCharacteristicsSectionInner = ({
                 <Select
                   value={formData.rcdTimeDelay || ''}
                   onValueChange={(value) => {
-                    haptics.tap();
+                    haptic.light();
                     onUpdate('rcdTimeDelay', value === '__clear__' ? '' : value);
                   }}
                 >

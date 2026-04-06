@@ -11,7 +11,7 @@ import {
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { cn } from '@/lib/utils';
 import { useIsMobile } from '@/hooks/use-mobile';
-import { useHaptics } from '@/hooks/useHaptics';
+import { useHaptic } from '@/hooks/useHaptic';
 
 const defectCodes = [
   {
@@ -137,7 +137,7 @@ interface DefectCodesReferenceProps {
 
 const DefectCodesReference = ({ defaultOpen = false }: DefectCodesReferenceProps) => {
   const isMobile = useIsMobile();
-  const haptics = useHaptics();
+  const haptic = useHaptic();
   const [isOpen, setIsOpen] = React.useState(defaultOpen);
 
   return (
@@ -145,7 +145,7 @@ const DefectCodesReference = ({ defaultOpen = false }: DefectCodesReferenceProps
       <Collapsible
         open={isOpen}
         onOpenChange={(open) => {
-          haptics.tap();
+          haptic.light();
           setIsOpen(open);
         }}
       >

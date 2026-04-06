@@ -20,6 +20,7 @@ import {
   Receipt,
 } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
+import { copyToClipboard } from '@/utils/clipboard';
 import { useCompanyProfile } from '@/hooks/useCompanyProfile';
 import { supabase } from '@/integrations/supabase/client';
 import { saveCertificatePdf } from '@/utils/certificate-pdf-storage';
@@ -442,7 +443,7 @@ const EICCertificateActions: React.FC<EICCertificateActionsProps> = ({
       null,
       2
     );
-    navigator.clipboard.writeText(jsonData);
+    await copyToClipboard(jsonData);
     setJsonPreview(jsonData);
     toast({
       title: 'JSON Copied',

@@ -29,6 +29,7 @@ import { reportCloud } from '@/utils/reportCloud';
 import { createNotificationFromCertificate } from '@/utils/notificationHelper';
 import { draftStorage } from '@/utils/draftStorage';
 import { supabase } from '@/integrations/supabase/client';
+import { trackFeatureUse } from '@/components/ActivityTracker';
 import { formatEVChargingJson } from '@/utils/evChargingJsonFormatter';
 
 import EVChargingFormTabs from '@/components/inspection/ev-charging/EVChargingFormTabs';
@@ -91,6 +92,13 @@ export default function EVChargingCertificate() {
       window.history.replaceState(null, '', `/electrician/inspection-testing/ev-charging/${newId}`);
     },
   });
+
+  // Track certificate opened
+  useEffect(() => {
+    supabase.auth.getUser().then(({ data: { user } }) => {
+      if (user) trackFeatureUse(user.id, 'certificate_opened', { type: 'ev-charging' });
+    });
+  }, []);
 
   // Smart form hook for company branding and auto-fill
   const { loadCompanyBranding, hasSavedCompanyBranding } = useEVChargingSmartForm();

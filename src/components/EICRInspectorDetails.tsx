@@ -29,7 +29,7 @@ import { Alert, AlertDescription } from '@/components/ui/alert';
 import { useToast } from '@/hooks/use-toast';
 import { cn } from '@/lib/utils';
 import { useIsMobile } from '@/hooks/use-mobile';
-import { useHaptics } from '@/hooks/useHaptics';
+import { useHaptic } from '@/hooks/useHaptic';
 import { useCompanyProfile } from '@/hooks/useCompanyProfile';
 import SectionTitle from '@/components/ui/SectionTitle';
 import FormField from '@/components/ui/FormField';
@@ -54,7 +54,7 @@ const availableQualifications = [
 
 const EICRInspectorDetails = ({ formData, onUpdate }: EICRInspectorDetailsProps) => {
   const isMobile = useIsMobile();
-  const haptics = useHaptics();
+  const haptic = useHaptic();
   const { profiles, getDefaultProfile } = useInspectorProfiles();
   const { companyProfile, loading: companyProfileLoading } = useCompanyProfile();
   const { toast } = useToast();
@@ -81,7 +81,7 @@ const EICRInspectorDetails = ({ formData, onUpdate }: EICRInspectorDetailsProps)
   });
 
   const toggleSection = (section: string) => {
-    haptics.tap();
+    haptic.light();
     setOpenSections((prev) => ({ ...prev, [section]: !prev[section] }));
   };
 
@@ -109,7 +109,7 @@ const EICRInspectorDetails = ({ formData, onUpdate }: EICRInspectorDetailsProps)
   }, [formData.inspectorQualifications]);
 
   const handleProfileSelect = (profile: InspectorProfile) => {
-    haptics.success();
+    haptic.success();
     onUpdate('inspectorName', profile.name);
     onUpdate('inspectorQualifications', profile.qualifications.join(', '));
     onUpdate('inspectorSignature', profile.signatureData || '');
@@ -130,7 +130,7 @@ const EICRInspectorDetails = ({ formData, onUpdate }: EICRInspectorDetailsProps)
   };
 
   const toggleQualification = (qualification: string) => {
-    haptics.tap();
+    haptic.light();
     const updated = selectedQualifications.includes(qualification)
       ? selectedQualifications.filter((q) => q !== qualification)
       : [...selectedQualifications, qualification];
@@ -164,14 +164,14 @@ const EICRInspectorDetails = ({ formData, onUpdate }: EICRInspectorDetailsProps)
     const reader = new FileReader();
     reader.onload = (e) => {
       onUpdate('companyLogo', e.target?.result as string);
-      haptics.success();
+      haptic.success();
       toast({ title: 'Logo uploaded', description: 'Company logo uploaded successfully.' });
     };
     reader.readAsDataURL(file);
   };
 
   const handleRemoveLogo = () => {
-    haptics.tap();
+    haptic.light();
     onUpdate('companyLogo', '');
     toast({ title: 'Logo removed', description: 'Company logo has been removed.' });
   };
@@ -182,7 +182,7 @@ const EICRInspectorDetails = ({ formData, onUpdate }: EICRInspectorDetailsProps)
     const inspectorProfile = getAvailableProfile();
 
     if (!companyProfile && !inspectorProfile) {
-      haptics.warning();
+      haptic.warning();
       toast({
         title: 'No Saved Settings Found',
         description: 'Please set up your Business Settings or Inspector Profile first.',
@@ -191,7 +191,7 @@ const EICRInspectorDetails = ({ formData, onUpdate }: EICRInspectorDetailsProps)
       return;
     }
 
-    haptics.success();
+    haptic.success();
     let loadedItems: string[] = [];
 
     // Load inspector personal details - Company Profile takes priority
@@ -459,7 +459,7 @@ const EICRInspectorDetails = ({ formData, onUpdate }: EICRInspectorDetailsProps)
               <Select
                 value={formData.registrationScheme || ''}
                 onValueChange={(value) => {
-                  haptics.tap();
+                  haptic.light();
                   onUpdate('registrationScheme', value);
                 }}
               >

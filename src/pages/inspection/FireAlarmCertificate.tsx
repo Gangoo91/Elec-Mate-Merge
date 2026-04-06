@@ -33,6 +33,7 @@ import {
   createInvoiceFromCertificate,
 } from '@/utils/certificateToQuote';
 import { supabase } from '@/integrations/supabase/client';
+import { trackFeatureUse } from '@/components/ActivityTracker';
 import { formatFireAlarmJson } from '@/utils/fireAlarmJsonFormatter';
 import { useCertificateEmail } from '@/hooks/useCertificateEmail';
 import { EmailCertificateDialog } from '@/components/certificate-completion/EmailCertificateDialog';
@@ -106,6 +107,13 @@ export default function FireAlarmCertificate() {
 
   // Company profile for email
   const { companyProfile } = useCompanyProfile();
+
+  // Track certificate opened
+  useEffect(() => {
+    supabase.auth.getUser().then(({ data: { user } }) => {
+      if (user) trackFeatureUse(user.id, 'certificate_opened', { type: 'fire-alarm' });
+    });
+  }, []);
 
   // Email state
   const [showEmailDialog, setShowEmailDialog] = useState(false);

@@ -21,6 +21,8 @@ const DangerNoticePage = lazy(() => import('@/pages/inspection/DangerNoticePage'
 const IsolationCertificatePage = lazy(() => import('@/pages/inspection/IsolationCertificatePage'));
 const PermitToWorkPage = lazy(() => import('@/pages/inspection/PermitToWorkPage'));
 const WarningLabelsPage = lazy(() => import('@/pages/inspection/WarningLabelsPage'));
+const BoardSchedulePage = lazy(() => import('@/pages/inspection/BoardSchedulePage'));
+const ClientHandoutsPage = lazy(() => import('@/pages/inspection/ClientHandoutsPage'));
 const SafeIsolationPage = lazy(() => import('@/pages/inspection/SafeIsolationPage'));
 
 const LoadingFallback = CertificateSkeleton;
@@ -63,6 +65,8 @@ export default function InspectionRoutes() {
         <Route path="permit-to-work" element={<PermitToWorkPage />} />
         <Route path="permit-to-work/:id" element={<PermitToWorkPage />} />
         <Route path="warning-labels" element={<WarningLabelsPage />} />
+        <Route path="board-schedule" element={<BoardSchedulePage />} />
+        <Route path="client-handouts" element={<ClientHandoutsPage />} />
         <Route path="safe-isolation" element={<SafeIsolationPage />} />
         <Route path="safe-isolation/:id" element={<SafeIsolationPage />} />
 

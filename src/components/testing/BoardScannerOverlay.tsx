@@ -11,6 +11,8 @@ import { Camera } from 'lucide-react';
 import { BoardPhotoCapture } from './BoardPhotoCapture';
 import { AnalysisProgress } from './AnalysisProgress';
 import { CircuitReviewSheet } from './CircuitReviewSheet';
+import { trackFeatureUse } from '@/components/ActivityTracker';
+import { supabase } from '@/integrations/supabase/client';
 
 export type AnalysisStage =
   | 'idle'
@@ -80,6 +82,9 @@ export const BoardScannerOverlay: React.FC<BoardScannerOverlayProps> = ({
         onAnalysisComplete({
           ...analysisResult,
           circuits,
+        });
+        supabase.auth.getUser().then(({ data: { user } }) => {
+          if (user) trackFeatureUse(user.id, 'board_scanner', {});
         });
       }
       setShowReview(false);

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Label } from '@/components/ui/label';
 import { cn } from '@/lib/utils';
 import { TestResult } from '@/types/testResult';
-import { useHaptics } from '@/hooks/useHaptics';
+import { useHaptic } from '@/hooks/useHaptic';
 import QuickValueInput from './QuickValueInput';
 import { Check, AlertTriangle } from 'lucide-react';
 
@@ -102,11 +102,11 @@ const EXTRA_TILES: TestTile[] = [
  * Optimized for quick data entry on mobile with validation colors
  */
 const TestValueGrid: React.FC<TestValueGridProps> = ({ circuit, onUpdate }) => {
-  const haptics = useHaptics();
+  const haptic = useHaptic();
   const [editingField, setEditingField] = useState<keyof TestResult | null>(null);
 
   const handleTileClick = (field: keyof TestResult) => {
-    haptics.tap();
+    haptic.light();
     setEditingField(field);
   };
 

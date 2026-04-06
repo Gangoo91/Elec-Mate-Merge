@@ -27,6 +27,7 @@ import { toast } from 'sonner';
 import { reportCloud } from '@/utils/reportCloud';
 import { draftStorage } from '@/utils/draftStorage';
 import { supabase } from '@/integrations/supabase/client';
+import { trackFeatureUse } from '@/components/ActivityTracker';
 
 import EmergencyLightingFormTabs from '@/components/inspection/emergency-lighting/EmergencyLightingFormTabs';
 import { useEmergencyLightingTabs } from '@/hooks/useEmergencyLightingTabs';
@@ -94,6 +95,13 @@ export default function EmergencyLightingCertificate() {
       );
     },
   });
+
+  // Track certificate opened
+  useEffect(() => {
+    supabase.auth.getUser().then(({ data: { user } }) => {
+      if (user) trackFeatureUse(user.id, 'certificate_opened', { type: 'emergency-lighting' });
+    });
+  }, []);
 
   // Smart form hook for company branding and auto-fill
   const { loadCompanyBranding, hasSavedCompanyBranding } = useEmergencyLightingSmartForm();

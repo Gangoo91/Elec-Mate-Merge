@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button';
 import { CheckCircle2, AlertTriangle, XCircle, Shield, ChevronDown, ChevronUp } from 'lucide-react';
 import { useState } from 'react';
 import { cn } from '@/lib/utils';
+import { copyToClipboard } from '@/utils/clipboard';
 
 interface ComplianceItem {
   label: string;
@@ -233,10 +234,10 @@ export function ComplianceCheckpoint({
     };
   };
 
-  const copyJsonToClipboard = () => {
+  const copyJsonToClipboard = async () => {
     const payload = generatePdfMonkeyPayload();
     if (payload) {
-      navigator.clipboard.writeText(JSON.stringify(payload, null, 2));
+      await copyToClipboard(JSON.stringify(payload, null, 2));
     }
   };
 

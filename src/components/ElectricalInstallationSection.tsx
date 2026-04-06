@@ -11,7 +11,7 @@ import {
 import { Cable, Gauge, CircuitBoard } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useIsMobile } from '@/hooks/use-mobile';
-import { useHaptics } from '@/hooks/useHaptics';
+import { useHaptic } from '@/hooks/useHaptic';
 import MultiboardSetup from '@/components/testing/MultiboardSetup';
 import { DistributionBoard, createMainBoard, MAIN_BOARD_ID } from '@/types/distributionBoard';
 
@@ -95,7 +95,7 @@ const ElectricalInstallationSectionInner = ({
   onUpdate,
 }: ElectricalInstallationSectionProps) => {
   const isMobile = useIsMobile();
-  const haptics = useHaptics();
+  const haptic = useHaptic();
 
   // Migrate legacy single-board data to multi-board format
   const boards: DistributionBoard[] = useMemo(() => {
@@ -175,7 +175,7 @@ const ElectricalInstallationSectionInner = ({
                   key={size}
                   type="button"
                   onClick={() => {
-                    haptics.tap();
+                    haptic.light();
                     onUpdate('intakeCableSize', formData.intakeCableSize === size ? '' : size);
                   }}
                   className={cn(
@@ -195,7 +195,7 @@ const ElectricalInstallationSectionInner = ({
             <Select
               value={formData.intakeCableType || ''}
               onValueChange={(value) => {
-                haptics.tap();
+                haptic.light();
                 onUpdate('intakeCableType', value);
               }}
             >
@@ -225,7 +225,7 @@ const ElectricalInstallationSectionInner = ({
                   key={size}
                   type="button"
                   onClick={() => {
-                    haptics.tap();
+                    haptic.light();
                     onUpdate('tailsSize', formData.tailsSize === size ? '' : size);
                   }}
                   className={cn(

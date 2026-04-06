@@ -6,7 +6,7 @@ import {
   MobileTabsContent,
 } from '@/components/ui/mobile-tabs';
 import { useIsMobile } from '@/hooks/use-mobile';
-import { useHaptics } from '@/hooks/useHaptics';
+import { useHaptic } from '@/hooks/useHaptic';
 import { cn } from '@/lib/utils';
 import { CheckCircle } from 'lucide-react';
 
@@ -43,7 +43,7 @@ export const SmartTabs = ({
   showProgress = false,
 }: SmartTabsProps) => {
   const isMobile = useIsMobile();
-  const haptics = useHaptics();
+  const haptic = useHaptic();
   const scrollRef = useRef<HTMLDivElement>(null);
   const activeTabRef = useRef<HTMLButtonElement>(null);
 
@@ -52,7 +52,7 @@ export const SmartTabs = ({
   const activeValue = value ?? currentValue;
 
   const handleValueChange = (newValue: string) => {
-    haptics.tap();
+    haptic.light();
     setCurrentValue(newValue);
     onValueChange?.(newValue);
   };

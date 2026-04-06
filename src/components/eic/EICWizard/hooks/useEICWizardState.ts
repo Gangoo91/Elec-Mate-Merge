@@ -7,6 +7,7 @@
 
 import { useState, useCallback, useMemo, useEffect } from 'react';
 import { DistributionBoard } from '@/types/distributionBoard';
+import { storageGetJSONSync, storageSetJSONSync, storageRemoveSync } from '@/utils/storage';
 
 export interface EICWizardStep {
   id: string;
@@ -117,17 +118,12 @@ export function useEICWizardState(options: UseEICWizardStateOptions) {
   // Load persisted state
   useEffect(() => {
     if (persistKey) {
-      try {
-        const saved = localStorage.getItem(persistKey);
-        if (saved) {
-          const parsed = JSON.parse(saved);
-          setData(parsed.data || {});
-          setCurrentStep(parsed.currentStep || 0);
-          setCompletedSteps(new Set(parsed.completedSteps || []));
-          setSkippedSteps(new Set(parsed.skippedSteps || []));
-        }
-      } catch (e) {
-        console.warn('Failed to load wizard state:', e);
+      const parsed = storageGetJSONSync<{ data?: EICWizardData; currentStep?: number; completedSteps?: number[]; skippedSteps?: number[] } | null>(persistKey, null);
+      if (parsed) {
+        setData(parsed.data || {});
+        setCurrentStep(parsed.currentStep || 0);
+        setCompletedSteps(new Set(parsed.completedSteps || []));
+        setSkippedSteps(new Set(parsed.skippedSteps || []));
       }
     }
   }, [persistKey]);
@@ -135,19 +131,12 @@ export function useEICWizardState(options: UseEICWizardStateOptions) {
   // Persist state changes
   useEffect(() => {
     if (persistKey) {
-      try {
-        localStorage.setItem(
-          persistKey,
-          JSON.stringify({
-            data,
-            currentStep,
-            completedSteps: Array.from(completedSteps),
-            skippedSteps: Array.from(skippedSteps),
-          })
-        );
-      } catch (e) {
-        console.warn('Failed to persist wizard state:', e);
-      }
+      storageSetJSONSync(persistKey, {
+        data,
+        currentStep,
+        completedSteps: Array.from(completedSteps),
+        skippedSteps: Array.from(skippedSteps),
+      });
     }
   }, [data, currentStep, completedSteps, skippedSteps, persistKey]);
 
@@ -224,7 +213,7 @@ export function useEICWizardState(options: UseEICWizardStateOptions) {
     }
     // Clear persistence
     if (persistKey) {
-      localStorage.removeItem(persistKey);
+      storageRemoveSync(persistKey);
     }
   }, [data, onComplete, persistKey]);
 
@@ -235,7 +224,7 @@ export function useEICWizardState(options: UseEICWizardStateOptions) {
     setCompletedSteps(new Set());
     setSkippedSteps(new Set());
     if (persistKey) {
-      localStorage.removeItem(persistKey);
+      storageRemoveSync(persistKey);
     }
   }, [persistKey]);
 

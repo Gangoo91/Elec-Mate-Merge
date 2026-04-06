@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Your EICR Explained</title>
+    <style>
+        :root { --accent: #3b82f6; --accent-bg: #eff6ff; }
+        @page { size: A4; margin: 0; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: Georgia, 'Times New Roman', serif; font-size: 10px; line-height: 1.55; color: #1e293b; background: #fff; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+        h1, h2, h3, .section-bar, .header-title, .header-company-name, .contact-card-name, .contact-card-title, .code-label, .code-title, .footer { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; }
+
+        .page { width: 210mm; min-height: 297mm; position: relative; overflow: hidden; }
+        .header { background: linear-gradient(180deg, #0a1628 0%, #152238 100%); color: #fff; padding: 14px 22px 12px; position: relative; }
+        .header::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: var(--accent); }
+        .header-content { display: flex; justify-content: space-between; align-items: center; }
+        .header-title { font-size: 24px; font-weight: 800; }
+        .header-subtitle { font-size: 10px; color: rgba(255,255,255,0.7); margin-top: 3px; font-style: italic; }
+        .header-right { text-align: right; display: flex; align-items: center; gap: 14px; }
+        .header-logo img { max-height: 50px; max-width: 130px; object-fit: contain; }
+        .header-company-name { font-size: 12px; font-weight: 700; color: var(--accent); }
+        .header-company-detail { font-size: 8px; color: rgba(255,255,255,0.6); margin-top: 2px; }
+        .header-scheme img { max-height: 35px; max-width: 70px; object-fit: contain; }
+        .header-sm { padding: 10px 22px 8px; }
+        .header-sm .header-title { font-size: 16px; }
+
+        .content { padding: 14px 22px; }
+
+        .intro-box { background: #0f172a; border: 1.5px solid #1e293b; border-left: 4px solid var(--accent); border-radius: 5px; padding: 10px 14px; margin-bottom: 12px; }
+        .intro-text { font-size: 10px; color: rgba(255,255,255,0.85); line-height: 1.6; }
+        .intro-text strong { color: #fff; }
+
+        .section { margin-bottom: 10px; }
+        .section-bar { background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); color: #fff; font-size: 9.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; padding: 5px 14px; border-left: 4px solid var(--accent); border-radius: 2px; margin-bottom: 6px; }
+        .section-bar.red { border-left-color: #dc2626; }
+        .section-bar.amber { border-left-color: #f59e0b; }
+        .section-bar.green { border-left-color: #22c55e; }
+
+        .bullet-list { padding: 0 0 0 4px; }
+        .bullet-item { display: flex; gap: 8px; margin-bottom: 4px; align-items: flex-start; }
+        .bullet-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); flex-shrink: 0; margin-top: 4px; }
+        .bullet-dot.red { background: #dc2626; }
+        .bullet-dot.amber { background: #f59e0b; }
+        .bullet-dot.green { background: #22c55e; }
+        .bullet-text { font-size: 10px; color: #334155; line-height: 1.55; flex: 1; }
+        .bullet-text strong { color: #0f172a; font-weight: 700; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; }
+
+        /* Classification code cards */
+        .code-card { border-radius: 5px; padding: 8px 14px; margin-bottom: 6px; display: flex; align-items: center; gap: 12px; }
+        .code-badge { width: 42px; height: 42px; border-radius: 6px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+        .code-label { font-size: 14px; font-weight: 900; color: #fff; }
+        .code-info { flex: 1; }
+        .code-title { font-size: 10px; font-weight: 700; color: #fff; margin-bottom: 2px; }
+        .code-desc { font-size: 9px; color: rgba(255,255,255,0.85); line-height: 1.5; }
+
+        .info-box { background: #0f172a; border: 1.5px solid #1e293b; border-left: 4px solid var(--accent); border-radius: 5px; padding: 10px 14px; margin: 6px 0; }
+        .info-title { font-size: 10px; font-weight: 700; color: #fff; margin-bottom: 3px; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; }
+        .info-text { font-size: 9.5px; color: rgba(255,255,255,0.85); line-height: 1.6; }
+
+        .amber-box { background: #0f172a; border: 1.5px solid #1e293b; border-left: 4px solid #f59e0b; border-radius: 5px; padding: 10px 14px; margin: 6px 0; }
+        .amber-title { font-size: 10px; font-weight: 700; color: #fff; margin-bottom: 3px; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; }
+        .amber-text { font-size: 9.5px; color: rgba(255,255,255,0.85); line-height: 1.6; }
+
+        .alert-box { background: #7f1d1d; border: 1.5px solid #991b1b; border-left: 4px solid #dc2626; border-radius: 5px; padding: 10px 14px; margin: 6px 0; }
+        .alert-title { font-size: 10px; font-weight: 800; color: #fff; margin-bottom: 3px; text-transform: uppercase; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; }
+        .alert-text { font-size: 9.5px; color: rgba(255,255,255,0.9); line-height: 1.6; }
+
+        .two-col { display: flex; gap: 10px; }
+        .two-col > .col { flex: 1; }
+
+        .contact-card { background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); border-radius: 6px; padding: 12px 16px; margin-top: 10px; position: relative; overflow: hidden; }
+        .contact-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: var(--accent); }
+        .contact-card-title { font-size: 8px; color: rgba(255,255,255,0.5); text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 4px; }
+        .contact-card-name { font-size: 13px; font-weight: 800; color: #fff; }
+        .contact-card-details { font-size: 9px; color: var(--accent); margin-top: 3px; }
+        .contact-card-address { font-size: 8px; color: rgba(255,255,255,0.5); margin-top: 3px; }
+        .contact-card-reg { font-size: 7.5px; color: rgba(255,255,255,0.4); margin-top: 3px; }
+
+        .footer { position: absolute; bottom: 0; left: 0; right: 0; border-top: 2px solid var(--accent); padding: 6px 22px; display: flex; justify-content: space-between; align-items: center; font-size: 7.5px; color: #94a3b8; }
+        .page-break { page-break-before: always; }
+    </style>
+</head>
+<body>
+
+<!-- ===== PAGE 1 — WHAT IS AN EICR & CODES ===== -->
+<div class="page">
+    <div class="header">
+        <div class="header-content">
+            <div>
+                <div class="header-title">Your EICR Explained</div>
+                <div class="header-subtitle">Understanding your Electrical Installation Condition Report</div>
+            </div>
+            <div class="header-right">
+                {% if company_logo %}<div class="header-logo"><img src="{{ company_logo }}" alt="Logo" /></div>{% endif %}
+                <div>
+                    <div class="header-company-name">{{ company_name }}</div>
+                    {% if company_phone %}<div class="header-company-detail">{{ company_phone }}</div>{% endif %}
+                    {% if registration_scheme %}<div class="header-company-detail">{{ registration_scheme }}: {{ registration_number }}</div>{% endif %}
+                </div>
+                {% if scheme_logo %}<div class="header-scheme"><img src="{{ scheme_logo }}" alt="Scheme" /></div>{% endif %}
+            </div>
+        </div>
+    </div>
+    <div class="content">
+        <div class="intro-box">
+            <div class="intro-text">You have received an <strong>EICR (Electrical Installation Condition Report)</strong> from <strong>{{ company_name }}</strong>. This is a thorough inspection and test of your electrical installation — the wiring, sockets, switches, consumer unit, earthing, and protection devices. This guide explains what it all means in plain English.</div>
+        </div>
+
+        <div class="section">
+            <div class="section-bar">What Was Inspected?</div>
+            <div class="bullet-list">
+                <div class="bullet-item"><div class="bullet-dot"></div><div class="bullet-text"><strong>All wiring and cables</strong> throughout the property — checked for damage, deterioration, and correct sizing</div></div>
+                <div class="bullet-item"><div class="bullet-dot"></div><div class="bullet-text"><strong>Every socket, switch, and light fitting</strong> — tested for correct operation, polarity, and physical condition</div></div>
+                <div class="bullet-item"><div class="bullet-dot"></div><div class="bullet-text"><strong>Consumer unit (fuse board)</strong> — all MCBs, RCDs, and RCBOs tested for correct operation and trip times</div></div>
+                <div class="bullet-item"><div class="bullet-dot"></div><div class="bullet-text"><strong>Earthing and bonding</strong> — the primary safety system that protects you from electric shock. Connections checked to gas, water, and other services</div></div>
+                <div class="bullet-item"><div class="bullet-dot"></div><div class="bullet-text"><strong>Electrical tests</strong> — insulation resistance, earth fault loop impedance (Zs), continuity, and RCD trip times measured and compared against BS 7671 limits</div></div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-bar red">Understanding the Classification Codes</div>
+            <p style="font-size: 9.5px; color: #475569; margin-bottom: 8px;">Your electrician assigns a code to each observation found during the inspection. Here's what they mean:</p>
+
+            <!-- C1 -->
+            <div class="code-card" style="background: #dc2626;">
+                <div class="code-badge" style="background: rgba(0,0,0,0.2);"><div class="code-label">C1</div></div>
+                <div class="code-info">
+                    <div class="code-title">DANGER PRESENT</div>
+                    <div class="code-desc">An immediate risk of injury exists. Your electrician will have already made this safe — typically by isolating the affected circuit. Urgent remedial work is required.</div>
+                </div>
+            </div>
+
+            <!-- C2 -->
+            <div class="code-card" style="background: #ea580c;">
+                <div class="code-badge" style="background: rgba(0,0,0,0.2);"><div class="code-label">C2</div></div>
+                <div class="code-info">
+                    <div class="code-title">POTENTIALLY DANGEROUS</div>
+                    <div class="code-desc">Not immediately dangerous but could become so. Remedial work should be completed as soon as possible. Do not ignore C2 findings.</div>
+                </div>
+            </div>
+
+            <!-- C3 -->
+            <div class="code-card" style="background: #ca8a04;">
+                <div class="code-badge" style="background: rgba(0,0,0,0.2);"><div class="code-label">C3</div></div>
+                <div class="code-info">
+                    <div class="code-title">IMPROVEMENT RECOMMENDED</div>
+                    <div class="code-desc">Does not meet current standards but is not dangerous. Improvement is recommended but not mandatory. Consider addressing these if selling, remortgaging, or renting.</div>
+                </div>
+            </div>
+
+            <!-- FI -->
+            <div class="code-card" style="background: #2563eb;">
+                <div class="code-badge" style="background: rgba(0,0,0,0.2);"><div class="code-label">FI</div></div>
+                <div class="code-info">
+                    <div class="code-title">FURTHER INVESTIGATION</div>
+                    <div class="code-desc">More investigation is needed to determine the extent of a potential problem. This may require opening up floor or ceiling voids, or specialist testing equipment.</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-bar green">Satisfactory or Unsatisfactory?</div>
+            <div class="two-col">
+                <div class="col">
+                    <div class="info-box" style="border-left-color: #22c55e;">
+                        <div class="info-title" style="color: #4ade80;">SATISFACTORY</div>
+                        <div class="info-text">Your installation meets safety standards. No C1 or C2 defects were found. You may have C3 improvements recommended — these are advisory, not urgent. Your installation is safe for continued use.</div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="alert-box">
+                        <div class="alert-title">UNSATISFACTORY</div>
+                        <div class="alert-text">C1 or C2 defects were found. These need attention. Review the observations on your report and contact {{ company_name }} to arrange remedial work. For rented properties, landlords must act within 28 days.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="footer">
+        <div>{{ company_name }}{% if company_phone %} — {{ company_phone }}{% endif %}</div>
+        <div>Powered by <strong>Elec-Mate</strong></div>
+        <div>Page 1 of 2</div>
+    </div>
+</div>
+
+<!-- ===== PAGE 2 — WHAT TO DO NEXT ===== -->
+<div class="page page-break">
+    <div class="header header-sm">
+        <div class="header-content">
+            <div><div class="header-title">What to Do Next</div></div>
+            <div class="header-right">
+                {% if company_logo %}<div class="header-logo"><img src="{{ company_logo }}" alt="Logo" style="max-height:35px;" /></div>{% endif %}
+                <div><div class="header-company-name">{{ company_name }}</div></div>
+            </div>
+        </div>
+    </div>
+    <div class="content">
+        <div class="section">
+            <div class="section-bar red">If Your EICR Is Unsatisfactory</div>
+            <div class="bullet-list">
+                <div class="bullet-item"><div class="bullet-dot red"></div><div class="bullet-text"><strong>C1 defects:</strong> Your electrician should have already made these safe on site — typically by isolating the circuit or removing the danger. Confirm that the remedial work is booked to permanently fix the issue</div></div>
+                <div class="bullet-item"><div class="bullet-dot red"></div><div class="bullet-text"><strong>C2 defects:</strong> Arrange for remedial work <strong>as soon as possible</strong>. These are not immediately dangerous but could become so. Do not put these off</div></div>
+                <div class="bullet-item"><div class="bullet-dot amber"></div><div class="bullet-text"><strong>C3 improvements:</strong> Not mandatory, but consider them — especially if you're selling, remortgaging, or renting the property. Insurers may also ask about C3 findings</div></div>
+                <div class="bullet-item"><div class="bullet-dot"></div><div class="bullet-text"><strong>FI items:</strong> Further investigation is needed. This may uncover additional issues. Your electrician will advise on what's involved and any additional costs</div></div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-bar amber">Landlords — Your Legal Obligations</div>
+            <div class="amber-box">
+                <div class="amber-title">Electrical Safety Standards in the Private Rented Sector (England) Regulations 2020</div>
+                <div class="amber-text">Since 1 April 2021, landlords must have an EICR carried out by a qualified electrician <strong>every 5 years</strong>. If the report is unsatisfactory, all C1 and C2 defects must be remedied within <strong>28 days</strong> (or sooner if specified by the electrician). Failure to comply can result in fines of up to <strong>£30,000</strong>. You must provide a copy of the EICR to your tenants within 28 days, and to your local authority within 7 days if requested.</div>
+            </div>
+            <div class="bullet-list">
+                <div class="bullet-item"><div class="bullet-dot amber"></div><div class="bullet-text"><strong>New tenancies:</strong> You must have a valid EICR before the tenancy begins and provide it to tenants before they move in</div></div>
+                <div class="bullet-item"><div class="bullet-dot amber"></div><div class="bullet-text"><strong>Existing tenancies:</strong> The EICR must be no more than 5 years old. If yours has expired, book a new one immediately</div></div>
+                <div class="bullet-item"><div class="bullet-dot amber"></div><div class="bullet-text"><strong>After remedial work:</strong> Your electrician must confirm in writing that the defects have been remedied. Keep this with your EICR</div></div>
+                <div class="bullet-item"><div class="bullet-dot amber"></div><div class="bullet-text"><strong>Records:</strong> Keep all EICRs for the life of the installation. You'll need them for insurance, property sales, and letting agent compliance checks</div></div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-bar">Understanding Your Report</div>
+            <div class="bullet-list">
+                <div class="bullet-item"><div class="bullet-dot"></div><div class="bullet-text"><strong>Schedule of Inspections:</strong> Lists every item checked — sockets, switches, connections, earthing — with a result for each (satisfactory, C1, C2, C3, or N/A)</div></div>
+                <div class="bullet-item"><div class="bullet-dot"></div><div class="bullet-text"><strong>Schedule of Test Results:</strong> The electrical measurements for each circuit — insulation resistance, earth fault loop impedance (Zs), and RCD trip times. These are compared against BS 7671 limits</div></div>
+                <div class="bullet-item"><div class="bullet-dot"></div><div class="bullet-text"><strong>Observations:</strong> Detailed descriptions of every defect found, including its location, the applicable BS 7671 regulation, and the recommended remedial action</div></div>
+                <div class="bullet-item"><div class="bullet-dot"></div><div class="bullet-text"><strong>Overall assessment:</strong> The summary at the front of the report — satisfactory or unsatisfactory. This is the key outcome</div></div>
+                <div class="bullet-item"><div class="bullet-dot"></div><div class="bullet-text"><strong>Next inspection date:</strong> Your electrician will recommend when the next EICR is due — typically 5 years for domestic, 3 years for commercial</div></div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-bar">Common EICR Findings Explained</div>
+            <div class="bullet-list">
+                <div class="bullet-item"><div class="bullet-dot"></div><div class="bullet-text"><strong>"Lack of RCD protection"</strong> — your sockets don't have the life-saving protection that prevents electric shock. This is a C2 or C3 depending on the circuit. A consumer unit upgrade will fix this</div></div>
+                <div class="bullet-item"><div class="bullet-dot"></div><div class="bullet-text"><strong>"No main bonding to gas/water"</strong> — a critical safety connection is missing. Without bonding, a fault on the gas or water pipes could give you an electric shock. Usually a C2</div></div>
+                <div class="bullet-item"><div class="bullet-dot"></div><div class="bullet-text"><strong>"Zs exceeds maximum permitted"</strong> — the earth fault protection on a circuit is too slow. If a fault occurred, the circuit breaker may not trip quickly enough. Usually a C2</div></div>
+                <div class="bullet-item"><div class="bullet-dot"></div><div class="bullet-text"><strong>"No SPD fitted"</strong> — no surge protection device. Required on all new consumer units since 2018. Protects your electronics from voltage spikes. Usually a C3</div></div>
+            </div>
+        </div>
+
+        <!-- Contact -->
+        <div class="contact-card">
+            <div class="contact-card-title">Questions about your EICR?</div>
+            <div class="contact-card-name">{{ company_name }}</div>
+            <div class="contact-card-details">
+                {% if company_phone %}{{ company_phone }}{% endif %}
+                {% if company_email %} | {{ company_email }}{% endif %}
+                {% if company_website %} | {{ company_website }}{% endif %}
+            </div>
+            {% if company_address %}<div class="contact-card-address">{{ company_address }}</div>{% endif %}
+            {% if registration_scheme %}<div class="contact-card-reg">{{ registration_scheme }} Registered — No. {{ registration_number }}</div>{% endif %}
+        </div>
+    </div>
+    <div class="footer">
+        <div>{{ company_name }}{% if company_phone %} — {{ company_phone }}{% endif %}</div>
+        <div>Powered by <strong>Elec-Mate</strong></div>
+        <div>Page 2 of 2</div>
+    </div>
+</div>
+
+</body>
+</html>

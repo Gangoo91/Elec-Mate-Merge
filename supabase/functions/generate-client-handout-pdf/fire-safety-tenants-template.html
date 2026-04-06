@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Fire Safety Guide for Tenants</title>
+    <style>
+        :root { --accent: #ef4444; }
+        @page { size: A4; margin: 0; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: Georgia, 'Times New Roman', serif; font-size: 10px; line-height: 1.55; color: #1e293b; background: #fff; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+        h1, h2, h3, .section-bar, .header-title, .header-company-name, .contact-card-name, .contact-card-title, .footer { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; }
+
+        .page { width: 210mm; min-height: 297mm; position: relative; overflow: hidden; }
+        .header { background: linear-gradient(180deg, #0a1628 0%, #152238 100%); color: #fff; padding: 14px 22px 12px; position: relative; }
+        .header::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: var(--accent); }
+        .header-content { display: flex; justify-content: space-between; align-items: center; }
+        .header-title { font-size: 24px; font-weight: 800; }
+        .header-subtitle { font-size: 10px; color: rgba(255,255,255,0.7); margin-top: 3px; font-style: italic; }
+        .header-right { text-align: right; display: flex; align-items: center; gap: 14px; }
+        .header-logo img { max-height: 50px; max-width: 130px; object-fit: contain; }
+        .header-company-name { font-size: 12px; font-weight: 700; color: var(--accent); }
+        .header-company-detail { font-size: 8px; color: rgba(255,255,255,0.6); margin-top: 2px; }
+        .header-scheme img { max-height: 35px; max-width: 70px; object-fit: contain; }
+        .header-sm { padding: 10px 22px 8px; }
+        .header-sm .header-title { font-size: 16px; }
+
+        .content { padding: 14px 22px; }
+        .intro-box { background: #0f172a; border: 1.5px solid #1e293b; border-left: 4px solid var(--accent); border-radius: 5px; padding: 10px 14px; margin-bottom: 12px; }
+        .intro-text { font-size: 10px; color: rgba(255,255,255,0.85); line-height: 1.6; }
+        .intro-text strong { color: #fff; }
+
+        .section { margin-bottom: 10px; }
+        .section-bar { background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); color: #fff; font-size: 9.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; padding: 5px 14px; border-left: 4px solid var(--accent); border-radius: 2px; margin-bottom: 6px; }
+        .section-bar.amber { border-left-color: #f59e0b; }
+        .section-bar.green { border-left-color: #22c55e; }
+        .section-bar.blue { border-left-color: #3b82f6; }
+
+        .bullet-list { padding: 0 0 0 4px; }
+        .bullet-item { display: flex; gap: 8px; margin-bottom: 4px; align-items: flex-start; }
+        .bullet-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); flex-shrink: 0; margin-top: 4px; }
+        .bullet-dot.amber { background: #f59e0b; }
+        .bullet-dot.green { background: #22c55e; }
+        .bullet-dot.blue { background: #3b82f6; }
+        .bullet-text { font-size: 10px; color: #334155; line-height: 1.55; flex: 1; }
+        .bullet-text strong { color: #0f172a; font-weight: 700; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; }
+
+        .numbered-item { display: flex; gap: 8px; margin-bottom: 5px; align-items: flex-start; }
+        .numbered-circle { width: 18px; height: 18px; border-radius: 50%; background: var(--accent); color: #fff; font-size: 9px; font-weight: 800; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; }
+
+        .info-box { background: #0f172a; border: 1.5px solid #1e293b; border-left: 4px solid var(--accent); border-radius: 5px; padding: 10px 14px; margin: 6px 0; }
+        .info-title { font-size: 10px; font-weight: 700; color: #fff; margin-bottom: 3px; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; }
+        .info-text { font-size: 9.5px; color: rgba(255,255,255,0.85); line-height: 1.6; }
+
+        .amber-box { background: #0f172a; border: 1.5px solid #1e293b; border-left: 4px solid #f59e0b; border-radius: 5px; padding: 10px 14px; margin: 6px 0; }
+        .amber-title { font-size: 10px; font-weight: 700; color: #fff; margin-bottom: 3px; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; }
+        .amber-text { font-size: 9.5px; color: rgba(255,255,255,0.85); line-height: 1.6; }
+
+        .alert-box { background: #7f1d1d; border: 1.5px solid #991b1b; border-left: 4px solid #dc2626; border-radius: 5px; padding: 10px 14px; margin: 6px 0; }
+        .alert-title { font-size: 10px; font-weight: 800; color: #fff; margin-bottom: 3px; text-transform: uppercase; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; }
+        .alert-text { font-size: 9.5px; color: rgba(255,255,255,0.9); line-height: 1.6; }
+
+        .contact-card { background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); border-radius: 6px; padding: 12px 16px; margin-top: 10px; position: relative; overflow: hidden; }
+        .contact-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: var(--accent); }
+        .contact-card-title { font-size: 8px; color: rgba(255,255,255,0.5); text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 4px; }
+        .contact-card-name { font-size: 13px; font-weight: 800; color: #fff; }
+        .contact-card-details { font-size: 9px; color: var(--accent); margin-top: 3px; }
+        .contact-card-address { font-size: 8px; color: rgba(255,255,255,0.5); margin-top: 3px; }
+        .contact-card-reg { font-size: 7.5px; color: rgba(255,255,255,0.4); margin-top: 3px; }
+
+        .footer { position: absolute; bottom: 0; left: 0; right: 0; border-top: 2px solid var(--accent); padding: 6px 22px; display: flex; justify-content: space-between; align-items: center; font-size: 7.5px; color: #94a3b8; }
+        .page-break { page-break-before: always; }
+    </style>
+</head>
+<body>
+
+<!-- ===== PAGE 1 — ALARMS & TESTING ===== -->
+<div class="page">
+    <div class="header">
+        <div class="header-content">
+            <div>
+                <div class="header-title">Fire Safety for Tenants</div>
+                <div class="header-subtitle">Essential fire safety information for your rented home</div>
+            </div>
+            <div class="header-right">
+                {% if company_logo %}<div class="header-logo"><img src="{{ company_logo }}" alt="Logo" /></div>{% endif %}
+                <div>
+                    <div class="header-company-name">{{ company_name }}</div>
+                    {% if company_phone %}<div class="header-company-detail">{{ company_phone }}</div>{% endif %}
+                    {% if registration_scheme %}<div class="header-company-detail">{{ registration_scheme }}: {{ registration_number }}</div>{% endif %}
+                </div>
+                {% if scheme_logo %}<div class="header-scheme"><img src="{{ scheme_logo }}" alt="Scheme" /></div>{% endif %}
+            </div>
+        </div>
+    </div>
+    <div class="content">
+        <div class="intro-box">
+            <div class="intro-text">Fire kills. In the UK, fire services attend over <strong>27,000 dwelling fires every year</strong>, resulting in around 250 deaths and 7,000 injuries. The majority of fire deaths happen in the home. This guide from <strong>{{ company_name }}</strong> explains how to protect yourself, your family, and your home. <strong>Read it, share it, and keep it somewhere visible.</strong></div>
+        </div>
+
+        <div class="section">
+            <div class="section-bar">Your Alarms — What's Installed and Why</div>
+            <div class="bullet-list">
+                <div class="bullet-item"><div class="bullet-dot"></div><div class="bullet-text"><strong>Smoke alarms</strong> are fitted on every floor — in hallways and landings (your escape route). They detect smoke particles in the air and sound a loud alarm. They are your <strong>first and most important warning</strong></div></div>
+                <div class="bullet-item"><div class="bullet-dot"></div><div class="bullet-text"><strong>Heat alarms</strong> are fitted in the kitchen. They respond to temperature, not smoke, so they won't give false alarms from cooking. They trigger when the temperature rises rapidly or exceeds a set threshold (typically 58°C)</div></div>
+                <div class="bullet-item"><div class="bullet-dot"></div><div class="bullet-text"><strong>Carbon monoxide (CO) alarms</strong> are fitted in any room with a gas boiler, gas fire, or solid fuel burner. Carbon monoxide is an <strong>invisible, odourless, tasteless gas that kills</strong>. You cannot detect it without an alarm</div></div>
+                <div class="bullet-item"><div class="bullet-dot"></div><div class="bullet-text"><strong>Interconnected:</strong> Your alarms are linked — when one detects danger, <strong>all alarms in the property sound together</strong>. This means you'll hear the alarm even if the fire starts in a room you're not in</div></div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-bar green">Testing Your Alarms — Your Responsibility</div>
+            <div class="bullet-list">
+                <div class="bullet-item"><div class="bullet-dot green"></div><div class="bullet-text"><strong>Test every alarm monthly</strong> — press and hold the test button until you hear the alarm. It should be loud enough to wake you. Test each one individually</div></div>
+                <div class="bullet-item"><div class="bullet-dot green"></div><div class="bullet-text"><strong>If an alarm doesn't sound</strong> when tested — replace the battery immediately (if battery-powered) or report it to your landlord straight away. <strong>A silent alarm cannot save your life</strong></div></div>
+                <div class="bullet-item"><div class="bullet-dot green"></div><div class="bullet-text"><strong>Never remove or disable an alarm</strong> — not even temporarily during cooking. If your smoke alarm keeps false-alarming from cooking, tell your landlord. You may need a heat alarm in the kitchen instead</div></div>
+                <div class="bullet-item"><div class="bullet-dot green"></div><div class="bullet-text"><strong>Replace batteries</strong> when you hear intermittent chirping. Mains-wired alarms have backup batteries that also need replacing. <strong>Replace the entire alarm unit every 10 years</strong> — the sensor degrades</div></div>
+            </div>
+            <div class="info-box">
+                <div class="info-title">What do the sounds mean?</div>
+                <div class="info-text"><strong>Continuous loud alarm:</strong> Fire or CO detected — evacuate immediately. <strong>Chirping every 30-60 seconds:</strong> Low battery — replace now, don't wait. <strong>Three beeps then silence:</strong> End of life — the whole unit needs replacing. Report to your landlord.</div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-bar">Preventing Fires — The Biggest Risks</div>
+            <div class="bullet-list">
+                <div class="bullet-item"><div class="bullet-dot amber"></div><div class="bullet-text"><strong>Cooking</strong> is the #1 cause of house fires. Never leave cooking unattended. Keep tea towels, cloths, and packaging away from the hob. If a pan catches fire — <strong>never throw water on it</strong>. Turn off the heat, cover with a damp cloth or fire blanket, and leave it to cool</div></div>
+                <div class="bullet-item"><div class="bullet-dot amber"></div><div class="bullet-text"><strong>Electrical appliances:</strong> Don't overload sockets. Unplug hair straighteners, irons, and portable heaters when not in use. Check cables for damage. Never charge phones or laptops on beds or sofas — they can overheat and ignite bedding</div></div>
+                <div class="bullet-item"><div class="bullet-dot amber"></div><div class="bullet-text"><strong>Candles:</strong> Never leave candles unattended. Keep them away from curtains, bedding, and anything flammable. Use a proper holder on a heat-resistant surface. Extinguish before going to sleep. Consider LED flameless candles instead</div></div>
+                <div class="bullet-item"><div class="bullet-dot amber"></div><div class="bullet-text"><strong>Smoking:</strong> Never smoke in bed. Use a proper ashtray — not a plant pot or cup. Make sure cigarettes are fully extinguished. Never throw cigarette ends out of windows — they can land on balconies below</div></div>
+                <div class="bullet-item"><div class="bullet-dot amber"></div><div class="bullet-text"><strong>Tumble dryers:</strong> Clean the lint filter after every use. Lint is highly flammable. Don't run the dryer when you're out or asleep. Keep the area around the dryer clear of flammable materials</div></div>
+                <div class="bullet-item"><div class="bullet-dot amber"></div><div class="bullet-text"><strong>E-bikes and e-scooters:</strong> Only use the manufacturer's charger. Never charge overnight or unattended. Never block your exit with a charging e-bike. Lithium battery fires are extremely intense and fast-moving</div></div>
+            </div>
+        </div>
+    </div>
+    <div class="footer">
+        <div>{{ company_name }}{% if company_phone %} — {{ company_phone }}{% endif %}</div>
+        <div>Powered by <strong>Elec-Mate</strong></div>
+        <div>Page 1 of 3</div>
+    </div>
+</div>
+
+<!-- ===== PAGE 2 — ESCAPE, FIRE DOORS & WHAT TO DO ===== -->
+<div class="page page-break">
+    <div class="header header-sm">
+        <div class="header-content">
+            <div><div class="header-title">Escape Plan & What to Do in a Fire</div></div>
+            <div class="header-right">
+                {% if company_logo %}<div class="header-logo"><img src="{{ company_logo }}" alt="Logo" style="max-height:35px;" /></div>{% endif %}
+                <div><div class="header-company-name">{{ company_name }}</div></div>
+            </div>
+        </div>
+    </div>
+    <div class="content">
+        <div class="section">
+            <div class="section-bar red">If There Is a Fire</div>
+            <div class="alert-box">
+                <div class="alert-title">Get Out, Stay Out, Call 999</div>
+                <div class="alert-text">Do not try to fight the fire. Do not go back in for possessions, phones, or pets. Get everyone out, close doors behind you to slow the fire, go to your meeting point, and call <strong>999</strong> from outside.</div>
+            </div>
+            <div class="numbered-item"><div class="numbered-circle">1</div><div class="bullet-text"><strong>Alert everyone</strong> — shout "FIRE!" loudly. If alarms haven't sounded, press the test button on the nearest alarm to trigger all interconnected units</div></div>
+            <div class="numbered-item"><div class="numbered-circle">2</div><div class="bullet-text"><strong>Get out immediately</strong> — use your planned escape route. Feel doors before opening — if hot, the fire is on the other side. Use an alternative route</div></div>
+            <div class="numbered-item"><div class="numbered-circle">3</div><div class="bullet-text"><strong>Close doors behind you</strong> — every closed door slows the spread of fire and smoke by 15-20 minutes. This buys time for everyone to escape and for the fire service to arrive</div></div>
+            <div class="numbered-item"><div class="numbered-circle">4</div><div class="bullet-text"><strong>Stay low</strong> — smoke rises. If the route is smoky, crawl along the floor where the air is clearest</div></div>
+            <div class="numbered-item"><div class="numbered-circle">5</div><div class="bullet-text"><strong>Call 999</strong> from outside — never go back in. Tell the operator your address and whether anyone is still inside</div></div>
+        </div>
+
+        <div class="section">
+            <div class="section-bar">If You Can't Get Out</div>
+            <div class="info-box">
+                <div class="info-text"><strong>Go to a room with a window.</strong> Close the door and put towels, sheets, or clothes along the bottom to block smoke. Open the window and shout for help. If you're above the ground floor, <strong>do not jump</strong> — wait for the fire service. Call 999 and tell them exactly where you are in the building.</div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-bar amber">Your Escape Route — Plan It Now</div>
+            <div class="bullet-list">
+                <div class="bullet-item"><div class="bullet-dot amber"></div><div class="bullet-text"><strong>Walk your escape route today.</strong> From every bedroom, find two ways out if possible. The primary route is usually through the hallway and front door. The secondary route might be a window (ground floor only)</div></div>
+                <div class="bullet-item"><div class="bullet-dot amber"></div><div class="bullet-text"><strong>Keep escape routes clear at all times.</strong> No shoes, coats, bikes, prams, or boxes in the hallway or on stairs. In a fire, you're escaping in darkness and smoke — obstacles can be deadly</div></div>
+                <div class="bullet-item"><div class="bullet-dot amber"></div><div class="bullet-text"><strong>Know where your keys are.</strong> Keep door keys in a consistent, known place near the door (but not visible from outside). In a fire, you won't have time to search for keys in the dark</div></div>
+                <div class="bullet-item"><div class="bullet-dot amber"></div><div class="bullet-text"><strong>Choose a meeting point</strong> outside — a lamp post, a neighbour's driveway. Everyone goes there so you know who's out. Practise with your household, including children</div></div>
+                <div class="bullet-item"><div class="bullet-dot amber"></div><div class="bullet-text"><strong>If you live in a flat:</strong> Know where the nearest fire exit is. Never use the lift in a fire. If the fire is not in your flat, the safest option may be to <strong>stay put</strong> with doors closed — follow your building's fire strategy (evacuate or stay put) posted in the communal area</div></div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-bar">Fire Doors — Do Not Wedge Them Open</div>
+            <div class="bullet-list">
+                <div class="bullet-item"><div class="bullet-dot"></div><div class="bullet-text"><strong>Fire doors save lives.</strong> A properly closed fire door holds back fire and smoke for <strong>30 minutes</strong>. A door wedged open provides <strong>zero protection</strong> — smoke and fire spread freely</div></div>
+                <div class="bullet-item"><div class="bullet-dot"></div><div class="bullet-text"><strong>Never wedge, prop, or hold fire doors open.</strong> Not with door stops, boxes, extinguishers, or furniture. If a fire door is difficult to close, report it to your landlord — it may need adjustment</div></div>
+                <div class="bullet-item"><div class="bullet-dot"></div><div class="bullet-text"><strong>Check your fire doors work:</strong> They should close fully by themselves (self-closing). There should be no gaps around the edges. The intumescent strip (usually a thin strip in the door frame) should be intact — this swells in heat to seal the gap</div></div>
+                <div class="bullet-item"><div class="bullet-dot"></div><div class="bullet-text"><strong>Close your bedroom door at night.</strong> Even a standard internal door slows fire and smoke significantly. A closed door between you and a fire could be the difference between life and death</div></div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-bar blue">Carbon Monoxide — The Silent Killer</div>
+            <div class="bullet-list">
+                <div class="bullet-item"><div class="bullet-dot blue"></div><div class="bullet-text"><strong>Symptoms of CO poisoning:</strong> Headaches, dizziness, nausea, breathlessness, confusion, collapse. Often mistaken for flu. If symptoms improve when you leave the property and return when you come back — suspect CO</div></div>
+                <div class="bullet-item"><div class="bullet-dot blue"></div><div class="bullet-text"><strong>If your CO alarm sounds:</strong> Open all windows and doors. Turn off gas appliances if safe. Leave the property. Call the <strong>gas emergency line: 0800 111 999</strong>. Do not go back in until cleared by an engineer</div></div>
+                <div class="bullet-item"><div class="bullet-dot blue"></div><div class="bullet-text"><strong>Never block ventilation.</strong> Air bricks, trickle vents, and extractor fans exist for a reason — they prevent CO build-up from gas appliances. Do not cover, block, or tape over them, even in winter</div></div>
+            </div>
+        </div>
+
+    </div>
+    <div class="footer">
+        <div>{{ company_name }}{% if company_phone %} — {{ company_phone }}{% endif %}</div>
+        <div>Powered by <strong>Elec-Mate</strong></div>
+        <div>Page 2 of 3</div>
+    </div>
+</div>
+
+<!-- ===== PAGE 3 — ELECTRICAL FIRE SAFETY, NIGHT ROUTINE & YOUR RIGHTS ===== -->
+<div class="page page-break">
+    <div class="header header-sm">
+        <div class="header-content">
+            <div><div class="header-title">Electrical Safety, Night Routine & Your Rights</div></div>
+            <div class="header-right">
+                {% if company_logo %}<div class="header-logo"><img src="{{ company_logo }}" alt="Logo" style="max-height:35px;" /></div>{% endif %}
+                <div><div class="header-company-name">{{ company_name }}</div></div>
+            </div>
+        </div>
+    </div>
+    <div class="content">
+        <div class="section">
+            <div class="section-bar">Electrical Fire Safety</div>
+            <div class="bullet-list">
+                <div class="bullet-item"><div class="bullet-dot"></div><div class="bullet-text"><strong>Overloaded sockets</strong> cause thousands of fires every year. Never plug more than <strong>3,120 watts</strong> into a single socket. A kettle alone uses up to 3,000W — never plug a kettle into an extension lead with other appliances</div></div>
+                <div class="bullet-item"><div class="bullet-dot"></div><div class="bullet-text"><strong>Never daisy-chain extension leads</strong> — plugging one extension into another creates extreme fire risk. If you need more sockets, ask your landlord to have additional ones installed</div></div>
+                <div class="bullet-item"><div class="bullet-dot"></div><div class="bullet-text"><strong>Check cables for damage</strong> — frayed, cracked, or melted cables are a fire waiting to happen. Check where cables enter plugs — this is where damage most commonly occurs from pulling</div></div>
+                <div class="bullet-item"><div class="bullet-dot"></div><div class="bullet-text"><strong>Warning signs of electrical faults:</strong> Hot sockets or plugs, burning smell, brown marks around sockets, flickering lights, sparking. If you notice any of these — <strong>stop using that socket</strong> and report to your landlord immediately</div></div>
+                <div class="bullet-item"><div class="bullet-dot"></div><div class="bullet-text"><strong>E-bikes and e-scooters</strong> are the fastest-growing cause of fatal house fires. Only use the manufacturer's charger. Never charge overnight or while you sleep. Never charge near your exit route. Lithium battery fires produce toxic gases and spread in seconds</div></div>
+                <div class="bullet-item"><div class="bullet-dot"></div><div class="bullet-text"><strong>Portable heaters:</strong> Keep at least 1 metre from furniture, curtains, and bedding. Never dry clothes on a heater. Never leave on overnight or when you leave the room. Never use in bathrooms</div></div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-bar green">Night-Time Safety Checklist</div>
+            <div class="info-box" style="border-left-color: #22c55e;">
+                <div class="info-title">Do this every night before bed — it takes 2 minutes</div>
+                <div class="info-text">
+                    ✓ Turn off and unplug portable heaters<br>
+                    ✓ Check the cooker / hob is off<br>
+                    ✓ Extinguish all candles<br>
+                    ✓ Unplug phone/laptop chargers from sockets (or at least off beds/sofas)<br>
+                    ✓ Close all internal doors — especially bedroom doors<br>
+                    ✓ Check e-bike/e-scooter is NOT charging<br>
+                    ✓ Check escape route is clear (nothing in the hallway)<br>
+                    ✓ Keys are in their known place near the front door
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-bar">Fire Blankets & Extinguishers</div>
+            <div class="bullet-list">
+                <div class="bullet-item"><div class="bullet-dot"></div><div class="bullet-text"><strong>Fire blanket (kitchen):</strong> Pull the tapes downward to release the blanket. Hold it in front of you as a shield. Place it gently over the pan fire or burning object. Leave it in place for at least <strong>30 minutes</strong>. Do not peek. Turn off the heat source if you can reach it safely</div></div>
+                <div class="bullet-item"><div class="bullet-dot"></div><div class="bullet-text"><strong>Fire extinguisher:</strong> Only use if the fire is small and you know which type to use. <strong>Never use water on an electrical or oil/fat fire.</strong> For electrical fires, use CO2 (black label) or dry powder (blue label). For cooking oil fires, use a wet chemical extinguisher (yellow label) or fire blanket</div></div>
+                <div class="bullet-item"><div class="bullet-dot"></div><div class="bullet-text"><strong>When NOT to fight a fire:</strong> If the fire is larger than a waste bin, if the room is filling with smoke, if you're unsure what's burning, or if your escape route could be cut off. <strong>Get out and let the fire service handle it</strong></div></div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-bar blue">Your Rights as a Tenant</div>
+            <div class="bullet-list">
+                <div class="bullet-item"><div class="bullet-dot blue"></div><div class="bullet-text"><strong>Your landlord must provide:</strong> Working smoke alarms on every floor, heat alarms in kitchens, CO alarms where there are gas appliances. These must be working at the start of your tenancy (Smoke and Carbon Monoxide Alarm Regulations 2022)</div></div>
+                <div class="bullet-item"><div class="bullet-dot blue"></div><div class="bullet-text"><strong>Fire doors</strong> in communal areas (flats/HMOs) are your landlord's responsibility to maintain. If a fire door doesn't close properly, has damaged seals, or is wedged open by the landlord — report it</div></div>
+                <div class="bullet-item"><div class="bullet-dot blue"></div><div class="bullet-text"><strong>Clear escape routes</strong> are a legal requirement. If your landlord stores items in communal hallways, stairwells, or near fire exits — this is a fire safety breach. Report to your local council if not resolved</div></div>
+                <div class="bullet-item"><div class="bullet-dot blue"></div><div class="bullet-text"><strong>Electrical safety:</strong> Your landlord must have a valid EICR (Electrical Installation Condition Report) every 5 years. Ask to see it — they must provide a copy within 28 days of the inspection</div></div>
+                <div class="bullet-item"><div class="bullet-dot blue"></div><div class="bullet-text"><strong>Gas safety:</strong> Your landlord must have an annual Gas Safety Certificate (CP12). You should receive a copy within 28 days of the check, or before you move in</div></div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-bar">Useful Contacts</div>
+            <div class="bullet-list">
+                <div class="bullet-item"><div class="bullet-dot"></div><div class="bullet-text"><strong>Fire emergency:</strong> 999</div></div>
+                <div class="bullet-item"><div class="bullet-dot"></div><div class="bullet-text"><strong>Fire service non-emergency:</strong> Contact your local fire and rescue service for free home fire safety visits and advice</div></div>
+                <div class="bullet-item"><div class="bullet-dot"></div><div class="bullet-text"><strong>Gas emergency:</strong> 0800 111 999 (free, 24/7 — National Gas Emergency Service)</div></div>
+                <div class="bullet-item"><div class="bullet-dot"></div><div class="bullet-text"><strong>Carbon monoxide helpline:</strong> 0800 111 999 (same as gas emergency)</div></div>
+                <div class="bullet-item"><div class="bullet-dot"></div><div class="bullet-text"><strong>Report unsafe housing:</strong> Contact your local council's Environmental Health department</div></div>
+                <div class="bullet-item"><div class="bullet-dot"></div><div class="bullet-text"><strong>After a fire:</strong> Your council has a duty to help with emergency accommodation. Contact them immediately. Your contents insurance (if you have it) will cover belongings — report within 24 hours</div></div>
+            </div>
+        </div>
+
+        <div class="contact-card">
+            <div class="contact-card-title">Electrical safety concerns? Contact your electrician</div>
+            <div class="contact-card-name">{{ company_name }}</div>
+            <div class="contact-card-details">
+                {% if company_phone %}{{ company_phone }}{% endif %}
+                {% if company_email %} | {{ company_email }}{% endif %}
+                {% if company_website %} | {{ company_website }}{% endif %}
+            </div>
+            {% if company_address %}<div class="contact-card-address">{{ company_address }}</div>{% endif %}
+            {% if registration_scheme %}<div class="contact-card-reg">{{ registration_scheme }} Registered — No. {{ registration_number }}</div>{% endif %}
+        </div>
+    </div>
+    <div class="footer">
+        <div>{{ company_name }}{% if company_phone %} — {{ company_phone }}{% endif %}</div>
+        <div>Powered by <strong>Elec-Mate</strong></div>
+        <div>Page 3 of 3</div>
+    </div>
+</div>
+
+</body>
+</html>

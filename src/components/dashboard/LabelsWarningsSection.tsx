@@ -54,7 +54,7 @@ const noticesAndPermits: DocDef[] = [
   },
 ];
 
-const warningLabels: DocDef[] = [
+const printables: DocDef[] = [
   {
     id: 'warning-labels',
     title: 'Warning Labels',
@@ -62,6 +62,14 @@ const warningLabels: DocDef[] = [
     badge: 'BS 7671',
     accentColor: 'from-yellow-500 via-amber-400 to-orange-400',
     href: '/electrician/inspection-testing/warning-labels',
+  },
+  {
+    id: 'board-schedule',
+    title: 'Board Schedule',
+    description: 'CU door label & A4 schedule',
+    badge: 'Printable',
+    accentColor: 'from-orange-500 via-amber-400 to-yellow-400',
+    href: '/electrician/inspection-testing/board-schedule',
   },
 ];
 
@@ -81,6 +89,17 @@ const siteRecords: DocDef[] = [
     badge: 'AI-Powered',
     accentColor: 'from-blue-500 via-blue-400 to-cyan-400',
     href: '/electrician/health-safety',
+  },
+];
+
+const clientHandouts: DocDef[] = [
+  {
+    id: 'client-handouts',
+    title: 'Client Handouts',
+    description: 'Branded guides for clients',
+    badge: '9 Templates',
+    accentColor: 'from-emerald-500 via-green-400 to-teal-400',
+    href: '/electrician/inspection-testing/client-handouts',
   },
 ];
 
@@ -329,13 +348,13 @@ const LabelsWarningsSection = ({ onBack }: LabelsWarningsSectionProps) => {
           </div>
         </motion.section>
 
-        {/* Warning Labels */}
+        {/* Printables */}
         <motion.section variants={itemVariants} className="space-y-3">
           <h2 className="text-xs font-medium text-white uppercase tracking-wider px-0.5">
-            Warning Labels
+            Printables
           </h2>
           <div className="grid grid-cols-2 gap-3 auto-rows-fr">
-            {warningLabels.map((doc) => (
+            {printables.map((doc) => (
               <DocCard key={doc.id} doc={doc} />
             ))}
           </div>
@@ -348,6 +367,18 @@ const LabelsWarningsSection = ({ onBack }: LabelsWarningsSectionProps) => {
           </h2>
           <div className="grid grid-cols-2 gap-3 auto-rows-fr">
             {siteRecords.map((doc) => (
+              <DocCard key={doc.id} doc={doc} />
+            ))}
+          </div>
+        </motion.section>
+
+        {/* Client Handouts */}
+        <motion.section variants={itemVariants} className="space-y-3">
+          <h2 className="text-xs font-medium text-white uppercase tracking-wider px-0.5">
+            Client Documents
+          </h2>
+          <div className="grid grid-cols-2 gap-3 auto-rows-fr">
+            {clientHandouts.map((doc) => (
               <DocCard key={doc.id} doc={doc} />
             ))}
           </div>

@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Landlord EICR Guide</title>
+    <style>
+        :root { --accent: #f59e0b; --accent-bg: #f5f3ff; }
+        @page { size: A4; margin: 0; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: Georgia, 'Times New Roman', serif; font-size: 10px; line-height: 1.55; color: #1e293b; background: #fff; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+        h1, h2, h3, .section-bar, .header-title, .header-company-name, .contact-card-name, .contact-card-title, .timeline-label, .penalty-number, .footer { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; }
+
+        .page { width: 210mm; min-height: 297mm; position: relative; overflow: hidden; }
+        .header { background: linear-gradient(180deg, #0a1628 0%, #152238 100%); color: #fff; padding: 14px 22px 12px; position: relative; }
+        .header::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: var(--accent); }
+        .header-content { display: flex; justify-content: space-between; align-items: center; }
+        .header-title { font-size: 24px; font-weight: 800; }
+        .header-subtitle { font-size: 10px; color: rgba(255,255,255,0.7); margin-top: 3px; font-style: italic; }
+        .header-right { text-align: right; display: flex; align-items: center; gap: 14px; }
+        .header-logo img { max-height: 50px; max-width: 130px; object-fit: contain; }
+        .header-company-name { font-size: 12px; font-weight: 700; color: var(--accent); }
+        .header-company-detail { font-size: 8px; color: rgba(255,255,255,0.6); margin-top: 2px; }
+        .header-scheme img { max-height: 35px; max-width: 70px; object-fit: contain; }
+        .header-sm { padding: 10px 22px 8px; }
+        .header-sm .header-title { font-size: 16px; }
+
+        .content { padding: 14px 22px; }
+
+        .intro-box { background: #0f172a; border: 1.5px solid #1e293b; border-left: 4px solid var(--accent); border-radius: 5px; padding: 10px 14px; margin-bottom: 12px; }
+        .intro-text { font-size: 10px; color: rgba(255,255,255,0.85); line-height: 1.6; }
+        .intro-text strong { color: #fff; }
+
+        .section { margin-bottom: 10px; }
+        .section-bar { background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); color: #fff; font-size: 9.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; padding: 5px 14px; border-left: 4px solid var(--accent); border-radius: 2px; margin-bottom: 6px; }
+        .section-bar.red { border-left-color: #dc2626; }
+        .section-bar.amber { border-left-color: #f59e0b; }
+        .section-bar.green { border-left-color: #22c55e; }
+
+        .bullet-list { padding: 0 0 0 4px; }
+        .bullet-item { display: flex; gap: 8px; margin-bottom: 4px; align-items: flex-start; }
+        .bullet-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); flex-shrink: 0; margin-top: 4px; }
+        .bullet-dot.red { background: #dc2626; }
+        .bullet-dot.amber { background: #f59e0b; }
+        .bullet-dot.green { background: #22c55e; }
+        .bullet-text { font-size: 10px; color: #334155; line-height: 1.55; flex: 1; }
+        .bullet-text strong { color: #0f172a; font-weight: 700; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; }
+
+        .info-box { background: #0f172a; border: 1.5px solid #1e293b; border-left: 4px solid var(--accent); border-radius: 5px; padding: 10px 14px; margin: 6px 0; }
+        .info-title { font-size: 10px; font-weight: 700; color: #fff; margin-bottom: 3px; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; }
+        .info-text { font-size: 9.5px; color: rgba(255,255,255,0.85); line-height: 1.6; }
+
+        .alert-box { background: #7f1d1d; border: 1.5px solid #991b1b; border-left: 4px solid #dc2626; border-radius: 5px; padding: 10px 14px; margin: 6px 0; }
+        .alert-title { font-size: 10px; font-weight: 800; color: #fff; margin-bottom: 3px; text-transform: uppercase; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; }
+        .alert-text { font-size: 9.5px; color: rgba(255,255,255,0.9); line-height: 1.6; }
+
+        .amber-box { background: #0f172a; border: 1.5px solid #1e293b; border-left: 4px solid #f59e0b; border-radius: 5px; padding: 10px 14px; margin: 6px 0; }
+        .amber-title { font-size: 10px; font-weight: 700; color: #fff; margin-bottom: 3px; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; }
+        .amber-text { font-size: 9.5px; color: rgba(255,255,255,0.85); line-height: 1.6; }
+
+        /* Timeline */
+        .timeline { margin: 8px 0; }
+        .timeline-item { display: flex; gap: 10px; margin-bottom: 6px; }
+        .timeline-marker { display: flex; flex-direction: column; align-items: center; width: 20px; flex-shrink: 0; }
+        .timeline-dot { width: 10px; height: 10px; border-radius: 50%; background: var(--accent); }
+        .timeline-dot.red { background: #dc2626; }
+        .timeline-dot.amber { background: #f59e0b; }
+        .timeline-dot.green { background: #22c55e; }
+        .timeline-line { width: 2px; flex: 1; background: #e2e8f0; margin-top: 2px; }
+        .timeline-content { flex: 1; padding-bottom: 4px; }
+        .timeline-label { font-size: 9px; font-weight: 700; color: #0f172a; text-transform: uppercase; letter-spacing: 0.5px; }
+        .timeline-desc { font-size: 9.5px; color: #475569; line-height: 1.5; margin-top: 2px; }
+
+        /* Penalty cards */
+        .penalty-row { display: flex; gap: 8px; margin: 8px 0; }
+        .penalty-card { flex: 1; background: #0f172a; border-radius: 5px; padding: 10px 12px; text-align: center; border: 1px solid #1e293b; }
+        .penalty-number { font-size: 18px; font-weight: 800; color: #f87171; }
+        .penalty-label { font-size: 8px; color: rgba(255,255,255,0.6); margin-top: 2px; text-transform: uppercase; letter-spacing: 0.8px; }
+
+        .contact-card { background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); border-radius: 6px; padding: 12px 16px; margin-top: 10px; position: relative; overflow: hidden; }
+        .contact-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: var(--accent); }
+        .contact-card-title { font-size: 8px; color: rgba(255,255,255,0.5); text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 4px; }
+        .contact-card-name { font-size: 13px; font-weight: 800; color: #fff; }
+        .contact-card-details { font-size: 9px; color: var(--accent); margin-top: 3px; }
+        .contact-card-address { font-size: 8px; color: rgba(255,255,255,0.5); margin-top: 3px; }
+        .contact-card-reg { font-size: 7.5px; color: rgba(255,255,255,0.4); margin-top: 3px; }
+
+        .footer { position: absolute; bottom: 0; left: 0; right: 0; border-top: 2px solid var(--accent); padding: 6px 22px; display: flex; justify-content: space-between; align-items: center; font-size: 7.5px; color: #94a3b8; }
+        .page-break { page-break-before: always; }
+    </style>
+</head>
+<body>
+
+<!-- ===== PAGE 1 — YOUR LEGAL OBLIGATIONS ===== -->
+<div class="page">
+    <div class="header">
+        <div class="header-content">
+            <div>
+                <div class="header-title">Landlord EICR Guide</div>
+                <div class="header-subtitle">Your legal obligations under the Electrical Safety Standards Regulations 2020</div>
+            </div>
+            <div class="header-right">
+                {% if company_logo %}<div class="header-logo"><img src="{{ company_logo }}" alt="Logo" /></div>{% endif %}
+                <div>
+                    <div class="header-company-name">{{ company_name }}</div>
+                    {% if company_phone %}<div class="header-company-detail">{{ company_phone }}</div>{% endif %}
+                    {% if registration_scheme %}<div class="header-company-detail">{{ registration_scheme }}: {{ registration_number }}</div>{% endif %}
+                </div>
+                {% if scheme_logo %}<div class="header-scheme"><img src="{{ scheme_logo }}" alt="Scheme" /></div>{% endif %}
+            </div>
+        </div>
+    </div>
+    <div class="content">
+        <div class="intro-box">
+            <div class="intro-text">Since <strong>1 April 2021</strong>, all private landlords in England must comply with <strong>The Electrical Safety Standards in the Private Rented Sector (England) Regulations 2020</strong>. This guide from <strong>{{ company_name }}</strong> explains exactly what you need to do, when you need to do it, and what happens if you don't.</div>
+        </div>
+
+        <!-- Penalties -->
+        <div class="penalty-row">
+            <div class="penalty-card">
+                <div class="penalty-number">£30,000</div>
+                <div class="penalty-label">Maximum fine per offence</div>
+            </div>
+            <div class="penalty-card">
+                <div class="penalty-number">5 Years</div>
+                <div class="penalty-label">Maximum between inspections</div>
+            </div>
+            <div class="penalty-card">
+                <div class="penalty-number">28 Days</div>
+                <div class="penalty-label">To complete remedial work</div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-bar red">What the Law Requires</div>
+            <div class="bullet-list">
+                <div class="bullet-item"><div class="bullet-dot red"></div><div class="bullet-text"><strong>Have an EICR every 5 years</strong> — carried out by a qualified and competent electrician. The report must cover the fixed electrical installation (wiring, sockets, consumer unit, earthing) — not portable appliances</div></div>
+                <div class="bullet-item"><div class="bullet-dot red"></div><div class="bullet-text"><strong>New tenancies:</strong> You must have a valid EICR <strong>before the tenancy begins</strong>. The report must be no more than 5 years old at the start of the tenancy</div></div>
+                <div class="bullet-item"><div class="bullet-dot red"></div><div class="bullet-text"><strong>Provide a copy to tenants</strong> within <strong>28 days</strong> of the inspection, or before they move in for new tenancies</div></div>
+                <div class="bullet-item"><div class="bullet-dot red"></div><div class="bullet-text"><strong>Provide to your local authority</strong> within <strong>7 days</strong> if they request it</div></div>
+                <div class="bullet-item"><div class="bullet-dot red"></div><div class="bullet-text"><strong>If unsatisfactory:</strong> Complete all C1 and C2 remedial work within <strong>28 days</strong> of the report (or sooner if the electrician specifies)</div></div>
+                <div class="bullet-item"><div class="bullet-dot red"></div><div class="bullet-text"><strong>After remedial work:</strong> Obtain written confirmation from the electrician that defects have been remedied. Provide this to tenants within <strong>28 days</strong> of completion</div></div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-bar">The 28-Day Timeline</div>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-marker"><div class="timeline-dot"></div><div class="timeline-line"></div></div>
+                    <div class="timeline-content">
+                        <div class="timeline-label">Day 0 — EICR Inspection</div>
+                        <div class="timeline-desc">Your electrician inspects and tests the installation. You receive the EICR report.</div>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-marker"><div class="timeline-dot amber"></div><div class="timeline-line"></div></div>
+                    <div class="timeline-content">
+                        <div class="timeline-label">Within 28 Days — Provide to Tenants</div>
+                        <div class="timeline-desc">Give a copy of the EICR to every existing tenant. For new tenants, provide before move-in.</div>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-marker"><div class="timeline-dot red"></div><div class="timeline-line"></div></div>
+                    <div class="timeline-content">
+                        <div class="timeline-label">Within 28 Days — Complete Remedial Work</div>
+                        <div class="timeline-desc">If unsatisfactory, all C1 and C2 defects must be fixed. Your electrician may specify a shorter deadline for C1 (danger present).</div>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-marker"><div class="timeline-dot green"></div><div class="timeline-line"></div></div>
+                    <div class="timeline-content">
+                        <div class="timeline-label">Within 28 Days of Remedial — Confirm to Tenants</div>
+                        <div class="timeline-desc">Obtain written confirmation from your electrician. Provide to tenants and local authority if requested.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-bar red">What Happens If You Don't Comply</div>
+            <div class="alert-box">
+                <div class="alert-title">Financial penalties</div>
+                <div class="alert-text">Your local authority can impose a fine of up to <strong>£30,000 per offence</strong>. Multiple breaches (e.g. no EICR + not providing to tenant + not completing remedial work) can each attract a separate fine. These are civil penalties — no court conviction needed.</div>
+            </div>
+            <div class="alert-box">
+                <div class="alert-title">Local authority intervention</div>
+                <div class="alert-text">If you fail to complete remedial work within 28 days, the local authority has the power to <strong>enter your property and arrange for the work to be done</strong>. They will recover all costs from you, payable within 21 days of the demand.</div>
+            </div>
+        </div>
+    </div>
+    <div class="footer">
+        <div>{{ company_name }}{% if company_phone %} — {{ company_phone }}{% endif %}</div>
+        <div>Powered by <strong>Elec-Mate</strong></div>
+        <div>Page 1 of 3</div>
+    </div>
+</div>
+
+<!-- ===== PAGE 2 — PRACTICAL GUIDANCE ===== -->
+<div class="page page-break">
+    <div class="header header-sm">
+        <div class="header-content">
+            <div><div class="header-title">Practical Guidance for Landlords</div></div>
+            <div class="header-right">
+                {% if company_logo %}<div class="header-logo"><img src="{{ company_logo }}" alt="Logo" style="max-height:35px;" /></div>{% endif %}
+                <div><div class="header-company-name">{{ company_name }}</div></div>
+            </div>
+        </div>
+    </div>
+    <div class="content">
+        <div class="section">
+            <div class="section-bar">Understanding Your EICR Results</div>
+            <div class="bullet-list">
+                <div class="bullet-item"><div class="bullet-dot red"></div><div class="bullet-text"><strong>C1 — Danger Present:</strong> An immediate risk of injury. Your electrician should make this safe on site (usually by isolating the circuit). You <strong>must</strong> arrange permanent remedial work urgently — do not wait 28 days for C1 defects</div></div>
+                <div class="bullet-item"><div class="bullet-dot amber"></div><div class="bullet-text"><strong>C2 — Potentially Dangerous:</strong> Not immediately dangerous but could become so. Must be remedied within 28 days. Common C2 findings: lack of RCD protection, missing bonding, high Zs values</div></div>
+                <div class="bullet-item"><div class="bullet-dot"></div><div class="bullet-text"><strong>C3 — Improvement Recommended:</strong> Not dangerous, not legally required to fix. However, addressing C3 findings protects your property and tenants, and demonstrates duty of care if there's ever a dispute</div></div>
+                <div class="bullet-item"><div class="bullet-dot"></div><div class="bullet-text"><strong>FI — Further Investigation:</strong> Additional investigation needed. May uncover C1 or C2 defects. Budget for this — don't leave FI items uninvestigated</div></div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-bar green">Best Practice — Go Beyond the Minimum</div>
+            <div class="bullet-list">
+                <div class="bullet-item"><div class="bullet-dot green"></div><div class="bullet-text"><strong>Fix C3 defects too.</strong> While not legally required, addressing C3 findings (like upgrading to RCD protection or fitting SPDs) protects your tenants and your investment. It also shows due diligence if there's ever an insurance claim or legal dispute</div></div>
+                <div class="bullet-item"><div class="bullet-dot green"></div><div class="bullet-text"><strong>Don't wait until the last minute.</strong> Book your EICR 2-3 months before the previous one expires. This gives time for any remedial work without breaching the 5-year deadline</div></div>
+                <div class="bullet-item"><div class="bullet-dot green"></div><div class="bullet-text"><strong>Use the same electrician.</strong> Continuity means they know the installation history, can spot deterioration, and provide more accurate reports. They also hold the previous test results for comparison</div></div>
+                <div class="bullet-item"><div class="bullet-dot green"></div><div class="bullet-text"><strong>Keep a property compliance file.</strong> Store your EICR, gas safety certificate, EPC, fire risk assessment, and landlord insurance together. Some letting agents and insurers now require sight of a valid EICR</div></div>
+                <div class="bullet-item"><div class="bullet-dot green"></div><div class="bullet-text"><strong>Inform tenants in advance.</strong> Give at least 24 hours written notice before the inspection. The electrician needs access to every room, the consumer unit, and the meter. An uncooperative tenant can delay your compliance</div></div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-bar amber">Common Mistakes Landlords Make</div>
+            <div class="bullet-list">
+                <div class="bullet-item"><div class="bullet-dot amber"></div><div class="bullet-text"><strong>Thinking an EPC replaces an EICR.</strong> They are completely different documents. An EPC assesses energy efficiency. An EICR assesses electrical safety. You need both</div></div>
+                <div class="bullet-item"><div class="bullet-dot amber"></div><div class="bullet-text"><strong>Using an unqualified person.</strong> The regulations require a "qualified and competent person." Look for NICEIC, NAPIT, or ELECSA registration. A general builder or handyman cannot carry out an EICR</div></div>
+                <div class="bullet-item"><div class="bullet-dot amber"></div><div class="bullet-text"><strong>Ignoring FI (Further Investigation) items.</strong> An FI could be hiding a C1 or C2 defect behind a wall or ceiling. If you don't investigate and a tenant is injured, you have failed in your duty of care</div></div>
+                <div class="bullet-item"><div class="bullet-dot amber"></div><div class="bullet-text"><strong>Not keeping records.</strong> You must keep EICRs for the life of the installation. If a local authority asks for your EICR and you can't produce it within 7 days, you're in breach</div></div>
+                <div class="bullet-item"><div class="bullet-dot amber"></div><div class="bullet-text"><strong>Assuming old wiring is fine.</strong> Many rental properties have wiring from the 1960s-80s. Just because "nothing has gone wrong" doesn't mean it's safe. Deterioration happens invisibly inside walls</div></div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-bar">What Does an EICR Cost?</div>
+            <div class="info-box">
+                <div class="info-text">A domestic EICR typically costs <strong>£150-300</strong> depending on the size of the property and number of circuits. It takes 2-4 hours. Remedial work costs vary — a consumer unit upgrade (the most common C2 fix) is typically <strong>£400-800</strong>. Compare this to a <strong>£30,000 fine</strong> for non-compliance, and the cost of an EICR is negligible.</div>
+            </div>
+        </div>
+
+    </div>
+    <div class="footer">
+        <div>{{ company_name }}{% if company_phone %} — {{ company_phone }}{% endif %}</div>
+        <div>Powered by <strong>Elec-Mate</strong></div>
+        <div>Page 2 of 3</div>
+    </div>
+</div>
+
+<!-- ===== PAGE 3 — HMOs, OTHER OBLIGATIONS & CHECKLIST ===== -->
+<div class="page page-break">
+    <div class="header header-sm">
+        <div class="header-content">
+            <div><div class="header-title">HMOs, Other Obligations & Checklist</div></div>
+            <div class="header-right">
+                {% if company_logo %}<div class="header-logo"><img src="{{ company_logo }}" alt="Logo" style="max-height:35px;" /></div>{% endif %}
+                <div><div class="header-company-name">{{ company_name }}</div></div>
+            </div>
+        </div>
+    </div>
+    <div class="content">
+
+        <div class="section">
+            <div class="section-bar red">HMOs — Additional Requirements</div>
+            <div class="bullet-list">
+                <div class="bullet-item"><div class="bullet-dot red"></div><div class="bullet-text"><strong>Mandatory HMO licensing</strong> (5+ tenants, 2+ households) requires a valid EICR as part of the licence application. Without one, your licence can be refused or revoked</div></div>
+                <div class="bullet-item"><div class="bullet-dot red"></div><div class="bullet-text"><strong>Fire safety:</strong> HMOs have additional requirements for fire detection, emergency lighting, fire doors, and escape routes. An EICR alone does not cover fire safety — you need a separate fire risk assessment</div></div>
+                <div class="bullet-item"><div class="bullet-dot red"></div><div class="bullet-text"><strong>PAT testing:</strong> While not a legal requirement for standard rentals, many HMO licensing conditions require <strong>portable appliance testing</strong> of any electrical equipment you provide (kettles, toasters, microwaves in communal areas)</div></div>
+                <div class="bullet-item"><div class="bullet-dot red"></div><div class="bullet-text"><strong>Selective licensing:</strong> Some local authorities operate selective licensing schemes that require additional compliance beyond the national regulations. Check with your local council</div></div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-bar amber">Smoke & CO Alarms — Separate Legal Requirement</div>
+            <div class="amber-box">
+                <div class="amber-title">The Smoke and Carbon Monoxide Alarm (Amendment) Regulations 2022</div>
+                <div class="amber-text">Since October 2022, landlords must install <strong>smoke alarms on every storey</strong> used as living accommodation, <strong>heat alarms in kitchens</strong>, and <strong>carbon monoxide alarms in any room with a fixed combustion appliance</strong> (gas boiler, fire, etc.). You must ensure alarms are working at the start of each new tenancy. This is separate from your EICR obligation.</div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-bar">Insurance & Liability</div>
+            <div class="bullet-list">
+                <div class="bullet-item"><div class="bullet-dot"></div><div class="bullet-text"><strong>Landlord insurance:</strong> Many insurers now require a valid EICR. If you make a claim and don't have one, your insurer may refuse to pay — especially for electrical fires or shock injuries</div></div>
+                <div class="bullet-item"><div class="bullet-dot"></div><div class="bullet-text"><strong>Liability:</strong> If a tenant is injured by an electrical fault and you don't have a current EICR, you are likely liable. A valid EICR demonstrates you took reasonable steps to ensure safety</div></div>
+                <div class="bullet-item"><div class="bullet-dot"></div><div class="bullet-text"><strong>Tax deductible:</strong> The cost of an EICR and any remedial work is an <strong>allowable expense</strong> against rental income for income tax purposes. Keep your invoices</div></div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-bar">Managing Agents — Who Is Responsible?</div>
+            <div class="info-box">
+                <div class="info-text">The <strong>legal responsibility always sits with the landlord</strong>, even if you use a managing agent. If your agent fails to arrange an EICR, you are liable — not the agent. Ensure your management agreement explicitly states that the agent is responsible for arranging EICRs and remedial work. Check they are actually doing it. Ask for copies of the reports.</div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-bar green">Tenant Changeover Checklist</div>
+            <div class="bullet-list">
+                <div class="bullet-item"><div class="bullet-dot green"></div><div class="bullet-text"><strong>Check EICR validity</strong> — is the report less than 5 years old? If not, book a new one before the new tenancy starts</div></div>
+                <div class="bullet-item"><div class="bullet-dot green"></div><div class="bullet-text"><strong>Check for outstanding defects</strong> — were all C1 and C2 defects from the last EICR remedied? Do you have written confirmation?</div></div>
+                <div class="bullet-item"><div class="bullet-dot green"></div><div class="bullet-text"><strong>Test smoke, heat and CO alarms</strong> — replace batteries, replace units over 10 years old, ensure they all sound when tested</div></div>
+                <div class="bullet-item"><div class="bullet-dot green"></div><div class="bullet-text"><strong>Visual inspection</strong> — check all sockets, switches, and light fittings for damage. Check for signs of DIY electrical work by the previous tenant</div></div>
+                <div class="bullet-item"><div class="bullet-dot green"></div><div class="bullet-text"><strong>Provide documents</strong> — give the new tenant copies of the EICR, gas safety certificate, EPC, and how-to-rent guide before they move in</div></div>
+                <div class="bullet-item"><div class="bullet-dot green"></div><div class="bullet-text"><strong>Show them the consumer unit</strong> — explain where it is, how to reset tripped switches, and how to test the RCDs</div></div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-bar">Scotland, Wales & Northern Ireland</div>
+            <div class="info-box">
+                <div class="info-text"><strong>Scotland:</strong> The Housing (Scotland) Act 2006 requires landlords to ensure electrical installations are safe, but 5-yearly EICRs are not yet a statutory requirement — they are strongly recommended by the Scottish Government. <strong>Wales:</strong> The Renting Homes (Wales) Act 2016 requires EICRs every 5 years, with similar obligations to England. <strong>Northern Ireland:</strong> No specific EICR requirement yet, but landlords have a general duty of care under common law. Check current local regulations as these are subject to change.</div>
+            </div>
+        </div>
+
+        <!-- Contact -->
+        <div class="contact-card">
+            <div class="contact-card-title">Book your EICR or remedial work</div>
+            <div class="contact-card-name">{{ company_name }}</div>
+            <div class="contact-card-details">
+                {% if company_phone %}{{ company_phone }}{% endif %}
+                {% if company_email %} | {{ company_email }}{% endif %}
+                {% if company_website %} | {{ company_website }}{% endif %}
+            </div>
+            {% if company_address %}<div class="contact-card-address">{{ company_address }}</div>{% endif %}
+            {% if registration_scheme %}<div class="contact-card-reg">{{ registration_scheme }} Registered — No. {{ registration_number }}</div>{% endif %}
+        </div>
+    </div>
+    <div class="footer">
+        <div>{{ company_name }}{% if company_phone %} — {{ company_phone }}{% endif %}</div>
+        <div>Powered by <strong>Elec-Mate</strong></div>
+        <div>Page 3 of 3</div>
+    </div>
+</div>
+
+</body>
+</html>

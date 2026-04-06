@@ -8,7 +8,7 @@ import EnhancedInspectionItemRow from './EnhancedInspectionItemRow';
 import EnhancedInspectionItemCard from './EnhancedInspectionItemCard';
 import { cn } from '@/lib/utils';
 import { useIsMobile } from '@/hooks/use-mobile';
-import { useHaptics } from '@/hooks/useHaptics';
+import { useHaptic } from '@/hooks/useHaptic';
 
 interface InspectionItem {
   id: string;
@@ -54,7 +54,7 @@ const EnhancedInspectionSectionCard = ({
   onBulkMarkNotApplicable,
 }: EnhancedInspectionSectionCardProps) => {
   const isMobile = useIsMobile();
-  const haptics = useHaptics();
+  const haptic = useHaptic();
 
   const handleOutcomeChange = (itemId: string, outcome: InspectionItem['outcome']) => {
     const currentInspectionItem = inspectionItems.find((item) => item.id === itemId);
@@ -84,10 +84,10 @@ const EnhancedInspectionSectionCard = ({
   };
 
   const handleBulkAction = (action: 'satisfactory' | 'na' | 'clear') => {
-    haptics.tap();
+    haptic.light();
     if (action === 'satisfactory' && onBulkMarkSatisfactory) {
       onBulkMarkSatisfactory(section.id);
-      haptics.success();
+      haptic.success();
     } else if (action === 'na') {
       if (onBulkMarkNotApplicable) {
         onBulkMarkNotApplicable(section.id);
@@ -119,7 +119,7 @@ const EnhancedInspectionSectionCard = ({
       <Collapsible
         open={isExpanded}
         onOpenChange={() => {
-          haptics.tap();
+          haptic.light();
           onToggle();
         }}
       >

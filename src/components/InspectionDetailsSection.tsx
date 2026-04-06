@@ -14,7 +14,7 @@ import { Button } from '@/components/ui/button';
 import { Calendar, Calculator, ClipboardList, CalendarCheck, Telescope } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useIsMobile } from '@/hooks/use-mobile';
-import { useHaptics } from '@/hooks/useHaptics';
+import { useHaptic } from '@/hooks/useHaptic';
 import { useMultiFieldSync } from '@/hooks/useFieldSync';
 
 // Fields managed by this section (for memoization comparison)
@@ -93,7 +93,7 @@ const FormField = ({
  */
 const InspectionDetailsSectionInner = ({ formData, onUpdate }: InspectionDetailsSectionProps) => {
   const isMobile = useIsMobile();
-  const haptics = useHaptics();
+  const haptic = useHaptic();
   const { toast } = useToast();
 
   // Auto-calculate next inspection date based on interval
@@ -108,13 +108,13 @@ const InspectionDetailsSectionInner = ({ formData, onUpdate }: InspectionDetails
     const nextDate = new Date(inspectionDate);
     nextDate.setFullYear(nextDate.getFullYear() + intervalYears);
 
-    haptics.success();
+    haptic.success();
     onUpdate('nextInspectionDate', nextDate.toISOString().split('T')[0]);
   };
 
   // Set today's date for inspection
   const setTodaysDate = () => {
-    haptics.tap();
+    haptic.light();
     const today = new Date().toISOString().split('T')[0];
     onUpdate('inspectionDate', today);
   };
@@ -189,7 +189,7 @@ const InspectionDetailsSectionInner = ({ formData, onUpdate }: InspectionDetails
                   key={option.value}
                   type="button"
                   onClick={() => {
-                    haptics.tap();
+                    haptic.light();
                     onUpdate(
                       'purposeOfInspection',
                       formData.purposeOfInspection === option.value ? '' : option.value
@@ -252,7 +252,7 @@ const InspectionDetailsSectionInner = ({ formData, onUpdate }: InspectionDetails
                   key={option.value}
                   type="button"
                   onClick={() => {
-                    haptics.tap();
+                    haptic.light();
                     onUpdate(
                       'inspectionInterval',
                       formData.inspectionInterval === option.value ? '' : option.value
@@ -367,7 +367,7 @@ const InspectionDetailsSectionInner = ({ formData, onUpdate }: InspectionDetails
             <Select
               value={formData.bsAmendment || 'amd3-2024'}
               onValueChange={(value) => {
-                haptics.tap();
+                haptic.light();
                 onUpdate('bsAmendment', value);
               }}
             >

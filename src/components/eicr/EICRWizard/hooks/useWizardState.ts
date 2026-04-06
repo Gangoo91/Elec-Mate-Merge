@@ -1,4 +1,5 @@
 import { useState, useCallback, useEffect } from 'react';
+import { storageGetSync, storageSetJSONSync, storageRemoveSync } from '@/utils/storage';
 
 export interface WizardStep {
   id: string;
@@ -38,18 +39,18 @@ export function useWizardState({
   // Initialize state from localStorage if persist key provided
   const getInitialState = (): WizardState => {
     if (persistKey && typeof window !== 'undefined') {
-      try {
-        const saved = localStorage.getItem(persistKey);
-        if (saved) {
+      const saved = storageGetSync(persistKey);
+      if (saved) {
+        try {
           const parsed = JSON.parse(saved);
           return {
             ...parsed,
             completedSteps: new Set(parsed.completedSteps || []),
             visitedSteps: new Set(parsed.visitedSteps || []),
           };
+        } catch (e) {
+          console.warn('Failed to load wizard state:', e);
         }
-      } catch (e) {
-        console.warn('Failed to load wizard state:', e);
       }
     }
     return {
@@ -70,7 +71,7 @@ export function useWizardState({
         completedSteps: Array.from(state.completedSteps),
         visitedSteps: Array.from(state.visitedSteps),
       };
-      localStorage.setItem(persistKey, JSON.stringify(toSave));
+      storageSetJSONSync(persistKey, toSave);
     }
   }, [state, persistKey]);
 
@@ -189,7 +190,7 @@ export function useWizardState({
     });
 
     if (persistKey && typeof window !== 'undefined') {
-      localStorage.removeItem(persistKey);
+      storageRemoveSync(persistKey);
     }
   }, [persistKey]);
 

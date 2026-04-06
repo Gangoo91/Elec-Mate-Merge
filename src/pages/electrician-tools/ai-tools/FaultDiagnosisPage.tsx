@@ -389,77 +389,25 @@ const FaultDiagnosisPage = () => {
   };
 
   return (
-    <div className="bg-background ">
-      {/* Header */}
-      <div className="sticky top-0 z-50 bg-background/95 backdrop-blur-xl border-b border-border/30 ">
+    <div className="-mt-3 sm:-mt-4 md:-mt-6 bg-background pb-24">
+      {/* Sticky Header */}
+      <div className="sticky top-0 z-50 bg-background/95 backdrop-blur-sm border-b border-white/[0.06]">
         <div className="px-4 py-2">
-          <button
-            onClick={() => navigate('/electrician-tools/ai-tooling')}
-            className="flex items-center gap-2 text-foreground h-11 touch-manipulation active:scale-[0.98] transition-all -ml-2 px-2 rounded-lg"
-          >
-            <ArrowLeft className="h-5 w-5" />
-            <span className="text-sm font-medium">AI Tools</span>
-          </button>
+          <div className="flex items-center gap-3 h-11">
+            <Button variant="ghost" size="icon" onClick={() => navigate('/electrician-tools/ai-tooling')} className="text-white hover:text-white hover:bg-white/10 rounded-xl h-11 w-11 touch-manipulation active:scale-[0.98]">
+              <ArrowLeft className="h-5 w-5" />
+            </Button>
+            <div className="flex items-center gap-2.5">
+              <div className="p-1.5 rounded-lg bg-orange-500/10 border border-orange-500/20">
+                <AlertTriangle className="h-4 w-4 text-orange-500" />
+              </div>
+              <h1 className="text-base font-semibold text-white">Fault Diagnosis</h1>
+            </div>
+          </div>
         </div>
       </div>
 
-      <main className="px-4 py-5 space-y-5 max-w-5xl mx-auto">
-        {/* Hero with Urgency Indicator */}
-        <div
-          className={cn(
-            'rounded-2xl border bg-gradient-to-br backdrop-blur-xl p-5 overflow-hidden relative',
-            urgencyLevel === 'critical'
-              ? 'border-red-500/50 from-red-500/20 via-card to-card/90'
-              : urgencyLevel === 'high'
-                ? 'border-orange-500/30 from-orange-500/10 via-card to-card/90'
-                : 'border-amber-500/30 from-amber-500/10 via-card to-card/90'
-          )}
-        >
-          <div className="relative flex items-center justify-between">
-            <div className="flex items-center gap-4">
-              <div
-                className={cn(
-                  'p-3 rounded-xl border',
-                  urgencyLevel === 'critical'
-                    ? 'bg-red-500/20 border-red-500/30'
-                    : urgencyLevel === 'high'
-                      ? 'bg-orange-500/20 border-orange-500/30'
-                      : 'bg-amber-500/20 border-amber-500/30'
-                )}
-              >
-                <AlertTriangle
-                  className={cn(
-                    'h-7 w-7',
-                    urgencyLevel === 'critical'
-                      ? 'text-red-400'
-                      : urgencyLevel === 'high'
-                        ? 'text-orange-400'
-                        : 'text-amber-400'
-                  )}
-                />
-              </div>
-              <div>
-                <h1 className="text-xl font-bold text-foreground">Fault Diagnosis</h1>
-                <p className="text-sm text-white">Identify issues & get rectification steps</p>
-              </div>
-            </div>
-            {selectedSymptoms.length > 0 && (
-              <Badge
-                className={cn(
-                  'text-xs',
-                  urgencyLevel === 'critical'
-                    ? 'bg-red-500/20 text-red-400 border-red-500/30'
-                    : urgencyLevel === 'high'
-                      ? 'bg-orange-500/20 text-orange-400 border-orange-500/30'
-                      : 'bg-amber-500/20 text-amber-400 border-amber-500/30'
-                )}
-              >
-                {urgencyLevel === 'critical' ? 'URGENT' : urgencyLevel.toUpperCase()}
-              </Badge>
-            )}
-          </div>
-        </div>
-
+      <main className="px-4 py-4 space-y-5">
         {/* Results */}
         {analysisResult?.compliance_summary ? (
           <div className="space-y-4">
@@ -477,15 +425,15 @@ const FaultDiagnosisPage = () => {
             </Button>
           </div>
         ) : isAnalyzing ? (
-          <div className="rounded-xl border border-orange-500/30 bg-card/50 p-6 space-y-4">
+          <div className="rounded-2xl bg-white/[0.03] border border-white/[0.08] p-6">
             <div className="flex items-center gap-3">
-              <Loader2 className="h-6 w-6 animate-spin text-orange-400" />
+              <Loader2 className="h-6 w-6 animate-spin text-orange-500" />
               <div>
-                <h3 className="font-semibold text-foreground">Analysing Fault...</h3>
+                <h3 className="font-semibold text-white">Analysing Fault...</h3>
                 <p className="text-xs text-white">Identifying issues and safety concerns</p>
               </div>
             </div>
-            <div className="h-2 bg-muted rounded-full overflow-hidden">
+            <div className="h-2 bg-muted rounded-full overflow-hidden mt-4">
               <motion.div
                 className="h-full bg-orange-500"
                 initial={{ width: 0 }}
@@ -495,10 +443,10 @@ const FaultDiagnosisPage = () => {
           </div>
         ) : (
           <>
-            {/* Symptom Selection - Visual Grid */}
+            {/* Symptom Selection */}
             <div className="space-y-3">
-              <div className="flex items-center justify-between px-1">
-                <h2 className="font-semibold text-foreground">What symptoms do you see?</h2>
+              <div className="flex items-center justify-between">
+                <h2 className="text-xs font-medium text-white uppercase tracking-wider px-0.5">What symptoms do you see?</h2>
                 {selectedSymptoms.length > 0 && (
                   <Badge variant="secondary" className="text-xs">
                     {selectedSymptoms.length} selected
@@ -513,27 +461,27 @@ const FaultDiagnosisPage = () => {
                       key={symptom.id}
                       onClick={() => toggleSymptom(symptom.id)}
                       className={cn(
-                        'relative p-4 rounded-xl border-2 transition-all touch-manipulation',
+                        'relative p-4 rounded-xl transition-all touch-manipulation',
                         'min-h-[80px] flex flex-col items-center justify-center gap-2',
                         isSelected
-                          ? symptom.color
-                          : 'border-border/30 bg-card/50 hover:border-border/50'
+                          ? 'h-11 rounded-xl bg-orange-500/20 text-orange-400 ring-1 ring-orange-500/40 shadow-sm shadow-orange-500/10'
+                          : 'h-11 rounded-xl bg-white/[0.06] text-white ring-1 ring-white/[0.08] active:scale-[0.97] transition-all'
                       )}
                     >
                       <symptom.icon
-                        className={cn('h-6 w-6', isSelected ? '' : 'text-muted-foreground')}
+                        className={cn('h-6 w-6', isSelected ? 'text-orange-400' : 'text-white')}
                       />
                       <span
                         className={cn(
                           'text-sm font-medium text-center',
-                          isSelected ? 'text-foreground' : 'text-white'
+                          isSelected ? 'text-orange-400' : 'text-white'
                         )}
                       >
                         {symptom.label}
                       </span>
                       {isSelected && (
                         <div className="absolute top-2 right-2">
-                          <Check className="h-4 w-4 text-current" />
+                          <Check className="h-4 w-4 text-orange-400" />
                         </div>
                       )}
                       {symptom.severity === 'high' && (
@@ -547,24 +495,19 @@ const FaultDiagnosisPage = () => {
               </div>
             </div>
 
-            {/* When Did It Start - Timeline */}
-            <div className="rounded-xl border border-border/30 bg-card/50 p-4 space-y-3">
-              <h3 className="font-medium text-foreground text-sm flex items-center gap-2">
-                <Clock className="h-4 w-4 text-orange-400" />
-                When did you first notice this?
-              </h3>
+            {/* When Did It Start */}
+            <div className="space-y-3">
+              <h2 className="text-xs font-medium text-white uppercase tracking-wider px-0.5">When did you first notice this?</h2>
               <div className="flex flex-wrap gap-2">
                 {timeframes.map((time) => (
                   <button
                     key={time.id}
                     onClick={() => setSelectedTimeframe(time.id)}
                     className={cn(
-                      'px-4 py-2.5 rounded-xl border-2 text-sm font-medium transition-all min-h-[44px]',
+                      'px-4 py-2.5 text-sm font-medium transition-all min-h-[44px]',
                       selectedTimeframe === time.id
-                        ? time.urgency === 'high'
-                          ? 'bg-red-500/20 border-red-500/40 text-red-400'
-                          : 'bg-orange-500/20 border-orange-500/40 text-orange-400'
-                        : 'border-border/30 text-white hover:border-border/50'
+                        ? 'h-11 rounded-xl bg-orange-500/20 text-orange-400 ring-1 ring-orange-500/40 shadow-sm shadow-orange-500/10 touch-manipulation'
+                        : 'h-11 rounded-xl bg-white/[0.06] text-white ring-1 ring-white/[0.08] touch-manipulation active:scale-[0.97] transition-all'
                     )}
                   >
                     {time.label}
@@ -574,18 +517,18 @@ const FaultDiagnosisPage = () => {
             </div>
 
             {/* Location Quick Select */}
-            <div className="rounded-xl border border-border/30 bg-card/50 p-4 space-y-3">
-              <h3 className="font-medium text-foreground text-sm">Location in Property</h3>
+            <div className="space-y-3">
+              <h2 className="text-xs font-medium text-white uppercase tracking-wider px-0.5">Location in Property</h2>
               <div className="flex flex-wrap gap-2">
                 {locations.map((loc) => (
                   <button
                     key={loc}
                     onClick={() => setSelectedLocation(loc)}
                     className={cn(
-                      'px-3 py-2 rounded-lg border text-xs font-medium transition-all min-h-[44px] touch-manipulation',
+                      'px-3 py-2 text-xs font-medium transition-all min-h-[44px]',
                       selectedLocation === loc
-                        ? 'bg-orange-500/20 border-orange-500/40 text-orange-400'
-                        : 'border-border/30 text-white hover:border-border/50'
+                        ? 'h-11 rounded-xl bg-orange-500/20 text-orange-400 ring-1 ring-orange-500/40 shadow-sm shadow-orange-500/10 touch-manipulation'
+                        : 'h-11 rounded-xl bg-white/[0.06] text-white ring-1 ring-white/[0.08] touch-manipulation active:scale-[0.97] transition-all'
                     )}
                   >
                     {loc}
@@ -595,129 +538,124 @@ const FaultDiagnosisPage = () => {
             </div>
 
             {/* Image Capture */}
-            <div className="rounded-xl border border-border/30 bg-card/50 p-4 space-y-4">
-              <div className="flex items-center gap-2">
-                <Camera className="h-5 w-5 text-orange-400" />
-                <h3 className="font-semibold text-foreground">Photo Evidence</h3>
-              </div>
-
-              <AnimatePresence>
-                {isCameraActive && (
-                  <motion.div
-                    initial={{ height: 0 }}
-                    animate={{ height: 'auto' }}
-                    exit={{ height: 0 }}
-                    className="space-y-3 overflow-hidden"
-                  >
-                    <div className="relative aspect-video bg-muted rounded-xl overflow-hidden">
-                      <video
-                        ref={videoRef}
-                        autoPlay
-                        playsInline
-                        muted
-                        className="w-full h-full object-cover"
-                      />
-                    </div>
-                    <div className="flex gap-2">
-                      <Button
-                        onClick={captureImage}
-                        className="flex-1 h-12 bg-orange-500 hover:bg-orange-600"
-                      >
-                        Capture
-                      </Button>
-                      <Button onClick={stopCamera} variant="outline" className="h-12">
-                        <X className="h-5 w-5" />
-                      </Button>
-                    </div>
-                  </motion.div>
-                )}
-              </AnimatePresence>
-
-              {!isCameraActive && (
-                <div className="grid grid-cols-2 gap-3">
-                  <Button
-                    onClick={startCamera}
-                    className="h-14 bg-orange-500 hover:bg-orange-600 text-white"
-                  >
-                    <Camera className="h-5 w-5 mr-2" />
-                    Camera
-                  </Button>
-                  <Button
-                    onClick={() => fileInputRef.current?.click()}
-                    variant="outline"
-                    className="h-14 border-orange-500/30"
-                  >
-                    <Upload className="h-5 w-5 mr-2" />
-                    Upload
-                  </Button>
-                </div>
-              )}
-
-              <input
-                ref={fileInputRef}
-                type="file"
-                accept="image/*"
-                multiple
-                onChange={(e) => handleFileSelect(e.target.files)}
-                className="hidden"
-              />
-
-              {images.length > 0 && (
-                <div className="flex gap-2 overflow-x-auto pb-2">
-                  {images.map((img, idx) => (
-                    <div
-                      key={idx}
-                      className="relative flex-shrink-0 w-24 h-24 rounded-xl overflow-hidden border-2 border-orange-500/30"
+            <div className="space-y-3">
+              <h2 className="text-xs font-medium text-white uppercase tracking-wider px-0.5">Photo Evidence</h2>
+              <div className="space-y-3">
+                <AnimatePresence>
+                  {isCameraActive && (
+                    <motion.div
+                      initial={{ height: 0 }}
+                      animate={{ height: 'auto' }}
+                      exit={{ height: 0 }}
+                      className="space-y-3 overflow-hidden"
                     >
-                      <img
-                        src={URL.createObjectURL(img)}
-                        alt=""
-                        className="w-full h-full object-cover"
-                        loading="lazy"
-                      />
-                      <button
-                        onClick={() => setImages((prev) => prev.filter((_, i) => i !== idx))}
-                        className="absolute top-1 right-1 p-1 bg-red-500 rounded-full"
+                      <div className="relative aspect-video bg-muted rounded-xl overflow-hidden">
+                        <video
+                          ref={videoRef}
+                          autoPlay
+                          playsInline
+                          muted
+                          className="w-full h-full object-cover"
+                        />
+                      </div>
+                      <div className="flex gap-2">
+                        <Button
+                          onClick={captureImage}
+                          className="flex-1 h-12 bg-orange-500 hover:bg-orange-600"
+                        >
+                          Capture
+                        </Button>
+                        <Button onClick={stopCamera} variant="outline" className="h-12">
+                          <X className="h-5 w-5" />
+                        </Button>
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+
+                {!isCameraActive && (
+                  <div className="grid grid-cols-2 gap-3">
+                    <Button
+                      onClick={startCamera}
+                      className="h-14 bg-orange-500 hover:bg-orange-600 text-white"
+                    >
+                      <Camera className="h-5 w-5 mr-2" />
+                      Camera
+                    </Button>
+                    <Button
+                      onClick={() => fileInputRef.current?.click()}
+                      variant="ghost"
+                      className="h-14 bg-white/[0.06] ring-1 ring-white/[0.08] text-white hover:text-white hover:bg-white/[0.1]"
+                    >
+                      <Upload className="h-5 w-5 mr-2" />
+                      Upload
+                    </Button>
+                  </div>
+                )}
+
+                <input
+                  ref={fileInputRef}
+                  type="file"
+                  accept="image/*"
+                  multiple
+                  onChange={(e) => handleFileSelect(e.target.files)}
+                  className="hidden"
+                />
+
+                {images.length > 0 && (
+                  <div className="grid grid-cols-4 gap-2">
+                    {images.map((img, idx) => (
+                      <div
+                        key={idx}
+                        className="relative aspect-square rounded-xl overflow-hidden border border-white/[0.08]"
                       >
-                        <X className="h-3 w-3 text-white" />
-                      </button>
-                    </div>
-                  ))}
-                </div>
-              )}
+                        <img
+                          src={URL.createObjectURL(img)}
+                          alt=""
+                          className="w-full h-full object-cover"
+                          loading="lazy"
+                        />
+                        <button
+                          onClick={() => setImages((prev) => prev.filter((_, i) => i !== idx))}
+                          className="absolute top-1 right-1 p-1 bg-black/60 rounded-full"
+                        >
+                          <X className="h-3 w-3 text-white" />
+                        </button>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
             </div>
 
             {/* Additional Notes */}
-            <div className="rounded-xl border border-border/30 bg-card/50 p-4 space-y-3">
-              <h3 className="font-medium text-foreground text-sm">Additional Details</h3>
-              <input
-                type="text"
-                placeholder="Describe the fault, symptoms, or what you have already tested..."
-                value={additionalNotes}
-                onChange={(e) => setAdditionalNotes(e.target.value)}
-                className="w-full h-12 px-4 rounded-xl border border-border/30 bg-background/50 text-foreground"
-                style={{ fontSize: '16px' }}
-              />
-              {images.length === 0 && (
-                <p className="text-xs text-white">
-                  📸 Add a photo above for visual analysis, or select symptoms and describe the
-                  fault here to get a text-based diagnosis without one.
-                </p>
-              )}
+            <div className="space-y-3">
+              <h2 className="text-xs font-medium text-white uppercase tracking-wider px-0.5">Additional Details</h2>
+              <div className="space-y-3">
+                <input
+                  type="text"
+                  placeholder="Describe the fault, symptoms, or what you have already tested..."
+                  value={additionalNotes}
+                  onChange={(e) => setAdditionalNotes(e.target.value)}
+                  className="w-full h-12 px-4 rounded-xl border border-white/[0.08] bg-background/50 text-white"
+                  style={{ fontSize: '16px' }}
+                />
+                {images.length === 0 && (
+                  <p className="text-xs text-white">
+                    Add a photo above for visual analysis, or select symptoms and describe the
+                    fault here to get a text-based diagnosis without one.
+                  </p>
+                )}
+              </div>
             </div>
 
-            {/* Analyse Button — visible when image uploaded OR symptoms/notes filled */}
+            {/* Analyse Button */}
             {(images.length > 0 ||
               selectedSymptoms.length > 0 ||
               additionalNotes.trim().length > 0) && (
               <Button
                 onClick={handleAnalysis}
-                className={cn(
-                  'w-full h-14 text-base font-semibold rounded-xl',
-                  'bg-gradient-to-r from-orange-500 to-red-500',
-                  'hover:from-orange-600 hover:to-red-600',
-                  'text-white shadow-lg shadow-orange-500/25'
-                )}
+                className="w-full h-14 rounded-xl bg-gradient-to-r from-orange-500 to-amber-500 text-white font-bold text-base touch-manipulation active:scale-[0.98] shadow-lg shadow-orange-500/20"
               >
                 <AlertTriangle className="h-5 w-5 mr-2" />
                 {images.length === 0 ? 'Diagnose from Description' : 'Diagnose Fault'}

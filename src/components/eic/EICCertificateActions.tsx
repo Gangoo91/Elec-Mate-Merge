@@ -29,7 +29,7 @@ import {
 } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 import { useIsMobile } from '@/hooks/use-mobile';
-import { useHaptics } from '@/hooks/useHaptics';
+import { useHaptic } from '@/hooks/useHaptic';
 import { cn } from '@/lib/utils';
 
 interface EICCertificateActionsProps {
@@ -51,7 +51,7 @@ const EICCertificateActions: React.FC<EICCertificateActionsProps> = ({
 }) => {
   const navigate = useNavigate();
   const isMobile = useIsMobile();
-  const haptics = useHaptics();
+  const haptic = useHaptic();
   const { toast } = useToast();
   const { companyProfile } = useCompanyProfile();
   const [isExporting, setIsExporting] = useState(false);
@@ -104,6 +104,7 @@ const EICCertificateActions: React.FC<EICCertificateActionsProps> = ({
 
   const handleGeneratePDF = async () => {
     if (!canGenerateCertificate) {
+      haptic.warning();
       toast({
         title: 'Cannot Generate Certificate',
         description:
@@ -226,6 +227,7 @@ const EICCertificateActions: React.FC<EICCertificateActionsProps> = ({
       setExportProgress(100);
       setExportStatus('complete');
 
+      haptic.success();
       toast({
         title: 'EIC Generated Successfully',
         description: storagePath
@@ -252,6 +254,7 @@ const EICCertificateActions: React.FC<EICCertificateActionsProps> = ({
   };
 
   const handleSaveDraft = () => {
+    haptic.success();
     onSaveDraft();
     toast({
       title: 'Draft Saved',
@@ -261,6 +264,7 @@ const EICCertificateActions: React.FC<EICCertificateActionsProps> = ({
 
   const handleEmailCertificate = () => {
     if (!canGenerateCertificate) {
+      haptic.warning();
       toast({
         title: 'Cannot Email Certificate',
         description: 'Please complete all required sections first.',
@@ -269,6 +273,7 @@ const EICCertificateActions: React.FC<EICCertificateActionsProps> = ({
       return;
     }
 
+    haptic.light();
     // Pre-fill with client email if available
     if (formData.clientEmail) {
       setEmailRecipient(formData.clientEmail);
@@ -316,6 +321,7 @@ const EICCertificateActions: React.FC<EICCertificateActionsProps> = ({
         throw new Error(result?.error || 'Failed to send certificate email');
       }
 
+      haptic.success();
       toast({
         title: 'Certificate Sent',
         description: `EIC certificate sent successfully to ${emailRecipient}`,

@@ -287,29 +287,6 @@ const Dashboard = ({
           animate="visible"
           className="px-4 py-4 space-y-5"
         >
-          {/* KPI Strip */}
-          <motion.div variants={itemVariants}>
-            <DashboardStatsBar
-              inProgressCount={inProgressCount}
-              partPDueCount={partPDueCount}
-              expiringCount={expiringCount}
-              completedCount={completedCount}
-              overduePartP={overduePartP}
-              isLoading={isLoading}
-              onStatClick={handleStatClick}
-            />
-          </motion.div>
-
-          {/* Compliance Score */}
-          <motion.div variants={itemVariants}>
-            <ComplianceScoreCard
-              partPOverdue={partPOverdueCount}
-              partPPending={partPDueCount - partPOverdueCount}
-              expiredCerts={expiredCertsCount}
-              expiringSoon={expiringCount - expiredCertsCount}
-            />
-          </motion.div>
-
           {/* New Certificate CTA */}
           <motion.div variants={itemVariants}>
             <HeroCTA />
@@ -332,9 +309,9 @@ const Dashboard = ({
           <motion.section variants={itemVariants} className="space-y-3">
             <div className="grid grid-cols-2 gap-3 auto-rows-fr">
               <HubCard
-                title="Certificates"
-                description="EICR, EIC, Minor Works"
-                liveSubtitle={inProgressCount > 0 ? `${inProgressCount} in progress` : 'EICR, EIC, Minor Works'}
+                title="EICR, EIC & MW"
+                description="Core certificates"
+                liveSubtitle={inProgressCount > 0 ? `${inProgressCount} in progress` : 'Core certificates'}
                 accentColor="from-blue-500 via-blue-400 to-cyan-400"
                 onClick={() => onNavigate('certificates')}
               />
@@ -393,6 +370,28 @@ const Dashboard = ({
               />
             </div>
           </motion.section>
+
+          {/* Compliance & Stats — at the bottom */}
+          <motion.div variants={itemVariants}>
+            <ComplianceScoreCard
+              partPOverdue={partPOverdueCount}
+              partPPending={partPDueCount - partPOverdueCount}
+              expiredCerts={expiredCertsCount}
+              expiringSoon={expiringCount - expiredCertsCount}
+            />
+          </motion.div>
+
+          <motion.div variants={itemVariants}>
+            <DashboardStatsBar
+              inProgressCount={inProgressCount}
+              partPDueCount={partPDueCount}
+              expiringCount={expiringCount}
+              completedCount={completedCount}
+              overduePartP={overduePartP}
+              isLoading={isLoading}
+              onStatClick={handleStatClick}
+            />
+          </motion.div>
         </motion.main>
       </div>
 

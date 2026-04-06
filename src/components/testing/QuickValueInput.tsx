@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
-import { useHaptics } from '@/hooks/useHaptics';
+import { useHaptic } from '@/hooks/useHaptic';
 import { Check, X, ChevronUp, ChevronDown } from 'lucide-react';
 
 interface QuickValueInputProps {
@@ -38,7 +38,7 @@ const QuickValueInput: React.FC<QuickValueInputProps> = ({
   allowStepper = true,
   step = 0.01,
 }) => {
-  const haptics = useHaptics();
+  const haptic = useHaptic();
   const inputRef = useRef<HTMLInputElement>(null);
   const [localValue, setLocalValue] = useState(value);
 
@@ -51,31 +51,31 @@ const QuickValueInput: React.FC<QuickValueInputProps> = ({
   }, []);
 
   const handleConfirm = () => {
-    haptics.success();
+    haptic.success();
     onChange(localValue);
     onClose();
   };
 
   const handleCancel = () => {
-    haptics.tap();
+    haptic.light();
     onClose();
   };
 
   const handleIncrement = () => {
-    haptics.tap();
+    haptic.light();
     const num = parseFloat(localValue) || 0;
     setLocalValue((num + step).toFixed(2));
   };
 
   const handleDecrement = () => {
-    haptics.tap();
+    haptic.light();
     const num = parseFloat(localValue) || 0;
     const newVal = Math.max(0, num - step);
     setLocalValue(newVal.toFixed(2));
   };
 
   const handlePresetClick = (preset: string) => {
-    haptics.tap();
+    haptic.light();
     setLocalValue(preset);
   };
 

@@ -2,7 +2,7 @@ import React from 'react';
 import { cn } from '@/lib/utils';
 import { CheckCircle, FileText, Search, TestTube, PenTool, Award } from 'lucide-react';
 import { EICTabValue } from '@/hooks/useEICTabs';
-import { useHaptics } from '@/hooks/useHaptics';
+import { useHaptic } from '@/hooks/useHaptic';
 
 interface StepConfig {
   id: EICTabValue;
@@ -57,11 +57,11 @@ const EICStepIndicator: React.FC<EICStepIndicatorProps> = ({
   isTabComplete,
   className,
 }) => {
-  const haptics = useHaptics();
+  const haptic = useHaptic();
   const currentIndex = steps.findIndex((s) => s.id === currentTab);
 
   const handleStepClick = (stepId: EICTabValue) => {
-    haptics.tap();
+    haptic.light();
     onTabChange(stepId);
   };
 

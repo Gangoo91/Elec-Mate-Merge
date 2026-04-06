@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Energy Saving Tips</title>
+    <style>
+        :root { --accent: #eab308; --accent-bg: #fefce8; }
+        @page { size: A4; margin: 0; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: Georgia, 'Times New Roman', serif; font-size: 10.5px; line-height: 1.7; color: #1e293b; background: #fff; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+        h1, h2, h3, .section-bar, .header-title, .header-company-name, .contact-card-name, .contact-card-title, .saving-badge, .cost-table th, .stat-number { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; }
+
+        .page { width: 210mm; min-height: 297mm; position: relative; }
+
+        /* Header */
+        .header { background: linear-gradient(180deg, #0a1628 0%, #152238 100%); color: #fff; padding: 20px 28px 18px; position: relative; }
+        .header::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 5px; background: var(--accent); }
+        .header-content { display: flex; justify-content: space-between; align-items: center; }
+        .header-title { font-size: 28px; font-weight: 800; letter-spacing: -0.3px; }
+        .header-subtitle { font-size: 11px; color: rgba(255,255,255,0.7); margin-top: 5px; font-style: italic; }
+        .header-right { text-align: right; display: flex; align-items: center; gap: 14px; }
+        .header-logo img { max-height: 55px; max-width: 140px; object-fit: contain; }
+        .header-company-name { font-size: 13px; font-weight: 700; color: var(--accent); }
+        .header-company-detail { font-size: 8.5px; color: rgba(255,255,255,0.6); margin-top: 2px; }
+        .header-scheme img { max-height: 40px; max-width: 80px; object-fit: contain; }
+        .header-sm { padding: 14px 28px 12px; }
+        .header-sm .header-title { font-size: 20px; }
+
+        /* Content */
+        .content { padding: 20px 28px; }
+
+        /* Intro */
+        .intro-box { background: #0f172a; border: 1.5px solid #1e293b; border-left: 5px solid var(--accent); border-radius: 6px; padding: 14px 18px; margin-bottom: 16px; }
+        .intro-text { font-size: 11px; color: rgba(255,255,255,0.85); line-height: 1.8; }
+        .intro-text strong { color: #fff; }
+
+        /* Stat row */
+        .stat-row { display: flex; gap: 10px; margin-bottom: 16px; }
+        .stat-card { flex: 1; background: #0f172a; border-radius: 6px; padding: 12px 14px; text-align: center; }
+        .stat-number { font-size: 22px; font-weight: 800; color: var(--accent); }
+        .stat-label { font-size: 8px; color: rgba(255,255,255,0.7); margin-top: 2px; text-transform: uppercase; letter-spacing: 0.8px; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; }
+
+        /* Section */
+        .section { margin-bottom: 12px; }
+        .section-bar { background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); color: #fff; font-size: 10.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.2px; padding: 8px 18px; border-left: 5px solid var(--accent); border-radius: 3px; margin-bottom: 10px; }
+        .section-bar.green { border-left-color: #22c55e; }
+        .section-bar.blue { border-left-color: #3b82f6; }
+
+        /* Bullets */
+        .bullet-list { padding: 0 0 0 6px; }
+        .bullet-item { display: flex; gap: 10px; margin-bottom: 7px; align-items: flex-start; }
+        .bullet-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--accent); flex-shrink: 0; margin-top: 6px; }
+        .bullet-dot.green { background: #22c55e; }
+        .bullet-dot.blue { background: #3b82f6; }
+        .bullet-text { font-size: 10.5px; color: #334155; line-height: 1.7; flex: 1; }
+        .bullet-text strong { color: #0f172a; font-weight: 700; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; }
+
+        /* Saving badge */
+        .saving-badge { display: inline-block; background: #dcfce7; color: #166534; font-size: 8.5px; font-weight: 700; padding: 2px 7px; border-radius: 3px; border: 1px solid #86efac; margin-left: 4px; }
+
+        /* Highlight boxes */
+        .highlight-box { border-radius: 6px; padding: 14px 18px; margin: 10px 0; }
+        .highlight-box.amber { background: #0f172a; border: 1.5px solid #1e293b; border-left: 5px solid #f59e0b; }
+        .highlight-box.green { background: #0f172a; border: 1.5px solid #1e293b; border-left: 5px solid #22c55e; }
+        .highlight-box.blue { background: #0f172a; border: 1.5px solid #1e293b; border-left: 5px solid #3b82f6; }
+        .highlight-title { font-size: 10.5px; font-weight: 700; color: #fff; margin-bottom: 4px; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; }
+        .highlight-text { font-size: 10px; color: rgba(255,255,255,0.85); line-height: 1.7; }
+
+        /* Two column */
+        .two-col { display: flex; gap: 14px; }
+        .two-col > .col { flex: 1; }
+
+        /* Tables */
+        .cost-table { width: 100%; border-collapse: collapse; margin: 8px 0; font-size: 9.5px; }
+        .cost-table th { background: #0f172a; color: #fff; padding: 6px 10px; text-align: left; font-size: 9px; font-weight: 600; }
+        .cost-table td { padding: 5px 10px; border-bottom: 1px solid #e2e8f0; }
+        .cost-table tr:nth-child(even) td { background: #f8fafc; }
+        .cost-table .saving { color: #166534; font-weight: 700; }
+
+        /* Comparison box */
+        .comparison-box { background: #0f172a; border-radius: 8px; padding: 14px 18px; margin: 10px 0; }
+        .comparison-row { display: flex; justify-content: space-between; align-items: center; padding: 5px 0; border-bottom: 1px solid rgba(255,255,255,0.08); }
+        .comparison-row:last-child { border-bottom: none; }
+        .comparison-label { font-size: 10px; color: rgba(255,255,255,0.7); font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; }
+        .comparison-value { font-size: 12px; font-weight: 700; color: var(--accent); font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; }
+        .comparison-value.red { color: #f87171; }
+        .comparison-value.green { color: #4ade80; }
+
+        /* Contact */
+        .contact-card { background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); border-radius: 8px; padding: 16px 20px; margin-top: 16px; position: relative; overflow: hidden; }
+        .contact-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: var(--accent); }
+        .contact-card-title { font-size: 9px; color: rgba(255,255,255,0.5); text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 5px; }
+        .contact-card-name { font-size: 16px; font-weight: 800; color: #fff; }
+        .contact-card-details { font-size: 10.5px; color: var(--accent); margin-top: 4px; }
+        .contact-card-address { font-size: 9px; color: rgba(255,255,255,0.5); margin-top: 4px; }
+        .contact-card-reg { font-size: 8.5px; color: rgba(255,255,255,0.4); margin-top: 5px; }
+
+        /* Footer */
+        .footer { position: absolute; bottom: 0; left: 0; right: 0; border-top: 3px solid var(--accent); padding: 8px 28px; display: flex; justify-content: space-between; align-items: center; font-size: 8px; color: #94a3b8; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; }
+        .page-break { page-break-before: always; }
+    </style>
+</head>
+<body>
+
+<!-- ===== PAGE 1 — QUICK WINS ===== -->
+<div class="page">
+    <div class="header">
+        <div class="header-content">
+            <div>
+                <div class="header-title">Energy Saving Tips</div>
+                <div class="header-subtitle">Practical advice from your electrician to reduce your electricity bills</div>
+            </div>
+            <div class="header-right">
+                {% if company_logo %}<div class="header-logo"><img src="{{ company_logo }}" alt="Logo" /></div>{% endif %}
+                <div>
+                    <div class="header-company-name">{{ company_name }}</div>
+                    {% if company_phone %}<div class="header-company-detail">{{ company_phone }}</div>{% endif %}
+                    {% if registration_scheme %}<div class="header-company-detail">{{ registration_scheme }}: {{ registration_number }}</div>{% endif %}
+                </div>
+                {% if scheme_logo %}<div class="header-scheme"><img src="{{ scheme_logo }}" alt="Scheme" /></div>{% endif %}
+            </div>
+        </div>
+    </div>
+    <div class="content">
+
+        <!-- Key Stats -->
+        <div class="stat-row">
+            <div class="stat-card">
+                <div class="stat-number">£200+</div>
+                <div class="stat-label">Saved switching to LED</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">£80</div>
+                <div class="stat-label">Saved per 1°C reduction</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">£60-80</div>
+                <div class="stat-label">Wasted on standby/year</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">90%</div>
+                <div class="stat-label">Less energy with LEDs</div>
+            </div>
+        </div>
+
+        <div class="intro-box">
+            <div class="intro-text">These tips are recommended by <strong>{{ company_name }}</strong> based on what we see in homes every day. Most cost nothing — just a change in habits. Others are small investments that pay for themselves within months. We've included real numbers so you can see exactly how much you'll save.</div>
+        </div>
+
+        <!-- Lighting -->
+        <div class="section">
+            <div class="section-bar">Lighting — The Single Biggest Quick Win</div>
+            <div class="bullet-list">
+                <div class="bullet-item"><div class="bullet-dot"></div><div class="bullet-text"><strong>Replace all halogen downlights with LEDs.</strong> A 5W LED produces the same light as a 50W halogen — that's <strong>90% less energy</strong>. LEDs last 15,000-25,000 hours vs 2,000 for halogen. They also run cool, reducing fire risk in insulated ceilings <span class="saving-badge">Save £200+/yr</span></div></div>
+                <div class="bullet-item"><div class="bullet-dot"></div><div class="bullet-text"><strong>The maths:</strong> A kitchen with 8 × 50W halogens running 5 hours/day costs <strong>£210/year</strong>. Replace with 8 × 5W LEDs: <strong>£21/year</strong>. The LEDs cost £20-30 total and pay for themselves in <strong>under 3 weeks</strong></div></div>
+                <div class="bullet-item"><div class="bullet-dot"></div><div class="bullet-text"><strong>Motion sensors (PIR)</strong> in hallways, bathrooms, utility rooms, and garages mean lights are only on when someone is there. A bathroom light left on 8 hours a day unnecessarily costs £12/year — for one room</div></div>
+                <div class="bullet-item"><div class="bullet-dot"></div><div class="bullet-text"><strong>Dimmer switches</strong> save energy and extend bulb life. At 75% brightness, you use 20% less power. Modern LED dimmers are smooth, silent, and cost £15-25 to install</div></div>
+                <div class="bullet-item"><div class="bullet-dot"></div><div class="bullet-text"><strong>Outdoor lighting:</strong> Use dusk-to-dawn sensors instead of manual switches or timers. Solar-powered garden lights cost nothing to run. LED security floodlights use 10-30W vs 500W for old halogen floods <span class="saving-badge">Save £50/yr</span></div></div>
+            </div>
+        </div>
+
+        <!-- Heating -->
+        <div class="section">
+            <div class="section-bar">Heating & Hot Water — Where 60% of Your Bill Goes</div>
+            <div class="bullet-list">
+                <div class="bullet-item"><div class="bullet-dot"></div><div class="bullet-text"><strong>Turn your thermostat down by 1°C.</strong> You genuinely won't notice the difference between 21°C and 20°C — but you'll save approximately <strong>£80/year</strong>. The World Health Organisation recommends 18°C as a healthy minimum <span class="saving-badge">Save £80/yr</span></div></div>
+                <div class="bullet-item"><div class="bullet-dot"></div><div class="bullet-text"><strong>Use your programmer properly.</strong> Set heating to come on 30 minutes before you wake and switch off 30 minutes before bed — rooms retain warmth from residual heat. Don't leave it on 24/7 "because it's cheaper" — that's a myth</div></div>
+                <div class="bullet-item"><div class="bullet-dot"></div><div class="bullet-text"><strong>Smart thermostats</strong> (Hive £150, Nest £200, Tado £150) learn your routine, detect when you leave the house via your phone's GPS, and adjust automatically. Independent studies show <strong>10-15% savings</strong> — that's £100-150/year on an average heating bill <span class="saving-badge">Save £150/yr</span></div></div>
+                <div class="bullet-item"><div class="bullet-dot"></div><div class="bullet-text"><strong>Radiator valves (TRVs):</strong> Fit thermostatic radiator valves to control each room individually. Turn down spare bedrooms, hallways, and rooms you rarely use. A TRV costs £8-15 and fitting takes 10 minutes</div></div>
+                <div class="bullet-item"><div class="bullet-dot"></div><div class="bullet-text"><strong>Hot water cylinder:</strong> Set to exactly <strong>60°C</strong> — higher wastes energy, lower risks legionella bacteria growth. Insulate the cylinder with an 80mm jacket (£15 from any DIY store, saves £35/year). If you have a combi boiler, you don't have a cylinder</div></div>
+            </div>
+        </div>
+    </div>
+    <div class="footer">
+        <div>{{ company_name }}{% if company_phone %} — {{ company_phone }}{% endif %}</div>
+        <div>Powered by <strong>Elec-Mate</strong></div>
+        <div>Page 1 of 3</div>
+    </div>
+</div>
+
+<!-- ===== PAGE 2 — APPLIANCES, STANDBY & SMART ===== -->
+<div class="page page-break">
+    <div class="header header-sm">
+        <div class="header-content">
+            <div><div class="header-title">Appliances, Standby & Smart Home</div></div>
+            <div class="header-right">
+                {% if company_logo %}<div class="header-logo"><img src="{{ company_logo }}" alt="Logo" style="max-height:40px;" /></div>{% endif %}
+                <div><div class="header-company-name">{{ company_name }}</div></div>
+            </div>
+        </div>
+    </div>
+    <div class="content">
+
+        <!-- Standby -->
+        <div class="section">
+            <div class="section-bar">Standby Power — The Silent Energy Drain</div>
+            <div class="two-col">
+                <div class="col">
+                    <div class="bullet-list">
+                        <div class="bullet-item"><div class="bullet-dot"></div><div class="bullet-text">The average UK home wastes <strong>£60-80/year</strong> powering devices that are "off" but still drawing electricity. That red standby light costs real money</div></div>
+                        <div class="bullet-item"><div class="bullet-dot"></div><div class="bullet-text"><strong>Switch off at the wall</strong> — TVs, games consoles, set-top boxes, soundbars, monitors, printers. If it has a remote control, it's using standby power</div></div>
+                        <div class="bullet-item"><div class="bullet-dot"></div><div class="bullet-text"><strong>Smart plug strips</strong> (£15-25) let you switch off 4-6 devices with one tap on your phone, or set schedules. Put one behind the TV unit and one at the computer desk</div></div>
+                        <div class="bullet-item"><div class="bullet-dot"></div><div class="bullet-text"><strong>Phone and laptop chargers</strong> draw power even with no device attached. A charger left plugged in 24/7 wastes £3-8/year — multiply by the number of chargers in your home</div></div>
+                    </div>
+                </div>
+                <div class="col">
+                    <table class="cost-table">
+                        <thead><tr><th>Device on Standby</th><th>Cost/Year</th></tr></thead>
+                        <tbody>
+                            <tr><td>Games console (PS5/Xbox)</td><td class="saving">£12-25</td></tr>
+                            <tr><td>Sky/Virgin set-top box</td><td class="saving">£10-18</td></tr>
+                            <tr><td>Desktop PC + monitor</td><td class="saving">£8-15</td></tr>
+                            <tr><td>TV (LED/OLED)</td><td class="saving">£5-8</td></tr>
+                            <tr><td>Laptop charger (no laptop)</td><td class="saving">£5-8</td></tr>
+                            <tr><td>Microwave (just the clock)</td><td class="saving">£4-6</td></tr>
+                            <tr><td>Smart speaker</td><td class="saving">£3-5</td></tr>
+                            <tr><td>Phone charger (no phone)</td><td class="saving">£2-3</td></tr>
+                            <tr><td><strong>Typical household total</strong></td><td class="saving"><strong>£60-80</strong></td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Kitchen -->
+        <div class="section">
+            <div class="section-bar">Kitchen — Where Most Energy Is Used</div>
+            <div class="bullet-list">
+                <div class="bullet-item"><div class="bullet-dot"></div><div class="bullet-text"><strong>Kettle:</strong> Only boil what you need. A full kettle (1.7L) uses 0.13 kWh per boil. A single cup (0.3L) uses 0.03 kWh — <strong>77% less</strong>. If you boil a full kettle 4 times daily, you're wasting £40/year boiling water you pour away</div></div>
+                <div class="bullet-item"><div class="bullet-dot"></div><div class="bullet-text"><strong>Washing machine:</strong> Wash at <strong>30°C</strong> — modern detergents clean just as effectively. Each wash at 30°C vs 60°C uses <strong>40% less energy</strong>. Also, always wait for a full load rather than running half-loads</div></div>
+                <div class="bullet-item"><div class="bullet-dot"></div><div class="bullet-text"><strong>Tumble dryer:</strong> The most expensive appliance to run — each cycle uses 3-5 kWh, costing <strong>£1.00-1.50 per load</strong>. That's £150-250/year if used daily. Use a washing line or indoor airer whenever possible. When you must use it, clean the lint filter every time — a blocked filter increases energy use by 25%</div></div>
+                <div class="bullet-item"><div class="bullet-dot"></div><div class="bullet-text"><strong>Fridge/freezer:</strong> Runs 24/7 — test the door seal by closing it on a £5 note. If it slides out easily, the seal needs replacing. Defrost when ice exceeds 5mm — ice build-up increases energy use by <strong>30%</strong>. Use a slow cooker or air fryer instead of the oven for smaller meals — they use a fraction of the energy</div></div>
+            </div>
+        </div>
+
+        <!-- Smart Home -->
+        <div class="section">
+            <div class="section-bar blue">Smart Home — Technology That Pays for Itself</div>
+            <div class="bullet-list">
+                <div class="bullet-item"><div class="bullet-dot blue"></div><div class="bullet-text"><strong>Energy monitors</strong> (Loop £50, Hildebrand £30) clip onto your electricity meter and show real-time usage on your phone. Most people discover at least one "energy vampire" they didn't know about. Seeing your usage in real-time changes behaviour immediately <span class="saving-badge">Save £50-100/yr</span></div></div>
+                <div class="bullet-item"><div class="bullet-dot blue"></div><div class="bullet-text"><strong>Smart plugs</strong> (£10-15 each) — monitor individual appliance energy use, set schedules, create "away mode" routines. Put them on your most-used devices to understand what's actually costing you money</div></div>
+                <div class="bullet-item"><div class="bullet-dot blue"></div><div class="bullet-text"><strong>Smart thermostat:</strong> Already mentioned but worth repeating — a Hive, Nest, or Tado pays for itself within <strong>12-18 months</strong> and then saves you money every year after that <span class="saving-badge">Save £100-150/yr</span></div></div>
+                <div class="bullet-item"><div class="bullet-dot blue"></div><div class="bullet-text"><strong>Immersion heater timer:</strong> If you have a hot water cylinder with an immersion heater, don't leave it on 24/7. A £15 time switch set to heat water for 1-2 hours morning and evening saves <strong>£50-80/year</strong></div></div>
+            </div>
+            <div class="highlight-box blue">
+                <div class="highlight-title">{{ company_name }} can install all of these</div>
+                <div class="highlight-text">We install smart thermostats, energy monitors, smart lighting, EV chargers, solar PV, and battery storage. Ask us for a free energy assessment of your home — we'll tell you exactly where you're wasting money and what the return on investment would be for each upgrade.</div>
+            </div>
+        </div>
+    </div>
+    <div class="footer">
+        <div>{{ company_name }}{% if company_phone %} — {{ company_phone }}{% endif %}</div>
+        <div>Powered by <strong>Elec-Mate</strong></div>
+        <div>Page 2 of 3</div>
+    </div>
+</div>
+
+<!-- ===== PAGE 3 — BIGGER INVESTMENTS & TARIFFS ===== -->
+<div class="page page-break">
+    <div class="header header-sm">
+        <div class="header-content">
+            <div><div class="header-title">Bigger Savings & Your Energy Tariff</div></div>
+            <div class="header-right">
+                {% if company_logo %}<div class="header-logo"><img src="{{ company_logo }}" alt="Logo" style="max-height:40px;" /></div>{% endif %}
+                <div><div class="header-company-name">{{ company_name }}</div></div>
+            </div>
+        </div>
+    </div>
+    <div class="content">
+
+        <!-- Solar -->
+        <div class="section">
+            <div class="section-bar green">Solar PV — Generate Free Electricity</div>
+            <div class="bullet-list">
+                <div class="bullet-item"><div class="bullet-dot green"></div><div class="bullet-text"><strong>How it works:</strong> Panels on your roof convert sunlight into electricity. A typical 4kW system (10 panels) generates 3,400-4,200 kWh/year — covering <strong>60-80% of average household electricity</strong></div></div>
+                <div class="bullet-item"><div class="bullet-dot green"></div><div class="bullet-text"><strong>Cost & payback:</strong> A 4kW system costs <strong>£5,000-7,000</strong> installed. At current electricity prices (28p/kWh), it pays for itself in <strong>6-8 years</strong>, then generates free electricity for 20+ more years</div></div>
+                <div class="bullet-item"><div class="bullet-dot green"></div><div class="bullet-text"><strong>Export payments:</strong> Electricity you don't use goes to the grid. Your supplier pays you via the Smart Export Guarantee — typically 4-15p/kWh. With a good tariff (Octopus Flux at 15p), export payments alone can reach <strong>£200-300/year</strong></div></div>
+                <div class="bullet-item"><div class="bullet-dot green"></div><div class="bullet-text"><strong>Orientation:</strong> South-facing at 30-40° is ideal, but east/west produces 80-85% as much. Even north-facing works for some properties. No planning permission needed for most homes</div></div>
+            </div>
+            <div class="comparison-box">
+                <div style="font-size: 9px; color: rgba(255,255,255,0.5); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 6px; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;">Typical 4kW solar system — annual returns</div>
+                <div class="comparison-row"><div class="comparison-label">Self-consumed electricity saved</div><div class="comparison-value green">£700-900</div></div>
+                <div class="comparison-row"><div class="comparison-label">Export payments (SEG)</div><div class="comparison-value green">£100-300</div></div>
+                <div class="comparison-row"><div class="comparison-label">Total annual saving</div><div class="comparison-value" style="font-size: 14px;">£800-1,200</div></div>
+                <div class="comparison-row"><div class="comparison-label">System lifetime (25-30 years)</div><div class="comparison-value green">£15,000-30,000+</div></div>
+            </div>
+        </div>
+
+        <!-- Battery -->
+        <div class="section">
+            <div class="section-bar green">Battery Storage — Store Cheap Power for Later</div>
+            <div class="bullet-list">
+                <div class="bullet-item"><div class="bullet-dot green"></div><div class="bullet-text"><strong>With solar:</strong> Instead of exporting excess daytime solar at 5p/kWh, store it in a battery and use it in the evening when grid electricity costs 28p/kWh. You save the <strong>23p/kWh difference</strong> on every unit stored</div></div>
+                <div class="bullet-item"><div class="bullet-dot green"></div><div class="bullet-text"><strong>Without solar:</strong> Charge overnight on a cheap tariff like Octopus Go (7.5p/kWh) and use during the day (28p/kWh). A 5kWh battery cycling daily saves <strong>£350-500/year</strong> on the tariff difference alone</div></div>
+                <div class="bullet-item"><div class="bullet-dot green"></div><div class="bullet-text"><strong>Cost:</strong> A 5kWh battery (GivEnergy, Fox ESS) costs <strong>£2,500-4,000</strong> installed. Combined with the right tariff, payback is <strong>5-7 years</strong>. A Tesla Powerwall (13.5kWh) costs £8,000-10,000 but stores more</div></div>
+            </div>
+        </div>
+
+        <!-- EV + Tariffs combined -->
+        <div class="section">
+            <div class="section-bar">EV Charging & Your Electricity Tariff</div>
+            <div class="comparison-box">
+                <div style="font-size: 9px; color: rgba(255,255,255,0.5); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 6px; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;">Annual fuel cost — 12,000 miles</div>
+                <div class="comparison-row"><div class="comparison-label">Petrol (50mpg)</div><div class="comparison-value red">£1,800/yr</div></div>
+                <div class="comparison-row"><div class="comparison-label">EV overnight tariff (7.5p/kWh)</div><div class="comparison-value green">£260/yr</div></div>
+                <div class="comparison-row"><div class="comparison-label">EV on home solar</div><div class="comparison-value green">£0-100/yr</div></div>
+            </div>
+            <div class="bullet-list" style="margin-top: 8px;">
+                <div class="bullet-item"><div class="bullet-dot"></div><div class="bullet-text"><strong>Time-of-use tariffs</strong> (Octopus Go, Intelligent Octopus) charge 7.5p/kWh overnight vs 28p+ daytime. Smart chargers schedule automatically — set it and forget it <span class="saving-badge">Save £1,500/yr vs petrol</span></div></div>
+                <div class="bullet-item"><div class="bullet-dot"></div><div class="bullet-text"><strong>Get a free smart meter</strong> from your supplier — it enables cheap tariffs and shows real-time usage. There is no downside</div></div>
+            </div>
+        </div>
+
+        <!-- Contact -->
+        <div class="contact-card">
+            <div class="contact-card-title">Ready to start saving? Talk to your electrician</div>
+            <div class="contact-card-name">{{ company_name }}</div>
+            <div class="contact-card-details">
+                {% if company_phone %}{{ company_phone }}{% endif %}
+                {% if company_email %} | {{ company_email }}{% endif %}
+                {% if company_website %} | {{ company_website }}{% endif %}
+            </div>
+            {% if company_address %}<div class="contact-card-address">{{ company_address }}</div>{% endif %}
+            {% if registration_scheme %}<div class="contact-card-reg">{{ registration_scheme }} Registered — No. {{ registration_number }}</div>{% endif %}
+        </div>
+    </div>
+    <div class="footer">
+        <div>{{ company_name }}{% if company_phone %} — {{ company_phone }}{% endif %}</div>
+        <div>Powered by <strong>Elec-Mate</strong></div>
+        <div>Page 3 of 3</div>
+    </div>
+</div>
+
+</body>
+</html>

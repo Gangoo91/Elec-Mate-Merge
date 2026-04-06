@@ -33,6 +33,7 @@ import {
   createInvoiceFromCertificate,
 } from '@/utils/certificateToQuote';
 import { supabase } from '@/integrations/supabase/client';
+import { trackFeatureUse } from '@/components/ActivityTracker';
 
 import PATTestingFormTabs from '@/components/inspection/pat-testing/PATTestingFormTabs';
 import { usePATTestingTabs } from '@/hooks/usePATTestingTabs';
@@ -103,6 +104,13 @@ export default function PATTestingCertificate() {
     data: Record<string, unknown>;
     lastModified: Date;
   } | null>(null);
+
+  // Track certificate opened
+  useEffect(() => {
+    supabase.auth.getUser().then(({ data: { user } }) => {
+      if (user) trackFeatureUse(user.id, 'certificate_opened', { type: 'pat-testing' });
+    });
+  }, []);
 
   // Check for recoverable draft on mount
   useEffect(() => {

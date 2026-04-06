@@ -14,7 +14,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { X, Save, Trash2, Zap, TestTube, Shield, Check, AlertTriangle } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { TestResult } from '@/types/testResult';
-import { useHaptics } from '@/hooks/useHaptics';
+import { useHaptic } from '@/hooks/useHaptic';
 import TestValueGrid from './TestValueGrid';
 
 interface CircuitEditSheetProps {
@@ -36,7 +36,7 @@ const CircuitEditSheet: React.FC<CircuitEditSheetProps> = ({
   onSave,
   onDelete,
 }) => {
-  const haptics = useHaptics();
+  const haptic = useHaptic();
   const [editedCircuit, setEditedCircuit] = useState<TestResult | null>(null);
   const [activeTab, setActiveTab] = useState('tests');
 
@@ -54,7 +54,7 @@ const CircuitEditSheet: React.FC<CircuitEditSheetProps> = ({
 
   const handleSave = () => {
     if (editedCircuit) {
-      haptics.success();
+      haptic.success();
       onSave(editedCircuit);
       onOpenChange(false);
     }
@@ -62,7 +62,7 @@ const CircuitEditSheet: React.FC<CircuitEditSheetProps> = ({
 
   const handleDelete = () => {
     if (onDelete) {
-      haptics.impact();
+      haptic.heavy();
       onDelete();
       onOpenChange(false);
     }

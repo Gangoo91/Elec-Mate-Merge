@@ -1,3 +1,4 @@
+import { copyToClipboard } from '@/utils/clipboard';
 import { Card } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
 import { Alert, AlertDescription } from '@/components/ui/alert';
@@ -233,10 +234,10 @@ export function ComplianceCheckpoint({
     };
   };
 
-  const copyJsonToClipboard = () => {
+  const copyJsonToClipboard = async () => {
     const payload = generatePdfMonkeyPayload();
     if (payload) {
-      navigator.clipboard.writeText(JSON.stringify(payload, null, 2));
+      await copyToClipboard(JSON.stringify(payload, null, 2));
     }
   };
 

@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { FileText, Download, CheckCircle2, AlertTriangle, Calculator, Copy } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
+import { copyToClipboard as clipboardCopy } from '@/utils/clipboard';
 
 interface TestingStep {
   id: number;
@@ -92,12 +93,12 @@ const ContinuityTestRecordingCard = ({ testingSteps }: ContinuityTestRecordingCa
     });
   };
 
-  const copyToClipboard = () => {
+  const copyToClipboard = async () => {
     const resultsText = testRecords
       .map((record) => `${record.circuit}: ${record.reading}Ω (${record.method}) - ${record.notes}`)
       .join('\n');
 
-    navigator.clipboard.writeText(resultsText);
+    await clipboardCopy(resultsText);
     toast({
       title: 'Copied to Clipboard',
       description: 'Test results copied to clipboard.',

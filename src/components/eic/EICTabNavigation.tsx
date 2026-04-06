@@ -5,7 +5,7 @@ import { Badge } from '@/components/ui/badge';
 import { ChevronLeft, ChevronRight, CheckCircle, Circle } from 'lucide-react';
 import { EICTabValue } from '@/hooks/useEICTabs';
 import { useIsMobile } from '@/hooks/use-mobile';
-import { useHaptics } from '@/hooks/useHaptics';
+import { useHaptic } from '@/hooks/useHaptic';
 import { cn } from '@/lib/utils';
 
 interface EICTabNavigationProps {
@@ -40,7 +40,7 @@ const EICTabNavigation: React.FC<EICTabNavigationProps> = ({
   canGenerateCertificate = true,
 }) => {
   const isMobile = useIsMobile();
-  const haptics = useHaptics();
+  const haptic = useHaptic();
 
   const getTabDisplayName = (tab: EICTabValue) => {
     const names = {
@@ -53,22 +53,22 @@ const EICTabNavigation: React.FC<EICTabNavigationProps> = ({
   };
 
   const handlePrevious = () => {
-    haptics.tap();
+    haptic.light();
     navigatePrevious();
   };
 
   const handleNext = () => {
-    haptics.tap();
+    haptic.light();
     navigateNext();
   };
 
   const handleToggleComplete = () => {
-    haptics.tap();
+    haptic.light();
     onToggleComplete();
   };
 
   const handleGenerateCertificate = () => {
-    haptics.success();
+    haptic.success();
     onGenerateCertificate?.();
   };
 

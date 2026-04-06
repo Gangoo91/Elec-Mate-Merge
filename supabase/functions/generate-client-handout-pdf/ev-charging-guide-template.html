@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>EV Charging Guide</title>
+    <style>
+        :root { --accent: #22c55e; }
+        @page { size: A4; margin: 0; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: Georgia, 'Times New Roman', serif; font-size: 10px; line-height: 1.55; color: #1e293b; background: #fff; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+        h1, h2, h3, .section-bar, .header-title, .header-company-name, .contact-card-name, .contact-card-title, .stat-number, .stat-label, .comparison-label, .comparison-value, .footer { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; }
+
+        .page { width: 210mm; min-height: 297mm; position: relative; overflow: hidden; }
+        .header { background: linear-gradient(180deg, #0a1628 0%, #152238 100%); color: #fff; padding: 14px 22px 12px; position: relative; }
+        .header::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: var(--accent); }
+        .header-content { display: flex; justify-content: space-between; align-items: center; }
+        .header-title { font-size: 24px; font-weight: 800; }
+        .header-subtitle { font-size: 10px; color: rgba(255,255,255,0.7); margin-top: 3px; font-style: italic; }
+        .header-right { text-align: right; display: flex; align-items: center; gap: 14px; }
+        .header-logo img { max-height: 50px; max-width: 130px; object-fit: contain; }
+        .header-company-name { font-size: 12px; font-weight: 700; color: var(--accent); }
+        .header-company-detail { font-size: 8px; color: rgba(255,255,255,0.6); margin-top: 2px; }
+        .header-scheme img { max-height: 35px; max-width: 70px; object-fit: contain; }
+        .header-sm { padding: 10px 22px 8px; }
+        .header-sm .header-title { font-size: 16px; }
+
+        .content { padding: 14px 22px; }
+        .intro-box { background: #0f172a; border: 1.5px solid #1e293b; border-left: 4px solid var(--accent); border-radius: 5px; padding: 10px 14px; margin-bottom: 12px; }
+        .intro-text { font-size: 10px; color: rgba(255,255,255,0.85); line-height: 1.6; }
+        .intro-text strong { color: #fff; }
+
+        .section { margin-bottom: 10px; }
+        .section-bar { background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); color: #fff; font-size: 9.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; padding: 5px 14px; border-left: 4px solid var(--accent); border-radius: 2px; margin-bottom: 6px; }
+        .section-bar.amber { border-left-color: #f59e0b; }
+        .section-bar.blue { border-left-color: #3b82f6; }
+        .section-bar.red { border-left-color: #dc2626; }
+
+        .bullet-list { padding: 0 0 0 4px; }
+        .bullet-item { display: flex; gap: 8px; margin-bottom: 4px; align-items: flex-start; }
+        .bullet-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); flex-shrink: 0; margin-top: 4px; }
+        .bullet-dot.amber { background: #f59e0b; }
+        .bullet-dot.blue { background: #3b82f6; }
+        .bullet-dot.red { background: #dc2626; }
+        .bullet-text { font-size: 10px; color: #334155; line-height: 1.55; flex: 1; }
+        .bullet-text strong { color: #0f172a; font-weight: 700; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; }
+
+        .info-box { background: #0f172a; border: 1.5px solid #1e293b; border-left: 4px solid var(--accent); border-radius: 5px; padding: 10px 14px; margin: 6px 0; }
+        .info-title { font-size: 10px; font-weight: 700; color: #fff; margin-bottom: 3px; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; }
+        .info-text { font-size: 9.5px; color: rgba(255,255,255,0.85); line-height: 1.6; }
+
+        .amber-box { background: #0f172a; border: 1.5px solid #1e293b; border-left: 4px solid #f59e0b; border-radius: 5px; padding: 10px 14px; margin: 6px 0; }
+        .amber-title { font-size: 10px; font-weight: 700; color: #fff; margin-bottom: 3px; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; }
+        .amber-text { font-size: 9.5px; color: rgba(255,255,255,0.85); line-height: 1.6; }
+
+        .alert-box { background: #7f1d1d; border: 1.5px solid #991b1b; border-left: 4px solid #dc2626; border-radius: 5px; padding: 10px 14px; margin: 6px 0; }
+        .alert-title { font-size: 10px; font-weight: 800; color: #fff; margin-bottom: 3px; text-transform: uppercase; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; }
+        .alert-text { font-size: 9.5px; color: rgba(255,255,255,0.9); line-height: 1.6; }
+
+        .stat-row { display: flex; gap: 8px; margin-bottom: 12px; }
+        .stat-card { flex: 1; background: #0f172a; border-radius: 5px; padding: 10px 10px; text-align: center; border: 1px solid #1e293b; }
+        .stat-number { font-size: 18px; font-weight: 800; color: var(--accent); }
+        .stat-label { font-size: 7.5px; color: rgba(255,255,255,0.6); margin-top: 2px; text-transform: uppercase; letter-spacing: 0.8px; }
+
+        .comparison-box { background: #0f172a; border-radius: 6px; padding: 12px 14px; margin: 6px 0; border: 1px solid #1e293b; }
+        .comparison-row { display: flex; justify-content: space-between; align-items: center; padding: 4px 0; border-bottom: 1px solid rgba(255,255,255,0.06); }
+        .comparison-row:last-child { border-bottom: none; }
+        .comparison-label { font-size: 9.5px; color: rgba(255,255,255,0.7); }
+        .comparison-value { font-size: 11px; font-weight: 700; }
+        .comparison-value.red { color: #f87171; }
+        .comparison-value.green { color: #4ade80; }
+        .comparison-value.white { color: #fff; }
+
+        .contact-card { background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); border-radius: 6px; padding: 12px 16px; margin-top: 10px; position: relative; overflow: hidden; }
+        .contact-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: var(--accent); }
+        .contact-card-title { font-size: 8px; color: rgba(255,255,255,0.5); text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 4px; }
+        .contact-card-name { font-size: 13px; font-weight: 800; color: #fff; }
+        .contact-card-details { font-size: 9px; color: var(--accent); margin-top: 3px; }
+        .contact-card-address { font-size: 8px; color: rgba(255,255,255,0.5); margin-top: 3px; }
+        .contact-card-reg { font-size: 7.5px; color: rgba(255,255,255,0.4); margin-top: 3px; }
+
+        .footer { position: absolute; bottom: 0; left: 0; right: 0; border-top: 2px solid var(--accent); padding: 6px 22px; display: flex; justify-content: space-between; align-items: center; font-size: 7.5px; color: #94a3b8; }
+        .page-break { page-break-before: always; }
+    </style>
+</head>
+<body>
+
+<!-- ===== PAGE 1 — YOUR EV CHARGER ===== -->
+<div class="page">
+    <div class="header">
+        <div class="header-content">
+            <div>
+                <div class="header-title">Your EV Charging Guide</div>
+                <div class="header-subtitle">Everything you need to know about charging your electric vehicle at home</div>
+            </div>
+            <div class="header-right">
+                {% if company_logo %}<div class="header-logo"><img src="{{ company_logo }}" alt="Logo" /></div>{% endif %}
+                <div>
+                    <div class="header-company-name">{{ company_name }}</div>
+                    {% if company_phone %}<div class="header-company-detail">{{ company_phone }}</div>{% endif %}
+                    {% if registration_scheme %}<div class="header-company-detail">{{ registration_scheme }}: {{ registration_number }}</div>{% endif %}
+                </div>
+                {% if scheme_logo %}<div class="header-scheme"><img src="{{ scheme_logo }}" alt="Scheme" /></div>{% endif %}
+            </div>
+        </div>
+    </div>
+    <div class="content">
+        <div class="stat-row">
+            <div class="stat-card"><div class="stat-number">2-3p</div><div class="stat-label">Per mile overnight</div></div>
+            <div class="stat-card"><div class="stat-number">£260</div><div class="stat-label">Annual fuel (overnight)</div></div>
+            <div class="stat-card"><div class="stat-number">7-22kW</div><div class="stat-label">Home charger speed</div></div>
+            <div class="stat-card"><div class="stat-number">85%</div><div class="stat-label">Cheaper than petrol</div></div>
+        </div>
+
+        <div class="intro-box">
+            <div class="intro-text">This guide from <strong>{{ company_name }}</strong> explains how to get the most from your home EV charger — how to charge smartly, save money, maintain your equipment, and troubleshoot common issues. Home charging is the cheapest and most convenient way to fuel your electric vehicle.</div>
+        </div>
+
+        <div class="section">
+            <div class="section-bar">How Home Charging Works</div>
+            <div class="bullet-list">
+                <div class="bullet-item"><div class="bullet-dot"></div><div class="bullet-text"><strong>Your home charger</strong> (also called a wallbox or EVSE) converts your home's AC electricity to a form your car's battery can accept. It communicates with your vehicle to manage the charge safely</div></div>
+                <div class="bullet-item"><div class="bullet-dot"></div><div class="bullet-text"><strong>Type 2 connector</strong> is the UK standard for home and public AC charging. Your charger has either a tethered cable (permanently attached) or a socket where you plug in your own cable</div></div>
+                <div class="bullet-item"><div class="bullet-dot"></div><div class="bullet-text"><strong>Charging speed:</strong> A 7kW charger adds approximately <strong>25-30 miles of range per hour</strong>. A typical EV (60kWh battery) charges from 20% to 80% in about <strong>5-6 hours</strong> — perfect for overnight charging</div></div>
+                <div class="bullet-item"><div class="bullet-dot"></div><div class="bullet-text"><strong>Smart charging</strong> is required by law on all chargers installed since June 2022. Your charger connects to WiFi and can schedule charging for the cheapest electricity rates automatically</div></div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-bar green">Save Money — Smart Charging & Tariffs</div>
+            <div class="comparison-box">
+                <div style="font-size: 8px; color: rgba(255,255,255,0.5); text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 6px; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;">Annual fuel cost — 12,000 miles</div>
+                <div class="comparison-row"><div class="comparison-label">Petrol car (50mpg, £1.40/litre)</div><div class="comparison-value red">£1,800</div></div>
+                <div class="comparison-row"><div class="comparison-label">EV — standard tariff (28p/kWh)</div><div class="comparison-value white">£960</div></div>
+                <div class="comparison-row"><div class="comparison-label">EV — overnight tariff (7.5p/kWh)</div><div class="comparison-value green">£260</div></div>
+                <div class="comparison-row"><div class="comparison-label">EV — home solar</div><div class="comparison-value green">£0-100</div></div>
+            </div>
+            <div class="bullet-list">
+                <div class="bullet-item"><div class="bullet-dot"></div><div class="bullet-text"><strong>Switch to a time-of-use tariff.</strong> Octopus Go, Intelligent Octopus, OVO Charge Anytime — these charge <strong>7-8p/kWh overnight</strong> vs 28p+ during the day. Your smart charger handles the scheduling automatically</div></div>
+                <div class="bullet-item"><div class="bullet-dot"></div><div class="bullet-text"><strong>Set your charge limit to 80%.</strong> Charging from 80% to 100% takes almost as long as 20% to 80% and puts more stress on the battery. Only charge to 100% before long journeys</div></div>
+                <div class="bullet-item"><div class="bullet-dot"></div><div class="bullet-text"><strong>Use the charger app</strong> (not the car app) to set schedules. Most charger apps integrate with your tariff to find the cheapest 30-minute slots automatically. Set it once and forget</div></div>
+                <div class="bullet-item"><div class="bullet-dot"></div><div class="bullet-text"><strong>Pre-condition your car</strong> while it's still plugged in — heat or cool the cabin before you unplug. This uses mains electricity instead of draining your battery, giving you more range</div></div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-bar blue">Understanding Your Charger</div>
+            <div class="bullet-list">
+                <div class="bullet-item"><div class="bullet-dot blue"></div><div class="bullet-text"><strong>LED indicators:</strong> Most chargers use coloured lights — <strong>green</strong> = standby/ready, <strong>blue</strong> = charging in progress, <strong>flashing</strong> = scheduled/waiting for cheap rate, <strong>red</strong> = fault. Check your manufacturer's guide for exact meanings</div></div>
+                <div class="bullet-item"><div class="bullet-dot blue"></div><div class="bullet-text"><strong>Load management:</strong> If fitted, your charger automatically reduces power when your home's electricity demand is high (e.g. oven + shower running). This prevents your main fuse from tripping</div></div>
+                <div class="bullet-item"><div class="bullet-dot blue"></div><div class="bullet-text"><strong>WiFi connection:</strong> Keep your charger connected to WiFi for software updates, smart tariff integration, and remote monitoring. If your charger loses WiFi, it will still charge but without smart features</div></div>
+                <div class="bullet-item"><div class="bullet-dot blue"></div><div class="bullet-text"><strong>RCD protection:</strong> Your charger has dedicated RCD/RCBO protection in the consumer unit. If it trips, do not keep resetting — contact {{ company_name }}</div></div>
+            </div>
+        </div>
+    </div>
+    <div class="footer">
+        <div>{{ company_name }}{% if company_phone %} — {{ company_phone }}{% endif %}</div>
+        <div>Powered by <strong>Elec-Mate</strong></div>
+        <div>Page 1 of 3</div>
+    </div>
+</div>
+
+<!-- ===== PAGE 2 — MAINTENANCE & TROUBLESHOOTING ===== -->
+<div class="page page-break">
+    <div class="header header-sm">
+        <div class="header-content">
+            <div><div class="header-title">Maintenance & Troubleshooting</div></div>
+            <div class="header-right">
+                {% if company_logo %}<div class="header-logo"><img src="{{ company_logo }}" alt="Logo" style="max-height:35px;" /></div>{% endif %}
+                <div><div class="header-company-name">{{ company_name }}</div></div>
+            </div>
+        </div>
+    </div>
+    <div class="content">
+        <div class="section">
+            <div class="section-bar amber">Maintaining Your Charger</div>
+            <div class="bullet-list">
+                <div class="bullet-item"><div class="bullet-dot amber"></div><div class="bullet-text"><strong>Keep the connector clean and dry.</strong> Wipe the plug and socket with a dry cloth regularly. If debris gets inside the connector, it can cause charging errors or reduced speed</div></div>
+                <div class="bullet-item"><div class="bullet-dot amber"></div><div class="bullet-text"><strong>Cable management:</strong> Don't leave the cable lying on the ground where it can be driven over, stepped on, or damaged by garden equipment. Use the cable holder on your charger unit. Coil loosely — tight coils generate heat</div></div>
+                <div class="bullet-item"><div class="bullet-dot amber"></div><div class="bullet-text"><strong>Check the cable regularly</strong> for cuts, cracks, or exposed wires — especially near the plug where flexing occurs. If damaged, <strong>stop using it immediately</strong> and contact us for a replacement</div></div>
+                <div class="bullet-item"><div class="bullet-dot amber"></div><div class="bullet-text"><strong>Software updates:</strong> Your charger receives updates over WiFi. Keep it connected. Updates may improve charging speed, add new tariff integrations, or fix bugs. Most update automatically overnight</div></div>
+                <div class="bullet-item"><div class="bullet-dot amber"></div><div class="bullet-text"><strong>Winter care:</strong> Your charger is weatherproof (IP65 rated) and works in all UK weather. In freezing conditions, the connector may be stiff — don't force it. Warm the plug in your hands for a moment first</div></div>
+                <div class="bullet-item"><div class="bullet-dot amber"></div><div class="bullet-text"><strong>Annual inspection:</strong> We recommend a visual inspection annually as part of your general electrical maintenance. Check for water ingress, loose mounting, and cable condition</div></div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-bar red">Troubleshooting — Common Issues</div>
+            <div class="bullet-list">
+                <div class="bullet-item"><div class="bullet-dot red"></div><div class="bullet-text"><strong>Charger not starting:</strong> 80% of "not charging" reports are fixed in under a minute. First, <strong>unplug and firmly re-seat the connector</strong> — a loose connection is the most common cause. Then check your car isn't on a scheduled charge (timer set in car app). Finally, check the consumer unit for a tripped RCBO</div></div>
+                <div class="bullet-item"><div class="bullet-dot red"></div><div class="bullet-text"><strong>Charging slower than expected:</strong> Check your car's charge setting — some vehicles default to a lower current (e.g. 10A instead of 32A). Cold weather also reduces charge speed as the battery management system protects the cells. Pre-conditioning helps</div></div>
+                <div class="bullet-item"><div class="bullet-dot red"></div><div class="bullet-text"><strong>Red light / error indicator:</strong> Power cycle the charger — switch off at the consumer unit, wait 30 seconds, switch back on. If the error persists, note the light pattern and contact {{ company_name }}</div></div>
+                <div class="bullet-item"><div class="bullet-dot red"></div><div class="bullet-text"><strong>RCBO keeps tripping:</strong> This indicates a ground fault — either in the charger or the vehicle. Try a different charging cable if you have a socket type. <strong>Do not keep resetting</strong> — contact {{ company_name }} on {{ company_phone }}</div></div>
+                <div class="bullet-item"><div class="bullet-dot red"></div><div class="bullet-text"><strong>App not connecting:</strong> Check your WiFi signal at the charger location. If weak, consider a WiFi extender. Reset the charger's WiFi connection via the charger's setup button (consult manual)</div></div>
+            </div>
+            <div class="alert-box">
+                <div class="alert-title">Never attempt to open or repair the charger</div>
+                <div class="alert-text">Your charger contains high-voltage components. If you notice physical damage, burning smell, unusual sounds, or persistent errors, <strong>stop using it immediately</strong>, switch off at the consumer unit, and contact {{ company_name }}. Do not attempt DIY repairs.</div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-bar">Cold Weather & Battery Care</div>
+            <div class="bullet-list">
+                <div class="bullet-item"><div class="bullet-dot"></div><div class="bullet-text"><strong>Range drops in winter</strong> — typically 15-25% less range in cold weather. This is normal and not a fault. The battery chemistry is less efficient at low temperatures, and cabin heating uses energy</div></div>
+                <div class="bullet-item"><div class="bullet-dot"></div><div class="bullet-text"><strong>Pre-condition while plugged in:</strong> Set your car to warm the cabin and battery before you unplug in the morning. This uses mains power (free via your charger) instead of battery power, maximising your range</div></div>
+                <div class="bullet-item"><div class="bullet-dot"></div><div class="bullet-text"><strong>Keep the battery between 20-80%</strong> for daily use. Deep discharges (below 10%) and constant full charges (100%) degrade the battery faster over time</div></div>
+                <div class="bullet-item"><div class="bullet-dot"></div><div class="bullet-text"><strong>Charge immediately after driving</strong> in cold weather — the battery is warmer from use and will accept charge faster than a cold-soaked battery that's been parked all day</div></div>
+            </div>
+        </div>
+    </div>
+    <div class="footer">
+        <div>{{ company_name }}{% if company_phone %} — {{ company_phone }}{% endif %}</div>
+        <div>Powered by <strong>Elec-Mate</strong></div>
+        <div>Page 2 of 3</div>
+    </div>
+</div>
+
+<!-- ===== PAGE 3 — GRANTS, SOLAR & THE FUTURE ===== -->
+<div class="page page-break">
+    <div class="header header-sm">
+        <div class="header-content">
+            <div><div class="header-title">Grants, Solar & Going Further</div></div>
+            <div class="header-right">
+                {% if company_logo %}<div class="header-logo"><img src="{{ company_logo }}" alt="Logo" style="max-height:35px;" /></div>{% endif %}
+                <div><div class="header-company-name">{{ company_name }}</div></div>
+            </div>
+        </div>
+    </div>
+    <div class="content">
+        <div class="section">
+            <div class="section-bar">Government Grants (OZEV) — April 2026 Update</div>
+            <div class="bullet-list">
+                <div class="bullet-item"><div class="bullet-dot"></div><div class="bullet-text"><strong>EV Chargepoint Grant:</strong> From April 2026, renters, flat owners, and businesses can claim up to <strong>£500 per socket</strong> (increased from £350) or 75% of the cost, whichever is lower</div></div>
+                <div class="bullet-item"><div class="bullet-dot"></div><div class="bullet-text"><strong>Homeowners</strong> in detached/semi-detached houses are <strong>no longer eligible</strong> for the grant (removed in 2022). However, the investment pays for itself within 2-3 years through fuel savings</div></div>
+                <div class="bullet-item"><div class="bullet-dot"></div><div class="bullet-text"><strong>Landlords:</strong> Can claim the grant for rental properties — up to £500 per socket. Must use an OZEV-approved installer. The charger must have smart functionality</div></div>
+                <div class="bullet-item"><div class="bullet-dot"></div><div class="bullet-text"><strong>Workplace charging:</strong> Businesses can claim up to £500 per socket (max 40 sockets) for staff and visitor charging. Great for company car schemes</div></div>
+            </div>
+            <div class="info-box">
+                <div class="info-title">Is {{ company_name }} OZEV-approved?</div>
+                <div class="info-text">{% if registration_scheme %}As a {{ registration_scheme }}-registered installer, we can process OZEV grant applications on your behalf. The grant is deducted from your invoice — you don't need to apply separately.{% else %}Contact us to check if we can process OZEV grant applications for your installation.{% endif %}</div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-bar green">Solar PV + EV = Free Fuel</div>
+            <div class="bullet-list">
+                <div class="bullet-item"><div class="bullet-dot green"></div><div class="bullet-text"><strong>The ultimate combination:</strong> Solar panels generate free electricity during the day. A battery stores the excess. Your car charges overnight from the battery. <strong>Total fuel cost: virtually zero</strong></div></div>
+                <div class="bullet-item"><div class="bullet-dot green"></div><div class="bullet-text"><strong>Solar diverter:</strong> Some smart chargers (like the Zappi) can automatically use excess solar generation to charge your car instead of exporting to the grid at 5p/kWh. You save the full 28p/kWh difference</div></div>
+                <div class="bullet-item"><div class="bullet-dot green"></div><div class="bullet-text"><strong>Vehicle-to-Grid (V2G):</strong> Emerging technology that allows your car to power your home during peak hours and recharge from cheap overnight electricity. Currently available on some Nissan and Hyundai models</div></div>
+                <div class="bullet-item"><div class="bullet-dot green"></div><div class="bullet-text"><strong>Battery storage:</strong> A home battery (Tesla Powerwall, GivEnergy, Fox ESS) stores cheap overnight electricity or solar energy for evening use. Combined with an EV charger, you can run your entire home and car on cheap or free electricity</div></div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-bar">Public Charging — When You're Away From Home</div>
+            <div class="bullet-list">
+                <div class="bullet-item"><div class="bullet-dot"></div><div class="bullet-text"><strong>Apps to download:</strong> Zap-Map (find chargers), Octopus Electroverse (one card for multiple networks), BP Pulse, Tesla Supercharger (now open to all). Most accept contactless payment</div></div>
+                <div class="bullet-item"><div class="bullet-dot"></div><div class="bullet-text"><strong>Rapid charging:</strong> 50-350kW DC chargers at motorway services can add 100+ miles in 20-30 minutes. Costs 60-80p/kWh — expensive compared to home charging. Use for long journeys only</div></div>
+                <div class="bullet-item"><div class="bullet-dot"></div><div class="bullet-text"><strong>Destination charging:</strong> Many hotels, supermarkets, and car parks offer free or cheap 7-22kW charging while you shop or stay. Check Zap-Map for availability</div></div>
+                <div class="bullet-item"><div class="bullet-dot"></div><div class="bullet-text"><strong>Route planning:</strong> Use A Better Route Planner (ABRP) for long journeys — it calculates charging stops based on your car's real-world range, weather, speed, and elevation</div></div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-bar">Quick Reference</div>
+            <div class="bullet-list">
+                <div class="bullet-item"><div class="bullet-dot"></div><div class="bullet-text"><strong>Your charger location:</strong> Ask your electrician to confirm the dedicated circuit in your consumer unit</div></div>
+                <div class="bullet-item"><div class="bullet-dot"></div><div class="bullet-text"><strong>Power cuts:</strong> Your charger will resume automatically when power is restored (unless a schedule prevents it)</div></div>
+                <div class="bullet-item"><div class="bullet-dot"></div><div class="bullet-text"><strong>Moving house:</strong> Your charger can be removed and reinstalled at your new property. Contact us for a quote</div></div>
+                <div class="bullet-item"><div class="bullet-dot"></div><div class="bullet-text"><strong>Warranty:</strong> Most chargers have a 3-year manufacturer warranty. Keep your purchase receipt and installation certificate</div></div>
+            </div>
+        </div>
+
+        <div class="contact-card">
+            <div class="contact-card-title">Charger issues, upgrades, or solar installation</div>
+            <div class="contact-card-name">{{ company_name }}</div>
+            <div class="contact-card-details">
+                {% if company_phone %}{{ company_phone }}{% endif %}
+                {% if company_email %} | {{ company_email }}{% endif %}
+                {% if company_website %} | {{ company_website }}{% endif %}
+            </div>
+            {% if company_address %}<div class="contact-card-address">{{ company_address }}</div>{% endif %}
+            {% if registration_scheme %}<div class="contact-card-reg">{{ registration_scheme }} Registered — No. {{ registration_number }}</div>{% endif %}
+        </div>
+    </div>
+    <div class="footer">
+        <div>{{ company_name }}{% if company_phone %} — {{ company_phone }}{% endif %}</div>
+        <div>Powered by <strong>Elec-Mate</strong></div>
+        <div>Page 3 of 3</div>
+    </div>
+</div>
+
+</body>
+</html>

@@ -23,7 +23,7 @@ import InspectionPhotoUpload from '@/components/inspection/InspectionPhotoUpload
 import InspectionPhotoGallery from '@/components/inspection/InspectionPhotoGallery';
 import { cn } from '@/lib/utils';
 import { useIsMobile } from '@/hooks/use-mobile';
-import { useHaptics } from '@/hooks/useHaptics';
+import { useHaptic } from '@/hooks/useHaptic';
 
 interface EICDefectObservationCardProps {
   observation: EICObservation;
@@ -45,7 +45,7 @@ const EICDefectObservationCard: React.FC<EICDefectObservationCardProps> = ({
 }) => {
   const [isExpanded, setIsExpanded] = useState(true);
   const isMobile = useIsMobile();
-  const haptics = useHaptics();
+  const haptic = useHaptic();
 
   // Initialize photo management
   const { photos, isUploading, isScanning, uploadPhoto, deletePhoto, scanPhotoWithAI } =
@@ -128,7 +128,7 @@ const EICDefectObservationCard: React.FC<EICDefectObservationCardProps> = ({
           isMobile && 'min-h-[60px]'
         )}
         onClick={() => {
-          haptics.tap();
+          haptic.light();
           setIsExpanded(!isExpanded);
         }}
       >
@@ -171,7 +171,7 @@ const EICDefectObservationCard: React.FC<EICDefectObservationCardProps> = ({
           <button
             onClick={(e) => {
               e.stopPropagation();
-              haptics.warning();
+              haptic.warning();
               onRemove(observation.id);
             }}
             className="h-10 w-10 flex items-center justify-center rounded-lg text-red-400/70 hover:text-red-400 hover:bg-red-500/10 transition-colors touch-manipulation"
@@ -218,7 +218,7 @@ const EICDefectObservationCard: React.FC<EICDefectObservationCardProps> = ({
                     <button
                       key={code.code}
                       onClick={() => {
-                        haptics.tap();
+                        haptic.light();
                         onUpdate(observation.id, 'defectCode', code.code);
                         if (observation.inspectionItemId && onSyncToInspectionItem) {
                           onSyncToInspectionItem(observation.inspectionItemId, code.code);

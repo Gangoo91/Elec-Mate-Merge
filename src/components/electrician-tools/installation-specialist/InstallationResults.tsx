@@ -468,83 +468,77 @@ export const InstallationResults = ({
 
   return (
     <div ref={contentRef} className="space-y-6 animate-fade-in pb-24 sm:pb-6">
-      {/* Hero Banner */}
+      {/* Inline Header */}
       {jobTitle && (
-        <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-blue-500/10 via-primary/10 to-background border border-blue-500/30 p-6 sm:p-8 shadow-xl">
-          <div className="absolute inset-0 bg-grid-pattern opacity-5" />
-          <div className="relative z-10">
-            <div className="flex flex-col sm:flex-row items-center sm:items-start gap-4 mb-3">
-              <div className="p-3 rounded-xl bg-gradient-to-br from-blue-400 to-blue-600 shadow-lg">
-                <Wrench className="h-8 w-8 text-foreground" />
-              </div>
-              <div className="flex-1 w-full text-center sm:text-left">
-                <h2 className="text-2xl sm:text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-blue-500 to-blue-600 mb-2 leading-tight">
-                  {jobTitle}
-                </h2>
-                <div className="flex flex-wrap gap-2">
-                  {installationType && (
-                    <Badge className="bg-gradient-to-r from-blue-400/20 to-blue-600/20 text-foreground border-blue-400/40 px-3 py-1 text-sm font-semibold">
-                      {installationType
-                        ? `${installationType.charAt(0).toUpperCase()}${installationType.slice(1)}`
-                        : 'General'}{' '}
-                      Installation
-                    </Badge>
-                  )}
-                  <Badge className="bg-gradient-to-r from-success/20 to-emerald-500/20 text-success border-success/40 px-3 py-1 text-sm font-semibold animate-pulse">
-                    ✓ Method Statement Ready
-                  </Badge>
-                </div>
-              </div>
-            </div>
+        <div className="flex items-start gap-3">
+          <div className="w-10 h-10 rounded-xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center flex-shrink-0">
+            <Wrench className="h-5 w-5 text-blue-400" />
+          </div>
+          <div className="flex-1 min-w-0">
+            <h2 className="text-lg font-bold text-white leading-tight">{jobTitle}</h2>
+            <p className="text-sm text-white">Installation guide</p>
+          </div>
+          <div className="flex items-center gap-2 flex-shrink-0">
+            <button
+              onClick={() => {
+                navigator.clipboard.writeText(installationGuide || '');
+                toast({ title: 'Copied', description: 'Method statement copied to clipboard.' });
+              }}
+              className="h-9 px-3 rounded-lg bg-white/[0.06] text-white ring-1 ring-white/[0.08] text-sm font-medium touch-manipulation active:scale-95 transition-all"
+            >
+              Copy
+            </button>
+            <button
+              onClick={onStartOver}
+              className="h-9 px-3 rounded-lg bg-white/[0.06] text-white ring-1 ring-white/[0.08] text-sm font-medium touch-manipulation active:scale-95 transition-all"
+            >
+              <RotateCcw className="h-4 w-4" />
+            </button>
           </div>
         </div>
       )}
 
       {/* Original Request Display */}
       {originalQuery && (
-        <Card className="border-blue-500/20 bg-gradient-to-br from-blue-500/5 to-background">
-          <CardContent className="p-4 sm:p-6">
-            <div className="flex flex-col sm:flex-row items-start gap-3">
-              <div className="p-2 rounded-lg bg-blue-500/10">
-                <FileText className="h-5 w-5 text-blue-400" />
-              </div>
-              <div className="flex-1">
-                <h4 className="font-semibold text-sm text-muted-foreground mb-2">
-                  Original Request
-                </h4>
-                <p className="text-base text-foreground font-medium leading-relaxed mb-3">
-                  {originalQuery}
-                </p>
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 text-xs">
-                  {projectDetails?.projectName && (
-                    <div className="flex items-center gap-2 bg-muted/50 rounded px-3 py-2">
-                      <span className="text-muted-foreground">Project:</span>
-                      <span className="font-semibold text-foreground">
-                        {projectDetails.projectName}
-                      </span>
-                    </div>
-                  )}
-                  {projectDetails?.location && (
-                    <div className="flex items-center gap-2 bg-muted/50 rounded px-3 py-2">
-                      <span className="text-muted-foreground">Location:</span>
-                      <span className="font-semibold text-foreground">
-                        {projectDetails.location}
-                      </span>
-                    </div>
-                  )}
-                  {projectDetails?.installationType && (
-                    <div className="flex items-center gap-2 bg-muted/50 rounded px-3 py-2">
-                      <span className="text-muted-foreground">Type:</span>
-                      <span className="font-semibold text-foreground">
-                        {projectDetails.installationType}
-                      </span>
-                    </div>
-                  )}
-                </div>
+        <div className="rounded-xl bg-white/[0.03] border border-white/[0.08] p-4 sm:p-5">
+          <div className="flex flex-col sm:flex-row items-start gap-3">
+            <div className="p-2 rounded-lg bg-blue-500/10 border border-blue-500/20">
+              <FileText className="h-5 w-5 text-blue-400" />
+            </div>
+            <div className="flex-1">
+              <h2 className="text-xs font-medium text-white uppercase tracking-wider px-0.5 mb-2">Original Request</h2>
+              <p className="text-base text-white font-medium leading-relaxed mb-3">
+                {originalQuery}
+              </p>
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 text-xs">
+                {projectDetails?.projectName && (
+                  <div className="flex items-center gap-2 bg-white/[0.04] rounded px-3 py-2">
+                    <span className="text-white">Project:</span>
+                    <span className="font-semibold text-white">
+                      {projectDetails.projectName}
+                    </span>
+                  </div>
+                )}
+                {projectDetails?.location && (
+                  <div className="flex items-center gap-2 bg-white/[0.04] rounded px-3 py-2">
+                    <span className="text-white">Location:</span>
+                    <span className="font-semibold text-white">
+                      {projectDetails.location}
+                    </span>
+                  </div>
+                )}
+                {projectDetails?.installationType && (
+                  <div className="flex items-center gap-2 bg-white/[0.04] rounded px-3 py-2">
+                    <span className="text-white">Type:</span>
+                    <span className="font-semibold text-white">
+                      {projectDetails.installationType}
+                    </span>
+                  </div>
+                )}
               </div>
             </div>
-          </CardContent>
-        </Card>
+          </div>
+        </div>
       )}
 
       {/* ✅ NEW: Project Metadata Card */}

@@ -9,7 +9,7 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { SyncStatusIndicator } from '@/components/ui/sync-status-indicator';
 import { SyncStatus } from '@/hooks/useCloudSync';
-import { useHaptics } from '@/hooks/useHaptics';
+import { useHaptic } from '@/hooks/useHaptic';
 
 interface MWFormHeaderProps {
   onBack: () => void;
@@ -37,18 +37,18 @@ const MWFormHeader: React.FC<MWFormHeaderProps> = ({
   isOnline = true,
   isAuthenticated = false,
 }) => {
-  const haptics = useHaptics();
+  const haptic = useHaptic();
 
   const handleBack = () => {
-    haptics.tap();
+    haptic.light();
     onBack();
   };
 
   const handleSave = async () => {
-    haptics.tap();
+    haptic.light();
     if (onManualSave) {
       await onManualSave();
-      haptics.success();
+      haptic.success();
     }
   };
 
@@ -111,7 +111,7 @@ const MWFormHeader: React.FC<MWFormHeaderProps> = ({
               <DropdownMenuContent align="end" className="w-48 bg-card border-border/50">
                 <DropdownMenuItem
                   onClick={() => {
-                    haptics.tap();
+                    haptic.light();
                     onStartNew();
                   }}
                   className="gap-2"
@@ -172,7 +172,7 @@ const MWFormHeader: React.FC<MWFormHeaderProps> = ({
                   variant="outline"
                   size="sm"
                   onClick={() => {
-                    haptics.tap();
+                    haptic.light();
                     onStartNew();
                   }}
                   className="h-10 gap-2 border-white/20 hover:bg-white/10"

@@ -103,9 +103,10 @@ export default function SafeIsolationPage() {
   useEffect(() => {
     supabase.auth.getUser().then(async ({ data: { user } }) => {
       if (!user) return;
-      const { data: profile } = await supabase.from('profiles').select('full_name').eq('id', user.id).single();
-      if (profile && !data.personName) {
-        setData((prev) => ({ ...prev, personName: prev.personName || profile.full_name || '' }));
+      const { data: cpData } = await supabase.rpc('get_my_company_profile');
+      const cp = Array.isArray(cpData) ? cpData[0] : cpData;
+      if (cp && !data.personName) {
+        setData((prev) => ({ ...prev, personName: prev.personName || cp.inspector_name || cp.company_name || '' }));
       }
     });
   }, []);

@@ -1,6 +1,5 @@
 import { useState } from 'react';
-import { AlertCircle, Trash2, ChevronUp, ChevronDown, Edit2, Plus } from 'lucide-react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { AlertCircle, Trash2, Edit2, Plus } from 'lucide-react';
 import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
 import { useMobileEnhanced } from '@/hooks/use-mobile-enhanced';
@@ -46,23 +45,16 @@ export const EmergencyProceduresSection = ({
   };
 
   return (
-    <Card className="border-red-500/30 bg-gradient-to-br from-red-500/5 to-orange-500/5">
-      <CardHeader>
-        <CardTitle className="flex items-center gap-2 text-red-600">
-          <AlertCircle className="h-5 w-5" />
-          Emergency Procedures
-        </CardTitle>
-      </CardHeader>
-      <CardContent>
-        <div className="space-y-3">
-          {procedures.map((procedure, idx) => (
-            <div
-              key={idx}
-              className="flex flex-col items-center gap-3 p-4 bg-white/50 dark:bg-elec-card/50 rounded-lg border border-red-500/20 hover:border-red-500/40 transition-all relative sm:flex-row sm:items-start"
-            >
-              <div className="flex-shrink-0 w-8 h-8 rounded-full bg-gradient-to-br from-red-500 to-orange-500 text-foreground flex items-center justify-center font-bold text-sm shadow-lg">
-                {idx + 1}
-              </div>
+    <div className="space-y-3">
+      <div className="space-y-2">
+        {procedures.map((procedure, idx) => (
+          <div
+            key={idx}
+            className="flex flex-col items-center gap-3 p-4 rounded-xl bg-white/[0.03] border border-white/[0.08] relative sm:flex-row sm:items-start"
+          >
+            <div className="flex-shrink-0 w-8 h-8 rounded-full bg-gradient-to-br from-red-500 to-orange-500 text-white flex items-center justify-center font-bold text-sm">
+              {idx + 1}
+            </div>
 
               {editingIndex === idx ? (
                 <div className="flex-1 w-full space-y-2">
@@ -100,7 +92,7 @@ export const EmergencyProceduresSection = ({
                 </div>
               ) : (
                 <>
-                  <p className="flex-1 w-full text-sm leading-relaxed pt-1 text-center sm:text-left">
+                  <p className="flex-1 w-full text-sm text-white leading-relaxed pt-1 text-center sm:text-left">
                     {procedure}
                   </p>
                   <div className="absolute top-2 right-2 flex gap-1">
@@ -130,33 +122,32 @@ export const EmergencyProceduresSection = ({
                 </>
               )}
             </div>
-          ))}
-        </div>
+        ))}
+      </div>
 
-        <Button
-          onClick={onAdd}
-          variant="outline"
-          className={cn(
-            'w-full mt-3 touch-manipulation active:scale-[0.98]',
-            isMobile && 'min-h-[48px]'
-          )}
-        >
-          <Plus className="h-4 w-4 mr-2" />
-          Add Procedure
-        </Button>
+      <Button
+        onClick={onAdd}
+        variant="outline"
+        className={cn(
+          'w-full touch-manipulation active:scale-[0.98]',
+          isMobile && 'min-h-[48px]'
+        )}
+      >
+        <Plus className="h-4 w-4 mr-2" />
+        Add Procedure
+      </Button>
 
-        {/* Emergency Contact Reminder */}
-        <div className="mt-4 p-3 bg-red-500/10 border border-red-500/30 rounded-lg">
-          <div className="flex items-start gap-2">
-            <AlertCircle className="h-4 w-4 text-red-500 flex-shrink-0 mt-0.5" />
-            <p className="text-xs text-foreground">
-              <span className="font-semibold text-foreground">Important:</span> Ensure all team
-              members are familiar with emergency procedures and know the location of first aid
-              equipment and emergency exits.
-            </p>
-          </div>
+      {/* Emergency Contact Reminder */}
+      <div className="p-3 bg-red-500/10 border border-red-500/30 rounded-lg">
+        <div className="flex items-start gap-2">
+          <AlertCircle className="h-4 w-4 text-red-500 flex-shrink-0 mt-0.5" />
+          <p className="text-xs text-white">
+            <span className="font-semibold text-white">Important:</span> Ensure all team
+            members are familiar with emergency procedures and know the location of first aid
+            equipment and emergency exits.
+          </p>
         </div>
-      </CardContent>
-    </Card>
+      </div>
+    </div>
   );
 };

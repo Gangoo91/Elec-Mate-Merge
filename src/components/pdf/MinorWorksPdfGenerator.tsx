@@ -35,7 +35,6 @@ import { generatePdfFilename } from '@/utils/pdfFilenameGenerator';
 import CertificateGenerationDialog from '@/components/inspection/CertificateGenerationDialog';
 import PDFExportProgress from '@/components/PDFExportProgress';
 import { useIsMobile } from '@/hooks/use-mobile';
-import { useHaptics } from '@/hooks/useHaptics';
 import { cn } from '@/lib/utils';
 import { openExternalUrl } from '@/utils/open-external-url';
 
@@ -78,7 +77,6 @@ const MinorWorksPdfGenerator: React.FC<MinorWorksPdfGeneratorProps> = ({
   const [isSendingWhatsApp, setIsSendingWhatsApp] = useState(false);
 
   const isMobile = useIsMobile();
-  const haptics = useHaptics();
   const { toast } = useToast();
   const navigate = useNavigate();
   const queryClient = useQueryClient();

@@ -28,7 +28,7 @@ import { useToast } from '@/hooks/use-toast';
 import { cn } from '@/lib/utils';
 import EICCertificateActions from './EICCertificateActions';
 import { useIsMobile } from '@/hooks/use-mobile';
-import { useHaptics } from '@/hooks/useHaptics';
+import { useHaptic } from '@/hooks/useHaptic';
 import { useCompanyProfile } from '@/hooks/useCompanyProfile';
 import { useInspectorProfiles } from '@/hooks/useInspectorProfiles';
 
@@ -52,7 +52,7 @@ const EICCertificateTab: React.FC<EICCertificateTabProps> = ({
   canGenerateCertificate,
 }) => {
   const isMobile = useIsMobile();
-  const haptics = useHaptics();
+  const haptic = useHaptic();
   const { toast } = useToast();
   const { companyProfile } = useCompanyProfile();
   const { getDefaultProfile } = useInspectorProfiles();
@@ -62,7 +62,7 @@ const EICCertificateTab: React.FC<EICCertificateTabProps> = ({
   });
 
   const toggleSection = (section: keyof typeof openSections) => {
-    haptics.tap();
+    haptic.light();
     setOpenSections((prev) => ({ ...prev, [section]: !prev[section] }));
   };
 
@@ -164,7 +164,7 @@ const EICCertificateTab: React.FC<EICCertificateTabProps> = ({
       return;
     }
 
-    haptics.tap();
+    haptic.light();
 
     // Prefer inspector profile, fall back to company profile
     if (inspectorProfile) {

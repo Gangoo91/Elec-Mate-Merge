@@ -274,34 +274,25 @@ const InstallationVerifyPage = () => {
   const selectedCert = certificateTypes.find((c) => c.id === selectedCertType);
 
   return (
-    <div className="bg-background ">
-      {/* Header */}
-      <div className="sticky top-0 z-50 bg-background/95 backdrop-blur-xl border-b border-border/30 ">
+    <div className="-mt-3 sm:-mt-4 md:-mt-6 bg-background pb-24">
+      {/* Sticky Header */}
+      <div className="sticky top-0 z-50 bg-background/95 backdrop-blur-sm border-b border-white/[0.06]">
         <div className="px-4 py-2">
-          <button
-            onClick={() => navigate('/electrician-tools/ai-tooling')}
-            className="flex items-center gap-2 text-foreground h-11 touch-manipulation active:scale-[0.98] transition-all -ml-2 px-2 rounded-lg"
-          >
-            <ArrowLeft className="h-5 w-5" />
-            <span className="text-sm font-medium">AI Tools</span>
-          </button>
-        </div>
-      </div>
-
-      <main className="px-4 py-5 space-y-5 max-w-5xl mx-auto">
-        {/* Hero */}
-        <div className="rounded-2xl border border-cyan-500/30 bg-gradient-to-br from-cyan-500/10 via-card to-card/90 backdrop-blur-xl p-5 overflow-hidden relative">
-          <div className="relative flex items-center gap-4">
-            <div className="p-3 rounded-xl bg-cyan-500/20 border border-cyan-500/30">
-              <CheckCircle className="h-7 w-7 text-cyan-400" />
-            </div>
-            <div>
-              <h1 className="text-xl font-bold text-foreground">Installation Verification</h1>
-              <p className="text-sm text-white">BS 7671 compliance check</p>
+          <div className="flex items-center gap-3 h-11">
+            <Button variant="ghost" size="icon" onClick={() => navigate('/electrician-tools/ai-tooling')} className="text-white hover:text-white hover:bg-white/10 rounded-xl h-11 w-11 touch-manipulation active:scale-[0.98]">
+              <ArrowLeft className="h-5 w-5" />
+            </Button>
+            <div className="flex items-center gap-2.5">
+              <div className="p-1.5 rounded-lg bg-cyan-500/10 border border-cyan-500/20">
+                <CheckCircle className="h-4 w-4 text-cyan-500" />
+              </div>
+              <h1 className="text-base font-semibold text-white">Installation Verification</h1>
             </div>
           </div>
         </div>
+      </div>
 
+      <main className="px-4 py-4 space-y-5">
         {/* Results */}
         {analysisResult?.verification_checks ? (
           <div className="space-y-4">
@@ -314,15 +305,15 @@ const InstallationVerifyPage = () => {
             </Button>
           </div>
         ) : isAnalyzing ? (
-          <div className="rounded-xl border border-cyan-500/30 bg-card/50 p-6 space-y-4">
+          <div className="rounded-2xl bg-white/[0.03] border border-white/[0.08] p-6">
             <div className="flex items-center gap-3">
-              <Loader2 className="h-6 w-6 animate-spin text-cyan-400" />
+              <Loader2 className="h-6 w-6 animate-spin text-cyan-500" />
               <div>
-                <h3 className="font-semibold text-foreground">Verifying Installation...</h3>
+                <h3 className="font-semibold text-white">Verifying Installation...</h3>
                 <p className="text-xs text-white">Checking against BS 7671 requirements</p>
               </div>
             </div>
-            <div className="h-2 bg-muted rounded-full overflow-hidden">
+            <div className="h-2 bg-muted rounded-full overflow-hidden mt-4">
               <motion.div
                 className="h-full bg-cyan-500"
                 initial={{ width: 0 }}
@@ -332,26 +323,26 @@ const InstallationVerifyPage = () => {
           </div>
         ) : (
           <>
-            {/* Certificate Type - Card Selection */}
+            {/* Certificate Type */}
             <div className="space-y-3">
-              <h2 className="font-semibold text-foreground px-1">Certificate Type</h2>
+              <h2 className="text-xs font-medium text-white uppercase tracking-wider px-0.5">Certificate Type</h2>
               <div className="grid grid-cols-3 gap-3">
                 {certificateTypes.map((cert) => (
                   <button
                     key={cert.id}
                     onClick={() => setSelectedCertType(cert.id)}
                     className={cn(
-                      'relative p-4 rounded-xl border-2 transition-all touch-manipulation',
+                      'relative p-4 rounded-xl transition-all touch-manipulation',
                       'min-h-[100px] flex flex-col items-center justify-center gap-2 text-center',
                       selectedCertType === cert.id
-                        ? cert.color
-                        : 'border-border/30 bg-card/50 hover:border-border/50'
+                        ? 'bg-cyan-500/20 text-cyan-400 ring-1 ring-cyan-500/40 shadow-sm shadow-cyan-500/10'
+                        : 'bg-white/[0.06] text-white ring-1 ring-white/[0.08] active:scale-[0.97]'
                     )}
                   >
                     <cert.icon
                       className={cn(
                         'h-6 w-6',
-                        selectedCertType === cert.id ? '' : 'text-muted-foreground'
+                        selectedCertType === cert.id ? 'text-cyan-400' : 'text-white'
                       )}
                     />
                     <div>
@@ -359,7 +350,7 @@ const InstallationVerifyPage = () => {
                       <span className="text-[10px] text-white">{cert.desc}</span>
                     </div>
                     {selectedCertType === cert.id && (
-                      <div className="absolute top-2 right-2 w-2 h-2 rounded-full bg-current animate-pulse" />
+                      <div className="absolute top-2 right-2 w-2 h-2 rounded-full bg-cyan-400 animate-pulse" />
                     )}
                   </button>
                 ))}
@@ -367,18 +358,18 @@ const InstallationVerifyPage = () => {
             </div>
 
             {/* Property Type */}
-            <div className="rounded-xl border border-border/30 bg-card/50 p-4 space-y-3">
-              <h3 className="font-medium text-foreground text-sm">Property Type</h3>
+            <div className="space-y-3">
+              <h2 className="text-xs font-medium text-white uppercase tracking-wider px-0.5">Property Type</h2>
               <div className="grid grid-cols-3 gap-2">
                 {propertyTypes.map((prop) => (
                   <button
                     key={prop.id}
                     onClick={() => setSelectedPropertyType(prop.id)}
                     className={cn(
-                      'p-3 rounded-xl border-2 transition-all flex flex-col items-center gap-1.5 min-h-[70px] touch-manipulation',
+                      'p-3 rounded-xl transition-all flex flex-col items-center gap-1.5 min-h-[70px] touch-manipulation',
                       selectedPropertyType === prop.id
-                        ? 'bg-cyan-500/20 border-cyan-500/40 text-cyan-400'
-                        : 'border-border/30 text-white hover:border-border/50'
+                        ? 'bg-cyan-500/20 text-cyan-400 ring-1 ring-cyan-500/40 shadow-sm shadow-cyan-500/10'
+                        : 'bg-white/[0.06] text-white ring-1 ring-white/[0.08] active:scale-[0.97]'
                     )}
                   >
                     <prop.icon className="h-5 w-5" />
@@ -389,12 +380,9 @@ const InstallationVerifyPage = () => {
             </div>
 
             {/* Scope of Verification */}
-            <div className="rounded-xl border border-border/30 bg-card/50 p-4 space-y-3">
+            <div className="space-y-3">
               <div className="flex items-center justify-between">
-                <h3 className="font-medium text-foreground text-sm flex items-center gap-2">
-                  <Shield className="h-4 w-4 text-cyan-400" />
-                  What are you verifying?
-                </h3>
+                <h2 className="text-xs font-medium text-white uppercase tracking-wider px-0.5">What are you verifying?</h2>
                 <Badge variant="secondary" className="text-xs">
                   {selectedScopes.length} areas
                 </Badge>
@@ -405,10 +393,10 @@ const InstallationVerifyPage = () => {
                     key={scope.id}
                     onClick={() => toggleScope(scope.id)}
                     className={cn(
-                      'px-3 py-2 rounded-lg border text-xs font-medium transition-all min-h-[44px] touch-manipulation',
+                      'px-3 py-2 text-xs font-medium transition-all min-h-[44px]',
                       selectedScopes.includes(scope.id)
-                        ? 'bg-cyan-500/20 border-cyan-500/40 text-cyan-400'
-                        : 'border-border/30 text-white hover:border-border/50'
+                        ? 'h-11 rounded-xl bg-cyan-500/20 text-cyan-400 ring-1 ring-cyan-500/40 shadow-sm shadow-cyan-500/10 touch-manipulation'
+                        : 'h-11 rounded-xl bg-white/[0.06] text-white ring-1 ring-white/[0.08] touch-manipulation active:scale-[0.97] transition-all'
                     )}
                   >
                     {scope.label}
@@ -417,12 +405,9 @@ const InstallationVerifyPage = () => {
               </div>
             </div>
 
-            {/* Quick Checks - Pre-flight */}
-            <div className="rounded-xl border border-border/30 bg-card/50 p-4 space-y-3">
-              <h3 className="font-medium text-foreground text-sm flex items-center gap-2">
-                <Zap className="h-4 w-4 text-cyan-400" />
-                Pre-verification Checklist
-              </h3>
+            {/* Pre-verification Checklist */}
+            <div className="space-y-3">
+              <h2 className="text-xs font-medium text-white uppercase tracking-wider px-0.5">Pre-verification Checklist</h2>
               <div className="space-y-2">
                 {quickChecks.map((check) => (
                   <button
@@ -432,7 +417,7 @@ const InstallationVerifyPage = () => {
                       'w-full flex items-center gap-3 p-3 rounded-lg border transition-all text-left min-h-[48px] touch-manipulation',
                       checkedItems.includes(check.id)
                         ? 'bg-cyan-500/10 border-cyan-500/30'
-                        : 'border-border/30 hover:border-border/50'
+                        : 'border-white/[0.08] hover:border-white/[0.15]'
                     )}
                   >
                     <div
@@ -440,19 +425,14 @@ const InstallationVerifyPage = () => {
                         'w-5 h-5 rounded border-2 flex items-center justify-center transition-colors',
                         checkedItems.includes(check.id)
                           ? 'bg-cyan-500 border-cyan-500'
-                          : 'border-muted-foreground/30'
+                          : 'border-white/30'
                       )}
                     >
                       {checkedItems.includes(check.id) && (
                         <CheckCircle className="h-3 w-3 text-white" />
                       )}
                     </div>
-                    <span
-                      className={cn(
-                        'text-sm',
-                        checkedItems.includes(check.id) ? 'text-foreground' : 'text-white'
-                      )}
-                    >
+                    <span className="text-sm text-white">
                       {check.label}
                     </span>
                   </button>
@@ -460,125 +440,123 @@ const InstallationVerifyPage = () => {
               </div>
             </div>
 
-            {/* Image Capture - Multi-photo encouraged */}
-            <div className="rounded-xl border border-border/30 bg-card/50 p-4 space-y-4">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-2">
-                  <Camera className="h-5 w-5 text-cyan-400" />
-                  <h3 className="font-semibold text-foreground">Installation Photos</h3>
+            {/* Image Capture */}
+            <div className="space-y-3">
+              <h2 className="text-xs font-medium text-white uppercase tracking-wider px-0.5">Installation Photos</h2>
+              <div className="space-y-3">
+                <div className="flex items-center justify-between">
+                  <p className="text-xs text-white">
+                    Capture multiple angles: consumer unit front, internal, labels, earthing, etc.
+                  </p>
+                  <Badge variant="outline" className="text-xs text-white border-white/[0.08]">
+                    {images.length}/6
+                  </Badge>
                 </div>
-                <Badge variant="outline" className="text-xs">
-                  {images.length}/6
-                </Badge>
-              </div>
 
-              <p className="text-xs text-white">
-                Capture multiple angles: consumer unit front, internal, labels, earthing, etc.
-              </p>
-
-              <AnimatePresence>
-                {isCameraActive && (
-                  <motion.div
-                    initial={{ height: 0 }}
-                    animate={{ height: 'auto' }}
-                    exit={{ height: 0 }}
-                    className="space-y-3 overflow-hidden"
-                  >
-                    <div className="relative aspect-video bg-muted rounded-xl overflow-hidden">
-                      <video
-                        ref={videoRef}
-                        autoPlay
-                        playsInline
-                        muted
-                        className="w-full h-full object-cover"
-                      />
-                    </div>
-                    <div className="flex gap-2">
-                      <Button
-                        onClick={captureImage}
-                        className="flex-1 h-12 bg-cyan-500 hover:bg-cyan-600"
-                      >
-                        Capture
-                      </Button>
-                      <Button onClick={stopCamera} variant="outline" className="h-12">
-                        <X className="h-5 w-5" />
-                      </Button>
-                    </div>
-                  </motion.div>
-                )}
-              </AnimatePresence>
-
-              {!isCameraActive && (
-                <div className="grid grid-cols-2 gap-3">
-                  <Button
-                    onClick={startCamera}
-                    className="h-14 bg-cyan-500 hover:bg-cyan-600 text-white"
-                  >
-                    <Camera className="h-5 w-5 mr-2" />
-                    Camera
-                  </Button>
-                  <Button
-                    onClick={() => fileInputRef.current?.click()}
-                    variant="outline"
-                    className="h-14 border-cyan-500/30"
-                  >
-                    <Upload className="h-5 w-5 mr-2" />
-                    Upload
-                  </Button>
-                </div>
-              )}
-
-              <input
-                ref={fileInputRef}
-                type="file"
-                accept="image/*"
-                multiple
-                onChange={(e) => handleFileSelect(e.target.files)}
-                className="hidden"
-              />
-
-              {images.length > 0 && (
-                <div className="grid grid-cols-3 gap-2">
-                  {images.map((img, idx) => (
-                    <div
-                      key={idx}
-                      className="relative aspect-square rounded-xl overflow-hidden border-2 border-cyan-500/30"
+                <AnimatePresence>
+                  {isCameraActive && (
+                    <motion.div
+                      initial={{ height: 0 }}
+                      animate={{ height: 'auto' }}
+                      exit={{ height: 0 }}
+                      className="space-y-3 overflow-hidden"
                     >
-                      <img
-                        src={URL.createObjectURL(img)}
-                        alt=""
-                        className="w-full h-full object-cover"
-                        loading="lazy"
-                      />
-                      <button
-                        onClick={() => setImages((prev) => prev.filter((_, i) => i !== idx))}
-                        className="absolute top-1 right-1 p-1 bg-red-500 rounded-full"
-                      >
-                        <X className="h-3 w-3 text-white" />
-                      </button>
-                    </div>
-                  ))}
-                  {images.length < 6 && (
-                    <button
-                      onClick={() => fileInputRef.current?.click()}
-                      className="aspect-square rounded-xl border-2 border-dashed border-border/30 flex items-center justify-center hover:border-cyan-500/30 transition-colors"
-                    >
-                      <Plus className="h-6 w-6 text-muted-foreground" />
-                    </button>
+                      <div className="relative aspect-video bg-muted rounded-xl overflow-hidden">
+                        <video
+                          ref={videoRef}
+                          autoPlay
+                          playsInline
+                          muted
+                          className="w-full h-full object-cover"
+                        />
+                      </div>
+                      <div className="flex gap-2">
+                        <Button
+                          onClick={captureImage}
+                          className="flex-1 h-12 bg-cyan-500 hover:bg-cyan-600"
+                        >
+                          Capture
+                        </Button>
+                        <Button onClick={stopCamera} variant="outline" className="h-12">
+                          <X className="h-5 w-5" />
+                        </Button>
+                      </div>
+                    </motion.div>
                   )}
-                </div>
-              )}
+                </AnimatePresence>
+
+                {!isCameraActive && (
+                  <div className="grid grid-cols-2 gap-3">
+                    <Button
+                      onClick={startCamera}
+                      className="h-14 bg-cyan-500 hover:bg-cyan-600 text-white"
+                    >
+                      <Camera className="h-5 w-5 mr-2" />
+                      Camera
+                    </Button>
+                    <Button
+                      onClick={() => fileInputRef.current?.click()}
+                      variant="ghost"
+                      className="h-14 bg-white/[0.06] ring-1 ring-white/[0.08] text-white hover:text-white hover:bg-white/[0.1]"
+                    >
+                      <Upload className="h-5 w-5 mr-2" />
+                      Upload
+                    </Button>
+                  </div>
+                )}
+
+                <input
+                  ref={fileInputRef}
+                  type="file"
+                  accept="image/*"
+                  multiple
+                  onChange={(e) => handleFileSelect(e.target.files)}
+                  className="hidden"
+                />
+
+                {images.length > 0 && (
+                  <div className="grid grid-cols-4 gap-2">
+                    {images.map((img, idx) => (
+                      <div
+                        key={idx}
+                        className="relative aspect-square rounded-xl overflow-hidden border border-white/[0.08]"
+                      >
+                        <img
+                          src={URL.createObjectURL(img)}
+                          alt=""
+                          className="w-full h-full object-cover"
+                          loading="lazy"
+                        />
+                        <button
+                          onClick={() => setImages((prev) => prev.filter((_, i) => i !== idx))}
+                          className="absolute top-1 right-1 p-1 bg-black/60 rounded-full"
+                        >
+                          <X className="h-3 w-3 text-white" />
+                        </button>
+                      </div>
+                    ))}
+                    {images.length < 6 && (
+                      <button
+                        onClick={() => fileInputRef.current?.click()}
+                        className="aspect-square rounded-xl border border-dashed border-white/[0.15] flex items-center justify-center hover:border-cyan-500/30 transition-colors"
+                      >
+                        <Plus className="h-6 w-6 text-white" />
+                      </button>
+                    )}
+                  </div>
+                )}
+              </div>
             </div>
 
             {/* Additional Notes */}
-            <div className="rounded-xl border border-border/30 bg-card/50 p-4 space-y-3">
-              <h3 className="font-medium text-foreground text-sm">Additional Notes</h3>
+            <div className="space-y-3">
+              <h2 className="text-xs font-medium text-white uppercase tracking-wider px-0.5">Additional Notes</h2>
               <input
                 type="text"
                 placeholder="Age of installation, recent work, concerns..."
                 value={additionalNotes}
                 onChange={(e) => setAdditionalNotes(e.target.value)}
-                className="w-full h-12 px-4 rounded-xl border border-border/30 bg-background/50 text-foreground"
+                className="w-full h-12 px-4 rounded-xl border border-white/[0.08] bg-background/50 text-white"
                 style={{ fontSize: '16px' }}
               />
             </div>
@@ -587,12 +565,7 @@ const InstallationVerifyPage = () => {
             {images.length > 0 && (
               <Button
                 onClick={handleAnalysis}
-                className={cn(
-                  'w-full h-14 text-base font-semibold rounded-xl',
-                  'bg-gradient-to-r from-cyan-500 to-teal-500',
-                  'hover:from-cyan-600 hover:to-teal-600',
-                  'text-white shadow-lg shadow-cyan-500/25'
-                )}
+                className="w-full h-14 rounded-xl bg-gradient-to-r from-cyan-500 to-teal-500 text-white font-bold text-base touch-manipulation active:scale-[0.98] shadow-lg shadow-cyan-500/20"
               >
                 <CheckCircle className="h-5 w-5 mr-2" />
                 Verify Installation

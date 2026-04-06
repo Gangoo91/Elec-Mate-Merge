@@ -16,7 +16,7 @@ import { exportObservationsToPDF, exportCompleteEICRToPDF } from '@/utils/pdfExp
 import { useToast } from '@/hooks/use-toast';
 import { cn } from '@/lib/utils';
 import { useIsMobile } from '@/hooks/use-mobile';
-import { useHaptics } from '@/hooks/useHaptics';
+import { useHaptic } from '@/hooks/useHaptic';
 
 interface DefectObservation {
   id: string;
@@ -59,7 +59,7 @@ const DefectObservationsSection = React.forwardRef<HTMLDivElement, DefectObserva
   ) => {
     const { toast } = useToast();
     const isMobile = useIsMobile();
-    const haptics = useHaptics();
+    const haptic = useHaptic();
     const [isOpen, setIsOpen] = useState(defaultOpen);
     const [pdfExportState, setPdfExportState] = useState({
       isExporting: false,
@@ -108,7 +108,7 @@ const DefectObservationsSection = React.forwardRef<HTMLDivElement, DefectObserva
     };
 
     const handleAddObservation = () => {
-      haptics.tap();
+      haptic.light();
       onAddObservation();
     };
 
@@ -128,7 +128,7 @@ const DefectObservationsSection = React.forwardRef<HTMLDivElement, DefectObserva
         <Collapsible
           open={isOpen}
           onOpenChange={(open) => {
-            haptics.tap();
+            haptic.light();
             setIsOpen(open);
           }}
         >

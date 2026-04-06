@@ -25,42 +25,12 @@ import ComponentIdentificationResults from '@/components/electrician-tools/ai-to
 
 // Component categories with icons
 const componentCategories = [
-  {
-    id: 'protection',
-    label: 'Protection Devices',
-    icon: Shield,
-    color: 'text-red-400 bg-red-500/10 border-red-500/30',
-  },
-  {
-    id: 'distribution',
-    label: 'Distribution',
-    icon: Box,
-    color: 'text-blue-400 bg-blue-500/10 border-blue-500/30',
-  },
-  {
-    id: 'control',
-    label: 'Control Gear',
-    icon: CircuitBoard,
-    color: 'text-purple-400 bg-purple-500/10 border-purple-500/30',
-  },
-  {
-    id: 'accessories',
-    label: 'Accessories',
-    icon: PlugZap,
-    color: 'text-green-400 bg-green-500/10 border-green-500/30',
-  },
-  {
-    id: 'metering',
-    label: 'Metering',
-    icon: Gauge,
-    color: 'text-amber-400 bg-amber-500/10 border-amber-500/30',
-  },
-  {
-    id: 'unknown',
-    label: "Don't Know",
-    icon: Search,
-    color: 'text-slate-400 bg-slate-500/10 border-slate-500/30',
-  },
+  { id: 'protection', label: 'Protection Devices', icon: Shield },
+  { id: 'distribution', label: 'Distribution', icon: Box },
+  { id: 'control', label: 'Control Gear', icon: CircuitBoard },
+  { id: 'accessories', label: 'Accessories', icon: PlugZap },
+  { id: 'metering', label: 'Metering', icon: Gauge },
+  { id: 'unknown', label: "Don't Know", icon: Search },
 ];
 
 // What user wants to know
@@ -259,35 +229,25 @@ const ComponentIdentifyPage = () => {
   };
 
   return (
-    <div className="bg-background ">
-      {/* Header */}
-      <div className="sticky top-0 z-50 bg-background/95 backdrop-blur-xl border-b border-border/30 ">
+    <div className="-mt-3 sm:-mt-4 md:-mt-6 bg-background pb-24">
+      {/* Sticky Header */}
+      <div className="sticky top-0 z-50 bg-background/95 backdrop-blur-sm border-b border-white/[0.06]">
         <div className="px-4 py-2">
-          <button
-            onClick={() => navigate('/electrician-tools/ai-tooling')}
-            className="flex items-center gap-2 text-foreground h-11 touch-manipulation active:scale-[0.98] transition-all -ml-2 px-2 rounded-lg"
-          >
-            <ArrowLeft className="h-5 w-5" />
-            <span className="text-sm font-medium">AI Tools</span>
-          </button>
-        </div>
-      </div>
-
-      <main className="px-4 py-5 space-y-5 max-w-5xl mx-auto">
-        {/* Hero */}
-        <div className="rounded-2xl border border-blue-500/30 bg-gradient-to-br from-blue-500/10 via-card to-card/90 backdrop-blur-xl p-5 overflow-hidden relative">
-          <div className="absolute inset-0 bg-gradient-to-br from-blue-500/[0.05] via-transparent to-transparent pointer-events-none" />
-          <div className="relative flex items-center gap-4">
-            <div className="p-3 rounded-xl bg-blue-500/20 border border-blue-500/30">
-              <Search className="h-7 w-7 text-blue-400" />
-            </div>
-            <div>
-              <h1 className="text-xl font-bold text-foreground">Component Identification</h1>
-              <p className="text-sm text-white">Identify specs & BS 7671 requirements</p>
+          <div className="flex items-center gap-3 h-11">
+            <Button variant="ghost" size="icon" onClick={() => navigate('/electrician-tools/ai-tooling')} className="text-white hover:text-white hover:bg-white/10 rounded-xl h-11 w-11 touch-manipulation active:scale-[0.98]">
+              <ArrowLeft className="h-5 w-5" />
+            </Button>
+            <div className="flex items-center gap-2.5">
+              <div className="p-1.5 rounded-lg bg-blue-500/10 border border-blue-500/20">
+                <Search className="h-4 w-4 text-blue-400" />
+              </div>
+              <h1 className="text-base font-semibold text-white">Component Identification</h1>
             </div>
           </div>
         </div>
+      </div>
 
+      <motion.main className="px-4 py-4 space-y-5">
         {/* Results */}
         {analysisResult ? (
           <div className="space-y-4">
@@ -295,23 +255,26 @@ const ComponentIdentifyPage = () => {
               analysisResult={analysisResult}
               onRetry={resetAnalysis}
             />
-            <Button onClick={resetAnalysis} variant="outline" className="w-full h-12">
+            <Button
+              onClick={resetAnalysis}
+              className="w-full h-12 rounded-xl bg-white/[0.06] text-white ring-1 ring-white/[0.08] font-semibold touch-manipulation active:scale-[0.98] hover:bg-white/[0.1]"
+            >
               Identify Another Component
             </Button>
           </div>
         ) : isAnalyzing ? (
           /* Loading State */
-          <div className="rounded-xl border border-border/30 bg-card/50 p-6 space-y-4">
+          <div className="rounded-2xl bg-white/[0.03] border border-white/[0.08] p-6 space-y-4">
             <div className="flex items-center gap-3">
-              <Loader2 className="h-6 w-6 animate-spin text-blue-400" />
+              <Loader2 className="h-5 w-5 text-blue-400 animate-spin" />
               <div>
-                <h3 className="font-semibold text-foreground">Identifying Component...</h3>
-                <p className="text-xs text-white">Analysing image and cross-referencing database</p>
+                <p className="text-sm font-medium text-white">Analysing...</p>
+                <p className="text-xs text-white">Cross-referencing component database</p>
               </div>
             </div>
-            <div className="h-2 bg-muted rounded-full overflow-hidden">
+            <div className="h-1.5 bg-white/[0.06] rounded-full overflow-hidden">
               <motion.div
-                className="h-full bg-blue-500"
+                className="h-full bg-blue-500 rounded-full"
                 initial={{ width: 0 }}
                 animate={{ width: `${analysisProgress}%` }}
               />
@@ -320,153 +283,137 @@ const ComponentIdentifyPage = () => {
         ) : (
           <>
             {/* Category Selection */}
-            <div className="rounded-xl border border-border/30 bg-card/50 backdrop-blur-xl p-4 space-y-4">
-              <div className="flex items-center gap-2">
-                <Box className="h-5 w-5 text-blue-400" />
-                <h2 className="font-semibold text-foreground">Component Type</h2>
-                <span className="text-xs text-white">(optional)</span>
-              </div>
-
+            <div className="space-y-3">
+              <h2 className="text-xs font-medium text-white uppercase tracking-wider px-0.5">Component Type</h2>
               <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
                 {componentCategories.map((cat) => (
                   <button
                     key={cat.id}
                     onClick={() => setSelectedCategory(selectedCategory === cat.id ? null : cat.id)}
                     className={cn(
-                      'p-3 rounded-xl border-2 transition-all min-h-[70px] touch-manipulation',
-                      'flex flex-col items-center justify-center gap-2 text-center',
+                      'flex items-center gap-2 px-3 transition-all touch-manipulation',
                       selectedCategory === cat.id
-                        ? cat.color
-                        : 'border-border/30 bg-background/50 hover:border-border/50'
+                        ? 'h-11 rounded-xl bg-blue-500/20 text-blue-400 ring-1 ring-blue-500/40 shadow-sm shadow-blue-500/10'
+                        : 'h-11 rounded-xl bg-white/[0.06] text-white ring-1 ring-white/[0.08] active:scale-[0.97]'
                     )}
                   >
-                    <cat.icon
-                      className={cn(
-                        'h-5 w-5',
-                        selectedCategory === cat.id ? '' : 'text-muted-foreground'
-                      )}
-                    />
-                    <span className="text-xs font-medium">{cat.label}</span>
+                    <cat.icon className="h-4 w-4 flex-shrink-0" />
+                    <span className="text-xs font-medium truncate">{cat.label}</span>
                   </button>
                 ))}
               </div>
             </div>
 
             {/* Image Capture */}
-            <div className="rounded-xl border border-border/30 bg-card/50 backdrop-blur-xl p-4 space-y-4">
-              <div className="flex items-center gap-2">
-                <Camera className="h-5 w-5 text-blue-400" />
-                <h2 className="font-semibold text-foreground">Capture Component</h2>
-              </div>
-
-              {/* Camera View */}
-              <AnimatePresence>
-                {isCameraActive && (
-                  <motion.div
-                    initial={{ height: 0, opacity: 0 }}
-                    animate={{ height: 'auto', opacity: 1 }}
-                    exit={{ height: 0, opacity: 0 }}
-                    className="space-y-3 overflow-hidden"
-                  >
-                    <div className="relative aspect-video bg-muted rounded-xl overflow-hidden">
-                      <video
-                        ref={videoRef}
-                        autoPlay
-                        playsInline
-                        muted
-                        className="w-full h-full object-cover"
-                      />
-                      <div className="absolute inset-0 border-2 border-blue-500/50 rounded-xl pointer-events-none" />
-                    </div>
-                    <div className="flex gap-2">
-                      <Button
-                        onClick={captureImage}
-                        className="flex-1 h-12 bg-blue-500 hover:bg-blue-600"
-                      >
-                        <Camera className="h-5 w-5 mr-2" />
-                        Capture
-                      </Button>
-                      <Button onClick={stopCamera} variant="outline" className="h-12">
-                        <X className="h-5 w-5" />
-                      </Button>
-                    </div>
-                  </motion.div>
-                )}
-              </AnimatePresence>
-
-              {/* Buttons */}
-              {!isCameraActive && (
-                <div className="grid grid-cols-2 gap-3">
-                  <Button
-                    onClick={startCamera}
-                    className="h-14 bg-blue-500 hover:bg-blue-600 text-white"
-                  >
-                    <Camera className="h-5 w-5 mr-2" />
-                    Camera
-                  </Button>
-                  <Button
-                    onClick={() => fileInputRef.current?.click()}
-                    variant="outline"
-                    className="h-14 border-blue-500/30 hover:bg-blue-500/10"
-                  >
-                    <Upload className="h-5 w-5 mr-2" />
-                    Upload
-                  </Button>
-                </div>
-              )}
-
-              <input
-                ref={fileInputRef}
-                type="file"
-                accept="image/*"
-                onChange={(e) => handleFileSelect(e.target.files)}
-                className="hidden"
-              />
-
-              {/* Image Preview */}
-              {images.length > 0 && (
-                <div className="flex gap-2 overflow-x-auto pb-2">
-                  {images.map((img, idx) => (
-                    <div
-                      key={idx}
-                      className="relative flex-shrink-0 w-24 h-24 rounded-xl overflow-hidden border-2 border-blue-500/30"
+            <div className="space-y-3">
+              <h2 className="text-xs font-medium text-white uppercase tracking-wider px-0.5">Capture Component</h2>
+              <div className="space-y-3">
+                {/* Camera View */}
+                <AnimatePresence>
+                  {isCameraActive && (
+                    <motion.div
+                      initial={{ height: 0, opacity: 0 }}
+                      animate={{ height: 'auto', opacity: 1 }}
+                      exit={{ height: 0, opacity: 0 }}
+                      className="space-y-3 overflow-hidden"
                     >
-                      <img
-                        src={URL.createObjectURL(img)}
-                        alt=""
-                        className="w-full h-full object-cover"
-                        loading="lazy"
-                      />
-                      <button
-                        onClick={() => removeImage(idx)}
-                        className="absolute top-1 right-1 p-1 bg-red-500 rounded-full"
+                      <div className="relative aspect-video bg-black rounded-xl overflow-hidden">
+                        <video
+                          ref={videoRef}
+                          autoPlay
+                          playsInline
+                          muted
+                          className="w-full h-full object-cover"
+                        />
+                        <div className="absolute inset-0 border-2 border-blue-500/50 rounded-xl pointer-events-none" />
+                      </div>
+                      <div className="flex gap-2">
+                        <Button
+                          onClick={captureImage}
+                          className="flex-1 h-12 rounded-xl bg-blue-500 hover:bg-blue-600 text-white font-semibold touch-manipulation active:scale-[0.98]"
+                        >
+                          <Camera className="h-5 w-5 mr-2" />
+                          Capture
+                        </Button>
+                        <Button
+                          onClick={stopCamera}
+                          className="h-12 rounded-xl bg-white/[0.06] text-white ring-1 ring-white/[0.08] touch-manipulation active:scale-[0.98] hover:bg-white/[0.1]"
+                        >
+                          <X className="h-5 w-5" />
+                        </Button>
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+
+                {/* Buttons */}
+                {!isCameraActive && (
+                  <div className="flex gap-3">
+                    <Button
+                      onClick={startCamera}
+                      className="flex-1 h-12 rounded-xl bg-blue-500 hover:bg-blue-600 text-white font-semibold touch-manipulation active:scale-[0.98]"
+                    >
+                      <Camera className="h-5 w-5 mr-2" />
+                      Camera
+                    </Button>
+                    <Button
+                      onClick={() => fileInputRef.current?.click()}
+                      className="flex-1 h-12 rounded-xl bg-white/[0.06] text-white ring-1 ring-white/[0.08] font-semibold touch-manipulation active:scale-[0.98] hover:bg-white/[0.1]"
+                    >
+                      <Upload className="h-5 w-5 mr-2" />
+                      Upload
+                    </Button>
+                  </div>
+                )}
+
+                <input
+                  ref={fileInputRef}
+                  type="file"
+                  accept="image/*"
+                  onChange={(e) => handleFileSelect(e.target.files)}
+                  className="hidden"
+                />
+
+                {/* Image Preview */}
+                {images.length > 0 && (
+                  <div className="grid grid-cols-4 gap-2">
+                    {images.map((img, idx) => (
+                      <div
+                        key={idx}
+                        className="relative aspect-square rounded-xl overflow-hidden ring-1 ring-white/[0.08]"
                       >
-                        <X className="h-3 w-3 text-white" />
-                      </button>
-                    </div>
-                  ))}
-                </div>
-              )}
+                        <img
+                          src={URL.createObjectURL(img)}
+                          alt=""
+                          className="w-full h-full object-cover"
+                          loading="lazy"
+                        />
+                        <button
+                          onClick={() => removeImage(idx)}
+                          className="absolute top-1 right-1 w-6 h-6 rounded-full bg-black/60 flex items-center justify-center touch-manipulation"
+                        >
+                          <X className="h-3 w-3 text-white" />
+                        </button>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
             </div>
 
             {/* What do you want to know? */}
-            <div className="rounded-xl border border-border/30 bg-card/50 backdrop-blur-xl p-4 space-y-4">
-              <div className="flex items-center gap-2">
-                <Sparkles className="h-5 w-5 text-blue-400" />
-                <h2 className="font-semibold text-foreground">What do you want to know?</h2>
-              </div>
-
+            <div className="space-y-3">
+              <h2 className="text-xs font-medium text-white uppercase tracking-wider px-0.5">What Do You Want To Know?</h2>
               <div className="flex flex-wrap gap-2">
                 {infoChips.map((chip) => (
                   <button
                     key={chip.id}
                     onClick={() => toggleInfo(chip.id)}
                     className={cn(
-                      'px-4 py-2.5 rounded-xl border-2 text-sm font-medium transition-all touch-manipulation',
-                      'min-h-[44px] flex items-center gap-2',
+                      'px-3 text-sm font-medium transition-all touch-manipulation flex items-center gap-2',
                       selectedInfo.includes(chip.id)
-                        ? 'bg-blue-500/20 border-blue-500/40 text-blue-400'
-                        : 'border-border/30 text-white hover:border-border/50'
+                        ? 'h-9 rounded-xl bg-blue-500/20 text-blue-400 ring-1 ring-blue-500/40 shadow-sm shadow-blue-500/10'
+                        : 'h-9 rounded-xl bg-white/[0.06] text-white ring-1 ring-white/[0.08] active:scale-[0.97]'
                     )}
                   >
                     <chip.icon className="h-4 w-4" />
@@ -481,12 +428,7 @@ const ComponentIdentifyPage = () => {
               <Button
                 onClick={handleAnalysis}
                 disabled={isAnalyzing}
-                className={cn(
-                  'w-full h-14 text-base font-semibold rounded-xl',
-                  'bg-gradient-to-r from-blue-500 to-blue-600',
-                  'hover:from-blue-600 hover:to-blue-700',
-                  'text-white shadow-lg shadow-blue-500/25'
-                )}
+                className="w-full h-14 rounded-xl bg-gradient-to-r from-blue-500 to-cyan-500 text-white font-bold text-base touch-manipulation active:scale-[0.98] shadow-lg shadow-blue-500/20 hover:from-blue-600 hover:to-cyan-600"
               >
                 <Search className="h-5 w-5 mr-2" />
                 Identify Component
@@ -496,7 +438,7 @@ const ComponentIdentifyPage = () => {
         )}
 
         <canvas ref={canvasRef} className="hidden" />
-      </main>
+      </motion.main>
     </div>
   );
 };

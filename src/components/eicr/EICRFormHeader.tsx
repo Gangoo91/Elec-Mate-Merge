@@ -4,7 +4,7 @@ import { ArrowLeft, Save, Plus, Zap } from 'lucide-react';
 import { SyncStatusIndicator } from '@/components/ui/sync-status-indicator';
 import { SyncStatus } from '@/hooks/useCloudSync';
 import { useIsMobile } from '@/hooks/use-mobile';
-import { useHaptics } from '@/hooks/useHaptics';
+import { useHaptic } from '@/hooks/useHaptic';
 
 interface EICRFormHeaderProps {
   onBack: () => void;
@@ -42,17 +42,17 @@ const EICRFormHeader: React.FC<EICRFormHeaderProps> = ({
   isAuthenticated = false,
 }) => {
   const isMobile = useIsMobile();
-  const haptics = useHaptics();
+  const haptic = useHaptic();
 
   const handleBack = () => {
-    haptics.tap();
+    haptic.light();
     onBack();
   };
 
   const handleSave = async () => {
-    haptics.tap();
+    haptic.light();
     await onManualSave();
-    haptics.success();
+    haptic.success();
   };
 
   if (isMobile) {
@@ -131,7 +131,7 @@ const EICRFormHeader: React.FC<EICRFormHeaderProps> = ({
         />
         <Button
           onClick={() => {
-            haptics.tap();
+            haptic.light();
             onStartNew();
           }}
           variant="outline"

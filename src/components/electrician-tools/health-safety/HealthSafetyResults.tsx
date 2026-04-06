@@ -2,10 +2,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState, useRef } from 'react';
 import { saveOrSharePdf } from '@/utils/save-or-share-pdf';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Textarea } from '@/components/ui/textarea';
-import { Copy, Download, RotateCcw, Edit2, Save, X, Shield, AlertTriangle } from 'lucide-react';
+import { Copy, Download, RotateCcw, Edit2, Save, Shield } from 'lucide-react';
 import { toast } from 'sonner';
 import { openOrDownloadPdf } from '@/utils/pdf-download';
 import { copyToClipboard } from '@/utils/clipboard';
@@ -216,46 +214,42 @@ export const HealthSafetyResults = ({ data, onStartOver }: HealthSafetyResultsPr
     }
   };
 
+  const toggleEdit = () => {
+    if (isEditingRiskAssessment) {
+      handleSaveRiskAssessment();
+    } else {
+      setIsEditingRiskAssessment(true);
+    }
+  };
+
   return (
-    <div className="space-y-4 sm:space-y-6 animate-fade-in">
-      {/* Header Section with Gradient */}
-      <Card className="bg-gradient-to-br from-blue-500/10 via-purple-500/10 to-pink-500/10 border-blue-500/20">
-        <CardContent className="pt-6">
-          <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
-            <div className="flex-shrink-0 w-14 h-14 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center shadow-lg">
-              <Shield className="h-7 w-7 text-foreground" />
-            </div>
-            <div className="flex-1">
-              <h3 className="text-2xl font-bold text-foreground mb-1">
-                Safety Documentation Results
-              </h3>
-              <p className="text-sm text-muted-foreground">
-                Comprehensive risk assessment and safety procedures
-              </p>
-            </div>
-            <div className="flex items-center gap-2 flex-wrap w-full sm:w-auto">
-              <Button
-                size="sm"
-                variant="outline"
-                onClick={handleCopy}
-                className="touch-manipulation"
-              >
-                <Copy className="h-4 w-4 mr-2" />
-                Copy
-              </Button>
-              <Button
-                size="sm"
-                variant="ghost"
-                onClick={onStartOver}
-                className="touch-manipulation"
-              >
-                <RotateCcw className="h-4 w-4 mr-2" />
-                Start Over
-              </Button>
-            </div>
+    <div className="space-y-5 animate-fade-in">
+      {/* Header */}
+      <div className="flex items-start justify-between gap-3">
+        <div className="flex items-center gap-3">
+          <div className="w-10 h-10 rounded-xl bg-orange-500/10 border border-orange-500/20 flex items-center justify-center shrink-0">
+            <Shield className="h-5 w-5 text-orange-400" />
           </div>
-        </CardContent>
-      </Card>
+          <div>
+            <h2 className="text-lg font-bold text-white">Safety Assessment</h2>
+            <p className="text-xs text-white">Comprehensive risk assessment</p>
+          </div>
+        </div>
+        <div className="flex gap-2 shrink-0">
+          <button
+            onClick={handleCopy}
+            className="h-9 px-3 rounded-lg bg-white/[0.06] text-white ring-1 ring-white/[0.08] text-xs font-medium flex items-center gap-1.5 touch-manipulation active:scale-[0.97]"
+          >
+            <Copy className="h-3.5 w-3.5" /> Copy
+          </button>
+          <button
+            onClick={onStartOver}
+            className="h-9 px-3 rounded-lg bg-white/[0.06] text-white ring-1 ring-white/[0.08] text-xs font-medium flex items-center gap-1.5 touch-manipulation active:scale-[0.97]"
+          >
+            <RotateCcw className="h-3.5 w-3.5" /> New
+          </button>
+        </div>
+      </div>
 
       {/* Summary Statistics */}
       <RiskSummaryStats
@@ -264,43 +258,29 @@ export const HealthSafetyResults = ({ data, onStartOver }: HealthSafetyResultsPr
         emergencyProcedures={editableData?.emergencyProcedures || []}
       />
 
-      {/* Risk Assessment - Enhanced Cards */}
+      {/* Risk Assessment */}
       {editableData?.hazards && editableData.hazards.length > 0 && (
-        <Card>
-          <CardHeader>
-            <div className="flex items-center justify-between gap-2">
-              <CardTitle className="flex items-center gap-2">
-                <AlertTriangle className="h-5 w-5 text-red-500" />
-                Risk Assessment
-              </CardTitle>
+        <section className="space-y-3">
+          <div className="flex items-center justify-between">
+            <h2 className="text-xs font-medium text-white uppercase tracking-wider px-0.5">
+              Risk Assessment
+            </h2>
+            <button
+              onClick={toggleEdit}
+              className="h-8 px-3 rounded-lg bg-white/[0.06] text-white ring-1 ring-white/[0.08] text-[11px] font-medium flex items-center gap-1.5 touch-manipulation"
+            >
               {isEditingRiskAssessment ? (
-                <div className="flex gap-2">
-                  <Button
-                    size="sm"
-                    onClick={handleSaveRiskAssessment}
-                    className="bg-green-600 hover:bg-green-700 text-foreground"
-                  >
-                    <Save className="h-4 w-4 mr-1" />
-                    Save
-                  </Button>
-                  <Button size="sm" variant="outline" onClick={handleCancelRiskAssessment}>
-                    <X className="h-4 w-4 mr-1" />
-                    Cancel
-                  </Button>
-                </div>
+                <>
+                  <Save className="h-3 w-3" /> Save
+                </>
               ) : (
-                <Button
-                  size="sm"
-                  variant="outline"
-                  onClick={() => setIsEditingRiskAssessment(true)}
-                >
-                  <Edit2 className="h-4 w-4 mr-1" />
-                  Edit
-                </Button>
+                <>
+                  <Edit2 className="h-3 w-3" /> Edit
+                </>
               )}
-            </div>
-          </CardHeader>
-          <CardContent className="space-y-3">
+            </button>
+          </div>
+          <div className="space-y-2">
             {editableData.hazards.map((hazard: any, idx: number) => (
               <EnhancedHazardCard
                 key={idx}
@@ -310,51 +290,61 @@ export const HealthSafetyResults = ({ data, onStartOver }: HealthSafetyResultsPr
                 onDelete={handleDeleteHazard}
               />
             ))}
-            {isEditingRiskAssessment && (
-              <Button onClick={handleAddHazard} variant="outline" className="w-full">
-                Add Hazard
-              </Button>
-            )}
-          </CardContent>
-        </Card>
+          </div>
+          {isEditingRiskAssessment && (
+            <Button onClick={handleAddHazard} variant="outline" className="w-full">
+              Add Hazard
+            </Button>
+          )}
+        </section>
       )}
 
-      {/* PPE Requirements - Enhanced Grid */}
-      <PPERequirementsGrid
-        ppeItems={editableData?.ppe || []}
-        onUpdate={(updatedPPE) => {
-          setEditableData((prev: any) => ({ ...prev, ppe: updatedPPE }));
-        }}
-      />
+      {/* PPE Requirements */}
+      <section className="space-y-3">
+        <h2 className="text-xs font-medium text-white uppercase tracking-wider px-0.5">
+          PPE Requirements
+        </h2>
+        <PPERequirementsGrid
+          ppeItems={editableData?.ppe || []}
+          onUpdate={(updatedPPE) => {
+            setEditableData((prev: any) => ({ ...prev, ppe: updatedPPE }));
+          }}
+        />
+      </section>
 
-      {/* Emergency Procedures - Enhanced Section */}
-      <EmergencyProceduresSection
-        procedures={editableData?.emergencyProcedures || []}
-        onUpdate={handleUpdateProcedure}
-        onDelete={handleDeleteProcedure}
-        onMove={handleMoveProcedure}
-        onAdd={handleAddProcedure}
-      />
+      {/* Emergency Procedures */}
+      <section className="space-y-3">
+        <h2 className="text-xs font-medium text-white uppercase tracking-wider px-0.5">
+          Emergency Procedures
+        </h2>
+        <EmergencyProceduresSection
+          procedures={editableData?.emergencyProcedures || []}
+          onUpdate={handleUpdateProcedure}
+          onDelete={handleDeleteProcedure}
+          onMove={handleMoveProcedure}
+          onAdd={handleAddProcedure}
+        />
+      </section>
 
       {/* Notes */}
       {editableData?.notes && (
-        <Card className="bg-muted/50">
-          <CardHeader>
-            <CardTitle>Additional Notes</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <p className="text-sm text-foreground whitespace-pre-wrap">{editableData.notes}</p>
-          </CardContent>
-        </Card>
+        <section className="space-y-3">
+          <h2 className="text-xs font-medium text-white uppercase tracking-wider px-0.5">
+            Additional Notes
+          </h2>
+          <div className="rounded-xl bg-white/[0.03] border border-white/[0.08] p-4">
+            <p className="text-sm text-white whitespace-pre-wrap">{editableData.notes}</p>
+          </div>
+        </section>
       )}
 
-      {/* Download PDF Button at Bottom */}
-      <div className="pt-4 border-t">
-        <Button onClick={handleExportPDF} className="w-full h-12 text-base font-semibold" size="lg">
-          <Download className="h-5 w-5 mr-2" />
-          Download PDF
-        </Button>
-      </div>
+      {/* Download PDF Button */}
+      <button
+        onClick={handleExportPDF}
+        className="w-full h-14 rounded-xl bg-gradient-to-r from-orange-500 to-amber-500 text-white font-bold text-base flex items-center justify-center gap-2 touch-manipulation active:scale-[0.98] shadow-lg shadow-orange-500/20"
+      >
+        <Download className="h-5 w-5" /> Download PDF
+      </button>
     </div>
   );
 };

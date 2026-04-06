@@ -574,67 +574,71 @@ const WiringInstructionPage = () => {
   const stepLabels = ['Property', 'Circuit', 'Component'];
 
   return (
-    <div className="bg-background min-h-screen">
+    <div className="-mt-3 sm:-mt-4 md:-mt-6 bg-background pb-24">
       {/* Header */}
-      <div className="sticky top-0 z-50 bg-background/95 backdrop-blur-xl border-b border-border/30">
-        <div className="px-4 py-2 flex items-center justify-between max-w-5xl mx-auto">
-          <button
-            onClick={() => navigate('/electrician-tools/ai-tooling')}
-            className="flex items-center gap-2 text-white h-11 touch-manipulation active:scale-[0.98] transition-all -ml-2 px-2 rounded-lg"
-          >
-            <ArrowLeft className="h-5 w-5" />
-            <span className="text-sm font-medium">AI Tools</span>
-          </button>
-
-          {/* Step indicator */}
-          {!analysisResult && !isAnalyzing && (
-            <div className="flex items-center gap-1.5">
-              {stepLabels.map((label, i) => {
-                const stepNum = i + 1;
-                const isActive = currentStep >= stepNum;
-                const isCurrent = currentStep === stepNum;
-                return (
-                  <div key={label} className="flex items-center gap-1.5">
-                    {i > 0 && (
-                      <div
-                        className={cn('w-4 h-px', isActive ? 'bg-elec-yellow' : 'bg-white/20')}
-                      />
-                    )}
-                    <div className="flex items-center gap-1">
-                      <div
-                        className={cn(
-                          'w-2 h-2 rounded-full transition-all',
-                          isCurrent
-                            ? 'bg-elec-yellow scale-125'
-                            : isActive
-                              ? 'bg-elec-yellow/60'
-                              : 'bg-white/20'
-                        )}
-                      />
-                      <span
-                        className={cn(
-                          'text-[10px] font-medium hidden sm:inline',
-                          isCurrent
-                            ? 'text-elec-yellow'
-                            : isActive
-                              ? 'text-white/60'
-                              : 'text-white/30'
-                        )}
-                      >
-                        {label}
-                      </span>
-                    </div>
-                  </div>
-                );
-              })}
+      <div className="sticky top-0 z-50 bg-background/95 backdrop-blur-sm border-b border-white/[0.06]">
+        <div className="px-4 py-2">
+          <div className="flex items-center gap-3 h-11 max-w-5xl mx-auto">
+            <Button variant="ghost" size="icon" onClick={() => navigate('/electrician-tools/ai-tooling')} className="text-white hover:text-white hover:bg-white/10 rounded-xl h-11 w-11 touch-manipulation active:scale-[0.98]">
+              <ArrowLeft className="h-5 w-5" />
+            </Button>
+            <div className="flex items-center gap-2.5 flex-1">
+              <div className="p-1.5 rounded-lg bg-emerald-500/10 border border-emerald-500/20">
+                <Wrench className="h-4 w-4 text-emerald-500" />
+              </div>
+              <h1 className="text-base font-semibold text-white">Wiring Guide</h1>
             </div>
-          )}
+
+            {/* Step indicator */}
+            {!analysisResult && !isAnalyzing && (
+              <div className="flex items-center gap-1.5">
+                {stepLabels.map((label, i) => {
+                  const stepNum = i + 1;
+                  const isActive = currentStep >= stepNum;
+                  const isCurrent = currentStep === stepNum;
+                  return (
+                    <div key={label} className="flex items-center gap-1.5">
+                      {i > 0 && (
+                        <div
+                          className={cn('w-4 h-px', isActive ? 'bg-emerald-500' : 'bg-white/20')}
+                        />
+                      )}
+                      <div className="flex items-center gap-1">
+                        <div
+                          className={cn(
+                            'w-2 h-2 rounded-full transition-all',
+                            isCurrent
+                              ? 'bg-emerald-500 scale-125'
+                              : isActive
+                                ? 'bg-emerald-500/60'
+                                : 'bg-white/20'
+                          )}
+                        />
+                        <span
+                          className={cn(
+                            'text-[10px] font-medium hidden sm:inline',
+                            isCurrent
+                              ? 'text-emerald-500'
+                              : isActive
+                                ? 'text-white'
+                                : 'text-white'
+                          )}
+                        >
+                          {label}
+                        </span>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            )}
+          </div>
         </div>
       </div>
 
       <main
         className={cn(
-          'px-4 py-5 space-y-5 max-w-5xl mx-auto',
+          'px-4 py-4 space-y-5 max-w-5xl mx-auto',
           canGenerate && !analysisResult && !isAnalyzing && 'pb-28'
         )}
       >
@@ -686,7 +690,7 @@ const WiringInstructionPage = () => {
               </div>
               <div>
                 <h3 className="font-semibold text-white text-base">Generating Wiring Guide</h3>
-                <p className="text-sm text-white/60 mt-0.5">
+                <p className="text-sm text-white mt-0.5">
                   {analysisProgress < 30
                     ? 'Analysing component...'
                     : analysisProgress < 60
@@ -757,19 +761,19 @@ const WiringInstructionPage = () => {
                         )}
                       >
                         <prop.icon
-                          className={cn('h-6 w-6', isSelected ? prop.color : 'text-white/60')}
+                          className={cn('h-6 w-6', isSelected ? prop.color : 'text-white')}
                         />
                       </div>
                       <div className="text-center">
                         <span
                           className={cn(
                             'text-sm font-semibold block',
-                            isSelected ? 'text-white' : 'text-white/80'
+                            'text-white'
                           )}
                         >
                           {prop.label}
                         </span>
-                        <span className="text-[10px] text-white/50 mt-0.5 block">{prop.desc}</span>
+                        <span className="text-[10px] text-white mt-0.5 block">{prop.desc}</span>
                       </div>
                       {isSelected && (
                         <div
@@ -832,13 +836,13 @@ const WiringInstructionPage = () => {
                         )}
                       >
                         <circuit.icon
-                          className={cn('h-5 w-5', isSelected ? circuit.text : 'text-white/60')}
+                          className={cn('h-5 w-5', isSelected ? circuit.text : 'text-white')}
                         />
                       </div>
                       <span
                         className={cn(
                           'text-xs font-semibold text-center leading-tight',
-                          isSelected ? 'text-white' : 'text-white/70'
+                          'text-white'
                         )}
                       >
                         {circuit.label}
@@ -873,8 +877,8 @@ const WiringInstructionPage = () => {
                         className={cn(
                           'flex-1 h-11 rounded-xl text-sm font-medium transition-all touch-manipulation flex items-center justify-center gap-2',
                           inputTab === 'describe'
-                            ? 'bg-elec-yellow text-black'
-                            : 'text-white/60 hover:text-white'
+                            ? 'bg-emerald-500 text-white'
+                            : 'text-white hover:bg-white/[0.06]'
                         )}
                       >
                         <Sparkles className="h-4 w-4" />
@@ -885,8 +889,8 @@ const WiringInstructionPage = () => {
                         className={cn(
                           'flex-1 h-11 rounded-xl text-sm font-medium transition-all touch-manipulation flex items-center justify-center gap-2',
                           inputTab === 'photo'
-                            ? 'bg-elec-yellow text-black'
-                            : 'text-white/60 hover:text-white'
+                            ? 'bg-emerald-500 text-white'
+                            : 'text-white hover:bg-white/[0.06]'
                         )}
                       >
                         <Camera className="h-4 w-4" />
@@ -905,9 +909,9 @@ const WiringInstructionPage = () => {
                           value={textDescription}
                           onChange={(e) => setTextDescription(e.target.value)}
                           placeholder="e.g. 2-gang 2-way light switch, Hager 18-way dual RCD consumer unit, shower pull cord isolator..."
-                          className="touch-manipulation text-base min-h-[100px] focus:ring-2 focus:ring-elec-yellow/20 border-white/[0.08] focus:border-elec-yellow bg-transparent"
+                          className="touch-manipulation text-base min-h-[100px] focus:ring-2 focus:ring-emerald-500/20 border-white/[0.08] focus:border-emerald-500 bg-transparent text-white"
                         />
-                        <p className="text-[11px] text-white/40">
+                        <p className="text-[11px] text-white">
                           Be specific — include manufacturer, model, or terminal markings if known
                         </p>
                       </motion.div>
@@ -946,7 +950,14 @@ const WiringInstructionPage = () => {
                               <div className="flex gap-2">
                                 <Button
                                   onClick={captureImage}
-                                  className="flex-1 h-12 bg-elec-yellow text-black hover:bg-elec-yellow/90"
+                                  className={cn(
+                                    'flex-1 h-12 text-white',
+                                    selectedProperty === 'domestic'
+                                      ? 'bg-blue-500 hover:bg-blue-600'
+                                      : selectedProperty === 'commercial'
+                                        ? 'bg-purple-500 hover:bg-purple-600'
+                                        : 'bg-orange-500 hover:bg-orange-600'
+                                  )}
                                 >
                                   <Camera className="h-5 w-5 mr-2" />
                                   Capture
@@ -963,14 +974,21 @@ const WiringInstructionPage = () => {
                           <div className="grid grid-cols-2 gap-3">
                             <Button
                               onClick={startCamera}
-                              className="h-14 bg-transparent hover:bg-white/[0.04] border border-white/[0.08] text-white"
+                              className={cn(
+                                'h-14 text-white',
+                                selectedProperty === 'domestic'
+                                  ? 'bg-blue-500 hover:bg-blue-600'
+                                  : selectedProperty === 'commercial'
+                                    ? 'bg-purple-500 hover:bg-purple-600'
+                                    : 'bg-orange-500 hover:bg-orange-600'
+                              )}
                             >
                               <Camera className="h-5 w-5 mr-2" />
                               Camera
                             </Button>
                             <Button
                               onClick={() => fileInputRef.current?.click()}
-                              className="h-14 bg-transparent hover:bg-white/[0.04] border border-white/[0.08] text-white"
+                              className="h-14 bg-white/[0.06] ring-1 ring-white/[0.08] text-white hover:bg-white/[0.1]"
                             >
                               <Upload className="h-5 w-5 mr-2" />
                               Upload
@@ -991,7 +1009,7 @@ const WiringInstructionPage = () => {
                             {images.map((img, idx) => (
                               <div
                                 key={idx}
-                                className="relative flex-shrink-0 w-24 h-24 rounded-xl overflow-hidden border-2 border-elec-yellow/30"
+                                className="relative flex-shrink-0 w-24 h-24 rounded-xl overflow-hidden border-2 border-emerald-500/30"
                               >
                                 <img
                                   src={URL.createObjectURL(img)}
@@ -1018,18 +1036,18 @@ const WiringInstructionPage = () => {
                     <details className="group">
                       <summary className="flex items-center justify-between p-4 cursor-pointer list-none touch-manipulation">
                         <div className="flex items-center gap-2">
-                          <Info className="h-4 w-4 text-elec-yellow" />
+                          <Info className="h-4 w-4 text-emerald-500" />
                           <span className="font-medium text-white text-sm">Technical Details</span>
                           <Badge variant="secondary" className="text-[10px]">
                             Optional
                           </Badge>
                         </div>
-                        <ChevronRight className="h-4 w-4 text-white/40 group-open:rotate-90 transition-transform" />
+                        <ChevronRight className="h-4 w-4 text-white group-open:rotate-90 transition-transform" />
                       </summary>
                       <div className="px-4 pb-4 space-y-4 border-t border-white/[0.06] pt-4">
                         {/* Installation Type */}
                         <div className="space-y-2">
-                          <label className="text-xs font-medium text-white/70">
+                          <label className="text-xs font-medium text-white">
                             Installation Type
                           </label>
                           <div className="flex flex-wrap gap-2">
@@ -1040,8 +1058,8 @@ const WiringInstructionPage = () => {
                                 className={cn(
                                   'px-3 py-2 rounded-xl border text-xs font-medium transition-all min-h-[44px] touch-manipulation',
                                   selectedContext === ctx.id
-                                    ? 'bg-elec-yellow/10 border-elec-yellow/30 text-elec-yellow'
-                                    : 'border-white/[0.08] text-white/60 hover:border-white/[0.15] bg-transparent'
+                                    ? 'bg-emerald-500/20 border-emerald-500/40 text-emerald-400'
+                                    : 'border-white/[0.08] text-white hover:border-white/[0.15] bg-transparent'
                                 )}
                               >
                                 {ctx.label}
@@ -1052,7 +1070,7 @@ const WiringInstructionPage = () => {
 
                         {/* Earthing System */}
                         <div className="space-y-2">
-                          <label className="text-xs font-medium text-white/70">
+                          <label className="text-xs font-medium text-white">
                             Earthing System
                           </label>
                           <div className="flex flex-wrap gap-2">
@@ -1063,8 +1081,8 @@ const WiringInstructionPage = () => {
                                 className={cn(
                                   'px-3 py-2 rounded-lg border text-xs font-medium transition-all min-h-[44px] touch-manipulation',
                                   selectedEarthing === sys.id
-                                    ? 'bg-elec-yellow/10 border-elec-yellow/30 text-elec-yellow'
-                                    : 'border-white/[0.08] text-white/60 hover:border-white/[0.15] bg-transparent'
+                                    ? 'bg-emerald-500/20 border-emerald-500/40 text-emerald-400'
+                                    : 'border-white/[0.08] text-white hover:border-white/[0.15] bg-transparent'
                                 )}
                               >
                                 {sys.label}
@@ -1075,7 +1093,7 @@ const WiringInstructionPage = () => {
 
                         {/* Supply Rating */}
                         <div className="space-y-2">
-                          <label className="text-xs font-medium text-white/70">
+                          <label className="text-xs font-medium text-white">
                             Supply Rating (Amps)
                           </label>
                           <input
@@ -1096,7 +1114,7 @@ const WiringInstructionPage = () => {
 
                         {/* Additional Notes */}
                         <div className="space-y-2">
-                          <label className="text-xs font-medium text-white/70">
+                          <label className="text-xs font-medium text-white">
                             Additional Details
                           </label>
                           <input
@@ -1135,12 +1153,12 @@ const WiringInstructionPage = () => {
               onClick={handleAnalysis}
               disabled={isAnalyzing}
               className={cn(
-                'w-full h-14 text-base font-semibold rounded-2xl text-white shadow-lg max-w-5xl mx-auto flex',
+                'w-full h-14 rounded-xl text-white font-bold text-base touch-manipulation active:scale-[0.98] shadow-lg max-w-5xl mx-auto flex',
                 selectedProperty === 'domestic'
-                  ? 'bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 shadow-blue-500/25'
+                  ? 'bg-gradient-to-r from-blue-500 to-cyan-400 shadow-blue-500/20'
                   : selectedProperty === 'commercial'
-                    ? 'bg-gradient-to-r from-purple-500 to-purple-600 hover:from-purple-600 hover:to-purple-700 shadow-purple-500/25'
-                    : 'bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 shadow-orange-500/25'
+                    ? 'bg-gradient-to-r from-purple-500 to-violet-400 shadow-purple-500/20'
+                    : 'bg-gradient-to-r from-orange-500 to-amber-400 shadow-orange-500/20'
               )}
             >
               <Sparkles className="h-5 w-5 mr-2" />

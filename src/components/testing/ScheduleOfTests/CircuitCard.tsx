@@ -13,7 +13,7 @@ import {
   Shield,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import { useHaptics } from '@/hooks/useHaptics';
+import { useHaptic } from '@/hooks/useHaptic';
 
 interface CircuitCardProps {
   circuit: TestResult;
@@ -41,18 +41,18 @@ const CircuitCardInner = ({
   enableSwipe = true,
   className = '',
 }: CircuitCardProps) => {
-  const haptics = useHaptics();
+  const haptic = useHaptic();
 
   // Haptic feedback handlers - pass circuit id to callbacks
   const handleEdit = useCallback(() => {
-    haptics.tap();
+    haptic.light();
     onEdit(circuit.id);
-  }, [haptics, onEdit, circuit.id]);
+  }, [haptic, onEdit, circuit.id]);
 
   const handleDelete = useCallback(() => {
-    haptics.impact();
+    haptic.heavy();
     onDelete(circuit.id);
-  }, [haptics, onDelete, circuit.id]);
+  }, [haptic, onDelete, circuit.id]);
   // Calculate circuit status and validation
   const { status, hasRcd, rcdOk, validations } = useMemo(() => {
     const hasZs = circuit.zs && circuit.maxZs;

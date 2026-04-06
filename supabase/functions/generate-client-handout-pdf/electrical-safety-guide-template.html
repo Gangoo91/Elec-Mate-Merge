@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Electrical Safety Guide</title>
+    <style>
+        :root { --accent: #22c55e; --accent-dark: #166534; --accent-bg: #f0fdf4; }
+        @page { size: A4; margin: 0; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 10px; line-height: 1.55; color: #1e293b; background: #fff; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+        .page { width: 210mm; min-height: 297mm; padding: 0; position: relative; overflow: hidden; }
+        .header { background: linear-gradient(180deg, #0a1628 0%, #152238 100%); color: #fff; padding: 14px 22px 12px; position: relative; }
+        .header::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: var(--accent); }
+        .header-content { display: flex; justify-content: space-between; align-items: center; }
+        .header-title { font-size: 24px; font-weight: 800; }
+        .header-subtitle { font-size: 10px; color: rgba(255,255,255,0.7); margin-top: 3px; }
+        .header-right { text-align: right; display: flex; align-items: center; gap: 14px; }
+        .header-logo img { max-height: 55px; max-width: 140px; object-fit: contain; }
+        .header-company-name { font-size: 12px; font-weight: 700; color: var(--accent); }
+        .header-company-detail { font-size: 8.5px; color: rgba(255,255,255,0.6); margin-top: 2px; }
+        .header-scheme img { max-height: 40px; max-width: 80px; object-fit: contain; }
+        .header-sm { padding: 10px 22px 8px; }
+        .header-sm .header-title { font-size: 16px; }
+        .header-sm .header-logo img { max-height: 35px; }
+        .content { padding: 14px 22px; }
+        .intro-box { background: #0f172a; border: 1.5px solid #1e293b; border-left: 5px solid var(--accent); border-radius: 5px; padding: 10px 14px; margin-bottom: 12px; }
+        .intro-text { font-size: 10px; color: rgba(255,255,255,0.85); line-height: 1.6; }
+        .intro-text strong { color: #fff; }
+        .section { margin-bottom: 10px; }
+        .section-bar { background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); color: #fff; font-size: 9.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; padding: 5px 14px; border-left: 4px solid var(--accent); border-radius: 2px; margin-bottom: 6px; }
+        .section-bar.red { border-left-color: #dc2626; }
+        .section-bar.amber { border-left-color: #f59e0b; }
+        .section-bar.blue { border-left-color: #3b82f6; }
+        .bullet-list { padding: 0 0 0 4px; }
+        .bullet-item { display: flex; gap: 8px; margin-bottom: 4px; align-items: flex-start; }
+        .bullet-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); flex-shrink: 0; margin-top: 4px; }
+        .bullet-dot.red { background: #dc2626; }
+        .bullet-dot.amber { background: #f59e0b; }
+        .bullet-dot.blue { background: #3b82f6; }
+        .bullet-text { font-size: 10px; color: #334155; line-height: 1.55; flex: 1; }
+        .bullet-text strong { color: #0f172a; font-weight: 700; }
+        .numbered-item { display: flex; gap: 8px; margin-bottom: 5px; align-items: flex-start; }
+        .numbered-circle { width: 18px; height: 18px; border-radius: 50%; background: var(--accent); color: #fff; font-size: 9px; font-weight: 800; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px; }
+        .alert-box { background: #7f1d1d; border: 1.5px solid #991b1b; border-left: 4px solid #dc2626; border-radius: 5px; padding: 10px 14px; margin: 6px 0; }
+        .alert-title { font-size: 10px; font-weight: 800; color: #fff; margin-bottom: 3px; text-transform: uppercase; letter-spacing: 0.5px; }
+        .alert-text { font-size: 9.5px; color: rgba(255,255,255,0.9); line-height: 1.6; }
+        .info-box { background: #0f172a; border: 1.5px solid #1e293b; border-left: 4px solid #3b82f6; border-radius: 5px; padding: 10px 14px; margin: 6px 0; }
+        .info-title { font-size: 10px; font-weight: 700; color: #fff; margin-bottom: 3px; }
+        .info-text { font-size: 9.5px; color: rgba(255,255,255,0.85); line-height: 1.6; }
+        .amber-box { background: #0f172a; border: 1.5px solid #1e293b; border-left: 4px solid #f59e0b; border-radius: 5px; padding: 10px 14px; margin: 6px 0; }
+        .amber-title { font-size: 10px; font-weight: 700; color: #fff; margin-bottom: 3px; }
+        .amber-text { font-size: 9.5px; color: rgba(255,255,255,0.85); line-height: 1.6; }
+        .two-col { display: flex; gap: 12px; }
+        .two-col > .col { flex: 1; }
+        .wattage-table { width: 100%; border-collapse: collapse; margin: 6px 0; font-size: 10px; }
+        .wattage-table th { background: #0f172a; color: #fff; padding: 5px 8px; text-align: left; font-size: 9px; font-weight: 600; }
+        .wattage-table td { padding: 4px 8px; border-bottom: 1px solid #e2e8f0; }
+        .wattage-table tr:nth-child(even) td { background: #f8fafc; }
+        .contact-card { background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); border-radius: 6px; padding: 12px 16px; margin-top: 10px; position: relative; overflow: hidden; }
+        .contact-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: var(--accent); }
+        .contact-card-title { font-size: 8px; color: rgba(255,255,255,0.5); text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 4px; }
+        .contact-card-name { font-size: 13px; font-weight: 800; color: #fff; }
+        .contact-card-details { font-size: 9px; color: var(--accent); margin-top: 3px; }
+        .contact-card-address { font-size: 8px; color: rgba(255,255,255,0.5); margin-top: 3px; }
+        .contact-card-reg { font-size: 7.5px; color: rgba(255,255,255,0.4); margin-top: 3px; }
+        .footer { position: absolute; bottom: 0; left: 0; right: 0; border-top: 2px solid var(--accent); padding: 6px 22px; display: flex; justify-content: space-between; align-items: center; font-size: 7.5px; color: #94a3b8; }
+        .page-break { page-break-before: always; }
+    </style>
+</head>
+<body>
+
+<!-- ===== PAGE 1 — YOUR ELECTRICAL SYSTEM ===== -->
+<div class="page">
+    <div class="header">
+        <div class="header-content">
+            <div>
+                <div class="header-title">Electrical Safety Guide</div>
+                <div class="header-subtitle">A complete guide to electrical safety in your home</div>
+            </div>
+            <div class="header-right">
+                {% if company_logo %}<div class="header-logo"><img src="{{ company_logo }}" alt="Logo" /></div>{% endif %}
+                <div>
+                    <div class="header-company-name">{{ company_name }}</div>
+                    {% if company_phone %}<div class="header-company-detail">{{ company_phone }}</div>{% endif %}
+                    {% if registration_scheme %}<div class="header-company-detail">{{ registration_scheme }}: {{ registration_number }}</div>{% endif %}
+                </div>
+                {% if scheme_logo %}<div class="header-scheme"><img src="{{ scheme_logo }}" alt="Scheme" /></div>{% endif %}
+            </div>
+        </div>
+    </div>
+    <div class="content">
+        <div class="intro-box">
+            <div class="intro-text">This guide has been prepared by <strong>{{ company_name }}</strong> to help you understand and maintain electrical safety in your home. Keep this document in a safe place — it contains important information about your electrical installation, emergency procedures, and when to call a qualified electrician.</div>
+        </div>
+
+        <div class="section">
+            <div class="section-bar">Understanding Your Consumer Unit</div>
+            <div class="bullet-list">
+                <div class="bullet-item"><div class="bullet-dot"></div><div class="bullet-text">Your <strong>consumer unit</strong> (also called a fuse board) is the heart of your electrical system. It distributes electricity to every circuit in your home and protects you from faults</div></div>
+                <div class="bullet-item"><div class="bullet-dot"></div><div class="bullet-text"><strong>MCBs (Miniature Circuit Breakers)</strong> protect individual circuits. Each one controls a different part of your home — lights, sockets, cooker, shower, etc. When a fault occurs, the MCB "trips" (switches off) to protect the wiring</div></div>
+                <div class="bullet-item"><div class="bullet-dot"></div><div class="bullet-text"><strong>RCDs (Residual Current Devices)</strong> are the wider switches, usually with a "T" or "Test" button. These protect YOU from electric shock. They detect tiny imbalances in the current and cut power in milliseconds — fast enough to save your life</div></div>
+                <div class="bullet-item"><div class="bullet-dot"></div><div class="bullet-text"><strong>RCBOs</strong> combine the protection of an MCB and an RCD in one device. If your board has RCBOs, a fault on one circuit won't affect any others — only the faulty circuit trips. This is the modern standard for new installations</div></div>
+                <div class="bullet-item"><div class="bullet-dot"></div><div class="bullet-text"><strong>SPD (Surge Protection Device)</strong> protects your home from voltage spikes caused by lightning or grid surges. Required in all new consumer units since 2018. It protects expensive electronics — TVs, computers, smart home devices — from damage</div></div>
+                <div class="bullet-item"><div class="bullet-dot"></div><div class="bullet-text"><strong>The main switch</strong> turns off ALL electricity to your home. Know where it is — you may need it in an emergency. It's usually the large switch at the top or side of the consumer unit</div></div>
+            </div>
+            <div class="info-box">
+                <div class="info-title">Keep your consumer unit accessible</div>
+                <div class="info-text">Never block your consumer unit with furniture, storage, or coats. In an emergency, you need to reach it quickly. There should be at least 1 metre of clear space in front of it.</div>
+            </div>
+            <div class="amber-box">
+                <div class="amber-title">What's changing? — BS 7671 Amendment 4 (April 2026)</div>
+                <div class="amber-text">New regulations are being introduced for <strong>battery energy storage systems</strong> (home batteries like Tesla Powerwall, GivEnergy), <strong>smart home wiring</strong> (Power over Ethernet for lighting and building controls), and <strong>ICT equipment earthing</strong>. If you're planning a battery storage installation, solar PV expansion, or smart home upgrade, speak to {{ company_name }} about the latest requirements.</div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-bar">How to Test Your RCD Protection</div>
+            <div class="numbered-item"><div class="numbered-circle">1</div><div class="bullet-text"><strong>Find the test button</strong> — look for switches on your consumer unit with a button marked <strong>"T"</strong> or <strong>"Test"</strong>. You may have one or two RCDs</div></div>
+            <div class="numbered-item"><div class="numbered-circle">2</div><div class="bullet-text"><strong>Press the test button firmly</strong> — the switch should trip immediately, cutting power to the circuits it protects. Some lights or sockets will go off — this is normal</div></div>
+            <div class="numbered-item"><div class="numbered-circle">3</div><div class="bullet-text"><strong>Check it tripped</strong> — if the switch did NOT move, <strong>contact {{ company_name }} immediately on {{ company_phone }}</strong>. Your life-saving protection is not working</div></div>
+            <div class="numbered-item"><div class="numbered-circle">4</div><div class="bullet-text"><strong>Reset the RCD</strong> — push the switch firmly back up to restore power</div></div>
+            <div class="amber-box">
+                <div class="amber-title">How often?</div>
+                <div class="amber-text">Test your RCDs <strong>every 3 months</strong>. It takes 30 seconds. Set a reminder on your phone — the 1st of January, April, July, and October is easy to remember. <strong>This simple test could save a life.</strong></div>
+            </div>
+        </div>
+
+    </div>
+    <div class="footer">
+        <div>{{ company_name }}{% if company_phone %} — {{ company_phone }}{% endif %}</div>
+        <div>Powered by <strong>Elec-Mate</strong></div>
+        <div>Page 1 of 4</div>
+    </div>
+</div>
+
+<!-- ===== PAGE 2 — TRIPPING, WARNING SIGNS & SAFETY ===== -->
+<div class="page page-break">
+    <div class="header header-sm">
+        <div class="header-content">
+            <div><div class="header-title">Troubleshooting & Warning Signs</div></div>
+            <div class="header-right">
+                {% if company_logo %}<div class="header-logo"><img src="{{ company_logo }}" alt="Logo" style="max-height:40px;" /></div>{% endif %}
+                <div><div class="header-company-name">{{ company_name }}</div></div>
+            </div>
+        </div>
+    </div>
+    <div class="content">
+        <div class="section">
+            <div class="section-bar">What to Do When Something Trips</div>
+            <div class="bullet-list">
+                <div class="bullet-item"><div class="bullet-dot blue"></div><div class="bullet-text"><strong>A single MCB has tripped:</strong> This usually means a fault on one circuit. Unplug everything on that circuit, reset the MCB. Plug items back in one at a time. The one that causes the trip is faulty — stop using it</div></div>
+                <div class="bullet-item"><div class="bullet-dot blue"></div><div class="bullet-text"><strong>An RCD has tripped:</strong> This affects multiple circuits. Try resetting it. If it trips again immediately, there's a fault. Turn off all MCBs under that RCD, reset the RCD, then turn MCBs on one at a time to find which circuit has the fault</div></div>
+                <div class="bullet-item"><div class="bullet-dot blue"></div><div class="bullet-text"><strong>Everything has tripped:</strong> Check with your neighbours — it may be a power cut from the grid, not a fault in your home. If it's just you, try the main switch</div></div>
+                <div class="bullet-item"><div class="bullet-dot red"></div><div class="bullet-text"><strong>It keeps tripping repeatedly:</strong> Do NOT keep resetting it. This indicates a serious fault. <strong>Call {{ company_name }} on {{ company_phone }}</strong></div></div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-bar red">Warning Signs — Call an Electrician Immediately</div>
+            <div class="bullet-list">
+                <div class="bullet-item"><div class="bullet-dot red"></div><div class="bullet-text">A <strong>burning smell</strong> from sockets, switches, or the consumer unit — this could indicate overheating or arcing</div></div>
+                <div class="bullet-item"><div class="bullet-dot red"></div><div class="bullet-text"><strong>Brown or black marks</strong> around sockets or switches — signs of heat damage or electrical arcing</div></div>
+                <div class="bullet-item"><div class="bullet-dot red"></div><div class="bullet-text">Sockets or switches that feel <strong>warm or hot</strong> to the touch — this is never normal and indicates a loose connection or overload</div></div>
+                <div class="bullet-item"><div class="bullet-dot red"></div><div class="bullet-text"><strong>Sparking or crackling sounds</strong> from sockets, switches, or inside walls</div></div>
+                <div class="bullet-item"><div class="bullet-dot red"></div><div class="bullet-text"><strong>Electric shocks or tingling</strong> when touching appliances, light switches, or metal surfaces</div></div>
+                <div class="bullet-item"><div class="bullet-dot red"></div><div class="bullet-text">Lights that <strong>flicker constantly</strong> or dim noticeably when appliances switch on — occasional flicker with a high-power appliance (kettle, vacuum) can be normal, but persistent flickering is not</div></div>
+                <div class="bullet-item"><div class="bullet-dot red"></div><div class="bullet-text"><strong>Frequent tripping</strong> of circuit breakers or RCDs — this means there is an active fault</div></div>
+            </div>
+            <div class="alert-box">
+                <div class="alert-text">If you notice any of these signs, <strong>switch off the affected circuit at the consumer unit</strong> and contact <strong>{{ company_name }}</strong> on <strong>{{ company_phone }}</strong>. Do not attempt to investigate or repair the fault yourself.</div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-bar">Socket & Plug Safety</div>
+            <div class="two-col">
+                <div class="col">
+                    <div class="bullet-list">
+                        <div class="bullet-item"><div class="bullet-dot"></div><div class="bullet-text"><strong>One plug per socket</strong> — avoid multi-way adapters. If you need more sockets, have additional ones installed properly</div></div>
+                        <div class="bullet-item"><div class="bullet-dot"></div><div class="bullet-text"><strong>Never daisy-chain</strong> extension leads — plugging one extension into another creates a fire risk</div></div>
+                        <div class="bullet-item"><div class="bullet-dot"></div><div class="bullet-text"><strong>Check the rating</strong> — a standard extension lead is rated at 13A (3,120W). Don't plug in more than this combined</div></div>
+                    </div>
+                </div>
+                <div class="col">
+                    <table class="wattage-table">
+                        <thead><tr><th>Appliance</th><th>Watts</th></tr></thead>
+                        <tbody>
+                            <tr><td>Kettle</td><td>2,200 — 3,000W</td></tr>
+                            <tr><td>Fan heater</td><td>2,000 — 3,000W</td></tr>
+                            <tr><td>Iron</td><td>1,000 — 2,800W</td></tr>
+                            <tr><td>Hairdryer</td><td>1,000 — 2,200W</td></tr>
+                            <tr><td>Microwave</td><td>600 — 1,500W</td></tr>
+                            <tr><td>Toaster</td><td>800 — 1,500W</td></tr>
+                            <tr><td>TV</td><td>50 — 200W</td></tr>
+                            <tr><td>Phone charger</td><td>5 — 20W</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="amber-box">
+                <div class="amber-title">The 3,120W Rule</div>
+                <div class="amber-text">Never exceed <strong>3,120 watts</strong> on a single socket or extension lead (13A × 240V). A kettle alone uses up to 3,000W — so <strong>never plug a kettle into an extension lead with other appliances</strong>.</div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-bar">Bathroom & Kitchen Safety</div>
+            <div class="bullet-list">
+                <div class="bullet-item"><div class="bullet-dot blue"></div><div class="bullet-text"><strong>Bathrooms:</strong> No standard sockets allowed in bathrooms. Only shaver sockets (transformer-isolated) and pull-cord switches are permitted. Extractor fans, showers, and heated towel rails must be installed by a qualified electrician</div></div>
+                <div class="bullet-item"><div class="bullet-dot blue"></div><div class="bullet-text"><strong>Kitchens:</strong> Keep sockets away from the sink and hob. Water and electricity don't mix. Never use appliances with wet hands. Ensure worktop appliances are plugged into dedicated sockets, not extension leads</div></div>
+                <div class="bullet-item"><div class="bullet-dot blue"></div><div class="bullet-text"><strong>Outdoor areas:</strong> All outdoor sockets must have RCD protection. Don't use indoor extension leads outside. Use weatherproof equipment rated IP44 or higher. Never use a garden power tool in wet conditions</div></div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-bar">Cable & Appliance Safety</div>
+            <div class="bullet-list">
+                <div class="bullet-item"><div class="bullet-dot"></div><div class="bullet-text">Never run cables <strong>under carpets or rugs</strong> — they overheat and create a fire risk. Use proper cable management (trunking, clips)</div></div>
+                <div class="bullet-item"><div class="bullet-dot"></div><div class="bullet-text">Replace any cable that is <strong>frayed, cracked, or has exposed wires</strong> immediately. Don't tape over damaged cables</div></div>
+                <div class="bullet-item"><div class="bullet-dot"></div><div class="bullet-text">Check appliance cables where they enter the plug — this is where damage most commonly occurs from pulling</div></div>
+                <div class="bullet-item"><div class="bullet-dot"></div><div class="bullet-text">Register your appliances at <strong>registermyappliance.org.uk</strong> — you'll be notified of safety recalls</div></div>
+            </div>
+        </div>
+    </div>
+    <div class="footer">
+        <div>{{ company_name }}{% if company_phone %} — {{ company_phone }}{% endif %}</div>
+        <div>Powered by <strong>Elec-Mate</strong></div>
+        <div>Page 2 of 4</div>
+    </div>
+</div>
+
+<!-- ===== PAGE 3 — SMOKE ALARMS, OUTDOOR, CHILDREN ===== -->
+<div class="page page-break">
+    <div class="header header-sm">
+        <div class="header-content">
+            <div><div class="header-title">Alarms, Outdoor & Children's Safety</div></div>
+            <div class="header-right">
+                {% if company_logo %}<div class="header-logo"><img src="{{ company_logo }}" alt="Logo" style="max-height:40px;" /></div>{% endif %}
+                <div><div class="header-company-name">{{ company_name }}</div></div>
+            </div>
+        </div>
+    </div>
+    <div class="content">
+        <div class="section">
+            <div class="section-bar amber">Smoke, Heat & CO Alarms</div>
+            <div class="bullet-list">
+                <div class="bullet-item"><div class="bullet-dot amber"></div><div class="bullet-text"><strong>Test all alarms monthly</strong> — press and hold the test button until you hear the alarm. If it doesn't sound, replace the battery or the unit</div></div>
+                <div class="bullet-item"><div class="bullet-dot amber"></div><div class="bullet-text"><strong>Replace batteries annually</strong> in battery-powered alarms. Replace the entire alarm unit <strong>every 10 years</strong> — the sensor degrades over time</div></div>
+                <div class="bullet-item"><div class="bullet-dot amber"></div><div class="bullet-text"><strong>Smoke alarms:</strong> Fit on every floor, ideally in hallways and landings. Do NOT put them in kitchens or bathrooms (steam causes false alarms)</div></div>
+                <div class="bullet-item"><div class="bullet-dot amber"></div><div class="bullet-text"><strong>Heat alarms:</strong> Use in kitchens instead of smoke alarms — they respond to temperature, not smoke, so no false alarms from cooking</div></div>
+                <div class="bullet-item"><div class="bullet-dot amber"></div><div class="bullet-text"><strong>Carbon monoxide (CO) alarms:</strong> Required in any room with a gas appliance, oil boiler, or solid fuel burner. CO is odourless and kills — you CANNOT detect it without an alarm</div></div>
+            </div>
+            <div class="amber-box">
+                <div class="amber-title">What do the beeps mean?</div>
+                <div class="amber-text"><strong>Continuous loud alarm:</strong> Danger detected — evacuate and call 999. <strong>Intermittent chirping (every 30-60 seconds):</strong> Low battery — replace immediately. <strong>Three beeps then silence:</strong> End of life — replace the entire unit.</div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-bar">Outdoor Electrics</div>
+            <div class="bullet-list">
+                <div class="bullet-item"><div class="bullet-dot"></div><div class="bullet-text"><strong>Garden lighting:</strong> Low-voltage (12V) garden lights are safest for DIY installation. Mains voltage (240V) garden lighting must be installed by a qualified electrician with proper outdoor-rated cable and RCD protection</div></div>
+                <div class="bullet-item"><div class="bullet-dot"></div><div class="bullet-text"><strong>Outdoor sockets:</strong> Must be protected by a 30mA RCD and have a weatherproof enclosure (IP66). Don't use indoor multi-socket adapters outside</div></div>
+                <div class="bullet-item"><div class="bullet-dot"></div><div class="bullet-text"><strong>Hot tubs & pools:</strong> Must be on a dedicated circuit with RCD protection, installed by a qualified electrician. Never use standard extension leads to power a hot tub</div></div>
+                <div class="bullet-item"><div class="bullet-dot"></div><div class="bullet-text"><strong>Sheds & outbuildings:</strong> If you want mains power in a shed, it must be installed by a qualified electrician using proper armoured cable (SWA). Do not run extension leads permanently to outbuildings</div></div>
+                <div class="bullet-item"><div class="bullet-dot"></div><div class="bullet-text"><strong>Lawn mowers & power tools:</strong> Always use an RCD adapter (available from any DIY store, ~£15) when using power tools outdoors. If you cut through the cable, the RCD will save your life</div></div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-bar">Children's Electrical Safety</div>
+            <div class="bullet-list">
+                <div class="bullet-item"><div class="bullet-dot"></div><div class="bullet-text"><strong>Socket covers are NOT recommended</strong> — UK sockets have built-in shutters that only open when a proper plug is inserted. Cheap socket covers can actually defeat the shutter mechanism and make sockets LESS safe. This is the official advice from the IET and Electrical Safety First</div></div>
+                <div class="bullet-item"><div class="bullet-dot"></div><div class="bullet-text"><strong>Teach children</strong> that electricity is dangerous. They should never poke anything into sockets, play with plugs, or touch switches with wet hands</div></div>
+                <div class="bullet-item"><div class="bullet-dot"></div><div class="bullet-text"><strong>Keep cables tidy</strong> — children can pull on hanging cables and bring appliances (kettles, irons, lamps) down on themselves</div></div>
+                <div class="bullet-item"><div class="bullet-dot"></div><div class="bullet-text"><strong>Phone and tablet chargers:</strong> Don't leave chargers plugged in within children's reach. The USB end can be inserted into mouths. Unplug when not in use</div></div>
+            </div>
+            <div class="info-box">
+                <div class="info-title">The socket cover myth</div>
+                <div class="info-text">The Electrical Safety Council (now Electrical Safety First) and the IET have both confirmed that <strong>UK 13A sockets do not need and should not have socket covers</strong>. The built-in shutters provide adequate protection. Socket covers sold in shops can actually compromise the safety mechanism.</div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-bar">Christmas & Seasonal Safety</div>
+            <div class="bullet-list">
+                <div class="bullet-item"><div class="bullet-dot"></div><div class="bullet-text">Check Christmas lights for damage before each use — replace any with cracked holders, bare wires, or missing bulbs</div></div>
+                <div class="bullet-item"><div class="bullet-dot"></div><div class="bullet-text">Use LED lights — they run cool, use less power, and are much safer than older filament types</div></div>
+                <div class="bullet-item"><div class="bullet-dot"></div><div class="bullet-text">Outdoor lights must be rated for outdoor use (check for IP44+ rating). Use an RCD adapter for outdoor decorations</div></div>
+                <div class="bullet-item"><div class="bullet-dot"></div><div class="bullet-text">Turn off all decorative lights when you go to bed or leave the house. Use a timer to do this automatically</div></div>
+            </div>
+        </div>
+    </div>
+    <div class="footer">
+        <div>{{ company_name }}{% if company_phone %} — {{ company_phone }}{% endif %}</div>
+        <div>Powered by <strong>Elec-Mate</strong></div>
+        <div>Page 3 of 4</div>
+    </div>
+</div>
+
+<!-- ===== PAGE 4 — EMERGENCIES, INSPECTIONS, CONTACTS ===== -->
+<div class="page page-break">
+    <div class="header header-sm">
+        <div class="header-content">
+            <div><div class="header-title">Emergencies & Your Electrician</div></div>
+            <div class="header-right">
+                {% if company_logo %}<div class="header-logo"><img src="{{ company_logo }}" alt="Logo" style="max-height:40px;" /></div>{% endif %}
+                <div><div class="header-company-name">{{ company_name }}</div></div>
+            </div>
+        </div>
+    </div>
+    <div class="content">
+        <div class="section">
+            <div class="section-bar red">In an Emergency</div>
+            <div class="alert-box">
+                <div class="alert-title">Electric Shock</div>
+                <div class="alert-text"><strong>Do NOT touch the person</strong> — you will also receive a shock. Switch off the supply at the consumer unit first. If you cannot reach the switch safely, use a dry non-metallic object (wooden broom handle, dry towel wrapped around your hand) to separate them from the source. <strong>Call 999 immediately.</strong> Begin CPR if the person is not breathing and you are trained to do so.</div>
+            </div>
+            <div class="alert-box">
+                <div class="alert-title">Electrical Fire</div>
+                <div class="alert-text"><strong>NEVER use water</strong> on an electrical fire — water conducts electricity. Unplug the appliance ONLY if it is safe to do so. Use a <strong>CO2 or dry powder fire extinguisher</strong>. If the fire is spreading, get out, close doors behind you, and <strong>call 999</strong>. Do not go back in.</div>
+            </div>
+            <div class="amber-box">
+                <div class="amber-title">Power Cut</div>
+                <div class="amber-text">Check your neighbours — if they're also out, it's a network fault. Call your <strong>Distribution Network Operator (DNO)</strong> on <strong>105</strong> (free, 24/7). If it's just your property: check your consumer unit for tripped switches. Try resetting. If it keeps tripping, call your electrician.</div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-bar blue">Electrical Inspections — EICR</div>
+            <div class="bullet-list">
+                <div class="bullet-item"><div class="bullet-dot blue"></div><div class="bullet-text">An <strong>EICR (Electrical Installation Condition Report)</strong> is a thorough inspection and test of all the wiring, sockets, switches, and protection in your home</div></div>
+                <div class="bullet-item"><div class="bullet-dot blue"></div><div class="bullet-text"><strong>Rented properties:</strong> Landlords must have an EICR every <strong>5 years</strong> — this is the law since April 2021 (Electrical Safety Standards Regulations)</div></div>
+                <div class="bullet-item"><div class="bullet-dot blue"></div><div class="bullet-text"><strong>Owner-occupied:</strong> Recommended every <strong>10 years</strong>, or when buying/selling a property</div></div>
+                <div class="bullet-item"><div class="bullet-dot blue"></div><div class="bullet-text"><strong>After major work:</strong> Always get an EICR after a rewire, extension, or major renovation</div></div>
+                <div class="bullet-item"><div class="bullet-dot blue"></div><div class="bullet-text"><strong>Older properties:</strong> If your home was built before 1990 or has not been inspected, book an EICR. Old wiring deteriorates and can become dangerous</div></div>
+            </div>
+            <div class="info-box">
+                <div class="info-title">What does an EICR cost?</div>
+                <div class="info-text">A typical domestic EICR costs <strong>£150-300</strong> depending on the size of the property. It takes 2-4 hours. The electrician will need access to all rooms, the consumer unit, and the meter. It's a small price for the peace of mind that your home is electrically safe.</div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-bar">What You CAN Do Yourself (Safely)</div>
+            <div class="bullet-list">
+                <div class="bullet-item"><div class="bullet-dot"></div><div class="bullet-text"><strong>Change a light bulb</strong> — switch off the light first, let the bulb cool, replace like-for-like</div></div>
+                <div class="bullet-item"><div class="bullet-dot"></div><div class="bullet-text"><strong>Change a fuse in a plug</strong> — always replace with the correct rating (3A for lamps/electronics, 13A for heating appliances)</div></div>
+                <div class="bullet-item"><div class="bullet-dot"></div><div class="bullet-text"><strong>Wire a plug</strong> — Brown to Live (right), Blue to Neutral (left), Green/Yellow to Earth (top)</div></div>
+                <div class="bullet-item"><div class="bullet-dot red"></div><div class="bullet-text"><strong>Everything else requires a qualified electrician</strong> — replacing sockets or switches, new circuits, additional sockets, bathroom/kitchen work, consumer unit changes, outdoor wiring, EV charger installation</div></div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-bar">Useful Contacts</div>
+            <div class="two-col">
+                <div class="col">
+                    <div class="bullet-list">
+                        <div class="bullet-item"><div class="bullet-dot"></div><div class="bullet-text"><strong>Emergency:</strong> 999</div></div>
+                        <div class="bullet-item"><div class="bullet-dot"></div><div class="bullet-text"><strong>Power cuts:</strong> 105 (free, 24/7)</div></div>
+                        <div class="bullet-item"><div class="bullet-dot"></div><div class="bullet-text"><strong>Gas emergency:</strong> 0800 111 999</div></div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="bullet-list">
+                        <div class="bullet-item"><div class="bullet-dot"></div><div class="bullet-text"><strong>Electrical Safety First:</strong> electricalsafetyfirst.org.uk</div></div>
+                        <div class="bullet-item"><div class="bullet-dot"></div><div class="bullet-text"><strong>Product recalls:</strong> registermyappliance.org.uk</div></div>
+                        <div class="bullet-item"><div class="bullet-dot"></div><div class="bullet-text"><strong>Find an electrician:</strong> electricalcompetentperson.co.uk</div></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Contact Card -->
+        <div class="contact-card">
+            <div class="contact-card-title">Your Electrician</div>
+            <div class="contact-card-name">{{ company_name }}</div>
+            <div class="contact-card-details">
+                {% if company_phone %}{{ company_phone }}{% endif %}
+                {% if company_email %} | {{ company_email }}{% endif %}
+                {% if company_website %} | {{ company_website }}{% endif %}
+            </div>
+            {% if company_address %}<div class="contact-card-address">{{ company_address }}</div>{% endif %}
+            {% if registration_scheme %}<div class="contact-card-reg">{{ registration_scheme }} Registered — No. {{ registration_number }}</div>{% endif %}
+        </div>
+    </div>
+    <div class="footer">
+        <div>{{ company_name }}{% if company_phone %} — {{ company_phone }}{% endif %}</div>
+        <div>Powered by <strong>Elec-Mate</strong></div>
+        <div>Page 4 of 4</div>
+    </div>
+</div>
+
+</body>
+</html>

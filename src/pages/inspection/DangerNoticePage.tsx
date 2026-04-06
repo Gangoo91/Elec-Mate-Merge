@@ -126,7 +126,7 @@ const defaultData = (): DangerNoticeData => ({
 
 const DRAFT_KEY = 'elec-mate-draft-danger-notice';
 
-const inputCn = 'h-11 text-base touch-manipulation bg-white/[0.06] border-white/[0.08] text-white focus:border-yellow-500 focus:ring-yellow-500';
+const inputCn = 'h-12 text-base touch-manipulation bg-white/[0.06] border-white/[0.08] text-white focus:border-yellow-500 focus:ring-yellow-500';
 const textareaCn = 'touch-manipulation text-base min-h-[100px] bg-white/[0.06] border-white/[0.08] text-white focus:border-yellow-500 focus:ring-yellow-500';
 
 const dangerTypes = [
@@ -141,14 +141,14 @@ const dangerTypes = [
 
 const Section = ({ title, accentColor, children, badge }: { title: string; accentColor?: string; children: React.ReactNode; badge?: React.ReactNode }) => (
   <motion.section variants={itemVariants} className="space-y-4">
-    <div className="relative rounded-2xl bg-white/[0.04] border border-white/[0.06] overflow-hidden">
-      <div className={cn('absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r opacity-50', accentColor || 'from-red-500 via-rose-400 to-pink-400')} />
-      <div className="px-4 pt-4 pb-1 flex items-center justify-between">
+    <div className="border-b border-white/[0.06] pb-1 mb-3 flex items-center justify-between">
+      <div>
+        <div className={cn('h-[2px] w-full rounded-full bg-gradient-to-r mb-2', accentColor || 'from-red-500 via-rose-400 to-pink-400')} />
         <h2 className="text-xs font-medium text-white uppercase tracking-wider">{title}</h2>
-        {badge}
       </div>
-      <div className="px-4 pb-4 space-y-4">{children}</div>
+      {badge}
     </div>
+    {children}
   </motion.section>
 );
 
@@ -301,26 +301,23 @@ export default function DangerNoticePage() {
     return () => clearTimeout(timer);
   }, [data, editId]);
 
-  // Pre-fill contractor from profile
+  // Pre-fill contractor from company profile
   useEffect(() => {
     if (eicrState?.fromEicr && data.contractorName) return;
     supabase.auth.getUser().then(async ({ data: { user } }) => {
       if (!user) return;
-      const { data: profile } = await supabase
-        .from('profiles')
-        .select('full_name, company_name, phone, email, registration_number, address, registration_scheme')
-        .eq('id', user.id)
-        .single();
-      if (profile && !data.contractorName) {
+      const { data: cpData } = await supabase.rpc('get_my_company_profile');
+      const cp = Array.isArray(cpData) ? cpData[0] : cpData;
+      if (cp && !data.contractorName) {
         setData((prev) => ({
           ...prev,
-          contractorName: prev.contractorName || profile.full_name || '',
-          contractorCompany: prev.contractorCompany || profile.company_name || '',
-          contractorPhone: prev.contractorPhone || profile.phone || '',
-          contractorEmail: prev.contractorEmail || profile.email || '',
-          contractorAddress: prev.contractorAddress || profile.address || '',
-          registrationNumber: prev.registrationNumber || profile.registration_number || '',
-          registrationScheme: prev.registrationScheme || profile.registration_scheme || '',
+          contractorName: prev.contractorName || cp.inspector_name || cp.company_name || '',
+          contractorCompany: prev.contractorCompany || cp.company_name || '',
+          contractorPhone: prev.contractorPhone || cp.company_phone || '',
+          contractorEmail: prev.contractorEmail || cp.company_email || '',
+          contractorAddress: prev.contractorAddress || cp.company_address || '',
+          registrationNumber: prev.registrationNumber || cp.registration_number || '',
+          registrationScheme: prev.registrationScheme || cp.registration_scheme || '',
         }));
       }
     });
@@ -458,7 +455,7 @@ export default function DangerNoticePage() {
         </div>
       </div>
 
-      <motion.main variants={containerVariants} initial="hidden" animate="visible" className="px-4 py-4 space-y-4 max-w-2xl mx-auto">
+      <motion.main variants={containerVariants} initial="hidden" animate="visible" className="px-4 py-4 space-y-4 max-w-3xl mx-auto">
 
         {/* Warning banner */}
         <motion.div variants={itemVariants} className="relative rounded-2xl border border-red-500/20 overflow-hidden">
@@ -484,8 +481,8 @@ export default function DangerNoticePage() {
         <Section title="Reference" accentColor="from-white/20 to-white/5">
           <Field label="Record No."><Input value={data.referenceNumber} onChange={(e) => update('referenceNumber', e.target.value)} className={inputCn} /></Field>
           <div className="grid grid-cols-2 gap-3">
-            <Field label="Date"><input type="date" value={data.date} onChange={(e) => update('date', e.target.value)} className={cn(inputCn, 'w-full rounded-md border px-3 appearance-none')} /></Field>
-            <Field label="Time"><input type="time" value={data.time} onChange={(e) => update('time', e.target.value)} className={cn(inputCn, 'w-full rounded-md border px-3 appearance-none')} /></Field>
+            <Field label="Date"><Input type="date" value={data.date} onChange={(e) => update('date', e.target.value)} className={cn(inputCn, '[color-scheme:dark]')} /></Field>
+            <Field label="Time"><Input type="time" value={data.time} onChange={(e) => update('time', e.target.value)} className={cn(inputCn, '[color-scheme:dark]')} /></Field>
           </div>
         </Section>
 

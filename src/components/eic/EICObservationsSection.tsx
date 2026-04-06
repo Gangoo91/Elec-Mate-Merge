@@ -12,7 +12,7 @@ import EICDefectObservationsList from './EICDefectObservationsList';
 import { EICObservation } from '@/hooks/useEICObservations';
 import { cn } from '@/lib/utils';
 import { useIsMobile } from '@/hooks/use-mobile';
-import { useHaptics } from '@/hooks/useHaptics';
+import { useHaptic } from '@/hooks/useHaptic';
 
 interface EICObservationsSectionProps {
   observations: EICObservation[];
@@ -34,14 +34,14 @@ const EICObservationsSection: React.FC<EICObservationsSectionProps> = ({
   className,
 }) => {
   const isMobile = useIsMobile();
-  const haptics = useHaptics();
+  const haptic = useHaptic();
   const unsatisfactoryCount = observations.filter(
     (obs) => obs.defectCode === 'unsatisfactory'
   ).length;
   const limitationsCount = observations.filter((obs) => obs.defectCode === 'limitation').length;
 
   const handleAddObservation = () => {
-    haptics.tap();
+    haptic.light();
     onAddObservation();
   };
 

@@ -161,20 +161,19 @@ const defaultData = (): IsolationData => ({
 
 const DRAFT_KEY = 'elec-mate-draft-isolation-cert';
 
-const inputCn = 'h-11 text-base touch-manipulation bg-white/[0.06] border-white/[0.08] text-white focus:border-yellow-500 focus:ring-yellow-500';
+const inputCn = 'h-12 text-base touch-manipulation bg-white/[0.06] border-white/[0.08] text-white focus:border-yellow-500 focus:ring-yellow-500';
 const textareaCn = 'touch-manipulation text-base min-h-[100px] bg-white/[0.06] border-white/[0.08] text-white focus:border-yellow-500 focus:ring-yellow-500';
+const dateTimeCn = 'h-12 text-base touch-manipulation bg-white/[0.06] border-white/[0.08] text-white focus:border-yellow-500 focus:ring-yellow-500 [color-scheme:dark]';
 
 // --- Reusable components ---
 
 const Section = ({ title, accentColor, children }: { title: string; accentColor?: string; children: React.ReactNode }) => (
-  <motion.section variants={itemVariants}>
-    <div className="relative rounded-2xl bg-white/[0.04] border border-white/[0.06] overflow-hidden">
-      <div className={cn('absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r opacity-50', accentColor || 'from-amber-500 via-amber-400 to-yellow-400')} />
-      <div className="px-4 pt-4 pb-1">
-        <h2 className="text-xs font-medium text-white uppercase tracking-wider">{title}</h2>
-      </div>
-      <div className="px-4 pb-4 space-y-4">{children}</div>
+  <motion.section variants={itemVariants} className="space-y-4">
+    <div className="border-b border-white/[0.06] pb-1 mb-3">
+      <div className={cn('h-[2px] w-full rounded-full bg-gradient-to-r mb-2', accentColor || 'from-amber-500 via-amber-400 to-yellow-400')} />
+      <h2 className="text-xs font-medium text-white uppercase tracking-wider">{title}</h2>
     </div>
+    {children}
   </motion.section>
 );
 
@@ -234,25 +233,22 @@ export default function IsolationCertificatePage() {
     return () => clearTimeout(timer);
   }, [data, editId]);
 
-  // Pre-fill contractor from profile
+  // Pre-fill contractor from company profile
   useEffect(() => {
     if (data.contractorName) return;
     supabase.auth.getUser().then(async ({ data: { user } }) => {
       if (!user) return;
-      const { data: profile } = await supabase
-        .from('profiles')
-        .select('full_name, company_name, phone, email, registration_number, registration_scheme')
-        .eq('id', user.id)
-        .single();
-      if (profile) {
+      const { data: cpData } = await supabase.rpc('get_my_company_profile');
+      const cp = Array.isArray(cpData) ? cpData[0] : cpData;
+      if (cp) {
         setData((prev) => ({
           ...prev,
-          contractorName: prev.contractorName || profile.full_name || '',
-          contractorCompany: prev.contractorCompany || profile.company_name || '',
-          contractorPhone: prev.contractorPhone || profile.phone || '',
-          contractorEmail: prev.contractorEmail || profile.email || '',
-          registrationNumber: prev.registrationNumber || profile.registration_number || '',
-          registrationScheme: prev.registrationScheme || profile.registration_scheme || '',
+          contractorName: prev.contractorName || cp.inspector_name || cp.company_name || '',
+          contractorCompany: prev.contractorCompany || cp.company_name || '',
+          contractorPhone: prev.contractorPhone || cp.company_phone || '',
+          contractorEmail: prev.contractorEmail || cp.company_email || '',
+          registrationNumber: prev.registrationNumber || cp.registration_number || '',
+          registrationScheme: prev.registrationScheme || cp.registration_scheme || '',
           personIsolatingName: prev.personIsolatingName || profile.full_name || '',
         }));
       }
@@ -370,7 +366,7 @@ export default function IsolationCertificatePage() {
         </div>
       </div>
 
-      <motion.main variants={containerVariants} initial="hidden" animate="visible" className="px-4 py-4 space-y-4 max-w-2xl mx-auto">
+      <motion.main variants={containerVariants} initial="hidden" animate="visible" className="px-4 py-4 space-y-4 max-w-3xl mx-auto">
 
         {/* Banner */}
         <motion.div variants={itemVariants} className="relative rounded-2xl border border-amber-500/20 overflow-hidden">
@@ -385,8 +381,8 @@ export default function IsolationCertificatePage() {
         <Section title="Reference" accentColor="from-white/20 to-white/5">
           <Field label="Record No."><Input value={data.referenceNumber} onChange={(e) => update('referenceNumber', e.target.value)} className={inputCn} /></Field>
           <div className="grid grid-cols-2 gap-3">
-            <Field label="Date"><input type="date" value={data.date} onChange={(e) => update('date', e.target.value)} className={cn(inputCn, 'w-full rounded-md border px-3 appearance-none')} /></Field>
-            <Field label="Time"><input type="time" value={data.time} onChange={(e) => update('time', e.target.value)} className={cn(inputCn, 'w-full rounded-md border px-3 appearance-none')} /></Field>
+            <Field label="Date"><Input type="date" value={data.date} onChange={(e) => update('date', e.target.value)} className={dateTimeCn} /></Field>
+            <Field label="Time"><Input type="time" value={data.time} onChange={(e) => update('time', e.target.value)} className={dateTimeCn} /></Field>
           </div>
         </Section>
 
@@ -480,8 +476,8 @@ export default function IsolationCertificatePage() {
         {/* Isolation Sign-On */}
         <Section title="Isolation" accentColor="from-elec-yellow/40 to-amber-400/20">
           <div className="grid grid-cols-2 gap-3">
-            <Field label="Date Isolated"><input type="date" value={data.dateIsolated} onChange={(e) => update('dateIsolated', e.target.value)} className={cn(inputCn, 'w-full rounded-md border px-3 appearance-none')} /></Field>
-            <Field label="Time Isolated"><input type="time" value={data.timeIsolated} onChange={(e) => update('timeIsolated', e.target.value)} className={cn(inputCn, 'w-full rounded-md border px-3 appearance-none')} /></Field>
+            <Field label="Date Isolated"><Input type="date" value={data.dateIsolated} onChange={(e) => update('dateIsolated', e.target.value)} className={dateTimeCn} /></Field>
+            <Field label="Time Isolated"><Input type="time" value={data.timeIsolated} onChange={(e) => update('timeIsolated', e.target.value)} className={dateTimeCn} /></Field>
           </div>
           <Field label="Person Isolating"><Input value={data.personIsolatingName} onChange={(e) => update('personIsolatingName', e.target.value)} className={inputCn} /></Field>
           <SignatureInput label="Person Isolating Signature" value={data.personIsolatingSignature} onChange={(sig) => update('personIsolatingSignature', sig || '')} />
@@ -495,8 +491,8 @@ export default function IsolationCertificatePage() {
         {/* De-Isolation / Handback */}
         <Section title="De-Isolation / Handback" accentColor="from-cyan-500/40 to-blue-400/20">
           <div className="grid grid-cols-2 gap-3">
-            <Field label="Date"><input type="date" value={data.dateDeisolated} onChange={(e) => update('dateDeisolated', e.target.value)} className={cn(inputCn, 'w-full rounded-md border px-3 appearance-none')} /></Field>
-            <Field label="Time"><input type="time" value={data.timeDeisolated} onChange={(e) => update('timeDeisolated', e.target.value)} className={cn(inputCn, 'w-full rounded-md border px-3 appearance-none')} /></Field>
+            <Field label="Date"><Input type="date" value={data.dateDeisolated} onChange={(e) => update('dateDeisolated', e.target.value)} className={dateTimeCn} /></Field>
+            <Field label="Time"><Input type="time" value={data.timeDeisolated} onChange={(e) => update('timeDeisolated', e.target.value)} className={dateTimeCn} /></Field>
           </div>
           <TickButton checked={data.workCompleted} label="All work completed" color="emerald" onChange={() => update('workCompleted', !data.workCompleted)} />
           <TickButton checked={data.allPersonsClear} label="All persons clear of equipment" color="emerald" onChange={() => update('allPersonsClear', !data.allPersonsClear)} />
