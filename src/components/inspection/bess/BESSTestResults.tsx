@@ -197,7 +197,7 @@ export default function BESSTestResults({ formData, onUpdate }: Props) {
                     <SelectTrigger className={selectTriggerCn}><SelectValue placeholder="Select..." /></SelectTrigger>
                     <SelectContent className={selectContentCn}>
                       <SelectItem value="G98">G98 (≤16A/phase — notify only)</SelectItem>
-                      <SelectItem value="G99">G99 (>16A/phase — approval required)</SelectItem>
+                      <SelectItem value="G99">G99 (&gt;16A/phase — approval required)</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
