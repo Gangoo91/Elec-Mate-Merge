@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, useMemo } from 'react';
 import {
   ArrowLeft,
   MousePointer2,
@@ -20,6 +20,7 @@ import {
   LayoutGrid,
   Eraser,
   RotateCw,
+  FileText,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useSearchParams, useNavigate } from 'react-router-dom';
@@ -32,6 +33,9 @@ import { AIRoomBuilderDialog } from '@/components/electrician-tools/diagram-buil
 import { RoomShapePicker } from '@/components/electrician-tools/diagram-builder/RoomShapePicker';
 import { SaveRoomSheet } from '@/components/electrician-tools/diagram-builder/SaveRoomSheet';
 import { SavedRoomsStrip } from '@/components/electrician-tools/diagram-builder/SavedRoomsStrip';
+import { SymbolCountPanel } from '@/components/electrician-tools/diagram-builder/SymbolCountPanel';
+import { ExportReviewSheet } from '@/components/electrician-tools/diagram-builder/ExportReviewSheet';
+import { symbolRegistry } from '@/components/electrician-tools/diagram-builder/symbols/symbolRegistry';
 import { useFloorPlanRooms } from '@/hooks/useFloorPlanRooms';
 import { toast } from '@/hooks/use-toast';
 import { storageSetJSONSync, storageGetJSONSync } from '@/utils/storage';
@@ -86,11 +90,24 @@ const DiagramBuilderPage = () => {
   const [placingSymbolName, setPlacingSymbolName] = useState<string | null>(null);
   const [saveSheetOpen, setSaveSheetOpen] = useState(false);
   const [activeRoomId, setActiveRoomId] = useState<string | null>(null);
+  const [exportReviewOpen, setExportReviewOpen] = useState(false);
   const { rooms, saveRoom, deleteRoom } = useFloorPlanRooms();
   const canvasRef = useRef<any>(null);
   const [searchParams] = useSearchParams();
   const haptic = useHaptic();
   const autoSaveTimerRef = useRef<ReturnType<typeof setInterval> | null>(null);
+
+  // Live symbol counts for the floating panel
+  const symbolCounts = useMemo(() => {
+    const counts = new Map<string, number>();
+    canvasObjects.filter((o) => o.type === 'symbol' && o.symbolId).forEach((o) => {
+      counts.set(o.symbolId!, (counts.get(o.symbolId!) || 0) + 1);
+    });
+    return Array.from(counts.entries()).map(([id, count]) => {
+      const sym = symbolRegistry.find((s) => s.id === id);
+      return { id, name: sym?.name || id, category: sym?.category || 'other', count };
+    });
+  }, [canvasObjects]);
 
   // Auto-open AI Room Builder dialog when ?ai=true is in the URL
   useEffect(() => {
@@ -262,7 +279,7 @@ const DiagramBuilderPage = () => {
     setActiveRoomId(null);
     setSaveSheetOpen(false);
     haptic.success();
-    toast({ title: `${name} saved`, description: 'Add another room or export PDF' });
+    toast({ title: `${name} saved`, description: `${symbolCounts.length > 0 ? symbolCounts.reduce((sum, s) => sum + s.count, 0) + ' items. ' : ''}Add another room or export.` });
   };
 
   const handleRoomSelect = (roomId: string) => {
@@ -290,6 +307,7 @@ const DiagramBuilderPage = () => {
     { id: 'wall', icon: PenTool, label: 'Wall' },
     { id: 'shapes', icon: LayoutGrid, label: 'Shapes' },
     { id: 'add-symbol', icon: Plus, label: 'Symbol' },
+    { id: 'dimension', icon: Ruler, label: 'Measure' },
     { id: 'eraser', icon: Eraser, label: 'Delete' },
     { id: 'ai-room', icon: Sparkles, label: 'AI' },
     { id: 'undo', icon: Undo2, label: 'Undo' },
@@ -399,7 +417,7 @@ const DiagramBuilderPage = () => {
   };
 
   return (
-    <div className="fixed inset-0 bg-[#1a1a1a] flex flex-col">
+    <div className="fixed inset-0 z-50 bg-[#1a1a1a] flex flex-col">
       {/* Minimal sticky header */}
       <div
         className="flex items-center justify-between px-3 bg-elec-dark border-b border-white/10 shrink-0"
@@ -417,20 +435,22 @@ const DiagramBuilderPage = () => {
           <h1 className="text-sm font-semibold text-white">Room Planner</h1>
         </div>
 
-        <div className="flex items-center gap-1">
-          {/* Done button */}
-          {canvasObjects.length > 0 && (
-            <Button
-              onClick={() => {
-                haptic.light();
-                setSaveSheetOpen(true);
-              }}
-              className="h-8 px-3 bg-elec-yellow text-black hover:bg-elec-yellow/90 text-xs font-semibold touch-manipulation"
-            >
-              <Check className="h-3.5 w-3.5 mr-1" />
-              Done
-            </Button>
-          )}
+        <div className="flex items-center gap-1.5">
+          {/* Done / Save Room button — always visible */}
+          <Button
+            onClick={() => {
+              if (canvasObjects.length === 0) {
+                toast({ title: 'Nothing to save', description: 'Draw a room or place symbols first' });
+                return;
+              }
+              haptic.light();
+              setSaveSheetOpen(true);
+            }}
+            className="h-8 px-3 bg-elec-yellow text-black hover:bg-elec-yellow/90 text-xs font-semibold touch-manipulation"
+          >
+            <Check className="h-3.5 w-3.5 mr-1" />
+            Done
+          </Button>
 
           {/* Overflow menu */}
           <DropdownMenu>
@@ -445,6 +465,15 @@ const DiagramBuilderPage = () => {
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end" className="bg-elec-card border-white/10 min-w-[180px]">
               <ExportControls canvasObjects={canvasObjects} canvasRef={canvasRef} asMenuItems onOpenPdfDialog={() => setExportDialogOpen(true)} />
+              {rooms.length > 0 && (
+                <DropdownMenuItem
+                  onClick={() => setExportReviewOpen(true)}
+                  className="text-white hover:bg-white/10 touch-manipulation"
+                >
+                  <FileText className="h-4 w-4 mr-2" />
+                  Export Floor Plans
+                </DropdownMenuItem>
+              )}
               <DropdownMenuSeparator className="bg-white/10" />
               <DropdownMenuItem
                 onClick={handleRotateAll}
@@ -592,6 +621,9 @@ const DiagramBuilderPage = () => {
         </div>
       </div>
 
+      {/* Symbol count panel — floats above scale bar */}
+      <SymbolCountPanel counts={symbolCounts} />
+
       {/* Scale bar overlay */}
       <div className="absolute bottom-20 left-4 z-20 flex items-center gap-1 bg-black/50 backdrop-blur-sm px-2 py-1 rounded-lg">
         <div className="h-2.5 border-l border-white/70" />
@@ -653,6 +685,18 @@ const DiagramBuilderPage = () => {
         open={saveSheetOpen}
         onOpenChange={setSaveSheetOpen}
         onSave={handleSaveRoom}
+      />
+
+      {/* Export Review Sheet */}
+      <ExportReviewSheet
+        open={exportReviewOpen}
+        onOpenChange={setExportReviewOpen}
+        rooms={rooms}
+        onGeneratePdf={(data) => {
+          // TODO: Send to PDFMonkey edge function
+          console.log('PDF data:', data);
+          toast({ title: 'PDF generation coming soon' });
+        }}
       />
 
       {/* Room Shape Picker Sheet */}

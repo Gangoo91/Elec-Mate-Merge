@@ -21,11 +21,11 @@ export const SavedRoomsStrip = ({
     <div className="w-full overflow-x-auto scrollbar-hide bg-black/40 border-b border-white/10 px-2 py-2">
       <div className="flex items-center gap-2 min-w-min">
         {rooms.map((room) => (
-          <button
+          <div
             key={room.id}
             onClick={() => onRoomSelect(room.id)}
             className={cn(
-              'relative flex-shrink-0 flex flex-col items-center touch-manipulation rounded-lg transition-all',
+              'relative flex-shrink-0 flex flex-col items-center touch-manipulation rounded-lg transition-all cursor-pointer',
               activeRoomId === room.id
                 ? 'ring-2 ring-elec-yellow'
                 : 'ring-1 ring-white/20'
@@ -62,7 +62,7 @@ export const SavedRoomsStrip = ({
             >
               <X className="h-3 w-3 text-white" />
             </button>
-          </button>
+          </div>
         ))}
 
         {/* New room button */}

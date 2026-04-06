@@ -709,8 +709,11 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
       if (obj.type === 'symbol' && obj.symbolId) {
         try {
           const svgString = await loadSymbolSvg(obj.symbolId);
-          const { objects: svgObjects } = await loadSVGFromString(svgString);
-          const validObjects = svgObjects.filter((o): o is FabricObject => o !== null);
+          console.log('[Symbol] Loading:', obj.symbolId, 'SVG length:', svgString.length, 'starts:', svgString.substring(0, 60));
+          const result = await loadSVGFromString(svgString);
+          const svgObjects = result.objects;
+          console.log('[Symbol] Parsed objects:', svgObjects?.length, 'from', obj.symbolId);
+          const validObjects = (svgObjects || []).filter((o): o is FabricObject => o !== null);
           if (validObjects.length > 0) {
             fabricObj = util.groupSVGElements(validObjects, {
               left: obj.x,
@@ -729,7 +732,7 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
             (fabricObj as any).customData = { id: obj.id, type: 'symbol', symbolId: obj.symbolId };
           }
         } catch (err) {
-          console.warn('Failed to load SVG for symbol:', obj.symbolId, err);
+          console.error('[Symbol] FAILED to load SVG for:', obj.symbolId, err);
         }
       } else if (obj.type === 'rectangle') {
         fabricObj = new Rect({

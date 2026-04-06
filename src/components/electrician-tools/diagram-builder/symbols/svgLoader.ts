@@ -23,15 +23,7 @@ export async function loadSymbolSvg(symbolId: string): Promise<string> {
   const cached = svgCache.get(symbolId);
   if (cached) return cached;
 
-  // 2. Legacy electricalSymbols (already contains svgXml)
-  const legacy = electricalSymbols.find((s) => s.id === symbolId);
-  if (legacy?.svgXml) {
-    const resolved = resolveCurrentColor(legacy.svgXml);
-    svgCache.set(symbolId, resolved);
-    return resolved;
-  }
-
-  // 3. Registry path fetch
+  // 2. SVG file from registry (our proper SVG files in public/symbols/)
   const regEntry = symbolRegistry.find((s) => s.id === symbolId);
   if (regEntry) {
     try {
@@ -42,8 +34,16 @@ export async function loadSymbolSvg(symbolId: string): Promise<string> {
         return svgText;
       }
     } catch {
-      // Fall through to placeholder
+      // Fall through to legacy
     }
+  }
+
+  // 3. Fallback to legacy electricalSymbols (inline TypeScript SVGs)
+  const legacy = electricalSymbols.find((s) => s.id === symbolId);
+  if (legacy?.svgXml) {
+    const resolved = resolveCurrentColor(legacy.svgXml);
+    svgCache.set(symbolId, resolved);
+    return resolved;
   }
 
   // 4. Fallback placeholder — simple circle with cross
@@ -61,21 +61,21 @@ export async function preloadAllSymbols(): Promise<void> {
   const promises = symbolRegistry.map(async (entry) => {
     if (svgCache.has(entry.id)) return;
 
-    // Try legacy first (no network)
-    const legacy = electricalSymbols.find((s) => s.id === entry.id);
-    if (legacy?.svgXml) {
-      svgCache.set(entry.id, resolveCurrentColor(legacy.svgXml));
-      return;
-    }
-
-    // Then fetch
+    // Fetch SVG file first (our proper symbols)
     try {
       const resp = await fetch(entry.svgPath);
       if (resp.ok) {
         svgCache.set(entry.id, resolveCurrentColor(await resp.text()));
+        return;
       }
     } catch {
-      // Skip — will use placeholder on demand
+      // Fall through to legacy
+    }
+
+    // Fallback to legacy inline SVGs
+    const legacy = electricalSymbols.find((s) => s.id === entry.id);
+    if (legacy?.svgXml) {
+      svgCache.set(entry.id, resolveCurrentColor(legacy.svgXml));
     }
   });
 
