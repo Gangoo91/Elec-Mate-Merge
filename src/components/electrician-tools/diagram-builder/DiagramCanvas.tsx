@@ -7,6 +7,70 @@ import { loadSymbolSvg } from './symbols/svgLoader';
 import { ZoomIn, ZoomOut, Maximize2, RotateCw } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
+// Minimap component — renders a small overview of the canvas
+const MinimapOverlay = ({ fabricCanvas }: { fabricCanvas: FabricCanvas | null }) => {
+  const minimapRef = useRef<HTMLCanvasElement>(null);
+  const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
+
+  useEffect(() => {
+    if (!minimapRef.current || !fabricCanvas) return;
+
+    const el = minimapRef.current;
+    const ctx = el.getContext('2d');
+    if (!ctx) return;
+
+    el.width = 120;
+    el.height = 80;
+
+    const update = () => {
+      ctx.fillStyle = '#1a1a1a';
+      ctx.fillRect(0, 0, 120, 80);
+
+      const mainEl = (fabricCanvas as any).lowerCanvasEl || fabricCanvas.getElement?.();
+      if (!mainEl) return;
+
+      const cw = fabricCanvas.width || 400;
+      const ch = fabricCanvas.height || 600;
+      const sx = 120 / cw;
+      const sy = 80 / ch;
+      const s = Math.min(sx, sy);
+      const ox = (120 - cw * s) / 2;
+      const oy = (80 - ch * s) / 2;
+
+      ctx.drawImage(mainEl, ox, oy, cw * s, ch * s);
+
+      // Viewport rectangle
+      const vpt = fabricCanvas.viewportTransform;
+      if (vpt) {
+        const zoom = fabricCanvas.getZoom();
+        ctx.strokeStyle = '#EAB308';
+        ctx.lineWidth = 1.5;
+        ctx.strokeRect(
+          ox + (-vpt[4] / zoom) * s,
+          oy + (-vpt[5] / zoom) * s,
+          (cw / zoom) * s,
+          (ch / zoom) * s
+        );
+      }
+    };
+
+    intervalRef.current = setInterval(update, 1000);
+    update();
+
+    return () => {
+      if (intervalRef.current) clearInterval(intervalRef.current);
+    };
+  }, [fabricCanvas]);
+
+  return (
+    <div className="absolute bottom-3 right-3 z-10">
+      <div className="bg-black/70 backdrop-blur border border-white/20 rounded-lg overflow-hidden" style={{ width: 120, height: 80 }}>
+        <canvas ref={minimapRef} style={{ width: 120, height: 80 }} />
+      </div>
+    </div>
+  );
+};
+
 // Scale: 52px = 1 metre
 const SCALE = 52;
 const WALL_THICKNESS = 8;
@@ -24,6 +88,7 @@ interface DiagramCanvasProps {
   toolbarHeight?: number;
   onWallTapped?: (wallId: string, currentLength: number, screenPos: { x: number; y: number }) => void;
   onRotate?: () => void;
+  onToolChange?: (tool: string) => void;
 }
 
 /** Convert pixel distance to metres string */
@@ -32,7 +97,7 @@ const pxToMetres = (px: number): string => {
 };
 
 export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
-  ({ activeTool, selectedSymbolId, objects, onObjectsChange, gridEnabled, snapEnabled, headerHeight = 48, toolbarHeight = 56, onWallTapped, onRotate }, ref) => {
+  ({ activeTool, selectedSymbolId, objects, onObjectsChange, gridEnabled, snapEnabled, headerHeight = 48, toolbarHeight = 56, onWallTapped, onRotate, onToolChange }, ref) => {
     const canvasRef = useRef<HTMLCanvasElement>(null);
     const fabricCanvasRef = useRef<FabricCanvas | null>(null);
     const [isDrawing, setIsDrawing] = useState(false);
@@ -540,8 +605,8 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
       const toRemove = canvas.getObjects().filter((fObj) => {
         const customData = (fObj as any).customData;
         if (!customData?.id) return false;
-        // Don't remove wall labels — they're tied to their parent wall
-        if (customData.type === 'wall-label') {
+        // Don't remove wall labels / circuit dots — they're tied to their parent
+        if (customData.type === 'wall-label' || customData.type === 'circuit-dot') {
           return !stateIds.has(customData.parentId);
         }
         return !stateIds.has(customData.id);
@@ -752,6 +817,29 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
             });
             // SVG elements already have correct fill/stroke from resolveCurrentColor
             (fabricObj as any).customData = { id: obj.id, type: 'symbol', symbolId: obj.symbolId };
+
+            // Circuit colour dot — small indicator showing which circuit this symbol is on
+            if (obj.circuitRef && fabricObj) {
+              const COLOURS: Record<string, string> = {
+                L1: '#3B82F6', L2: '#60A5FA', S1: '#EF4444', S2: '#F87171',
+                C1: '#F59E0B', EV1: '#10B981', FA1: '#EC4899', IH1: '#8B5CF6', AC1: '#06B6D4',
+              };
+              const dotColour = COLOURS[obj.circuitRef] || '#6B7280';
+              const dot = new Circle({
+                radius: 4,
+                fill: dotColour,
+                stroke: '#000000',
+                strokeWidth: 0.5,
+                left: (fabricObj.left || 0) + 16,
+                top: (fabricObj.top || 0) - 16,
+                selectable: false,
+                evented: false,
+                originX: 'center',
+                originY: 'center',
+              });
+              (dot as any).customData = { type: 'circuit-dot', parentId: obj.id };
+              canvas.add(dot);
+            }
           }
         } catch (err) {
           console.error('[Symbol] FAILED to load SVG for:', obj.symbolId, err);
@@ -1033,9 +1121,11 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
         }
 
         // Always allow tapping existing objects to select them (except in eraser mode)
+        // Fixes ELE-611: wall-draw cursor stays active when clicking placed symbols
         if (activeTool !== 'eraser' && activeTool !== 'select' && e.target && (e.target as any).customData) {
           canvas.setActiveObject(e.target);
           canvas.renderAll();
+          onToolChange?.('select');
           return;
         }
 
@@ -1102,14 +1192,56 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
           const found = symbolRegistry.find((s) => s.id === selectedSymbolId) ||
                         electricalSymbols.find((s) => s.id === selectedSymbolId);
           if (found) {
+            let placeX = x;
+            let placeY = y;
+            let placeRotation = 0;
+
+            // Wall-snap: if symbol is wall-mounted, snap to nearest wall within 40px
+            const regEntry = symbolRegistry.find((s) => s.id === selectedSymbolId);
+            if (regEntry && (regEntry.mountType === 'wall' || regEntry.mountType === 'panel')) {
+              const wallObjects = objects.filter((o) => o.type === 'wall' && o.points && o.points.length >= 2);
+              let bestDist = 40; // max snap distance
+              let bestPoint = { x: placeX, y: placeY };
+              let bestAngle = 0;
+
+              for (const wall of wallObjects) {
+                const p1 = wall.points![0];
+                const p2 = wall.points![1];
+                const dx = p2.x - p1.x;
+                const dy = p2.y - p1.y;
+                const lenSq = dx * dx + dy * dy;
+                if (lenSq === 0) continue;
+
+                // Project point onto wall line segment
+                let t = ((x - p1.x) * dx + (y - p1.y) * dy) / lenSq;
+                t = Math.max(0, Math.min(1, t));
+                const projX = p1.x + t * dx;
+                const projY = p1.y + t * dy;
+                const dist = Math.hypot(x - projX, y - projY);
+
+                if (dist < bestDist) {
+                  bestDist = dist;
+                  bestPoint = { x: projX, y: projY };
+                  bestAngle = Math.atan2(dy, dx) * (180 / Math.PI);
+                }
+              }
+
+              if (bestDist < 40) {
+                placeX = bestPoint.x;
+                placeY = bestPoint.y;
+                // Rotate symbol to be perpendicular to wall
+                placeRotation = bestAngle + 90;
+              }
+            }
+
             const newObj: CanvasObject = {
               id: `obj-${Date.now()}`,
               type: 'symbol',
-              x,
-              y,
+              x: placeX,
+              y: placeY,
               width: 40,
               height: 40,
-              rotation: 0,
+              rotation: placeRotation,
               symbolId: selectedSymbolId,
             };
             onObjectsChange([...objects, newObj]);
@@ -1512,6 +1644,9 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
             <RotateCw className="h-4 w-4" />
           </Button>
         </div>
+
+        {/* Minimap — bottom-right overview */}
+        <MinimapOverlay fabricCanvas={fabricCanvasRef.current} />
       </div>
     );
   }

@@ -1,8 +1,8 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { symbolRegistry, categories, type SymbolCategory } from './symbols/symbolRegistry';
 import { loadSymbolSvg, getSymbolSvgSync } from './symbols/svgLoader';
 import { Input } from '@/components/ui/input';
-import { Search } from 'lucide-react';
+import { Search, Minus, Plus } from 'lucide-react';
 import {
   Sheet,
   SheetContent,
@@ -14,7 +14,7 @@ import { cn } from '@/lib/utils';
 interface SymbolLibraryProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  onSymbolSelect: (symbolId: string) => void;
+  onSymbolSelect: (symbolId: string, quantity: number) => void;
   selectedSymbolId: string | null;
 }
 
@@ -53,6 +53,20 @@ export const SymbolLibrary = ({
   const [searchTerm, setSearchTerm] = useState('');
   const [activeCategory, setActiveCategory] = useState<SymbolCategory | 'all'>('all');
   const [quickPackFilter, setQuickPackFilter] = useState<string[] | null>(null);
+  const [searchActive, setSearchActive] = useState(false);
+  const [pendingSymbolId, setPendingSymbolId] = useState<string | null>(null);
+  const [quantity, setQuantity] = useState(1);
+  const searchInputRef = useRef<HTMLInputElement>(null);
+
+  // Reset search state when sheet closes
+  useEffect(() => {
+    if (!open) {
+      setSearchActive(false);
+      setSearchTerm('');
+      setPendingSymbolId(null);
+      setQuantity(1);
+    }
+  }, [open]);
 
   const filteredSymbols = symbolRegistry.filter((symbol) => {
     if (quickPackFilter) {
@@ -65,6 +79,27 @@ export const SymbolLibrary = ({
     const matchesCategory = activeCategory === 'all' || symbol.category === activeCategory;
     return matchesSearch && matchesCategory;
   });
+
+  const pendingSymbol = pendingSymbolId ? symbolRegistry.find((s) => s.id === pendingSymbolId) : null;
+
+  const handleSymbolTap = (symbolId: string) => {
+    if (pendingSymbolId === symbolId) {
+      // Tapping same symbol again — deselect
+      setPendingSymbolId(null);
+      setQuantity(1);
+    } else {
+      setPendingSymbolId(symbolId);
+      setQuantity(1);
+    }
+  };
+
+  const handlePlace = () => {
+    if (pendingSymbolId) {
+      onSymbolSelect(pendingSymbolId, quantity);
+      setPendingSymbolId(null);
+      setQuantity(1);
+    }
+  };
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
@@ -80,19 +115,40 @@ export const SymbolLibrary = ({
         <SheetHeader className="px-4 pb-3">
           <SheetTitle className="text-white text-lg font-semibold">Symbols</SheetTitle>
           <div className="relative mt-2">
-            {!searchTerm && (
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white/40 pointer-events-none" />
+            {!searchActive ? (
+              // Tappable search bar — does NOT focus an input or trigger keyboard
+              <button
+                type="button"
+                onClick={() => {
+                  setSearchActive(true);
+                  setTimeout(() => searchInputRef.current?.focus(), 50);
+                }}
+                className="w-full h-11 bg-elec-dark border border-white/10 rounded-md px-3 flex items-center gap-2 touch-manipulation"
+              >
+                <Search className="h-4 w-4 text-white/40 flex-shrink-0" />
+                <span className="text-white/40 text-base">Search symbols...</span>
+              </button>
+            ) : (
+              <>
+                {!searchTerm && (
+                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white/40 pointer-events-none" />
+                )}
+                <Input
+                  ref={searchInputRef}
+                  type="text"
+                  placeholder="Search symbols..."
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  onBlur={() => {
+                    if (!searchTerm) setSearchActive(false);
+                  }}
+                  className={cn(
+                    'h-11 bg-elec-dark border-white/10 text-white text-base touch-manipulation',
+                    !searchTerm && 'pl-9'
+                  )}
+                />
+              </>
             )}
-            <Input
-              type="text"
-              placeholder="Search symbols..."
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              className={cn(
-                'h-11 bg-elec-dark border-white/10 text-white text-base touch-manipulation',
-                !searchTerm && 'pl-9'
-              )}
-            />
           </div>
         </SheetHeader>
 
@@ -161,10 +217,10 @@ export const SymbolLibrary = ({
             {filteredSymbols.map((symbol) => (
               <button
                 key={symbol.id}
-                onClick={() => onSymbolSelect(symbol.id)}
+                onClick={() => handleSymbolTap(symbol.id)}
                 className={cn(
                   'flex flex-col items-center justify-center gap-1.5 p-3 rounded-lg border transition-all touch-manipulation min-h-[80px]',
-                  selectedSymbolId === symbol.id
+                  pendingSymbolId === symbol.id
                     ? 'border-elec-yellow bg-elec-yellow/10'
                     : 'border-white/10 bg-white/5 active:bg-white/10'
                 )}
@@ -183,6 +239,42 @@ export const SymbolLibrary = ({
             </div>
           )}
         </div>
+
+        {/* Quantity picker + Place button — shown when a symbol is selected */}
+        {pendingSymbol && (
+          <div className="px-4 py-3 border-t border-white/10 bg-elec-dark flex items-center gap-3">
+            <div className="flex items-center gap-1">
+              <SymbolPreview symbolId={pendingSymbol.id} />
+              <span className="text-white text-xs font-medium ml-1 max-w-[100px] truncate">{pendingSymbol.name}</span>
+            </div>
+            <div className="flex items-center gap-0 ml-auto">
+              <button
+                type="button"
+                onClick={() => setQuantity(Math.max(1, quantity - 1))}
+                className="h-10 w-10 rounded-l-lg bg-white/10 flex items-center justify-center touch-manipulation active:bg-white/20"
+              >
+                <Minus className="h-4 w-4 text-white" />
+              </button>
+              <div className="h-10 w-12 bg-white/5 flex items-center justify-center border-x border-white/10">
+                <span className="text-white text-lg font-bold">{quantity}</span>
+              </div>
+              <button
+                type="button"
+                onClick={() => setQuantity(Math.min(20, quantity + 1))}
+                className="h-10 w-10 rounded-r-lg bg-white/10 flex items-center justify-center touch-manipulation active:bg-white/20"
+              >
+                <Plus className="h-4 w-4 text-white" />
+              </button>
+            </div>
+            <button
+              type="button"
+              onClick={handlePlace}
+              className="h-10 px-5 rounded-lg bg-elec-yellow text-black text-sm font-bold touch-manipulation active:scale-95"
+            >
+              Place {quantity > 1 ? quantity : ''}
+            </button>
+          </div>
+        )}
       </SheetContent>
     </Sheet>
   );

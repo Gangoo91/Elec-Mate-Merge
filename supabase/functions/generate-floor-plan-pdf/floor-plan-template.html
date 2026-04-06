@@ -4,10 +4,10 @@
     <meta charset="UTF-8">
     <title>Electrical Floor Plan</title>
     <style>
-        :root { --accent: #EAB308; --accent-bg: #fefce8; --dark: #0f172a; --mid: #334155; --light: #64748b; --border: #e2e8f0; }
+        :root { --accent: #EAB308; --accent-bg: #fefce8; --dark: #0f172a; --mid: #1e293b; --light: #334155; --border: #e2e8f0; }
         @page { size: A4 landscape; margin: 0; }
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 10px; line-height: 1.5; color: var(--dark); background: #fff; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+        body { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 11px; line-height: 1.5; color: var(--dark); background: #fff; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
 
         .page { width: 297mm; min-height: 210mm; position: relative; overflow: hidden; page-break-after: always; }
         .page:last-child { page-break-after: auto; }
@@ -280,7 +280,7 @@
       <thead><tr style="background: #f8fafc;"><th style="padding: 4px 8px; text-align: left; font-size: 9px;">Item</th><th style="padding: 4px 8px; text-align: left; font-size: 9px;">Height</th><th style="padding: 4px 8px; text-align: left; font-size: 9px;">Notes</th></tr></thead>
       <tbody>
         {% for item in standard_notes.mountingHeights %}
-        <tr><td style="padding: 3px 8px; border-bottom: 1px solid #f1f5f9; font-size: 9px;">{{ item.item }}</td><td style="padding: 3px 8px; border-bottom: 1px solid #f1f5f9; font-size: 9px; font-weight: 600;">{{ item.height }}</td><td style="padding: 3px 8px; border-bottom: 1px solid #f1f5f9; font-size: 9px; color: #64748b;">{{ item.notes }}</td></tr>
+        <tr><td style="padding: 3px 8px; border-bottom: 1px solid #f1f5f9; font-size: 9px;">{{ item.item }}</td><td style="padding: 3px 8px; border-bottom: 1px solid #f1f5f9; font-size: 9px; font-weight: 600;">{{ item.height }}</td><td style="padding: 3px 8px; border-bottom: 1px solid #f1f5f9; font-size: 9px; color: #1e293b;">{{ item.notes }}</td></tr>
         {% endfor %}
       </tbody>
     </table>
@@ -288,7 +288,7 @@
 
   <div style="margin-bottom: 16px;">
     <div style="font-size: 11px; font-weight: 700; color: #EAB308; text-transform: uppercase; margin-bottom: 6px;">General Notes</div>
-    <ol style="padding-left: 16px; font-size: 9px; color: #334155; line-height: 1.6;">
+    <ol style="padding-left: 16px; font-size: 9px; color: #1e293b; line-height: 1.6;">
       {% for note in standard_notes.generalNotes %}
       <li style="margin-bottom: 3px;">{{ note }}</li>
       {% endfor %}
@@ -309,7 +309,7 @@
 <!-- ════════════════════════ APPENDIX: FULL SYMBOL REFERENCE ════════════════════════ -->
 <div class="page appendix-page">
     <div class="appendix-title">Appendix — BS EN 60617 Symbol Reference</div>
-    <p style="font-size: 9px; color: #64748b; margin-bottom: 12px;">
+    <p style="font-size: 9px; color: #1e293b; margin-bottom: 12px;">
         114 electrical installation symbols conforming to BS EN 60617 / CIBSE conventions for UK floor plan drawings.
     </p>
 
@@ -332,12 +332,12 @@
     <div class="appendix-title">Declaration &amp; Sign-Off</div>
 
     <div style="margin-bottom: 24px;">
-        <p style="font-size: 10px; color: #334155; line-height: 1.6; margin-bottom: 12px;">
+        <p style="font-size: 10px; color: #1e293b; line-height: 1.6; margin-bottom: 12px;">
             I confirm that this electrical floor plan drawing has been prepared in accordance with
             <strong>BS 7671:2018+A3:2024</strong> (Requirements for Electrical Installations — IET Wiring Regulations).
             Symbols conform to <strong>BS EN 60617</strong> / CIBSE conventions for UK electrical installation drawings.
         </p>
-        <p style="font-size: 10px; color: #334155; line-height: 1.6;">
+        <p style="font-size: 10px; color: #1e293b; line-height: 1.6;">
             This drawing is intended for use as a reference for the electrical installation layout.
             All work must be carried out by a competent person in accordance with the current edition of BS 7671.
         </p>

@@ -73,6 +73,14 @@ export interface ProjectCostEstimate {
   created_at: string;
 }
 
+export interface ProjectFloorPlan {
+  id: string;
+  name: string;
+  status: string;
+  total_items: number;
+  created_at: string;
+}
+
 export interface UnlinkedItem {
   id: string;
   label: string;
@@ -94,6 +102,7 @@ export function useProjectEntities(projectId: string | undefined) {
   const [siteVisits, setSiteVisits] = useState<ProjectSiteVisit[]>([]);
   const [circuitDesigns, setCircuitDesigns] = useState<ProjectCircuitDesign[]>([]);
   const [costEstimates, setCostEstimates] = useState<ProjectCostEstimate[]>([]);
+  const [floorPlans, setFloorPlans] = useState<ProjectFloorPlan[]>([]);
 
   const refresh = useCallback(async () => {
     if (!projectId) return;
@@ -113,7 +122,7 @@ export function useProjectEntities(projectId: string | undefined) {
 
       if (error || !proj) throw error || new Error('Project not found');
 
-      const [tasksRes, quotesRes, invoicesRes, certsRes, ramsRes, visitsRes, circuitRes, costRes] =
+      const [tasksRes, quotesRes, invoicesRes, certsRes, ramsRes, visitsRes, circuitRes, costRes, floorPlanRes] =
         await Promise.all([
           s()
             .from('spark_tasks')
@@ -153,6 +162,10 @@ export function useProjectEntities(projectId: string | undefined) {
             .select('id, status, query, created_at')
             .eq('project_id', projectId)
             .eq('status', 'complete'),
+          s()
+            .from('floor_plans')
+            .select('id, name, status, total_items, created_at')
+            .eq('project_id', projectId),
         ]);
 
       setProject({
@@ -255,6 +268,7 @@ export function useProjectEntities(projectId: string | undefined) {
       setSiteVisits(visitsRes.data || []);
       setCircuitDesigns(circuitRes.data || []);
       setCostEstimates(costRes.data || []);
+      setFloorPlans(floorPlanRes.data || []);
     } catch (err) {
       console.error('Failed to load project entities:', err);
       toast({ title: 'Error', description: 'Could not load project.', variant: 'destructive' });
@@ -312,6 +326,8 @@ export function useProjectEntities(projectId: string | undefined) {
   const unlinkCircuitDesign = (id: string) => unlinkEntity('circuit_design_jobs', id);
   const linkCostEstimate = (id: string) => linkEntity('cost_engineer_jobs', id);
   const unlinkCostEstimate = (id: string) => unlinkEntity('cost_engineer_jobs', id);
+  const linkFloorPlan = (id: string) => linkEntity('floor_plans', id);
+  const unlinkFloorPlan = (id: string) => unlinkEntity('floor_plans', id);
 
   // Fetch unlinked entities for the link sheet
   async function fetchUnlinked(
@@ -455,6 +471,15 @@ export function useProjectEntities(projectId: string | undefined) {
     }));
   }
 
+  async function fetchUnlinkedFloorPlans(): Promise<UnlinkedItem[]> {
+    const rows = await fetchUnlinked('floor_plans', 'id, name, status, total_items, created_at');
+    return rows.map((r: { id: string; name?: string; total_items?: number; status?: string }) => ({
+      id: r.id,
+      label: r.name || 'Floor Plan',
+      sublabel: `${r.total_items || 0} items — ${r.status || 'draft'}`,
+    }));
+  }
+
   async function completeProject() {
     if (!projectId) return;
     try {
@@ -505,6 +530,7 @@ export function useProjectEntities(projectId: string | undefined) {
     siteVisits,
     circuitDesigns,
     costEstimates,
+    floorPlans,
     isLoading,
     progress,
     totalTasks,
@@ -533,6 +559,9 @@ export function useProjectEntities(projectId: string | undefined) {
     fetchUnlinkedSiteVisits,
     fetchUnlinkedCircuitDesigns,
     fetchUnlinkedCostEstimates,
+    linkFloorPlan,
+    unlinkFloorPlan,
+    fetchUnlinkedFloorPlans,
     completeProject,
     deleteProject,
     refresh,

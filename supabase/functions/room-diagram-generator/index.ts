@@ -8,21 +8,25 @@ serve(async (req) => {
   }
 
   try {
-    const { description } = await req.json();
+    const { description, image_base64 } = await req.json();
 
-    if (!description) {
-      throw new Error('Room description is required');
+    if (!description && !image_base64) {
+      throw new Error('Room description or photo is required');
     }
 
-    console.log('🏠 Generating room diagram from:', description);
+    const isPhotoMode = !!image_base64;
+    console.log(`🏠 Generating room diagram from: ${isPhotoMode ? 'photo' : 'description'}`);
 
     const geminiKey = Deno.env.get('GEMINI_API_KEY');
     if (!geminiKey) throw new Error('GEMINI_API_KEY not configured');
 
-    const prompt = `You are an expert electrical diagram generator for UK electricians. Parse the user's natural language room description and convert it to a structured JSON format for canvas rendering.
+    const photoPrompt = isPhotoMode
+      ? `Analyse this photo of a room. Estimate the room dimensions, identify walls, doors, windows, and suggest a complete electrical layout suitable for a UK domestic installation.`
+      : '';
 
-USER DESCRIPTION:
-${description}
+    const prompt = `You are an expert electrical diagram generator for UK electricians. ${isPhotoMode ? 'Analyse the provided photo and' : 'Parse the user\'s natural language room description and'} convert it to a structured JSON format for canvas rendering.
+
+${isPhotoMode ? photoPrompt : `USER DESCRIPTION:\n${description}`}
 
 IMPORTANT PARSING RULES:
 1. Extract room name
@@ -102,23 +106,63 @@ CRITICAL: Return ONLY the JSON object, no markdown, no explanations, no code blo
 
     const result = await withRetry(
       async () => {
-        const response = await callGemini(
-          {
-            messages: [
-              {
-                role: 'system',
-                content:
-                  'You are an expert electrical diagram parser. Return only valid JSON, no markdown formatting.',
-              },
-              { role: 'user', content: prompt },
-            ],
-            model: 'gemini-2.5-flash',
-            temperature: 0.3,
-            max_tokens: 8000, // Increased to handle detailed room JSON with multiple symbols
-            response_format: { type: 'json_object' },
-          },
-          geminiKey
-        );
+        // For photo mode, call Gemini directly with vision parts
+        let response;
+        if (isPhotoMode) {
+          // Strip data URI prefix if present
+          const rawBase64 = image_base64.replace(/^data:image\/\w+;base64,/, '');
+
+          const visionBody = {
+            contents: [{
+              role: 'user',
+              parts: [
+                { inlineData: { mimeType: 'image/jpeg', data: rawBase64 } },
+                { text: prompt },
+              ],
+            }],
+            systemInstruction: {
+              parts: [{ text: 'You are an expert electrical diagram parser. Return only valid JSON, no markdown formatting.' }],
+            },
+            generationConfig: {
+              temperature: 0.3,
+              maxOutputTokens: 8000,
+              responseMimeType: 'application/json',
+            },
+          };
+
+          const visionRes = await fetch(
+            `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${geminiKey}`,
+            { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(visionBody) }
+          );
+
+          if (!visionRes.ok) {
+            const errText = await visionRes.text();
+            throw new Error(`Gemini vision error: ${visionRes.status} - ${errText}`);
+          }
+
+          const visionData = await visionRes.json();
+          const content = visionData?.candidates?.[0]?.content?.parts?.[0]?.text;
+          if (!content) throw new Error('No response from Gemini vision');
+          response = { content };
+        } else {
+          response = await callGemini(
+            {
+              messages: [
+                {
+                  role: 'system',
+                  content:
+                    'You are an expert electrical diagram parser. Return only valid JSON, no markdown formatting.',
+                },
+                { role: 'user', content: prompt },
+              ],
+              model: 'gemini-2.5-flash',
+              temperature: 0.3,
+              max_tokens: 8000,
+              response_format: { type: 'json_object' },
+            },
+            geminiKey
+          );
+        }
 
         // Clean response (remove markdown code blocks if present)
         let cleanedContent = response.content.trim();

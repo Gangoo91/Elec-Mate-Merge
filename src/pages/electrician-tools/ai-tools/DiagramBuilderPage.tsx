@@ -67,6 +67,35 @@ export interface CanvasObject {
   symbolId?: string;
   text?: string;
   points?: { x: number; y: number }[];
+  circuitRef?: string;
+}
+
+// Circuit colour map for visual identification
+export const CIRCUIT_COLOURS: Record<string, string> = {
+  L1: '#3B82F6', L2: '#60A5FA', // Lighting — blue
+  S1: '#EF4444', S2: '#F87171', // Ring finals — red
+  C1: '#F59E0B', // Cooker — amber
+  EV1: '#10B981', // EV — green
+  FA1: '#EC4899', // Fire alarm — pink
+  IH1: '#8B5CF6', // Immersion — purple
+  AC1: '#06B6D4', // AC — cyan
+};
+
+/** Quick circuit ref lookup for a single symbol */
+function getCircuitRefForSymbol(symbolId: string): string | undefined {
+  const LIGHTING = ['light-ceiling','light-wall','light-downlight','light-emergency','light-fluorescent','light-pendant','light-bulkhead','light-pir','light-outside','light-led-strip','light-exit-sign','light-twin-emergency','light-high-bay'];
+  const SOCKETS = ['socket-single-13a','socket-double-13a','socket-usb','socket-data','socket-telephone','socket-tv-aerial','socket-floor','socket-outdoor','socket-shaver','socket-fused-spur','socket-switched-fused-spur','socket-unswitched-spur'];
+  const FIRE = ['smoke-detector','co-detector','heat-detector'];
+
+  if (LIGHTING.includes(symbolId)) return 'L1';
+  if (SOCKETS.includes(symbolId)) return 'S1';
+  if (symbolId === 'socket-cooker-45a') return 'C1';
+  if (symbolId === 'socket-ev-charger') return 'EV1';
+  if (symbolId === 'extractor-fan') return 'L1';
+  if (FIRE.includes(symbolId)) return 'FA1';
+  if (symbolId === 'water-heater') return 'IH1';
+  if (symbolId === 'air-conditioning' || symbolId === 'fan-coil-unit') return 'AC1';
+  return undefined;
 }
 
 const HEADER_HEIGHT = 48;
@@ -96,11 +125,50 @@ const DiagramBuilderPage = () => {
   const [activeRoomId, setActiveRoomId] = useState<string | null>(null);
   const [exportReviewOpen, setExportReviewOpen] = useState(false);
   const [myPlansOpen, setMyPlansOpen] = useState(false);
+  const [showCircuits, setShowCircuits] = useState(false);
   const { rooms, saveRoom, deleteRoom } = useFloorPlanRooms();
   const canvasRef = useRef<any>(null);
   const [searchParams] = useSearchParams();
   const haptic = useHaptic();
   const autoSaveTimerRef = useRef<ReturnType<typeof setInterval> | null>(null);
+
+  // Auto-assign circuitRef to symbols that don't have one
+  useEffect(() => {
+    let needsUpdate = false;
+    const updated = canvasObjects.map((obj) => {
+      if (obj.type === 'symbol' && obj.symbolId && !obj.circuitRef) {
+        const ref = getCircuitRefForSymbol(obj.symbolId);
+        if (ref) { needsUpdate = true; return { ...obj, circuitRef: ref }; }
+      }
+      return obj;
+    });
+    if (needsUpdate) setCanvasObjects(updated);
+  }, [canvasObjects]);
+
+  // Circuit summary for the circuit panel
+  const circuitSummary = useMemo(() => {
+    const circuits = new Map<string, { ref: string; name: string; count: number; colour: string }>();
+    for (const obj of canvasObjects) {
+      if (obj.circuitRef) {
+        const existing = circuits.get(obj.circuitRef);
+        if (existing) {
+          existing.count++;
+        } else {
+          const names: Record<string, string> = {
+            L1: 'Lighting 1', L2: 'Lighting 2', S1: 'Ring Final 1', S2: 'Ring Final 2',
+            C1: 'Cooker', EV1: 'EV Charger', FA1: 'Fire Alarm', IH1: 'Immersion', AC1: 'A/C',
+          };
+          circuits.set(obj.circuitRef, {
+            ref: obj.circuitRef,
+            name: names[obj.circuitRef] || obj.circuitRef,
+            count: 1,
+            colour: CIRCUIT_COLOURS[obj.circuitRef] || '#6B7280',
+          });
+        }
+      }
+    }
+    return Array.from(circuits.values()).sort((a, b) => a.ref.localeCompare(b.ref));
+  }, [canvasObjects]);
 
   // Live symbol counts for the floating panel
   const symbolCounts = useMemo(() => {
@@ -256,22 +324,57 @@ const DiagramBuilderPage = () => {
     let thumbnail = '';
     let fullImage = '';
     if (canvasEl) {
-      // High-res image for PDF (3x scale for HD print quality)
+      // Calculate bounding box of all objects to crop whitespace
+      const pad = 40; // padding around content
+      let minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity;
+      for (const obj of canvasObjects) {
+        const w = obj.width || 40;
+        const h = obj.height || 40;
+        if (obj.points) {
+          for (const p of obj.points) {
+            minX = Math.min(minX, p.x);
+            minY = Math.min(minY, p.y);
+            maxX = Math.max(maxX, p.x);
+            maxY = Math.max(maxY, p.y);
+          }
+        } else {
+          minX = Math.min(minX, obj.x);
+          minY = Math.min(minY, obj.y);
+          maxX = Math.max(maxX, obj.x + w);
+          maxY = Math.max(maxY, obj.y + h);
+        }
+      }
+
+      // If no objects, fall back to full canvas
+      if (!isFinite(minX)) {
+        minX = 0; minY = 0;
+        maxX = canvasEl.width; maxY = canvasEl.height;
+      } else {
+        minX = Math.max(0, minX - pad);
+        minY = Math.max(0, minY - pad);
+        maxX = Math.min(canvasEl.width, maxX + pad);
+        maxY = Math.min(canvasEl.height, maxY + pad);
+      }
+
+      const cropW = maxX - minX;
+      const cropH = maxY - minY;
+
+      // High-res image for PDF (3x scale for HD print quality) — cropped to content
       const scale = 3;
       const hiResCanvas = document.createElement('canvas');
-      hiResCanvas.width = canvasEl.width * scale;
-      hiResCanvas.height = canvasEl.height * scale;
+      hiResCanvas.width = cropW * scale;
+      hiResCanvas.height = cropH * scale;
       const hiCtx = hiResCanvas.getContext('2d');
       if (hiCtx) {
         hiCtx.fillStyle = '#FFFFFF';
         hiCtx.fillRect(0, 0, hiResCanvas.width, hiResCanvas.height);
         hiCtx.imageSmoothingEnabled = true;
         hiCtx.imageSmoothingQuality = 'high';
-        hiCtx.drawImage(canvasEl, 0, 0, hiResCanvas.width, hiResCanvas.height);
+        hiCtx.drawImage(canvasEl, minX, minY, cropW, cropH, 0, 0, hiResCanvas.width, hiResCanvas.height);
         fullImage = hiResCanvas.toDataURL('image/png', 1.0);
       }
 
-      // Small thumbnail for the room strip
+      // Small thumbnail for the room strip — also cropped
       const thumbCanvas = document.createElement('canvas');
       thumbCanvas.width = 120;
       thumbCanvas.height = 90;
@@ -279,7 +382,7 @@ const DiagramBuilderPage = () => {
       if (thumbCtx) {
         thumbCtx.fillStyle = '#FFFFFF';
         thumbCtx.fillRect(0, 0, 120, 90);
-        thumbCtx.drawImage(canvasEl, 0, 0, 120, 90);
+        thumbCtx.drawImage(canvasEl, minX, minY, cropW, cropH, 0, 0, 120, 90);
         thumbnail = thumbCanvas.toDataURL('image/png', 0.7);
       }
     }
@@ -638,6 +741,13 @@ const DiagramBuilderPage = () => {
             setWallEditLength(parseFloat(currentLength.toFixed(2)));
           }}
           onRotate={handleRotateAll}
+          onToolChange={(tool) => {
+            setActiveTool(tool as any);
+            if (tool === 'select') {
+              setSelectedSymbolId(null);
+              setPlacingSymbolName(null);
+            }
+          }}
         />
         {/* Empty canvas hint */}
         {canvasObjects.length === 0 && rooms.length === 0 && (
@@ -688,7 +798,7 @@ const DiagramBuilderPage = () => {
       </div>
 
       {/* Symbol count panel — floats above scale bar */}
-      <SymbolCountPanel counts={symbolCounts} />
+      <SymbolCountPanel counts={symbolCounts} circuits={circuitSummary} />
 
       {/* Scale bar is rendered by DiagramCanvas — no duplicate needed */}
 
@@ -703,17 +813,45 @@ const DiagramBuilderPage = () => {
       <SymbolLibrary
         open={symbolSheetOpen}
         onOpenChange={setSymbolSheetOpen}
-        onSymbolSelect={(symbolId) => {
-          setSelectedSymbolId(symbolId);
-          setActiveTool('symbol');
-          setSymbolSheetOpen(false);
-          // Find symbol name for placement indicator
-          import('@/components/electrician-tools/diagram-builder/symbols/symbolRegistry').then(
-            ({ symbolRegistry }) => {
-              const sym = symbolRegistry.find((s) => s.id === symbolId);
-              setPlacingSymbolName(sym?.name || null);
+        onSymbolSelect={(symbolId, quantity) => {
+          if (quantity > 1) {
+            // Multi-place: add symbols in a grid pattern near canvas centre
+            const centreX = 300;
+            const centreY = 250;
+            const cols = Math.min(quantity, 4);
+            const spacing = 60;
+            const newObjects: CanvasObject[] = [];
+            for (let i = 0; i < quantity; i++) {
+              const col = i % cols;
+              const row = Math.floor(i / cols);
+              newObjects.push({
+                id: `obj-${Date.now()}-${i}`,
+                type: 'symbol' as const,
+                x: centreX + col * spacing - ((cols - 1) * spacing) / 2,
+                y: centreY + row * spacing,
+                width: 40,
+                height: 40,
+                rotation: 0,
+                symbolId,
+              });
             }
-          );
+            setCanvasObjects((prev) => [...prev, ...newObjects]);
+            setSymbolSheetOpen(false);
+            setPlacingSymbolName(null);
+            setSelectedSymbolId(null);
+            setActiveTool('select');
+          } else {
+            // Single place: tap canvas to position
+            setSelectedSymbolId(symbolId);
+            setActiveTool('symbol');
+            setSymbolSheetOpen(false);
+            import('@/components/electrician-tools/diagram-builder/symbols/symbolRegistry').then(
+              ({ symbolRegistry }) => {
+                const sym = symbolRegistry.find((s) => s.id === symbolId);
+                setPlacingSymbolName(sym?.name || null);
+              }
+            );
+          }
         }}
         selectedSymbolId={selectedSymbolId}
       />
@@ -888,44 +1026,42 @@ const DiagramBuilderPage = () => {
         }}
       />
 
-      {/* Wall length edit popup */}
+      {/* Wall length edit — fixed bottom bar */}
       {wallEditState && (
-        <div
-          className="absolute z-50"
-          style={{
-            left: Math.min(wallEditState.position.x, window.innerWidth - 200),
-            top: Math.max(wallEditState.position.y - 70, 60),
-          }}
-        >
-          <div className="bg-black/90 backdrop-blur rounded-xl p-3 border border-elec-yellow/30 shadow-xl">
-            <p className="text-xs text-white mb-1">Wall length</p>
-            <div className="flex items-center gap-2">
-              <input
-                type="number"
-                step="0.1"
-                min="0.5"
-                max="20"
-                value={wallEditLength}
-                onChange={(e) => setWallEditLength(parseFloat(e.target.value) || 0)}
-                onKeyDown={(e) => {
-                  if (e.key === 'Enter') applyWallLength();
-                  if (e.key === 'Escape') setWallEditState(null);
-                }}
-                className="h-11 w-20 bg-white/10 border border-white/20 rounded-lg text-white text-center text-sm px-2 touch-manipulation focus:border-yellow-500 focus:ring-yellow-500 focus:outline-none"
-                autoFocus
-              />
-              <span className="text-white text-sm">m</span>
-              <button
-                onClick={applyWallLength}
-                className="h-11 px-3 bg-elec-yellow text-black rounded-lg font-semibold text-sm touch-manipulation active:scale-95"
-              >
-                Set
-              </button>
+        <div className="fixed bottom-0 left-0 right-0 z-50 bg-[#111] border-t border-elec-yellow/30 px-4 py-3 safe-area-pb">
+          <div className="flex items-center justify-between gap-3 max-w-md mx-auto">
+            <div className="flex-1">
+              <p className="text-xs text-white mb-1.5 font-medium">Wall length</p>
+              <div className="flex items-center gap-2">
+                <input
+                  type="number"
+                  step="0.1"
+                  min="0.5"
+                  max="20"
+                  value={wallEditLength}
+                  onChange={(e) => setWallEditLength(parseFloat(e.target.value) || 0)}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter') applyWallLength();
+                    if (e.key === 'Escape') setWallEditState(null);
+                  }}
+                  className="h-12 w-24 bg-white/10 border border-white/20 rounded-xl text-white text-center text-lg font-semibold px-3 touch-manipulation focus:border-elec-yellow focus:ring-1 focus:ring-elec-yellow/30 focus:outline-none"
+                  autoFocus
+                />
+                <span className="text-white text-sm font-medium">metres</span>
+              </div>
+            </div>
+            <div className="flex gap-2 shrink-0">
               <button
                 onClick={() => setWallEditState(null)}
-                className="h-11 px-2 text-white text-sm touch-manipulation active:scale-95"
+                className="h-12 px-4 bg-white/10 text-white rounded-xl text-sm font-medium touch-manipulation active:scale-95"
               >
                 Cancel
+              </button>
+              <button
+                onClick={applyWallLength}
+                className="h-12 px-6 bg-elec-yellow text-black rounded-xl text-sm font-bold touch-manipulation active:scale-95"
+              >
+                Set
               </button>
             </div>
           </div>

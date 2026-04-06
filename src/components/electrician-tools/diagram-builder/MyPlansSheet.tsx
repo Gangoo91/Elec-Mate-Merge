@@ -1,10 +1,12 @@
 import { useState, useEffect } from 'react';
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
 import { Button } from '@/components/ui/button';
-import { Trash2, FileText, Plus } from 'lucide-react';
+import { Trash2, FileText, Plus, Cloud, Loader2 } from 'lucide-react';
 import { storageGetJSONSync, storageSetJSONSync } from '@/utils/storage';
 import { useHaptic } from '@/hooks/useHaptic';
+import { useFloorPlanCloud } from '@/hooks/useFloorPlanCloud';
 import type { SavedRoom } from '@/hooks/useFloorPlanRooms';
+import { toast } from 'sonner';
 import { cn } from '@/lib/utils';
 
 export interface SavedFloorPlan {
@@ -37,11 +39,36 @@ export function MyPlansSheet({ open, onOpenChange, currentRooms, onLoadPlan, onN
   const [plans, setPlans] = useState<SavedFloorPlan[]>(loadPlans);
   const [saveName, setSaveName] = useState('');
   const [showSaveInput, setShowSaveInput] = useState(false);
+  const [cloudSyncing, setCloudSyncing] = useState(false);
   const haptic = useHaptic();
+  const { saveToCloud, loadFromCloud, deleteFromCloud } = useFloorPlanCloud();
 
+  // Load local plans + merge cloud plans on open
   useEffect(() => {
-    if (open) setPlans(loadPlans());
-  }, [open]);
+    if (!open) return;
+    setPlans(loadPlans());
+
+    // Background cloud fetch — merge any plans not in local storage
+    loadFromCloud().then((cloudPlans) => {
+      if (cloudPlans.length === 0) return;
+      setPlans((localPlans) => {
+        const localIds = new Set(localPlans.map((p) => p.id));
+        const newFromCloud = cloudPlans
+          .filter((cp) => !localIds.has(cp.id))
+          .map((cp) => ({
+            id: cp.id,
+            name: cp.name,
+            rooms: cp.rooms as SavedRoom[],
+            createdAt: cp.created_at,
+            updatedAt: cp.updated_at,
+          }));
+        if (newFromCloud.length === 0) return localPlans;
+        const merged = [...localPlans, ...newFromCloud];
+        persistPlans(merged);
+        return merged;
+      });
+    });
+  }, [open, loadFromCloud]);
 
   const handleSaveCurrent = () => {
     if (!saveName.trim() || currentRooms.length === 0) return;
@@ -60,6 +87,13 @@ export function MyPlansSheet({ open, onOpenChange, currentRooms, onLoadPlan, onN
     persistPlans(updated);
     setSaveName('');
     setShowSaveInput(false);
+
+    // Cloud sync in background
+    setCloudSyncing(true);
+    saveToCloud({ id: newPlan.id, name: newPlan.name, rooms: newPlan.rooms })
+      .then(() => toast.success('Saved to cloud'))
+      .catch(() => {}) // Local save succeeded, cloud is bonus
+      .finally(() => setCloudSyncing(false));
   };
 
   const handleDelete = (id: string) => {
@@ -67,6 +101,7 @@ export function MyPlansSheet({ open, onOpenChange, currentRooms, onLoadPlan, onN
     const updated = plans.filter((p) => p.id !== id);
     setPlans(updated);
     persistPlans(updated);
+    deleteFromCloud(id); // Background cloud delete
   };
 
   const totalRooms = (plan: SavedFloorPlan) => plan.rooms.length;
@@ -77,7 +112,14 @@ export function MyPlansSheet({ open, onOpenChange, currentRooms, onLoadPlan, onN
     <Sheet open={open} onOpenChange={onOpenChange}>
       <SheetContent side="bottom" className="h-[75vh] p-0 rounded-t-2xl overflow-hidden bg-background border-t border-white/10 flex flex-col">
         <SheetHeader className="px-4 pt-4 pb-3 border-b border-white/10 shrink-0">
-          <SheetTitle className="text-white text-lg font-semibold">My Floor Plans</SheetTitle>
+          <SheetTitle className="text-white text-lg font-semibold flex items-center gap-2">
+            My Floor Plans
+            {cloudSyncing ? (
+              <Loader2 className="h-4 w-4 text-elec-yellow animate-spin" />
+            ) : (
+              <Cloud className="h-4 w-4 text-white/30" />
+            )}
+          </SheetTitle>
         </SheetHeader>
 
         <div className="flex-1 min-h-0 overflow-y-auto px-4 py-4 space-y-3">

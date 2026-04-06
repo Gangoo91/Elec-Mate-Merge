@@ -3,7 +3,7 @@ import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { Sheet, SheetContent } from '@/components/ui/sheet';
 import {
-  Sparkles, Loader2, ArrowLeft, Mic, ChevronRight,
+  Sparkles, Loader2, ArrowLeft, Mic, ChevronRight, Camera,
   LayoutGrid, Shield, Zap, Lightbulb, FileText, PoundSterling,
   AlertTriangle, Info, CheckCircle2,
 } from 'lucide-react';
@@ -15,7 +15,7 @@ import { cn } from '@/lib/utils';
 import type { CanvasObject } from '@/pages/electrician-tools/ai-tools/DiagramBuilderPage';
 import { symbolRegistry } from '@/components/electrician-tools/diagram-builder/symbols/symbolRegistry';
 
-type Mode = 'hub' | 'templates' | 'describe' | 'review' | 'autoplace' | 'suggestions' | 'spec' | 'quote';
+type Mode = 'hub' | 'templates' | 'describe' | 'review' | 'autoplace' | 'suggestions' | 'spec' | 'quote' | 'photo';
 
 const QUICK_TEMPLATES = [
   {
@@ -110,39 +110,51 @@ const ROOM_SYMBOL_PACKS: Record<string, { symbolId: string; name: string }[]> = 
     { symbolId: 'socket-double-13a', name: 'Double Socket' },
     { symbolId: 'socket-double-13a', name: 'Double Socket' },
     { symbolId: 'socket-double-13a', name: 'Double Socket' },
+    { symbolId: 'socket-double-13a', name: 'Double Socket' },
+    { symbolId: 'socket-double-13a', name: 'Double Socket' },
     { symbolId: 'socket-cooker-45a', name: 'Cooker 45A' },
-    { symbolId: 'socket-switched-fused-spur', name: 'Switched Fused Spur' },
+    { symbolId: 'socket-fused-spur', name: 'Fused Spur (Dishwasher)' },
+    { symbolId: 'socket-fused-spur', name: 'Fused Spur (Washing Machine)' },
+    { symbolId: 'socket-switched-fused-spur', name: 'Switched Fused Spur (Boiler)' },
+    { symbolId: 'socket-switched-fused-spur', name: 'Switched Fused Spur (Extractor)' },
     { symbolId: 'light-ceiling', name: 'Ceiling Light' },
+    { symbolId: 'light-downlight', name: 'Downlight (over worktop)' },
     { symbolId: 'switch-1way', name: '1-Way Switch' },
     { symbolId: 'extractor-fan', name: 'Extractor Fan' },
-    { symbolId: 'smoke-detector', name: 'Smoke Detector' },
+    { symbolId: 'smoke-detector', name: 'Heat Detector' },
   ],
   bedroom: [
     { symbolId: 'socket-double-13a', name: 'Double Socket' },
     { symbolId: 'socket-double-13a', name: 'Double Socket' },
+    { symbolId: 'socket-double-13a', name: 'Double Socket' },
     { symbolId: 'light-ceiling', name: 'Ceiling Light' },
-    { symbolId: 'switch-2way', name: '2-Way Switch' },
-    { symbolId: 'switch-2way', name: '2-Way Switch' },
+    { symbolId: 'switch-2way', name: '2-Way Switch (door)' },
+    { symbolId: 'switch-2way', name: '2-Way Switch (bed)' },
     { symbolId: 'smoke-detector', name: 'Smoke Detector' },
     { symbolId: 'socket-tv-aerial', name: 'TV Aerial' },
+    { symbolId: 'socket-usb', name: 'USB Socket (bedside)' },
   ],
   bathroom: [
+    { symbolId: 'light-downlight', name: 'Downlight' },
     { symbolId: 'light-downlight', name: 'Downlight' },
     { symbolId: 'light-downlight', name: 'Downlight' },
     { symbolId: 'light-downlight', name: 'Downlight' },
     { symbolId: 'switch-pull-cord', name: 'Pull Cord' },
     { symbolId: 'socket-shaver', name: 'Shaver Socket' },
     { symbolId: 'extractor-fan', name: 'Extractor Fan' },
+    { symbolId: 'socket-switched-fused-spur', name: 'Switched Fused Spur (Towel Rail)' },
   ],
   living: [
     { symbolId: 'socket-double-13a', name: 'Double Socket' },
     { symbolId: 'socket-double-13a', name: 'Double Socket' },
     { symbolId: 'socket-double-13a', name: 'Double Socket' },
+    { symbolId: 'socket-double-13a', name: 'Double Socket' },
     { symbolId: 'light-ceiling', name: 'Ceiling Light' },
     { symbolId: 'light-ceiling', name: 'Ceiling Light' },
-    { symbolId: 'switch-dimmer', name: 'Dimmer' },
+    { symbolId: 'switch-dimmer', name: 'Dimmer Switch' },
     { symbolId: 'socket-tv-aerial', name: 'TV Aerial' },
     { symbolId: 'socket-data', name: 'Data Socket' },
+    { symbolId: 'socket-telephone', name: 'Telephone Socket' },
     { symbolId: 'smoke-detector', name: 'Smoke Detector' },
   ],
   hallway: [
@@ -151,14 +163,38 @@ const ROOM_SYMBOL_PACKS: Record<string, { symbolId: string; name: string }[]> = 
     { symbolId: 'switch-2way', name: '2-Way Switch' },
     { symbolId: 'smoke-detector', name: 'Smoke Detector' },
     { symbolId: 'co-detector', name: 'CO Detector' },
+    { symbolId: 'consumer-unit', name: 'Consumer Unit' },
+    { symbolId: 'socket-double-13a', name: 'Double Socket' },
   ],
   garage: [
     { symbolId: 'light-fluorescent', name: 'Fluorescent' },
+    { symbolId: 'light-fluorescent', name: 'Fluorescent' },
+    { symbolId: 'socket-double-13a', name: 'Double Socket' },
     { symbolId: 'socket-double-13a', name: 'Double Socket' },
     { symbolId: 'socket-double-13a', name: 'Double Socket' },
     { symbolId: 'socket-outdoor', name: 'Outdoor IP66' },
     { symbolId: 'switch-1way', name: '1-Way Switch' },
     { symbolId: 'consumer-unit', name: 'Consumer Unit' },
+    { symbolId: 'smoke-detector', name: 'Smoke Detector' },
+    { symbolId: 'socket-switched-fused-spur', name: 'Switched Fused Spur (Freezer)' },
+  ],
+  utility: [
+    { symbolId: 'socket-double-13a', name: 'Double Socket' },
+    { symbolId: 'socket-double-13a', name: 'Double Socket' },
+    { symbolId: 'socket-fused-spur', name: 'Fused Spur (Washing Machine)' },
+    { symbolId: 'socket-fused-spur', name: 'Fused Spur (Tumble Dryer)' },
+    { symbolId: 'socket-switched-fused-spur', name: 'Switched Fused Spur (Boiler)' },
+    { symbolId: 'light-ceiling', name: 'Ceiling Light' },
+    { symbolId: 'switch-1way', name: '1-Way Switch' },
+    { symbolId: 'extractor-fan', name: 'Extractor Fan' },
+    { symbolId: 'smoke-detector', name: 'Heat Detector' },
+  ],
+  dining: [
+    { symbolId: 'socket-double-13a', name: 'Double Socket' },
+    { symbolId: 'socket-double-13a', name: 'Double Socket' },
+    { symbolId: 'light-ceiling', name: 'Ceiling Light (pendant)' },
+    { symbolId: 'switch-dimmer', name: 'Dimmer Switch' },
+    { symbolId: 'socket-floor', name: 'Floor Socket (table)' },
     { symbolId: 'smoke-detector', name: 'Smoke Detector' },
   ],
 };
@@ -172,6 +208,7 @@ const modeTitle: Record<Mode, string> = {
   suggestions: 'Smart Suggestions',
   spec: 'Specification Writer',
   quote: 'Quote Generator',
+  photo: 'Photo to Plan',
 };
 
 const modeSubtitle: Record<Mode, string> = {
@@ -183,6 +220,7 @@ const modeSubtitle: Record<Mode, string> = {
   suggestions: 'AI finds what\'s missing or could be better',
   spec: 'AI generates professional electrical specification',
   quote: 'Price the job from your floor plan',
+  photo: 'Take a photo and AI generates the floor plan',
 };
 
 interface AIRoomBuilderDialogProps {
@@ -214,6 +252,9 @@ export const AIRoomBuilderDialog = ({
   const [specLoading, setSpecLoading] = useState(false);
   const [quoteResult, setQuoteResult] = useState<any>(null);
   const [quoteLoading, setQuoteLoading] = useState(false);
+  const [photoPreview, setPhotoPreview] = useState<string | null>(null);
+  const [photoGenerating, setPhotoGenerating] = useState(false);
+  const photoInputRef = useRef<HTMLInputElement>(null);
   const haptic = useHaptic();
   const toastIdRef = useRef<string | number | null>(null);
 
@@ -448,21 +489,78 @@ export const AIRoomBuilderDialog = ({
     }
   };
 
-  // --- Auto-place symbols ---
+  // --- Photo to Plan ---
+  const handlePhotoCapture = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = () => {
+      setPhotoPreview(reader.result as string);
+    };
+    reader.readAsDataURL(file);
+  };
+
+  const handlePhotoGenerate = async () => {
+    if (!photoPreview) return;
+    setPhotoGenerating(true);
+    haptic.light();
+
+    try {
+      const { data, error } = await supabase.functions.invoke('room-diagram-generator', {
+        body: { image_base64: photoPreview },
+      });
+
+      if (error) throw error;
+      if (!data?.success) throw new Error(data?.error || 'Failed to analyse photo');
+
+      onRoomGenerated(data.roomData || data);
+      haptic.success();
+      toast.success('Room generated from photo');
+      setPhotoPreview(null);
+      onOpenChange(false);
+    } catch (error) {
+      haptic.error();
+      toast.error(error instanceof Error ? error.message : 'Failed to generate from photo');
+    } finally {
+      setPhotoGenerating(false);
+    }
+  };
+
+  // --- Auto-place symbols (inside room walls if present) ---
   const handleAutoPlace = (roomType: string) => {
     const pack = ROOM_SYMBOL_PACKS[roomType];
     if (!pack || !onSymbolsAutoPlaced) return;
 
-    const spacing = 60;
-    const startX = 100;
-    const startY = 100;
-    const perRow = 5;
+    // Detect room wall bounding box from canvasObjects
+    let minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity;
+    const walls = (canvasObjects || []).filter((o) => o.type === 'wall');
+    for (const w of walls) {
+      if (w.points) {
+        for (const p of w.points) {
+          minX = Math.min(minX, p.x); minY = Math.min(minY, p.y);
+          maxX = Math.max(maxX, p.x); maxY = Math.max(maxY, p.y);
+        }
+      }
+    }
+
+    // If walls found, place inside them with padding; otherwise use default area
+    const hasRoom = isFinite(minX);
+    const pad = 30;
+    const areaX = hasRoom ? minX + pad : 80;
+    const areaY = hasRoom ? minY + pad : 80;
+    const areaW = hasRoom ? (maxX - minX) - pad * 2 : 300;
+    const areaH = hasRoom ? (maxY - minY) - pad * 2 : 300;
+
+    const cols = Math.min(pack.length, Math.max(3, Math.floor(areaW / 55)));
+    const spacingX = Math.min(55, areaW / cols);
+    const spacingY = Math.min(55, areaH / Math.ceil(pack.length / cols));
 
     const newObjects: CanvasObject[] = pack.map((item, idx) => ({
       id: `auto-${roomType}-${idx}-${Date.now()}`,
       type: 'symbol' as const,
-      x: startX + (idx % perRow) * spacing,
-      y: startY + Math.floor(idx / perRow) * spacing,
+      x: areaX + (idx % cols) * spacingX,
+      y: areaY + Math.floor(idx / cols) * spacingY,
       symbolId: item.symbolId,
       rotation: 0,
     }));
@@ -481,6 +579,7 @@ export const AIRoomBuilderDialog = ({
     { id: 'suggestions' as Mode, icon: Lightbulb, title: 'Smart Suggestions', desc: 'AI finds what\'s missing or could be better', color: 'bg-purple-500/10 text-purple-400' },
     { id: 'spec' as Mode, icon: FileText, title: 'Write Specification', desc: 'AI generates professional electrical spec', color: 'bg-cyan-500/10 text-cyan-400' },
     { id: 'quote' as Mode, icon: PoundSterling, title: 'Generate Quote', desc: 'Price the job from your floor plan', color: 'bg-emerald-500/10 text-emerald-400' },
+    { id: 'photo' as Mode, icon: Camera, title: 'Photo to Plan', desc: 'Take a photo, AI generates the floor plan', color: 'bg-pink-500/10 text-pink-400' },
   ];
 
   const reviewItemIcon = (type: 'warning' | 'info' | 'pass') => {
@@ -798,19 +897,46 @@ export const AIRoomBuilderDialog = ({
                 )}
                 {suggestionsResult && (
                   <>
-                    {suggestionsResult.suggestions ? (
-                      <div className="space-y-2">
-                        {(Array.isArray(suggestionsResult.suggestions) ? suggestionsResult.suggestions : [suggestionsResult.suggestions]).map((item: any, idx: number) => (
-                          <div key={idx} className="p-3 rounded-xl bg-purple-500/10 border border-purple-500/20">
-                            <p className="text-sm text-white">{typeof item === 'string' ? item : item.message || item.suggestion || JSON.stringify(item)}</p>
-                          </div>
-                        ))}
-                      </div>
-                    ) : (
-                      <div className="p-3 rounded-xl bg-white/[0.03] border border-white/[0.06]">
-                        <p className="text-sm text-white whitespace-pre-wrap">{typeof suggestionsResult === 'string' ? suggestionsResult : JSON.stringify(suggestionsResult, null, 2)}</p>
-                      </div>
-                    )}
+                    <div className="space-y-3">
+                      {suggestionsResult.summary && (
+                        <div className="p-3 rounded-xl bg-purple-500/20 border border-purple-500/30">
+                          <p className="text-sm font-semibold text-white">{suggestionsResult.summary}</p>
+                        </div>
+                      )}
+                      {suggestionsResult.missing?.length > 0 && (
+                        <div>
+                          <p className="text-xs font-semibold text-orange-400 uppercase mb-1.5">Missing Items</p>
+                          {suggestionsResult.missing.map((item: any, idx: number) => (
+                            <div key={idx} className="p-2.5 rounded-lg bg-orange-500/10 border border-orange-500/20 mb-1.5">
+                              <p className="text-sm font-medium text-white">{item.name || item.symbol}</p>
+                              <p className="text-xs text-white mt-0.5">{item.reason}</p>
+                            </div>
+                          ))}
+                        </div>
+                      )}
+                      {suggestionsResult.compliance?.length > 0 && (
+                        <div>
+                          <p className="text-xs font-semibold text-red-400 uppercase mb-1.5">Compliance Issues</p>
+                          {suggestionsResult.compliance.map((item: any, idx: number) => (
+                            <div key={idx} className="p-2.5 rounded-lg bg-red-500/10 border border-red-500/20 mb-1.5">
+                              <p className="text-sm font-medium text-white">{item.issue}</p>
+                              <p className="text-xs text-white mt-0.5">{item.regulation} — {item.severity}</p>
+                            </div>
+                          ))}
+                        </div>
+                      )}
+                      {suggestionsResult.improvements?.length > 0 && (
+                        <div>
+                          <p className="text-xs font-semibold text-blue-400 uppercase mb-1.5">Improvements</p>
+                          {suggestionsResult.improvements.map((item: any, idx: number) => (
+                            <div key={idx} className="p-2.5 rounded-lg bg-blue-500/10 border border-blue-500/20 mb-1.5">
+                              <p className="text-sm font-medium text-white">{item.suggestion}</p>
+                              <p className="text-xs text-white mt-0.5">{item.benefit}</p>
+                            </div>
+                          ))}
+                        </div>
+                      )}
+                    </div>
                     <div className="flex gap-2">
                       <Button
                         onClick={() => { setSuggestionsResult(null); runSuggestions(); }}
@@ -861,20 +987,38 @@ export const AIRoomBuilderDialog = ({
                 )}
                 {specResult && (
                   <>
-                    {specResult.specification ? (
-                      <div className="space-y-2">
-                        {(Array.isArray(specResult.specification) ? specResult.specification : [specResult.specification]).map((item: any, idx: number) => (
-                          <div key={idx} className="p-3 rounded-xl bg-cyan-500/10 border border-cyan-500/20">
-                            <p className="text-sm text-white font-semibold mb-1">{idx + 1}.</p>
-                            <p className="text-sm text-white">{typeof item === 'string' ? item : item.text || item.description || JSON.stringify(item)}</p>
-                          </div>
-                        ))}
-                      </div>
-                    ) : (
-                      <div className="p-3 rounded-xl bg-white/[0.03] border border-white/[0.06]">
-                        <p className="text-sm text-white whitespace-pre-wrap">{typeof specResult === 'string' ? specResult : JSON.stringify(specResult, null, 2)}</p>
-                      </div>
-                    )}
+                    <div className="space-y-3">
+                      {specResult.title && (
+                        <p className="text-sm font-bold text-cyan-400">{specResult.title}</p>
+                      )}
+                      {specResult.items?.length > 0 && (
+                        <div className="space-y-2">
+                          {specResult.items.map((item: any, idx: number) => (
+                            <div key={idx} className="p-3 rounded-xl bg-cyan-500/10 border border-cyan-500/20">
+                              <p className="text-sm text-white font-semibold mb-1">{item.number || idx + 1}. {item.description}</p>
+                              <div className="flex flex-wrap gap-2 mt-1.5">
+                                {item.circuit && <span className="text-[10px] bg-white/10 px-2 py-0.5 rounded text-white">{item.circuit}</span>}
+                                {item.cable && <span className="text-[10px] bg-white/10 px-2 py-0.5 rounded text-white">{item.cable}</span>}
+                                {item.protection && <span className="text-[10px] bg-white/10 px-2 py-0.5 rounded text-white">{item.protection}</span>}
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      )}
+                      {specResult.generalNotes && (
+                        <div className="p-3 rounded-xl bg-white/[0.03] border border-white/[0.06]">
+                          <p className="text-xs font-semibold text-cyan-400 uppercase mb-1">General Notes</p>
+                          <p className="text-sm text-white">{specResult.generalNotes}</p>
+                        </div>
+                      )}
+                      {specResult.regulations?.length > 0 && (
+                        <div className="flex flex-wrap gap-1.5">
+                          {specResult.regulations.map((reg: string, idx: number) => (
+                            <span key={idx} className="text-[10px] bg-cyan-500/10 border border-cyan-500/20 px-2 py-0.5 rounded text-cyan-400">{reg}</span>
+                          ))}
+                        </div>
+                      )}
+                    </div>
                     <div className="flex gap-2">
                       <Button
                         onClick={() => { setSpecResult(null); runSpec(); }}
@@ -925,34 +1069,77 @@ export const AIRoomBuilderDialog = ({
                 )}
                 {quoteResult && (
                   <>
-                    {quoteResult.materials && (
+                    {quoteResult.materials ? (
                       <div className="space-y-3">
+                        {quoteResult.quoteRef && (
+                          <p className="text-xs text-white font-medium">Ref: {quoteResult.quoteRef}</p>
+                        )}
                         <div>
                           <p className="text-xs font-semibold text-white mb-2">Materials</p>
                           <div className="space-y-1.5">
                             {(Array.isArray(quoteResult.materials) ? quoteResult.materials : []).map((item: any, idx: number) => (
                               <div key={idx} className="flex items-center justify-between p-2.5 rounded-lg bg-emerald-500/10 border border-emerald-500/20">
-                                <p className="text-sm text-white">{item.name || item.item || JSON.stringify(item)}</p>
-                                {item.cost != null && <p className="text-sm font-semibold text-emerald-400 shrink-0 ml-2">{typeof item.cost === 'number' ? `£${item.cost.toFixed(2)}` : item.cost}</p>}
+                                <div className="flex-1 mr-2">
+                                  <p className="text-sm text-white">{item.item || item.name}</p>
+                                  {item.qty && <p className="text-xs text-white">Qty: {item.qty}</p>}
+                                </div>
+                                <p className="text-sm font-semibold text-emerald-400 shrink-0">
+                                  {item.total != null ? `£${Number(item.total).toFixed(2)}` : ''}
+                                </p>
                               </div>
                             ))}
                           </div>
                         </div>
-                        {quoteResult.labour != null && (
-                          <div className="flex items-center justify-between p-3 rounded-xl bg-white/[0.03] border border-white/[0.06]">
-                            <p className="text-sm font-semibold text-white">Labour</p>
-                            <p className="text-sm font-semibold text-white">{typeof quoteResult.labour === 'number' ? `£${quoteResult.labour.toFixed(2)}` : quoteResult.labour}</p>
+                        {quoteResult.materialsSubtotal != null && (
+                          <div className="flex items-center justify-between px-3 py-1.5">
+                            <p className="text-xs text-white">Materials subtotal</p>
+                            <p className="text-sm font-semibold text-white">£{Number(quoteResult.materialsSubtotal).toFixed(2)}</p>
                           </div>
                         )}
-                        {quoteResult.total != null && (
-                          <div className="flex items-center justify-between p-3 rounded-xl bg-emerald-500/20 border border-emerald-500/30">
-                            <p className="text-base font-bold text-white">Total</p>
-                            <p className="text-base font-bold text-emerald-400">{typeof quoteResult.total === 'number' ? `£${quoteResult.total.toFixed(2)}` : quoteResult.total}</p>
+                        {quoteResult.labour && (
+                          <div className="flex items-center justify-between p-3 rounded-xl bg-white/[0.03] border border-white/[0.06]">
+                            <div>
+                              <p className="text-sm font-semibold text-white">Labour</p>
+                              {quoteResult.labour.hours && <p className="text-xs text-white">{quoteResult.labour.hours}hrs @ £{quoteResult.labour.rate}/hr</p>}
+                            </div>
+                            <p className="text-sm font-semibold text-white">£{Number(quoteResult.labour.total || 0).toFixed(2)}</p>
                           </div>
+                        )}
+                        {quoteResult.sundries && (
+                          <div className="flex items-center justify-between px-3 py-1.5">
+                            <p className="text-xs text-white">{quoteResult.sundries.description || 'Sundries'}</p>
+                            <p className="text-sm text-white">£{Number(quoteResult.sundries.total || 0).toFixed(2)}</p>
+                          </div>
+                        )}
+                        {quoteResult.certification && (
+                          <div className="flex items-center justify-between px-3 py-1.5">
+                            <p className="text-xs text-white">{quoteResult.certification.description || 'Certification'}</p>
+                            <p className="text-sm text-white">£{Number(quoteResult.certification.total || 0).toFixed(2)}</p>
+                          </div>
+                        )}
+                        {quoteResult.subtotalExVat != null && (
+                          <div className="flex items-center justify-between px-3 py-1.5 border-t border-white/10">
+                            <p className="text-sm text-white">Subtotal (ex VAT)</p>
+                            <p className="text-sm font-semibold text-white">£{Number(quoteResult.subtotalExVat).toFixed(2)}</p>
+                          </div>
+                        )}
+                        {quoteResult.vat != null && (
+                          <div className="flex items-center justify-between px-3 py-1.5">
+                            <p className="text-xs text-white">VAT (20%)</p>
+                            <p className="text-sm text-white">£{Number(quoteResult.vat).toFixed(2)}</p>
+                          </div>
+                        )}
+                        {(quoteResult.totalIncVat != null || quoteResult.total != null) && (
+                          <div className="flex items-center justify-between p-3 rounded-xl bg-emerald-500/20 border border-emerald-500/30">
+                            <p className="text-base font-bold text-white">Total (inc VAT)</p>
+                            <p className="text-base font-bold text-emerald-400">£{Number(quoteResult.totalIncVat || quoteResult.total).toFixed(2)}</p>
+                          </div>
+                        )}
+                        {quoteResult.estimatedDuration && (
+                          <p className="text-xs text-white">Estimated duration: {quoteResult.estimatedDuration}</p>
                         )}
                       </div>
-                    )}
-                    {!quoteResult.materials && (
+                    ) : (
                       <div className="p-3 rounded-xl bg-white/[0.03] border border-white/[0.06]">
                         <p className="text-sm text-white whitespace-pre-wrap">{typeof quoteResult === 'string' ? quoteResult : JSON.stringify(quoteResult, null, 2)}</p>
                       </div>
@@ -973,6 +1160,70 @@ export const AIRoomBuilderDialog = ({
                       </Button>
                     </div>
                   </>
+                )}
+              </div>
+            )}
+            {/* ==================== PHOTO TO PLAN ==================== */}
+            {mode === 'photo' && (
+              <div className="p-4 space-y-4">
+                <input
+                  ref={photoInputRef}
+                  type="file"
+                  accept="image/*"
+                  capture="environment"
+                  onChange={handlePhotoCapture}
+                  className="hidden"
+                />
+
+                {!photoPreview && !photoGenerating && (
+                  <>
+                    <div className="bg-white/[0.03] rounded-xl p-4 border border-white/[0.06] text-center">
+                      <Camera className="h-10 w-10 text-pink-400 mx-auto mb-3" />
+                      <p className="text-sm font-semibold text-white mb-1">Photo to Floor Plan</p>
+                      <p className="text-xs text-white">
+                        Take a photo of a room and AI will estimate dimensions and suggest an electrical layout.
+                      </p>
+                    </div>
+                    <Button
+                      onClick={() => photoInputRef.current?.click()}
+                      className="w-full h-12 bg-pink-600 text-white hover:bg-pink-700 font-semibold text-sm touch-manipulation"
+                    >
+                      <Camera className="h-4 w-4 mr-2" />
+                      Take Photo
+                    </Button>
+                  </>
+                )}
+
+                {photoPreview && !photoGenerating && (
+                  <>
+                    <div className="rounded-xl overflow-hidden border border-white/10">
+                      <img src={photoPreview} alt="Room photo" className="w-full h-48 object-cover" />
+                    </div>
+                    <div className="flex gap-2">
+                      <Button
+                        onClick={() => { setPhotoPreview(null); photoInputRef.current?.click(); }}
+                        variant="outline"
+                        className="flex-1 h-11 border-white/10 text-white hover:bg-white/10 touch-manipulation"
+                      >
+                        Retake
+                      </Button>
+                      <Button
+                        onClick={handlePhotoGenerate}
+                        className="flex-1 h-11 bg-pink-600 text-white hover:bg-pink-700 font-semibold touch-manipulation"
+                      >
+                        <Sparkles className="h-4 w-4 mr-2" />
+                        Generate Plan
+                      </Button>
+                    </div>
+                  </>
+                )}
+
+                {photoGenerating && (
+                  <div className="flex flex-col items-center justify-center py-12">
+                    <Loader2 className="h-8 w-8 text-pink-400 animate-spin mb-3" />
+                    <p className="text-sm font-medium text-white">Analysing photo...</p>
+                    <p className="text-xs text-white mt-1">AI is estimating dimensions and electrical layout</p>
+                  </div>
                 )}
               </div>
             )}
