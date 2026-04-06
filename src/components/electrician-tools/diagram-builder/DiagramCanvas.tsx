@@ -1377,6 +1377,32 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
       return () => { canvas.off('object:modified', handleObjectModified); };
     }, [objects]);
 
+    // Rotate selected object 90° or rotate all if nothing selected
+    const handleRotate = () => {
+      const canvas = fabricCanvasRef.current;
+      if (!canvas) return;
+
+      const active = canvas.getActiveObject();
+      if (active) {
+        // Rotate just the selected object
+        const currentAngle = active.angle || 0;
+        active.rotate(currentAngle + 90);
+        canvas.renderAll();
+
+        // Update React state
+        const customData = (active as any).customData;
+        if (customData?.id) {
+          const updated = objects.map((obj) =>
+            obj.id === customData.id ? { ...obj, rotation: (obj.rotation || 0) + 90 } : obj
+          );
+          onObjectsChange(updated);
+        }
+      } else if (onRotate) {
+        // No selection — rotate everything
+        onRotate();
+      }
+    };
+
     // Zoom controls
     const handleZoomIn = () => {
       const canvas = fabricCanvasRef.current;
@@ -1447,17 +1473,15 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
           >
             <Maximize2 className="h-4 w-4" />
           </Button>
-          {onRotate && (
-            <Button
-              size="icon"
-              variant="outline"
-              onClick={onRotate}
-              className="h-9 w-9 bg-black/60 backdrop-blur border-white/10 text-white hover:bg-black/80 touch-manipulation"
-              title="Rotate 90°"
-            >
-              <RotateCw className="h-4 w-4" />
-            </Button>
-          )}
+          <Button
+            size="icon"
+            variant="outline"
+            onClick={handleRotate}
+            className="h-9 w-9 bg-black/60 backdrop-blur border-white/10 text-white hover:bg-black/80 touch-manipulation"
+            title="Rotate 90°"
+          >
+            <RotateCw className="h-4 w-4" />
+          </Button>
         </div>
       </div>
     );
