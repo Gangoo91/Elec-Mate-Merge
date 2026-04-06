@@ -147,7 +147,7 @@ export function formatDangerNoticePayload(
     company_address: company.company_address || data.contractorAddress,
     company_phone: company.company_phone || data.contractorPhone,
     company_email: company.company_email || data.contractorEmail,
-    company_logo: company.company_logo || '',
+    company_logo: company.logo_data_url || company.logo_url || '',
     company_tagline: company.company_tagline || '',
     registration_scheme_logo: company.registration_scheme_logo || '',
   };

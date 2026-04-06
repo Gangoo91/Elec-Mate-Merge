@@ -47,7 +47,7 @@ export function formatLimitationNoticePayload(data: Record<string, any>, company
     company_address: company.company_address || '',
     company_phone: company.company_phone || data.contractorPhone,
     company_email: company.company_email || data.contractorEmail,
-    company_logo: company.company_logo || '',
-    scheme_logo: company.scheme_logo || '',
+    company_logo: company.logo_data_url || company.logo_url || '',
+    scheme_logo: company.scheme_logo_data_url || company.registration_scheme_logo || '',
   };
 }
