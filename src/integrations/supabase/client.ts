@@ -31,11 +31,16 @@ export const supabase = createClient<Database>(SUPABASE_URL, SUPABASE_PUBLISHABL
       const headers = new Headers(options.headers || {});
       headers.set('x-request-id', requestId);
 
-      // Set 10-minute timeout to cover long-running edge functions (some take 8+ mins)
+      // Use caller's signal if provided, otherwise apply a default timeout.
+      // Edge function calls (functions/v1/) get 10 minutes for AI jobs.
+      // Everything else (auth, DB, storage) gets 30 seconds.
+      const isEdgeFunction = typeof url === 'string' && url.includes('/functions/v1/');
+      const timeout = isEdgeFunction ? 600000 : 30000;
+
       return fetch(url, {
         ...options,
         headers,
-        signal: AbortSignal.timeout(600000), // 600 seconds = 10 minutes
+        signal: options.signal || AbortSignal.timeout(timeout),
       });
     },
   },

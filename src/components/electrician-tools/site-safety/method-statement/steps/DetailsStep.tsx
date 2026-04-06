@@ -152,21 +152,19 @@ const DetailsStep = ({ data, onDataChange, onNext, onBack }: DetailsStepProps) =
                 <FileText className="h-4 w-4 text-elec-yellow" />
                 Type of Work *
               </Label>
-              <Select
-                value={data.workType}
-                onValueChange={(value) => onDataChange({ workType: value })}
-              >
-                <SelectTrigger className="h-11">
-                  <SelectValue placeholder="Select work type" />
-                </SelectTrigger>
-                <SelectContent>
-                  {workTypes.map((type) => (
-                    <SelectItem key={type} value={type}>
-                      {type}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
+              <Input
+                id="workType"
+                list="workType-suggestions"
+                value={data.workType || ''}
+                onChange={(e) => onDataChange({ workType: e.target.value })}
+                placeholder="Type or select work type"
+                className="h-11 text-base touch-manipulation border-white/30 focus:border-yellow-500 focus:ring-yellow-500"
+              />
+              <datalist id="workType-suggestions">
+                {workTypes.map((type) => (
+                  <option key={type} value={type} />
+                ))}
+              </datalist>
             </div>
 
             <div className="space-y-2">

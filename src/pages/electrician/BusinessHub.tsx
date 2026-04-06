@@ -25,6 +25,7 @@ import {
   Share2,
   Timer,
   PenTool,
+  BookOpen,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { BusinessCard, BusinessKPIStrip } from '@/components/business-hub';
@@ -343,6 +344,16 @@ const BusinessHub = () => {
               accentColor="from-emerald-500 via-teal-400 to-cyan-400"
               iconColor="text-emerald-400"
               iconBg="bg-emerald-500/10 border border-emerald-500/20"
+            />
+            <BusinessCard
+              title="Price Book"
+              description="Materials & markup"
+              icon={BookOpen}
+              href="/electrician/price-book"
+              variant="compact"
+              accentColor="from-violet-500 via-purple-400 to-indigo-400"
+              iconColor="text-violet-400"
+              iconBg="bg-violet-500/10 border border-violet-500/20"
             />
           </div>
         </motion.section>
