@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40">
+  <line x1="8" y1="28" x2="32" y2="28" stroke="currentColor" stroke-width="1.5"/>
+  <path d="M 8 28 A 12 12 0 0 1 32 28" fill="none" stroke="currentColor" stroke-width="1.5"/>
+  <text x="20" y="22" text-anchor="middle" dominant-baseline="central" fill="currentColor" font-family="Arial, sans-serif" font-size="7" font-weight="bold">USB</text>
+</svg>

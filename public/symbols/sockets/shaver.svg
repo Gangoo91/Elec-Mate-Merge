@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40">
+  <line x1="10" y1="26" x2="30" y2="26" stroke="currentColor" stroke-width="1.5"/>
+  <path d="M 10 26 A 10 10 0 0 1 30 26" fill="none" stroke="currentColor" stroke-width="1.5"/>
+  <text x="20" y="23" text-anchor="middle" font-family="Arial, sans-serif" font-size="8" font-weight="bold" fill="currentColor">SH</text>
+</svg>

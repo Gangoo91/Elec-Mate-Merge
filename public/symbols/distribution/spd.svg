@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.5">
+  <!-- SPD body -->
+  <rect x="10" y="8" width="20" height="24" rx="1"/>
+  <!-- Lightning bolt -->
+  <polyline points="22,12 17,20 22,20 17,28" stroke-linejoin="round"/>
+</svg>

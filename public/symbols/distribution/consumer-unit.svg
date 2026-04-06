@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.5">
+  <!-- CU rectangle (landscape) -->
+  <rect x="5" y="10" width="30" height="20" rx="1"/>
+  <!-- MCB slot dividers -->
+  <line x1="12" y1="10" x2="12" y2="30"/>
+  <line x1="19" y1="10" x2="19" y2="30"/>
+  <line x1="26" y1="10" x2="26" y2="30"/>
+</svg>

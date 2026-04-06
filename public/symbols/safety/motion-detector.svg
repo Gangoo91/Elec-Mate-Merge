@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.5">
+  <!-- Centre filled dot -->
+  <circle cx="12" cy="20" r="2.5" fill="currentColor" stroke="none"/>
+  <!-- Detection arcs radiating right -->
+  <path d="M 18 16 A 5 5 0 0 1 18 24"/>
+  <path d="M 23 13 A 9 9 0 0 1 23 27"/>
+  <path d="M 28 10 A 13 13 0 0 1 28 30"/>
+</svg>

@@ -1,9 +1,17 @@
 import { useEffect, useRef, useState, forwardRef, useImperativeHandle } from 'react';
-import { Canvas as FabricCanvas, Rect, Line, Path, FabricText, FabricObject, Group } from 'fabric';
+import { Canvas as FabricCanvas, Rect, Line, FabricText, FabricObject, Group, Circle, Point, loadSVGFromString, util } from 'fabric';
 import type { CanvasObject } from '@/pages/electrician-tools/ai-tools/DiagramBuilderPage';
+import { symbolRegistry } from './symbols/symbolRegistry';
 import { electricalSymbols } from './symbols/electricalSymbols';
-import { ZoomIn, ZoomOut, Maximize2 } from 'lucide-react';
+import { loadSymbolSvg } from './symbols/svgLoader';
+import { ZoomIn, ZoomOut, Maximize2, RotateCw } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+
+// Scale: 70px = 1 metre (40% larger than original 50px for better mobile visibility)
+const SCALE = 70;
+const WALL_THICKNESS = 8;
+const SNAP_DISTANCE = 10; // px for wall endpoint snapping
+const AXIS_SNAP_DEGREES = 10; // snap to horizontal/vertical within this angle
 
 interface DiagramCanvasProps {
   activeTool: string;
@@ -12,30 +20,112 @@ interface DiagramCanvasProps {
   onObjectsChange: (objects: CanvasObject[]) => void;
   gridEnabled: boolean;
   snapEnabled: boolean;
+  headerHeight?: number;
+  toolbarHeight?: number;
+  onWallTapped?: (wallId: string, currentLength: number, screenPos: { x: number; y: number }) => void;
+  onRotate?: () => void;
 }
 
+/** Convert pixel distance to metres string */
+const pxToMetres = (px: number): string => {
+  return (Math.abs(px) / SCALE).toFixed(2) + 'm';
+};
+
 export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
-  ({ activeTool, selectedSymbolId, objects, onObjectsChange, gridEnabled, snapEnabled }, ref) => {
+  ({ activeTool, selectedSymbolId, objects, onObjectsChange, gridEnabled, snapEnabled, headerHeight = 48, toolbarHeight = 56, onWallTapped, onRotate }, ref) => {
     const canvasRef = useRef<HTMLCanvasElement>(null);
     const fabricCanvasRef = useRef<FabricCanvas | null>(null);
     const [isDrawing, setIsDrawing] = useState(false);
     const [startPoint, setStartPoint] = useState<{ x: number; y: number } | null>(null);
     const undoStack = useRef<CanvasObject[][]>([]);
     const redoStack = useRef<CanvasObject[][]>([]);
+    // Dimension tool needs two clicks — track first click
+    const [dimensionStart, setDimensionStart] = useState<{ x: number; y: number } | null>(null);
+    const [zoomLevel, setZoomLevel] = useState(1);
+    // Flag to prevent grid redraw from clearing AI-rendered content
+    const aiRenderActiveRef = useRef(false);
+
+    // Collect all wall endpoints from current objects for snapping
+    const getWallEndpoints = (): { x: number; y: number }[] => {
+      const endpoints: { x: number; y: number }[] = [];
+      for (const obj of objects) {
+        if (obj.type === 'wall' && obj.points && obj.points.length >= 2) {
+          endpoints.push(obj.points[0]);
+          endpoints.push(obj.points[obj.points.length - 1]);
+        }
+      }
+      return endpoints;
+    };
+
+    // Find nearest wall endpoint within SNAP_DISTANCE
+    const findSnapEndpoint = (x: number, y: number): { x: number; y: number } | null => {
+      const endpoints = getWallEndpoints();
+      let closest: { x: number; y: number } | null = null;
+      let closestDist = SNAP_DISTANCE;
+      for (const ep of endpoints) {
+        const dist = Math.hypot(ep.x - x, ep.y - y);
+        if (dist < closestDist) {
+          closestDist = dist;
+          closest = ep;
+        }
+      }
+      return closest;
+    };
+
+    // Snap wall direction to horizontal/vertical if within threshold
+    const snapWallDirection = (sx: number, sy: number, ex: number, ey: number): { x: number; y: number } => {
+      const dx = ex - sx;
+      const dy = ey - sy;
+      const angle = Math.abs(Math.atan2(dy, dx) * (180 / Math.PI));
+      // Near horizontal (0 or 180 degrees)
+      if (angle < AXIS_SNAP_DEGREES || angle > (180 - AXIS_SNAP_DEGREES)) {
+        return { x: ex, y: sy };
+      }
+      // Near vertical (90 degrees)
+      if (Math.abs(angle - 90) < AXIS_SNAP_DEGREES) {
+        return { x: sx, y: ey };
+      }
+      return { x: ex, y: ey };
+    };
 
     // Expose methods to parent via ref
     useImperativeHandle(ref, () => ({
-      renderAIRoom: (roomData: any) => {
+      getCanvasElement: (): HTMLCanvasElement | null => {
+        return canvasRef.current;
+      },
+      undo,
+      redo,
+      renderAIRoom: async (roomData: any) => {
         if (!fabricCanvasRef.current) return;
 
-        console.log('🎨 Rendering AI room:', roomData);
+        aiRenderActiveRef.current = true;
         const canvas = fabricCanvasRef.current;
-        const scale = 50; // 1m = 50px
+        const scale = SCALE;
         const offsetX = 100;
         const offsetY = 100;
 
-        // Clear existing objects
+        // Clear existing objects but redraw grid
         canvas.clear();
+        canvas.backgroundColor = '#FFFFFF';
+
+        // Redraw grid after clear
+        if (gridEnabled) {
+          const gridSize = 20;
+          const gw = canvas.width || 1200;
+          const gh = canvas.height || 600;
+          for (let i = 0; i < gw / gridSize; i++) {
+            const isMajor = i % 5 === 0;
+            canvas.add(new Line([i * gridSize, 0, i * gridSize, gh], {
+              stroke: isMajor ? '#999999' : '#CCCCCC', strokeWidth: isMajor ? 1 : 0.5, selectable: false, evented: false,
+            }));
+          }
+          for (let i = 0; i < gh / gridSize; i++) {
+            const isMajor = i % 5 === 0;
+            canvas.add(new Line([0, i * gridSize, gw, i * gridSize], {
+              stroke: isMajor ? '#999999' : '#CCCCCC', strokeWidth: isMajor ? 1 : 0.5, selectable: false, evented: false,
+            }));
+          }
+        }
 
         // Draw walls as lines
         const walls = roomData.walls || [];
@@ -47,19 +137,12 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
           let endX = currentX;
           let endY = currentY;
 
-          // Calculate wall endpoints
-          if (wall.id === 'north') {
-            endX = currentX + length;
-          } else if (wall.id === 'east') {
-            endY = currentY + length;
-          } else if (wall.id === 'south') {
-            endX = currentX - length;
-          } else if (wall.id === 'west') {
-            endY = currentY - length;
-          }
+          if (wall.id === 'north') endX = currentX + length;
+          else if (wall.id === 'east') endY = currentY + length;
+          else if (wall.id === 'south') endX = currentX - length;
+          else if (wall.id === 'west') endY = currentY - length;
 
-          // Draw professional architectural wall (double line)
-          const wallThickness = 8;
+          const wallThickness = WALL_THICKNESS;
           const isVertical = Math.abs(endX - currentX) < Math.abs(endY - currentY);
 
           if (isVertical) {
@@ -88,7 +171,6 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
             canvas.add(wallRect);
           }
 
-          // Add professional dimension label
           const midX = (currentX + endX) / 2;
           const midY = (currentY + endY) / 2;
           const label = new FabricText(`${wall.length}m`, {
@@ -106,22 +188,30 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
           currentY = endY;
         });
 
-        // Place electrical symbols
+        // Place electrical symbols (async)
+        const SYMBOL_INSET = 4;
+        const roomWidth = walls[0]?.length * scale || 200;
+        const roomHeight = walls[1]?.length * scale || 200;
+
         const symbols = roomData.symbols || [];
-        symbols.forEach((symbol: any) => {
-          const electricalSymbol = electricalSymbols.find((s) => s.id === symbol.type);
-          if (!electricalSymbol) {
-            console.warn(`Symbol not found: ${symbol.type}`);
+        const symbolPromises = symbols.map(async (symbol: any) => {
+          // ELE-604: Strip -bs7671 suffix from AI-generated symbol IDs
+          const symbolId = symbol.type.replace(/-bs7671$/, '');
+
+          // Try symbolRegistry first, then fall back to legacy electricalSymbols
+          const registrySymbol = symbolRegistry.find((s) => s.id === symbolId);
+          const legacySymbol = electricalSymbols.find((s) => s.id === symbolId);
+
+          if (!registrySymbol && !legacySymbol) {
+            console.warn(`Symbol not found: ${symbol.type} (resolved: ${symbolId})`);
             return;
           }
 
           let symbolX = offsetX + 20;
           let symbolY = offsetY + 20;
 
-          // Calculate symbol position
+          // ELE-589: Calculate symbol position INSIDE the room
           if (symbol.position === 'center') {
-            const roomWidth = walls[0]?.length * scale || 200;
-            const roomHeight = walls[1]?.length * scale || 200;
             symbolX = offsetX + roomWidth / 2;
             symbolY = offsetY + roomHeight / 2;
           } else if (symbol.wall) {
@@ -129,34 +219,45 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
 
             if (symbol.wall === 'north') {
               symbolX = offsetX + positionOnWall;
-              symbolY = offsetY - 20;
+              symbolY = offsetY + WALL_THICKNESS + SYMBOL_INSET;
             } else if (symbol.wall === 'south') {
               symbolX = offsetX + positionOnWall;
-              symbolY = offsetY + (walls[1]?.length * scale || 0) + 20;
+              symbolY = offsetY + roomHeight - WALL_THICKNESS - SYMBOL_INSET - 20;
             } else if (symbol.wall === 'east') {
-              symbolX = offsetX + (walls[0]?.length * scale || 0) + 20;
+              symbolX = offsetX + roomWidth - WALL_THICKNESS - SYMBOL_INSET - 20;
               symbolY = offsetY + positionOnWall;
             } else if (symbol.wall === 'west') {
-              symbolX = offsetX - 20;
+              symbolX = offsetX + WALL_THICKNESS + SYMBOL_INSET;
               symbolY = offsetY + positionOnWall;
             }
           }
 
-          // Create symbol using SVG path - Professional black
-          const symbolPath = new Path(electricalSymbol.svg, {
-            left: symbolX,
-            top: symbolY,
-            fill: '#000000',
-            stroke: '#000000',
-            scaleX: 1.5,
-            scaleY: 1.5,
-            selectable: true,
-          });
-
-          canvas.add(symbolPath);
+          // Load SVG via the new loader
+          try {
+            const svgString = await loadSymbolSvg(symbolId);
+            const { objects: svgObjects } = await loadSVGFromString(svgString);
+            const validObjects = svgObjects.filter((o): o is FabricObject => o !== null);
+            if (validObjects.length > 0) {
+              const group = util.groupSVGElements(validObjects, {
+                left: symbolX,
+                top: symbolY,
+                scaleX: 1.5,
+                scaleY: 1.5,
+                selectable: true,
+                originX: 'center',
+                originY: 'center',
+              });
+              group.set({ fill: '#000000', stroke: '#000000' });
+              canvas.add(group);
+            }
+          } catch (err) {
+            console.warn('Failed to load SVG for AI symbol:', symbolId, err);
+          }
         });
 
-        // Add room title - Professional black
+        await Promise.all(symbolPromises);
+
+        // Add room title
         if (roomData.room?.name) {
           const title = new FabricText(roomData.room.name, {
             left: offsetX,
@@ -170,6 +271,39 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
           canvas.add(title);
         }
 
+        // Scale bar in bottom-left
+        const scaleBarMetres = 1;
+        const scaleBarPx = scaleBarMetres * scale;
+        const scaleBarX = 20;
+        const scaleBarY = (canvas.height || 600) - 30;
+
+        const scaleBarLine = new Line([scaleBarX, scaleBarY, scaleBarX + scaleBarPx, scaleBarY], {
+          stroke: '#000000', strokeWidth: 2, selectable: false, evented: false,
+        });
+        canvas.add(scaleBarLine);
+
+        const tickLeft = new Line([scaleBarX, scaleBarY - 5, scaleBarX, scaleBarY + 5], {
+          stroke: '#000000', strokeWidth: 2, selectable: false, evented: false,
+        });
+        canvas.add(tickLeft);
+
+        const tickRight = new Line([scaleBarX + scaleBarPx, scaleBarY - 5, scaleBarX + scaleBarPx, scaleBarY + 5], {
+          stroke: '#000000', strokeWidth: 2, selectable: false, evented: false,
+        });
+        canvas.add(tickRight);
+
+        const scaleLabel = new FabricText(`${scaleBarMetres}m`, {
+          left: scaleBarX + scaleBarPx / 2,
+          top: scaleBarY - 18,
+          fontSize: 11,
+          fill: '#000000',
+          fontFamily: 'Arial',
+          fontWeight: '500',
+          selectable: false,
+          originX: 'center',
+        });
+        canvas.add(scaleLabel);
+
         canvas.renderAll();
       },
     }));
@@ -178,29 +312,82 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
     useEffect(() => {
       if (!canvasRef.current) return;
 
-      const canvasWidth = window.innerWidth > 768 ? 1200 : window.innerWidth - 24;
-      const canvasHeight =
-        window.innerWidth > 768 ? window.innerHeight - 200 : window.innerHeight - 220; // Mobile: reduced for compact layout
+      const canvasWidth = window.innerWidth;
+      const canvasHeight = window.innerHeight - headerHeight - toolbarHeight;
 
       const canvas = new FabricCanvas(canvasRef.current, {
         width: canvasWidth,
         height: canvasHeight,
         backgroundColor: '#FFFFFF',
         selection: activeTool === 'select',
+        allowTouchScrolling: false,
       });
 
       fabricCanvasRef.current = canvas;
+      console.log('[DiagramCanvas] Canvas created:', canvasWidth, 'x', canvasHeight, 'grid:', gridEnabled);
 
-      // Handle window resize
+      // Draw initial grid immediately
+      if (gridEnabled) {
+        const gridSize = 20;
+        for (let i = 0; i <= canvasWidth / gridSize; i++) {
+          const isMajor = i % 5 === 0;
+          canvas.add(new Line([i * gridSize, 0, i * gridSize, canvasHeight], {
+            stroke: isMajor ? '#999999' : '#CCCCCC', strokeWidth: isMajor ? 1 : 0.5, selectable: false, evented: false,
+          }));
+        }
+        for (let i = 0; i <= canvasHeight / gridSize; i++) {
+          const isMajor = i % 5 === 0;
+          canvas.add(new Line([0, i * gridSize, canvasWidth, i * gridSize], {
+            stroke: isMajor ? '#999999' : '#CCCCCC', strokeWidth: isMajor ? 1 : 0.5, selectable: false, evented: false,
+          }));
+        }
+        canvas.renderAll();
+        console.log('[DiagramCanvas] Grid drawn:', canvas.getObjects().length, 'lines');
+      }
+
+      // Pinch-to-zoom handler
+      let lastPinchDistance = 0;
+      const handleTouchGesture = (e: any) => {
+        if (e.e?.touches?.length === 2) {
+          const touch1 = e.e.touches[0];
+          const touch2 = e.e.touches[1];
+          const distance = Math.hypot(
+            touch1.clientX - touch2.clientX,
+            touch1.clientY - touch2.clientY
+          );
+
+          if (lastPinchDistance > 0) {
+            const zoomFactor = distance / lastPinchDistance;
+            const currentZoom = canvas.getZoom();
+            const newZoom = Math.min(Math.max(currentZoom * zoomFactor, 0.1), 5);
+
+            const midX = (touch1.clientX + touch2.clientX) / 2;
+            const midY = (touch1.clientY + touch2.clientY) / 2;
+            const canvasRect = canvasRef.current?.getBoundingClientRect();
+            if (canvasRect) {
+              const pointX = midX - canvasRect.left;
+              const pointY = midY - canvasRect.top;
+              canvas.zoomToPoint(new Point(pointX, pointY), newZoom);
+              setZoomLevel(newZoom);
+            }
+          }
+          lastPinchDistance = distance;
+          e.e.preventDefault();
+        }
+      };
+
+      const handleTouchEnd = () => {
+        lastPinchDistance = 0;
+      };
+
+      canvas.on('mouse:move', handleTouchGesture);
+      canvas.upperCanvasEl?.addEventListener('touchend', handleTouchEnd, { passive: true });
+
+      // Handle window resize — fill available space
       const handleResize = () => {
-        const newWidth = window.innerWidth > 768 ? 1200 : window.innerWidth - 24;
-        const newHeight =
-          window.innerWidth > 768 ? window.innerHeight - 200 : window.innerHeight - 220;
-
-        canvas.setDimensions({
-          width: newWidth,
-          height: newHeight,
-        });
+        const newWidth = window.innerWidth;
+        const newHeight = window.innerHeight - headerHeight - toolbarHeight;
+        canvas.setDimensions({ width: newWidth, height: newHeight });
         canvas.renderAll();
       };
 
@@ -208,55 +395,99 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
 
       return () => {
         window.removeEventListener('resize', handleResize);
+        canvas.off('mouse:move', handleTouchGesture);
+        canvas.upperCanvasEl?.removeEventListener('touchend', handleTouchEnd);
         canvas.dispose();
       };
     }, []);
 
-    // Draw grid
+    // Track which object IDs are already on the Fabric canvas
+    const renderedObjectIds = useRef<Set<string>>(new Set());
+
+    // Draw grid only when gridEnabled changes
     useEffect(() => {
       const canvas = fabricCanvasRef.current;
       if (!canvas) return;
 
-      canvas.clear();
-      canvas.backgroundColor = '#FFFFFF';
+      // Remove existing grid lines
+      const gridObjects = canvas.getObjects().filter((obj) => (obj as any).isGridLine);
+      gridObjects.forEach((obj) => canvas.remove(obj));
 
       if (gridEnabled) {
         const gridSize = 20;
         const width = canvas.width || 1200;
         const height = canvas.height || 600;
 
-        // Vertical lines - Professional gray grid
-        for (let i = 0; i < width / gridSize; i++) {
+        for (let i = 0; i <= width / gridSize; i++) {
+          const isMajor = i % 5 === 0;
           const line = new Line([i * gridSize, 0, i * gridSize, height], {
-            stroke: '#E5E7EB',
-            strokeWidth: i % 5 === 0 ? 1 : 0.5,
+            stroke: isMajor ? '#999999' : '#CCCCCC',
+            strokeWidth: isMajor ? 1 : 0.5,
             selectable: false,
             evented: false,
-            opacity: 0.3,
           });
+          (line as any).isGridLine = true;
           canvas.add(line);
+          canvas.sendObjectToBack(line);
         }
 
-        // Horizontal lines - Professional gray grid
-        for (let i = 0; i < height / gridSize; i++) {
+        for (let i = 0; i <= height / gridSize; i++) {
+          const isMajor = i % 5 === 0;
           const line = new Line([0, i * gridSize, width, i * gridSize], {
-            stroke: '#E5E7EB',
-            strokeWidth: i % 5 === 0 ? 1 : 0.5,
+            stroke: isMajor ? '#999999' : '#CCCCCC',
+            strokeWidth: isMajor ? 1 : 0.5,
             selectable: false,
             evented: false,
-            opacity: 0.3,
           });
+          (line as any).isGridLine = true;
           canvas.add(line);
+          canvas.sendObjectToBack(line);
         }
       }
 
-      // Restore objects from state
-      objects.forEach((obj) => {
-        addObjectToCanvas(obj);
+      canvas.renderAll();
+    }, [gridEnabled]);
+
+    // Sync new objects from React state to Fabric canvas (add only, no clear/rebuild)
+    useEffect(() => {
+      const canvas = fabricCanvasRef.current;
+      if (!canvas) return;
+
+      // Skip if AI render is active
+      if (aiRenderActiveRef.current) {
+        aiRenderActiveRef.current = false;
+        return;
+      }
+
+      // Find objects in state that aren't on the canvas yet
+      const newObjects = objects.filter((obj) => !renderedObjectIds.current.has(obj.id));
+
+      // Find objects removed from state that are still on canvas
+      const stateIds = new Set(objects.map((o) => o.id));
+      const toRemove = canvas.getObjects().filter((fObj) => {
+        const customData = (fObj as any).customData;
+        return customData?.id && !stateIds.has(customData.id);
       });
 
-      canvas.renderAll();
-    }, [gridEnabled, objects]);
+      // Remove deleted objects from canvas
+      toRemove.forEach((fObj) => {
+        const id = (fObj as any).customData?.id;
+        if (id) renderedObjectIds.current.delete(id);
+        canvas.remove(fObj);
+      });
+
+      // Add new objects
+      const addNewObjects = async () => {
+        for (const obj of newObjects) {
+          await addObjectToCanvas(obj);
+          renderedObjectIds.current.add(obj.id);
+        }
+        if (newObjects.length > 0 || toRemove.length > 0) {
+          canvas.renderAll();
+        }
+      };
+      addNewObjects();
+    }, [objects]);
 
     // Snap to grid helper
     const snapToGrid = (value: number) => {
@@ -265,28 +496,184 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
       return Math.round(value / gridSize) * gridSize;
     };
 
-    // Add object to canvas
-    const addObjectToCanvas = (obj: CanvasObject) => {
+    // Create a dimension line group from two points
+    const createDimensionGroup = (x1: number, y1: number, x2: number, y2: number): Group => {
+      const dx = x2 - x1;
+      const dy = y2 - y1;
+      const dist = Math.hypot(dx, dy);
+      const label = pxToMetres(dist);
+      const isHorizontal = Math.abs(dx) >= Math.abs(dy);
+      const tickLen = 8;
+      const arrowSize = 5;
+
+      const elements: FabricObject[] = [];
+
+      // Main line
+      const mainLine = new Line([x1, y1, x2, y2], {
+        stroke: '#333333',
+        strokeWidth: 1,
+        selectable: false,
+      });
+      elements.push(mainLine as unknown as FabricObject);
+
+      // Tick marks (perpendicular end lines)
+      if (isHorizontal) {
+        elements.push(new Line([x1, y1 - tickLen, x1, y1 + tickLen], {
+          stroke: '#333333', strokeWidth: 1, selectable: false,
+        }) as unknown as FabricObject);
+        elements.push(new Line([x2, y2 - tickLen, x2, y2 + tickLen], {
+          stroke: '#333333', strokeWidth: 1, selectable: false,
+        }) as unknown as FabricObject);
+      } else {
+        elements.push(new Line([x1 - tickLen, y1, x1 + tickLen, y1], {
+          stroke: '#333333', strokeWidth: 1, selectable: false,
+        }) as unknown as FabricObject);
+        elements.push(new Line([x2 - tickLen, y2, x2 + tickLen, y2], {
+          stroke: '#333333', strokeWidth: 1, selectable: false,
+        }) as unknown as FabricObject);
+      }
+
+      // Arrowheads
+      const angle = Math.atan2(dy, dx);
+      const addArrow = (tipX: number, tipY: number, pointAngle: number) => {
+        const a1x = tipX - arrowSize * Math.cos(pointAngle - Math.PI / 6);
+        const a1y = tipY - arrowSize * Math.sin(pointAngle - Math.PI / 6);
+        const a2x = tipX - arrowSize * Math.cos(pointAngle + Math.PI / 6);
+        const a2y = tipY - arrowSize * Math.sin(pointAngle + Math.PI / 6);
+        elements.push(new Line([tipX, tipY, a1x, a1y], {
+          stroke: '#333333', strokeWidth: 1, selectable: false,
+        }) as unknown as FabricObject);
+        elements.push(new Line([tipX, tipY, a2x, a2y], {
+          stroke: '#333333', strokeWidth: 1, selectable: false,
+        }) as unknown as FabricObject);
+      };
+
+      addArrow(x1, y1, angle + Math.PI); // arrow pointing away from start towards start
+      addArrow(x2, y2, angle); // arrow pointing away from end towards end
+
+      // Wait — arrows should point outward from the line ends.
+      // Actually for dimension lines: arrows point INWARD. Let me fix:
+      // Arrow at start points toward end (angle), arrow at end points toward start (angle + PI)
+      // Let me redo:
+      elements.length = 0; // clear and redo
+
+      // Main line
+      elements.push(new Line([x1, y1, x2, y2], {
+        stroke: '#333333', strokeWidth: 1, selectable: false,
+      }) as unknown as FabricObject);
+
+      // Tick marks
+      if (isHorizontal) {
+        elements.push(new Line([x1, y1 - tickLen, x1, y1 + tickLen], {
+          stroke: '#333333', strokeWidth: 1, selectable: false,
+        }) as unknown as FabricObject);
+        elements.push(new Line([x2, y2 - tickLen, x2, y2 + tickLen], {
+          stroke: '#333333', strokeWidth: 1, selectable: false,
+        }) as unknown as FabricObject);
+      } else {
+        elements.push(new Line([x1 - tickLen, y1, x1 + tickLen, y1], {
+          stroke: '#333333', strokeWidth: 1, selectable: false,
+        }) as unknown as FabricObject);
+        elements.push(new Line([x2 - tickLen, y2, x2 + tickLen, y2], {
+          stroke: '#333333', strokeWidth: 1, selectable: false,
+        }) as unknown as FabricObject);
+      }
+
+      // Arrowhead at start (pointing toward end)
+      const a1x1 = x1 + arrowSize * Math.cos(angle - Math.PI / 6);
+      const a1y1 = y1 + arrowSize * Math.sin(angle - Math.PI / 6);
+      const a1x2 = x1 + arrowSize * Math.cos(angle + Math.PI / 6);
+      const a1y2 = y1 + arrowSize * Math.sin(angle + Math.PI / 6);
+      elements.push(new Line([x1, y1, a1x1, a1y1], {
+        stroke: '#333333', strokeWidth: 1, selectable: false,
+      }) as unknown as FabricObject);
+      elements.push(new Line([x1, y1, a1x2, a1y2], {
+        stroke: '#333333', strokeWidth: 1, selectable: false,
+      }) as unknown as FabricObject);
+
+      // Arrowhead at end (pointing toward start)
+      const reverseAngle = angle + Math.PI;
+      const a2x1 = x2 + arrowSize * Math.cos(reverseAngle - Math.PI / 6);
+      const a2y1 = y2 + arrowSize * Math.sin(reverseAngle - Math.PI / 6);
+      const a2x2 = x2 + arrowSize * Math.cos(reverseAngle + Math.PI / 6);
+      const a2y2 = y2 + arrowSize * Math.sin(reverseAngle + Math.PI / 6);
+      elements.push(new Line([x2, y2, a2x1, a2y1], {
+        stroke: '#333333', strokeWidth: 1, selectable: false,
+      }) as unknown as FabricObject);
+      elements.push(new Line([x2, y2, a2x2, a2y2], {
+        stroke: '#333333', strokeWidth: 1, selectable: false,
+      }) as unknown as FabricObject);
+
+      // Label background + text
+      const midX = (x1 + x2) / 2;
+      const midY = (y1 + y2) / 2;
+      const labelOffsetY = isHorizontal ? -14 : 0;
+      const labelOffsetX = isHorizontal ? 0 : 14;
+
+      const labelBg = new Rect({
+        left: midX + labelOffsetX - 20,
+        top: midY + labelOffsetY - 7,
+        width: 40,
+        height: 14,
+        fill: '#FFFFFF',
+        stroke: 'transparent',
+        strokeWidth: 0,
+        selectable: false,
+      });
+      elements.push(labelBg as unknown as FabricObject);
+
+      const labelText = new FabricText(label, {
+        left: midX + labelOffsetX,
+        top: midY + labelOffsetY - 6,
+        fontSize: 10,
+        fill: '#000000',
+        fontFamily: 'Arial',
+        fontWeight: '500',
+        originX: 'center',
+        selectable: false,
+      });
+      elements.push(labelText as unknown as FabricObject);
+
+      const group = new Group(elements, {
+        selectable: true,
+        hasControls: true,
+        hasBorders: true,
+      });
+
+      return group;
+    };
+
+    // Add object to canvas (async for SVG symbol loading)
+    const addObjectToCanvas = async (obj: CanvasObject) => {
       const canvas = fabricCanvasRef.current;
       if (!canvas) return;
 
       let fabricObj: FabricObject | null = null;
 
       if (obj.type === 'symbol' && obj.symbolId) {
-        const symbol = electricalSymbols.find((s) => s.id === obj.symbolId);
-        if (symbol) {
-          fabricObj = new Path(symbol.svg, {
-            left: obj.x,
-            top: obj.y,
-            fill: '#000000',
-            stroke: '#000000',
-            scaleX: (obj.width || 40) / 40,
-            scaleY: (obj.height || 40) / 40,
-            angle: obj.rotation || 0,
-            selectable: true,
-            hasControls: true,
-          });
-          (fabricObj as any).customData = { id: obj.id, type: 'symbol', symbolId: obj.symbolId };
+        try {
+          const svgString = await loadSymbolSvg(obj.symbolId);
+          const { objects: svgObjects } = await loadSVGFromString(svgString);
+          const validObjects = svgObjects.filter((o): o is FabricObject => o !== null);
+          if (validObjects.length > 0) {
+            fabricObj = util.groupSVGElements(validObjects, {
+              left: obj.x,
+              top: obj.y,
+              scaleX: (obj.width || 40) / 40,
+              scaleY: (obj.height || 40) / 40,
+              angle: obj.rotation || 0,
+              selectable: true,
+              hasControls: false,
+              lockScalingX: true,
+              lockScalingY: true,
+              originX: 'center',
+              originY: 'center',
+            });
+            // SVG elements already have correct fill/stroke from resolveCurrentColor
+            (fabricObj as any).customData = { id: obj.id, type: 'symbol', symbolId: obj.symbolId };
+          }
+        } catch (err) {
+          console.warn('Failed to load SVG for symbol:', obj.symbolId, err);
         }
       } else if (obj.type === 'rectangle') {
         fabricObj = new Rect({
@@ -326,6 +713,71 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
           hasControls: true,
         });
         (fabricObj as any).customData = { id: obj.id, type: 'text' };
+      } else if (obj.type === 'wall' && obj.points && obj.points.length >= 2) {
+        const p1 = obj.points[0];
+        const p2 = obj.points[1];
+        const dx = p2.x - p1.x;
+        const dy = p2.y - p1.y;
+        const isVertical = Math.abs(dy) > Math.abs(dx);
+        const dist = Math.hypot(dx, dy);
+
+        // Wall as a filled rect
+        if (isVertical) {
+          const wallRect = new Rect({
+            left: p1.x - WALL_THICKNESS / 2,
+            top: Math.min(p1.y, p2.y),
+            width: WALL_THICKNESS,
+            height: Math.abs(dy),
+            fill: '#000000',
+            stroke: '#000000',
+            strokeWidth: 1,
+            selectable: true,
+            hasControls: true,
+          });
+          (wallRect as any).customData = { id: obj.id, type: 'wall' };
+          canvas.add(wallRect);
+        } else {
+          const wallRect = new Rect({
+            left: Math.min(p1.x, p2.x),
+            top: p1.y - WALL_THICKNESS / 2,
+            width: Math.abs(dx),
+            height: WALL_THICKNESS,
+            fill: '#000000',
+            stroke: '#000000',
+            strokeWidth: 1,
+            selectable: true,
+            hasControls: true,
+          });
+          (wallRect as any).customData = { id: obj.id, type: 'wall' };
+          canvas.add(wallRect);
+        }
+
+        // Auto dimension label
+        const midX = (p1.x + p2.x) / 2;
+        const midY = (p1.y + p2.y) / 2;
+        const labelText = pxToMetres(dist);
+        const label = new FabricText(labelText, {
+          left: isVertical ? midX + WALL_THICKNESS / 2 + 6 : midX,
+          top: isVertical ? midY : midY - WALL_THICKNESS / 2 - 16,
+          fontSize: 10,
+          fill: '#000000',
+          fontFamily: 'Arial',
+          fontWeight: '500',
+          selectable: false,
+          evented: false,
+          originX: isVertical ? 'left' : 'center',
+        });
+        (label as any).customData = { id: obj.id + '-label', type: 'wall-label', parentId: obj.id };
+        canvas.add(label);
+
+        return; // Already added manually
+      } else if (obj.type === 'dimension' && obj.points && obj.points.length >= 2) {
+        const p1 = obj.points[0];
+        const p2 = obj.points[1];
+        const group = createDimensionGroup(p1.x, p1.y, p2.x, p2.y);
+        (group as any).customData = { id: obj.id, type: 'dimension' };
+        canvas.add(group);
+        return; // Already added manually
       }
 
       if (fabricObj) {
@@ -342,7 +794,6 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
       redoStack.current = [];
     };
 
-    // Undo
     const undo = () => {
       if (undoStack.current.length === 0) return;
       const prevState = undoStack.current.pop();
@@ -352,7 +803,6 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
       }
     };
 
-    // Redo
     const redo = () => {
       if (redoStack.current.length === 0) return;
       const nextState = redoStack.current.pop();
@@ -368,17 +818,14 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
         const canvas = fabricCanvasRef.current;
         if (!canvas) return;
 
-        // Undo: Ctrl+Z
         if ((e.ctrlKey || e.metaKey) && e.key === 'z' && !e.shiftKey) {
           e.preventDefault();
           undo();
         }
-        // Redo: Ctrl+Y or Ctrl+Shift+Z
         if ((e.ctrlKey || e.metaKey) && (e.key === 'y' || (e.key === 'z' && e.shiftKey))) {
           e.preventDefault();
           redo();
         }
-        // Delete: Delete or Backspace
         if (e.key === 'Delete' || e.key === 'Backspace') {
           const activeObjects = canvas.getActiveObjects();
           if (activeObjects.length > 0) {
@@ -392,14 +839,12 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
             canvas.renderAll();
           }
         }
-        // Copy: Ctrl+C
         if ((e.ctrlKey || e.metaKey) && e.key === 'c') {
           const activeObject = canvas.getActiveObject();
           if (activeObject) {
             (window as any).clipboard = activeObject;
           }
         }
-        // Paste: Ctrl+V
         if ((e.ctrlKey || e.metaKey) && e.key === 'v') {
           const clipboardObj = (window as any).clipboard;
           if (clipboardObj) {
@@ -412,7 +857,6 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
               canvas.setActiveObject(cloned);
               canvas.renderAll();
 
-              // Add to objects state
               saveState();
               const newObj: CanvasObject = {
                 id: `obj-${Date.now()}`,
@@ -427,11 +871,22 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
             });
           }
         }
+        // Escape clears dimension tool first-click
+        if (e.key === 'Escape') {
+          setDimensionStart(null);
+        }
       };
 
       window.addEventListener('keydown', handleKeyDown);
       return () => window.removeEventListener('keydown', handleKeyDown);
     }, [objects]);
+
+    // Clear dimension start when tool changes away from dimension
+    useEffect(() => {
+      if (activeTool !== 'dimension') {
+        setDimensionStart(null);
+      }
+    }, [activeTool]);
 
     // Handle mouse events for drawing
     useEffect(() => {
@@ -441,19 +896,114 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
       canvas.selection = activeTool === 'select';
 
       const handleMouseDown = (e: any) => {
-        if (activeTool === 'select') return;
+        if (activeTool === 'select') {
+          // Check if user tapped a wall object — emit onWallTapped
+          if (onWallTapped && e.target) {
+            const tapped = e.target as any;
+            const customData = tapped.customData;
+            if (customData?.type === 'wall') {
+              const wallObj = objects.find((o) => o.id === customData.id);
+              if (wallObj?.points && wallObj.points.length >= 2) {
+                const p1 = wallObj.points[0];
+                const p2 = wallObj.points[1];
+                const lengthPx = Math.hypot(p2.x - p1.x, p2.y - p1.y);
+                const lengthMetres = lengthPx / SCALE;
+
+                // Get screen position from the raw event
+                const rawEvent = e.e as MouseEvent | TouchEvent;
+                let screenX = 0;
+                let screenY = 0;
+                if ('touches' in rawEvent && rawEvent.touches.length > 0) {
+                  screenX = rawEvent.touches[0].clientX;
+                  screenY = rawEvent.touches[0].clientY;
+                } else if ('clientX' in rawEvent) {
+                  screenX = (rawEvent as MouseEvent).clientX;
+                  screenY = (rawEvent as MouseEvent).clientY;
+                }
+
+                onWallTapped(customData.id, lengthMetres, { x: screenX, y: screenY });
+              }
+            }
+          }
+          return;
+        }
+
+        // Eraser tool — tap to delete objects
+        if (activeTool === 'eraser' && e.target) {
+          const tapped = e.target as any;
+          const customData = tapped.customData;
+          if (customData?.id) {
+            saveState();
+            canvas.remove(e.target);
+            canvas.renderAll();
+            onObjectsChange(objects.filter((o) => o.id !== customData.id));
+          }
+          return;
+        }
 
         const pointer = canvas.getPointer(e.e);
-        const x = snapToGrid(pointer.x);
-        const y = snapToGrid(pointer.y);
+        let x = snapToGrid(pointer.x);
+        let y = snapToGrid(pointer.y);
+
+        // Dimension tool uses click-click, not drag
+        if (activeTool === 'dimension') {
+          if (!dimensionStart) {
+            // First click — set start
+            setDimensionStart({ x, y });
+
+            // Show a small dot at the start point
+            const dot = new Circle({
+              left: x,
+              top: y,
+              radius: 3,
+              fill: '#333333',
+              originX: 'center',
+              originY: 'center',
+              selectable: false,
+              evented: false,
+            });
+            (dot as any).isTemp = true;
+            (dot as any).isDimensionDot = true;
+            canvas.add(dot);
+            canvas.renderAll();
+          } else {
+            // Second click — create dimension
+            saveState();
+
+            // Remove temp dot
+            const tempDots = canvas.getObjects().filter((obj) => (obj as any).isDimensionDot);
+            tempDots.forEach((obj) => canvas.remove(obj));
+
+            const newObj: CanvasObject = {
+              id: `obj-${Date.now()}`,
+              type: 'dimension',
+              x: dimensionStart.x,
+              y: dimensionStart.y,
+              points: [{ x: dimensionStart.x, y: dimensionStart.y }, { x, y }],
+            };
+            onObjectsChange([...objects, newObj]);
+            setDimensionStart(null); // Reset for next measurement (stays in dimension tool)
+          }
+          return;
+        }
+
+        // Wall tool: snap to existing wall endpoints
+        if (activeTool === 'wall') {
+          const snapPoint = findSnapEndpoint(x, y);
+          if (snapPoint) {
+            x = snapPoint.x;
+            y = snapPoint.y;
+          }
+        }
 
         setIsDrawing(true);
         setStartPoint({ x, y });
 
         if (activeTool === 'symbol' && selectedSymbolId) {
           saveState();
-          const symbol = electricalSymbols.find((s) => s.id === selectedSymbolId);
-          if (symbol) {
+          const found = symbolRegistry.find((s) => s.id === selectedSymbolId) ||
+                        electricalSymbols.find((s) => s.id === selectedSymbolId);
+          if (found) {
             const newObj: CanvasObject = {
               id: `obj-${Date.now()}`,
               type: 'symbol',
@@ -482,30 +1032,68 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
       };
 
       const handleMouseMove = (e: any) => {
+        const pointer = canvas.getPointer(e.e);
+        let x = snapToGrid(pointer.x);
+        let y = snapToGrid(pointer.y);
+
+        // Dimension tool preview line from first click to cursor
+        if (activeTool === 'dimension' && dimensionStart) {
+          const tempPreviews = canvas.getObjects().filter((obj) => (obj as any).isDimensionPreview);
+          tempPreviews.forEach((obj) => canvas.remove(obj));
+
+          const previewLine = new Line([dimensionStart.x, dimensionStart.y, x, y], {
+            stroke: '#666666',
+            strokeWidth: 1,
+            strokeDashArray: [4, 4],
+            selectable: false,
+            evented: false,
+          });
+          (previewLine as any).isTemp = true;
+          (previewLine as any).isDimensionPreview = true;
+          canvas.add(previewLine);
+
+          // Live dimension label
+          const dist = Math.hypot(x - dimensionStart.x, y - dimensionStart.y);
+          const midX = (dimensionStart.x + x) / 2;
+          const midY = (dimensionStart.y + y) / 2;
+          const liveLabel = new FabricText(pxToMetres(dist), {
+            left: midX,
+            top: midY - 16,
+            fontSize: 10,
+            fill: '#333333',
+            fontFamily: 'Arial',
+            fontWeight: '500',
+            originX: 'center',
+            selectable: false,
+            evented: false,
+          });
+          (liveLabel as any).isTemp = true;
+          (liveLabel as any).isDimensionPreview = true;
+          canvas.add(liveLabel);
+
+          canvas.renderAll();
+          return;
+        }
+
         if (!isDrawing || !startPoint || activeTool === 'symbol' || activeTool === 'text') return;
 
-        const pointer = canvas.getPointer(e.e);
-        const x = snapToGrid(pointer.x);
-        const y = snapToGrid(pointer.y);
-
-        // Clear temporary objects
         const tempObjects = canvas.getObjects().filter((obj) => (obj as any).isTemp);
         tempObjects.forEach((obj) => canvas.remove(obj));
 
         if (activeTool === 'line') {
           const line = new Line([startPoint.x, startPoint.y, x, y], {
-            stroke: '#000000',
-            strokeWidth: 2,
-            selectable: false,
+            stroke: '#000000', strokeWidth: 2, selectable: false,
           });
           (line as any).isTemp = true;
           canvas.add(line);
         } else if (activeTool === 'rectangle') {
+          const w = Math.abs(x - startPoint.x);
+          const h = Math.abs(y - startPoint.y);
           const rect = new Rect({
             left: Math.min(startPoint.x, x),
             top: Math.min(startPoint.y, y),
-            width: Math.abs(x - startPoint.x),
-            height: Math.abs(y - startPoint.y),
+            width: w,
+            height: h,
             fill: 'transparent',
             stroke: '#000000',
             strokeWidth: 2,
@@ -513,6 +1101,100 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
           });
           (rect as any).isTemp = true;
           canvas.add(rect);
+
+          // Live dimensions label for rectangle
+          const dimLabel = new FabricText(`${pxToMetres(w)} \u00d7 ${pxToMetres(h)}`, {
+            left: x + 8,
+            top: y + 8,
+            fontSize: 10,
+            fill: '#333333',
+            fontFamily: 'Arial',
+            fontWeight: '500',
+            backgroundColor: 'rgba(255,255,255,0.8)',
+            selectable: false,
+            evented: false,
+          });
+          (dimLabel as any).isTemp = true;
+          canvas.add(dimLabel);
+        } else if (activeTool === 'wall') {
+          // Snap direction to axis
+          const snapped = snapWallDirection(startPoint.x, startPoint.y, x, y);
+          let endX = snapped.x;
+          let endY = snapped.y;
+
+          // Snap endpoint to existing walls
+          const snapEnd = findSnapEndpoint(endX, endY);
+          if (snapEnd) {
+            endX = snapEnd.x;
+            endY = snapEnd.y;
+          }
+
+          // Preview wall (semi-transparent thick line)
+          const previewLine = new Line([startPoint.x, startPoint.y, endX, endY], {
+            stroke: 'rgba(0,0,0,0.4)',
+            strokeWidth: WALL_THICKNESS,
+            selectable: false,
+            evented: false,
+          });
+          (previewLine as any).isTemp = true;
+          canvas.add(previewLine);
+
+          // Live dimension label
+          const dist = Math.hypot(endX - startPoint.x, endY - startPoint.y);
+          const isVertical = Math.abs(endY - startPoint.y) > Math.abs(endX - startPoint.x);
+          const midX = (startPoint.x + endX) / 2;
+          const midY = (startPoint.y + endY) / 2;
+          const liveLabel = new FabricText(pxToMetres(dist), {
+            left: isVertical ? midX + WALL_THICKNESS / 2 + 6 : midX,
+            top: isVertical ? midY : midY - WALL_THICKNESS / 2 - 16,
+            fontSize: 10,
+            fill: '#333333',
+            fontFamily: 'Arial',
+            fontWeight: '500',
+            originX: isVertical ? 'left' : 'center',
+            backgroundColor: 'rgba(255,255,255,0.8)',
+            selectable: false,
+            evented: false,
+          });
+          (liveLabel as any).isTemp = true;
+          canvas.add(liveLabel);
+
+          // Snap indicator (yellow circle at snap point)
+          if (snapEnd) {
+            const snapIndicator = new Circle({
+              left: snapEnd.x,
+              top: snapEnd.y,
+              radius: 5,
+              fill: 'rgba(250,204,21,0.7)',
+              stroke: '#EAB308',
+              strokeWidth: 1,
+              originX: 'center',
+              originY: 'center',
+              selectable: false,
+              evented: false,
+            });
+            (snapIndicator as any).isTemp = true;
+            canvas.add(snapIndicator);
+          }
+
+          // Also show snap indicator at start if it snapped
+          const snapStart = findSnapEndpoint(startPoint.x, startPoint.y);
+          if (snapStart && (snapStart.x === startPoint.x && snapStart.y === startPoint.y)) {
+            const snapIndicator = new Circle({
+              left: snapStart.x,
+              top: snapStart.y,
+              radius: 5,
+              fill: 'rgba(250,204,21,0.7)',
+              stroke: '#EAB308',
+              strokeWidth: 1,
+              originX: 'center',
+              originY: 'center',
+              selectable: false,
+              evented: false,
+            });
+            (snapIndicator as any).isTemp = true;
+            canvas.add(snapIndicator);
+          }
         }
 
         canvas.renderAll();
@@ -520,15 +1202,14 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
 
       const handleMouseUp = (e: any) => {
         if (!isDrawing || !startPoint) return;
-        if (activeTool === 'symbol' || activeTool === 'text') return;
+        if (activeTool === 'symbol' || activeTool === 'text' || activeTool === 'dimension') return;
 
         const pointer = canvas.getPointer(e.e);
-        const x = snapToGrid(pointer.x);
-        const y = snapToGrid(pointer.y);
+        let x = snapToGrid(pointer.x);
+        let y = snapToGrid(pointer.y);
 
         saveState();
 
-        // Remove temporary objects
         const tempObjects = canvas.getObjects().filter((obj) => (obj as any).isTemp);
         tempObjects.forEach((obj) => canvas.remove(obj));
 
@@ -538,10 +1219,7 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
             type: 'line',
             x: startPoint.x,
             y: startPoint.y,
-            points: [
-              { x: startPoint.x, y: startPoint.y },
-              { x, y },
-            ],
+            points: [{ x: startPoint.x, y: startPoint.y }, { x, y }],
           };
           onObjectsChange([...objects, newObj]);
         } else if (activeTool === 'rectangle') {
@@ -555,6 +1233,31 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
             rotation: 0,
           };
           onObjectsChange([...objects, newObj]);
+        } else if (activeTool === 'wall') {
+          // Snap direction
+          const snapped = snapWallDirection(startPoint.x, startPoint.y, x, y);
+          let endX = snapped.x;
+          let endY = snapped.y;
+
+          // Snap endpoint to existing walls
+          const snapEnd = findSnapEndpoint(endX, endY);
+          if (snapEnd) {
+            endX = snapEnd.x;
+            endY = snapEnd.y;
+          }
+
+          // Only create wall if it has some length
+          const dist = Math.hypot(endX - startPoint.x, endY - startPoint.y);
+          if (dist > 5) {
+            const newObj: CanvasObject = {
+              id: `obj-${Date.now()}`,
+              type: 'wall',
+              x: startPoint.x,
+              y: startPoint.y,
+              points: [{ x: startPoint.x, y: startPoint.y }, { x: endX, y: endY }],
+            };
+            onObjectsChange([...objects, newObj]);
+          }
         }
 
         setIsDrawing(false);
@@ -570,7 +1273,7 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
         canvas.off('mouse:move', handleMouseMove);
         canvas.off('mouse:up', handleMouseUp);
       };
-    }, [activeTool, selectedSymbolId, isDrawing, startPoint, objects, snapEnabled]);
+    }, [activeTool, selectedSymbolId, isDrawing, startPoint, objects, snapEnabled, dimensionStart, onWallTapped]);
 
     // Handle object modifications
     useEffect(() => {
@@ -602,73 +1305,90 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
       };
 
       canvas.on('object:modified', handleObjectModified);
-
-      return () => {
-        canvas.off('object:modified', handleObjectModified);
-      };
+      return () => { canvas.off('object:modified', handleObjectModified); };
     }, [objects]);
 
     // Zoom controls
     const handleZoomIn = () => {
       const canvas = fabricCanvasRef.current;
       if (!canvas) return;
-      const zoom = canvas.getZoom();
-      canvas.setZoom(Math.min(zoom * 1.2, 5));
+      const newZoom = Math.min(canvas.getZoom() * 1.2, 5);
+      canvas.setZoom(newZoom);
+      setZoomLevel(newZoom);
     };
 
     const handleZoomOut = () => {
       const canvas = fabricCanvasRef.current;
       if (!canvas) return;
-      const zoom = canvas.getZoom();
-      canvas.setZoom(Math.max(zoom * 0.8, 0.1));
+      const newZoom = Math.max(canvas.getZoom() * 0.8, 0.1);
+      canvas.setZoom(newZoom);
+      setZoomLevel(newZoom);
     };
 
     const handleResetView = () => {
       const canvas = fabricCanvasRef.current;
       if (!canvas) return;
       canvas.setZoom(1);
+      setZoomLevel(1);
       canvas.viewportTransform = [1, 0, 0, 1, 0, 0];
       canvas.renderAll();
     };
 
-    return (
-      <div className="flex-1 overflow-hidden bg-gray-100 p-2 md:p-4 flex items-center justify-center relative">
-        <canvas ref={canvasRef} className="border border-gray-300 rounded shadow-lg bg-white" />
+    // Calculate scale bar width based on zoom
+    const scaleBarWidth = Math.round(SCALE * zoomLevel);
 
-        {/* Zoom Controls - Floating */}
-        <div className="absolute bottom-4 right-4 md:bottom-8 md:right-8 flex flex-col gap-1.5">
+    return (
+      <div className="w-full h-full overflow-hidden relative">
+        <canvas ref={canvasRef} />
+
+        {/* Scale Bar Overlay — bottom-left */}
+        <div className="absolute bottom-4 left-4 z-10 flex items-center gap-1 bg-black/60 backdrop-blur px-2 py-1 rounded text-white text-[10px]">
+          <div className="h-3 border-l border-white/80" />
+          <div style={{ width: `${scaleBarWidth}px` }} className="border-t border-white/80" />
+          <div className="h-3 border-l border-white/80" />
+          <span className="ml-1">1m</span>
+        </div>
+
+        {/* Zoom Controls - Floating top-right */}
+        <div className="absolute top-3 right-3 flex flex-col gap-1.5">
           <Button
             size="icon"
             variant="outline"
             onClick={handleZoomIn}
-            className="h-8 w-8 md:h-9 md:w-9 bg-elec-card/90 backdrop-blur border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10"
+            className="h-9 w-9 bg-black/60 backdrop-blur border-white/10 text-white hover:bg-black/80 touch-manipulation"
             title="Zoom In"
           >
-            <ZoomIn className="h-3 w-3 md:h-4 md:w-4" />
+            <ZoomIn className="h-4 w-4" />
           </Button>
           <Button
             size="icon"
             variant="outline"
             onClick={handleZoomOut}
-            className="h-8 w-8 md:h-9 md:w-9 bg-elec-card/90 backdrop-blur border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10"
+            className="h-9 w-9 bg-black/60 backdrop-blur border-white/10 text-white hover:bg-black/80 touch-manipulation"
             title="Zoom Out"
           >
-            <ZoomOut className="h-3 w-3 md:h-4 md:w-4" />
+            <ZoomOut className="h-4 w-4" />
           </Button>
           <Button
             size="icon"
             variant="outline"
             onClick={handleResetView}
-            className="h-8 w-8 md:h-9 md:w-9 bg-elec-card/90 backdrop-blur border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10"
+            className="h-9 w-9 bg-black/60 backdrop-blur border-white/10 text-white hover:bg-black/80 touch-manipulation"
             title="Reset View"
           >
-            <Maximize2 className="h-3 w-3 md:h-4 md:w-4" />
+            <Maximize2 className="h-4 w-4" />
           </Button>
-        </div>
-
-        {/* Zoom Indicator */}
-        <div className="absolute top-8 right-8 bg-elec-card border border-elec-yellow/20 rounded px-3 py-1 text-sm text-elec-light">
-          {Math.round((fabricCanvasRef.current?.getZoom() || 1) * 100)}%
+          {onRotate && (
+            <Button
+              size="icon"
+              variant="outline"
+              onClick={onRotate}
+              className="h-9 w-9 bg-black/60 backdrop-blur border-white/10 text-white hover:bg-black/80 touch-manipulation"
+              title="Rotate 90°"
+            >
+              <RotateCw className="h-4 w-4" />
+            </Button>
+          )}
         </div>
       </div>
     );

@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.5">
+  <!-- Shared plate -->
+  <line x1="6" y1="26" x2="34" y2="26"/>
+  <!-- Left blade -->
+  <line x1="14" y1="26" x2="10" y2="14"/>
+  <!-- Left dot -->
+  <circle cx="10" cy="14" r="2" fill="currentColor" stroke="none"/>
+  <!-- Right blade -->
+  <line x1="26" y1="26" x2="30" y2="14"/>
+  <!-- Right dot -->
+  <circle cx="30" cy="14" r="2" fill="currentColor" stroke="none"/>
+</svg>

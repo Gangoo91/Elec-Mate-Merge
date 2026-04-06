@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40">
+  <!-- Primary coil circle -->
+  <circle cx="16" cy="20" r="9" fill="none" stroke="currentColor" stroke-width="1.5"/>
+  <!-- Secondary coil circle (overlapping) -->
+  <circle cx="24" cy="20" r="9" fill="none" stroke="currentColor" stroke-width="1.5"/>
+</svg>

@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40">
+  <rect x="5" y="8" width="30" height="24" rx="1" fill="none" stroke="currentColor" stroke-width="1.5"/>
+  <!-- Internal divider lines -->
+  <line x1="5" y1="16" x2="35" y2="16" stroke="currentColor" stroke-width="1"/>
+  <!-- PB text -->
+  <text x="20" y="28" text-anchor="middle" font-family="sans-serif" font-size="10" font-weight="bold" fill="currentColor" stroke="none">PB</text>
+</svg>

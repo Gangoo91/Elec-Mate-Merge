@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40">
+  <!-- Outer rectangle (slightly larger than junction box) -->
+  <rect x="6" y="8" width="28" height="24" rx="1" fill="none" stroke="currentColor" stroke-width="1.5"/>
+  <!-- Grid lines (multi-compartment) -->
+  <line x1="6" y1="20" x2="34" y2="20" stroke="currentColor" stroke-width="1"/>
+  <line x1="16" y1="8" x2="16" y2="32" stroke="currentColor" stroke-width="1"/>
+  <line x1="25" y1="8" x2="25" y2="32" stroke="currentColor" stroke-width="1"/>
+</svg>

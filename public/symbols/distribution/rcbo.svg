@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.5">
+  <!-- RCBO body -->
+  <rect x="10" y="4" width="20" height="32" rx="1"/>
+  <!-- Trip line (MCB element) -->
+  <line x1="14" y1="8" x2="22" y2="16"/>
+  <!-- Earth symbol (RCD element) -->
+  <line x1="15" y1="24" x2="25" y2="24"/>
+  <line x1="17" y1="27" x2="23" y2="27"/>
+  <line x1="19" y1="30" x2="21" y2="30"/>
+  <!-- Divider between MCB and RCD sections -->
+  <line x1="10" y1="20" x2="30" y2="20" stroke-dasharray="2 2"/>
+</svg>

@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40">
+  <line x1="4" y1="15" x2="36" y2="15" stroke="currentColor" stroke-width="1.5" stroke-dasharray="4,3"/>
+  <line x1="4" y1="25" x2="36" y2="25" stroke="currentColor" stroke-width="1.5" stroke-dasharray="4,3"/>
+  <line x1="4" y1="15" x2="4" y2="25" stroke="currentColor" stroke-width="1.2" stroke-dasharray="3,2"/>
+  <line x1="36" y1="15" x2="36" y2="25" stroke="currentColor" stroke-width="1.2" stroke-dasharray="3,2"/>
+</svg>

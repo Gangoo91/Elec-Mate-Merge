@@ -1,15 +1,26 @@
-export type SymbolCategory = 'lighting' | 'sockets' | 'switches' | 'distribution' | 'accessories';
+export type SymbolCategory = 'lighting' | 'sockets' | 'switches' | 'distribution' | 'accessories' | 'architectural';
+
+export type MountType = 'wall' | 'ceiling' | 'floor' | 'freestanding';
 
 export interface ElectricalSymbol {
   id: string;
   name: string;
   category: SymbolCategory;
-  svg: string;
+  /** @deprecated Use svgXml instead. Kept for backwards compatibility with saved diagrams. */
+  svg?: string;
+  /** Full SVG XML string e.g. '<svg>...</svg>' */
+  svgXml: string;
+  /** Where the symbol is typically mounted */
+  mountType?: MountType;
   width: number;
   height: number;
   standard?: string;
   iecCode?: string;
 }
+
+/** Helper to wrap a legacy SVG path string into a full SVG XML document */
+const pathToSvgXml = (pathD: string): string =>
+  `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40" width="40" height="40"><path d="${pathD}" fill="currentColor" stroke="currentColor" stroke-width="0.5"/></svg>`;
 
 // BS 7671 / IEC 60617 Compliant Electrical Symbols
 // Based on UK electrical installation standards
@@ -21,6 +32,8 @@ export const electricalSymbols: ElectricalSymbol[] = [
     category: 'lighting',
     // BS 7671: Circle with cross
     svg: 'M 20 20 m -6 0 a 6 6 0 1 0 12 0 a 6 6 0 1 0 -12 0 M 20 14 L 20 26 M 14 20 L 26 20',
+    svgXml: pathToSvgXml('M 20 20 m -6 0 a 6 6 0 1 0 12 0 a 6 6 0 1 0 -12 0 M 20 14 L 20 26 M 14 20 L 26 20'),
+    mountType: 'ceiling',
     width: 40,
     height: 40,
     standard: 'IEC 60617 / BS 7671',
@@ -32,6 +45,8 @@ export const electricalSymbols: ElectricalSymbol[] = [
     category: 'lighting',
     // BS 7671: Semicircle on wall
     svg: 'M 16 20 L 24 20 L 24 26 A 4 6 0 0 1 16 26 Z',
+    svgXml: pathToSvgXml('M 16 20 L 24 20 L 24 26 A 4 6 0 0 1 16 26 Z'),
+    mountType: 'wall',
     width: 40,
     height: 40,
     standard: 'IEC 60617 / BS 7671',
@@ -43,6 +58,8 @@ export const electricalSymbols: ElectricalSymbol[] = [
     category: 'lighting',
     // BS 7671: Circle with bar
     svg: 'M 20 20 m -6 0 a 6 6 0 1 0 12 0 a 6 6 0 1 0 -12 0 M 14 20 L 26 20',
+    svgXml: pathToSvgXml('M 20 20 m -6 0 a 6 6 0 1 0 12 0 a 6 6 0 1 0 -12 0 M 14 20 L 26 20'),
+    mountType: 'wall',
     width: 40,
     height: 40,
     standard: 'IEC 60617 / BS 7671',
@@ -54,6 +71,8 @@ export const electricalSymbols: ElectricalSymbol[] = [
     category: 'lighting',
     // BS 7671: Rectangle
     svg: 'M 12 18 L 28 18 L 28 22 L 12 22 Z',
+    svgXml: pathToSvgXml('M 12 18 L 28 18 L 28 22 L 12 22 Z'),
+    mountType: 'ceiling',
     width: 40,
     height: 40,
     standard: 'IEC 60617 / BS 7671',
@@ -65,6 +84,8 @@ export const electricalSymbols: ElectricalSymbol[] = [
     category: 'lighting',
     // BS 7671: Filled circle
     svg: 'M 20 20 m -5 0 a 5 5 0 1 0 10 0 a 5 5 0 1 0 -10 0',
+    svgXml: pathToSvgXml('M 20 20 m -5 0 a 5 5 0 1 0 10 0 a 5 5 0 1 0 -10 0'),
+    mountType: 'ceiling',
     width: 40,
     height: 40,
     standard: 'IEC 60617 / BS 7671',
@@ -76,6 +97,8 @@ export const electricalSymbols: ElectricalSymbol[] = [
     category: 'lighting',
     // BS 7671: Circle with outer ring
     svg: 'M 20 20 m -6 0 a 6 6 0 1 0 12 0 a 6 6 0 1 0 -12 0 M 20 20 m -4 0 a 4 4 0 1 0 8 0 a 4 4 0 1 0 -8 0',
+    svgXml: pathToSvgXml('M 20 20 m -6 0 a 6 6 0 1 0 12 0 a 6 6 0 1 0 -12 0 M 20 20 m -4 0 a 4 4 0 1 0 8 0 a 4 4 0 1 0 -8 0'),
+    mountType: 'wall',
     width: 40,
     height: 40,
     standard: 'IEC 60617 / BS 7671',
@@ -87,6 +110,8 @@ export const electricalSymbols: ElectricalSymbol[] = [
     category: 'lighting',
     // BS 7671: Circle with line above
     svg: 'M 20 10 L 20 16 M 20 18 m -4 0 a 4 4 0 1 0 8 0 a 4 4 0 1 0 -8 0',
+    svgXml: pathToSvgXml('M 20 10 L 20 16 M 20 18 m -4 0 a 4 4 0 1 0 8 0 a 4 4 0 1 0 -8 0'),
+    mountType: 'ceiling',
     width: 40,
     height: 40,
     standard: 'IEC 60617 / BS 7671',
@@ -98,6 +123,8 @@ export const electricalSymbols: ElectricalSymbol[] = [
     category: 'lighting',
     // BS 7671: Rectangle with E
     svg: 'M 12 14 L 28 14 L 28 26 L 12 26 Z M 18 18 L 22 18 M 18 20 L 21 20 M 18 22 L 22 22',
+    svgXml: pathToSvgXml('M 12 14 L 28 14 L 28 26 L 12 26 Z M 18 18 L 22 18 M 18 20 L 21 20 M 18 22 L 22 22'),
+    mountType: 'wall',
     width: 40,
     height: 40,
     standard: 'IEC 60617 / BS 7671',
@@ -109,6 +136,8 @@ export const electricalSymbols: ElectricalSymbol[] = [
     category: 'lighting',
     // BS 7671: Trapezoid with rays
     svg: 'M 14 18 L 20 18 L 26 24 L 26 24 L 14 24 Z M 16 18 L 14 14 M 20 18 L 20 14 M 24 18 L 26 14',
+    svgXml: pathToSvgXml('M 14 18 L 20 18 L 26 24 L 26 24 L 14 24 Z M 16 18 L 14 14 M 20 18 L 20 14 M 24 18 L 26 14'),
+    mountType: 'wall',
     width: 40,
     height: 40,
     standard: 'IEC 60617 / BS 7671',
@@ -120,6 +149,8 @@ export const electricalSymbols: ElectricalSymbol[] = [
     category: 'lighting',
     // BS 7671: Circle with PIR indicator
     svg: 'M 20 20 m -6 0 a 6 6 0 1 0 12 0 a 6 6 0 1 0 -12 0 M 16 14 L 18 16 M 22 14 L 20 16 M 24 14 L 22 16',
+    svgXml: pathToSvgXml('M 20 20 m -6 0 a 6 6 0 1 0 12 0 a 6 6 0 1 0 -12 0 M 16 14 L 18 16 M 22 14 L 20 16 M 24 14 L 22 16'),
+    mountType: 'wall',
     width: 40,
     height: 40,
     standard: 'IEC 60617 / BS 7671',
@@ -133,6 +164,8 @@ export const electricalSymbols: ElectricalSymbol[] = [
     category: 'sockets',
     // BS 7671: Single circle
     svg: 'M 20 20 m -6 0 a 6 6 0 1 0 12 0 a 6 6 0 1 0 -12 0',
+    svgXml: pathToSvgXml('M 20 20 m -6 0 a 6 6 0 1 0 12 0 a 6 6 0 1 0 -12 0'),
+    mountType: 'wall',
     width: 40,
     height: 40,
     standard: 'IEC 60617 / BS 7671',
@@ -144,6 +177,8 @@ export const electricalSymbols: ElectricalSymbol[] = [
     category: 'sockets',
     // BS 7671: Two circles
     svg: 'M 15 20 m -4 0 a 4 4 0 1 0 8 0 a 4 4 0 1 0 -8 0 M 25 20 m -4 0 a 4 4 0 1 0 8 0 a 4 4 0 1 0 -8 0',
+    svgXml: pathToSvgXml('M 15 20 m -4 0 a 4 4 0 1 0 8 0 a 4 4 0 1 0 -8 0 M 25 20 m -4 0 a 4 4 0 1 0 8 0 a 4 4 0 1 0 -8 0'),
+    mountType: 'wall',
     width: 40,
     height: 40,
     standard: 'IEC 60617 / BS 7671',
@@ -155,6 +190,8 @@ export const electricalSymbols: ElectricalSymbol[] = [
     category: 'sockets',
     // BS 7671: Circle with tilde
     svg: 'M 20 20 m -6 0 a 6 6 0 1 0 12 0 a 6 6 0 1 0 -12 0 M 16 18 Q 18 16 20 18 T 24 18',
+    svgXml: pathToSvgXml('M 20 20 m -6 0 a 6 6 0 1 0 12 0 a 6 6 0 1 0 -12 0 M 16 18 Q 18 16 20 18 T 24 18'),
+    mountType: 'wall',
     width: 40,
     height: 40,
     standard: 'IEC 60617 / BS 7671',
@@ -166,6 +203,8 @@ export const electricalSymbols: ElectricalSymbol[] = [
     category: 'sockets',
     // BS 7671: Large circle with C
     svg: 'M 20 20 m -7 0 a 7 7 0 1 0 14 0 a 7 7 0 1 0 -14 0 M 22 16 A 3 3 0 0 0 18 20 A 3 3 0 0 0 22 24',
+    svgXml: pathToSvgXml('M 20 20 m -7 0 a 7 7 0 1 0 14 0 a 7 7 0 1 0 -14 0 M 22 16 A 3 3 0 0 0 18 20 A 3 3 0 0 0 22 24'),
+    mountType: 'wall',
     width: 40,
     height: 40,
     standard: 'IEC 60617 / BS 7671',
@@ -177,6 +216,8 @@ export const electricalSymbols: ElectricalSymbol[] = [
     category: 'sockets',
     // BS 7671: Circle with diagonal lines
     svg: 'M 20 20 m -6 0 a 6 6 0 1 0 12 0 a 6 6 0 1 0 -12 0 M 16 16 L 24 24 M 24 16 L 16 24',
+    svgXml: pathToSvgXml('M 20 20 m -6 0 a 6 6 0 1 0 12 0 a 6 6 0 1 0 -12 0 M 16 16 L 24 24 M 24 16 L 16 24'),
+    mountType: 'floor',
     width: 40,
     height: 40,
     standard: 'IEC 60617 / BS 7671',
@@ -188,6 +229,8 @@ export const electricalSymbols: ElectricalSymbol[] = [
     category: 'sockets',
     // BS 7671: Circle with outer square
     svg: 'M 20 20 m -5 0 a 5 5 0 1 0 10 0 a 5 5 0 1 0 -10 0 M 12 12 L 28 12 L 28 28 L 12 28 Z',
+    svgXml: pathToSvgXml('M 20 20 m -5 0 a 5 5 0 1 0 10 0 a 5 5 0 1 0 -10 0 M 12 12 L 28 12 L 28 28 L 12 28 Z'),
+    mountType: 'wall',
     width: 40,
     height: 40,
     standard: 'IEC 60617 / BS 7671',
@@ -199,6 +242,8 @@ export const electricalSymbols: ElectricalSymbol[] = [
     category: 'sockets',
     // BS 7671: Small circle with S
     svg: 'M 20 20 m -5 0 a 5 5 0 1 0 10 0 a 5 5 0 1 0 -10 0 M 19 18 Q 21 17 22 19 Q 21 21 19 22',
+    svgXml: pathToSvgXml('M 20 20 m -5 0 a 5 5 0 1 0 10 0 a 5 5 0 1 0 -10 0 M 19 18 Q 21 17 22 19 Q 21 21 19 22'),
+    mountType: 'wall',
     width: 40,
     height: 40,
     standard: 'IEC 60617 / BS 7671',
@@ -210,6 +255,8 @@ export const electricalSymbols: ElectricalSymbol[] = [
     category: 'sockets',
     // BS 7671: Circle with USB symbol
     svg: 'M 20 20 m -6 0 a 6 6 0 1 0 12 0 a 6 6 0 1 0 -12 0 M 20 16 L 20 24 M 17 20 L 20 20 M 20 20 L 23 20 M 17 20 L 17 18 M 23 20 L 23 22',
+    svgXml: pathToSvgXml('M 20 20 m -6 0 a 6 6 0 1 0 12 0 a 6 6 0 1 0 -12 0 M 20 16 L 20 24 M 17 20 L 20 20 M 20 20 L 23 20 M 17 20 L 17 18 M 23 20 L 23 22'),
+    mountType: 'wall',
     width: 40,
     height: 40,
     standard: 'IEC 60617 / BS 7671',
@@ -221,6 +268,8 @@ export const electricalSymbols: ElectricalSymbol[] = [
     category: 'sockets',
     // BS 7671: Rectangle with fuse symbol
     svg: 'M 14 14 L 26 14 L 26 26 L 14 26 Z M 17 20 L 23 20 M 20 17 L 20 23',
+    svgXml: pathToSvgXml('M 14 14 L 26 14 L 26 26 L 14 26 Z M 17 20 L 23 20 M 20 17 L 20 23'),
+    mountType: 'wall',
     width: 40,
     height: 40,
     standard: 'IEC 60617 / BS 7671',
@@ -232,6 +281,8 @@ export const electricalSymbols: ElectricalSymbol[] = [
     category: 'sockets',
     // BS 7671: Rectangle with lightning bolt
     svg: 'M 14 12 L 26 12 L 26 28 L 14 28 Z M 18 16 L 20 20 L 18 20 L 20 24 M 22 18 L 22 22',
+    svgXml: pathToSvgXml('M 14 12 L 26 12 L 26 28 L 14 28 Z M 18 16 L 20 20 L 18 20 L 20 24 M 22 18 L 22 22'),
+    mountType: 'wall',
     width: 40,
     height: 40,
     standard: 'IEC 60617 / BS 7671',
@@ -245,6 +296,8 @@ export const electricalSymbols: ElectricalSymbol[] = [
     category: 'switches',
     // BS 7671: Line with contact point
     svg: 'M 14 20 L 20 20 L 24 16 M 26 16 m -1 0 a 1 1 0 1 0 2 0 a 1 1 0 1 0 -2 0',
+    svgXml: pathToSvgXml('M 14 20 L 20 20 L 24 16 M 26 16 m -1 0 a 1 1 0 1 0 2 0 a 1 1 0 1 0 -2 0'),
+    mountType: 'wall',
     width: 40,
     height: 40,
     standard: 'IEC 60617 / BS 7671',
@@ -256,6 +309,8 @@ export const electricalSymbols: ElectricalSymbol[] = [
     category: 'switches',
     // BS 7671: Y-shaped
     svg: 'M 14 20 L 20 20 L 24 16 M 24 24 L 20 20 M 26 16 m -1 0 a 1 1 0 1 0 2 0 a 1 1 0 1 0 -2 0 M 26 24 m -1 0 a 1 1 0 1 0 2 0 a 1 1 0 1 0 -2 0',
+    svgXml: pathToSvgXml('M 14 20 L 20 20 L 24 16 M 24 24 L 20 20 M 26 16 m -1 0 a 1 1 0 1 0 2 0 a 1 1 0 1 0 -2 0 M 26 24 m -1 0 a 1 1 0 1 0 2 0 a 1 1 0 1 0 -2 0'),
+    mountType: 'wall',
     width: 40,
     height: 40,
     standard: 'IEC 60617 / BS 7671',
@@ -267,6 +322,8 @@ export const electricalSymbols: ElectricalSymbol[] = [
     category: 'switches',
     // BS 7671: Double Y-shaped
     svg: 'M 12 16 L 18 20 L 12 24 M 28 16 L 22 20 L 28 24 M 14 16 m -1 0 a 1 1 0 1 0 2 0 a 1 1 0 1 0 -2 0 M 14 24 m -1 0 a 1 1 0 1 0 2 0 a 1 1 0 1 0 -2 0 M 26 16 m -1 0 a 1 1 0 1 0 2 0 a 1 1 0 1 0 -2 0 M 26 24 m -1 0 a 1 1 0 1 0 2 0 a 1 1 0 1 0 -2 0',
+    svgXml: pathToSvgXml('M 12 16 L 18 20 L 12 24 M 28 16 L 22 20 L 28 24 M 14 16 m -1 0 a 1 1 0 1 0 2 0 a 1 1 0 1 0 -2 0 M 14 24 m -1 0 a 1 1 0 1 0 2 0 a 1 1 0 1 0 -2 0 M 26 16 m -1 0 a 1 1 0 1 0 2 0 a 1 1 0 1 0 -2 0 M 26 24 m -1 0 a 1 1 0 1 0 2 0 a 1 1 0 1 0 -2 0'),
+    mountType: 'wall',
     width: 40,
     height: 40,
     standard: 'IEC 60617 / BS 7671',
@@ -278,6 +335,8 @@ export const electricalSymbols: ElectricalSymbol[] = [
     category: 'switches',
     // BS 7671: Circle with D
     svg: 'M 20 20 m -6 0 a 6 6 0 1 0 12 0 a 6 6 0 1 0 -12 0 M 18 17 L 18 23 A 3 3 0 0 0 22 20 A 3 3 0 0 0 18 17',
+    svgXml: pathToSvgXml('M 20 20 m -6 0 a 6 6 0 1 0 12 0 a 6 6 0 1 0 -12 0 M 18 17 L 18 23 A 3 3 0 0 0 22 20 A 3 3 0 0 0 18 17'),
+    mountType: 'wall',
     width: 40,
     height: 40,
     standard: 'IEC 60617 / BS 7671',
@@ -289,6 +348,8 @@ export const electricalSymbols: ElectricalSymbol[] = [
     category: 'switches',
     // BS 7671: Vertical line with circle
     svg: 'M 20 12 L 20 24 M 20 26 m -2 0 a 2 2 0 1 0 4 0 a 2 2 0 1 0 -4 0',
+    svgXml: pathToSvgXml('M 20 12 L 20 24 M 20 26 m -2 0 a 2 2 0 1 0 4 0 a 2 2 0 1 0 -4 0'),
+    mountType: 'ceiling',
     width: 40,
     height: 40,
     standard: 'IEC 60617 / BS 7671',
@@ -300,6 +361,8 @@ export const electricalSymbols: ElectricalSymbol[] = [
     category: 'switches',
     // BS 7671: Two 1-way switches
     svg: 'M 12 16 L 16 16 L 20 12 M 22 12 m -1 0 a 1 1 0 1 0 2 0 a 1 1 0 1 0 -2 0 M 12 24 L 16 24 L 20 20 M 22 20 m -1 0 a 1 1 0 1 0 2 0 a 1 1 0 1 0 -2 0',
+    svgXml: pathToSvgXml('M 12 16 L 16 16 L 20 12 M 22 12 m -1 0 a 1 1 0 1 0 2 0 a 1 1 0 1 0 -2 0 M 12 24 L 16 24 L 20 20 M 22 20 m -1 0 a 1 1 0 1 0 2 0 a 1 1 0 1 0 -2 0'),
+    mountType: 'wall',
     width: 40,
     height: 40,
     standard: 'IEC 60617 / BS 7671',
@@ -311,6 +374,8 @@ export const electricalSymbols: ElectricalSymbol[] = [
     category: 'switches',
     // BS 7671: Circle with sensor waves
     svg: 'M 20 20 m -6 0 a 6 6 0 1 0 12 0 a 6 6 0 1 0 -12 0 M 14 14 L 16 16 M 16 12 L 18 14 M 24 14 L 22 16 M 24 12 L 22 14',
+    svgXml: pathToSvgXml('M 20 20 m -6 0 a 6 6 0 1 0 12 0 a 6 6 0 1 0 -12 0 M 14 14 L 16 16 M 16 12 L 18 14 M 24 14 L 22 16 M 24 12 L 22 14'),
+    mountType: 'wall',
     width: 40,
     height: 40,
     standard: 'IEC 60617 / BS 7671',
@@ -322,6 +387,8 @@ export const electricalSymbols: ElectricalSymbol[] = [
     category: 'switches',
     // BS 7671: Circle with clock hands
     svg: 'M 20 20 m -6 0 a 6 6 0 1 0 12 0 a 6 6 0 1 0 -12 0 M 20 16 L 20 20 L 23 22',
+    svgXml: pathToSvgXml('M 20 20 m -6 0 a 6 6 0 1 0 12 0 a 6 6 0 1 0 -12 0 M 20 16 L 20 20 L 23 22'),
+    mountType: 'wall',
     width: 40,
     height: 40,
     standard: 'IEC 60617 / BS 7671',
@@ -333,6 +400,8 @@ export const electricalSymbols: ElectricalSymbol[] = [
     category: 'switches',
     // BS 7671: Rectangle with bar
     svg: 'M 16 14 L 24 14 L 24 26 L 16 26 Z M 18 18 L 22 18 M 18 22 L 22 22',
+    svgXml: pathToSvgXml('M 16 14 L 24 14 L 24 26 L 16 26 Z M 18 18 L 22 18 M 18 22 L 22 22'),
+    mountType: 'wall',
     width: 40,
     height: 40,
     standard: 'IEC 60617 / BS 7671',
@@ -344,6 +413,8 @@ export const electricalSymbols: ElectricalSymbol[] = [
     category: 'switches',
     // BS 7671: Circle with X
     svg: 'M 20 20 m -7 0 a 7 7 0 1 0 14 0 a 7 7 0 1 0 -14 0 M 16 16 L 24 24 M 24 16 L 16 24',
+    svgXml: pathToSvgXml('M 20 20 m -7 0 a 7 7 0 1 0 14 0 a 7 7 0 1 0 -14 0 M 16 16 L 24 24 M 24 16 L 16 24'),
+    mountType: 'wall',
     width: 40,
     height: 40,
     standard: 'IEC 60617 / BS 7671',
@@ -357,6 +428,8 @@ export const electricalSymbols: ElectricalSymbol[] = [
     category: 'distribution',
     // BS 7671: Rectangle with horizontal lines
     svg: 'M 10 12 L 30 12 L 30 28 L 10 28 Z M 10 18 L 30 18 M 10 24 L 30 24 M 16 14 L 16 16 M 20 14 L 20 16 M 24 14 L 24 16',
+    svgXml: pathToSvgXml('M 10 12 L 30 12 L 30 28 L 10 28 Z M 10 18 L 30 18 M 10 24 L 30 24 M 16 14 L 16 16 M 20 14 L 20 16 M 24 14 L 24 16'),
+    mountType: 'wall',
     width: 40,
     height: 40,
     standard: 'IEC 60617 / BS 7671',
@@ -368,6 +441,8 @@ export const electricalSymbols: ElectricalSymbol[] = [
     category: 'distribution',
     // BS 7671: Small filled rectangle
     svg: 'M 16 12 L 24 12 L 24 28 L 16 28 Z M 20 16 L 20 20 M 18 22 L 22 22',
+    svgXml: pathToSvgXml('M 16 12 L 24 12 L 24 28 L 16 28 Z M 20 16 L 20 20 M 18 22 L 22 22'),
+    mountType: 'wall',
     width: 40,
     height: 40,
     standard: 'IEC 60617 / BS 7671',
@@ -379,6 +454,8 @@ export const electricalSymbols: ElectricalSymbol[] = [
     category: 'distribution',
     // BS 7671: Rectangle with wave
     svg: 'M 16 12 L 24 12 L 24 28 L 16 28 Z M 18 18 Q 20 16 22 18 M 20 22 L 20 26',
+    svgXml: pathToSvgXml('M 16 12 L 24 12 L 24 28 L 16 28 Z M 18 18 Q 20 16 22 18 M 20 22 L 20 26'),
+    mountType: 'wall',
     width: 40,
     height: 40,
     standard: 'IEC 60617 / BS 7671',
@@ -390,6 +467,8 @@ export const electricalSymbols: ElectricalSymbol[] = [
     category: 'distribution',
     // BS 7671: Combined MCB + RCD
     svg: 'M 16 12 L 24 12 L 24 28 L 16 28 Z M 20 16 m -2 0 a 2 2 0 1 0 4 0 a 2 2 0 1 0 -4 0 M 18 22 Q 20 20 22 22',
+    svgXml: pathToSvgXml('M 16 12 L 24 12 L 24 28 L 16 28 Z M 20 16 m -2 0 a 2 2 0 1 0 4 0 a 2 2 0 1 0 -4 0 M 18 22 Q 20 20 22 22'),
+    mountType: 'wall',
     width: 40,
     height: 40,
     standard: 'IEC 60617 / BS 7671',
@@ -401,6 +480,8 @@ export const electricalSymbols: ElectricalSymbol[] = [
     category: 'distribution',
     // BS 7671: Rectangle with bars
     svg: 'M 18 12 L 22 12 L 22 28 L 18 28 Z M 14 18 L 26 18 M 14 22 L 26 22',
+    svgXml: pathToSvgXml('M 18 12 L 22 12 L 22 28 L 18 28 Z M 14 18 L 26 18 M 14 22 L 26 22'),
+    mountType: 'wall',
     width: 40,
     height: 40,
     standard: 'IEC 60617 / BS 7671',
@@ -412,6 +493,8 @@ export const electricalSymbols: ElectricalSymbol[] = [
     category: 'distribution',
     // BS 7671: Grid pattern
     svg: 'M 10 10 L 30 10 L 30 30 L 10 30 Z M 10 16 L 30 16 M 10 23 L 30 23 M 17 10 L 17 30 M 23 10 L 23 30',
+    svgXml: pathToSvgXml('M 10 10 L 30 10 L 30 30 L 10 30 Z M 10 16 L 30 16 M 10 23 L 30 23 M 17 10 L 17 30 M 23 10 L 23 30'),
+    mountType: 'wall',
     width: 40,
     height: 40,
     standard: 'IEC 60617 / BS 7671',
@@ -423,6 +506,8 @@ export const electricalSymbols: ElectricalSymbol[] = [
     category: 'distribution',
     // BS 7671: Lightning in rectangle
     svg: 'M 16 12 L 24 12 L 24 28 L 16 28 Z M 18 16 L 20 20 L 18 20 L 20 24 M 22 18 L 22 22',
+    svgXml: pathToSvgXml('M 16 12 L 24 12 L 24 28 L 16 28 Z M 18 16 L 20 20 L 18 20 L 20 24 M 22 18 L 22 22'),
+    mountType: 'wall',
     width: 40,
     height: 40,
     standard: 'IEC 60617 / BS 7671',
@@ -434,6 +519,8 @@ export const electricalSymbols: ElectricalSymbol[] = [
     category: 'distribution',
     // BS 7671: Parallel horizontal lines
     svg: 'M 10 16 L 30 16 M 10 20 L 30 20 M 10 24 L 30 24 M 14 12 L 14 28 M 20 12 L 20 28 M 26 12 L 26 28',
+    svgXml: pathToSvgXml('M 10 16 L 30 16 M 10 20 L 30 20 M 10 24 L 30 24 M 14 12 L 14 28 M 20 12 L 20 28 M 26 12 L 26 28'),
+    mountType: 'wall',
     width: 40,
     height: 40,
     standard: 'IEC 60617 / BS 7671',
@@ -445,6 +532,8 @@ export const electricalSymbols: ElectricalSymbol[] = [
     category: 'distribution',
     // BS 7671: Smaller consumer unit
     svg: 'M 12 14 L 28 14 L 28 26 L 12 26 Z M 12 20 L 28 20 M 16 16 L 16 18 M 24 16 L 24 18',
+    svgXml: pathToSvgXml('M 12 14 L 28 14 L 28 26 L 12 26 Z M 12 20 L 28 20 M 16 16 L 16 18 M 24 16 L 24 18'),
+    mountType: 'wall',
     width: 40,
     height: 40,
     standard: 'IEC 60617 / BS 7671',
@@ -456,6 +545,8 @@ export const electricalSymbols: ElectricalSymbol[] = [
     category: 'distribution',
     // BS 7671: Two coils with core
     svg: 'M 14 14 m -2 0 a 2 2 0 1 0 4 0 a 2 2 0 1 0 -4 0 M 14 26 m -2 0 a 2 2 0 1 0 4 0 a 2 2 0 1 0 -4 0 M 26 14 m -2 0 a 2 2 0 1 0 4 0 a 2 2 0 1 0 -4 0 M 26 26 m -2 0 a 2 2 0 1 0 4 0 a 2 2 0 1 0 -4 0 M 19 12 L 21 12 L 21 28 L 19 28 Z',
+    svgXml: pathToSvgXml('M 14 14 m -2 0 a 2 2 0 1 0 4 0 a 2 2 0 1 0 -4 0 M 14 26 m -2 0 a 2 2 0 1 0 4 0 a 2 2 0 1 0 -4 0 M 26 14 m -2 0 a 2 2 0 1 0 4 0 a 2 2 0 1 0 -4 0 M 26 26 m -2 0 a 2 2 0 1 0 4 0 a 2 2 0 1 0 -4 0 M 19 12 L 21 12 L 21 28 L 19 28 Z'),
+    mountType: 'freestanding',
     width: 40,
     height: 40,
     standard: 'IEC 60617 / BS 7671',
@@ -469,6 +560,8 @@ export const electricalSymbols: ElectricalSymbol[] = [
     category: 'accessories',
     // BS 7671: Circle with S
     svg: 'M 20 20 m -6 0 a 6 6 0 1 0 12 0 a 6 6 0 1 0 -12 0 M 18 18 Q 20 17 22 18 Q 20 19 18 20 Q 20 21 22 22',
+    svgXml: pathToSvgXml('M 20 20 m -6 0 a 6 6 0 1 0 12 0 a 6 6 0 1 0 -12 0 M 18 18 Q 20 17 22 18 Q 20 19 18 20 Q 20 21 22 22'),
+    mountType: 'ceiling',
     width: 40,
     height: 40,
     standard: 'IEC 60617 / BS 7671',
@@ -480,6 +573,8 @@ export const electricalSymbols: ElectricalSymbol[] = [
     category: 'accessories',
     // BS 7671: Circle with bell
     svg: 'M 20 20 m -6 0 a 6 6 0 1 0 12 0 a 6 6 0 1 0 -12 0 M 17 17 L 23 17 L 23 21 L 17 21 Z M 20 21 L 20 23 M 18 23 L 22 23',
+    svgXml: pathToSvgXml('M 20 20 m -6 0 a 6 6 0 1 0 12 0 a 6 6 0 1 0 -12 0 M 17 17 L 23 17 L 23 21 L 17 21 Z M 20 21 L 20 23 M 18 23 L 22 23'),
+    mountType: 'wall',
     width: 40,
     height: 40,
     standard: 'IEC 60617 / BS 7671',
@@ -491,6 +586,8 @@ export const electricalSymbols: ElectricalSymbol[] = [
     category: 'accessories',
     // BS 7671: Bell shape
     svg: 'M 14 16 L 20 16 L 26 22 L 26 24 L 14 24 Z M 20 24 L 20 26 M 18 26 L 22 26',
+    svgXml: pathToSvgXml('M 14 16 L 20 16 L 26 22 L 26 24 L 14 24 Z M 20 24 L 20 26 M 18 26 L 22 26'),
+    mountType: 'wall',
     width: 40,
     height: 40,
     standard: 'IEC 60617 / BS 7671',
@@ -502,6 +599,8 @@ export const electricalSymbols: ElectricalSymbol[] = [
     category: 'accessories',
     // BS 7671: Square with X
     svg: 'M 14 14 L 26 14 L 26 26 L 14 26 Z M 14 14 L 26 26 M 26 14 L 14 26',
+    svgXml: pathToSvgXml('M 14 14 L 26 14 L 26 26 L 14 26 Z M 14 14 L 26 26 M 26 14 L 14 26'),
+    mountType: 'ceiling',
     width: 40,
     height: 40,
     standard: 'IEC 60617 / BS 7671',
@@ -513,6 +612,8 @@ export const electricalSymbols: ElectricalSymbol[] = [
     category: 'accessories',
     // BS 7671: Circle with T
     svg: 'M 20 20 m -6 0 a 6 6 0 1 0 12 0 a 6 6 0 1 0 -12 0 M 17 17 L 23 17 M 20 17 L 20 23',
+    svgXml: pathToSvgXml('M 20 20 m -6 0 a 6 6 0 1 0 12 0 a 6 6 0 1 0 -12 0 M 17 17 L 23 17 M 20 17 L 20 23'),
+    mountType: 'wall',
     width: 40,
     height: 40,
     standard: 'IEC 60617 / BS 7671',
@@ -524,6 +625,8 @@ export const electricalSymbols: ElectricalSymbol[] = [
     category: 'accessories',
     // BS 7671: Rectangle with speaker
     svg: 'M 14 14 L 26 14 L 26 26 L 14 26 Z M 17 18 L 19 18 L 21 16 L 21 24 L 19 22 L 17 22 Z M 22 18 L 23 17 M 22 20 L 24 20 M 22 22 L 23 23',
+    svgXml: pathToSvgXml('M 14 14 L 26 14 L 26 26 L 14 26 Z M 17 18 L 19 18 L 21 16 L 21 24 L 19 22 L 17 22 Z M 22 18 L 23 17 M 22 20 L 24 20 M 22 22 L 23 23'),
+    mountType: 'wall',
     width: 40,
     height: 40,
     standard: 'IEC 60617 / BS 7671',
@@ -535,6 +638,8 @@ export const electricalSymbols: ElectricalSymbol[] = [
     category: 'accessories',
     // BS 7671: Camera shape
     svg: 'M 12 18 L 18 18 L 18 22 L 12 22 Z M 18 20 L 22 20 L 24 16 L 24 24 L 22 20 M 22 20 m -1 0 a 1 1 0 1 0 2 0 a 1 1 0 1 0 -2 0',
+    svgXml: pathToSvgXml('M 12 18 L 18 18 L 18 22 L 12 22 Z M 18 20 L 22 20 L 24 16 L 24 24 L 22 20 M 22 20 m -1 0 a 1 1 0 1 0 2 0 a 1 1 0 1 0 -2 0'),
+    mountType: 'wall',
     width: 40,
     height: 40,
     standard: 'IEC 60617 / BS 7671',
@@ -546,6 +651,8 @@ export const electricalSymbols: ElectricalSymbol[] = [
     category: 'accessories',
     // BS 7671: Circle with fan blades
     svg: 'M 20 20 m -6 0 a 6 6 0 1 0 12 0 a 6 6 0 1 0 -12 0 M 20 14 L 20 18 M 20 22 L 20 26 M 14 20 L 18 20 M 22 20 L 26 20',
+    svgXml: pathToSvgXml('M 20 20 m -6 0 a 6 6 0 1 0 12 0 a 6 6 0 1 0 -12 0 M 20 14 L 20 18 M 20 22 L 20 26 M 14 20 L 18 20 M 22 20 L 26 20'),
+    mountType: 'wall',
     width: 40,
     height: 40,
     standard: 'IEC 60617 / BS 7671',
@@ -557,6 +664,8 @@ export const electricalSymbols: ElectricalSymbol[] = [
     category: 'accessories',
     // BS 7671: Heating element
     svg: 'M 16 14 L 24 14 L 24 26 L 16 26 Z M 18 16 L 18 24 M 20 16 L 20 24 M 22 16 L 22 24',
+    svgXml: pathToSvgXml('M 16 14 L 24 14 L 24 26 L 16 26 Z M 18 16 L 18 24 M 20 16 L 20 24 M 22 16 L 22 24'),
+    mountType: 'wall',
     width: 40,
     height: 40,
     standard: 'IEC 60617 / BS 7671',
@@ -568,6 +677,8 @@ export const electricalSymbols: ElectricalSymbol[] = [
     category: 'accessories',
     // BS 7671: Circle with M
     svg: 'M 20 20 m -6 0 a 6 6 0 1 0 12 0 a 6 6 0 1 0 -12 0 M 17 23 L 17 17 L 20 20 L 23 17 L 23 23',
+    svgXml: pathToSvgXml('M 20 20 m -6 0 a 6 6 0 1 0 12 0 a 6 6 0 1 0 -12 0 M 17 23 L 17 17 L 20 20 L 23 17 L 23 23'),
+    mountType: 'wall',
     width: 40,
     height: 40,
     standard: 'IEC 60617 / BS 7671',

@@ -1,157 +1,155 @@
-import { useState } from 'react';
-import { electricalSymbols, SymbolCategory } from './symbols/electricalSymbols';
+import { useState, useEffect } from 'react';
+import { symbolRegistry, categories, type SymbolCategory } from './symbols/symbolRegistry';
+import { loadSymbolSvg, getSymbolSvgSync } from './symbols/svgLoader';
 import { Input } from '@/components/ui/input';
-import { Search, ChevronDown } from 'lucide-react';
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
-import { Button } from '@/components/ui/button';
+import { Search } from 'lucide-react';
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+} from '@/components/ui/sheet';
 import { cn } from '@/lib/utils';
 
 interface SymbolLibraryProps {
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
   onSymbolSelect: (symbolId: string) => void;
   selectedSymbolId: string | null;
-  isMobile?: boolean;
 }
 
+/** Small component that loads + renders a symbol SVG preview */
+const SymbolPreview = ({ symbolId }: { symbolId: string }) => {
+  const [svgHtml, setSvgHtml] = useState<string>(() => getSymbolSvgSync(symbolId) || '');
+
+  useEffect(() => {
+    if (!svgHtml) {
+      loadSymbolSvg(symbolId).then(setSvgHtml);
+    }
+  }, [symbolId, svgHtml]);
+
+  if (!svgHtml) return <div className="w-10 h-10 rounded bg-white/5" />;
+
+  // The SVG loader replaces currentColor with #000000 for canvas rendering.
+  // For the preview on dark background, swap to yellow (#EAB308).
+  const previewHtml = svgHtml
+    .replace(/#000000/g, '#EAB308')
+    .replace(/currentColor/g, '#EAB308');
+
+  return (
+    <div
+      className="w-10 h-10"
+      dangerouslySetInnerHTML={{ __html: previewHtml }}
+    />
+  );
+};
+
 export const SymbolLibrary = ({
+  open,
+  onOpenChange,
   onSymbolSelect,
   selectedSymbolId,
-  isMobile = false,
 }: SymbolLibraryProps) => {
   const [searchTerm, setSearchTerm] = useState('');
-  const [openCategories, setOpenCategories] = useState<Set<SymbolCategory>>(
-    new Set(['lighting', 'sockets', 'switches'])
-  );
+  const [activeCategory, setActiveCategory] = useState<SymbolCategory | 'all'>('all');
 
-  const filteredSymbols = electricalSymbols.filter(
-    (symbol) =>
+  const filteredSymbols = symbolRegistry.filter((symbol) => {
+    const matchesSearch =
+      !searchTerm ||
       symbol.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      symbol.category.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+      symbol.category.toLowerCase().includes(searchTerm.toLowerCase());
+    const matchesCategory = activeCategory === 'all' || symbol.category === activeCategory;
+    return matchesSearch && matchesCategory;
+  });
 
-  const categories: SymbolCategory[] = [
-    'lighting',
-    'sockets',
-    'switches',
-    'distribution',
-    'accessories',
-  ];
+  return (
+    <Sheet open={open} onOpenChange={onOpenChange}>
+      <SheetContent
+        side="bottom"
+        className="h-[70vh] p-0 rounded-t-2xl overflow-hidden bg-elec-card border-white/10 flex flex-col"
+      >
+        {/* Drag handle */}
+        <div className="flex justify-center pt-2 pb-1">
+          <div className="w-10 h-1 rounded-full bg-white/20" />
+        </div>
 
-  const toggleCategory = (category: SymbolCategory) => {
-    const newOpen = new Set(openCategories);
-    if (newOpen.has(category)) {
-      newOpen.delete(category);
-    } else {
-      newOpen.add(category);
-    }
-    setOpenCategories(newOpen);
-  };
+        <SheetHeader className="px-4 pb-3">
+          <SheetTitle className="text-white text-lg font-semibold">Symbols</SheetTitle>
+          <div className="relative mt-2">
+            {!searchTerm && (
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white/40 pointer-events-none" />
+            )}
+            <Input
+              type="text"
+              placeholder="Search symbols..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className={cn(
+                'h-11 bg-elec-dark border-white/10 text-white text-base touch-manipulation',
+                !searchTerm && 'pl-9'
+              )}
+            />
+          </div>
+        </SheetHeader>
 
-  const categoryNames: Record<SymbolCategory, string> = {
-    lighting: 'Lighting',
-    sockets: 'Sockets & Outlets',
-    switches: 'Switches & Controls',
-    distribution: 'Distribution',
-    accessories: 'Safety & Accessories',
-  };
-
-  if (isMobile) {
-    return (
-      <div className="px-2 py-2">
-        <div className="grid grid-cols-6 gap-1.5 overflow-x-auto">
-          {filteredSymbols.slice(0, 12).map((symbol) => (
+        {/* Category pills — horizontal scroll */}
+        <div className="flex gap-1.5 overflow-x-auto px-4 pb-3 scrollbar-hide">
+          <button
+            onClick={() => setActiveCategory('all')}
+            className={cn(
+              'flex-shrink-0 px-3 py-1.5 rounded-full text-xs font-medium transition-all touch-manipulation h-8',
+              activeCategory === 'all'
+                ? 'bg-elec-yellow text-black'
+                : 'bg-white/5 border border-white/10 text-white'
+            )}
+          >
+            All
+          </button>
+          {categories.map((cat) => (
             <button
-              key={symbol.id}
-              onClick={() => onSymbolSelect(symbol.id)}
-              className={`aspect-square flex flex-col items-center justify-center p-1.5 rounded border transition-all ${
-                selectedSymbolId === symbol.id
-                  ? 'border-elec-yellow bg-elec-yellow/10'
-                  : 'border-elec-yellow/20 bg-elec-card hover:border-elec-yellow/40'
-              }`}
-              title={symbol.name}
+              key={cat.id}
+              onClick={() => setActiveCategory(cat.id)}
+              className={cn(
+                'flex-shrink-0 px-3 py-1.5 rounded-full text-xs font-medium transition-all touch-manipulation whitespace-nowrap h-8',
+                activeCategory === cat.id
+                  ? 'bg-elec-yellow text-black'
+                  : 'bg-white/5 border border-white/10 text-white'
+              )}
             >
-              <svg width="20" height="20" viewBox="0 0 40 40" className="text-elec-yellow">
-                <path d={symbol.svg} fill="currentColor" stroke="currentColor" strokeWidth="0.5" />
-              </svg>
+              {cat.name}
             </button>
           ))}
         </div>
-      </div>
-    );
-  }
 
-  return (
-    <div className="flex flex-col h-full">
-      <div className="p-4 border-b border-elec-yellow/20">
-        <h2 className="text-lg font-semibold text-elec-light mb-3">Symbol Library</h2>
-        <div className="relative">
-          {!searchTerm && (
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-elec-light/40 pointer-events-none" />
+        {/* 4-col symbol grid — scrollable */}
+        <div className="flex-1 min-h-0 overflow-y-auto px-4 pb-6">
+          <div className="grid grid-cols-4 gap-2">
+            {filteredSymbols.map((symbol) => (
+              <button
+                key={symbol.id}
+                onClick={() => onSymbolSelect(symbol.id)}
+                className={cn(
+                  'flex flex-col items-center justify-center gap-1.5 p-3 rounded-lg border transition-all touch-manipulation min-h-[80px]',
+                  selectedSymbolId === symbol.id
+                    ? 'border-elec-yellow bg-elec-yellow/10'
+                    : 'border-white/10 bg-white/5 active:bg-white/10'
+                )}
+              >
+                <SymbolPreview symbolId={symbol.id} />
+                <span className="text-[10px] text-white text-center leading-tight line-clamp-2">
+                  {symbol.name}
+                </span>
+              </button>
+            ))}
+          </div>
+
+          {filteredSymbols.length === 0 && (
+            <div className="text-center text-white/40 py-8 text-sm">
+              No symbols found
+            </div>
           )}
-          <Input
-            type="text"
-            placeholder="Search symbols..."
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            className={cn(
-              'bg-elec-dark border-elec-yellow/20 text-elec-light',
-              !searchTerm && 'pl-9'
-            )}
-          />
         </div>
-      </div>
-
-      <div className="flex-1 overflow-y-auto p-4 space-y-2">
-        {categories.map((category) => {
-          const categorySymbols = filteredSymbols.filter((s) => s.category === category);
-          if (categorySymbols.length === 0) return null;
-
-          return (
-            <Collapsible
-              key={category}
-              open={openCategories.has(category)}
-              onOpenChange={() => toggleCategory(category)}
-            >
-              <CollapsibleTrigger asChild>
-                <Button
-                  variant="ghost"
-                  className="w-full justify-between p-3 h-auto hover:bg-elec-yellow/10 text-elec-light"
-                >
-                  <span className="font-medium">{categoryNames[category]}</span>
-                  <ChevronDown
-                    className={`h-4 w-4 transition-transform ${
-                      openCategories.has(category) ? 'rotate-180' : ''
-                    }`}
-                  />
-                </Button>
-              </CollapsibleTrigger>
-
-              <CollapsibleContent className="space-y-2 pt-2">
-                {categorySymbols.map((symbol) => (
-                  <button
-                    key={symbol.id}
-                    onClick={() => onSymbolSelect(symbol.id)}
-                    className={`w-full flex items-center gap-3 p-3 rounded border transition-all ${
-                      selectedSymbolId === symbol.id
-                        ? 'border-elec-yellow bg-elec-yellow/10'
-                        : 'border-elec-yellow/20 bg-elec-card hover:border-elec-yellow/40'
-                    }`}
-                  >
-                    <svg
-                      width="32"
-                      height="32"
-                      viewBox="0 0 40 40"
-                      className="text-elec-yellow flex-shrink-0"
-                    >
-                      <path d={symbol.svg} fill="currentColor" />
-                    </svg>
-                    <span className="text-sm text-elec-light text-left">{symbol.name}</span>
-                  </button>
-                ))}
-              </CollapsibleContent>
-            </Collapsible>
-          );
-        })}
-      </div>
-    </div>
+      </SheetContent>
+    </Sheet>
   );
 };

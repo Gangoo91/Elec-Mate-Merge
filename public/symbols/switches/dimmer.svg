@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.5">
+  <!-- Plate -->
+  <line x1="13" y1="26" x2="27" y2="26"/>
+  <!-- Blade -->
+  <line x1="20" y1="26" x2="28" y2="14"/>
+  <!-- Semicircle at tip (dimmer indicator) -->
+  <path d="M 25 14 A 3 3 0 0 1 31 14"/>
+</svg>

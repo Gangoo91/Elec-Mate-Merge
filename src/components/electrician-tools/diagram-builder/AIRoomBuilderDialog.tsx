@@ -1,42 +1,97 @@
-import { useState } from 'react';
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-} from '@/components/ui/dialog';
+import { useState, useRef } from 'react';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
-import { Sparkles, Loader2, ArrowLeft, Mic } from 'lucide-react';
+import { Sheet, SheetContent } from '@/components/ui/sheet';
+import { Sparkles, Loader2, ArrowLeft, Mic, ChevronRight } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
-import { SimplifiedRoomForm } from './SimplifiedRoomForm';
+import { useHaptic } from '@/hooks/useHaptic';
+import { cn } from '@/lib/utils';
 
 const QUICK_TEMPLATES = [
   {
     id: 'kitchen',
     name: 'Kitchen',
-    icon: '🍳',
-    dimensions: '4m × 3m',
+    dimensions: '4m x 3m',
     description:
-      'Kitchen - 4m north wall with window centred, 3m east wall with door on right, 4m south wall with 2x double sockets 1.5m apart, 3m west wall with light switch near door, ceiling light in centre',
+      'Kitchen - 4m x 3m. 4m north wall with window centred. 3m east wall with door on right. 4m south wall with 6 double sockets evenly spaced along worktop height (1.15m). 3m west wall with 1-way switch near door. Dedicated cooker-45a socket on south wall. Switched fused spur for extractor fan on north wall near window. Ceiling light in centre.',
   },
   {
     id: 'bedroom',
     name: 'Bedroom',
-    icon: '🛏️',
-    dimensions: '3m × 4m',
+    dimensions: '3m x 4m',
     description:
-      'Bedroom - 3m north wall with window centred, 4m east wall, 3m south wall with door on left and 2x double sockets, 4m west wall with 1x double socket, 2-way light switches on east and west walls near door, ceiling light in centre',
+      'Bedroom - 3m x 4m. 3m north wall with window centred. 4m east wall. 3m south wall with door on left and 2x double sockets. 4m west wall with 1x double socket. 2-way light switches on east and west walls near door. Ceiling light in centre. Smoke detector on ceiling.',
+  },
+  {
+    id: 'living-room',
+    name: 'Living Room',
+    dimensions: '5m x 4m',
+    description:
+      'Living room - 5m x 4m. 5m north wall with large window centred. 4m east wall with door on right and 1x double socket. 5m south wall with 3x double sockets evenly spaced and 1x TV aerial socket. 4m west wall with 2x double sockets. 2-way switches near door and far wall. 2x ceiling lights evenly spaced. Smoke detector on ceiling.',
+  },
+  {
+    id: 'bathroom',
+    name: 'Bathroom',
+    dimensions: '2.5m x 3m',
+    description:
+      'Bathroom - 2.5m x 3m. 2.5m north wall with window centred. 3m east wall with door on right. 2.5m south wall. 3m west wall with shaver socket at 1.5m height. Pull-cord switch on ceiling near door. 4x IP-rated downlights evenly spaced on ceiling. Extractor fan on north wall near ceiling. No 13A sockets allowed. Smoke detector on ceiling.',
   },
   {
     id: 'office',
     name: 'Office',
-    icon: '💼',
-    dimensions: '5m × 4m',
+    dimensions: '5m x 4m',
     description:
-      'Office - 5m north wall with 2x windows, 4m east wall, 5m south wall with door on left and 4x double sockets evenly spaced, 4m west wall with 2x double sockets, light switch near door, 2x ceiling lights',
+      'Office - 5m x 4m. 5m north wall with 2x windows. 4m east wall with 2x double sockets and 1x data socket. 5m south wall with door on left and 4x double sockets evenly spaced. 4m west wall with 2x double sockets and 1x data socket. 1-way switch near door. 2x ceiling lights evenly spaced. Smoke detector on ceiling.',
+  },
+  {
+    id: 'garage',
+    name: 'Garage',
+    dimensions: '6m x 3m',
+    description:
+      'Garage - 6m x 3m. 6m north wall with up-and-over door. 3m east wall with consumer unit at 1.5m height. 6m south wall with 2x double sockets evenly spaced. 3m west wall with 1x outdoor IP66 socket outside. 1-way switch near side door on east wall. 2x fluorescent lights on ceiling evenly spaced. Smoke detector on ceiling.',
+  },
+  {
+    id: 'utility-room',
+    name: 'Utility',
+    dimensions: '2m x 3m',
+    description:
+      'Utility room - 2m x 3m. 2m north wall. 3m east wall with door on right. 2m south wall with 2x double sockets at worktop height (1.15m). 3m west wall with 1x switched fused spur for washing machine and 1x switched fused spur for dryer. 1-way switch near door. Ceiling light in centre. Extractor fan on north wall.',
+  },
+  {
+    id: 'hallway',
+    name: 'Hallway',
+    dimensions: '6m x 1.5m',
+    description:
+      'Hallway - 6m x 1.5m. 6m north wall. 1.5m east wall with front door. 6m south wall with 1x double socket at midpoint. 1.5m west wall. 2-way switches at both ends of hallway. 2x ceiling lights evenly spaced. Smoke detector on ceiling at midpoint.',
+  },
+  {
+    id: 'en-suite',
+    name: 'En-Suite',
+    dimensions: '2m x 2.5m',
+    description:
+      'En-suite bathroom - 2m x 2.5m. 2m north wall. 2.5m east wall with door on right. 2m south wall with shaver socket at 1.5m height. 2.5m west wall. Pull-cord switch on ceiling near door. 3x IP-rated downlights on ceiling. Extractor fan on north wall near ceiling. No 13A sockets allowed.',
+  },
+  {
+    id: 'wc',
+    name: 'WC',
+    dimensions: '1.5m x 2m',
+    description:
+      'WC/cloakroom - 1.5m x 2m. 1.5m north wall. 2m east wall with door on right. 1.5m south wall. 2m west wall. Pull-cord switch on ceiling near door. 1x ceiling light in centre. Extractor fan on north wall near ceiling. No 13A sockets.',
+  },
+  {
+    id: 'conservatory',
+    name: 'Conservatory',
+    dimensions: '4m x 3m',
+    description:
+      'Conservatory - 4m x 3m. 4m north wall (glazed). 3m east wall (glazed). 4m south wall with double doors centred. 3m west wall connecting to house with door on left. 2x double sockets on west wall. 1-way switch near house door. 2x ceiling lights evenly spaced. Smoke detector on ceiling.',
+  },
+  {
+    id: 'dining-room',
+    name: 'Dining Room',
+    dimensions: '4m x 3.5m',
+    description:
+      'Dining room - 4m x 3.5m. 4m north wall with window centred. 3.5m east wall with door on right. 4m south wall with 2x double sockets evenly spaced. 3.5m west wall with 1x double socket. 2-way switches near door and far wall. Pendant light in centre of ceiling. Dimmer switch near door. Smoke detector on ceiling.',
   },
 ];
 
@@ -53,91 +108,44 @@ export const AIRoomBuilderDialog = ({
 }: AIRoomBuilderDialogProps) => {
   const [description, setDescription] = useState('');
   const [isGenerating, setIsGenerating] = useState(false);
-  const [mode, setMode] = useState<'quickstart' | 'advanced'>('quickstart');
+  const [mode, setMode] = useState<'templates' | 'describe'>('templates');
   const [isListening, setIsListening] = useState(false);
+  const haptic = useHaptic();
+  const toastIdRef = useRef<string | number | null>(null);
 
-  const handleQuickGenerate = async (template: (typeof QUICK_TEMPLATES)[0]) => {
+  const dismissLoadingToast = () => {
+    if (toastIdRef.current) {
+      toast.dismiss(toastIdRef.current);
+      toastIdRef.current = null;
+    }
+  };
+
+  const generateRoom = async (roomDescription: string, roomName: string) => {
     setIsGenerating(true);
-    toast.loading(`Generating ${template.name}...`);
+    haptic.light();
+    toastIdRef.current = toast.loading(`Generating ${roomName}...`);
 
     try {
       const { data, error } = await supabase.functions.invoke('room-diagram-generator', {
-        body: { description: template.description },
+        body: { description: roomDescription },
       });
+
+      dismissLoadingToast();
 
       if (error) throw error;
 
       if (data.success) {
-        toast.success(`${template.name} generated!`);
+        haptic.success();
+        toast.success(`${roomName} generated`);
         onRoomGenerated(data.roomData);
         onOpenChange(false);
       } else {
         throw new Error(data.error || 'Failed to generate room');
       }
     } catch (error) {
-      console.error('Room generation error:', error);
+      dismissLoadingToast();
+      haptic.error();
       toast.error(error instanceof Error ? error.message : 'Failed to generate room');
-    } finally {
-      setIsGenerating(false);
-    }
-  };
-
-  const handleSimpleFormGenerate = async (generatedDescription: string) => {
-    setIsGenerating(true);
-    toast.loading('Generating your room...');
-
-    try {
-      const { data, error } = await supabase.functions.invoke('room-diagram-generator', {
-        body: { description: generatedDescription },
-      });
-
-      if (error) throw error;
-
-      if (data.success) {
-        toast.success('Room generated!');
-        onRoomGenerated(data.roomData);
-        onOpenChange(false);
-      } else {
-        throw new Error(data.error || 'Failed to generate room');
-      }
-    } catch (error) {
-      console.error('Room generation error:', error);
-      toast.error(error instanceof Error ? error.message : 'Failed to generate room');
-    } finally {
-      setIsGenerating(false);
-    }
-  };
-
-  const handleGenerate = async () => {
-    if (!description.trim()) {
-      toast.error('Please describe your room first');
-      return;
-    }
-
-    setIsGenerating(true);
-    toast.loading('Understanding your room...');
-
-    try {
-      const { data, error } = await supabase.functions.invoke('room-diagram-generator', {
-        body: { description: description.trim() },
-      });
-
-      if (error) throw error;
-
-      toast.loading('Drawing walls and symbols...');
-      await new Promise((resolve) => setTimeout(resolve, 500));
-
-      if (data.success && data.roomData) {
-        toast.success('Room diagram generated!');
-        onRoomGenerated(data.roomData);
-        setDescription('');
-        onOpenChange(false);
-      } else {
-        throw new Error(data.error || 'Failed to generate room diagram');
-      }
-    } catch (error) {
-      console.error('Room generation error:', error);
-      toast.error(error instanceof Error ? error.message : 'Failed to generate room diagram');
     } finally {
       setIsGenerating(false);
     }
@@ -145,7 +153,7 @@ export const AIRoomBuilderDialog = ({
 
   const handleVoiceInput = () => {
     if (!('webkitSpeechRecognition' in window)) {
-      toast.error('Voice input not supported in this browser');
+      toast.error('Voice input not supported');
       return;
     }
 
@@ -153,21 +161,12 @@ export const AIRoomBuilderDialog = ({
     recognition.lang = 'en-GB';
     recognition.continuous = false;
 
-    recognition.onstart = () => {
-      setIsListening(true);
-      toast.info('Listening... speak now!');
-    };
-
+    recognition.onstart = () => setIsListening(true);
     recognition.onresult = (event: any) => {
-      const transcript = event.results[0][0].transcript;
-      setDescription(transcript);
-      toast.success('Voice input captured!');
+      setDescription(event.results[0][0].transcript);
+      haptic.success();
     };
-
-    recognition.onend = () => {
-      setIsListening(false);
-    };
-
+    recognition.onend = () => setIsListening(false);
     recognition.onerror = () => {
       toast.error('Voice input failed');
       setIsListening(false);
@@ -177,143 +176,142 @@ export const AIRoomBuilderDialog = ({
   };
 
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-[650px] bg-elec-card border-elec-yellow/30 max-h-[90vh] overflow-y-auto">
-        {mode === 'quickstart' ? (
-          <div className="space-y-4">
-            <DialogHeader>
-              <DialogTitle className="text-center text-xl font-bold text-elec-light">
-                ✨ Build Your Room in 5 Seconds
-              </DialogTitle>
-              <DialogDescription className="text-center text-elec-light/70">
-                Choose a template or describe your room
-              </DialogDescription>
-            </DialogHeader>
-
-            {/* Quick Start Templates */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-              {QUICK_TEMPLATES.map((template) => (
-                <Button
-                  key={template.id}
-                  onClick={() => handleQuickGenerate(template)}
-                  className="h-24 flex flex-col items-center justify-center gap-2 bg-elec-dark border-2 border-elec-yellow/30 hover:border-elec-yellow hover:bg-elec-yellow/10 transition-all"
-                  disabled={isGenerating}
+    <Sheet open={open} onOpenChange={onOpenChange}>
+      <SheetContent side="bottom" className="h-[85vh] rounded-t-2xl p-0 overflow-hidden">
+        <div className="flex flex-col h-full bg-background">
+          {/* Header */}
+          <div className="flex items-center justify-between px-4 py-3 border-b border-white/10">
+            <div className="flex items-center gap-3">
+              {mode === 'describe' && (
+                <button
+                  onClick={() => setMode('templates')}
+                  className="h-8 w-8 flex items-center justify-center rounded-lg hover:bg-white/10 touch-manipulation"
                 >
-                  <span className="text-3xl">{template.icon}</span>
-                  <span className="font-semibold text-elec-light">{template.name}</span>
-                  <span className="text-xs text-elec-light/60">{template.dimensions}</span>
-                </Button>
-              ))}
-            </div>
-
-            {/* OR Separator */}
-            <div className="flex items-center gap-2">
-              <div className="flex-1 border-t border-elec-yellow/20"></div>
-              <span className="text-xs text-elec-light/60 uppercase">Or</span>
-              <div className="flex-1 border-t border-elec-yellow/20"></div>
-            </div>
-
-            {/* Simple Form */}
-            <SimplifiedRoomForm onGenerate={handleSimpleFormGenerate} isGenerating={isGenerating} />
-
-            {/* Advanced Mode Link */}
-            <button
-              onClick={() => setMode('advanced')}
-              className="w-full text-center text-xs text-elec-yellow hover:underline pt-2"
-            >
-              Advanced: Describe room in natural language →
-            </button>
-          </div>
-        ) : (
-          <div className="space-y-4">
-            <DialogHeader>
-              <button
-                onClick={() => setMode('quickstart')}
-                className="text-xs text-elec-yellow mb-2 flex items-center gap-1 hover:underline"
-              >
-                <ArrowLeft className="h-3 w-3" />
-                Back to Quick Start
-              </button>
-              <DialogTitle className="text-elec-light">AI Room Builder - Advanced</DialogTitle>
-              <DialogDescription className="text-elec-light/70">
-                Describe your room in natural language and let AI create the electrical diagram
-              </DialogDescription>
-            </DialogHeader>
-
-            <div className="space-y-2">
-              <label className="text-sm font-medium text-elec-light">Room Description</label>
-              <div className="relative">
-                <Textarea
-                  placeholder="e.g., Kitchen - 4m x 3m, north wall has a window, east wall has a door, need 3 double sockets on south wall, 1 ceiling light, light switch near door"
-                  value={description}
-                  onChange={(e) => setDescription(e.target.value)}
-                  className="min-h-[120px] bg-elec-dark border-elec-yellow/30 text-elec-light placeholder:text-elec-light/40 pr-12"
-                  disabled={isGenerating}
-                />
-                <Button
-                  onClick={handleVoiceInput}
-                  disabled={isListening || isGenerating}
-                  className="absolute bottom-2 right-2 h-8 w-8 rounded-full p-0"
-                  variant="outline"
-                  title="Voice input"
-                >
-                  <Mic className={`h-4 w-4 ${isListening ? 'text-red-500 animate-pulse' : ''}`} />
-                </Button>
+                  <ArrowLeft className="h-4 w-4 text-white" />
+                </button>
+              )}
+              <div>
+                <h2 className="text-base font-semibold text-white">
+                  {mode === 'templates' ? 'AI Room Builder' : 'Describe Your Room'}
+                </h2>
+                <p className="text-xs text-white/60">
+                  {mode === 'templates'
+                    ? 'Choose a room type or describe your own'
+                    : 'Tell us about the room in your own words'}
+                </p>
               </div>
             </div>
-
-            <div className="bg-elec-dark/50 p-4 rounded-lg border border-elec-yellow/20">
-              <h4 className="text-sm font-semibold text-elec-yellow mb-2">Example Format:</h4>
-              <p className="text-xs text-elec-light/70 leading-relaxed">
-                "Living room - 5m by 4m. North wall (5m) has two windows. East wall (4m) has the
-                door on the right side. South wall (5m) needs 4 double sockets evenly spaced. West
-                wall (4m) needs 1 double socket. Put a light switch near the door and 2 ceiling
-                lights."
-              </p>
-            </div>
-
-            <div className="space-y-2">
-              <h4 className="text-sm font-semibold text-elec-light">Tips:</h4>
-              <ul className="text-xs text-elec-light/70 space-y-1 list-disc list-inside">
-                <li>Specify room dimensions (width x height in metres)</li>
-                <li>
-                  Mention wall orientations (north/south/east/west) and features (windows/doors)
-                </li>
-                <li>Indicate socket quantities and positions along walls</li>
-                <li>Specify lighting (ceiling lights, wall lights) and switch locations</li>
-              </ul>
-            </div>
-
-            <div className="flex gap-2">
-              <Button
-                onClick={handleGenerate}
-                disabled={isGenerating || !description.trim()}
-                className="flex-1 bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90 font-semibold"
-              >
-                {isGenerating ? (
-                  <>
-                    <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                    Generating...
-                  </>
-                ) : (
-                  <>
-                    <Sparkles className="h-4 w-4 mr-2" />
-                    Generate Room Diagram
-                  </>
-                )}
-              </Button>
-              <Button
-                variant="outline"
-                onClick={() => onOpenChange(false)}
-                disabled={isGenerating}
-                className="border-elec-yellow/30 text-elec-light hover:bg-elec-yellow/10"
-              >
-                Cancel
-              </Button>
-            </div>
+            <Sparkles className="h-5 w-5 text-elec-yellow" />
           </div>
-        )}
-      </DialogContent>
-    </Dialog>
+
+          {/* Content */}
+          <div className="flex-1 overflow-y-auto">
+            {mode === 'templates' ? (
+              <div className="p-4 space-y-4">
+                {/* Room templates grid */}
+                <div className="grid grid-cols-2 gap-2">
+                  {QUICK_TEMPLATES.map((template) => (
+                    <button
+                      key={template.id}
+                      onClick={() => generateRoom(template.description, template.name)}
+                      disabled={isGenerating}
+                      className={cn(
+                        'relative overflow-hidden text-left p-3.5 rounded-xl',
+                        'bg-white/[0.04] border border-white/[0.08]',
+                        'hover:bg-white/[0.08] hover:border-elec-yellow/30',
+                        'active:scale-[0.97] transition-all duration-150 touch-manipulation',
+                        isGenerating && 'opacity-50 pointer-events-none'
+                      )}
+                    >
+                      <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-elec-yellow/40 to-amber-400/40" />
+                      <p className="text-sm font-semibold text-white">{template.name}</p>
+                      <p className="text-[11px] text-white/50 mt-0.5">{template.dimensions}</p>
+                      <ChevronRight className="absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white/20" />
+                    </button>
+                  ))}
+                </div>
+
+                {/* Describe your own */}
+                <div className="pt-2">
+                  <button
+                    onClick={() => setMode('describe')}
+                    className="w-full p-4 rounded-xl bg-elec-yellow/10 border border-elec-yellow/20 hover:bg-elec-yellow/20 active:scale-[0.98] transition-all touch-manipulation text-left"
+                  >
+                    <p className="text-sm font-semibold text-elec-yellow">Describe your own room</p>
+                    <p className="text-xs text-white/50 mt-0.5">
+                      Use natural language or voice input
+                    </p>
+                  </button>
+                </div>
+              </div>
+            ) : (
+              <div className="p-4 space-y-4">
+                {/* Description input */}
+                <div className="relative">
+                  <Textarea
+                    placeholder="e.g. Kitchen, 4m by 3m. Window on the north wall. Door on the east wall. 4 double sockets along the south wall. Cooker point. Light switch by the door."
+                    value={description}
+                    onChange={(e) => setDescription(e.target.value)}
+                    className="min-h-[140px] bg-white/[0.04] border-white/10 text-white placeholder:text-white/30 text-sm touch-manipulation pr-12 focus:border-elec-yellow/40 focus:ring-elec-yellow/20"
+                    disabled={isGenerating}
+                  />
+                  <button
+                    onClick={handleVoiceInput}
+                    disabled={isListening || isGenerating}
+                    className={cn(
+                      'absolute bottom-3 right-3 h-9 w-9 rounded-full flex items-center justify-center touch-manipulation',
+                      isListening
+                        ? 'bg-red-500/20 border border-red-500/40'
+                        : 'bg-white/[0.06] border border-white/10 hover:bg-white/10'
+                    )}
+                  >
+                    <Mic className={cn('h-4 w-4', isListening ? 'text-red-400' : 'text-white/60')} />
+                  </button>
+                </div>
+
+                {/* Tips */}
+                <div className="bg-white/[0.03] rounded-xl p-3 border border-white/[0.06]">
+                  <p className="text-xs font-medium text-white/70 mb-2">Tips for best results</p>
+                  <ul className="text-[11px] text-white/50 space-y-1">
+                    <li>Include room dimensions (e.g. 4m by 3m)</li>
+                    <li>Mention where doors and windows are</li>
+                    <li>Say how many sockets and where</li>
+                    <li>Specify lighting type (ceiling, downlights, pendant)</li>
+                  </ul>
+                </div>
+
+                {/* Generate button */}
+                <Button
+                  onClick={() => generateRoom(description.trim(), 'Room')}
+                  disabled={isGenerating || !description.trim()}
+                  className="w-full h-12 bg-elec-yellow text-black hover:bg-elec-yellow/90 font-semibold text-sm touch-manipulation"
+                >
+                  {isGenerating ? (
+                    <>
+                      <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                      Generating...
+                    </>
+                  ) : (
+                    <>
+                      <Sparkles className="h-4 w-4 mr-2" />
+                      Generate Floor Plan
+                    </>
+                  )}
+                </Button>
+              </div>
+            )}
+          </div>
+
+          {/* Loading overlay */}
+          {isGenerating && (
+            <div className="absolute inset-0 bg-background/80 backdrop-blur-sm flex flex-col items-center justify-center z-10">
+              <Loader2 className="h-8 w-8 text-elec-yellow animate-spin mb-3" />
+              <p className="text-sm font-medium text-white">Generating floor plan...</p>
+              <p className="text-xs text-white/50 mt-1">This takes a few seconds</p>
+            </div>
+          )}
+        </div>
+      </SheetContent>
+    </Sheet>
   );
 };

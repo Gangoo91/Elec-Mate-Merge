@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40">
+  <rect x="3" y="8" width="34" height="24" rx="1" fill="none" stroke="currentColor" stroke-width="1.5"/>
+  <!-- Thick horizontal busbar line -->
+  <line x1="3" y1="20" x2="37" y2="20" stroke="currentColor" stroke-width="2.5"/>
+  <!-- BB label -->
+  <text x="20" y="28" text-anchor="middle" dominant-baseline="central" fill="currentColor" font-family="Arial, sans-serif" font-size="7" font-weight="bold">BB</text>
+</svg>

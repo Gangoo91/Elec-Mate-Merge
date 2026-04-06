@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.5">
+  <!-- Plate (consistent with other switches) -->
+  <line x1="13" y1="26" x2="27" y2="26"/>
+  <!-- Blade -->
+  <line x1="20" y1="26" x2="26" y2="14"/>
+  <!-- Zigzag heating element at tip -->
+  <polyline points="26,14 28,11 30,15 32,11 34,15"/>
+</svg>

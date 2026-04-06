@@ -1,0 +1,4 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40">
+  <circle cx="20" cy="20" r="10" fill="none" stroke="currentColor" stroke-width="1.5"/>
+  <text x="20" y="21" text-anchor="middle" dominant-baseline="central" fill="currentColor" font-family="Arial, sans-serif" font-size="10" font-weight="bold">CO</text>
+</svg>

@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.5">
+  <!-- PIR sensor cone (wedge) -->
+  <polygon points="20,10 10,24 30,24"/>
+  <!-- Switch blade -->
+  <line x1="20" y1="24" x2="26" y2="34"/>
+  <!-- Dot at blade tip -->
+  <circle cx="26" cy="34" r="2" fill="currentColor" stroke="none"/>
+</svg>

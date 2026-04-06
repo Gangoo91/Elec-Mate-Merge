@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40">
+  <rect x="8" y="8" width="24" height="24" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/>
+  <!-- Diagonal crack line -->
+  <polyline points="12,12 20,22 16,18 24,28" fill="none" stroke="currentColor" stroke-width="1"/>
+  <!-- BG label inside -->
+  <text x="20" y="14" text-anchor="middle" dominant-baseline="central" fill="currentColor" font-family="Arial, sans-serif" font-size="7" font-weight="bold">BG</text>
+</svg>

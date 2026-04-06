@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40">
+  <rect x="4" y="10" width="32" height="20" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/>
+  <text x="22" y="24" text-anchor="middle" font-size="8" font-weight="700" font-family="sans-serif" fill="currentColor">EXIT</text>
+  <circle cx="10" cy="15" r="2" fill="none" stroke="currentColor" stroke-width="1"/>
+  <line x1="10" y1="17" x2="10" y2="24" stroke="currentColor" stroke-width="1"/>
+  <line x1="10" y1="24" x2="8" y2="28" stroke="currentColor" stroke-width="1"/>
+  <line x1="10" y1="24" x2="12" y2="28" stroke="currentColor" stroke-width="1"/>
+  <line x1="10" y1="20" x2="13" y2="18" stroke="currentColor" stroke-width="1"/>
+</svg>

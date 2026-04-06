@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40">
+  <polygon points="20,4 14,24 20,20 26,24" fill="currentColor" stroke="none"/>
+  <polygon points="20,4 14,24 20,20 26,24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+  <text x="20" y="34" text-anchor="middle" dominant-baseline="central" fill="currentColor" font-family="Arial, sans-serif" font-size="10" font-weight="bold">N</text>
+</svg>
