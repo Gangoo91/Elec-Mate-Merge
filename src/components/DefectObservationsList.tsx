@@ -28,6 +28,14 @@ interface DefectObservationsListProps {
     certificateType?: 'eicr' | 'eic';
     installationAddress?: string;
     clientName?: string;
+    clientPhone?: string;
+    clientEmail?: string;
+    inspectorName?: string;
+    companyName?: string;
+    companyPhone?: string;
+    companyEmail?: string;
+    registrationScheme?: string;
+    registrationNumber?: string;
   };
 }
 

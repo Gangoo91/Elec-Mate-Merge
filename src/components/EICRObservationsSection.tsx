@@ -51,6 +51,14 @@ const EICRObservationsSection = React.forwardRef<HTMLDivElement, EICRObservation
       certificateType: 'eicr' as const,
       installationAddress: formData?.installationAddress || formData?.clientAddress,
       clientName: formData?.clientName,
+      clientPhone: formData?.clientPhone,
+      clientEmail: formData?.clientEmail,
+      inspectorName: formData?.inspectorName,
+      companyName: formData?.companyName,
+      companyPhone: formData?.companyPhone,
+      companyEmail: formData?.companyEmail,
+      registrationScheme: formData?.registrationScheme,
+      registrationNumber: formData?.registrationNumber,
     };
 
     return (

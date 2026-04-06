@@ -55,7 +55,7 @@ import { useCertificateEmail } from '@/hooks/useCertificateEmail';
 import { EmailCertificateDialog } from '@/components/certificate-completion/EmailCertificateDialog';
 import { useCustomers } from '@/hooks/useCustomers';
 import { useIsMobile } from '@/hooks/use-mobile';
-import { useHaptics } from '@/hooks/useHaptics';
+import { useHaptic } from '@/hooks/useHaptic';
 import { useAppReview } from '@/hooks/useAppReview';
 import AppReviewPromptSheet from '@/components/AppReviewPromptSheet';
 import {
@@ -69,6 +69,8 @@ import { mapDefectsToQuoteItems } from '@/utils/defectToQuoteItems';
 import QuoteOptionsSheet from '@/components/inspection/eicr/QuoteOptionsSheet';
 import AIEstimatorSheet from '@/components/inspection/eicr/AIEstimatorSheet';
 import { openOrDownloadPdf } from '@/utils/pdf-download';
+import { storageSetJSONSync } from '@/utils/storage';
+import { copyToClipboard } from '@/utils/clipboard';
 
 interface EICRSummaryProps {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -94,7 +96,7 @@ const EICRSummary = ({ formData: propFormData, onUpdate: propOnUpdate }: EICRSum
   const queryClient = useQueryClient();
   const navigate = useNavigate();
   const isMobile = useIsMobile();
-  const haptics = useHaptics();
+  const haptic = useHaptic();
   const { recordPositiveAction, showReviewPrompt, handleRate, handleDismiss } = useAppReview();
   const [isJsonOpen, setIsJsonOpen] = useState(false);
   const [isGenerating, setIsGenerating] = useState(false);
@@ -170,7 +172,7 @@ const EICRSummary = ({ formData: propFormData, onUpdate: propOnUpdate }: EICRSum
       defectObservationsCount: latestFormData?.defectObservations?.length || 0,
     });
     const formattedJson = await formatEICRJson(latestFormData, effectiveReportId);
-    navigator.clipboard.writeText(JSON.stringify(formattedJson, null, 2));
+    await copyToClipboard(JSON.stringify(formattedJson, null, 2));
     toast({
       title: 'JSON copied',
       description: 'Structured form data copied to clipboard.',
@@ -589,7 +591,7 @@ const EICRSummary = ({ formData: propFormData, onUpdate: propOnUpdate }: EICRSum
 
   // Navigate to quote builder with client data pre-filled
   const handleCreateQuote = () => {
-    haptics.tap();
+    haptic.light();
     const url = createQuoteFromCertificate({
       clientName: formData.clientName || '',
       clientEmail: formData.clientEmail || '',
@@ -606,7 +608,7 @@ const EICRSummary = ({ formData: propFormData, onUpdate: propOnUpdate }: EICRSum
 
   // Navigate to invoice builder with client data pre-filled
   const handleCreateInvoice = () => {
-    haptics.tap();
+    haptic.light();
     const url = createInvoiceFromCertificate({
       clientName: formData.clientName || '',
       clientEmail: formData.clientEmail || '',
@@ -728,7 +730,7 @@ const EICRSummary = ({ formData: propFormData, onUpdate: propOnUpdate }: EICRSum
 
   const handleEstimateToQuote = () => {
     if (!estimateResult) return;
-    haptics.tap();
+    haptic.light();
 
     const materialItems = estimateResult.items.filter((i) => i.category === 'materials');
     const labourItems = estimateResult.items.filter((i) => i.category === 'labour');
@@ -753,7 +755,7 @@ const EICRSummary = ({ formData: propFormData, onUpdate: propOnUpdate }: EICRSum
     };
 
     const costSessionId = `estimate-${Date.now()}`;
-    localStorage.setItem(costSessionId, JSON.stringify({ costData }));
+    storageSetJSONSync(costSessionId, { costData });
 
     const certUrl = createQuoteFromCertificate({
       clientName: formData.clientName || '',
@@ -776,7 +778,7 @@ const EICRSummary = ({ formData: propFormData, onUpdate: propOnUpdate }: EICRSum
         const parsed = JSON.parse(stored);
         if (parsed.certificateData?.jobDetails) {
           parsed.certificateData.jobDetails.description = estimateResult.scopeOfWorks;
-          localStorage.setItem(certSessionId, JSON.stringify(parsed));
+          storageSetJSONSync(certSessionId, parsed);
         }
       }
     }
@@ -798,7 +800,7 @@ const EICRSummary = ({ formData: propFormData, onUpdate: propOnUpdate }: EICRSum
         <Collapsible defaultOpen={false}>
           <CollapsibleTrigger className="w-full" asChild>
             <button
-              onClick={() => haptics.tap()}
+              onClick={() => haptic.light()}
               className={cn(
                 'w-full flex items-center gap-3 p-4 text-left touch-manipulation transition-colors',
                 'bg-card/50 border-y border-border/30',
@@ -825,7 +827,7 @@ const EICRSummary = ({ formData: propFormData, onUpdate: propOnUpdate }: EICRSum
                   <Select
                     value={formData.designStandard || ''}
                     onValueChange={(value) => {
-                      haptics.tap();
+                      haptic.light();
                       onUpdate('designStandard', value);
                     }}
                   >
@@ -845,7 +847,7 @@ const EICRSummary = ({ formData: propFormData, onUpdate: propOnUpdate }: EICRSum
                   <Select
                     value={formData.partPCompliance || ''}
                     onValueChange={(value) => {
-                      haptics.tap();
+                      haptic.light();
                       onUpdate('partPCompliance', value);
                     }}
                   >
@@ -864,7 +866,7 @@ const EICRSummary = ({ formData: propFormData, onUpdate: propOnUpdate }: EICRSum
                 <button
                   type="button"
                   onClick={() => {
-                    haptics.tap();
+                    haptic.light();
                     onUpdate('bs7671Compliance', !formData.bs7671Compliance);
                   }}
                   className={cn(
@@ -883,7 +885,7 @@ const EICRSummary = ({ formData: propFormData, onUpdate: propOnUpdate }: EICRSum
                 <button
                   type="button"
                   onClick={() => {
-                    haptics.tap();
+                    haptic.light();
                     onUpdate('buildingRegsCompliance', !formData.buildingRegsCompliance);
                   }}
                   className={cn(
@@ -910,7 +912,7 @@ const EICRSummary = ({ formData: propFormData, onUpdate: propOnUpdate }: EICRSum
         <Collapsible defaultOpen={true}>
           <CollapsibleTrigger className="w-full" asChild>
             <button
-              onClick={() => haptics.tap()}
+              onClick={() => haptic.light()}
               className={cn(
                 'w-full flex items-center gap-3 p-4 text-left touch-manipulation transition-colors',
                 'bg-card/50 border-y border-border/30',
@@ -959,9 +961,9 @@ const EICRSummary = ({ formData: propFormData, onUpdate: propOnUpdate }: EICRSum
                   <button
                     type="button"
                     onClick={() => {
-                      haptics.tap();
+                      haptic.light();
                       onUpdate('overallAssessment', 'satisfactory');
-                      haptics.success();
+                      haptic.success();
                     }}
                     className={cn(
                       'h-14 rounded-xl font-semibold transition-all touch-manipulation',
@@ -977,9 +979,9 @@ const EICRSummary = ({ formData: propFormData, onUpdate: propOnUpdate }: EICRSum
                   <button
                     type="button"
                     onClick={() => {
-                      haptics.tap();
+                      haptic.light();
                       onUpdate('overallAssessment', 'unsatisfactory');
-                      haptics.warning();
+                      haptic.warning();
                     }}
                     className={cn(
                       'h-14 rounded-xl font-semibold transition-all touch-manipulation',
@@ -1010,7 +1012,7 @@ const EICRSummary = ({ formData: propFormData, onUpdate: propOnUpdate }: EICRSum
                       key={option.value}
                       type="button"
                       onClick={() => {
-                        haptics.tap();
+                        haptic.light();
                         onUpdate('satisfactoryForContinuedUse', option.value);
                       }}
                       className={cn(
@@ -1031,7 +1033,7 @@ const EICRSummary = ({ formData: propFormData, onUpdate: propOnUpdate }: EICRSum
               <button
                 type="button"
                 onClick={() => {
-                  haptics.tap();
+                  haptic.light();
                   onUpdate('noRemedialAction', !formData.noRemedialAction);
                 }}
                 className={cn(
@@ -1083,14 +1085,14 @@ const EICRSummary = ({ formData: propFormData, onUpdate: propOnUpdate }: EICRSum
         >
           <Button
             onClick={() => {
-              haptics.tap();
+              haptic.light();
               onUpdate('inspectedByName', formData.inspectorName);
               onUpdate('inspectedBySignature', formData.inspectorSignature);
               onUpdate('inspectedByForOnBehalfOf', formData.companyName);
               onUpdate('inspectedByPosition', 'Inspector');
               onUpdate('inspectedByAddress', formData.companyAddress);
               onUpdate('inspectedByCpScheme', formData.registrationScheme);
-              haptics.success();
+              haptic.success();
               toast({
                 title: 'Details copied',
                 description: "Inspector details copied to 'Inspected By' section",
@@ -1108,7 +1110,7 @@ const EICRSummary = ({ formData: propFormData, onUpdate: propOnUpdate }: EICRSum
         <Collapsible
           open={inspectedByOpen}
           onOpenChange={(open) => {
-            haptics.tap();
+            haptic.light();
             setInspectedByOpen(open);
           }}
         >
@@ -1212,7 +1214,7 @@ const EICRSummary = ({ formData: propFormData, onUpdate: propOnUpdate }: EICRSum
                   <button
                     type="button"
                     onClick={() => {
-                      haptics.tap();
+                      haptic.light();
                       const newValue = !formData.inspectedByCpSchemeNA;
                       onUpdate('inspectedByCpSchemeNA', newValue);
                       if (newValue) onUpdate('inspectedByCpScheme', '');
@@ -1236,7 +1238,7 @@ const EICRSummary = ({ formData: propFormData, onUpdate: propOnUpdate }: EICRSum
         <Collapsible
           open={authorisedByOpen}
           onOpenChange={(open) => {
-            haptics.tap();
+            haptic.light();
             setAuthorisedByOpen(open);
           }}
         >
@@ -1275,7 +1277,7 @@ const EICRSummary = ({ formData: propFormData, onUpdate: propOnUpdate }: EICRSum
               <button
                 type="button"
                 onClick={() => {
-                  haptics.tap();
+                  haptic.light();
                   const newValue = !formData.sameAsInspectedBy;
                   onUpdate('sameAsInspectedBy', newValue);
                   if (newValue) {
@@ -1286,7 +1288,7 @@ const EICRSummary = ({ formData: propFormData, onUpdate: propOnUpdate }: EICRSum
                     onUpdate('reportAuthorisedByPosition', formData.inspectedByPosition);
                     onUpdate('reportAuthorisedByAddress', formData.inspectedByAddress);
                     onUpdate('reportAuthorisedByMembershipNo', formData.inspectedByCpScheme);
-                    haptics.success();
+                    haptic.success();
                     toast({
                       title: 'Details copied',
                       description: "Copied from 'Inspected By' section",
@@ -1456,7 +1458,7 @@ const EICRSummary = ({ formData: propFormData, onUpdate: propOnUpdate }: EICRSum
           <Button
             className="w-full h-14 gap-3 bg-elec-yellow text-black hover:bg-elec-yellow/90 font-bold text-base shadow-lg shadow-elec-yellow/20 transition-all duration-200 active:scale-95 touch-manipulation"
             onClick={() => {
-              haptics.tap();
+              haptic.light();
               handleGenerateCertificate();
             }}
             disabled={!isFormComplete() || isGenerating}
@@ -1479,7 +1481,7 @@ const EICRSummary = ({ formData: propFormData, onUpdate: propOnUpdate }: EICRSum
               variant="outline"
               className="h-12 gap-2 bg-card/50 border-border/30 hover:bg-card transition-all duration-200 active:scale-95 touch-manipulation"
               onClick={() => {
-                haptics.tap();
+                haptic.light();
                 setShowEmailDialog(true);
               }}
               disabled={!isFormComplete()}
@@ -1491,7 +1493,7 @@ const EICRSummary = ({ formData: propFormData, onUpdate: propOnUpdate }: EICRSum
               variant="outline"
               className="h-12 gap-2 bg-card/50 border-border/30 hover:bg-card transition-all duration-200 active:scale-95 touch-manipulation"
               onClick={() => {
-                haptics.tap();
+                haptic.light();
                 handleSaveDraft();
               }}
             >
@@ -1506,7 +1508,7 @@ const EICRSummary = ({ formData: propFormData, onUpdate: propOnUpdate }: EICRSum
               variant="outline"
               className="h-12 gap-2 bg-emerald-500/10 border-emerald-500/30 hover:bg-emerald-500/20 text-emerald-400 transition-all duration-200 active:scale-95 touch-manipulation"
               onClick={() => {
-                haptics.tap();
+                haptic.light();
                 setShowQuoteOptions(true);
               }}
             >
@@ -1523,6 +1525,46 @@ const EICRSummary = ({ formData: propFormData, onUpdate: propOnUpdate }: EICRSum
             </Button>
           </div>
 
+          {/* Danger Notice — shows when C1 observations exist, sends ALL C1s */}
+          {formData.defectObservations?.some((d: any) => d.defectCode === 'C1') && (() => {
+            const c1Observations = formData.defectObservations?.filter((d: any) => d.defectCode === 'C1') || [];
+            const c1Count = c1Observations.length;
+            return (
+              <Button
+                variant="outline"
+                className="w-full h-12 gap-2 bg-red-500/10 border-red-500/30 hover:bg-red-500/20 text-red-400 transition-all duration-200 active:scale-95 touch-manipulation"
+                onClick={() => {
+                  navigate('/electrician/inspection-testing/danger-notice', {
+                    state: {
+                      fromEicr: true,
+                      eicrCertNumber: formData.certificateNumber || '',
+                      clientName: formData.clientName || '',
+                      installationAddress: formData.installationAddress || '',
+                      clientPhone: formData.clientPhone || '',
+                      clientEmail: formData.clientEmail || '',
+                      inspectorName: formData.inspectorName || '',
+                      inspectorCompany: formData.companyName || '',
+                      inspectorPhone: formData.companyPhone || '',
+                      inspectorEmail: formData.companyEmail || '',
+                      inspectorRegistration: formData.registrationNumber || '',
+                      inspectorScheme: formData.registrationScheme || '',
+                      observations: c1Observations.map((obs: any) => ({
+                        description: obs.description,
+                        item: obs.item,
+                        regulation: obs.regulation || '',
+                        recommendation: obs.recommendation,
+                        photos: obs.photos || [],
+                      })),
+                    },
+                  });
+                }}
+              >
+                <AlertTriangle className="h-4 w-4" />
+                Issue Danger Notice{c1Count > 1 ? ` (${c1Count} C1s)` : ''}
+              </Button>
+            );
+          })()}
+
           {!isFormComplete() && (
             <p className="text-xs text-amber-300/70 flex items-center justify-center gap-2 pt-2">
               <AlertTriangle className="h-3.5 w-3.5" />
@@ -1537,7 +1579,7 @@ const EICRSummary = ({ formData: propFormData, onUpdate: propOnUpdate }: EICRSum
         <Collapsible open={isJsonOpen} onOpenChange={handleToggleJsonPreview}>
           <CollapsibleTrigger className="w-full" asChild>
             <button
-              onClick={() => haptics.tap()}
+              onClick={() => haptic.light()}
               className={cn(
                 'w-full flex items-center gap-3 p-4 text-left touch-manipulation transition-colors',
                 'bg-card/30 border-y border-border/30',

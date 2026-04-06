@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -46,6 +47,14 @@ interface DefectObservationCardProps {
     certificateType?: 'eicr' | 'eic';
     installationAddress?: string;
     clientName?: string;
+    clientPhone?: string;
+    clientEmail?: string;
+    inspectorName?: string;
+    companyName?: string;
+    companyPhone?: string;
+    companyEmail?: string;
+    registrationScheme?: string;
+    registrationNumber?: string;
   };
 }
 
@@ -373,6 +382,15 @@ const DefectObservationCard = ({
         )}
       </div>
 
+      {/* Issue Danger Notice — C1 only */}
+      {defect.defectCode === 'C1' && certificateContext && (
+        <IssueDangerNoticeButton
+          defect={defect}
+          certificateContext={certificateContext}
+          photos={photos}
+        />
+      )}
+
       <AIEnhanceObservationSheet
         open={showAISheet}
         onOpenChange={setShowAISheet}
@@ -415,5 +433,56 @@ const DefectObservationCard = ({
     </div>
   );
 };
+
+/** Danger Notice button for C1 observations — navigates with pre-fill data */
+function IssueDangerNoticeButton({
+  defect,
+  certificateContext,
+  photos,
+}: {
+  defect: DefectObservation;
+  certificateContext: NonNullable<DefectObservationCardProps['certificateContext']>;
+  photos: { id: string; url: string }[];
+}) {
+  const navigate = useNavigate();
+
+  return (
+    <div className="pt-3 border-t border-white/5">
+      <button
+        type="button"
+        onClick={() => {
+          navigate('/electrician/inspection-testing/danger-notice', {
+            state: {
+              fromEicr: true,
+              eicrCertNumber: certificateContext.certificateNumber || '',
+              clientName: certificateContext.clientName || '',
+              installationAddress: certificateContext.installationAddress || '',
+              clientPhone: certificateContext.clientPhone || '',
+              clientEmail: certificateContext.clientEmail || '',
+              inspectorName: certificateContext.inspectorName || '',
+              inspectorCompany: certificateContext.companyName || '',
+              inspectorPhone: certificateContext.companyPhone || '',
+              inspectorEmail: certificateContext.companyEmail || '',
+              inspectorRegistration: certificateContext.registrationNumber || '',
+              inspectorScheme: certificateContext.registrationScheme || '',
+              observation: {
+                description: defect.description,
+                item: defect.item,
+                regulation: defect.regulation || '',
+                recommendation: defect.recommendation,
+                photos: photos.map((p) => p.url).filter(Boolean),
+              },
+            },
+          });
+        }}
+        className="flex items-center gap-3 w-full p-3 rounded-xl bg-red-500/10 border border-red-500/25 hover:bg-red-500/15 transition-all touch-manipulation active:scale-[0.98]"
+      >
+        <div className="w-2 h-2 rounded-full bg-red-400 flex-shrink-0" />
+        <span className="text-sm font-medium text-red-400">Issue Danger Notice</span>
+        <span className="text-[10px] text-white ml-auto">Pre-filled from this observation</span>
+      </button>
+    </div>
+  );
+}
 
 export default DefectObservationCard;

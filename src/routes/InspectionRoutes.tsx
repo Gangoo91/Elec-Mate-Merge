@@ -16,6 +16,13 @@ const EmergencyLightingCertificate = lazy(
 const SolarPVCertificate = lazy(() => import('@/pages/inspection/SolarPVCertificate'));
 const PATTestingCertificate = lazy(() => import('@/pages/inspection/PATTestingCertificate'));
 
+// Labels & Warnings
+const DangerNoticePage = lazy(() => import('@/pages/inspection/DangerNoticePage'));
+const IsolationCertificatePage = lazy(() => import('@/pages/inspection/IsolationCertificatePage'));
+const PermitToWorkPage = lazy(() => import('@/pages/inspection/PermitToWorkPage'));
+const WarningLabelsPage = lazy(() => import('@/pages/inspection/WarningLabelsPage'));
+const SafeIsolationPage = lazy(() => import('@/pages/inspection/SafeIsolationPage'));
+
 const LoadingFallback = CertificateSkeleton;
 
 export default function InspectionRoutes() {
@@ -47,6 +54,17 @@ export default function InspectionRoutes() {
         {/* PAT Testing Certificate (IET CoP) */}
         <Route path="pat-testing/new" element={<PATTestingCertificate />} />
         <Route path="pat-testing/:id" element={<PATTestingCertificate />} />
+
+        {/* Labels & Warnings */}
+        <Route path="danger-notice" element={<DangerNoticePage />} />
+        <Route path="danger-notice/:id" element={<DangerNoticePage />} />
+        <Route path="isolation-certificate" element={<IsolationCertificatePage />} />
+        <Route path="isolation-certificate/:id" element={<IsolationCertificatePage />} />
+        <Route path="permit-to-work" element={<PermitToWorkPage />} />
+        <Route path="permit-to-work/:id" element={<PermitToWorkPage />} />
+        <Route path="warning-labels" element={<WarningLabelsPage />} />
+        <Route path="safe-isolation" element={<SafeIsolationPage />} />
+        <Route path="safe-isolation/:id" element={<SafeIsolationPage />} />
 
         {/* All other inspection routes handled by InspectionIndex with query params */}
         <Route path="*" element={<InspectionIndex />} />

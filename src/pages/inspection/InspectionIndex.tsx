@@ -1,9 +1,21 @@
 import React, { useState, useEffect, lazy, Suspense } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { Loader2 } from 'lucide-react';
+import { ArrowLeft, FileCheck } from 'lucide-react';
+import { motion } from 'framer-motion';
+import { Button } from '@/components/ui/button';
 import ErrorBoundary from '@/components/ErrorBoundary';
 import { NotificationsManager } from '@/components/notifications/NotificationsManager';
 import { SectionSkeleton } from '@/components/ui/page-skeleton';
+
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: { opacity: 1, transition: { staggerChildren: 0.04 } },
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 8 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.25 } },
+};
 
 // Lazy-loaded components for code splitting
 const Dashboard = lazy(() => import('@/components/Dashboard'));
@@ -12,6 +24,9 @@ const EICForm = lazy(() => import('@/components/EICForm'));
 const MinorWorksForm = lazy(() => import('@/components/MinorWorksForm'));
 const MyReports = lazy(() => import('@/components/MyReports'));
 const LearningHub = lazy(() => import('@/components/LearningHub'));
+const CertificatesSection = lazy(() => import('@/components/dashboard/CertificatesSection'));
+const SpecialistSection = lazy(() => import('@/components/dashboard/SpecialistSection'));
+const LabelsWarningsSection = lazy(() => import('@/components/dashboard/LabelsWarningsSection'));
 
 // Skeleton loader for lazy components
 const SectionLoader = SectionSkeleton;
@@ -177,28 +192,61 @@ const InspectionIndex = () => {
             onEditReport={handleEditReport}
           />
         );
+      case 'certificates':
+        return (
+          <CertificatesSection
+            onNavigate={handleNavigate}
+            onBack={() => handleNavigate('dashboard')}
+          />
+        );
+      case 'specialist':
+        return (
+          <SpecialistSection
+            onBack={() => handleNavigate('dashboard')}
+          />
+        );
+      case 'labels-warnings':
+        return (
+          <LabelsWarningsSection
+            onBack={() => handleNavigate('dashboard')}
+          />
+        );
       case 'learning-hub':
         return <LearningHub onBack={() => handleNavigate('dashboard')} />;
       case 'notifications':
         return (
-          <div className="bg-background text-foreground">
-            <div className="sticky top-0 z-50 w-full border-b border-border/50 bg-sidebar/95 backdrop-blur supports-[backdrop-filter]:bg-sidebar/80">
-              <div className="px-3 sm:px-4">
-                <div className="flex h-12 items-center justify-between">
-                  <button
+          <div className="-mt-3 sm:-mt-4 md:-mt-6 bg-background pb-24">
+            {/* Sticky Header — matches Business Hub */}
+            <div className="sticky top-0 z-50 bg-background/95 backdrop-blur-sm border-b border-white/[0.06]">
+              <div className="px-4 py-2">
+                <div className="flex items-center gap-3 h-11">
+                  <Button
+                    variant="ghost"
+                    size="icon"
                     onClick={() => handleNavigate('dashboard')}
-                    className="flex items-center gap-1.5 text-muted-foreground hover:text-foreground -ml-2 px-2 py-1 rounded"
+                    className="text-white hover:text-white hover:bg-white/10 rounded-xl h-11 w-11 touch-manipulation active:scale-[0.98]"
                   >
-                    <span className="text-sm">Back</span>
-                  </button>
-                  <span className="font-semibold">Part P Notifications</span>
-                  <div className="w-16" />
+                    <ArrowLeft className="h-5 w-5" />
+                  </Button>
+                  <div className="flex items-center gap-2.5">
+                    <div className="p-1.5 rounded-lg bg-elec-yellow/10 border border-elec-yellow/20">
+                      <FileCheck className="h-4 w-4 text-elec-yellow" />
+                    </div>
+                    <h1 className="text-base font-semibold text-white">Part P Notifications</h1>
+                  </div>
                 </div>
               </div>
             </div>
-            <main className="px-3 sm:px-4 py-4 pb-20 sm:pb-6">
-              <NotificationsManager onNavigate={handleNavigate} />
-            </main>
+
+            {/* Main Content — motion stagger like Business Hub */}
+            <motion.main
+              variants={containerVariants}
+              initial="hidden"
+              animate="visible"
+              className="px-4 py-4 space-y-5"
+            >
+              <NotificationsManager onNavigate={handleNavigate} partPOnly itemVariants={itemVariants} />
+            </motion.main>
           </div>
         );
       default:
