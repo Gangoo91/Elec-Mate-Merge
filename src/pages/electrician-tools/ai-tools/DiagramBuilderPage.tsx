@@ -21,6 +21,7 @@ import {
   Eraser,
   RotateCw,
   FileText,
+  Trash2,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useSearchParams, useNavigate } from 'react-router-dom';
@@ -455,6 +456,21 @@ const DiagramBuilderPage = () => {
         </div>
 
         <div className="flex items-center gap-1.5">
+          {/* Rotate selected object */}
+          <button
+            onClick={() => { canvasRef.current?.handleRotate?.(); haptic.light(); }}
+            className="h-8 w-8 rounded-lg bg-white/10 flex items-center justify-center touch-manipulation active:scale-90"
+          >
+            <RotateCw className="h-3.5 w-3.5 text-white" />
+          </button>
+          {/* Delete selected object */}
+          <button
+            onClick={() => { canvasRef.current?.deleteSelected?.(); haptic.heavy(); }}
+            className="h-8 w-8 rounded-lg bg-red-500/20 flex items-center justify-center touch-manipulation active:scale-90"
+          >
+            <Trash2 className="h-3.5 w-3.5 text-red-400" />
+          </button>
+
           {/* Done / Save Room button — always visible */}
           <Button
             onClick={() => {
@@ -465,7 +481,7 @@ const DiagramBuilderPage = () => {
               haptic.light();
               setSaveSheetOpen(true);
             }}
-            className="h-8 px-3 bg-elec-yellow text-black hover:bg-elec-yellow/90 text-xs font-semibold touch-manipulation"
+            className="h-9 px-4 bg-elec-yellow text-black hover:bg-elec-yellow/90 text-sm font-bold touch-manipulation rounded-lg"
           >
             <Check className="h-3.5 w-3.5 mr-1" />
             Done
@@ -597,6 +613,7 @@ const DiagramBuilderPage = () => {
           onObjectsChange={(newObjects) => {
             // If a new symbol was just placed, auto-switch back to select
             if (activeTool === 'symbol' && newObjects.length > canvasObjects.length) {
+              haptic.success();
               setActiveTool('select');
               setSelectedSymbolId(null);
               setPlacingSymbolName(null);
@@ -613,6 +630,22 @@ const DiagramBuilderPage = () => {
           }}
           onRotate={handleRotateAll}
         />
+        {/* Empty canvas hint */}
+        {canvasObjects.length === 0 && rooms.length === 0 && (
+          <div className="absolute inset-0 z-10 flex items-center justify-center pointer-events-none">
+            <div className="text-center pointer-events-auto">
+              <p className="text-white/40 text-sm mb-3">Tap to get started</p>
+              <div className="flex gap-3">
+                <button onClick={() => setShapesSheetOpen(true)} className="px-4 py-2.5 bg-white/[0.08] border border-white/15 rounded-xl text-white text-xs font-medium touch-manipulation active:scale-95">
+                  Room Shape
+                </button>
+                <button onClick={() => setAiDialogOpen(true)} className="px-4 py-2.5 bg-elec-yellow/20 border border-elec-yellow/30 rounded-xl text-elec-yellow text-xs font-medium touch-manipulation active:scale-95">
+                  AI Generate
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
 
       {/* Floating pill toolbar at bottom centre */}

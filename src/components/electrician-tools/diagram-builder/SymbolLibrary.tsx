@@ -52,8 +52,12 @@ export const SymbolLibrary = ({
 }: SymbolLibraryProps) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [activeCategory, setActiveCategory] = useState<SymbolCategory | 'all'>('all');
+  const [quickPackFilter, setQuickPackFilter] = useState<string[] | null>(null);
 
   const filteredSymbols = symbolRegistry.filter((symbol) => {
+    if (quickPackFilter) {
+      return quickPackFilter.includes(symbol.id);
+    }
     const matchesSearch =
       !searchTerm ||
       symbol.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -92,13 +96,43 @@ export const SymbolLibrary = ({
           </div>
         </SheetHeader>
 
+        {/* Quick Packs — common room-specific symbol sets */}
+        <div className="px-4 pb-2">
+          <div className="flex gap-2 overflow-x-auto scrollbar-hide">
+            {[
+              { label: 'Kitchen', symbols: ['socket-double-13a', 'socket-cooker-45a', 'socket-fused-spur', 'light-ceiling', 'switch-1way', 'extractor-fan', 'socket-switched-fused-spur'] },
+              { label: 'Bedroom', symbols: ['socket-double-13a', 'light-ceiling', 'switch-2way', 'smoke-detector', 'socket-usb', 'socket-tv-aerial'] },
+              { label: 'Bathroom', symbols: ['light-downlight', 'switch-pull-cord', 'socket-shaver', 'extractor-fan', 'light-bulkhead'] },
+              { label: 'Living Room', symbols: ['socket-double-13a', 'light-ceiling', 'switch-dimmer', 'socket-tv-aerial', 'socket-data', 'smoke-detector'] },
+              { label: 'Hallway', symbols: ['light-ceiling', 'switch-2way', 'smoke-detector', 'co-detector'] },
+            ].map((pack) => (
+              <button
+                key={pack.label}
+                onClick={() => {
+                  setSearchTerm('');
+                  setActiveCategory('all');
+                  setQuickPackFilter(pack.symbols);
+                }}
+                className={cn(
+                  'flex-shrink-0 px-3 py-1.5 rounded-full text-[10px] font-medium touch-manipulation active:scale-95 whitespace-nowrap',
+                  quickPackFilter === pack.symbols
+                    ? 'bg-elec-yellow/30 border border-elec-yellow/50 text-elec-yellow'
+                    : 'bg-elec-yellow/10 border border-elec-yellow/20 text-elec-yellow'
+                )}
+              >
+                {pack.label}
+              </button>
+            ))}
+          </div>
+        </div>
+
         {/* Category pills — horizontal scroll */}
         <div className="flex gap-1.5 overflow-x-auto px-4 pb-3 scrollbar-hide">
           <button
-            onClick={() => setActiveCategory('all')}
+            onClick={() => { setActiveCategory('all'); setQuickPackFilter(null); }}
             className={cn(
               'flex-shrink-0 px-3 py-1.5 rounded-full text-xs font-medium transition-all touch-manipulation h-8',
-              activeCategory === 'all'
+              activeCategory === 'all' && !quickPackFilter
                 ? 'bg-elec-yellow text-black'
                 : 'bg-white/5 border border-white/10 text-white'
             )}
@@ -108,10 +142,10 @@ export const SymbolLibrary = ({
           {categories.map((cat) => (
             <button
               key={cat.id}
-              onClick={() => setActiveCategory(cat.id)}
+              onClick={() => { setActiveCategory(cat.id); setQuickPackFilter(null); }}
               className={cn(
                 'flex-shrink-0 px-3 py-1.5 rounded-full text-xs font-medium transition-all touch-manipulation whitespace-nowrap h-8',
-                activeCategory === cat.id
+                activeCategory === cat.id && !quickPackFilter
                   ? 'bg-elec-yellow text-black'
                   : 'bg-white/5 border border-white/10 text-white'
               )}

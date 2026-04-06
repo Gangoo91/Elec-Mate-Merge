@@ -134,6 +134,28 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
       undo,
       redo,
       zoomToFit,
+      handleRotate,
+      deleteSelected: () => {
+        const canvas = fabricCanvasRef.current;
+        if (!canvas) return;
+        const active = canvas.getActiveObject();
+        if (active) {
+          const customData = (active as any).customData;
+          if (customData?.id) {
+            saveState();
+            // Remove wall labels too
+            if (customData.type === 'wall') {
+              const labels = canvas.getObjects().filter(o => (o as any).customData?.parentId === customData.id);
+              labels.forEach(l => canvas.remove(l));
+            }
+            canvas.remove(active);
+            renderedObjectIds.current.delete(customData.id);
+            canvas.discardActiveObject();
+            canvas.renderAll();
+            onObjectsChange(objects.filter(o => o.id !== customData.id));
+          }
+        }
+      },
       forceFullRedraw: () => {
         // Clear rendered IDs + clear all non-grid objects from canvas
         const canvas = fabricCanvasRef.current;
@@ -1007,6 +1029,13 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
             canvas.renderAll();
             onObjectsChange(objects.filter((o) => o.id !== customData.id));
           }
+          return;
+        }
+
+        // Always allow tapping existing objects to select them (except in eraser mode)
+        if (activeTool !== 'eraser' && activeTool !== 'select' && e.target && (e.target as any).customData) {
+          canvas.setActiveObject(e.target);
+          canvas.renderAll();
           return;
         }
 
