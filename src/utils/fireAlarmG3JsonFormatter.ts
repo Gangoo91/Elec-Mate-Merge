@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /**
  * Fire Alarm G3 Commissioning Certificate — JSON Formatter
  * Maps form data to PDF template variables for PDF Monkey
@@ -15,7 +16,10 @@ export const formatFireAlarmG3Json = (formData: Record<string, any>) => {
   const getNum = (key: string, defaultValue = 0): number => {
     const value = formData[key];
     if (typeof value === 'number') return value;
-    if (typeof value === 'string') { const p = parseFloat(value); return isNaN(p) ? defaultValue : p; }
+    if (typeof value === 'string') {
+      const p = parseFloat(value);
+      return isNaN(p) ? defaultValue : p;
+    }
     return defaultValue;
   };
 
@@ -47,32 +51,47 @@ export const formatFireAlarmG3Json = (formData: Record<string, any>) => {
   // Panel tests
   const pt = formData.panelTests || {};
   const panelTests = {
-    power_on: formatTestResult(pt.powerOnTest), power_on_class: getResultClass(pt.powerOnTest),
-    zone_indicators: formatTestResult(pt.zoneIndicators), zone_indicators_class: getResultClass(pt.zoneIndicators),
-    fault_indicators: formatTestResult(pt.faultIndicators), fault_indicators_class: getResultClass(pt.faultIndicators),
-    silence: formatTestResult(pt.silenceFacility), silence_class: getResultClass(pt.silenceFacility),
-    reset: formatTestResult(pt.resetFunction), reset_class: getResultClass(pt.resetFunction),
-    event_log: formatTestResult(pt.eventLog), event_log_class: getResultClass(pt.eventLog),
-    remote_signalling: formatTestResult(pt.remoteSignalling), remote_signalling_class: getResultClass(pt.remoteSignalling),
+    power_on: formatTestResult(pt.powerOnTest),
+    power_on_class: getResultClass(pt.powerOnTest),
+    zone_indicators: formatTestResult(pt.zoneIndicators),
+    zone_indicators_class: getResultClass(pt.zoneIndicators),
+    fault_indicators: formatTestResult(pt.faultIndicators),
+    fault_indicators_class: getResultClass(pt.faultIndicators),
+    silence: formatTestResult(pt.silenceFacility),
+    silence_class: getResultClass(pt.silenceFacility),
+    reset: formatTestResult(pt.resetFunction),
+    reset_class: getResultClass(pt.resetFunction),
+    event_log: formatTestResult(pt.eventLog),
+    event_log_class: getResultClass(pt.eventLog),
+    remote_signalling: formatTestResult(pt.remoteSignalling),
+    remote_signalling_class: getResultClass(pt.remoteSignalling),
   };
 
   // Power tests
   const pw = formData.powerTests || {};
   const powerTests = {
-    mains: formatTestResult(pw.mainsSupply), mains_class: getResultClass(pw.mainsSupply),
+    mains: formatTestResult(pw.mainsSupply),
+    mains_class: getResultClass(pw.mainsSupply),
     battery_voltage: pw.batteryVoltage || '',
-    battery_condition: formatTestResult(pw.batteryCondition), battery_condition_class: getResultClass(pw.batteryCondition),
-    charger: formatTestResult(pw.chargerOperation), charger_class: getResultClass(pw.chargerOperation),
-    standby: formatTestResult(pw.standbyDuration), standby_class: getResultClass(pw.standbyDuration),
+    battery_condition: formatTestResult(pw.batteryCondition),
+    battery_condition_class: getResultClass(pw.batteryCondition),
+    charger: formatTestResult(pw.chargerOperation),
+    charger_class: getResultClass(pw.chargerOperation),
+    standby: formatTestResult(pw.standbyDuration),
+    standby_class: getResultClass(pw.standbyDuration),
   };
 
   // Fault tests
   const ft = formData.faultTests || {};
   const faultTests = {
-    open_circuit: formatTestResult(ft.openCircuit), open_circuit_class: getResultClass(ft.openCircuit),
-    short_circuit: formatTestResult(ft.shortCircuit), short_circuit_class: getResultClass(ft.shortCircuit),
-    earth_fault: formatTestResult(ft.earthFault), earth_fault_class: getResultClass(ft.earthFault),
-    power_fail: formatTestResult(ft.powerFail), power_fail_class: getResultClass(ft.powerFail),
+    open_circuit: formatTestResult(ft.openCircuit),
+    open_circuit_class: getResultClass(ft.openCircuit),
+    short_circuit: formatTestResult(ft.shortCircuit),
+    short_circuit_class: getResultClass(ft.shortCircuit),
+    earth_fault: formatTestResult(ft.earthFault),
+    earth_fault_class: getResultClass(ft.earthFault),
+    power_fail: formatTestResult(ft.powerFail),
+    power_fail_class: getResultClass(ft.powerFail),
   };
 
   // Sound readings
@@ -102,7 +121,12 @@ export const formatFireAlarmG3Json = (formData: Record<string, any>) => {
     number: i + 1,
     description: d.description || '',
     severity: d.severity || 'non-critical',
-    severity_class: d.severity === 'critical' ? 'critical' : d.severity === 'recommendation' ? 'recommendation' : 'non-critical',
+    severity_class:
+      d.severity === 'critical'
+        ? 'critical'
+        : d.severity === 'recommendation'
+          ? 'recommendation'
+          : 'non-critical',
     rectified: d.rectified || false,
     rectification_date: formatDateUK(d.rectificationDate || ''),
   }));
@@ -110,15 +134,30 @@ export const formatFireAlarmG3Json = (formData: Record<string, any>) => {
   // Soak test duration
   let soakDuration = get('soakTestDuration');
   if (!soakDuration && formData.soakTestStart && formData.soakTestEnd) {
-    const days = Math.round((new Date(formData.soakTestEnd).getTime() - new Date(formData.soakTestStart).getTime()) / 86400000);
+    const days = Math.round(
+      (new Date(formData.soakTestEnd).getTime() - new Date(formData.soakTestStart).getTime()) /
+        86400000
+    );
     soakDuration = `${days} days`;
   }
 
   // Device coverage percentages
-  const detCoverage = getNum('detectorsTotalCount') > 0 ? Math.round((getNum('detectorsTestedCount') / getNum('detectorsTotalCount')) * 100) : 0;
-  const cpCoverage = getNum('callPointsTotalCount') > 0 ? Math.round((getNum('callPointsTestedCount') / getNum('callPointsTotalCount')) * 100) : 0;
-  const sndCoverage = getNum('soundersTotalCount') > 0 ? Math.round((getNum('soundersTestedCount') / getNum('soundersTotalCount')) * 100) : 0;
-  const intCoverage = getNum('interfacesTotalCount') > 0 ? Math.round((getNum('interfacesTestedCount') / getNum('interfacesTotalCount')) * 100) : 0;
+  const detCoverage =
+    getNum('detectorsTotalCount') > 0
+      ? Math.round((getNum('detectorsTestedCount') / getNum('detectorsTotalCount')) * 100)
+      : 0;
+  const cpCoverage =
+    getNum('callPointsTotalCount') > 0
+      ? Math.round((getNum('callPointsTestedCount') / getNum('callPointsTotalCount')) * 100)
+      : 0;
+  const sndCoverage =
+    getNum('soundersTotalCount') > 0
+      ? Math.round((getNum('soundersTestedCount') / getNum('soundersTotalCount')) * 100)
+      : 0;
+  const intCoverage =
+    getNum('interfacesTotalCount') > 0
+      ? Math.round((getNum('interfacesTestedCount') / getNum('interfacesTotalCount')) * 100)
+      : 0;
 
   // Overall result
   const overallResult = get('overallResult');
@@ -237,7 +276,12 @@ export const formatFireAlarmG3Json = (formData: Record<string, any>) => {
 
     // Overall Result
     overall_result: overallResult,
-    overall_result_display: overallResult === 'satisfactory' ? 'Satisfactory' : overallResult === 'unsatisfactory' ? 'Unsatisfactory' : '',
+    overall_result_display:
+      overallResult === 'satisfactory'
+        ? 'Satisfactory'
+        : overallResult === 'unsatisfactory'
+          ? 'Unsatisfactory'
+          : '',
 
     // Service Schedule
     next_service_due: getDate('nextServiceDue'),
@@ -245,7 +289,7 @@ export const formatFireAlarmG3Json = (formData: Record<string, any>) => {
 
     // Notes
     additional_notes: get('additionalNotes'),
-    has_additional_notes: !!(get('additionalNotes')?.trim()),
+    has_additional_notes: !!get('additionalNotes')?.trim(),
 
     // Photos
     photos,

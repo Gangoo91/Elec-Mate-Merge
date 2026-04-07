@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { SmartTabs, SmartTab } from '@/components/ui/smart-tabs';
 import { Building2, PenTool, Grid3X3, FileCheck } from 'lucide-react';
 import FAG1ClientPremises from './tabs/FAG1ClientPremises';
@@ -87,7 +88,10 @@ const FireAlarmG1FormTabs: React.FC<Props> = ({
   const completedTabs: Record<string, boolean> = {
     client: !!(formData.clientName && formData.premisesAddress && formData.fraReference),
     design: !!(formData.systemCategory && formData.designBasis && formData.categoryJustification),
-    devices: !!(formData.zones?.length > 0 && (formData.plannedOpticalSmoke || formData.plannedHeat || formData.plannedMultiSensor)),
+    devices: !!(
+      formData.zones?.length > 0 &&
+      (formData.plannedOpticalSmoke || formData.plannedHeat || formData.plannedMultiSensor)
+    ),
     declaration: !!(formData.designerSignature && formData.designerName),
   };
 

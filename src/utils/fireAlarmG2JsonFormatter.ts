@@ -1,9 +1,16 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /**
  * Formats Fire Alarm certificate form data for PDF generation
  * Compliant with BS 5839-1:2025 Fire detection and fire alarm systems
  */
 
-import { FireAlarmFormData, FireAlarmZone, InterfaceEquipment, AspiratingUnit, TestEquipmentItem } from '@/types/fire-alarm';
+import {
+  FireAlarmFormData,
+  FireAlarmZone,
+  InterfaceEquipment,
+  AspiratingUnit,
+  TestEquipmentItem,
+} from '@/types/fire-alarm';
 import type { FireAlarmPayloadType } from '@/types/fire-alarm-payload';
 
 export const formatFireAlarmJson = (formData: Partial<FireAlarmFormData>): FireAlarmPayloadType => {
@@ -307,7 +314,17 @@ export const formatFireAlarmJson = (formData: Partial<FireAlarmFormData>): FireA
       return {
         zone: r.zone || '',
         location: r.location || '',
-        area_type: ({ general: 'General', sleeping: 'Sleeping', stairwell: 'Stairwell', 'plant-room': 'Plant Room' } as Record<string, string>)[r.areaType || 'general'] || r.areaType || 'General',
+        area_type:
+          (
+            {
+              general: 'General',
+              sleeping: 'Sleeping',
+              stairwell: 'Stairwell',
+              'plant-room': 'Plant Room',
+            } as Record<string, string>
+          )[r.areaType || 'general'] ||
+          r.areaType ||
+          'General',
         db_reading: r.dBReading || '',
         min_required: r.minRequired || '65',
         result: isPassing ? 'PASS' : 'FAIL',
@@ -448,9 +465,14 @@ export const formatFireAlarmJson = (formData: Partial<FireAlarmFormData>): FireA
   const formatThirdPartyCertification = () => {
     const cert = formData.thirdPartyCertification || {};
     // G2 uses flat boolean fields; legacy uses nested object with strings
-    const bafe = cert.bafeRegistration || (formData.bafeRegistered ? (formData.thirdPartyCertNumber || 'Yes') : '');
-    const fia = cert.fiaMembership || (formData.fiaRegistered ? (formData.thirdPartyCertNumber || 'Yes') : '');
-    const nsi = cert.nsiSsaibCertification || (formData.nsiRegistered ? (formData.thirdPartyCertNumber || 'Yes') : '');
+    const bafe =
+      cert.bafeRegistration ||
+      (formData.bafeRegistered ? formData.thirdPartyCertNumber || 'Yes' : '');
+    const fia =
+      cert.fiaMembership || (formData.fiaRegistered ? formData.thirdPartyCertNumber || 'Yes' : '');
+    const nsi =
+      cert.nsiSsaibCertification ||
+      (formData.nsiRegistered ? formData.thirdPartyCertNumber || 'Yes' : '');
     const other = cert.otherAccreditation || '';
     return {
       bafe_registration: bafe,
@@ -495,15 +517,17 @@ export const formatFireAlarmJson = (formData: Partial<FireAlarmFormData>): FireA
         'Dual path': 'Dual Path',
         'Single path': 'Single Path',
         redcare: 'BT Redcare',
-        'RedCare': 'BT Redcare',
+        RedCare: 'BT Redcare',
         dualcom: 'Dualcom',
-        'Dualcom': 'Dualcom',
+        Dualcom: 'Dualcom',
         gsm: 'GSM/GPRS',
-        'GSM': 'GSM',
-        'IP': 'IP',
-        'GPRS': 'GPRS',
+        GSM: 'GSM',
+        IP: 'IP',
+        GPRS: 'GPRS',
         other: monitoring.signallingRouteOther || 'Other',
-      }[sigRoute] || sigRoute || '';
+      }[sigRoute] ||
+      sigRoute ||
+      '';
 
     return {
       is_monitored: isMonitored,
@@ -650,8 +674,14 @@ export const formatFireAlarmJson = (formData: Partial<FireAlarmFormData>): FireA
     call_point_count: (formData.callPoints || []).length || formData.callPointCount || 0,
     sounder_count: (formData.sounders || []).length || formData.sounderCount || 0,
     visual_alarm_count: formData.visualAlarmCount || 0,
-    total_alarm_devices: ((formData.sounders || []).length || formData.sounderCount || 0) + (formData.visualAlarmCount || 0),
-    total_devices: ((formData.detectors || []).length || totalDetectors) + ((formData.callPoints || []).length || formData.callPointCount || 0) + ((formData.sounders || []).length || formData.sounderCount || 0) + (formData.visualAlarmCount || 0),
+    total_alarm_devices:
+      ((formData.sounders || []).length || formData.sounderCount || 0) +
+      (formData.visualAlarmCount || 0),
+    total_devices:
+      ((formData.detectors || []).length || totalDetectors) +
+      ((formData.callPoints || []).length || formData.callPointCount || 0) +
+      ((formData.sounders || []).length || formData.sounderCount || 0) +
+      (formData.visualAlarmCount || 0),
 
     // ============================================
     // ZONES
@@ -802,13 +832,27 @@ export const formatFireAlarmJson = (formData: Partial<FireAlarmFormData>): FireA
     photos: (() => {
       const generalPhotos = formData.photos || [];
       const devicePhotos: string[] = [];
-      (formData.detectors || []).forEach((d: any) => { if (d.photo) devicePhotos.push(d.photo); });
-      (formData.sounders || []).forEach((s: any) => { if (s.photo) devicePhotos.push(s.photo); });
-      (formData.callPoints || []).forEach((c: any) => { if (c.photo) devicePhotos.push(c.photo); });
+      (formData.detectors || []).forEach((d: any) => {
+        if (d.photo) devicePhotos.push(d.photo);
+      });
+      (formData.sounders || []).forEach((s: any) => {
+        if (s.photo) devicePhotos.push(s.photo);
+      });
+      (formData.callPoints || []).forEach((c: any) => {
+        if (c.photo) devicePhotos.push(c.photo);
+      });
       return [...generalPhotos, ...devicePhotos];
     })(),
-    has_photos: ((formData.photos || []).length > 0) || (formData.detectors || []).some((d: any) => d.photo) || (formData.sounders || []).some((s: any) => s.photo) || (formData.callPoints || []).some((c: any) => c.photo),
-    photo_count: (formData.photos || []).length + (formData.detectors || []).filter((d: any) => d.photo).length + (formData.sounders || []).filter((s: any) => s.photo).length + (formData.callPoints || []).filter((c: any) => c.photo).length,
+    has_photos:
+      (formData.photos || []).length > 0 ||
+      (formData.detectors || []).some((d: any) => d.photo) ||
+      (formData.sounders || []).some((s: any) => s.photo) ||
+      (formData.callPoints || []).some((c: any) => c.photo),
+    photo_count:
+      (formData.photos || []).length +
+      (formData.detectors || []).filter((d: any) => d.photo).length +
+      (formData.sounders || []).filter((s: any) => s.photo).length +
+      (formData.callPoints || []).filter((c: any) => c.photo).length,
 
     // ============================================
     // INTERFACE EQUIPMENT
@@ -850,9 +894,10 @@ export const formatFireAlarmJson = (formData: Partial<FireAlarmFormData>): FireA
     // ============================================
     devices_tested_count: getNum('devicesTestedCount'),
     devices_total_count: getNum('devicesTotalCount'),
-    devices_tested_percentage: getNum('devicesTotalCount') > 0
-      ? Math.round((getNum('devicesTestedCount') / getNum('devicesTotalCount')) * 100)
-      : 0,
+    devices_tested_percentage:
+      getNum('devicesTotalCount') > 0
+        ? Math.round((getNum('devicesTestedCount') / getNum('devicesTotalCount')) * 100)
+        : 0,
     device_testing_complete: getBool('deviceTestingComplete'),
 
     // ============================================

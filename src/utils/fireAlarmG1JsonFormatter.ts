@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /**
  * Fire Alarm G1 Design Certificate — JSON Formatter
  * Maps form data to PDF template variables for PDF Monkey
@@ -15,7 +16,10 @@ export const formatFireAlarmG1Json = (formData: Record<string, any>) => {
   const getNum = (key: string, defaultValue = 0): number => {
     const value = formData[key];
     if (typeof value === 'number') return value;
-    if (typeof value === 'string') { const p = parseFloat(value); return isNaN(p) ? defaultValue : p; }
+    if (typeof value === 'string') {
+      const p = parseFloat(value);
+      return isNaN(p) ? defaultValue : p;
+    }
     return defaultValue;
   };
 
@@ -32,44 +36,68 @@ export const formatFireAlarmG1Json = (formData: Record<string, any>) => {
 
   // System category descriptions
   const categoryDescriptions: Record<string, string> = {
-    'L1': 'Life safety — all areas of building',
-    'L2': 'Life safety — escape routes and high-risk areas',
-    'L3': 'Life safety — escape routes only',
-    'L4': 'Life safety — within escape routes only',
-    'L5': 'Life safety — engineered system as risk assessment dictates',
-    'M': 'Manual system — manual call points only',
-    'P1': 'Property protection — full coverage',
-    'P2': 'Property protection — partial coverage',
+    L1: 'Life safety — all areas of building',
+    L2: 'Life safety — escape routes and high-risk areas',
+    L3: 'Life safety — escape routes only',
+    L4: 'Life safety — within escape routes only',
+    L5: 'Life safety — engineered system as risk assessment dictates',
+    M: 'Manual system — manual call points only',
+    P1: 'Property protection — full coverage',
+    P2: 'Property protection — partial coverage',
   };
 
   // Premises type display
   const premisesTypes: Record<string, string> = {
-    'Office': 'Office', 'Retail': 'Retail', 'Warehouse': 'Warehouse',
-    'Factory': 'Factory / Industrial', 'School': 'School / Education',
-    'Hospital': 'Hospital / Healthcare', 'Care Home': 'Care Home / Residential',
-    'Hotel': 'Hotel / B&B', 'HMO': 'HMO', 'Place of Worship': 'Place of Worship',
-    'Restaurant': 'Restaurant / Kitchen', 'Leisure': 'Leisure / Sports',
-    'Data Centre': 'Data Centre', 'Mixed Use': 'Mixed Use',
+    Office: 'Office',
+    Retail: 'Retail',
+    Warehouse: 'Warehouse',
+    Factory: 'Factory / Industrial',
+    School: 'School / Education',
+    Hospital: 'Hospital / Healthcare',
+    'Care Home': 'Care Home / Residential',
+    Hotel: 'Hotel / B&B',
+    HMO: 'HMO',
+    'Place of Worship': 'Place of Worship',
+    Restaurant: 'Restaurant / Kitchen',
+    Leisure: 'Leisure / Sports',
+    'Data Centre': 'Data Centre',
+    'Mixed Use': 'Mixed Use',
   };
 
   const occupancyTypes: Record<string, string> = {
-    'Sleeping': 'Sleeping accommodation', 'Non-sleeping': 'Non-sleeping',
-    'Mixed': 'Mixed (sleeping + non-sleeping)', 'Unoccupied': 'Unoccupied / Storage',
+    Sleeping: 'Sleeping accommodation',
+    'Non-sleeping': 'Non-sleeping',
+    Mixed: 'Mixed (sleeping + non-sleeping)',
+    Unoccupied: 'Unoccupied / Storage',
   };
 
   const networkTypes: Record<string, string> = {
-    'conventional': 'Conventional', 'addressable': 'Addressable',
-    'analogue-addressable': 'Analogue Addressable', 'wireless': 'Wireless',
-    'hybrid': 'Hybrid', 'networked': 'Networked (multi-panel)',
+    conventional: 'Conventional',
+    addressable: 'Addressable',
+    'analogue-addressable': 'Analogue Addressable',
+    wireless: 'Wireless',
+    hybrid: 'Hybrid',
+    networked: 'Networked (multi-panel)',
   };
 
   const signallingRoutes: Record<string, string> = {
-    'Dual path': 'Dual Path', 'Single path': 'Single Path',
-    'RedCare': 'BT RedCare', 'Dualcom': 'Dualcom', 'GSM': 'GSM', 'IP': 'IP',
+    'Dual path': 'Dual Path',
+    'Single path': 'Single Path',
+    RedCare: 'BT RedCare',
+    Dualcom: 'Dualcom',
+    GSM: 'GSM',
+    IP: 'IP',
   };
 
   // Planned device totals
-  const plannedDetectors = getNum('plannedOpticalSmoke') + getNum('plannedHeat') + getNum('plannedMultiSensor') + getNum('plannedBeam') + getNum('plannedAspirating') + getNum('plannedFlame') + getNum('plannedCO');
+  const plannedDetectors =
+    getNum('plannedOpticalSmoke') +
+    getNum('plannedHeat') +
+    getNum('plannedMultiSensor') +
+    getNum('plannedBeam') +
+    getNum('plannedAspirating') +
+    getNum('plannedFlame') +
+    getNum('plannedCO');
 
   // Format zones
   const zones = (formData.zones || []).map((z: any, i: number) => ({
@@ -125,7 +153,11 @@ export const formatFireAlarmG1Json = (formData: Record<string, any>) => {
     beam_spacing: get('beamSpacing'),
     ventilation_notes: get('ventilationNotes'),
     building_construction_notes: get('buildingConstructionNotes'),
-    has_construction_notes: !!(get('ceilingType') || get('beamSpacing') || get('buildingConstructionNotes')),
+    has_construction_notes: !!(
+      get('ceilingType') ||
+      get('beamSpacing') ||
+      get('buildingConstructionNotes')
+    ),
 
     // FRA
     fra_reference: get('fraReference'),
@@ -157,7 +189,7 @@ export const formatFireAlarmG1Json = (formData: Record<string, any>) => {
     cable_type: get('cableType'),
     circuit_integrity: get('circuitIntegrity'),
     red_cable_for_mains: getBool('redCableForMains'),
-    has_cable: !!(get('cableType')),
+    has_cable: !!get('cableType'),
 
     // Cause & Effect
     evacuation_strategy: get('evacuationStrategy'),
@@ -183,7 +215,11 @@ export const formatFireAlarmG1Json = (formData: Record<string, any>) => {
     planned_sounders: getNum('plannedSounders'),
     planned_vads: getNum('plannedVADs'),
     total_planned_detectors: plannedDetectors,
-    total_planned_devices: plannedDetectors + getNum('plannedCallPoints') + getNum('plannedSounders') + getNum('plannedVADs'),
+    total_planned_devices:
+      plannedDetectors +
+      getNum('plannedCallPoints') +
+      getNum('plannedSounders') +
+      getNum('plannedVADs'),
 
     // Zones
     zones,
@@ -209,7 +245,7 @@ export const formatFireAlarmG1Json = (formData: Record<string, any>) => {
       const a = parseFloat(formData.alarmCurrent || '0');
       const h = parseFloat(formData.requiredStandby || '24');
       if (!q && !a) return '';
-      return ((q * h) + (a * 0.5)) / 1000;
+      return (q * h + a * 0.5) / 1000;
     })(),
     has_battery_calc: !!(get('quiescentCurrent') || get('alarmCurrent')),
 
@@ -217,7 +253,7 @@ export const formatFireAlarmG1Json = (formData: Record<string, any>) => {
     sound_target_general: get('soundTargetGeneral') || '65',
     sound_target_sleeping: get('soundTargetSleeping') || '75',
     sound_design_notes: get('soundDesignNotes'),
-    has_sound_targets: !!(get('soundDesignNotes')),
+    has_sound_targets: !!get('soundDesignNotes'),
 
     // Drawing Schedule (G1 unique)
     drawings: (formData.drawings || []).map((d: any, i: number) => ({
@@ -230,7 +266,7 @@ export const formatFireAlarmG1Json = (formData: Record<string, any>) => {
 
     // Cable Route
     cable_route_notes: get('cableRouteNotes'),
-    has_cable_routes: !!(get('cableRouteNotes')),
+    has_cable_routes: !!get('cableRouteNotes'),
 
     // Design Documentation (G1 unique)
     design_spec_ref: get('designSpecRef'),
@@ -244,11 +280,17 @@ export const formatFireAlarmG1Json = (formData: Record<string, any>) => {
     rel_std_7671: getBool('relStd7671'),
     rel_std_build_regs: getBool('relStdBuildRegs'),
     rel_std_rro: getBool('relStdRRO'),
-    has_related_standards: !!(getBool('relStdEN54') || getBool('relStd5839_6') || getBool('relStd7671') || getBool('relStdBuildRegs') || getBool('relStdRRO')),
+    has_related_standards: !!(
+      getBool('relStdEN54') ||
+      getBool('relStd5839_6') ||
+      getBool('relStd7671') ||
+      getBool('relStdBuildRegs') ||
+      getBool('relStdRRO')
+    ),
 
     // Deviations
     design_deviations: get('designDeviations'),
-    has_deviations: !!(get('designDeviations')),
+    has_deviations: !!get('designDeviations'),
 
     // Designer Declaration
     designer_name: get('designerName'),
@@ -259,7 +301,7 @@ export const formatFireAlarmG1Json = (formData: Record<string, any>) => {
 
     // Notes
     additional_notes: get('additionalNotes'),
-    has_additional_notes: !!(get('additionalNotes')?.trim()),
+    has_additional_notes: !!get('additionalNotes')?.trim(),
 
     // Company Branding
     company_name: get('companyName'),

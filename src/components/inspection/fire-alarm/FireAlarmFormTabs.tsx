@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { SmartTabs, SmartTab } from '@/components/ui/smart-tabs';
 import { Building2, Cpu, Grid3X3, Link2, FileCheck } from 'lucide-react';
 import FAClientPremises from './tabs/FAClientPremises';
@@ -109,8 +110,11 @@ const FireAlarmFormTabs: React.FC<FireAlarmFormTabsProps> = ({
   const completedTabs: Record<string, boolean> = {
     client: !!(formData.clientName && formData.premisesAddress),
     system: !!(formData.systemCategory && formData.systemMake),
-    zones: !!((formData.zones?.length > 0) && (formData.detectors?.length > 0 || formData.sounders?.length > 0)),
-    equipment: !!(formData.asFittedDrawingsProvided),
+    zones: !!(
+      formData.zones?.length > 0 &&
+      (formData.detectors?.length > 0 || formData.sounders?.length > 0)
+    ),
+    equipment: !!formData.asFittedDrawingsProvided,
     declarations: !!(formData.installerSignature && formData.overallResult),
   };
 
